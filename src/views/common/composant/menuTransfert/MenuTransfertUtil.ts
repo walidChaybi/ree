@@ -1,17 +1,14 @@
-import { Droit } from "../../../../model/agent/enum/Droit";
-import {
-  IUtilisateur,
-  utilisateurADroit
-} from "../../../../model/agent/IUtilisateur";
-import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
-import { SousTypeRequete } from "../../../../model/requete/enum/SousTypeRequete";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
-import { IActionOption } from "../../../../model/requete/IActionOption";
-import { TransfertParams } from "../../hook/requete/TransfertHook";
-import { DoubleSubmitUtil } from "../../util/DoubleSubmitUtil";
-import { storeRece } from "../../util/storeRece";
-import { Option, Options } from "../../util/Type";
+import { TransfertParams } from "@hook/requete/TransfertHook";
+import { Droit } from "@model/agent/enum/Droit";
+import { IUtilisateur, utilisateurADroit } from "@model/agent/IUtilisateur";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IActionOption } from "@model/requete/IActionOption";
+import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
+import { storeRece } from "@util/storeRece";
+import { Option, Options } from "@util/Type";
 import { IMenuTransfertProps } from "./MenuTransfert";
 
 export function onValidateService(

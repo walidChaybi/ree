@@ -1,5 +1,5 @@
+import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
 import React, { useRef } from "react";
-import { DoubleSubmitUtil } from "../../util/DoubleSubmitUtil";
 
 type BoutonProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,

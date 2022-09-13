@@ -1,9 +1,9 @@
-import { ICertificatRCAComposition } from "../../model/composition/ICertificatRCAComposition";
-import { ICertificatSituationComposition } from "../../model/composition/ICertificatSituationComposition";
-import { IReponseSansDelivranceCSDemandeIncompleteComposition } from "../../model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
-import { IReponseSansDelivranceCSFrancaisComposition } from "../../model/composition/IReponseSansDelivranceCSFrancaisComposition";
-import { IReponseSansDelivranceCSMariageComposition } from "../../model/composition/IReponseSansDelivranceCSMariageComposition";
-import { dateCourrier } from "../../views/common/util/DateUtils";
+import { ICertificatRCAComposition } from "@model/composition/ICertificatRCAComposition";
+import { ICertificatSituationComposition } from "@model/composition/ICertificatSituationComposition";
+import { IReponseSansDelivranceCSDemandeIncompleteComposition } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
+import { IReponseSansDelivranceCSFrancaisComposition } from "@model/composition/IReponseSansDelivranceCSFrancaisComposition";
+import { IReponseSansDelivranceCSMariageComposition } from "@model/composition/IReponseSansDelivranceCSMariageComposition";
+import { dateCourrier } from "@util/DateUtils";
 import { imagePngVideBase64 } from "./ImagePng";
 
 const baseReponseSansDelivranceCS = {
@@ -71,11 +71,12 @@ const baseReponseSansDelivranceCSInstitutionnel = {
   titre: undefined
 };
 
-export const reponseSansDelivranceCSDemandeIncomplete: IReponseSansDelivranceCSDemandeIncompleteComposition = {
-  ...baseReponseSansDelivranceCSInstitutionnel,
-  objet_courrier:
-    "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil"
-};
+export const reponseSansDelivranceCSDemandeIncomplete: IReponseSansDelivranceCSDemandeIncompleteComposition =
+  {
+    ...baseReponseSansDelivranceCSInstitutionnel,
+    objet_courrier:
+      "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil"
+  };
 
 export const reponseSansDelivranceCSMariage: IReponseSansDelivranceCSMariageComposition =
   {
@@ -87,12 +88,13 @@ export const reponseSansDelivranceCSMariage: IReponseSansDelivranceCSMariageComp
     prenoms_titulaire2: "Laurent"
   };
 
-export const reponseSansDelivranceCSFrancais: IReponseSansDelivranceCSFrancaisComposition = {
-  ...baseReponseSansDelivranceCS,
-  objet_courrier:
-    "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil",
-  url: "https://www.service-public.fr"
-};
+export const reponseSansDelivranceCSFrancais: IReponseSansDelivranceCSFrancaisComposition =
+  {
+    ...baseReponseSansDelivranceCS,
+    objet_courrier:
+      "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil",
+    url: "https://www.service-public.fr"
+  };
 
 export const certificatSituation: ICertificatSituationComposition = {
   numero_requete: "012345",

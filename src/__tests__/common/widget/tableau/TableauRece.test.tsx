@@ -1,16 +1,16 @@
+import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { fireEvent, render, screen } from "@testing-library/react";
+import {
+  NB_LIGNES_PAR_APPEL_DEFAUT,
+  NB_LIGNES_PAR_PAGE_DEFAUT
+} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
+import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import requetes from "../../../../mock/data/requetes.json";
 import { generateurRequetes } from "../../../../mock/script-generation-donnees/generateurRequetes";
-import {
-  NB_LIGNES_PAR_APPEL_DEFAUT,
-  NB_LIGNES_PAR_PAGE_DEFAUT
-} from "../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { TableauRece } from "../../../../views/common/widget/tableau/TableauRece/TableauRece";
-import { TableauTypeColumn } from "../../../../views/common/widget/tableau/TableauRece/TableauTypeColumn";
-import { URL_MES_REQUETES_DELIVRANCE } from "../../../../views/router/ReceUrls";
 
 const HookConsummer: React.FC = (props: any) => {
   return <button onClick={() => props.reloadData()}>{"BoutonTest"}</button>;

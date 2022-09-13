@@ -1,4 +1,4 @@
-import { DoubleSubmitUtil } from "../../../views/common/util/DoubleSubmitUtil";
+import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
 
 test("Attendu: DoubleSubmitUtil fonctionne correctement", () => {
   const element: any = {};

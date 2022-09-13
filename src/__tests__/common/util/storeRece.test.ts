@@ -1,7 +1,7 @@
+import { storeRece } from "@util/storeRece";
 import request from "superagent";
 import officier from "../../../mock/data/connectedUser.json";
 import { configAgent } from "../../../mock/superagent-config/superagent-mock-agent";
-import { storeRece } from "../../../views/common/util/storeRece";
 
 const superagentMock = require("superagent-mock")(request, configAgent);
 

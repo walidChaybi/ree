@@ -1,6 +1,6 @@
 import { InfoRounded } from "@material-ui/icons";
+import { estRenseigne } from "@util/Utils";
 import React from "react";
-import { estRenseigne } from "../../../../../../common/util/Utils";
 
 interface ItemInfoBulleProps {
   label?: string;

@@ -1,9 +1,9 @@
 import { TextField } from "@material-ui/core";
+import { storeRece } from "@util/storeRece";
+import { getLibelle } from "@util/Utils";
 import { useFormik } from "formik";
 import React from "react";
 import { Button } from "reakit/Button";
-import { storeRece } from "../../util/storeRece";
-import { getLibelle } from "../../util/Utils";
 import "./scss/FormPinCode.scss";
 
 interface FormPinCodePros {

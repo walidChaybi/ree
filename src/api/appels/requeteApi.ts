@@ -1,12 +1,12 @@
-import { CLES } from "../../model/parametres/clesParametres";
-import { StatutRequete } from "../../model/requete/enum/StatutRequete";
-import { IDocumentReponse } from "../../model/requete/IDocumentReponse";
-import { IEchange } from "../../model/requete/IEchange";
-import { IRequeteDelivrance } from "../../model/requete/IRequeteDelivrance";
-import { IPieceJustificative } from "../../model/requete/pieceJointe/IPieceJustificative";
-import { IRMCRequestRequete } from "../../model/rmc/requete/IRMCRequestRequete";
-import { SortOrder } from "../../views/common/widget/tableau/TableUtils";
-import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
+import { CLES } from "@model/parametres/clesParametres";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { IEchange } from "@model/requete/IEchange";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
+import { IRMCRequestRequete } from "@model/rmc/requete/IRMCRequestRequete";
+import { ICriteresRMCAuto } from "@pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
 import { URL_MENTION } from "./etatcivilApi";
 
@@ -59,7 +59,7 @@ export enum TypeAppelRequete {
   REQUETE_CREATION_SERVICE = "requeteCreationService",
   MES_REQUETES_DELIVRANCE = "mesRequetes",
   MES_REQUETES_INFO = "mesRequetesInfo",
-  MES_REQUETES_CREATION = "mesRequetesCreation",
+  MES_REQUETES_CREATION = "mesRequetesCreation"
 }
 
 export interface IQueryParametersPourRequetes {
@@ -96,7 +96,7 @@ export function getParametresBaseRequete(): Promise<any> {
   return api.fetchCache({
     method: HttpMethod.POST,
     uri: `${URL_PARAMETRE}`,
-    data: CLES,
+    data: CLES
   });
 }
 
@@ -118,8 +118,8 @@ export function getRequetesDelivrance(
           ? queryParameters.tri
           : "dateStatut",
       sens: queryParameters.sens,
-      range: queryParameters.range,
-    },
+      range: queryParameters.range
+    }
   });
 }
 
@@ -141,8 +141,8 @@ export function getRequetesInformation(
           ? queryParameters.tri
           : "dateStatut",
       sens: queryParameters.sens,
-      range: queryParameters.range,
-    },
+      range: queryParameters.range
+    }
   });
 }
 
@@ -164,22 +164,22 @@ export function getRequetesCreation(
           ? queryParameters.tri
           : "dateStatut",
       sens: queryParameters.sens,
-      range: queryParameters.range,
-    },
+      range: queryParameters.range
+    }
   });
 }
 
 export function getDetailRequete(idRequete: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_REQUETES}/${idRequete}`,
+    uri: `${URL_REQUETES}/${idRequete}`
   });
 }
 
 export async function getNomenclatureRequete(nom: string): Promise<any> {
   return api.fetchCache({
     method: HttpMethod.GET,
-    uri: `${URL_NOMENCLATURE}/${nom}`,
+    uri: `${URL_NOMENCLATURE}/${nom}`
   });
 }
 
@@ -192,8 +192,8 @@ export function rechercheMultiCriteresRequetes(
     uri: `${URL_REQUETES_RMC}`,
     data: criteres,
     parameters: {
-      range,
-    },
+      range
+    }
   });
 }
 
@@ -205,9 +205,9 @@ export function patchUtilisateurAssigneRequete(
     uri: `${URL_REPONSES}/${queryParameters.idReponse}`,
     parameters: {
       nomOec: queryParameters.nomOec,
-      prenomOec: queryParameters.prenomOec,
+      prenomOec: queryParameters.prenomOec
     },
-    headers: [],
+    headers: []
   });
 }
 
@@ -216,15 +216,15 @@ export function getCompteurRequetes(statuts: string): Promise<any> {
     method: HttpMethod.GET,
     uri: URL_REQUETES_COUNT,
     parameters: {
-      statuts,
-    },
+      statuts
+    }
   });
 }
 
 export async function creationRequeteDelivrance({
   requete,
   futurStatut,
-  refus = false,
+  refus = false
 }: {
   requete: IRequeteDelivrance;
   futurStatut: StatutRequete;
@@ -236,8 +236,8 @@ export async function creationRequeteDelivrance({
     data: requete,
     parameters: {
       refus,
-      futurStatut: StatutRequete.getKey(futurStatut),
-    },
+      futurStatut: StatutRequete.getKey(futurStatut)
+    }
   });
 }
 
@@ -245,7 +245,7 @@ export async function updateRequeteDelivrance({
   idRequete,
   requete,
   futurStatut,
-  refus = false,
+  refus = false
 }: {
   idRequete: string;
   requete: IRequeteDelivrance;
@@ -258,8 +258,8 @@ export async function updateRequeteDelivrance({
     data: requete,
     parameters: {
       refus,
-      futurStatut: StatutRequete.getKey(futurStatut),
-    },
+      futurStatut: StatutRequete.getKey(futurStatut)
+    }
   });
 }
 
@@ -270,7 +270,7 @@ export async function updateChoixDelivrance(
   return api.fetch({
     method: HttpMethod.PATCH,
     uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_CHOIX_DELIVRANCE}`,
-    parameters: { choixDelivrance },
+    parameters: { choixDelivrance }
   });
 }
 
@@ -282,9 +282,9 @@ export async function patchSauvegarderDocument(
     method: HttpMethod.PATCH,
     uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_COURRIER}`,
     parameters: {
-      idRequete,
+      idRequete
     },
-    data: requete,
+    data: requete
   });
 }
 export async function postSauvCourrierCreerActionMajStatutRequete(
@@ -299,9 +299,9 @@ export async function postSauvCourrierCreerActionMajStatutRequete(
     parameters: {
       idRequete,
       libelleAction,
-      statutRequete: StatutRequete.getKey(statutRequete),
+      statutRequete: StatutRequete.getKey(statutRequete)
     },
-    data: requete,
+    data: requete
   });
 }
 
@@ -316,9 +316,9 @@ export async function postSauvDocumentCreerActionMajStatutRequete(
     uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_DOCUMENT}`,
     parameters: {
       libelleAction,
-      statutRequete: StatutRequete.getKey(statutRequete),
+      statutRequete: StatutRequete.getKey(statutRequete)
     },
-    data: document,
+    data: document
   });
 }
 
@@ -329,7 +329,7 @@ export async function postSauvegarderDocument(
   return api.fetch({
     method: HttpMethod.PATCH,
     uri: `${URL_DOCUMENT_REPONSE}/update/${idRequete}`,
-    data: documents,
+    data: documents
   });
 }
 
@@ -552,8 +552,8 @@ export function getNbReqInfo(listeStatuts: string): Promise<any> {
     method: HttpMethod.GET,
     uri: URL_NB_REQ_INFO,
     parameters: {
-      statuts: listeStatuts,
-    },
+      statuts: listeStatuts
+    }
   });
 }
 
@@ -568,8 +568,8 @@ export function postObservation(
     parameters: {
       idRequete,
       texteObservation,
-      idObservation,
-    },
+      idObservation
+    }
   });
 }
 
@@ -578,8 +578,8 @@ export function deleteObservation(idObservation: string): Promise<any> {
     method: HttpMethod.DELETE,
     uri: URL_OBSERVATION,
     parameters: {
-      idObservation,
-    },
+      idObservation
+    }
   });
 }
 
@@ -590,7 +590,7 @@ export function updateDocumentMention(
   return api.fetch({
     method: HttpMethod.PATCH,
     uri: `${URL_DOCUMENT_REPONSE}/${id}${URL_MENTION}`,
-    data: mentionsRetirees ? mentionsRetirees : [],
+    data: mentionsRetirees ? mentionsRetirees : []
   });
 }
 

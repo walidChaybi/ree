@@ -1,28 +1,28 @@
 /* istanbul ignore file */
 
-import { Droit } from "../../model/agent/enum/Droit";
-import { Perimetre } from "../../model/agent/enum/Perimetre";
-import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../common/util/featureFlag/gestionnaireFeatureFlag";
-import { droitsSaufConsulterArchives } from "../common/util/habilitation/habilitationsDescription";
-import { IRoute } from "../common/util/route/IRoute";
-import { getLibelle } from "../common/util/Utils";
-import { PageMessage } from "../core/login/PageMessage";
-import { AccueilPage } from "../pages/accueil/AccueilPage";
-import { RMCArchivePage } from "../pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
-import { RMCActeInscriptionPage } from "../pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
-import { RMCRequetePage } from "../pages/rechercheMultiCriteres/requete/RMCRequetePage";
-import ApercuReqCreationPage from "../pages/requeteCreation/EspaceCreation/apercuReqCreation/ApercuReqCreationPage";
-import EspaceCreationPage from "../pages/requeteCreation/EspaceCreation/EspaceCreationPage";
-import { ApercuRequetePage } from "../pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
-import { ApercuRequetePriseEnChargePage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
-import { ApercuRequeteTraitementPage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
-import { EditionExtraitCopiePage } from "../pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
-import EspaceDelivrancePage from "../pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
-import { SaisirRDCPage } from "../pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
-import { SaisirRDCSCPage } from "../pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
-import { ApercuReqInfoPage } from "../pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
-import EspaceInformationPage from "../pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
+import { PageMessage } from "@core/login/PageMessage";
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
+import { AccueilPage } from "@pages/accueil/AccueilPage";
+import { RMCArchivePage } from "@pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
+import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
+import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
+import ApercuReqCreationPage from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/ApercuReqCreationPage";
+import EspaceCreationPage from "@pages/requeteCreation/EspaceCreation/EspaceCreationPage";
+import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
+import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
+import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
+import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
+import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
+import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
+import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
+import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
+import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { droitsSaufConsulterArchives } from "@util/habilitation/habilitationsDescription";
+import { IRoute } from "@util/route/IRoute";
+import { getLibelle } from "@util/Utils";
 import {
   URL_ACCUEIL,
   URL_CONTEXT_APP,

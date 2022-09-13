@@ -1,7 +1,6 @@
-import React from "react";
-
 import { render, waitFor } from "@testing-library/react";
-import { SectionPanel } from "../../../../views/common/widget/section/SectionPanel";
+import { SectionPanel } from "@widget/section/SectionPanel";
+import React from "react";
 
 test("render composant SectionPanel", async () => {
   const { getByTestId, getAllByTestId } = render(

@@ -1,5 +1,5 @@
-import { IFicheRcRca } from "../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import { getDecision } from "../../../../../views/pages/fiche/hook/constructionComposants/rcrca/DecisionUtils";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { getDecision } from "@pages/fiche/hook/constructionComposants/rcrca/DecisionUtils";
 import {
   ficheAutoriteJuridictionFranceAvecConfirmation,
   ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA,
@@ -88,21 +88,24 @@ test("Decision utils get decision : decision de type ONAC, ", async () => {
 
   expect(idxType).toBeLessThan(idxDate);
 
-  const idxDateEtrangere = componentsEtrangere[1].partContent?.contents.findIndex(
-    content => content.libelle === "Date décision étrangère"
-  );
+  const idxDateEtrangere =
+    componentsEtrangere[1].partContent?.contents.findIndex(
+      content => content.libelle === "Date décision étrangère"
+    );
   expect(idxDateEtrangere).toBeGreaterThan(-1);
 
   expect(idxDate).toBeLessThan(idxDateEtrangere);
 
-  const idxEntolementRg = componentsEtrangere[1].partContent?.contents.findIndex(
-    content => content.libelle === "Enrôlement RG"
-  );
+  const idxEntolementRg =
+    componentsEtrangere[1].partContent?.contents.findIndex(
+      content => content.libelle === "Enrôlement RG"
+    );
   expect(idxEntolementRg).toBeGreaterThan(-1);
 
-  const idxEnrolementPortalis = componentsEtrangere[1].partContent?.contents.findIndex(
-    content => content.libelle === "Enrôlement Portalis"
-  );
+  const idxEnrolementPortalis =
+    componentsEtrangere[1].partContent?.contents.findIndex(
+      content => content.libelle === "Enrôlement Portalis"
+    );
   expect(idxEnrolementPortalis).toBeGreaterThan(-1);
 });
 

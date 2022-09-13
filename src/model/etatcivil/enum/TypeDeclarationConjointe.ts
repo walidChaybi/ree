@@ -1,6 +1,6 @@
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
-import { Option } from "../../../views/common/util/Type";
-import { premiereLettreEnMajuscule } from "../../../views/common/util/Utils";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
+import { Option } from "@util/Type";
+import { premiereLettreEnMajuscule } from "@util/Utils";
 
 export class TypeDeclarationConjointe extends EnumWithLibelle {
   public static readonly INDETERMINE = new TypeDeclarationConjointe(

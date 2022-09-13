@@ -1,10 +1,10 @@
-import { render, screen } from "@testing-library/react";
-import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
-import { goToLinkRMC } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauCommun";
+import { goToLinkRMC } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauCommun";
 import {
   determinerCriteresRMCAuto,
   getMessageZeroRequete
-} from "../../../../views/pages/rechercheMultiCriteres/autoRequetes/hook/RMCAutoRequetesUtils";
+} from "@pages/rechercheMultiCriteres/autoRequetes/hook/RMCAutoRequetesUtils";
+import { render, screen } from "@testing-library/react";
+import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
 
 test("determinerCriteresRMCAuto", () => {
   const res = determinerCriteresRMCAuto(requeteDelivrance);

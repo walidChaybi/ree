@@ -1,17 +1,17 @@
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import {
   createEvent,
   fireEvent,
   render,
   waitFor
 } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
+import { PopinSignature } from "@widget/signature/PopinSignature";
 import React from "react";
 import request from "superagent";
 import { configParamsBaseRequete } from "../../../../mock/superagent-config/superagent-mock-params";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
-import { storeRece } from "../../../../views/common/util/storeRece";
-import { PopinSignature } from "../../../../views/common/widget/signature/PopinSignature";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],

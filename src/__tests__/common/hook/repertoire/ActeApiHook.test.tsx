@@ -1,9 +1,9 @@
+import { useInformationsActeApiHook } from "@hook/acte/ActeApiHook";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { useInformationsActeApiHook } from "../../../../views/common/hook/acte/ActeApiHook";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

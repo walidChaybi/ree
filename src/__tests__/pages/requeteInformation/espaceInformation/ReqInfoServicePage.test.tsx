@@ -1,19 +1,19 @@
+import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
+import { StatutsRequetesInformation } from "@pages/requeteInformation/espaceInformation/EspaceReqInfoParams";
+import { ReqInfoServicePage } from "@pages/requeteInformation/espaceInformation/ReqInfoServicePage";
+import {
+  URL_REQUETES_INFORMATION_SERVICE,
+  URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID
+} from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/routeUtil";
+import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { Router } from "react-router-dom";
 import request from "superagent";
-import { IQueryParametersPourRequetes } from "../../../../api/appels/requeteApi";
 import { configRequetesInformation } from "../../../../mock/superagent-config/superagent-mock-requetes-information";
-import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
-import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { StatutsRequetesInformation } from "../../../../views/pages/requeteInformation/espaceInformation/EspaceReqInfoParams";
-import { ReqInfoServicePage } from "../../../../views/pages/requeteInformation/espaceInformation/ReqInfoServicePage";
-import {
-  URL_REQUETES_INFORMATION_SERVICE,
-  URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID
-} from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(
   request,

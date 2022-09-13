@@ -1,4 +1,4 @@
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 
 export class TypeVisibiliteArchiviste extends EnumWithLibelle {
   public static readonly NON = new TypeVisibiliteArchiviste("NON");

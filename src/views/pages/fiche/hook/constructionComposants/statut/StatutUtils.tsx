@@ -1,7 +1,7 @@
+import { IStatutFiche } from "@model/etatcivil/fiche/IStatutFiche";
+import { SectionContentProps } from "@widget/section/SectionContent";
+import { SectionPartProps } from "@widget/section/SectionPart";
 import React from "react";
-import { IStatutFiche } from "../../../../../../model/etatcivil/fiche/IStatutFiche";
-import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 import { TableauStatut } from "./TableauStatut";
 
 export function getStatuts(statutsFiche: IStatutFiche[]): SectionPartProps[] {

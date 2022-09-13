@@ -1,10 +1,10 @@
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { IParamsTableau } from "@util/GestionDesLiensApi";
+import { getLibelle } from "@util/Utils";
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
-import { getLibelle } from "../../../../common/util/Utils";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
 import { ApercuRequetePriseEnChargePartieDroite } from "./contenu/ApercuRequetePriseEnChargePartieDroite";
 

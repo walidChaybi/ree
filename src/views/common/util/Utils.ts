@@ -1,5 +1,5 @@
-import { IPrenom } from "../../../model/etatcivil/fiche/IPrenom";
-import { IPrenomOrdonnes } from "../../../model/requete/IPrenomOrdonnes";
+import { IPrenom } from "@model/etatcivil/fiche/IPrenom";
+import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 
 export const SPC = "SPC";
 export const SANS_PRENOM_CONNU = "Sans prénom connu";

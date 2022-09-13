@@ -1,7 +1,7 @@
-import { IQueryParametersPourRequetes } from "../../../../api/appels/requeteApi";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { indexParamsReq } from "../../../common/util/RequetesUtils";
-import { SortOrder } from "../../../common/widget/tableau/TableUtils";
+import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { indexParamsReq } from "@util/RequetesUtils";
+import { SortOrder } from "@widget/tableau/TableUtils";
 
 export function goToLinkRequete(
   link: string,

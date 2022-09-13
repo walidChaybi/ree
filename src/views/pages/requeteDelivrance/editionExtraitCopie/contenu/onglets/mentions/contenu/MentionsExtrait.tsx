@@ -1,15 +1,12 @@
+import { IMention } from "@model/etatcivil/acte/mention/IMention";
+import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { Generateur } from "@util/generateur/Generateur";
+import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { SelectRece } from "@widget/formulaire/champsSaisie/SelectField";
+import { ListeGlisserDeposer } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useCallback } from "react";
-import { IMention } from "../../../../../../../../model/etatcivil/acte/mention/IMention";
-import { TypeMention } from "../../../../../../../../model/etatcivil/acte/mention/ITypeMention";
-import { NatureActe } from "../../../../../../../../model/etatcivil/enum/NatureActe";
-import { NatureMention } from "../../../../../../../../model/etatcivil/enum/NatureMention";
-import { Generateur } from "../../../../../../../common/util/generateur/Generateur";
-import {
-  getLibelle,
-  getValeurOuVide
-} from "../../../../../../../common/util/Utils";
-import { SelectRece } from "../../../../../../../common/widget/formulaire/champsSaisie/SelectField";
-import { ListeGlisserDeposer } from "../../../../../../../common/widget/listeGlisserDeposer/ListeGlisserDeposer";
 import {
   handleBlur,
   handleCheckBox,

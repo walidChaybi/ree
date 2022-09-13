@@ -1,11 +1,5 @@
-import {
-  getJourOu1er,
-  getMoisEnLettre
-} from "../../../views/common/util/DateUtils";
-import {
-  formatPrenoms,
-  getValeurOuVide
-} from "../../../views/common/util/Utils";
+import { getJourOu1er, getMoisEnLettre } from "@util/DateUtils";
+import { formatPrenoms, getValeurOuVide } from "@util/Utils";
 import { ITitulaireRequeteTableau } from "../../requete/ITitulaireRequeteTableau";
 
 export interface ITitulaireComposition {

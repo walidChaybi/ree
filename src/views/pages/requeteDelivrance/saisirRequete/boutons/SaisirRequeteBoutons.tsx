@@ -1,10 +1,10 @@
+import { Droit } from "@model/agent/enum/Droit";
+import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
+import { getLibelle } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
-import { Droit } from "../../../../../model/agent/enum/Droit";
-import { officierHabiliterPourLeDroit } from "../../../../../model/agent/IOfficier";
-import { getLibelle } from "../../../../common/util/Utils";
-import { Bouton } from "../../../../common/widget/boutonAntiDoubleSubmit/Bouton";
-import { FormikComponentProps } from "../../../../common/widget/formulaire/utils/FormUtil";
 import "./scss/SaisirRequeteBoutons.scss";
 
 export type SaisirRequeteBoutonsProps = {

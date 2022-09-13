@@ -1,30 +1,27 @@
-import React, { useContext, useEffect, useState } from "react";
-import { ConfirmationPopin } from "../..../../../../../common/widget/popin/ConfirmationPopin";
-import {
-  FicheActe,
-  IFicheActe
-} from "../../../../../model/etatcivil/acte/IFicheActe";
+import { RECEContext } from "@core/body/Body";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import {
   ITitulaireActe,
   TitulaireActe
-} from "../../../../../model/etatcivil/acte/ITitulaireActe";
-import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
+} from "@model/etatcivil/acte/ITitulaireActe";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   CODE_COPIE_INTEGRALE,
   CODE_EXTRAIT_AVEC_FILIATION,
   CODE_EXTRAIT_PLURILINGUE,
   CODE_EXTRAIT_SANS_FILIATION
-} from "../../../../../model/requete/enum/DocumentDelivranceConstante";
-import { NatureActeRequete } from "../../../../../model/requete/enum/NatureActeRequete";
+} from "@model/requete/enum/DocumentDelivranceConstante";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import {
   DocumentReponse,
   IDocumentReponse
-} from "../../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import { checkDirty, getLibelle } from "../../../../common/util/Utils";
-import { OngletsDynamique } from "../../../../common/widget/ongletsDynamique/OngletsDynamique";
-import { RECEContext } from "../../../../core/body/Body";
+} from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { checkDirty, getLibelle } from "@util/Utils";
+import { OngletsDynamique } from "@widget/ongletsDynamique/OngletsDynamique";
+import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
+import React, { useContext, useEffect, useState } from "react";
 
 interface OngletsDocumentsProps {
   documents?: IDocumentReponse[];

@@ -1,16 +1,16 @@
-import { FileExtension, MimeType } from "file-type";
-import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
-import { Qualite } from "../../../../../model/requete/enum/Qualite";
-import { TypeInstitutionnel } from "../../../../../model/requete/enum/TypeInstitutionnel";
-import { TypeMandataireReq } from "../../../../../model/requete/enum/TypeMandataireReq";
-import { TypePieceJustificative } from "../../../../../model/requete/enum/TypePieceJustificative";
-import { Requerant } from "../../../../../model/requete/IRequerant";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { Qualite } from "@model/requete/enum/Qualite";
+import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
+import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { Requerant } from "@model/requete/IRequerant";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import {
   ITitulaireRequete,
   TitulaireRequete
-} from "../../../../../model/requete/ITitulaireRequete";
-import { getValeurOuVide } from "../../../../common/util/Utils";
+} from "@model/requete/ITitulaireRequete";
+import { getValeurOuVide } from "@util/Utils";
+import { FileExtension, MimeType } from "file-type";
 import {
   ADRESSE,
   DOCUMENT,
@@ -164,7 +164,10 @@ const saisieRequerant = (requete: IRequeteDelivrance) => {
       if (
         Requerant.estTitulaireX({
           requerant: requete.requerant,
-          titulaire: TitulaireRequete.getTitulaireByPosition({titulaires: requete.titulaires, position: 1})
+          titulaire: TitulaireRequete.getTitulaireByPosition({
+            titulaires: requete.titulaires,
+            position: 1
+          })
         })
       ) {
         return {
@@ -176,7 +179,10 @@ const saisieRequerant = (requete: IRequeteDelivrance) => {
       } else if (
         Requerant.estTitulaireX({
           requerant: requete.requerant,
-          titulaire: TitulaireRequete.getTitulaireByPosition({titulaires: requete.titulaires, position: 2})
+          titulaire: TitulaireRequete.getTitulaireByPosition({
+            titulaires: requete.titulaires,
+            position: 2
+          })
         })
       ) {
         return {

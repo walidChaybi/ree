@@ -1,40 +1,40 @@
+import {
+  INavigationApercuRMCAutoParams,
+  useNavigationApercuRMCAuto
+} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import {
+  CreationActionMiseAjourStatutHookParams,
+  useCreationActionMiseAjourStatut
+} from "@hook/requete/CreationActionMiseAjourStatutHook";
+import {
+  TypePieceJointe,
+  usePostPiecesJointesApi
+} from "@hook/requete/piecesJointes/PostPiecesJointesHook";
+import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
+import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { CODE_ATTESTATION_PACS } from "@model/requete/enum/DocumentDelivranceConstante";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { PieceJointe } from "@util/FileUtils";
+import messageManager from "@util/messageManager";
+import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
+import { getLibelle } from "@util/Utils";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import {
+  AdresseFormDefaultValues,
+  AdresseFormValidationSchema
+} from "@widget/formulaire/adresse/AdresseForm";
+import { Formulaire } from "@widget/formulaire/Formulaire";
+import { DOCUMENT_OBLIGATOIRE } from "@widget/formulaire/FormulaireMessages";
+import { withNamespace } from "@widget/formulaire/utils/FormUtil";
+import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { FormikProps, FormikValues } from "formik";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import { IReponseSansDelivranceCS } from "../../../../model/composition/IReponseSansDelivranceCS";
-import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "../../../../model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
-import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
-import { CODE_ATTESTATION_PACS } from "../../../../model/requete/enum/DocumentDelivranceConstante";
-import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
-import {
-  INavigationApercuRMCAutoParams,
-  useNavigationApercuRMCAuto
-} from "../../../common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
-import {
-  CreationActionMiseAjourStatutHookParams,
-  useCreationActionMiseAjourStatut
-} from "../../../common/hook/requete/CreationActionMiseAjourStatutHook";
-import {
-  TypePieceJointe,
-  usePostPiecesJointesApi
-} from "../../../common/hook/requete/piecesJointes/PostPiecesJointesHook";
-import { PieceJointe } from "../../../common/util/FileUtils";
-import messageManager from "../../../common/util/messageManager";
-import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
-import { getLibelle } from "../../../common/util/Utils";
-import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
-import {
-  AdresseFormDefaultValues,
-  AdresseFormValidationSchema
-} from "../../../common/widget/formulaire/adresse/AdresseForm";
-import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
-import { DOCUMENT_OBLIGATOIRE } from "../../../common/widget/formulaire/FormulaireMessages";
-import { withNamespace } from "../../../common/widget/formulaire/utils/FormUtil";
-import { ConfirmationPopin } from "../../../common/widget/popin/ConfirmationPopin";
 import { useReponseSansDelivranceCS } from "../../requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/hook/ChoixReponseSansDelivranceCSHook";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";

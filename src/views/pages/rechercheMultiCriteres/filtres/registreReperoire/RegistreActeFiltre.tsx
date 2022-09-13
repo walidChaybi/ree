@@ -1,35 +1,35 @@
-import { connect } from "formik";
-import React, { useCallback } from "react";
-import * as Yup from "yup";
-import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
-import { TypeFamille } from "../../../../../model/etatcivil/enum/TypeFamille";
-import { Option, Options } from "../../../../common/util/Type";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
+import { Option, Options } from "@util/Type";
 import {
   enMajuscule,
   getLibelle,
   premiereLettreEnMajusculeLeResteEnMinuscule
-} from "../../../../common/util/Utils";
-import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
+} from "@util/Utils";
+import { Fieldset } from "@widget/fieldset/Fieldset";
 import {
   ChampRechercheField,
   ChampRechercheFieldProps
-} from "../../../../common/widget/formulaire/champRecherche/ChampRechercheField";
-import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
-import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
+} from "@widget/formulaire/champRecherche/ChampRechercheField";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import {
   MAX_ANNEE_MESSAGE,
   MIN_LENGTH_ANNEE_MESSAGE
-} from "../../../../common/widget/formulaire/FormulaireMessages";
+} from "@widget/formulaire/FormulaireMessages";
 import {
   digitSeulement,
   traiteCarAutorises,
   traiteEspace
-} from "../../../../common/widget/formulaire/utils/ControlesUtil";
+} from "@widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
   withNamespace
-} from "../../../../common/widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useCallback } from "react";
+import * as Yup from "yup";
 import { useRecherchePocopa } from "./hook/RecherchePocopaApiHook";
 
 // Noms des champs
@@ -79,8 +79,9 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
     React.useState<string>("");
 
   // State: dernier pocopas sélectionné
-  const [lastPocopaSelected, setLastPocopaSelected] =
-    React.useState<string | undefined>(undefined);
+  const [lastPocopaSelected, setLastPocopaSelected] = React.useState<
+    string | undefined
+  >(undefined);
 
   const familleRegistre = props.formik.getFieldProps(
     familleRegistreWithNamespace

@@ -1,7 +1,7 @@
+import { getLibelle } from "@util/Utils";
+import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
-import { getLibelle } from "../../../common/util/Utils";
-import { FormikComponentProps } from "../../../common/widget/formulaire/utils/FormUtil";
 import "./scss/RMCBoutons.scss";
 
 export interface IRMCBoutonRappelCriteresPropsProps {
@@ -11,7 +11,9 @@ export interface IRMCBoutonRappelCriteresPropsProps {
 export type RMCBoutonRappelCriteresProps = IRMCBoutonRappelCriteresPropsProps &
   FormikComponentProps;
 
-const RMCBoutonRappelCriteres: React.FC<RMCBoutonRappelCriteresProps> = props => {
+const RMCBoutonRappelCriteres: React.FC<
+  RMCBoutonRappelCriteresProps
+> = props => {
   const values = props.rappelCriteres();
   return (
     <>

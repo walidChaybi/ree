@@ -1,8 +1,5 @@
-import { estDateAtteinte } from "../../../views/common/util/DateUtils";
-import {
-  triListeObjetsSurDate,
-  triListeObjetsSurPropriete
-} from "../../../views/common/util/Utils";
+import { estDateAtteinte } from "@util/DateUtils";
+import { triListeObjetsSurDate, triListeObjetsSurPropriete } from "@util/Utils";
 import { ITitulaireActe } from "./ITitulaireActe";
 
 export interface IAnalyseMarginale {

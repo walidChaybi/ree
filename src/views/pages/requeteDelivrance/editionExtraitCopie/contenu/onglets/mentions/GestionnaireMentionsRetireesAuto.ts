@@ -1,8 +1,5 @@
-import {
-  IMention,
-  Mention
-} from "../../../../../../../model/etatcivil/acte/mention/IMention";
-import { NatureActe } from "../../../../../../../model/etatcivil/enum/NatureActe";
+import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import {
   ANNULATION_EVENEMENT,
   ANNULATION_MARIAGE,
@@ -23,9 +20,9 @@ import {
   PACS,
   REPRISE_VIE_COMMUNE,
   SEPARATION_CORPS
-} from "../../../../../../../model/etatcivil/enum/NatureMention";
-import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
-import { DEUX } from "../../../../../../common/util/Utils";
+} from "@model/etatcivil/enum/NatureMention";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DEUX } from "@util/Utils";
 
 export type IMentionAvecRetiree = IMention & { retiree?: boolean };
 

@@ -1,9 +1,9 @@
+import { compositionApi } from "@api/appels/compositionApi";
+import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
+import { ICourrierComposition } from "@model/composition/ICourrierComposition";
+import { logError } from "@util/LogManager";
+import { getLibelle } from "@util/Utils";
 import { useEffect, useState } from "react";
-import { compositionApi } from "../../../../api/appels/compositionApi";
-import { IDonneesComposition } from "../../../../model/composition/commun/retourApiComposition/IDonneesComposition";
-import { ICourrierComposition } from "../../../../model/composition/ICourrierComposition";
-import { logError } from "../../util/LogManager";
-import { getLibelle } from "../../util/Utils";
 
 export interface ICourrierParams {
   codeCourrier?: string;

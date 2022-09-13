@@ -1,9 +1,9 @@
+import { NatureRca } from "@model/etatcivil/enum/NatureRca";
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { IDataFicheProps } from "@pages/fiche/FichePage";
+import { getFicheTitle, setFiche } from "@pages/fiche/FicheUtils";
 import { pacsModificationNotaireMap } from "../../../mock/data/PACS";
-import { NatureRca } from "../../../model/etatcivil/enum/NatureRca";
-import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
-import { IFicheRcRca } from "../../../model/etatcivil/rcrca/IFicheRcRca";
-import { IDataFicheProps } from "../../../views/pages/fiche/FichePage";
-import { getFicheTitle, setFiche } from "../../../views/pages/fiche/FicheUtils";
 
 test("ficheUtils getFicheTitle works", async () => {
   const title = getFicheTitle(

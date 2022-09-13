@@ -1,3 +1,6 @@
+import { VoletPieceJustificativesEtActions } from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/components/VoletPieceJusticativesEtActions";
+import { mappingRequeteCreation } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
+import { URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -5,6 +8,8 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/routeUtil";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
@@ -20,11 +25,6 @@ import {
   requeteCreationAvecMessagesRetourSDANFSansLesDroits
 } from "../../../../mock/data/requeteCreation";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
-import { storeRece } from "../../../../views/common/util/storeRece";
-import { VoletPieceJustificativesEtActions } from "../../../../views/pages/requeteCreation/EspaceCreation/apercuReqCreation/components/VoletPieceJusticativesEtActions";
-import { mappingRequeteCreation } from "../../../../views/pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
-import { URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID } from "../../../../views/router/ReceUrls";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 beforeAll(() => {

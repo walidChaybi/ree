@@ -1,16 +1,16 @@
-import { QualiteFamille } from "../../../../../model/requete/enum/QualiteFamille";
-import { Residence } from "../../../../../model/requete/enum/Residence";
-import { SituationFamiliale } from "../../../../../model/requete/enum/SituationFamiliale";
-import { TypeEvenementUnion } from "../../../../../model/requete/enum/TypeEvenementUnion";
-import { TypeObjetTitulaire } from "../../../../../model/requete/enum/TypeObjetTitulaire";
-import { IEvenementUnion } from "../../../../../model/requete/IEvenementUnion";
-import { IPrenomOrdonnes } from "../../../../../model/requete/IPrenomOrdonnes";
-import { IRequeteCreation } from "../../../../../model/requete/IRequeteCreation";
-import { ITitulaireRequete } from "../../../../../model/requete/ITitulaireRequete";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
+import { Residence } from "@model/requete/enum/Residence";
+import { SituationFamiliale } from "@model/requete/enum/SituationFamiliale";
+import { TypeEvenementUnion } from "@model/requete/enum/TypeEvenementUnion";
+import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
+import { IEvenementUnion } from "@model/requete/IEvenementUnion";
+import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
+import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import {
   getDateStringFromDateCompose,
   getFormatDateFromTimestamp
-} from "../../../../common/util/DateUtils";
+} from "@util/DateUtils";
 import { ItemEffetCollectifProps } from "./components/Item/ItemEffetCollectif";
 import {
   ItemEnfantMajeurProps,
@@ -26,7 +26,6 @@ import { DateCoordonneesType } from "./components/Types";
 const mappingIRequeteCreationVersResumeRequeteCreationProps = (
   requeteCreation: IRequeteCreation
 ): ResumeRequeteCreationProps => {
-
   const requete: ItemRequeteProps = {
     numeros: {
       rece: requeteCreation.numero,

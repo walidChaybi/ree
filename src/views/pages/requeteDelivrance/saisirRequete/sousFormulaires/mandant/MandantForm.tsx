@@ -1,20 +1,20 @@
-import { connect } from "formik";
-import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
-import { TypeMandant } from "../../../../../../model/requete/enum/TypeMandant";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
-import { RadioField } from "../../../../../common/widget/formulaire/champsSaisie/RadioField";
-import { SousFormulaire } from "../../../../../common/widget/formulaire/SousFormulaire";
+import { TypeMandant } from "@model/requete/enum/TypeMandant";
+import { getLibelle } from "@util/Utils";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
+import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import {
   sortieChampEnMajuscule,
   sortieChampPremiereLettreEnMajuscule
-} from "../../../../../common/widget/formulaire/utils/ControlesUtil";
+} from "@widget/formulaire/utils/ControlesUtil";
 import {
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
   withNamespace
-} from "../../../../../common/widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useEffect, useState } from "react";
+import * as Yup from "yup";
 import {
   NOM,
   PRENOM,
@@ -44,9 +44,8 @@ const MandantForm: React.FC<SubFormProps> = props => {
   const raisonSocialeWithNamespace = withNamespace(props.nom, RAISON_SOCIALE);
   const nomWithNamespace = withNamespace(props.nom, NOM);
   const prenomWithNamespace = withNamespace(props.nom, PRENOM);
-  const [raisonSocialeVisible, setRaisonSocialeVisible] = useState<boolean>(
-    false
-  );
+  const [raisonSocialeVisible, setRaisonSocialeVisible] =
+    useState<boolean>(false);
 
   const onChangeRequerant = (e: React.ChangeEvent<HTMLInputElement>) => {
     props.formik.setFieldValue(typeMandantWithNamespace, e.target.value);

@@ -1,15 +1,15 @@
 import {
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID
+} from "@router/ReceUrls";
+import {
   cleanUrl,
   getLastPathElem,
   getUrlWithoutIdParam,
   getUrlWithParam,
   isLastPathElemIsId,
   isPathElemId
-} from "../../../../views/common/util/route/routeUtil";
-import {
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID
-} from "../../../../views/router/ReceUrls";
+} from "@util/route/routeUtil";
 
 test("Attendu: getUrlWithParam fonctionne correctement", () => {
   expect(

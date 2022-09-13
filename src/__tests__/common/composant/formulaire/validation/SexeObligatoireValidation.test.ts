@@ -1,5 +1,5 @@
-import { sexeObligatoireValidation } from "./../../../../../views/common/composant/formulaire/validation/SexeObligatoireValidation";
-import { IParentNaissanceForm } from "./../../../../../views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/mapping/mappingActeVerFormulaireSaisirExtrait";
+import { sexeObligatoireValidation } from "@composant/formulaire/validation/SexeObligatoireValidation";
+import { IParentNaissanceForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/mapping/mappingActeVerFormulaireSaisirExtrait";
 test("Attendu: sexeObligatoireValidation fonctionne correctement", () => {
   const createError = jest.fn(() => "erreur");
   const mockContext = {

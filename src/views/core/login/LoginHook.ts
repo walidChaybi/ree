@@ -1,10 +1,10 @@
+import { getLogin } from "@api/appels/agentApi";
+import { IOfficier } from "@model/agent/IOfficier";
+import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
+import { formatNom, formatPrenom } from "@util/Utils";
 import { useEffect, useState } from "react";
-import { getLogin } from "../../../api/appels/agentApi";
-import { IOfficier } from "../../../model/agent/IOfficier";
-import { mapHabilitationsUtilisateur } from "../../../model/agent/IUtilisateur";
-import { gestionnaireFeatureFlag } from "../../common/util/featureFlag/gestionnaireFeatureFlag";
-import { gestionnaireDoubleOuverture } from "../../common/util/GestionnaireDoubleOuverture";
-import { formatNom, formatPrenom } from "../../common/util/Utils";
 
 export interface ILoginApi {
   officierDataState?: IOfficier;

@@ -1,23 +1,23 @@
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { ValidationSchemaChoixCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/ChoixCourrierForm";
+import TexteLibreForm from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/TexteLibreForm";
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  TEXTE,
+  TEXTE_LIBRE
+} from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
+import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import React from "react";
 import request from "superagent";
 import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
-import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { ValidationSchemaChoixCourrier } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/ChoixCourrierForm";
-import TexteLibreForm from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/TexteLibreForm";
-import {
-    TEXTE,
-    TEXTE_LIBRE
-} from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

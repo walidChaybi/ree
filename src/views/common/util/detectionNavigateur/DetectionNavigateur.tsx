@@ -1,5 +1,5 @@
+import { getLibelle } from "@util/Utils";
 import * as React from "react";
-import { getLibelle } from "../../util/Utils";
 
 export const FIREFOX = "Mozilla Firefox";
 export const CHROME = "Google Chrome ou Chromium";

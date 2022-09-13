@@ -1,5 +1,5 @@
-import { peupleParametresBaseRequete } from "../../../api/nomenclature/NomenclatureParametresBaseRequete";
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import { peupleParametresBaseRequete } from "@api/nomenclature/NomenclatureParametresBaseRequete";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 
 export class ParametreBaseRequete extends EnumWithLibelle {
   public static async init() {

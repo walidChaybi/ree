@@ -1,23 +1,23 @@
 import {
   CertificatRCAComposition,
   NOM_DOCUMENT_CERTIFICAT_RCA
-} from "../../../../../../model/composition/ICertificatRCAComposition";
+} from "@model/composition/ICertificatRCAComposition";
 import {
   CertificatRCComposition,
   NOM_DOCUMENT_CERTIFICAT_RC
-} from "../../../../../../model/composition/ICertificatRCComposition";
+} from "@model/composition/ICertificatRCComposition";
 import {
   CertificatPACSComposition,
   NOM_DOCUMENT_ATTESTATION_PACS
-} from "../../../../../../model/composition/pacs/ICertificatPACSComposition";
-import { TypeCertificatComposition } from "../../../../../../model/composition/type/TypeCertificatCompoistion";
-import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
-import { TypePacsRcRca } from "../../../../../../model/etatcivil/enum/TypePacsRcRca";
-import { IFichePacs } from "../../../../../../model/etatcivil/pacs/IFichePacs";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
-import { IRequeteTableauDelivrance } from "../../../../../../model/requete/IRequeteTableauDelivrance";
-import { ITitulaireRequeteTableau } from "../../../../../../model/requete/ITitulaireRequeteTableau";
+} from "@model/composition/pacs/ICertificatPACSComposition";
+import { TypeCertificatComposition } from "@model/composition/type/TypeCertificatCompoistion";
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
+import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { specificationPACS } from "../specificationInscriptions/specificationPACS";
 import { specificationRC } from "../specificationInscriptions/specificationRC";
 import { specificationRCA } from "../specificationInscriptions/specificationRCA";

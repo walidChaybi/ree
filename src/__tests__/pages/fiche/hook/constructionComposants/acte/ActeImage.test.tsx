@@ -1,9 +1,8 @@
-import { fireEvent } from "@testing-library/react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { ActeImage } from "@pages/fiche/hook/constructionComposants/acte/ActeImage";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { ActeImage } from "../../../../../../views/pages/fiche/hook/constructionComposants/acte/ActeImage";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

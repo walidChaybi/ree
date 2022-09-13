@@ -1,16 +1,13 @@
-import { render, screen } from "@testing-library/react";
-import { createMemoryHistory } from "history";
-import React from "react";
-import { Router } from "react-router-dom";
-import {
-  BoutonRetour,
-  getLibelleEtUrl
-} from "../../../../views/common/widget/navigation/BoutonRetour";
 import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_RECHERCHE_REQUETE,
   URL_REQUETES_DELIVRANCE_SERVICE
-} from "../../../../views/router/ReceUrls";
+} from "@router/ReceUrls";
+import { render, screen } from "@testing-library/react";
+import { BoutonRetour, getLibelleEtUrl } from "@widget/navigation/BoutonRetour";
+import { createMemoryHistory } from "history";
+import React from "react";
+import { Router } from "react-router-dom";
 
 let history: any;
 beforeEach(() => {

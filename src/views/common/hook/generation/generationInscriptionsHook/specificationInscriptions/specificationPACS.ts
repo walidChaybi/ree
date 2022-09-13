@@ -1,8 +1,5 @@
-import {
-  Decret,
-  IDecret
-} from "../../../../../../model/etatcivil/commun/IDecret";
-import { storeRece } from "../../../../util/storeRece";
+import { Decret, IDecret } from "@model/etatcivil/commun/IDecret";
+import { storeRece } from "@util/storeRece";
 
 export interface IElementsJasperCertificatPACS {
   decrets: IDecret[];

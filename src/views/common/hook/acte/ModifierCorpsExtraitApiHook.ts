@@ -1,7 +1,7 @@
+import { postCorpsTexte } from "@api/appels/etatcivilApi";
+import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { postCorpsTexte } from "../../../../api/appels/etatcivilApi";
-import { TypeExtrait } from "../../../../model/etatcivil/enum/TypeExtrait";
-import { logError } from "../../util/LogManager";
 
 export interface IModifierCorpsExtraitParams {
   idActe: string;

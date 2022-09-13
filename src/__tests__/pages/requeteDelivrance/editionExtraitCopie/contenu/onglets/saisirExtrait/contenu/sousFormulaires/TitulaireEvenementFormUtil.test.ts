@@ -1,5 +1,5 @@
-import { NatureActe } from "../../../../../../../../../model/etatcivil/enum/NatureActe";
-import { getLabels } from "../../../../../../../../../views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/contenu/sousFormulaires/TitulaireEvenementFormUtil";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { getLabels } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/contenu/sousFormulaires/TitulaireEvenementFormUtil";
 
 test("Attendu: getLabels fonctionne correctement", () => {
   expect(getLabels(NatureActe.NAISSANCE)).toEqual({

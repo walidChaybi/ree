@@ -1,34 +1,31 @@
-import { History } from "history";
-import React from "react";
-import { ITitulaireActe } from "../../../../../../../model/etatcivil/acte/ITitulaireActe";
-import { LienParente } from "../../../../../../../model/etatcivil/enum/LienParente";
-import { Sexe } from "../../../../../../../model/etatcivil/enum/Sexe";
-import { TypeActe } from "../../../../../../../model/etatcivil/enum/TypeActe";
-import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
+import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { LienParente } from "@model/etatcivil/enum/LienParente";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { TypeActe } from "@model/etatcivil/enum/TypeActe";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   DELIVRANCE_ACTE,
   DELIVRANCE_ACTE_NON_ANTHENTIQUE
-} from "../../../../../../../model/requete/enum/DocumentDelivranceConstante";
-import { MotifDelivrance } from "../../../../../../../model/requete/enum/MotifDelivrance";
-import { NatureActeRequete } from "../../../../../../../model/requete/enum/NatureActeRequete";
-import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
-import { IActionOption } from "../../../../../../../model/requete/IActionOption";
+} from "@model/requete/enum/DocumentDelivranceConstante";
+import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { IActionOption } from "@model/requete/IActionOption";
 import {
   OptionCourrier,
   OptionsCourrier
-} from "../../../../../../../model/requete/IOptionCourrier";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
-import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { DoubleSubmitUtil } from "../../../../../../common/util/DoubleSubmitUtil";
-import { getUrlPrecedente } from "../../../../../../common/util/route/routeUtil";
-import {
-  getLibelle,
-  getValeurOuVide
-} from "../../../../../../common/util/Utils";
-import { IBoutonPopin } from "../../../../../../common/widget/popin/ConfirmationPopin";
-import { PATH_EDITION, receUrl } from "../../../../../../router/ReceUrls";
+} from "@model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { PATH_EDITION, receUrl } from "@router/ReceUrls";
+import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
+import { getUrlPrecedente } from "@util/route/routeUtil";
+import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { IBoutonPopin } from "@widget/popin/ConfirmationPopin";
+import { History } from "history";
+import React from "react";
 import { DocumentEC } from "../../../../editionExtraitCopie/enum/DocumentEC";
 import { SaisieCourrier } from "../../../apercuCourrier/contenu/modelForm/ISaisiePageModel";
 

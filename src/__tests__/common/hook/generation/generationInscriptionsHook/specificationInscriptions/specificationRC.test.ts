@@ -1,3 +1,7 @@
+import { specificationRC } from "@hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRC";
+import { NatureRc } from "@model/etatcivil/enum/NatureRc";
+import { TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
+import { storeRece } from "@util/storeRece";
 import request from "superagent";
 import {
   FicheRcDecisionNotaire,
@@ -8,10 +12,6 @@ import {
 } from "../../../../../../mock/data/ficheRC";
 import { decrets } from "../../../../../../mock/data/NomenclatureEtatCivilDecrets";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { NatureRc } from "../../../../../../model/etatcivil/enum/NatureRc";
-import { TypeInscriptionRc } from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
-import { specificationRC } from "../../../../../../views/common/hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRC";
-import { storeRece } from "../../../../../../views/common/util/storeRece";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

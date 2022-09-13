@@ -1,4 +1,10 @@
+import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { FichePage } from "@pages/fiche/FichePage";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { storeRece } from "@util/storeRece";
 import React from "react";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
@@ -6,12 +12,6 @@ import { userDroitConsulterPerimetreTUNIS } from "../../../mock/data/connectedUs
 import { idFicheActe1 } from "../../../mock/data/ficheActe";
 import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-import { TypeAlerte } from "../../../model/etatcivil/enum/TypeAlerte";
-import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
-import { FeatureFlag } from "../../../views/common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
-import { storeRece } from "../../../views/common/util/storeRece";
-import { FichePage } from "../../../views/pages/fiche/FichePage";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],

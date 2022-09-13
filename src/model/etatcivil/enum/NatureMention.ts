@@ -1,8 +1,8 @@
 /* istanbul ignore file */
-import { peupleNatureMention } from "../../../api/nomenclature/NomenclatureEtatcivil";
-import { EnumNomemclature } from "../../../views/common/util/enum/EnumNomenclature";
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
-import { Options } from "../../../views/common/util/Type";
+import { peupleNatureMention } from "@api/nomenclature/NomenclatureEtatcivil";
+import { EnumNomemclature } from "@util/enum/EnumNomenclature";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
+import { Options } from "@util/Type";
 import { DocumentDelivrance } from "../../requete/enum/DocumentDelivrance";
 import {
   CODE_EXTRAIT_AVEC_FILIATION,

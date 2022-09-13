@@ -1,14 +1,14 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import React from "react";
-import request from "superagent";
-import { HTTP_NOT_FOUND } from "../../../../../api/ApiManager";
-import { ReponseAppelMesRequetes } from "../../../../../mock/data/EspaceDelivrance";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
+import { HTTP_NOT_FOUND } from "@api/ApiManager";
 import {
   gereErreur,
   useGetRequeteAleatoire
-} from "../../../../../views/common/hook/requete/PrendreEnChargeAleatoirementApiHook";
+} from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { render, screen, waitFor } from "@testing-library/react";
+import React from "react";
+import request from "superagent";
+import { ReponseAppelMesRequetes } from "../../../../../mock/data/EspaceDelivrance";
+import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const HookConsumerUseGetRequeteDelivranceAleatoire: React.FC = () => {

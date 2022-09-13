@@ -2,8 +2,8 @@ import {
   getUrlParamId,
   getUrlPrecedente,
   URL_SEPARATEUR
-} from "../common/util/route/routeUtil";
-import { gestionnaireNavigation } from "../common/widget/filAriane/FilAriane";
+} from "@util/route/routeUtil";
+import { gestionnaireNavigation } from "@widget/filAriane/FilAriane";
 
 export interface IUrlData {
   url: string;

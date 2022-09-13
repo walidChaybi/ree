@@ -1,8 +1,8 @@
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { IUrlData, receUrl } from "@router/ReceUrls";
+import { tousNonNullsNonZeroEtNonVides } from "@util/Utils";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
-import { IUrlData, receUrl } from "../../../router/ReceUrls";
-import { tousNonNullsNonZeroEtNonVides } from "../../util/Utils";
 import {
   INavigationApercuDelivrance,
   useNavigationApercuDelivrance

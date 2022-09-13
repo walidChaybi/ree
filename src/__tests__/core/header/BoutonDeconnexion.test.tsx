@@ -1,3 +1,6 @@
+import { OfficierContext } from "@core/contexts/OfficierContext";
+import { BoutonDeconnexion } from "@core/header/BoutonDeconnexion";
+import { URL_DECONNEXION, URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -11,12 +14,6 @@ import { Router } from "react-router-dom";
 import request from "superagent";
 import officier from "../../../mock/data/connectedUser.json";
 import { configFakeUrl } from "../../../mock/superagent-config/superagent-mock-fake-url";
-import { OfficierContext } from "../../../views/core/contexts/OfficierContext";
-import { BoutonDeconnexion } from "../../../views/core/header/BoutonDeconnexion";
-import {
-  URL_DECONNEXION,
-  URL_MES_REQUETES_DELIVRANCE
-} from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configFakeUrl);
 
@@ -122,7 +119,6 @@ test("renders click BoutonDeconnexion (nbRequetes = 1) produit une popin de conf
     expect(history.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
   });
 });
-
 
 afterAll(() => {
   superagentMock.unset();

@@ -1,9 +1,9 @@
+import { TypePieceJointe } from "@hook/requete/piecesJointes/communPieceJointe";
+import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointeHook";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
+import { getValeurOuVide } from "@util/Utils";
 import React, { useEffect, useState } from "react";
-import { TypePieceJointe } from "../../hook/requete/piecesJointes/communPieceJointe";
-import { useGetPieceJointeApi } from "../../hook/requete/piecesJointes/GetPieceJointeHook";
-import { getValeurOuVide } from "../../util/Utils";
 import { VisionneuseDocument } from "../document/VisionneuseDocument";
 import { AccordionTitle } from "./AccordionTitle";
 import "./scss/AccordionVisionneuse.scss";
@@ -19,7 +19,7 @@ export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
 }) => {
   const [idDocument, setIdDocument] = useState<string>();
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  
+
   useEffect(() => {
     setIdDocument(isExpanded ? idDocumentAAfficher : undefined);
   }, [isExpanded, idDocumentAAfficher]);

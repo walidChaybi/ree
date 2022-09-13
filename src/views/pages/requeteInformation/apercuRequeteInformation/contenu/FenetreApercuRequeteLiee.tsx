@@ -1,7 +1,7 @@
 import { Link } from "@material-ui/core";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { FenetreExterne } from "@util/FenetreExterne";
 import React, { useState } from "react";
-import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
-import { FenetreExterne } from "../../../../common/util/FenetreExterne";
 import { ApercuRequetePage } from "../../../requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { ApercuReqInfoPage } from "../ApercuReqInfoPage";
 

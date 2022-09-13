@@ -1,7 +1,7 @@
-import { IExtraitCopieComposition } from "../../model/composition/extraitCopie/IExtraitCopieComposition";
-import { IContenuReponseSansDelivranceCS } from "../../model/composition/IReponseSansDelivranceCS";
-import { NatureActe } from "../../model/etatcivil/enum/NatureActe";
-import { TypePacsRcRca } from "../../model/etatcivil/enum/TypePacsRcRca";
+import { IExtraitCopieComposition } from "@model/composition/extraitCopie/IExtraitCopieComposition";
+import { IContenuReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
 const api = ApiManager.getInstance("rece-composition-api", "v1");

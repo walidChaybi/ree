@@ -1,9 +1,9 @@
 import { act, waitFor } from "@testing-library/react";
-import { localStorageMock } from "../../../mock/localStorageMock";
 import {
   GestionnaireDoubleOuverture,
   gestionnaireDoubleOuverture
-} from "../../../views/common/util/GestionnaireDoubleOuverture";
+} from "@util/GestionnaireDoubleOuverture";
+import { localStorageMock } from "../../../mock/localStorageMock";
 
 const mockFunction = jest.fn();
 

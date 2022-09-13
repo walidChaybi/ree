@@ -1,5 +1,5 @@
+import { IPieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import React, { Fragment } from "react";
-import { IPieceJointe } from "../../../../model/requete/pieceJointe/IPieceJointe";
 import "../../widget/section/scss/SectionPanel.scss";
 import "../../widget/section/scss/SectionPanelArea.scss";
 import { LienPieceJointe } from "./LienPieceJointe";

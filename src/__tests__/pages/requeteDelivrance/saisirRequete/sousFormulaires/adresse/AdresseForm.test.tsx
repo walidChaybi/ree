@@ -1,3 +1,4 @@
+import { ADRESSE } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 import {
   act,
   fireEvent,
@@ -5,14 +6,13 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { Field, Form, Formik } from "formik";
-import React, { useState } from "react";
 import AdresseForm, {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
-} from "../../../../../../views/common/widget/formulaire/adresse/AdresseForm";
-import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { ADRESSE } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCSCPageModel";
+} from "@widget/formulaire/adresse/AdresseForm";
+import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
+import { Field, Form, Formik } from "formik";
+import React, { useState } from "react";
 
 const HookAdresseForm: React.FC = () => {
   const [result, setResult] = useState("");

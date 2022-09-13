@@ -1,5 +1,5 @@
-import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   ACTE_NAISSANCE_NON_TROUVE_MARIAGE,
   ACTE_NON_TROUVE,
@@ -14,17 +14,17 @@ import {
   MANDAT_GENEALOGIQUE,
   PROPOSITION_TRANSCRIPTION,
   REFUS_DELIVRANCE_MARIAGE
-} from "../../../../../../../model/requete/enum/DocumentDelivranceConstante";
-import { MotifDelivrance } from "../../../../../../../model/requete/enum/MotifDelivrance";
-import { NatureActeRequete } from "../../../../../../../model/requete/enum/NatureActeRequete";
-import { StatutRequete } from "../../../../../../../model/requete/enum/StatutRequete";
-import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
-import { OptionsCourrier } from "../../../../../../../model/requete/IOptionCourrier";
-import { Requerant } from "../../../../../../../model/requete/IRequerant";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
-import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { Options } from "../../../../../../common/util/Type";
-import { getValeurOuVide } from "../../../../../../common/util/Utils";
+} from "@model/requete/enum/DocumentDelivranceConstante";
+import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { OptionsCourrier } from "@model/requete/IOptionCourrier";
+import { Requerant } from "@model/requete/IRequerant";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { Options } from "@util/Type";
+import { getValeurOuVide } from "@util/Utils";
 import {
   ADRESSE_COURRIEL,
   CODE_POSTAL,

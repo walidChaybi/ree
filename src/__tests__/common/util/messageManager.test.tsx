@@ -1,7 +1,7 @@
-import React from "react";
 import { render, waitFor } from "@testing-library/react";
+import messageManager from "@util/messageManager";
+import React from "react";
 import { ToastContainer } from "react-toastify";
-import messageManager from "../../../views/common/util/messageManager";
 
 test("renders all types of error popin", async () => {
   const { getByText } = render(

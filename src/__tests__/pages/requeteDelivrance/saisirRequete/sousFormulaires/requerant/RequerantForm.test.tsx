@@ -1,3 +1,9 @@
+import { TypeRequerant } from "@model/requete/enum/TypeRequerant";
+import { REQUERANT } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCSCPageModel";
+import RequerantForm, {
+  RequerantFormDefaultValues,
+  RequerantFormValidationSchema
+} from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/requerant/RequerantForm";
 import {
   act,
   fireEvent,
@@ -5,15 +11,9 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { TypeRequerant } from "../../../../../../model/requete/enum/TypeRequerant";
-import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { REQUERANT } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCSCPageModel";
-import RequerantForm, {
-  RequerantFormDefaultValues,
-  RequerantFormValidationSchema
-} from "../../../../../../views/pages/requeteDelivrance/saisirRequete/sousFormulaires/requerant/RequerantForm";
 
 const HookRequerantForm: React.FC = () => {
   const [result, setResult] = useState("");

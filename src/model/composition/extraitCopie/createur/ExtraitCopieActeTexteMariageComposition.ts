@@ -1,4 +1,4 @@
-import { getValeurOuVide } from "../../../../views/common/util/Utils";
+import { getValeurOuVide } from "@util/Utils";
 import { IFicheActe } from "../../../etatcivil/acte/IFicheActe";
 import { ExistenceContratMariage } from "../../../etatcivil/enum/ExistenceContratMariage";
 import { LienParente } from "../../../etatcivil/enum/LienParente";
@@ -82,16 +82,29 @@ export class ExtraitCopieActeTexteMariageComposition {
     return `${evtActe.leouEnEvenement} ${evtActe.dateEvenement}
 a été célébré à ${evtActe.lieuEvenement}
 le mariage
-de ${ecTitulaire1.prenoms} ${ecTitulaire1.nom} ${ecTitulaire1.partiesNom}${this.getNaissance(ecTitulaire1.dateNaissanceOuAge, ecTitulaire1.lieuNaissance)}${parents1}${parentsAdoptants1}
-et de ${ecTitulaire2?.prenoms} ${ecTitulaire2?.nom} ${ecTitulaire2?.partiesNom}${this.getNaissance(ecTitulaire2?.dateNaissanceOuAge, ecTitulaire2?.lieuNaissance)}${parents2}${parentsAdoptants2}
+de ${ecTitulaire1.prenoms} ${ecTitulaire1.nom} ${
+      ecTitulaire1.partiesNom
+    }${this.getNaissance(
+      ecTitulaire1.dateNaissanceOuAge,
+      ecTitulaire1.lieuNaissance
+    )}${parents1}${parentsAdoptants1}
+et de ${ecTitulaire2?.prenoms} ${ecTitulaire2?.nom} ${
+      ecTitulaire2?.partiesNom
+    }${this.getNaissance(
+      ecTitulaire2?.dateNaissanceOuAge,
+      ecTitulaire2?.lieuNaissance
+    )}${parents2}${parentsAdoptants2}
 
 Contrat de mariage : ${enonciationContratDeMariage}`;
   }
 
   //Gestion du retour chariot pour la ligne à propos de la naissance
-  private static getNaissance(dateAge: string | undefined, lieu: string | undefined){
+  private static getNaissance(
+    dateAge: string | undefined,
+    lieu: string | undefined
+  ) {
     let naissance = "";
-    if(dateAge || lieu){
+    if (dateAge || lieu) {
       naissance = `
 ${dateAge}${lieu}`;
     }

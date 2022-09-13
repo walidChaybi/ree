@@ -1,20 +1,20 @@
-import React, { useCallback, useState } from "react";
-import { useHistory } from "react-router";
-import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
-import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import {
   CreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
-} from "../../../../common/hook/requete/CreationActionMiseAjourStatutHook";
-import { getUrlPrecedente } from "../../../../common/util/route/routeUtil";
-import { storeRece } from "../../../../common/util/storeRece";
-import { getLibelle } from "../../../../common/util/Utils";
-import { Bouton } from "../../../../common/widget/boutonAntiDoubleSubmit/Bouton";
-import { VisionneuseAvecTitre } from "../../../../common/widget/document/VisionneuseAvecTitre";
-import { BoutonRetour } from "../../../../common/widget/navigation/BoutonRetour";
-import { receUrl } from "../../../../router/ReceUrls";
+} from "@hook/requete/CreationActionMiseAjourStatutHook";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { receUrl } from "@router/ReceUrls";
+import { getUrlPrecedente } from "@util/route/routeUtil";
+import { storeRece } from "@util/storeRece";
+import { getLibelle } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { VisionneuseAvecTitre } from "@widget/document/VisionneuseAvecTitre";
+import { BoutonRetour } from "@widget/navigation/BoutonRetour";
+import React, { useCallback, useState } from "react";
+import { useHistory } from "react-router";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
 import { mappingRequeteDelivranceToRequeteTableau } from "../mapping/ReqDelivranceToReqTableau";
 import { BoutonPrendreEnCharge } from "./contenu/BoutonPrendreEnCharge";

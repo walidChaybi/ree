@@ -1,22 +1,22 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../../../model/agent/IOfficier";
-import { ITitulaireActe } from "../../../../../../model/etatcivil/acte/ITitulaireActe";
-import { IAlerte } from "../../../../../../model/etatcivil/fiche/IAlerte";
-import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
-import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { AlertesActes } from "../../../../../common/composant/alertesActe/AlertesActes";
-import { GetAlertesActeApiHookParameters } from "../../../../../common/hook/alertes/GetAlertesActeApiHook";
+import { AlertesActes } from "@composant/alertesActe/AlertesActes";
+import { GetAlertesActeApiHookParameters } from "@hook/alertes/GetAlertesActeApiHook";
 import {
   GetNbrTitulairesActeHookParameters,
   useGetNbrTitulairesActeApiHook
-} from "../../../../../common/hook/repertoires/NbrTitulairesActeHook";
+} from "@hook/repertoires/NbrTitulairesActeHook";
 import {
   GetTitulairesActeHookParameters,
   useGetTitulairesActeApiHook
-} from "../../../../../common/hook/repertoires/TitulairesActeHook";
-import { aplatirTableau } from "../../../../../common/util/Utils";
-import { BoutonRetour } from "../../../../../common/widget/navigation/BoutonRetour";
+} from "@hook/repertoires/TitulairesActeHook";
+import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "@model/agent/IOfficier";
+import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { aplatirTableau } from "@util/Utils";
+import { BoutonRetour } from "@widget/navigation/BoutonRetour";
+import React, { useCallback, useEffect, useState } from "react";
 import { RMCAuto } from "../../../../rechercheMultiCriteres/autoActesInscriptions/RMCAuto";
 import { DataRMCAuto } from "../ApercuRequetePriseEnChargePage";
 import { ChoixAction } from "./actions/ChoixAction";

@@ -1,9 +1,6 @@
 /* istanbul ignore file */
-import { getFormatDateFromTimestamp } from "../../views/common/util/DateUtils";
-import {
-  enMajuscule,
-  premiereLettreEnMajuscule
-} from "../../views/common/util/Utils";
+import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import { enMajuscule, premiereLettreEnMajuscule } from "@util/Utils";
 
 export interface IAction {
   id: string;

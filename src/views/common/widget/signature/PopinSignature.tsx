@@ -4,9 +4,9 @@ import {
   DialogContent,
   DialogTitle
 } from "@material-ui/core";
+import { storeRece } from "@util/storeRece";
+import { getLibelle } from "@util/Utils";
 import React from "react";
-import { getLibelle } from "../../../common/util/Utils";
-import { storeRece } from "../../util/storeRece";
 import { FormPinCode } from "./FormPinCode";
 import {
   DocumentsByRequete,
@@ -32,11 +32,8 @@ export const PopinSignature: React.FC<PopinSignatureProps> = ({
     storeRece.codePin
   );
 
-  const {
-    successSignature,
-    errorsSignature,
-    idRequetesToSign
-  } = useSignatureDocumentHook(documentsByRequete, pinCode);
+  const { successSignature, errorsSignature, idRequetesToSign } =
+    useSignatureDocumentHook(documentsByRequete, pinCode);
 
   // Si une des erreurs concerne le code Pin on le réinitialise pour que l'utilisateur le saisisse à nouveau lors d'une prochaine tentative de signature
   if (storeRece.codePin && erreurDeCodePin()) {

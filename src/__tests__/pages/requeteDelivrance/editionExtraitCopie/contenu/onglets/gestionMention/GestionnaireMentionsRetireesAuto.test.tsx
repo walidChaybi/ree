@@ -1,4 +1,4 @@
-import { NatureActe } from "../../../../../../../model/etatcivil/enum/NatureActe";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import {
   ADOPTION,
   ANNULATION_DECISION,
@@ -22,12 +22,12 @@ import {
   RECTIFICATION,
   REPRISE_VIE_COMMUNE,
   SEPARATION_CORPS
-} from "../../../../../../../model/etatcivil/enum/NatureMention";
-import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
+} from "@model/etatcivil/enum/NatureMention";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import {
   gestionnaireMentionsRetireesAuto,
   IMentionAvecRetiree
-} from "../../../../../../../views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionnaireMentionsRetireesAuto";
+} from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionnaireMentionsRetireesAuto";
 
 test("deselectionnerRadieParPaire", () => {
   const deselectionnerRadieParPaire = [

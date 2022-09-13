@@ -1,16 +1,16 @@
+import { CertificatSituationComposition } from "@model/composition/ICertificatSituationComposition";
+import { IDecret } from "@model/etatcivil/commun/IDecret";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
+import { Qualite } from "@model/requete/enum/Qualite";
+import { TypeCanal } from "@model/requete/enum/TypeCanal";
+import { IRequerant } from "@model/requete/IRequerant";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { waitFor } from "@testing-library/react";
 import request from "superagent";
 import { certificatSituation } from "../../../mock/data/Composition";
 import { configParamsBaseRequete } from "../../../mock/superagent-config/superagent-mock-params";
-import { CertificatSituationComposition } from "../../../model/composition/ICertificatSituationComposition";
-import { IDecret } from "../../../model/etatcivil/commun/IDecret";
-import { Sexe } from "../../../model/etatcivil/enum/Sexe";
-import { ParametreBaseRequete } from "../../../model/parametres/enum/ParametresBaseRequete";
-import { Qualite } from "../../../model/requete/enum/Qualite";
-import { TypeCanal } from "../../../model/requete/enum/TypeCanal";
-import { IRequerant } from "../../../model/requete/IRequerant";
-import { IRequeteTableauDelivrance } from "../../../model/requete/IRequeteTableauDelivrance";
-import { ITitulaireRequeteTableau } from "../../../model/requete/ITitulaireRequeteTableau";
 
 const superagentMock = require("superagent-mock")(
   request,
@@ -62,14 +62,15 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
     requerant: requerant
   } as IRequeteTableauDelivrance;
 
-  const resultat = await CertificatSituationComposition.creerCertificatSituation(
-    titre,
-    decrets,
-    phrase,
-    requete,
-    phrasesPiecesJointes,
-    titulaire
-  );
+  const resultat =
+    await CertificatSituationComposition.creerCertificatSituation(
+      titre,
+      decrets,
+      phrase,
+      requete,
+      phrasesPiecesJointes,
+      titulaire
+    );
   await waitFor(() => {
     expect(resultat).toEqual(attendu);
   });

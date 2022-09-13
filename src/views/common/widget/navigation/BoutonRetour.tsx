@@ -1,14 +1,14 @@
-import React from "react";
-import { Link, useHistory } from "react-router-dom";
 import {
   URL_ACCUEIL,
   URL_CONTEXT_APP,
   URL_MES_REQUETES_DELIVRANCE,
   URL_RECHERCHE_REQUETE,
   URL_REQUETES_DELIVRANCE_SERVICE
-} from "../../../router/ReceUrls";
-import { getUrlPrecedente } from "../../util/route/routeUtil";
-import { getLibelle } from "../../util/Utils";
+} from "@router/ReceUrls";
+import { getUrlPrecedente } from "@util/route/routeUtil";
+import { getLibelle } from "@util/Utils";
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
 
 export const BoutonRetour: React.FC = () => {
   const history = useHistory();

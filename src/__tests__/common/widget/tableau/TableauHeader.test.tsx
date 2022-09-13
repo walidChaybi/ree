@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render } from "@testing-library/react";
+import { TableauHeader } from "@widget/tableau/TableauRece/TableauHeader";
+import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React from "react";
-import { TableauHeader } from "../../../../views/common/widget/tableau/TableauRece/TableauHeader";
-import { TableauTypeColumn } from "../../../../views/common/widget/tableau/TableauRece/TableauTypeColumn";
 
 const UN = 1;
 const DEUX = 2;

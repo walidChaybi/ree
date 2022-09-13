@@ -1,5 +1,5 @@
-import { IFicheRcRca } from "../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import { getAutorite } from "../../../../../views/pages/fiche/hook/constructionComposants/rcrca/AutoriteUtils";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { getAutorite } from "@pages/fiche/hook/constructionComposants/rcrca/AutoriteUtils";
 import {
   ficheAutoriteJuridictionEtrangerAvecConfirmation,
   ficheAutoriteJuridictionFranceAvecConfirmation,

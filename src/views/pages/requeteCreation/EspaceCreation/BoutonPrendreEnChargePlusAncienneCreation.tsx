@@ -1,21 +1,21 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
 import {
   MiseAjourStatutCreationParams,
   useMiseAjourStatutCreation
-} from "../../../common/hook/requete/creation/MiseAJourStatutCreationApiHook";
+} from "@hook/requete/creation/MiseAJourStatutCreationApiHook";
 import {
   IRequetePlusAncienneResultat,
   useGetRequetePlusAncienne
-} from "../../../common/hook/requete/PrendreEnChargePlusAncienneApiHook";
-import WithHabilitation from "../../../common/util/habilitation/WithHabilitation";
-import messageManager from "../../../common/util/messageManager";
-import { getUrlWithParam } from "../../../common/util/route/routeUtil";
-import { getLibelle } from "../../../common/util/Utils";
-import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOperationEnCours";
-import { URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID } from "../../../router/ReceUrls";
+} from "@hook/requete/PrendreEnChargePlusAncienneApiHook";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID } from "@router/ReceUrls";
+import WithHabilitation from "@util/habilitation/WithHabilitation";
+import messageManager from "@util/messageManager";
+import { getUrlWithParam } from "@util/route/routeUtil";
+import { getLibelle } from "@util/Utils";
+import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
+import React, { useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 interface BoutonPrendreEnChargePlusAncienneCreationProps {
   typeRequete: TypeRequete;

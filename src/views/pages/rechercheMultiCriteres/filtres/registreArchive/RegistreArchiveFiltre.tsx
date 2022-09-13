@@ -1,11 +1,11 @@
-import { connect } from "formik";
-import React from "react";
-import * as Yup from "yup";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
   withNamespace
-} from "../../../../common/widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React from "react";
+import * as Yup from "yup";
 import EvenementFiltre, {
   EvenementDefaultValues,
   EvenementFiltreProps,

@@ -1,17 +1,14 @@
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { IActionOption } from "@model/requete/IActionOption";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { receUrl } from "@router/ReceUrls";
+import { filtrerListeActions } from "@util/RequetesUtils";
+import { getLibelle, supprimerNullEtUndefinedDuTableau } from "@util/Utils";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
-import { IActionOption } from "../../../../../../../model/requete/IActionOption";
-import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
-import {
-  getLibelle,
-  supprimerNullEtUndefinedDuTableau
-} from "../../../../../../common/util/Utils";
-import { OperationEnCours } from "../../../../../../common/widget/attente/OperationEnCours";
-import { GroupeBouton } from "../../../../../../common/widget/menu/GroupeBouton";
-import { receUrl } from "../../../../../../router/ReceUrls";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../../mapping/ReqDelivranceToReqTableau";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import { useDelivrerCertificatSituationHook } from "./hook/DelivrerCertificatSituationHook";
@@ -34,9 +31,8 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
     actes
   );
 
-  const delivrerOptions: IActionOption[] = getOptionsMenuDelivrer(
-    refDelivrerOptions0
-  );
+  const delivrerOptions: IActionOption[] =
+    getOptionsMenuDelivrer(refDelivrerOptions0);
 
   const handleDelivrerMenu = () => {
     setOperationEnCours(true);

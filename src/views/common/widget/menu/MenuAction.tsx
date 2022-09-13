@@ -4,10 +4,10 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import { IActionOption } from "@model/requete/IActionOption";
+import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React from "react";
-import { IActionOption } from "../../../../model/requete/IActionOption";
-import { DoubleSubmitUtil } from "../../util/DoubleSubmitUtil";
-import { Bouton } from "../../widget/boutonAntiDoubleSubmit/Bouton";
 import "./scss/MenuAction.scss";
 
 interface IMenuActionProps {

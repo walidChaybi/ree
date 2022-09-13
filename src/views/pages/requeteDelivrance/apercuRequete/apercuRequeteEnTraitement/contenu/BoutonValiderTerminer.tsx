@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../../../model/agent/IOfficier";
-import { TypePacsRcRca } from "../../../../../../model/etatcivil/enum/TypePacsRcRca";
-import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
-import { TypeCanal } from "../../../../../../model/requete/enum/TypeCanal";
-import { DocumentReponse } from "../../../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import {
   IDerniereDelivranceRcRcaPacsParams,
   useDerniereDelivranceRcRcaPacsApiHook
-} from "../../../../../common/hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
+} from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
 import {
   CreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
-} from "../../../../../common/hook/requete/ActionHook";
-import { getUrlPrecedente } from "../../../../../common/util/route/routeUtil";
-import { storeRece } from "../../../../../common/util/storeRece";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { BoutonOperationEnCours } from "../../../../../common/widget/attente/BoutonOperationEnCours";
-import { receUrl } from "../../../../../router/ReceUrls";
+} from "@hook/requete/ActionHook";
+import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "@model/agent/IOfficier";
+import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeCanal } from "@model/requete/enum/TypeCanal";
+import { DocumentReponse } from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { receUrl } from "@router/ReceUrls";
+import { getUrlPrecedente } from "@util/route/routeUtil";
+import { storeRece } from "@util/storeRece";
+import { getLibelle } from "@util/Utils";
+import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 interface BoutonValiderTerminerProps {
   requete: IRequeteDelivrance;

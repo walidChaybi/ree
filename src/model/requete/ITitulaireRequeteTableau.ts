@@ -1,4 +1,4 @@
-import { formatNom, formatPrenom } from "../../views/common/util/Utils";
+import { formatNom, formatPrenom } from "@util/Utils";
 import { Sexe } from "../etatcivil/enum/Sexe";
 import { QualiteFamille } from "./enum/QualiteFamille";
 import { SEPARATOR_NUMERO_ELEMENT } from "./IRequeteTableauDelivrance";

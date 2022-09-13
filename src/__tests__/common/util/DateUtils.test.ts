@@ -23,7 +23,7 @@ import {
   getJourOu1er,
   getMoisEnLettre,
   IDateCompose
-} from "../../../views/common/util/DateUtils";
+} from "@util/DateUtils";
 
 test("getDateFromDateCompose", () => {
   const dateCompose = {

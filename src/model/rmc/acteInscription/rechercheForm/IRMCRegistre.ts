@@ -1,4 +1,4 @@
-import { Option } from "../../../../views/common/util/Type";
+import { Option } from "@util/Type";
 
 export interface IRMCRegistre {
   natureActe?: string;

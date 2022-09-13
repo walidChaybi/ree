@@ -1,3 +1,9 @@
+import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
+import { LIEN_TITULAIRE } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCPageModel";
+import LienTitulaireForm, {
+  LienTitulaireFormDefaultValues,
+  LienTitulaireFormValidationSchema
+} from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/lienTitulaire/LienTitulaireForm";
 import {
   act,
   fireEvent,
@@ -5,15 +11,9 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { TypeLienRequerant } from "../../../../../../model/requete/enum/TypeLienRequerant";
-import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { LIEN_TITULAIRE } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCPageModel";
-import LienTitulaireForm, {
-  LienTitulaireFormDefaultValues,
-  LienTitulaireFormValidationSchema
-} from "../../../../../../views/pages/requeteDelivrance/saisirRequete/sousFormulaires/lienTitulaire/LienTitulaireForm";
 
 const HookLienTitulaireForm: React.FC = () => {
   const [result, setResult] = useState("");

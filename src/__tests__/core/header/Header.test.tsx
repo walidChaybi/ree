@@ -1,7 +1,7 @@
+import { Header } from "@core/header/Header";
+import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
-import { screen, render, fireEvent } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { Header } from "../../../views/core/header/Header";
 
 test("renders header", () => {
   render(

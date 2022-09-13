@@ -1,17 +1,17 @@
-import React from "react";
-import { IStatutFiche } from "../../../../../../model/etatcivil/fiche/IStatutFiche";
-import { processDataStorting } from "../../../../../../views/common/widget/tableau/TableUtils";
+import { IStatutFiche } from "@model/etatcivil/fiche/IStatutFiche";
 import {
   getDateFromTimestamp,
   getDateString,
   getDateStringFromDateCompose
-} from "../../../../../common/util/DateUtils";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { LieuxUtils } from "../../../../../common/utilMetier/LieuxUtils";
+} from "@util/DateUtils";
+import { getLibelle } from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
   TableauSimple,
   TableauSimpleProps
-} from "../../../../../common/widget/tableau/TableauSimple/TableauSimple";
+} from "@widget/tableau/TableauSimple/TableauSimple";
+import { processDataStorting } from "@widget/tableau/TableUtils";
+import React from "react";
 import "./scss/TableauStatut.scss";
 interface TableauStatutProps {
   statutsFiche: IStatutFiche[];

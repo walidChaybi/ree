@@ -1,13 +1,13 @@
-import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
-import { StatutPacesUtil } from "../../../../../../model/etatcivil/enum/StatutPacs";
-import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { StatutPacesUtil } from "@model/etatcivil/enum/StatutPacs";
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import {
   InscriptionRcUtil,
   TypeInscriptionRc
-} from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
-import { IFichePacs } from "../../../../../../model/etatcivil/pacs/IFichePacs";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
+} from "@model/etatcivil/enum/TypeInscriptionRc";
+import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   CODE_CERTIFICAT_SITUATION_PACS,
   CODE_CERTIFICAT_SITUATION_PACS_RC,
@@ -16,9 +16,9 @@ import {
   CODE_CERTIFICAT_SITUATION_RC,
   CODE_CERTIFICAT_SITUATION_RCA,
   CODE_CERTIFICAT_SITUATION_RC_RCA
-} from "../../../../../../model/requete/enum/DocumentDelivranceConstante";
-import { getDateFormatJasper } from "../../../../util/DateUtils";
-import { getLibelle, replaceIndexByValue } from "../../../../util/Utils";
+} from "@model/requete/enum/DocumentDelivranceConstante";
+import { getDateFormatJasper } from "@util/DateUtils";
+import { getLibelle, replaceIndexByValue } from "@util/Utils";
 import { IPhrasesJasperCertificatSituation } from "../GenerationCertificatSituationHook";
 import { INbInscriptionsInfos } from "./specificationPhraseRMCAutoVide";
 export interface IInfosInscriptions {

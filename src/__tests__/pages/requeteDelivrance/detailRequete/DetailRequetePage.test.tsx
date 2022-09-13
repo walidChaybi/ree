@@ -1,13 +1,13 @@
+import { DetailRequetePage } from "@pages/requeteDelivrance/detailRequete/DetailRequetePage";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/routeUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
-import { DetailRequetePage } from "../../../../views/pages/requeteDelivrance/detailRequete/DetailRequetePage";
-import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

@@ -1,3 +1,7 @@
+import { specificationPhraseDelivrer } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
+import { INbInscriptionsInfos } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import request from "superagent";
 import {
   FicheRcDecisionNotaire,
@@ -13,10 +17,6 @@ import {
   pacsModificationNotaireMap
 } from "../../../../../../mock/data/PACS";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
-import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
-import { specificationPhraseDelivrer } from "../../../../../../views/common/hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
-import { INbInscriptionsInfos } from "../../../../../../views/common/hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 beforeAll(() => {

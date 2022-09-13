@@ -1,6 +1,6 @@
 /* istanbul ignore file */
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
-import { Option, Options } from "../../../views/common/util/Type";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
+import { Option, Options } from "@util/Type";
 
 export const TYPE_LIEN_REQUERANT_POUR_TITULAIRE = ["TITULAIRE"];
 

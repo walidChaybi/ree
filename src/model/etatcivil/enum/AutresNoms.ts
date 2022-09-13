@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 
 export class AutresNoms extends EnumWithLibelle {
   public static readonly USAGE = new AutresNoms("Usage");

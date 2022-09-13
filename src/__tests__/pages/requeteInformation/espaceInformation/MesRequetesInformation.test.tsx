@@ -1,3 +1,9 @@
+import { OfficierContext } from "@core/contexts/OfficierContext";
+import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
+import {
+  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+  URL_MES_REQUETES_INFORMATION
+} from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -5,19 +11,13 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/routeUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import officier from "../../../../mock/data/connectedUser.json";
 import { configRequetesInformation } from "../../../../mock/superagent-config/superagent-mock-requetes-information";
-import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
-import { OfficierContext } from "../../../../views/core/contexts/OfficierContext";
-import EspaceInformationPage from "../../../../views/pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
-import {
-  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-  URL_MES_REQUETES_INFORMATION
-} from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(
   request,

@@ -1,18 +1,18 @@
-import React from "react";
 import {
   OptionCourrier,
   OptionsCourrier
-} from "../../../../../../../../model/requete/IOptionCourrier";
-import { getLibelle } from "../../../../../../../common/util/Utils";
-import { IconeDanger } from "../../../../../../../common/widget/icones/IconeDanger";
-import { IconeMoins } from "../../../../../../../common/widget/icones/IconeMoins";
-import { IconePlus } from "../../../../../../../common/widget/icones/IconePlus";
-import { IconeValider } from "../../../../../../../common/widget/icones/IconeValider";
+} from "@model/requete/IOptionCourrier";
+import { getLibelle } from "@util/Utils";
+import { IconeDanger } from "@widget/icones/IconeDanger";
+import { IconeMoins } from "@widget/icones/IconeMoins";
+import { IconePlus } from "@widget/icones/IconePlus";
+import { IconeValider } from "@widget/icones/IconeValider";
 import {
   Ligne,
   TableauSimple,
   TableauSimpleProps
-} from "../../../../../../../common/widget/tableau/TableauSimple/TableauSimple";
+} from "@widget/tableau/TableauSimple/TableauSimple";
+import React from "react";
 import { texteOptionCourrierModifie } from "./GestionOptionsCourrier";
 import "./scss/OptionsCourrierForm.scss";
 

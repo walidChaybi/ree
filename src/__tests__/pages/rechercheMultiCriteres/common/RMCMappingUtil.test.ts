@@ -1,5 +1,5 @@
+import { mappingRequeteDelivranceToRMC } from "@pages/rechercheMultiCriteres/common/mapping/RMCMappingUtil";
 import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
-import { mappingRequeteDelivranceToRMC } from "../../../../views/pages/rechercheMultiCriteres/common/mapping/RMCMappingUtil";
 
 test("mappingIRMCActeArchive", () => {
   expect(mappingRequeteDelivranceToRMC(requeteDelivrance)).toStrictEqual({

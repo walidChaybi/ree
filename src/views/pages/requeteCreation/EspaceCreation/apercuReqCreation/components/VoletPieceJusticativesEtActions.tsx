@@ -1,6 +1,6 @@
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
+import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useState } from "react";
-import { IRequeteCreation } from "../../../../../../model/requete/IRequeteCreation";
-import { VoletAvecOnglet } from "../../../../../common/widget/voletAvecOnglet/VoletAvecOnglet";
 import { OngletAction } from "./OngletAction";
 import { OngletPiecesJustificatives } from "./OngletPiecesJustificatives";
 import "./scss/VoletPieceJustificativesEtActions.scss";

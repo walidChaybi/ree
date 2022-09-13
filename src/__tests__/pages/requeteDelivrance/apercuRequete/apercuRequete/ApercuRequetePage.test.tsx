@@ -1,14 +1,14 @@
+import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { act, render, screen, waitFor } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/routeUtil";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
-import { storeRece } from "../../../../../views/common/util/storeRece";
-import { ApercuRequetePage } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
-import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 const globalAny: any = global;

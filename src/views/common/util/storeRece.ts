@@ -1,7 +1,7 @@
-import { IEntite } from "../../../model/agent/IEntiteRattachement";
-import { IOfficier } from "../../../model/agent/IOfficier";
-import { IUtilisateur } from "../../../model/agent/IUtilisateur";
-import { IDecret } from "../../../model/etatcivil/commun/IDecret";
+import { IEntite } from "@model/agent/IEntiteRattachement";
+import { IOfficier } from "@model/agent/IOfficier";
+import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { IDecret } from "@model/etatcivil/commun/IDecret";
 import parametres from "../../../ressources/parametres.json";
 import { Rot18 } from "./crypto/Rot18";
 

@@ -1,3 +1,4 @@
+import { RMCTableauRequetesAssociees } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCTableauRequetesAssociees";
 import { render } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
@@ -6,7 +7,6 @@ import {
   DataRMCRequeteAvecResultat,
   DataTableauRequete
 } from "../../../../../mock/data/RMCRequete";
-import { RMCTableauRequetesAssociees } from "../../../../../views/pages/rechercheMultiCriteres/autoRequetes/resultats/RMCTableauRequetesAssociees";
 
 const history = createMemoryHistory();
 history.push("");

@@ -1,11 +1,11 @@
+import { getAdresse } from "@pages/requeteDelivrance/saisirRequete/hook/mappingFormulaireRDCSCVersRequeteDelivrance";
 import {
   enMajuscule,
   formatNom,
   formatPrenom,
   getValeurOuVide,
   SNP
-} from "../../views/common/util/Utils";
-import { getAdresse } from "../../views/pages/requeteDelivrance/saisirRequete/hook/mappingFormulaireRDCSCVersRequeteDelivrance";
+} from "@util/Utils";
 import { Qualite } from "./enum/Qualite";
 import { TypeInstitutionnel } from "./enum/TypeInstitutionnel";
 import { TypeLienRequerant } from "./enum/TypeLienRequerant";
@@ -215,7 +215,8 @@ function getQualiteRequerant(requerant: any): IQualiteRequerant {
     mandataireHabilite: getMandataireHabilite(
       requerant.detailQualiteMandataireHabilite
     ),
-    autreProfessionnel: requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
+    autreProfessionnel:
+      requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
     institutionnel: getInstitutionnel(requerant.detailQualiteInstitutionnel)
   };
 }

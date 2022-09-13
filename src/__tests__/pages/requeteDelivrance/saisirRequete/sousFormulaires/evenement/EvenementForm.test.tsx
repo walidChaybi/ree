@@ -1,3 +1,8 @@
+import EvenementForm, {
+  EvenementFormDefaultValues,
+  EvenementFormValidationSchema,
+  EvenementSubFormProps
+} from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/evenement/EvenementForm";
 import {
   act,
   fireEvent,
@@ -7,11 +12,6 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import EvenementForm, {
-  EvenementFormDefaultValues,
-  EvenementFormValidationSchema,
-  EvenementSubFormProps
-} from "../../../../../../views/pages/requeteDelivrance/saisirRequete/sousFormulaires/evenement/EvenementForm";
 
 const EVENEMENT = "evenement";
 

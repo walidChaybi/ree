@@ -1,5 +1,5 @@
-import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IParamsTableau } from "@util/GestionDesLiensApi";
 
 export interface IRMCActeApiHookResultat {
   dataRMCActe?: IResultatRMCActe[];

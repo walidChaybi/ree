@@ -1,22 +1,19 @@
-import React, { Fragment } from "react";
-import { Qualite } from "../../../../../../../model/requete/enum/Qualite";
-import { TypeLienMandant } from "../../../../../../../model/requete/enum/TypeLienMandant";
-import { TypeLienRequerant } from "../../../../../../../model/requete/enum/TypeLienRequerant";
-import { EvenementReqDelivrance } from "../../../../../../../model/requete/IEvenementReqDelivrance";
-import {
-  IRequerant,
-  Requerant,
-} from "../../../../../../../model/requete/IRequerant";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
+import { Qualite } from "@model/requete/enum/Qualite";
+import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
+import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
+import { EvenementReqDelivrance } from "@model/requete/IEvenementReqDelivrance";
+import { IRequerant, Requerant } from "@model/requete/IRequerant";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import {
   ITitulaireRequete,
-  TitulaireRequete,
-} from "../../../../../../../model/requete/ITitulaireRequete";
+  TitulaireRequete
+} from "@model/requete/ITitulaireRequete";
 import {
   formatPrenom,
   getLibelle,
-  triListeObjetsSurPropriete,
-} from "../../../../../../common/util/Utils";
+  triListeObjetsSurPropriete
+} from "@util/Utils";
+import React, { Fragment } from "react";
 import { ItemLibelle } from "./item/ItemLibelle";
 import "./scss/ResumeRequetePartieHaute.scss";
 
@@ -26,7 +23,7 @@ interface ResumeRequetePartieHauteProps {
 
 export const ResumeRequetePartieHaute: React.FC<
   ResumeRequetePartieHauteProps
-> = (props) => {
+> = props => {
   const sortedTitulaires = props.requete.titulaires
     ? triListeObjetsSurPropriete([...props.requete.titulaires], "position")
     : [];

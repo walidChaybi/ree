@@ -1,7 +1,7 @@
-import { ChoixDelivrance } from "../../../../model/requete/enum/ChoixDelivrance";
-import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
-import { getOngletSelectVenantDePriseEnCharge } from "../../../../views/pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
-import { DocumentEC } from "../../../../views/pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { getOngletSelectVenantDePriseEnCharge } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
+import { DocumentEC } from "@pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
 
 test("getOngletSelectVenantDePriseEnCharge", () => {
   expect(

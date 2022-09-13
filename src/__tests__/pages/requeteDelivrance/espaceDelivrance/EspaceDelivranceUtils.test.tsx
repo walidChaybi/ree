@@ -1,7 +1,7 @@
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { goToLinkRequete } from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { render, screen } from "@testing-library/react";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { getIconPrioriteRequete } from "../../../../views/common/util/tableauRequete/TableauRequeteUtils";
-import { goToLinkRequete } from "../../../../views/pages/requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
+import { getIconPrioriteRequete } from "@util/tableauRequete/TableauRequeteUtils";
 
 test("espace delivrance utils goToLinkRequete", () => {
   const result = goToLinkRequete(

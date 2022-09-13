@@ -1,25 +1,25 @@
-import { connect } from "formik";
-import React, { useEffect } from "react";
-import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../ressources/Regex";
 import {
   NOM_NAISSANCE,
   PRENOMS
-} from "../../../pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import PrenomsForm, {
   PrenomsFormDefaultValues,
   PrenomsFormValidationSchema
-} from "../../../pages/requeteDelivrance/saisirRequete/sousFormulaires/identite/nomsPrenoms/PrenomsForm";
-import { getLibelle } from "../../util/Utils";
-import { InputField } from "../../widget/formulaire/champsSaisie/InputField";
-import { CARATERES_AUTORISES_MESSAGE } from "../../widget/formulaire/FormulaireMessages";
-import { sortieChampEnMajuscule } from "../../widget/formulaire/utils/ControlesUtil";
+} from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/identite/nomsPrenoms/PrenomsForm";
+import { getLibelle } from "@util/Utils";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
+import { sortieChampEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   INomForm,
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
   withNamespace
-} from "../../widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useEffect } from "react";
+import * as Yup from "yup";
+import { CarateresAutorise } from "../../../../ressources/Regex";
 import "./scss/ParentForm.scss";
 
 // Valeurs par défaut des champs

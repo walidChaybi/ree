@@ -1,4 +1,4 @@
-import { getInformationsFiche } from "../../../api/appels/etatcivilApi";
+import { getInformationsFiche } from "@api/appels/etatcivilApi";
 import request from "superagent";
 import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
 

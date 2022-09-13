@@ -1,3 +1,11 @@
+import { TITULAIRE } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
+import RMCBoutons, {
+  RMCBoutonsProps
+} from "@pages/rechercheMultiCriteres/boutons/RMCBoutons";
+import TitulaireFiltre, {
+  TitulaireDefaultValues,
+  TitulaireFiltreProps
+} from "@pages/rechercheMultiCriteres/filtres/titulaire/TitulaireFiltre";
 import {
   act,
   fireEvent,
@@ -5,17 +13,9 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { stockageDonnees } from "@util/stockageDonnees";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { stockageDonnees } from "../../../../views/common/util/stockageDonnees";
-import { TITULAIRE } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
-import RMCBoutons, {
-  RMCBoutonsProps
-} from "../../../../views/pages/rechercheMultiCriteres/boutons/RMCBoutons";
-import TitulaireFiltre, {
-  TitulaireDefaultValues,
-  TitulaireFiltreProps
-} from "../../../../views/pages/rechercheMultiCriteres/filtres/titulaire/TitulaireFiltre";
 
 const HookConsummerRMCBoutons: React.FC = () => {
   const rappelCriteres = () => {

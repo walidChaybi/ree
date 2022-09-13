@@ -1,5 +1,5 @@
-import { getLibelle } from "../../../../common/util/Utils";
-import { TableauTypeColumn } from "../../../../common/widget/tableau/TableauRece/TableauTypeColumn";
+import { getLibelle } from "@util/Utils";
+import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { styleColonne } from "./EspaceCreationParams";
 
 export enum HeaderTableauMesRequetesCreation {

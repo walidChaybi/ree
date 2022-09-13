@@ -1,17 +1,17 @@
+import {
+  useGetDocumentReponseApi,
+  usePostDocumentsReponseApi
+} from "@hook/DocumentReponseHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import {
-    documentReponseCARN_CSPAC_01,
-    idDocumentsReponse
+  documentReponseCARN_CSPAC_01,
+  idDocumentsReponse
 } from "../../../mock/data/DocumentReponse";
 import { imagePngVideBase64 } from "../../../mock/data/ImagePng";
 import { requeteRDCSC } from "../../../mock/data/requeteDelivrance";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-import {
-    useGetDocumentReponseApi,
-    usePostDocumentsReponseApi
-} from "../../../views/common/hook/DocumentReponseHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

@@ -1,6 +1,6 @@
+import { sauvegarderReponseReqInfo } from "@api/appels/requeteApi";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { sauvegarderReponseReqInfo } from "../../../../../../api/appels/requeteApi";
-import { logError } from "../../../../../common/util/LogManager";
 
 export interface ISauvegarderReponseReqInfoParams {
   idRequete: string;
@@ -11,8 +11,9 @@ export interface ISauvegarderReponseReqInfoParams {
 export function useSauvegarderReponsesReqInfoHook(
   params: ISauvegarderReponseReqInfoParams | undefined
 ) {
-  const [idReponseChoisie, setIdReponseChoisie] =
-    useState<string | undefined>();
+  const [idReponseChoisie, setIdReponseChoisie] = useState<
+    string | undefined
+  >();
 
   useEffect(() => {
     if (params) {

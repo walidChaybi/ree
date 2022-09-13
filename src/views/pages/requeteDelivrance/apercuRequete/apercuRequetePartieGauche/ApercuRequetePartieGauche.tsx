@@ -1,9 +1,9 @@
+import { SuiviActionsRequete } from "@composant/suivis/SuiviActionsRequete";
+import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationRequete";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import React from "react";
-import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
-import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import { SuiviActionsRequete } from "../../../../common/composant/suivis/SuiviActionsRequete";
-import { SuiviObservationsRequete } from "../../../../common/composant/suivis/SuiviObservationRequete";
 import { RMCRequetesAssocieesResultats } from "../../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { DocumentsReponses } from "./contenu/document/DocumentsReponses";
 import { ResumeRequete } from "./contenu/resume/ResumeRequete";
@@ -16,7 +16,7 @@ interface ApercuRequetePartieGaucheProps {
 
 export const ApercuRequetePartieGauche: React.FC<
   ApercuRequetePartieGaucheProps
-> = (props) => {
+> = props => {
   return (
     <div className="side left">
       <ResumeRequete requete={props.requete} />

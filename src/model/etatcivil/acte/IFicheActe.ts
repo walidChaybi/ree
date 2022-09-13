@@ -1,4 +1,4 @@
-import { DATE_MES } from "../../../views/common/util/DateUtils";
+import { DATE_MES } from "@util/DateUtils";
 import {
   compactObject,
   DEUX,
@@ -8,7 +8,7 @@ import {
   triListeObjetsSurPropriete,
   TROIS,
   UN
-} from "../../../views/common/util/Utils";
+} from "@util/Utils";
 import { ChoixDelivrance } from "../../requete/enum/ChoixDelivrance";
 import { IPersonne } from "../commun/IPersonne";
 import { NatureActe } from "../enum/NatureActe";

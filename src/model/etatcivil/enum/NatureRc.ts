@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 
-import { peupleNatureRc } from "../../../api/nomenclature/NomenclatureEtatcivil";
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
-import { Options } from "../../../views/common/util/Type";
+import { peupleNatureRc } from "@api/nomenclature/NomenclatureEtatcivil";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
+import { Options } from "@util/Type";
 
 export class NatureRc extends EnumWithLibelle {
   constructor(

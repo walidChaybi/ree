@@ -1,7 +1,7 @@
-import { TypeDeclarationConjointe } from "../../../../model/etatcivil/enum/TypeDeclarationConjointe";
-import { getDateFormatJasper } from "../../../../views/common/util/DateUtils";
-import { getValeurOuVide } from "../../../../views/common/util/Utils";
-import { EtatCivilUtil } from "../../../../views/common/utilMetier/EtatCivilUtil";
+import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationConjointe";
+import { getDateFormatJasper } from "@util/DateUtils";
+import { getValeurOuVide } from "@util/Utils";
+import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";
 import { IFicheActe } from "../../../etatcivil/acte/IFicheActe";
 import { NatureActe } from "../../../etatcivil/enum/NatureActe";
 import { Validation } from "../../../requete/enum/Validation";
@@ -82,27 +82,49 @@ export class ExtraitCopieActeTexteNaissanceComposition {
     return `${evtActe.leouEnEvenement} ${evtActe.dateEvenement} ${
       evtActe.heureEvenement
     }
-est ${neOuNeeTitulaire1} à ${evtActe.lieuEvenement}${this.getLigneAvecRetourChariot(true, ecTitulaire1.prenoms)}${this.getLigneAvecRetourChariot(true, ecTitulaire1.nom, declarationConjointe)}${this.getLigneAvecRetourChariot(false, ecTitulaire1.partiesNom)}${this.getSexe(duOuDeSexe, ecTitulaire1.sexe.libelle.toLowerCase())}${parents}`;
+est ${neOuNeeTitulaire1} à ${
+      evtActe.lieuEvenement
+    }${this.getLigneAvecRetourChariot(
+      true,
+      ecTitulaire1.prenoms
+    )}${this.getLigneAvecRetourChariot(
+      true,
+      ecTitulaire1.nom,
+      declarationConjointe
+    )}${this.getLigneAvecRetourChariot(
+      false,
+      ecTitulaire1.partiesNom
+    )}${this.getSexe(
+      duOuDeSexe,
+      ecTitulaire1.sexe.libelle.toLowerCase()
+    )}${parents}`;
   }
 
   //Gestion du retour chariot
-  private static getLigneAvecRetourChariot(tabulation: boolean, element1: string, element2?: string){
+  private static getLigneAvecRetourChariot(
+    tabulation: boolean,
+    element1: string,
+    element2?: string
+  ) {
     let texte = "";
     const tab = tabulation ? "  " : "";
-    if(element1 || element2){
+    if (element1 || element2) {
       texte = `
 ${tab}${element1}`;
     }
-    if(element2){
+    if (element2) {
       texte += ` ${getValeurOuVide(element2)}`;
     }
     return texte;
   }
 
   //Gestion du retour chariot pour la ligne à propos du sexe
-  private static getSexe(duOuDeSexe: string | undefined, sexeTitulaire: string | undefined){
+  private static getSexe(
+    duOuDeSexe: string | undefined,
+    sexeTitulaire: string | undefined
+  ) {
     let sexe = "";
-    if(sexeTitulaire){
+    if (sexeTitulaire) {
       sexe = `
 ${duOuDeSexe} sexe ${sexeTitulaire}`;
     }
@@ -138,7 +160,9 @@ et de ${parent2}`;
     let declarationConjointe = "";
     if (acte.analyseMarginales) {
       const { titulaireAMCompositionEC1 } =
-        CommunExtraitOuCopieActeTexteComposition.getTitulairesAnalayseMarginaleCompositionEC(acte);
+        CommunExtraitOuCopieActeTexteComposition.getTitulairesAnalayseMarginaleCompositionEC(
+          acte
+        );
       if (
         titulaireAMCompositionEC1?.typeDeclarationConjointe &&
         titulaireAMCompositionEC1.typeDeclarationConjointe !==

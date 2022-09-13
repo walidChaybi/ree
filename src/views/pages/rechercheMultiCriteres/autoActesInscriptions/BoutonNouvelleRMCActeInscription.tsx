@@ -1,9 +1,9 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getLibelle } from "@util/Utils";
 import React, { useCallback, useState } from "react";
 import { Button } from "reakit/Button";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
-import { getLibelle } from "../../../common/util/Utils";
 import { PopinNouvelleRMCActeInscription } from "./PopinNouvelleRMCActeInscription";
 import "./scss/BoutonNouvelleRMCActeInscription.scss";
 

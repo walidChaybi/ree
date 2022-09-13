@@ -1,3 +1,5 @@
+import { titreForm } from "@pages/rechercheMultiCriteres/requete/RMCRequeteForm";
+import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
 import {
   act,
   fireEvent,
@@ -6,8 +8,6 @@ import {
   waitFor
 } from "@testing-library/react";
 import React from "react";
-import { titreForm } from "../../../../views/pages/rechercheMultiCriteres/requete/RMCRequeteForm";
-import { RMCRequetePage } from "../../../../views/pages/rechercheMultiCriteres/requete/RMCRequetePage";
 
 const globalAny: any = global;
 globalAny.scroll = jest.fn();

@@ -1,3 +1,4 @@
+import { useGetDocumentReponseApi } from "@hook/DocumentReponseHook";
 import {
   Avatar,
   List,
@@ -7,19 +8,15 @@ import {
 } from "@material-ui/core";
 import Image from "@material-ui/icons/Image";
 import PictureAsPdf from "@material-ui/icons/PictureAsPdf";
-import React, { useCallback, useEffect, useState } from "react";
 import {
   DocumentReponse,
   IDocumentReponse
-} from "../../../../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
-import { useGetDocumentReponseApi } from "../../../../../../common/hook/DocumentReponseHook";
-import { getIdDocumentReponseAAfficher } from "../../../../../../common/util/RequetesUtils";
-import {
-  getLibelle,
-  getValeurOuVide
-} from "../../../../../../common/util/Utils";
-import { AccordionRece } from "../../../../../../common/widget/accordion/AccordionRece";
+} from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { getIdDocumentReponseAAfficher } from "@util/RequetesUtils";
+import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { AccordionRece } from "@widget/accordion/AccordionRece";
+import React, { useCallback, useEffect, useState } from "react";
 import { FenetreDocumentReponse } from "./FenetreDocumentReponse";
 import "./scss/DocumentsReponses.scss";
 

@@ -1,8 +1,5 @@
+import { base64toBlob, validateFile } from "@util/FileUtils";
 import { imagePngVideBase64 } from "../../../mock/data/ImagePng";
-import {
-  base64toBlob,
-  validateFile
-} from "../../../views/common/util/FileUtils";
 
 test("validateFile : size error", () => {
   expect(() => {

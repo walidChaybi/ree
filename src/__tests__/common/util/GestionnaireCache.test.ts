@@ -1,4 +1,4 @@
-import { GestionnaireCache } from "../../../views/common/util/GestionnaireCache";
+import { GestionnaireCache } from "@util/GestionnaireCache";
 
 test("Attendu: Le gestionnaire de cache SANS délais d'expiration fonctionne correctement", async () => {
   const cache = GestionnaireCache.addCache("cache1");

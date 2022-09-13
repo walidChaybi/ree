@@ -1,5 +1,5 @@
-import { ParametreBaseRequete } from "../../model/parametres/enum/ParametresBaseRequete";
-import { logError } from "../../views/common/util/LogManager";
+import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
+import { logError } from "@util/LogManager";
 import { getParametresBaseRequete } from "../appels/requeteApi";
 
 export async function peupleParametresBaseRequete() {

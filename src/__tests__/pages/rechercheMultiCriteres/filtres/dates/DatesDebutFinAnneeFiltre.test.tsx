@@ -1,20 +1,20 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
-import { Field, Form, Formik } from "formik";
-import React, { useState } from "react";
-import { DATES_DEBUT_FIN_ANNEE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
+import { DATES_DEBUT_FIN_ANNEE } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
   DatesDebutFinAnneeFiltreProps
-} from "../../../../../views/pages/rechercheMultiCriteres/filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
+} from "@pages/rechercheMultiCriteres/filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { Field, Form, Formik } from "formik";
+import React, { useState } from "react";
 
 const HookDatesDebutFinAnneeFiltre: React.FC = () => {
   const [result, setResult] = useState("");
 
-  const datesDebutFinAnneeFiltreProps = ({
+  const datesDebutFinAnneeFiltreProps = {
     nomFiltre: DATES_DEBUT_FIN_ANNEE,
     key: DATES_DEBUT_FIN_ANNEE,
     anneeVisible: true
-  } as any) as DatesDebutFinAnneeFiltreProps;
+  } as any as DatesDebutFinAnneeFiltreProps;
 
   const handleClickButton = (values: any) => {
     setResult(JSON.stringify(values));

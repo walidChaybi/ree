@@ -3,8 +3,8 @@ import {
   formatPrenom,
   getValeurOuVide,
   premiereLettreEnMajusculeLeResteEnMinuscule
-} from "../../../views/common/util/Utils";
-import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
+} from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { TypeAutorite, TypeAutoriteUtil } from "../enum/TypeAutorite";
 
 // Regroupe les autorités commune, notaire, onac, juridiction, poste

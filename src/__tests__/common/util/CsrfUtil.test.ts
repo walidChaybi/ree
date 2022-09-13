@@ -1,4 +1,4 @@
-import { getCsrfCookieValueFromCookies } from "../../../views/common/util/CsrfUtil";
+import { getCsrfCookieValueFromCookies } from "@util/CsrfUtil";
 
 test("Attendu: getCsrfCookieValue fonctionne correctement", () => {
   let cookies =

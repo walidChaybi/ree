@@ -1,10 +1,10 @@
+import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuRequete";
+import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { IUuidRequeteParams } from "../../../../../model/params/IUuidRequeteParams";
-import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import { BandeauRequete } from "../../../../common/composant/bandeauApercuRequete/BandeauApercuRequete";
-import { ProtectionApercu } from "../../../../common/util/route/Protection/ProtectionApercu";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
 import { ApercuRequetePartieGauche } from "../apercuRequetePartieGauche/ApercuRequetePartieGauche";
 import "./scss/ApercuRequeteTemplate.scss";

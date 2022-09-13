@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
-import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import {
   PATH_APERCU_REQ_DEL,
   PATH_APERCU_REQ_TRAITEMENT,
   PATH_EDITION
-} from "../../../router/ReceUrls";
-import { FeatureFlag } from "../../util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../util/featureFlag/gestionnaireFeatureFlag";
-import messageManager from "../../util/messageManager";
-import { GestionnaireARetraiterDansSaga } from "../../util/migration/GestionnaireARetraiterDansSaga";
+} from "@router/ReceUrls";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import messageManager from "@util/messageManager";
+import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
 import {
   autorisePrendreEnChargeReqTableauDelivrance,
   typeEstDelivrance
-} from "../../util/RequetesUtils";
-import { getUrlPrecedente, getUrlWithParam } from "../../util/route/routeUtil";
-import { storeRece } from "../../util/storeRece";
-import { getLibelle } from "../../util/Utils";
+} from "@util/RequetesUtils";
+import { getUrlPrecedente, getUrlWithParam } from "@util/route/routeUtil";
+import { storeRece } from "@util/storeRece";
+import { getLibelle } from "@util/Utils";
+import { useEffect, useState } from "react";
 
 export interface INavigationApercuDelivrance {
   isRmcAuto?: boolean;

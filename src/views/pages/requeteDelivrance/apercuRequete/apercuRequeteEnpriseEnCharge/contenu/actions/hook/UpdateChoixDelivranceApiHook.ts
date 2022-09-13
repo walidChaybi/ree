@@ -1,8 +1,8 @@
+import { updateChoixDelivrance } from "@api/appels/requeteApi";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { updateChoixDelivrance } from "../../../../../../../../api/appels/requeteApi";
-import { ChoixDelivrance } from "../../../../../../../../model/requete/enum/ChoixDelivrance";
-import { IRequeteDelivrance } from "../../../../../../../../model/requete/IRequeteDelivrance";
-import { logError } from "../../../../../../../common/util/LogManager";
 
 export interface UpdateChoixDelivranceProps {
   requete: IRequeteDelivrance;

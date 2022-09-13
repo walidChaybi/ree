@@ -1,4 +1,10 @@
+import { OfficierContext } from "@core/contexts/OfficierContext";
+import { mappingOfficier } from "@core/login/LoginHook";
+import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
+import EspaceCreationPage from "@pages/requeteCreation/EspaceCreation/EspaceCreationPage";
+import { URL_ACCUEIL } from "@router/ReceUrls";
 import { act, render, screen, waitFor } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
@@ -8,12 +14,6 @@ import {
   resultatRequeteUtilistateurLeBiannic
 } from "../../../mock/data/connectedUserAvecDroit";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-import { mapHabilitationsUtilisateur } from "../../../model/agent/IUtilisateur";
-import { storeRece } from "../../../views/common/util/storeRece";
-import { OfficierContext } from "../../../views/core/contexts/OfficierContext";
-import { mappingOfficier } from "../../../views/core/login/LoginHook";
-import EspaceCreationPage from "../../../views/pages/requeteCreation/EspaceCreation/EspaceCreationPage";
-import { URL_ACCUEIL } from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

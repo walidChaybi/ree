@@ -1,7 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
+import { a11yProps } from "@widget/onglets/BoiteAOnglets";
+import { LinkTab } from "@widget/onglets/LinkTab";
 import React from "react";
-import { a11yProps } from "../../../../views/common/widget/onglets/BoiteAOnglets";
-import { LinkTab } from "../../../../views/common/widget/onglets/LinkTab";
 
 test("renders LinkTab renders correctly", () => {
   act(() => {

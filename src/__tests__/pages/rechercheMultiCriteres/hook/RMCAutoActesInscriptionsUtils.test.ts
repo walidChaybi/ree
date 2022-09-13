@@ -1,14 +1,14 @@
-import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import {
   determinerCriteresRMCAuto,
   redirectionRMCAuto,
   redirectionRMCAutoApercuTraitement
-} from "../../../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
+} from "@pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
 import {
   PATH_APERCU_REQ_TRAITEMENT,
   URL_MES_REQUETES_DELIVRANCE,
   URL_REQUETES_DELIVRANCE_SERVICE
-} from "../../../../views/router/ReceUrls";
+} from "@router/ReceUrls";
 
 const requete = {
   idRequete: "0",

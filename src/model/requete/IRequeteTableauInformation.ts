@@ -1,8 +1,5 @@
-import { getFormatDateFromTimestamp } from "../../views/common/util/DateUtils";
-import {
-  getValeurOuVide,
-  valeurOuUndefined
-} from "../../views/common/util/Utils";
+import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import { getValeurOuVide, valeurOuUndefined } from "@util/Utils";
 import { ObjetRequete } from "./enum/ObjetRequete";
 import { Qualite } from "./enum/Qualite";
 import { SousTypeInformation } from "./enum/SousTypeInformation";

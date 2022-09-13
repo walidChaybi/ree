@@ -1,8 +1,5 @@
-import {
-  Decret,
-  IDecret
-} from "../../../../../../model/etatcivil/commun/IDecret";
-import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
+import { Decret, IDecret } from "@model/etatcivil/commun/IDecret";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   CODE_CERTIFICAT_SITUATION_PACS,
   CODE_CERTIFICAT_SITUATION_PACS_RC,
@@ -11,8 +8,8 @@ import {
   CODE_CERTIFICAT_SITUATION_RC,
   CODE_CERTIFICAT_SITUATION_RCA,
   CODE_CERTIFICAT_SITUATION_RC_RCA
-} from "../../../../../../model/requete/enum/DocumentDelivranceConstante";
-import { storeRece } from "../../../../util/storeRece";
+} from "@model/requete/enum/DocumentDelivranceConstante";
+import { storeRece } from "@util/storeRece";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Specifications pour les décrêts à renvoyer en fonction du document demandé

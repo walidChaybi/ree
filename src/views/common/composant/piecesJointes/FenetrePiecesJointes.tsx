@@ -1,9 +1,9 @@
+import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointeHook";
+import { TypePieceJointe } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
+import { FenetreExterne } from "@util/FenetreExterne";
+import { VisionneuseAvecTitre } from "@widget/document/VisionneuseAvecTitre";
 import { MimeType } from "file-type/core";
 import React from "react";
-import { useGetPieceJointeApi } from "../../hook/requete/piecesJointes/GetPieceJointeHook";
-import { TypePieceJointe } from "../../hook/requete/piecesJointes/PostPiecesJointesHook";
-import { FenetreExterne } from "../../util/FenetreExterne";
-import { VisionneuseAvecTitre } from "../../widget/document/VisionneuseAvecTitre";
 
 interface FenetrePieceProps {
   idPiece: string;

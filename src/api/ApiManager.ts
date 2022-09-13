@@ -1,15 +1,12 @@
+import { URL_ACCUEIL } from "@router/ReceUrls";
+import { getCsrfHeader } from "@util/CsrfUtil";
+import { Generateur } from "@util/generateur/Generateur";
+import { GestionnaireCache, ReceCache } from "@util/GestionnaireCache";
+import messageManager from "@util/messageManager";
 import request, * as superagent from "superagent";
 import { configAgent } from "../mock/superagent-config/superagent-mock-agent";
 import { configEtatcivil } from "../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
-import { getCsrfHeader } from "../views/common/util/CsrfUtil";
-import { Generateur } from "../views/common/util/generateur/Generateur";
-import {
-  GestionnaireCache,
-  ReceCache
-} from "../views/common/util/GestionnaireCache";
-import messageManager from "../views/common/util/messageManager";
-import { URL_ACCUEIL } from "../views/router/ReceUrls";
 
 export const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
 const EXPIRATION_CACHE_SECONDS = 43200; // Expiration du cache au bout de 12h (43200 secondes)
@@ -149,12 +146,11 @@ export class ApiManager {
       );
     }
 
-    
-      httpRequete = this.processRequestHeaders(
-        httpRequete,
-        httpRequestConfig.headers,
-      );
-    
+    httpRequete = this.processRequestHeaders(
+      httpRequete,
+      httpRequestConfig.headers
+    );
+
     if (httpRequestConfig.responseType) {
       httpRequete = httpRequete.responseType(httpRequestConfig.responseType);
     }
@@ -247,7 +243,7 @@ export class ApiManager {
 
   public processRequestHeaders(
     httpRequest: superagent.SuperAgentRequest,
-    headers?: HttpRequestHeader[],
+    headers?: HttpRequestHeader[]
   ): superagent.SuperAgentRequest {
     let res = httpRequest;
     headers?.forEach(element => {

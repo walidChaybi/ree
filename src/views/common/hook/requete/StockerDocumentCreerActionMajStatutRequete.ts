@@ -1,8 +1,8 @@
+import { postSauvDocumentCreerActionMajStatutRequete } from "@api/appels/requeteApi";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { postSauvDocumentCreerActionMajStatutRequete } from "../../../../api/appels/requeteApi";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
-import { logError } from "../../util/LogManager";
 
 export interface IStockerDocumentCreerActionMajStatutRequeteParams {
   libelleAction: string;

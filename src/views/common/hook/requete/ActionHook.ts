@@ -1,7 +1,7 @@
+import { postCreationActionEtMiseAjourStatut } from "@api/appels/requeteApi";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { postCreationActionEtMiseAjourStatut } from "../../../../api/appels/requeteApi";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { logError } from "../../util/LogManager";
 
 export interface CreationActionEtMiseAjourStatutParams {
   libelleAction?: string;

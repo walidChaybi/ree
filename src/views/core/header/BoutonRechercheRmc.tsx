@@ -1,13 +1,10 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@material-ui/core";
+import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
+import { FenetreExterne, FenetreExterneUtil } from "@util/FenetreExterne";
+import { getLibelle } from "@util/Utils";
 import React, { useState } from "react";
-import {
-  FenetreExterne,
-  FenetreExterneUtil
-} from "../../common/util/FenetreExterne";
-import { getLibelle } from "../../common/util/Utils";
-import { RMCActeInscriptionPage } from "../../pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import "../../pages/rechercheMultiCriteres/acteInscription/scss/RMCActeInscriptionPage.scss";
 
 const width = 1200;

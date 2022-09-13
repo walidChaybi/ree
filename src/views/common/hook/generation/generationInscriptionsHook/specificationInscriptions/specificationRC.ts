@@ -1,16 +1,13 @@
-import { NatureRc } from "../../../../../../model/etatcivil/enum/NatureRc";
-import { TypeAutoriteUtil } from "../../../../../../model/etatcivil/enum/TypeAutorite";
+import { NatureRc } from "@model/etatcivil/enum/NatureRc";
+import { TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
 import {
   InscriptionRcUtil,
   TypeInscriptionRc
-} from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import {
-  getDateFormatJasper,
-  getDateFromTimestamp
-} from "../../../../util/DateUtils";
-import { formatDe } from "../../../../util/Utils";
-import { LieuxUtils } from "../../../../utilMetier/LieuxUtils";
+} from "@model/etatcivil/enum/TypeInscriptionRc";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { getDateFormatJasper, getDateFromTimestamp } from "@util/DateUtils";
+import { formatDe } from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
   getDecisionExequatur,
   getDecisionJuridiction,
@@ -146,9 +143,8 @@ class SpecificationRC {
       elementsJasper.decisionRecue2 = getParagrapheDecisionRecue2(infosRC);
       elementsJasper.interesseDecision = getInteressesDecision(infosRC);
       elementsJasper.regime = getResume(infosRC);
-      elementsJasper.renouvellementModification = getRenouvellementModification(
-        infosRC
-      );
+      elementsJasper.renouvellementModification =
+        getRenouvellementModification(infosRC);
       elementsJasper.decisionExequatur = getDecisionExequatur(infosRC);
       elementsJasper.duree = getDuree(infosRC);
       elementsJasper.paragrapheFin = getParagrapheFin(infosRC);

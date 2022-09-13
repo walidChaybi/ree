@@ -1,6 +1,6 @@
-import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
-import { setDataBandeau } from "../../../../views/pages/fiche/contenu/BandeauFicheUtils";
-import { IDataFicheProps } from "../../../../views/pages/fiche/FichePage";
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { setDataBandeau } from "@pages/fiche/contenu/BandeauFicheUtils";
+import { IDataFicheProps } from "@pages/fiche/FichePage";
 import DATA_FICHE_PACS from "../data/bandeauPacs";
 import DATA_FICHE_RC from "../data/bandeauRc";
 import { acte } from "../data/ficheActe";

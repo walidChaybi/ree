@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react";
+import { ProgressSignature } from "@widget/signature/ProgressSignature";
 import React from "react";
-import { ProgressSignature } from "../../../../views/common/widget/signature/ProgressSignature";
 
 test("renders progress bar, close function is called automatically", () => {
   const handleClickButton = jest.fn();

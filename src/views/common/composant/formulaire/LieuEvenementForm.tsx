@@ -1,17 +1,17 @@
-import { connect } from "formik";
-import React, { useCallback, useState } from "react";
-import { IEvenement } from "../../../../model/etatcivil/acte/IEvenement";
-import { ILieuEvenement } from "../../../../model/etatcivil/commun/ILieuEvenement";
-import { EtrangerFrance } from "../../../../model/etatcivil/enum/EtrangerFrance";
-import { estRenseigne, getLibelle } from "../../util/Utils";
-import { FRANCE, LieuxUtils } from "../../utilMetier/LieuxUtils";
-import { InputField } from "../../widget/formulaire/champsSaisie/InputField";
-import { RadioField } from "../../widget/formulaire/champsSaisie/RadioField";
-import { SelectField } from "../../widget/formulaire/champsSaisie/SelectField";
+import { IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { ILieuEvenement } from "@model/etatcivil/commun/ILieuEvenement";
+import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
+import { estRenseigne, getLibelle } from "@util/Utils";
+import { FRANCE, LieuxUtils } from "@utilMetier/LieuxUtils";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
+import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import {
   FormikComponentProps,
   withNamespace
-} from "../../widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useCallback, useState } from "react";
 import {
   ARRONDISSEMENT,
   ETRANGER_FRANCE,
@@ -314,7 +314,5 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
     );
   }
 };
-
-
 
 export default connect<ComponentFormProps>(LieuEvenementForm);

@@ -1,9 +1,6 @@
-import {
-  formatAHeure,
-  getDateStringFromDateCompose
-} from "../../../views/common/util/DateUtils";
-import { estRenseigne, numberToString } from "../../../views/common/util/Utils";
-import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
+import { formatAHeure, getDateStringFromDateCompose } from "@util/DateUtils";
+import { estRenseigne, numberToString } from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export interface IEvenement {
   heure?: number;

@@ -1,4 +1,4 @@
-import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   CODE_CERTIFICAT_SITUATION_PACS,
   CODE_CERTIFICAT_SITUATION_PACS_RC,
@@ -7,8 +7,8 @@ import {
   CODE_CERTIFICAT_SITUATION_RC,
   CODE_CERTIFICAT_SITUATION_RCA,
   CODE_CERTIFICAT_SITUATION_RC_RCA
-} from "../../../../../../model/requete/enum/DocumentDelivranceConstante";
-import { getLibelle } from "../../../../util/Utils";
+} from "@model/requete/enum/DocumentDelivranceConstante";
+import { getLibelle } from "@util/Utils";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Specifications pour le titre à renvoyer en fonction du document demandé

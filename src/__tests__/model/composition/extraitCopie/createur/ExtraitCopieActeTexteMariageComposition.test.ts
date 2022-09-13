@@ -1,10 +1,10 @@
+import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { ExtraitCopieActeTexteMariageComposition } from "@model/composition/extraitCopie/createur/ExtraitCopieActeTexteMariageComposition";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { Validation } from "@model/requete/enum/Validation";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ficheActeMariage } from "../../../../../mock/data/ficheActe";
-import { ExtraitCopieActeTexteMariageComposition } from "../../../../../model/composition/extraitCopie/createur/ExtraitCopieActeTexteMariageComposition";
-import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
-import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
-import { Validation } from "../../../../../model/requete/enum/Validation";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import { mapActe } from "../../../../../views/common/hook/repertoires/MappingRepertoires";
 
 test("Attendu: getCorpsTexte fonctionne correctement", () => {
   const acte = mapActe(ficheActeMariage.data);

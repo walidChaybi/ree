@@ -1,3 +1,6 @@
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import {
   act,
   createEvent,
@@ -6,13 +9,10 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { BoutonSignature } from "@widget/signature/BoutonSignature";
 import React from "react";
 import request from "superagent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
-import { BoutonSignature } from "../../../../views/common/widget/signature/BoutonSignature";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 beforeAll(() => {

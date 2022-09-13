@@ -1,8 +1,8 @@
-import { FournisseurDonneeBandeauRcRca } from "./FournisseurDonneesBandeauRcRca";
-import { FournisseurDonneeBandeauPacs } from "./FournisseurDonneesBandeauPacs";
-import { FournisseurDonneeBandeauActe } from "./FournisseurDonneesBandeauActe";
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
-import { TypeFiche } from "../../../../../model/etatcivil/enum/TypeFiche";
+import { FournisseurDonneeBandeauActe } from "./FournisseurDonneesBandeauActe";
+import { FournisseurDonneeBandeauPacs } from "./FournisseurDonneesBandeauPacs";
+import { FournisseurDonneeBandeauRcRca } from "./FournisseurDonneesBandeauRcRca";
 
 class FournisseurDonneesBandeauFactory {
   createFournisseur(categorie: TypeFiche, data: any) {
@@ -29,4 +29,5 @@ class FournisseurDonneesBandeauFactory {
   }
 }
 
-export const fournisseurDonneesBandeauFactory = new FournisseurDonneesBandeauFactory();
+export const fournisseurDonneesBandeauFactory =
+  new FournisseurDonneesBandeauFactory();

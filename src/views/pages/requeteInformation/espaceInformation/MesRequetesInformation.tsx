@@ -1,23 +1,23 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
-} from "../../../../api/appels/requeteApi";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
+} from "@api/appels/requeteApi";
 import {
   INavigationApercuReqInfoParams,
   useNavigationApercuInformation
-} from "../../../common/hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
-import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
-import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
-import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
+} from "@hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { receUrl } from "@router/ReceUrls";
+import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
-} from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { TableauRece } from "../../../common/widget/tableau/TableauRece/TableauRece";
-import { receUrl } from "../../../router/ReceUrls";
+} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
+import React, { useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { requeteInformationMesRequetesColumnHeaders } from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationApiHook";

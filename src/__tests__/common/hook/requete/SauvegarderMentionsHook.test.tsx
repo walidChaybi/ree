@@ -1,3 +1,9 @@
+import {
+  SauvegarderMentionsParam,
+  useSauvegarderMentions
+} from "@hook/acte/mentions/SauvegarderMentionsHook";
+import { IMention } from "@model/etatcivil/acte/mention/IMention";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
@@ -6,12 +12,6 @@ import { requeteDelivranceRDC } from "../../../../mock/data/requeteDelivrance";
 import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { IMention } from "../../../../model/etatcivil/acte/mention/IMention";
-import { NatureMention } from "../../../../model/etatcivil/enum/NatureMention";
-import {
-  SauvegarderMentionsParam,
-  useSauvegarderMentions
-} from "../../../../views/common/hook/acte/mentions/SauvegarderMentionsHook";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],

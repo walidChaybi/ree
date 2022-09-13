@@ -1,5 +1,5 @@
-import { estNonRenseigne, getLibelle } from "../../util/Utils";
-import { LieuxUtils } from "../../utilMetier/LieuxUtils";
+import { estNonRenseigne, getLibelle } from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export function estModeSaisieFrance(
   ville?: string,

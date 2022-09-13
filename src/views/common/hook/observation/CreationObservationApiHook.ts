@@ -1,6 +1,6 @@
+import { postObservation } from "@api/appels/requeteApi";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { postObservation } from "../../../../api/appels/requeteApi";
-import { logError } from "../../util/LogManager";
 
 export interface ICreationObservationParams {
   idRequete: string;
@@ -13,8 +13,9 @@ interface ICreationObservationResultat {
 }
 
 export function useCreationObservationApi(params?: ICreationObservationParams) {
-  const [resultat, setResultat] =
-    useState<ICreationObservationResultat | undefined>();
+  const [resultat, setResultat] = useState<
+    ICreationObservationResultat | undefined
+  >();
   useEffect(() => {
     async function fetchData() {
       if (params && params.texteObservation && params.idRequete) {

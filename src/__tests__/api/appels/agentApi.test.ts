@@ -1,10 +1,10 @@
-import request from "superagent";
 import {
   getLogin,
   getTousLesUtilisateurs,
   getToutesLesEntiteRattachement,
   getUtilisateurs
-} from "../../../api/appels/agentApi";
+} from "@api/appels/agentApi";
+import request from "superagent";
 import { configAgent } from "../../../mock/superagent-config/superagent-mock-agent";
 
 const superagentMock = require("superagent-mock")(request, configAgent);

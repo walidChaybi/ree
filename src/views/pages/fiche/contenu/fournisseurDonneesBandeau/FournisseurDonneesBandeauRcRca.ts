@@ -1,9 +1,9 @@
-import { IPrenom } from "../../../../../model/etatcivil/fiche/IPrenom";
+import { IPrenom } from "@model/etatcivil/fiche/IPrenom";
 import {
   formatNom,
   formatPrenom,
   triListeObjetsSurPropriete
-} from "../../../../common/util/Utils";
+} from "@util/Utils";
 import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
 import { SimplePersonne } from "./IFournisseurDonneesBandeau";
 

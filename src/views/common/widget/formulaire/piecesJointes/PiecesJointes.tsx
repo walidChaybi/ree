@@ -1,14 +1,14 @@
 import AttachFileOutlinedIcon from "@material-ui/icons/AttachFileOutlined";
 import InsertDriveFileOutlinedIcon from "@material-ui/icons/InsertDriveFileOutlined";
-import React from "react";
 import {
   Base64File,
   ExtensionDocumentTypeMime,
   PieceJointe
-} from "../../../util/FileUtils";
-import messageManager from "../../../util/messageManager";
-import { Option, Options } from "../../../util/Type";
-import { getLibelle } from "../../../util/Utils";
+} from "@util/FileUtils";
+import messageManager from "@util/messageManager";
+import { Option, Options } from "@util/Type";
+import { getLibelle } from "@util/Utils";
+import React from "react";
 import { IconePoubelle } from "../../icones/IconePoubelle";
 import {
   TableauSimple,

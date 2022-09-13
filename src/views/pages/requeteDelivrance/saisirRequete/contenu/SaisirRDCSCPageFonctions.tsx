@@ -1,20 +1,22 @@
 import {
   IReponseSansDelivranceCSDemandeIncompleteComposition,
   ReponseSansDelivranceCSDemandeIncompleteComposition
-} from "../../../../../model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
-import { TypeCanal } from "../../../../../model/requete/enum/TypeCanal";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import messageManager from "../../../../common/util/messageManager";
-import { getLibelle } from "../../../../common/util/Utils";
+} from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
+import { TypeCanal } from "@model/requete/enum/TypeCanal";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import messageManager from "@util/messageManager";
+import { getLibelle } from "@util/Utils";
 
 export function createReponseSansDelivranceCS(requete?: IRequeteDelivrance) {
-  let reponseSansDelivranceCS = {} as IReponseSansDelivranceCSDemandeIncompleteComposition;
+  let reponseSansDelivranceCS =
+    {} as IReponseSansDelivranceCSDemandeIncompleteComposition;
   if (requete && requete.requerant) {
-    reponseSansDelivranceCS = ReponseSansDelivranceCSDemandeIncompleteComposition.creerReponseSansDelivranceCS(
-      requete.requerant,
-      TypeCanal.COURRIER,
-      requete.numero
-    );
+    reponseSansDelivranceCS =
+      ReponseSansDelivranceCSDemandeIncompleteComposition.creerReponseSansDelivranceCS(
+        requete.requerant,
+        TypeCanal.COURRIER,
+        requete.numero
+      );
   } else {
     messageManager.showErrorAndClose(
       "Erreur inattendue: Pas de requérent pour la requête"

@@ -1,5 +1,5 @@
-import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import { getInteresse } from "../../../../../../views/pages/fiche/hook/constructionComposants/interesses/InteresseUtils";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { getInteresse } from "@pages/fiche/hook/constructionComposants/interesses/InteresseUtils";
 import {
   ficheDeuxInteresseNumeroOrdreNonOrdonne,
   ficheUnInteresseLieuDecesDateDeces,

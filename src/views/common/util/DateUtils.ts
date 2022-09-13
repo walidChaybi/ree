@@ -1,4 +1,4 @@
-import { getLibelle } from "../util/Utils";
+import { getLibelle } from "@util/Utils";
 import {
   CINQ,
   DEUX,

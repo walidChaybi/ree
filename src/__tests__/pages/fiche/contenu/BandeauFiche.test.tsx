@@ -1,9 +1,9 @@
+import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
+import { BandeauFiche } from "@pages/fiche/contenu/BandeauFiche";
+import { BandeauFicheActeNumero } from "@pages/fiche/contenu/BandeauFicheActeNumero";
+import { BandeauFicheRcRcaPacsNumero } from "@pages/fiche/contenu/BandeauFicheRcRcaPacsNumero";
 import { render } from "@testing-library/react";
 import React from "react";
-import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
-import { BandeauFiche } from "../../../../views/pages/fiche/contenu/BandeauFiche";
-import { BandeauFicheActeNumero } from "../../../../views/pages/fiche/contenu/BandeauFicheActeNumero";
-import { BandeauFicheRcRcaPacsNumero } from "../../../../views/pages/fiche/contenu/BandeauFicheRcRcaPacsNumero";
 import { bandeauActe } from "../data/ficheActe";
 import DATA_FICHE from "../data/ficheRC";
 

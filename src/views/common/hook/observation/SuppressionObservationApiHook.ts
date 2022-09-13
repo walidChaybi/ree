@@ -1,6 +1,6 @@
+import { deleteObservation } from "@api/appels/requeteApi";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { deleteObservation } from "../../../../api/appels/requeteApi";
-import { logError } from "../../util/LogManager";
 
 export interface ISuppressionObservationParams {
   idObservation?: string;
@@ -13,8 +13,9 @@ interface ISuppressionObservationResultat {
 export function useSuppressionObservationApi(
   params?: ISuppressionObservationParams
 ) {
-  const [resultat, setResultat] =
-    useState<ISuppressionObservationResultat | undefined>();
+  const [resultat, setResultat] = useState<
+    ISuppressionObservationResultat | undefined
+  >();
   useEffect(() => {
     async function fetchData() {
       if (params && params.idObservation) {

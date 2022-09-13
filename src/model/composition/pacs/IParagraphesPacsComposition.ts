@@ -1,8 +1,5 @@
-import {
-  getDateFormatJasper,
-  getDateFromTimestamp
-} from "../../../views/common/util/DateUtils";
-import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
+import { getDateFormatJasper, getDateFromTimestamp } from "@util/DateUtils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { IAutorite } from "../../etatcivil/commun/IAutorite";
 import { TypeAutorite } from "../../etatcivil/enum/TypeAutorite";
 import { TypeJuridiction } from "../../etatcivil/enum/TypeJuridiction";

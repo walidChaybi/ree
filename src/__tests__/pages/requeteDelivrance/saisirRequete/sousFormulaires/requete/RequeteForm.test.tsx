@@ -1,3 +1,5 @@
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { REQUETE } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCPageModel";
 import {
   act,
   fireEvent,
@@ -5,17 +7,15 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import RequeteForm, {
+  RequeteFormDefaultValues,
+  RequeteFormValidationSchema
+} from "@widget/formulaire/requete/RequeteForm";
+import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import request from "superagent";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
-import RequeteForm, {
-  RequeteFormDefaultValues,
-  RequeteFormValidationSchema
-} from "../../../../../../views/common/widget/formulaire/requete/RequeteForm";
-import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { REQUETE } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCPageModel";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

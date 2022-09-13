@@ -26,6 +26,7 @@ const typescriptFormatter = require("react-dev-utils/typescriptFormatter");
 const WebpackAutoInject = require("webpack-auto-inject-version");
 
 const postcssNormalize = require("postcss-normalize");
+const { appSrc } = require("./paths");
 
 const appPackageJson = require(paths.appPackageJson);
 
@@ -296,6 +297,23 @@ module.exports = function (webpackEnv) {
           "react-dom$": "react-dom/profiling",
           "scheduler/tracing": "scheduler/tracing-profiling"
         }),
+        "@widget": path.resolve(__dirname, `${appSrc}/views/common/widget`),
+        "@composant": path.resolve(
+          __dirname,
+          `${appSrc}/views/common/composant`
+        ),
+        "@hook": path.resolve(__dirname, `${appSrc}/views/common/hook`),
+        "@util": path.resolve(__dirname, `${appSrc}/views/common/util`),
+        "@utilMetier": path.resolve(
+          __dirname,
+          `${appSrc}/views/common/utilMetier`
+        ),
+        "@core": path.resolve(__dirname, `${appSrc}/views/core`),
+        "@pages": path.resolve(__dirname, `${appSrc}/views/pages`),
+        "@router": path.resolve(__dirname, `${appSrc}/views/router`),
+        "@api": path.resolve(__dirname, `${appSrc}/api`),
+        "@model": path.resolve(__dirname, `${appSrc}/model`),
+        "@scss": path.resolve(__dirname, `${appSrc}/scss`),
         ...(modules.webpackAliases || {})
       },
       plugins: [

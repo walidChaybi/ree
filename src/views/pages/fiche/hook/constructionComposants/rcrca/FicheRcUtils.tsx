@@ -1,6 +1,6 @@
-import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { getLibelle } from "@util/Utils";
+import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { IAccordionReceSection } from "../../../FicheUtils";
 import { getInscriptionRepertoireCivil } from "../inscriptionRepertoireCivil/InscriptionRepertoireCivilUtils";
 import { getInteresse } from "../interesses/InteresseUtils";

@@ -1,3 +1,8 @@
+import { MANDATAIRE } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import MandataireForm, {
+  MandataireFormDefaultValues,
+  MandataireFormValidationSchema
+} from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/requerant/mandataire/MandataireForm";
 import {
   act,
   fireEvent,
@@ -5,16 +10,11 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import request from "superagent";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { MANDATAIRE } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
-import MandataireForm, {
-  MandataireFormDefaultValues,
-  MandataireFormValidationSchema
-} from "../../../../../../views/pages/requeteDelivrance/saisirRequete/sousFormulaires/requerant/mandataire/MandataireForm";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

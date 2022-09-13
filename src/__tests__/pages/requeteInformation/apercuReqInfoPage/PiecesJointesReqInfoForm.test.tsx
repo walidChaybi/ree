@@ -1,3 +1,5 @@
+import PiecesJointesReqInfoForm from "@pages/requeteInformation/apercuRequeteInformation/contenu/choixReponse/PiecesJointesReqInfoForm";
+import { PIECES_JOINTES } from "@pages/requeteInformation/apercuRequeteInformation/contenu/choixReponse/ReponseReqInfoForm";
 import {
   act,
   fireEvent,
@@ -5,11 +7,9 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Form, Formik } from "formik";
 import React from "react";
-import { SubFormProps } from "../../../../views/common/widget/formulaire/utils/FormUtil";
-import PiecesJointesReqInfoForm from "../../../../views/pages/requeteInformation/apercuRequeteInformation/contenu/choixReponse/PiecesJointesReqInfoForm";
-import { PIECES_JOINTES } from "../../../../views/pages/requeteInformation/apercuRequeteInformation/contenu/choixReponse/ReponseReqInfoForm";
 
 test("renders PiecesJointesReqInfoForm, bouton activé", async () => {
   const props = {

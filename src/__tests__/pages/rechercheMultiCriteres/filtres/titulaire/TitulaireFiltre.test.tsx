@@ -1,3 +1,8 @@
+import { TITULAIRE } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
+import TitulaireFiltre, {
+  TitulaireDefaultValues,
+  TitulaireFiltreProps
+} from "@pages/rechercheMultiCriteres/filtres/titulaire/TitulaireFiltre";
 import {
   act,
   fireEvent,
@@ -7,11 +12,6 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { TITULAIRE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
-import TitulaireFiltre, {
-  TitulaireDefaultValues,
-  TitulaireFiltreProps
-} from "../../../../../views/pages/rechercheMultiCriteres/filtres/titulaire/TitulaireFiltre";
 
 const HookConsummerTitulaireForm: React.FC = () => {
   const [result, setResult] = useState("");
@@ -104,9 +104,8 @@ test("bouton switch Nom et Prénom", async () => {
       });
     });
 
-    const boutonSwitch = component.container.getElementsByClassName(
-      "BtnNomPrenom"
-    );
+    const boutonSwitch =
+      component.container.getElementsByClassName("BtnNomPrenom");
 
     await waitFor(() => {
       expect(inputNom.value).toBe("mockNom");

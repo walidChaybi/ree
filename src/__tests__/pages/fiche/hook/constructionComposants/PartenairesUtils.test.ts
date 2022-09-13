@@ -1,6 +1,6 @@
-import { Nationalite } from "../../../../../model/etatcivil/enum/Nationalite";
-import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
-import { getPartenaires } from "../../../../../views/pages/fiche/hook/constructionComposants/pacs/PartenairesUtils";
+import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { getPartenaires } from "@pages/fiche/hook/constructionComposants/pacs/PartenairesUtils";
 
 test("getPartenaires", () => {
   const partenaires = [

@@ -1,10 +1,10 @@
-import { CopieActeImageComposition } from "../../../../../../model/composition/extraitCopie/createur/CopieActeImageComposition";
-import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
-import { TypeActe } from "../../../../../../model/etatcivil/enum/TypeActe";
-import { ChoixDelivrance } from "../../../../../../model/requete/enum/ChoixDelivrance";
-import { Validation } from "../../../../../../model/requete/enum/Validation";
-import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
-import { getLibelle, getValeurOuVide } from "../../../../util/Utils";
+import { CopieActeImageComposition } from "@model/composition/extraitCopie/createur/CopieActeImageComposition";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { TypeActe } from "@model/etatcivil/enum/TypeActe";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { Validation } from "@model/requete/enum/Validation";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { getLibelle, getValeurOuVide } from "@util/Utils";
 
 export const creationCompositionCopieActeImage = function (
   acte: IFicheActe,

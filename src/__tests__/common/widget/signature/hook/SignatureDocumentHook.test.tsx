@@ -1,18 +1,18 @@
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import {
-    createEvent,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  createEvent,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
+import {
+  DocumentsByRequete,
+  useSignatureDocumentHook
+} from "@widget/signature/hook/SignatureDocumentHook";
 import React from "react";
 import request from "superagent";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
-import {
-    DocumentsByRequete,
-    useSignatureDocumentHook
-} from "../../../../../views/common/widget/signature/hook/SignatureDocumentHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
-import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
-import { IRequeteTableauDelivrance } from "../../../../../../model/requete/IRequeteTableauDelivrance";
 import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
-} from "../../../../../common/hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import { autorisePrendreEnChargeDelivrance } from "../../../../../common/util/RequetesUtils";
-import { getUrlWithParam } from "../../../../../common/util/route/routeUtil";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { BoutonOperationEnCours } from "../../../../../common/widget/attente/BoutonOperationEnCours";
+} from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { autorisePrendreEnChargeDelivrance } from "@util/RequetesUtils";
+import { getUrlWithParam } from "@util/route/routeUtil";
+import { getLibelle } from "@util/Utils";
+import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import "./scss/BoutonPrendreEnCharge.scss";
 
@@ -19,39 +19,38 @@ interface BoutonPrendreEnChargeProps {
   disabled?: boolean;
 }
 
-export const BoutonPrendreEnCharge: React.FC<BoutonPrendreEnChargeProps> =
-  props => {
-    const history = useHistory();
+export const BoutonPrendreEnCharge: React.FC<
+  BoutonPrendreEnChargeProps
+> = props => {
+  const history = useHistory();
 
-    const [params, setParams] =
-      useState<CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
+  const [params, setParams] = useState<
+    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+  >();
 
-    const setActionEtUpdateStatut = () => {
-      setParams({
-        requete: mapRequeteRmcAuto(props.requete),
-        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-        statutRequete: StatutRequete.PRISE_EN_CHARGE,
-        urlCourante: getUrlWithParam(
-          history.location.pathname,
-          props.requete.id
-        )
-      });
-    };
-
-    useCreationActionMiseAjourStatutEtRmcAuto(params);
-
-    return (
-      <BoutonOperationEnCours
-        onClick={setActionEtUpdateStatut}
-        class="BoutonPrendreEnCharge"
-        estDesactive={
-          !autorisePrendreEnChargeDelivrance(props.requete) || props.disabled
-        }
-      >
-        {getLibelle("Prendre en charge")}
-      </BoutonOperationEnCours>
-    );
+  const setActionEtUpdateStatut = () => {
+    setParams({
+      requete: mapRequeteRmcAuto(props.requete),
+      libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
+      statutRequete: StatutRequete.PRISE_EN_CHARGE,
+      urlCourante: getUrlWithParam(history.location.pathname, props.requete.id)
+    });
   };
+
+  useCreationActionMiseAjourStatutEtRmcAuto(params);
+
+  return (
+    <BoutonOperationEnCours
+      onClick={setActionEtUpdateStatut}
+      class="BoutonPrendreEnCharge"
+      estDesactive={
+        !autorisePrendreEnChargeDelivrance(props.requete) || props.disabled
+      }
+    >
+      {getLibelle("Prendre en charge")}
+    </BoutonOperationEnCours>
+  );
+};
 
 const mapRequeteRmcAuto = (
   requete: IRequeteDelivrance

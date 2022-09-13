@@ -1,5 +1,5 @@
-import { NatureMention } from "../../model/etatcivil/enum/NatureMention";
-import { IMentionAffichage } from "../../views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { IMentionAffichage } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 
 export const mentions = [
   {

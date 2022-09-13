@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
-import {
-  IEchange,
-  IEchangeServeur
-} from "../../../../../../model/requete/IEchange";
 import {
   RetourSDANFParams,
   useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook
-} from "../../../../../common/hook/requete/creation/EnvoyerMessageSdanfEtMiseAJourStatutApiHook";
-import { getFormatDateFromTimestamp } from "../../../../../common/util/DateUtils";
-import { storeRece } from "../../../../../common/util/storeRece";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { GroupeBouton } from "../../../../../common/widget/menu/GroupeBouton";
-import { ConfirmationPopinAvecMessage } from "../../../../../common/widget/popin/ConfirmationPopinAvecMessage";
+} from "@hook/requete/creation/EnvoyerMessageSdanfEtMiseAJourStatutApiHook";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IEchange, IEchangeServeur } from "@model/requete/IEchange";
+import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import { storeRece } from "@util/storeRece";
+import { getLibelle } from "@util/Utils";
+import { GroupeBouton } from "@widget/menu/GroupeBouton";
+import { ConfirmationPopinAvecMessage } from "@widget/popin/ConfirmationPopinAvecMessage";
+import React, { useEffect, useState } from "react";
 interface ListeActionsRetourSDANFProps {
   statusRequete: any;
   idRequeteCorbeilleAgent: string;

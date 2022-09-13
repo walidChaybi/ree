@@ -1,8 +1,8 @@
+import { IActionOption } from "@model/requete/IActionOption";
+import { filtrerListeActions } from "@util/RequetesUtils";
+import { getLibelle } from "@util/Utils";
+import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import React, { useRef } from "react";
-import { IActionOption } from "../../../../../../../model/requete/IActionOption";
-import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
-import { getLibelle } from "../../../../../../common/util/Utils";
-import { GroupeBouton } from "../../../../../../common/widget/menu/GroupeBouton";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 
 const INDEX_ACTION_METTRE_A_JOUR = 0;

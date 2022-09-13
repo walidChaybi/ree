@@ -1,3 +1,4 @@
+import { RMCTableauActes } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauActes";
 import {
   act,
   fireEvent,
@@ -5,6 +6,10 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import {
+  NB_LIGNES_PAR_APPEL_ACTE,
+  NB_LIGNES_PAR_PAGE_ACTE
+} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import request from "superagent";
 import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
@@ -13,11 +18,6 @@ import {
   DataTableauActe
 } from "../../../../../mock/data/RMCActe";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import {
-  NB_LIGNES_PAR_APPEL_ACTE,
-  NB_LIGNES_PAR_PAGE_ACTE
-} from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { RMCTableauActes } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauActes";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

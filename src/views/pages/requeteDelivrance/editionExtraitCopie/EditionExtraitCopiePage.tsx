@@ -1,31 +1,31 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { IUuidEditionParams } from "../../../../model/params/IUuidEditionParams";
-import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
-import { ACTE_NON_TROUVE } from "../../../../model/requete/enum/DocumentDelivranceConstante";
-import { Validation } from "../../../../model/requete/enum/Validation";
-import {
-  DocumentReponse,
-  IDocumentReponse
-} from "../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
-import { useSupprimerDocumentComplementaireApi } from "../../../../views/common/hook/requete/SupprimerDocumentComplementaireHook";
-import { RetoucheImage } from "../../../common/composant/retoucheImage/RetoucheImage";
+import { RetoucheImage } from "@composant/retoucheImage/RetoucheImage";
+import { RECEContext } from "@core/body/Body";
 import {
   IActeApiHookParams,
   useInformationsActeApiHook
-} from "../../../common/hook/acte/ActeApiHook";
+} from "@hook/acte/ActeApiHook";
 import {
   IGetImagesDeLActeParams,
   useGetImagesDeLActe
-} from "../../../common/hook/acte/GetImagesDeLActeApiHook";
+} from "@hook/acte/GetImagesDeLActeApiHook";
 import {
   IGenerationECParams,
   useGenerationEC
-} from "../../../common/hook/generation/generationECHook/generationECHook";
-import { checkDirty, getLibelle } from "../../../common/util/Utils";
-import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
-import { RECEContext } from "../../../core/body/Body";
+} from "@hook/generation/generationECHook/generationECHook";
+import { useSupprimerDocumentComplementaireApi } from "@hook/requete/SupprimerDocumentComplementaireHook";
+import { IUuidEditionParams } from "@model/params/IUuidEditionParams";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { ACTE_NON_TROUVE } from "@model/requete/enum/DocumentDelivranceConstante";
+import { Validation } from "@model/requete/enum/Validation";
+import {
+  DocumentReponse,
+  IDocumentReponse
+} from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { checkDirty, getLibelle } from "@util/Utils";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import {
   IDetailRequeteParams,
   useAvecRejeuDetailRequeteApiHook

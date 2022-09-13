@@ -1,7 +1,7 @@
 import {
   AnalyseMarginale,
   IAnalyseMarginale
-} from "../../../../model/etatcivil/acte/IAnalyseMarginale";
+} from "@model/etatcivil/acte/IAnalyseMarginale";
 
 test("Atendu: getAnalyseMarginaleLaPlusRecente fonctionne correctement", () => {
   const am1 = {

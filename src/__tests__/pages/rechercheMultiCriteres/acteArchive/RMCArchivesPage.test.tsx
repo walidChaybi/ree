@@ -1,4 +1,8 @@
 import {
+  RMCArchivePage,
+  titreForm
+} from "@pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
+import {
   act,
   fireEvent,
   render,
@@ -8,10 +12,6 @@ import {
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import {
-  RMCArchivePage,
-  titreForm
-} from "../../../../views/pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

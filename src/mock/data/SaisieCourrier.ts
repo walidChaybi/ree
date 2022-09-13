@@ -1,21 +1,21 @@
-import { Nationalite } from "../../model/etatcivil/enum/Nationalite";
-import { NatureActe } from "../../model/etatcivil/enum/NatureActe";
-import { ChoixDelivrance } from "../../model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "../../model/requete/enum/DocumentDelivrance";
-import { MotifDelivrance } from "../../model/requete/enum/MotifDelivrance";
-import { Provenance } from "../../model/requete/enum/Provenance";
-import { Qualite } from "../../model/requete/enum/Qualite";
-import { SousTypeDelivrance } from "../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../model/requete/enum/StatutRequete";
-import { TypeCanal } from "../../model/requete/enum/TypeCanal";
-import { TypeRequete } from "../../model/requete/enum/TypeRequete";
-import { OptionsCourrier } from "../../model/requete/IOptionCourrier";
-import { IRequeteDelivrance } from "../../model/requete/IRequeteDelivrance";
-import { SaisieCourrier } from "../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
+import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
+import { Provenance } from "@model/requete/enum/Provenance";
+import { Qualite } from "@model/requete/enum/Qualite";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeCanal } from "@model/requete/enum/TypeCanal";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { OptionsCourrier } from "@model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { SaisieCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 import {
   Adresse,
   Requete
-} from "../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 
 export const SaisieCourrier17 = {
   choixCourrier: {

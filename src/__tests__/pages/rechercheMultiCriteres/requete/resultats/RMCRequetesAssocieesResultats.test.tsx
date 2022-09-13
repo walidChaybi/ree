@@ -1,4 +1,10 @@
+import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
+import {
+  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+} from "@router/ReceUrls";
 import { act, render, screen, waitFor } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/routeUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
@@ -6,12 +12,6 @@ import request from "superagent";
 import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
 import { requeteInformation } from "../../../../../mock/data/requeteInformation";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
-import { RMCRequetesAssocieesResultats } from "../../../../../views/pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
-import {
-  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
-} from "../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

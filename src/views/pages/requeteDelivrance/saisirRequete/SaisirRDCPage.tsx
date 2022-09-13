@@ -1,37 +1,37 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import * as Yup from "yup";
-import { NatureActeRequete } from "../../../../model/requete/enum/NatureActeRequete";
-import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { TypeLienMandant } from "../../../../model/requete/enum/TypeLienMandant";
-import {
-  TypeLienRequerant,
-  TYPE_LIEN_REQUERANT_POUR_TITULAIRE
-} from "../../../../model/requete/enum/TypeLienRequerant";
-import {
-  TypeRequerantRDC,
-  UN_TITULAIRE
-} from "../../../../model/requete/enum/TypeRequerantRDC";
-import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto
-} from "../../../common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
-import messageManager from "../../../common/util/messageManager";
-import { Options } from "../../../common/util/Type";
-import { getLibelle } from "../../../common/util/Utils";
-import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
+} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
+import {
+  TypeLienRequerant,
+  TYPE_LIEN_REQUERANT_POUR_TITULAIRE
+} from "@model/requete/enum/TypeLienRequerant";
+import {
+  TypeRequerantRDC,
+  UN_TITULAIRE
+} from "@model/requete/enum/TypeRequerantRDC";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import messageManager from "@util/messageManager";
+import { Options } from "@util/Type";
+import { getLibelle } from "@util/Utils";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
-} from "../../../common/widget/formulaire/adresse/AdresseForm";
-import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
+} from "@widget/formulaire/adresse/AdresseForm";
+import { Formulaire } from "@widget/formulaire/Formulaire";
 import {
   RequeteFormDefaultValues,
   RequeteFormValidationSchema
-} from "../../../common/widget/formulaire/requete/RequeteForm";
-import { ConfirmationPopin } from "../../../common/widget/popin/ConfirmationPopin";
+} from "@widget/formulaire/requete/RequeteForm";
+import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
+import React, { useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import * as Yup from "yup";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps

@@ -1,9 +1,9 @@
+import { MandataireRc } from "@model/etatcivil/enum/MandataireRc";
+import { getPanelsRc } from "@pages/fiche/hook/constructionComposants/rcrca/FicheRcUtils";
 import { waitFor } from "@testing-library/react";
 import request from "superagent";
 import mockRC from "../../../../../mock/data/RC.json";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { MandataireRc } from "../../../../../model/etatcivil/enum/MandataireRc";
-import { getPanelsRc } from "../../../../../views/pages/fiche/hook/constructionComposants/rcrca/FicheRcUtils";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

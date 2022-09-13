@@ -1,6 +1,6 @@
+import { deleteAlerteActe } from "@api/appels/etatcivilApi";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { deleteAlerteActe } from "../../../../api/appels/etatcivilApi";
-import { logError } from "../../util/LogManager";
 
 export interface DeleteAlerteActeApiHookParameters {
   idAlerteActe: string;

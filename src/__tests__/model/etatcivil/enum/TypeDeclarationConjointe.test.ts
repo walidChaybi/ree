@@ -1,5 +1,5 @@
-import { TypeDeclarationConjointe } from "../../../../model/etatcivil/enum/TypeDeclarationConjointe";
-import { premiereLettreEnMajuscule } from "../../../../views/common/util/Utils";
+import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationConjointe";
+import { premiereLettreEnMajuscule } from "@util/Utils";
 
 test("Attendu: getAllEnumsAsOptions de TypeDeclarationConjointe fonctionne correctement", () => {
   expect(

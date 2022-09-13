@@ -1,18 +1,12 @@
+import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { InscriptionRcUtil } from "@model/etatcivil/enum/TypeInscriptionRc";
+import { IDureeInscription } from "@model/etatcivil/rcrca/IDureeInscription";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { getDateFromTimestamp, getDateString } from "@util/DateUtils";
+import { premiereLettreEnMajusculeLeResteEnMinuscule } from "@util/Utils";
+import { SectionContentProps } from "@widget/section/SectionContent";
+import { SectionPartProps } from "@widget/section/SectionPart";
 import React from "react";
-import {
-  FicheUtil,
-  TypeFiche
-} from "../../../../../../model/etatcivil/enum/TypeFiche";
-import { InscriptionRcUtil } from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
-import { IDureeInscription } from "../../../../../../model/etatcivil/rcrca/IDureeInscription";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import {
-  getDateFromTimestamp,
-  getDateString
-} from "../../../../../common/util/DateUtils";
-import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../../../../common/util/Utils";
-import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 import { LienFiche } from "../../../LienFiche";
 import { InscriptionsLiees } from "./InscriptionsLiees";
 

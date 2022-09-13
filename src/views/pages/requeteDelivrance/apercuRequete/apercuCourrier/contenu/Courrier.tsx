@@ -1,26 +1,26 @@
-import React, { useCallback, useEffect, useState } from "react";
-import * as Yup from "yup";
-import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "../../../../../../model/requete/enum/SousTypeDelivrance";
-import {
-  OptionCourrier,
-  OptionsCourrier
-} from "../../../../../../model/requete/IOptionCourrier";
-import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
-import { ReinitialiserValiderFormBoutons } from "../../../../../common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
+import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import {
   ICreerCourrierECParams,
   useCreerCourrierEC
-} from "../../../../../common/hook/requete/creerCourrierECHook";
-import { useReinitialisationComposant } from "../../../../../common/util/form/useReinitialisation";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { OperationEnCours } from "../../../../../common/widget/attente/OperationEnCours";
+} from "@hook/requete/creerCourrierECHook";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import {
+  OptionCourrier,
+  OptionsCourrier
+} from "@model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { useReinitialisationComposant } from "@util/form/useReinitialisation";
+import { getLibelle } from "@util/Utils";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import {
   AdresseFormValidationSchema,
   AdresseFormValidationSchemaRequired
-} from "../../../../../common/widget/formulaire/adresse/AdresseForm";
-import { Formulaire } from "../../../../../common/widget/formulaire/Formulaire";
-import { ConfirmationPopin } from "../../../../../common/widget/popin/ConfirmationPopin";
+} from "@widget/formulaire/adresse/AdresseForm";
+import { Formulaire } from "@widget/formulaire/Formulaire";
+import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
+import React, { useCallback, useEffect, useState } from "react";
+import * as Yup from "yup";
 import { DocumentEC } from "../../../editionExtraitCopie/enum/DocumentEC";
 import {
   controleFormulaire,

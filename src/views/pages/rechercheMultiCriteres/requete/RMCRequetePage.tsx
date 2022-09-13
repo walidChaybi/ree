@@ -1,8 +1,8 @@
+import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
+import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { AutoScroll } from "@widget/autoScroll/autoScroll";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { ICriteresRMCRequete } from "../../../../model/rmc/requete/ICriteresRMCRequete";
-import { IRMCRequete } from "../../../../model/rmc/requete/IRMCRequete";
-import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
-import { AutoScroll } from "../../../common/widget/autoScroll/autoScroll";
 import { useRMCRequeteApiHook } from "./hook/RMCRequeteApiHook";
 import { RMCRequeteResultats } from "./resultats/RMCRequeteResultats";
 import { RMCRequeteForm } from "./RMCRequeteForm";

@@ -1,16 +1,16 @@
-import React from "react";
-import { IQueryParametersPourRequetes } from "../../../../api/appels/requeteApi";
-import { IOfficier } from "../../../../model/agent/IOfficier";
-import { IOngletProps } from "../../../../model/IOnglet";
-import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
-import { getLibelle } from "../../../common/util/Utils";
-import { BoiteAOnglet } from "../../../common/widget/onglets/BoiteAOnglets";
-import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { OfficierContext } from "../../../core/contexts/OfficierContext";
+import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
+import { OfficierContext } from "@core/contexts/OfficierContext";
+import { IOfficier } from "@model/agent/IOfficier";
+import { IOngletProps } from "@model/IOnglet";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import {
   URL_MES_REQUETES_CREATION,
   URL_REQUETES_CREATION_SERVICE
-} from "../../../router/ReceUrls";
+} from "@router/ReceUrls";
+import { getLibelle } from "@util/Utils";
+import { BoiteAOnglet } from "@widget/onglets/BoiteAOnglets";
+import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import React from "react";
 import BoutonPrendreEnChargePlusAncienneCreation from "./BoutonPrendreEnChargePlusAncienneCreation";
 import { MesRequetesCreation } from "./MesRequetesCreation";
 import { statutsRequetesCreation } from "./params/EspaceCreationParams";

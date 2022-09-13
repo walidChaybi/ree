@@ -1,8 +1,8 @@
+import { postSauvCourrierCreerActionMajStatutRequete } from "@api/appels/requeteApi";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { ISauvegardeCourrier } from "@model/requete/ISauvegardeCourrier";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { postSauvCourrierCreerActionMajStatutRequete } from "../../../../api/appels/requeteApi";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { ISauvegardeCourrier } from "../../../../model/requete/ISauvegardeCourrier";
-import { logError } from "../../util/LogManager";
 
 export function useSauvegarderCourrierCreerActionMajStatutRequete(
   statutRequete: StatutRequete,
@@ -10,8 +10,9 @@ export function useSauvegarderCourrierCreerActionMajStatutRequete(
   requete?: ISauvegardeCourrier | undefined,
   requeteId?: string
 ) {
-  const [uuidDocumentsReponse, setUuidDocumentsReponse] =
-    useState<string[] | undefined>();
+  const [uuidDocumentsReponse, setUuidDocumentsReponse] = useState<
+    string[] | undefined
+  >();
   useEffect(
     () => {
       if (requete && requeteId) {

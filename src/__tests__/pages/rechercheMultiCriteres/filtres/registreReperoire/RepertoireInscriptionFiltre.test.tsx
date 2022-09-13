@@ -1,3 +1,10 @@
+import { NatureRc } from "@model/etatcivil/enum/NatureRc";
+import { NatureRca } from "@model/etatcivil/enum/NatureRca";
+import { REPERTOIRE } from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
+import RepertoireInscriptionFiltre, {
+  RepertoireInscriptionDefaultValues,
+  RepertoireInscriptionFiltreProps
+} from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RepertoireInscriptionFiltre";
 import {
   act,
   fireEvent,
@@ -9,13 +16,6 @@ import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
-import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
-import { REPERTOIRE } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
-import RepertoireInscriptionFiltre, {
-  RepertoireInscriptionDefaultValues,
-  RepertoireInscriptionFiltreProps
-} from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RepertoireInscriptionFiltre";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

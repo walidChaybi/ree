@@ -1,32 +1,29 @@
-import { Qualite } from "../../../../../model/requete/enum/Qualite";
-import { TypeInstitutionnel } from "../../../../../model/requete/enum/TypeInstitutionnel";
-import { TypeLienMandant } from "../../../../../model/requete/enum/TypeLienMandant";
-import { TypeLienRequerant } from "../../../../../model/requete/enum/TypeLienRequerant";
-import { TypeMandataireReq } from "../../../../../model/requete/enum/TypeMandataireReq";
-import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
-import { EvenementReqDelivrance } from "../../../../../model/requete/IEvenementReqDelivrance";
-import { IMandant, Mandant } from "../../../../../model/requete/IMandant";
-import { IParent, Parent } from "../../../../../model/requete/IParents";
-import { IRequerant, Requerant } from "../../../../../model/requete/IRequerant";
-import { Requete } from "../../../../../model/requete/IRequete";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
+import { Qualite } from "@model/requete/enum/Qualite";
+import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
+import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
+import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
+import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { EvenementReqDelivrance } from "@model/requete/IEvenementReqDelivrance";
+import { IMandant, Mandant } from "@model/requete/IMandant";
+import { IParent, Parent } from "@model/requete/IParents";
+import { IRequerant, Requerant } from "@model/requete/IRequerant";
+import { Requete } from "@model/requete/IRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import {
   ITitulaireRequete,
   TitulaireRequete
-} from "../../../../../model/requete/ITitulaireRequete";
-import {
-  getLibelle,
-  triListeObjetsSurPropriete
-} from "../../../../common/util/Utils";
-import { SectionContentProps } from "../../../../common/widget/section/SectionContent";
-import { SectionPanelProps } from "../../../../common/widget/section/SectionPanel";
-import { SectionPartProps } from "../../../../common/widget/section/SectionPart";
-import { SectionPartContentProps } from "../../../../common/widget/section/SectionPartContent";
+} from "@model/requete/ITitulaireRequete";
+import { getLibelle, triListeObjetsSurPropriete } from "@util/Utils";
+import { SectionContentProps } from "@widget/section/SectionContent";
+import { SectionPanelProps } from "@widget/section/SectionPanel";
+import { SectionPartProps } from "@widget/section/SectionPart";
+import { SectionPartContentProps } from "@widget/section/SectionPartContent";
 import {
   ajouterContentPartAuPartMultiValeurs,
   ajouterContentPartAuPartUneValeur,
   ajouterPanelAreasAuPanel
-} from "../../../../common/widget/section/SectionUtils";
+} from "@widget/section/SectionUtils";
 
 export function getPanelsDetailRequete(detailRequete?: IRequeteDelivrance) {
   const panels: SectionPanelProps[] = [];

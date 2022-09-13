@@ -5,12 +5,12 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
+import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Form, Formik } from "formik";
 import React from "react";
 import request from "superagent";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import PiecesJointesForm from "../../../../../views/common/widget/formulaire/piecesJointes/PiecesJointesForm";
-import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
 import { inputPngFiles } from "../../../../__tests__utils__/testsUtil";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);

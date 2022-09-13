@@ -1,3 +1,4 @@
+import { BoutonNouvelleRMCActeInscription } from "@pages/rechercheMultiCriteres/autoActesInscriptions/BoutonNouvelleRMCActeInscription";
 import {
   act,
   fireEvent,
@@ -6,7 +7,6 @@ import {
   waitFor
 } from "@testing-library/react";
 import React from "react";
-import { BoutonNouvelleRMCActeInscription } from "../../../../views/pages/rechercheMultiCriteres/autoActesInscriptions/BoutonNouvelleRMCActeInscription";
 
 test("renders titre bouton ajouter RMC", async () => {
   await act(async () => {

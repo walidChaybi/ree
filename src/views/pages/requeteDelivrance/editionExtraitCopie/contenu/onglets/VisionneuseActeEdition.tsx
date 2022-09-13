@@ -1,8 +1,8 @@
+import { AlertesActes } from "@composant/alertesActe/AlertesActes";
+import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "@model/agent/IOfficier";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import React, { useEffect, useState } from "react";
-import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../../../model/agent/IOfficier";
-import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
-import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
-import { AlertesActes } from "../../../../../common/composant/alertesActe/AlertesActes";
 import { ActeImage } from "../../../../fiche/hook/constructionComposants/acte/ActeImage";
 
 interface VisionneuseActeEditionProps {

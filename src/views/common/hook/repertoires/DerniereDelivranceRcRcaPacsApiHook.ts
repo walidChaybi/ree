@@ -1,7 +1,7 @@
+import { updateDateDerniereDelivranceRcRcaPacs } from "@api/appels/etatcivilApi";
+import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { updateDateDerniereDelivranceRcRcaPacs } from "../../../../api/appels/etatcivilApi";
-import { TypePacsRcRca } from "../../../../model/etatcivil/enum/TypePacsRcRca";
-import { logError } from "../../util/LogManager";
 
 export interface IDerniereDelivranceRcRcaPacsParams {
   idRepertoire: string;

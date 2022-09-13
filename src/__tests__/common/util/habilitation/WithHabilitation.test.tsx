@@ -1,11 +1,11 @@
+import { Droit } from "@model/agent/enum/Droit";
+import { IOfficier } from "@model/agent/IOfficier";
 import { render } from "@testing-library/react";
+import { IHabiliationDescription } from "@util/habilitation/habilitationsDescription";
+import WithHabilitation from "@util/habilitation/WithHabilitation";
+import { storeRece } from "@util/storeRece";
 import React from "react";
 import mockConnectedUser from "../../../../mock/data/connectedUser.json";
-import { Droit } from "../../../../model/agent/enum/Droit";
-import { IOfficier } from "../../../../model/agent/IOfficier";
-import { IHabiliationDescription } from "../../../../views/common/util/habilitation/habilitationsDescription";
-import WithHabilitation from "../../../../views/common/util/habilitation/WithHabilitation";
-import { storeRece } from "../../../../views/common/util/storeRece";
 
 interface BoutonTestProps {
   disabled?: boolean;

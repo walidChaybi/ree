@@ -1,15 +1,3 @@
-import { IEvenement } from "../../../../../../../../model/etatcivil/acte/IEvenement";
-import {
-  FicheActe,
-  IFicheActe
-} from "../../../../../../../../model/etatcivil/acte/IFicheActe";
-import { IFiliation } from "../../../../../../../../model/etatcivil/acte/IFiliation";
-import {
-  ITitulaireActe,
-  TitulaireActe
-} from "../../../../../../../../model/etatcivil/acte/ITitulaireActe";
-import { Sexe } from "../../../../../../../../model/etatcivil/enum/Sexe";
-import { TypeDeclarationConjointe } from "../../../../../../../../model/etatcivil/enum/TypeDeclarationConjointe";
 import {
   AGE,
   ANNEE,
@@ -45,11 +33,17 @@ import {
   TITULAIRE_EVT_2,
   TYPE,
   VILLE
-} from "../../../../../../../common/composant/formulaire/ConstantesNomsForm";
+} from "@composant/formulaire/ConstantesNomsForm";
+import { IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IFiliation } from "@model/etatcivil/acte/IFiliation";
 import {
-  getDateComposeFromDate,
-  IDateCompose
-} from "../../../../../../../common/util/DateUtils";
+  ITitulaireActe,
+  TitulaireActe
+} from "@model/etatcivil/acte/ITitulaireActe";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationConjointe";
+import { getDateComposeFromDate, IDateCompose } from "@util/DateUtils";
 import {
   ABSENCE_VALIDEE,
   DEUX,
@@ -58,11 +52,8 @@ import {
   rempliAGaucheAvecZero,
   UN,
   ZERO
-} from "../../../../../../../common/util/Utils";
-import {
-  FRANCE,
-  LieuxUtils
-} from "../../../../../../../common/utilMetier/LieuxUtils";
+} from "@util/Utils";
+import { FRANCE, LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export interface ISaisieExtraitForm {
   [TITULAIRE_EVT_1]: ITitulaireEvtForm;

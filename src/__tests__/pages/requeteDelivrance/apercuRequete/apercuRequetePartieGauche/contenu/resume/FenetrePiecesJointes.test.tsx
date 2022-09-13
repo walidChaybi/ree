@@ -1,12 +1,12 @@
+import {
+  FenetrePiecesJointes,
+  onClose
+} from "@composant/piecesJointes/FenetrePiecesJointes";
+import { TypePieceJointe } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
-import {
-  FenetrePiecesJointes,
-  onClose
-} from "../../../../../../../views/common/composant/piecesJointes/FenetrePiecesJointes";
-import { TypePieceJointe } from "../../../../../../../views/common/hook/requete/piecesJointes/PostPiecesJointesHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

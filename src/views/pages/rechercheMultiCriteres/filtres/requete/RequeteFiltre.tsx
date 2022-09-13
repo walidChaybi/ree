@@ -1,26 +1,26 @@
-import { connect, getIn } from "formik";
-import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
-import { SousTypeCreation } from "../../../../../model/requete/enum/SousTypeCreation";
-import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
-import { SousTypeInformation } from "../../../../../model/requete/enum/SousTypeInformation";
-import { SousTypeMiseAJour } from "../../../../../model/requete/enum/SousTypeMiseAJour";
-import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
-import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
-import { IRMCRequete } from "../../../../../model/rmc/requete/IRMCRequete";
-import { CarateresAlphanumerique } from "../../../../../ressources/Regex";
-import { Options } from "../../../../common/util/Type";
-import { getLibelle } from "../../../../common/util/Utils";
-import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
-import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
-import { CARACTERES_ALPHANUMERIQUE } from "../../../../common/widget/formulaire/FormulaireMessages";
-import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
+import { SousTypeMiseAJour } from "@model/requete/enum/SousTypeMiseAJour";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
+import { Options } from "@util/Type";
+import { getLibelle } from "@util/Utils";
+import { Fieldset } from "@widget/fieldset/Fieldset";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
+import { CARACTERES_ALPHANUMERIQUE } from "@widget/formulaire/FormulaireMessages";
+import { traiteEspace } from "@widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
   withNamespace
-} from "../../../../common/widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect, getIn } from "formik";
+import React, { useEffect, useState } from "react";
+import * as Yup from "yup";
+import { CarateresAlphanumerique } from "../../../../../ressources/Regex";
 
 // Noms des champs
 export const NUMERO_REQUETE = "numeroRequete";
@@ -71,9 +71,8 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
     STATUT_REQUETE
   );
 
-  const [sousTypeRequeteInactif, setSousTypeRequeteInactif] = useState<boolean>(
-    true
-  );
+  const [sousTypeRequeteInactif, setSousTypeRequeteInactif] =
+    useState<boolean>(true);
 
   const [sousTypeRequeteOptions, setSousTypeRequeteOptions] = useState<Options>(
     []

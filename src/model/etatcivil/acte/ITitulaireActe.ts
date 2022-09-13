@@ -1,11 +1,11 @@
-import { getDateStringFromDateCompose } from "../../../views/common/util/DateUtils";
+import { getDateStringFromDateCompose } from "@util/DateUtils";
 import {
   formatNom,
   formatPrenom,
   mapPrenomsVersPrenomsOrdonnes,
   numberToString
-} from "../../../views/common/util/Utils";
-import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
+} from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { IPrenomOrdonnes } from "../../requete/IPrenomOrdonnes";
 import { LienParente } from "../enum/LienParente";
 import { Sexe } from "../enum/Sexe";

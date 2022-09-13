@@ -1,3 +1,15 @@
+import {
+  IGenerationCertificatSituationParams,
+  useGenerationCertificatSituationHook
+} from "@hook/generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
+import {
+  INbInscriptionsInfos,
+  specificationPhraseRMCAutoVide
+} from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
@@ -7,18 +19,6 @@ import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../mock
 import { idRequeteRDCSC } from "../../../../../mock/data/requeteDelivrance";
 import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
-import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
-import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
-import { ITitulaireRequeteTableau } from "../../../../../model/requete/ITitulaireRequeteTableau";
-import {
-  IGenerationCertificatSituationParams,
-  useGenerationCertificatSituationHook
-} from "../../../../../views/common/hook/generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
-import {
-  INbInscriptionsInfos,
-  specificationPhraseRMCAutoVide
-} from "../../../../../views/common/hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],

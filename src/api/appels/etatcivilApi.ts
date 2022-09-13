@@ -1,11 +1,11 @@
-import { TypeExtrait } from "../../model/etatcivil/enum/TypeExtrait";
-import { TypeFiche } from "../../model/etatcivil/enum/TypeFiche";
-import { IRMCRequestActesInscriptions } from "../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
-import { IExtraitSaisiAEnvoyer } from "../../views/common/hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
-import { AddAlerteActeApiHookParameters } from "../../views/common/hook/alertes/AddAlerteActeHookApi";
-import { DeleteAlerteActeApiHookParameters } from "../../views/common/hook/alertes/DeleteAlerteActeHookApi";
-import { IDerniereDelivranceRcRcaPacsParams } from "../../views/common/hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
-import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
+import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
+import { AddAlerteActeApiHookParameters } from "@hook/alertes/AddAlerteActeHookApi";
+import { DeleteAlerteActeApiHookParameters } from "@hook/alertes/DeleteAlerteActeHookApi";
+import { IDerniereDelivranceRcRcaPacsParams } from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
+import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { IRMCRequestActesInscriptions } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
+import { ICriteresRMCAuto } from "@pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");

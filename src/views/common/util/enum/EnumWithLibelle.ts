@@ -1,7 +1,7 @@
 import {
   changeLaPlaceDunElement,
   premiereLettreEnMajuscule
-} from "../../util/Utils";
+} from "@util/Utils";
 import { Options } from "../Type";
 
 const AUTRE = "autre";

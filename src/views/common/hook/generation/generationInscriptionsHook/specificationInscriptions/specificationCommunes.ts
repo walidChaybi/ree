@@ -1,27 +1,27 @@
-import { Decret } from "../../../../../../model/etatcivil/commun/IDecret";
-import { LienParente } from "../../../../../../model/etatcivil/enum/LienParente";
+import { Decret } from "@model/etatcivil/commun/IDecret";
+import { LienParente } from "@model/etatcivil/enum/LienParente";
 import {
   TypeDecision,
   TypeDecisionUtil
-} from "../../../../../../model/etatcivil/enum/TypeDecision";
-import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import { IInteresse } from "../../../../../../model/etatcivil/rcrca/IInteresse";
-import { IMariageInteresse } from "../../../../../../model/etatcivil/rcrca/IMariageInteresse";
-import { IParent } from "../../../../../../model/etatcivil/rcrca/IParent";
+} from "@model/etatcivil/enum/TypeDecision";
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { IInteresse } from "@model/etatcivil/rcrca/IInteresse";
+import { IMariageInteresse } from "@model/etatcivil/rcrca/IMariageInteresse";
+import { IParent } from "@model/etatcivil/rcrca/IParent";
 import {
   getDateFormatJasper,
   getDateFormatJasperFromCompose,
   getDateFromTimestamp
-} from "../../../../util/DateUtils";
-import { storeRece } from "../../../../util/storeRece";
+} from "@util/DateUtils";
+import { storeRece } from "@util/storeRece";
 import {
   compareNombre,
   formatNom,
   formatPrenom,
   triListeObjetsSurPropriete
-} from "../../../../util/Utils";
-import { LieuxUtils } from "../../../../utilMetier/LieuxUtils";
+} from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export function getDecisionExequatur(data: IFicheRcRca) {
   let decision = undefined;

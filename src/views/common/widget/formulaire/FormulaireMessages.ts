@@ -1,5 +1,5 @@
-import { MIN_YEAR } from "../../util/DateUtils";
-import { getLibelle } from "../../util/Utils";
+import { MIN_YEAR } from "@util/DateUtils";
+import { getLibelle } from "@util/Utils";
 
 // Messages d'erreurs
 export const CARATERES_AUTORISES_MESSAGE =

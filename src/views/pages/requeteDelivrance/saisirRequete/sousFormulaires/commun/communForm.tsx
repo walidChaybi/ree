@@ -1,10 +1,10 @@
-import React from "react";
-import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
   sortieChampEnMajuscule,
   sortieChampPremiereLettreEnMajuscule
-} from "../../../../../common/widget/formulaire/utils/ControlesUtil";
-import { NB_CARACT_MAX_SAISIE } from "../../../../../common/widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/ControlesUtil";
+import { NB_CARACT_MAX_SAISIE } from "@widget/formulaire/utils/FormUtil";
+import React from "react";
 export function getBlockRaisonSocialeNomPrenom(
   raisonSocialeWithNamespace: string,
   libelleChampRaisonSociale: string,

@@ -1,22 +1,21 @@
-import React from "react";
-import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import {
   ITitulaireActe,
   TitulaireActe
-} from "../../../../../../model/etatcivil/acte/ITitulaireActe";
+} from "@model/etatcivil/acte/ITitulaireActe";
 import {
   remplaceSNP,
   remplaceSPC,
   triListeObjetsSurPropriete
-} from "../../../../../common/util/Utils";
-import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
+} from "@util/Utils";
+import { SectionContentProps } from "@widget/section/SectionContent";
+import { SectionPartProps } from "@widget/section/SectionPart";
+import React from "react";
 
 export function getTitulaires(acte: IFicheActe): SectionPartProps[] {
-  const sortedTitulaires = acte.titulaires ? triListeObjetsSurPropriete(
-    [...acte.titulaires],
-    "numeroOrdreSaisi"
-  ) : [];
+  const sortedTitulaires = acte.titulaires
+    ? triListeObjetsSurPropriete([...acte.titulaires], "numeroOrdreSaisi")
+    : [];
 
   return sortedTitulaires.map((titulaire, index) => {
     return {

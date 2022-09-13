@@ -1,5 +1,5 @@
-import { getLibelle } from "../../../util/Utils";
-import { withNamespace } from "../../../widget/formulaire/utils/FormUtil";
+import { getLibelle } from "@util/Utils";
+import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import {
   LIEU_COMPLET,
   PAYS,

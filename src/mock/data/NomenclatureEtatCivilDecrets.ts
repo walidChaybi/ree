@@ -1,5 +1,5 @@
-import { DocumentDecret, IDecret } from "../../model/etatcivil/commun/IDecret";
-import { TypePacsRcRca } from "../../model/etatcivil/enum/TypePacsRcRca";
+import { DocumentDecret, IDecret } from "@model/etatcivil/commun/IDecret";
+import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
 
 export const decrets: IDecret[] = [
   {

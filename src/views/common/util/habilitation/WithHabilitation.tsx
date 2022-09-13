@@ -1,10 +1,10 @@
-import * as React from "react";
 import {
   estOfficierHabiliterPourSeulementLesDroits,
   estOfficierHabiliterPourTousLesDroits,
   estOfficierHabiliterPourUnDesDroits,
   IOfficier
-} from "../../../../model/agent/IOfficier";
+} from "@model/agent/IOfficier";
+import * as React from "react";
 import { storeRece } from "../storeRece";
 import {
   habilitationsDescription,

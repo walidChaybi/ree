@@ -1,11 +1,10 @@
-import { IAlerte } from "../../model/etatcivil/fiche/IAlerte";
+import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 
 export const ReponseAppelGetAlertesActe = {
   hasTechnicalError: false,
   hasBusinessError: false,
   status: 200,
-  url:
-    "/rece-etatcivil-api/v1/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/alertes",
+  url: "/rece-etatcivil-api/v1/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/alertes",
   data: [
     {
       id: "ee63de49-0a32-4086-9a98-03a846a790e4",

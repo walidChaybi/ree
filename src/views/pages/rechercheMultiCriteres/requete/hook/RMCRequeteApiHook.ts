@@ -1,21 +1,16 @@
+import { rechercheMultiCriteresRequetes } from "@api/appels/requeteApi";
+import { TRequeteTableau } from "@model/requete/IRequeteTableau";
+import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
+import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
+import { logError } from "@util/LogManager";
+import { mappingRequetesTableau } from "@util/RequetesUtils";
 import { useEffect, useState } from "react";
-import { rechercheMultiCriteresRequetes } from "../../../../../api/appels/requeteApi";
-import { TRequeteTableau } from "../../../../../model/requete/IRequeteTableau";
-import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
-import {
-  getParamsTableau,
-  IParamsTableau
-} from "../../../../common/util/GestionDesLiensApi";
-import { logError } from "../../../../common/util/LogManager";
-import { mappingRequetesTableau } from "../../../../common/util/RequetesUtils";
 import { mappingCriteresRequete } from "./RMCRequeteMapping";
 
 export function useRMCRequeteApiHook(criteres?: ICriteresRMCRequete) {
   const [dataRMCRequete, setDataRMCRequete] = useState<TRequeteTableau[]>();
-  const [
-    dataTableauRMCRequete,
-    setDataTableauRMCRequete
-  ] = useState<IParamsTableau>();
+  const [dataTableauRMCRequete, setDataTableauRMCRequete] =
+    useState<IParamsTableau>();
 
   useEffect(() => {
     async function fetchRequetes() {

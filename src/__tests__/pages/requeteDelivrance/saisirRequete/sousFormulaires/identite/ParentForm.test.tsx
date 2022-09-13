@@ -1,3 +1,9 @@
+import ParentForm, {
+  ParentFormDefaultValues,
+  ParentFormValidationSchema,
+  ParentSubFormProps
+} from "@composant/formulaire/ParentForm";
+import { PARENT1 } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import {
   act,
   fireEvent,
@@ -7,12 +13,6 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import ParentForm, {
-  ParentFormDefaultValues,
-  ParentFormValidationSchema,
-  ParentSubFormProps
-} from "../../../../../../views/common/composant/formulaire/ParentForm";
-import { PARENT1 } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 
 const HookParentForm: React.FC = () => {
   const [result, setResult] = useState("");

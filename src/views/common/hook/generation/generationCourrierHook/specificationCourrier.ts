@@ -1,30 +1,27 @@
 import {
   AnalyseMarginale,
   IAnalyseMarginale
-} from "../../../../../model/etatcivil/acte/IAnalyseMarginale";
-import {
-  FicheActe,
-  IFicheActe
-} from "../../../../../model/etatcivil/acte/IFicheActe";
-import { TitulaireActe } from "../../../../../model/etatcivil/acte/ITitulaireActe";
-import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
-import { SousTypeRequete } from "../../../../../model/requete/enum/SousTypeRequete";
+} from "@model/etatcivil/acte/IAnalyseMarginale";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { TitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import {
   OptionCourrier,
   OptionsCourrier
-} from "../../../../../model/requete/IOptionCourrier";
-import { IPrenomOrdonnes } from "../../../../../model/requete/IPrenomOrdonnes";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
+} from "@model/requete/IOptionCourrier";
+import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import {
   ITitulaireRequete,
   TitulaireRequete
-} from "../../../../../model/requete/ITitulaireRequete";
-import { SaisieCourrier } from "../../../../pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
+} from "@model/requete/ITitulaireRequete";
+import { SaisieCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 import {
   formatPrenom,
   getValeurOuVide,
   triListeObjetsSurPropriete
-} from "../../../util/Utils";
+} from "@util/Utils";
 
 export interface OptionsJasper {
   option?: string;

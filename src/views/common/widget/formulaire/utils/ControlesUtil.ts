@@ -1,10 +1,10 @@
-import { FormikProps, FormikValues } from "formik";
 import {
   enMajuscule,
   premiereLettreEnMajuscule,
   rempliAGaucheAvecZero,
   supprimerEspacesInutiles
-} from "../../../util/Utils";
+} from "@util/Utils";
+import { FormikProps, FormikValues } from "formik";
 
 export const NB_MAX_JOUR = 31;
 export const NB_MAX_MOIS = 12;

@@ -1,4 +1,4 @@
-import { TypePieceJustificative } from "../../model/requete/enum/TypePieceJustificative";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 
 export const TYPE_PIECE_JUSTIFICATIVE = [
   {

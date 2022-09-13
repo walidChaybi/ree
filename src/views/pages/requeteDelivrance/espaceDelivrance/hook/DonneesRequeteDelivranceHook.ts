@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
 import {
   getRequetesDelivrance,
   IQueryParametersPourRequetes,
   TypeAppelRequete
-} from "../../../../../api/appels/requeteApi";
+} from "@api/appels/requeteApi";
 import {
   IRequeteTableauDelivrance,
   mappingRequetesTableauDelivrance
-} from "../../../../../model/requete/IRequeteTableauDelivrance";
-import {
-  getParamsTableau,
-  IParamsTableau
-} from "../../../../common/util/GestionDesLiensApi";
-import { logError } from "../../../../common/util/LogManager";
+} from "@model/requete/IRequeteTableauDelivrance";
+import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
+import { logError } from "@util/LogManager";
+import { useEffect, useState } from "react";
 
 export function useRequeteDelivranceApi(
   queryParameters: IQueryParametersPourRequetes,

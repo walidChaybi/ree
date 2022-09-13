@@ -1,27 +1,24 @@
+import { TransfertParams, useTransfertApi } from "@hook/requete/TransfertHook";
 import { Menu, MenuItem } from "@material-ui/core";
 import { AssignmentInd } from "@material-ui/icons";
-import React, { useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { SousTypeRequete } from "../../../../model/requete/enum/SousTypeRequete";
-import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
-import { IActionOption } from "../../../../model/requete/IActionOption";
-import { IProvenanceRequete } from "../../../../model/requete/IProvenanceRequete";
+import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IActionOption } from "@model/requete/IActionOption";
+import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
 import {
   receUrl,
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_INFORMATION
-} from "../../../router/ReceUrls";
-import {
-  TransfertParams,
-  useTransfertApi
-} from "../../hook/requete/TransfertHook";
-import { FeatureFlag } from "../../util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../util/featureFlag/gestionnaireFeatureFlag";
-import { Option } from "../../util/Type";
-import { getLibelle } from "../../util/Utils";
-import { OperationEnCours } from "../../widget/attente/OperationEnCours";
-import { Bouton } from "../../widget/boutonAntiDoubleSubmit/Bouton";
-import { GroupeBouton } from "../../widget/menu/GroupeBouton";
+} from "@router/ReceUrls";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { Option } from "@util/Type";
+import { getLibelle } from "@util/Utils";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { GroupeBouton } from "@widget/menu/GroupeBouton";
+import React, { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   listeEntiteToOptions,
   listeUtilisateursToOptionsBis,

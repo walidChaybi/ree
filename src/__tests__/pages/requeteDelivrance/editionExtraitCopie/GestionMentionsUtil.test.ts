@@ -1,17 +1,7 @@
-import { waitFor } from "@testing-library/react";
-import request from "superagent";
-import {
-  documentReponseCopieIntegrale,
-  documentReponseExtraitAvecFiliation
-} from "../../../../mock/data/DocumentReponse";
-import { ficheActe2, ficheActeMariage } from "../../../../mock/data/ficheActe";
-import { mentionsAffichage, mentionsApi } from "../../../../mock/data/mentions";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { IMention } from "../../../../model/etatcivil/acte/mention/IMention";
-import { NatureMention } from "../../../../model/etatcivil/enum/NatureMention";
-import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
-import { mapActe } from "../../../../views/common/hook/repertoires/MappingRepertoires";
+import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { IMention } from "@model/etatcivil/acte/mention/IMention";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   aucuneMentionsNationalite,
   handleCheckBox,
@@ -24,7 +14,17 @@ import {
   texteEnFonctionOpposableAuTiers,
   texteNonModifieNatureChangePasDeTexteDelivrance,
   validerMentions
-} from "../../../../views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
+} from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
+import { waitFor } from "@testing-library/react";
+import request from "superagent";
+import {
+  documentReponseCopieIntegrale,
+  documentReponseExtraitAvecFiliation
+} from "../../../../mock/data/DocumentReponse";
+import { ficheActe2, ficheActeMariage } from "../../../../mock/data/ficheActe";
+import { mentionsAffichage, mentionsApi } from "../../../../mock/data/mentions";
+import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { acte } from "../../fiche/data/ficheActe";
 
 const superagentMock = require("superagent-mock")(request, [

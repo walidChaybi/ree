@@ -1,17 +1,17 @@
-import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
-import { TypeActe } from "../../../../../model/etatcivil/enum/TypeActe";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import { IRMCActeArchive } from "../../../../../model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
-import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
-import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { getDateStringFromDateCompose } from "../../../../common/util/DateUtils";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { TypeActe } from "@model/etatcivil/enum/TypeActe";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
+import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { getDateStringFromDateCompose } from "@util/DateUtils";
 import {
   formatNom,
   formatNoms,
   formatPrenoms,
   getValeurOuVide,
   valeurOuUndefined
-} from "../../../../common/util/Utils";
+} from "@util/Utils";
 
 export function getCriteresTitulaire(
   criteres: IRMCActeInscription | IRMCActeArchive

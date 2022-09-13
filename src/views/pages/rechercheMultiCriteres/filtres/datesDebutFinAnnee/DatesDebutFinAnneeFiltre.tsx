@@ -1,23 +1,23 @@
-import { connect } from "formik";
-import React from "react";
-import * as Yup from "yup";
 import {
   compareDatesCompose,
   estDateVide,
   IDateCompose
-} from "../../../../common/util/DateUtils";
-import { getLibelle } from "../../../../common/util/Utils";
-import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
+} from "@util/DateUtils";
+import { getLibelle } from "@util/Utils";
+import { Fieldset } from "@widget/fieldset/Fieldset";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues
-} from "../../../../common/widget/formulaire/champsDate/DateComposeForm";
-import { DateValidationSchema } from "../../../../common/widget/formulaire/champsDate/DateComposeFormValidation";
+} from "@widget/formulaire/champsDate/DateComposeForm";
+import { DateValidationSchema } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
   withNamespace
-} from "../../../../common/widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React from "react";
+import * as Yup from "yup";
 import "../scss/FiltreRMC.scss";
 
 // Noms des champs

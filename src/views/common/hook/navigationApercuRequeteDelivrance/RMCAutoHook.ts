@@ -1,24 +1,21 @@
-import { useEffect, useState } from "react";
-import {
-  FicheUtil,
-  TypeFiche
-} from "../../../../model/etatcivil/enum/TypeFiche";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
-import { IResultatRMCActe } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { useRMCAutoActeApiHook } from "../../../pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActeApiHook";
+import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { useRMCAutoActeApiHook } from "@pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActeApiHook";
 import {
   redirectionRMCAuto,
   redirectionRMCAutoApercuTraitement
-} from "../../../pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
-import { useRMCAutoInscriptionApiHook } from "../../../pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoInscriptionApiHook";
-import { IUrlData } from "../../../router/ReceUrls";
-import { IParamsTableau } from "../../util/GestionDesLiensApi";
-import { getLibelle } from "../../util/Utils";
+} from "@pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
+import { useRMCAutoInscriptionApiHook } from "@pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoInscriptionApiHook";
+import { IUrlData } from "@router/ReceUrls";
+import { IParamsTableau } from "@util/GestionDesLiensApi";
+import { getLibelle } from "@util/Utils";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
   NB_LIGNES_PAR_APPEL_DEFAUT
-} from "../../widget/tableau/TableauRece/TableauPaginationConstantes";
+} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { useEffect, useState } from "react";
 import {
   IGenerationCertificatSituationParams,
   useGenerationCertificatSituationHook
@@ -46,17 +43,14 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
     `0-${NB_LIGNES_PAR_APPEL_ACTE}`
   );
 
-  const {
-    dataRMCAutoInscription,
-    dataTableauRMCAutoInscription
-  } = useRMCAutoInscriptionApiHook(
-    params?.requete,
-    `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-  );
+  const { dataRMCAutoInscription, dataTableauRMCAutoInscription } =
+    useRMCAutoInscriptionApiHook(
+      params?.requete,
+      `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+    );
 
-  const [paramsCertificatSituation, setParamsCertificatSituation] = useState<
-    IGenerationCertificatSituationParams
-  >();
+  const [paramsCertificatSituation, setParamsCertificatSituation] =
+    useState<IGenerationCertificatSituationParams>();
 
   useEffect(() => {
     // si pasDeTraitementAuto=true alors pas de génération de certificat de situation automatiquement en fonction des résultats de la RMC auto
@@ -79,9 +73,8 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
   }, [dataRMCAutoInscription, dataRMCAutoActe]);
 
   // Génération du certificat de situation
-  const resultGenerationCertificatSituationRMCAutoVide = useGenerationCertificatSituationHook(
-    paramsCertificatSituation
-  );
+  const resultGenerationCertificatSituationRMCAutoVide =
+    useGenerationCertificatSituationHook(paramsCertificatSituation);
 
   useEffect(() => {
     if (

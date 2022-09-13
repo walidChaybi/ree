@@ -1,30 +1,27 @@
-import React, { useContext, useEffect, useState } from "react";
-import {
-  FicheActe,
-  IFicheActe
-} from "../../../../../../../model/etatcivil/acte/IFicheActe";
-import { TypeExtrait } from "../../../../../../../model/etatcivil/enum/TypeExtrait";
-import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
-import {
-  CODE_EXTRAIT_AVEC_FILIATION,
-  CODE_EXTRAIT_SANS_FILIATION
-} from "../../../../../../../model/requete/enum/DocumentDelivranceConstante";
-import { Validation } from "../../../../../../../model/requete/enum/Validation";
-import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
-import { ReinitialiserValiderBoutons } from "../../../../../../common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
+import { ReinitialiserValiderBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
+import { RECEContext } from "@core/body/Body";
 import {
   IModifierCorpsExtraitParams,
   useModifierCorpsExtrait
-} from "../../../../../../common/hook/acte/ModifierCorpsExtraitApiHook";
-import { creationCompositionExtraitCopieActeTexte } from "../../../../../../common/hook/generation/generationECHook/creationComposition/creationCompositionExtraitCopieActeTexte";
+} from "@hook/acte/ModifierCorpsExtraitApiHook";
+import { creationCompositionExtraitCopieActeTexte } from "@hook/generation/generationECHook/creationComposition/creationCompositionExtraitCopieActeTexte";
 import {
   IGenerationECParams,
   useGenerationEC
-} from "../../../../../../common/hook/generation/generationECHook/generationECHook";
-import { getLibelle } from "../../../../../../common/util/Utils";
-import { StaticField } from "../../../../../../common/widget/formulaire/champFixe/StaticField";
-import { RECEContext } from "../../../../../../core/body/Body";
+} from "@hook/generation/generationECHook/generationECHook";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import {
+  CODE_EXTRAIT_AVEC_FILIATION,
+  CODE_EXTRAIT_SANS_FILIATION
+} from "@model/requete/enum/DocumentDelivranceConstante";
+import { Validation } from "@model/requete/enum/Validation";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { getLibelle } from "@util/Utils";
+import { StaticField } from "@widget/formulaire/champFixe/StaticField";
+import React, { useContext, useEffect, useState } from "react";
 import { DocumentEC } from "../../../enum/DocumentEC";
 import "./scss/ModifierCorpsExtrait.scss";
 

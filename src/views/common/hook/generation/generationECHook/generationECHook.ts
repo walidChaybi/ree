@@ -1,11 +1,11 @@
+import { Orientation } from "@model/composition/enum/Orientation";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { Validation } from "@model/requete/enum/Validation";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { useCallback, useEffect, useState } from "react";
-import { Orientation } from "../../../../../model/composition/enum/Orientation";
-import { IFicheActe } from "../../../../../model/etatcivil/acte/IFicheActe";
-import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
-import { Validation } from "../../../../../model/requete/enum/Validation";
-import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import { MimeType } from "../../../../../ressources/MimeType";
 import {
   IActeApiHookParams,

@@ -1,4 +1,4 @@
-import { getValeurOuVide } from "../../../../views/common/util/Utils";
+import { getValeurOuVide } from "@util/Utils";
 import { IFicheActe } from "../../../etatcivil/acte/IFicheActe";
 import { ICorpsImage } from "../../../etatcivil/acte/imageActe/ICorpsImage";
 import { Validation } from "../../../requete/enum/Validation";

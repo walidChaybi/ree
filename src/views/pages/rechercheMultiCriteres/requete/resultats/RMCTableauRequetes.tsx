@@ -1,38 +1,38 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router";
-import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
-import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
-import { TRequeteTableau } from "../../../../../model/requete/IRequeteTableau";
-import { IRequeteTableauCreation } from "../../../../../model/requete/IRequeteTableauCreation";
-import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
-import { IRequeteTableauInformation } from "../../../../../model/requete/IRequeteTableauInformation";
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto
-} from "../../../../common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import {
   INavigationApercuReqInfoParams,
   useNavigationApercuInformation
-} from "../../../../common/hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
+} from "@hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
 import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
-} from "../../../../common/hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
-import { autorisePrendreEnChargeReqTableauDelivrance } from "../../../../common/util/RequetesUtils";
-import { getUrlWithParam } from "../../../../common/util/route/routeUtil";
-import { getMessageZeroRequete } from "../../../../common/util/tableauRequete/TableauRequeteUtils";
-import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
-import {
-  NB_LIGNES_PAR_APPEL_DEFAUT,
-  NB_LIGNES_PAR_PAGE_REQUETE
-} from "../../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { TableauRece } from "../../../../common/widget/tableau/TableauRece/TableauRece";
+} from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { TRequeteTableau } from "@model/requete/IRequeteTableau";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import {
   URL_RECHERCHE_REQUETE,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID
-} from "../../../../router/ReceUrls";
+} from "@router/ReceUrls";
+import { IParamsTableau } from "@util/GestionDesLiensApi";
+import { autorisePrendreEnChargeReqTableauDelivrance } from "@util/RequetesUtils";
+import { getUrlWithParam } from "@util/route/routeUtil";
+import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import {
+  NB_LIGNES_PAR_APPEL_DEFAUT,
+  NB_LIGNES_PAR_PAGE_REQUETE
+} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
+import React, { useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { columnsTableauRequete } from "./RMCTableauRequetesParams";
 

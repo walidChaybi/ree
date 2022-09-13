@@ -1,3 +1,10 @@
+import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { mappingRequeteDelivrance } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
+import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import {
   act,
   fireEvent,
@@ -5,6 +12,7 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import React from "react";
 import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../../../../mock/data/connectedUserAvecDroit";
@@ -19,13 +27,6 @@ import {
 } from "../../../../../../../mock/data/ficheActe";
 import { configEtatcivil } from "../../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { IEvenement } from "../../../../../../../model/etatcivil/acte/IEvenement";
-import { IFicheActe } from "../../../../../../../model/etatcivil/acte/IFicheActe";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
-import { mapActe } from "../../../../../../../views/common/hook/repertoires/MappingRepertoires";
-import { storeRece } from "../../../../../../../views/common/util/storeRece";
-import { mappingRequeteDelivrance } from "../../../../../../../views/pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
-import { SaisirExtraitForm } from "../../../../../../../views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import {
   changeInput,
   expectEstAbsent,
@@ -38,7 +39,6 @@ import {
   expectSelectEstAbsent
 } from "../../../../../../__tests__utils__/expectUtils";
 import { configComposition } from "./../../../../../../../mock/superagent-config/superagent-mock-composition";
-import { DocumentDelivrance } from "./../../../../../../../model/requete/enum/DocumentDelivrance";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],

@@ -1,11 +1,11 @@
-import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
-import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
-import { IPrenomOrdonnes } from "../../../../../model/requete/IPrenomOrdonnes";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
-import { ITitulaireRequete } from "../../../../../model/requete/ITitulaireRequete";
-import { ITitulaireRequeteTableau } from "../../../../../model/requete/ITitulaireRequeteTableau";
-import { getValeurOuVide } from "../../../../common/util/Utils";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
+import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
+import { getValeurOuVide } from "@util/Utils";
 
 export function mappingRequeteDelivranceToRequeteTableau(
   requete: IRequeteDelivrance

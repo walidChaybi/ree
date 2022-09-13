@@ -1,11 +1,11 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
+import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
+import { getLibelle } from "@util/Utils";
 import React, { useCallback, useState } from "react";
 import { Button } from "reakit/Button";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
-import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
-import { IRMCRequete } from "../../../../../model/rmc/requete/IRMCRequete";
-import { getLibelle } from "../../../../common/util/Utils";
 import "./../scss/BoutonNouvelleRMCRequete.scss";
 import { PopinNouvelleRMCRequete } from "./PopinNouvelleRMCRequete";
 

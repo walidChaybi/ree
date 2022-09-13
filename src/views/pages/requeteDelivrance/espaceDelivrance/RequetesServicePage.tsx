@@ -1,32 +1,32 @@
-import React, { useCallback, useEffect, useState } from "react";
 import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
-} from "../../../../api/appels/requeteApi";
-import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
-import { MenuTransfert } from "../../../common/composant/menuTransfert/MenuTransfert";
+} from "@api/appels/requeteApi";
+import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
 import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
-} from "../../../common/hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import { FeatureFlag } from "../../../common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../../common/util/featureFlag/gestionnaireFeatureFlag";
-import { autorisePrendreEnChargeReqTableauDelivrance } from "../../../common/util/RequetesUtils";
-import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
-import { getLibelle } from "../../../common/util/Utils";
-import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
-import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
+} from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { autorisePrendreEnChargeReqTableauDelivrance } from "@util/RequetesUtils";
+import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { getLibelle } from "@util/Utils";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import {
   NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE,
   NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE
-} from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { TableauRece } from "../../../common/widget/tableau/TableauRece/TableauRece";
-import { TableauTypeColumn } from "../../../common/widget/tableau/TableauRece/TableauTypeColumn";
-import { SortOrder } from "../../../common/widget/tableau/TableUtils";
-import { URL_REQUETES_DELIVRANCE_SERVICE } from "../../../router/ReceUrls";
+} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
+import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
+import { SortOrder } from "@widget/tableau/TableUtils";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   dateStatutColumnHeaders,
   HeaderTableauRequete,

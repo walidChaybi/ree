@@ -1,8 +1,8 @@
-import { IMention } from "../../../../../../../model/etatcivil/acte/mention/IMention";
-import { ITexteMention } from "../../../../../../../model/etatcivil/acte/mention/ITexteMention";
-import { ITypeMention } from "../../../../../../../model/etatcivil/acte/mention/ITypeMention";
-import { NatureMention } from "../../../../../../../model/etatcivil/enum/NatureMention";
-import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
+import { IMention } from "@model/etatcivil/acte/mention/IMention";
+import { ITexteMention } from "@model/etatcivil/acte/mention/ITexteMention";
+import { ITypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { IMentionAffichage } from "./GestionMentionsUtil";
 
 export interface MentionPourRenumerotation {

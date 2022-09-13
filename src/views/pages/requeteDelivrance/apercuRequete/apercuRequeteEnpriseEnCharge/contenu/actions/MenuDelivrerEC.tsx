@@ -1,23 +1,23 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
-import { IActionOption } from "../../../../../../../model/requete/IActionOption";
-import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
   ICreerCourrierECParams,
   useCreerCourrierEC
-} from "../../../../../../common/hook/requete/creerCourrierECHook";
-import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
-import { estRenseigne, getLibelle } from "../../../../../../common/util/Utils";
-import { OperationEnCours } from "../../../../../../common/widget/attente/OperationEnCours";
-import { GroupeBouton } from "../../../../../../common/widget/menu/GroupeBouton";
+} from "@hook/requete/creerCourrierECHook";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { IActionOption } from "@model/requete/IActionOption";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { filtrerListeActions } from "@util/RequetesUtils";
+import { estRenseigne, getLibelle } from "@util/Utils";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import {
   ConfirmationPopin,
   IBoutonPopin
-} from "../../../../../../common/widget/popin/ConfirmationPopin";
+} from "@widget/popin/ConfirmationPopin";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { DocumentEC } from "../../../../editionExtraitCopie/enum/DocumentEC";
 import { useOptionsCourriersApiHook } from "../../../apercuCourrier/contenu/hook/OptionsCourriersHook";
 import { IChoixActionDelivranceProps } from "./ChoixAction";

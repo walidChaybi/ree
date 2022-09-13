@@ -1,39 +1,36 @@
-import React, { useCallback, useContext, useState } from "react";
-import * as Yup from "yup";
-import {
-  FicheActe,
-  IFicheActe
-} from "../../../../../../../model/etatcivil/acte/IFicheActe";
-import { IFiliation } from "../../../../../../../model/etatcivil/acte/IFiliation";
-import {
-  ITitulaireActe,
-  TitulaireActe
-} from "../../../../../../../model/etatcivil/acte/ITitulaireActe";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
-import { ReinitialiserValiderFormBoutons } from "../../../../../../common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
+import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import {
   PARENT_NAISS,
   TITULAIRE_EVT_1,
   TITULAIRE_EVT_2
-} from "../../../../../../common/composant/formulaire/ConstantesNomsForm";
-import { IExtraitSaisiAEnvoyer } from "../../../../../../common/hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
+} from "@composant/formulaire/ConstantesNomsForm";
+import { RECEContext } from "@core/body/Body";
+import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
 import {
   ISauvegardeValidationSaisieExtraitParams,
   useSauvegardeValidationSaisieExtrait
-} from "../../../../../../common/hook/requete/ValidationSaisieExtraitHook";
-import { useReinitialisationComposant } from "../../../../../../common/util/form/useReinitialisation";
-import { getLibelle } from "../../../../../../common/util/Utils";
-import { AccordionRece } from "../../../../../../common/widget/accordion/AccordionRece";
-import { StaticField } from "../../../../../../common/widget/formulaire/champFixe/StaticField";
-import { Formulaire } from "../../../../../../common/widget/formulaire/Formulaire";
-import FormikEffect from "../../../../../../common/widget/formulaire/utils/FormikEffect";
-import { withNamespace } from "../../../../../../common/widget/formulaire/utils/FormUtil";
-import { ConfirmationPopin } from "../../../../../../common/widget/popin/ConfirmationPopin";
-import { RECEContext } from "../../../../../../core/body/Body";
+} from "@hook/requete/ValidationSaisieExtraitHook";
+import { IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IFiliation } from "@model/etatcivil/acte/IFiliation";
+import {
+  ITitulaireActe,
+  TitulaireActe
+} from "@model/etatcivil/acte/ITitulaireActe";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { useReinitialisationComposant } from "@util/form/useReinitialisation";
+import { getLibelle } from "@util/Utils";
+import { AccordionRece } from "@widget/accordion/AccordionRece";
+import { StaticField } from "@widget/formulaire/champFixe/StaticField";
+import { Formulaire } from "@widget/formulaire/Formulaire";
+import FormikEffect from "@widget/formulaire/utils/FormikEffect";
+import { withNamespace } from "@widget/formulaire/utils/FormUtil";
+import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
+import React, { useCallback, useContext, useState } from "react";
+import * as Yup from "yup";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
 import { DocumentEC } from "../../../enum/DocumentEC";
-import { IEvenement } from "./../../../../../../../model/etatcivil/acte/IEvenement";
-import { NatureActe } from "./../../../../../../../model/etatcivil/enum/NatureActe";
 import { ParentNaissanceForm } from "./contenu/sousFormulaires/ParentNaissanceForm";
 import { TitulaireEvenementForm } from "./contenu/sousFormulaires/TitulaireEvenementForm";
 import { TitulaireEvtValidationSchema } from "./contenu/sousFormulaires/validation/TitulaireEvenementFormValidation";

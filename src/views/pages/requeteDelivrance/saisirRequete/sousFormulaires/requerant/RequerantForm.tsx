@@ -1,15 +1,12 @@
+import { Qualite } from "@model/requete/enum/Qualite";
+import { Requerant } from "@model/requete/IRequerant";
+import { getLibelle } from "@util/Utils";
+import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
+import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
+import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { Qualite } from "../../../../../../model/requete/enum/Qualite";
-import { Requerant } from "../../../../../../model/requete/IRequerant";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { RadioField } from "../../../../../common/widget/formulaire/champsSaisie/RadioField";
-import { SousFormulaire } from "../../../../../common/widget/formulaire/SousFormulaire";
-import {
-  SubFormProps,
-  withNamespace
-} from "../../../../../common/widget/formulaire/utils/FormUtil";
 import {
   AUTRE_PROFESSIONNEL,
   INSTITUTI0NNEL,

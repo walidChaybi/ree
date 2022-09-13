@@ -1,3 +1,9 @@
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import BoutonPrendreEnChargePlusAncienneCreation from "@pages/requeteCreation/EspaceCreation/BoutonPrendreEnChargePlusAncienneCreation";
+import {
+  URL_MES_REQUETES_CREATION,
+  URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID
+} from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -5,20 +11,14 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/routeUtil";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import { userDroitCreerActeEtabliPerimetreMEAE } from "../../../mock/data/connectedUserAvecDroit";
 import { configRequetesCreation } from "../../../mock/superagent-config/superagent-mock-requetes-creation";
-import { TypeRequete } from "../../../model/requete/enum/TypeRequete";
-import { getUrlWithParam } from "../../../views/common/util/route/routeUtil";
-import { storeRece } from "../../../views/common/util/storeRece";
-import BoutonPrendreEnChargePlusAncienneCreation from "../../../views/pages/requeteCreation/EspaceCreation/BoutonPrendreEnChargePlusAncienneCreation";
-import {
-  URL_MES_REQUETES_CREATION,
-  URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID
-} from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(
   request,

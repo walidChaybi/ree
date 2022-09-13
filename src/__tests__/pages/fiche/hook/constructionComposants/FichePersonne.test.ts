@@ -1,4 +1,4 @@
-import { getFichesPersonne } from "../../../../../views/pages/fiche/hook/constructionComposants/personne/FichePersonne";
+import { getFichesPersonne } from "@pages/fiche/hook/constructionComposants/personne/FichePersonne";
 import { personneMock } from "./mock/PersonneMock";
 
 test("Decision utils get decision : decision de type Juridiction, ", async () => {

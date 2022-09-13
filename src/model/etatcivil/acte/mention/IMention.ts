@@ -1,4 +1,4 @@
-import { getValeurOuVide } from "../../../../views/common/util/Utils";
+import { getValeurOuVide } from "@util/Utils";
 import { NATIONALITE, NatureMention } from "../../enum/NatureMention";
 import { StatutMention } from "../../enum/StatutMention";
 import { IEvenement } from "../IEvenement";

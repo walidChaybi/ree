@@ -1,14 +1,14 @@
+import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
+import { statutsRequetesCreation } from "@pages/requeteCreation/EspaceCreation/params/EspaceCreationParams";
+import { RequetesServiceCreation } from "@pages/requeteCreation/EspaceCreation/RequetesServiceCreation";
+import { URL_REQUETES_CREATION_SERVICE } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
-import { IQueryParametersPourRequetes } from "../../../api/appels/requeteApi";
 import { configRequetesCreation } from "../../../mock/superagent-config/superagent-mock-requetes-creation";
-import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { statutsRequetesCreation } from "../../../views/pages/requeteCreation/EspaceCreation/params/EspaceCreationParams";
-import { RequetesServiceCreation } from "../../../views/pages/requeteCreation/EspaceCreation/RequetesServiceCreation";
-import { URL_REQUETES_CREATION_SERVICE } from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(
   request,

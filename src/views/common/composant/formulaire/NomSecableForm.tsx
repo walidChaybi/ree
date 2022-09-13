@@ -1,13 +1,13 @@
-import { connect } from "formik";
-import React, { useCallback, useState } from "react";
-import { ABSENCE_VALIDEE, estRenseigne, getLibelle } from "../../util/Utils";
-import { EtatCivilUtil } from "../../utilMetier/EtatCivilUtil";
-import { CheckboxField } from "../../widget/formulaire/champsSaisie/CheckBoxField";
-import { InputField } from "../../widget/formulaire/champsSaisie/InputField";
+import { ABSENCE_VALIDEE, estRenseigne, getLibelle } from "@util/Utils";
+import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";
+import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
   FormikComponentProps,
   withNamespace
-} from "../../widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useCallback, useState } from "react";
 import { NOM_PARTIE1, NOM_PARTIE2, SECABLE } from "./ConstantesNomsForm";
 
 interface ComponentFormProps {

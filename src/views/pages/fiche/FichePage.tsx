@@ -1,25 +1,25 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { officierAutoriserSurLeTypeRegistreOuDroitMEAE } from "../../../model/agent/IOfficier";
-import { IFicheActe } from "../../../model/etatcivil/acte/IFicheActe";
-import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
-import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
 import {
   AddAlerteActeApiHookParameters,
   useAddAlerteActeApiHook
-} from "../../common/hook/alertes/AddAlerteActeHookApi";
+} from "@hook/alertes/AddAlerteActeHookApi";
 import {
   DeleteAlerteActeApiHookParameters,
   useDeleteAlerteActeApiHook
-} from "../../common/hook/alertes/DeleteAlerteActeHookApi";
-import { FeatureFlag } from "../../common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../common/util/featureFlag/gestionnaireFeatureFlag";
-import { FenetreExterneUtil } from "../../common/util/FenetreExterne";
-import { AccordionRece } from "../../common/widget/accordion/AccordionRece";
-import { IAjouterAlerteFormValue } from "../../common/widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
-import { OperationLocaleEnCours } from "../../common/widget/attente/OperationLocaleEnCours";
-import { BarreNavigationSuivPrec } from "../../common/widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
-import { SectionPanelProps } from "../../common/widget/section/SectionPanel";
-import { SectionPanelAreaProps } from "../../common/widget/section/SectionPanelArea";
+} from "@hook/alertes/DeleteAlerteActeHookApi";
+import { officierAutoriserSurLeTypeRegistreOuDroitMEAE } from "@model/agent/IOfficier";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { FenetreExterneUtil } from "@util/FenetreExterne";
+import { AccordionRece } from "@widget/accordion/AccordionRece";
+import { IAjouterAlerteFormValue } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
+import { OperationLocaleEnCours } from "@widget/attente/OperationLocaleEnCours";
+import { BarreNavigationSuivPrec } from "@widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
+import { SectionPanelProps } from "@widget/section/SectionPanel";
+import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
+import React, { useCallback, useEffect, useState } from "react";
 import { BoutonCreationRDD } from "./BoutonCreationRDD/BoutonCreationRDD";
 import { BandeauAlertesActe } from "./contenu/BandeauAlertesActe";
 import { BandeauFiche } from "./contenu/BandeauFiche";

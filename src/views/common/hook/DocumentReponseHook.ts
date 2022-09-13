@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
 import {
   getDocumentReponseById,
   IMiseAJourDocumentParams,
   patchDocumentsReponsesAvecSignature,
   postDocumentReponseApi
-} from "../../../api/appels/requeteApi";
-import { IDocumentReponse } from "../../../model/requete/IDocumentReponse";
-import { logError } from "../util/LogManager";
+} from "@api/appels/requeteApi";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { logError } from "@util/LogManager";
+import { useEffect, useState } from "react";
 
 export function useGetDocumentReponseApi(
   idDocumentReponse?: string

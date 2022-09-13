@@ -1,7 +1,7 @@
+import { IActionOption } from "@model/requete/IActionOption";
+import { DocumentEC } from "@pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
+import { getLibelle } from "@util/Utils";
 import React, { useState } from "react";
-import { IActionOption } from "../../../../model/requete/IActionOption";
-import { DocumentEC } from "../../../pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
-import { getLibelle } from "../../util/Utils";
 import { MenuAction } from "../menu/MenuAction";
 import "./scss/OngletsDynamique.scss";
 

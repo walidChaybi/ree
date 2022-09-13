@@ -1,15 +1,15 @@
+import { CommunExtraitOuCopieActeTexteComposition } from "@model/composition/extraitCopie/createur/CommunExtraitOuCopieActeTexteComposition";
+import { IExtraitCopieComposition } from "@model/composition/extraitCopie/IExtraitCopieComposition";
+import { IMention } from "@model/etatcivil/acte/mention/IMention";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { LIBELLE_FONCTION_AGENT_1 } from "@model/parametres/clesParametres";
+import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { Validation } from "@model/requete/enum/Validation";
 import request from "superagent";
 import { configParamsBaseRequete } from "../../../../../mock/superagent-config/superagent-mock-params";
-import { CommunExtraitOuCopieActeTexteComposition } from "../../../../../model/composition/extraitCopie/createur/CommunExtraitOuCopieActeTexteComposition";
-import { IExtraitCopieComposition } from "../../../../../model/composition/extraitCopie/IExtraitCopieComposition";
-import { IMention } from "../../../../../model/etatcivil/acte/mention/IMention";
-import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
-import { NatureMention } from "../../../../../model/etatcivil/enum/NatureMention";
-import { LIBELLE_FONCTION_AGENT_1 } from "../../../../../model/parametres/clesParametres";
-import { ParametreBaseRequete } from "../../../../../model/parametres/enum/ParametresBaseRequete";
-import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
-import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
-import { Validation } from "../../../../../model/requete/enum/Validation";
 const superagentMock = require("superagent-mock")(
   request,
   configParamsBaseRequete

@@ -1,12 +1,12 @@
+import { specificationDecret } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationDecret";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { waitFor } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import request from "superagent";
 import { decrets } from "../../../../../../mock/data/NomenclatureEtatCivilDecrets";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
 import {} from "../../../../../../mock/superagent-config/superagent-mock-params";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
-import { specificationDecret } from "../../../../../../views/common/hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationDecret";
-import { storeRece } from "../../../../../../views/common/util/storeRece";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 beforeAll(() => {

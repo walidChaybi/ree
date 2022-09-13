@@ -1,3 +1,7 @@
+import { useCompositionReponseSansDelivranceCSApi } from "@hook/composition/CompositionReponseSansDelivranceCSHook";
+import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
+import { NOM_DOCUMENT_REFUS_FRANCAIS } from "@model/composition/IReponseSansDelivranceCSFrancaisComposition";
+import { NOM_DOCUMENT_REFUS_MARIAGE } from "@model/composition/IReponseSansDelivranceCSMariageComposition";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
@@ -8,10 +12,6 @@ import {
 } from "../../../../mock/data/Composition";
 import { imagePngVideBase64 } from "../../../../mock/data/ImagePng";
 import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
-import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "../../../../model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
-import { NOM_DOCUMENT_REFUS_FRANCAIS } from "../../../../model/composition/IReponseSansDelivranceCSFrancaisComposition";
-import { NOM_DOCUMENT_REFUS_MARIAGE } from "../../../../model/composition/IReponseSansDelivranceCSMariageComposition";
-import { useCompositionReponseSansDelivranceCSApi } from "../../../../views/common/hook/composition/CompositionReponseSansDelivranceCSHook";
 const superagentMock = require("superagent-mock")(request, configComposition);
 
 const HookConsumerMariage: React.FC = () => {

@@ -1,7 +1,7 @@
-import { IFicheRcRca } from "../../model/etatcivil/rcrca/IFicheRcRca";
-import { getDateFromDateCompose } from "../../views/common/util/DateUtils";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { getDateFromDateCompose } from "@util/DateUtils";
 
-export const FicheRcaDecisionJuridictionEtrangere = ({
+export const FicheRcaDecisionJuridictionEtrangere = {
   id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61d",
   categorie: "RCA",
   annee: "2020",
@@ -123,8 +123,7 @@ export const FicheRcaDecisionJuridictionEtrangere = ({
   nature: {
     id: "488a436b-330d-4c3c-83e0-e49d2739013a",
     nom: "NATURE_RCA",
-    code:
-      "CHANGEMENT_REGIME_MATRIMONIAL_ACTE_NOTARIE_ETRANGER_INSTRUCTION_PROCUREUR",
+    code: "CHANGEMENT_REGIME_MATRIMONIAL_ACTE_NOTARIE_ETRANGER_INSTRUCTION_PROCUREUR",
     libelle:
       "changement de régime matrimonial par acte notarié étranger / instruction du Procureur",
     estActif: true,
@@ -133,9 +132,9 @@ export const FicheRcaDecisionJuridictionEtrangere = ({
     categorieRCRCA: "REGIME MATRIMONIAL"
   },
   typeInscription: "INSCRIPTION"
-} as any) as IFicheRcRca;
+} as any as IFicheRcRca;
 
-export const FicheRcaDecisionAvecInstructionProcureur = ({
+export const FicheRcaDecisionAvecInstructionProcureur = {
   id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61c",
   categorie: "RCA",
   annee: "2020",
@@ -247,9 +246,9 @@ export const FicheRcaDecisionAvecInstructionProcureur = ({
     categorieRCRCA: "FILIATION"
   },
   typeInscription: "INSCRIPTION"
-} as any) as IFicheRcRca;
+} as any as IFicheRcRca;
 
-export const FicheRcaDecisionNotaireConvention = ({
+export const FicheRcaDecisionNotaireConvention = {
   id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
   categorie: "RCA",
   annee: "1998",
@@ -485,7 +484,7 @@ export const FicheRcaDecisionNotaireConvention = ({
     categorieRCRCA: "FILIATION"
   },
   typeInscription: "INSCRIPTION"
-} as any) as IFicheRcRca;
+} as any as IFicheRcRca;
 
 export const idFicheRca = "8c9ea77f-55dc-494f-8e75-b136ac7ce63d";
 export const ficheRca = {

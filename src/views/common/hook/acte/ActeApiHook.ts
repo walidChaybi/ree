@@ -1,7 +1,7 @@
+import { getInformationsFicheActe } from "@api/appels/etatcivilApi";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { getInformationsFicheActe } from "../../../../api/appels/etatcivilApi";
-import { IFicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
-import { logError } from "../../util/LogManager";
 import { mapActe } from "../repertoires/MappingRepertoires";
 
 export interface IActeApiHookParams {

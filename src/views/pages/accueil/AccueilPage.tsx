@@ -1,3 +1,7 @@
+import {
+  OfficierContext,
+  OfficierContextProps
+} from "@core/contexts/OfficierContext";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import {
   faChartBar,
@@ -6,17 +10,13 @@ import {
   faSearch,
   faSync
 } from "@fortawesome/free-solid-svg-icons";
+import { IOfficier } from "@model/agent/IOfficier";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { getLibelle } from "@util/Utils";
 import React, { useEffect, useState } from "react";
 import logoRece from "../../../img/logo-rece.svg";
-import { IOfficier } from "../../../model/agent/IOfficier";
-import { StatutRequete } from "../../../model/requete/enum/StatutRequete";
-import { FeatureFlag } from "../../common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../common/util/featureFlag/gestionnaireFeatureFlag";
-import { getLibelle } from "../../common/util/Utils";
-import {
-  OfficierContext,
-  OfficierContextProps
-} from "../../core/contexts/OfficierContext";
 import "../accueil/scss/AccueilPage.scss";
 import { useCompteurRequeteHook } from "../requeteDelivrance/espaceDelivrance/hook/CompteurRequeteHook";
 import {

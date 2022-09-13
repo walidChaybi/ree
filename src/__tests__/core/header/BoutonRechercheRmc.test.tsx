@@ -1,3 +1,6 @@
+import { OfficierContext } from "@core/contexts/OfficierContext";
+import { BoutonRechercheRmc } from "@core/header/BoutonRechercheRmc";
+import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
@@ -5,9 +8,6 @@ import { Router } from "react-router-dom";
 import request from "superagent";
 import officier from "../../../mock/data/connectedUser.json";
 import { configFakeUrl } from "../../../mock/superagent-config/superagent-mock-fake-url";
-import { OfficierContext } from "../../../views/core/contexts/OfficierContext";
-import { BoutonRechercheRmc } from "../../../views/core/header/BoutonRechercheRmc";
-import { URL_MES_REQUETES_DELIVRANCE } from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configFakeUrl);
 

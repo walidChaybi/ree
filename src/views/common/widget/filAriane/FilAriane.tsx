@@ -1,17 +1,17 @@
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import React from "react";
-import { Route } from "react-router";
-import { useHistory } from "react-router-dom";
-import { URL_ACCUEIL, URL_CONTEXT_APP } from "../../../router/ReceUrls";
-import { IRoute } from "../../util/route/IRoute";
+import { URL_ACCUEIL, URL_CONTEXT_APP } from "@router/ReceUrls";
+import { IRoute } from "@util/route/IRoute";
 import {
   getUrlWithoutIdParam,
   isPathElemId,
   urlWithParamPatern,
   URL_SEPARATEUR
-} from "../../util/route/routeUtil";
-import { getLibelle } from "../../util/Utils";
+} from "@util/route/routeUtil";
+import { getLibelle } from "@util/Utils";
+import React from "react";
+import { Route } from "react-router";
+import { useHistory } from "react-router-dom";
 import { Categorie } from "./Categorie";
 
 // Gère l'empilement des urls visités par l'utilisateur

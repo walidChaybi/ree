@@ -1,7 +1,7 @@
+import { rechercheMultiCriteresActes } from "@api/appels/etatcivilApi";
+import { getParamsTableau } from "@util/GestionDesLiensApi";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { rechercheMultiCriteresActes } from "../../../../../api/appels/etatcivilApi";
-import { getParamsTableau } from "../../../../common/util/GestionDesLiensApi";
-import { logError } from "../../../../common/util/LogManager";
 import {
   IRMCActeApiHookResultat,
   RESULTAT_NON_DEFINIT
@@ -16,9 +16,8 @@ import {
 export function useRMCActeApiHook(
   criteres?: ICriteresRechercheActeInscription
 ): IRMCActeApiHookResultat {
-  const [resultat, setResultat] = useState<IRMCActeApiHookResultat>(
-    RESULTAT_NON_DEFINIT
-  );
+  const [resultat, setResultat] =
+    useState<IRMCActeApiHookResultat>(RESULTAT_NON_DEFINIT);
 
   useEffect(() => {
     if (criteres && criteres.valeurs) {

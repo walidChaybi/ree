@@ -1,7 +1,7 @@
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getLibelle } from "@util/Utils";
 import React, { useState } from "react";
-import { getLibelle } from "../../../util/Utils";
 import {
   IAjouterAlerteFormValue,
   PopinAjouterAlertes

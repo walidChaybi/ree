@@ -1,3 +1,5 @@
+import { OngletPiecesJustificatives } from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/components/OngletPiecesJustificatives";
+import { mappingRequeteCreation } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import {
   act,
   fireEvent,
@@ -9,8 +11,6 @@ import React from "react";
 import request from "superagent";
 import { requeteCreation } from "../../../mock/data/requeteCreation";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-import { OngletPiecesJustificatives } from "../../../views/pages/requeteCreation/EspaceCreation/apercuReqCreation/components/OngletPiecesJustificatives";
-import { mappingRequeteCreation } from "../../../views/pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

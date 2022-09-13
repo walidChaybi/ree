@@ -1,4 +1,4 @@
-import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
+import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 
 test("Attendu: FicheUtil fonctionne correctement", () => {
   expect(FicheUtil.getLibelle(TypeFiche.RC)).toBe("RC");

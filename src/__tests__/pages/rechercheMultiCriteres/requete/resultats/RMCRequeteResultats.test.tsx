@@ -1,3 +1,5 @@
+import { RMCRequeteResultats } from "@pages/rechercheMultiCriteres/requete/resultats/RMCRequeteResultats";
+import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { render, screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
@@ -6,8 +8,6 @@ import {
   DataRMCRequeteAvecResultat,
   DataTableauRequete
 } from "../../../../../mock/data/RMCRequete";
-import { RMCRequeteResultats } from "../../../../../views/pages/rechercheMultiCriteres/requete/resultats/RMCRequeteResultats";
-import { URL_RECHERCHE_REQUETE } from "../../../../../views/router/ReceUrls";
 
 test("renders Fielset Recherche Multi Critères Requêtes", () => {
   const history = createMemoryHistory();

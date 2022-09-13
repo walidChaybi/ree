@@ -1,13 +1,10 @@
+import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
+import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { useEffect, useState } from "react";
-import {
-  FicheUtil,
-  TypeFiche
-} from "../../../../../model/etatcivil/enum/TypeFiche";
-import { TypePacsRcRca } from "../../../../../model/etatcivil/enum/TypePacsRcRca";
-import { IFichePacs } from "../../../../../model/etatcivil/pacs/IFichePacs";
-import { IFicheRcRca } from "../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
-import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
   IResultGenerationInscriptions,
   IResultGenerationPlusieursInscriptions
@@ -69,11 +66,12 @@ export function useGenerationInscriptionsHook(
   }, [resultGenerationCertificatRC]);
 
   // 2.1 Génération d'une ou des incriptions RCA
-  const resultGenerationCertificatRCA = useGenerationCertificatPACSOuRCOuRCAHook(
-    TypePacsRcRca.RCA,
-    requete,
-    listeRCA
-  );
+  const resultGenerationCertificatRCA =
+    useGenerationCertificatPACSOuRCOuRCAHook(
+      TypePacsRcRca.RCA,
+      requete,
+      listeRCA
+    );
 
   // 3 - Stockage en mémoire des RCA générés
   //   - On récupère les PACS
@@ -98,11 +96,12 @@ export function useGenerationInscriptionsHook(
   }, [resultGenerationCertificatRCA]);
 
   // 3.1 Génération d'une ou des incriptions PACS
-  const resultGenerationCertificatPACS = useGenerationCertificatPACSOuRCOuRCAHook(
-    TypePacsRcRca.PACS,
-    requete,
-    listePACS
-  );
+  const resultGenerationCertificatPACS =
+    useGenerationCertificatPACSOuRCOuRCAHook(
+      TypePacsRcRca.PACS,
+      requete,
+      listePACS
+    );
 
   // 4 - Maj du state résultat 'resultGenerationInscription' pour invoquer ensuite la génération du certificat de situation général (cf. DelivrerCertificatSituationHook.ts)
   useEffect(() => {

@@ -1,4 +1,9 @@
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { ResumeRequete } from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequete";
+import { mappingRequeteDelivrance } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { act, render, screen, waitFor } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/routeUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
@@ -7,14 +12,9 @@ import {
   detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel,
   detailRequeteDelivranceAvecRequerantQualiteInstitutionnel,
   detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece,
-  ReponseAppelDetailRequeteDelivrance,
+  ReponseAppelDetailRequeteDelivrance
 } from "../../../../../../mock/data/DetailRequeteDelivrance";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { TypePieceJustificative } from "../../../../../../model/requete/enum/TypePieceJustificative";
-import { getUrlWithParam } from "../../../../../../views/common/util/route/routeUtil";
-import { ResumeRequete } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequete";
-import { mappingRequeteDelivrance } from "../../../../../../views/pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
-import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -42,9 +42,11 @@ describe("ResumeRequetePartieHaute", () => {
               path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
             >
               <ResumeRequete
-                requete={await mappingRequeteDelivrance(
-                  ReponseAppelDetailRequeteDelivrance.data
-                )}
+                requete={
+                  await mappingRequeteDelivrance(
+                    ReponseAppelDetailRequeteDelivrance.data
+                  )
+                }
               />
             </Route>
           </Router>
@@ -79,9 +81,11 @@ describe("ResumeRequetePartieHaute", () => {
               path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
             >
               <ResumeRequete
-                requete={await mappingRequeteDelivrance(
-                  detailRequeteDelivranceAvecRequerantQualiteInstitutionnel.data
-                )}
+                requete={
+                  await mappingRequeteDelivrance(
+                    detailRequeteDelivranceAvecRequerantQualiteInstitutionnel.data
+                  )
+                }
               />
             </Route>
           </Router>
@@ -116,9 +120,11 @@ describe("ResumeRequetePartieHaute", () => {
               path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
             >
               <ResumeRequete
-                requete={await mappingRequeteDelivrance(
-                  detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel.data
-                )}
+                requete={
+                  await mappingRequeteDelivrance(
+                    detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel.data
+                  )
+                }
               />
             </Route>
           </Router>
@@ -152,9 +158,11 @@ describe("ResumeRequetePartieHaute", () => {
               path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
             >
               <ResumeRequete
-                requete={await mappingRequeteDelivrance(
-                  detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece.data
-                )}
+                requete={
+                  await mappingRequeteDelivrance(
+                    detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece.data
+                  )
+                }
               />
             </Route>
           </Router>

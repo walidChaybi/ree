@@ -1,11 +1,11 @@
+import {
+  FenetreDocumentReponse,
+  onClose
+} from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/document/FenetreDocumentReponse";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import {
-    FenetreDocumentReponse,
-    onClose
-} from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/document/FenetreDocumentReponse";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

@@ -1,22 +1,22 @@
-import { useEffect, useState } from "react";
+import {
+  IGenerationCourrierParams,
+  useGenerationCourrierHook
+} from "@hook/requete/GenerationCourrierHook";
 import {
   FicheActe,
   IFicheActe,
   necessiteMentionNationalite
-} from "../../../../model/etatcivil/acte/IFicheActe";
-import { ChoixDelivrance } from "../../../../model/requete/enum/ChoixDelivrance";
-import { OptionCourrier } from "../../../../model/requete/IOptionCourrier";
-import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
-import {
-  IGenerationCourrierParams,
-  useGenerationCourrierHook
-} from "../../../pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/hook/GenerationCourrierHook";
-import { SaisieCourrier } from "../../../pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
-import { mappingVersMentionApi } from "../../../pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
-import { gestionnaireMentionsRetireesAuto } from "../../../pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionnaireMentionsRetireesAuto";
-import { getOngletSelectVenantDePriseEnCharge } from "../../../pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
-import { DocumentEC } from "../../../pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
-import { DEUX } from "../../util/Utils";
+} from "@model/etatcivil/acte/IFicheActe";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { OptionCourrier } from "@model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { SaisieCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
+import { mappingVersMentionApi } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
+import { gestionnaireMentionsRetireesAuto } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionnaireMentionsRetireesAuto";
+import { getOngletSelectVenantDePriseEnCharge } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
+import { DocumentEC } from "@pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
+import { DEUX } from "@util/Utils";
+import { useEffect, useState } from "react";
 import {
   IActeApiHookParams,
   useInformationsActeApiHook

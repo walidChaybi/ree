@@ -1,11 +1,11 @@
+import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
+import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
+import { MEP_YEAR } from "@util/DateUtils";
+import { stockageDonnees } from "@util/stockageDonnees";
+import { Formulaire } from "@widget/formulaire/Formulaire";
+import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import * as Yup from "yup";
-import { ICriteresRMCRequete } from "../../../../model/rmc/requete/ICriteresRMCRequete";
-import { IRMCRequete } from "../../../../model/rmc/requete/IRMCRequete";
-import { MEP_YEAR } from "../../../common/util/DateUtils";
-import { stockageDonnees } from "../../../common/util/stockageDonnees";
-import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
-import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,

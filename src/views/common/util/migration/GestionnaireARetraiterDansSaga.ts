@@ -1,9 +1,9 @@
 /* istanbul ignore file */
-import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
-import { SousTypeRequete } from "../../../../model/requete/enum/SousTypeRequete";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { FeatureFlag } from "../featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../featureFlag/gestionnaireFeatureFlag";
 

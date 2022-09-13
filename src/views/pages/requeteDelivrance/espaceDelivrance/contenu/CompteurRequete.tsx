@@ -1,6 +1,6 @@
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { getLibelle } from "@util/Utils";
 import React from "react";
-import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
-import { getLibelle } from "../../../../common/util/Utils";
 import { useCompteurRequeteHook } from "../hook/CompteurRequeteHook";
 import "./scss/CompteurRequete.scss";
 

@@ -1,5 +1,5 @@
-import { mapActe } from "../../../../../../views/common/hook/repertoires/MappingRepertoires";
-import { getEvenement } from "../../../../../../views/pages/fiche/hook/constructionComposants/acte/EvenementActeUtils";
+import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { getEvenement } from "@pages/fiche/hook/constructionComposants/acte/EvenementActeUtils";
 import { acte } from "../../../data/ficheActe";
 
 test("Acte utils : affichage correcte des infos de l'évènement", async () => {

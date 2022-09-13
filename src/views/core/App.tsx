@@ -1,31 +1,31 @@
 /* istanbul ignore file */
 
+import { GestionnaireCacheApi } from "@api/appels/cache/GestionnaireCacheApi";
+import { GestionnaireNomenclature } from "@api/nomenclature/GestionnaireNomenclature";
 import { createTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
+import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
+import "@scss/_colors.scss";
+import "@scss/_library.scss";
+import {
+  CHROME,
+  FIREFOX,
+  SeulementNavigateur
+} from "@util/detectionNavigateur/DetectionNavigateur";
+import { ErrorManager } from "@util/ErrorManager";
+import {
+  appelRequetesASigner,
+  GestionnaireFermeture,
+  traiteAppelRequeteASigner
+} from "@util/GestionnaireFermeture";
+import { logError } from "@util/LogManager";
+import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
+import { storeRece } from "@util/storeRece";
 import fr from "date-fns/locale/fr";
 import React, { useEffect, useState } from "react";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { GestionnaireCacheApi } from "../../api/appels/cache/GestionnaireCacheApi";
-import { GestionnaireNomenclature } from "../../api/nomenclature/GestionnaireNomenclature";
-import "../../scss/_colors.scss";
-import "../../scss/_library.scss";
-import {
-  CHROME,
-  FIREFOX,
-  SeulementNavigateur
-} from "../common/util/detectionNavigateur/DetectionNavigateur";
-import { ErrorManager } from "../common/util/ErrorManager";
-import {
-  appelRequetesASigner,
-  GestionnaireFermeture,
-  traiteAppelRequeteASigner
-} from "../common/util/GestionnaireFermeture";
-import { logError } from "../common/util/LogManager";
-import { GestionnaireARetraiterDansSaga } from "../common/util/migration/GestionnaireARetraiterDansSaga";
-import { storeRece } from "../common/util/storeRece";
-import { URL_MES_REQUETES_DELIVRANCE } from "../router/ReceUrls";
 import "./App.scss";
 import { Body } from "./body/Body";
 import { OfficierContext } from "./contexts/OfficierContext";

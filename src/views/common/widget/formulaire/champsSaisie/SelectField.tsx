@@ -1,4 +1,5 @@
 import { FormControl, Select } from "@material-ui/core";
+import { Option } from "@util/Type";
 import {
   connect,
   ErrorMessage,
@@ -7,7 +8,6 @@ import {
   FormikValues
 } from "formik";
 import React, { useEffect } from "react";
-import { Option } from "../../../util/Type";
 import { IconErrorMessage } from "../erreur/IconeErreurMessage";
 import { FormikComponentProps } from "../utils/FormUtil";
 import "./scss/SelectField.scss";

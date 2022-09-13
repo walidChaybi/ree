@@ -1,13 +1,13 @@
-import { IPartenaire } from "../../../../../../model/etatcivil/pacs/IPartenaire";
-import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
+import { IPartenaire } from "@model/etatcivil/pacs/IPartenaire";
+import { getDateStringFromDateCompose } from "@util/DateUtils";
 import {
   formatNom,
   formatNoms,
   formatPrenoms,
   jointPrenoms
-} from "../../../../../common/util/Utils";
-import { LieuxUtils } from "../../../../../common/utilMetier/LieuxUtils";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
+} from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import { SectionPartProps } from "@widget/section/SectionPart";
 
 export function getPartenaires(partenaires: IPartenaire[]): SectionPartProps[] {
   return partenaires.map((p, idx) => {

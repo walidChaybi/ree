@@ -1,14 +1,14 @@
+import {
+  ISauvegardeValidationSaisieExtraitParams,
+  useSauvegardeValidationSaisieExtrait
+} from "@hook/requete/ValidationSaisieExtraitHook";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
-import {
-  ISauvegardeValidationSaisieExtraitParams,
-  useSauvegardeValidationSaisieExtrait
-} from "../../../../views/common/hook/requete/ValidationSaisieExtraitHook";
 import {
   acteExtraitSaisie,
   extraitSaisiAEnvoyer,

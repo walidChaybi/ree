@@ -1,21 +1,18 @@
-import * as Yup from "yup";
+import { NB_HEURE, NB_MINUTE } from "@composant/formulaire/ConstantesNomsForm";
 import {
   ANNEE,
   JOUR,
   MOIS
-} from "../../../../pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
-import {
-  NB_HEURE,
-  NB_MINUTE
-} from "../../../composant/formulaire/ConstantesNomsForm";
+} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import {
   estDateReceValide,
   IDateCompose,
   MEP_YEAR,
   MIN_LENGTH_ANNEE,
   MIN_YEAR
-} from "../../../util/DateUtils";
-import { estHeureValide, getLibelle } from "../../../util/Utils";
+} from "@util/DateUtils";
+import { estHeureValide, getLibelle } from "@util/Utils";
+import * as Yup from "yup";
 import {
   ANNEE_OBLIGATOIRE,
   MIN_LENGTH_ANNEE_MESSAGE,

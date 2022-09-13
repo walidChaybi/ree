@@ -1,36 +1,33 @@
-import moment from "moment";
-import { useCallback, useEffect, useState } from "react";
 import {
   getDocumentReponseById,
   IMiseAJourDocumentParams
-} from "../../../../../api/appels/requeteApi";
-import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
-import { TypeCanal } from "../../../../../model/requete/enum/TypeCanal";
-import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
-import {
-  ModeSignature,
-  ModeSignatureUtil
-} from "../../../../../model/requete/ModeSignature";
-import parametres from "../../../../../ressources/parametres.json";
+} from "@api/appels/requeteApi";
 import {
   IDerniereDelivranceActeParams,
   useDerniereDelivranceActeApiHook
-} from "../../../hook/acte/DerniereDelivranceActeApiHook";
+} from "@hook/acte/DerniereDelivranceActeApiHook";
 import {
   IResultatPatchDocumentReponse,
   usePatchDocumentsReponseAvecSignatureApi
-} from "../../../hook/DocumentReponseHook";
+} from "@hook/DocumentReponseHook";
 import {
   CreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
-} from "../../../hook/requete/ActionHook";
-import { FormatDate } from "../../../util/DateUtils";
-import messageManager from "../../../util/messageManager";
-import { gestionnaireSignatureFlag } from "../../../util/signatureFlag/gestionnaireSignatureFlag";
-import gestionnaireTimer from "../../../util/timer/GestionnaireTimer";
-import { getLibelle, getValeurOuVide } from "../../../util/Utils";
+} from "@hook/requete/ActionHook";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeCanal } from "@model/requete/enum/TypeCanal";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
+import { FormatDate } from "@util/DateUtils";
+import messageManager from "@util/messageManager";
+import { gestionnaireSignatureFlag } from "@util/signatureFlag/gestionnaireSignatureFlag";
+import gestionnaireTimer from "@util/timer/GestionnaireTimer";
+import { getLibelle, getValeurOuVide } from "@util/Utils";
+import moment from "moment";
+import { useCallback, useEffect, useState } from "react";
+import parametres from "../../../../../ressources/parametres.json";
 import { SignatureErrors } from "../messages/ErrorsSignature";
 import { SuccessSignatureType } from "../messages/SuccessSignature";
 

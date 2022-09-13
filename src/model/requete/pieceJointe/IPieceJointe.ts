@@ -1,4 +1,4 @@
-import { TypePieceJointe } from "../../../views/common/hook/requete/piecesJointes/PostPiecesJointesHook";
+import { TypePieceJointe } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 
 // Objet générique (peut être une pièce justificative ou pièce complément information)
 export interface IPieceJointe {

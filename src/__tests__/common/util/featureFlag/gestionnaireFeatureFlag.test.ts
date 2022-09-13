@@ -1,5 +1,5 @@
-import { FeatureFlag } from "../../../../views/common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 
 test("gestion feature flag works ", async () => {
   expect(

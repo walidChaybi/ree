@@ -1,10 +1,10 @@
+import { ListePiecesJointes } from "@composant/piecesJointes/ListePiecesJointes";
+import { TypePieceJointe } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IPieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
+import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
+import { FenetreExterne } from "@util/FenetreExterne";
 import React, { useState } from "react";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
-import { IPieceJointe } from "../../../../../../../model/requete/pieceJointe/IPieceJointe";
-import { IPieceJustificative } from "../../../../../../../model/requete/pieceJointe/IPieceJustificative";
-import { ListePiecesJointes } from "../../../../../../common/composant/piecesJointes/ListePiecesJointes";
-import { TypePieceJointe } from "../../../../../../common/hook/requete/piecesJointes/PostPiecesJointesHook";
-import { FenetreExterne } from "../../../../../../common/util/FenetreExterne";
 import { DetailRequetePage } from "../../../../detailRequete/DetailRequetePage";
 import { ResumeRequetePartieHaute } from "./ResumeRequetePartieHaute";
 import "./scss/ResumeRequete.scss";
@@ -18,7 +18,7 @@ interface ResumeRequeteProps {
 const width = 1100;
 const height = 600;
 
-export const ResumeRequete: React.FC<ResumeRequeteProps> = (props) => {
+export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
   const [fenetreExterne, setFenetreExterne] = useState<boolean>(false);
 
   const onClickNumero = () => {
@@ -72,11 +72,11 @@ function mapPiecesJustificatives(
   pieces?: IPieceJustificative[]
 ): IPieceJointe[] {
   return pieces
-    ? pieces.map((piece) => ({
+    ? pieces.map(piece => ({
         id: piece.id,
         libelle: piece.typePieceJustificative.libelle,
         nom: piece.nom,
-        typePiece: TypePieceJointe.PIECE_JUSTIFICATIVE,
+        typePiece: TypePieceJointe.PIECE_JUSTIFICATIVE
       }))
     : [];
 }

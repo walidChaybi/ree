@@ -1,19 +1,19 @@
-import React, { useCallback, useState } from "react";
-import { DialogDisclosureHTMLProps } from "reakit/Dialog";
-import { IOfficier } from "../../../../model/agent/IOfficier";
-import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
+import { IOfficier } from "@model/agent/IOfficier";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import {
   DocumentReponse,
   IDocumentReponse
-} from "../../../../model/requete/IDocumentReponse";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
-import { FeatureFlag } from "../../util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../util/featureFlag/gestionnaireFeatureFlag";
-import messageManager from "../../util/messageManager";
-import { getLibelle, getValeurOuVide } from "../../util/Utils";
-import { Bouton } from "../../widget/boutonAntiDoubleSubmit/Bouton";
+} from "@model/requete/IDocumentReponse";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import messageManager from "@util/messageManager";
+import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import React, { useCallback, useState } from "react";
+import { DialogDisclosureHTMLProps } from "reakit/Dialog";
 import { PopinSignature } from "../signature/PopinSignature";
 import {
   DocumentsATraiter,
@@ -156,4 +156,3 @@ function estUnDocumentASigner(document: IDocumentReponse) {
         document.avecCtv === true
     : /*Etape 1*/ document.avecCtv === true;
 }
-

@@ -1,22 +1,22 @@
-import React, { useCallback, useState } from "react";
-import { IOfficier } from "../../../../model/agent/IOfficier";
-import { IOngletProps } from "../../../../model/IOnglet";
-import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
+import { OfficierContext } from "@core/contexts/OfficierContext";
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto
-} from "../../../common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
-import { FeatureFlag } from "../../../common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../../common/util/featureFlag/gestionnaireFeatureFlag";
-import { NomComposant } from "../../../common/util/habilitation/habilitationsDescription";
-import { getLibelle } from "../../../common/util/Utils";
-import { BoiteAOnglet } from "../../../common/widget/onglets/BoiteAOnglets";
-import { OfficierContext } from "../../../core/contexts/OfficierContext";
+} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import { IOfficier } from "@model/agent/IOfficier";
+import { IOngletProps } from "@model/IOnglet";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_REQUETES_DELIVRANCE_SERVICE
-} from "../../../router/ReceUrls";
+} from "@router/ReceUrls";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { NomComposant } from "@util/habilitation/habilitationsDescription";
+import { getLibelle } from "@util/Utils";
+import { BoiteAOnglet } from "@widget/onglets/BoiteAOnglets";
+import React, { useCallback, useState } from "react";
 import BoutonPrendreEnChargeAleatoirement from "./contenu/BoutonPrendreEnChargeAleatoirement";
 import { CompteurRequete } from "./contenu/CompteurRequete";
 import MenuSaisirRequete from "./contenu/MenuSaisirRequete";

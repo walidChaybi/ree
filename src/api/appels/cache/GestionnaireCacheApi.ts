@@ -1,8 +1,8 @@
-import { mappingUtilisateurs } from "../../../model/agent/IUtilisateur";
-import { Decret, IDecret } from "../../../model/etatcivil/commun/IDecret";
-import { logError } from "../../../views/common/util/LogManager";
-import { storeRece } from "../../../views/common/util/storeRece";
-import { triListeObjetsSurPropriete } from "../../../views/common/util/Utils";
+import { mappingUtilisateurs } from "@model/agent/IUtilisateur";
+import { Decret, IDecret } from "@model/etatcivil/commun/IDecret";
+import { logError } from "@util/LogManager";
+import { storeRece } from "@util/storeRece";
+import { triListeObjetsSurPropriete } from "@util/Utils";
 import {
   getTousLesUtilisateurs,
   getToutesLesEntiteRattachement

@@ -1,10 +1,10 @@
+import { routesRece } from "@router/ReceRoutes";
+import { RouterComponent } from "@router/RouteComponent";
+import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
+import { logError } from "@util/LogManager";
+import { getLibelle } from "@util/Utils";
+import { FilAriane } from "@widget/filAriane/FilAriane";
 import React, { useEffect, useState } from "react";
-import { gestionnaireDoubleOuverture } from "../../common/util/GestionnaireDoubleOuverture";
-import { logError } from "../../common/util/LogManager";
-import { getLibelle } from "../../common/util/Utils";
-import { FilAriane } from "../../common/widget/filAriane/FilAriane";
-import { routesRece } from "../../router/ReceRoutes";
-import { RouterComponent } from "../../router/RouteComponent";
 import {
   OfficierContext,
   OfficierContextProps

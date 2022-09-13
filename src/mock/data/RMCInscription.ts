@@ -1,4 +1,4 @@
-import { IResultatRMCInscription } from "../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { idFichePacs } from "./fichePacs";
 
 export const DataTableauInscription = {
@@ -220,8 +220,7 @@ export const ReponseAppelRMCInscription4PremiersResultats = {
   url: "/rece-etatcivil-api/v1/repertoirecivil/rmc",
   headers: {
     "content-range": "0-4/8",
-    link:
-      '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=1-4>;rel="next"'
+    link: '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=1-4>;rel="next"'
   },
   data: {
     repertoiresCiviles: [
@@ -305,8 +304,7 @@ export const ReponseAppelRMCInscription4DernierResultats = {
   url: "/rece-etatcivil-api/v1/repertoirecivil/rmc",
   headers: {
     "content-range": "4-8/8",
-    link:
-      '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=0-4>;rel="prev"'
+    link: '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=0-4>;rel="prev"'
   },
   data: {
     repertoiresCiviles: [

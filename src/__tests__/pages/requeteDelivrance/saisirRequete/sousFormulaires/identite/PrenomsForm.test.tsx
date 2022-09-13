@@ -1,3 +1,8 @@
+import { PRENOMS } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import PrenomsForm, {
+  PrenomsFormDefaultValues,
+  PrenomsFormValidationSchema
+} from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/identite/nomsPrenoms/PrenomsForm";
 import {
   act,
   fireEvent,
@@ -5,14 +10,9 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { PRENOMS } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
-import PrenomsForm, {
-  PrenomsFormDefaultValues,
-  PrenomsFormValidationSchema
-} from "../../../../../../views/pages/requeteDelivrance/saisirRequete/sousFormulaires/identite/nomsPrenoms/PrenomsForm";
 
 const HookPrenomsForm: React.FC = () => {
   const [result, setResult] = useState("");

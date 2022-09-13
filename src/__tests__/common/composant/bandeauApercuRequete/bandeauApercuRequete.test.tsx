@@ -1,11 +1,11 @@
+import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuRequete";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TRequete } from "@model/requete/IRequete";
+import { IStatutCourant } from "@model/requete/IStatutCourant";
 import { render, screen } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import React from "react";
 import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { TRequete } from "../../../../model/requete/IRequete";
-import { IStatutCourant } from "../../../../model/requete/IStatutCourant";
-import { BandeauRequete } from "../../../../views/common/composant/bandeauApercuRequete/BandeauApercuRequete";
-import { storeRece } from "../../../../views/common/util/storeRece";
 
 const statutCourantRequete = {
   statut: StatutRequete.A_SIGNER,

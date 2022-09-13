@@ -1,6 +1,6 @@
-import React from "react";
-import { SuccessSignature } from "../../../../views/common/widget/signature/messages/SuccessSignature";
 import { render, screen } from "@testing-library/react";
+import { SuccessSignature } from "@widget/signature/messages/SuccessSignature";
+import React from "react";
 
 test("renders Success signature", async () => {
   render(

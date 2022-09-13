@@ -6,9 +6,9 @@ import {
   TROIS,
   UN,
   ZERO
-} from "../../../../views/common/util/Utils";
-import { EtatCivilUtil } from "../../../../views/common/utilMetier/EtatCivilUtil";
-import { LieuxUtils } from "../../../../views/common/utilMetier/LieuxUtils";
+} from "@util/Utils";
+import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { IEvenement } from "../../../etatcivil/acte/IEvenement";
 import { FicheActe, IFicheActe } from "../../../etatcivil/acte/IFicheActe";
 import { IFiliation } from "../../../etatcivil/acte/IFiliation";

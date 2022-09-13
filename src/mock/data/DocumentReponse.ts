@@ -1,6 +1,6 @@
-import { Orientation } from "../../model/composition/enum/Orientation";
-import { Validation } from "../../model/requete/enum/Validation";
-import { IDocumentReponse } from "../../model/requete/IDocumentReponse";
+import { Orientation } from "@model/composition/enum/Orientation";
+import { Validation } from "@model/requete/enum/Validation";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { imagePngVideBase64 } from "./ImagePng";
 
 export const idDocumentsReponse = [

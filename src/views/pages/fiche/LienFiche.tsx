@@ -1,10 +1,7 @@
 import { Link } from "@material-ui/core";
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { FenetreExterne, FenetreExterneUtil } from "@util/FenetreExterne";
 import React, { useState } from "react";
-import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
-import {
-  FenetreExterne,
-  FenetreExterneUtil
-} from "../../common/util/FenetreExterne";
 import { FichePage } from "./FichePage";
 import "./scss/LienFiche.scss";
 

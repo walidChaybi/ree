@@ -1,24 +1,18 @@
+import { rechercheMultiCriteresAutoRequetes } from "@api/appels/requeteApi";
+import { TRequete } from "@model/requete/IRequete";
+import { TRequeteTableau } from "@model/requete/IRequeteTableau";
+import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
+import { logError } from "@util/LogManager";
+import { mappingRequetesTableau } from "@util/RequetesUtils";
 import { useEffect, useState } from "react";
-import { rechercheMultiCriteresAutoRequetes } from "../../../../../api/appels/requeteApi";
-import { TRequete } from "../../../../../model/requete/IRequete";
-import { TRequeteTableau } from "../../../../../model/requete/IRequeteTableau";
-import {
-  getParamsTableau,
-  IParamsTableau
-} from "../../../../common/util/GestionDesLiensApi";
-import { logError } from "../../../../common/util/LogManager";
-import { mappingRequetesTableau } from "../../../../common/util/RequetesUtils";
 import { determinerCriteresRMCAuto } from "./RMCAutoRequetesUtils";
 
 export function useRMCAutoRequeteApiHook(requete: TRequete, range: string) {
-  const [dataRMCAutoRequete, setDataRMCAutoRequete] = useState<
-    TRequeteTableau[]
-  >();
+  const [dataRMCAutoRequete, setDataRMCAutoRequete] =
+    useState<TRequeteTableau[]>();
 
-  const [
-    dataTableauRMCAutoRequete,
-    setDataTableauRMCAutoRequete
-  ] = useState<IParamsTableau>();
+  const [dataTableauRMCAutoRequete, setDataTableauRMCAutoRequete] =
+    useState<IParamsTableau>();
 
   useEffect(() => {
     async function fetchRequetes() {

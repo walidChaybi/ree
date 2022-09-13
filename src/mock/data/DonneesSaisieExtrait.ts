@@ -1,6 +1,6 @@
-import { IFicheActe } from "../../model/etatcivil/acte/IFicheActe";
-import { IRequeteDelivrance } from "../../model/requete/IRequeteDelivrance";
-import { IExtraitSaisiAEnvoyer } from "../../views/common/hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
+import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 
 export const extraitSaisiAEnvoyer = {
   natureActe: "NAISSANCE",

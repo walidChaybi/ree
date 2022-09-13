@@ -1,16 +1,15 @@
-import { DecisionAnnulation } from "../../model/etatcivil/enum/DecisionAnnulation";
-import { Nationalite } from "../../model/etatcivil/enum/Nationalite";
-import { Sexe } from "../../model/etatcivil/enum/Sexe";
-import { StatutPacs } from "../../model/etatcivil/enum/StatutPacs";
-import { TypeAutorite } from "../../model/etatcivil/enum/TypeAutorite";
-import { IFichePacs } from "../../model/etatcivil/pacs/IFichePacs";
+import { DecisionAnnulation } from "@model/etatcivil/enum/DecisionAnnulation";
+import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { StatutPacs } from "@model/etatcivil/enum/StatutPacs";
+import { TypeAutorite } from "@model/etatcivil/enum/TypeAutorite";
+import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
 
 export const pacsModificationNotaire = {
   hasTechnicalError: false,
   hasBusinessError: false,
   status: 200,
-  url:
-    "/rece-etatcivil-api/v1/repertoirecivil/pacs/89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
+  url: "/rece-etatcivil-api/v1/repertoirecivil/pacs/89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
   data: {
     id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
     numero: "123456",

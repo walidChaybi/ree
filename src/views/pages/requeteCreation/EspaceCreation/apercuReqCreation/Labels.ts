@@ -1,4 +1,4 @@
-import { getLibelle } from "../../../../common/util/Utils";
+import { getLibelle } from "@util/Utils";
 
 export const SDANF = getLibelle("SDANF");
 export const REQUETE = getLibelle("Requête");

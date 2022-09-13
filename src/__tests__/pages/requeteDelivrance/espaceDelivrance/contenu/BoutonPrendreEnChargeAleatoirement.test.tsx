@@ -1,3 +1,9 @@
+import { mappingOfficier } from "@core/login/LoginHook";
+import { BoutonPrendreEnChargeAleatoirement } from "@pages/requeteDelivrance/espaceDelivrance/contenu/BoutonPrendreEnChargeAleatoirement";
+import {
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+} from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -5,6 +11,8 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/routeUtil";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
@@ -16,14 +24,6 @@ import {
 import { ReponseAppelMesRequetes } from "../../../../../mock/data/EspaceDelivrance";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
-import { storeRece } from "../../../../../views/common/util/storeRece";
-import { mappingOfficier } from "../../../../../views/core/login/LoginHook";
-import { BoutonPrendreEnChargeAleatoirement } from "../../../../../views/pages/requeteDelivrance/espaceDelivrance/contenu/BoutonPrendreEnChargeAleatoirement";
-import {
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
-} from "../../../../../views/router/ReceUrls";
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],
   configEtatcivil[0]

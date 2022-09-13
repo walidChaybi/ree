@@ -1,7 +1,7 @@
 import { Link } from "@material-ui/core";
+import { IPieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
+import { getLibelle } from "@util/Utils";
 import React, { useState } from "react";
-import { IPieceJointe } from "../../../../model/requete/pieceJointe/IPieceJointe";
-import { getLibelle } from "../../util/Utils";
 import { FenetrePiecesJointes } from "./FenetrePiecesJointes";
 
 interface IDataLienFicheProps {

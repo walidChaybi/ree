@@ -1,5 +1,5 @@
-import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
-import { CreationRequeteRDC } from "../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCPageModel";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { CreationRequeteRDC } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCPageModel";
 
 export const RequeteRDCTitulaire = {
   futurStatut: StatutRequete.PRISE_EN_CHARGE,
@@ -22,10 +22,9 @@ export const RequeteRDCTitulaire = {
       paysEvenement: "France"
     },
     titulaire1: {
-      noms:{
-
+      noms: {
         nomNaissance: "NOM",
-        nomUsage: "",
+        nomUsage: ""
       },
       prenoms: {
         prenom1: "",
@@ -61,9 +60,9 @@ export const RequeteRDCTitulaire = {
       }
     },
     titulaire2: {
-      noms:{
+      noms: {
         nomNaissance: "",
-        nomUsage: "",
+        nomUsage: ""
       },
       prenoms: {
         prenom1: "",
@@ -165,9 +164,9 @@ export const RequeteRDCMandataire = {
       paysEvenement: "France"
     },
     titulaire1: {
-      noms:{
+      noms: {
         nomNaissance: "NOM",
-        nomUsage: "",
+        nomUsage: ""
       },
       prenoms: {
         prenom1: "",
@@ -203,9 +202,9 @@ export const RequeteRDCMandataire = {
       }
     },
     titulaire2: {
-      noms:{
+      noms: {
         nomNaissance: "",
-        nomUsage: "",
+        nomUsage: ""
       },
       prenoms: {
         prenom1: "",
@@ -307,9 +306,9 @@ export const RequeteRDCInstitutionnel = {
       paysEvenement: "France"
     },
     titulaire1: {
-      noms:{
+      noms: {
         nomNaissance: "NOM",
-        nomUsage: "",
+        nomUsage: ""
       },
       prenoms: {
         prenom1: "",
@@ -345,9 +344,9 @@ export const RequeteRDCInstitutionnel = {
       }
     },
     titulaire2: {
-      noms:{
+      noms: {
         nomNaissance: "",
-        nomUsage: "",
+        nomUsage: ""
       },
       prenoms: {
         prenom1: "",
@@ -437,9 +436,9 @@ export const RequeteRDCParticulier = {
       paysEvenement: "France"
     },
     titulaire1: {
-      noms:{
+      noms: {
         nomNaissance: "NOM",
-        nomUsage: "",
+        nomUsage: ""
       },
       prenoms: {
         prenom1: "",
@@ -475,9 +474,9 @@ export const RequeteRDCParticulier = {
       }
     },
     titulaire2: {
-      noms:{
+      noms: {
         nomNaissance: "",
-        nomUsage: "",
+        nomUsage: ""
       },
       prenoms: {
         prenom1: "",
@@ -565,9 +564,9 @@ export const RequeteRDCAutreProfessionnnel = {
       paysEvenement: "France"
     },
     titulaire1: {
-      noms:{
+      noms: {
         nomNaissance: "NOM",
-        nomUsage: "",
+        nomUsage: ""
       },
       prenoms: {
         prenom1: "",
@@ -603,9 +602,9 @@ export const RequeteRDCAutreProfessionnnel = {
       }
     },
     titulaire2: {
-      noms:{
+      noms: {
         nomNaissance: "",
-        nomUsage: "",
+        nomUsage: ""
       },
       prenoms: {
         prenom1: "",

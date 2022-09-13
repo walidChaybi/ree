@@ -1,3 +1,4 @@
+import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import {
   act,
   fireEvent,
@@ -5,15 +6,14 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import React from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { TypeAlerte } from "../../../../model/etatcivil/enum/TypeAlerte";
-import { BoutonAjouterAlerte } from "../../../../views/common/widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
+import { BoutonAjouterAlerte } from "@widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
 import {
   COMPLEMENT_DESCRIPTION,
   ID_TYPE_ALERTE
-} from "../../../../views/common/widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
+} from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
+import React from "react";
+import request from "superagent";
+import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

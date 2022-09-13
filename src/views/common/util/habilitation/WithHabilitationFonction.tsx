@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 // FIXME : class à supprimer ?
 
-import { officierHabiliterUniquementPourLeDroit } from "../../../../model/agent/IOfficier";
+import { officierHabiliterUniquementPourLeDroit } from "@model/agent/IOfficier";
 import { storeRece } from "../storeRece";
 import {
   habilitationsDescription,

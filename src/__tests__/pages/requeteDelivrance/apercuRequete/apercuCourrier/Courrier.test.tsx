@@ -1,3 +1,5 @@
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { Courrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/Courrier";
 import {
   act,
   fireEvent,
@@ -5,6 +7,7 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import React from "react";
 import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../../mock/data/connectedUserAvecDroit";
@@ -12,9 +15,6 @@ import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
 import { requeteDelivranceRDC } from "../../../../../mock/data/requeteDelivrance";
 import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
-import { storeRece } from "../../../../../views/common/util/storeRece";
-import { Courrier } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/Courrier";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],

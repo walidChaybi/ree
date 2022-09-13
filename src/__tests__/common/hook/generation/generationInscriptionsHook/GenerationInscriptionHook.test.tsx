@@ -1,3 +1,8 @@
+import { useGenerationInscriptionsHook } from "@hook/generation/generationInscriptionsHook/GenerationInscriptionsHook";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
@@ -12,11 +17,6 @@ import {
 import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetesGeneInscription } from "../../../../../mock/superagent-config/superagent-mock-requetes-gene-inscription";
-import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
-import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
-import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
-import { ITitulaireRequeteTableau } from "../../../../../model/requete/ITitulaireRequeteTableau";
-import { useGenerationInscriptionsHook } from "../../../../../views/common/hook/generation/generationInscriptionsHook/GenerationInscriptionsHook";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],

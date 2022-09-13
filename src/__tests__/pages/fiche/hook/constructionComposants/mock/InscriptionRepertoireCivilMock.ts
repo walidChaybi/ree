@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
-import { MandataireRc } from "../../../../../../model/etatcivil/enum/MandataireRc";
-import { NatureRc } from "../../../../../../model/etatcivil/enum/NatureRc";
+import { MandataireRc } from "@model/etatcivil/enum/MandataireRc";
+import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 
 export const ficheInscriptionRepertoireCivil = {
   nature: new NatureRc("CURATELLE_AMENAGEE"),

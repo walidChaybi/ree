@@ -1,8 +1,8 @@
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { PieceJointe } from "@util/FileUtils";
+import { Options } from "@util/Type";
 import { connect } from "formik";
 import React, { useEffect } from "react";
-import { TypePieceJustificative } from "../../../../../model/requete/enum/TypePieceJustificative";
-import { PieceJointe } from "../../../util/FileUtils";
-import { Options } from "../../../util/Type";
 import "../scss/PiecesJointesForm.scss";
 import { SousFormulaire } from "../SousFormulaire";
 import { SubFormProps } from "../utils/FormUtil";

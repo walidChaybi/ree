@@ -1,7 +1,7 @@
+import { updateStatutRequeteCreation } from "@api/appels/requeteApi";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { logError } from "@util/LogManager";
 import { useEffect } from "react";
-import { updateStatutRequeteCreation } from "../../../../../api/appels/requeteApi";
-import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
-import { logError } from "../../../util/LogManager";
 
 export interface MiseAjourStatutCreationParams {
   statutRequete: StatutRequete;

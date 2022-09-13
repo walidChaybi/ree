@@ -1,4 +1,4 @@
-import { SousTypeRequete } from "../../../model/requete/enum/SousTypeRequete";
+import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { StatutRequete } from "../../requete/enum/StatutRequete";
 
 export interface IRMCFiltreRequete {

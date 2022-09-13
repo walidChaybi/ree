@@ -1,7 +1,7 @@
 import { Divider, List, ListItem, ListItemText } from "@material-ui/core";
+import { logError } from "@util/LogManager";
+import { getLibelle } from "@util/Utils";
 import React, { useCallback } from "react";
-import { logError } from "../../../util/LogManager";
-import { getLibelle } from "../../../util/Utils";
 import "./scss/ErrorsSignature.scss";
 
 interface ErrorsSignatureProps {

@@ -1,8 +1,8 @@
+import { PieceJointe } from "@util/FileUtils";
+import { PiecesJointes } from "@widget/formulaire/piecesJointes/PiecesJointes";
+import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
-import { PieceJointe } from "../../../../../common/util/FileUtils";
-import { PiecesJointes } from "../../../../../common/widget/formulaire/piecesJointes/PiecesJointes";
-import { SubFormProps } from "../../../../../common/widget/formulaire/utils/FormUtil";
 import "./scss/PiecesJointesReqInfo.scss";
 
 const NOMBRE_PIECE_MAX = 2;

@@ -1,3 +1,16 @@
+import { getLibelle } from "@util/Utils";
+import { Fieldset } from "@widget/fieldset/Fieldset";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import {
+  ASTERISQUE_MESSAGE,
+  CARATERES_AUTORISES_MESSAGE
+} from "@widget/formulaire/FormulaireMessages";
+import { traiteEspace } from "@widget/formulaire/utils/ControlesUtil";
+import {
+  ComponentFiltreProps,
+  FormikComponentProps,
+  withNamespace
+} from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
@@ -5,19 +18,6 @@ import {
   AsterisqueRecherche,
   CarateresAutoriseRecherche
 } from "../../../../../ressources/Regex";
-import { getLibelle } from "../../../../common/util/Utils";
-import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
-import {
-  ASTERISQUE_MESSAGE,
-  CARATERES_AUTORISES_MESSAGE
-} from "../../../../common/widget/formulaire/FormulaireMessages";
-import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
-import {
-  ComponentFiltreProps,
-  FormikComponentProps,
-  withNamespace
-} from "../../../../common/widget/formulaire/utils/FormUtil";
 import "../scss/FiltreRMC.scss";
 
 // Noms des champs

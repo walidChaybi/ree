@@ -1,16 +1,16 @@
+import {
+  IQueryParametersPourRequetes,
+  TypeAppelRequete
+} from "@api/appels/requeteApi";
+import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
+import { StatutsRequetesInformation } from "@pages/requeteInformation/espaceInformation/EspaceReqInfoParams";
+import { useRequeteInformationApi } from "@pages/requeteInformation/espaceInformation/hook/DonneesRequeteInformationApiHook";
+import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import {
-  IQueryParametersPourRequetes,
-  TypeAppelRequete
-} from "../../../../../api/appels/requeteApi";
 import { configRequetesInformation } from "../../../../../mock/superagent-config/superagent-mock-requetes-information";
-import { IRequeteTableauInformation } from "../../../../../model/requete/IRequeteTableauInformation";
-import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { StatutsRequetesInformation } from "../../../../../views/pages/requeteInformation/espaceInformation/EspaceReqInfoParams";
-import { useRequeteInformationApi } from "../../../../../views/pages/requeteInformation/espaceInformation/hook/DonneesRequeteInformationApiHook";
 
 const superagentMock = require("superagent-mock")(
   request,

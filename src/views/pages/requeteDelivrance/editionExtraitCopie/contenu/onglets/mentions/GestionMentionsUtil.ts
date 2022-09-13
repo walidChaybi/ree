@@ -1,24 +1,14 @@
-import {
-  FicheActe,
-  IFicheActe
-} from "../../../../../../../model/etatcivil/acte/IFicheActe";
-import {
-  IMention,
-  Mention
-} from "../../../../../../../model/etatcivil/acte/mention/IMention";
-import { NatureMention } from "../../../../../../../model/etatcivil/enum/NatureMention";
-import { TypeFiche } from "../../../../../../../model/etatcivil/enum/TypeFiche";
-import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   DocumentReponse,
   IDocumentReponse
-} from "../../../../../../../model/requete/IDocumentReponse";
-import messageManager from "../../../../../../common/util/messageManager";
-import {
-  getLibelle,
-  getValeurOuVide,
-  shallowEgalTableau
-} from "../../../../../../common/util/Utils";
+} from "@model/requete/IDocumentReponse";
+import messageManager from "@util/messageManager";
+import { getLibelle, getValeurOuVide, shallowEgalTableau } from "@util/Utils";
 import { fournisseurDonneesBandeauFactory } from "../../../../../fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 import { gestionnaireRenumerotationMentions } from "./GestionnaireRenumerotationMentions";
 

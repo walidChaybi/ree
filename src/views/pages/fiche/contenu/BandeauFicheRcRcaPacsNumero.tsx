@@ -1,13 +1,15 @@
+import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
+import { jointAvec } from "@util/Utils";
 import React from "react";
-import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
-import { jointAvec } from "../../../common/util/Utils";
 import "./scss/Bandeau.scss";
 
 export interface BandeauFicheRcRcaPacsNumeroProps {
   dataBandeau: IBandeauFiche;
 }
 
-export const BandeauFicheRcRcaPacsNumero: React.FC<BandeauFicheRcRcaPacsNumeroProps> = props => {
+export const BandeauFicheRcRcaPacsNumero: React.FC<
+  BandeauFicheRcRcaPacsNumeroProps
+> = props => {
   const data = props.dataBandeau;
   function getPrenomNom() {
     const nomsPrenoms = data.personnes.map(

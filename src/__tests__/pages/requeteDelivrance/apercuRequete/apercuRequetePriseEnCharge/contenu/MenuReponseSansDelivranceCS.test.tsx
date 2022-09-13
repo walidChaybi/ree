@@ -1,18 +1,29 @@
+import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { MenuReponseSansDelivranceCS } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuReponseSansDelivranceCS";
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
+  createReponseSansDelivranceCSPourCompositionApiFrancais,
+  createReponseSansDelivranceCSPourCompositionApiMariage
+} from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ReponseSansDelivranceCSFonctions";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "@router/ReceUrls";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/routeUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import {
-    reponseSansDelivranceCSDemandeIncomplete,
-    reponseSansDelivranceCSFrancais,
-    reponseSansDelivranceCSMariage
+  reponseSansDelivranceCSDemandeIncomplete,
+  reponseSansDelivranceCSFrancais,
+  reponseSansDelivranceCSMariage
 } from "../../../../../../mock/data/Composition";
 import requeteDelivrance, {
   idRequeteRDCSC,
@@ -23,17 +34,6 @@ import { configComposition } from "../../../../../../mock/superagent-config/supe
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configParamsBaseRequete } from "../../../../../../mock/superagent-config/superagent-mock-params";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { ParametreBaseRequete } from "../../../../../../model/parametres/enum/ParametresBaseRequete";
-import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
-import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { getUrlWithParam } from "../../../../../../views/common/util/route/routeUtil";
-import { MenuReponseSansDelivranceCS } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuReponseSansDelivranceCS";
-import {
-  createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
-  createReponseSansDelivranceCSPourCompositionApiFrancais,
-  createReponseSansDelivranceCSPourCompositionApiMariage
-} from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ReponseSansDelivranceCSFonctions";
-import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],
@@ -109,18 +109,18 @@ test("Reponse sans délivrance mariage", async () => {
 test("test de création réponse sans délivrance mariage", async () => {
   const requete = requeteDelivrance;
   const acte = { idActe: "b41079a5-9e8d-478c-b04c-c4c2ac671348" };
-  const reponseSansDelivranceCS = await createReponseSansDelivranceCSPourCompositionApiMariage(
-    requete,
-    (acte as any) as IResultatRMCActe
-  );
+  const reponseSansDelivranceCS =
+    await createReponseSansDelivranceCSPourCompositionApiMariage(
+      requete,
+      acte as any as IResultatRMCActe
+    );
   expect(reponseSansDelivranceCS).toStrictEqual(reponseSansDelivranceCSMariage);
 });
 
 test("test de création réponse sans délivrance français", async () => {
   const requete = requeteDelivrance;
-  const reponseSansDelivranceCS = await createReponseSansDelivranceCSPourCompositionApiFrancais(
-    requete
-  );
+  const reponseSansDelivranceCS =
+    await createReponseSansDelivranceCSPourCompositionApiFrancais(requete);
   expect(reponseSansDelivranceCS).toStrictEqual(
     reponseSansDelivranceCSFrancais
   );
@@ -128,9 +128,10 @@ test("test de création réponse sans délivrance français", async () => {
 
 test("test de création réponse sans délivrance demande incomplete", async () => {
   const requete = requeteDelivranceInstitutionnel;
-  const reponseSansDelivranceCS = await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
-    requete
-  );
+  const reponseSansDelivranceCS =
+    await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
+      requete
+    );
   expect(reponseSansDelivranceCS).toStrictEqual(
     reponseSansDelivranceCSDemandeIncomplete
   );
@@ -169,18 +170,21 @@ test("Réponse ignorer", async () => {
 });
 
 test("message erreur", async () => {
-  const reponseSansDelivranceCS1 = await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
-    {} as IRequeteDelivrance
-  );
+  const reponseSansDelivranceCS1 =
+    await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
+      {} as IRequeteDelivrance
+    );
   expect(reponseSansDelivranceCS1).toStrictEqual({});
-  const reponseSansDelivranceCS2 = await createReponseSansDelivranceCSPourCompositionApiMariage(
-    {} as IRequeteDelivrance,
-    {} as IResultatRMCActe
-  );
+  const reponseSansDelivranceCS2 =
+    await createReponseSansDelivranceCSPourCompositionApiMariage(
+      {} as IRequeteDelivrance,
+      {} as IResultatRMCActe
+    );
   expect(reponseSansDelivranceCS2).toStrictEqual({});
-  const reponseSansDelivranceCS3 = await createReponseSansDelivranceCSPourCompositionApiFrancais(
-    {} as IRequeteDelivrance
-  );
+  const reponseSansDelivranceCS3 =
+    await createReponseSansDelivranceCSPourCompositionApiFrancais(
+      {} as IRequeteDelivrance
+    );
   expect(reponseSansDelivranceCS3).toStrictEqual({});
 });
 

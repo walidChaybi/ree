@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { getInformationsFiche } from "../../../../api/appels/etatcivilApi";
-import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
+import { getInformationsFiche } from "@api/appels/etatcivilApi";
 import {
   mapActe,
   mapPacs,
   mapRcRca
-} from "../../../common/hook/repertoires/MappingRepertoires";
-import { logError } from "../../../common/util/LogManager";
+} from "@hook/repertoires/MappingRepertoires";
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { logError } from "@util/LogManager";
+import { useEffect, useState } from "react";
 
 export interface IDataFicheApi {
   data: any;

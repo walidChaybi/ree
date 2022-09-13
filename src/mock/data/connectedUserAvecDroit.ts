@@ -1,6 +1,6 @@
-import { Droit } from "../../model/agent/enum/Droit";
-import { TypeEntite } from "../../model/agent/enum/TypeEntite";
-import { IOfficier } from "../../model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
+import { TypeEntite } from "@model/agent/enum/TypeEntite";
+import { IOfficier } from "@model/agent/IOfficier";
 
 export const userDroitConsulterArchive: IOfficier = {
   idSSO: "idSSOConnectedUser",

@@ -1,14 +1,14 @@
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { TypeRequerant } from "@model/requete/enum/TypeRequerant";
+import { TRequete } from "@model/requete/IRequete";
+import { Options } from "@util/Type";
+import { getLibelle } from "@util/Utils";
+import AdresseForm from "@widget/formulaire/adresse/AdresseForm";
+import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
+import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
+import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { FormikProps, FormikValues } from "formik";
 import React from "react";
-import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
-import { TypeRequerant } from "../../../../../model/requete/enum/TypeRequerant";
-import { TRequete } from "../../../../../model/requete/IRequete";
-import { Options } from "../../../../common/util/Type";
-import { getLibelle } from "../../../../common/util/Utils";
-import AdresseForm from "../../../../common/widget/formulaire/adresse/AdresseForm";
-import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
-import PiecesJointesForm from "../../../../common/widget/formulaire/piecesJointes/PiecesJointesForm";
-import { SubFormProps } from "../../../../common/widget/formulaire/utils/FormUtil";
 import {
   ADRESSE,
   DOCUMENT,

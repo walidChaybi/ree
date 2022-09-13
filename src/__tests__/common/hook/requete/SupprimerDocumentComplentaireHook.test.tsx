@@ -1,4 +1,10 @@
+import { useSupprimerDocumentComplementaireApi } from "@hook/requete/SupprimerDocumentComplementaireHook";
+import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import request from "superagent";
@@ -7,12 +13,6 @@ import { requeteAvecDocs } from "../../../../mock/data/DetailRequeteDelivrance";
 import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { TypeMention } from "../../../../model/etatcivil/acte/mention/ITypeMention";
-import { NatureMention } from "../../../../model/etatcivil/enum/NatureMention";
-import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
-import { useSupprimerDocumentComplementaireApi } from "../../../../views/common/hook/requete/SupprimerDocumentComplementaireHook";
-import { storeRece } from "../../../../views/common/util/storeRece";
-import { URL_MES_REQUETES_DELIVRANCE } from "../../../../views/router/ReceUrls";
 
 let history: MemoryHistory;
 const globalAny: any = global;
@@ -21,7 +21,7 @@ globalAny.URL.createObjectURL = jest.fn();
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
   configRequetes[0],
-  configComposition[0],
+  configComposition[0]
 ]);
 
 const params = {

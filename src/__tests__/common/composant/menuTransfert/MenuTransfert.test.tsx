@@ -1,4 +1,20 @@
+import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
+import { Droit } from "@model/agent/enum/Droit";
+import { TypeEntite } from "@model/agent/enum/TypeEntite";
+import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
+import { IEntite } from "@model/agent/IEntiteRattachement";
+import { IUtilisateur } from "@model/agent/IUtilisateur";
+import {
+  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_INFORMATION
+} from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { getUrlWithParam } from "@util/route/routeUtil";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { act } from "react-dom/test-utils";
@@ -11,26 +27,6 @@ import {
 import { requeteInformation } from "../../../../mock/data/requeteInformation";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { Droit } from "../../../../model/agent/enum/Droit";
-import { TypeEntite } from "../../../../model/agent/enum/TypeEntite";
-import {
-  IDroit,
-  IHabilitation,
-  IProfil
-} from "../../../../model/agent/Habilitation";
-import { IEntite } from "../../../../model/agent/IEntiteRattachement";
-import { IUtilisateur } from "../../../../model/agent/IUtilisateur";
-import { MenuTransfert } from "../../../../views/common/composant/menuTransfert/MenuTransfert";
-import { FeatureFlag } from "../../../../views/common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
-import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
-import { storeRece } from "../../../../views/common/util/storeRece";
-import {
-  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_INFORMATION
-} from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 const superagentMock3 = require("superagent-mock")(request, configEtatcivil);

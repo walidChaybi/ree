@@ -1,3 +1,8 @@
+import RegistreActeFiltre, {
+  RegistreActeDefaultValues,
+  RegistreActeFiltreProps
+} from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreActeFiltre";
+import { REGISTRE } from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
 import {
   act,
   fireEvent,
@@ -9,11 +14,6 @@ import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import RegistreActeFiltre, {
-  RegistreActeDefaultValues,
-  RegistreActeFiltreProps
-} from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreActeFiltre";
-import { REGISTRE } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

@@ -1,8 +1,8 @@
+import { postTransfertRequete } from "@api/appels/requeteApi";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { logError } from "@util/LogManager";
+import { getValeurOuVide } from "@util/Utils";
 import { useEffect, useState } from "react";
-import { postTransfertRequete } from "../../../../api/appels/requeteApi";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { logError } from "../../util/LogManager";
-import { getValeurOuVide } from "../../util/Utils";
 
 export interface TransfertParams {
   idRequete: string;

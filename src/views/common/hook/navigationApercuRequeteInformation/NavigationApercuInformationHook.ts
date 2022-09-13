@@ -1,10 +1,10 @@
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
+import { PATH_APERCU_REQ_INFO } from "@router/ReceUrls";
+import { autorisePrendreEnChargeReqTableauInformation } from "@util/RequetesUtils";
+import { getUrlWithParam } from "@util/route/routeUtil";
 import { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { IRequeteTableauInformation } from "../../../../model/requete/IRequeteTableauInformation";
-import { PATH_APERCU_REQ_INFO } from "../../../router/ReceUrls";
-import { autorisePrendreEnChargeReqTableauInformation } from "../../util/RequetesUtils";
-import { getUrlWithParam } from "../../util/route/routeUtil";
 import {
   CreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut

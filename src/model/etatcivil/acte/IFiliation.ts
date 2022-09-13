@@ -1,4 +1,4 @@
-import { mapPrenomsVersPrenomsOrdonnes } from "../../../views/common/util/Utils";
+import { mapPrenomsVersPrenomsOrdonnes } from "@util/Utils";
 import { IPrenomOrdonnes } from "../../requete/IPrenomOrdonnes";
 import { LienParente } from "../enum/LienParente";
 import { Sexe } from "../enum/Sexe";

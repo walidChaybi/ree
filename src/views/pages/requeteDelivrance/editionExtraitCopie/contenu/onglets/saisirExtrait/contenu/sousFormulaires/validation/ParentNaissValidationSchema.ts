@@ -1,18 +1,18 @@
-import * as Yup from "yup";
-import { EtrangerFrance } from "../../../../../../../../../../model/etatcivil/enum/EtrangerFrance";
-import { Sexe } from "../../../../../../../../../../model/etatcivil/enum/Sexe";
 import {
   DATE_NAISSANCE_OU_AGE_DE,
   NOM_NAISSANCE,
   SEXE
-} from "../../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
-import { DateNaissanceOuAgeDeValidationSchema } from "../../../../../../../../../common/composant/formulaire/validation/DateNaissanceOuAgeDeFormValidation";
-import { sexeObligatoireValidation } from "../../../../../../../../../common/composant/formulaire/validation/SexeObligatoireValidation";
+} from "@composant/formulaire/ConstantesNomsForm";
+import { DateNaissanceOuAgeDeValidationSchema } from "@composant/formulaire/validation/DateNaissanceOuAgeDeFormValidation";
+import { sexeObligatoireValidation } from "@composant/formulaire/validation/SexeObligatoireValidation";
+import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import {
   auMoinsUneProprieteEstRenseigne,
   estNonRenseigne,
   getLibelle
-} from "../../../../../../../../../common/util/Utils";
+} from "@util/Utils";
+import * as Yup from "yup";
 import { IParentNaissanceForm } from "../../../mapping/mappingActeVerFormulaireSaisirExtrait";
 export const ParentNaissValidationSchema = Yup.object({
   [DATE_NAISSANCE_OU_AGE_DE]: DateNaissanceOuAgeDeValidationSchema,
@@ -67,4 +67,3 @@ function supprimeValeurInconnu(
 
   return parentNaissanceFormSansValeurInconnu;
 }
-

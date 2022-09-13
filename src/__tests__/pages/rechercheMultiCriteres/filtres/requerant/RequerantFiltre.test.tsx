@@ -1,3 +1,8 @@
+import RequerantFiltre, {
+  RequerantDefaultValues,
+  RequerantFiltreProps
+} from "@pages/rechercheMultiCriteres/filtres/requerant/RequerantFiltre";
+import { REQUERANT } from "@pages/rechercheMultiCriteres/requete/RMCRequeteForm";
 import {
   act,
   fireEvent,
@@ -7,11 +12,6 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import RequerantFiltre, {
-  RequerantDefaultValues,
-  RequerantFiltreProps
-} from "../../../../../views/pages/rechercheMultiCriteres/filtres/requerant/RequerantFiltre";
-import { REQUERANT } from "../../../../../views/pages/rechercheMultiCriteres/requete/RMCRequeteForm";
 
 const HookConsummerRequerantForm: React.FC = () => {
   const [result, setResult] = useState("");

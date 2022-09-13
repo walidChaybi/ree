@@ -1,13 +1,13 @@
-import { connect } from "formik";
-import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
-import { TypeRepertoire } from "../../../../../model/etatcivil/enum/TypeRepertoire";
-import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { TypeRepertoire } from "@model/etatcivil/enum/TypeRepertoire";
+import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
   withNamespace
-} from "../../../../common/widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useEffect, useState } from "react";
+import * as Yup from "yup";
 import EvenementFiltre, {
   EvenementDefaultValues,
   EvenementFiltreProps,
@@ -46,7 +46,9 @@ export const RegistreRepertoireValidationSchema = Yup.object({
 export type RegistreRepertoireFiltreProps = ComponentFiltreProps &
   FormikComponentProps;
 
-const RegistreRepertoireFiltre: React.FC<RegistreRepertoireFiltreProps> = props => {
+const RegistreRepertoireFiltre: React.FC<
+  RegistreRepertoireFiltreProps
+> = props => {
   const [filtreActeInactif, setFiltreActeInactif] = useState<
     boolean | undefined
   >(false);

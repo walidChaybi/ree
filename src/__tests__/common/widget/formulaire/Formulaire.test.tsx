@@ -1,8 +1,7 @@
+import { act, render, waitFor } from "@testing-library/react";
+import { Formulaire } from "@widget/formulaire/Formulaire";
 import React from "react";
-import { render, waitFor, act } from "@testing-library/react";
-
 import * as Yup from "yup";
-import { Formulaire } from "../../../../views/common/widget/formulaire/Formulaire";
 
 const HookConsummerFormulaire: React.FC = () => {
   const FORMULAIRE = "formulaire";

@@ -1,17 +1,17 @@
-import { connect } from "formik";
-import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../../../ressources/Regex";
-import { getLibelle } from "../../../../../../common/util/Utils";
-import { InputField } from "../../../../../../common/widget/formulaire/champsSaisie/InputField";
-import { CARATERES_AUTORISES_MESSAGE } from "../../../../../../common/widget/formulaire/FormulaireMessages";
-import { sortieChampEnMajuscule } from "../../../../../../common/widget/formulaire/utils/ControlesUtil";
+import { getLibelle } from "@util/Utils";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
+import { sortieChampEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   IGNORER_TABULATION,
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
   withNamespace
-} from "../../../../../../common/widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useEffect, useState } from "react";
+import * as Yup from "yup";
+import { CarateresAutorise } from "../../../../../../../ressources/Regex";
 import {
   NOM_NAISSANCE,
   NOM_USAGE

@@ -1,9 +1,9 @@
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { IActionOption } from "@model/requete/IActionOption";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { MenuAction } from "@widget/menu/MenuAction";
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { SousTypeDelivrance } from "../../../../../../model/requete/enum/SousTypeDelivrance";
-import { IActionOption } from "../../../../../../model/requete/IActionOption";
-import { MenuAction } from "../../../../../../views/common/widget/menu/MenuAction";
 
 test("renders d'un menu choix des actions", () => {
   const testOptions: IActionOption[] = [

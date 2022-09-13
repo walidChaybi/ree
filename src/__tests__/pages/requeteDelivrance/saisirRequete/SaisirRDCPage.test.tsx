@@ -1,3 +1,7 @@
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
+import { URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC } from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -5,18 +9,14 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { getLastPathElem } from "@util/route/routeUtil";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
-import { getLastPathElem } from "../../../../views/common/util/route/routeUtil";
-import { storeRece } from "../../../../views/common/util/storeRece";
-import { SaisirRDCPage } from "../../../../views/pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
-import { URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

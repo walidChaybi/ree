@@ -6,13 +6,13 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { Field, Form, Formik } from "formik";
-import React, { useState } from "react";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues,
   onDatePickerValueChange
-} from "../../../../views/common/widget/formulaire/champsDate/DateComposeForm";
+} from "@widget/formulaire/champsDate/DateComposeForm";
+import { Field, Form, Formik } from "formik";
+import React, { useState } from "react";
 
 const HookConsummerDateComposeForm: React.FC = () => {
   const [result, setResult] = useState("");

@@ -1,22 +1,19 @@
-import { IEvenement } from "../../../../../../../../model/etatcivil/acte/IEvenement";
-import {
-  FicheActe,
-  IFicheActe
-} from "../../../../../../../../model/etatcivil/acte/IFicheActe";
-import { IFiliation } from "../../../../../../../../model/etatcivil/acte/IFiliation";
-import { ITitulaireActe } from "../../../../../../../../model/etatcivil/acte/ITitulaireActe";
-import { EtrangerFrance } from "../../../../../../../../model/etatcivil/enum/EtrangerFrance";
-import { LienParente } from "../../../../../../../../model/etatcivil/enum/LienParente";
-import { NatureActe } from "../../../../../../../../model/etatcivil/enum/NatureActe";
-import { IExtraitSaisiAEnvoyer } from "../../../../../../../common/hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
-import { getDateDebutFromDateCompose } from "../../../../../../../common/util/DateUtils";
+import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
+import { IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IFiliation } from "@model/etatcivil/acte/IFiliation";
+import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
+import { LienParente } from "@model/etatcivil/enum/LienParente";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { getDateDebutFromDateCompose } from "@util/DateUtils";
 import {
   DEUX,
   getNombreOuUndefined,
   getTableauAPartirElementsNonVides,
   getValeurOuUndefined,
   UN
-} from "../../../../../../../common/util/Utils";
+} from "@util/Utils";
 import {
   IDateCompleteForm,
   ILieuEvenementForm,

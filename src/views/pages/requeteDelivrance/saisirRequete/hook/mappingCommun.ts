@@ -1,6 +1,6 @@
-import { IPrenomOrdonnes } from "../../../../../model/requete/IPrenomOrdonnes";
-import { IPieceJustificative } from "../../../../../model/requete/pieceJointe/IPieceJustificative";
-import { getValeurOuVide } from "../../../../common/util/Utils";
+import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
+import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
+import { getValeurOuVide } from "@util/Utils";
 
 export function getPrenoms(prenoms: any): IPrenomOrdonnes[] {
   const prenomsInteresse = [] as IPrenomOrdonnes[];

@@ -1,6 +1,6 @@
+import { RetourSdanf } from "@model/requete/enum/RetourSdanf";
+import { IEchange } from "@model/requete/IEchange";
 import React from "react";
-import { RetourSdanf } from "../../../../../../../model/requete/enum/RetourSdanf";
-import { IEchange } from "../../../../../../../model/requete/IEchange";
 interface ItemEchangesRetourSDANFProps {
   echanges?: IEchange[];
 }

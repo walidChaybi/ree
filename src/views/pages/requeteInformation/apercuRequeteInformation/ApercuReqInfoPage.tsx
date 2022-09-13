@@ -1,20 +1,20 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { appartientAMonServiceOuServicesMeresOuServicesFilles } from "../../../../model/agent/IOfficier";
-import { IUuidRequeteParams } from "../../../../model/params/IUuidRequeteParams";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { Requete, TRequete } from "../../../../model/requete/IRequete";
-import { IRequeteInformation } from "../../../../model/requete/IRequeteInformation";
-import { IRequeteTableauInformation } from "../../../../model/requete/IRequeteTableauInformation";
-import { BandeauRequete } from "../../../common/composant/bandeauApercuRequete/BandeauApercuRequete";
-import { SuiviActionsRequete } from "../../../common/composant/suivis/SuiviActionsRequete";
-import { SuiviObservationsRequete } from "../../../common/composant/suivis/SuiviObservationRequete";
+import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuRequete";
+import { SuiviActionsRequete } from "@composant/suivis/SuiviActionsRequete";
+import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationRequete";
 import {
   CreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
-} from "../../../common/hook/requete/CreationActionMiseAjourStatutHook";
-import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
-import { getLibelle } from "../../../common/util/Utils";
+} from "@hook/requete/CreationActionMiseAjourStatutHook";
+import { appartientAMonServiceOuServicesMeresOuServicesFilles } from "@model/agent/IOfficier";
+import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { Requete, TRequete } from "@model/requete/IRequete";
+import { IRequeteInformation } from "@model/requete/IRequeteInformation";
+import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
+import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
+import { getLibelle } from "@util/Utils";
+import React, { useCallback, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { RMCAuto } from "../../rechercheMultiCriteres/autoActesInscriptions/RMCAuto";
 import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import {

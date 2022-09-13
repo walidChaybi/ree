@@ -1,7 +1,7 @@
+import { AlertesActes } from "@composant/alertesActe/AlertesActes";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
-import { AlertesActes } from "../../../../../../views/common/composant/alertesActe/AlertesActes";
 
 test("render texte du bouton d'ajout d'alerte", () => {
   render(

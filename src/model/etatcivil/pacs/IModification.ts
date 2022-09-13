@@ -1,4 +1,4 @@
-import { getFormatDateFromTimestamp } from "../../../views/common/util/DateUtils";
+import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { IActionDatee } from "../commun/IActionDatee";
 import { IAutorite } from "../commun/IAutorite";
 

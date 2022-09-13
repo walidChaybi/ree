@@ -1,27 +1,24 @@
-import { useEffect, useState } from "react";
 import {
   getRequetesCreation,
   IQueryParametersPourRequetes,
   TypeAppelRequete
-} from "../../../../api/appels/requeteApi";
-import { QualiteFamille } from "../../../../model/requete/enum/QualiteFamille";
-import { SousTypeCreation } from "../../../../model/requete/enum/SousTypeCreation";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { TypeObjetTitulaire } from "../../../../model/requete/enum/TypeObjetTitulaire";
-import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
-import { IRequeteTableauCreation } from "../../../../model/requete/IRequeteTableauCreation";
-import { mapAttribueA } from "../../../../model/requete/IRequeteTableauDelivrance";
+} from "@api/appels/requeteApi";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
+import { mapAttribueA } from "@model/requete/IRequeteTableauDelivrance";
 import {
   ITitulaireRequeteTableau,
   mapTitulaires
-} from "../../../../model/requete/ITitulaireRequeteTableau";
-import { getFormatDateFromTimestamp } from "../../../common/util/DateUtils";
-import {
-  getParamsTableau,
-  IParamsTableau
-} from "../../../common/util/GestionDesLiensApi";
-import { logError } from "../../../common/util/LogManager";
-import { getValeurOuVide, valeurOuUndefined } from "../../../common/util/Utils";
+} from "@model/requete/ITitulaireRequeteTableau";
+import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
+import { logError } from "@util/LogManager";
+import { getValeurOuVide, valeurOuUndefined } from "@util/Utils";
+import { useEffect, useState } from "react";
 
 export function useRequeteCreationApi(
   queryParameters: IQueryParametersPourRequetes,

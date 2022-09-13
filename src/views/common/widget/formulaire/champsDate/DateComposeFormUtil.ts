@@ -3,7 +3,7 @@ import {
   getDateComposeFromDate,
   getIsoStringFromDateCompose,
   IDateCompose
-} from "../../../util/DateUtils";
+} from "@util/DateUtils";
 
 export interface IDateComposeForm {
   jour?: string;

@@ -1,6 +1,6 @@
-import { IMention } from "../../../../../../../model/etatcivil/acte/mention/IMention";
-import { IMentionAffichage } from "../../../../../../../views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
-import { gestionnaireRenumerotationMentions } from "../../../../../../../views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionnaireRenumerotationMentions";
+import { IMention } from "@model/etatcivil/acte/mention/IMention";
+import { IMentionAffichage } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
+import { gestionnaireRenumerotationMentions } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionnaireRenumerotationMentions";
 
 ///////// RG 2
 

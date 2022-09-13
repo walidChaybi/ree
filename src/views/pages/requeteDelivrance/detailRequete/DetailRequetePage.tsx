@@ -1,7 +1,7 @@
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { getLibelle } from "@util/Utils";
+import { SectionPanel } from "@widget/section/SectionPanel";
 import React, { useEffect, useState } from "react";
-import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
-import { getLibelle } from "../../../common/util/Utils";
-import { SectionPanel } from "../../../common/widget/section/SectionPanel";
 import { useDetailRequeteApiHook } from "./hook/DetailRequeteHook";
 import { getPanelsDetailRequete } from "./hook/DetailRequeteUtils";
 import "./scss/DetailRequetePage.scss";

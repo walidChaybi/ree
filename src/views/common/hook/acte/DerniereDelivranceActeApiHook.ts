@@ -1,6 +1,6 @@
+import { updateDateDerniereDelivranceActe } from "@api/appels/etatcivilApi";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { updateDateDerniereDelivranceActe } from "../../../../api/appels/etatcivilApi";
-import { logError } from "../../util/LogManager";
 
 export interface IDerniereDelivranceActeParams {
   idActe: string;

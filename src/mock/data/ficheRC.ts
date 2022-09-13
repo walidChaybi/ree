@@ -1,7 +1,7 @@
-import { IFicheRcRca } from "../../model/etatcivil/rcrca/IFicheRcRca";
-import { getDateFromDateCompose } from "../../views/common/util/DateUtils";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { getDateFromDateCompose } from "@util/DateUtils";
 
-export const FicheRcDecisionNotaire = ({
+export const FicheRcDecisionNotaire = {
   id: "135e4dfe-9757-4d5d-8715-359c6e73289b",
   categorie: "RC",
   annee: "2020",
@@ -105,9 +105,9 @@ export const FicheRcDecisionNotaire = ({
   inscriptionsImpactees: [],
   inscriptionsLiees: [],
   duree: { nombreDuree: 1, uniteDuree: "année", dateFinDeMesure: 1470204367000 }
-} as any) as IFicheRcRca;
+} as any as IFicheRcRca;
 
-export const FicheRcDecisionNotaireTypeRequete = ({
+export const FicheRcDecisionNotaireTypeRequete = {
   id: "135e4dfe-9757-4d5d-8715-359c6e73289b",
   categorie: "RC",
   annee: "2020",
@@ -219,9 +219,9 @@ export const FicheRcDecisionNotaireTypeRequete = ({
   inscriptionsImpactees: [],
   inscriptionsLiees: [],
   duree: { nombreDuree: 1, uniteDuree: "année", dateFinDeMesure: 1470204367000 }
-} as any) as IFicheRcRca;
+} as any as IFicheRcRca;
 
-export const FicheRcDecisionNotaireTypeRequete2 = ({
+export const FicheRcDecisionNotaireTypeRequete2 = {
   id: "135e4dfe-9757-4d5d-8715-359c6e73289b",
   categorie: "RC",
   annee: "2020",
@@ -333,9 +333,9 @@ export const FicheRcDecisionNotaireTypeRequete2 = ({
   inscriptionsImpactees: [],
   inscriptionsLiees: [],
   duree: { nombreDuree: 1, uniteDuree: "année", dateFinDeMesure: 1470204367000 }
-} as any) as IFicheRcRca;
+} as any as IFicheRcRca;
 
-export const FicheRcRenouvellementTypeJugement = ({
+export const FicheRcRenouvellementTypeJugement = {
   id: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
   categorie: "RC",
   annee: "2020",
@@ -584,9 +584,9 @@ export const FicheRcRenouvellementTypeJugement = ({
     }
   ],
   duree: { nombreDuree: 1, uniteDuree: "mois", dateFinDeMesure: 1652162767000 }
-} as any) as IFicheRcRca;
+} as any as IFicheRcRca;
 
-export const FicheRcRenouvellementTypeOrdonnance = ({
+export const FicheRcRenouvellementTypeOrdonnance = {
   id: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
   categorie: "RC",
   annee: "2020",
@@ -834,9 +834,9 @@ export const FicheRcRenouvellementTypeOrdonnance = ({
     }
   ],
   duree: { nombreDuree: 1, uniteDuree: "mois", dateFinDeMesure: 1652162767000 }
-} as any) as IFicheRcRca;
+} as any as IFicheRcRca;
 
-export const FicheRcModification = ({
+export const FicheRcModification = {
   id: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
   categorie: "RC",
   annee: "2020",
@@ -1085,4 +1085,4 @@ export const FicheRcModification = ({
     }
   ],
   duree: { nombreDuree: 1, uniteDuree: "mois", dateFinDeMesure: 1652162767000 }
-} as any) as IFicheRcRca;
+} as any as IFicheRcRca;

@@ -1,4 +1,11 @@
+import { RMCActeInscriptionResultats } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
 import { render, screen } from "@testing-library/react";
+import {
+  NB_LIGNES_PAR_APPEL_ACTE,
+  NB_LIGNES_PAR_APPEL_INSCRIPTION,
+  NB_LIGNES_PAR_PAGE_ACTE,
+  NB_LIGNES_PAR_PAGE_INSCRIPTION
+} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import {
   DataRMCActeAvecResultat,
@@ -8,13 +15,6 @@ import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
 } from "../../../../../mock/data/RMCInscription";
-import {
-  NB_LIGNES_PAR_APPEL_ACTE,
-  NB_LIGNES_PAR_APPEL_INSCRIPTION,
-  NB_LIGNES_PAR_PAGE_ACTE,
-  NB_LIGNES_PAR_PAGE_INSCRIPTION
-} from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { RMCActeInscriptionResultats } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
 
 test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
   const { container } = render(

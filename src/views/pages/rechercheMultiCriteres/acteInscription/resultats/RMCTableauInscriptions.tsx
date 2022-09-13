@@ -1,26 +1,19 @@
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
+import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
+import { StatutFiche } from "@model/etatcivil/enum/StatutFiche";
+import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { TRequete } from "@model/requete/IRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { IParamsTableau } from "@util/GestionDesLiensApi";
+import { getLibelle, getValeurOuVide, supprimeElement } from "@util/Utils";
+import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
+import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React, { useCallback, useEffect, useState } from "react";
-import { Droit } from "../../../../../model/agent/enum/Droit";
-import { Perimetre } from "../../../../../model/agent/enum/Perimetre";
-import { officierALeDroitSurLePerimetre } from "../../../../../model/agent/IOfficier";
-import { StatutFiche } from "../../../../../model/etatcivil/enum/StatutFiche";
-import {
-  FicheUtil,
-  TypeFiche
-} from "../../../../../model/etatcivil/enum/TypeFiche";
-import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
-import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
-import { TRequete } from "../../../../../model/requete/IRequete";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
-import {
-  getLibelle,
-  getValeurOuVide,
-  supprimeElement
-} from "../../../../common/util/Utils";
-import { TableauRece } from "../../../../common/widget/tableau/TableauRece/TableauRece";
-import { TableauTypeColumn } from "../../../../common/widget/tableau/TableauRece/TableauTypeColumn";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { IDataFicheProps, IIndex } from "../../../fiche/FichePage";
 import { getMessageZeroInscription } from "../hook/RMCActeInscriptionUtils";

@@ -1,3 +1,10 @@
+import ResumeRequeteCreation from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/components/ResumeRequeteCreation";
+import {
+  INFOS,
+  resume as Labels
+} from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/Labels";
+import mappingIRequeteCreationVersResumeRequeteCreationProps from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/mappingIRequeteCreationVersResumeRequeteCreationProps";
+import { mappingRequeteCreation } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import {
   act,
   fireEvent,
@@ -9,13 +16,6 @@ import React from "react";
 import request from "superagent";
 import { requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitulaireEtUnEnfantMajeur } from "../../../mock/data/requeteCreation";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-import ResumeRequeteCreation from "../../../views/pages/requeteCreation/EspaceCreation/apercuReqCreation/components/ResumeRequeteCreation";
-import {
-  INFOS,
-  resume as Labels
-} from "../../../views/pages/requeteCreation/EspaceCreation/apercuReqCreation/Labels";
-import mappingIRequeteCreationVersResumeRequeteCreationProps from "../../../views/pages/requeteCreation/EspaceCreation/apercuReqCreation/mappingIRequeteCreationVersResumeRequeteCreationProps";
-import { mappingRequeteCreation } from "../../../views/pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const renduResumeRequeteCreation = async () => {

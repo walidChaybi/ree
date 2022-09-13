@@ -1,7 +1,7 @@
 /* istanbul ignore file */
+import { URL_CONTEXT_APP } from "@router/ReceUrls";
+import { getLibelle } from "@util/Utils";
 import * as React from "react";
-import { URL_CONTEXT_APP } from "../../router/ReceUrls";
-import { getLibelle } from "../util/Utils";
 import { logError } from "./LogManager";
 
 interface LocalProps {

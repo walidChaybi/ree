@@ -1,3 +1,8 @@
+import { AUTRE_PROFESSIONNEL } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import AutreProfessionnelForm, {
+  AutreProfessionnelFormDefaultValues,
+  AutreProfessionnelFormValidationSchema
+} from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/requerant/autreProfessionnel/AutreProfessionnelForm";
 import {
   act,
   fireEvent,
@@ -5,14 +10,9 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { AUTRE_PROFESSIONNEL } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
-import AutreProfessionnelForm, {
-  AutreProfessionnelFormDefaultValues,
-  AutreProfessionnelFormValidationSchema
-} from "../../../../../../views/pages/requeteDelivrance/saisirRequete/sousFormulaires/requerant/autreProfessionnel/AutreProfessionnelForm";
 
 const HookAutreProfessionnelForm: React.FC = () => {
   const [result, setResult] = useState("");

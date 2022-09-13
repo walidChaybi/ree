@@ -1,17 +1,17 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
-import { IActionOption } from "../../../../../../../model/requete/IActionOption";
-import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { resetDoubleSubmit } from "../../../../../../common/composant/menuTransfert/MenuTransfertUtil";
-import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
-import { estRenseigne, getLibelle } from "../../../../../../common/util/Utils";
-import { GroupeBouton } from "../../../../../../common/widget/menu/GroupeBouton";
+import { resetDoubleSubmit } from "@composant/menuTransfert/MenuTransfertUtil";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { IActionOption } from "@model/requete/IActionOption";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { filtrerListeActions } from "@util/RequetesUtils";
+import { estRenseigne, getLibelle } from "@util/Utils";
+import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import {
   ConfirmationPopin,
   IBoutonPopin
-} from "../../../../../../common/widget/popin/ConfirmationPopin";
+} from "@widget/popin/ConfirmationPopin";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { DocumentEC } from "../../../../editionExtraitCopie/enum/DocumentEC";
 import { IgnoreRequetePopin } from "../IgnoreRequetePopin";
 import { IChoixActionDelivranceProps } from "./ChoixAction";

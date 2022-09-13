@@ -1,5 +1,5 @@
+import { Option } from "@util/Type";
 import React from "react";
-import { Option } from "../../../util/Type";
 import { RadioField } from "./RadioField";
 
 interface CheckboxFieldProps {
@@ -15,7 +15,7 @@ interface CheckboxFieldProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const CheckboxField: React.FC<CheckboxFieldProps> = (props) => {
+export const CheckboxField: React.FC<CheckboxFieldProps> = props => {
   const type: "checkbox" | "radio" = "checkbox";
   const checkBoxProps = { ...props, type };
   return <RadioField {...checkBoxProps} />;

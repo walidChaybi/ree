@@ -1,25 +1,15 @@
-import React from "react";
-import {
-  Autorite,
-  IAutorite
-} from "../../../../../../model/etatcivil/commun/IAutorite";
+import { Autorite, IAutorite } from "@model/etatcivil/commun/IAutorite";
 import {
   TypeAutorite,
   TypeAutoriteUtil
-} from "../../../../../../model/etatcivil/enum/TypeAutorite";
-import {
-  FicheUtil,
-  TypeFiche
-} from "../../../../../../model/etatcivil/enum/TypeFiche";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import {
-  formatNom,
-  formatPrenom,
-  getValeurOuVide
-} from "../../../../../common/util/Utils";
-import { LieuxUtils } from "../../../../../common/utilMetier/LieuxUtils";
-import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
+} from "@model/etatcivil/enum/TypeAutorite";
+import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { formatNom, formatPrenom, getValeurOuVide } from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import { SectionContentProps } from "@widget/section/SectionContent";
+import { SectionPartProps } from "@widget/section/SectionPart";
+import React from "react";
 
 export function getAutorite(rcrca: IFicheRcRca): SectionPartProps[] {
   let autorite: SectionPartProps[] = [];

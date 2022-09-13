@@ -1,4 +1,4 @@
-import { peupleTypeMention } from "../../../../api/nomenclature/NomenclatureEtatcivil";
+import { peupleTypeMention } from "@api/nomenclature/NomenclatureEtatcivil";
 import { NatureActe } from "../../enum/NatureActe";
 import { NatureMention } from "../../enum/NatureMention";
 

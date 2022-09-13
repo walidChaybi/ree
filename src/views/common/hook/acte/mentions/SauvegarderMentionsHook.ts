@@ -1,20 +1,17 @@
-import { useEffect, useState } from "react";
-import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
-import { Validation } from "../../../../../model/requete/enum/Validation";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { Validation } from "@model/requete/enum/Validation";
 import {
   documentDejaCreer,
   IDocumentReponse
-} from "../../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
+} from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import {
   IMentionAffichage,
   mappingVersMentionsApi,
   modificationEffectue
-} from "../../../../pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
-import {
-  getValeurOuVide,
-  tousNonNullsNonZeroEtNonVides
-} from "../../../util/Utils";
+} from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
+import { getValeurOuVide, tousNonNullsNonZeroEtNonVides } from "@util/Utils";
+import { useEffect, useState } from "react";
 import {
   IGenerationECParams,
   useGenerationEC

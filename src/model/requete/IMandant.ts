@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { formatNom, formatPrenom } from "../../views/common/util/Utils";
+import { formatNom, formatPrenom } from "@util/Utils";
 import { TypeLienMandant } from "./enum/TypeLienMandant";
 import { TypeMandant } from "./enum/TypeMandant";
 

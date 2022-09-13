@@ -1,16 +1,16 @@
-import React from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
-import { Droit } from "../../model/agent/enum/Droit";
+import { Droit } from "@model/agent/enum/Droit";
 import {
   estOfficierHabiliterPourSeulementLesDroits,
   estOfficierHabiliterPourTousLesDroits,
   estOfficierHabiliterPourUnDesDroits,
   officierALeDroitSurUnDesPerimetres
-} from "../../model/agent/IOfficier";
-import messageManager from "../common/util/messageManager";
-import { IDroitPerimetre, IRoute } from "../common/util/route/IRoute";
-import { storeRece } from "../common/util/storeRece";
-import { getLibelle } from "../common/util/Utils";
+} from "@model/agent/IOfficier";
+import messageManager from "@util/messageManager";
+import { IDroitPerimetre, IRoute } from "@util/route/IRoute";
+import { storeRece } from "@util/storeRece";
+import { getLibelle } from "@util/Utils";
+import React from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { routesRece } from "./ReceRoutes";
 import { URL_ACCUEIL } from "./ReceUrls";
 

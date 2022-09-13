@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { IDocumentPJ } from "../../../../../../model/requete/IDocumentPj";
-import { IRequeteCreation } from "../../../../../../model/requete/IRequeteCreation";
-import { IPieceJustificativeCreation } from "../../../../../../model/requete/pieceJointe/IPieceJustificativeCreation";
-import { AccordionVisionneuse } from "../../../../../common/widget/accordion/AccordionVisionneuse";
+import { IDocumentPJ } from "@model/requete/IDocumentPj";
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
+import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
+import { AccordionVisionneuse } from "@widget/accordion/AccordionVisionneuse";
 import {
   ListeGlisserDeposer,
   ListeItem
-} from "../../../../../common/widget/listeGlisserDeposer/ListeGlisserDeposer";
+} from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
+import React, { useCallback, useEffect, useState } from "react";
 import "./scss/VoletPiecesJustificatives.scss";
 
 interface OngletPiecesJustificativesProps {

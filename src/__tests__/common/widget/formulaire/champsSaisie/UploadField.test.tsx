@@ -6,9 +6,9 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { ExtensionDocumentTypeMime } from "@util/FileUtils";
+import UploadFileField from "@widget/formulaire/champsSaisie/UploadFileField";
 import React from "react";
-import { ExtensionDocumentTypeMime } from "../../../../../views/common/util/FileUtils";
-import UploadFileField from "../../../../../views/common/widget/formulaire/champsSaisie/UploadFileField";
 import { inputPngFiles } from "../../../../__tests__utils__/testsUtil";
 
 const AJOUT_PIECE_JOINTE = "Ajout d'une pièce jointe";

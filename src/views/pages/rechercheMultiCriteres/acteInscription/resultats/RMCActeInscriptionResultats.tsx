@@ -1,11 +1,11 @@
+import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { TRequete } from "@model/requete/IRequete";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { IParamsTableau } from "@util/GestionDesLiensApi";
+import { getLibelle } from "@util/Utils";
+import { Fieldset } from "@widget/fieldset/Fieldset";
 import React from "react";
-import { IAlerte } from "../../../../../model/etatcivil/fiche/IAlerte";
-import { TRequete } from "../../../../../model/requete/IRequete";
-import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
-import { getLibelle } from "../../../../common/util/Utils";
-import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import "../scss/RMCActeInscriptionResultats.scss";
 import { RMCTableauActes } from "./RMCTableauActes";
 import { TypeRMC } from "./RMCTableauCommun";
@@ -55,7 +55,9 @@ export interface RMCActeInscriptionResultatsProps {
   dataTableauRMCFicheInscription?: IParamsTableau;
 }
 
-export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsProps> = ({
+export const RMCActeInscriptionResultats: React.FC<
+  RMCActeInscriptionResultatsProps
+> = ({
   typeRMC,
   dataAlertes,
   ajoutAlertePossible = false,

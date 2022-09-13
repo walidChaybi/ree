@@ -1,8 +1,8 @@
+import { getTypeDocument } from "@hook/generation/generationECHook/generationECHookUtil";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import request from "superagent";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
-import { getTypeDocument } from "../../../../../views/common/hook/generation/generationECHook/generationECHookUtil";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 beforeAll(() => {

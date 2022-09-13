@@ -1,6 +1,6 @@
 /* istanbul ignore file */
-import { EnumWithComplete } from "../../../views/common/util/enum/EnumWithComplete";
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import { EnumWithComplete } from "@util/enum/EnumWithComplete";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import {
   CODE_COPIE_INTEGRALE,
   CODE_COPIE_NON_SIGNEE,

@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { customHeaderRenderer } from "@widget/formulaire/datePicker/CustomHeader";
 import React from "react";
-import { customHeaderRenderer } from "../../../../../views/common/widget/formulaire/datePicker/CustomHeader";
 
 test("Attendu: customHeaderRenderer fonctionne correctement", async () => {
   const evt = {

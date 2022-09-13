@@ -1,9 +1,9 @@
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import messageManager from "@util/messageManager";
+import { getLibelle } from "@util/Utils";
+import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useEffect, useState } from "react";
-import { IFicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import messageManager from "../../../common/util/messageManager";
-import { getLibelle } from "../../../common/util/Utils";
-import { ConfirmationPopin } from "../../../common/widget/popin/ConfirmationPopin";
 import {
   ICreationRequeteDelivranceParams,
   useCreationRequeteDelivranceRDD

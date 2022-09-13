@@ -1,8 +1,8 @@
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { IParamsTableau } from "@util/GestionDesLiensApi";
+import { getLibelle } from "@util/Utils";
+import { Fieldset } from "@widget/fieldset/Fieldset";
 import React from "react";
-import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
-import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
-import { getLibelle } from "../../../../common/util/Utils";
-import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import "../scss/RMCRequeteResultats.scss";
 import { RMCTableauRequetes } from "./RMCTableauRequetes";
 
@@ -13,7 +13,9 @@ export interface RMCRequeteResultatsProps {
   resetRMC: boolean;
 }
 
-export const RMCRequeteResultats: React.FC<RMCRequeteResultatsProps> = props => {
+export const RMCRequeteResultats: React.FC<
+  RMCRequeteResultatsProps
+> = props => {
   return (
     <div className="ResultatsRMC">
       <Fieldset titre="Résultats de la recherche multi-critères">

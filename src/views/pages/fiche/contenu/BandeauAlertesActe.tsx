@@ -1,8 +1,8 @@
+import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { BoutonAjouterAlerte } from "@widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
+import { IAjouterAlerteFormValue } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
+import { ListeAlertes } from "@widget/alertes/listeAlertes/ListeAlertes";
 import React from "react";
-import { IAlerte } from "../../../../model/etatcivil/fiche/IAlerte";
-import { BoutonAjouterAlerte } from "../../../common/widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
-import { IAjouterAlerteFormValue } from "../../../common/widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
-import { ListeAlertes } from "../../../common/widget/alertes/listeAlertes/ListeAlertes";
 import "./scss/BandeauAlertesActe.scss";
 
 export interface BandeauAlertesActeProps {

@@ -1,5 +1,5 @@
+import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { IActionDatee } from "../commun/IActionDatee";
-import { getFormatDateFromTimestamp } from "../../../views/common/util/DateUtils";
 import { IAutorite } from "../commun/IAutorite";
 
 export interface IDissolution extends IActionDatee {

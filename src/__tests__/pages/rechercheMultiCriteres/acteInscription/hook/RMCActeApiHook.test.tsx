@@ -1,10 +1,10 @@
+import { useRMCActeApiHook } from "@pages/rechercheMultiCriteres/acteInscription/hook/RMCActeApiHook";
+import { ICriteresRechercheActeInscription } from "@pages/rechercheMultiCriteres/acteInscription/hook/RMCActeInscriptionUtils";
 import { act, render, screen, waitFor } from "@testing-library/react";
+import { NB_LIGNES_PAR_APPEL_ACTE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { NB_LIGNES_PAR_APPEL_ACTE } from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { useRMCActeApiHook } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/hook/RMCActeApiHook";
-import { ICriteresRechercheActeInscription } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/hook/RMCActeInscriptionUtils";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

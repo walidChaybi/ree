@@ -1,4 +1,4 @@
-import { formatPrenoms } from "../../views/common/util/Utils";
+import { formatPrenoms } from "@util/Utils";
 import { IFicheActe } from "../etatcivil/acte/IFicheActe";
 import { TitulaireActe } from "../etatcivil/acte/ITitulaireActe";
 import { IRequeteDelivrance } from "../requete/IRequeteDelivrance";
@@ -31,7 +31,8 @@ export const ReponseSansDelivranceCSMariageComposition = {
     requete: IRequeteDelivrance,
     infoActe: IFicheActe
   ) {
-    const reponseSansDelivranceCS = {} as IReponseSansDelivranceCSMariageComposition;
+    const reponseSansDelivranceCS =
+      {} as IReponseSansDelivranceCSMariageComposition;
     ParametresComposition.ajoutParametres(reponseSansDelivranceCS);
 
     CommunComposition.ajoutParamCommuns(

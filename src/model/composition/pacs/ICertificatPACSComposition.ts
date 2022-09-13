@@ -1,4 +1,4 @@
-import { getValeurOuVide } from "../../../views/common/util/Utils";
+import { getValeurOuVide } from "@util/Utils";
 import { Decret, IDecret } from "../../etatcivil/commun/IDecret";
 import { IFichePacs } from "../../etatcivil/pacs/IFichePacs";
 import { TypeCanal } from "../../requete/enum/TypeCanal";

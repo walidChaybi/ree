@@ -1,5 +1,5 @@
-import { getCellTitulaires } from "../../../../common/util/tableauRequete/TableauRequeteUtils";
-import { TableauTypeColumn } from "../../../../common/widget/tableau/TableauRece/TableauTypeColumn";
+import { getCellTitulaires } from "@util/tableauRequete/TableauRequeteUtils";
+import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 
 export enum HeaderTableauRequetesAssociees {
   Titulaires = "titulaires",

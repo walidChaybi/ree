@@ -1,13 +1,13 @@
+import {
+  OfficierContext,
+  officierContextMock
+} from "@core/contexts/OfficierContext";
+import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import request from "superagent";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-import {
-  OfficierContext,
-  officierContextMock
-} from "../../../views/core/contexts/OfficierContext";
-import { AccueilPage } from "../../../views/pages/accueil/AccueilPage";
 let container: Element | null;
 
 const superagentMock = require("superagent-mock")(request, configRequetes);

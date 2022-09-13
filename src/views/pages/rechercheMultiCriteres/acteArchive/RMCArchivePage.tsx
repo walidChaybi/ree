@@ -1,12 +1,12 @@
-import React, { useCallback, useState } from "react";
-import * as Yup from "yup";
-import { IRMCActeArchive } from "../../../../model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
-import { stockageDonnees } from "../../../common/util/stockageDonnees";
-import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
+import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
+import { stockageDonnees } from "@util/stockageDonnees";
+import { Formulaire } from "@widget/formulaire/Formulaire";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
   NB_LIGNES_PAR_PAGE_ACTE
-} from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
+} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import React, { useCallback, useState } from "react";
+import * as Yup from "yup";
 import { goToLinkRMC } from "../acteInscription/resultats/RMCTableauCommun";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
@@ -63,16 +63,12 @@ export const RMCArchivePage: React.FC = () => {
 
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
-  const [
-    criteresRechercheActe,
-    setCriteresRechercheActe
-  ] = useState<ICriteresRechercheActeArchive>();
+  const [criteresRechercheActe, setCriteresRechercheActe] =
+    useState<ICriteresRechercheActeArchive>();
 
   // Critères de recherche pour alimenter les données des fiches Acte en effet leur pagination/navigation est indépendante du tableau de résultats
-  const [
-    criteresRechercheFicheActe,
-    setCriteresRechercheFicheActe
-  ] = useState<ICriteresRechercheActeArchive>();
+  const [criteresRechercheFicheActe, setCriteresRechercheFicheActe] =
+    useState<ICriteresRechercheActeArchive>();
 
   const { dataRMCActe, dataTableauRMCActe } = useRMCActeArchiveApiHook(
     criteresRechercheActe

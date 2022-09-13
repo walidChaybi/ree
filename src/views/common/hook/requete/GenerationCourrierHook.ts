@@ -1,36 +1,25 @@
-import { useEffect, useState } from "react";
-import { IDonneesComposition } from "../../../../../../../model/composition/commun/retourApiComposition/IDonneesComposition";
-import { Orientation } from "../../../../../../../model/composition/enum/Orientation";
+import { useSauvegarderCourrierCreerActionMajStatutRequete } from "@hook/requete/SauvegardeCourrierCreerActionMajStatut";
+import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
+import { Orientation } from "@model/composition/enum/Orientation";
 import {
   CourrierComposition,
   ICourrierComposition
-} from "../../../../../../../model/composition/ICourrierComposition";
-import { IFicheActe } from "../../../../../../../model/etatcivil/acte/IFicheActe";
-import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
-import { IAdresseRequerant } from "../../../../../../../model/requete/IAdresseRequerant";
-import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
-import { OptionsCourrier } from "../../../../../../../model/requete/IOptionCourrier";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
-import { ISauvegardeCourrier } from "../../../../../../../model/requete/ISauvegardeCourrier";
-import { MimeType } from "../../../../../../../ressources/MimeType";
+} from "@model/composition/ICourrierComposition";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { IAdresseRequerant } from "@model/requete/IAdresseRequerant";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { OptionsCourrier } from "@model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { ISauvegardeCourrier } from "@model/requete/ISauvegardeCourrier";
+import { getStatutApresChoixDelivrance } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import {
-  IActeApiHookParams,
-  useInformationsActeApiHook
-} from "../../../../../../common/hook/acte/ActeApiHook";
-import {
-  ICourrierParams,
-  useCourrierApiHook
-} from "../../../../../../common/hook/composition/CompositionCourrierHook";
-import {
-  IElementsJasperCourrier,
-  specificationCourrier
-} from "../../../../../../common/hook/generation/generationCourrierHook/specificationCourrier";
-import {
-  IResultGenerationUnDocument,
-  RESULTAT_VIDE
-} from "../../../../../../common/hook/generation/generationUtils";
-import { useSauvegarderCourrierCreerActionMajStatutRequete } from "../../../../../../common/hook/requete/SauvegardeCourrierCreerActionMajStatut";
-import { getValeurOuVide } from "../../../../../../common/util/Utils";
+  ADRESSE,
+  REQUETE,
+  SaisieCourrier,
+  TEXTE,
+  TEXTE_LIBRE
+} from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 import {
   CODE_POSTAL,
   COMMUNE,
@@ -41,15 +30,26 @@ import {
   NB_EXEMPLAIRE,
   PAYS,
   VOIE
-} from "../../../../saisirRequete/modelForm/ISaisirRequetePageModel";
-import { getStatutApresChoixDelivrance } from "../contenuForm/CourrierFonctions";
+} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import { getValeurOuVide } from "@util/Utils";
+import { useEffect, useState } from "react";
+import { MimeType } from "../../../../ressources/MimeType";
 import {
-  ADRESSE,
-  REQUETE,
-  SaisieCourrier,
-  TEXTE,
-  TEXTE_LIBRE
-} from "../modelForm/ISaisiePageModel";
+  IActeApiHookParams,
+  useInformationsActeApiHook
+} from "../acte/ActeApiHook";
+import {
+  ICourrierParams,
+  useCourrierApiHook
+} from "../composition/CompositionCourrierHook";
+import {
+  IElementsJasperCourrier,
+  specificationCourrier
+} from "../generation/generationCourrierHook/specificationCourrier";
+import {
+  IResultGenerationUnDocument,
+  RESULTAT_VIDE
+} from "../generation/generationUtils";
 
 export interface IResultGenerationCourrier {
   idDocumentReponse?: string;

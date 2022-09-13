@@ -1,31 +1,26 @@
+import { IgnorerParams, useIgnorerApi } from "@hook/requete/IgnorerHook";
 import {
   Dialog,
   DialogContent,
   DialogContentText,
   DialogTitle
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import * as Yup from "yup";
-import { IRequete } from "../../../../../../model/requete/IRequete";
-import {
-  IgnorerParams,
-  useIgnorerApi
-} from "../../../../../common/hook/requete/IgnorerHook";
-import { getUrlPrecedente } from "../../../../../common/util/route/routeUtil";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { OperationEnCours } from "../../../../../common/widget/attente/OperationEnCours";
-import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
-import { SelectField } from "../../../../../common/widget/formulaire/champsSaisie/SelectField";
-import { Formulaire } from "../../../../../common/widget/formulaire/Formulaire";
+import { IRequete } from "@model/requete/IRequete";
+import { getUrlPrecedente } from "@util/route/routeUtil";
+import { getLibelle } from "@util/Utils";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
+import { Formulaire } from "@widget/formulaire/Formulaire";
 import {
   ALERTE_AUTRE,
   ALERTE_OBLIGATOIRE,
   COMPLEMENT_DESCRIPTION_LIMITE_TAILLE
-} from "../../../../../common/widget/formulaire/FormulaireMessages";
-import FormBoutons, {
-  FormBoutonsProps
-} from "../../../../../common/widget/popin/FormBoutons";
+} from "@widget/formulaire/FormulaireMessages";
+import FormBoutons, { FormBoutonsProps } from "@widget/popin/FormBoutons";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import * as Yup from "yup";
 import "../scss/IgnoreRequetePopin.scss";
 
 export interface IgnoreRequetePopinProps {

@@ -1,3 +1,4 @@
+import { RMCTableauInscriptions } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauInscriptions";
 import {
   act,
   fireEvent,
@@ -5,6 +6,11 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
+import {
+  NB_LIGNES_PAR_APPEL_INSCRIPTION,
+  NB_LIGNES_PAR_PAGE_INSCRIPTION
+} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import request from "superagent";
 import { userDroitConsulterPerimetreMEAE } from "../../../../../mock/data/connectedUserAvecDroit";
@@ -14,12 +20,6 @@ import {
   DataTableauInscription
 } from "../../../../../mock/data/RMCInscription";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { storeRece } from "../../../../../views/common/util/storeRece";
-import {
-  NB_LIGNES_PAR_APPEL_INSCRIPTION,
-  NB_LIGNES_PAR_PAGE_INSCRIPTION
-} from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { RMCTableauInscriptions } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauInscriptions";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

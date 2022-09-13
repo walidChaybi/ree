@@ -1,6 +1,6 @@
+import { Residence } from "@model/requete/enum/Residence";
+import { estRenseigne } from "@util/Utils";
 import React from "react";
-import { Residence } from "../../../../../../../model/requete/enum/Residence";
-import { estRenseigne } from "../../../../../../common/util/Utils";
 import Labels from "../../Labels";
 import {
   formatLigneDateCoordonnees,

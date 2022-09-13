@@ -1,9 +1,9 @@
+import { specificationPhraseRMCAutoVide } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import request from "superagent";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
-import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
-import { specificationPhraseRMCAutoVide } from "../../../../../../views/common/hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

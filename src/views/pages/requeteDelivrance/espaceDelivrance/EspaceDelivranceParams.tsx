@@ -1,9 +1,9 @@
 import {
   getCellTitulaires,
   getIconPrioriteRequete
-} from "../../../common/util/tableauRequete/TableauRequeteUtils";
-import { getLibelle } from "../../../common/util/Utils";
-import { TableauTypeColumn } from "../../../common/widget/tableau/TableauRece/TableauTypeColumn";
+} from "@util/tableauRequete/TableauRequeteUtils";
+import { getLibelle } from "@util/Utils";
+import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 
 export enum HeaderTableauRequete {
   Numero = "numero",

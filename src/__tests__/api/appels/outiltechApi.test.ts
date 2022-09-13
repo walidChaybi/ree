@@ -1,5 +1,5 @@
+import { postLog } from "@api/appels/outiltechApi";
 import request from "superagent";
-import { postLog } from "../../../api/appels/outiltechApi";
 import { configOutiltech } from "../../../mock/superagent-config/superagent-mock-outiltech";
 
 const superagentMock = require("superagent-mock")(request, configOutiltech);

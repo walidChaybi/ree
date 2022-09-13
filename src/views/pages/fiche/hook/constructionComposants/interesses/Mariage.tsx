@@ -1,11 +1,11 @@
-import React from "react";
 import {
   getLibelleLieuMariage,
   getLieuMariage,
   IMariageInteresse
-} from "../../../../../../model/etatcivil/rcrca/IMariageInteresse";
-import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
-import { EtatCivilUtil } from "../../../../../common/utilMetier/EtatCivilUtil";
+} from "@model/etatcivil/rcrca/IMariageInteresse";
+import { getDateStringFromDateCompose } from "@util/DateUtils";
+import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";
+import React from "react";
 import "./scss/Mariage.scss";
 
 export const Mariage: React.FC<IMariageInteresse> = props => {

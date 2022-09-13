@@ -1,16 +1,16 @@
+import { ICertificatPACSComposition } from "@model/composition/pacs/ICertificatPACSComposition";
+import { ParagrapheComposition } from "@model/composition/pacs/IParagraphesPacsComposition";
+import { IAutorite } from "@model/etatcivil/commun/IAutorite";
+import { TypeAutorite } from "@model/etatcivil/enum/TypeAutorite";
+import { TypeJuridiction } from "@model/etatcivil/enum/TypeJuridiction";
+import { IAnnulation } from "@model/etatcivil/pacs/IAnnulation";
+import { IDissolution } from "@model/etatcivil/pacs/IDissolution";
+import { IModification } from "@model/etatcivil/pacs/IModification";
 import {
   annulationJuridictionMap,
   dissolutionJuridictionMap,
   pacsModificationNotaireMap
 } from "../../../mock/data/PACS";
-import { ICertificatPACSComposition } from "../../../model/composition/pacs/ICertificatPACSComposition";
-import { ParagrapheComposition } from "../../../model/composition/pacs/IParagraphesPacsComposition";
-import { IAutorite } from "../../../model/etatcivil/commun/IAutorite";
-import { TypeAutorite } from "../../../model/etatcivil/enum/TypeAutorite";
-import { TypeJuridiction } from "../../../model/etatcivil/enum/TypeJuridiction";
-import { IAnnulation } from "../../../model/etatcivil/pacs/IAnnulation";
-import { IDissolution } from "../../../model/etatcivil/pacs/IDissolution";
-import { IModification } from "../../../model/etatcivil/pacs/IModification";
 
 test("ajoutParagrapheEnregistrementPACS", () => {
   let temp = {} as ICertificatPACSComposition;
@@ -61,23 +61,23 @@ test("getLibelleJuridiction defaut", () => {
 });
 test("getAutorite commune", () => {
   expect(
-    ParagrapheComposition.getAutorite(({
+    ParagrapheComposition.getAutorite({
       typeAutorite: TypeAutorite.COMMUNE
-    } as unknown) as IAutorite)
+    } as unknown as IAutorite)
   ).toBe("en la commune de");
 });
 test("getAutorite commune", () => {
   expect(
-    ParagrapheComposition.getAutorite(({
+    ParagrapheComposition.getAutorite({
       typeAutorite: "salut"
-    } as unknown) as IAutorite)
+    } as unknown as IAutorite)
   ).toBe("");
 });
 test("getAutorite poste", () => {
   expect(
-    ParagrapheComposition.getAutorite(({
+    ParagrapheComposition.getAutorite({
       typeAutorite: TypeAutorite.POSTE_ETRANGER,
       typePoste: "Benoît"
-    } as unknown) as IAutorite)
+    } as unknown as IAutorite)
   ).toBe("par Benoît à");
 });

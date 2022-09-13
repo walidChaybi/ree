@@ -1,7 +1,7 @@
+import { getAlertesActe } from "@api/appels/etatcivilApi";
+import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { getAlertesActe } from "../../../../api/appels/etatcivilApi";
-import { IAlerte } from "../../../../model/etatcivil/fiche/IAlerte";
-import { logError } from "../../util/LogManager";
 import { mapAlertesActe } from "./MappingAlertesActe";
 
 export interface GetAlertesActeApiHookParameters {

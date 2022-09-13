@@ -1,5 +1,5 @@
-import { Provenance } from "../../model/requete/enum/Provenance";
-import { IPieceComplementInformation } from "../../model/requete/pieceJointe/IPieceComplementInformation";
+import { Provenance } from "@model/requete/enum/Provenance";
+import { IPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
 import { imagePngVideBase64 } from "./ImagePng";
 
 export const idPieceComplementInformation = [

@@ -1,7 +1,7 @@
+import { getInformationsFicheRepertoire } from "@api/appels/etatcivilApi";
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { getInformationsFicheRepertoire } from "../../../../api/appels/etatcivilApi";
-import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
-import { logError } from "../../util/LogManager";
 import { mapPacs, mapRcRca, TFiche } from "./MappingRepertoires";
 
 export function useInformationsRepertoireApiHook(

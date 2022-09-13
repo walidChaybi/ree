@@ -1,4 +1,4 @@
-import { IElementsJasperCertificatRCA } from "../../views/common/hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRCA";
+import { IElementsJasperCertificatRCA } from "@hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRCA";
 import { TypeCanal } from "../requete/enum/TypeCanal";
 import { IRequerant } from "../requete/IRequerant";
 import { ITitulaireRequeteTableau } from "../requete/ITitulaireRequeteTableau";

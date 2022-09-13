@@ -1,30 +1,30 @@
-import classNames from "classnames";
-import moment from "moment";
 import {
   appartientAMonServiceOuServicesMeresOuServicesFilles,
   mAppartient,
   mAppartientOuAppartientAPersonne,
   provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer
-} from "../../../model/agent/IOfficier";
-import { SousTypeDelivrance } from "../../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../model/requete/enum/StatutRequete";
-import { TypeRequete } from "../../../model/requete/enum/TypeRequete";
-import { IActionOption } from "../../../model/requete/IActionOption";
-import { DocumentReponse } from "../../../model/requete/IDocumentReponse";
+} from "@model/agent/IOfficier";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IActionOption } from "@model/requete/IActionOption";
+import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import {
   IRequeteDelivrance,
   RequeteDelivrance
-} from "../../../model/requete/IRequeteDelivrance";
-import { TRequeteTableau } from "../../../model/requete/IRequeteTableau";
+} from "@model/requete/IRequeteDelivrance";
+import { TRequeteTableau } from "@model/requete/IRequeteTableau";
 import {
   IRequeteTableauDelivrance,
   mappingUneRequeteTableauDelivrance
-} from "../../../model/requete/IRequeteTableauDelivrance";
+} from "@model/requete/IRequeteTableauDelivrance";
 import {
   IRequeteTableauInformation,
   mappingUneRequeteTableauInformation
-} from "../../../model/requete/IRequeteTableauInformation";
-import { getLibelle } from "../../common/util/Utils";
+} from "@model/requete/IRequeteTableauInformation";
+import { getLibelle } from "@util/Utils";
+import classNames from "classnames";
+import moment from "moment";
 import { FormatDate } from "./DateUtils";
 
 export const indexParamsReq = {

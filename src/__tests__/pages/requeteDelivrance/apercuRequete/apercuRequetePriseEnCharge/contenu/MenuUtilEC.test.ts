@@ -1,6 +1,6 @@
-import { NatureActe } from "../../../../../../model/etatcivil/enum/NatureActe";
-import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
   aGenreIdentique,
   aGenreIndetermine,
@@ -12,7 +12,7 @@ import {
   estChoixIgnorerRequete,
   IndexAction,
   nombreActesSelectionnesDifferentDeUn
-} from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuUtilEC";
+} from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuUtilEC";
 
 const testsCasMultiples = <T>({
   casOK,

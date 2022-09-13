@@ -1,26 +1,23 @@
-import React from "react";
-import { Qualite } from "../../../../../model/requete/enum/Qualite";
-import { Requerant } from "../../../../../model/requete/IRequerant";
-import { Requete } from "../../../../../model/requete/IRequete";
-import { IRequeteInformation } from "../../../../../model/requete/IRequeteInformation";
-import { TitulaireRequete } from "../../../../../model/requete/ITitulaireRequete";
-import { IPieceComplementInformation } from "../../../../../model/requete/pieceJointe/IPieceComplementInformation";
-import { IPieceJointe } from "../../../../../model/requete/pieceJointe/IPieceJointe";
-import { ListePiecesJointes } from "../../../../common/composant/piecesJointes/ListePiecesJointes";
-import { TypePieceJointe } from "../../../../common/hook/requete/piecesJointes/PostPiecesJointesHook";
-import { getLibelle, getValeurOuVide } from "../../../../common/util/Utils";
-import "../../../../common/widget/section/scss/SectionPanel.scss";
-import { SectionContentProps } from "../../../../common/widget/section/SectionContent";
-import {
-  SectionPanel,
-  SectionPanelProps
-} from "../../../../common/widget/section/SectionPanel";
-import { SectionPartProps } from "../../../../common/widget/section/SectionPart";
+import { ListePiecesJointes } from "@composant/piecesJointes/ListePiecesJointes";
+import { TypePieceJointe } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
+import { Qualite } from "@model/requete/enum/Qualite";
+import { Requerant } from "@model/requete/IRequerant";
+import { Requete } from "@model/requete/IRequete";
+import { IRequeteInformation } from "@model/requete/IRequeteInformation";
+import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
+import { IPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
+import { IPieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
+import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { SectionContentProps } from "@widget/section/SectionContent";
+import { SectionPanel, SectionPanelProps } from "@widget/section/SectionPanel";
+import { SectionPartProps } from "@widget/section/SectionPart";
 import {
   ajouterContentPartAuPartUneValeur,
   ajouterContentPartAuPartUneValeurVide,
   ajouterPanelAreasAuPanel
-} from "../../../../common/widget/section/SectionUtils";
+} from "@widget/section/SectionUtils";
+import React from "react";
+import "../../../../common/widget/section/scss/SectionPanel.scss";
 import { FenetreApercuRequeteLiee } from "./FenetreApercuRequeteLiee";
 import "./scss/ResumeReqInfo.scss";
 

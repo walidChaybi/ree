@@ -1,4 +1,4 @@
-import { valideLieu } from "./../../../../../views/common/composant/formulaire/validation/LieuEvenementFormValidation";
+import { valideLieu } from "@composant/formulaire/validation/LieuEvenementFormValidation";
 test("Attendu: la validation du formulaire LieuEvenementForm fonctionne correctement", () => {
   const mockFormik = {
     getFieldProps(): any {

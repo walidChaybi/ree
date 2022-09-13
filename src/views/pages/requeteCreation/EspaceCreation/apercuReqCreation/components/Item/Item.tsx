@@ -1,8 +1,8 @@
-import React from "react";
 import {
   AccordionRece,
   AccordionReceClassNameProps
-} from "../../../../../../common/widget/accordion/AccordionRece";
+} from "@widget/accordion/AccordionRece";
+import React from "react";
 import "../../scss/ApercuReqCreationPage.scss";
 import { formatLigne } from "../Formatages";
 

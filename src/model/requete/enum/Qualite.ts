@@ -1,6 +1,6 @@
 /* istanbul ignore file */
-import { EnumWithComplete } from "../../../views/common/util/enum/EnumWithComplete";
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import { EnumWithComplete } from "@util/enum/EnumWithComplete";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 
 export class Qualite extends EnumWithComplete {
   public static readonly UTILISATEUR_RECE = new Qualite(

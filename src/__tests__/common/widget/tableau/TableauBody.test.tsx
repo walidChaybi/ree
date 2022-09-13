@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
+import { getIconPrioriteRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { TableauBody } from "@widget/tableau/TableauRece/TableauBody";
+import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { getIconPrioriteRequete } from "../../../../views/common/util/tableauRequete/TableauRequeteUtils";
-import { TableauBody } from "../../../../views/common/widget/tableau/TableauRece/TableauBody";
-import { TableauTypeColumn } from "../../../../views/common/widget/tableau/TableauRece/TableauTypeColumn";
 
 const subData = {
   sousTypeRequete: "RDC",

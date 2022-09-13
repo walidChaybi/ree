@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
 import {
   postPieceComplementInformationApi,
   postPieceJustificative
-} from "../../../../../api/appels/requeteApi";
+} from "@api/appels/requeteApi";
 import {
   getPieceComplementInformation,
   getPieceJustificative
-} from "../../../../pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
-import { PieceJointe } from "../../../util/FileUtils";
-import { logError } from "../../../util/LogManager";
+} from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
+import { PieceJointe } from "@util/FileUtils";
+import { logError } from "@util/LogManager";
+import { useEffect, useState } from "react";
 
 export enum TypePieceJointe {
   PIECE_COMPLEMENT_INFORMATION,

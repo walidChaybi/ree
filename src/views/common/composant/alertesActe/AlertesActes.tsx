@@ -1,23 +1,23 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { IAlerte } from "../../../../model/etatcivil/fiche/IAlerte";
-import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
 import {
   AddAlerteActeApiHookParameters,
   useAddAlerteActeApiHook
-} from "../../hook/alertes/AddAlerteActeHookApi";
+} from "@hook/alertes/AddAlerteActeHookApi";
 import {
   DeleteAlerteActeApiHookParameters,
   useDeleteAlerteActeApiHook
-} from "../../hook/alertes/DeleteAlerteActeHookApi";
+} from "@hook/alertes/DeleteAlerteActeHookApi";
 import {
   GetAlertesActeApiHookParameters,
   useGetAlertesActeApiHook
-} from "../../hook/alertes/GetAlertesActeApiHook";
-import { getLibelle } from "../../util/Utils";
-import { AccordionRece } from "../../widget/accordion/AccordionRece";
-import { BoutonAjouterAlerte } from "../../widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
-import { IAjouterAlerteFormValue } from "../../widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
-import { ListeAlertes } from "../../widget/alertes/listeAlertes/ListeAlertes";
+} from "@hook/alertes/GetAlertesActeApiHook";
+import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { getLibelle } from "@util/Utils";
+import { AccordionRece } from "@widget/accordion/AccordionRece";
+import { BoutonAjouterAlerte } from "@widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
+import { IAjouterAlerteFormValue } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
+import { ListeAlertes } from "@widget/alertes/listeAlertes/ListeAlertes";
+import React, { useCallback, useEffect, useState } from "react";
 import "./scss/AlertesActes.scss";
 
 export interface AlertesActesProps {

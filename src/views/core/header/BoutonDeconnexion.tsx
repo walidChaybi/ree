@@ -1,23 +1,20 @@
+import { getCompteurRequetes } from "@api/appels/requeteApi";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { getCompteurRequetes } from "../../../api/appels/requeteApi";
-import { StatutRequete } from "../../../model/requete/enum/StatutRequete";
-import { gestionnaireDoubleOuverture } from "../../common/util/GestionnaireDoubleOuverture";
-import { logError } from "../../common/util/LogManager";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { URL_DECONNEXION, URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
+import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
+import { logError } from "@util/LogManager";
 import {
   getLibelle,
   premiereLettreEnMajusculeLeResteEnMinuscule
-} from "../../common/util/Utils";
-import { ConfirmationPopin } from "../../common/widget/popin/ConfirmationPopin";
-import {
-  URL_DECONNEXION,
-  URL_MES_REQUETES_DELIVRANCE
-} from "../../router/ReceUrls";
+} from "@util/Utils";
+import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
+import React from "react";
+import { useHistory } from "react-router-dom";
 import { OfficierContext } from "../contexts/OfficierContext";
 
 interface BoutonDeconnexionProps {

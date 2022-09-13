@@ -1,12 +1,12 @@
-import { TypeMention } from "../../model/etatcivil/acte/mention/ITypeMention";
-import { MandataireRc } from "../../model/etatcivil/enum/MandataireRc";
-import { NatureMention } from "../../model/etatcivil/enum/NatureMention";
-import { NatureRc } from "../../model/etatcivil/enum/NatureRc";
-import { NatureRca } from "../../model/etatcivil/enum/NatureRca";
-import { TypeAlerte } from "../../model/etatcivil/enum/TypeAlerte";
-import { mappingTypeMention } from "../../views/common/hook/acte/mentions/MentionsApiHook";
-import { logError } from "../../views/common/util/LogManager";
-import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../views/common/util/Utils";
+import { mappingTypeMention } from "@hook/acte/mentions/MentionsApiHook";
+import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { MandataireRc } from "@model/etatcivil/enum/MandataireRc";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { NatureRc } from "@model/etatcivil/enum/NatureRc";
+import { NatureRca } from "@model/etatcivil/enum/NatureRca";
+import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
+import { logError } from "@util/LogManager";
+import { premiereLettreEnMajusculeLeResteEnMinuscule } from "@util/Utils";
 import {
   getNomenclatureEtatCivil,
   getTypesMention

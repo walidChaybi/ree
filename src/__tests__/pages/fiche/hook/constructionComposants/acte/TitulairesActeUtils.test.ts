@@ -1,5 +1,5 @@
-import { mapActe } from "../../../../../../views/common/hook/repertoires/MappingRepertoires";
-import { getTitulaires } from "../../../../../../views/pages/fiche/hook/constructionComposants/acte/TitulairesActeUtils";
+import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { getTitulaires } from "@pages/fiche/hook/constructionComposants/acte/TitulairesActeUtils";
 import { acte } from "../../../data/ficheActe";
 
 test("Acte utils : affichage correcte des infos d'un titulaire", async () => {

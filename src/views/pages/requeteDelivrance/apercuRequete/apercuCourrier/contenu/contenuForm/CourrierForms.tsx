@@ -1,17 +1,14 @@
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { OptionsCourrier } from "@model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { Options } from "@util/Type";
+import { getLibelle } from "@util/Utils";
+import AdresseForm from "@widget/formulaire/adresse/AdresseForm";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import RequeteForm from "@widget/formulaire/requete/RequeteForm";
+import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
+import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import React from "react";
-import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
-import { OptionsCourrier } from "../../../../../../../model/requete/IOptionCourrier";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
-import { Options } from "../../../../../../common/util/Type";
-import { getLibelle } from "../../../../../../common/util/Utils";
-import AdresseForm from "../../../../../../common/widget/formulaire/adresse/AdresseForm";
-import { InputField } from "../../../../../../common/widget/formulaire/champsSaisie/InputField";
-import RequeteForm from "../../../../../../common/widget/formulaire/requete/RequeteForm";
-import { SousFormulaire } from "../../../../../../common/widget/formulaire/SousFormulaire";
-import {
-  SubFormProps,
-  withNamespace
-} from "../../../../../../common/widget/formulaire/utils/FormUtil";
 import {
   ADRESSE,
   CHOIX_COURRIER,
@@ -51,7 +48,7 @@ export function getOptionsCourrier(
   setCheckOptions: () => void,
   documentDelivranceChoisi?: DocumentDelivrance
 ): JSX.Element {
-  const optionsCourrierFormProps = ({
+  const optionsCourrierFormProps = {
     nom: OPTION,
     documentDelivranceChoisi,
     titre: getLibelle("Options"),
@@ -59,7 +56,7 @@ export function getOptionsCourrier(
     optionsChoisies,
     setOptionsChoisies,
     setCheckOptions
-  } as any) as OptionsCourrierSubFormProps;
+  } as any as OptionsCourrierSubFormProps;
   return <OptionsCourrierForm key={OPTION} {...optionsCourrierFormProps} />;
 }
 

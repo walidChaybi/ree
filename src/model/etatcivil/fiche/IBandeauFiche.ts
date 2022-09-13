@@ -1,6 +1,6 @@
-import { SimplePersonne } from "../../../views/pages/fiche/contenu/fournisseurDonneesBandeau/IFournisseurDonneesBandeau";
-import { IStatutFiche } from "./IStatutFiche";
+import { SimplePersonne } from "@pages/fiche/contenu/fournisseurDonneesBandeau/IFournisseurDonneesBandeau";
 import { IAlerte } from "./IAlerte";
+import { IStatutFiche } from "./IStatutFiche";
 
 export interface IBandeauFiche {
   titreFenetre: string;

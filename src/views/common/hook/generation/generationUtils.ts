@@ -1,5 +1,5 @@
-import { IFichePacs } from "../../../../model/etatcivil/pacs/IFichePacs";
-import { IFicheRcRca } from "../../../../model/etatcivil/rcrca/IFicheRcRca";
+import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { TFiche } from "../repertoires/MappingRepertoires";
 
 export const RESULTAT_VIDE = {};

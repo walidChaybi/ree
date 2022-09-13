@@ -1,8 +1,5 @@
-import {
-  getDateDuJour,
-  getDateFormatJasper
-} from "../../../views/common/util/DateUtils";
-import { getValeurOuVide } from "../../../views/common/util/Utils";
+import { getDateDuJour, getDateFormatJasper } from "@util/DateUtils";
+import { getValeurOuVide } from "@util/Utils";
 
 export interface ICommunComposition {
   objet_courrier?: string;

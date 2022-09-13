@@ -1,7 +1,7 @@
+import { getTitulairesActe } from "@api/appels/etatcivilApi";
+import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { getTitulairesActe } from "../../../../api/appels/etatcivilApi";
-import { ITitulaireActe } from "../../../../model/etatcivil/acte/ITitulaireActe";
-import { logError } from "../../util/LogManager";
 
 export interface GetTitulairesActeHookParameters {
   idActe: string;

@@ -1,14 +1,14 @@
+import { Body } from "@core/body/Body";
+import { OfficierContext } from "@core/contexts/OfficierContext";
+import { URL_ACCUEIL } from "@router/ReceUrls";
 import { act, render, screen, waitFor } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import officier from "../../../mock/data/connectedUser.json";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-import { storeRece } from "../../../views/common/util/storeRece";
-import { Body } from "../../../views/core/body/Body";
-import { OfficierContext } from "../../../views/core/contexts/OfficierContext";
-import { URL_ACCUEIL } from "../../../views/router/ReceUrls";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 test("renders BoutonDeconnexion", async () => {

@@ -1,11 +1,11 @@
+import { specificationCourrier } from "@hook/generation/generationCourrierHook/specificationCourrier";
+import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import {
   ActeAnalyseMarginales,
   OptionsChoisiesCourrier17,
   RequeteRDDCourrier17,
   SaisieCourrier17
 } from "../../../../../mock/data/SaisieCourrier";
-import { specificationCourrier } from "../../../../../views/common/hook/generation/generationCourrierHook/specificationCourrier";
-import { mapActe } from "../../../../../views/common/hook/repertoires/MappingRepertoires";
 
 const saisieCourrier = SaisieCourrier17;
 const requete = RequeteRDDCourrier17;

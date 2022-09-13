@@ -1,3 +1,8 @@
+import EvenementFiltre, {
+  EvenementDefaultValues,
+  EvenementFiltreProps
+} from "@pages/rechercheMultiCriteres/filtres/registreReperoire/EvenementFiltre";
+import { EVENEMENT } from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
 import {
   act,
   fireEvent,
@@ -7,11 +12,6 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import EvenementFiltre, {
-  EvenementDefaultValues,
-  EvenementFiltreProps
-} from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/EvenementFiltre";
-import { EVENEMENT } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
 const HookEvenementFiltre: React.FC = () => {
   const [result, setResult] = useState("");
 

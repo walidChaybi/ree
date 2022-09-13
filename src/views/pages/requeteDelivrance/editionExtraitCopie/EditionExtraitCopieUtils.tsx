@@ -1,31 +1,27 @@
-import React from "react";
-import {
-  FicheActe,
-  IFicheActe
-} from "../../../../model/etatcivil/acte/IFicheActe";
-import { NatureActe } from "../../../../model/etatcivil/enum/NatureActe";
-import { TypeActe } from "../../../../model/etatcivil/enum/TypeActe";
-import { ChoixDelivrance } from "../../../../model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
+import { SuiviActionsRequete } from "@composant/suivis/SuiviActionsRequete";
+import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationRequete";
+import { IActeApiHookResultat } from "@hook/acte/ActeApiHook";
+import { IGetImagesDeLActeParams } from "@hook/acte/GetImagesDeLActeApiHook";
+import { IGenerationECParams } from "@hook/generation/generationECHook/generationECHook";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { TypeActe } from "@model/etatcivil/enum/TypeActe";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   CODE_COPIE_INTEGRALE,
   CODE_COPIE_NON_SIGNEE,
   CODE_EXTRAIT_AVEC_FILIATION,
   CODE_EXTRAIT_PLURILINGUE,
   CODE_EXTRAIT_SANS_FILIATION
-} from "../../../../model/requete/enum/DocumentDelivranceConstante";
-import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
-import { Validation } from "../../../../model/requete/enum/Validation";
-import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
+} from "@model/requete/enum/DocumentDelivranceConstante";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { Validation } from "@model/requete/enum/Validation";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import {
   IRequeteDelivrance,
   RequeteDelivrance
-} from "../../../../model/requete/IRequeteDelivrance";
-import { SuiviActionsRequete } from "../../../common/composant/suivis/SuiviActionsRequete";
-import { SuiviObservationsRequete } from "../../../common/composant/suivis/SuiviObservationRequete";
-import { IActeApiHookResultat } from "../../../common/hook/acte/ActeApiHook";
-import { IGetImagesDeLActeParams } from "../../../common/hook/acte/GetImagesDeLActeApiHook";
-import { IGenerationECParams } from "../../../common/hook/generation/generationECHook/generationECHook";
+} from "@model/requete/IRequeteDelivrance";
 import {
   DEUX,
   estTableauNonVide,
@@ -33,10 +29,11 @@ import {
   TROIS,
   UN,
   ZERO
-} from "../../../common/util/Utils";
-import { AccordionRece } from "../../../common/widget/accordion/AccordionRece";
-import { Bouton } from "../../../common/widget/boutonAntiDoubleSubmit/Bouton";
-import { OngletProps } from "../../../common/widget/voletAvecOnglet/VoletAvecOnglet";
+} from "@util/Utils";
+import { AccordionRece } from "@widget/accordion/AccordionRece";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { OngletProps } from "@widget/voletAvecOnglet/VoletAvecOnglet";
+import React from "react";
 import { Courrier } from "../apercuRequete/apercuCourrier/contenu/Courrier";
 import { sousTypeCreationCourrierAutomatique } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuUtilEC";
 import { BoutonModifierTraitement } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonModifierTraitement";

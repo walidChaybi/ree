@@ -1,20 +1,17 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { IFicheActe } from "../../../../../../../model/etatcivil/acte/IFicheActe";
-import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
-import { CODE_COPIE_INTEGRALE } from "../../../../../../../model/requete/enum/DocumentDelivranceConstante";
-import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
-import { ReinitialiserValiderBoutons } from "../../../../../../common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
-import { useMentionsApiHook } from "../../../../../../common/hook/acte/mentions/MentionsApiHook";
+import { ReinitialiserValiderBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
+import { RECEContext } from "@core/body/Body";
+import { useMentionsApiHook } from "@hook/acte/mentions/MentionsApiHook";
 import {
   SauvegarderMentionsParam,
   useSauvegarderMentions
-} from "../../../../../../common/hook/acte/mentions/SauvegarderMentionsHook";
-import {
-  getLibelle,
-  getValeurOuVide
-} from "../../../../../../common/util/Utils";
-import { RECEContext } from "../../../../../../core/body/Body";
+} from "@hook/acte/mentions/SauvegarderMentionsHook";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { CODE_COPIE_INTEGRALE } from "@model/requete/enum/DocumentDelivranceConstante";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { getLibelle, getValeurOuVide } from "@util/Utils";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
 import { DocumentEC } from "../../../enum/DocumentEC";
 import { MentionsCopie } from "./contenu/MentionsCopie";
@@ -106,7 +103,6 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
   }, [reinitialisation]);
 
   const sauvegarderMentions = useCallback(() => {
-
     if (mentionsApi && mentions && props.acte?.id && props.document) {
       setOperationEnCours(true);
       setSauvegarderMentionsParams({

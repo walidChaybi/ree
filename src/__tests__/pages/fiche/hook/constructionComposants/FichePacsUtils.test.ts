@@ -1,11 +1,11 @@
+import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
+import { getPanelsPacs } from "@pages/fiche/hook/constructionComposants/pacs/FichePacsUtils";
 import {
   annulationJuridictionMap,
   dissolutionJuridictionMap,
   dissolutionPosteMap,
   pacsModificationNotaireMap
 } from "../../../../../mock/data/PACS";
-import { IFichePacs } from "../../../../../model/etatcivil/pacs/IFichePacs";
-import { getPanelsPacs } from "../../../../../views/pages/fiche/hook/constructionComposants/pacs/FichePacsUtils";
 
 test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
   const panels = getPanelsPacs(pacsModificationNotaireMap as IFichePacs);

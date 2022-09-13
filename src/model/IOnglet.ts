@@ -1,4 +1,4 @@
-import { NomComposant } from "../views/common/util/habilitation/habilitationsDescription";
+import { NomComposant } from "@util/habilitation/habilitationsDescription";
 
 export interface EnTeteOnglet {
   titre: string;

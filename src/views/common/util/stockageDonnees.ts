@@ -1,5 +1,5 @@
-import { IRMCActeArchive } from "../../../model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
-import { IRMCActeInscription } from "../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
+import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 
 const CRITERES_RMC_ACTE_INSPT = "criteresRMCActeInspt";
 const CRITERES_RMC_ACTE_ARCHIVE = "criteresRMCActeArchive";

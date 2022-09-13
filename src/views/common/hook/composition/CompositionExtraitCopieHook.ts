@@ -1,10 +1,10 @@
+import { compositionApi } from "@api/appels/compositionApi";
+import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
+import { IExtraitCopieComposition } from "@model/composition/extraitCopie/IExtraitCopieComposition";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { logError, LogErrorMsg } from "@util/LogManager";
+import { getLibelle } from "@util/Utils";
 import { useEffect, useState } from "react";
-import { compositionApi } from "../../../../api/appels/compositionApi";
-import { IDonneesComposition } from "../../../../model/composition/commun/retourApiComposition/IDonneesComposition";
-import { IExtraitCopieComposition } from "../../../../model/composition/extraitCopie/IExtraitCopieComposition";
-import { ChoixDelivrance } from "../../../../model/requete/enum/ChoixDelivrance";
-import { logError, LogErrorMsg } from "../../util/LogManager";
-import { getLibelle } from "../../util/Utils";
 
 export interface IExtraitCopieApiHookResultat {
   donneesComposition?: IDonneesComposition;

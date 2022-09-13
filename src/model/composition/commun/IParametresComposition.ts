@@ -1,4 +1,4 @@
-import { dateCourrier } from "../../../views/common/util/DateUtils";
+import { dateCourrier } from "@util/DateUtils";
 import {
   ADRESSE_INTERNET_MINISTERE,
   BLOC_MARQUES_MINISTERE,
@@ -63,9 +63,8 @@ export const ParametresComposition = {
     obj.cachet_signature = oec
       ? ParametreBaseRequete.getEnumFor(LIBELLE_FONCTION_AGENT_1)?.libelle
       : ParametreBaseRequete.getEnumFor(LIBELLE_FONCTION_AGENT_2)?.libelle;
-    obj.sceau_ministere = ParametreBaseRequete.getEnumFor(
-      SCEAU_MINISTERE
-    )?.libelle;
+    obj.sceau_ministere =
+      ParametreBaseRequete.getEnumFor(SCEAU_MINISTERE)?.libelle;
 
     return obj;
   }

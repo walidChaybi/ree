@@ -1,7 +1,7 @@
+import { mappingRequeteDelivranceVersFormulaireRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import requeteDelivrance, {
   requeteDelivranceInstitutionnel
 } from "../../../../../mock/data/requeteDelivrance";
-import { mappingRequeteDelivranceVersFormulaireRDCSC } from "../../../../../views/pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 
 test("test du mapping Particulier", () => {
   const res = mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);

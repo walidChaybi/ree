@@ -1,14 +1,14 @@
+import { RetoucheImage } from "@composant/retoucheImage/RetoucheImage";
 import {
   createEvent,
   fireEvent,
   render,
   waitFor
 } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import React from "react";
 import { act } from "react-test-renderer";
 import { MimeType } from "../../../../ressources/MimeType";
-import { RetoucheImage } from "../../../../views/common/composant/retoucheImage/RetoucheImage";
-import { storeRece } from "./../../../../views/common/util/storeRece";
 
 test("Attendu: Le retour de l'appel à la retouche d'image s'effectue correctement", async () => {
   const onRetoucheTerminee = jest.fn();

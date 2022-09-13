@@ -1,25 +1,19 @@
-import React from "react";
-import {
-  Filiation,
-  IFiliation
-} from "../../../../../../../../../model/etatcivil/acte/IFiliation";
-import { Sexe } from "../../../../../../../../../model/etatcivil/enum/Sexe";
-import { IPrenomOrdonnes } from "../../../../../../../../../model/requete/IPrenomOrdonnes";
 import {
   DATE_NAISSANCE_OU_AGE_DE,
   LIEU_NAISSANCE,
   NOM_NAISSANCE,
   SEXE
-} from "../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
-import DateNaissanceOuAgeDeForm from "../../../../../../../../common/composant/formulaire/DateNaissanceOuAgeDeForm";
-import LieuEvenementForm from "../../../../../../../../common/composant/formulaire/LieuEvenementForm";
-import {
-  estRenseigne,
-  getLibelle
-} from "../../../../../../../../common/util/Utils";
-import { InputField } from "../../../../../../../../common/widget/formulaire/champsSaisie/InputField";
-import { RadioField } from "../../../../../../../../common/widget/formulaire/champsSaisie/RadioField";
-import { withNamespace } from "../../../../../../../../common/widget/formulaire/utils/FormUtil";
+} from "@composant/formulaire/ConstantesNomsForm";
+import DateNaissanceOuAgeDeForm from "@composant/formulaire/DateNaissanceOuAgeDeForm";
+import LieuEvenementForm from "@composant/formulaire/LieuEvenementForm";
+import { Filiation, IFiliation } from "@model/etatcivil/acte/IFiliation";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
+import { estRenseigne, getLibelle } from "@util/Utils";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
+import { withNamespace } from "@widget/formulaire/utils/FormUtil";
+import React from "react";
 import { PRENOMS } from "../../../../../../saisirRequete/modelForm/ISaisirRequetePageModel";
 import PrenomsForm from "../../../../../../saisirRequete/sousFormulaires/identite/nomsPrenoms/PrenomsForm";
 import "./scss/ParentNaissanceForm.scss";

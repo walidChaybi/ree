@@ -1,3 +1,8 @@
+import { PARTICULIER } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import ParticulierForm, {
+  ParticulierFormDefaultValues,
+  ParticulierFormValidationSchema
+} from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/requerant/particulier/ParticulierForm";
 import {
   act,
   fireEvent,
@@ -5,14 +10,9 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { PARTICULIER } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
-import ParticulierForm, {
-  ParticulierFormDefaultValues,
-  ParticulierFormValidationSchema
-} from "../../../../../../views/pages/requeteDelivrance/saisirRequete/sousFormulaires/requerant/particulier/ParticulierForm";
 
 const HookParticulierForm: React.FC = () => {
   const [result, setResult] = useState("");

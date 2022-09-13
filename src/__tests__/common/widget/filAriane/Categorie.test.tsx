@@ -1,10 +1,10 @@
-import { Categorie } from "../../../../views/common/widget/filAriane/Categorie";
-import React from "react";
+import { URL_REQUETES } from "@api/appels/requeteApi";
+import { URL_ACCUEIL } from "@router/ReceUrls";
+import { fireEvent, render, waitFor } from "@testing-library/react";
+import { Categorie } from "@widget/filAriane/Categorie";
 import { createMemoryHistory } from "history";
-import { render, waitFor, fireEvent } from "@testing-library/react";
+import React from "react";
 import { Router } from "react-router-dom";
-import { URL_REQUETES } from "../../../../api/appels/requeteApi";
-import { URL_ACCUEIL } from "../../../../views/router/ReceUrls";
 
 test("renders not last Categorie", async () => {
   const history = createMemoryHistory();

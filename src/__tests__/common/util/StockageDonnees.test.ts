@@ -1,4 +1,4 @@
-import { stockageDonnees } from "../../../views/common/util/stockageDonnees";
+import { stockageDonnees } from "@util/stockageDonnees";
 
 test("gestion du stockage des critères de RMC Requête", async () => {
   const localStorageMock = (function () {

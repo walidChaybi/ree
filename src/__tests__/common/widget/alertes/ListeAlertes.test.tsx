@@ -5,11 +5,11 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
+import { ListeAlertes } from "@widget/alertes/listeAlertes/ListeAlertes";
 import React from "react";
 import { Alertes } from "../../../../mock/data/Alertes";
 import { userDroitCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
-import { storeRece } from "../../../../views/common/util/storeRece";
-import { ListeAlertes } from "../../../../views/common/widget/alertes/listeAlertes/ListeAlertes";
 
 storeRece.utilisateurCourant = userDroitCOMEDEC;
 

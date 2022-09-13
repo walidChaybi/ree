@@ -1,8 +1,8 @@
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { FenetreExterne } from "@util/FenetreExterne";
+import { VisionneuseAvecTitre } from "@widget/document/VisionneuseAvecTitre";
 import { MimeType } from "file-type/core";
 import React from "react";
-import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
-import { FenetreExterne } from "../../../../../../common/util/FenetreExterne";
-import { VisionneuseAvecTitre } from "../../../../../../common/widget/document/VisionneuseAvecTitre";
 
 interface DocumentReponseProps {
   numRequete: string;

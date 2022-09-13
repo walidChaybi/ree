@@ -1,17 +1,12 @@
-import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
-import { TRequete } from "../../../../../model/requete/IRequete";
-import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TRequete } from "@model/requete/IRequete";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import {
   ITitulaireRequete,
   TitulaireRequete
-} from "../../../../../model/requete/ITitulaireRequete";
-import { ITitulaireRequeteTableau } from "../../../../../model/requete/ITitulaireRequeteTableau";
-import { IRMCRequestActesInscriptions } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
-import {
-  getUrlPrecedente,
-  getUrlWithParam
-} from "../../../../common/util/route/routeUtil";
-import { valeurOuUndefined } from "../../../../common/util/Utils";
+} from "@model/requete/ITitulaireRequete";
+import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
+import { IRMCRequestActesInscriptions } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import {
   PATH_APERCU_REQ_PRISE,
   PATH_APERCU_REQ_TRAITEMENT,
@@ -19,7 +14,9 @@ import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_RECHERCHE_REQUETE,
   URL_REQUETES_DELIVRANCE_SERVICE
-} from "../../../../router/ReceUrls";
+} from "@router/ReceUrls";
+import { getUrlPrecedente, getUrlWithParam } from "@util/route/routeUtil";
+import { valeurOuUndefined } from "@util/Utils";
 
 export interface ICriteresRMCAuto {
   criteres: IRMCRequestActesInscriptions[];

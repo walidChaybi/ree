@@ -1,8 +1,8 @@
+import { TRequete } from "@model/requete/IRequete";
+import { getLibelle } from "@util/Utils";
+import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect, FormikProps, FormikValues } from "formik";
 import React from "react";
-import { TRequete } from "../../../../../../model/requete/IRequete";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { FormikComponentProps } from "../../../../../common/widget/formulaire/utils/FormUtil";
 import { limitesTitulaires } from "../../SaisirRDCSCPage";
 import IdentiteForm, { IdentiteSubFormProps } from "./IdentiteForm";
 import "./scss/IdentiteForm.scss";

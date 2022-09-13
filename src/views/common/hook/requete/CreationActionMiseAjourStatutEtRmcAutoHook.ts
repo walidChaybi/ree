@@ -1,6 +1,6 @@
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { useCallback, useEffect, useState } from "react";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto

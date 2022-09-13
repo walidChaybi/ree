@@ -1,5 +1,5 @@
-import { getFormatDateFromTimestamp } from "../../../views/common/util/DateUtils";
-import { getValeurOuVide } from "../../../views/common/util/Utils";
+import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import { getValeurOuVide } from "@util/Utils";
 import { IActionDatee } from "../commun/IActionDatee";
 import { IAutorite } from "../commun/IAutorite";
 import {

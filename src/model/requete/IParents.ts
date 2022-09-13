@@ -1,11 +1,6 @@
 /* istanbul ignore file */
 
-import {
-  DEUX,
-  formatNom,
-  formatPrenoms,
-  UN
-} from "../../views/common/util/Utils";
+import { DEUX, formatNom, formatPrenoms, UN } from "@util/Utils";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 
 export interface IParent {

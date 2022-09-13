@@ -1,3 +1,11 @@
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
+import { MOTIF_IGNORE } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/IgnoreRequetePopin";
+import {
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+} from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -5,11 +13,12 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/routeUtil";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
-import { DocumentDelivrance } from "../../../../../../src/model/requete/enum/DocumentDelivrance";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
 import {
   DataRMCActeAvecResultat,
@@ -22,15 +31,6 @@ import {
 import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { TypePieceJustificative } from "../../../../../model/requete/enum/TypePieceJustificative";
-import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
-import { storeRece } from "../../../../../views/common/util/storeRece";
-import { ApercuRequetePriseEnChargePage } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
-import { MOTIF_IGNORE } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/IgnoreRequetePopin";
-import {
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
-} from "../../../../../views/router/ReceUrls";
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],
   configEtatcivil[0],

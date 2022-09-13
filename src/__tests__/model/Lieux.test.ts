@@ -1,4 +1,4 @@
-import { LieuxUtils } from "../../views/common/utilMetier/LieuxUtils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 test("Lieux model", () => {
   expect(LieuxUtils.isPaysFrance("france")).toBe(true);
@@ -72,7 +72,6 @@ test("Attendu: getLieu fonctionne correctement", () => {
 
   expect(LieuxUtils.getLieu("casablanca")).toBe("Casablanca");
 });
-
 
 test("Attendu: getLieu fonctionne correctement", () => {
   expect(

@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 
-import { peupleTypeAlerte } from "../../../api/nomenclature/NomenclatureEtatcivil";
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
-import { Options } from "../../../views/common/util/Type";
+import { peupleTypeAlerte } from "@api/nomenclature/NomenclatureEtatcivil";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
+import { Options } from "@util/Type";
 
 const CODE_COULEUR_ALERTE_ROUGE = "CodeCouleurAlerteRouge";
 const CODE_COULEUR_ALERTE_ORANGE = "CodeCouleurAlerteOrange";

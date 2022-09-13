@@ -1,7 +1,7 @@
 import {
   IElementsJasperCourrier,
   OptionsJasper
-} from "../../views/common/hook/generation/generationCourrierHook/specificationCourrier";
+} from "@hook/generation/generationCourrierHook/specificationCourrier";
 import { IRequeteDelivrance } from "../requete/IRequeteDelivrance";
 import {
   CommunComposition,

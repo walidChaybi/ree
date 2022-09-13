@@ -1,5 +1,5 @@
+import { getLibelle } from "@util/Utils";
 import React from "react";
-import { getLibelle } from "../../../../../../../common/util/Utils";
 
 export const titreDetail = "Détails de requête";
 
@@ -8,7 +8,7 @@ interface ItemLibelleProps {
   data: any;
 }
 
-export const ItemLibelle: React.FC<ItemLibelleProps> = (props) => {
+export const ItemLibelle: React.FC<ItemLibelleProps> = props => {
   return (
     <div className="panel">
       <span>{getLibelle(props.libelle)}</span>

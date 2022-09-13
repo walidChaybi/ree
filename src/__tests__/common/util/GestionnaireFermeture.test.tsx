@@ -1,14 +1,14 @@
+import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { act, render } from "@testing-library/react";
-import { createMemoryHistory } from "history";
-import React from "react";
-import { Router } from "react-router-dom";
-import officier from "../../../mock/data/connectedUser.json";
 import {
   appelRequetesASigner,
   GestionnaireFermeture,
   traiteAppelRequeteASigner
-} from "../../../views/common/util/GestionnaireFermeture";
-import { URL_MES_REQUETES_DELIVRANCE } from "../../../views/router/ReceUrls";
+} from "@util/GestionnaireFermeture";
+import { createMemoryHistory } from "history";
+import React from "react";
+import { Router } from "react-router-dom";
+import officier from "../../../mock/data/connectedUser.json";
 
 const xhrMockObj = {
   open: jest.fn(),

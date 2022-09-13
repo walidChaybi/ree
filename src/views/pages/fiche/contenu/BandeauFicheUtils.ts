@@ -1,10 +1,10 @@
 import {
   AlerteInscription,
   AlerteInscriptionUtil
-} from "../../../../model/etatcivil/enum/AlerteInscription";
-import { IAlerte } from "../../../../model/etatcivil/fiche/IAlerte";
-import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
-import { getDateStringIso } from "../../../common/util/DateUtils";
+} from "@model/etatcivil/enum/AlerteInscription";
+import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
+import { getDateStringIso } from "@util/DateUtils";
 import { IDataFicheProps } from "../FichePage";
 import { getFicheTitle } from "../FicheUtils";
 import { fournisseurDonneesBandeauFactory } from "./fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
@@ -13,10 +13,11 @@ export function setDataBandeau(
   dataFiche: IDataFicheProps,
   data: any
 ): IBandeauFiche {
-  const fournisseurDonneesBandeau = fournisseurDonneesBandeauFactory.createFournisseur(
-    dataFiche.categorie,
-    data
-  );
+  const fournisseurDonneesBandeau =
+    fournisseurDonneesBandeauFactory.createFournisseur(
+      dataFiche.categorie,
+      data
+    );
 
   let bandeauFiche = {} as IBandeauFiche;
   const dataBandeau = fournisseurDonneesBandeau.getData();

@@ -1,10 +1,10 @@
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { useFichePageApiHook } from "@pages/fiche/hook/FichePageApiHook";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
-import { useFichePageApiHook } from "../../../../views/pages/fiche/hook/FichePageApiHook";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

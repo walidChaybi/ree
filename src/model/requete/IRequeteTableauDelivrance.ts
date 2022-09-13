@@ -1,11 +1,11 @@
-import { getFormatDateFromTimestamp } from "../../views/common/util/DateUtils";
-import { storeRece } from "../../views/common/util/storeRece";
+import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import { storeRece } from "@util/storeRece";
 import {
   formatNom,
   formatPrenom,
   getValeurOuVide,
   valeurOuUndefined
-} from "../../views/common/util/Utils";
+} from "@util/Utils";
 import { NatureActe } from "../etatcivil/enum/NatureActe";
 import { DocumentDelivrance } from "./enum/DocumentDelivrance";
 import { Provenance } from "./enum/Provenance";

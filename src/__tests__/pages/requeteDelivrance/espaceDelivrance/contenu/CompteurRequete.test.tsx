@@ -1,8 +1,8 @@
+import { CompteurRequete } from "@pages/requeteDelivrance/espaceDelivrance/contenu/CompteurRequete";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { CompteurRequete } from "../../../../../views/pages/requeteDelivrance/espaceDelivrance/contenu/CompteurRequete";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

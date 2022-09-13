@@ -1,14 +1,6 @@
-import {
-  formatJour,
-  formatMois,
-  IDateCompose
-} from "../../../views/common/util/DateUtils";
-import {
-  formatNom,
-  getValeurOuVide,
-  jointPrenoms
-} from "../../../views/common/util/Utils";
-import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
+import { formatJour, formatMois, IDateCompose } from "@util/DateUtils";
+import { formatNom, getValeurOuVide, jointPrenoms } from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { Nationalite } from "../enum/Nationalite";
 import { Sexe } from "../enum/Sexe";
 import { IPrenom } from "../fiche/IPrenom";

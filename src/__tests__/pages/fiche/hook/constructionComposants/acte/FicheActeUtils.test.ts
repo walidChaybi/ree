@@ -1,23 +1,23 @@
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
+import { IDroit, IProfil } from "@model/agent/Habilitation";
+import { IOfficier } from "@model/agent/IOfficier";
+import { IPerimetre } from "@model/agent/IPerimetre";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IRegistre } from "@model/etatcivil/acte/IRegistre";
+import { ITypeRegistre } from "@model/etatcivil/acte/ITypeRegistre";
+import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
+import {
+  getPanelsActe,
+  getParamsAffichageFicheActe,
+  IParamsAffichage
+} from "@pages/fiche/hook/constructionComposants/acte/FicheActeUtils";
+import { storeRece } from "@util/storeRece";
 import {
   userDroitConsulterArchive,
   userDroitConsulterPerimetreMEAE,
   userDroitConsulterPerimetreTUNIS
 } from "../../../../../../mock/data/connectedUserAvecDroit";
-import { Droit } from "../../../../../../model/agent/enum/Droit";
-import { Perimetre } from "../../../../../../model/agent/enum/Perimetre";
-import { IDroit, IProfil } from "../../../../../../model/agent/Habilitation";
-import { IOfficier } from "../../../../../../model/agent/IOfficier";
-import { IPerimetre } from "../../../../../../model/agent/IPerimetre";
-import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
-import { IRegistre } from "../../../../../../model/etatcivil/acte/IRegistre";
-import { ITypeRegistre } from "../../../../../../model/etatcivil/acte/ITypeRegistre";
-import { TypeVisibiliteArchiviste } from "../../../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
-import { storeRece } from "../../../../../../views/common/util/storeRece";
-import {
-  getPanelsActe,
-  getParamsAffichageFicheActe,
-  IParamsAffichage
-} from "../../../../../../views/pages/fiche/hook/constructionComposants/acte/FicheActeUtils";
 import { acte } from "../../../data/ficheActe";
 
 const resumeActeLibelle = "Résumé de l'acte";

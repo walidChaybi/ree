@@ -4,8 +4,8 @@ import {
   getCellTitulaires,
   getIconPrioriteRequete,
   getObservationsNumeroRequete
-} from "../../../../common/util/tableauRequete/TableauRequeteUtils";
-import { TableauTypeColumn } from "../../../../common/widget/tableau/TableauRece/TableauTypeColumn";
+} from "@util/tableauRequete/TableauRequeteUtils";
+import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 
 export enum HeaderTableauRequete {
   Observations = "observations",

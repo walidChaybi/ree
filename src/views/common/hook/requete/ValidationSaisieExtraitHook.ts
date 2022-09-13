@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { IFicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
-import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
-import { CODE_EXTRAIT_PLURILINGUE } from "../../../../model/requete/enum/DocumentDelivranceConstante";
-import { Validation } from "../../../../model/requete/enum/Validation";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { CODE_EXTRAIT_PLURILINGUE } from "@model/requete/enum/DocumentDelivranceConstante";
+import { Validation } from "@model/requete/enum/Validation";
 import {
   documentDejaCreer,
   getExtraitsCopies,
   IDocumentReponse
-} from "../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
-import { DocumentEC } from "../../../pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
+} from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { DocumentEC } from "@pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
+import { useEffect, useState } from "react";
 import {
   IExtraitSaisiAEnvoyer,
   IMajEtatCivilSuiteSaisieExtraitParams,

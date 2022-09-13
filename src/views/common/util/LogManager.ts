@@ -1,9 +1,6 @@
+import { ID_CORRELATION_HEADER_NAME } from "@api/ApiManager";
+import { IQueryParameterPostLog, postLog } from "@api/appels/outiltechApi";
 import moment from "moment";
-import { ID_CORRELATION_HEADER_NAME } from "../../../api/ApiManager";
-import {
-  IQueryParameterPostLog,
-  postLog
-} from "../../../api/appels/outiltechApi";
 import { FeatureFlag } from "./featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "./featureFlag/gestionnaireFeatureFlag";
 import messageManager from "./messageManager";
@@ -76,8 +73,8 @@ function sendToServer() {
   isWaiting = false;
 
   postLog(listLog)
-    .then((result) => {})
-    .catch((error) => {});
+    .then(result => {})
+    .catch(error => {});
 
   listLog = [];
 }

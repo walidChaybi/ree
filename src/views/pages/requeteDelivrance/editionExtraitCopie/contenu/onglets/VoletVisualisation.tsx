@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
-import { IDocumentReponse } from "../../../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import {
   OngletProps,
   VoletAvecOnglet
-} from "../../../../../common/widget/voletAvecOnglet/VoletAvecOnglet";
+} from "@widget/voletAvecOnglet/VoletAvecOnglet";
+import React, { useCallback, useEffect, useState } from "react";
 import { getOngletsVisu } from "../../EditionExtraitCopieUtils";
 
 interface VoletVisualisationProps {

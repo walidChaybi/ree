@@ -1,17 +1,11 @@
-import { TypeAutoriteUtil } from "../../../../../../model/etatcivil/enum/TypeAutorite";
-import { TypeDecisionUtil } from "../../../../../../model/etatcivil/enum/TypeDecision";
-import {
-  FicheUtil,
-  TypeFiche
-} from "../../../../../../model/etatcivil/enum/TypeFiche";
-import { IDecisionRcRca } from "../../../../../../model/etatcivil/rcrca/IDecisionRcRca";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import {
-  getDateFromTimestamp,
-  getDateString
-} from "../../../../../common/util/DateUtils";
-import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
+import { TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
+import { TypeDecisionUtil } from "@model/etatcivil/enum/TypeDecision";
+import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { IDecisionRcRca } from "@model/etatcivil/rcrca/IDecisionRcRca";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { getDateFromTimestamp, getDateString } from "@util/DateUtils";
+import { SectionContentProps } from "@widget/section/SectionContent";
+import { SectionPartProps } from "@widget/section/SectionPart";
 
 export function getDecision(rcrca: IFicheRcRca): SectionPartProps[] {
   let contentsDecision: SectionContentProps[] = [];

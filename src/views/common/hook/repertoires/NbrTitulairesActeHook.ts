@@ -1,6 +1,6 @@
+import { getNbrTitulairesActe } from "@api/appels/etatcivilApi";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { getNbrTitulairesActe } from "../../../../api/appels/etatcivilApi";
-import { logError } from "../../util/LogManager";
 
 export interface GetNbrTitulairesActeHookParameters {
   idActe: string;

@@ -1,5 +1,5 @@
-import { SectionContentProps } from "../../../../views/common/widget/section/SectionContent";
-import { ajouterContentPartAuPartMultiValeursVide } from "../../../../views/common/widget/section/SectionUtils";
+import { SectionContentProps } from "@widget/section/SectionContent";
+import { ajouterContentPartAuPartMultiValeursVide } from "@widget/section/SectionUtils";
 
 test("ajouterContentPartAuPartMultiValeursVide", () => {
   let panel = [] as SectionContentProps[];

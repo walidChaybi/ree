@@ -1,6 +1,6 @@
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
 import { RouteComponentProps } from "react-router";
-import { Droit } from "../../../../model/agent/enum/Droit";
-import { Perimetre } from "../../../../model/agent/enum/Perimetre";
 
 export interface IDroitPerimetre {
   droit: Droit;

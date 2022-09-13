@@ -1,5 +1,5 @@
-import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
-import { PieceJointe } from "../../../../common/util/FileUtils";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { PieceJointe } from "@util/FileUtils";
 import { Adresse, Identite, Requerant } from "./ISaisirRequetePageModel";
 
 // Nom des sous-formulaires

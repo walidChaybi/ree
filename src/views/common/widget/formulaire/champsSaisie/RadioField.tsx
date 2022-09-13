@@ -1,6 +1,6 @@
+import { Option, Options } from "@util/Type";
 import { ErrorMessage, Field } from "formik";
 import React from "react";
-import { Option, Options } from "../../../../../views/common/util/Type";
 import { IconErrorMessage } from "../erreur/IconeErreurMessage";
 
 interface RadioFieldProps {

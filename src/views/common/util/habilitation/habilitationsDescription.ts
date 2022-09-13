@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { Droit } from "../../../../model/agent/enum/Droit";
+import { Droit } from "@model/agent/enum/Droit";
 
 export interface IHabiliationDescription {
   nomComposant: NomComposantOuFonction;

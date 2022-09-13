@@ -1,12 +1,9 @@
-import { TypeAutoriteUtil } from "../../../../../../model/etatcivil/enum/TypeAutorite";
-import { TypeDecision } from "../../../../../../model/etatcivil/enum/TypeDecision";
-import { TypeInscriptionRc } from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import {
-  getDateFormatJasper,
-  getDateFromTimestamp
-} from "../../../../util/DateUtils";
-import { LieuxUtils } from "../../../../utilMetier/LieuxUtils";
+import { TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
+import { TypeDecision } from "@model/etatcivil/enum/TypeDecision";
+import { TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { getDateFormatJasper, getDateFromTimestamp } from "@util/DateUtils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
   getDecisionExequatur,
   getDecisionJuridiction,

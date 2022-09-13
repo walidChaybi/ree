@@ -1,7 +1,7 @@
+import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import React from "react";
 import { useParams } from "react-router";
-import { IUuidRequeteParams } from "../../../../../model/params/IUuidRequeteParams";
-import { IRequeteCreation } from "../../../../../model/requete/IRequeteCreation";
 import { useDetailRequeteApiHook } from "../../../requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import ResumeRequeteCreation from "./components/ResumeRequeteCreation";
 import { VoletPieceJustificativesEtActions } from "./components/VoletPieceJusticativesEtActions";

@@ -1,10 +1,10 @@
+import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
+import { useRMCRequeteApiHook } from "@pages/rechercheMultiCriteres/requete/hook/RMCRequeteApiHook";
 import { act, render, screen, waitFor } from "@testing-library/react";
+import { NB_LIGNES_PAR_APPEL_REQUETE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import request from "superagent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { ICriteresRMCRequete } from "../../../../model/rmc/requete/ICriteresRMCRequete";
-import { NB_LIGNES_PAR_APPEL_REQUETE } from "../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { useRMCRequeteApiHook } from "../../../../views/pages/rechercheMultiCriteres/requete/hook/RMCRequeteApiHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

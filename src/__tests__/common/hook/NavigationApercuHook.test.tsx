@@ -1,15 +1,15 @@
+import { useNavigationApercuDelivrance } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
+import { Provenance } from "@model/requete/enum/Provenance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { act, render, waitFor } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import React from "react";
 import request from "superagent";
 import { userDroitCOMEDEC } from "../../../mock/data/connectedUserAvecDroit";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-import { Provenance } from "../../../model/requete/enum/Provenance";
-import { SousTypeDelivrance } from "../../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../model/requete/enum/StatutRequete";
-import { TypeRequete } from "../../../model/requete/enum/TypeRequete";
-import { IRequeteTableauDelivrance } from "../../../model/requete/IRequeteTableauDelivrance";
-import { useNavigationApercuDelivrance } from "../../../views/common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
-import { storeRece } from "../../../views/common/util/storeRece";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

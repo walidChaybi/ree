@@ -1,11 +1,12 @@
+import { Droit } from "@model/agent/enum/Droit";
+import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
+import { getLibelle } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
-import { Droit } from "../../../../../model/agent/enum/Droit";
-import { officierHabiliterPourLeDroit } from "../../../../../model/agent/IOfficier";
-import { getLibelle } from "../../../util/Utils";
-import { Bouton } from "../../../widget/boutonAntiDoubleSubmit/Bouton";
-import { FormikComponentProps } from "../../../widget/formulaire/utils/FormUtil";
 import "./scss/ReinitialiserValiderBoutons.scss";
+
 interface ReinitialiserValiderBoutonsProps {
   onClickReInitialiser?: any;
   reInitialiserDisabled?: boolean;

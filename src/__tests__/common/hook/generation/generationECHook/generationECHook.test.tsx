@@ -1,3 +1,9 @@
+import {
+  IGenerationECParams,
+  useGenerationEC
+} from "@hook/generation/generationECHook/generationECHook";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { Validation } from "@model/requete/enum/Validation";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
@@ -9,12 +15,6 @@ import {
 import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
-import { Validation } from "../../../../../model/requete/enum/Validation";
-import {
-  IGenerationECParams,
-  useGenerationEC
-} from "../../../../../views/common/hook/generation/generationECHook/generationECHook";
 import { getRequeteWithChoixDelivrance } from "../../../../__tests__utils__/testsUtil";
 
 const superagentMock = require("superagent-mock")(request, [

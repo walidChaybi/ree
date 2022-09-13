@@ -2,10 +2,10 @@ import { TablePagination } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
+import { IParamsTableau } from "@util/GestionDesLiensApi";
+import { getLibelle } from "@util/Utils";
 import React, { useCallback, useEffect } from "react";
 import { Box } from "reakit/Box";
-import { IParamsTableau } from "../../../util/GestionDesLiensApi";
-import { getLibelle } from "../../../util/Utils";
 import {
   getPaginatedData,
   getSortOrder,

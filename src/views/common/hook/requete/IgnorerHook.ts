@@ -1,6 +1,6 @@
+import { postIgnorerRequete } from "@api/appels/requeteApi";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { postIgnorerRequete } from "../../../../api/appels/requeteApi";
-import { logError } from "../../util/LogManager";
 
 export interface IgnorerParams {
   idRequete?: string;

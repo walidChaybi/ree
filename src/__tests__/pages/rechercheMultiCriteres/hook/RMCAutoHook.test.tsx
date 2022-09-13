@@ -1,13 +1,8 @@
-import { act, render, waitFor } from "@testing-library/react";
-import React from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 import {
   IRMCAutoParams,
   useRMCAutoHook
-} from "../../../../views/common/hook/navigationApercuRequeteDelivrance/RMCAutoHook";
-import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
+} from "@hook/navigationApercuRequeteDelivrance/RMCAutoHook";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
@@ -17,7 +12,12 @@ import {
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_REQUETES_DELIVRANCE_SERVICE,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
-} from "../../../../views/router/ReceUrls";
+} from "@router/ReceUrls";
+import { act, render, waitFor } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/routeUtil";
+import React from "react";
+import request from "superagent";
+import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

@@ -1,10 +1,10 @@
+import { LienPieceJointe } from "@composant/piecesJointes/LienPieceJointe";
+import { TypePieceJointe } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { TypePieceJustificative } from "../../../../../../../model/requete/enum/TypePieceJustificative";
-import { LienPieceJointe } from "../../../../../../../views/common/composant/piecesJointes/LienPieceJointe";
-import { TypePieceJointe } from "../../../../../../../views/common/hook/requete/piecesJointes/PostPiecesJointesHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

@@ -1,3 +1,4 @@
+import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationRequete";
 import {
   act,
   fireEvent,
@@ -5,6 +6,7 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import React from "react";
 import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
@@ -14,8 +16,6 @@ import {
 } from "../../../../mock/data/Observations";
 import DONNEES_REQUETE from "../../../../mock/data/requete";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { SuiviObservationsRequete } from "../../../../views/common/composant/suivis/SuiviObservationRequete";
-import { storeRece } from "../../../../views/common/util/storeRece";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

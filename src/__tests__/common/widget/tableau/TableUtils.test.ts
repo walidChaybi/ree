@@ -5,7 +5,7 @@ import {
   getPaginatedData,
   processDataStorting,
   stableSort
-} from "../../../../views/common/widget/tableau/TableUtils";
+} from "@widget/tableau/TableUtils";
 
 interface IData {
   id: number;

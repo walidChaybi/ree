@@ -1,7 +1,7 @@
-import { TypeAlerte } from "../../../../model/etatcivil/enum/TypeAlerte";
-import { IAlerte } from "../../../../model/etatcivil/fiche/IAlerte";
-import { getDateFromTimestamp, getDateString } from "../../util/DateUtils";
-import { compactObject, triListeObjetsSurPropriete } from "../../util/Utils";
+import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
+import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { getDateFromTimestamp, getDateString } from "@util/DateUtils";
+import { compactObject, triListeObjetsSurPropriete } from "@util/Utils";
 
 const dotCharacter = "\u2022";
 

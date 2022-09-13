@@ -1,5 +1,5 @@
-import { IFicheRcRca } from "../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import { getStatuts } from "../../../../../views/pages/fiche/hook/constructionComposants/statut/StatutUtils";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { getStatuts } from "@pages/fiche/hook/constructionComposants/statut/StatutUtils";
 import { ficheInscriptionRepertoireCivil } from "./mock/InscriptionRepertoireCivilMock";
 
 test("Statut utils get statuts", async () => {

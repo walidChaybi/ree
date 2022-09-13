@@ -1,5 +1,5 @@
+import { estRenseigne } from "@util/Utils";
 import React from "react";
-import { estRenseigne } from "../../../../../common/util/Utils";
 import Labels from "../Labels";
 import {
   DateCoordonneesType,

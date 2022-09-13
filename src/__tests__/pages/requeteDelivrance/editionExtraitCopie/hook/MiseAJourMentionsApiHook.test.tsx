@@ -1,12 +1,12 @@
+import {
+  IMiseAJourMentionsParams,
+  useMiseAJourMentionsApiHook
+} from "@hook/acte/mentions/MiseAJourMentionsApiHook";
+import { IMention } from "@model/etatcivil/acte/mention/IMention";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { IMention } from "../../../../../model/etatcivil/acte/mention/IMention";
-import {
-  IMiseAJourMentionsParams,
-  useMiseAJourMentionsApiHook
-} from "../../../../../views/common/hook/acte/mentions/MiseAJourMentionsApiHook";
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const params: IMiseAJourMentionsParams = {

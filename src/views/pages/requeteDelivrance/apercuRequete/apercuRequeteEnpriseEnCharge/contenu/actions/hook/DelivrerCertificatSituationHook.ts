@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import { IRequeteTableauDelivrance } from "../../../../../../../../model/requete/IRequeteTableauDelivrance";
-import { IResultatRMCActe } from "../../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
   IGenerationCertificatSituationParams,
   useGenerationCertificatSituationHook
-} from "../../../../../../../common/hook/generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
-import { specificationPhraseDelivrer } from "../../../../../../../common/hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
-import { INbInscriptionsInfos } from "../../../../../../../common/hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
-import { useGenerationInscriptionsHook } from "../../../../../../../common/hook/generation/generationInscriptionsHook/GenerationInscriptionsHook";
+} from "@hook/generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
+import { specificationPhraseDelivrer } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
+import { INbInscriptionsInfos } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
+import { useGenerationInscriptionsHook } from "@hook/generation/generationInscriptionsHook/GenerationInscriptionsHook";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { useEffect, useState } from "react";
 import { useSupprimerAnciensDocumentsReponseHook } from "./SupprimerAnciensDocumentsReponseHook";
 
 export interface IResultDelivrerCertificatSituation {
@@ -31,10 +31,8 @@ export function useDelivrerCertificatSituationHook(
     setResultDelivrerCertificatSituation
   ] = useState<IResultDelivrerCertificatSituation>();
 
-  const [
-    paramsCertificatSituation,
-    setParamsCertificatSituation
-  ] = useState<IGenerationCertificatSituationParams>();
+  const [paramsCertificatSituation, setParamsCertificatSituation] =
+    useState<IGenerationCertificatSituationParams>();
 
   // 0 - Suppression des eventuels documents générés au préalable
   const isOldDocumentsDeleted = useSupprimerAnciensDocumentsReponseHook(
@@ -66,9 +64,8 @@ export function useDelivrerCertificatSituationHook(
   }, [resultGenerationInscription]);
 
   // 2 - Génération du certificat de situation
-  const resultGenerationCertificatSituation = useGenerationCertificatSituationHook(
-    paramsCertificatSituation
-  );
+  const resultGenerationCertificatSituation =
+    useGenerationCertificatSituationHook(paramsCertificatSituation);
 
   // 5 - une fois l'action créée, création du résultat
   useEffect(() => {

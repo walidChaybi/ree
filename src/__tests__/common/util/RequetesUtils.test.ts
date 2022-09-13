@@ -1,9 +1,9 @@
-import moment from "moment";
-import { FormatDate } from "../../../views/common/util/DateUtils";
+import { FormatDate } from "@util/DateUtils";
 import {
   getMessagePrioriteDeLaRequete,
   prioriteDeLaRequete
-} from "../../../views/common/util/RequetesUtils";
+} from "@util/RequetesUtils";
+import moment from "moment";
 
 test("récupération de la priorité de la requête : Priotité basse", () => {
   const dateRequete = moment();

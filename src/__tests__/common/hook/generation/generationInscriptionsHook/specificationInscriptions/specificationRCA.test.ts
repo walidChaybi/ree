@@ -1,11 +1,11 @@
+import { specificationRCA } from "@hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRCA";
+import { storeRece } from "@util/storeRece";
 import {
   FicheRcaDecisionAvecInstructionProcureur,
   FicheRcaDecisionJuridictionEtrangere,
   FicheRcaDecisionNotaireConvention
 } from "../../../../../../mock/data/ficheRCA";
 import { decrets } from "../../../../../../mock/data/NomenclatureEtatCivilDecrets";
-import { specificationRCA } from "../../../../../../views/common/hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRCA";
-import { storeRece } from "../../../../../../views/common/util/storeRece";
 
 beforeAll(() => {
   storeRece.decrets = decrets;

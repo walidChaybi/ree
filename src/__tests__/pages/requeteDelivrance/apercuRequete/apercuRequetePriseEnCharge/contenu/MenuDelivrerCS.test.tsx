@@ -1,10 +1,17 @@
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { MenuDelivrerCS } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerCS";
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID
+} from "@router/ReceUrls";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/routeUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
@@ -18,13 +25,6 @@ import { DataRMCInscriptionAvecUnRCA } from "../../../../../../mock/data/RMCInsc
 import { configComposition } from "../../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
-import { getUrlWithParam } from "../../../../../../views/common/util/route/routeUtil";
-import { MenuDelivrerCS } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerCS";
-import {
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID
-} from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],

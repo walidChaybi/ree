@@ -1,4 +1,4 @@
-import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../../views/common/util/Utils";
+import { premiereLettreEnMajusculeLeResteEnMinuscule } from "@util/Utils";
 
 export enum DecisionAnnulation {
   JUGEMENT = "JUGEMENT",

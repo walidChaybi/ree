@@ -1,8 +1,8 @@
+import { getDecisionExequatur } from "@hook/generation/generationInscriptionsHook/specificationInscriptions/specificationCommunes";
 import {
   FicheRcaDecisionAvecInstructionProcureur,
   FicheRcaDecisionJuridictionEtrangere
 } from "../../../../../../mock/data/ficheRCA";
-import { getDecisionExequatur } from "../../../../../../views/common/hook/generation/generationInscriptionsHook/specificationInscriptions/specificationCommunes";
 
 test("Attendu: getDecisionExequatur AVEC une decision Juridiction étrangère", async () => {
   const data = FicheRcaDecisionJuridictionEtrangere;

@@ -1,26 +1,26 @@
 import ReportIcon from "@material-ui/icons/Report";
-import React from "react";
-import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
-import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
-import { StatutFiche } from "../../../../../model/etatcivil/enum/StatutFiche";
-import { InscriptionRcUtil } from "../../../../../model/etatcivil/enum/TypeInscriptionRc";
-import { TypeRepertoire } from "../../../../../model/etatcivil/enum/TypeRepertoire";
-import { IRMCRequestActesInscriptions } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
-import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
-import { RMCRepertoire } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCRepertoire";
-import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { NatureRc } from "@model/etatcivil/enum/NatureRc";
+import { NatureRca } from "@model/etatcivil/enum/NatureRca";
+import { StatutFiche } from "@model/etatcivil/enum/StatutFiche";
+import { InscriptionRcUtil } from "@model/etatcivil/enum/TypeInscriptionRc";
+import { TypeRepertoire } from "@model/etatcivil/enum/TypeRepertoire";
+import { IRMCRequestActesInscriptions } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
+import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { RMCRepertoire } from "@model/rmc/acteInscription/rechercheForm/IRMCRepertoire";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
   getDateDebutFromDateCompose,
   getDateFinFromDateCompose,
   getDateStringFromDateCompose
-} from "../../../../common/util/DateUtils";
+} from "@util/DateUtils";
 import {
   formatNom,
   formatNoms,
   formatPrenoms,
   getValeurOuVide,
   valeurOuUndefined
-} from "../../../../common/util/Utils";
+} from "@util/Utils";
+import React from "react";
 import { getCriteresTitulaire } from "../../common/mapping/RMCMappingUtil";
 
 export interface ICriteresRechercheActeInscription {

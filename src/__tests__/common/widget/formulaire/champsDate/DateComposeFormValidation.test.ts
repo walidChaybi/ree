@@ -1,12 +1,12 @@
-import { MEP_YEAR, MIN_YEAR } from "../../../../../views/common/util/DateUtils";
-import { validateAnnee } from "../../../../../views/common/widget/formulaire/champsDate/DateComposeFormValidation";
+import { MEP_YEAR, MIN_YEAR } from "@util/DateUtils";
+import { validateAnnee } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import {
   ANNEE_OBLIGATOIRE,
   MIN_LENGTH_ANNEE_MESSAGE,
   MSG_CURRENT_YEAR_MAX,
   MSG_DATE_MEP_MIN,
   MSG_MIN_YEAR
-} from "../../../../../views/common/widget/formulaire/FormulaireMessages";
+} from "@widget/formulaire/FormulaireMessages";
 
 test("Attendu: validateAnnee fonctionne correctement", () => {
   expect(validateAnnee(0, undefined, undefined, true)).toBe(ANNEE_OBLIGATOIRE);

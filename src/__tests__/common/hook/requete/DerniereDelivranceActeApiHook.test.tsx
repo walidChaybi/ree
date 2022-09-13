@@ -1,11 +1,11 @@
+import {
+  IDerniereDelivranceActeParams,
+  useDerniereDelivranceActeApiHook
+} from "@hook/acte/DerniereDelivranceActeApiHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import {
-  IDerniereDelivranceActeParams,
-  useDerniereDelivranceActeApiHook
-} from "../../../../views/common/hook/acte/DerniereDelivranceActeApiHook";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

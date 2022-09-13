@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 
-import { EnumWithComplete } from "../../../views/common/util/enum/EnumWithComplete";
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
-import { Options } from "../../../views/common/util/Type";
+import { EnumWithComplete } from "@util/enum/EnumWithComplete";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
+import { Options } from "@util/Type";
 
 export class Nationalite extends EnumWithComplete {
   public static readonly FRANCAISE = new Nationalite("FRANCAISE", "Française");

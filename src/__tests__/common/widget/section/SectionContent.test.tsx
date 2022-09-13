@@ -1,7 +1,6 @@
-import React from "react";
-
 import { render, waitFor } from "@testing-library/react";
-import { SectionContent } from "../../../../views/common/widget/section/SectionContent";
+import { SectionContent } from "@widget/section/SectionContent";
+import React from "react";
 
 test("render composant SectionContent", async () => {
   const { getByText } = render(

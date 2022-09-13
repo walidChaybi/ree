@@ -1,15 +1,15 @@
-import { connect } from "formik";
-import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
-import { SelectField } from "../../../../../common/widget/formulaire/champsSaisie/SelectField";
-import { SousFormulaire } from "../../../../../common/widget/formulaire/SousFormulaire";
+import { getLibelle } from "@util/Utils";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
+import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import {
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
   withNamespace
-} from "../../../../../common/widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useEffect, useState } from "react";
+import * as Yup from "yup";
 import { LIEN, NATURE_LIEN } from "../../modelForm/ISaisirRequetePageModel";
 import "./scss/LienTitulaireForm.scss";
 

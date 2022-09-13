@@ -5,9 +5,9 @@ import {
   IconButton
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
+import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
+import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
 import React from "react";
-import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
-import { IRMCRequete } from "../../../../../model/rmc/requete/IRMCRequete";
 import { RMCRequeteForm } from "../../requete/RMCRequeteForm";
 import "./../scss/PopinNouvelleRMCRequete.scss";
 

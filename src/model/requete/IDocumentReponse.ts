@@ -1,5 +1,5 @@
+import { DEUX } from "@util/Utils";
 import { MimeType } from "file-type/core";
-import { DEUX } from "../../views/common/util/Utils";
 import { Orientation } from "../composition/enum/Orientation";
 import { IMention } from "../etatcivil/acte/mention/IMention";
 import { ChoixDelivrance } from "./enum/ChoixDelivrance";

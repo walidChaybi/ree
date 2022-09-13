@@ -1,5 +1,5 @@
+import { FormatDate } from "@util/DateUtils";
 import moment from "moment";
-import { FormatDate } from "../../util/DateUtils";
 
 export type SortOrder = "ASC" | "DESC";
 

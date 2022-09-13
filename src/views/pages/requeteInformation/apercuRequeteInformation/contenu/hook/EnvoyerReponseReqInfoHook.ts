@@ -1,12 +1,12 @@
+import { HTTP_STATUS_OK } from "@api/ApiManager";
+import { getEnvoyerMail } from "@api/appels/mailApi";
+import { IMail } from "@model/mail/IMail";
+import { IPieceJustificativeMail } from "@model/mail/IPieceJustificativeMail";
+import { IRequeteInformation } from "@model/requete/IRequeteInformation";
+import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import { PieceJointe } from "@util/FileUtils";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { HTTP_STATUS_OK } from "../../../../../../api/ApiManager";
-import { getEnvoyerMail } from "../../../../../../api/appels/mailApi";
-import { IMail } from "../../../../../../model/mail/IMail";
-import { IPieceJustificativeMail } from "../../../../../../model/mail/IPieceJustificativeMail";
-import { IRequeteInformation } from "../../../../../../model/requete/IRequeteInformation";
-import { getFormatDateFromTimestamp } from "../../../../../common/util/DateUtils";
-import { PieceJointe } from "../../../../../common/util/FileUtils";
-import { logError } from "../../../../../common/util/LogManager";
 import { ISauvegarderReponseReqInfoParams } from "./SauvegarderReponseReqInfoHook";
 
 export interface IEnvoyerReponseReqInfoParams {

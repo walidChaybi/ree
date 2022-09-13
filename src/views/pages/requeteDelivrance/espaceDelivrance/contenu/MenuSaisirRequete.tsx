@@ -1,15 +1,8 @@
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { Droit } from "../../../../../model/agent/enum/Droit";
-import { utilisateurADroit } from "../../../../../model/agent/IUtilisateur";
-import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
-import { FeatureFlag } from "../../../../common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../../../common/util/featureFlag/gestionnaireFeatureFlag";
-import WithHabilitation from "../../../../common/util/habilitation/WithHabilitation";
-import { storeRece } from "../../../../common/util/storeRece";
-import { getLibelle } from "../../../../common/util/Utils";
+import { Droit } from "@model/agent/enum/Droit";
+import { utilisateurADroit } from "@model/agent/IUtilisateur";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import {
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
@@ -17,7 +10,14 @@ import {
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC
-} from "../../../../router/ReceUrls";
+} from "@router/ReceUrls";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import WithHabilitation from "@util/habilitation/WithHabilitation";
+import { storeRece } from "@util/storeRece";
+import { getLibelle } from "@util/Utils";
+import React from "react";
+import { useHistory } from "react-router-dom";
 import "./scss/MenuSaisirRequete.scss";
 
 interface MenuSaisirRequeteProps {

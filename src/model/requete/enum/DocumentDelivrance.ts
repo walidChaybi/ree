@@ -1,11 +1,11 @@
 /* istanbul ignore file */
-import { peupleDocumentDelivrance } from "../../../api/nomenclature/NomenclatureRequete";
-import { EnumNomemclature } from "../../../views/common/util/enum/EnumNomenclature";
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
-import { FeatureFlag } from "../../../views/common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
-import { Options } from "../../../views/common/util/Type";
-import { getValeurOuVide } from "../../../views/common/util/Utils";
+import { peupleDocumentDelivrance } from "@api/nomenclature/NomenclatureRequete";
+import { EnumNomemclature } from "@util/enum/EnumNomenclature";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { Options } from "@util/Type";
+import { getValeurOuVide } from "@util/Utils";
 import { TypeRepertoire } from "../../etatcivil/enum/TypeRepertoire";
 import { ChoixDelivrance } from "./ChoixDelivrance";
 import {

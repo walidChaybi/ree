@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor } from "@testing-library/react";
+import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
-import { AccordionRece } from "../../../../views/common/widget/accordion/AccordionRece";
 
 test("render composant AccordionRece", async () => {
   const { getByText } = render(

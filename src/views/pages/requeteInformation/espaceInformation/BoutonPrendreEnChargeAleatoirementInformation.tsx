@@ -1,21 +1,21 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
 import {
   CreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
-} from "../../../common/hook/requete/CreationActionMiseAjourStatutHook";
+} from "@hook/requete/CreationActionMiseAjourStatutHook";
 import {
   IRequeteAleatoireResultat,
   useGetRequeteAleatoire
-} from "../../../common/hook/requete/PrendreEnChargeAleatoirementApiHook";
-import WithHabilitation from "../../../common/util/habilitation/WithHabilitation";
-import messageManager from "../../../common/util/messageManager";
-import { getUrlWithParam } from "../../../common/util/route/routeUtil";
-import { getLibelle } from "../../../common/util/Utils";
-import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOperationEnCours";
-import { URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID } from "../../../router/ReceUrls";
+} from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID } from "@router/ReceUrls";
+import WithHabilitation from "@util/habilitation/WithHabilitation";
+import messageManager from "@util/messageManager";
+import { getUrlWithParam } from "@util/route/routeUtil";
+import { getLibelle } from "@util/Utils";
+import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
+import React, { useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (
   props: any

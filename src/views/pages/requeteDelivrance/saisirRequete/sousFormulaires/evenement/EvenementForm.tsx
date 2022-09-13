@@ -1,21 +1,21 @@
-import { connect } from "formik";
-import React, { useEffect } from "react";
-import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
-import { getLibelle } from "../../../../../common/util/Utils";
+import { getLibelle } from "@util/Utils";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues
-} from "../../../../../common/widget/formulaire/champsDate/DateComposeForm";
-import { DateValidationSchemaSansTestFormat } from "../../../../../common/widget/formulaire/champsDate/DateComposeFormValidation";
-import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
-import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
-import { sortieChampPremiereLettreEnMajuscule } from "../../../../../common/widget/formulaire/utils/ControlesUtil";
+} from "@widget/formulaire/champsDate/DateComposeForm";
+import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
+import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
   withNamespace
-} from "../../../../../common/widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useEffect } from "react";
+import * as Yup from "yup";
+import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import {
   DATE_EVENEMENT,
   PAYS_EVENEMENT,

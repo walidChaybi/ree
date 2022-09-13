@@ -1,6 +1,6 @@
 import { Backdrop, CircularProgress, makeStyles } from "@material-ui/core";
+import gestionnaireTimer from "@util/timer/GestionnaireTimer";
 import React, { useEffect } from "react";
-import gestionnaireTimer from "../../util/timer/GestionnaireTimer";
 
 const useStyles = makeStyles(theme => ({
   backdrop: {

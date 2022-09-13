@@ -1,7 +1,7 @@
+import { BoutonNouvelleRMCRequete } from "@pages/rechercheMultiCriteres/autoRequetes/contenu/BoutonNouvelleRMCRequete";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { act } from "react-test-renderer";
-import { BoutonNouvelleRMCRequete } from "../../../../views/pages/rechercheMultiCriteres/autoRequetes/contenu/BoutonNouvelleRMCRequete";
 
 test("render BoutonNouvelleRMCRequete", async () => {
   await act(async () => {

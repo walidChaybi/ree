@@ -1,25 +1,25 @@
-import { connect } from "formik";
-import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
 import {
   CodesExtraitCopie,
   DocumentDelivrance
-} from "../../../../../model/requete/enum/DocumentDelivrance";
+} from "@model/requete/enum/DocumentDelivrance";
 import {
   CODE_COPIE_INTEGRALE,
   CODE_EXTRAIT_PLURILINGUE
-} from "../../../../../model/requete/enum/DocumentDelivranceConstante";
-import { MotifDelivrance } from "../../../../../model/requete/enum/MotifDelivrance";
-import { NatureActeRequete } from "../../../../../model/requete/enum/NatureActeRequete";
+} from "@model/requete/enum/DocumentDelivranceConstante";
+import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import {
   COMPLEMENT_MOTIF,
   DOCUMENT_DEMANDE,
   MOTIF,
   NATURE_ACTE,
   NB_EXEMPLAIRE
-} from "../../../../pages/requeteDelivrance//saisirRequete/modelForm/ISaisirRequetePageModel";
-import { Options } from "../../../util/Type";
-import { getLibelle } from "../../../util/Utils";
+} from "@pages/requeteDelivrance//saisirRequete/modelForm/ISaisirRequetePageModel";
+import { Options } from "@util/Type";
+import { getLibelle } from "@util/Utils";
+import { connect } from "formik";
+import React, { useEffect, useState } from "react";
+import * as Yup from "yup";
 import { InputField } from "../champsSaisie/InputField";
 import { SelectField } from "../champsSaisie/SelectField";
 import {

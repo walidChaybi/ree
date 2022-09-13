@@ -1,9 +1,9 @@
-import { getFormatDateFromTimestamp } from "../../views/common/util/DateUtils";
+import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import {
   enMajuscule,
   finirAvec3petitsPoints,
   premiereLettreEnMajuscule
-} from "../../views/common/util/Utils";
+} from "@util/Utils";
 
 const LONGUEUR_TEXTE_MAX = 30;
 

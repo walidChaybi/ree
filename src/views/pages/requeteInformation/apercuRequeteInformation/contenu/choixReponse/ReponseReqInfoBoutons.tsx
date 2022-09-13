@@ -1,10 +1,10 @@
+import { receUrl, URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
+import { getLibelle } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { Bouton } from "../../../../../common/widget/boutonAntiDoubleSubmit/Bouton";
-import { FormikComponentProps } from "../../../../../common/widget/formulaire/utils/FormUtil";
-import { receUrl, URL_RECHERCHE_REQUETE } from "../../../../../router/ReceUrls";
 import "../scss/ReponseReqInfo.scss";
 
 export type ComponentProps = {

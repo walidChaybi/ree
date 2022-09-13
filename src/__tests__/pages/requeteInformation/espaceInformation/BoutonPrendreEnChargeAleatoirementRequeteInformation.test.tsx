@@ -1,4 +1,10 @@
+import { BoutonPrendreEnChargeAleatoirementInformation } from "@pages/requeteInformation/espaceInformation/BoutonPrendreEnChargeAleatoirementInformation";
+import {
+  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+  URL_MES_REQUETES_INFORMATION
+} from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/routeUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { act } from "react-dom/test-utils";
@@ -7,12 +13,6 @@ import request from "superagent";
 import { ReponseMesRequetesInformation } from "../../../../mock/data/EspaceInformation";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetesInformation } from "../../../../mock/superagent-config/superagent-mock-requetes-information";
-import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
-import { BoutonPrendreEnChargeAleatoirementInformation } from "../../../../views/pages/requeteInformation/espaceInformation/BoutonPrendreEnChargeAleatoirementInformation";
-import {
-  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-  URL_MES_REQUETES_INFORMATION
-} from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetesInformation[0],

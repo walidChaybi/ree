@@ -1,3 +1,5 @@
+import { TypePieceJointe } from "@hook/requete/piecesJointes/communPieceJointe";
+import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointeHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
@@ -5,8 +7,6 @@ import { idDocumentsReponse } from "../../../mock/data/DocumentReponse";
 import { imagePngVideBase64 } from "../../../mock/data/ImagePng";
 import { idPieceComplementInformation } from "../../../mock/data/PieceComplementInformation";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-import { TypePieceJointe } from "../../../views/common/hook/requete/piecesJointes/communPieceJointe";
-import { useGetPieceJointeApi } from "../../../views/common/hook/requete/piecesJointes/GetPieceJointeHook";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const HookConsumerUseGetPieceJustificativeApi: React.FC = () => {

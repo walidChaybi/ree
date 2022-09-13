@@ -1,8 +1,8 @@
+import { logErrorOnConsole } from "@util/LogManager";
+import messageManager from "@util/messageManager";
+import { estTableauNonVide, getLibelle } from "@util/Utils";
 import React, { useCallback, useEffect } from "react";
 import { MimeType } from "../../../../ressources/MimeType";
-import { logErrorOnConsole } from "../../util/LogManager";
-import messageManager from "../../util/messageManager";
-import { estTableauNonVide, getLibelle } from "../../util/Utils";
 
 interface IRetoucheImageProps {
   images: string[];

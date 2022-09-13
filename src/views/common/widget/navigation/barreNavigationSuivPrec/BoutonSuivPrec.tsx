@@ -3,9 +3,9 @@ import {
   faChevronCircleRight
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getLibelle } from "@util/Utils";
 import React from "react";
 import { Button } from "reakit/Button";
-import { getLibelle } from "../../../util/Utils";
 import "./scss/BoutonSuivPrec.scss";
 
 export interface BoutonSuivPrecProps {

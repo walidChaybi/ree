@@ -1,3 +1,6 @@
+import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
+import { DataRMCAuto } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
+import { ApercuRequetePriseEnChargePartieDroite } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/ApercuRequetePriseEnChargePartieDroite";
 import {
   act,
   fireEvent,
@@ -5,6 +8,11 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
+import {
+  COMPLEMENT_DESCRIPTION,
+  ID_TYPE_ALERTE
+} from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
@@ -23,14 +31,6 @@ import {
   configEtatcivil,
   NORESULT
 } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { TypeAlerte } from "../../../../../../model/etatcivil/enum/TypeAlerte";
-import { storeRece } from "../../../../../../views/common/util/storeRece";
-import {
-  COMPLEMENT_DESCRIPTION,
-  ID_TYPE_ALERTE
-} from "../../../../../../views/common/widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
-import { DataRMCAuto } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
-import { ApercuRequetePriseEnChargePartieDroite } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/ApercuRequetePriseEnChargePartieDroite";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

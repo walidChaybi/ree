@@ -1,3 +1,5 @@
+import { useGenerationCourrierHook } from "@hook/requete/GenerationCourrierHook";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
@@ -10,8 +12,6 @@ import {
 import { configComposition } from "../../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
-import { useGenerationCourrierHook } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/hook/GenerationCourrierHook";
 
 const superagentMock = require("superagent-mock")(request, [
   configComposition[0],

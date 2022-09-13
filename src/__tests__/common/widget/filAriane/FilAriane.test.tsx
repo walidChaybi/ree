@@ -1,8 +1,11 @@
+import { routesRece } from "@router/ReceRoutes";
+import {
+  URL_ACCUEIL,
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID
+} from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
-import { createMemoryHistory } from "history";
-import React from "react";
-import { Router } from "react-router-dom";
-import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
+import { getUrlWithParam } from "@util/route/routeUtil";
 import {
   buildPagesInfos,
   FilAriane,
@@ -10,13 +13,10 @@ import {
   gestionnaireNavigation,
   getPathElements,
   getUrlFromNPathElements
-} from "../../../../views/common/widget/filAriane/FilAriane";
-import { routesRece } from "../../../../views/router/ReceRoutes";
-import {
-  URL_ACCUEIL,
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID
-} from "../../../../views/router/ReceUrls";
+} from "@widget/filAriane/FilAriane";
+import { createMemoryHistory } from "history";
+import React from "react";
+import { Router } from "react-router-dom";
 
 test("renders composant FilAriane", () => {
   const history = createMemoryHistory();

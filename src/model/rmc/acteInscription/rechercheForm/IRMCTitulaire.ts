@@ -1,4 +1,4 @@
-import { IDateCompose } from "../../../../views/common/util/DateUtils";
+import { IDateCompose } from "@util/DateUtils";
 
 export interface IRMCTitulaire {
   nom?: string;

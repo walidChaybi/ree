@@ -1,7 +1,7 @@
+import { RECEContext } from "@core/body/Body";
+import { checkDirty } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { ReactNode, useContext, useEffect, useState } from "react";
-import { RECEContext } from "../../../core/body/Body";
-import { checkDirty } from "../../util/Utils";
-import { Bouton } from "../../widget/boutonAntiDoubleSubmit/Bouton";
 import { OperationEnCours } from "./OperationEnCours";
 
 interface BoutonOperationEnCoursProps {

@@ -1,13 +1,13 @@
-import { waitFor } from "@testing-library/react";
-import request from "superagent";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import {
   IRequeteDelivrance,
   RequeteDelivrance
-} from "../../../../model/requete/IRequeteDelivrance";
+} from "@model/requete/IRequeteDelivrance";
+import { waitFor } from "@testing-library/react";
+import request from "superagent";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 test("Attendu: RequeteDelivrance.getDocumentsDeDelivrance fonctionne correctement", async () => {

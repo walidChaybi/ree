@@ -1,9 +1,9 @@
+import { GestionnaireCacheApi } from "@api/appels/cache/GestionnaireCacheApi";
+import { storeRece } from "@util/storeRece";
 import request from "superagent";
-import { GestionnaireCacheApi } from "../../api/appels/cache/GestionnaireCacheApi";
 import { decrets } from "../../mock/data/NomenclatureEtatCivilDecrets";
 import { configAgent } from "../../mock/superagent-config/superagent-mock-agent";
 import { configEtatcivil } from "../../mock/superagent-config/superagent-mock-etatcivil";
-import { storeRece } from "../../views/common/util/storeRece";
 
 const superagentMock = require("superagent-mock")(request, [
   configAgent[0],

@@ -2,16 +2,16 @@
 /*
  * fichier non testé car composant à supprimer dans étape 2
  */
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { Button } from "reakit/Button";
 import {
   CreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
-} from "../../../../../common/hook/requete/ActionHook";
-import { GestionnaireARetraiterDansSaga } from "../../../../../common/util/migration/GestionnaireARetraiterDansSaga";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { receUrl } from "../../../../../router/ReceUrls";
+} from "@hook/requete/ActionHook";
+import { receUrl } from "@router/ReceUrls";
+import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
+import { getLibelle } from "@util/Utils";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Button } from "reakit/Button";
 import "./scss/BoutonARetraiterSaga.scss";
 
 interface BoutonARetraiterSagaProps {

@@ -1,13 +1,13 @@
-import { CopieActeTexteDecesComposition } from "../../../../../../model/composition/extraitCopie/createur/CopieActeTexteDecesComposition";
-import { ExtraitCopieActeTexteMariageComposition } from "../../../../../../model/composition/extraitCopie/createur/ExtraitCopieActeTexteMariageComposition";
-import { ExtraitCopieActeTexteNaissanceComposition } from "../../../../../../model/composition/extraitCopie/createur/ExtraitCopieActeTexteNaissanceComposition";
-import { IExtraitCopieComposition } from "../../../../../../model/composition/extraitCopie/IExtraitCopieComposition";
-import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
-import { NatureActe } from "../../../../../../model/etatcivil/enum/NatureActe";
-import { ChoixDelivrance } from "../../../../../../model/requete/enum/ChoixDelivrance";
-import { Validation } from "../../../../../../model/requete/enum/Validation";
-import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
-import { getValeurOuVide } from "../../../../util/Utils";
+import { CopieActeTexteDecesComposition } from "@model/composition/extraitCopie/createur/CopieActeTexteDecesComposition";
+import { ExtraitCopieActeTexteMariageComposition } from "@model/composition/extraitCopie/createur/ExtraitCopieActeTexteMariageComposition";
+import { ExtraitCopieActeTexteNaissanceComposition } from "@model/composition/extraitCopie/createur/ExtraitCopieActeTexteNaissanceComposition";
+import { IExtraitCopieComposition } from "@model/composition/extraitCopie/IExtraitCopieComposition";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { Validation } from "@model/requete/enum/Validation";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { getValeurOuVide } from "@util/Utils";
 
 export const creationCompositionExtraitCopieActeTexte = function (
   acteComplet: IFicheActe,

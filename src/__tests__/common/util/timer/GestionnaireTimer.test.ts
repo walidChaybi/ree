@@ -1,5 +1,4 @@
-import gestionnaireTimer from "../../../../views/common/util/timer/GestionnaireTimer";
-import { waitFor } from "@testing-library/react";
+import gestionnaireTimer from "@util/timer/GestionnaireTimer";
 
 function wait(ms: number) {
   var start = new Date().getTime();

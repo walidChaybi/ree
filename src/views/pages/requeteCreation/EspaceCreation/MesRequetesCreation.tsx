@@ -1,21 +1,21 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router";
 import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
-} from "../../../../api/appels/requeteApi";
-import { IRequeteTableauCreation } from "../../../../model/requete/IRequeteTableauCreation";
-import { getUrlWithParam } from "../../../common/util/route/routeUtil";
-import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
-import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
-import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
+} from "@api/appels/requeteApi";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
+import { URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID } from "@router/ReceUrls";
+import { getUrlWithParam } from "@util/route/routeUtil";
+import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
-} from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { TableauRece } from "../../../common/widget/tableau/TableauRece/TableauRece";
-import { SortOrder } from "../../../common/widget/tableau/TableUtils";
-import { URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID } from "../../../router/ReceUrls";
+} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
+import { SortOrder } from "@widget/tableau/TableUtils";
+import React, { useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { useRequeteCreationApi } from "../hook/DonneesRequeteCreationApiHook";
 import { statutsRequetesCreation } from "./params/EspaceCreationParams";

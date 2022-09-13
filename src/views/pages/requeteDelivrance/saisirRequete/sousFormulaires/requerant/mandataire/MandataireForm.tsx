@@ -1,14 +1,14 @@
-import { connect } from "formik";
-import React, { useState } from "react";
-import { TypeMandataireReq } from "../../../../../../../model/requete/enum/TypeMandataireReq";
-import { getLibelle } from "../../../../../../common/util/Utils";
-import { InputField } from "../../../../../../common/widget/formulaire/champsSaisie/InputField";
-import { SelectField } from "../../../../../../common/widget/formulaire/champsSaisie/SelectField";
+import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
+import { getLibelle } from "@util/Utils";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import {
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
   withNamespace
-} from "../../../../../../common/widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useState } from "react";
 import {
   NATURE,
   NOM,

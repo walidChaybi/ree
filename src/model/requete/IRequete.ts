@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { getFormatDateFromTimestamp } from "../../views/common/util/DateUtils";
+import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { StatutRequete } from "./enum/StatutRequete";
 import { TypeCanal } from "./enum/TypeCanal";
 import { TypeRequete } from "./enum/TypeRequete";

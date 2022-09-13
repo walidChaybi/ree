@@ -1,4 +1,14 @@
+import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { Provenance } from "@model/requete/enum/Provenance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { BoutonModifierTraitement } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/BoutonModifierTraitement";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { act, fireEvent, render, waitFor } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
@@ -8,16 +18,6 @@ import { idRequeteRDCSC } from "../../../../../../mock/data/requeteDelivrance";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configParamsBaseRequete } from "../../../../../../mock/superagent-config/superagent-mock-params";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { Nationalite } from "../../../../../../model/etatcivil/enum/Nationalite";
-import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
-import { Provenance } from "../../../../../../model/requete/enum/Provenance";
-import { SousTypeDelivrance } from "../../../../../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
-import { TypeRequete } from "../../../../../../model/requete/enum/TypeRequete";
-import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
-import { storeRece } from "../../../../../../views/common/util/storeRece";
-import { BoutonModifierTraitement } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/BoutonModifierTraitement";
-import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],

@@ -1,12 +1,12 @@
+import { HTTP_STATUS_OK } from "@api/ApiManager";
+import { URL_REQUETES_COUNT } from "@api/appels/requeteApi";
+import { OfficierContextProps } from "@core/contexts/OfficierContext";
+import { IOfficier } from "@model/agent/IOfficier";
+import { URL_ACCUEIL, URL_DECONNEXION } from "@router/ReceUrls";
+import { executeEnDiffere, getLibelle } from "@util/Utils";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { HTTP_STATUS_OK } from "../../../api/ApiManager";
-import { URL_REQUETES_COUNT } from "../../../api/appels/requeteApi";
-import { IOfficier } from "../../../model/agent/IOfficier";
 import apiResources from "../../../ressources/api.json";
-import { OfficierContextProps } from "../../core/contexts/OfficierContext";
-import { URL_ACCUEIL, URL_DECONNEXION } from "../../router/ReceUrls";
-import { executeEnDiffere, getLibelle } from "../util/Utils";
 import { getCsrfHeader } from "./CsrfUtil";
 import messageManager from "./messageManager";
 

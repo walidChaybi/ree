@@ -1,14 +1,14 @@
-import classNames from "classnames";
-import React from "react";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { TRequete } from "../../../../model/requete/IRequete";
-import { getFormatDateFromTimestamp } from "../../util/DateUtils";
-import { storeRece } from "../../util/storeRece";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TRequete } from "@model/requete/IRequete";
+import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import { storeRece } from "@util/storeRece";
 import {
   formatNom,
   getLibelle,
   premiereLettreEnMajusculeLeResteEnMinuscule
-} from "../../util/Utils";
+} from "@util/Utils";
+import classNames from "classnames";
+import React from "react";
 import "./scss/BandeauApercuRequete.scss";
 
 interface BandeauRequeteProps {

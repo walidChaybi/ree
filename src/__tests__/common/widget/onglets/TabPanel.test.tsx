@@ -1,7 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
+import { a11yProps } from "@widget/onglets/BoiteAOnglets";
+import { TabPanel } from "@widget/onglets/TabPanel";
 import React from "react";
-import { a11yProps } from "../../../../views/common/widget/onglets/BoiteAOnglets";
-import { TabPanel } from "../../../../views/common/widget/onglets/TabPanel";
 
 test("renders TabPanel renders correctly", () => {
   act(() => {

@@ -1,23 +1,15 @@
+import { IFamille } from "@model/etatcivil/commun/IFamille";
+import { IFicheLien } from "@model/etatcivil/commun/IFicheLien";
+import { IFicheLienActes } from "@model/etatcivil/commun/IFicheLienActes";
+import { IPersonne, Personne } from "@model/etatcivil/commun/IPersonne";
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { formatDe, getLibelle, remplaceSNP, remplaceSPC } from "@util/Utils";
+import { SectionContentProps } from "@widget/section/SectionContent";
+import { SectionPanelProps } from "@widget/section/SectionPanel";
+import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
+import { SectionPartProps } from "@widget/section/SectionPart";
+import { SectionPartContentProps } from "@widget/section/SectionPartContent";
 import React from "react";
-import { IFamille } from "../../../../../../model/etatcivil/commun/IFamille";
-import { IFicheLien } from "../../../../../../model/etatcivil/commun/IFicheLien";
-import { IFicheLienActes } from "../../../../../../model/etatcivil/commun/IFicheLienActes";
-import {
-  IPersonne,
-  Personne
-} from "../../../../../../model/etatcivil/commun/IPersonne";
-import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
-import {
-  formatDe,
-  getLibelle,
-  remplaceSNP,
-  remplaceSPC
-} from "../../../../../common/util/Utils";
-import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
-import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
-import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
-import { SectionPartContentProps } from "../../../../../common/widget/section/SectionPartContent";
 import { LienFiche } from "../../../LienFiche";
 import { IParamsAffichage } from "../acte/FicheActeUtils";
 

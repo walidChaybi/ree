@@ -1,9 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 import { Autocomplete, FilterOptionsState } from "@material-ui/lab";
+import { Option } from "@util/Type";
+import { getLibelle } from "@util/Utils";
 import { connect, Field } from "formik";
 import React from "react";
-import { Option } from "../../../util/Type";
-import { getLibelle } from "../../../util/Utils";
 import { IconeCroix } from "../../icones/IconeCroix";
 import { FormikComponentProps } from "../utils/FormUtil";
 import "./scss/ChampRecherche.scss";

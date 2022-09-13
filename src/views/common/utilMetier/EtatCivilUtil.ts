@@ -1,16 +1,16 @@
-import { IEvenement } from "../../../model/etatcivil/acte/IEvenement";
-import { Sexe } from "../../../model/etatcivil/enum/Sexe";
+import { IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import {
   formatAHeureExtrait,
   getDateFormatJasperFromCompose,
   IDateCompose
-} from "../util/DateUtils";
+} from "@util/DateUtils";
 import {
   ABSENCE_VALIDEE,
   formatNom,
   formatPrenoms,
   getValeurOuVide
-} from "../util/Utils";
+} from "@util/Utils";
 
 export class EtatCivilUtil {
   public static formatLeOuEn(jour?: string | number) {

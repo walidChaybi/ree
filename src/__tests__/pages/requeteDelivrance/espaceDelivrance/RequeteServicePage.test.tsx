@@ -1,4 +1,8 @@
+import { TypeEntite } from "@model/agent/enum/TypeEntite";
+import { RequetesServicePage } from "@pages/requeteDelivrance/espaceDelivrance/RequetesServicePage";
+import { URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { act } from "react-dom/test-utils";
@@ -6,10 +10,6 @@ import { Router } from "react-router-dom";
 import request from "superagent";
 import { configAgent } from "../../../../mock/superagent-config/superagent-mock-agent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { TypeEntite } from "../../../../model/agent/enum/TypeEntite";
-import { storeRece } from "../../../../views/common/util/storeRece";
-import { RequetesServicePage } from "../../../../views/pages/requeteDelivrance/espaceDelivrance/RequetesServicePage";
-import { URL_REQUETES_DELIVRANCE_SERVICE } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],

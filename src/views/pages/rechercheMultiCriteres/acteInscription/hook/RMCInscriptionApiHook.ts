@@ -1,11 +1,8 @@
+import { rechercheMultiCriteresInscriptions } from "@api/appels/etatcivilApi";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { rechercheMultiCriteresInscriptions } from "../../../../../api/appels/etatcivilApi";
-import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import {
-  getParamsTableau,
-  IParamsTableau
-} from "../../../../common/util/GestionDesLiensApi";
-import { logError } from "../../../../common/util/LogManager";
 import {
   ICriteresRechercheActeInscription,
   mappingCriteres,
@@ -24,9 +21,8 @@ const RESULTAT_NON_DEFINIT: IRMCInscriptionApiHookResultat = {};
 export function useRMCInscriptionApiHook(
   criteres?: ICriteresRechercheActeInscription
 ): IRMCInscriptionApiHookResultat {
-  const [resultat, setResultat] = useState<IRMCInscriptionApiHookResultat>(
-    RESULTAT_NON_DEFINIT
-  );
+  const [resultat, setResultat] =
+    useState<IRMCInscriptionApiHookResultat>(RESULTAT_NON_DEFINIT);
 
   useEffect(() => {
     async function fetchInscriptions() {

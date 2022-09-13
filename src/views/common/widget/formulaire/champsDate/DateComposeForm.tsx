@@ -1,16 +1,13 @@
-import { connect, ErrorMessage, Field } from "formik";
-import React, { useState } from "react";
+import { NB_HEURE, NB_MINUTE } from "@composant/formulaire/ConstantesNomsForm";
 import {
   ANNEE,
   JOUR,
   MOIS
-} from "../../../../pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
-import {
-  NB_HEURE,
-  NB_MINUTE
-} from "../../../composant/formulaire/ConstantesNomsForm";
-import { getDateComposeFromDate } from "../../../util/DateUtils";
-import { executeEnDiffere } from "../../../util/Utils";
+} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import { getDateComposeFromDate } from "@util/DateUtils";
+import { executeEnDiffere } from "@util/Utils";
+import { connect, ErrorMessage, Field } from "formik";
+import React, { useState } from "react";
 import { IconeCroix } from "../../icones/IconeCroix";
 import ReceDatePicker from "../datePicker/ReceDatePicker";
 import { IconErrorMessage } from "../erreur/IconeErreurMessage";

@@ -1,14 +1,14 @@
-import React from "react";
-import { Droit } from "../../../../../../model/agent/enum/Droit";
+import { Droit } from "@model/agent/enum/Droit";
 import {
   officierAutoriserSurLeTypeRegistre,
   officierAutoriserSurLeTypeRegistreOuDroitMEAE,
   officierHabiliterPourLeDroit
-} from "../../../../../../model/agent/IOfficier";
-import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
-import { TypeVisibiliteArchiviste } from "../../../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
-import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
-import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
+} from "@model/agent/IOfficier";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
+import { SectionPanelProps } from "@widget/section/SectionPanel";
+import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
+import React from "react";
 import { IAccordionReceSection } from "../../../FicheUtils";
 import { getFichesPersonneActe } from "../personne/FichePersonne";
 import { ActeImage } from "./ActeImage";

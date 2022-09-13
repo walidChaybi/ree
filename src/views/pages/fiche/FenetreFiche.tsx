@@ -1,9 +1,6 @@
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { FenetreExterne, FenetreExterneUtil } from "@util/FenetreExterne";
 import React, { useState } from "react";
-import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
-import {
-  FenetreExterne,
-  FenetreExterneUtil
-} from "../../common/util/FenetreExterne";
 import { FichePage, IDataFicheProps, IIndex } from "./FichePage";
 import "./scss/LienFiche.scss";
 

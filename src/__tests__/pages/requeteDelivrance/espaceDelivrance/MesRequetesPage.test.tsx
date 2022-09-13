@@ -1,3 +1,5 @@
+import { MesRequetesPage } from "@pages/requeteDelivrance/espaceDelivrance/MesRequetesPage";
+import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -10,8 +12,6 @@ import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { MesRequetesPage } from "../../../../views/pages/requeteDelivrance/espaceDelivrance/MesRequetesPage";
-import { URL_MES_REQUETES_DELIVRANCE } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 const history = createMemoryHistory();

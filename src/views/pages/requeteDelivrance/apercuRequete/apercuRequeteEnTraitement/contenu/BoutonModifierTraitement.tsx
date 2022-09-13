@@ -1,17 +1,14 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
-import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
-} from "../../../../../common/hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import {
-  getUrlPrecedente,
-  getUrlWithParam
-} from "../../../../../common/util/route/routeUtil";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { BoutonOperationEnCours } from "../../../../../common/widget/attente/BoutonOperationEnCours";
+} from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { getUrlPrecedente, getUrlWithParam } from "@util/route/routeUtil";
+import { getLibelle } from "@util/Utils";
+import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 
 interface BoutonModifierTraitementProps {

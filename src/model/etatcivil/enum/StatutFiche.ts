@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 
 export class StatutFiche extends EnumWithLibelle {
   public static readonly ACTIF = new StatutFiche("Actif");

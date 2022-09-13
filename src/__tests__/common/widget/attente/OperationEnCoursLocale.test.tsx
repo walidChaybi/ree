@@ -1,6 +1,6 @@
 import { render, waitFor } from "@testing-library/react";
+import { OperationLocaleEnCours } from "@widget/attente/OperationLocaleEnCours";
 import React from "react";
-import { OperationLocaleEnCours } from "../../../../views/common/widget/attente/OperationLocaleEnCours";
 
 test("render OperationEnCours", async () => {
   const fn = jest.fn();

@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { SousTypeRequete } from "../../../../../model/requete/enum/SousTypeRequete";
-import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
-import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
+import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import {
   PATH_APERCU_REQ_DEL,
   PATH_APERCU_REQ_INFO,
@@ -11,8 +9,10 @@ import {
   PATH_EDITION,
   PATH_SAISIR_RDCSC,
   receUrl
-} from "../../../../router/ReceUrls";
-import { getLibelle } from "../../../util/Utils";
+} from "@router/ReceUrls";
+import { getLibelle } from "@util/Utils";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { GestionnaireARetraiterDansSaga } from "../../migration/GestionnaireARetraiterDansSaga";
 import { Protection } from "./Protection";
 

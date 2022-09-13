@@ -1,17 +1,16 @@
+import { Qualite } from "@model/requete/enum/Qualite";
+import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
+import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
+import { IRequerant, Requerant } from "@model/requete/IRequerant";
+import { mappingRequeteDelivranceVersFormulaireRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import request from "superagent";
 import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { Qualite } from "../../../../model/requete/enum/Qualite";
-import { TypeInstitutionnel } from "../../../../model/requete/enum/TypeInstitutionnel";
-import { TypeMandataireReq } from "../../../../model/requete/enum/TypeMandataireReq";
-import { IRequerant, Requerant } from "../../../../model/requete/IRequerant";
-import { mappingRequeteDelivranceVersFormulaireRDCSC } from "../../../../views/pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 test("Attendu: Requerant.setRequerant particulier", async () => {
-  const saisieRequeteRdcsc = mappingRequeteDelivranceVersFormulaireRDCSC(
-    requeteDelivrance
-  );
+  const saisieRequeteRdcsc =
+    mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
 
   const requerantAttendu = {
     adresse: {
@@ -50,9 +49,8 @@ test("Attendu: Requerant.setRequerant mandataire", async () => {
     }
   };
   requeteDelivrance.requerant.qualiteRequerant = qualiteMandataire;
-  const saisieRequeteRdcsc = mappingRequeteDelivranceVersFormulaireRDCSC(
-    requeteDelivrance
-  );
+  const saisieRequeteRdcsc =
+    mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
 
   const requerantAttendu = {
     adresse: {
@@ -86,9 +84,8 @@ test("Attendu: Requerant.setRequerant institutionnel", async () => {
     }
   };
   requeteDelivrance.requerant.qualiteRequerant = qualiteInstitutionnel;
-  const saisieRequeteRdcsc = mappingRequeteDelivranceVersFormulaireRDCSC(
-    requeteDelivrance
-  );
+  const saisieRequeteRdcsc =
+    mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
 
   const requerantAttendu = {
     adresse: {
@@ -120,9 +117,8 @@ test("Attendu: Requerant.setRequerant interessé", async () => {
     }
   };
   requeteDelivrance.requerant.qualiteRequerant = qualiteParticulier;
-  const saisieRequeteRdcsc = mappingRequeteDelivranceVersFormulaireRDCSC(
-    requeteDelivrance
-  );
+  const saisieRequeteRdcsc =
+    mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
 
   const requerantAttendu = {
     adresse: {

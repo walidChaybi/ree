@@ -1,7 +1,7 @@
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { InscriptionRcUtil } from "@model/etatcivil/enum/TypeInscriptionRc";
+import { IInscriptionLiee } from "@model/etatcivil/rcrca/IInscriptionLiee";
 import React from "react";
-import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
-import { InscriptionRcUtil } from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
-import { IInscriptionLiee } from "../../../../../../model/etatcivil/rcrca/IInscriptionLiee";
 import { LienFiche } from "../../../LienFiche";
 
 interface IInscriptionsLieesProps {

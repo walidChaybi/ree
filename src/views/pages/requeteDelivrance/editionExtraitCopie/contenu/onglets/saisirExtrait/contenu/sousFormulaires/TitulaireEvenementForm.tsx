@@ -1,15 +1,3 @@
-import React from "react";
-import {
-  Evenement,
-  IEvenement
-} from "../../../../../../../../../model/etatcivil/acte/IEvenement";
-import {
-  ITitulaireActe,
-  TitulaireActe
-} from "../../../../../../../../../model/etatcivil/acte/ITitulaireActe";
-import { NatureActe } from "../../../../../../../../../model/etatcivil/enum/NatureActe";
-import { Sexe } from "../../../../../../../../../model/etatcivil/enum/Sexe";
-import { IPrenomOrdonnes } from "../../../../../../../../../model/requete/IPrenomOrdonnes";
 import {
   DECLARATION_CONJOINTE,
   LIEU_EVENEMENT,
@@ -17,18 +5,24 @@ import {
   NOM_SECABLE,
   PRENOMS,
   SEXE
-} from "../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
-import DeclarationConjointeForm from "../../../../../../../../common/composant/formulaire/DeclarationConjointeForm";
-import LieuEvenementForm from "../../../../../../../../common/composant/formulaire/LieuEvenementForm";
-import NomSecableForm from "../../../../../../../../common/composant/formulaire/NomSecableForm";
+} from "@composant/formulaire/ConstantesNomsForm";
+import DeclarationConjointeForm from "@composant/formulaire/DeclarationConjointeForm";
+import LieuEvenementForm from "@composant/formulaire/LieuEvenementForm";
+import NomSecableForm from "@composant/formulaire/NomSecableForm";
+import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
 import {
-  estRenseigne,
-  getLibelle
-} from "../../../../../../../../common/util/Utils";
-import DateComposeForm from "../../../../../../../../common/widget/formulaire/champsDate/DateComposeForm";
-import { InputField } from "../../../../../../../../common/widget/formulaire/champsSaisie/InputField";
-import { RadioField } from "../../../../../../../../common/widget/formulaire/champsSaisie/RadioField";
-import { withNamespace } from "../../../../../../../../common/widget/formulaire/utils/FormUtil";
+  ITitulaireActe,
+  TitulaireActe
+} from "@model/etatcivil/acte/ITitulaireActe";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
+import { estRenseigne, getLibelle } from "@util/Utils";
+import DateComposeForm from "@widget/formulaire/champsDate/DateComposeForm";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
+import { withNamespace } from "@widget/formulaire/utils/FormUtil";
+import React from "react";
 import { DATE_EVENEMENT } from "../../../../../../saisirRequete/modelForm/ISaisirRequetePageModel";
 import PrenomsForm from "../../../../../../saisirRequete/sousFormulaires/identite/nomsPrenoms/PrenomsForm";
 import "./scss/TitulaireEvenementForm.scss";

@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { IDonneesComposition } from "../../../../../model/composition/commun/retourApiComposition/IDonneesComposition";
-import { Orientation } from "../../../../../model/composition/enum/Orientation";
+import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
+import { Orientation } from "@model/composition/enum/Orientation";
 import {
   CertificatSituationComposition,
   ICertificatSituationComposition,
   NOM_DOCUMENT_CERTIFICAT_SITUATION
-} from "../../../../../model/composition/ICertificatSituationComposition";
-import { IDecret } from "../../../../../model/etatcivil/commun/IDecret";
-import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
-import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
-import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
-import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
-import { ITitulaireRequeteTableau } from "../../../../../model/requete/ITitulaireRequeteTableau";
+} from "@model/composition/ICertificatSituationComposition";
+import { IDecret } from "@model/etatcivil/commun/IDecret";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
+import { useEffect, useState } from "react";
 import { MimeType } from "../../../../../ressources/MimeType";
 import { useCertificatSituationApiHook } from "../../composition/CompositionCertificatSituationHook";
 import {
@@ -43,10 +43,8 @@ export function useGenerationCertificatSituationHook(
     setResultGenerationCertificatSituation
   ] = useState<IResultGenerationUnDocument>();
 
-  const [
-    certificatSituationComposition,
-    setCertificatSituationComposition
-  ] = useState<ICertificatSituationComposition>();
+  const [certificatSituationComposition, setCertificatSituationComposition] =
+    useState<ICertificatSituationComposition>();
 
   const [
     stockerDocumentCreerActionMajStatutRequeteParams,
@@ -62,12 +60,13 @@ export function useGenerationCertificatSituationHook(
       (params.nbInscriptionsInfos || params.infosInscription)
     ) {
       if (params?.requete.titulaires && params.requete.titulaires.length > 0) {
-        const phrases: IPhrasesJasperCertificatSituation = params.specificationPhrase.getPhrasesJasper(
-          params.requete.document, // id du type de document demandé
-          params.requete.titulaires[0].sexe,
-          params.nbInscriptionsInfos,
-          params.infosInscription
-        );
+        const phrases: IPhrasesJasperCertificatSituation =
+          params.specificationPhrase.getPhrasesJasper(
+            params.requete.document, // id du type de document demandé
+            params.requete.titulaires[0].sexe,
+            params.nbInscriptionsInfos,
+            params.infosInscription
+          );
         construitCertificatSituation(
           phrases.phrasesLiees,
           params.requete,
@@ -84,9 +83,8 @@ export function useGenerationCertificatSituationHook(
 
   // 2 - Création du certificat de situation: appel api composition
   // récupération du document en base64
-  const donneesComposition:
-    | IDonneesComposition
-    | undefined = useCertificatSituationApiHook(certificatSituationComposition);
+  const donneesComposition: IDonneesComposition | undefined =
+    useCertificatSituationApiHook(certificatSituationComposition);
 
   // 3 - Création du document réponse (après appel 'useCertificatSituationRmcAutoVideApi') pour stockage dans la BDD et Swift
   useEffect(() => {

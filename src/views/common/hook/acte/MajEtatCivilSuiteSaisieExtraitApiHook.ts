@@ -1,8 +1,8 @@
+import { majEtatCivilSuiteSaisieExtrait } from "@api/appels/etatcivilApi";
+import { IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { majEtatCivilSuiteSaisieExtrait } from "../../../../api/appels/etatcivilApi";
-import { IEvenement } from "../../../../model/etatcivil/acte/IEvenement";
-import { ITitulaireActe } from "../../../../model/etatcivil/acte/ITitulaireActe";
-import { logError } from "../../util/LogManager";
 
 export interface IExtraitSaisiAEnvoyer {
   evenementActe: IEvenement;

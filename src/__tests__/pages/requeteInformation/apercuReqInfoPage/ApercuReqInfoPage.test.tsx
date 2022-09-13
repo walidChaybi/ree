@@ -1,3 +1,9 @@
+import { IOfficier } from "@model/agent/IOfficier";
+import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
+import {
+  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+  URL_MES_REQUETES_INFORMATION
+} from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -5,6 +11,8 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/routeUtil";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
@@ -19,14 +27,6 @@ import {
 } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configMail } from "../../../../mock/superagent-config/superagent-mock-mail";
 import { configRequetesInformation } from "../../../../mock/superagent-config/superagent-mock-requetes-information";
-import { IOfficier } from "../../../../model/agent/IOfficier";
-import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
-import { storeRece } from "../../../../views/common/util/storeRece";
-import { ApercuReqInfoPage } from "../../../../views/pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
-import {
-  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-  URL_MES_REQUETES_INFORMATION
-} from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetesInformation[0],

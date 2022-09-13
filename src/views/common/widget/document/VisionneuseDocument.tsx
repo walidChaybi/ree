@@ -1,8 +1,8 @@
 import { LinearProgress } from "@material-ui/core";
+import { base64toBlob } from "@util/FileUtils";
+import { getLibelle } from "@util/Utils";
 import { MimeType } from "file-type";
 import React, { useEffect, useRef, useState } from "react";
-import { base64toBlob } from "../../util/FileUtils";
-import { getLibelle } from "../../util/Utils";
 import "./scss/VisionneuseDocument.scss";
 
 interface IVisionneuseDocumentProps {

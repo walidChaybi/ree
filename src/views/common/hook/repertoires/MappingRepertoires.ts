@@ -1,36 +1,33 @@
-import { IAnalyseMarginale } from "../../../../model/etatcivil/acte/IAnalyseMarginale";
-import { ICorpsExtraitRectification } from "../../../../model/etatcivil/acte/ICorpsExtraitRectification";
-import { IFicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
-import { IRegistre } from "../../../../model/etatcivil/acte/IRegistre";
-import { ITitulaireActe } from "../../../../model/etatcivil/acte/ITitulaireActe";
-import { ITypeRegistre } from "../../../../model/etatcivil/acte/ITypeRegistre";
-import { IAutresNoms } from "../../../../model/etatcivil/commun/IAutresNoms";
-import { IFicheLien } from "../../../../model/etatcivil/commun/IFicheLien";
-import { ILieuEvenement } from "../../../../model/etatcivil/commun/ILieuEvenement";
-import { IPersonne } from "../../../../model/etatcivil/commun/IPersonne";
-import { AutresNoms } from "../../../../model/etatcivil/enum/AutresNoms";
-import { ExistenceContratMariage } from "../../../../model/etatcivil/enum/ExistenceContratMariage";
-import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";
-import { NatureActe } from "../../../../model/etatcivil/enum/NatureActe";
-import { NatureRc } from "../../../../model/etatcivil/enum/NatureRc";
-import { NatureRca } from "../../../../model/etatcivil/enum/NatureRca";
-import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
-import { StatutFiche } from "../../../../model/etatcivil/enum/StatutFiche";
-import { TypeActe } from "../../../../model/etatcivil/enum/TypeActe";
-import { TypeDeclarationConjointe } from "../../../../model/etatcivil/enum/TypeDeclarationConjointe";
-import { TypeExtrait } from "../../../../model/etatcivil/enum/TypeExtrait";
-import { TypeVisibiliteArchiviste } from "../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
-import { IFichePacs } from "../../../../model/etatcivil/pacs/IFichePacs";
-import { IPartenaire } from "../../../../model/etatcivil/pacs/IPartenaire";
-import { IFicheRcRca } from "../../../../model/etatcivil/rcrca/IFicheRcRca";
-import {
-  IInteresse,
-  Interesse
-} from "../../../../model/etatcivil/rcrca/IInteresse";
-import { getDateFromTimestamp, IDateCompose } from "../../util/DateUtils";
-import { formatNom, formatPrenom } from "../../util/Utils";
+import { IAnalyseMarginale } from "@model/etatcivil/acte/IAnalyseMarginale";
+import { ICorpsExtraitRectification } from "@model/etatcivil/acte/ICorpsExtraitRectification";
+import { IDetailMariage } from "@model/etatcivil/acte/IDetailMariage";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IRegistre } from "@model/etatcivil/acte/IRegistre";
+import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { ITypeRegistre } from "@model/etatcivil/acte/ITypeRegistre";
+import { IAutresNoms } from "@model/etatcivil/commun/IAutresNoms";
+import { IFicheLien } from "@model/etatcivil/commun/IFicheLien";
+import { ILieuEvenement } from "@model/etatcivil/commun/ILieuEvenement";
+import { IPersonne } from "@model/etatcivil/commun/IPersonne";
+import { AutresNoms } from "@model/etatcivil/enum/AutresNoms";
+import { ExistenceContratMariage } from "@model/etatcivil/enum/ExistenceContratMariage";
+import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { NatureRc } from "@model/etatcivil/enum/NatureRc";
+import { NatureRca } from "@model/etatcivil/enum/NatureRca";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { StatutFiche } from "@model/etatcivil/enum/StatutFiche";
+import { TypeActe } from "@model/etatcivil/enum/TypeActe";
+import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationConjointe";
+import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
+import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
+import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
+import { IPartenaire } from "@model/etatcivil/pacs/IPartenaire";
+import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { IInteresse, Interesse } from "@model/etatcivil/rcrca/IInteresse";
+import { getDateFromTimestamp, IDateCompose } from "@util/DateUtils";
+import { formatNom, formatPrenom } from "@util/Utils";
 import { mappingMentions } from "../acte/mentions/MentionsApiHook";
-import { IDetailMariage } from "./../../../../model/etatcivil/acte/IDetailMariage";
 
 export type TFiche = IFicheRcRca | IFichePacs | IFicheActe;
 

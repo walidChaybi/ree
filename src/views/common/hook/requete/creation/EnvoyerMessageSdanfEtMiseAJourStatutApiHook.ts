@@ -1,7 +1,7 @@
+import { postMessageRetourSDANFEtUpdateStatutRequete } from "@api/appels/requeteApi";
+import { IEchange } from "@model/requete/IEchange";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { postMessageRetourSDANFEtUpdateStatutRequete } from "../../../../../api/appels/requeteApi";
-import { IEchange } from "../../../../../model/requete/IEchange";
-import { logError } from "../../../util/LogManager";
 
 export interface RetourSDANFParams {
   idRequete: string;

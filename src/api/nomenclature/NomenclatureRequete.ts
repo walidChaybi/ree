@@ -1,9 +1,9 @@
 /* istanbul ignore file */
 
-import { DocumentDelivrance } from "../../model/requete/enum/DocumentDelivrance";
-import { TypePieceJustificative } from "../../model/requete/enum/TypePieceJustificative";
-import { logError } from "../../views/common/util/LogManager";
-import { premiereLettreEnMajuscule } from "../../views/common/util/Utils";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { logError } from "@util/LogManager";
+import { premiereLettreEnMajuscule } from "@util/Utils";
 import { getNomenclatureRequete } from "../appels/requeteApi";
 
 const TYPE_PIECE_JUSTIFICATIVE = "TYPE_PIECE_JUSTIFICATIVE";

@@ -1,18 +1,18 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { IAlerte } from "../../../../model/etatcivil/fiche/IAlerte";
-import { TRequete } from "../../../../model/requete/IRequete";
-import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
-import { IResultatRMCActe } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { IParamsTableau } from "../../../common/util/GestionDesLiensApi";
-import { stockageDonnees } from "../../../common/util/stockageDonnees";
+import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { TRequete } from "@model/requete/IRequete";
+import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { IParamsTableau } from "@util/GestionDesLiensApi";
+import { stockageDonnees } from "@util/stockageDonnees";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_APPEL_INSCRIPTION,
   NB_LIGNES_PAR_PAGE_ACTE,
   NB_LIGNES_PAR_PAGE_INSCRIPTION
-} from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
+} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import React, { useCallback, useEffect, useState } from "react";
 import { DataRMCAuto } from "../../requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { useRMCActeApiHook } from "../acteInscription/hook/RMCActeApiHook";
 import { ICriteresRechercheActeInscription } from "../acteInscription/hook/RMCActeInscriptionUtils";
@@ -73,31 +73,21 @@ export const RMCAuto: React.FC<RMCAutoProps> = ({
   >(dataHistory?.dataTableauRMCAutoInscription);
 
   /* Etats RMC manuelle */
-  const [
-    resetRMCActeInscription,
-    setResetRMCActeInscription
-  ] = useState<boolean>(false);
+  const [resetRMCActeInscription, setResetRMCActeInscription] =
+    useState<boolean>(false);
 
-  const [
-    valuesRMCActeInscription,
-    setValuesRMCActeInscription
-  ] = useState<IRMCActeInscription>({});
+  const [valuesRMCActeInscription, setValuesRMCActeInscription] =
+    useState<IRMCActeInscription>({});
 
-  const [
-    criteresRechercheActe,
-    setCriteresRechercheActe
-  ] = useState<ICriteresRechercheActeInscription>();
+  const [criteresRechercheActe, setCriteresRechercheActe] =
+    useState<ICriteresRechercheActeInscription>();
 
-  const [
-    criteresRechercheInscription,
-    setCriteresRechercheInscription
-  ] = useState<ICriteresRechercheActeInscription>();
+  const [criteresRechercheInscription, setCriteresRechercheInscription] =
+    useState<ICriteresRechercheActeInscription>();
 
   // Critères de recherche pour alimenter les données des fiches Acte en effet leur pagination/navigation est indépendante du tableau de résultats
-  const [
-    criteresRechercheFicheActe,
-    setCriteresRechercheFicheActe
-  ] = useState<ICriteresRechercheActeInscription>();
+  const [criteresRechercheFicheActe, setCriteresRechercheFicheActe] =
+    useState<ICriteresRechercheActeInscription>();
 
   // Critères de recherche pour alimenter les données des fiches Inscription en effet leur pagination/navigation est indépendante du tableau de résultats
   const [
@@ -122,22 +112,15 @@ export const RMCAuto: React.FC<RMCAutoProps> = ({
     paramsRMCAuto?.requete,
     `0-${NB_LIGNES_PAR_APPEL_ACTE}`
   );
-  const {
-    dataRMCAutoInscription,
-    dataTableauRMCAutoInscription
-  } = useRMCAutoInscriptionApiHook(
-    paramsRMCAuto?.requete,
-    paramsRMCAuto?.range
-  );
+  const { dataRMCAutoInscription, dataTableauRMCAutoInscription } =
+    useRMCAutoInscriptionApiHook(paramsRMCAuto?.requete, paramsRMCAuto?.range);
 
   /* Hooks RMC manuelle */
   const { dataRMCActe, dataTableauRMCActe } = useRMCActeApiHook(
     criteresRechercheActe
   );
-  const {
-    dataRMCInscription,
-    dataTableauRMCInscription
-  } = useRMCInscriptionApiHook(criteresRechercheInscription);
+  const { dataRMCInscription, dataTableauRMCInscription } =
+    useRMCInscriptionApiHook(criteresRechercheInscription);
 
   /* Actualisation des résultats de la RMC */
   useEffect(() => {

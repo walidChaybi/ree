@@ -1,28 +1,19 @@
-import {
-  Autorite,
-  IAutorite
-} from "../../../../../../model/etatcivil/commun/IAutorite";
-import { StatutPacesUtil } from "../../../../../../model/etatcivil/enum/StatutPacs";
-import {
-  Annulation,
-  IAnnulation
-} from "../../../../../../model/etatcivil/pacs/IAnnulation";
-import {
-  Dissolution,
-  IDissolution
-} from "../../../../../../model/etatcivil/pacs/IDissolution";
-import { IFichePacs } from "../../../../../../model/etatcivil/pacs/IFichePacs";
+import { Autorite, IAutorite } from "@model/etatcivil/commun/IAutorite";
+import { StatutPacesUtil } from "@model/etatcivil/enum/StatutPacs";
+import { Annulation, IAnnulation } from "@model/etatcivil/pacs/IAnnulation";
+import { Dissolution, IDissolution } from "@model/etatcivil/pacs/IDissolution";
+import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
 import {
   IModification,
   Modification
-} from "../../../../../../model/etatcivil/pacs/IModification";
-import { getDateString } from "../../../../../common/util/DateUtils";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
-import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
-import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
-import { AjoutePartAuPanelAreas } from "../../../../../common/widget/section/SectionUtils";
+} from "@model/etatcivil/pacs/IModification";
+import { getDateString } from "@util/DateUtils";
+import { getLibelle } from "@util/Utils";
+import { SectionContentProps } from "@widget/section/SectionContent";
+import { SectionPanelProps } from "@widget/section/SectionPanel";
+import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
+import { SectionPartProps } from "@widget/section/SectionPart";
+import { AjoutePartAuPanelAreas } from "@widget/section/SectionUtils";
 import { IAccordionReceSection } from "../../../FicheUtils";
 import { getFichesPersonne } from "../personne/FichePersonne";
 import { getStatuts } from "../statut/StatutUtils";

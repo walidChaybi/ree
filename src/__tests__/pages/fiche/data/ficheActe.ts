@@ -1,5 +1,5 @@
-import { NatureActe } from "../../../../model/etatcivil/enum/NatureActe";
-import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
 
 export const bandeauActe: IBandeauFiche = {
   titreFenetre: "NAISSANCE-DUPE-N°2020-123456",

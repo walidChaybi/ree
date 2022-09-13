@@ -1,9 +1,9 @@
+import { ExtraitPlurilingueComposition } from "@model/composition/extraitCopie/plurilingue/createur/ExtraitPlurilingueComposition";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import {
   ficheActeMariage,
   ficheActeNaissance
 } from "../../../../../../mock/data/ficheActe";
-import { ExtraitPlurilingueComposition } from "../../../../../../model/composition/extraitCopie/plurilingue/createur/ExtraitPlurilingueComposition";
-import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 
 test("Attendu: creerExtraitPlurilingue fonctionne correctement pour NAISSANCE", () => {
   const acte = ficheActeNaissance.data;

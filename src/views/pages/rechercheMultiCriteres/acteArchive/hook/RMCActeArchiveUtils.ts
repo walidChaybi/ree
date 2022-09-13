@@ -1,10 +1,10 @@
-import { IRMCArchiveRequest } from "../../../../../model/rmc/acteArchive/envoi/IRMCArchiveRequest";
-import { IRMCActeArchive } from "../../../../../model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
+import { IRMCArchiveRequest } from "@model/rmc/acteArchive/envoi/IRMCArchiveRequest";
+import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import {
   getDateDebutFromDateCompose,
   getDateFinFromDateCompose
-} from "../../../../common/util/DateUtils";
-import { valeurOuUndefined } from "../../../../common/util/Utils";
+} from "@util/DateUtils";
+import { valeurOuUndefined } from "@util/Utils";
 import { getCriteresTitulaire } from "../../common/mapping/RMCMappingUtil";
 
 /** Critères de recherche: mapping avant appel d'api */

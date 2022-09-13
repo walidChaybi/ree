@@ -1,14 +1,14 @@
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import React, { useEffect, useRef, useState } from "react";
 import {
   Base64File,
   ExtensionDocumentTypeMime,
   getBase64FileAndValidate
-} from "../../../util/FileUtils";
-import messageManager from "../../../util/messageManager";
-import { Option, Options } from "../../../util/Type";
-import { getLibelle } from "../../../util/Utils";
+} from "@util/FileUtils";
+import messageManager from "@util/messageManager";
+import { Option, Options } from "@util/Type";
+import { getLibelle } from "@util/Utils";
+import React, { useEffect, useRef, useState } from "react";
 
 export interface UploadFileFieldProps {
   name: string;

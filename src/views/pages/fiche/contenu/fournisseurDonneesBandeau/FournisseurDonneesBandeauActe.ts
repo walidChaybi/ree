@@ -7,7 +7,7 @@ import {
   getValeurOuVide,
   premiereLettreEnMajusculeLeResteEnMinuscule,
   triListeObjetsSurPropriete
-} from "../../../../common/util/Utils";
+} from "@util/Utils";
 import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
 import { SimplePersonne } from "./IFournisseurDonneesBandeau";
 

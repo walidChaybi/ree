@@ -1,16 +1,15 @@
-import React from "react";
-import { render, fireEvent, screen } from "@testing-library/react";
 import {
-  traiteCarAutorises,
   digitSeulement,
+  focusApresProchainChamps,
+  traiteCarAutorises,
   traiteDepassement,
   traiteDepassementJour,
   traiteDepassementMois,
-  focusApresProchainChamps,
-  traiteZeroAGauche,
-  traiteEspace
-} from "../../../../../views/common/widget/formulaire/utils/ControlesUtil";
+  traiteEspace,
+  traiteZeroAGauche
+} from "@widget/formulaire/utils/ControlesUtil";
 import { FormikProps, FormikValues } from "formik";
+import React from "react";
 
 test("traiteCarAutorises", async () => {
   const element = {
@@ -76,7 +75,7 @@ test("focusApresProchainChamps", async () => {
     }
   };
   focusApresProchainChamps(
-    (element as any) as React.ChangeEvent<HTMLInputElement>
+    element as any as React.ChangeEvent<HTMLInputElement>
   );
   expect(
     element.target.nextElementSibling.nextElementSibling.focus
@@ -90,10 +89,10 @@ test("traiteZeroAGauche", async () => {
     }
   };
 
-  const formik = ({
+  const formik = {
     handleChange: jest.fn(),
     handleBlur: jest.fn()
-  } as any) as FormikProps<FormikValues>;
+  } as any as FormikProps<FormikValues>;
 
   traiteZeroAGauche(element, formik);
   expect(element.target.value).toBe("01");

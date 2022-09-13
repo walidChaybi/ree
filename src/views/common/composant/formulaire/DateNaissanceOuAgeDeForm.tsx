@@ -1,19 +1,16 @@
-import { connect } from "formik";
-import React, { useCallback, useState } from "react";
-import {
-  Evenement,
-  IEvenement
-} from "../../../../model/etatcivil/acte/IEvenement";
-import { estRenseigne, getLibelle } from "../../util/Utils";
+import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { estRenseigne, getLibelle } from "@util/Utils";
 import DateComposeForm, {
   ChampDateModifie
-} from "../../widget/formulaire/champsDate/DateComposeForm";
-import { IDateComposeForm } from "../../widget/formulaire/champsDate/DateComposeFormUtil";
-import { InputField } from "../../widget/formulaire/champsSaisie/InputField";
+} from "@widget/formulaire/champsDate/DateComposeForm";
+import { IDateComposeForm } from "@widget/formulaire/champsDate/DateComposeFormUtil";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
   FormikComponentProps,
   withNamespace
-} from "../../widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useCallback, useState } from "react";
 import { AGE, ANNEE, DATE, JOUR, MOIS } from "./ConstantesNomsForm";
 
 interface ComponentProps {

@@ -1,6 +1,6 @@
+import { postMentions } from "@api/appels/etatcivilApi";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { postMentions } from "../../../../../api/appels/etatcivilApi";
-import { logError } from "../../../util/LogManager";
 
 export interface IMiseAJourMentionsParams {
   idActe: string;

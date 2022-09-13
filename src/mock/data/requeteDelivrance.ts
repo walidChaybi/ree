@@ -1,21 +1,21 @@
-import { Nationalite } from "../../model/etatcivil/enum/Nationalite";
-import { ChoixDelivrance } from "../../model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "../../model/requete/enum/DocumentDelivrance";
-import { MotifDelivrance } from "../../model/requete/enum/MotifDelivrance";
-import { NatureActeRequete } from "../../model/requete/enum/NatureActeRequete";
-import { Provenance } from "../../model/requete/enum/Provenance";
-import { Qualite } from "../../model/requete/enum/Qualite";
-import { SousTypeDelivrance } from "../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../model/requete/enum/StatutRequete";
-import { TypeCanal } from "../../model/requete/enum/TypeCanal";
-import { TypeInstitutionnel } from "../../model/requete/enum/TypeInstitutionnel";
-import { TypeMandataireReq } from "../../model/requete/enum/TypeMandataireReq";
-import { TypePieceJustificative } from "../../model/requete/enum/TypePieceJustificative";
-import { TypeRequete } from "../../model/requete/enum/TypeRequete";
-import { IProvenancePlanete } from "../../model/requete/IProvenancePlanete";
-import { IProvenanceRece } from "../../model/requete/IProvenanceRece";
-import { IRequerant } from "../../model/requete/IRequerant";
-import { IRequeteDelivrance } from "../../model/requete/IRequeteDelivrance";
+import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { Provenance } from "@model/requete/enum/Provenance";
+import { Qualite } from "@model/requete/enum/Qualite";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeCanal } from "@model/requete/enum/TypeCanal";
+import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
+import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IProvenancePlanete } from "@model/requete/IProvenancePlanete";
+import { IProvenanceRece } from "@model/requete/IProvenanceRece";
+import { IRequerant } from "@model/requete/IRequerant";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { documentReponseCourrier117 } from "./DocumentReponse";
 import { TYPE_PIECE_JUSTIFICATIVE } from "./NomenclatureTypePieceJustificative";
 
@@ -290,7 +290,7 @@ const requerant: IRequerant = {
 } as IRequerant;
 
 export const idRequeteRDCSC = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";
-export const requeteRDCSC = ({
+export const requeteRDCSC = {
   id: idRequeteRDCSC,
   type: TypeRequete.DELIVRANCE,
   sousType: SousTypeDelivrance.RDCSC,
@@ -321,7 +321,7 @@ export const requeteRDCSC = ({
       parentsTitulaire: []
     }
   ]
-} as any) as IRequeteDelivrance;
+} as any as IRequeteDelivrance;
 
 export const idRequeteRDC = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";
 
@@ -449,7 +449,7 @@ export const requeteDelivranceRDC: IRequeteDelivrance = {
   choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
 };
 
-export const requeteRDC = ({
+export const requeteRDC = {
   id: idRequeteRDC,
   type: TypeRequete.DELIVRANCE,
   sousType: SousTypeDelivrance.RDC,
@@ -480,7 +480,7 @@ export const requeteRDC = ({
       parentsTitulaire: []
     }
   ]
-} as any) as IRequeteDelivrance;
+} as any as IRequeteDelivrance;
 
 export const requeteRDD = {
   type: TypeRequete.DELIVRANCE,

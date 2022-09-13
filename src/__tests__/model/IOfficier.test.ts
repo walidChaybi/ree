@@ -1,15 +1,6 @@
-import mockConnectedUser from "../../mock/data/connectedUser.json";
-import {
-  resultatHeaderUtilistateurLaurenceBourdeau,
-  resultatRequeteUtilistateurLaurenceBourdeau,
-  userDroitConsulterArchive,
-  userDroitConsulterConsulterArchive,
-  userDroitConsulterPerimetreMEAE,
-  userDroitConsulterPerimetreTUNIS,
-  userDroitnonCOMEDEC
-} from "../../mock/data/connectedUserAvecDroit";
-import { Droit } from "../../model/agent/enum/Droit";
-import { Perimetre } from "../../model/agent/enum/Perimetre";
+import { mappingOfficier } from "@core/login/LoginHook";
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
 import {
   appartientAMonServiceOuServicesMeresOuServicesFilles,
   contientEntiteMere,
@@ -20,10 +11,19 @@ import {
   officierALeDroitSurUnDesPerimetres,
   officierAutoriserSurLeTypeRegistre,
   officierHabiliterUniquementPourLeDroit
-} from "../../model/agent/IOfficier";
-import { mapHabilitationsUtilisateur } from "../../model/agent/IUtilisateur";
-import { storeRece } from "../../views/common/util/storeRece";
-import { mappingOfficier } from "../../views/core/login/LoginHook";
+} from "@model/agent/IOfficier";
+import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
+import { storeRece } from "@util/storeRece";
+import mockConnectedUser from "../../mock/data/connectedUser.json";
+import {
+  resultatHeaderUtilistateurLaurenceBourdeau,
+  resultatRequeteUtilistateurLaurenceBourdeau,
+  userDroitConsulterArchive,
+  userDroitConsulterConsulterArchive,
+  userDroitConsulterPerimetreMEAE,
+  userDroitConsulterPerimetreTUNIS,
+  userDroitnonCOMEDEC
+} from "../../mock/data/connectedUserAvecDroit";
 
 const u: any = mockConnectedUser;
 

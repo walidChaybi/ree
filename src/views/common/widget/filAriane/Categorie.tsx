@@ -1,6 +1,6 @@
+import { checkDirty } from "@util/Utils";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { checkDirty } from "../../util/Utils";
 
 interface CategorieProps {
   url: string;

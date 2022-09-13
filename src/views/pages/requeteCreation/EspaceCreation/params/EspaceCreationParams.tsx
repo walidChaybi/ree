@@ -1,4 +1,4 @@
-import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 
 export const statutsRequetesCreation = [
   StatutRequete.PRISE_EN_CHARGE.nom,

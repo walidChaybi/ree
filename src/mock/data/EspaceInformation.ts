@@ -1,4 +1,4 @@
-import { Sexe } from "../../model/etatcivil/enum/Sexe";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 
 export const ReponseMesRequetesInformation = [
   {

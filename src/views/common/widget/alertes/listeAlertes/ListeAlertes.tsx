@@ -1,13 +1,13 @@
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useCallback, useState } from "react";
-import { IAlerte } from "../../../../../model/etatcivil/fiche/IAlerte";
 import {
   toAlertString,
   toReferenceString
-} from "../../../hook/alertes/MappingAlertesActe";
-import { storeRece } from "../../../util/storeRece";
-import { getLibelle } from "../../../util/Utils";
+} from "@hook/alertes/MappingAlertesActe";
+import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { storeRece } from "@util/storeRece";
+import { getLibelle } from "@util/Utils";
+import React, { useCallback, useState } from "react";
 import { ConfirmationPopin } from "../../popin/ConfirmationPopin";
 import { PopinSupprimerAlerte } from "./contenu/PopinSupprimerAlerte";
 import "./scss/ListeAlertes.scss";

@@ -1,6 +1,6 @@
 /* istanbul ignore file */
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
-import { Options } from "../../../views/common/util/Type";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
+import { Options } from "@util/Type";
 
 export class TypeInstitutionnel extends EnumWithLibelle {
   public static readonly TRIBUNAL = new TypeInstitutionnel("Tribunal");

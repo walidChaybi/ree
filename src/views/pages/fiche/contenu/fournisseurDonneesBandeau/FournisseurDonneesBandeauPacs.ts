@@ -1,5 +1,5 @@
+import { triListeObjetsSurPropriete } from "@util/Utils";
 import { FournisseurDonneeBandeauRcRca } from "./FournisseurDonneesBandeauRcRca";
-import { triListeObjetsSurPropriete } from "../../../../common/util/Utils";
 export class FournisseurDonneeBandeauPacs extends FournisseurDonneeBandeauRcRca {
   getPersonnesAsAny() {
     return triListeObjetsSurPropriete(

@@ -1,4 +1,4 @@
-import { HttpRequestHeader } from "../../../api/ApiManager";
+import { HttpRequestHeader } from "@api/ApiManager";
 const CSRF_COOKIE_NAME = "csrf_token";
 const CSRF_HEADER_NAME = "X-Csrf-Token";
 

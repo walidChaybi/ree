@@ -1,4 +1,4 @@
-import { Crypto } from "../../../../views/common/util/crypto/Crypto";
+import { Crypto } from "@util/crypto/Crypto";
 
 test("Encrypte et décrypte", () => {
   const pass = "RECE";

@@ -1,7 +1,7 @@
+import { postSauvegarderDocument } from "@api/appels/requeteApi";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { postSauvegarderDocument } from "../../../../api/appels/requeteApi";
-import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
-import { logError } from "../../util/LogManager";
 
 export interface ISauvegarderDocumentsParams {
   documentsReponsePourStockage?: IDocumentReponse[];

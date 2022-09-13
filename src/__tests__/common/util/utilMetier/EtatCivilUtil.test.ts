@@ -1,7 +1,7 @@
-import { IEvenement } from "../../../../model/etatcivil/acte/IEvenement";
-import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
-import { getDateFormatJasperFromCompose } from "../../../../views/common/util/DateUtils";
-import { EtatCivilUtil } from "../../../../views/common/utilMetier/EtatCivilUtil";
+import { IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { getDateFormatJasperFromCompose } from "@util/DateUtils";
+import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";
 test("Attendu: formatLeOuEn fonctionne correctement", () => {
   expect(`${EtatCivilUtil.formatLeOuEn()} décembre 2021`).toBe(
     "En décembre 2021"

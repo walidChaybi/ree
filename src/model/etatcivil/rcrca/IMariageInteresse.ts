@@ -1,5 +1,5 @@
-import { IDateCompose } from "../../../views/common/util/DateUtils";
-import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
+import { IDateCompose } from "@util/DateUtils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export interface IMariageInteresse {
   villeMariage: string;

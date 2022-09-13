@@ -1,6 +1,6 @@
 import { ListItemText } from "@material-ui/core";
+import { Action, IAction } from "@model/requete/IActions";
 import React from "react";
-import { Action, IAction } from "../../../../model/requete/IActions";
 import "./scss/Suivis.scss";
 
 interface ActionRequeteProps {

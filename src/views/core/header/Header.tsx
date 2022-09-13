@@ -1,13 +1,13 @@
 import { Tooltip } from "@material-ui/core";
+import { Droit } from "@model/agent/enum/Droit";
+import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
+import { URL_ACCUEIL } from "@router/ReceUrls";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { getLibelle } from "@util/Utils";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import logoReceBlanc from "../../../img/logo-rece-blanc.svg";
-import { Droit } from "../../../model/agent/enum/Droit";
-import { officierHabiliterPourLeDroit } from "../../../model/agent/IOfficier";
-import { FeatureFlag } from "../../common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../common/util/featureFlag/gestionnaireFeatureFlag";
-import { getLibelle } from "../../common/util/Utils";
-import { URL_ACCUEIL } from "../../router/ReceUrls";
 import { BoutonDeconnexion } from "./BoutonDeconnexion";
 import { BoutonRechercheRmc } from "./BoutonRechercheRmc";
 

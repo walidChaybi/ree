@@ -1,3 +1,4 @@
+import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -5,11 +6,10 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { BoiteAOnglet } from "@widget/onglets/BoiteAOnglets";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import { BoiteAOnglet } from "../../../../views/common/widget/onglets/BoiteAOnglets";
-import { URL_MES_REQUETES_DELIVRANCE } from "../../../../views/router/ReceUrls";
 
 const mock = [
   {

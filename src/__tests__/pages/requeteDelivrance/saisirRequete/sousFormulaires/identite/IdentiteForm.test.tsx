@@ -1,3 +1,9 @@
+import { TITULAIRES } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCSCPageModel";
+import IdentiteForm, {
+  IdentiteFormDefaultValues,
+  IdentiteFormValidationSchema,
+  IdentiteSubFormProps
+} from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/identite/IdentiteForm";
 import {
   act,
   fireEvent,
@@ -7,12 +13,6 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { TITULAIRES } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCSCPageModel";
-import IdentiteForm, {
-  IdentiteFormDefaultValues,
-  IdentiteFormValidationSchema,
-  IdentiteSubFormProps
-} from "../../../../../../views/pages/requeteDelivrance/saisirRequete/sousFormulaires/identite/IdentiteForm";
 
 const HookIdentiteForm: React.FC = () => {
   const [result, setResult] = useState("");

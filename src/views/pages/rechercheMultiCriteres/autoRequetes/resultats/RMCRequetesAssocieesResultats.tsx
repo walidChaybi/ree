@@ -1,12 +1,12 @@
+import { IRequete } from "@model/requete/IRequete";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
+import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
+import { IParamsTableau } from "@util/GestionDesLiensApi";
+import { getLibelle } from "@util/Utils";
+import { Fieldset } from "@widget/fieldset/Fieldset";
+import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useEffect, useState } from "react";
-import { IRequete } from "../../../../../model/requete/IRequete";
-import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
-import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
-import { IRMCRequete } from "../../../../../model/rmc/requete/IRMCRequete";
-import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
-import { getLibelle } from "../../../../common/util/Utils";
-import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useRMCRequeteApiHook } from "../../requete/hook/RMCRequeteApiHook";
 import { useRMCAutoRequeteApiHook } from "../hook/RMCAutoRequeteApiHook";
 import "../scss/RMCRequetesAssocieesResultats.scss";
@@ -16,30 +16,24 @@ export interface RMCRequetesAssocieesResultatsProps {
   requete: IRequete;
 }
 
-export const RMCRequetesAssocieesResultats: React.FC<RMCRequetesAssocieesResultatsProps> = props => {
+export const RMCRequetesAssocieesResultats: React.FC<
+  RMCRequetesAssocieesResultatsProps
+> = props => {
   /* Etats RMC */
-  const [requetesTableau, setRequetesTableau] = useState<
-    IRequeteTableauDelivrance[]
-  >();
+  const [requetesTableau, setRequetesTableau] =
+    useState<IRequeteTableauDelivrance[]>();
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>();
 
   /* Etats RMC manuelle*/
   const [nouvelleRMCRequete, setNouvelleRMCRequete] = useState<boolean>(false);
   const [valuesRMCRequete, setValuesRMCRequete] = useState<IRMCRequete>({});
 
-  const [
-    criteresRechercheRequete,
-    setCriteresRechercheRequete
-  ] = useState<ICriteresRMCRequete>();
+  const [criteresRechercheRequete, setCriteresRechercheRequete] =
+    useState<ICriteresRMCRequete>();
 
   /* Hook d'appel de l'API RMC Auto requêtes */
-  const {
-    dataRMCAutoRequete,
-    dataTableauRMCAutoRequete
-  } = useRMCAutoRequeteApiHook(
-    props.requete,
-    `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-  );
+  const { dataRMCAutoRequete, dataTableauRMCAutoRequete } =
+    useRMCAutoRequeteApiHook(props.requete, `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`);
 
   /* Hook d'appel de l'API RMC manuelle requêtes */
   const { dataRMCRequete, dataTableauRMCRequete } = useRMCRequeteApiHook(

@@ -1,5 +1,5 @@
+import { SituationFamiliale } from "@model/requete/enum/SituationFamiliale";
 import React from "react";
-import { SituationFamiliale } from "../../../../../../../model/requete/enum/SituationFamiliale";
 import Labels, { INFOS } from "../../Labels";
 import {
   formatLigne,

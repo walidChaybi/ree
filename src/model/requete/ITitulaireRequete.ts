@@ -1,12 +1,12 @@
 /* istanbul ignore file */
 
-import { getDateStringFromDateCompose } from "../../views/common/util/DateUtils";
+import { getDateStringFromDateCompose } from "@util/DateUtils";
 import {
   formatNom,
   formatPrenom,
   numberToString,
   premiereLettreEnMajusculeLeResteEnMinuscule
-} from "../../views/common/util/Utils";
+} from "@util/Utils";
 import { Nationalite } from "../etatcivil/enum/Nationalite";
 import { Sexe } from "../etatcivil/enum/Sexe";
 import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";

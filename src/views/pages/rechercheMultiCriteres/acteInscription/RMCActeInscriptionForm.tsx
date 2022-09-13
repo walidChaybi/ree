@@ -1,8 +1,8 @@
+import { MIN_YEAR } from "@util/DateUtils";
+import { stockageDonnees } from "@util/stockageDonnees";
+import { Formulaire } from "@widget/formulaire/Formulaire";
 import React from "react";
 import * as Yup from "yup";
-import { MIN_YEAR } from "../../../common/util/DateUtils";
-import { stockageDonnees } from "../../../common/util/stockageDonnees";
-import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,

@@ -1,9 +1,9 @@
+import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { IEchange } from "@model/requete/IEchange";
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
+import { getLibelle } from "@util/Utils";
 import React from "react";
 import { useParams } from "react-router";
-import { IUuidRequeteParams } from "../../../../../../model/params/IUuidRequeteParams";
-import { IEchange } from "../../../../../../model/requete/IEchange";
-import { IRequeteCreation } from "../../../../../../model/requete/IRequeteCreation";
-import { getLibelle } from "../../../../../common/util/Utils";
 import { Item } from "./Item/Item";
 import { ItemEchangesRetourSDANF } from "./Item/ItemEchangesRetourSDANF";
 import { ListeActionsRetourSDANF } from "./ListeActions";

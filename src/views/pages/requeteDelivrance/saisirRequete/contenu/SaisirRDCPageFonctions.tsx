@@ -1,5 +1,5 @@
-import { NatureActeRequete } from "../../../../../model/requete/enum/NatureActeRequete";
-import { getLibelle } from "../../../../common/util/Utils";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { getLibelle } from "@util/Utils";
 import { SaisieRequeteRDC } from "../modelForm/ISaisirRDCPageModel";
 
 /** Elements Popin "Confirmation" */

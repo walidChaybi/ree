@@ -1,15 +1,15 @@
+import {
+  IQueryParametersPourRequetes,
+  TypeAppelRequete
+} from "@api/appels/requeteApi";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { useRequeteDelivranceApi } from "@pages/requeteDelivrance/espaceDelivrance/hook/DonneesRequeteDelivranceHook";
+import { NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import {
-  IQueryParametersPourRequetes,
-  TypeAppelRequete
-} from "../../../../../api/appels/requeteApi";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
-import { NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE } from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { useRequeteDelivranceApi } from "../../../../../views/pages/requeteDelivrance/espaceDelivrance/hook/DonneesRequeteDelivranceHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

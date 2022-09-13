@@ -1,9 +1,9 @@
+import { SuiviActionsRequete } from "@composant/suivis/SuiviActionsRequete";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import DONNEES_REQUETE from "../../../../mock/data/requete";
 import { configAgent } from "../../../../mock/superagent-config/superagent-mock-agent";
-import { SuiviActionsRequete } from "../../../../views/common/composant/suivis/SuiviActionsRequete";
 
 const superagentMock = require("superagent-mock")(request, configAgent);
 

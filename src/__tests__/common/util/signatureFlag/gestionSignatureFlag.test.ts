@@ -1,4 +1,4 @@
-import { gestionnaireSignatureFlag } from "../../../../views/common/util/signatureFlag/gestionnaireSignatureFlag";
+import { gestionnaireSignatureFlag } from "@util/signatureFlag/gestionnaireSignatureFlag";
 
 test("gestion signature flag works ", async () => {
   const localStorageMock = (function () {

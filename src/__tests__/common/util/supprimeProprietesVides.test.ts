@@ -1,4 +1,4 @@
-import { supprimeProprietesVides } from "../../../views/common/util/supprimeProprietesVides";
+import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
 
 test("test visiteur simple", async () => {
   const test11 = {};

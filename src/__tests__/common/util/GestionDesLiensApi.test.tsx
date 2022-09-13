@@ -3,7 +3,7 @@ import {
   getMinRange,
   getRowsNumber,
   parseLink
-} from "../../../views/common/util/GestionDesLiensApi";
+} from "@util/GestionDesLiensApi";
 
 test("gestion de lien api parseLink", async () => {
   const { nextLink, prevLink } = parseLink(

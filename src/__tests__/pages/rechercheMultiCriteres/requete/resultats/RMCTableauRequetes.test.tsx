@@ -1,3 +1,5 @@
+import { RMCTableauRequetes } from "@pages/rechercheMultiCriteres/requete/resultats/RMCTableauRequetes";
+import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -5,6 +7,8 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { getLastPathElem } from "@util/route/routeUtil";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
@@ -15,10 +19,6 @@ import {
   DataTableauRequete
 } from "../../../../../mock/data/RMCRequete";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { getLastPathElem } from "../../../../../views/common/util/route/routeUtil";
-import { storeRece } from "../../../../../views/common/util/storeRece";
-import { RMCTableauRequetes } from "../../../../../views/pages/rechercheMultiCriteres/requete/resultats/RMCTableauRequetes";
-import { URL_RECHERCHE_REQUETE } from "../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

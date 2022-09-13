@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 
 export class Priorite extends EnumWithLibelle {
   public static readonly BASSE = new Priorite("Priorité basse");

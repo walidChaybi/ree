@@ -1,9 +1,9 @@
+import { creationRequeteDelivrance } from "@api/appels/requeteApi";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { logError } from "@util/LogManager";
+import { getLibelle } from "@util/Utils";
 import { useEffect, useState } from "react";
-import { creationRequeteDelivrance } from "../../../../api/appels/requeteApi";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
-import { logError } from "../../../common/util/LogManager";
-import { getLibelle } from "../../../common/util/Utils";
 
 export interface ICreationRequeteDelivranceParams {
   requete: IRequeteDelivrance;
@@ -44,4 +44,3 @@ export const useCreationRequeteDelivranceRDD = (
 
   return resultat;
 };
-

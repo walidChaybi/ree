@@ -1,6 +1,6 @@
+import { getCompteurRequetes } from "@api/appels/requeteApi";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { getCompteurRequetes } from "../../../../../api/appels/requeteApi";
-import { logError } from "../../../../common/util/LogManager";
 
 export function useCompteurRequeteHook(
   reloadCompteur: boolean,

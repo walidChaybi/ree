@@ -1,15 +1,15 @@
-import React from "react";
-import { IQueryParametersPourRequetes } from "../../../../api/appels/requeteApi";
-import { IOngletProps } from "../../../../model/IOnglet";
-import { NomComposant } from "../../../common/util/habilitation/habilitationsDescription";
-import { getLibelle } from "../../../common/util/Utils";
-import { BoiteAOnglet } from "../../../common/widget/onglets/BoiteAOnglets";
-import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { OfficierContext } from "../../../core/contexts/OfficierContext";
+import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
+import { OfficierContext } from "@core/contexts/OfficierContext";
+import { IOngletProps } from "@model/IOnglet";
 import {
   URL_MES_REQUETES_INFORMATION,
   URL_REQUETES_INFORMATION_SERVICE
-} from "../../../router/ReceUrls";
+} from "@router/ReceUrls";
+import { NomComposant } from "@util/habilitation/habilitationsDescription";
+import { getLibelle } from "@util/Utils";
+import { BoiteAOnglet } from "@widget/onglets/BoiteAOnglets";
+import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import React from "react";
 import { BoutonPrendreEnChargeAleatoirementInformation } from "./BoutonPrendreEnChargeAleatoirementInformation";
 import { StatutsRequetesInformation } from "./EspaceReqInfoParams";
 import { MesRequetesInformationPage } from "./MesRequetesInformation";

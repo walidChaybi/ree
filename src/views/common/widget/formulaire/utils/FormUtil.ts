@@ -1,6 +1,6 @@
+import { TRequete } from "@model/requete/IRequete";
+import { Options } from "@util/Type";
 import { FormikProps, FormikValues } from "formik";
-import { TRequete } from "../../../../../model/requete/IRequete";
-import { Options } from "../../../util/Type";
 
 export const NB_CARACT_MAX_SAISIE = "100";
 export const NB_CARACT_ADRESSE = "38";

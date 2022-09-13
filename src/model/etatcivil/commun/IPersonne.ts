@@ -1,13 +1,10 @@
-import {
-  getDateStringFromDateCompose,
-  IDateCompose
-} from "../../../views/common/util/DateUtils";
+import { getDateStringFromDateCompose, IDateCompose } from "@util/DateUtils";
 import {
   formatNom,
   formatPrenom,
   premiereLettreEnMajusculeLeResteEnMinuscule
-} from "../../../views/common/util/Utils";
-import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
+} from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { AutresNoms } from "../enum/AutresNoms";
 import { Nationalite } from "../enum/Nationalite";
 import { Sexe } from "../enum/Sexe";

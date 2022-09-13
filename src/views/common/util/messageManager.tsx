@@ -1,8 +1,8 @@
 import { Alert, AlertTitle } from "@material-ui/lab";
+import { getLibelle } from "@util/Utils";
 import * as React from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getLibelle } from "./../util/Utils";
 import "./scss/Message.scss";
 
 const DURATION_BEFORE_CLOSE = 3000;

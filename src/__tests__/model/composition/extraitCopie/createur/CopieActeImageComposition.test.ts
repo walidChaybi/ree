@@ -1,10 +1,10 @@
+import { CopieActeImageComposition } from "@model/composition/extraitCopie/createur/CopieActeImageComposition";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { Validation } from "@model/requete/enum/Validation";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ficheActeMariage } from "../../../../../mock/data/ficheActe";
-import { CopieActeImageComposition } from "../../../../../model/composition/extraitCopie/createur/CopieActeImageComposition";
-import { IFicheActe } from "../../../../../model/etatcivil/acte/IFicheActe";
-import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
-import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
-import { Validation } from "../../../../../model/requete/enum/Validation";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 
 test("Attendu: corps image correct", () => {
   const acte = ficheActeMariage.data as any as IFicheActe;

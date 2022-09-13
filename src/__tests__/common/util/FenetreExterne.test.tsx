@@ -1,6 +1,6 @@
 import { render, waitFor } from "@testing-library/react";
+import { FenetreExterne } from "@util/FenetreExterne";
 import React from "react";
-import { FenetreExterne } from "../../../views/common/util/FenetreExterne";
 
 const globalAny: any = global;
 globalAny.open = () => {

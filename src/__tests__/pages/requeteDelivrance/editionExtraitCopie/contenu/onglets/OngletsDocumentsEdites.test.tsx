@@ -1,10 +1,20 @@
+import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
+import {
+  PATH_EDITION,
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_MES_REQUETES_DELIVRANCE_EDITION_ID
+} from "@router/ReceUrls";
 import {
   act,
   fireEvent,
   render,
   screen,
-  waitFor,
+  waitFor
 } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
@@ -13,21 +23,11 @@ import { userDroitCOMEDEC } from "../../../../../../mock/data/connectedUserAvecD
 import { configComposition } from "../../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { TypeMention } from "../../../../../../model/etatcivil/acte/mention/ITypeMention";
-import { NatureMention } from "../../../../../../model/etatcivil/enum/NatureMention";
-import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
-import { storeRece } from "../../../../../../views/common/util/storeRece";
-import { EditionExtraitCopiePage } from "../../../../../../views/pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
-import {
-  PATH_EDITION,
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
-} from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
   configRequetes[0],
-  configComposition[0],
+  configComposition[0]
 ]);
 
 let history: MemoryHistory;

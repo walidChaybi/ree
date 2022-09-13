@@ -1,3 +1,8 @@
+import RequeteFiltre, {
+  RequeteDefaultValues,
+  RequeteFiltreProps
+} from "@pages/rechercheMultiCriteres/filtres/requete/RequeteFiltre";
+import { REQUETE } from "@pages/rechercheMultiCriteres/requete/RMCRequeteForm";
 import {
   act,
   fireEvent,
@@ -7,11 +12,6 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import RequeteFiltre, {
-  RequeteDefaultValues,
-  RequeteFiltreProps
-} from "../../../../../views/pages/rechercheMultiCriteres/filtres/requete/RequeteFiltre";
-import { REQUETE } from "../../../../../views/pages/rechercheMultiCriteres/requete/RMCRequeteForm";
 
 const HookRequeteFiltre: React.FC = () => {
   const [result, setResult] = useState("");

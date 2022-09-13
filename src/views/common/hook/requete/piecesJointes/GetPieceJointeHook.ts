@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
 import {
   getPieceComplementInformationById,
   getPieceJustificativeById
-} from "../../../../../api/appels/requeteApi";
-import { IPieceComplementInformation } from "../../../../../model/requete/pieceJointe/IPieceComplementInformation";
-import { IPieceJustificative } from "../../../../../model/requete/pieceJointe/IPieceJustificative";
-import { logError } from "../../../util/LogManager";
+} from "@api/appels/requeteApi";
+import { IPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
+import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
+import { logError } from "@util/LogManager";
+import { useEffect, useState } from "react";
 import { TypePieceJointe } from "./PostPiecesJointesHook";
 
 export function useGetPieceJointeApi(

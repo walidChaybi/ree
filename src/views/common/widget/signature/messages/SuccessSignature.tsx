@@ -1,6 +1,6 @@
 import { Divider, List, ListItem, ListItemText } from "@material-ui/core";
+import { getLibelle } from "@util/Utils";
 import React, { useCallback } from "react";
-import { getLibelle } from "../../../util/Utils";
 import "./scss/SuccessSignature.scss";
 
 interface SuccessSignatureProps {

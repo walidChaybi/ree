@@ -1,9 +1,6 @@
-import {
-  Evenement,
-  IEvenement
-} from "../../../model/etatcivil/acte/IEvenement";
-import { EtrangerFrance } from "../../../model/etatcivil/enum/EtrangerFrance";
-import { Option } from "../util/Type";
+import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
+import { Option } from "@util/Type";
 import {
   estRenseigne,
   formatMajusculesMinusculesMotCompose,
@@ -13,7 +10,7 @@ import {
   premiereLettreEnMajuscule,
   SEIZE,
   VINGT
-} from "../util/Utils";
+} from "@util/Utils";
 
 export const FRANCE = "FRANCE";
 const PARIS = "PARIS";

@@ -1,4 +1,12 @@
+import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { Provenance } from "@model/requete/enum/Provenance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { BoutonValiderTerminer } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/BoutonValiderTerminer";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { act, fireEvent, render, waitFor } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
@@ -7,14 +15,6 @@ import { userDroitnonCOMEDEC } from "../../../../../../mock/data/connectedUserAv
 import { idRequeteRDCSC } from "../../../../../../mock/data/requeteDelivrance";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { Nationalite } from "../../../../../../model/etatcivil/enum/Nationalite";
-import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
-import { Provenance } from "../../../../../../model/requete/enum/Provenance";
-import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
-import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
-import { storeRece } from "../../../../../../views/common/util/storeRece";
-import { BoutonValiderTerminer } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/BoutonValiderTerminer";
-import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],

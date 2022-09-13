@@ -1,7 +1,7 @@
 import { Tab } from "@material-ui/core";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
+import { IOnglet } from "@model/requete/IOnglet";
 import React from "react";
-import { IOnglet } from "../../../../model/requete/IOnglet";
 
 export interface OngletProps {
   liste: IOnglet[];

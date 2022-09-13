@@ -1,25 +1,25 @@
-import request from "superagent";
-import requeteDelivrance, {
-  requeteDelivranceInstitutionnel
-} from "../../../../../../mock/data/requeteDelivrance";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { ChoixDelivrance } from "../../../../../../model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
-import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
-import { OptionCourrier } from "../../../../../../model/requete/IOptionCourrier";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { OptionCourrier } from "@model/requete/IOptionCourrier";
 import {
   controleFormulaire,
   getDefaultValuesCourrier,
   getStatutApresChoixDelivrance,
   getTypesCourrier
-} from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
+} from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import {
   CHOIX_COURRIER,
   COURRIER,
   SaisieCourrier,
   TEXTE,
   TEXTE_LIBRE
-} from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
+} from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
+import request from "superagent";
+import requeteDelivrance, {
+  requeteDelivranceInstitutionnel
+} from "../../../../../../mock/data/requeteDelivrance";
+import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

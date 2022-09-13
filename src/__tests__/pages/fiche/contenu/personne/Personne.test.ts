@@ -1,5 +1,5 @@
-import { Personne } from "../../../../../model/etatcivil/commun/IPersonne";
-import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
+import { Personne } from "@model/etatcivil/commun/IPersonne";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { personneMock } from "../../../fiche/hook/constructionComposants/mock/PersonneMock";
 test("render composant SectionPart", async () => {
   expect(Personne.getNom(personneMock)).toBe("FAULKNER");

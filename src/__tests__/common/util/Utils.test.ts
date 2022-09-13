@@ -1,4 +1,4 @@
-import { IPrenom } from "../../../model/etatcivil/fiche/IPrenom";
+import { IPrenom } from "@model/etatcivil/fiche/IPrenom";
 import {
   auMoinsUneProprieteEstRenseigne,
   changeLaPlaceDunElement,
@@ -25,7 +25,7 @@ import {
   tousNonNullsNonZeroEtNonVides,
   triListeObjetsSurPropriete,
   valeurOuUndefined
-} from "../../../views/common/util/Utils";
+} from "@util/Utils";
 
 test("Attendu: premiereLettreEnMajusculeLeResteEnMinuscule fonctionne correctement", () => {
   expect(premiereLettreEnMajusculeLeResteEnMinuscule("NAISSANCE")).toBe(

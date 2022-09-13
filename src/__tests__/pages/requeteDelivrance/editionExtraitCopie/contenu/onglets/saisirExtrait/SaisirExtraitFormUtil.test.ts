@@ -1,15 +1,15 @@
+import { mapTitulaires } from "@hook/repertoires/MappingRepertoires";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { CODE_EXTRAIT_PLURILINGUE } from "@model/requete/enum/DocumentDelivranceConstante";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { parentMemeSexeOuExtraitPlurilingue } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitFormUtil";
 import request from "superagent";
 import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { CODE_EXTRAIT_PLURILINGUE } from "../../../../../../../model/requete/enum/DocumentDelivranceConstante";
-import { mapTitulaires } from "../../../../../../../views/common/hook/repertoires/MappingRepertoires";
 import {
   titulaireClassique,
   titulaireParentsDeMemeSexe,
   titulaireSexeInconnu
 } from "./../../../../../../../mock/data/Titulaire";
-import { DocumentDelivrance } from "./../../../../../../../model/requete/enum/DocumentDelivrance";
-import { IDocumentReponse } from "./../../../../../../../model/requete/IDocumentReponse";
-import { parentMemeSexeOuExtraitPlurilingue } from "./../../../../../../../views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitFormUtil";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 beforeAll(async () => {

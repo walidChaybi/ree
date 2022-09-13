@@ -5,11 +5,11 @@ import {
   DialogTitle
 } from "@material-ui/core";
 import { FilterOptionsState } from "@material-ui/lab";
+import { Option, Options } from "@util/Type";
+import { getLibelle } from "@util/Utils";
+import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
+import { ChampRecherche } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import React, { useState } from "react";
-import { Option, Options } from "../../util/Type";
-import { getLibelle } from "../../util/Utils";
-import { BoutonOperationEnCours } from "../../widget/attente/BoutonOperationEnCours";
-import { ChampRecherche } from "../../widget/formulaire/champRecherche/ChampRechercheField";
 import "./scss/TransfertPopin.scss";
 
 interface TransfertPopinProps {

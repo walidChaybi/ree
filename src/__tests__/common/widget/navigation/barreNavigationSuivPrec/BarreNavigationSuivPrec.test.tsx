@@ -1,6 +1,6 @@
+import { fireEvent, render, screen } from "@testing-library/react";
+import { BarreNavigationSuivPrec } from "@widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { BarreNavigationSuivPrec } from "../../../../../views/common/widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
 
 test("Attendu le composant BarreNavigationSuivPrec fonctionne correctement", () => {
   const BarreNavigationSuivPrecConsumer: React.FC = () => {

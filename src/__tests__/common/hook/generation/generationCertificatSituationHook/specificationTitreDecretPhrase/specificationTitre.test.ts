@@ -1,9 +1,9 @@
+import { specificationTitre } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationTitre";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { waitFor } from "@testing-library/react";
 import request from "superagent";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
-import { specificationTitre } from "../../../../../../views/common/hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationTitre";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 beforeAll(() => {

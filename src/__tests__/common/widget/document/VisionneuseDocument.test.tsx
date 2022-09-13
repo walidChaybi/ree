@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import { VisionneuseDocument } from "@widget/document/VisionneuseDocument";
 import React from "react";
 import {
   imagePngVideBase64,
   urlImagePngVideBase64
 } from "../../../../mock/data/ImagePng";
-import { VisionneuseDocument } from "../../../../views/common/widget/document/VisionneuseDocument";
 
 // @ts-ignore
 global.URL.createObjectURL = jest.fn(() => urlImagePngVideBase64);

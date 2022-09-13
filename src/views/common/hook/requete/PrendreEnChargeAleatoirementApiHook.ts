@@ -1,11 +1,11 @@
+import { HTTP_NOT_FOUND } from "@api/ApiManager";
+import { getRequeteAleatoire } from "@api/appels/requeteApi";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { TRequeteTableau } from "@model/requete/IRequeteTableau";
+import { mappingUneRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { mappingUneRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { HTTP_NOT_FOUND } from "../../../../api/ApiManager";
-import { getRequeteAleatoire } from "../../../../api/appels/requeteApi";
-import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
-import { TRequeteTableau } from "../../../../model/requete/IRequeteTableau";
-import { mappingUneRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
-import { mappingUneRequeteTableauInformation } from "../../../../model/requete/IRequeteTableauInformation";
-import { logError } from "../../util/LogManager";
 
 export interface IRequeteAleatoireResultat {
   requete: TRequeteTableau;

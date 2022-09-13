@@ -1,18 +1,18 @@
-import { connect } from "formik";
-import React, { useCallback, useState } from "react";
-import { TypeDeclarationConjointe } from "../../../../model/etatcivil/enum/TypeDeclarationConjointe";
-import { estRenseigne, getLibelle } from "../../util/Utils";
+import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationConjointe";
+import { estRenseigne, getLibelle } from "@util/Utils";
 import DateComposeForm, {
   DateComposeFormProps
-} from "../../widget/formulaire/champsDate/DateComposeForm";
+} from "@widget/formulaire/champsDate/DateComposeForm";
 import {
   SelectField,
   SelectFieldProps
-} from "../../widget/formulaire/champsSaisie/SelectField";
+} from "@widget/formulaire/champsSaisie/SelectField";
 import {
   FormikComponentProps,
   withNamespace
-} from "../../widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useCallback, useState } from "react";
 import { ANNEE, DATE, JOUR, MOIS, TYPE } from "./ConstantesNomsForm";
 
 interface ComponentFormProps {

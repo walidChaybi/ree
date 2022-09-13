@@ -1,9 +1,9 @@
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { LienFiche } from "@pages/fiche/LienFiche";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
-import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
-import { LienFiche } from "../../../views/pages/fiche/LienFiche";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

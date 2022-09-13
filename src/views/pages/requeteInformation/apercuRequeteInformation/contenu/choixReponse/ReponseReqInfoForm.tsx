@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import * as Yup from "yup";
-import { IReponseRequeteInfo } from "../../../../../../model/requete/IReponseRequeteInfo";
-import { IRequeteInformation } from "../../../../../../model/requete/IRequeteInformation";
 import {
   TypePieceJointe,
   usePostPiecesJointesApi
-} from "../../../../../common/hook/requete/piecesJointes/PostPiecesJointesHook";
-import { PieceJointe } from "../../../../../common/util/FileUtils";
-import { getLibelle } from "../../../../../common/util/Utils";
-import { OperationEnCours } from "../../../../../common/widget/attente/OperationEnCours";
-import { Fieldset } from "../../../../../common/widget/fieldset/Fieldset";
-import { Formulaire } from "../../../../../common/widget/formulaire/Formulaire";
+} from "@hook/requete/piecesJointes/PostPiecesJointesHook";
+import { IReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
+import { IRequeteInformation } from "@model/requete/IRequeteInformation";
+import { URL_MES_REQUETES_INFORMATION } from "@router/ReceUrls";
+import { PieceJointe } from "@util/FileUtils";
+import { getLibelle } from "@util/Utils";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { Fieldset } from "@widget/fieldset/Fieldset";
+import { Formulaire } from "@widget/formulaire/Formulaire";
 import {
   FormikComponentProps,
   SubFormProps
-} from "../../../../../common/widget/formulaire/utils/FormUtil";
-import { URL_MES_REQUETES_INFORMATION } from "../../../../../router/ReceUrls";
+} from "@widget/formulaire/utils/FormUtil";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import * as Yup from "yup";
 import {
   IEnvoyerReponseReqInfoParams,
   useEnvoyerReponsesReqInfoHook

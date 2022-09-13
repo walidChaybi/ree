@@ -1,9 +1,9 @@
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import { IReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
+import { IRequeteInformation } from "@model/requete/IRequeteInformation";
+import { getLibelle } from "@util/Utils";
 import React, { useEffect, useState } from "react";
-import { IReponseRequeteInfo } from "../../../../../../model/requete/IReponseRequeteInfo";
-import { IRequeteInformation } from "../../../../../../model/requete/IRequeteInformation";
-import { getLibelle } from "../../../../../common/util/Utils";
 
 interface MenuReponsesProposeesProps {
   onClick: (reponse: IReponseRequeteInfo) => void;

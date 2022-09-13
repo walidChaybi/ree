@@ -1,9 +1,9 @@
+import { getOptionsCourriers } from "@api/appels/requeteApi";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { OptionsCourrier } from "@model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { getOptionsCourriers } from "../../../../../../../api/appels/requeteApi";
-import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
-import { OptionsCourrier } from "../../../../../../../model/requete/IOptionCourrier";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
-import { logError } from "../../../../../../common/util/LogManager";
 import { recupererLesOptionsDisponiblesPourLeCourrier } from "../contenuForm/sousFormulaires/GestionOptionsCourrier";
 
 export function useOptionsCourriersApiHook(

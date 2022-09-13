@@ -1,20 +1,17 @@
 import { SettingsBackupRestore } from "@material-ui/icons";
-import { connect } from "formik";
-import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
-import { DocumentDelivrance } from "../../../../../../../../model/requete/enum/DocumentDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   OptionCourrier,
   OptionsCourrier
-} from "../../../../../../../../model/requete/IOptionCourrier";
-import { IRequeteDelivrance } from "../../../../../../../../model/requete/IRequeteDelivrance";
-import { getLibelle } from "../../../../../../../common/util/Utils";
-import { InputField } from "../../../../../../../common/widget/formulaire/champsSaisie/InputField";
-import { SousFormulaire } from "../../../../../../../common/widget/formulaire/SousFormulaire";
-import {
-  SubFormProps,
-  withNamespace
-} from "../../../../../../../common/widget/formulaire/utils/FormUtil";
+} from "@model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { getLibelle } from "@util/Utils";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
+import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useEffect, useState } from "react";
+import * as Yup from "yup";
 import { useOptionsCourriersApiHook } from "../../hook/OptionsCourriersHook";
 import { CONTENU, LIBELLE_OPTION } from "../../modelForm/ISaisiePageModel";
 import {

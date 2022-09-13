@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
-import { IRequeteTableauInformation } from "../../../../model/requete/IRequeteTableauInformation";
 import {
   CreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
-} from "../../../common/hook/requete/ActionHook";
-import { storeRece } from "../../../common/util/storeRece";
+} from "@hook/requete/ActionHook";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
+import { storeRece } from "@util/storeRece";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export interface CreationActionMiseAjourStatutHookParams {
   statutRequete: StatutRequete;

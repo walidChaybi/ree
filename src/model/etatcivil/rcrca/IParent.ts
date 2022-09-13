@@ -1,4 +1,4 @@
-import { IDateCompose } from "../../../views/common/util/DateUtils";
+import { IDateCompose } from "@util/DateUtils";
 import { LienParente } from "../enum/LienParente";
 import { IPrenom } from "../fiche/IPrenom";
 

@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
-import { stockageDonnees } from "../../../common/util/stockageDonnees";
-import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
-import { AutoScroll } from "../../../common/widget/autoScroll/autoScroll";
+import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { stockageDonnees } from "@util/stockageDonnees";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { AutoScroll } from "@widget/autoScroll/autoScroll";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
   NB_LIGNES_PAR_APPEL_INSCRIPTION,
   NB_LIGNES_PAR_PAGE_ACTE,
   NB_LIGNES_PAR_PAGE_INSCRIPTION
-} from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
+} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useRMCActeApiHook } from "./hook/RMCActeApiHook";
 import { ICriteresRechercheActeInscription } from "./hook/RMCActeInscriptionUtils";
 import { useRMCInscriptionApiHook } from "./hook/RMCInscriptionApiHook";

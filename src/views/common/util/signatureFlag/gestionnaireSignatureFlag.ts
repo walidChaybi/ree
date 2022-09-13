@@ -1,4 +1,4 @@
-import { ModeSignature } from "../../../../model/requete/ModeSignature";
+import { ModeSignature } from "@model/requete/ModeSignature";
 
 const NOM_CLE_SIGNATURE_FLAG = "signatureFlag";
 

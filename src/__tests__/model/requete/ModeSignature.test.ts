@@ -1,7 +1,4 @@
-import {
-  ModeSignatureUtil,
-  ModeSignature
-} from "../../../model/requete/ModeSignature";
+import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
 
 test("ModeSignature model", () => {
   expect(ModeSignatureUtil.isValid(ModeSignature.DRY_RUN)).toBe(true);

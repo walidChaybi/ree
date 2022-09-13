@@ -1,10 +1,3 @@
-import { connect } from "formik";
-import React from "react";
-import * as Yup from "yup";
-import {
-  CarateresAutorise,
-  NumeroTelephone
-} from "../../../../../ressources/Regex";
 import {
   ADRESSE_COURRIEL,
   CODE_POSTAL,
@@ -15,8 +8,15 @@ import {
   NUMERO_TELEPHONE,
   PAYS,
   VOIE
-} from "../../../../pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
-import { getLibelle } from "../../../util/Utils";
+} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import { getLibelle } from "@util/Utils";
+import { connect } from "formik";
+import React from "react";
+import * as Yup from "yup";
+import {
+  CarateresAutorise,
+  NumeroTelephone
+} from "../../../../../ressources/Regex";
 import { InputField } from "../champsSaisie/InputField";
 import {
   ADRESSE_MAIL_NON_CONFORME,

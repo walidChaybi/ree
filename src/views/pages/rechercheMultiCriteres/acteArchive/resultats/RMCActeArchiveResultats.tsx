@@ -1,12 +1,12 @@
-import React from "react";
-import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
-import { getLibelle } from "../../../../common/util/Utils";
-import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IParamsTableau } from "@util/GestionDesLiensApi";
+import { getLibelle } from "@util/Utils";
+import { Fieldset } from "@widget/fieldset/Fieldset";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
   NB_LIGNES_PAR_PAGE_ACTE
-} from "../../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
+} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import React from "react";
 import { RMCTableauActes } from "../../acteInscription/resultats/RMCTableauActes";
 import "../scss/RMCActeArchiveResultats.scss";
 
@@ -27,7 +27,9 @@ export interface RMCActeArchiveResultatsProps {
   dataTableauRMCFicheActe?: IParamsTableau;
 }
 
-export const RMCActeArchiveResultats: React.FC<RMCActeArchiveResultatsProps> = props => {
+export const RMCActeArchiveResultats: React.FC<
+  RMCActeArchiveResultatsProps
+> = props => {
   return (
     <div className="ResultatsRMC">
       <Fieldset titre={getLibelle("Résultats de la recherche multi-critères")}>

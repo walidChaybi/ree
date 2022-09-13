@@ -1,12 +1,10 @@
 import { Dialog, DialogContent } from "@material-ui/core";
+import { getLibelle } from "@util/Utils";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { Formulaire } from "@widget/formulaire/Formulaire";
+import FormBoutons, { FormBoutonsProps } from "@widget/popin/FormBoutons";
 import React from "react";
 import * as Yup from "yup";
-import { getLibelle } from "../../../util/Utils";
-import { InputField } from "../../../widget/formulaire/champsSaisie/InputField";
-import { Formulaire } from "../../../widget/formulaire/Formulaire";
-import FormBoutons, {
-  FormBoutonsProps
-} from "../../../widget/popin/FormBoutons";
 import "../../../widget/popin/scss/PopinAjouter.scss";
 
 export const OBSERVATION = "observation";

@@ -1,11 +1,11 @@
+import {
+  IMiseAJourDocumentMentionParams,
+  useMiseAJourDocumentMentionApiHook
+} from "@hook/acte/mentions/MiseAJourDocumentMentionApiHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import {
-  IMiseAJourDocumentMentionParams,
-  useMiseAJourDocumentMentionApiHook
-} from "../../../../../views/common/hook/acte/mentions/MiseAJourDocumentMentionApiHook";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const params: IMiseAJourDocumentMentionParams = {

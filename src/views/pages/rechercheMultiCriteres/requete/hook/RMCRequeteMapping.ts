@@ -1,10 +1,10 @@
-import { IRMCRequestRequete } from "../../../../../model/rmc/requete/IRMCRequestRequete";
-import { IRMCRequete } from "../../../../../model/rmc/requete/IRMCRequete";
+import { IRMCRequestRequete } from "@model/rmc/requete/IRMCRequestRequete";
+import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
 import {
   getDateDebutFromDateCompose,
   getDateFinFromDateCompose
-} from "../../../../common/util/DateUtils";
-import { valeurOuUndefined } from "../../../../common/util/Utils";
+} from "@util/DateUtils";
+import { valeurOuUndefined } from "@util/Utils";
 
 /** Critères de recherche requete: mapping avant appel d'api */
 export function mappingCriteresRequete(

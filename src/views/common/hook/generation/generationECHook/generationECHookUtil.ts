@@ -5,38 +5,31 @@ import {
   NOM_DOCUMENT_EC_AVEC_FILIATION,
   NOM_DOCUMENT_EC_PLURILINGUE,
   NOM_DOCUMENT_EC_SANS_FILIATION
-} from "../../../../../model/composition/extraitCopie/IExtraitCopieComposition";
+} from "@model/composition/extraitCopie/IExtraitCopieComposition";
 import {
   AnalyseMarginale,
   IAnalyseMarginale
-} from "../../../../../model/etatcivil/acte/IAnalyseMarginale";
-import { ICorpsExtraitRectification } from "../../../../../model/etatcivil/acte/ICorpsExtraitRectification";
-import {
-  FicheActe,
-  IFicheActe
-} from "../../../../../model/etatcivil/acte/IFicheActe";
-import { ITitulaireActe } from "../../../../../model/etatcivil/acte/ITitulaireActe";
-import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
-import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
-import { TypeExtrait } from "../../../../../model/etatcivil/enum/TypeExtrait";
-import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
+} from "@model/etatcivil/acte/IAnalyseMarginale";
+import { ICorpsExtraitRectification } from "@model/etatcivil/acte/ICorpsExtraitRectification";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   CODE_COPIE_INTEGRALE,
   CODE_COPIE_NON_SIGNEE,
   CODE_EXTRAIT_AVEC_FILIATION,
   CODE_EXTRAIT_PLURILINGUE,
   CODE_EXTRAIT_SANS_FILIATION
-} from "../../../../../model/requete/enum/DocumentDelivranceConstante";
-import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
-import { Validation } from "../../../../../model/requete/enum/Validation";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import {
-  SNP,
-  SPC,
-  tousNonNullsNonZeroEtNonVides
-} from "../../../../common/util/Utils";
+} from "@model/requete/enum/DocumentDelivranceConstante";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { Validation } from "@model/requete/enum/Validation";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { SNP, SPC, tousNonNullsNonZeroEtNonVides } from "@util/Utils";
 import { IExtraitCopieApiHookResultat } from "../../composition/CompositionExtraitCopieHook";
 import { ICreerCourrierECParams } from "../../requete/creerCourrierECHook";
 import { creationCompositionCopieActeImage } from "./creationComposition/creationCompositionCopieActeImage";

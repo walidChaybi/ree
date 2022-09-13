@@ -1,5 +1,5 @@
-import { Sexe } from "../../model/etatcivil/enum/Sexe";
-import { IRequeteTableauDelivrance } from "../../model/requete/IRequeteTableauDelivrance";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 
 export const DataTableauRequete = {
   previousDataLinkState: "previousDataLinkState",

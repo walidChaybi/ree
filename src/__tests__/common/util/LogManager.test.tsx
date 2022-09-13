@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { logError } from "@util/LogManager";
+import { storeRece } from "@util/storeRece";
 import React from "react";
 import { ToastContainer } from "react-toastify";
-import { FeatureFlag } from "../../../views/common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
-import { logError } from "../../../views/common/util/LogManager";
-import { storeRece } from "../../../views/common/util/storeRece";
 
 beforeEach(() => {
   expect(

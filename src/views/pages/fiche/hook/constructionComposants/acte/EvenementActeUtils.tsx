@@ -1,14 +1,8 @@
+import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { SectionContentProps } from "@widget/section/SectionContent";
+import { SectionPartProps } from "@widget/section/SectionPart";
 import React from "react";
-import {
-  Evenement,
-  IEvenement
-} from "../../../../../../model/etatcivil/acte/IEvenement";
-import {
-  FicheActe,
-  IFicheActe
-} from "../../../../../../model/etatcivil/acte/IFicheActe";
-import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 
 export function getEvenement(acte: IFicheActe): SectionPartProps[] {
   const evenement: SectionPartProps[] = [

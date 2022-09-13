@@ -1,3 +1,9 @@
+import { TypeMandant } from "@model/requete/enum/TypeMandant";
+import { MANDANT } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCPageModel";
+import MandantForm, {
+  MandantFormDefaultValues,
+  MandantFormValidationSchema
+} from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/mandant/MandantForm";
 import {
   act,
   fireEvent,
@@ -5,15 +11,9 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { TypeMandant } from "../../../../../../model/requete/enum/TypeMandant";
-import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { MANDANT } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCPageModel";
-import MandantForm, {
-  MandantFormDefaultValues,
-  MandantFormValidationSchema
-} from "../../../../../../views/pages/requeteDelivrance/saisirRequete/sousFormulaires/mandant/MandantForm";
 
 const HookMandantForm: React.FC = () => {
   const [result, setResult] = useState("");

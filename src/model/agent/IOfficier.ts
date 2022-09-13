@@ -1,5 +1,5 @@
-import { storeRece } from "../../views/common/util/storeRece";
-import { estTableauNonVide } from "../../views/common/util/Utils";
+import { storeRece } from "@util/storeRece";
+import { estTableauNonVide } from "@util/Utils";
 import { Provenance } from "../requete/enum/Provenance";
 import { Droit } from "./enum/Droit";
 import { Perimetre, PerimetreEnum } from "./enum/Perimetre";

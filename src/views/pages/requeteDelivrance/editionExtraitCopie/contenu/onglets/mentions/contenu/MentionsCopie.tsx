@@ -1,7 +1,7 @@
 import { Warning } from "@material-ui/icons";
+import { getLibelle } from "@util/Utils";
+import { ListeGlisserDeposer } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useCallback } from "react";
-import { getLibelle } from "../../../../../../../common/util/Utils";
-import { ListeGlisserDeposer } from "../../../../../../../common/widget/listeGlisserDeposer/ListeGlisserDeposer";
 import {
   handleCheckBox,
   IMentionAffichage,

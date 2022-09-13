@@ -1,9 +1,9 @@
+import { Mariage } from "@pages/fiche/hook/constructionComposants/interesses/Mariage";
 import { render } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configParamsBaseRequete } from "../../../../../../mock/superagent-config/superagent-mock-params";
-import { Mariage } from "../../../../../../views/pages/fiche/hook/constructionComposants/interesses/Mariage";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],

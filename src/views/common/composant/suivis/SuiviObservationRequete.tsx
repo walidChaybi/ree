@@ -1,24 +1,21 @@
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { List, ListItemText } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import {
-  IObservation,
-  Observation
-} from "../../../../model/requete/IObservation";
 import {
   ICreationObservationParams,
   useCreationObservationApi
-} from "../../hook/observation/CreationObservationApiHook";
+} from "@hook/observation/CreationObservationApiHook";
 import {
   ISuppressionObservationParams,
   useSuppressionObservationApi
-} from "../../hook/observation/SuppressionObservationApiHook";
-import { logError } from "../../util/LogManager";
-import { storeRece } from "../../util/storeRece";
-import { getLibelle, getValeurOuVide } from "../../util/Utils";
-import { AccordionRece } from "../../widget/accordion/AccordionRece";
+} from "@hook/observation/SuppressionObservationApiHook";
+import { List, ListItemText } from "@material-ui/core";
+import { IObservation, Observation } from "@model/requete/IObservation";
+import { logError } from "@util/LogManager";
+import { storeRece } from "@util/storeRece";
+import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { AccordionRece } from "@widget/accordion/AccordionRece";
+import React, { useEffect, useState } from "react";
 import {
   IAjouterObservationFormValue,
   OBSERVATION,

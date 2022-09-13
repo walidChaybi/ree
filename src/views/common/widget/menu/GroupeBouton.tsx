@@ -1,7 +1,7 @@
 import { Button, ButtonGroup } from "@material-ui/core";
+import { IActionOption } from "@model/requete/IActionOption";
+import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
 import React from "react";
-import { IActionOption } from "../../../../model/requete/IActionOption";
-import { DoubleSubmitUtil } from "../../util/DoubleSubmitUtil";
 import "./scss/GroupeBouton.scss";
 
 interface IGroupeBoutonProps {

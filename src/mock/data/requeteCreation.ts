@@ -1,4 +1,4 @@
-import { IRequeteCreation } from "../../model/requete/IRequeteCreation";
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 
 export const requeteCreation = {
   id: "3ed9aa4e-921b-489f-b8fe-531dd703c60c",

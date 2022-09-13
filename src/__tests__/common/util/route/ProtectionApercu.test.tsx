@@ -1,7 +1,7 @@
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { checkURL } from "@util/route/Protection/ProtectionApercu";
 import { createMemoryHistory } from "history";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
-import { checkURL } from "../../../../views/common/util/route/Protection/ProtectionApercu";
 
 const history = createMemoryHistory();
 

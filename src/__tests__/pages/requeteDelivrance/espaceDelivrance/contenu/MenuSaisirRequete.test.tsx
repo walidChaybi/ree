@@ -1,18 +1,4 @@
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
-import { createMemoryHistory } from "history";
-import React from "react";
-import { Router } from "react-router-dom";
-import { userDroitnonCOMEDEC } from "../../../../../mock/data/connectedUserAvecDroit";
-import { FeatureFlag } from "../../../../../views/common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
-import { storeRece } from "../../../../../views/common/util/storeRece";
-import MenuSaisirRequete from "../../../../../views/pages/requeteDelivrance/espaceDelivrance/contenu/MenuSaisirRequete";
+import MenuSaisirRequete from "@pages/requeteDelivrance/espaceDelivrance/contenu/MenuSaisirRequete";
 import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
@@ -22,7 +8,21 @@ import {
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC
-} from "../../../../../views/router/ReceUrls";
+} from "@router/ReceUrls";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { storeRece } from "@util/storeRece";
+import { createMemoryHistory } from "history";
+import React from "react";
+import { Router } from "react-router-dom";
+import { userDroitnonCOMEDEC } from "../../../../../mock/data/connectedUserAvecDroit";
 
 const history = createMemoryHistory();
 window.alert = jest.fn();

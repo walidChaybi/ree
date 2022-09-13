@@ -1,15 +1,15 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import React, { useEffect, useState } from "react";
-import request from "superagent";
-import { ConfirmationPopinAvecMessage } from "../../../../../src/views/common/widget/popin/ConfirmationPopinAvecMessage";
-import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
-import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { storeRece } from "../../../../views/common/util/storeRece";
 import {
   estSuperieurA500Caracteres,
   getPrenomEtNom
-} from "../../../../views/pages/requeteCreation/EspaceCreation/apercuReqCreation/components/ListeActions";
+} from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/components/ListeActions";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
+import { ConfirmationPopinAvecMessage } from "@widget/popin/ConfirmationPopinAvecMessage";
+import React, { useEffect, useState } from "react";
+import request from "superagent";
+import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
+import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 beforeAll(() => {

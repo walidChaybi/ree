@@ -1,5 +1,5 @@
-import { NatureActe } from "../../../../../../../../../model/etatcivil/enum/NatureActe";
-import { getLibelle } from "../../../../../../../../common/util/Utils";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { getLibelle } from "@util/Utils";
 
 interface ILabel {
   dateEvenement: string;

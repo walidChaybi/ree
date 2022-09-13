@@ -1,7 +1,7 @@
+import { getLibelle } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { connect } from "formik";
 import React from "react";
-import { getLibelle } from "../../util/Utils";
-import { Bouton } from "../../widget/boutonAntiDoubleSubmit/Bouton";
 import { FormikComponentProps } from "../formulaire/utils/FormUtil";
 
 export type IFormBoutonsProps = {

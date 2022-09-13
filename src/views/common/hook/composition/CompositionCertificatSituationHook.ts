@@ -1,9 +1,9 @@
+import { compositionApi } from "@api/appels/compositionApi";
+import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
+import { ICertificatSituationComposition } from "@model/composition/ICertificatSituationComposition";
+import { logError } from "@util/LogManager";
+import { getLibelle } from "@util/Utils";
 import { useEffect, useState } from "react";
-import { compositionApi } from "../../../../api/appels/compositionApi";
-import { IDonneesComposition } from "../../../../model/composition/commun/retourApiComposition/IDonneesComposition";
-import { ICertificatSituationComposition } from "../../../../model/composition/ICertificatSituationComposition";
-import { logError } from "../../util/LogManager";
-import { getLibelle } from "../../util/Utils";
 
 export function useCertificatSituationApiHook(
   certificatSituationComposition?: ICertificatSituationComposition

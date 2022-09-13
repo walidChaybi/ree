@@ -5,8 +5,8 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useState } from "react";
-import { ConfirmationPopin } from "../../../../views/common/widget/popin/ConfirmationPopin";
 
 afterEach(cleanup);
 

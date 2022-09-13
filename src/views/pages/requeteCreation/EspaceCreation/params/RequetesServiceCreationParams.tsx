@@ -1,5 +1,5 @@
-import { CINQ, getLibelle } from "../../../../common/util/Utils";
-import { TableauTypeColumn } from "../../../../common/widget/tableau/TableauRece/TableauTypeColumn";
+import { CINQ, getLibelle } from "@util/Utils";
+import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { colonnesTableauMesRequetesCreation } from "./MesRequetesCreationParams";
 
 export enum HeaderTableauRequetesServiceCreation {

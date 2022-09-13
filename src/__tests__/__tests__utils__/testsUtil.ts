@@ -1,6 +1,6 @@
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { mappingRequeteDelivrance } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { urlImagePngVideBase64 } from "../../mock/data/ImagePng";
-import { ChoixDelivrance } from "../../model/requete/enum/ChoixDelivrance";
-import { mappingRequeteDelivrance } from "../../views/pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 
 function dataURLtoFile(dataurl: string, filename: string): File {
   const arr = dataurl.split(",");

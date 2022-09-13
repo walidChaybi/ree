@@ -1,6 +1,6 @@
 /* istanbul ignore file */
-import { EnumWithComplete } from "../../../views/common/util/enum/EnumWithComplete";
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import { EnumWithComplete } from "@util/enum/EnumWithComplete";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 
 export class TypeExtrait extends EnumWithComplete {
   public static readonly EXTRAIT_AVEC_FILIATION = new TypeExtrait(

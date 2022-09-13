@@ -1,4 +1,4 @@
-import { SortOrder } from "../widget/tableau/TableUtils";
+import { SortOrder } from "@widget/tableau/TableUtils";
 
 export interface IParametresLienApi {
   tri: string;

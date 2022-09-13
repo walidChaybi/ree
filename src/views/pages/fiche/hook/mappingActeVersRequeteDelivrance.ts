@@ -1,26 +1,23 @@
-import { IEvenement } from "../../../../model/etatcivil/acte/IEvenement";
-import {
-  FicheActe,
-  IFicheActe
-} from "../../../../model/etatcivil/acte/IFicheActe";
-import { IFiliation } from "../../../../model/etatcivil/acte/IFiliation";
+import { IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IFiliation } from "@model/etatcivil/acte/IFiliation";
 import {
   ITitulaireActe,
   TitulaireActe
-} from "../../../../model/etatcivil/acte/ITitulaireActe";
-import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";
-import { NatureActe } from "../../../../model/etatcivil/enum/NatureActe";
-import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
-import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
-import { MotifDelivrance } from "../../../../model/requete/enum/MotifDelivrance";
-import { Provenance } from "../../../../model/requete/enum/Provenance";
-import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
-import { TypeCanal } from "../../../../model/requete/enum/TypeCanal";
-import { TypeLienRequerant } from "../../../../model/requete/enum/TypeLienRequerant";
-import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
-import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
-import { supprimeProprietesVides } from "../../../common/util/supprimeProprietesVides";
-import { mapPrenomsVersPrenomsOrdonnes } from "../../../common/util/Utils";
+} from "@model/etatcivil/acte/ITitulaireActe";
+import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
+import { Provenance } from "@model/requete/enum/Provenance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { TypeCanal } from "@model/requete/enum/TypeCanal";
+import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
+import { mapPrenomsVersPrenomsOrdonnes } from "@util/Utils";
 
 export const mappingActeVersRequeteDelivrance = (
   acte: IFicheActe,

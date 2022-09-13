@@ -1,28 +1,22 @@
-import { connect } from "formik";
-import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
-import { IPrenomOrdonnes } from "../../../../../../../model/requete/IPrenomOrdonnes";
-import { CarateresAutorise } from "../../../../../../../ressources/Regex";
-import {
-  DEUX,
-  estRenseigne,
-  getLibelle,
-  UN,
-  ZERO
-} from "../../../../../../common/util/Utils";
-import { InputField } from "../../../../../../common/widget/formulaire/champsSaisie/InputField";
+import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
+import { DEUX, estRenseigne, getLibelle, UN, ZERO } from "@util/Utils";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
   CARATERES_AUTORISES_MESSAGE,
   CHAMP_OBLIGATOIRE
-} from "../../../../../../common/widget/formulaire/FormulaireMessages";
-import { sortieChampPremiereLettreEnMajuscule } from "../../../../../../common/widget/formulaire/utils/ControlesUtil";
+} from "@widget/formulaire/FormulaireMessages";
+import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   IGNORER_TABULATION,
   INomForm,
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
   withNamespace
-} from "../../../../../../common/widget/formulaire/utils/FormUtil";
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useEffect, useState } from "react";
+import * as Yup from "yup";
+import { CarateresAutorise } from "../../../../../../../ressources/Regex";
 import {
   PRENOM_1,
   PRENOM_2,
