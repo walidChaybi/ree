@@ -12,6 +12,7 @@ export interface AccordionReceProps {
   disabled?: boolean;
   titre?: string;
   className?: AccordionReceClassNameProps;
+  bouton?: JSX.Element;
 }
 export interface AccordionReceClassNameProps {
   container?: string;
@@ -19,39 +20,37 @@ export interface AccordionReceClassNameProps {
   title?: string;
 }
 
-export const AccordionRece: React.FC<AccordionReceProps> = ({
-  children,
-  panel,
-  index,
-  expanded,
-  disabled,
-  className,
-  titre
-}) => {
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+export const AccordionRece: React.FC<AccordionReceProps> = props => {
+  const [isExpanded, setIsExpanded] = useState<boolean>(props.expanded);
 
   useEffect(() => {
-    setIsExpanded(expanded);
-  }, [expanded]);
+    setIsExpanded(props.expanded);
+  }, [props.expanded]);
 
   const handleChange = () => {
     setIsExpanded(!isExpanded);
   };
 
   return (
-    <div className={className?.container}>
+    <div className={props.className?.container}>
       <Accordion
-        key={`rece-accordion-${index}`}
+        key={`rece-accordion-${props.index}`}
         className="accordionRece"
         expanded={isExpanded}
-        disabled={disabled}
+        disabled={props.disabled}
         onChange={handleChange}
         TransitionProps={{ timeout: 0 }}
       >
-        <AccordionTitle title={titre} className={className?.title}/>
+        <AccordionTitle
+          title={props.titre}
+          className={props.className?.title}
+          bouton={props.bouton}
+        />
         <AccordionDetails>
-          {panel && <SectionPanel {...panel} id={`${index}`} />}
-          <div className={className?.content}>{children}</div>
+          {props.panel && (
+            <SectionPanel {...props.panel} id={`${props.index}`} />
+          )}
+          <div className={props.className?.content}>{props.children}</div>
         </AccordionDetails>
       </Accordion>
     </div>

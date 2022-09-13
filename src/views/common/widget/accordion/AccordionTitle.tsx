@@ -6,19 +6,21 @@ import "./scss/AccordionTitle.scss";
 export interface AccordionTitleProps {
   title?: string;
   className?: string;
+  bouton?: JSX.Element;
 }
 
-export const AccordionTitle: React.FC<AccordionTitleProps> = ({
-  title,
-  className
-}) => {
+export const AccordionTitle: React.FC<AccordionTitleProps> = props => {
   return (
     <AccordionSummary
-      className={["accordionTitle", className].join(" ")}
+      className={["accordionTitle", props.className].join(" ")}
       expandIcon={<ExpandMoreIcon />}
-      title={title}
+      title={props.title}
     >
-      {title}
+      <div className={props.bouton ? "MuiSummaryFlex" : ""}>
+        {props.bouton && <div className="itemHidden"></div>}
+        {props.title}
+        {props.bouton}
+      </div>
     </AccordionSummary>
   );
 };

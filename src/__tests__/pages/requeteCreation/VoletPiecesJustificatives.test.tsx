@@ -35,8 +35,8 @@ test("renders VoletPiecesJustificatives", async () => {
 
   await waitFor(() => {
     expect(
-      screen.getAllByText("nom")[2].classList.contains("Mui-expanded")
-    ).toBeTruthy();
+      screen.getAllByTitle("nom")[2].classList.contains("Mui-expanded")
+    ).toBe(true);
   });
 });
 

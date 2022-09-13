@@ -18,7 +18,7 @@ const DefaultValues = {
   [OBSERVATION]: ""
 };
 
-const OBSERVATION_MAX_LENGTH = 150;
+const OBSERVATION_MAX_LENGTH = 500;
 
 const NB_LIGNE_COMPLEMENT_DESCRIPTION = 10;
 

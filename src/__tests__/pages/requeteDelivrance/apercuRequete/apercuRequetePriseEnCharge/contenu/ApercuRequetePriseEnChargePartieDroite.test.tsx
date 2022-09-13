@@ -119,7 +119,7 @@ test("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes acte",
   });
 
   const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
-  const accordionAlertes: HTMLElement = screen.getByText(
+  const accordionAlertes: HTMLElement = screen.getByTitle(
     "Alertes et informations"
   );
 

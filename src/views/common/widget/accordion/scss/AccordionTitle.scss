@@ -16,10 +16,20 @@ div.accordionTitle {
   .MuiAccordionSummary-content {
     display: block;
     margin: 0px;
+
+  }
+
+  .MuiSummaryFlex {
+    display: flex;
   }
 
   svg {
     color: white;
+  }
+
+  .itemHidden {
+    margin-right: auto;
+    visibility: hidden;
   }
 }
 
