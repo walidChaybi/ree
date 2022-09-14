@@ -5,13 +5,6 @@ import {
   TitulaireActe
 } from "@model/etatcivil/acte/ITitulaireActe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import {
-  CODE_COPIE_INTEGRALE,
-  CODE_EXTRAIT_AVEC_FILIATION,
-  CODE_EXTRAIT_PLURILINGUE,
-  CODE_EXTRAIT_SANS_FILIATION
-} from "@model/requete/enum/DocumentDelivranceConstante";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import {
   DocumentReponse,
@@ -22,6 +15,7 @@ import { checkDirty, getLibelle } from "@util/Utils";
 import { OngletsDynamique } from "@widget/ongletsDynamique/OngletsDynamique";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useEffect, useState } from "react";
+import { genererListeAjoutComplementaire, getTypeDocument, INDEX_PLUS, ItemListe, listePlus } from "./OngletDocumentsEditesUtils";
 
 interface OngletsDocumentsProps {
   documents?: IDocumentReponse[];
@@ -31,18 +25,6 @@ interface OngletsDocumentsProps {
   ajouterDocument: (document: any) => void;
   retirerDocument: () => void;
   acte?: IFicheActe;
-}
-
-interface ItemListe {
-  label: string;
-  value: number;
-}
-
-enum INDEX_PLUS {
-  INDEX_EXTRAIT_PLURILINGUE,
-  INDEX_EXTRAIT_SANS_FILIATION,
-  INDEX_EXTRAIT_AVEC_FILIATION,
-  INDEX_COPIE_INTEGRALE
 }
 
 const titulairesEstDeGenreIndetermine = (titulaires: ITitulaireActe[]) => {
@@ -67,22 +49,6 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
   retirerDocument,
   acte
 }) => {
-  const listePlus = [
-    {
-      label: "Extrait plurilingue",
-      value: INDEX_PLUS.INDEX_EXTRAIT_PLURILINGUE
-    },
-    {
-      label: "Extrait copie sans filiation",
-      value: INDEX_PLUS.INDEX_EXTRAIT_SANS_FILIATION
-    },
-    {
-      label: "Extrait copie avec filiation",
-      value: INDEX_PLUS.INDEX_EXTRAIT_AVEC_FILIATION
-    },
-    { label: "Copie intégrale", value: INDEX_PLUS.INDEX_COPIE_INTEGRALE }
-  ];
-
   const boutons = [
     {
       label: getLibelle("Ok"),
@@ -101,7 +67,9 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
   const [erreurMessagePopin, setErreurMessagePopin] = useState("");
 
   useEffect(() => {
-    genererListeAjoutComplementaire();
+    if (documents && acte) {
+      setListe(genererListeAjoutComplementaire(documents, acte));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [documents, retirerDocument]);
 
@@ -146,6 +114,7 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
     } else if (FicheActe.estNombreDeTitulaireErrone(acteRequete)) {
       messageErreur = messageErreurTitulaireMultiple;
     }
+
     return messageErreur;
   };
 
@@ -184,23 +153,6 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
     return res;
   }
 
-  function genererListeAjoutComplementaire() {
-    if (documents) {
-      let listeMapped: ItemListe[] = [];
-      const index = 0;
-
-      for (let i = index; i < documents?.length; i++) {
-        listeMapped = listePlus.filter((itemListe: ItemListe) => {
-          return documents[i].nom !== itemListe.label;
-        });
-      }
-
-      if (listeMapped.length) {
-        setListe(listeMapped);
-      }
-    }
-  }
-
   return (
     <>
       <OngletsDynamique
@@ -231,30 +183,4 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
     </>
   );
 };
-function getTypeDocument(indexChoix: number): string | undefined {
-  let typeDocument: string | undefined;
-  switch (indexChoix) {
-    case INDEX_PLUS.INDEX_EXTRAIT_PLURILINGUE:
-      typeDocument = DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_PLURILINGUE);
 
-      break;
-    case INDEX_PLUS.INDEX_EXTRAIT_SANS_FILIATION:
-      typeDocument = DocumentDelivrance.getKeyForCode(
-        CODE_EXTRAIT_SANS_FILIATION
-      );
-
-      break;
-    case INDEX_PLUS.INDEX_EXTRAIT_AVEC_FILIATION:
-      typeDocument = DocumentDelivrance.getKeyForCode(
-        CODE_EXTRAIT_AVEC_FILIATION
-      );
-
-      break;
-    case INDEX_PLUS.INDEX_COPIE_INTEGRALE:
-      typeDocument = DocumentDelivrance.getKeyForCode(CODE_COPIE_INTEGRALE);
-      break;
-    default:
-      break;
-  }
-  return typeDocument;
-}

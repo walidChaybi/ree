@@ -44,165 +44,168 @@ beforeEach(async () => {
   history.push(URL_MES_REQUETES_DELIVRANCE);
 });
 
-test("Doit rendre le bouton + pour ajouter un document complémentaire quand un seul documentResponse est présent dans la requête", async () => {
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f77/19c0d767-64e5-4376-aa1f-6d781a2a235a`
-  );
-
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
+describe("Test onglets documents édites", () => {
+  test("Doit rendre le bouton + pour ajouter un document complémentaire quand un seul documentResponse est présent dans la requête", async () => {
+    history.push(
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f77/19c0d767-64e5-4376-aa1f-6d781a2a235a`
     );
+
+    await act(async () => {
+      render(
+        <Router history={history}>
+          <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
+            <EditionExtraitCopiePage />
+          </Route>
+        </Router>
+      );
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText("+")).toBeDefined();
+    });
   });
 
-  await waitFor(() => {
-    expect(screen.getByText("+")).toBeDefined();
+  test("Doit rendre le bouton x pour retirer un document complémentaire quand plusieurs documentResponse sont présent dans la requête", async () => {
+    history.push(
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f`
+    );
+
+    await act(async () => {
+      render(
+        <Router history={history}>
+          <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
+            <EditionExtraitCopiePage />
+          </Route>
+        </Router>
+      );
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText("x")).toBeDefined();
+    });
+  });
+
+  test("Ne doit pas permettre l'ajout d'un même document complémentaire dans une requête", async () => {
+    history.push(
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f77/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+    );
+
+    await act(async () => {
+      render(
+        <Router history={history}>
+          <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
+            <EditionExtraitCopiePage />
+          </Route>
+        </Router>
+      );
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText("+")).toBeDefined();
+      fireEvent.click(screen.getByText("+"));
+      expect(screen.getByText("Extrait plurilingue"));
+      expect(screen.getByText("Extrait avec filiation"));
+      expect(screen.getByText("Extrait sans filiation"));
+    });
+  });
+
+  test("Doit ajouter le document selectionné au click sur le menu", async () => {
+    history.push(
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b272-b9de4g683aaf/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+    );
+
+    await act(async () => {
+      render(
+        <Router history={history}>
+          <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
+            <EditionExtraitCopiePage />
+          </Route>
+        </Router>
+      );
+    });
+
+    await waitFor(() => {
+      let boutonAjouterDocument: HTMLElement;
+      expect(screen.getByText("+")).toBeDefined();
+      fireEvent.click(screen.getByText("+"));
+      boutonAjouterDocument = screen.getAllByText("Extrait avec filiation")[0];
+      expect(boutonAjouterDocument).toBeDefined();
+      fireEvent.click(boutonAjouterDocument);
+    });
+
+    await waitFor(() => {
+      expect(screen.getAllByText("Extrait avec filiation")[1]).toBeDefined();
+    });
+  });
+
+  test("Doit afficher un message d'erreur quand le nombre de titulaire est > 1 dans un acte de naissance/décès pour une demande plurilingue", async () => {
+    history.push(
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4038-b271-b9de48283a8f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+    );
+
+    await act(async () => {
+      render(
+        <Router history={history}>
+          <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
+            <EditionExtraitCopiePage />
+          </Route>
+        </Router>
+      );
+    });
+
+    await waitFor(() => {
+      let boutonAjouterDocument: HTMLElement;
+      expect(screen.getByText("+")).toBeDefined();
+      fireEvent.click(screen.getByText("+"));
+      boutonAjouterDocument = screen.getByText("Extrait plurilingue");
+      expect(boutonAjouterDocument).toBeDefined();
+      fireEvent.click(boutonAjouterDocument);
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          "Pas de délivrance d'extrait sur la base d'un acte à titulaires multiples."
+        )
+      ).toBeDefined();
+    });
+  });
+
+  test("Doit afficher une erreur si le titulaire est de genre indetermine quand le choix est extrait pluri", async () => {
+    history.push(
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4038-b272-b9de48683a8f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+    );
+
+    await act(async () => {
+      render(
+        <Router history={history}>
+          <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
+            <EditionExtraitCopiePage />
+          </Route>
+        </Router>
+      );
+    });
+
+    await waitFor(() => {
+      let boutonAjouterDocument: HTMLElement;
+      expect(screen.getByText("+")).toBeDefined();
+      fireEvent.click(screen.getByText("+"));
+      boutonAjouterDocument = screen.getByText("Extrait plurilingue");
+      expect(boutonAjouterDocument).toBeDefined();
+      fireEvent.click(boutonAjouterDocument);
+    });
+
+    await waitFor(() => {
+      // expect(screen.getByText("Extrait avec filiation")).not.toBeDefined();
+      expect(
+        screen.getByText(
+          "Pas de délivrance d'extrait plurilingue de naissance avec une personne de genre indéterminé ou des parents de même sexe."
+        )
+      ).toBeDefined();
+    });
   });
 });
 
-test("Doit rendre le bouton x pour retirer un document complémentaire quand plusieurs documentResponse sont présent dans la requête", async () => {
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f`
-  );
-
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
-  });
-
-  await waitFor(() => {
-    expect(screen.getByText("x")).toBeDefined();
-  });
-});
-
-test("Ne doit pas permettre l'ajout d'un même document complémentaire dans une requête", async () => {
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f77/19c0d767-64e5-4376-aa1f-6d781a2a235a`
-  );
-
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
-  });
-
-  await waitFor(() => {
-    expect(screen.getByText("+")).toBeDefined();
-    fireEvent.click(screen.getByText("+"));
-    expect(screen.getByText("Extrait plurilingue"));
-    expect(screen.getByText("Extrait copie avec filiation"));
-    expect(screen.getByText("Extrait copie sans filiation"));
-  });
-});
-
-test("Doit ajouter le document selectionné au click sur le menu", async () => {
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b272-b9de4g683aaf/19c0d767-64e5-4376-aa1f-6d781a2a235a`
-  );
-
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
-  });
-
-  await waitFor(() => {
-    let boutonAjouterDocument: HTMLElement;
-    expect(screen.getByText("+")).toBeDefined();
-    fireEvent.click(screen.getByText("+"));
-    boutonAjouterDocument = screen.getByText("Extrait copie avec filiation");
-    expect(boutonAjouterDocument).toBeDefined();
-    fireEvent.click(boutonAjouterDocument);
-  });
-
-  await waitFor(() => {
-    expect(screen.getByText("Extrait avec filiation")).toBeDefined();
-  });
-});
-
-test("Doit afficher un message d'erreur quand le nombre de titulaire est > 1 dans un acte de naissance/décès pour une demande plurilingue", async () => {
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4038-b271-b9de48283a8f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
-  );
-
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
-  });
-
-  await waitFor(() => {
-    let boutonAjouterDocument: HTMLElement;
-    expect(screen.getByText("+")).toBeDefined();
-    fireEvent.click(screen.getByText("+"));
-    boutonAjouterDocument = screen.getByText("Extrait plurilingue");
-    expect(boutonAjouterDocument).toBeDefined();
-    fireEvent.click(boutonAjouterDocument);
-  });
-
-  await waitFor(() => {
-    expect(
-      screen.getByText(
-        "Pas de délivrance d'extrait sur la base d'un acte à titulaires multiples."
-      )
-    ).toBeDefined();
-  });
-});
-
-test("Doit afficher une erreur si le titulaire est de genre indetermine quand le choix est extrait pluri", async () => {
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4038-b272-b9de48683a8f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
-  );
-
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
-  });
-
-  await waitFor(() => {
-    let boutonAjouterDocument: HTMLElement;
-    expect(screen.getByText("+")).toBeDefined();
-    fireEvent.click(screen.getByText("+"));
-    boutonAjouterDocument = screen.getByText("Extrait plurilingue");
-    expect(boutonAjouterDocument).toBeDefined();
-    fireEvent.click(boutonAjouterDocument);
-  });
-
-  await waitFor(() => {
-    // expect(screen.getByText("Extrait avec filiation")).not.toBeDefined();
-    expect(
-      screen.getByText(
-        "Pas de délivrance d'extrait plurilingue de naissance avec une personne de genre indéterminé ou des parents de même sexe."
-      )
-    ).toBeDefined();
-  });
-});
 
 // test("Doit afficher un message d'erreur quand le nombre de titulaire est > 2 dans un acte de mariage plurilinque/EC avec ou sans filiation", async () => {
 //   history.push(

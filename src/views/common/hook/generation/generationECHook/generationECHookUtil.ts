@@ -142,6 +142,7 @@ export function creationComposition(
   choixDelivrance: ChoixDelivrance
 ): IExtraitCopieComposition | undefined {
   let composition;
+
   if (
     estDemandeExtraitAvecOuSansFiliationOuCopieActeTexte(acte, choixDelivrance)
   ) {
@@ -149,7 +150,8 @@ export function creationComposition(
       acte,
       requete,
       validation,
-      mentionsRetirees
+      mentionsRetirees,
+      choixDelivrance
     );
   } else if (estDemandeExtraitPlurilingue(choixDelivrance)) {
     composition = creationCompositionExtraitPlurilingue(acte);
@@ -179,6 +181,7 @@ export const getValidationEC = (
       }
       break;
   }
+
   return validation;
 };
 
@@ -280,7 +283,6 @@ export function creationEC(
     const choixDelivrance = params?.choixDelivrance
       ? params.choixDelivrance
       : params?.requete.choixDelivrance;
-    let composition;
 
     // Verification des données pour la génération d'extrait mariage/naissance
     // En cas de validation en erreur alors un extrait en erreur sera généré
@@ -288,12 +290,12 @@ export function creationEC(
       // @ts-ignore NonNull
       acte,
       // @ts-ignore NonNull
-      params.requete.choixDelivrance,
+      choixDelivrance,
       // @ts-ignore NonNull
       params.validation
     );
 
-    composition = creationComposition(
+    const composition = creationComposition(
       // @ts-ignore NonNull
       acte,
       // @ts-ignore NonNull
@@ -304,10 +306,11 @@ export function creationEC(
       // @ts-ignore NonNull
       choixDelivrance
     );
+
     setValidation(validationControle);
     setExtraitCopieApiHookParams({
       // @ts-ignore NonNull
-      choixDelivrance: params.choixDelivrance,
+      choixDelivrance,
       extraitCopieComposition: composition
     });
   }

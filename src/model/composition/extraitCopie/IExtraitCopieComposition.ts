@@ -1,9 +1,9 @@
 import { ICommunComposition } from "../commun/ICommunComposition";
 import { IParametresComposition } from "../commun/IParametresComposition";
 
-export const NOM_DOCUMENT_EC_SANS_FILIATION = "Extrait copie sans filiation";
-export const NOM_DOCUMENT_EC_AVEC_FILIATION = "Extrait copie avec filiation";
-export const NOM_DOCUMENT_EC_PLURILINGUE = "Extrait copie plurilingue";
+export const NOM_DOCUMENT_EC_SANS_FILIATION = "Extrait sans filiation";
+export const NOM_DOCUMENT_EC_AVEC_FILIATION = "Extrait avec filiation";
+export const NOM_DOCUMENT_EC_PLURILINGUE = "Extrait plurilingue";
 export const NOM_DOCUMENT_COPIE_INTEGRALE = "Copie intégrale";
 export const NOM_DOCUMENT_COPIE_ARCHIVE = "Copie archive";
 

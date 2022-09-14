@@ -13,10 +13,11 @@ export const creationCompositionExtraitCopieActeTexte = function (
   acteComplet: IFicheActe,
   requete: IRequeteDelivrance,
   validation: Validation,
-  mentionsRetirees: string[]
+  mentionsRetirees: string[],
+  choixDelivranceEC: ChoixDelivrance
 ) {
   let composition;
-  const choixDelivrance = getValeurOuVide(requete.choixDelivrance);
+  const choixDelivrance = getValeurOuVide(choixDelivranceEC);
   if (acteComplet.nature === NatureActe.MARIAGE) {
     composition =
       ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexteMariage(

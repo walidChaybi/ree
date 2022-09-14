@@ -147,15 +147,19 @@ export function getCorpsTexte(
   requete: IRequeteDelivrance,
   document: IDocumentReponse
 ) {
-  const composition = creationCompositionExtraitCopieActeTexte(
-    acte,
-    requete,
-    document.validation ? document.validation : Validation.O,
-    document.mentionsRetirees
-      ? document.mentionsRetirees.map(el => el.idMention)
-      : []
-  );
-  return composition.corps_texte;
+  let composition;
+  if (requete?.choixDelivrance) {
+    composition = creationCompositionExtraitCopieActeTexte(
+      acte,
+      requete,
+      document.validation ? document.validation : Validation.O,
+      document.mentionsRetirees
+        ? document.mentionsRetirees.map(el => el.idMention)
+        : [],
+      requete.choixDelivrance
+    );
+  }
+  return composition?.corps_texte;
 }
 
 export function corpsNonModifierOuCorpsVide(
