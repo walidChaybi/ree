@@ -118,6 +118,7 @@ export async function peupleTypeAlerte() {
             data?.code,
             data?.type,
             data?.sousType,
+            data?.description,
             premiereLettreEnMajusculeLeResteEnMinuscule(data?.libelle)
           )
         );

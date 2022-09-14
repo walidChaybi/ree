@@ -40,6 +40,7 @@ export class TypeAlerte extends EnumWithLibelle {
     private readonly _code: string,
     private readonly _type: string,
     private readonly _sousType: string,
+    private readonly _description: string,
     libelle: string
   ) {
     super(libelle);
@@ -47,6 +48,10 @@ export class TypeAlerte extends EnumWithLibelle {
 
   get code() {
     return this._code;
+  }
+
+  get description() {
+    return this._description;
   }
 
   get type() {
@@ -74,7 +79,7 @@ export class TypeAlerte extends EnumWithLibelle {
     return EnumWithLibelle.contientEnums(TypeAlerte);
   }
 
-  public static getEnumFor(str: string) {
+  public static getEnumFor(str: string): TypeAlerte {
     return EnumWithLibelle.getEnumFor(str, TypeAlerte);
   }
 

@@ -1,11 +1,9 @@
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  toAlertString,
-  toReferenceString
-} from "@hook/alertes/MappingAlertesActe";
-import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
-import { storeRece } from "@util/storeRece";
+import { officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE } from "@model/agent/IOfficier";
+import { Alerte, IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getLibelle } from "@util/Utils";
 import React, { useCallback, useState } from "react";
 import { ConfirmationPopin } from "../../popin/ConfirmationPopin";
@@ -21,6 +19,7 @@ interface PopinSupprimerAlerteState {
 export interface ListeAlertesProps {
   ajoutAlertePossible: boolean;
   alertes: IAlerte[];
+  idTypeRegistre?: string;
   displayReference: boolean;
   supprimerAlerteCallBack: (idAlerteActe: string, idActe: string) => void;
 }
@@ -29,22 +28,21 @@ export const ListeAlertes: React.FC<ListeAlertesProps> = ({
   ajoutAlertePossible,
   alertes,
   displayReference,
+  idTypeRegistre,
   supprimerAlerteCallBack
 }) => {
-  const [
-    popinSupprimerAlerteState,
-    setPopinSupprimerAlerteState
-  ] = useState<PopinSupprimerAlerteState>({
-    idAlerteActe: "",
-    idActe: "",
-    isOpen: false
-  });
+  const [popinSupprimerAlerteState, setPopinSupprimerAlerteState] =
+    useState<PopinSupprimerAlerteState>({
+      idAlerteActe: "",
+      idActe: "",
+      isOpen: false
+    });
   const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
 
   const onClick = (alerte: IAlerte): void => {
     if (
       ajoutAlertePossible &&
-      storeRece?.utilisateurCourant?.trigramme === alerte?.trigrammeUtilisateur
+      officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(idTypeRegistre)
     ) {
       setPopinSupprimerAlerteState({
         idAlerteActe: alerte?.id || "",
@@ -75,35 +73,35 @@ export const ListeAlertes: React.FC<ListeAlertesProps> = ({
   return (
     <>
       <div className="ListeAlertes">
-        {alertes?.map(
-          (alerte: IAlerte, idx: number): JSX.Element => {
-            return (
-              <div
-                key={`alerte-${idx}`}
-                className={alerte?.codeCouleur}
-                title={alerte?.complementDescription}
-              >
-                {displayReference === true
-                  ? toReferenceString(alerte)
-                  : toAlertString(alerte)}
+        {alertes?.map((alerte: IAlerte, idx: number): JSX.Element => {
+          return (
+            <div
+              key={`alerte-${idx}`}
+              className={alerte?.codeCouleur}
+              title={alerte?.complementDescription}
+            >
+              {displayReference === true
+                ? Alerte.toReferenceString(alerte)
+                : Alerte.toAlertString(alerte)}
+              {gestionnaireFeatureFlag.estActif(
+                FeatureFlag.FF_DELIV_EC_PAC
+              ) && (
                 <FontAwesomeIcon
                   icon={faTrashAlt}
                   className="IconeBoutonSupprimerAlerte"
                   title={getLibelle("Supprimer l'alerte")}
                   onClick={() => onClick(alerte)}
                 />
-              </div>
-            );
-          }
-        )}
+              )}
+            </div>
+          );
+        })}
       </div>
       <ConfirmationPopin
         disablePortal={true}
         isOpen={hasMessageBloquant}
         messages={[
-          getLibelle(
-            "Vous pouvez supprimer seulement les alertes que vous avez ajoutées vous-même."
-          )
+          getLibelle("Vous n'avez pas les droits pour supprimer une alerte.")
         ]}
         boutons={[
           {

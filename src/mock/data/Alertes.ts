@@ -1,3 +1,4 @@
+import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 
 export const ReponseAppelGetAlertesActe = {
@@ -5,38 +6,41 @@ export const ReponseAppelGetAlertesActe = {
   hasBusinessError: false,
   status: 200,
   url: "/rece-etatcivil-api/v1/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/alertes",
-  data: [
-    {
-      id: "ee63de49-0a32-4086-9a98-03a846a790e4",
-      idActe: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
-      numeroActe: "737",
-      numeroBisTerActe: "55",
-      idTypeAlerte: "058a436b-330d-4c3c-83e0-d49c27390aa7",
-      famille: "AR3",
-      pocopa: "SEOUL",
-      annee: 1986,
-      support1: "support 1",
-      support2: "support 2",
-      complementDescription: "alerte générée par l'utilisateur",
-      dateCreation: 1616022000000,
-      trigrammeUtilisateur: "MLA"
-    },
-    {
-      id: "ee737531-a7ed-4218-aba9-d8fc54bf5376",
-      idActe: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
-      numeroActe: "737",
-      numeroBisTerActe: "55",
-      idTypeAlerte: "058a436b-330d-4c3c-83e0-d49c27390aaf",
-      famille: "AR3",
-      pocopa: "SEOUL",
-      annee: 1986,
-      support1: "support 1",
-      support2: "support 2",
-      complementDescription: "alerte générée automatiquement par l'outil RECE",
-      dateCreation: 1552863600000,
-      trigrammeUtilisateur: "RECE"
-    }
-  ],
+  data: {
+    idTypeRegistre: "12345",
+    alertes: [
+      {
+        id: "ee63de49-0a32-4086-9a98-03a846a790e4",
+        idActe: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
+        numeroActe: "737",
+        numeroBisTerActe: "55",
+        famille: "AR3",
+        pocopa: "SEOUL",
+        annee: 1986,
+        support1: "support 1",
+        support2: "support 2",
+        complementDescription: "alerte générée par l'utilisateur",
+        dateCreation: 1616022000000,
+        idUtilisateur: "MLA"
+      },
+      {
+        id: "ee737531-a7ed-4218-aba9-d8fc54bf5376",
+        idActe: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
+        numeroActe: "737",
+        numeroBisTerActe: "55",
+        idTypeAlerte: "058a436b-330d-4c3c-83e0-d49c27390aaf",
+        famille: "AR3",
+        pocopa: "SEOUL",
+        annee: 1986,
+        support1: "support 1",
+        support2: "support 2",
+        complementDescription:
+          "alerte générée automatiquement par l'outil RECE",
+        dateCreation: 1552863600000,
+        idUtilisateur: "RECE"
+      }
+    ]
+  },
   errors: []
 };
 
@@ -58,7 +62,7 @@ export const ReponseAppelAddAlerteActe = {
     support2: null,
     complementDescription: "TEST",
     dateCreation: 1634314413092,
-    trigrammeUtilisateur: "trigrammeConnectedUser"
+    idUtilisateur: "trigrammeConnectedUser"
   },
   errors: []
 };
@@ -67,7 +71,7 @@ export const Alertes: IAlerte[] = [
   {
     id: "ee63de49-0a32-4086-9a98-03a846a790e4",
     idActe: "ee63e3c9-3636-4071-a511-e9e599580606",
-    type: "A ne pas délivrer",
+    type: { type: "A ne pas délivrer" } as TypeAlerte,
     famille: "AR3",
     pocopa: "SEOUL",
     annee: "1986",
@@ -78,14 +82,14 @@ export const Alertes: IAlerte[] = [
     description:
       "A ne pas délivrer Extraénité des époux, dossier au parquet en cours",
     complementDescription: "alerte générée par l'utilisateur",
-    trigrammeUtilisateur: "trigrammeConnectedUser",
+    idUtilisateur: "trigrammeConnectedUser",
     dateCreationStr: "18/03/2021",
     codeCouleur: "CodeCouleurAlerteRouge"
   },
   {
     id: "ee737531-a7ed-4218-aba9-d8fc54bf5376",
     idActe: "ee63e3c9-3636-4071-a511-e9e599580606",
-    type: "A délivrer sous conditions",
+    type: { type: "A délivrer sous conditions" } as TypeAlerte,
     famille: "AR3",
     pocopa: "SEOUL",
     annee: "1986",
@@ -96,7 +100,7 @@ export const Alertes: IAlerte[] = [
     description:
       "A délivrer sous conditions Acte comportant une mention de désaveu de paternité",
     complementDescription: "alerte générée automatiquement par l'outil RECE",
-    trigrammeUtilisateur: "MLA",
+    idUtilisateur: "MLA",
     dateCreationStr: "18/03/2019",
     codeCouleur: "CodeCouleurAlerteOrange"
   }

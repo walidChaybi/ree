@@ -1502,7 +1502,7 @@ export const acte4: any = {
         sousType: "Divers - délivrer sous conditions "
       },
       dateCreation: 1552863600000,
-      trigrammeUtilisateur: "MLA"
+      idUtilisateur: "MLA"
     },
     {
       complementDescription: "ça c'est pas délivrable",
@@ -1515,7 +1515,7 @@ export const acte4: any = {
         sousType: "Divers - ne pas délivrer"
       },
       dateCreation: 1552863600000,
-      trigrammeUtilisateur: "AHE"
+      idUtilisateur: "AHE"
     },
     {
       complementDescription: "description 2 de l'alerte",
@@ -1528,7 +1528,7 @@ export const acte4: any = {
         sousType: "Repris SAGA"
       },
       dateCreation: 1552863600000,
-      trigrammeUtilisateur: "RECE"
+      idUtilisateur: "RECE"
     },
     {
       complementDescription: "description 1 de l'alerte",
@@ -1541,7 +1541,7 @@ export const acte4: any = {
         sousType: "Problème fonctionnel"
       },
       dateCreation: 1552863600000,
-      trigrammeUtilisateur: "MVI"
+      idUtilisateur: "MVI"
     },
     {
       complementDescription:
@@ -1555,7 +1555,7 @@ export const acte4: any = {
         sousType: "Acte non exploitable"
       },
       dateCreation: 1552863600000,
-      trigrammeUtilisateur: "NSL"
+      idUtilisateur: "NSL"
     }
   ],
   personnes: [],

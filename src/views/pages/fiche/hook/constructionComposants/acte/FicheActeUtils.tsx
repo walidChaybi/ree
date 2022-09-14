@@ -1,7 +1,7 @@
 import { Droit } from "@model/agent/enum/Droit";
 import {
-  officierAutoriserSurLeTypeRegistre,
-  officierAutoriserSurLeTypeRegistreOuDroitMEAE,
+  officierDroitConsulterSurLeTypeRegistre,
+  officierDroitConsulterSurLeTypeRegistreOuDroitMEAE,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
@@ -94,7 +94,7 @@ export function getParamsAffichageFicheActe(
   // ou
   // S'il a le droit CONSULTER sur le périmètre de l'acte et le type de registre est présent dans ce périmètre
   if (
-    officierAutoriserSurLeTypeRegistreOuDroitMEAE(idTypeRegistre) ||
+    officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(idTypeRegistre) ||
     officierHabiliterPourLeDroit(Droit.DELIVRER_COMEDEC)
   ) {
     params.visuBoutonAlertes = true;
@@ -114,7 +114,7 @@ export function getParamsAffichageFicheActe(
 
   // S'il a un droit CONSULTER mais pas sur le périmètre de l'acte
   // ou Si le type de registre n'est présent dans le périmètre de l'acte
-  else if (!officierAutoriserSurLeTypeRegistre(idTypeRegistre)) {
+  else if (!officierDroitConsulterSurLeTypeRegistre(idTypeRegistre)) {
     params.visuBoutonAlertes = false;
     params.visuActe = "disabled";
     params.personnes = "disabled";

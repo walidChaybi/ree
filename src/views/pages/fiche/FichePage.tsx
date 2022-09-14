@@ -6,10 +6,7 @@ import {
   DeleteAlerteActeApiHookParameters,
   useDeleteAlerteActeApiHook
 } from "@hook/alertes/DeleteAlerteActeHookApi";
-import { officierAutoriserSurLeTypeRegistreOuDroitMEAE } from "@model/agent/IOfficier";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
+import { officierDroitConsulterSurLeTypeRegistreOuDroitMEAE } from "@model/agent/IOfficier";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { FenetreExterneUtil } from "@util/FenetreExterne";
@@ -20,6 +17,9 @@ import { BarreNavigationSuivPrec } from "@widget/navigation/barreNavigationSuivP
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
 import React, { useCallback, useEffect, useState } from "react";
+import { IFicheActe } from "../../../model/etatcivil/acte/IFicheActe";
+import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
+import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
 import { BoutonCreationRDD } from "./BoutonCreationRDD/BoutonCreationRDD";
 import { BandeauAlertesActe } from "./contenu/BandeauAlertesActe";
 import { BandeauFiche } from "./contenu/BandeauFiche";
@@ -283,13 +283,14 @@ export const FichePage: React.FC<FichePageProps> = ({
             <>
               <BandeauAlertesActe
                 alertes={alertes}
+                idTypeRegistre={acte?.registre.id}
                 ajoutAlertePossible={ajoutAlertePossible}
                 ajouterAlerteCallBack={ajouterAlerteCallBack}
                 supprimerAlerteCallBack={supprimerAlerteCallBack}
                 afficherBouton={visuBoutonAlertes}
               />
               {acte &&
-                !officierAutoriserSurLeTypeRegistreOuDroitMEAE(
+                !officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(
                   acte.registre?.type?.id
                 ) &&
                 gestionnaireFeatureFlag.estActif(

@@ -139,8 +139,10 @@ const getRequeteRejetImpression = (responsable: string, requete: TRequete) => {
 const getStatutLibellePourRequete = (requete: TRequete) => {
   let responsable = requete.idUtilisateur
     ? `${premiereLettreEnMajusculeLeResteEnMinuscule(
-        storeRece.getPrenomUtilisateurFromID(requete.idUtilisateur)
-      )} ${formatNom(storeRece.getNomUtilisateurFromID(requete.idUtilisateur))}`
+        storeRece.getPrenomUtilisateurAPartirID(requete.idUtilisateur)
+      )} ${formatNom(
+        storeRece.getNomUtilisateurAPartirID(requete.idUtilisateur)
+      )}`
     : storeRece.getLibelleEntite(requete.idEntite);
   responsable = responsable ? responsable : "";
 

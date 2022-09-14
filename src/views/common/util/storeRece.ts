@@ -93,12 +93,18 @@ class StoreRece {
     }, codePin.time_out_ms);
   };
 
-  public getPrenomUtilisateurFromID(id: string) {
+  public getNomPrenomUtilisateurAPartirId(id: string) {
+    return `${this.getNomUtilisateurAPartirID(
+      id
+    )} ${this.getPrenomUtilisateurAPartirID(id)}`;
+  }
+
+  public getPrenomUtilisateurAPartirID(id: string) {
     return this.listeUtilisateurs.find(
       utilisateur => utilisateur.idUtilisateur === id
     )?.prenom;
   }
-  public getNomUtilisateurFromID(id: string) {
+  public getNomUtilisateurAPartirID(id: string) {
     return this.listeUtilisateurs.find(
       utilisateur => utilisateur.idUtilisateur === id
     )?.nom;
@@ -109,7 +115,7 @@ class StoreRece {
       ?.libelleEntite;
   }
 
-  public getTrigrammeFromID(id: string) {
+  public getTrigrammeFromID(id?: string) {
     return this.listeUtilisateurs.find(
       utilisateur => utilisateur.idUtilisateur === id
     )?.trigramme;

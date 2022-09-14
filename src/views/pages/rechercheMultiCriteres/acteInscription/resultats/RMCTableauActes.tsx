@@ -1,6 +1,5 @@
-import { DESCRIPTION_SAGA } from "@model/etatcivil/enum/TypeAlerte";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { Alerte, IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -161,7 +160,8 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
       if (isChecked) {
         const alertes = dataAlertes?.filter((alerte: IAlerte) => {
           return (
-            alerte?.idActe === data?.idActe && alerte?.type !== DESCRIPTION_SAGA
+            alerte?.idActe === data?.idActe &&
+            Alerte.estDeTypeDescriptionSAGA(data.alerte)
           );
         });
         return Array.isArray(alertes) && alertes.length > 0;

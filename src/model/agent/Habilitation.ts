@@ -18,3 +18,31 @@ export interface IHabilitation {
   profil: IProfil;
   perimetre: IPerimetre;
 }
+
+export const Habilitation = {
+  aDroitConsulterSurPerimetre(
+    habiliation: IHabilitation,
+    idTypeRegistre: string
+  ) {
+    return (
+      habiliation.perimetre &&
+      habiliation.perimetre.listeIdTypeRegistre &&
+      habiliation.profil.droits.find(d => d.nom === Droit.CONSULTER) &&
+      habiliation.perimetre.listeIdTypeRegistre.includes(idTypeRegistre)
+    );
+  },
+  aDroitDelivrerEtDelivrerComedecSurPerimetre(
+    habiliation: IHabilitation,
+    idTypeRegistre: string
+  ) {
+    return (
+      habiliation.perimetre &&
+      habiliation.perimetre.listeIdTypeRegistre &&
+      (habiliation.profil.droits.find(d => d.nom === Droit.DELIVRER) ||
+        habiliation.profil.droits.find(
+          d => d.nom === Droit.DELIVRER_COMEDEC
+        )) &&
+      habiliation.perimetre.listeIdTypeRegistre.includes(idTypeRegistre)
+    );
+  }
+};

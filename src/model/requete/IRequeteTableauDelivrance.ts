@@ -117,8 +117,10 @@ export function mapAttribueA(requete: any): string | undefined {
   let attribueA: string | undefined;
   if (requete?.idUtilisateur) {
     attribueA = `${formatPrenom(
-      storeRece.getPrenomUtilisateurFromID(requete?.idUtilisateur)
-    )} ${formatNom(storeRece.getNomUtilisateurFromID(requete?.idUtilisateur))}`;
+      storeRece.getPrenomUtilisateurAPartirID(requete?.idUtilisateur)
+    )} ${formatNom(
+      storeRece.getNomUtilisateurAPartirID(requete?.idUtilisateur)
+    )}`;
   } else if (requete?.idEntiteRattachement) {
     attribueA = storeRece.getLibelleEntite(requete.idEntiteRattachement);
   }

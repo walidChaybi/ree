@@ -9,7 +9,7 @@ import {
   IOfficier,
   officierALeDroitSurLePerimetre,
   officierALeDroitSurUnDesPerimetres,
-  officierAutoriserSurLeTypeRegistre,
+  officierDroitConsulterSurLeTypeRegistre,
   officierHabiliterUniquementPourLeDroit
 } from "@model/agent/IOfficier";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
@@ -60,11 +60,12 @@ test("Utilisateur autoriser à consulter l'acte dont l'idTypeRegistre est passé
   storeRece.utilisateurCourant = userDroitConsulterPerimetreTUNIS;
   const idTypeRegistre = "b66a9304-48b4-4aa3-920d-6cb27dd76c83";
   let autoriserAConsulterActe =
-    officierAutoriserSurLeTypeRegistre(idTypeRegistre);
+    officierDroitConsulterSurLeTypeRegistre(idTypeRegistre);
   expect(autoriserAConsulterActe).toBe(true);
 
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
-  autoriserAConsulterActe = officierAutoriserSurLeTypeRegistre(idTypeRegistre);
+  autoriserAConsulterActe =
+    officierDroitConsulterSurLeTypeRegistre(idTypeRegistre);
   expect(autoriserAConsulterActe).toBe(false);
 });
 

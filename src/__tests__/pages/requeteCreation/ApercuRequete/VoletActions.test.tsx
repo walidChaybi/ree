@@ -239,20 +239,19 @@ test("Doit desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete 
 });
 
 test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete et status est bon", async () => {
+  const history = createMemoryHistory();
+
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  storeRece.utilisateurCourant.idUtilisateur =
+    "90c6aee1-21be-4ba6-9e55-fc8831252646";
+
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+      "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
+    )
+  );
   act(() => {
-    const history = createMemoryHistory();
-
-    storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-    storeRece.utilisateurCourant.idUtilisateur =
-      "90c6aee1-21be-4ba6-9e55-fc8831252646";
-
-    history.push(
-      getUrlWithParam(
-        URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
-        "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
-      )
-    );
-
     render(
       <>
         <Router history={history}>
@@ -271,15 +270,16 @@ test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requ
     );
   });
 
-  act(async () => {
-    await waitFor(() => {
-      const boutonVoletAction = screen.getByText("Actions");
-      fireEvent.click(boutonVoletAction);
-    });
+  await waitFor(() => {
+    const boutonVoletAction = screen.getByText("Actions");
+    fireEvent.click(boutonVoletAction);
   });
 
   const button = screen.getByText("Acte irrecevable").closest("button");
-  expect(button?.getAttribute("disabled")).toBe(null);
+
+  await waitFor(() => {
+    expect(button?.getAttribute("disabled")).toBe(null);
+  });
 });
 
 test("Doit ouvrir et changer le titre de la popin au click sur une action", async () => {

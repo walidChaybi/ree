@@ -57,7 +57,9 @@ test("get prenom d'un id ", () => {
     }
   ];
   expect(
-    storeRece.getPrenomUtilisateurFromID("7a091a3b-6835-4824-94fb-527d68926d56")
+    storeRece.getPrenomUtilisateurAPartirID(
+      "7a091a3b-6835-4824-94fb-527d68926d56"
+    )
   ).toStrictEqual("Young");
 });
 
@@ -70,7 +72,7 @@ test("get nom d'un id ", () => {
     }
   ];
   expect(
-    storeRece.getNomUtilisateurFromID("7a091a3b-6835-4824-94fb-527d68926d56")
+    storeRece.getNomUtilisateurAPartirID("7a091a3b-6835-4824-94fb-527d68926d56")
   ).toStrictEqual("Ashley");
 });
 

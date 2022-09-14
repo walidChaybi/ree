@@ -1,8 +1,9 @@
 import { storeRece } from "@util/storeRece";
-import { estTableauNonVide } from "@util/Utils";
+import { estTableauNonVide, getValeurOuVide } from "@util/Utils";
 import { Provenance } from "../requete/enum/Provenance";
 import { Droit } from "./enum/Droit";
 import { Perimetre, PerimetreEnum } from "./enum/Perimetre";
+import { Habilitation } from "./Habilitation";
 import { IEntite } from "./IEntiteRattachement";
 import { IUtilisateur, utilisateurADroit } from "./IUtilisateur";
 
@@ -67,22 +68,21 @@ export function officierHabiliterUniquementPourLeDroit(droit: Droit): boolean {
   return droitTrouve;
 }
 
-// Vérification que l'officier à le droit de consulter la visualisation de l'acte
-// Soit il a le droit CONSULTER sur le périmètre de l'acte et le type de registre est présent dans ce périmètre
-// Soit il a le droit CONSULTER_ARCHIVE
-export function officierAutoriserSurLeTypeRegistre(idTypeRegistre: string) {
+export function officierDroitConsulterSurLeTypeRegistre(
+  idTypeRegistre: string
+): boolean {
   const officier = storeRece.utilisateurCourant;
   let res = false;
 
   if (officier) {
     let i = 0;
     while (!res && i < officier.habilitations.length) {
-      const h = officier.habilitations[i];
+      const habilitationOfficier = officier.habilitations[i];
       if (
-        h.perimetre &&
-        h.perimetre.listeIdTypeRegistre &&
-        h.profil.droits.find(d => d.nom === Droit.CONSULTER) &&
-        h.perimetre.listeIdTypeRegistre.includes(idTypeRegistre)
+        Habilitation.aDroitConsulterSurPerimetre(
+          habilitationOfficier,
+          idTypeRegistre
+        )
       ) {
         res = true;
       }
@@ -93,16 +93,45 @@ export function officierAutoriserSurLeTypeRegistre(idTypeRegistre: string) {
   return res;
 }
 
-// Vérification que l'officier à le droit de consulter la visualisation de l'acte
-// Soit il a le droit CONSULTER sur le périmètre de l'acte et le type de registre est présent dans ce périmètre
-// Soit il a le droit CONSULTER sur le périmètre MEAE
-// Soit il a le droit CONSULTER_ARCHIVE
-export function officierAutoriserSurLeTypeRegistreOuDroitMEAE(
+export function officierDroitDelivrerSurLeTypeRegistre(idTypeRegistre: string) {
+  const officier = storeRece.utilisateurCourant;
+  let estHabilite = false;
+
+  if (officier) {
+    let i = 0;
+    while (!estHabilite && i < officier.habilitations.length) {
+      const habilitationOfficier = officier.habilitations[i];
+      if (
+        Habilitation.aDroitDelivrerEtDelivrerComedecSurPerimetre(
+          habilitationOfficier,
+          idTypeRegistre
+        )
+      ) {
+        estHabilite = true;
+      }
+      i++;
+    }
+  }
+
+  return estHabilite;
+}
+
+export function officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(
   idTypeRegistre: string
 ) {
   return (
-    officierAutoriserSurLeTypeRegistre(idTypeRegistre) ||
+    officierDroitConsulterSurLeTypeRegistre(idTypeRegistre) ||
     officierALeDroitSurUnDesPerimetres(Droit.CONSULTER, [Perimetre.MEAE])
+  );
+}
+
+export function officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(
+  idTypeRegistre?: string
+) {
+  return (
+    officierDroitConsulterSurLeTypeRegistre(getValeurOuVide(idTypeRegistre)) ||
+    officierALeDroitSurUnDesPerimetres(Droit.DELIVRER, [Perimetre.MEAE]) ||
+    officierALeDroitSurUnDesPerimetres(Droit.DELIVRER_COMEDEC, [Perimetre.MEAE])
   );
 }
 

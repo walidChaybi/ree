@@ -1,5 +1,5 @@
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
-import { GetAlertesActeApiHookParameters } from "@hook/alertes/GetAlertesActeApiHook";
+import { IGetAlertesActeApiHookParameters } from "@hook/alertes/GetAlertesActeApiHook";
 import {
   GetNbrTitulairesActeHookParameters,
   useGetNbrTitulairesActeApiHook
@@ -43,7 +43,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
   >(new Map([]));
 
   /* Etat inscriptions sélectionnées */
-  const [addActe, setAddActe] = useState<GetAlertesActeApiHookParameters>();
+  const [addActe, setAddActe] = useState<IGetAlertesActeApiHookParameters>();
 
   /* Etat paramètres d'appel de l'API de récupération des titulaires d'un acte */
   const [titulairesActeHookParameters, setTitulairesActeHookParameters] =

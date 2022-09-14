@@ -19,7 +19,7 @@ export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const onClick = (): void => {
-    ajoutAlertePossible === true && setIsOpen(true);
+    ajoutAlertePossible && setIsOpen(true);
   };
 
   const onClosePopin = (): void => {
@@ -36,7 +36,7 @@ export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({
       <FontAwesomeIcon
         icon={faPlusCircle}
         className={`IconeBoutonAjoutAlerte ${
-          ajoutAlertePossible === false ? "Disabled" : ""
+          !ajoutAlertePossible ? "Disabled" : ""
         }`}
         title={getLibelle("Ajouter une alerte")}
         onClick={onClick}

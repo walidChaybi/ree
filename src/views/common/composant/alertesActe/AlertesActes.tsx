@@ -7,11 +7,13 @@ import {
   useDeleteAlerteActeApiHook
 } from "@hook/alertes/DeleteAlerteActeHookApi";
 import {
-  GetAlertesActeApiHookParameters,
+  IGetAlertesActeApiHookParameters,
   useGetAlertesActeApiHook
 } from "@hook/alertes/GetAlertesActeApiHook";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getLibelle } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { BoutonAjouterAlerte } from "@widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
@@ -23,7 +25,7 @@ import "./scss/AlertesActes.scss";
 export interface AlertesActesProps {
   detailRequete: IRequeteDelivrance;
   idActeInit?: string;
-  addActe?: GetAlertesActeApiHookParameters;
+  addActe?: IGetAlertesActeApiHookParameters;
   ajoutAlerte?: (alerte: Map<string, IAlerte[]>) => void;
   ajoutAlertePossible: boolean;
 }
@@ -40,7 +42,7 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
 
   /* Etat paramètres d'appel de l'API de récupération des alertes */
   const [alertesActeApiHookParameters, setAlertesActeApiHookParameters] =
-    useState<GetAlertesActeApiHookParameters>();
+    useState<IGetAlertesActeApiHookParameters>();
 
   /* Etat paramètres d'appel de l'API d'ajout d'une alerte */
   const [
@@ -78,7 +80,7 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
       if (alertesActeApiHookParameters.isChecked && resultatGetAlertesActe) {
         newAlertes.set(
           alertesActeApiHookParameters.idActe,
-          resultatGetAlertesActe
+          resultatGetAlertesActe.alertes
         );
       } else {
         newAlertes.delete(alertesActeApiHookParameters.idActe);
@@ -181,15 +183,20 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
                 key={`alertes-${index}`}
                 className={`Alertes ${index === 0 ? "" : "SeparateurAlertes"}`}
               >
-                <BoutonAjouterAlerte
-                  key={`bouton-ajouter-alerte-${index}`}
-                  ajoutAlertePossible={ajoutAlertePossible}
-                  ajouterAlerteCallBack={ajouterAlerteCallBack.bind(
-                    null,
-                    entry?.[0]
-                  )}
-                />
+                {gestionnaireFeatureFlag.estActif(
+                  FeatureFlag.FF_DELIV_EC_PAC
+                ) && (
+                  <BoutonAjouterAlerte
+                    key={`bouton-ajouter-alerte-${index}`}
+                    ajoutAlertePossible={ajoutAlertePossible}
+                    ajouterAlerteCallBack={ajouterAlerteCallBack.bind(
+                      null,
+                      entry?.[0]
+                    )}
+                  />
+                )}
                 <ListeAlertes
+                  idTypeRegistre={resultatGetAlertesActe?.idTypeRegistre}
                   key={`liste-alertes-${index}`}
                   ajoutAlertePossible={ajoutAlertePossible}
                   alertes={entry?.[1]}
