@@ -83,6 +83,29 @@ export const natureRetireesNaissanceAvecFillation = [
   RECTIFICATION
 ];
 
+export const natureRetireesNaissancePlurilingue = [
+  PACS,
+  ANNULATION_PACS,
+  DISSOLUTION_PACS,
+  MODIFICATION_PACS,
+  REPRISE_VIE_COMMUNE,
+  NATIONALITE,
+  EXTRANEITE,
+  CHANGEMENT_NOM,
+  CHANGEMENT_SEXE,
+  LIEN_FILIATION_HORS_ADOPTION,
+  ADOPTION,
+  PUPILLE,
+  ANNULATION_MARIAGE,
+  ANNULATION_DECISION,
+  ANNULATION_EVENEMENT,
+  ANNULATION_MENTION,
+  RECTIFICATION,
+  CODE_RC_RADIE,
+  CODE_RC,
+  AUTRES
+];
+
 export const natureRetireesNaissanceSansFillation = [
   ...natureRetireesNaissanceAvecFillation,
   NATIONALITE,

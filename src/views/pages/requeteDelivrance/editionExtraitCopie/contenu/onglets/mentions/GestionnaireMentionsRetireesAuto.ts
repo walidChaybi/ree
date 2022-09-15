@@ -16,6 +16,7 @@ import {
   natureRetireesMariageAvecFilliation,
   natureRetireesMariageSansFilliation,
   natureRetireesNaissanceAvecFillation,
+  natureRetireesNaissancePlurilingue,
   natureRetireesNaissanceSansFillation,
   PACS,
   REPRISE_VIE_COMMUNE,
@@ -34,43 +35,63 @@ export class GestionnaireMentionsRetireesAuto {
   ): string[] {
     Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions);
     if (choixDelivrance && natureActe) {
-      switch (natureActe) {
-        case NatureActe.NAISSANCE:
-          this.deselectionnerRadieParPaire(
-            this.garderMentionsNonRetiree(mentions)
-          );
-          this.deselectionnerAnnulationParPaire(
-            this.garderMentionsNonRetiree(mentions)
-          );
-          this.deselectionneSituationFamilialePassee(
-            this.garderMentionsNonRetiree(mentions)
-          );
+      if (ChoixDelivrance.estAvecOuSansFiliation(choixDelivrance)) {
+        switch (natureActe) {
+          case NatureActe.NAISSANCE:
+            this.deselectionnerRadieParPaire(
+              this.garderMentionsNonRetiree(mentions)
+            );
+            this.deselectionnerAnnulationParPaire(
+              this.garderMentionsNonRetiree(mentions)
+            );
+            this.deselectionneSituationFamilialePassee(
+              this.garderMentionsNonRetiree(mentions)
+            );
 
-          this.deselectionneExtraneite(this.garderMentionsNonRetiree(mentions));
-          this.deselectionneMentionsSpecifiques(
-            this.garderMentionsNonRetiree(mentions),
-            choixDelivrance,
-            natureActe
-          );
-          this.deselectionneMentionsIncompatibleAvecActe(
-            this.garderMentionsNonRetiree(mentions),
-            natureActe
-          );
-          break;
-        case NatureActe.MARIAGE:
-          this.deselectionnerAnnulationParPaire(
-            this.garderMentionsNonRetiree(mentions)
-          );
-          this.deselectionneMentionsSpecifiques(
-            this.garderMentionsNonRetiree(mentions),
-            choixDelivrance,
-            natureActe
-          );
-          this.deselectionneMentionsIncompatibleAvecActe(
-            this.garderMentionsNonRetiree(mentions),
-            natureActe
-          );
-          break;
+            this.deselectionneExtraneite(
+              this.garderMentionsNonRetiree(mentions)
+            );
+            this.deselectionneMentionsSpecifiques(
+              this.garderMentionsNonRetiree(mentions),
+              choixDelivrance,
+              natureActe
+            );
+            this.deselectionneMentionsIncompatibleAvecActe(
+              this.garderMentionsNonRetiree(mentions),
+              natureActe
+            );
+            break;
+          case NatureActe.MARIAGE:
+            this.deselectionnerAnnulationParPaire(
+              this.garderMentionsNonRetiree(mentions)
+            );
+            this.deselectionneMentionsSpecifiques(
+              this.garderMentionsNonRetiree(mentions),
+              choixDelivrance,
+              natureActe
+            );
+            this.deselectionneMentionsIncompatibleAvecActe(
+              this.garderMentionsNonRetiree(mentions),
+              natureActe
+            );
+            break;
+        }
+      } else {
+        if (natureActe === NatureActe.NAISSANCE) {
+          this.deselectionnerAnnulationParPaire(mentions);
+        }
+        this.deselectionneSituationFamilialePassee(
+          this.garderMentionsNonRetiree(mentions)
+        );
+        this.deselectionneMentionsSpecifiques(
+          this.garderMentionsNonRetiree(mentions),
+          choixDelivrance,
+          natureActe
+        );
+        this.deselectionneMentionsIncompatibleAvecActe(
+          this.garderMentionsNonRetiree(mentions),
+          natureActe
+        );
       }
     }
 
@@ -130,71 +151,30 @@ export class GestionnaireMentionsRetireesAuto {
     choixDelivrance: ChoixDelivrance,
     natureActe: NatureActe
   ) {
+    let mentionsRetirees: string[] = [];
     switch (natureActe) {
       case NatureActe.NAISSANCE:
-        this.deselectionneMentionsSpecifiquesNaissance(
-          mentions,
-          choixDelivrance
-        );
+        if (ChoixDelivrance.estAvecFiliation(choixDelivrance)) {
+          mentionsRetirees = natureRetireesNaissanceAvecFillation;
+        } else if (ChoixDelivrance.estSansFiliation(choixDelivrance)) {
+          mentionsRetirees = natureRetireesNaissanceSansFillation;
+        } else if (ChoixDelivrance.estPlurilingue(choixDelivrance)) {
+          mentionsRetirees = natureRetireesNaissancePlurilingue;
+        }
         break;
       case NatureActe.MARIAGE:
-        this.deselectionneMentionsSpecifiquesMariage(mentions, choixDelivrance);
+        if (ChoixDelivrance.estAvecFiliation(choixDelivrance)) {
+          mentionsRetirees = natureRetireesMariageAvecFilliation;
+        } else {
+          mentionsRetirees = natureRetireesMariageSansFilliation;
+        }
         break;
     }
-  }
-
-  public deselectionneMentionsSpecifiquesNaissance(
-    mentions: IMentionAvecRetiree[],
-    choixDelivrance: ChoixDelivrance
-  ) {
-    if (ChoixDelivrance.estAvecFiliation(choixDelivrance)) {
-      mentions.forEach(mention => {
-        if (
-          natureRetireesNaissanceAvecFillation.includes(
-            mention.typeMention.nature.code
-          )
-        ) {
-          mention.retiree = true;
-        }
-      });
-    } else {
-      mentions.forEach(mention => {
-        if (
-          natureRetireesNaissanceSansFillation.includes(
-            mention.typeMention.nature.code
-          )
-        ) {
-          mention.retiree = true;
-        }
-      });
-    }
-  }
-
-  public deselectionneMentionsSpecifiquesMariage(
-    mentions: IMentionAvecRetiree[],
-    choixDelivrance: ChoixDelivrance
-  ) {
-    if (ChoixDelivrance.estAvecFiliation(choixDelivrance)) {
-      mentions.forEach(mention => {
-        if (
-          natureRetireesMariageAvecFilliation.includes(
-            mention.typeMention.nature.code
-          )
-        ) {
-          mention.retiree = true;
-        }
-      });
-    } else {
-      mentions.forEach(mention => {
-        if (
-          natureRetireesMariageSansFilliation.includes(
-            mention.typeMention.nature.code
-          )
-        ) {
-          mention.retiree = true;
-        }
-      });
-    }
+    mentions.forEach(mention => {
+      if (mentionsRetirees.includes(mention.typeMention.nature.code)) {
+        mention.retiree = true;
+      }
+    });
   }
 
   public deselectionneMentionsIncompatibleAvecActe(
