@@ -63,7 +63,7 @@ test("renders OptionsCourrierForm DoubleClick pour ajouter, bouton moins pour su
 
   await waitFor(() => {
     expect(screen.getByText("Ajouter un paragraphe")).toBeDefined();
-    expect(screen.getByText("Option(s) disponibles(s)")).toBeDefined();
+    expect(screen.getByText("Option(s) disponible(s)")).toBeDefined();
     expect(screen.getByText("Option(s) choisie(s)")).toBeDefined();
     // Libellés des options dans le tableau
     expect(screen.getByText("Conciergeries administratives")).toBeDefined();

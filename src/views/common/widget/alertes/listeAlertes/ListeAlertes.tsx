@@ -80,7 +80,7 @@ export const ListeAlertes: React.FC<ListeAlertesProps> = ({
               className={alerte?.codeCouleur}
               title={alerte?.complementDescription}
             >
-              {displayReference === true
+              {displayReference
                 ? Alerte.toReferenceString(alerte)
                 : Alerte.toAlertString(alerte)}
               {gestionnaireFeatureFlag.estActif(

@@ -6,6 +6,7 @@ import {
   useSauvegarderMentions
 } from "@hook/acte/mentions/SauvegarderMentionsHook";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { Mention } from "@model/etatcivil/acte/mention/IMention";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_COPIE_INTEGRALE } from "@model/requete/enum/DocumentDelivranceConstante";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -47,6 +48,10 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
     useState<SauvegarderMentionsParam>();
   const [estDeverrouille, setEstdeverrouille] = useState<boolean>(
     getValeurEstdeverrouillerCommencement(props.document)
+  );
+
+  const estExtraitPlurilingue = DocumentDelivrance.estExtraitPlurilingue(
+    props.document?.typeDocument
   );
 
   const mentionsApi = useMentionsApiHook(mentionsParams);
@@ -93,10 +98,15 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
       );
       if (mentionsNew) {
         setMentions(mentionsNew);
+        if (estExtraitPlurilingue) {
+          mentionsNew[0].texte = Mention.getTexteAPartirPlurilingue(
+            mentionsNew[0].texte
+          );
+        }
         setMentionSelect(mentionsNew[0]);
       }
     }
-  }, [mentionsApi, props.document]);
+  }, [mentionsApi, props.document, estExtraitPlurilingue]);
 
   useEffect(() => {
     reinitialisation();
@@ -150,6 +160,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
         />
       ) : (
         <MentionsExtrait
+          estExtraitPlurilingue={estExtraitPlurilingue}
           mentions={mentions}
           mentionSelect={mentionSelect}
           mentionsApi={mentionsApi?.mentions}

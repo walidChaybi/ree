@@ -129,7 +129,7 @@ export function officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(
   idTypeRegistre?: string
 ) {
   return (
-    officierDroitConsulterSurLeTypeRegistre(getValeurOuVide(idTypeRegistre)) ||
+    officierDroitDelivrerSurLeTypeRegistre(getValeurOuVide(idTypeRegistre)) ||
     officierALeDroitSurUnDesPerimetres(Droit.DELIVRER, [Perimetre.MEAE]) ||
     officierALeDroitSurUnDesPerimetres(Droit.DELIVRER_COMEDEC, [Perimetre.MEAE])
   );

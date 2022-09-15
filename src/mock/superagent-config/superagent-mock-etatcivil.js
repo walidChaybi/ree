@@ -32,7 +32,7 @@ import {
   idFicheRca
 } from "../data/ficheRCA";
 import { imagePngVideBase64 } from "../data/ImagePng";
-import { mentions } from "../data/mentions";
+import { mentions, mentionsPlurilingues } from "../data/mentions";
 import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import {
   ReponseAppelNomenclatureMandataire,
@@ -117,7 +117,9 @@ export const configEtatcivil = [
       if (
         match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a" ||
         match[1] ===
-          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a?recupereImagesEtTexte=true"
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a?recupereImagesEtTexte=true" ||
+        match[1] ===
+          "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a?recupereImagesEtTexte=true"
       ) {
         return { data: acteNationalite };
       }
@@ -176,6 +178,12 @@ export const configEtatcivil = [
         context.method === "get"
       ) {
         return { data: mentions };
+      }
+      if (
+        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/mentions" &&
+        context.method === "get"
+      ) {
+        return { data: mentionsPlurilingues };
       }
       if (
         (match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions" ||

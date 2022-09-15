@@ -1,10 +1,7 @@
-import { IMention } from "@model/etatcivil/acte/mention/IMention";
-import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { Generateur } from "@util/generateur/Generateur";
-import { getLibelle, getValeurOuVide } from "@util/Utils";
-import { SelectRece } from "@widget/formulaire/champsSaisie/SelectField";
 import { ListeGlisserDeposer } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useCallback } from "react";
 import {
@@ -15,8 +12,11 @@ import {
   mappingVersListe,
   selectionneEtMiseAJour
 } from "../GestionMentionsUtil";
+import { AjoutMention } from "./AjoutMention";
+import { ModificationMention } from "./ModificationMention";
 
 export interface SectionModificationMentionProps {
+  estExtraitPlurilingue: boolean;
   mentions?: IMentionAffichage[];
   mentionSelect?: IMentionAffichage;
   mentionsApi?: IMention[];
@@ -35,7 +35,8 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
   setMentions,
   setMentionAjout,
   mentionAjout,
-  natureActe
+  natureActe,
+  estExtraitPlurilingue
 }) => {
   const handleOnBlur = useCallback(() => {
     handleBlur(
@@ -43,9 +44,17 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
       mentionSelect,
       mentionsApi,
       setMentionSelect,
-      setMentions
+      setMentions,
+      estExtraitPlurilingue
     );
-  }, [mentions, mentionSelect, mentionsApi, setMentionSelect, setMentions]);
+  }, [
+    mentions,
+    mentionSelect,
+    mentionsApi,
+    setMentionSelect,
+    setMentions,
+    estExtraitPlurilingue
+  ]);
 
   const handleChangeSelect = useCallback(
     (event: any) => {
@@ -89,7 +98,9 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
       } else {
         setMentionAjout({
           id: Generateur.genereCleUnique(),
-          texte: "",
+          texte: estExtraitPlurilingue
+            ? texteParDefautPlurilingue(natureActe)
+            : "",
           nature: NatureMention.getEnumFor(event.target.value),
           numeroOrdre: getNumeroOrdreMention(mentions),
           estPresent: true,
@@ -98,7 +109,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
         } as IMentionAffichage);
       }
     },
-    [mentionAjout, mentions, setMentionAjout]
+    [mentionAjout, mentions, setMentionAjout, estExtraitPlurilingue, natureActe]
   );
   const handleAjoutTexte = useCallback(
     (event: any) => {
@@ -123,6 +134,13 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
 
   const handleAjoutMention = useCallback(() => {
     if (mentionAjout) {
+      const futurMentionSelect = { ...mentionAjout };
+      if (estExtraitPlurilingue) {
+        mentionAjout.texte = Mention.getPlurilingueAPartirTexte(
+          mentionAjout.texte,
+          mentionAjout.nature
+        );
+      }
       let nouvellesMentions: IMentionAffichage[] = [];
       if (mentions) {
         nouvellesMentions = [...mentions];
@@ -132,10 +150,17 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
         (mention, index) => (mention.numeroOrdre = index + 1)
       );
       setMentions(nouvellesMentions);
-      setMentionSelect(mentionAjout);
+      setMentionSelect(futurMentionSelect);
       setMentionAjout(undefined);
     }
-  }, [mentionAjout, mentions, setMentionSelect, setMentionAjout, setMentions]);
+  }, [
+    mentionAjout,
+    mentions,
+    setMentionSelect,
+    setMentionAjout,
+    setMentions,
+    estExtraitPlurilingue
+  ]);
 
   return (
     <>
@@ -143,7 +168,9 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
         <>
           <ListeGlisserDeposer
             elementSelect={mentionSelect?.id}
-            setElementSelect={id =>
+            setElementSelect={(
+              id // @ts-ignore
+            ) =>
               selectionneEtMiseAJour(
                 mentions,
                 mentionSelect,
@@ -162,82 +189,38 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
             useDragHandle={true}
             libellesSontTitres={false}
           />
-          <div className="FormMention Modification">
-            <h3>{getLibelle("Modification d'une mention")}</h3>
-            <div className="SelectModif">
-              <span className="SelectNature">
-                <label>{getLibelle("Nature mention")}</label>
-                <SelectRece
-                  pasPremiereOptionVide={true}
-                  options={
-                    // Un TypeMention est lié à une nature d'acte. Ce qui permet de récuperer les Nature
-                    natureActe
-                      ? NatureMention.getEnumsAsOptions(
-                          TypeMention.getNaturesMentionPourActe(natureActe)
-                        )
-                      : NatureMention.getAllEnumsAsOptions()
-                  }
-                  label="Nature sélectionnée"
-                  value={NatureMention.getUuidFromNature(mentionSelect?.nature)}
-                  onChange={handleChangeSelect}
-                  aria-label="Nature sélectionnée"
-                  onBlur={handleOnBlur}
-                />
-              </span>
-            </div>
-            <textarea
-              value={getValeurOuVide(mentionSelect?.texte)}
-              onChange={handleChangeTexte}
-              aria-label="Texte sélectionné"
-              onBlur={handleOnBlur}
-            />
-          </div>
+          <ModificationMention
+            natureActe={natureActe}
+            mentionSelect={mentionSelect}
+            handleChangeSelect={handleChangeSelect}
+            handleOnBlur={handleOnBlur}
+            handleChangeTexte={handleChangeTexte}
+            estExtraitPlurilingue={estExtraitPlurilingue}
+          />
         </>
       )}
-      <div className="FormMention Ajout">
-        <h3>{getLibelle("Ajout d'une mention")}</h3>
-        <div className="SelectAjout">
-          <span className="SelectNature">
-            <label>{getLibelle("Nature mention")}</label>
-            <SelectRece
-              options={
-                // Un TypeMention est lié à une nature d'acte. Ce qui permet de récuperer les Nature
-                natureActe
-                  ? NatureMention.getEnumsAsOptions(
-                      TypeMention.getNaturesMentionPourActe(natureActe)
-                    )
-                  : NatureMention.getAllEnumsAsOptions()
-              }
-              label="Nature ajoutée"
-              value={NatureMention.getUuidFromNature(mentionAjout?.nature)}
-              onChange={handleAjoutSelect}
-            />
-          </span>
-          <span className="ConteneurBouton">
-            <button
-              disabled={
-                !mentionAjout ||
-                mentionAjout.texte === "" ||
-                mentionAjout.nature === NatureMention.getEnumFor("")
-              }
-              onClick={handleAjoutMention}
-              title="Ajouter la mention"
-            >
-              +
-            </button>
-          </span>
-        </div>
-        <textarea
-          value={getValeurOuVide(mentionAjout?.texte)}
-          onChange={handleAjoutTexte}
-          placeholder="Texte mention à ajouter"
-        />
-      </div>
+      <AjoutMention
+        natureActe={natureActe}
+        mentionAjout={mentionAjout}
+        handleAjoutSelect={handleAjoutSelect}
+        handleAjoutMention={handleAjoutMention}
+        handleAjoutTexte={handleAjoutTexte}
+        estExtraitPlurilingue={estExtraitPlurilingue}
+      />
     </>
   );
 };
+
 function getNumeroOrdreMention(
   mentions: IMentionAffichage[] | undefined
 ): number {
   return mentions ? mentions.length + 1 : 0;
+}
+
+function texteParDefautPlurilingue(natureActe?: NatureActe) {
+  if (natureActe === NatureActe.MARIAGE) {
+    return "JJ-MM-AA <Lieu événement> <NOM du conjoint> <Prénoms du conjoint>";
+  } else {
+    return "JJ-MM-AA <Lieu événement>";
+  }
 }

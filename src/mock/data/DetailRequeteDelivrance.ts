@@ -1854,21 +1854,31 @@ export const requeteAvecDocsPlurilingue = {
       mentionsRetirees: []
     },
     {
-      id: "28bc3078-7e53-4b8b-8cf8-7f75a2502573",
-      nom: "Extrait avec filiation plurilingue",
+      id: "f63223ce-f425-441e-846c-114b0f36936d",
+      nom: "Extrait plurilingue",
       typeDocument: "ff7fe1fa-a2d6-4bc5-8681-deba65d9e2c6",
       mimeType: "application/pdf",
-      taille: 30132,
-      avecCtv: false,
-      nbPages: 1,
+      taille: 81568,
+      avecCtv: true,
+      nbPages: 2,
       orientation: "Portrait",
       referenceSwift:
-        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
-      conteneurSwift: "documents-delivres-2022-3",
+        "f6321644-be3b-4ac6-85ca-5197df5daa6a_f6326fca-80d5-4f9b-b139-71d16fd2eb63.pdf",
+      conteneurSwift: "documents-delivres-2022-9",
+      empreinte: "���\u0003�nh�,\u001c�ʸ\u0014)",
       validation: "O",
-      idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
+      idActe: "b41079a5-9e8d-478c-b04c-c4c2ac67134b",
       optionsCourrier: [],
-      mentionsRetirees: []
+      mentionsRetirees: [
+        {
+          id: "f632cb4e-b4de-4270-a8a2-ddda30c94490",
+          idMention: "1a0aa3be-8311-465d-b750-d4c19834477b"
+        },
+        {
+          id: "f632561d-7832-469c-845e-cb1cffada2fd",
+          idMention: "1a0aa3be-8311-465d-b750-d4c19834477a"
+        }
+      ]
     }
   ],
   evenement: {

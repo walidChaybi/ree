@@ -27,7 +27,7 @@ export function getTableauOptionsDisponibles(
   const tableauOptionsDisponiblesProps: TableauSimpleProps = {
     entetes: [
       {
-        libelle: getLibelle("Option(s) disponibles(s)")
+        libelle: getLibelle("Option(s) disponible(s)")
       },
       {
         className: "BoutonOption",

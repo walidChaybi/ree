@@ -12,6 +12,7 @@ import {
   requeteActeMariageAvecTroisTitulaire,
   requeteAvecCopieIntegraleActeImage,
   requeteAvecDocs,
+  requeteAvecDocsPlurilingue,
   requeteSansDocument
 } from "../data/DetailRequeteDelivrance";
 import {
@@ -328,6 +329,10 @@ export const configRequetes = [
         }
       }
 
+      if (match[1] === "/requetes/8bfa282d-1e66-4538-b242-b9de4f693f0e") {
+        return { data: requeteAvecDocsPlurilingue };
+      }
+
       if (match[1] === "/requetes/9bfa282d-1e66-4538-b242-b9de4f693f0e") {
         if (compteur === 0) {
           compteur++;
@@ -549,7 +554,9 @@ export const configRequetes = [
       if (
         match[1] ===
           "/documentsreponses/9bfa865e-6d7a-4d66-900e-b548178854db" ||
-        match[1] === "/documentsreponses/28bc3078-7e53-4b8b-8cf8-7f75a2502573"
+        match[1] ===
+          "/documentsreponses/28bc3078-7e53-4b8b-8cf8-7f75a2502573" ||
+        match[1] === "/documentsreponses/f63223ce-f425-441e-846c-114b0f36936d"
       ) {
         return { data: documentReponseExtraitAvecFiliation };
       }

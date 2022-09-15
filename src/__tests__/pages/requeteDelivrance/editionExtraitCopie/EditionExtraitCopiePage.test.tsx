@@ -436,63 +436,6 @@ test("Test affichage Edition Copie", async () => {
     );
   });
 });
-/*
-// Courrier
-test("Test création courrier", async () => {
-  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f693f0e/19c0d767-64e5-4376-aa1f-6d781a2a235a`
-  );
-
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
-  });
-
-  await waitFor(() => {
-    expect(screen.getByText("Option(s) disponiblalut toies(s)")).toBeDefined();
-    expect(
-      (screen.getByText("Valider") as HTMLButtonElement).disabled
-    ).toBeFalsy();
-  });
-
-  act(() => {
-    fireEvent.click(screen.getByText("Valider"));
-  });
-
-  await waitFor(() => {
-    expect(screen.getByText("Copie intégrale")).toBeDefined();
-    expect(screen.getByText("Extrait avec filiation")).toBeDefined();
-  });
-
-  act(() => {
-    fireEvent.click(screen.getByText("Extrait avec filiation"));
-  });
-
-  await waitFor(() => {
-    expect(screen.getByText("Gérer les mentions")).toBeDefined();
-  });
-
-  act(() => {
-    fireEvent.click(screen.getByText("Gérer les mentions"));
-  });
-
-  await waitFor(() => {
-    expect(screen.getByText("Valider")).toBeDefined();
-  });
-  act(() => {
-    fireEvent.click(screen.getByText("Valider"));
-  });
-
-  await waitFor(() => {
-    expect(screen.getByText("Valider")).toBeDefined();
-  });
-});*/
 
 test("Attendu: la modification d'une copie acte image s'effectue correctement", async () => {
   history.push(
@@ -643,4 +586,41 @@ test("Test ajout nationalité auto", async () => {
 
 afterAll(() => {
   superagentMock.unset();
+});
+
+test("Test création extrait plurilingue", async () => {
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  history.push(
+    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/8bfa282d-1e66-4538-b242-b9de4f693f0e/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+  );
+
+  await act(async () => {
+    render(
+      <Router history={history}>
+        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
+          <EditionExtraitCopiePage />
+        </Route>
+      </Router>
+    );
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Extrait avec filiation plurilingue")).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(screen.getByText("Extrait avec filiation plurilingue"));
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Gérer les mentions")).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(screen.getByText("Gérer les mentions"));
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Sc 31-01-92 <Nantes> <Jenmi>")).toBeDefined();
+  });
 });

@@ -54,6 +54,21 @@ export const natureRetireesMariageSansFilliation = [
   ADOPTION
 ];
 
+export const natureMentionExtraitPlurilingueMariage = [
+  SEPARATION_CORPS,
+  DIVORCE,
+  ANNULATION_MARIAGE,
+  ANNULATION_ACTE
+];
+
+export const natureMentionExtraitPlurilingueNaissance = [
+  MARIAGE,
+  SEPARATION_CORPS,
+  DIVORCE,
+  DECES,
+  ANNULATION_ACTE
+];
+
 export const natureRetireesNaissanceAvecFillation = [
   REPRISE_VIE_COMMUNE,
   ANNULATION_MARIAGE,
@@ -212,5 +227,23 @@ export class NatureMention extends EnumNomemclature {
           )
       ) != null
     );
+  }
+
+  public static getCodePourNature(codeNature?: string) {
+    switch (codeNature) {
+      case SEPARATION_CORPS:
+        return "Sc";
+      case MARIAGE:
+        return "Mar";
+      case DIVORCE:
+        return "Div";
+      case DECES:
+        return "D";
+      case ANNULATION_ACTE:
+      case ANNULATION_MARIAGE:
+        return "A";
+      default:
+        return "";
+    }
   }
 }

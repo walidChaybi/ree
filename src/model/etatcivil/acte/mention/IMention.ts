@@ -62,6 +62,19 @@ export const Mention = {
     }
     return texte;
   },
+  getTexteAPartirPlurilingue(texteMentionPlurilingue?: string): string {
+    if (texteMentionPlurilingue) {
+      const regex = /(?:Mar|Div|D|Sc|A) ([\W\w\s]*)/gm;
+      const matches = new RegExp(regex).exec(texteMentionPlurilingue);
+      if (matches?.[1]) {
+        return matches?.[1];
+      }
+    }
+    return "";
+  },
+  getPlurilingueAPartirTexte(texte?: string, nature?: NatureMention): string {
+    return `${NatureMention.getCodePourNature(nature?.code)} ${texte}`;
+  },
   trierMentionsNumeroOrdreApposition(mentions: IMention[]) {
     mentions.sort(
       (mention1, mentions2) => mention1.numeroOrdre - mentions2.numeroOrdre
@@ -94,6 +107,13 @@ export const Mention = {
             mention.textes?.texteMention ||
             mention.textes?.texteMentionDelivrance
         )
+      : [];
+  },
+  filtreSansTexteMentionNiTexteMentionPlurilingue(
+    mentions?: IMention[]
+  ): IMention[] {
+    return mentions
+      ? mentions.filter(mention => mention.textes?.texteMentionPlurilingue)
       : [];
   }
 };

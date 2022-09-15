@@ -209,7 +209,8 @@ test("mappingVersMentionApi", () => {
       {
         id: "1",
         textes: {
-          texteMentionDelivrance: "texte mention"
+          texteMentionDelivrance: "texte mention",
+          texteMentionPlurilingue: undefined
         },
         typeMention: {
           nature: {

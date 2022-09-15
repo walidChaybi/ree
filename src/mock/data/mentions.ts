@@ -355,3 +355,142 @@ export const mentionsApi = [
     }
   }
 ];
+
+
+export const mentionsPlurilingues = [
+  {
+    id: "f6947623-9959-4d07-8963-f55b16a08071",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 2,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663158980650,
+    titulaires: null,
+    typeMention: {
+      codeType: "39",
+      libelleType:
+        "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
+      codeSousType: "39-98",
+      libelleSousType: "Séparation de corps - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+        nom: "NATURE_MENTION",
+        code: "3",
+        libelle: "Séparation de corps",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: null,
+    textes: {
+      texteMention: null,
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance: null,
+
+      texteMentionPlurilingue: "Sc 31-01-92 <Nantes> <Jenmi>"
+    }
+  },
+  {
+    id: "f692c7f2-d9f8-4ab0-80f2-f63a0c6819de",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 3,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663158896811,
+    titulaires: null,
+    typeMention: {
+      codeType: "39",
+      libelleType:
+        "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
+      codeSousType: "39-98",
+      libelleSousType: "Séparation de corps - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+        nom: "NATURE_MENTION",
+        code: "3",
+        libelle: "Séparation de corps",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: null,
+    textes: {
+      texteMention: null,
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance: "Sc sale pute",
+      texteMentionPlurilingue: null
+    }
+  },
+  {
+    id: "f69b0825-9b47-4754-9f0b-0191b178b44d",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 1,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663159390387,
+    titulaires: null,
+    typeMention: {
+      codeType: "39",
+      libelleType:
+        "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
+      codeSousType: "39-98",
+      libelleSousType: "Séparation de corps - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+        nom: "NATURE_MENTION",
+        code: "3",
+        libelle: "Séparation de corps",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: null,
+    textes: {
+      texteMention: null,
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance:
+        "Sc JJ-MM-AA <Lieu événement> <NOM du conjoint> <Prénoms du conjoint>",
+      texteMentionPlurilingue:
+        "Sc JJ-MM-AA <Lieu événement> <NOM du conjoint> <Prénoms du conjoint>"
+    }
+  }
+];
