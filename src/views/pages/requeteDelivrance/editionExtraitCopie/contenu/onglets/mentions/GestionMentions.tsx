@@ -11,7 +11,7 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_COPIE_INTEGRALE } from "@model/requete/enum/DocumentDelivranceConstante";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { estTableauNonVide, getLibelle, getValeurOuVide } from "@util/Utils";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
 import { DocumentEC } from "../../../enum/DocumentEC";
@@ -92,18 +92,18 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
 
   const reinitialisation = useCallback(() => {
     if (mentionsApi?.mentions && props.document) {
-      const mentionsNew = mappingVersMentionAffichage(
+      const mentionsAAfficher = mappingVersMentionAffichage(
         mentionsApi.mentions,
         props.document
       );
-      if (mentionsNew) {
-        setMentions(mentionsNew);
+      if (estTableauNonVide(mentionsAAfficher)) {
+        setMentions(mentionsAAfficher);
         if (estExtraitPlurilingue) {
-          mentionsNew[0].texte = Mention.getTexteAPartirPlurilingue(
-            mentionsNew[0].texte
+          mentionsAAfficher[0].texte = Mention.getTexteAPartirPlurilingue(
+            mentionsAAfficher[0].texte
           );
         }
-        setMentionSelect(mentionsNew[0]);
+        setMentionSelect(mentionsAAfficher[0]);
       }
     }
   }, [mentionsApi, props.document, estExtraitPlurilingue]);
