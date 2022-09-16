@@ -10,7 +10,7 @@ import {
   mappingVersMentionsApi,
   modificationEffectue
 } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
-import { getValeurOuVide, tousNonNullsNonZeroEtNonVides } from "@util/Utils";
+import { getValeurOuVide, tousRenseignes } from "@util/Utils";
 import { useEffect, useState } from "react";
 import {
   IGenerationECParams,
@@ -99,7 +99,7 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
   // Maj du résultat retourné par le hook
   useEffect(() => {
     if (
-      tousNonNullsNonZeroEtNonVides(
+      tousRenseignes(
         params,
         mentionsRetireesSaved,
         resultatMajDocReponseAvecMentionRetirees || resultatGenerationEC

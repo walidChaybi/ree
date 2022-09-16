@@ -19,6 +19,7 @@ import {
   traiteAppelRequeteASigner
 } from "@util/GestionnaireFermeture";
 import { logError } from "@util/LogManager";
+import { TOASTCONTAINER_PRINCIPAL } from "@util/messageManager";
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
 import { storeRece } from "@util/storeRece";
 import fr from "date-fns/locale/fr";
@@ -105,6 +106,7 @@ const App: React.FC = () => {
                 <Header />
                 {!operationEnCours && <Body />}
                 <ToastContainer
+                  containerId={TOASTCONTAINER_PRINCIPAL}
                   className={"toast-container"}
                   position="top-center"
                   hideProgressBar={false}
@@ -113,6 +115,7 @@ const App: React.FC = () => {
                   rtl={false}
                   draggable={true}
                   pauseOnHover={true}
+                  enableMultiContainer={true}
                 />
               </OfficierContext.Provider>
             </div>

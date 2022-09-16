@@ -1,7 +1,7 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getLibelle } from "@util/Utils";
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { Button } from "reakit/Button";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
 import { PopinNouvelleRMCActeInscription } from "./PopinNouvelleRMCActeInscription";
@@ -10,23 +10,15 @@ import "./scss/BoutonNouvelleRMCActeInscription.scss";
 interface BoutonNouvelleRMCActeInscriptionProps
   extends DialogDisclosureHTMLProps {
   nouvelleRMCActeInscription: (values: any) => void;
+  popinAffichee: boolean;
+  setPopinAffichee: (affichee: boolean) => void;
 }
 
-export const BoutonNouvelleRMCActeInscription: React.FC<BoutonNouvelleRMCActeInscriptionProps> = ({
-  nouvelleRMCActeInscription
-}) => {
-  const [showWaitState, setShowWaitState] = useState<boolean>(false);
-  const closePopin = useCallback(
-    (showPopin: boolean) => {
-      if (showWaitState && showPopin === false) {
-        setShowWaitState(showPopin);
-      }
-    },
-    [showWaitState]
-  );
-
+export const BoutonNouvelleRMCActeInscription: React.FC<
+  BoutonNouvelleRMCActeInscriptionProps
+> = props => {
   const handleClickNouvelleRMC = () => {
-    setShowWaitState(true);
+    props.setPopinAffichee(true);
   };
 
   return (
@@ -37,9 +29,9 @@ export const BoutonNouvelleRMCActeInscription: React.FC<BoutonNouvelleRMCActeIns
       </Button>
 
       <PopinNouvelleRMCActeInscription
-        open={showWaitState}
-        onClose={closePopin}
-        nouvelleRMCActeInscription={nouvelleRMCActeInscription}
+        open={props.popinAffichee}
+        setPopinAffichee={props.setPopinAffichee}
+        nouvelleRMCActeInscription={props.nouvelleRMCActeInscription}
       />
     </>
   );

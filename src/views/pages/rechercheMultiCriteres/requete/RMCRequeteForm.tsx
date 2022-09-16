@@ -1,12 +1,13 @@
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
 import { MEP_YEAR } from "@util/DateUtils";
+import messageManager from "@util/messageManager";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import * as Yup from "yup";
-import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
+import RMCBoutons from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
   DatesDebutFinAnneeFiltreProps,
@@ -28,17 +29,18 @@ import TitulaireFiltre, {
   TitulaireValidationSchema
 } from "../filtres/titulaire/TitulaireFiltre";
 import "./scss/RMCRequetePage.scss";
+import { getMessageSiVerificationRestrictionRmcRequeteEnErreur } from "./validation/VerificationRestrictionRmcRequete";
 
 // Nom des filtres
 export const REQUETE = "requete";
-export const DATES_DEBUT_FIN = "datesDebutFin";
+export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
 export const TITULAIRE = "titulaire";
 export const REQUERANT = "requerant";
 
 // Valeurs par défaut des champs
 const DefaultValuesRMCRequete = {
   [REQUETE]: RequeteDefaultValues,
-  [DATES_DEBUT_FIN]: DatesDebutFinAnneeDefaultValues,
+  [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeDefaultValues,
   [TITULAIRE]: TitulaireDefaultValues,
   [REQUERANT]: RequerantDefaultValues
 };
@@ -46,7 +48,7 @@ const DefaultValuesRMCRequete = {
 // Schéma de validation en sortie de champs
 const ValidationSchemaRMCRequete = Yup.object({
   [REQUETE]: RequeteValidationSchema,
-  [DATES_DEBUT_FIN]: DatesDebutFinAnneeValidationSchema,
+  [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeValidationSchema,
   [TITULAIRE]: TitulaireValidationSchema,
   [REQUERANT]: RequerantValidationSchema
 });
@@ -74,24 +76,29 @@ export const RMCRequeteForm: React.FC<RMCRequeteFormProps> = ({
   ];
 
   const onSubmitRMCRequete = (values: any) => {
-    setNouvelleRMCRequete(true);
-    setValuesRMCRequete(values);
-    setCriteresRechercheRequete({
-      valeurs: values,
-      range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-    });
-    stockageDonnees.stockerCriteresRMCReq(values);
-    setNouvelleRMCRequete(false);
+    const messageErreur =
+      getMessageSiVerificationRestrictionRmcRequeteEnErreur(values);
+    if (messageErreur) {
+      messageManager.showErrorAndClose(messageErreur);
+    } else {
+      if (closePopIn) {
+        closePopIn();
+      }
+
+      setNouvelleRMCRequete(true);
+      setValuesRMCRequete(values);
+      setCriteresRechercheRequete({
+        valeurs: values,
+        range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+      });
+      stockageDonnees.stockerCriteresRMCReq(values);
+      setNouvelleRMCRequete(false);
+    }
   };
 
   const rappelCriteres = () => {
     return stockageDonnees.recupererCriteresRMCReq();
   };
-
-  const boutonsProps = {
-    rappelCriteres,
-    closePopIn
-  } as RMCBoutonsProps;
 
   return (
     <>
@@ -103,7 +110,7 @@ export const RMCRequeteForm: React.FC<RMCRequeteFormProps> = ({
         onSubmit={onSubmitRMCRequete}
       >
         <div className="DeuxColonnes FormulaireRMCRequete">{blocsForm}</div>
-        <RMCBoutons {...boutonsProps} />
+        <RMCBoutons rappelCriteres={rappelCriteres} />
       </Formulaire>
     </>
   );
@@ -118,12 +125,12 @@ function getFormRequete(): JSX.Element {
 
 function getFormDatesDebutFin(): JSX.Element {
   const datesDebutFinAnneeFiltreProps = {
-    nomFiltre: DATES_DEBUT_FIN,
+    nomFiltre: DATES_DEBUT_FIN_ANNEE,
     anneeMin: MEP_YEAR
   } as DatesDebutFinAnneeFiltreProps;
   return (
     <DatesDebutFinAnneeFiltre
-      key={DATES_DEBUT_FIN}
+      key={DATES_DEBUT_FIN_ANNEE}
       {...datesDebutFinAnneeFiltreProps}
     />
   );

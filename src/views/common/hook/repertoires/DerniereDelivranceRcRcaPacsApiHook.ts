@@ -25,6 +25,7 @@ export function useDerniereDelivranceRcRcaPacsApiHook(
           setResultat({ resultat: true });
         })
         .catch(error => {
+          /* istanbul ignore next */
           setResultat({ resultat: false });
           logError({
             messageUtilisateur:

@@ -3,6 +3,7 @@
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { Options } from "@util/Type";
 
+
 export class TypeFamille extends EnumWithLibelle {
   public static readonly ACQ = new TypeFamille(
     "Acquisition de la nationalité française"
@@ -43,5 +44,9 @@ export class TypeFamille extends EnumWithLibelle {
 
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(TypeFamille, true, false);
+  }
+
+  public static getKey(typeFamille: TypeFamille) {
+    return EnumWithLibelle.getKey(TypeFamille, typeFamille);
   }
 }

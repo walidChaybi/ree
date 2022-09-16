@@ -328,8 +328,12 @@ export function compactObject(object: any): any {
   return object;
 }
 
-export function tousNonNullsNonZeroEtNonVides(...args: any[]): boolean {
+export function tousRenseignes(...args: any[]): boolean {
   return args.length > 0 && args.every(elem => elem);
+}
+
+export function tousNonRenseignes(...args: any[]): boolean {
+  return args.length === 0 || args.every(elem => !elem);
 }
 
 export function supprimeElement(tableau: any[], fct: any) {
@@ -462,9 +466,99 @@ export function auMoinsUneProprieteEstRenseigne(objet: Object): boolean {
 }
 
 export function estUnObjet(objet: any): boolean {
-  return typeof objet === "object" && !Array.isArray(objet);
+  return objet != null && typeof objet === "object" && !Array.isArray(objet);
 }
 
 export function estUnNombre(str?: string): boolean {
   return str != null && str !== "" && Number.isInteger(+str);
+}
+
+export function getValeurProprieteAPartirChemin(
+  chemin: string,
+  objet?: Object
+) {
+  return objet
+    ? chemin
+        .split(".")
+        //@ts-ignore
+        .reduce((previous, current) => previous?.[current], objet)
+    : undefined;
+}
+
+export function seulementUneProprieteRenseignee(
+  cheminPropriete: string,
+  objet?: Object
+): boolean {
+  const valeurPropriete = getValeurProprieteAPartirChemin(
+    cheminPropriete,
+    objet
+  );
+
+  return (
+    objet != null &&
+    estRenseigne(valeurPropriete) &&
+    (!estUnObjet(valeurPropriete) ||
+      auMoinsUneProprieteEstRenseigne(valeurPropriete as Object)) &&
+    seulementUneProprieteRenseigneeAvecCheminCourant(cheminPropriete, objet, "")
+  );
+}
+
+export function ajouteCheminCourant(propriete: string, cheminCourant: string) {
+  return cheminCourant ? `${cheminCourant}.${propriete}` : propriete;
+}
+
+function seulementUneProprieteRenseigneeAvecCheminCourant(
+  cheminPropriete: string,
+  objet: Object,
+  cheminCourant: string
+): boolean {
+  let res = true;
+  const proprietes = Object.getOwnPropertyNames(objet);
+  for (const propriete of proprietes) {
+    const cheminProprieteCourante = ajouteCheminCourant(
+      propriete,
+      cheminCourant
+    );
+    if (cheminPropriete !== cheminProprieteCourante) {
+      //@ts-ignore
+      const valeur = objet[propriete];
+      if (estUnObjet(valeur)) {
+        res = seulementUneProprieteRenseigneeAvecCheminCourant(
+          cheminPropriete,
+          valeur,
+          cheminProprieteCourante
+        );
+        if (!res) {
+          break;
+        }
+      } else if (estRenseigne(valeur)) {
+        res = false;
+        break;
+      }
+    }
+  }
+  return res;
+}
+
+export function aucuneProprieteRenseignee(objet?: Object): boolean {
+  if (!objet) {
+    return true;
+  }
+
+  let res = true;
+  const proprietes = Object.getOwnPropertyNames(objet);
+  for (const propriete of proprietes) {
+    //@ts-ignore
+    const valeur = objet[propriete];
+    if (estUnObjet(valeur)) {
+      res = aucuneProprieteRenseignee(valeur);
+      if (!res) {
+        break;
+      }
+    } else if (estRenseigne(valeur)) {
+      res = false;
+      break;
+    }
+  }
+  return res;
 }

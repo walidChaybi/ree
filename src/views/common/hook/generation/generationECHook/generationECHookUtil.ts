@@ -29,7 +29,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { SNP, SPC, tousNonNullsNonZeroEtNonVides } from "@util/Utils";
+import { SNP, SPC, tousRenseignes } from "@util/Utils";
 import { IExtraitCopieApiHookResultat } from "../../composition/CompositionExtraitCopieHook";
 import { ICreerCourrierECParams } from "../../requete/creerCourrierECHook";
 import { creationCompositionCopieActeImage } from "./creationComposition/creationCompositionCopieActeImage";
@@ -331,14 +331,11 @@ export function toutesLesDonneesSontPresentes(
 export function estPresentIdActeEtChoixDelivrance(
   params?: IGenerationECParams | ICreerCourrierECParams
 ): boolean {
-  return tousNonNullsNonZeroEtNonVides(
-    params?.idActe,
-    params?.requete?.choixDelivrance
-  );
+  return tousRenseignes(params?.idActe, params?.requete?.choixDelivrance);
 }
 
 export function estPresentActeEtChoixDelivrance(
   params?: IGenerationECParams
 ): boolean {
-  return tousNonNullsNonZeroEtNonVides(params?.acte, params?.choixDelivrance);
+  return tousRenseignes(params?.acte, params?.choixDelivrance);
 }

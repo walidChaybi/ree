@@ -11,17 +11,15 @@ import "./scss/PopinNouvelleRMCActeInscription.scss";
 
 interface PopinNouvelleRMCActeInscriptionProps {
   open: boolean;
-  onClose: (isOpen: boolean) => void;
+  setPopinAffichee: (affichee: boolean) => void;
   nouvelleRMCActeInscription: (values: any) => void;
 }
 
-export const PopinNouvelleRMCActeInscription: React.FC<PopinNouvelleRMCActeInscriptionProps> = ({
-  open,
-  onClose,
-  nouvelleRMCActeInscription
-}) => {
+export const PopinNouvelleRMCActeInscription: React.FC<
+  PopinNouvelleRMCActeInscriptionProps
+> = ({ open, setPopinAffichee, nouvelleRMCActeInscription }) => {
   const handleClose = () => {
-    onClose(false);
+    setPopinAffichee(false);
   };
 
   return (
@@ -41,10 +39,7 @@ export const PopinNouvelleRMCActeInscription: React.FC<PopinNouvelleRMCActeInscr
         </IconButton>
       </DialogTitle>
       <DialogContent>
-        <RMCActeInscriptionForm
-          onSubmit={nouvelleRMCActeInscription}
-          closePopIn={handleClose}
-        />
+        <RMCActeInscriptionForm onSubmit={nouvelleRMCActeInscription} />
       </DialogContent>
     </Dialog>
   );

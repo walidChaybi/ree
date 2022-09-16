@@ -41,7 +41,10 @@ export const BoutonRechercheRmc: React.FC = () => {
           titre="Recherche acte et inscription"
           setFenetreExterneUtil={setFenetreExterneUtil}
         >
-          <RMCActeInscriptionPage noAutoScroll={true}></RMCActeInscriptionPage>
+          <RMCActeInscriptionPage
+            noAutoScroll={true}
+            dansFenetreExterne={true}
+          ></RMCActeInscriptionPage>
         </FenetreExterne>
       )}
     </>

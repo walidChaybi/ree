@@ -43,7 +43,10 @@ export const RMCRequetePage: React.FC = () => {
 
   return (
     <>
-      <OperationEnCours visible={opEnCours}></OperationEnCours>
+      <OperationEnCours
+        visible={opEnCours}
+        onClick={() => setOpEnCours(false)}
+      ></OperationEnCours>
       <RMCRequeteForm
         setNouvelleRMCRequete={setNouvelleRMCRequete}
         setValuesRMCRequete={setValuesRMCRequete}

@@ -3,7 +3,7 @@ import { stockageDonnees } from "@util/stockageDonnees";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import React from "react";
 import * as Yup from "yup";
-import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
+import RMCBoutons from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
   DatesDebutFinAnneeFiltreProps,
@@ -44,12 +44,10 @@ export const titreForm = "Critères de recherche d'un acte et d'une inscription"
 
 interface RMCActeInscriptionFormProps {
   onSubmit: (values: any) => void;
-  closePopIn?: () => void;
 }
 
 export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = ({
-  onSubmit,
-  closePopIn
+  onSubmit
 }) => {
   const blocsForm: JSX.Element[] = [
     getFormTitulaire(),
@@ -65,11 +63,6 @@ export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = ({
     return stockageDonnees.recupererCriteresRMCActeInspt();
   };
 
-  const boutonsProps = {
-    rappelCriteres,
-    closePopIn
-  } as RMCBoutonsProps;
-
   return (
     <>
       <title>{titreForm}</title>
@@ -80,7 +73,7 @@ export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = ({
         onSubmit={onSubmitRMCActeInscription}
       >
         <div className="DeuxColonnes FormulaireRMCAI">{blocsForm}</div>
-        <RMCBoutons {...boutonsProps} />
+        <RMCBoutons rappelCriteres={rappelCriteres} />
       </Formulaire>
     </>
   );

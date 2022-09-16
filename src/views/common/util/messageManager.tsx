@@ -26,8 +26,14 @@ const successTitle = getLibelle("Succès");
 const warnTitle = getLibelle("Attention");
 const errorTitle = getLibelle("Erreur");
 
+export const TOASTCONTAINER_PRINCIPAL = "toastContainer-principal";
+
 const messageManager = {
-  showErrorAndClose: (errorMessage: string, autoClose?: number) => {
+  showErrorAndClose: (
+    errorMessage: string,
+    containerId = TOASTCONTAINER_PRINCIPAL,
+    autoClose?: number
+  ) => {
     toast(
       <div className="message-manager">
         <Alert severity="error">
@@ -40,12 +46,13 @@ const messageManager = {
         autoClose: getDurationErrorForAutoClose(autoClose),
         closeButton: false,
         hideProgressBar: false,
-        className: "error"
+        className: "error",
+        containerId
       }
     );
   },
 
-  showError: (errorMessage: string) => {
+  showError: (errorMessage: string, containerId = TOASTCONTAINER_PRINCIPAL) => {
     toast(
       <div className="message-manager error">
         <Alert severity="error">
@@ -57,12 +64,16 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "error"
+        className: "error",
+        containerId
       }
     );
   },
 
-  showErrors: (errorMessage: string[]) => {
+  showErrors: (
+    errorMessage: string[],
+    containerId = TOASTCONTAINER_PRINCIPAL
+  ) => {
     const htmlErrorMessage = errorMessage
       .map(message => message + "\n")
       .toString()
@@ -79,12 +90,17 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "error"
+        className: "error",
+        containerId
       }
     );
   },
 
-  showSuccessAndClose: (successMessage: string, autoClose?: number) => {
+  showSuccessAndClose: (
+    successMessage: string,
+    containerId = TOASTCONTAINER_PRINCIPAL,
+    autoClose?: number
+  ) => {
     toast(
       <div className="message-manager">
         <Alert severity="success">
@@ -96,12 +112,16 @@ const messageManager = {
         autoClose: getDurationForAutoClose(autoClose),
         closeButton: false,
         hideProgressBar: false,
-        className: "success"
+        className: "success",
+        containerId
       }
     );
   },
 
-  showSuccess: (successMessage: string) => {
+  showSuccess: (
+    successMessage: string,
+    containerId = TOASTCONTAINER_PRINCIPAL
+  ) => {
     toast(
       <div className="message-manager">
         <Alert severity="success">
@@ -113,12 +133,16 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "success"
+        className: "success",
+        containerId
       }
     );
   },
 
-  showSuccesses: (successMessage: string[]) => {
+  showSuccesses: (
+    successMessage: string[],
+    containerId = TOASTCONTAINER_PRINCIPAL
+  ) => {
     const htmlErrorMessage = successMessage
       .map(message => message + "\n")
       .toString()
@@ -135,12 +159,17 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "success"
+        className: "success",
+        containerId
       }
     );
   },
 
-  showInfoAndClose: (infoMessage: string, autoClose?: number) => {
+  showInfoAndClose: (
+    infoMessage: string,
+    containerId = TOASTCONTAINER_PRINCIPAL,
+    autoClose?: number
+  ) => {
     toast(
       <div className="message-manager">
         <Alert severity="info">
@@ -153,12 +182,13 @@ const messageManager = {
         autoClose: getDurationForAutoClose(autoClose),
         closeButton: false,
         hideProgressBar: false,
-        className: "info"
+        className: "info",
+        containerId
       }
     );
   },
 
-  showInfo: (infoMessage: string) => {
+  showInfo: (infoMessage: string, containerId = TOASTCONTAINER_PRINCIPAL) => {
     toast(
       <div className="message-manager">
         <Alert severity="info">
@@ -170,12 +200,16 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "info"
+        className: "info",
+        containerId
       }
     );
   },
 
-  showInfos: (infoMessages: string[]) => {
+  showInfos: (
+    infoMessages: string[],
+    containerId = TOASTCONTAINER_PRINCIPAL
+  ) => {
     const message = toString(infoMessages);
 
     toast(
@@ -189,12 +223,17 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "info"
+        className: "info",
+        containerId
       }
     );
   },
 
-  showWarningAndClose: (warningMessage: string, autoClose?: number) => {
+  showWarningAndClose: (
+    warningMessage: string,
+    containerId = TOASTCONTAINER_PRINCIPAL,
+    autoClose?: number
+  ) => {
     toast(
       <div className="message-manager">
         <Alert severity="warning">
@@ -207,12 +246,16 @@ const messageManager = {
         autoClose: getDurationForAutoClose(autoClose),
         closeButton: false,
         hideProgressBar: false,
-        className: "warning"
+        className: "warning",
+        containerId
       }
     );
   },
 
-  showWarning: (warningMessage: string) => {
+  showWarning: (
+    warningMessage: string,
+    containerId = TOASTCONTAINER_PRINCIPAL
+  ) => {
     toast(
       <div className="message-manager">
         <Alert severity="warning">
@@ -224,12 +267,16 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "warning"
+        className: "warning",
+        containerId
       }
     );
   },
 
-  showWarnings: (warningMessages: string[]) => {
+  showWarnings: (
+    warningMessages: string[],
+    containerId = TOASTCONTAINER_PRINCIPAL
+  ) => {
     const message = toString(warningMessages);
 
     toast(
@@ -243,7 +290,8 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "warning"
+        className: "warning",
+        containerId
       }
     );
   }

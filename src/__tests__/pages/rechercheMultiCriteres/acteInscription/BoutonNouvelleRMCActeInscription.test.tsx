@@ -6,18 +6,23 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import React from "react";
+import React, { useState } from "react";
+
+const ConteneurBouton: React.FC = () => {
+  const [popinAffichee, setPopinAffichee] = useState<boolean>(false);
+
+  return (
+    <BoutonNouvelleRMCActeInscription
+      nouvelleRMCActeInscription={jest.fn()}
+      setPopinAffichee={setPopinAffichee}
+      popinAffichee={popinAffichee}
+    />
+  );
+};
 
 test("renders titre bouton ajouter RMC", async () => {
   await act(async () => {
-    render(
-      <BoutonNouvelleRMCActeInscription
-        setValuesRMCActeInscription={jest.fn()}
-        setNouvelleRMCActeInscription={jest.fn()}
-        setCriteresRechercheActe={jest.fn()}
-        setCriteresRechercheInscription={jest.fn()}
-      />
-    );
+    render(<ConteneurBouton />);
   });
 
   const linkElement = screen.getByText("Nouvelle recherche multi-critères");

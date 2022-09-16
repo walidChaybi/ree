@@ -11,7 +11,12 @@ class GestionnaireFeatureFlag {
   }
 
   positionneFlagsAPartirDuHeader(header: any) {
-    this.supprimeTousLesFlags();
+    this.supprimeTousLesFlags([
+      FeatureFlag.FF_CONSULT_ACTE_RQT, 
+      FeatureFlag.FF_DELIV_CS, 
+      FeatureFlag.FF_DELIV_EC_PAC,
+      FeatureFlag.FF_NATALI, 
+      FeatureFlag.FF_RQT_INFORMATION]);
     const props = Object.getOwnPropertyNames(FeatureFlag);
     props.forEach((prop: string) => {
       const valeurFlag = this.getValeurFlagHeader(header, prop);
@@ -32,10 +37,12 @@ class GestionnaireFeatureFlag {
     return valeurFlag;
   }
 
-  private supprimeTousLesFlags(): void {
+  private supprimeTousLesFlags(nomFlags : string[]): void {
     const props = Object.getOwnPropertyNames(FeatureFlag);
     props.forEach((prop: string) => {
-      window.localStorage.removeItem(prop);
+      if (nomFlags.includes(prop)) {
+        window.localStorage.removeItem(prop);
+      }
     });
   }
 

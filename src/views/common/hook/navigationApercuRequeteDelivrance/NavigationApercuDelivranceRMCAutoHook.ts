@@ -1,6 +1,6 @@
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IUrlData, receUrl } from "@router/ReceUrls";
-import { tousNonNullsNonZeroEtNonVides } from "@util/Utils";
+import { tousRenseignes } from "@util/Utils";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
@@ -34,12 +34,7 @@ export function useNavigationApercuRMCAuto(
 
   useEffect(() => {
     if (navigation) {
-      if (
-        tousNonNullsNonZeroEtNonVides(
-          navigation.isRmcAuto,
-          rmcAutoNavigationParams
-        )
-      ) {
+      if (tousRenseignes(navigation.isRmcAuto, rmcAutoNavigationParams)) {
         setParamsRMCAuto(rmcAutoNavigationParams);
       } else if (navigation.url) {
         setUrlDataToPush({ url: navigation.url });
@@ -55,9 +50,7 @@ export function useNavigationApercuRMCAuto(
 
   useEffect(
     () => {
-      if (
-        tousNonNullsNonZeroEtNonVides(urlDataToPush, rmcAutoNavigationParams)
-      ) {
+      if (tousRenseignes(urlDataToPush, rmcAutoNavigationParams)) {
         if (
           estUrlSaisirOuApercuOuTraitementRequete(
             // @ts-ignore (forcément valué)

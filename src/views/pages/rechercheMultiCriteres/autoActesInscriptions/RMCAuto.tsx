@@ -4,6 +4,7 @@ import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IR
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
+import messageManager from "@util/messageManager";
 import { stockageDonnees } from "@util/stockageDonnees";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
@@ -19,6 +20,7 @@ import { ICriteresRechercheActeInscription } from "../acteInscription/hook/RMCAc
 import { useRMCInscriptionApiHook } from "../acteInscription/hook/RMCInscriptionApiHook";
 import { RMCActeInscriptionResultats } from "../acteInscription/resultats/RMCActeInscriptionResultats";
 import { goToLinkRMC } from "../acteInscription/resultats/RMCTableauCommun";
+import { getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur } from "../acteInscription/validation/VerificationRestrictionRmcActeInscription";
 import { BoutonNouvelleRMCActeInscription } from "./BoutonNouvelleRMCActeInscription";
 import { useRMCAutoActeApiHook } from "./hook/RMCAutoActeApiHook";
 import { useRMCAutoInscriptionApiHook } from "./hook/RMCAutoInscriptionApiHook";
@@ -55,6 +57,8 @@ export const RMCAuto: React.FC<RMCAutoProps> = ({
   onClickCheckboxTableauInscriptions,
   reset
 }) => {
+  const [popinAffichee, setPopinAffichee] = useState<boolean>(false);
+
   /* Etats RMC Auto */
   const [rmcAutoActe, setRmcAutoActe] = useState<
     IResultatRMCActe[] | undefined
@@ -209,20 +213,29 @@ export const RMCAuto: React.FC<RMCAutoProps> = ({
   /* Nouvelle RMC depuis la pop up */
   const nouvelleRMCActeInscription = useCallback(
     (values: any) => {
-      setResetRMCActeInscription(true);
-      setValuesRMCActeInscription(values);
-      setCriteresRechercheActe({
-        valeurs: values,
-        range: `0-${NB_LIGNES_PAR_APPEL_ACTE}`
-      });
-      setCriteresRechercheInscription({
-        valeurs: values,
-        range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-      });
-      stockageDonnees.stockerCriteresRMCActeInspt(values);
-      setResetRMCActeInscription(false);
-      if (reset) {
-        reset();
+      const messageErreur =
+        getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur(
+          values
+        );
+      if (messageErreur) {
+        messageManager.showErrorAndClose(messageErreur);
+      } else {
+        setPopinAffichee(false);
+        setResetRMCActeInscription(true);
+        setValuesRMCActeInscription(values);
+        setCriteresRechercheActe({
+          valeurs: values,
+          range: `0-${NB_LIGNES_PAR_APPEL_ACTE}`
+        });
+        setCriteresRechercheInscription({
+          valeurs: values,
+          range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+        });
+        stockageDonnees.stockerCriteresRMCActeInspt(values);
+        setResetRMCActeInscription(false);
+        if (reset) {
+          reset();
+        }
       }
     },
     [reset]
@@ -274,6 +287,8 @@ export const RMCAuto: React.FC<RMCAutoProps> = ({
         )}
       <BoutonNouvelleRMCActeInscription
         nouvelleRMCActeInscription={nouvelleRMCActeInscription}
+        setPopinAffichee={setPopinAffichee}
+        popinAffichee={popinAffichee}
       />
     </>
   );

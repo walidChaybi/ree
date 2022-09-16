@@ -49,11 +49,17 @@ test("render ApercuRequetePartieGauche", async () => {
   const nomTitulaire = screen.getByLabelText(
     "titulaire.nom"
   ) as HTMLInputElement;
+
+  const anneeNaissanceTitulaire = screen.getByLabelText(
+    "titulaire.dateNaissance.annee"
+  ) as HTMLInputElement;
+
   const boutonRechercher = screen.getByText("Rechercher") as HTMLButtonElement;
 
   await waitFor(() => {
     expect(popinNouvelleRMC).toBeInTheDocument();
     expect(nomTitulaire).toBeInTheDocument();
+    expect(anneeNaissanceTitulaire).toBeInTheDocument();
     expect(boutonRechercher).toBeInTheDocument();
     expect(boutonRechercher.disabled).toBeTruthy();
   });
@@ -64,8 +70,15 @@ test("render ApercuRequetePartieGauche", async () => {
     });
   });
 
+  await act(async () => {
+    fireEvent.change(anneeNaissanceTitulaire, {
+      target: { value: "2000" }
+    });
+  });
+
   await waitFor(() => {
     expect(nomTitulaire.value).toEqual(NORESULT);
+    expect(anneeNaissanceTitulaire.value).toEqual("2000");
   });
 
   await act(async () => {

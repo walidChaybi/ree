@@ -18,7 +18,9 @@ test("gestion feature flag works ", async () => {
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
   ).toBeFalsy();
-  expect(gestionnaireFeatureFlag.estActif(FeatureFlag.LOG_SERVEUR)).toBeFalsy();
+  expect(
+    gestionnaireFeatureFlag.estActif(FeatureFlag.LOG_SERVEUR)
+  ).toBeTruthy();
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_CONSULT_ACTE_RQT)
   ).toBeTruthy();

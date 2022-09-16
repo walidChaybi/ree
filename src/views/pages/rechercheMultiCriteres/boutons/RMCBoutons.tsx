@@ -10,7 +10,6 @@ import "./scss/RMCBoutons.scss";
 
 export interface IRMCBoutonsProps {
   rappelCriteres?: () => any;
-  closePopIn?: () => void;
 }
 
 export type RMCBoutonsProps = IRMCBoutonsProps & FormikComponentProps;
@@ -19,12 +18,6 @@ const RMCBoutons: React.FC<RMCBoutonsProps> = props => {
   const rmcBoutonRappelCriteresProps = {
     rappelCriteres: props.rappelCriteres
   } as RMCBoutonRappelCriteresProps;
-
-  const closePopIn = () => {
-    if (props.closePopIn) {
-      props.closePopIn();
-    }
-  };
 
   return (
     <>
@@ -40,7 +33,6 @@ const RMCBoutons: React.FC<RMCBoutonsProps> = props => {
         <Bouton
           disabled={!props.formik.isValid || !props.formik.dirty}
           type="submit"
-          onClick={closePopIn}
         >
           {getLibelle("Rechercher")}
         </Bouton>
@@ -49,4 +41,4 @@ const RMCBoutons: React.FC<RMCBoutonsProps> = props => {
   );
 };
 
-export default connect(RMCBoutons);
+export default connect<IRMCBoutonsProps>(RMCBoutons);

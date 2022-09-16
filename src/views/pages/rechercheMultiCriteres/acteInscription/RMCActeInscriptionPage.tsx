@@ -1,4 +1,5 @@
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import messageManager, { TOASTCONTAINER_PRINCIPAL } from "@util/messageManager";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { AutoScroll } from "@widget/autoScroll/autoScroll";
@@ -9,6 +10,7 @@ import {
   NB_LIGNES_PAR_PAGE_INSCRIPTION
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { ToastContainer } from "react-toastify";
 import { useRMCActeApiHook } from "./hook/RMCActeApiHook";
 import { ICriteresRechercheActeInscription } from "./hook/RMCActeInscriptionUtils";
 import { useRMCInscriptionApiHook } from "./hook/RMCInscriptionApiHook";
@@ -16,13 +18,18 @@ import { RMCActeInscriptionResultats } from "./resultats/RMCActeInscriptionResul
 import { goToLinkRMC } from "./resultats/RMCTableauCommun";
 import { RMCActeInscriptionForm } from "./RMCActeInscriptionForm";
 import "./scss/RMCActeInscriptionPage.scss";
+import { getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur as getMessageSiVerificationRestrictionRmcActeInscriptionEnErreur } from "./validation/VerificationRestrictionRmcActeInscription";
 
 interface RMCActeInscriptionPageProps {
   noAutoScroll: boolean;
+  dansFenetreExterne: boolean;
 }
 
+const TOASTCONTAINER_EXTERNE = "toastContainer-externe";
+
 export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
-  noAutoScroll
+  noAutoScroll,
+  dansFenetreExterne
 }) => {
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
 
@@ -118,21 +125,33 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
     [valuesRMCActeInscription]
   );
 
-  const onSubmitRMCActeInscription = useCallback((values: any) => {
-    setOpEnCours(true);
-    setNouvelleRMCActeInscription(true);
-    setValuesRMCActeInscription(values);
-    setCriteresRechercheActe({
-      valeurs: values,
-      range: `0-${NB_LIGNES_PAR_APPEL_ACTE}`
-    });
-    setCriteresRechercheInscription({
-      valeurs: values,
-      range: `0-${NB_LIGNES_PAR_APPEL_INSCRIPTION}`
-    });
-    stockageDonnees.stockerCriteresRMCActeInspt(values);
-    setNouvelleRMCActeInscription(false);
-  }, []);
+  const onSubmitRMCActeInscription = useCallback(
+    (values: IRMCActeInscription) => {
+      const messageErreur =
+        getMessageSiVerificationRestrictionRmcActeInscriptionEnErreur(values);
+      if (messageErreur) {
+        messageManager.showErrorAndClose(
+          messageErreur,
+          dansFenetreExterne ? TOASTCONTAINER_EXTERNE : TOASTCONTAINER_PRINCIPAL
+        );
+      } else {
+        setOpEnCours(true);
+        setNouvelleRMCActeInscription(true);
+        setValuesRMCActeInscription(values);
+        setCriteresRechercheActe({
+          valeurs: values,
+          range: `0-${NB_LIGNES_PAR_APPEL_ACTE}`
+        });
+        setCriteresRechercheInscription({
+          valeurs: values,
+          range: `0-${NB_LIGNES_PAR_APPEL_INSCRIPTION}`
+        });
+        stockageDonnees.stockerCriteresRMCActeInspt(values);
+        setNouvelleRMCActeInscription(false);
+      }
+    },
+    [dansFenetreExterne]
+  );
 
   const RMCActeInscriptionRef = useRef();
   return (
@@ -181,6 +200,21 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
             }
           />
         )}
+
+      {dansFenetreExterne && (
+        <ToastContainer
+          containerId={TOASTCONTAINER_EXTERNE}
+          className={"toast-container"}
+          position="top-center"
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick={true}
+          rtl={false}
+          draggable={true}
+          pauseOnHover={true}
+          enableMultiContainer={true}
+        />
+      )}
     </>
   );
 };

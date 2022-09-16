@@ -1,5 +1,6 @@
 import { IPrenom } from "@model/etatcivil/fiche/IPrenom";
 import {
+  aucuneProprieteRenseignee,
   auMoinsUneProprieteEstRenseigne,
   changeLaPlaceDunElement,
   checkDirty,
@@ -15,14 +16,17 @@ import {
   formatPrenoms,
   getPremierElemOuVide,
   getValeurOuVide,
+  getValeurProprieteAPartirChemin,
   joint,
   jointAvec,
   jointPrenoms,
   numberToString,
   premiereLettreEnMajusculeLeResteEnMinuscule,
+  seulementUneProprieteRenseignee,
   supprimeElement,
   supprimerNullEtUndefinedDuTableau,
-  tousNonNullsNonZeroEtNonVides,
+  tousNonRenseignes,
+  tousRenseignes,
   triListeObjetsSurPropriete,
   valeurOuUndefined
 } from "@util/Utils";
@@ -219,14 +223,25 @@ test("Attendu: supprimerNullEtUndefinedDuTableau fonctionne correctement", () =>
   ).toEqual(["", "a", "b"]);
 });
 
-test("Attendu: tousNonVides fonctionne correctement", () => {
-  expect(tousNonNullsNonZeroEtNonVides(undefined)).toBeFalsy();
-  expect(tousNonNullsNonZeroEtNonVides("a", "b", null)).toBeFalsy();
-  expect(tousNonNullsNonZeroEtNonVides("a", "b", undefined)).toBeFalsy();
-  expect(tousNonNullsNonZeroEtNonVides("a", "b", "")).toBeFalsy();
-  expect(tousNonNullsNonZeroEtNonVides("a", "b", "c")).toBeTruthy();
-  expect(tousNonNullsNonZeroEtNonVides("a", "b", 1)).toBeTruthy();
-  expect(tousNonNullsNonZeroEtNonVides("a", "b", 0)).toBeFalsy();
+test("Attendu: tousRenseignes fonctionne correctement", () => {
+  expect(tousRenseignes(undefined)).toBeFalsy();
+  expect(tousRenseignes("a", "b", null)).toBeFalsy();
+  expect(tousRenseignes("a", "b", undefined)).toBeFalsy();
+  expect(tousRenseignes("a", "b", "")).toBeFalsy();
+  expect(tousRenseignes("a", "b", "c")).toBeTruthy();
+  expect(tousRenseignes("a", "b", 1)).toBeTruthy();
+  expect(tousRenseignes("a", "b", 0)).toBeFalsy();
+});
+
+test("Attendu: tousNonRenseignes fonctionne correctement", () => {
+  expect(tousNonRenseignes()).toBeTruthy();
+  expect(tousNonRenseignes(undefined)).toBeTruthy();
+  expect(tousNonRenseignes("a", undefined, null)).toBeFalsy();
+  expect(tousNonRenseignes(undefined, "b", undefined)).toBeFalsy();
+  expect(tousNonRenseignes("", "", "")).toBeTruthy();
+  expect(tousNonRenseignes(undefined, null, "")).toBeTruthy();
+  expect(tousNonRenseignes("", "", 0)).toBeTruthy();
+  expect(tousNonRenseignes("a", "b", 0)).toBeFalsy();
 });
 
 test("Attendu: supprimeElement fonctionne correctement", () => {
@@ -300,4 +315,146 @@ test("Attendu: estUnNombre fonctionne correctement", () => {
   expect(estUnNombre(null)).toBeFalsy();
   expect(estUnNombre("")).toBeFalsy();
   expect(estUnNombre(undefined)).toBeFalsy();
+});
+
+test("Attendu: getValeurProprieteAPartirChemin fonctionne correctement", () => {
+  const objet = {
+    a: {
+      a1: "valeur a1",
+      a2: "",
+      a3: null
+    },
+    b: {
+      b1: {
+        b11: "valeur b11"
+      }
+    },
+    c: {
+      c1: {
+        c11: undefined,
+        a1: "valeur c.c1.a1"
+      }
+    },
+    e: "valeur e"
+  };
+  expect(getValeurProprieteAPartirChemin("e", objet)).toBe("valeur e");
+  expect(getValeurProprieteAPartirChemin("a.a1", objet)).toBe("valeur a1");
+  expect(getValeurProprieteAPartirChemin("b.b1.b11", objet)).toBe("valeur b11");
+  expect(getValeurProprieteAPartirChemin("c.c1.a1", objet)).toBe(
+    "valeur c.c1.a1"
+  );
+  expect(getValeurProprieteAPartirChemin("c.c1.c11", objet)).toBeUndefined();
+  expect(getValeurProprieteAPartirChemin("a.a2", objet)).toBe("");
+});
+
+test("Attendu: seulementUnAttributRenseigne fonctionne correctement", () => {
+  const objet = {
+    a: {
+      a1: "a1",
+      a2: "",
+      a3: null
+    },
+    b: {
+      b1: {
+        b11: ""
+      }
+    },
+    c: {
+      c1: {
+        c11: undefined
+      }
+    }
+  };
+
+  expect(seulementUneProprieteRenseignee("a.a1", objet)).toBeTruthy();
+  expect(seulementUneProprieteRenseignee("a.a2", objet)).toBeFalsy();
+
+  objet.a.a1 = "";
+  objet.b.b1.b11 = "b11";
+  expect(seulementUneProprieteRenseignee("b.b1.b11", objet)).toBeTruthy();
+
+  // @ts-ignore
+  objet.c.c1.c11 = "c11";
+  expect(seulementUneProprieteRenseignee("b.b1.b11", objet)).toBeFalsy();
+
+  // @ts-ignore
+  objet.b.b1.b11 = 0;
+  expect(seulementUneProprieteRenseignee("c.c1.c11", objet)).toBeTruthy();
+
+  // @ts-ignore
+  objet.b.b1.b11 = undefined;
+  expect(seulementUneProprieteRenseignee("c.c1.c11", objet)).toBeTruthy();
+
+  const objet2 = {
+    a: { a1: { a11: "valeur a11" } }
+  };
+  expect(seulementUneProprieteRenseignee("a.a1.a11", objet2)).toBeTruthy();
+
+  const objet3 = {
+    a: {
+      a1: "",
+      a2: "",
+      a3: null
+    },
+    b: {
+      b1: {
+        b11: {
+          b111: "b111",
+          b112: "b112",
+          b113: "b113"
+        }
+      }
+    },
+    c: {
+      c1: {
+        c11: undefined
+      }
+    }
+  };
+  expect(seulementUneProprieteRenseignee("b.b1.b11", objet3)).toBeTruthy();
+
+  const objet4 = {
+    a: {
+      a1: "",
+      a2: "",
+      a3: null
+    },
+    b: {
+      b1: {
+        b11: {}
+      }
+    },
+    c: {
+      c1: {
+        c11: undefined
+      }
+    }
+  };
+  expect(seulementUneProprieteRenseignee("b.b1.b11", objet4)).toBeFalsy();
+});
+
+test("Attendu: aucunAttributRenseigne fonctionne correctement", () => {
+  const objet = {
+    a: {
+      a1: 0,
+      a2: "",
+      a3: undefined
+    },
+    b: {
+      b1: {
+        b11: ""
+      }
+    },
+    c: {
+      c1: {
+        c11: null
+      }
+    },
+    d: {}
+  };
+
+  expect(aucuneProprieteRenseignee(objet)).toBeTruthy();
+
+  objet.b.b1.b11 = "b11";
+  expect(aucuneProprieteRenseignee(objet)).toBeFalsy();
 });
