@@ -13,7 +13,8 @@ const EXPIRATION_CACHE_SECONDS = 43200; // Expiration du cache au bout de 12h (4
 
 export const HTTP_STATUS_OK = 200;
 
-const HTTP_FORBIDDEN = 403;
+export const HTTP_UNAUTHORIZED = 401;
+export const HTTP_FORBIDDEN = 403;
 export const HTTP_NOT_FOUND = 404;
 
 const ERROR_OFFLINE_TIMEOUT = 5000;

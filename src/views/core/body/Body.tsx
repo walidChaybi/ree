@@ -1,3 +1,4 @@
+import { HTTP_FORBIDDEN, HTTP_UNAUTHORIZED } from "@api/ApiManager";
 import { routesRece } from "@router/ReceRoutes";
 import { RouterComponent } from "@router/RouteComponent";
 import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
@@ -59,11 +60,11 @@ export const Body: React.FC = () => {
 };
 
 function getMessageLogin(officier: OfficierContextProps) {
-  const codeErreurForbidden = 403;
   if (
     officier !== undefined &&
     officier.erreurState !== undefined &&
-    officier.erreurState.status === codeErreurForbidden
+    (officier.erreurState.status === HTTP_UNAUTHORIZED ||
+      officier.erreurState.status === HTTP_FORBIDDEN)
   ) {
     return getLibelle(
       "Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BIMO."
