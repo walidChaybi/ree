@@ -61,7 +61,9 @@ describe("Test onglets documents édites", () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText("+")).toBeDefined();
+      expect(
+        screen.getByTitle("Ajout d'un document complémentaire")
+      ).toBeDefined();
     });
   });
 
@@ -81,7 +83,9 @@ describe("Test onglets documents édites", () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText("x")).toBeDefined();
+      expect(
+        screen.getByTitle("Suppression du document complémentaire")
+      ).toBeDefined();
     });
   });
 
@@ -101,8 +105,10 @@ describe("Test onglets documents édites", () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText("+")).toBeDefined();
-      fireEvent.click(screen.getByText("+"));
+      expect(
+        screen.getByTitle("Ajout d'un document complémentaire")
+      ).toBeDefined();
+      fireEvent.click(screen.getByTitle("Ajout d'un document complémentaire"));
       expect(screen.getByText("Extrait plurilingue"));
       expect(screen.getByText("Extrait avec filiation"));
       expect(screen.getByText("Extrait sans filiation"));
@@ -126,15 +132,17 @@ describe("Test onglets documents édites", () => {
 
     await waitFor(() => {
       let boutonAjouterDocument: HTMLElement;
-      expect(screen.getByText("+")).toBeDefined();
-      fireEvent.click(screen.getByText("+"));
+      expect(
+        screen.getByTitle("Ajout d'un document complémentaire")
+      ).toBeDefined();
+      fireEvent.click(screen.getByTitle("Ajout d'un document complémentaire"));
       boutonAjouterDocument = screen.getAllByText("Extrait avec filiation")[0];
       expect(boutonAjouterDocument).toBeDefined();
       fireEvent.click(boutonAjouterDocument);
     });
 
     await waitFor(() => {
-      expect(screen.getAllByText("Extrait avec filiation")[1]).toBeDefined();
+      expect(screen.getByText("Extrait avec filiation")).toBeDefined();
     });
   });
 
@@ -155,8 +163,10 @@ describe("Test onglets documents édites", () => {
 
     await waitFor(() => {
       let boutonAjouterDocument: HTMLElement;
-      expect(screen.getByText("+")).toBeDefined();
-      fireEvent.click(screen.getByText("+"));
+      expect(
+        screen.getByTitle("Ajout d'un document complémentaire")
+      ).toBeDefined();
+      fireEvent.click(screen.getByTitle("Ajout d'un document complémentaire"));
       boutonAjouterDocument = screen.getByText("Extrait plurilingue");
       expect(boutonAjouterDocument).toBeDefined();
       fireEvent.click(boutonAjouterDocument);
@@ -188,8 +198,10 @@ describe("Test onglets documents édites", () => {
 
     await waitFor(() => {
       let boutonAjouterDocument: HTMLElement;
-      expect(screen.getByText("+")).toBeDefined();
-      fireEvent.click(screen.getByText("+"));
+      expect(
+        screen.getByTitle("Ajout d'un document complémentaire")
+      ).toBeDefined();
+      fireEvent.click(screen.getByTitle("Ajout d'un document complémentaire"));
       boutonAjouterDocument = screen.getByText("Extrait plurilingue");
       expect(boutonAjouterDocument).toBeDefined();
       fireEvent.click(boutonAjouterDocument);
@@ -205,7 +217,6 @@ describe("Test onglets documents édites", () => {
     });
   });
 });
-
 
 // test("Doit afficher un message d'erreur quand le nombre de titulaire est > 2 dans un acte de mariage plurilinque/EC avec ou sans filiation", async () => {
 //   history.push(
@@ -224,8 +235,8 @@ describe("Test onglets documents édites", () => {
 
 //   await waitFor(() => {
 //     let boutonAjouterDocument: HTMLElement;
-//     expect(screen.getByText("+")).toBeDefined();
-//     fireEvent.click(screen.getByText("+"));
+//     expect(screen.getByTitle("Ajout d'un document complémentaire")).toBeDefined();
+//     fireEvent.click(screen.getByTitle("Ajout d'un document complémentaire"));
 //     boutonAjouterDocument = screen.getByText("Extrait plurilingue");
 //     expect(boutonAjouterDocument).toBeDefined();
 //     fireEvent.click(boutonAjouterDocument);
@@ -239,3 +250,7 @@ describe("Test onglets documents édites", () => {
 //     ).toBeDefined();
 //   });
 // });
+
+afterAll(() => {
+  superagentMock.unset();
+});

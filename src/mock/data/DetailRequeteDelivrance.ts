@@ -2052,6 +2052,23 @@ export const requeteAvecCopieIntegraleActeImage = {
   provenanceServicePublic: null,
   documentsReponses: [
     {
+      id: "28bc3078-7e53-4b8b-8cf8-7f75a2502574",
+      nom: "Copie Intégral",
+      typeDocument: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
+      mimeType: "application/pdf",
+      taille: 30132,
+      avecCtv: false,
+      nbPages: 1,
+      orientation: "Portrait",
+      referenceSwift:
+        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+      conteneurSwift: "documents-delivres-2022-3",
+      validation: "O",
+      idActe: idFicheActeMariage,
+      optionsCourrier: [],
+      mentionsRetirees: []
+    },
+    {
       id: "28bc3078-7e53-4b8b-8cf8-7f75a2502573",
       nom: "Copie Intégral",
       typeDocument: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
@@ -2607,7 +2624,24 @@ export const detailRequeteDelivranceCopieArchive = {
   provenanceServicePublic: null,
   documentsReponses: [
     {
-      id: "28bc3078-7e53-4b8b-8cf8-7f75a2502573",
+      id: "28bc3078-7e53-4b8b-8cf8-7f75a2502574",
+      nom: "Copie Intégral",
+      typeDocument: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
+      mimeType: "application/pdf",
+      taille: 30132,
+      avecCtv: false,
+      nbPages: 1,
+      orientation: "Portrait",
+      referenceSwift:
+        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+      conteneurSwift: "documents-delivres-2022-3",
+      validation: "O",
+      idActe: idficheActeEC,
+      optionsCourrier: [],
+      mentionsRetirees: []
+    },
+    {
+      id: "28bc3078-7e53-4b8b-8cf8-7f75a25025743",
       nom: "Copie Intégral",
       typeDocument: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
       mimeType: "application/pdf",
@@ -2761,6 +2795,23 @@ export const detailRequeteDelivranceGenreIndetermine = {
   provenanceRece: null,
   provenanceServicePublic: null,
   documentsReponses: [
+    {
+      id: "28bc3078-7e53-4b8b-8cf8-7f75a2502574",
+      nom: "Copie Intégral",
+      typeDocument: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
+      mimeType: "application/pdf",
+      taille: 30132,
+      avecCtv: false,
+      nbPages: 1,
+      orientation: "Portrait",
+      referenceSwift:
+        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+      conteneurSwift: "documents-delivres-2022-3",
+      validation: "O",
+      idActe: idFicheActeAvecGenreIndetermine,
+      optionsCourrier: [],
+      mentionsRetirees: []
+    },
     {
       id: "28bc3078-7e53-4b8b-8cf8-7f75a2502573",
       nom: "Copie Intégral",
@@ -2916,6 +2967,23 @@ export const detailRequeteDelivranceAvecTitulaireMultiple = {
   provenanceRece: null,
   provenanceServicePublic: null,
   documentsReponses: [
+    {
+      id: "28bc3078-7e53-4b8b-8cf8-7f75a2502574",
+      nom: "Copie Intégral",
+      typeDocument: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
+      mimeType: "application/pdf",
+      taille: 30132,
+      avecCtv: false,
+      nbPages: 1,
+      orientation: "Portrait",
+      referenceSwift:
+        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+      conteneurSwift: "documents-delivres-2022-3",
+      validation: "O",
+      idActe: idFicheActeAvecTitulaireMultiple,
+      optionsCourrier: [],
+      mentionsRetirees: []
+    },
     {
       id: "28bc3078-7e53-4b8b-8cf8-7f75a2502573",
       nom: "Copie Intégral",

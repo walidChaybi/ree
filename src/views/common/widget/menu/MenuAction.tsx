@@ -11,7 +11,7 @@ import React from "react";
 import "./scss/MenuAction.scss";
 
 interface IMenuActionProps {
-  titre: string;
+  titre?: string;
   onSelect: (indexMenu: number) => any;
   listeActions?: IActionOption[];
   deplierEnBas?: boolean;
@@ -51,13 +51,17 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
   };
 
   return (
-    <div title={props.infoBulle} className={`MenuAction ${props.className}`}>
+    <div
+      title={props.infoBulle}
+      className={`MenuAction ${props.className ? props.className : ""}`}
+    >
       <Bouton
         className={`${props.classNameBouton}`}
         onClick={props.actionMoins ? props.actionMoins : handleClick}
       >
         <span>{props.titre}</span>
         {props.afficheChevron && afficheFleche()}
+        {props.children}
       </Bouton>
       <Menu
         className="Menu"

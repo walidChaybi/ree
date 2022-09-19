@@ -1,6 +1,9 @@
+import { Add } from "@material-ui/icons";
+import Clear from "@material-ui/icons/Clear";
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentEC } from "@pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
 import { getLibelle } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useState } from "react";
 import { MenuAction } from "../menu/MenuAction";
 import "./scss/OngletsDynamique.scss";
@@ -47,35 +50,32 @@ export const OngletsDynamique: React.FC<OngletsDynamiqueProps> = props => {
             );
           })}
 
-          {props.listeOnglets.length !== props.nombreOngletsMax &&
-            props.afficherPlus && (
-              <MenuAction
-                afficheChevron={false}
-                titre="+"
-                listeActions={props.listePlus}
-                onSelect={props.actionPlus}
-                widthMenuItem="auto"
-                infoBulle={getLibelle("Ajout d'un document complémentaire")}
-              ></MenuAction>
-            )}
+          {props.afficherPlus && (
+            <MenuAction
+              afficheChevron={false}
+              listeActions={props.listePlus}
+              onSelect={props.actionPlus}
+              widthMenuItem="auto"
+              infoBulle={getLibelle("Ajout d'un document complémentaire")}
+            >
+              <Add />
+            </MenuAction>
+          )}
 
-          {props.listeOnglets.length >= props.nombreOngletsMax &&
-            props.afficherMoins && (
-              <MenuAction
-                afficheChevron={false}
-                titre="x"
-                onSelect={props.actionMoins}
-                widthMenuItem="auto"
-                infoBulle={getLibelle("Suppression du document complémentaire")}
-                actionMoins={props.actionMoins}
-                classNameBouton={`retirerDocument ${
-                  props.listeOnglets[props.listeOnglets.length - 1].id ===
-                  idOngletCourant
-                    ? "selected"
-                    : ""
-                }`}
-              ></MenuAction>
-            )}
+          {props.afficherMoins && (
+            <Bouton
+              onClick={props.actionMoins}
+              title={getLibelle("Suppression du document complémentaire")}
+              className={`retirerDocument ${
+                props.listeOnglets[props.listeOnglets.length - 1].id ===
+                idOngletCourant
+                  ? "selected"
+                  : ""
+              }`}
+            >
+              <Clear />
+            </Bouton>
+          )}
         </>
       )}
     </div>

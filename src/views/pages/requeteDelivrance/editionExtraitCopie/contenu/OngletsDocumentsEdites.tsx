@@ -11,11 +11,19 @@ import {
   IDocumentReponse
 } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { checkDirty, getLibelle } from "@util/Utils";
+import { checkDirty, getLibelle, TROIS } from "@util/Utils";
 import { OngletsDynamique } from "@widget/ongletsDynamique/OngletsDynamique";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useEffect, useState } from "react";
-import { genererListeAjoutComplementaire, getTypeDocument, INDEX_PLUS, ItemListe, listePlus } from "./OngletDocumentsEditesUtils";
+import { EditionExtraitCopiePageContext } from "../EditionExtraitCopiePage";
+import { DocumentEC } from "../enum/DocumentEC";
+import {
+  genererListeAjoutComplementaire,
+  getTypeDocument,
+  INDEX_PLUS,
+  ItemListe,
+  listePlus
+} from "./OngletDocumentsEditesUtils";
 
 interface OngletsDocumentsProps {
   documents?: IDocumentReponse[];
@@ -62,6 +70,7 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
     "Pas de délivrance d'extrait plurilingue de naissance avec une personne de genre indéterminé ou des parents de même sexe.";
 
   const { isDirty, setIsDirty } = useContext(RECEContext);
+  const { setOperationEnCours } = useContext(EditionExtraitCopiePageContext);
   const [liste, setListe] = useState<ItemListe[]>(listePlus);
   const [openPopinErreur, setOpenPopinErreur] = useState(false);
   const [erreurMessagePopin, setErreurMessagePopin] = useState("");
@@ -95,6 +104,7 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
       if (messageErreur) {
         showMessageErreur(messageErreur);
       } else {
+        setOperationEnCours(true);
         ajouterDocument(typeDocument);
       }
     }
@@ -124,6 +134,7 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
   };
 
   const handleSelectMoins = () => {
+    setOperationEnCours(true);
     retirerDocument();
   };
 
@@ -161,18 +172,10 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
         actionMoins={handleSelectMoins}
         ongletSelectionne={idDocumentEdite}
         listeOnglets={getListeOnglets()}
-        afficherPlus={
-          (documents?.length !== 0 ||
-            ChoixDelivrance.estReponseSansDelivrance(
-              requete.choixDelivrance
-            )) &&
-          requete.choixDelivrance !==
-            ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE &&
-          !requete.provenanceRequete.provenancePlanete
-        }
+        afficherPlus={afficherPlus(requete, documents)}
         listePlus={liste}
         nombreOngletsMax={NB_DOCUMENT_MAX}
-        afficherMoins={true}
+        afficherMoins={documents?.length === TROIS}
       />
 
       <ConfirmationPopin
@@ -184,3 +187,14 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
   );
 };
 
+function afficherPlus(
+  requete: IRequeteDelivrance,
+  documents?: IDocumentReponse[]
+) {
+  return (
+    !ChoixDelivrance.estReponseSansDelivrance(requete.choixDelivrance) &&
+    documents?.length === DocumentEC.Complementaire &&
+    requete.choixDelivrance !== ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE &&
+    !requete.provenanceRequete.provenancePlanete
+  );
+}

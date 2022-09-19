@@ -54,8 +54,13 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
   const [acteApiHookParams, setActeApiHookParams] =
     useState<IActeApiHookParams>();
 
+  // 1- Récupération de l'acte complet pour la génération du document + images corpsImage
+  const acteApiHookResultat = useInformationsActeApiHook(acteApiHookParams);
+
   useEffect(() => {
-    if (estPresentIdActeEtChoixDelivrance(params)) {
+    // On ne rerecherche l'acte si il a déjà été chargé pour éviter de créer
+    // 2 courriers dans le cas d'une modification de courrier
+    if (!acteApiHookResultat && estPresentIdActeEtChoixDelivrance(params)) {
       setActeApiHookParams({
         idActe: params?.idActe,
         recupereImagesEtTexte:
@@ -66,10 +71,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
           ) || ChoixDelivrance.estAvecFiliation(params.requete.choixDelivrance)
       });
     }
-  }, [params]);
-
-  // 1- Récupération de l'acte complet pour la génération du document + images corpsImage
-  const acteApiHookResultat = useInformationsActeApiHook(acteApiHookParams);
+  }, [params, acteApiHookResultat]);
 
   // 2 - Ajout des mentions auto et des mentions retirées
   useEffect(
