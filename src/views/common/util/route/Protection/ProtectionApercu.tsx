@@ -37,7 +37,7 @@ export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
     if (
       // @ts-ignore
       window.protectionOff ||
-      receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_DEL + "/") ||
+      receUrl.getUrlCourante(history).includes(`${PATH_APERCU_REQ_DEL}/`) ||
       forcePass
     ) {
       setEstBonStatut(true);
@@ -88,7 +88,7 @@ function checkURLDelivrance(
     case StatutRequete.A_TRAITER:
       return receUrl
         .getUrlCourante(history)
-        .includes(PATH_APERCU_REQ_DEL + "/");
+        .includes(`${PATH_APERCU_REQ_DEL}/`);
     case StatutRequete.A_VALIDER:
     case StatutRequete.A_SIGNER:
       return (

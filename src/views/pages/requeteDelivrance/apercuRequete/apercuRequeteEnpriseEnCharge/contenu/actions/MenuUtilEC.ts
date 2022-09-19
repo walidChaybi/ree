@@ -289,18 +289,16 @@ export const aNombreTitulairesIncoherent = (
 
 const getGenreTitulaireConjointEtParents = (
   titulairesActe?: ITitulaireActe[]
-): GenresType => {
-  const genres = {
+): GenresType =>
+  ({
     titulaire: titulairesActe?.[0]?.sexe,
     conjoint: titulairesActe?.[1]?.sexe,
     parents:
       titulairesActe?.[0]?.filiations
         ?.filter(filiation => filiation.lienParente === LienParente.PARENT)
         .map(parent => parent.sexe) || []
-  } as unknown as GenresType;
+  } as unknown as GenresType);
 
-  return genres;
-};
 
 export const aGenreIdentique = (
   genrePersonneA?: string,

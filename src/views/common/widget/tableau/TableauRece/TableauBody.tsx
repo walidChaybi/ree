@@ -1,6 +1,7 @@
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
+import { chiffreEstPair } from "@util/Utils";
 import React from "react";
 import { OperationLocaleEnCours } from "../../attente/OperationLocaleEnCours";
 import "./scss/Tableau.scss";
@@ -44,6 +45,7 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
                   onClickRowHandler(row[idKey], idx);
                 }}
                 data-testid={row[idKey]}
+                className={`${chiffreEstPair(idx) ? "coloree" : ""}`}
               >
                 {getRowRender(columnHeaders, row, idx, icone)}
               </TableRow>

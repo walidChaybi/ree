@@ -20,7 +20,7 @@ export function getTitulaires(acte: IFicheActe): SectionPartProps[] {
   return sortedTitulaires.map((titulaire, index) => {
     return {
       partContent: {
-        contents: getTitulairesInfo(titulaire, index + 1)
+        contents: getTitulairesInfo(titulaire, Number(index) + 1)
       }
     };
   });

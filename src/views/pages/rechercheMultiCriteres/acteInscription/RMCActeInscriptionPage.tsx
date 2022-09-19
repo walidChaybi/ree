@@ -18,7 +18,7 @@ import { RMCActeInscriptionResultats } from "./resultats/RMCActeInscriptionResul
 import { goToLinkRMC } from "./resultats/RMCTableauCommun";
 import { RMCActeInscriptionForm } from "./RMCActeInscriptionForm";
 import "./scss/RMCActeInscriptionPage.scss";
-import { getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur as getMessageSiVerificationRestrictionRmcActeInscriptionEnErreur } from "./validation/VerificationRestrictionRmcActeInscription";
+import { getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur } from "./validation/VerificationRestrictionRmcActeInscription";
 
 interface RMCActeInscriptionPageProps {
   noAutoScroll: boolean;
@@ -128,7 +128,9 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
   const onSubmitRMCActeInscription = useCallback(
     (values: IRMCActeInscription) => {
       const messageErreur =
-        getMessageSiVerificationRestrictionRmcActeInscriptionEnErreur(values);
+        getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur(
+          values
+        );
       if (messageErreur) {
         messageManager.showErrorAndClose(
           messageErreur,

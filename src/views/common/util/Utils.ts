@@ -41,6 +41,10 @@ export function triListeObjetsSurPropriete(objets: any[], propriete: string) {
     : [];
 }
 
+export function chiffreEstPair(chiffre: number) {
+  return chiffre % DEUX === 0;
+}
+
 export function triListeObjetsSurDate(objets: any[], nomPropriete: string) {
   return objets
     ? objets.sort((o1, o2) => {

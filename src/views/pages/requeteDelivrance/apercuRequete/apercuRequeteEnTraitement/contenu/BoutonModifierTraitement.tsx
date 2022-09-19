@@ -4,6 +4,7 @@ import {
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { PATH_APERCU_REQ_PRISE } from "@router/ReceUrls";
 import { getUrlPrecedente, getUrlWithParam } from "@util/route/routeUtil";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
@@ -29,7 +30,11 @@ export const BoutonModifierTraitement: React.FC<
       !props.requete.documentsReponses ||
       props.requete.documentsReponses.length === 0
     ) {
-      history.replace(getUrlPrecedente(history.location.pathname));
+      history.replace(
+        `${getUrlPrecedente(
+          history.location.pathname
+        )}/${PATH_APERCU_REQ_PRISE}/${props.requete.id}`
+      );
     } else {
       setParams({
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
