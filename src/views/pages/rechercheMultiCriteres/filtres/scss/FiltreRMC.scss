@@ -18,4 +18,15 @@
   .BlockErreur {
     margin-left: 35%;
   }
+
+  .nomEtPrenom {
+    position: relative;
+
+    .BtnNomPrenom {
+      position: absolute;
+      top: 20%;
+      right: -6.5%;
+      color: #0579be;
+    }
+  }
 }

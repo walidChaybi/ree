@@ -2,5 +2,16 @@
 
 .Boutons {
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+
+  .rechercher {
+    display: flex;
+    justify-content: center;
+  }
+
+  .rappelEtReinitialiser {
+    display: flex;
+    width: auto;
+    justify-content: center;
+  }
 }

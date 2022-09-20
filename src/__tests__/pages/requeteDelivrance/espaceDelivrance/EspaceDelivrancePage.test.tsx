@@ -47,7 +47,7 @@ test("renders delivrancePage", async () => {
     );
   });
 
-  const title = screen.getByText(/Espace délivrance/i);
+  const title = screen.getByText("Délivrance");
   const mesRequetes = screen.getByText(/Mes requêtes de délivrance/i);
   const compteur = screen.getByText(/Total de requêtes à signer/i);
   const requetesService = screen.getByText(

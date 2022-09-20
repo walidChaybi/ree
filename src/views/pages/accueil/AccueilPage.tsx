@@ -70,21 +70,22 @@ export const AccueilPage: React.FC = () => {
       </OfficierContext.Consumer>
       <div className="MenuAccueil">
         <BoutonAccueilEspaceDelivrance
-          libelle={getLibelle("Espace délivrance")}
+          libelle={getLibelle("Délivrance")}
           pageUrl="mesrequetes"
           iconFA={faGavel}
           badge={nbReqTraiteRepondu}
           title={getLibelle("Bouton pour accèder à l'espace délivrance")}
         ></BoutonAccueilEspaceDelivrance>
+
         <BoutonAccueilEspaceMiseAjour
-          libelle={getLibelle("Espace mise à jour")}
+          libelle={getLibelle("Mise à jour")}
           pageUrl="miseAJour"
           iconFA={faSync}
           title={getLibelle("Bouton pour accèder à l'espace mise à jour")}
         ></BoutonAccueilEspaceMiseAjour>
         {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_NATALI) && (
           <BoutonAccueilEspaceCreation
-            libelle={getLibelle("Espace création")}
+            libelle={getLibelle("Création")}
             pageUrl="mesrequetescreation"
             iconFA={faPlusCircle}
             title={getLibelle("Bouton pour accèder à l'espace création")}
@@ -142,7 +143,7 @@ export const AccueilPage: React.FC = () => {
 function getBienvenueOfficier(officier?: IOfficier): string {
   let msgBienvenue = "Bienvenue";
   if (officier) {
-    msgBienvenue = `${msgBienvenue} ${officier.prenom} ${officier.nom} - ${officier.trigramme}`;
+    msgBienvenue = `${msgBienvenue} ${officier.prenom} ${officier.nom}`;
   }
   return getLibelle(msgBienvenue);
 }

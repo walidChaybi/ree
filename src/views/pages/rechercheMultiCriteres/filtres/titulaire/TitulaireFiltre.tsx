@@ -1,5 +1,5 @@
-import { faArrowsAltH } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconButton } from "@material-ui/core";
+import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import DateComposeForm, {
@@ -99,25 +99,27 @@ const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
     <div className={props.nomFiltre}>
       <Fieldset titre={getLibelle("Filtre titulaire")}>
         <div className="FormFiltre">
-          <InputField
-            name={withNamespace(props.nomFiltre, NOM)}
-            label={getLibelle("Nom")}
-            onBlur={onBlurChamp}
-          />
+          <div className="nomEtPrenom">
+            <InputField
+              name={withNamespace(props.nomFiltre, NOM)}
+              label={getLibelle("Nom")}
+              onBlur={onBlurChamp}
+            />
 
-          <InputField
-            name={withNamespace(props.nomFiltre, PRENOM)}
-            label={getLibelle("Prénom")}
-            onBlur={onBlurChamp}
-          />
-
-          <button
-            className="BtnNomPrenom"
-            type="button"
-            onClick={switchNomPrenom}
-          >
-            Nom <FontAwesomeIcon icon={faArrowsAltH} /> Prénom
-          </button>
+            <IconButton
+              aria-label="inverser nom et prénom"
+              className="BtnNomPrenom"
+              onClick={switchNomPrenom}
+              tabIndex="-1"
+            >
+              <SwapHorizIcon />
+            </IconButton>
+            <InputField
+              name={withNamespace(props.nomFiltre, PRENOM)}
+              label={getLibelle("Prénom")}
+              onBlur={onBlurChamp}
+            />
+          </div>
 
           <DateComposeForm {...dateDebutComposeFormProps} />
 

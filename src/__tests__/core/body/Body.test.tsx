@@ -64,7 +64,7 @@ test("renders Body", async () => {
     const titre = screen.getAllByText(/Accueil/i);
     expect(titre).toHaveLength(2);
 
-    const boutonElement = screen.getAllByText(/Espace délivrance/);
+    const boutonElement = screen.getAllByText("Délivrance");
     expect(boutonElement).toHaveLength(1);
   });
 });

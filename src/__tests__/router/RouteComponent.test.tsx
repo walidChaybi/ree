@@ -47,7 +47,7 @@ test("L'utilisateur accède à la page 'Espace délivrance' car il a le droit at
     );
   });
   await waitFor(() => {
-    expect(screen.getByText(/Espace délivrance/)).toBeInTheDocument();
+    expect(screen.getByText(/Délivrance/)).toBeInTheDocument();
   });
 });
 

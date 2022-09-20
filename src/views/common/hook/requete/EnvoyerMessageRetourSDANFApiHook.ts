@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { postMessageRetourSDANF } from "@api/appels/requeteApi";
 import { IEchange } from "@model/requete/IEchange";
 import { logError } from "@util/LogManager";

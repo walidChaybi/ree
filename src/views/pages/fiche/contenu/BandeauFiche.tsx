@@ -1,6 +1,7 @@
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
+import { getLibelle } from "@util/Utils";
 import React from "react";
 import "./scss/Bandeau.scss";
 
@@ -40,10 +41,12 @@ export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
             )}
           </div>
           <div className="LigneDates">
-            <div>{`Date dernière mise à jour : ${data.dateDerniereMaj}`}</div>
-            <div>
-              {`Date dernière délivrance : ${data.dateDerniereDelivrance}`}
-            </div>
+            <div>{`${getLibelle("Dernière mise à jour :")} ${
+              data.dateDerniereMaj
+            }`}</div>
+            <div>{`${getLibelle("Dernière délivrance :")} ${
+              data.dateDerniereDelivrance
+            }`}</div>
           </div>
         </div>
       )}

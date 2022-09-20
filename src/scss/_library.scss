@@ -76,11 +76,6 @@ Button,
   &:link {
     outline-style: none;
   }
-
-  &:hover {
-    background-color: $application-color;
-    box-shadow: 0 0 0 2px $border-focus;
-  }
 }
 
 .BoutonDanger {

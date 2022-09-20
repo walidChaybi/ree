@@ -114,7 +114,7 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
 
   return (
     <>
-      <title>{getLibelle("Espace délivrance")}</title>
+      <title>{getLibelle("Délivrance")}</title>
       <div>
         <OfficierContext.Consumer>
           {officier => (

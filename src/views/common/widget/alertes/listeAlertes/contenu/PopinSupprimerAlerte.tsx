@@ -2,6 +2,7 @@ import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React from "react";
+import "../scss/PopinSupprimerAlerte.scss";
 
 export interface PopinSupprimerAlerteProps {
   open: boolean;

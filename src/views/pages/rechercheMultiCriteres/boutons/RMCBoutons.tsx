@@ -22,20 +22,23 @@ const RMCBoutons: React.FC<RMCBoutonsProps> = props => {
   return (
     <>
       <div className="Boutons">
-        {props.rappelCriteres && (
-          <RMCBoutonRappelCriteres {...rmcBoutonRappelCriteresProps} />
-        )}
+        <div className="rechercher">
+          <Bouton
+            disabled={!props.formik.isValid || !props.formik.dirty}
+            type="submit"
+          >
+            {getLibelle("Rechercher")}
+          </Bouton>
+        </div>
+        <div className="rappelEtReinitialiser">
+          {props.rappelCriteres && (
+            <RMCBoutonRappelCriteres {...rmcBoutonRappelCriteresProps} />
+          )}
 
-        <button type="reset" onClick={() => props.formik.resetForm()}>
-          {getLibelle("Réinitialiser les critères")}
-        </button>
-
-        <Bouton
-          disabled={!props.formik.isValid || !props.formik.dirty}
-          type="submit"
-        >
-          {getLibelle("Rechercher")}
-        </Bouton>
+          <button type="reset" onClick={() => props.formik.resetForm()}>
+            {getLibelle("Réinitialiser les critères")}
+          </button>
+        </div>
       </div>
     </>
   );

@@ -29,6 +29,10 @@ export function getPanelsActe(acte: IFicheActe): IAccordionReceSection {
   return {
     panels: [
       {
+        panelAreas: getPanelAreasActeImage(acte, paramsAffichage),
+        title: "Visualisation de l'acte"
+      },
+      {
         panelAreas: [
           {
             parts: getTitulaires(acte),
@@ -39,13 +43,9 @@ export function getPanelsActe(acte: IFicheActe): IAccordionReceSection {
         ],
         title: "Résumé de l'acte"
       },
-      {
-        panelAreas: getPanelAreasActeImage(acte, paramsAffichage),
-        title: "Visualisation de l'acte"
-      },
       ...fichesPersonne
     ],
-    panelParDefaut: paramsAffichage.visuActe === "disabled" ? 0 : 1
+    panelParDefaut: paramsAffichage.visuActe === "disabled" ? 1 : 0
   };
 }
 

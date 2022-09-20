@@ -27,6 +27,7 @@ import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
 import { BandeauFicheRcRcaPacsNumero } from "./contenu/BandeauFicheRcRcaPacsNumero";
 import { setFiche } from "./FicheUtils";
 import { useFichePageApiHook } from "./hook/FichePageApiHook";
+import "./scss/FichePage.scss";
 
 export interface IIndex {
   value: number;
@@ -264,7 +265,7 @@ export const FichePage: React.FC<FichePageProps> = ({
     : undefined;
 
   return (
-    <>
+    <div className="FichePage">
       {bandeauFiche && panelsFiche && dataFicheState && dataFicheCourante ? (
         <>
           <BandeauFiche
@@ -274,11 +275,14 @@ export const FichePage: React.FC<FichePageProps> = ({
               dataFicheCourante.categorie
             )}
           />
-          <BarreNavigationSuivPrec
-            index={indexCourant}
-            max={nbLignesTotales}
-            setIndex={setIndexFiche}
-          />
+
+          <div className="barreNavigationSuivPrec">
+            <BarreNavigationSuivPrec
+              index={indexCourant}
+              max={nbLignesTotales}
+              setIndex={setIndexFiche}
+            />
+          </div>
           {dataFicheCourante.categorie === TypeFiche.ACTE && (
             <>
               <BandeauAlertesActe
@@ -325,7 +329,7 @@ export const FichePage: React.FC<FichePageProps> = ({
       ) : (
         <OperationLocaleEnCours visible={true} />
       )}
-    </>
+    </div>
   );
 };
 
