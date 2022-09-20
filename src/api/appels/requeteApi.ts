@@ -169,11 +169,23 @@ export function getRequetesCreation(
   });
 }
 
-export function getDetailRequete(idRequete: string): Promise<any> {
-  return api.fetch({
+export function getDetailRequete(
+  idRequete: string,
+  estConsultation = false
+): Promise<any> {
+  let config: any = {
     method: HttpMethod.GET,
     uri: `${URL_REQUETES}/${idRequete}`
-  });
+  };
+  if (estConsultation) {
+    config = {
+      ...config,
+      parameters: {
+        isConsultation: estConsultation
+      }
+    };
+  }
+  return api.fetch(config);
 }
 
 export async function getNomenclatureRequete(nom: string): Promise<any> {

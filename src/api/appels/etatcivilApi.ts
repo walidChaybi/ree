@@ -40,10 +40,11 @@ export const URL_SAISIE_EXTRAIT = "/saisieExtrait";
  */
 export function getInformationsFiche(
   typeFiche: TypeFiche,
-  identifiant: string
+  identifiant: string,
+  estConsultation = false
 ): Promise<any> {
   if (typeFiche === TypeFiche.ACTE) {
-    return getInformationsFicheActe(identifiant);
+    return getInformationsFicheActe(identifiant, false, estConsultation);
   } else {
     return getInformationsFicheRepertoire(typeFiche, identifiant);
   }
@@ -67,7 +68,8 @@ export function getInformationsFicheRepertoire(
  */
 export function getInformationsFicheActe(
   identifiant: string,
-  recupereImagesEtTexte = false
+  recupereImagesEtTexte = false,
+  estConsultation = false
 ): Promise<any> {
   let config: any = {
     method: HttpMethod.GET,
@@ -78,6 +80,14 @@ export function getInformationsFicheActe(
       ...config,
       parameters: {
         recupereImagesEtTexte
+      }
+    };
+  }
+  if (estConsultation) {
+    config = {
+      ...config,
+      parameters: {
+        isConsultation: estConsultation
       }
     };
   }

@@ -135,18 +135,36 @@ export const configEtatcivil = [
         match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f" ||
         match[1] ===
           "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f?recupereImagesEtTexte=true" ||
-        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4da"
+        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4da" ||
+        match[1] ===
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f?isConsultation=true"
       ) {
         return { data: acte };
-      } else if (match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc") {
+      } else if (
+        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc" ||
+        match[1] ===
+          "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc?isConsultation=true"
+      ) {
         return { data: acte1 };
       } else if (match[1] === "/acte/6e89c1c1-16c4-4e40-9b72-7b567270b26f") {
         return { data: acteExtraitSaisie };
-      } else if (match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8") {
+      } else if (
+        match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8" ||
+        match[1] ===
+          "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8?isConsultation=true"
+      ) {
         return { data: acte2 };
-      } else if (match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4db") {
+      } else if (
+        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4db" ||
+        match[1] ===
+          "/acte/d8708d77-a359-4553-be72-1eb5f246d4db?isConsultation=true"
+      ) {
         return { data: acte3 };
-      } else if (match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9") {
+      } else if (
+        match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9" ||
+        match[1] ===
+          "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9?isConsultation=true"
+      ) {
         return { data: acte4 };
       } else if (match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a") {
         return { data: acte5 };
@@ -234,11 +252,17 @@ export const configEtatcivil = [
 
       /////////////////////////////////////////////////////////////////////
       // actes utilisés pour le test de pagination (avec changement de plage)
-      if (match[1] === `/acte/${idFicheActe1}`) {
+      if (
+        match[1] === `/acte/${idFicheActe1}` ||
+        match[1] === `/acte/${idFicheActe1}?isConsultation=true`
+      ) {
         return ficheActe1;
       }
 
-      if (match[1] === `/acte/${idFicheActe2}`) {
+      if (
+        match[1] === `/acte/${idFicheActe2}` ||
+        match[1] === `/acte/${idFicheActe2}?isConsultation=true`
+      ) {
         return ficheActe2;
       }
       /////////////////////////////////////////////////////////////////////

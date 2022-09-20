@@ -38,17 +38,21 @@ import { storeRece } from "@util/storeRece";
 import { useEffect, useState } from "react";
 
 export interface IDetailRequeteParams {
-  idRequete: string;
+  idRequete?: string;
+  estConsultation?: boolean;
 }
 
-export function useDetailRequeteApiHook(idRequete: string | undefined) {
+export function useDetailRequeteApiHook(
+  idRequete: string | undefined,
+  estConsultation = false
+) {
   const [detailRequeteState, setDetailRequeteState] = useState<
     TRequete | undefined
   >();
 
   useEffect(() => {
-    fetchDetailRequete(setDetailRequeteState, idRequete);
-  }, [idRequete]);
+    fetchDetailRequete(setDetailRequeteState, idRequete, estConsultation);
+  }, [idRequete, estConsultation]);
 
   return {
     detailRequeteState
@@ -63,7 +67,11 @@ export function useAvecRejeuDetailRequeteApiHook(
   >();
 
   useEffect(() => {
-    fetchDetailRequete(setDetailRequeteState, params?.idRequete);
+    fetchDetailRequete(
+      setDetailRequeteState,
+      params?.idRequete,
+      params?.estConsultation
+    );
   }, [params]);
 
   return {
@@ -73,11 +81,12 @@ export function useAvecRejeuDetailRequeteApiHook(
 
 async function fetchDetailRequete(
   setDetailRequeteState: any,
-  idRequete?: string
+  idRequete?: string,
+  estConsultation = false
 ) {
   try {
     if (idRequete) {
-      const result = await getDetailRequete(idRequete);
+      const result = await getDetailRequete(idRequete, estConsultation);
       const typeRequete = TypeRequete.getEnumFor(result?.body?.data?.type);
       switch (typeRequete) {
         case TypeRequete.DELIVRANCE:

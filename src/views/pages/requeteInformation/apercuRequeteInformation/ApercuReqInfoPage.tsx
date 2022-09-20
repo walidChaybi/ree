@@ -11,10 +11,11 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Requete, TRequete } from "@model/requete/IRequete";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
+import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import { getLibelle } from "@util/Utils";
 import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { RMCAuto } from "../../rechercheMultiCriteres/autoActesInscriptions/RMCAuto";
 import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import {
@@ -42,6 +43,8 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
 
   useCreationActionMiseAjourStatut(paramsMAJReqInfo);
 
+  const history = useHistory();
+
   const { detailRequeteState } =
     useAvecRejeuDetailRequeteApiHook(detailRequeteParams);
 
@@ -50,9 +53,14 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
     if (props.idRequeteAAfficher) {
       setDetailRequeteParams({ idRequete: props.idRequeteAAfficher });
     } else {
-      setDetailRequeteParams({ idRequete: idRequeteParam });
+      setDetailRequeteParams({
+        idRequete: idRequeteParam,
+        estConsultation: history.location.pathname.includes(
+          URL_RECHERCHE_REQUETE
+        )
+      });
     }
-  }, [idRequeteParam, props.idRequeteAAfficher]);
+  }, [idRequeteParam, props.idRequeteAAfficher, history.location.pathname]);
 
   useEffect(() => {
     if (detailRequeteState) {

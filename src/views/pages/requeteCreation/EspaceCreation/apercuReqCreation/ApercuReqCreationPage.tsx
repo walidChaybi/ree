@@ -1,7 +1,8 @@
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
+import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import React from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { useDetailRequeteApiHook } from "../../../requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import ResumeRequeteCreation from "./components/ResumeRequeteCreation";
 import { VoletPieceJustificativesEtActions } from "./components/VoletPieceJusticativesEtActions";
@@ -10,8 +11,11 @@ import "./scss/ApercuReqCreationPage.scss";
 
 const ApercuReqCreationPage: React.FC = () => {
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
-
-  const { detailRequeteState } = useDetailRequeteApiHook(idRequeteParam);
+  const history = useHistory();
+  const { detailRequeteState } = useDetailRequeteApiHook(
+    idRequeteParam,
+    history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+  );
 
   return (
     <div className="ApercuReqCreationPage">

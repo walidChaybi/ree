@@ -2,9 +2,10 @@ import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuReq
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
 import { ApercuRequetePartieGauche } from "../apercuRequetePartieGauche/ApercuRequetePartieGauche";
 import "./scss/ApercuRequeteTemplate.scss";
@@ -19,7 +20,11 @@ interface TemplateProps {
 export const ApercuRequeteTemplate: React.FC<TemplateProps> = props => {
   const [idRequete, setIdRequete] = useState<string>();
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
-  const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
+  const history = useHistory();
+  const { detailRequeteState } = useDetailRequeteApiHook(
+    idRequete,
+    history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+  );
   const [requete, setRequete] = useState<IRequeteDelivrance>();
 
   useEffect(() => {

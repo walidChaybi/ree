@@ -22,10 +22,11 @@ import {
   IDocumentReponse
 } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { checkDirty, getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import {
   IDetailRequeteParams,
   useAvecRejeuDetailRequeteApiHook
@@ -64,7 +65,8 @@ export const EditionExtraitCopiePage: React.FC = () => {
     useState<ISuppressionDocumentComplementaireParams>();
 
   const { idRequeteParam, idActeParam } = useParams<IUuidEditionParams>();
-  const [idRequete, setIdRequete] = useState<IDetailRequeteParams>();
+  const [detailRequeteParams, setDetailRequeteParams] =
+    useState<IDetailRequeteParams>();
   const [requete, setRequete] = useState<IRequeteDelivrance>();
   const [documents, setDocuments] = useState<IDocumentReponse[]>();
   const [documentEdite, setDocumentEdite] = useState<IDocumentReponse>();
@@ -84,8 +86,10 @@ export const EditionExtraitCopiePage: React.FC = () => {
   >([]);
   const [recuperationImagesDeLActeParams, setRecuperationImagesDeLActeParams] =
     useState<IGetImagesDeLActeParams>();
+  const history = useHistory();
 
-  const { detailRequeteState } = useAvecRejeuDetailRequeteApiHook(idRequete);
+  const { detailRequeteState } =
+    useAvecRejeuDetailRequeteApiHook(detailRequeteParams);
   const resulatEC = useGenerationEC(creationECParams);
 
   const resultatInformationsActeApiHook = useInformationsActeApiHook(
@@ -155,16 +159,21 @@ export const EditionExtraitCopiePage: React.FC = () => {
 
   function rafraichirRequete(index: DocumentEC) {
     setOperationEnCours(false);
-    setIdRequete({ idRequete: idRequeteParam });
+    setDetailRequeteParams({ idRequete: idRequeteParam });
     setIndexDocEditeDemande(index);
     setIsDirty(false);
   }
 
   useEffect(() => {
     if (idRequeteParam) {
-      setIdRequete({ idRequete: idRequeteParam });
+      setDetailRequeteParams({
+        idRequete: idRequeteParam,
+        estConsultation: history.location.pathname.includes(
+          URL_RECHERCHE_REQUETE
+        )
+      });
     }
-  }, [idRequeteParam]);
+  }, [idRequeteParam, history.location.pathname]);
 
   useEffect(() => {
     if (detailRequeteState) {
