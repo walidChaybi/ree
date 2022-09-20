@@ -14,7 +14,6 @@ import { RMCTableauInscriptions } from "./RMCTableauInscriptions";
 export interface RMCActeInscriptionResultatsProps {
   typeRMC: TypeRMC;
   dataAlertes?: IAlerte[];
-  ajoutAlertePossible?: boolean;
   dataRequete?: TRequete;
   dataRMCActe: IResultatRMCActe[];
   dataTableauRMCActe: IParamsTableau;
@@ -60,7 +59,6 @@ export const RMCActeInscriptionResultats: React.FC<
 > = ({
   typeRMC,
   dataAlertes,
-  ajoutAlertePossible = false,
   dataRequete,
   dataRMCActe,
   dataTableauRMCActe,
@@ -99,7 +97,6 @@ export const RMCActeInscriptionResultats: React.FC<
             typeRMC={typeRMC}
             dataRequete={dataRequete}
             dataAlertes={dataAlertes}
-            ajoutAlertePossible={ajoutAlertePossible}
             dataRMCActe={dataRMCActe}
             dataTableauRMCActe={dataTableauRMCActe}
             setRangeActe={setRangeActe}

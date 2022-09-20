@@ -23,12 +23,7 @@ beforeEach(async () => {
 
 test("render BoutonAjouterAlerte avec ajout alerte possible : test ouverture / fermeture popin", async () => {
   await act(async () => {
-    render(
-      <BoutonAjouterAlerte
-        ajoutAlertePossible={true}
-        ajouterAlerteCallBack={jest.fn()}
-      />
-    );
+    render(<BoutonAjouterAlerte ajouterAlerteCallBack={jest.fn()} />);
   });
 
   const boutonAjouterAlerte = screen.getByTitle(
@@ -64,12 +59,7 @@ test("render BoutonAjouterAlerte avec ajout alerte possible : test ouverture / f
 
 test("render BoutonAjouterAlerte avec ajout alerte possible : test soumission formulaire", async () => {
   await act(async () => {
-    render(
-      <BoutonAjouterAlerte
-        ajoutAlertePossible={true}
-        ajouterAlerteCallBack={jest.fn()}
-      />
-    );
+    render(<BoutonAjouterAlerte ajouterAlerteCallBack={jest.fn()} />);
   });
 
   const boutonAjouterAlerte = screen.getByTitle(
@@ -127,37 +117,6 @@ test("render BoutonAjouterAlerte avec ajout alerte possible : test soumission fo
   await act(async () => {
     expect(boutonValider.disabled).toBeFalsy();
     fireEvent.click(boutonValider);
-  });
-
-  await waitFor(() => {
-    expect(popinAjouterAlertes).not.toBeInTheDocument();
-  });
-});
-
-test("render BoutonAjouterAlerte avec ajout alerte impossible", async () => {
-  await act(async () => {
-    render(
-      <BoutonAjouterAlerte
-        ajoutAlertePossible={false}
-        ajouterAlerteCallBack={jest.fn()}
-      />
-    );
-  });
-
-  const boutonAjouterAlerte = screen.getByTitle(
-    "Ajouter une alerte"
-  ) as HTMLButtonElement;
-
-  await waitFor(() => {
-    expect(boutonAjouterAlerte).toBeInTheDocument();
-  });
-
-  await act(async () => {
-    fireEvent.click(boutonAjouterAlerte);
-  });
-
-  const popinAjouterAlertes = screen.queryByRole("dialog", {
-    hidden: true
   });
 
   await waitFor(() => {

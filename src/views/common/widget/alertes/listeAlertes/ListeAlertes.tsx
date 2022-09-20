@@ -17,7 +17,6 @@ interface PopinSupprimerAlerteState {
 }
 
 export interface ListeAlertesProps {
-  ajoutAlertePossible: boolean;
   alertes: IAlerte[];
   idTypeRegistre?: string;
   displayReference: boolean;
@@ -25,7 +24,6 @@ export interface ListeAlertesProps {
 }
 
 export const ListeAlertes: React.FC<ListeAlertesProps> = ({
-  ajoutAlertePossible,
   alertes,
   displayReference,
   idTypeRegistre,
@@ -40,10 +38,7 @@ export const ListeAlertes: React.FC<ListeAlertesProps> = ({
   const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
 
   const onClick = (alerte: IAlerte): void => {
-    if (
-      ajoutAlertePossible &&
-      officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(idTypeRegistre)
-    ) {
+    if (officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(idTypeRegistre)) {
       setPopinSupprimerAlerteState({
         idAlerteActe: alerte?.id || "",
         idActe: alerte?.idActe || "",

@@ -27,15 +27,13 @@ export interface AlertesActesProps {
   idActeInit?: string;
   addActe?: IGetAlertesActeApiHookParameters;
   ajoutAlerte?: (alerte: Map<string, IAlerte[]>) => void;
-  ajoutAlertePossible: boolean;
 }
 
 export const AlertesActes: React.FC<AlertesActesProps> = ({
   detailRequete,
   idActeInit,
   addActe,
-  ajoutAlerte,
-  ajoutAlertePossible
+  ajoutAlerte
 }) => {
   /* Etat alertes associées aux aajoutAlertePossiblectes sélectionnés */
   const [alertes, setAlertes] = useState<Map<string, IAlerte[]>>(new Map([]));
@@ -132,11 +130,10 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
     (idAlerteActe: string, idActe: string) => {
       setDeleteAlerteActeApiHookParameters({
         idAlerteActe,
-        idActe,
-        provenanceRequete: detailRequete?.provenanceRequete?.provenance?.libelle
+        idActe
       });
     },
-    [detailRequete]
+    []
   );
 
   const resultatSuppressionAlerte = useDeleteAlerteActeApiHook(
@@ -188,7 +185,6 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
                 ) && (
                   <BoutonAjouterAlerte
                     key={`bouton-ajouter-alerte-${index}`}
-                    ajoutAlertePossible={ajoutAlertePossible}
                     ajouterAlerteCallBack={ajouterAlerteCallBack.bind(
                       null,
                       entry?.[0]
@@ -198,7 +194,6 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
                 <ListeAlertes
                   idTypeRegistre={resultatGetAlertesActe?.idTypeRegistre}
                   key={`liste-alertes-${index}`}
-                  ajoutAlertePossible={ajoutAlertePossible}
                   alertes={entry?.[1]}
                   displayReference={true}
                   supprimerAlerteCallBack={supprimerAlerteCallBack}

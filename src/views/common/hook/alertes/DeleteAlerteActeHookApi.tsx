@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 export interface DeleteAlerteActeApiHookParameters {
   idAlerteActe: string;
   idActe: string;
-  provenanceRequete: string;
 }
 
 export interface DeleteAlerteActeApiHookResultat {

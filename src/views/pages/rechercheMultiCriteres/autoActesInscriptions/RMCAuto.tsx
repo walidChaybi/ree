@@ -34,7 +34,6 @@ export interface RMCAutoProps {
   requete?: TRequete;
   dataHistory?: DataRMCAuto;
   dataAlertes?: IAlerte[];
-  ajoutAlertePossible?: boolean;
   onClickCheckboxTableauActes?: (
     index: number,
     isChecked: boolean,
@@ -52,7 +51,6 @@ export const RMCAuto: React.FC<RMCAutoProps> = ({
   requete,
   dataHistory,
   dataAlertes,
-  ajoutAlertePossible,
   onClickCheckboxTableauActes,
   onClickCheckboxTableauInscriptions,
   reset
@@ -250,7 +248,6 @@ export const RMCAuto: React.FC<RMCAutoProps> = ({
           <RMCActeInscriptionResultats
             typeRMC="Auto"
             dataAlertes={dataAlertes}
-            ajoutAlertePossible={ajoutAlertePossible}
             dataRequete={requete}
             dataRMCActe={rmcAutoActe}
             dataTableauRMCActe={tableauRMCAutoActe}

@@ -7,7 +7,6 @@ import "./scss/BandeauAlertesActe.scss";
 
 export interface BandeauAlertesActeProps {
   alertes: IAlerte[];
-  ajoutAlertePossible: boolean;
   idTypeRegistre?: string;
   ajouterAlerteCallBack: (value: IAjouterAlerteFormValue) => void;
   supprimerAlerteCallBack: (idAlerteActe: string, idActe: string) => void;
@@ -16,7 +15,6 @@ export interface BandeauAlertesActeProps {
 
 export const BandeauAlertesActe: React.FC<BandeauAlertesActeProps> = ({
   alertes,
-  ajoutAlertePossible,
   ajouterAlerteCallBack,
   supprimerAlerteCallBack,
   idTypeRegistre,
@@ -25,15 +23,11 @@ export const BandeauAlertesActe: React.FC<BandeauAlertesActeProps> = ({
   return (
     <div className="BandeauAlertesActe">
       {afficherBouton && (
-        <BoutonAjouterAlerte
-          ajoutAlertePossible={ajoutAlertePossible}
-          ajouterAlerteCallBack={ajouterAlerteCallBack}
-        />
+        <BoutonAjouterAlerte ajouterAlerteCallBack={ajouterAlerteCallBack} />
       )}
       {alertes?.length > 0 && (
         <ListeAlertes
           idTypeRegistre={idTypeRegistre}
-          ajoutAlertePossible={ajoutAlertePossible}
           alertes={alertes}
           displayReference={false}
           supprimerAlerteCallBack={supprimerAlerteCallBack}

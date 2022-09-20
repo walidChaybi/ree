@@ -8,7 +8,6 @@ import {
   GetTitulairesActeHookParameters,
   useGetTitulairesActeApiHook
 } from "@hook/repertoires/TitulairesActeHook";
-import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "@model/agent/IOfficier";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -62,21 +61,6 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
   const [nbrTitulairesActe, setNbrTitulairesActe] = useState<
     Map<string, number>
   >(new Map([]));
-
-  /* Etat ajout des alertes possible */
-  const [ajoutAlertePossible, setAjoutAlertePossible] =
-    useState<boolean>(false);
-
-  /* Gestion de l'affichage des boutons d'ajout des alertes */
-  useEffect(() => {
-    if (detailRequete) {
-      setAjoutAlertePossible(
-        provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
-          detailRequete?.provenanceRequete?.provenance?.libelle
-        )
-      );
-    }
-  }, [detailRequete]);
 
   /* Gestion du clic sur une colonne de type checkbox dans le tableau des actes */
   const onClickCheckboxActe = useCallback(
@@ -169,7 +153,6 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
         requete={detailRequete}
         dataHistory={dataHistory}
         dataAlertes={aplatirTableau(Array.from(alertes.values()))}
-        ajoutAlertePossible={ajoutAlertePossible}
         onClickCheckboxTableauActes={onClickCheckboxActe}
         onClickCheckboxTableauInscriptions={onClickCheckboxInscription}
         reset={resetActeInscription}
@@ -178,7 +161,6 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
         detailRequete={detailRequete}
         addActe={addActe}
         ajoutAlerte={setAlertes}
-        ajoutAlertePossible={ajoutAlertePossible}
       />
       <ChoixAction
         requete={detailRequete}

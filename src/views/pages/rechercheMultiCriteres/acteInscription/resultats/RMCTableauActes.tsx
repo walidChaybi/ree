@@ -25,7 +25,6 @@ export interface RMCResultatActeProps {
   typeRMC: TypeRMC;
   dataRequete?: TRequete;
   dataAlertes?: IAlerte[];
-  ajoutAlertePossible?: boolean;
   dataRMCActe: IResultatRMCActe[];
   dataTableauRMCActe: IParamsTableau;
   setRangeActe?: (range: string) => void;
@@ -51,7 +50,6 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   typeRMC,
   dataRequete,
   dataAlertes,
-  ajoutAlertePossible = false,
   dataRMCActe,
   dataTableauRMCActe,
   setRangeActe,
@@ -237,7 +235,6 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
                     (dataRequete as IRequeteDelivrance)?.provenanceRequete
                       ?.provenance?.libelle
                   }
-                  ajoutAlertePossible={ajoutAlertePossible}
                   index={fenetreFicheActe.index}
                   nbLignesTotales={dataTableauRMCActe.rowsNumberState || 0}
                   getLignesSuivantesOuPrecedentes={

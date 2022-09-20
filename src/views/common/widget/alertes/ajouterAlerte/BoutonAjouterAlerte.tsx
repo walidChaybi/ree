@@ -8,18 +8,16 @@ import {
 } from "./contenu/PopinAjouterAlertes";
 
 export interface BoutonAjouterAlerteProps {
-  ajoutAlertePossible: boolean;
   ajouterAlerteCallBack: (value: IAjouterAlerteFormValue) => void;
 }
 
 export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({
-  ajoutAlertePossible,
   ajouterAlerteCallBack
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const onClick = (): void => {
-    ajoutAlertePossible && setIsOpen(true);
+    setIsOpen(true);
   };
 
   const onClosePopin = (): void => {
@@ -35,9 +33,7 @@ export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({
     <div className="BoutonAjouterAlerte">
       <FontAwesomeIcon
         icon={faPlusCircle}
-        className={`IconeBoutonAjoutAlerte ${
-          !ajoutAlertePossible ? "Disabled" : ""
-        }`}
+        className={`IconeBoutonAjoutAlerte`}
         title={getLibelle("Ajouter une alerte")}
         onClick={onClick}
       />

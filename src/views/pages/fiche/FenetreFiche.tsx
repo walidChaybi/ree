@@ -12,7 +12,6 @@ interface IFenetreFicheProps {
   numeroRequete?: string;
   index: IIndex;
   provenanceRequete?: string;
-  ajoutAlertePossible?: boolean;
   nbLignesTotales: number;
   nbLignesParAppel: number;
   getLignesSuivantesOuPrecedentes?: (
@@ -29,7 +28,6 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
   numeroRequete,
   index,
   provenanceRequete = "",
-  ajoutAlertePossible = false,
   nbLignesTotales,
   nbLignesParAppel,
   getLignesSuivantesOuPrecedentes
@@ -57,7 +55,6 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
             fenetreExterneUtil={fenetreExterneUtil}
             index={index}
             provenanceRequete={provenanceRequete}
-            ajoutAlertePossible={ajoutAlertePossible}
             nbLignesTotales={nbLignesTotales}
             nbLignesParAppel={nbLignesParAppel}
             getLignesSuivantesOuPrecedentes={getLignesSuivantesOuPrecedentes}

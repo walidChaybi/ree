@@ -42,7 +42,6 @@ export const RMCActeArchiveResultats: React.FC<
           {props.dataRMCActeArchive.length > 0 ? (
             <RMCTableauActes
               typeRMC="Classique"
-              ajoutAlertePossible={false}
               dataRMCActe={props.dataRMCActeArchive}
               dataTableauRMCActe={props.dataTableauRMCActeArchive}
               setRangeActe={props.setRangeActeArchive}

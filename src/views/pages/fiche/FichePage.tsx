@@ -39,7 +39,6 @@ export interface FichePageProps {
   numeroRequete?: string;
   fenetreExterneUtil?: FenetreExterneUtil;
   provenanceRequete?: string;
-  ajoutAlertePossible?: boolean;
   nbLignesTotales: number;
   nbLignesParAppel: number;
   getLignesSuivantesOuPrecedentes?: (
@@ -62,7 +61,6 @@ export const FichePage: React.FC<FichePageProps> = ({
   index,
   fenetreExterneUtil,
   provenanceRequete = "",
-  ajoutAlertePossible = false,
   nbLignesTotales,
   nbLignesParAppel,
   getLignesSuivantesOuPrecedentes
@@ -243,11 +241,10 @@ export const FichePage: React.FC<FichePageProps> = ({
     (idAlerteActe: string, idActe: string) => {
       setDeleteAlerteActeApiHookParameters({
         idAlerteActe,
-        idActe,
-        provenanceRequete
+        idActe
       });
     },
-    [provenanceRequete]
+    []
   );
 
   const resultatSuppressionAlerte = useDeleteAlerteActeApiHook(
@@ -288,7 +285,6 @@ export const FichePage: React.FC<FichePageProps> = ({
               <BandeauAlertesActe
                 alertes={alertes}
                 idTypeRegistre={acte?.registre.id}
-                ajoutAlertePossible={ajoutAlertePossible}
                 ajouterAlerteCallBack={ajouterAlerteCallBack}
                 supprimerAlerteCallBack={supprimerAlerteCallBack}
                 afficherBouton={visuBoutonAlertes}

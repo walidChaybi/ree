@@ -276,10 +276,7 @@ export function deleteAlerteActe(
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.DELETE,
-    uri: `${URL_ACTE}${URL_ALERTE_ACTE}/${parameters?.idAlerteActe}`,
-    parameters: {
-      provenanceRequete: parameters?.provenanceRequete
-    }
+    uri: `${URL_ACTE}${URL_ALERTE_ACTE}/${parameters?.idAlerteActe}`
   });
 }
 
