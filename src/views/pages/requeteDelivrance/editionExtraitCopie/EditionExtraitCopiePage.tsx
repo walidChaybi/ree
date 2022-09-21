@@ -35,6 +35,7 @@ import { VoletVisualisation } from "./contenu/onglets/VoletVisualisation";
 import { OngletDocumentsEdites } from "./contenu/OngletsDocumentsEdites";
 import {
   choisirDocumentEdite,
+  estDocumentComplementaireDeTypeCopieIntegrale,
   filtrerDocumentComplementaireASupprimer,
   getBoutonsEdition,
   retoucheImage
@@ -102,15 +103,27 @@ export const EditionExtraitCopiePage: React.FC = () => {
 
   const ajouteDocument = (typeDocument: string) => {
     if (checkDirty(isDirty, setIsDirty) && requete) {
-      setCreationECParams({
-        acte: resultatInformationsActeApiHook?.acte,
-        requete,
-        validation: Validation.O,
-        pasDAction: true,
-        mentionsRetirees: [],
-        choixDelivrance:
-          DocumentDelivrance.getChoixDelivranceFromUUID(typeDocument)
-      });
+      if (estDocumentComplementaireDeTypeCopieIntegrale(typeDocument)) {
+        setCreationECParams({
+          idActe: resultatInformationsActeApiHook?.acte?.id,
+          requete,
+          validation: Validation.O,
+          pasDAction: true,
+          mentionsRetirees: [],
+          choixDelivrance:
+            DocumentDelivrance.getChoixDelivranceFromUUID(typeDocument)
+        });
+      } else {
+        setCreationECParams({
+          acte: resultatInformationsActeApiHook?.acte,
+          requete,
+          validation: Validation.O,
+          pasDAction: true,
+          mentionsRetirees: [],
+          choixDelivrance:
+            DocumentDelivrance.getChoixDelivranceFromUUID(typeDocument)
+        });
+      }
     }
   };
 

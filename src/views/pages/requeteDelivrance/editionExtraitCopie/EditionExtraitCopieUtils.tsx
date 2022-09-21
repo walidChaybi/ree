@@ -417,3 +417,12 @@ export function filtrerDocumentComplementaireASupprimer(
 
   return documentResponseASupprimer;
 }
+
+export function estDocumentComplementaireDeTypeCopieIntegrale(
+  typeDocument: string
+): boolean {
+  return (
+    DocumentDelivrance.getChoixDelivranceFromUUID(typeDocument) ===
+    ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE
+  );
+}
