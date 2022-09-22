@@ -1,4 +1,5 @@
 .FormulaireRMCAI {
+  
   .titulaire {
     grid-column: 1;
     grid-row: 1;
@@ -12,8 +13,5 @@
   .registreRepertoire {
     grid-column: 2;
     grid-row: 1 / span 2;
-  }
-  .BtnNomPrenom {
-    transform: rotate(90deg);
   }
 }
