@@ -240,6 +240,17 @@ export const ajoutOngletsExtraitPlurilingue = (
     res.liste.push(
       ongletMentions(acte, document, handleDocumentEnregistre, requete)
     );
+    switch (document.validation) {
+      case Validation.N:
+        res.ongletSelectionne = UN;
+        break;
+      case Validation.O:
+        res.ongletSelectionne = DEUX;
+        break;
+      case Validation.E:
+        res.ongletSelectionne = ZERO;
+        break;
+    }
   }
 };
 

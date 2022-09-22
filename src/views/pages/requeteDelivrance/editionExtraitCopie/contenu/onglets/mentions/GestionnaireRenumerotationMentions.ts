@@ -35,7 +35,7 @@ export class GestionnaireRenumerotationMentions {
 
     this.remplacerNumeroOrdreExtrait(res);
     this.numerotationMentionsEnBase(mentionsSurEcran, res);
-    this.numerotationMentionsAbsenteEnBase(mentionsSurEcran, res);
+    this.numerotationMentionsAbsenteEnBase(mentionsSurEcran, res, typeDocument);
 
     return res;
   }
@@ -174,7 +174,8 @@ export class GestionnaireRenumerotationMentions {
 
   private numerotationMentionsAbsenteEnBase(
     mentionsSurEcran: IMentionAffichage[],
-    mentionsEnBase: MentionPourRenumerotation[]
+    mentionsEnBase: MentionPourRenumerotation[],
+    typeDocument: string
   ) {
     const mentionsSurEcranPasEnBase = mentionsSurEcran.filter(
       mention =>
@@ -206,10 +207,19 @@ export class GestionnaireRenumerotationMentions {
           i++;
         }
       }
+      const estExtraitPlurilingue =
+        DocumentDelivrance.estExtraitPlurilingue(typeDocument);
       mentionsAAjouter.push({
         id: mention.id,
         numeroOrdreExtrait: mention.numeroOrdre,
-        textes: { texteMentionDelivrance: mention.texte },
+        textes: {
+          texteMentionDelivrance: estExtraitPlurilingue
+            ? undefined
+            : mention.texte,
+          texteMentionPlurilingue: estExtraitPlurilingue
+            ? mention.texte
+            : undefined
+        },
         typeMention: {
           nature: {
             id: NatureMention.getUuidFromNature(mention.nature)

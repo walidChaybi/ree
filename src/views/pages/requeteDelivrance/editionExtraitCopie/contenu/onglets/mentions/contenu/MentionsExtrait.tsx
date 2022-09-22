@@ -1,6 +1,6 @@
 import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { MARIAGE, NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { Generateur } from "@util/generateur/Generateur";
 import { ListeGlisserDeposer } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useCallback } from "react";
@@ -17,7 +17,7 @@ import { ModificationMention } from "./ModificationMention";
 
 export interface SectionModificationMentionProps {
   estExtraitPlurilingue: boolean;
-  mentions?: IMentionAffichage[];
+  mentions: IMentionAffichage[];
   mentionSelect?: IMentionAffichage;
   mentionsApi?: IMention[];
   setMentionSelect: any;
@@ -57,14 +57,31 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
   ]);
 
   const handleChangeSelect = useCallback(
-    (event: any) => {
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
       if (mentionSelect) {
-        const temp = { ...mentionSelect };
-        temp.nature = NatureMention.getEnumFor(event.target.value);
-        setMentionSelect(temp);
+        const nature = NatureMention.getEnumFor(event.target.value);
+        const nouvelleMention = { ...mentionSelect, nature };
+        setMentionSelect(nouvelleMention);
+
+        const mentionsMiseAJour = [...mentions];
+        const indexMention = mentions?.findIndex(
+          el => el.id === mentionSelect?.id
+        );
+        mentionsMiseAJour[indexMention].nature = nature;
+        if (estExtraitPlurilingue) {
+          mentionsMiseAJour[indexMention].texte =
+            Mention.getPlurilingueAPartirTexte(nouvelleMention?.texte, nature);
+        }
+        setMentions(mentionsMiseAJour);
       }
     },
-    [mentionSelect, setMentionSelect]
+    [
+      mentionSelect,
+      setMentionSelect,
+      mentions,
+      setMentions,
+      estExtraitPlurilingue
+    ]
   );
 
   const handleChangeTexte = useCallback(
@@ -91,25 +108,33 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
 
   const handleAjoutSelect = useCallback(
     (event: any) => {
-      if (mentionAjout) {
-        const temp = { ...mentionAjout };
-        temp.nature = NatureMention.getEnumFor(event.target.value);
-        setMentionAjout(temp);
+      const nature = NatureMention.getEnumFor(event.target.value);
+      if (!event.target.value) {
+        setMentionAjout(undefined);
       } else {
-        setMentionAjout({
-          id: Generateur.genereCleUnique(),
-          texte: estExtraitPlurilingue
-            ? texteParDefautPlurilingue(natureActe)
-            : "",
-          nature: NatureMention.getEnumFor(event.target.value),
-          numeroOrdre: getNumeroOrdreMention(mentions),
-          estPresent: true,
-          aPoubelle: true,
-          nouveau: true
-        } as IMentionAffichage);
+        if (mentionAjout) {
+          const temp = { ...mentionAjout };
+          temp.nature = nature;
+          if (estExtraitPlurilingue) {
+            temp.texte = texteParDefautPlurilingue(nature);
+          }
+          setMentionAjout(temp);
+        } else {
+          setMentionAjout({
+            id: Generateur.genereCleUnique(),
+            texte: estExtraitPlurilingue
+              ? texteParDefautPlurilingue(nature)
+              : "",
+            nature: NatureMention.getEnumFor(event.target.value),
+            numeroOrdre: getNumeroOrdreMention(mentions),
+            estPresent: true,
+            aPoubelle: true,
+            nouveau: true
+          } as IMentionAffichage);
+        }
       }
     },
-    [mentionAjout, mentions, setMentionAjout, estExtraitPlurilingue, natureActe]
+    [mentionAjout, mentions, setMentionAjout, estExtraitPlurilingue]
   );
   const handleAjoutTexte = useCallback(
     (event: any) => {
@@ -217,8 +242,8 @@ function getNumeroOrdreMention(
   return mentions ? mentions.length + 1 : 0;
 }
 
-function texteParDefautPlurilingue(natureActe?: NatureActe) {
-  if (natureActe === NatureActe.MARIAGE) {
+function texteParDefautPlurilingue(natureMention?: NatureMention) {
+  if (natureMention === NatureMention.getEnumFromCode(NatureMention, MARIAGE)) {
     return "JJ-MM-AA <Lieu événement> <NOM du conjoint> <Prénoms du conjoint>";
   } else {
     return "JJ-MM-AA <Lieu événement>";

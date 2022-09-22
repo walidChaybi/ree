@@ -173,6 +173,7 @@ export const getValidationEC = (
   switch (choixDelivrance) {
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
+    case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
       return getValidationExtrait(acte, choixDelivrance, validation);
     case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
     case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:

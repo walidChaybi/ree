@@ -42,7 +42,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
 
   const [mentionSelect, setMentionSelect] = useState<IMentionAffichage>();
   const [mentionAjout, setMentionAjout] = useState<IMentionAffichage>();
-  const [mentions, setMentions] = useState<IMentionAffichage[]>();
+  const [mentions, setMentions] = useState<IMentionAffichage[]>([]);
   const [mentionsParams, setMentionsParams] = useState<string>();
   const [sauvegarderMentionsParams, setSauvegarderMentionsParams] =
     useState<SauvegarderMentionsParam>();
@@ -98,12 +98,13 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
       );
       if (estTableauNonVide(mentionsAAfficher)) {
         setMentions(mentionsAAfficher);
+        const premiereMention = { ...mentionsAAfficher[0] };
         if (estExtraitPlurilingue) {
-          mentionsAAfficher[0].texte = Mention.getTexteAPartirPlurilingue(
-            mentionsAAfficher[0].texte
+          premiereMention.texte = Mention.getTexteAPartirPlurilingue(
+            premiereMention.texte
           );
         }
-        setMentionSelect(mentionsAAfficher[0]);
+        setMentionSelect(premiereMention);
       }
     }
   }, [mentionsApi, props.document, estExtraitPlurilingue]);
