@@ -49,8 +49,8 @@ export class SousTypeCreation extends EnumWithComplete {
     "Création Etablissement pour reconstitution (AR) Courrier",
     "Acte Etab AR (c)"
   );
-  public static readonly RCEADC = new SousTypeCreation(
-    "RCEADC",
+  public static readonly RCADC = new SousTypeCreation(
+    "RCADC",
     "Création Acte Dressé Courrier",
     "Acte Dressé (c)"
   );

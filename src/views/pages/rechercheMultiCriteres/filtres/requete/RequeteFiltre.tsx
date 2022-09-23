@@ -1,12 +1,9 @@
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
-import { SousTypeMiseAJour } from "@model/requete/enum/SousTypeMiseAJour";
+import { SousTypeRequeteUtil } from "@model/requete/enum/SousTypeRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
 import { Options } from "@util/Type";
-import { getLibelle } from "@util/Utils";
+import { estRenseigne, getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
@@ -74,21 +71,30 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
   const [sousTypeRequeteInactif, setSousTypeRequeteInactif] =
     useState<boolean>(true);
 
+  const [statutRequeteInactif, setStatutRequeteInactif] =
+    useState<boolean>(true);
+
   const [sousTypeRequeteOptions, setSousTypeRequeteOptions] = useState<Options>(
     []
   );
 
-  const manageTypeRequeteOptions = (type: string) => {
-    if (type === "DELIVRANCE") {
-      setSousTypeRequeteOptions(SousTypeDelivrance.getAllEnumsAsOptions());
-    } else if (type === "CREATION") {
-      setSousTypeRequeteOptions(SousTypeCreation.getAllEnumsAsOptions());
-    } else if (type === "MISE_A_JOUR") {
-      setSousTypeRequeteOptions(SousTypeMiseAJour.getAllEnumsAsOptions());
-    } else if (type === "INFORMATION") {
-      setSousTypeRequeteOptions(SousTypeInformation.getAllEnumsAsOptions());
-    } else {
-      setSousTypeRequeteOptions([]);
+  const [statutRequeteOptions, setStatutRequeteOptions] = useState<Options>([]);
+
+  const gestionTypeRequeteOptions = (type: string) => {
+    if (type) {
+      return setSousTypeRequeteOptions(
+        SousTypeRequeteUtil.getOptionsAPartirTypeRequete(
+          TypeRequete.getEnumFor(type)
+        )
+      );
+    }
+  };
+
+  const gestionStatutRequeteOptions = (type: string) => {
+    if (type) {
+      setStatutRequeteOptions(
+        StatutRequete.getOptionsAPartirTypeRequete(TypeRequete.getEnumFor(type))
+      );
     }
   };
 
@@ -100,19 +106,26 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
   const onChangeTypeRequete = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     props.formik.setFieldValue(sousTypeRequeteWithNamespace, "");
-    manageTypeRequeteOptions(e.target.value);
+    gestionTypeRequeteOptions(e.target.value);
+    gestionStatutRequeteOptions(e.target.value);
     props.formik.handleChange(e);
   };
 
   useEffect(() => {
     setSousTypeRequeteInactif(
-      !isTypeRequeteDirty(props.formik.values as IRMCRequete)
+      !estTypeRequeteDirty(props.formik.values as IRMCRequete)
     );
+
+    setStatutRequeteInactif(
+      !esSousTypeRequeteDirty(props.formik.values as IRMCRequete)
+    );
+
     const type = getIn(
       props.formik.values,
       withNamespace(props.nomFiltre, TYPE_REQUETE)
     );
-    manageTypeRequeteOptions(type);
+    gestionTypeRequeteOptions(type);
+    gestionStatutRequeteOptions(type);
   }, [props.formik.dirty, props.formik.values, props.nomFiltre]);
 
   return (
@@ -146,7 +159,8 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
           <SelectField
             name={statutRequeteWithNamespace}
             label={getLibelle("Statut de requête")}
-            options={StatutRequete.getAllEnumsAsOptions()}
+            options={statutRequeteOptions}
+            disabled={statutRequeteInactif}
           />
         </div>
       </Fieldset>
@@ -154,8 +168,12 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
   );
 };
 
-export default connect(RequeteFiltre);
-
-function isTypeRequeteDirty(values: IRMCRequete) {
+function estTypeRequeteDirty(values: IRMCRequete) {
   return values.requete?.typeRequete !== "";
 }
+
+function esSousTypeRequeteDirty(values: IRMCRequete): boolean {
+  return estRenseigne(values.requete?.sousTypeRequete);
+}
+
+export default connect(RequeteFiltre);

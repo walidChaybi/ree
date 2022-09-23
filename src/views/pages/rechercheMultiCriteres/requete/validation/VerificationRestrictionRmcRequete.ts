@@ -14,8 +14,7 @@ import {
 import {
   aucuneProprieteRenseignee,
   estNonRenseigne,
-  estRenseigne,
-  tousNonRenseignes
+  estRenseigne
 } from "@util/Utils";
 
 const verificationsRestrictionCriteresErreurs: IVerificationErreur[] = [
@@ -76,9 +75,7 @@ export function typeRequeteSaisiSansSousTypeOuStatut(
 ): boolean {
   return (
     estRenseigne(rMCSaisie.requete?.typeRequete) &&
-    tousNonRenseignes(
-      rMCSaisie.requete?.sousTypeRequete,
-      rMCSaisie.requete?.statutRequete
-    )
+    (estNonRenseigne(rMCSaisie.requete?.sousTypeRequete) ||
+      estNonRenseigne(rMCSaisie.requete?.statutRequete))
   );
 }

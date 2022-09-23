@@ -58,12 +58,6 @@ test("Bouton réinitialisation des champs", async () => {
         value: "INFORMATION"
       }
     });
-    fireEvent.input(typeRequete);
-    fireEvent.change(statutRequete, {
-      target: {
-        value: "A_TRAITER"
-      }
-    });
   });
 
   await act(async () => {
@@ -73,6 +67,14 @@ test("Bouton réinitialisation des champs", async () => {
       }
     });
   });
+
+  await act(async () => {
+    fireEvent.change(statutRequete, {
+      target: {
+        value: "A_TRAITER"
+      }
+    });
+  });  
 
   await waitFor(() => {
     expect(numeroRequete.value).toBe("1234ABCD");

@@ -1,4 +1,5 @@
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
 import {
   filtreDateCreationInformatiqueSaisiSeul,
@@ -35,6 +36,7 @@ test("Attendu: getMessageSiVerificationRestrictionRmcRequeteEnErreur fonctionne 
   );
 
   rmcSaisieTypeRequete.requete!.sousTypeRequete = SousTypeDelivrance.RDD;
+  rmcSaisieTypeRequete.requete!.statutRequete = StatutRequete.A_SIGNER;
   expect(
     getMessageSiVerificationRestrictionRmcRequeteEnErreur(rmcSaisieTypeRequete)
   ).toBeUndefined();
@@ -45,7 +47,8 @@ test("Attendu: typeRequeteSaisiSansSousTypeOuStatut fonctionne correctement", ()
     requete: {
       typeRequete: SOMETHING,
       sousTypeRequete: undefined,
-      numeroTeledossier: ""
+      numeroTeledossier: "",
+      statutRequete: undefined
     },
     titulaire: {
       nom: ""
@@ -64,6 +67,11 @@ test("Attendu: typeRequeteSaisiSansSousTypeOuStatut fonctionne correctement", ()
   ).toBeTruthy();
 
   rmcSaisieTypeRequete.requete!.sousTypeRequete = SousTypeDelivrance.RDD;
+  expect(
+    typeRequeteSaisiSansSousTypeOuStatut(rmcSaisieTypeRequete)
+  ).toBeTruthy();
+
+  rmcSaisieTypeRequete.requete!.statutRequete = StatutRequete.A_SIGNER;
   expect(
     typeRequeteSaisiSansSousTypeOuStatut(rmcSaisieTypeRequete)
   ).toBeFalsy();

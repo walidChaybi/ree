@@ -3,7 +3,8 @@ import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { Options } from "@util/Type";
+import { Option, Options } from "@util/Type";
+import { TypeRequete } from "./TypeRequete";
 
 export class StatutRequete extends EnumWithComplete {
   public static readonly BROUILLON = new StatutRequete(
@@ -79,6 +80,52 @@ export class StatutRequete extends EnumWithComplete {
     "ALERTE_SDANF",
     "Alerte SDANF"
   );
+  public static readonly TRAITE = new StatutRequete("TRAITE", "Traité");
+
+  private static readonly StatutsPourTypeRequeteDelivrance = [
+    StatutRequete.BROUILLON,
+    StatutRequete.DOUBLON,
+    StatutRequete.A_TRAITER,
+    StatutRequete.PRISE_EN_CHARGE,
+    StatutRequete.TRANSFEREE,
+    StatutRequete.A_VALIDER,
+    StatutRequete.IGNOREE,
+    StatutRequete.A_SIGNER,
+    StatutRequete.TRAITE_A_IMPRIMER,
+    StatutRequete.TRAITE_IMPRIME,
+    StatutRequete.TRAITE_A_DELIVRER_DEMAT,
+    StatutRequete.TRAITE_DELIVRE_DEMAT,
+    StatutRequete.TRAITE_REPONDU,
+    StatutRequete.REJET_IMPRESSION
+  ];
+  private static readonly StatutsPourTypeRequeteInformation = [
+    StatutRequete.REJET,
+    StatutRequete.A_TRAITER,
+    StatutRequete.PRISE_EN_CHARGE,
+    StatutRequete.TRANSFEREE,
+    StatutRequete.TRAITE_REPONDU
+  ];
+  private static readonly StatutsPourTypeRequeteMiseAJour =
+    StatutRequete.StatutsPourTypeRequeteDelivrance;
+  private static readonly StatutsPourTypeRequeteCreation = [
+    StatutRequete.A_TRAITER,
+    StatutRequete.PRISE_EN_CHARGE,
+    StatutRequete.RETOUR_SDANF,
+    StatutRequete.PROJET_VALIDE,
+    StatutRequete.A_SIGNER,
+    StatutRequete.TRAITE
+  ];
+
+  private static readonly StatutsParTypeRequete = {
+    [TypeRequete.getKey(TypeRequete.DELIVRANCE)]:
+      StatutRequete.StatutsPourTypeRequeteDelivrance,
+    [TypeRequete.getKey(TypeRequete.INFORMATION)]:
+      StatutRequete.StatutsPourTypeRequeteInformation,
+    [TypeRequete.getKey(TypeRequete.MISE_A_JOUR)]:
+      StatutRequete.StatutsPourTypeRequeteMiseAJour,
+    [TypeRequete.getKey(TypeRequete.CREATION)]:
+      StatutRequete.StatutsPourTypeRequeteCreation
+  };
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, StatutRequete);
@@ -134,5 +181,16 @@ export class StatutRequete extends EnumWithComplete {
     }
 
     return statuts;
+  }
+
+  public static getOptionsAPartirTypeRequete(
+    typeRequete: TypeRequete
+  ): Option[] {
+    return StatutRequete.StatutsParTypeRequete[TypeRequete.getKey(typeRequete)]
+      .map(statut => ({
+        value: StatutRequete.getKey(statut),
+        str: statut.libelle
+      }))
+      .sort((option1, option2) => option1.str.localeCompare(option2.str));
   }
 }

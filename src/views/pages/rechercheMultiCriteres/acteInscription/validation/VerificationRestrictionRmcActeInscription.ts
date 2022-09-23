@@ -78,8 +78,8 @@ export function numeroActeSaisiSansFamilleRegistreEtPocopa(
   const registre = rMCSaisie.registreRepertoire?.registre;
   return (
     estRenseigne(registre?.numeroActe) &&
-    estNonRenseigne(registre?.familleRegistre) &&
-    estNonRenseigne(registre?.pocopa)
+    (estNonRenseigne(registre?.familleRegistre) ||
+      estNonRenseigne(registre?.pocopa))
   );
 }
 

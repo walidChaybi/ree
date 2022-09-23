@@ -11,9 +11,11 @@ import {
   waitFor
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 const HookRequeteFiltre: React.FC = () => {
+  const ref = useRef<any>(null);
+
   const [result, setResult] = useState("");
 
   const requeteFiltreProps = {
@@ -23,8 +25,15 @@ const HookRequeteFiltre: React.FC = () => {
   const handleClickButton = (values: any) => {
     setResult(JSON.stringify(values));
   };
+
+  const estDisabled = (): boolean => {
+    return ref.current == null ? false : !ref.current.isValid;
+  };
+
   return (
     <Formik
+      //@ts-ignore
+      innerRef={ref}
       initialValues={{
         [REQUETE]: { ...RequeteDefaultValues }
       }}
@@ -32,7 +41,9 @@ const HookRequeteFiltre: React.FC = () => {
     >
       <Form>
         <RequeteFiltre {...requeteFiltreProps} />
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={estDisabled()}>
+          Submit
+        </button>
         <Field as="textarea" value={result} data-testid="result" />
       </Form>
     </Formik>
@@ -67,7 +78,17 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
         value: "DELIVRANCE"
       }
     });
-    fireEvent.input(typeRequete);
+  });
+
+  act(() => {
+    fireEvent.change(sousTypeRequete, {
+      target: {
+        value: "RDD"
+      }
+    });
+  });
+
+  act(() => {
     fireEvent.change(statutRequete, {
       target: {
         value: "A_SIGNER"
@@ -75,16 +96,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
     });
   });
 
-  await waitFor(() => {
-    act(() => {
-      fireEvent.change(sousTypeRequete, {
-        target: {
-          value: "RDD"
-        }
-      });
-      fireEvent.click(submit);
-    });
-  });
+  fireEvent.click(submit);
 
   const result = screen.getByTestId("result");
   await waitFor(() => {
@@ -123,30 +135,30 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
         value: "CREATION"
       }
     });
-    fireEvent.input(typeRequete);
-    fireEvent.change(statutRequete, {
+  });
+
+  act(() => {
+    fireEvent.change(sousTypeRequete, {
       target: {
-        value: "TRAITE_A_IMPRIMER"
+        value: "RCTC"
       }
     });
   });
 
-  await waitFor(() => {
-    act(() => {
-      fireEvent.change(sousTypeRequete, {
-        target: {
-          value: "RCTC"
-        }
-      });
-      fireEvent.click(submit);
+  act(() => {
+    fireEvent.change(statutRequete, {
+      target: {
+        value: "RETOUR_SDANF"
+      }
     });
   });
 
+  fireEvent.click(submit);
   const result = screen.getByTestId("result");
   await waitFor(() => {
     expect(sousTypeRequete.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-      '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","typeRequete":"CREATION","sousTypeRequete":"RCTC","statutRequete":"TRAITE_A_IMPRIMER"}}'
+      '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","typeRequete":"CREATION","sousTypeRequete":"RCTC","statutRequete":"RETOUR_SDANF"}}'
     );
   });
 });
@@ -179,7 +191,17 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
         value: "MISE_A_JOUR"
       }
     });
-    fireEvent.input(typeRequete);
+  });
+
+  act(() => {
+    fireEvent.change(sousTypeRequete, {
+      target: {
+        value: "RMPR"
+      }
+    });
+  });
+
+  act(() => {
     fireEvent.change(statutRequete, {
       target: {
         value: "DOUBLON"
@@ -187,17 +209,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
     });
   });
 
-  await waitFor(() => {
-    act(() => {
-      fireEvent.change(sousTypeRequete, {
-        target: {
-          value: "RMPR"
-        }
-      });
-      fireEvent.click(submit);
-    });
-  });
-
+  fireEvent.click(submit);
   const result = screen.getByTestId("result");
   await waitFor(() => {
     expect(sousTypeRequete.disabled).toBeFalsy();
@@ -235,7 +247,17 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
         value: "INFORMATION"
       }
     });
-    fireEvent.input(typeRequete);
+  });
+
+  act(() => {
+    fireEvent.change(sousTypeRequete, {
+      target: {
+        value: "COMPLETION_REQUETE_EN_COURS"
+      }
+    });
+  });
+
+  act(() => {
     fireEvent.change(statutRequete, {
       target: {
         value: "A_TRAITER"
@@ -243,17 +265,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
     });
   });
 
-  await waitFor(() => {
-    act(() => {
-      fireEvent.change(sousTypeRequete, {
-        target: {
-          value: "COMPLETION_REQUETE_EN_COURS"
-        }
-      });
-      fireEvent.click(submit);
-    });
-  });
-
+  fireEvent.click(submit);
   const result = screen.getByTestId("result");
   await waitFor(() => {
     expect(sousTypeRequete.disabled).toBeFalsy();
@@ -268,6 +280,8 @@ test("Sous Type Requete : Disabled / message d'erreur CARACTERES_ALPHANUMERIQUE 
     render(<HookRequeteFiltre />);
   });
 
+  const typeRequete = screen.getByTestId("requete.typeRequete")
+    .childNodes[0] as HTMLInputElement;
   const numeroRequete = screen.getByLabelText(
     "requete.numeroRequete"
   ) as HTMLInputElement;
@@ -275,7 +289,7 @@ test("Sous Type Requete : Disabled / message d'erreur CARACTERES_ALPHANUMERIQUE 
     .childNodes[0] as HTMLInputElement;
   const statutRequete = screen.getByTestId("requete.statutRequete")
     .childNodes[0] as HTMLInputElement;
-  const submit = screen.getByText(/Submit/i);
+  //const submit: HTMLButtonElement = screen.getByText(/Submit/i);
 
   act(() => {
     fireEvent.change(numeroRequete, {
@@ -283,17 +297,46 @@ test("Sous Type Requete : Disabled / message d'erreur CARACTERES_ALPHANUMERIQUE 
         value: "1234-"
       }
     });
-    fireEvent.change(statutRequete, {
+  });
+
+  await waitFor(() => {
+    expect(numeroRequete.value).toBe("1234-");
+    // expect(submit.disabled).toBeTruthy(); ne fonctionne pas (pas compris pourquoi)
+    expect(sousTypeRequete.disabled).toBeTruthy();
+    expect(statutRequete.disabled).toBeTruthy();
+  });
+
+  act(() => {
+    fireEvent.change(typeRequete, {
       target: {
-        value: "A_TRAITER"
+        value: "INFORMATION"
       }
     });
   });
 
   await waitFor(() => {
-    expect(numeroRequete.value).toBe("1234-");
-    expect(statutRequete.value).toBe("A_TRAITER");
-    expect(sousTypeRequete.disabled).toBeTruthy();
-    expect(submit).toBeTruthy();
+    expect(sousTypeRequete.disabled).toBeFalsy();
+    expect(statutRequete.disabled).toBeTruthy();
+  });
+
+  act(() => {
+    fireEvent.change(sousTypeRequete, {
+      target: {
+        value: "COMPLETION_REQUETE_EN_COURS"
+      }
+    });
+  });
+
+  await waitFor(() => {
+    expect(sousTypeRequete.disabled).toBeFalsy();
+    expect(statutRequete.disabled).toBeFalsy();
+  });
+
+  act(() => {
+    fireEvent.change(statutRequete, {
+      target: {
+        value: "A_TRAITER"
+      }
+    });
   });
 });

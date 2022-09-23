@@ -578,7 +578,7 @@ test("Attendu: numeroActeSaisiSansFamilleRegistreEtPocopa fonctionnne correcteme
   rmcSaisieNumeroActe.registreRepertoire!.registre!.familleRegistre = SOMETHING;
   expect(
     numeroActeSaisiSansFamilleRegistreEtPocopa(rmcSaisieNumeroActe)
-  ).toBeFalsy();
+  ).toBeTruthy();
 
   rmcSaisieNumeroActe.registreRepertoire!.registre!.familleRegistre = "";
   rmcSaisieNumeroActe.registreRepertoire!.registre!.pocopa = {
@@ -587,7 +587,7 @@ test("Attendu: numeroActeSaisiSansFamilleRegistreEtPocopa fonctionnne correcteme
   };
   expect(
     numeroActeSaisiSansFamilleRegistreEtPocopa(rmcSaisieNumeroActe)
-  ).toBeFalsy();
+  ).toBeTruthy();
 
   rmcSaisieNumeroActe.registreRepertoire!.registre!.familleRegistre = SOMETHING;
   rmcSaisieNumeroActe.registreRepertoire!.registre!.pocopa = {
