@@ -1,17 +1,16 @@
 import { Residence } from "@model/requete/enum/Residence";
+import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { estRenseigne } from "@util/Utils";
 import React from "react";
 import Labels from "../../Labels";
-import {
-  formatLigneDateCoordonnees,
-  formatLigneFrancisationIdentification,
-  formatLigneNationalites,
-  formatLigneNomsPrenomsGenre
-} from "../Formatages";
+import { formatLigneNationalites } from "../Formatages";
 import { DateCoordonneesType, IdentiteType, NationaliteType } from "../Types";
 import Item, { ItemProps } from "./Item";
 import { ItemLigne } from "./ItemLigne";
 import ItemParent, { ItemParentProps } from "./ItemParent";
+import { LigneDateNaissanceAdresse } from "./ItemTitulaire/LigneDateNaissanceAdresse";
+import { LigneFrancisationIdentification } from "./ItemTitulaire/LigneFrancisationIdentification";
+import { LigneNomPrenomActuel } from "./ItemTitulaire/LigneNomPrenomActuel";
 
 export interface ItemEffetCollectifProps {
   numeros: {
@@ -24,6 +23,7 @@ export interface ItemEffetCollectifProps {
   residence?: Residence;
   domiciliation?: string;
   parent?: ItemParentProps;
+  retenueSdanf?: IRetenueSdanf;
 }
 
 const ItemEffetCollectif: React.FC<
@@ -38,11 +38,23 @@ const ItemEffetCollectif: React.FC<
         texte={`N° ${props.numeros.requeteLiee}`}
         visible={estRenseigne(props.numeros.requeteLiee)}
       />
-      <ItemLigne texte={formatLigneNomsPrenomsGenre(props.identite)} />
-      <ItemLigne
-        texte={formatLigneFrancisationIdentification(props.identite)}
+
+      <LigneNomPrenomActuel
+        identite={props.identite}
+        retenueSdanf={props.retenueSdanf}
+        afficherNomActuel={false}
       />
-      <ItemLigne texte={formatLigneDateCoordonnees(props.naissance)} />
+
+      <LigneFrancisationIdentification
+        identite={props.identite}
+        retenueSdanf={props.retenueSdanf}
+      />
+
+      <LigneDateNaissanceAdresse
+        naissance={props.naissance}
+        retenueSdanf={props.retenueSdanf}
+      />
+
       <ItemLigne
         texte={
           formatLigneNationalites(props.nationalites) ??
@@ -60,6 +72,7 @@ const ItemEffetCollectif: React.FC<
           {...props.parent}
           titre={Labels.resume.parent}
           numeroItem={idDeuxiemeParent}
+          retenueSdanf={props.parent.retenueSdanf}
         />
       )}
     </Item>

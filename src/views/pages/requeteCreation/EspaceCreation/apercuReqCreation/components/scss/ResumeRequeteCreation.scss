@@ -8,6 +8,15 @@ $height: $spacing * 2.5;
     display: flex;
     padding-top: $spacing;
     padding-bottom: $spacing;
+
+    .erreurSdanf {
+      background-color: $surlignement-sdanf;
+      padding: 0.0rem 0.185rem;
+      border-radius: 0.3rem;
+    }
+  }
+  .itemLigneTitulaire {
+    display: flex;
   }
   .texte {
     display: flex;
@@ -24,6 +33,9 @@ $height: $spacing * 2.5;
     display: flex;
     flex: 1;
   }
+  .separateur {
+    margin: 0 0.11rem;
+  }
   .link {
     cursor: pointer;
     color: $application-color;
@@ -35,12 +47,12 @@ $height: $spacing * 2.5;
   }
   .infoBulle {
     display: flex;
-    margin-left: $spacing / 2;
+    // margin-left: $spacing / 3;
 
     .icon {
       cursor: pointer;
       height: $height;
-      margin-left: $spacing / 2;
+      margin-left: $spacing / 4;
       
       svg {
         height: $height;

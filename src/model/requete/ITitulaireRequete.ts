@@ -13,6 +13,7 @@ import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 import { IEvenementUnion } from "./IEvenementUnion";
 import { IParent } from "./IParents";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
+import { IRetenueSdanf } from "./IRetenueSdanf";
 
 export interface ITitulaireRequete {
   id: string;
@@ -28,6 +29,7 @@ export interface ITitulaireRequete {
   sexe: string;
   nationalite: Nationalite;
   parentsTitulaire?: IParent[];
+  codePostalNaissance?: string;
 
   // Nouveaux champs création
   situationFamiliale?: string;
@@ -60,6 +62,7 @@ export interface ITitulaireRequete {
 
   // Titulaire creation Union
   evenementUnions?: IEvenementUnion[];
+  retenueSdanf?: IRetenueSdanf;
 }
 
 interface INationalite {

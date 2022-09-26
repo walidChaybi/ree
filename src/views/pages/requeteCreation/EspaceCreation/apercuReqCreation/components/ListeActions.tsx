@@ -103,7 +103,9 @@ export const ListeActionsRetourSDANF: React.FC<
   };
 
   const fermerPopin = () => {
+    /* istanbul ignore next */
     setIsOpen(false);
+    /* istanbul ignore next */
     setButtonValidateDisabled(true);
     setMessageSDANF("");
   };
@@ -134,7 +136,7 @@ export const ListeActionsRetourSDANF: React.FC<
         emetteur: "SCEC",
         destinataire: "SDANF",
         nature: "REPONSE_SCEC",
-        message: message,
+        message,
         pieceJustificativeRequeteCreation: []
       }
     });

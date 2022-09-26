@@ -43,7 +43,6 @@ export function genererListeAjoutComplementaire(
 ): ItemListe[] {
   let listeMapped: ItemListe[] = [];
   const index = 0;
-
   if (acte.nature === NatureActe.DECES) {
     for (let i = index; i < documents.length; i++) {
       listeMapped = listePlus.filter((itemListe: ItemListe) => {
@@ -61,6 +60,7 @@ export function genererListeAjoutComplementaire(
       });
     }
   }
+
   return listeMapped;
 }
 
@@ -87,7 +87,9 @@ export function getTypeDocument(indexChoix: number): string | undefined {
       typeDocument = DocumentDelivrance.getKeyForCode(CODE_COPIE_INTEGRALE);
       break;
     default:
+      typeDocument = "";
       break;
   }
+
   return typeDocument;
 }

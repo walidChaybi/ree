@@ -1,3 +1,4 @@
+import { getDateStringFromDateCompose } from "@util/DateUtils";
 import { estRenseigne } from "@util/Utils";
 import React from "react";
 import Labels from "../Labels";
@@ -11,8 +12,8 @@ import {
 type LigneType = string | false | undefined;
 
 // Création d'un string "A, B, C..." où ", " est le séparateur par défaut et les valeurs vides sont supprimées
-export const formatLigne = (tab?: LigneType[], separateur = ", ") => {
-  const resultat = tab?.filter(Boolean).join(separateur);
+export const formatLigne = (tableau?: LigneType[], separateur = ", ") => {
+  const resultat = tableau?.filter(Boolean).join(separateur);
   return estRenseigne(resultat) ? resultat : undefined;
 };
 
@@ -77,10 +78,10 @@ export const formatLigneDateCoordonnees = (
 ) =>
   formatLigne([
     dateCoordonnees?.date,
-    dateCoordonnees?.ville,
-    dateCoordonnees?.arrondissement,
-    dateCoordonnees?.regionDeptEtat,
-    dateCoordonnees?.pays
+    dateCoordonnees?.villeNaissance,
+    dateCoordonnees?.arrondissementNaissance,
+    dateCoordonnees?.regionNaissance,
+    dateCoordonnees?.paysNaissance
   ]);
 
 export const formatLigneAdresse = (adresse?: DomiciliationType) =>
@@ -92,3 +93,27 @@ export const formatLigneAdresse = (adresse?: DomiciliationType) =>
 
 export const formatLigneNationalites = (nationalites?: NationaliteType[]) =>
   formatLigne(nationalites?.map(nationalite => nationalite.nationalite));
+
+export const presenceCorrectionSdanf = (
+  champAControlerSdanf?: string | number | string[],
+  champAControlerTitulaire?: string | number | string[]
+): boolean => {
+  return champAControlerSdanf
+    ? champAControlerSdanf !== champAControlerTitulaire
+    : false;
+};
+
+export const formatageDateNaissanceRetenueSdanf = (
+  jourNaissance: string | undefined,
+  moisNaissance: string | undefined,
+  anneeNaissance: string | undefined
+): string =>
+  getDateStringFromDateCompose(
+    anneeNaissance
+      ? {
+          jour: jourNaissance?.toString(),
+          mois: moisNaissance?.toString(),
+          annee: anneeNaissance?.toString()
+        }
+      : undefined
+  );

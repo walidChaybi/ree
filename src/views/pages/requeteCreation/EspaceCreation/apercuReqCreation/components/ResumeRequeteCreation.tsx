@@ -10,13 +10,15 @@ import ItemEnfantMajeur, {
 } from "./Item/ItemEnfantMajeur";
 import ItemFraterie from "./Item/ItemFraterie";
 import ItemRequete, { ItemRequeteProps } from "./Item/ItemRequete";
-import ItemTitulaire, { ItemTitulaireProps } from "./Item/ItemTitulaire";
+import ItemTitulaire, {
+  ItemTitulaireProps
+} from "./Item/ItemTitulaire/ItemTitulaire";
 import ItemUnion, { ItemUnionProps } from "./Item/ItemUnion";
 import "./scss/ResumeRequeteCreation.scss";
 
 export interface ResumeRequeteCreationProps {
   requete: ItemRequeteProps;
-  postulant?: ItemTitulaireProps;
+  titulaire?: ItemTitulaireProps;
   union?: ItemUnionProps;
   unionsAnterieurs: ItemUnionProps[];
   effetsCollectifs: ItemEffetCollectifProps[];
@@ -36,8 +38,8 @@ const ResumeRequeteCreation: React.FC<ResumeRequeteCreationProps> = props => {
     >
       <ItemRequete {...props.requete} />
 
-      {props.postulant && (
-        <ItemTitulaire {...props.postulant} titre={Labels.resume.titulaire} />
+      {props.titulaire && (
+        <ItemTitulaire {...props.titulaire} titre={Labels.resume.titulaire} />
       )}
 
       {props.union && <ItemUnion {...props.union} titre={UNION} />}

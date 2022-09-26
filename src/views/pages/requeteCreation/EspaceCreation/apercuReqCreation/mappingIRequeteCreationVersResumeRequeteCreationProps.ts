@@ -18,7 +18,7 @@ import {
 } from "./components/Item/ItemEnfantMajeur";
 import { ItemParentProps } from "./components/Item/ItemParent";
 import { ItemRequeteProps } from "./components/Item/ItemRequete";
-import { ItemTitulaireProps } from "./components/Item/ItemTitulaire";
+import { ItemTitulaireProps } from "./components/Item/ItemTitulaire/ItemTitulaire";
 import { ItemUnionProps } from "./components/Item/ItemUnion";
 import { ResumeRequeteCreationProps } from "./components/ResumeRequeteCreation";
 import { DateCoordonneesType } from "./components/Types";
@@ -65,8 +65,8 @@ const mappingIRequeteCreationVersResumeRequeteCreationProps = (
   };
 
   const {
-    postulant,
-    parentsPostulant = [],
+    titulaire,
+    parentsTitulaire = [],
     union,
     unionsAnterieurs,
     effetsCollectifs,
@@ -78,11 +78,11 @@ const mappingIRequeteCreationVersResumeRequeteCreationProps = (
 
   return {
     requete,
-    postulant:
-      postulant &&
+    titulaire:
+      titulaire &&
       mappingITitulaireRequeteVersItemTitulaireProps(
-        postulant,
-        parentsPostulant,
+        titulaire,
+        parentsTitulaire,
         nbUnionsAnterieurs
       ),
     union: union && mappingITitulaireRequeteVersItemUnionProps(union),
@@ -119,17 +119,22 @@ const mappingITitulaireRequeteVersItemTitulaireProps = (
         identification: titulaire.nomDemandeIdentification
       },
       prenoms: {
-        naissance: mappingPrenoms(titulaire.prenoms),
-        francisation: mappingPrenoms(titulaire.prenomsDemande)
+        naissance: formatagePrenoms(titulaire.prenoms),
+        francisation: formatagePrenoms(titulaire.prenomsDemande)
       },
       genre: titulaire.sexe
     },
     naissance: {
       date: mappingDateNaissance(titulaire),
-      ville: titulaire.villeNaissance || titulaire.villeEtrangereNaissance,
-      arrondissement: titulaire.arrondissementNaissance,
-      regionDeptEtat: titulaire.regionNaissance,
-      pays: titulaire.paysNaissance
+      villeNaissance:
+        titulaire.villeNaissance || titulaire.villeEtrangereNaissance,
+      arrondissementNaissance: titulaire.arrondissementNaissance,
+      regionNaissance: titulaire.regionNaissance,
+      paysNaissance: titulaire.paysNaissance,
+      anneeNaissance: titulaire.anneeNaissance,
+      moisNaissance: titulaire.moisNaissance,
+      jourNaissance: titulaire.jourNaissance,
+      codePostalNaissance: titulaire.codePostalNaissance
     },
     nbUnionsAnterieurs,
     situationFamiliale: SituationFamiliale.getEnumFor(
@@ -155,6 +160,7 @@ const mappingITitulaireRequeteVersItemTitulaireProps = (
       mail: titulaire.courriel,
       telephone: titulaire.telephone
     },
+    retenueSdanf: titulaire.retenueSdanf ?? undefined,
     parents: mappingTableau(
       mappingITitulaireRequeteVersItemParentProps,
       parents
@@ -174,19 +180,24 @@ const mappingITitulaireRequeteVersItemParentProps = (
         naissance: parent.nomNaissance
       },
       prenoms: {
-        naissance: mappingPrenoms(parent.prenoms)
+        naissance: formatagePrenoms(parent.prenoms)
       },
       genre: parent.sexe
     },
     naissance: {
       date: mappingDateNaissance(parent),
-      ville: parent.villeNaissance || parent.villeEtrangereNaissance,
-      arrondissement: parent.arrondissementNaissance,
-      regionDeptEtat: parent.regionNaissance,
-      pays: parent.paysNaissance
+      villeNaissance: parent.villeNaissance || parent.villeEtrangereNaissance,
+      arrondissementNaissance: parent.arrondissementNaissance,
+      regionNaissance: parent.regionNaissance,
+      paysNaissance: parent.paysNaissance,
+      anneeNaissance: parent.anneeNaissance,
+      moisNaissance: parent.moisNaissance,
+      jourNaissance: parent.jourNaissance,
+      codePostalNaissance: parent.codePostalNaissance
     },
     nationalites: parent.nationalites || [],
-    domiciliation: parent.domiciliationEnfant
+    domiciliation: parent.domiciliationEnfant,
+    retenueSdanf: parent.retenueSdanf ?? undefined
   };
 };
 
@@ -202,18 +213,23 @@ const mappingITitulaireRequeteVersItemUnionProps = (
         naissance: union.nomNaissance
       },
       prenoms: {
-        naissance: mappingPrenoms(union.prenoms)
+        naissance: formatagePrenoms(union.prenoms)
       },
       genre: union.sexe
     },
     naissance: {
       date: mappingDateNaissance(union),
-      ville: union.villeNaissance || union.villeEtrangereNaissance,
-      arrondissement: union.arrondissementNaissance,
-      regionDeptEtat: union.regionNaissance,
-      pays: union.paysNaissance
+      villeNaissance: union.villeNaissance || union.villeEtrangereNaissance,
+      arrondissementNaissance: union.arrondissementNaissance,
+      regionNaissance: union.regionNaissance,
+      paysNaissance: union.paysNaissance,
+      anneeNaissance: union.anneeNaissance,
+      moisNaissance: union.moisNaissance,
+      jourNaissance: union.jourNaissance,
+      codePostalNaissance: union.codePostalNaissance
     },
     nationalites: union.nationalites || [],
+    retenueSdanf: union.retenueSdanf ?? undefined,
     mariage: mappingEvenementUnion(
       union.evenementUnions,
       TypeEvenementUnion.MARIAGE
@@ -262,23 +278,28 @@ const mappingITitulaireRequeteVersItemEffetCollectifProps = (
         francisation: effetCollectif.nomDemandeFrancisation
       },
       prenoms: {
-        naissance: mappingPrenoms(effetCollectif.prenoms),
-        francisation: mappingPrenoms(effetCollectif.prenomsDemande)
+        naissance: formatagePrenoms(effetCollectif.prenoms),
+        francisation: formatagePrenoms(effetCollectif.prenomsDemande)
       },
       genre: effetCollectif.sexe
     },
     naissance: {
       date: mappingDateNaissance(effetCollectif),
-      ville:
+      villeNaissance:
         effetCollectif.villeNaissance || effetCollectif.villeEtrangereNaissance,
-      arrondissement: effetCollectif.arrondissementNaissance,
-      regionDeptEtat: effetCollectif.regionNaissance,
-      pays: effetCollectif.paysNaissance
+      arrondissementNaissance: effetCollectif.arrondissementNaissance,
+      regionNaissance: effetCollectif.regionNaissance,
+      paysNaissance: effetCollectif.paysNaissance,
+      anneeNaissance: effetCollectif.anneeNaissance,
+      moisNaissance: effetCollectif.moisNaissance,
+      jourNaissance: effetCollectif.jourNaissance,
+      codePostalNaissance: effetCollectif.codePostalNaissance
     },
     nationalites: effetCollectif.nationalites || [],
     statut,
     residence: Residence.getEnumFor(effetCollectif.residence),
     domiciliation: effetCollectif.domiciliationEnfant,
+    retenueSdanf: effetCollectif.retenueSdanf ?? undefined,
     parent:
       effetCollectif.parent2Enfant &&
       mappingITitulaireRequeteVersItemParentProps(effetCollectif.parent2Enfant)
@@ -294,18 +315,23 @@ const mappingITitulaireRequeteVersItemEnfantMajeurProps = (
         naissance: enfantMajeur.nomNaissance
       },
       prenoms: {
-        naissance: mappingPrenoms(enfantMajeur.prenoms)
+        naissance: formatagePrenoms(enfantMajeur.prenoms)
       },
       genre: enfantMajeur.sexe
     },
     naissance: {
       date: mappingDateNaissance(enfantMajeur),
-      ville:
+      villeNaissance:
         enfantMajeur.villeNaissance || enfantMajeur.villeEtrangereNaissance,
-      arrondissement: enfantMajeur.arrondissementNaissance,
-      regionDeptEtat: enfantMajeur.regionNaissance,
-      pays: enfantMajeur.paysNaissance
+      arrondissementNaissance: enfantMajeur.arrondissementNaissance,
+      regionNaissance: enfantMajeur.regionNaissance,
+      paysNaissance: enfantMajeur.paysNaissance,
+      anneeNaissance: enfantMajeur.anneeNaissance,
+      moisNaissance: enfantMajeur.moisNaissance,
+      jourNaissance: enfantMajeur.jourNaissance,
+      codePostalNaissance: enfantMajeur.codePostalNaissance
     },
+    retenueSdanf: enfantMajeur.retenueSdanf ?? undefined,
     nationalites: enfantMajeur.nationalites || []
   };
 };
@@ -319,60 +345,67 @@ const mappingITitulaireRequeteVersItemFraterieProps = (
         naissance: fraterie.nomNaissance
       },
       prenoms: {
-        naissance: mappingPrenoms(fraterie.prenoms)
+        naissance: formatagePrenoms(fraterie.prenoms)
       },
       genre: fraterie.sexe
     },
     naissance: {
       date: mappingDateNaissance(fraterie),
-      ville: fraterie.villeNaissance || fraterie.villeEtrangereNaissance,
-      arrondissement: fraterie.arrondissementNaissance,
-      regionDeptEtat: fraterie.regionNaissance,
-      pays: fraterie.paysNaissance
+      villeNaissance:
+        fraterie.villeNaissance || fraterie.villeEtrangereNaissance,
+      arrondissementNaissance: fraterie.arrondissementNaissance,
+      regionNaissance: fraterie.regionNaissance,
+      paysNaissance: fraterie.paysNaissance,
+      anneeNaissance: fraterie.anneeNaissance,
+      moisNaissance: fraterie.moisNaissance,
+      jourNaissance: fraterie.jourNaissance,
+      codePostalNaissance: fraterie.codePostalNaissance
     },
-    nationalites: fraterie.nationalites || []
+    nationalites: fraterie.nationalites || [],
+    retenueSdanf: fraterie.retenueSdanf ?? undefined
   };
 };
 
 const triTitulaires = (titulaires?: ITitulaireRequete[]) => {
-  const parentsPostulant = titulaires?.filter(
-    titulaire =>
-      titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
-      titulaire.qualite === QualiteFamille.PARENT
+  const parentsTitulaire = titulaires?.filter(
+    titulaireRequete =>
+      titulaireRequete.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
+      titulaireRequete.qualite === QualiteFamille.PARENT
   );
   const union = titulaires?.find(
-    titulaire =>
-      titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
-      titulaire.qualite === QualiteFamille.CONJOINT_ACTUEL
+    titulaireRequete =>
+      titulaireRequete.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
+      titulaireRequete.qualite === QualiteFamille.CONJOINT_ACTUEL
   );
   const unionsAnterieurs = titulaires?.filter(
-    titulaire =>
-      titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
-      titulaire.qualite === QualiteFamille.ANCIEN_CONJOINT
+    titulaireRequete =>
+      titulaireRequete.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
+      titulaireRequete.qualite === QualiteFamille.ANCIEN_CONJOINT
   );
   const effetsCollectifs = titulaires?.filter(
-    titulaire =>
-      titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
-      titulaire.qualite === QualiteFamille.ENFANT_MINEUR
+    titulaireRequete =>
+      titulaireRequete.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
+      titulaireRequete.qualite === QualiteFamille.ENFANT_MINEUR
   );
   const enfantsMajeurs = titulaires?.filter(
-    titulaire =>
-      titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
-      titulaire.qualite === QualiteFamille.ENFANT_MAJEUR
+    titulaireRequete =>
+      titulaireRequete.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
+      titulaireRequete.qualite === QualiteFamille.ENFANT_MAJEUR
   );
   const frateries = titulaires?.filter(
-    titulaire =>
-      titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
-      titulaire.qualite === QualiteFamille.FRATRIE
+    titulaireRequete =>
+      titulaireRequete.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
+      titulaireRequete.qualite === QualiteFamille.FRATRIE
   );
-  const postulant = titulaires?.find(
-    titulaire =>
-      titulaire.typeObjetTitulaire === TypeObjetTitulaire.POSTULANT_NATIONALITE
+  const titulaire = titulaires?.find(
+    titulaireRequete =>
+      titulaireRequete.typeObjetTitulaire ===
+      TypeObjetTitulaire.POSTULANT_NATIONALITE
   );
 
   return {
-    postulant,
-    parentsPostulant,
+    titulaire,
+    parentsTitulaire,
     union,
     unionsAnterieurs,
     effetsCollectifs,
@@ -386,10 +419,10 @@ const triPrenoms = (prenoms: IPrenomOrdonnes[]): string[] =>
     .sort((a, b) => a.numeroOrdre - b.numeroOrdre)
     .map(prenom => prenom.prenom);
 
-const mappingPrenoms = (prenoms?: IPrenomOrdonnes[]) =>
+export const formatagePrenoms = (prenoms?: IPrenomOrdonnes[]) =>
   prenoms ? triPrenoms(prenoms) : [];
 
-const mappingDateNaissance = ({
+export const mappingDateNaissance = ({
   jourNaissance,
   moisNaissance,
   anneeNaissance
@@ -420,10 +453,10 @@ const mappingEvenementUnion = (
           }
         : undefined
     ),
-    ville: evenementUnion?.ville,
-    arrondissement: evenementUnion?.arrondissement,
-    regionDeptEtat: evenementUnion?.region,
-    pays: evenementUnion?.pays
+    villeNaissance: evenementUnion?.ville,
+    arrondissementNaissance: evenementUnion?.arrondissement,
+    regionNaissance: evenementUnion?.region,
+    paysNaissance: evenementUnion?.pays
   };
 };
 

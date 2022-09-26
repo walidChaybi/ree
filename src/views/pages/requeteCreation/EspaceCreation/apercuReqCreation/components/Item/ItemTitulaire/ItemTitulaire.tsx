@@ -1,23 +1,24 @@
 import { SituationFamiliale } from "@model/requete/enum/SituationFamiliale";
+import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import React from "react";
-import Labels, { INFOS } from "../../Labels";
+import Labels, { INFOS } from "../../../Labels";
 import {
   formatLigne,
   formatLigneAdresse,
-  formatLigneDateCoordonnees,
-  formatLigneFrancisationIdentification,
-  formatLigneNationalites,
-  formatLigneNomsPrenomsGenre
-} from "../Formatages";
+  formatLigneNationalites
+} from "../../Formatages";
 import {
   DateCoordonneesType,
   DomiciliationType,
   IdentiteType,
   NationaliteType
-} from "../Types";
-import Item, { ItemProps } from "./Item";
-import { ItemLigne } from "./ItemLigne";
-import ItemParent, { ItemParentProps } from "./ItemParent";
+} from "../../Types";
+import Item, { ItemProps } from "../Item";
+import { ItemLigne } from "../ItemLigne";
+import ItemParent, { ItemParentProps } from "../ItemParent";
+import { LigneDateNaissanceAdresse } from "./LigneDateNaissanceAdresse";
+import { LigneFrancisationIdentification } from "./LigneFrancisationIdentification";
+import { LigneNomPrenomActuel } from "./LigneNomPrenomActuel";
 
 export interface ItemTitulaireProps {
   identite: IdentiteType;
@@ -27,6 +28,7 @@ export interface ItemTitulaireProps {
   nbMineurs?: number;
   nationalites: NationaliteType[];
   domiciliation: DomiciliationType;
+  retenueSdanf?: IRetenueSdanf;
   contacts: {
     mail?: string;
     telephone?: string;
@@ -42,11 +44,21 @@ const ItemTitulaire: React.FC<ItemTitulaireProps & ItemProps> = props => {
 
   return (
     <Item {...props}>
-      <ItemLigne texte={formatLigneNomsPrenomsGenre(props.identite)} />
-      <ItemLigne
-        texte={formatLigneFrancisationIdentification(props.identite)}
+      <LigneNomPrenomActuel
+        identite={props.identite}
+        retenueSdanf={props.retenueSdanf}
       />
-      <ItemLigne texte={formatLigneDateCoordonnees(props.naissance)} />
+
+      <LigneFrancisationIdentification
+        identite={props.identite}
+        retenueSdanf={props.retenueSdanf}
+      />
+
+      <LigneDateNaissanceAdresse
+        naissance={props.naissance}
+        retenueSdanf={props.retenueSdanf}
+      />
+
       <Item titre={INFOS} className={{ title: "bg-clair" }} etendu={false}>
         <ItemLigne
           label={Labels.resume.union.anterieurs}
@@ -78,6 +90,7 @@ const ItemTitulaire: React.FC<ItemTitulaireProps & ItemProps> = props => {
               titre={Labels.resume.parent}
               numeroItem={id + 1}
               totalItems={props.parents.length}
+              retenueSdanf={props.retenueSdanf}
             />
           )
       )}

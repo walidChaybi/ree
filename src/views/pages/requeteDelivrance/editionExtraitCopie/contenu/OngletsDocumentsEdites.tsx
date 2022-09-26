@@ -23,7 +23,7 @@ import {
   INDEX_PLUS,
   ItemListe,
   listePlus
-} from "./OngletDocumentsEditesUtils";
+} from "./OngletsDocumentsEditesUtils";
 
 interface OngletsDocumentsProps {
   documents?: IDocumentReponse[];

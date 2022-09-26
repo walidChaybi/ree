@@ -19,10 +19,14 @@ export type NationaliteType = {
 
 export type DateCoordonneesType = {
   date?: string;
-  ville?: string;
-  arrondissement?: string;
-  regionDeptEtat?: string;
-  pays?: string;
+  villeNaissance?: string;
+  arrondissementNaissance?: string;
+  regionNaissance?: string;
+  paysNaissance?: string;
+  anneeNaissance?: number;
+  moisNaissance?: number;
+  jourNaissance?: number;
+  codePostalNaissance?: string;
 };
 
 export type DomiciliationType = {

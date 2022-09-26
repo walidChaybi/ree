@@ -1,25 +1,34 @@
+import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import React from "react";
 import Labels from "../../Labels";
-import {
-  formatLigneDateCoordonnees,
-  formatLigneNationalites,
-  formatLigneNomsPrenomsGenre
-} from "../Formatages";
+import { formatLigneNationalites } from "../Formatages";
 import { DateCoordonneesType, IdentiteType, NationaliteType } from "../Types";
 import Item, { ItemProps } from "./Item";
 import { ItemLigne } from "./ItemLigne";
+import { LigneDateNaissanceAdresse } from "./ItemTitulaire/LigneDateNaissanceAdresse";
+import { LigneNomPrenomActuel } from "./ItemTitulaire/LigneNomPrenomActuel";
 
 export interface ItemEnfantMajeurProps {
   identite: IdentiteType;
   naissance: DateCoordonneesType;
   nationalites: NationaliteType[];
+  retenueSdanf?: IRetenueSdanf;
 }
 
 const ItemEnfantMajeur: React.FC<ItemEnfantMajeurProps & ItemProps> = props => {
   return (
     <Item {...props}>
-      <ItemLigne texte={formatLigneNomsPrenomsGenre(props.identite)} />
-      <ItemLigne texte={formatLigneDateCoordonnees(props.naissance)} />
+      <LigneNomPrenomActuel
+        identite={props.identite}
+        retenueSdanf={props.retenueSdanf}
+        afficherNomActuel={false}
+      />
+
+      <LigneDateNaissanceAdresse
+        naissance={props.naissance}
+        retenueSdanf={props.retenueSdanf}
+      />
+
       <ItemLigne
         texte={
           formatLigneNationalites(props.nationalites) ??
