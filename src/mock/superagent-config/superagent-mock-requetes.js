@@ -35,6 +35,7 @@ import {
   ReponseAppelNomenclatureTypePiecesJustificative
 } from "../data/nomenclatures";
 import { pieceComplementInformation } from "../data/PieceComplementInformation";
+import { reponseRequeteCreationMessageSdanf } from "../data/requeteCreation";
 import { idRequeteRDCSC } from "../data/requeteDelivrance";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 import { CreationRDCSC, UpdateRDCSC } from "../data/SaisirRequeteDelivrance";
@@ -252,6 +253,13 @@ export const configRequetes = [
           "/requetes/action/transfert?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce635d0&idEntite=12345&idUtilisateur=&statutRequete=A_TRAITER&libelleAction=Attribu%C3%A9e%20%C3%A0%20str2&attribuer=true"
       ) {
         return { data: "12345" };
+      }
+
+      if (
+        match[1] ===
+        "/requetes/action/retourSdanf?idRequete=3ed9aa4e-921b-429f-b8fe-531dd103c68s"
+      ) {
+        return { data: reponseRequeteCreationMessageSdanf };
       }
 
       // RMC Requete
@@ -554,7 +562,8 @@ export const configRequetes = [
       if (
         match[1] ===
           "/documentsreponses/9bfa865e-6d7a-4d66-900e-b548178854db" ||
-        match[1] === "/documentsreponses/28bc3078-7e53-4b8b-8cf8-7f75a2502573" || 
+        match[1] ===
+          "/documentsreponses/28bc3078-7e53-4b8b-8cf8-7f75a2502573" ||
         match[1] === "/documentsreponses/f63223ce-f425-441e-846c-114b0f36936d"
       ) {
         return { data: documentReponseExtraitAvecFiliation };

@@ -1,5 +1,6 @@
 import { postMessageRetourSDANFEtUpdateStatutRequete } from "@api/appels/requeteApi";
 import { IEchange } from "@model/requete/IEchange";
+import { mapEchangeRetourSDANF } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
@@ -10,8 +11,8 @@ export interface RetourSDANFParams {
 
 export function useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook(
   params?: RetourSDANFParams
-) {
-  const [res, setRes] = useState<any>();
+): IEchange {
+  const [messageSdanf, setMessageSdanf] = useState<IEchange>();
   useEffect(() => {
     if (params) {
       postMessageRetourSDANFEtUpdateStatutRequete(
@@ -19,7 +20,7 @@ export function useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook(
         params.message
       )
         .then(result => {
-          setRes(result.body.data);
+          setMessageSdanf(mapEchangeRetourSDANF(result.body.data));
         })
         .catch(error => {
           logError({
@@ -31,5 +32,5 @@ export function useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook(
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
-  return res;
+  return messageSdanf as IEchange;
 }

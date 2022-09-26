@@ -1796,3 +1796,11 @@ export const requeteCreationAvecMessagesRetourSDANFAvecMessages = {
     ]
   }
 };
+
+export const reponseRequeteCreationMessageSdanf = {
+  emetteur: "SCEC",
+  destinataire: "SDANF",
+  nature: "REPONSE_SCEC",
+  message: "Je suis un message test apiHook",
+  pieceJustificativeRequeteCreation: []
+};

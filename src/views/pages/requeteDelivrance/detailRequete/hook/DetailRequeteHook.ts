@@ -18,7 +18,7 @@ import { TypeMandant } from "@model/requete/enum/TypeMandant";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IAction } from "@model/requete/IActions";
-import { IEchange, IEchangeServeur } from "@model/requete/IEchange";
+import { IEchange } from "@model/requete/IEchange";
 import { IEvenementReqDelivrance } from "@model/requete/IEvenementReqDelivrance";
 import { IMandant } from "@model/requete/IMandant";
 import { IObservation } from "@model/requete/IObservation";
@@ -298,23 +298,25 @@ function mapPiecesJustificativesCreation(
   return piecesJustificatives;
 }
 
-export function mapEchangesRetourSDANF(
-  arrayEchanges?: IEchangeServeur[]
-): IEchange[] {
+export function mapEchangesRetourSDANF(echangesServeur?: any): IEchange[] {
   const echanges: IEchange[] = [];
 
-  arrayEchanges?.forEach((echange: IEchangeServeur) => {
-    const { dateMessage, ...reste } = echange;
-
-    const echangeMapped: IEchange = {
-      date: getFormatDateFromTimestamp(dateMessage),
-      ...reste
-    };
-
-    echanges.push(echangeMapped);
+  echangesServeur?.forEach((echange: any) => {
+    echanges.push(mapEchangeRetourSDANF(echange));
   });
 
   return echanges;
+}
+
+export function mapEchangeRetourSDANF(echangeServeur?: any): IEchange {
+  const { dateMessage, ...reste } = echangeServeur;
+
+  const echangeMapped: IEchange = {
+    date: getFormatDateFromTimestamp(dateMessage),
+    ...reste
+  };
+
+  return echangeMapped;
 }
 
 export function mappingRequeteCreation(data: any): IRequeteCreation {

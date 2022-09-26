@@ -39,7 +39,7 @@
       color: white;
     }
     &:disabled {
-      background-color: $disabled-button;
+      background-color: $disabled-button-lighter;
       pointer-events: none;
       &:focus,
       &:hover {
@@ -52,4 +52,8 @@
       outline-style: none;
     }
   }
+
+  .MuiButton-root.Mui-disabled {
+    color: rgba(0, 0, 0, 0.55);
+}
 }

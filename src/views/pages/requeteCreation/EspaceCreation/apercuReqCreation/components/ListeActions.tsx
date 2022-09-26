@@ -3,8 +3,7 @@ import {
   useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook
 } from "@hook/requete/creation/EnvoyerMessageSdanfEtMiseAJourStatutApiHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IEchange, IEchangeServeur } from "@model/requete/IEchange";
-import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import { IEchange } from "@model/requete/IEchange";
 import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
@@ -39,7 +38,7 @@ export const ListeActionsRetourSDANF: React.FC<
   ListeActionsRetourSDANFProps
 > = props => {
   const [param, setParam] = useState<RetourSDANFParams>();
-  const messageRetourSDANFAPI: IEchangeServeur =
+  const messageRetourSDANFAPI: IEchange =
     useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook(param);
 
   const [isOpen, setIsOpen] = React.useState(false);
@@ -85,14 +84,7 @@ export const ListeActionsRetourSDANF: React.FC<
 
   useEffect(() => {
     if (messageRetourSDANFAPI) {
-      const { dateMessage, ...reste } = messageRetourSDANFAPI;
-
-      const messageRetourSDANFMapped: IEchange = {
-        date: getFormatDateFromTimestamp(dateMessage),
-        ...reste
-      };
-
-      props.setEchanges([...(props.echanges ?? []), messageRetourSDANFMapped]);
+      props.setEchanges([...(props.echanges ?? []), messageRetourSDANFAPI]);
 
       setIsOpen(false);
       setDisabledActions(true);

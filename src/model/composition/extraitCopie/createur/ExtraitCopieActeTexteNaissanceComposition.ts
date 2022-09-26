@@ -165,8 +165,9 @@ et de ${parent2}`;
         );
       if (
         titulaireAMCompositionEC1?.typeDeclarationConjointe &&
-        titulaireAMCompositionEC1.typeDeclarationConjointe !==
-          TypeDeclarationConjointe.ABSENCE_DECLARATION
+        !TypeDeclarationConjointe.estAbsenceDeclaration(
+          titulaireAMCompositionEC1.typeDeclarationConjointe
+        )
       ) {
         declarationConjointe = `suivant déclaration conjointe ${titulaireAMCompositionEC1?.typeDeclarationConjointe.libelle}`;
 
