@@ -72,7 +72,8 @@ export const documentReponseCopieIntegrale: IDocumentReponse = {
   contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
   nbPages: 1,
   orientation: Orientation.PORTRAIT,
-  conteneurSwift: "conteneurSwift"
+  conteneurSwift: "conteneurSwift",
+  avecCtv: true
 };
 
 export const documentReponseExtraitAvecFiliation: IDocumentReponse = {

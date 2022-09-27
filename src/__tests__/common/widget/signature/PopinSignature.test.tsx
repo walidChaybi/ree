@@ -10,10 +10,12 @@ import { storeRece } from "@util/storeRece";
 import { PopinSignature } from "@widget/signature/PopinSignature";
 import React from "react";
 import request from "superagent";
+import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configParamsBaseRequete } from "../../../../mock/superagent-config/superagent-mock-params";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
 const superagentMock = require("superagent-mock")(request, [
+  configEtatcivil[0],
   configRequetes[0],
   configParamsBaseRequete[0]
 ]);
@@ -39,7 +41,8 @@ test("renders PopinSignature, signature event is received and success displayed"
             }
           ],
           documentsToSave: [],
-          sousTypeRequete: SousTypeDelivrance.RDD
+          sousTypeRequete: SousTypeDelivrance.RDD,
+          idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235b"
         }
       }}
       open={true}

@@ -18,7 +18,7 @@ import { PopinSignature } from "../signature/PopinSignature";
 import {
   DocumentsATraiter,
   DocumentsByRequete
-} from "./hook/SignatureDocumentHook";
+} from "./hook/SignatureDocumentHookUtil";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;

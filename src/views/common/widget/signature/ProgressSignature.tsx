@@ -2,7 +2,7 @@ import { Box, LinearProgress, Typography } from "@material-ui/core";
 import { getLibelle } from "@util/Utils";
 import React, { useCallback, useEffect } from "react";
 import { Button } from "reakit/Button";
-import { DocumentsByRequete } from "./hook/SignatureDocumentHook";
+import { DocumentsByRequete } from "./hook/SignatureDocumentHookUtil";
 import "./scss/PopinSignature.scss";
 
 interface ProgressSignatureProps {

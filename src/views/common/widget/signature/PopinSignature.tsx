@@ -8,10 +8,8 @@ import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
 import React from "react";
 import { FormPinCode } from "./FormPinCode";
-import {
-  DocumentsByRequete,
-  useSignatureDocumentHook
-} from "./hook/SignatureDocumentHook";
+import { useSignatureDocumentHook } from "./hook/SignatureDocumentHook";
+import { DocumentsByRequete } from "./hook/SignatureDocumentHookUtil";
 import { ErrorsSignature } from "./messages/ErrorsSignature";
 import { SuccessSignature } from "./messages/SuccessSignature";
 import { ProgressSignature } from "./ProgressSignature";

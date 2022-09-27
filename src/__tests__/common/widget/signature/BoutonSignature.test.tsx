@@ -1,14 +1,9 @@
+import { Orientation } from "@model/composition/enum/Orientation";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import {
-  act,
-  createEvent,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { createEvent, fireEvent, screen, waitFor } from "@testing-library/dom";
+import { act, render } from "@testing-library/react";
 import { BoutonSignature } from "@widget/signature/BoutonSignature";
 import React from "react";
 import request from "superagent";
@@ -24,17 +19,21 @@ const requete: IRequeteTableauDelivrance = {
   statut: StatutRequete.A_SIGNER.libelle,
   documentsReponses: [
     {
-      id: "123",
+      id: "f9279c00-5d2b-11ea-bc55-0242ac130004",
       nom: "aaa",
       typeDocument: "0e1e909f-f74c-4b16-9c03-b3733354c6ce", // UUID nomenclature
       taille: 100,
       avecCtv: true,
       conteneurSwift: "chemin",
-      mimeType: "pdf"
+      mimeType: "application/pdf",
+      nbPages: 1,
+      orientation: Orientation.PORTRAIT,
+      idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235b",
+      contenu: ""
     }
   ],
   sousType: "Délivrance E/C (d)"
-};
+} as IRequeteTableauDelivrance;
 
 test("renders titre bouton signature", () => {
   render(
@@ -52,7 +51,7 @@ test("renders titre bouton signature", () => {
   expect(screen.getByText(/Signature des documents/i)).toBeDefined();
 });
 
-test("renders titre bouton signature", async () => {
+test("renders titre bouton signature 2", async () => {
   render(
     <BoutonSignature
       libelle={"Signer le lot"}
@@ -79,23 +78,27 @@ test("renders titre bouton signature", async () => {
   act(() => {
     fireEvent.click(screen.getByText(/Valider/i));
   });
-  act(() => {
-    fireEvent(
-      window,
-      //@ts-ignore
-      createEvent(
-        "signWebextResponse",
+
+  setTimeout(() => {
+    act(() => {
+      fireEvent(
         window,
-        {
-          detail: {
-            direction: "to-call-app",
-            erreurs: []
-          }
-        },
-        { EventType: "CustomEvent" }
-      )
-    );
-  });
+        ////@ts-ignore
+        createEvent(
+          "signWebextResponse",
+          window,
+          {
+            detail: {
+              direction: "to-call-app",
+              erreurs: []
+            }
+          },
+          { EventType: "CustomEvent" }
+        )
+      );
+    });
+  }, 1000);
+
   await waitFor(() => {
     expect(screen.getByText(/Valider/i)).toBeDefined();
   });

@@ -6,15 +6,17 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import {
-  DocumentsByRequete,
-  useSignatureDocumentHook
-} from "@widget/signature/hook/SignatureDocumentHook";
+import { useSignatureDocumentHook } from "@widget/signature/hook/SignatureDocumentHook";
+import { DocumentsByRequete } from "@widget/signature/hook/SignatureDocumentHookUtil";
 import React from "react";
 import request from "superagent";
+import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
+const superagentMock = require("superagent-mock")(request, [
+  configEtatcivil[0],
+  configRequetes[0]
+]);
 
 const documentsByRequete: DocumentsByRequete = {
   id1: {
@@ -30,7 +32,8 @@ const documentsByRequete: DocumentsByRequete = {
       }
     ],
     documentsToSave: [],
-    sousTypeRequete: SousTypeDelivrance.RDC
+    sousTypeRequete: SousTypeDelivrance.RDC,
+    idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235b"
   },
   id2: {
     documentsToSign: [
@@ -45,7 +48,8 @@ const documentsByRequete: DocumentsByRequete = {
       }
     ],
     documentsToSave: [],
-    sousTypeRequete: SousTypeDelivrance.RDC
+    sousTypeRequete: SousTypeDelivrance.RDC,
+    idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235b"
   }
 };
 
