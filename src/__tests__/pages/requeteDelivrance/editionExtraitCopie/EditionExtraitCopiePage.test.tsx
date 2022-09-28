@@ -591,7 +591,7 @@ afterAll(() => {
 test("Test création extrait plurilingue", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
   history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/8bfa282d-1e66-4538-b242-b9de4f693f0e/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/3f52370d-14ed-4c55-8cf4-afe006d9aa38/19c0d767-64e5-4376-aa1f-6d781a2a235e`
   );
 
   await act(async () => {
@@ -605,7 +605,9 @@ test("Test création extrait plurilingue", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Extrait avec filiation plurilingue")).toBeDefined();
+    expect(
+      screen.getByText("Extrait avec filiation plurilingue")
+    ).toBeDefined();
   });
 
   act(() => {
@@ -621,6 +623,11 @@ test("Test création extrait plurilingue", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Sc 31-01-92 <Nantes> <Jenmi>")).toBeDefined();
+    expect(screen.getByText("31-01-92 Nantes Jenmi")).toBeDefined();
+    expect(
+      screen.getByText(
+        "Mar 15-06-2021 Nantes (Pays de Loire) Jean-Claude,Marie DUSS"
+      )
+    ).toBeDefined();
   });
 });

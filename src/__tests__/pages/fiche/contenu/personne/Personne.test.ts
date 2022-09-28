@@ -12,7 +12,7 @@ test("render composant SectionPart", async () => {
     "Marseille arr.2 (Provence-Aples-Côte d'Azur)"
   );
   expect(Personne.getLieuDeces(personneMock)).toBe(
-    "Londres - Angleterre (Grande Bretagne)"
+    "Londres, Angleterre (Grande Bretagne)"
   );
   expect(Personne.getDateNaissance(personneMock)).toBe("26/02/1980");
   expect(Personne.getDateDeces(personneMock)).toBe("07/2020");

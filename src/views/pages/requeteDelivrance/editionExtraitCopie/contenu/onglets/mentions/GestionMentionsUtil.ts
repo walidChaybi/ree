@@ -35,7 +35,8 @@ export interface IMentionAffichage {
 
 export function mappingVersMentionAffichage(
   mentionsApi: IMention[],
-  document: IDocumentReponse
+  document: IDocumentReponse,
+  natureActe?: NatureActe
 ): IMentionAffichage[] {
   let mentionsPourAffichage: IMentionAffichage[] = [];
 
@@ -55,7 +56,8 @@ export function mappingVersMentionAffichage(
   } else if (DocumentDelivrance.estExtraitPlurilingue(document.typeDocument)) {
     mentionsPourAffichage = mappingVersMentionAffichagePourExtraitPlurilingue(
       mentionsApi,
-      document
+      document,
+      natureActe
     );
   }
   return mentionsPourAffichage;
@@ -82,11 +84,14 @@ export function mappingVersMentionAffichagePourExtraitAvecOuSansFiliation(
 
 export function mappingVersMentionAffichagePourExtraitPlurilingue(
   mentionsApi: IMention[],
-  document: IDocumentReponse
+  document: IDocumentReponse,
+  natureActe?: NatureActe
 ): IMentionAffichage[] {
-  const mentions =
-    Mention.filtreSansTexteMentionNiTexteMentionPlurilingue(mentionsApi);
-
+  const mentions = Mention.filtrerTexteMentionPlurilingueEtNatureAdequat(
+    natureActe,
+    mentionsApi
+  );
+  Mention.formaterMentionsPlurilingue(mentions);
   Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions);
 
   // @ts-ignore le texteMentionPlurilingue n'est pas undefined
@@ -233,13 +238,14 @@ export function miseAJourMention(
 export function modificationEffectue(
   mentions?: IMentionAffichage[],
   mentionsApi?: IMention[],
-  document?: IDocumentReponse
+  document?: IDocumentReponse,
+  natureActe?: NatureActe
 ) {
   if (mentions && mentionsApi && document) {
     if (
       !shallowEgalTableau(
         mentions,
-        mappingVersMentionAffichage(mentionsApi, document)
+        mappingVersMentionAffichage(mentionsApi, document, natureActe)
       )
     ) {
       return true;
@@ -435,16 +441,17 @@ export function boutonReinitialiserEstDisabled(
   estdeverrouille: boolean,
   mentionsApi?: IMention[],
   mentions?: IMentionAffichage[],
-  document?: IDocumentReponse
+  document?: IDocumentReponse,
+  natureActe?: NatureActe
 ) {
   if (DocumentDelivrance.estCopieIntegrale(document?.typeDocument)) {
     return (
       !estdeverrouille ||
       (estdeverrouille &&
-        !modificationEffectue(mentions, mentionsApi, document))
+        !modificationEffectue(mentions, mentionsApi, document, natureActe))
     );
   } else {
-    return !modificationEffectue(mentions, mentionsApi, document);
+    return !modificationEffectue(mentions, mentionsApi, document, natureActe);
   }
 }
 
@@ -473,7 +480,7 @@ export function validerMentions(
 
   if (
     estDocumentCopieIntegrale &&
-    modificationEffectue(mentions, mentionsApi, document)
+    modificationEffectue(mentions, mentionsApi, document, acte?.nature)
   ) {
     if (
       window.confirm(

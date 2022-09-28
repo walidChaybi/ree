@@ -1,3 +1,4 @@
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import {
@@ -29,7 +30,7 @@ import {
 export interface SauvegarderMentionsParam {
   mentionsApi: IMentionsResultat;
   mentions: IMentionAffichage[];
-  idActe: string;
+  acte: IFicheActe;
   document: IDocumentReponse;
   requete: IRequeteDelivrance;
 }
@@ -84,7 +85,7 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
       mentionsRetireesSaved
     ) {
       setGenerationEC({
-        idActe: params.idActe,
+        idActe: params.acte.id,
         requete: params.requete,
         pasDAction: documentDejaCreer(
           params.requete.documentsReponses,
@@ -132,7 +133,7 @@ function sauvegarderEnFonctionTypeDocument(
   setMentionsRetireesSaved: any,
   setGenerationEC: any
 ) {
-  if (params.mentionsApi?.mentions && params.idActe) {
+  if (params.mentionsApi?.mentions && params.acte.id) {
     const { mentionsAEnvoyer, mentionsRetirees } = mappingVersMentionsApi(
       params.mentionsApi.mentions,
       params.mentions,
@@ -143,19 +144,20 @@ function sauvegarderEnFonctionTypeDocument(
       modificationEffectue(
         params.mentions,
         params.mentionsApi.mentions,
-        params.document
+        params.document,
+        params.acte.nature
       )
     ) {
       if (
         !DocumentDelivrance.estCopieIntegrale(params.document?.typeDocument)
       ) {
         setMentionsAEnvoyerParams({
-          idActe: getValeurOuVide(params.idActe),
+          idActe: getValeurOuVide(params.acte.id),
           mentions: mentionsAEnvoyer
         });
       } else {
         setGenerationEC({
-          idActe: params.idActe,
+          idActe: params.acte.id,
           requete: params.requete,
           validation: Validation.O,
           pasDAction: documentDejaCreer(

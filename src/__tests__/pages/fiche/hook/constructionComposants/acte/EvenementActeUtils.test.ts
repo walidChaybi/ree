@@ -23,7 +23,7 @@ test("Acte utils : affichage correcte des infos de l'évènement", async () => {
 
   const valueLieu: JSX.Element = components[0].partContent.contents[idxLieu]
     .value as JSX.Element;
-  expect(valueLieu.props.children).toBe("Kanpur - Uttar Pradesh (Inde)");
+  expect(valueLieu.props.children).toBe("Kanpur, Uttar Pradesh (Inde)");
 
   const idxNature = components[1].partContent.contents.findIndex(
     content => content.libelle === "Nature"

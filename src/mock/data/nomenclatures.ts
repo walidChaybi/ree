@@ -926,10 +926,42 @@ export const ReponseAppelNomenclatureNatureMention = {
   url: "/rece-etatcivil-api/v1/nomenclature/NATURE_MENTION",
   data: [
     {
+      id: "26186600-3146-4e95-954b-6ac741ad421a",
+      nom: "NATURE_MENTION",
+      code: "28",
+      libelle: "Dissolution du PACS",
+      estActif: true,
+      opposableAuTiers: true
+    },
+    {
+      id: "3fe1a991-6717-49cb-a208-a8fc09afc853",
+      nom: "NATURE_MENTION",
+      code: "29",
+      libelle: "Modification du PACS",
+      estActif: true,
+      opposableAuTiers: true
+    },
+    {
+      id: "b03c5368-01a5-4027-981d-bfd165b358ae",
+      nom: "NATURE_MENTION",
+      code: "6",
+      libelle: "Régime matrimonial",
+      estActif: true,
+      opposableAuTiers: false
+    },
+    {
+      id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+      nom: "NATURE_MENTION",
+      code: "27",
+      libelle: "Mariage",
+      estActif: true,
+      opposableAuTiers: false
+    },
+    {
       id: "b03cd99d-3422-4d70-98b5-7da12277e179",
       nom: "NATURE_MENTION",
       code: "2",
-      libelle: "PACS, mariage",
+      libelle: "PACS",
       estActif: true,
       opposableAuTiers: true
     },
@@ -938,14 +970,6 @@ export const ReponseAppelNomenclatureNatureMention = {
       nom: "NATURE_MENTION",
       code: "12",
       libelle: "Lien de filiation hors adoption",
-      estActif: true,
-      opposableAuTiers: false
-    },
-    {
-      id: "b03c14e3-7b8b-411d-8a6f-10a60334f509",
-      nom: "NATURE_MENTION",
-      code: "13",
-      libelle: "Adoption simple",
       estActif: true,
       opposableAuTiers: false
     },
@@ -974,6 +998,14 @@ export const ReponseAppelNomenclatureNatureMention = {
       opposableAuTiers: false
     },
     {
+      id: "b03ce3f6-44a1-41b5-92eb-e4983cbad686",
+      nom: "NATURE_MENTION",
+      code: "7",
+      libelle: "Contrat de mariage",
+      estActif: false,
+      opposableAuTiers: false
+    },
+    {
       id: "b03cede5-d26e-41ec-a7e2-0f1a09d5e162",
       nom: "NATURE_MENTION",
       code: "1",
@@ -982,34 +1014,10 @@ export const ReponseAppelNomenclatureNatureMention = {
       opposableAuTiers: false
     },
     {
-      id: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
-      nom: "NATURE_MENTION",
-      code: "3",
-      libelle: "Séparation de corps",
-      estActif: true,
-      opposableAuTiers: true
-    },
-    {
       id: "b03cd7cf-b9e2-4ddc-b039-87f1ab2fadb7",
       nom: "NATURE_MENTION",
       code: "4",
       libelle: "Reprise vie commune",
-      estActif: true,
-      opposableAuTiers: false
-    },
-    {
-      id: "b03c5368-01a5-4027-981d-bfd165b358ae",
-      nom: "NATURE_MENTION",
-      code: "6",
-      libelle: "Régime matrimonial",
-      estActif: true,
-      opposableAuTiers: false
-    },
-    {
-      id: "b03ce3f6-44a1-41b5-92eb-e4983cbad686",
-      nom: "NATURE_MENTION",
-      code: "7",
-      libelle: "Contrat de mariage",
       estActif: true,
       opposableAuTiers: false
     },
@@ -1030,6 +1038,14 @@ export const ReponseAppelNomenclatureNatureMention = {
       opposableAuTiers: false
     },
     {
+      id: "b03c45b2-74c6-4cc5-9f64-4bad6f343598",
+      nom: "NATURE_MENTION",
+      code: "11",
+      libelle: "Changement de sexe",
+      estActif: true,
+      opposableAuTiers: false
+    },
+    {
       id: "b03c5a32-397a-4ded-857b-798da72935d6",
       nom: "NATURE_MENTION",
       code: "10",
@@ -1038,12 +1054,20 @@ export const ReponseAppelNomenclatureNatureMention = {
       opposableAuTiers: false
     },
     {
-      id: "b03c45b2-74c6-4cc5-9f64-4bad6f343598",
+      id: "b03c14e3-7b8b-411d-8a6f-10a60334f509",
       nom: "NATURE_MENTION",
-      code: "11",
-      libelle: "Changement de sexe",
+      code: "13",
+      libelle: "Adoption simple",
       estActif: true,
       opposableAuTiers: false
+    },
+    {
+      id: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+      nom: "NATURE_MENTION",
+      code: "3",
+      libelle: "Séparation de corps",
+      estActif: true,
+      opposableAuTiers: true
     },
     {
       id: "b03cfc41-1821-496d-891c-87f963149600",
@@ -1063,50 +1087,10 @@ export const ReponseAppelNomenclatureNatureMention = {
       opposableAuTiers: false
     },
     {
-      id: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
-      nom: "NATURE_MENTION",
-      code: "19",
-      libelle: "Annulation d'une mention \"réputée non écrite",
-      estActif: true,
-      opposableAuTiers: false
-    },
-    {
-      id: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
-      nom: "NATURE_MENTION",
-      code: "20",
-      libelle: "Rectification (hors annulation de mention)",
-      estActif: true,
-      opposableAuTiers: true
-    },
-    {
-      id: "b03cdc6e-c77f-47a6-bc51-25b52ad7674e",
-      nom: "NATURE_MENTION",
-      code: "21",
-      libelle: "RC",
-      estActif: true,
-      opposableAuTiers: false
-    },
-    {
       id: "b03c5f7f-2ad5-4f55-8599-6192dd6f126e",
       nom: "NATURE_MENTION",
       code: "22",
       libelle: "RC radié",
-      estActif: true,
-      opposableAuTiers: false
-    },
-    {
-      id: "b03c0e11-54d4-4fd6-87f2-a08d2b2d4a22",
-      nom: "NATURE_MENTION",
-      code: "23",
-      libelle: "Annulation de l'acte",
-      estActif: true,
-      opposableAuTiers: false
-    },
-    {
-      id: "b03cc263-7d77-4027-a67b-286dd8754107",
-      nom: "NATURE_MENTION",
-      code: "24",
-      libelle: 'Décision "validant" un acte',
       estActif: true,
       opposableAuTiers: false
     },
@@ -1136,12 +1120,52 @@ export const ReponseAppelNomenclatureNatureMention = {
       opposableAuTiers: false
     },
     {
+      id: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
+      nom: "NATURE_MENTION",
+      code: "19",
+      libelle: "Annulation d'une mention \"réputée non écrite",
+      estActif: true,
+      opposableAuTiers: false
+    },
+    {
       id: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
       nom: "NATURE_MENTION",
       code: "5",
       libelle: "Divorce",
       estActif: true,
       opposableAuTiers: true
+    },
+    {
+      id: "b03cc263-7d77-4027-a67b-286dd8754107",
+      nom: "NATURE_MENTION",
+      code: "24",
+      libelle: 'Décision "validant" un acte',
+      estActif: false,
+      opposableAuTiers: false
+    },
+    {
+      id: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
+      nom: "NATURE_MENTION",
+      code: "20",
+      libelle: "Rectification (hors annulation de mention)",
+      estActif: true,
+      opposableAuTiers: false
+    },
+    {
+      id: "b03cdc6e-c77f-47a6-bc51-25b52ad7674e",
+      nom: "NATURE_MENTION",
+      code: "21",
+      libelle: "RC",
+      estActif: true,
+      opposableAuTiers: true
+    },
+    {
+      id: "b03c0e11-54d4-4fd6-87f2-a08d2b2d4a22",
+      nom: "NATURE_MENTION",
+      code: "23",
+      libelle: "Annulation de l'acte",
+      estActif: true,
+      opposableAuTiers: false
     }
   ]
 };

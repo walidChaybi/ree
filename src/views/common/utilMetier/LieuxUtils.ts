@@ -129,7 +129,11 @@ export class LieuxUtils {
     const regionStringEntreParentheses =
       LieuxUtils.getLieuEntreParentheses(regionString);
 
-    if (LieuxUtils.isPaysFrance(pays)) {
+    if (
+      LieuxUtils.isPaysFrance(pays) ||
+      this.estVilleJerusalem(ville) ||
+      !pays
+    ) {
       if (
         !LieuxUtils.isVilleAvecArrondissement(ville) ||
         arrondissement == null
@@ -223,7 +227,11 @@ export class LieuxUtils {
         !LieuxUtils.isVilleAvecArrondissement(ville) ||
         arrondissement == null
       ) {
-        return `${villeString}${libelleDepartementString}`;
+        if (!ville) {
+          return `--${libelleDepartementString}`;
+        } else {
+          return `${villeString}${libelleDepartementString}`;
+        }
       } else if (!LieuxUtils.isVilleParis(villeString)) {
         return `${villeString} ${LieuxUtils.formateArrondissement(
           arrondissement,
@@ -266,9 +274,18 @@ export class LieuxUtils {
     region: string,
     ville: string
   ) {
-    const regionAffichage = ` - ${region}`;
     const paysAffichage = pays ? ` (${pays})` : "";
-    return `${ville}${region ? regionAffichage : ""}${paysAffichage}`;
+    if (!ville && !region) {
+      return `--${paysAffichage}`;
+    } else if (!ville) {
+      return `${region}${paysAffichage}`;
+    } else if (!region) {
+      return `${ville}${paysAffichage}`;
+    } else if (!pays) {
+      return `${ville}, ${region}`;
+    } else {
+      return `${ville}, ${region}${paysAffichage}`;
+    }
   }
 
   public static affichagePaysCourrier(pays: string) {

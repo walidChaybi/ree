@@ -68,7 +68,7 @@ test("Attendu: getLieu fonctionne correctement", () => {
 
   expect(
     LieuxUtils.getLieu("casablanca", "sahara", "Maroc", "naparaitpas")
-  ).toBe("Casablanca - Sahara (Maroc)");
+  ).toBe("Casablanca, Sahara (Maroc)");
 
   expect(LieuxUtils.getLieu("casablanca")).toBe("Casablanca");
 });

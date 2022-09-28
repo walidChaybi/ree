@@ -2,7 +2,9 @@ import {
   SauvegarderMentionsParam,
   useSauvegarderMentions
 } from "@hook/acte/mentions/SauvegarderMentionsHook";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
@@ -43,7 +45,10 @@ const mentionOpposable = {
 const params: SauvegarderMentionsParam = {
   mentionsApi: { mentions: [mentionApi] },
   mentions: [mentionOpposable],
-  idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
+  acte: {
+    id: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
+    nature: NatureActe.NAISSANCE
+  } as IFicheActe,
   document: documentReponseExtraitAvecFiliation,
   requete: requeteDelivranceRDC
 };

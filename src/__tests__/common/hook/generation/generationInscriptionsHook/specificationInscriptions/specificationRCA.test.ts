@@ -18,7 +18,7 @@ test("Attendu: specificationRCA.getElementsJasper AVEC une instruction procureur
 Date de naissance: 2 septembre 1983
 Lieu de naissance: Lyon arr.8 (Rhône)
 Date de décès: mars 2003
-Lieu de décès: Londres - Grand-Londres (Royaume-Uni)`;
+Lieu de décès: Londres, Grand-Londres (Royaume-Uni)`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("4012");
   expect(elementsJasper.decisionRecue).toBe(
@@ -60,7 +60,7 @@ test("Attendu: specificationRCA.getElementsJasper AVEC une decision Notaire type
   const elementsJasper = specificationRCA.getElementsJasper(data);
   const interesses = `Julie, Sarah DURANT
 Date de naissance: octobre 1960
-Lieu de naissance: Brooklyn - New-York (États-Unis d'Amériques)
+Lieu de naissance: Brooklyn, New-York (États-Unis d'Amériques)
 
 et
 

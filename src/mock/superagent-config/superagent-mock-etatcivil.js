@@ -6,6 +6,7 @@ import {
   acte4,
   acte5,
   acteMariage,
+  acteNaissance,
   acteNationalite
 } from "../../__tests__/pages/fiche/data/ficheActe";
 import { ActeAnalyseMarginales } from "../data/ActeAnalyseMarginales";
@@ -178,6 +179,8 @@ export const configEtatcivil = [
         return { data: ficheActeMariage.data };
       } else if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac671348") {
         return { data: acteMariage };
+      } else if (match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e") {
+        return { data: acteNaissance };
       } else if (match[1] === "/acte/923a10fb-0b15-452d-83c0-d24c76d1d19d") {
         return { data: ActeAnalyseMarginales };
       }
@@ -198,7 +201,7 @@ export const configEtatcivil = [
         return { data: mentions };
       }
       if (
-        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/mentions" &&
+        match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/mentions" &&
         context.method === "get"
       ) {
         return { data: mentionsPlurilingues };
@@ -234,6 +237,7 @@ export const configEtatcivil = [
         match[1] === "/acte/corps/b41079a5-9e8f-478a-b04c-c4c2ac671123" ||
         match[1] === "/acte/corps/b45079a5-9e8f-488a-b07c-c4c2az613121" ||
         match[1] === "/acte/corps/b45079a5-9e8f-478a-b07c-c4c2az671123" ||
+        match[1] === "/acte/corps/19c0d767-64e5-4376-aa1f-6d781a2a235e" ||
         // acte texte
         match[1] === "/acte/texte/b41079a5-9e8d-478c-b04c-c4c4ey86537g"
       ) {
@@ -499,6 +503,7 @@ export const configEtatcivil = [
         match[1] === "/acte/b41079a5-9e8f-478a-b04c-c4c2ac671123/alertes" ||
         match[1] === "/acte/b45079a5-9e8f-488a-b07c-c4c2az613121/alertes" ||
         match[1] === "/acte/b45079a5-9e8f-478a-b07c-c4c2az671123/alertes" ||
+        match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/alertes" ||
         match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/alertes"
       ) {
         return { data: ReponseAppelGetAlertesActe.data };

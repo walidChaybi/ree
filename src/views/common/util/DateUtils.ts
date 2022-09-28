@@ -35,7 +35,10 @@ export enum FormatDate {
 }
 
 /** Trasforme un objet IDateCompose en chaîne JJ/MM/AAAA */
-export function getDateStringFromDateCompose(date?: IDateCompose): string {
+export function getDateStringFromDateCompose(
+  date?: IDateCompose,
+  separateur = "/"
+): string {
   let dateString = "";
 
   if (date && date.annee) {
@@ -45,13 +48,13 @@ export function getDateStringFromDateCompose(date?: IDateCompose): string {
   if (date && date.mois) {
     dateString = `${doitAjouter0Avant(date.mois) ? "0" : ""}${
       date.mois
-    }/${dateString}`;
+    }${separateur}${dateString}`;
   }
 
   if (date && date.jour) {
     dateString = `${doitAjouter0Avant(date.jour) ? "0" : ""}${
       date.jour
-    }/${dateString}`;
+    }${separateur}${dateString}`;
   }
   return dateString;
 }

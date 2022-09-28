@@ -393,14 +393,25 @@ export const mentionsPlurilingues = [
       nomOEC: null,
       prenomOEC: null
     },
-    evenement: null,
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 15,
+      mois: 6,
+      annee: 2021,
+      voie: null,
+      ville: "nantes",
+      arrondissement: null,
+      region: "Pays de Loire",
+      pays: "FRANCE",
+      lieuReprise: null
+    },
     textes: {
       texteMention: null,
       texteApposition: null,
       texteOEC: null,
       texteMentionDelivrance: null,
-
-      texteMentionPlurilingue: "Sc 31-01-92 <Nantes> <Jenmi>"
+      texteMentionPlurilingue: "Sc 31-01-92 Nantes Jenmi"
     }
   },
   {
@@ -415,18 +426,17 @@ export const mentionsPlurilingues = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "39",
-      libelleType:
-        "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
-      codeSousType: "39-98",
-      libelleSousType: "Séparation de corps - Autres",
+      codeType: "1",
+      libelleType: "Mariage",
+      codeSousType: "1-99",
+      libelleSousType: "Mariage - Autres",
       estActif: true,
       modeInformatisation: "NON",
       nature: {
-        id: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
         nom: "NATURE_MENTION",
-        code: "3",
-        libelle: "Séparation de corps",
+        code: "15",
+        libelle: "Mariage",
         estActif: true,
         opposableAuTiers: true
       },
@@ -438,59 +448,25 @@ export const mentionsPlurilingues = [
       nomOEC: null,
       prenomOEC: null
     },
-    evenement: null,
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 15,
+      mois: 6,
+      annee: 2021,
+      voie: null,
+      ville: "nantes",
+      arrondissement: null,
+      region: "Pays de Loire",
+      pays: "FRANCE",
+      lieuReprise: null
+    },
     textes: {
-      texteMention: null,
+      texteMention: "je suis marié avec Jean-Claude,Marie DUSS.",
       texteApposition: null,
       texteOEC: null,
-      texteMentionDelivrance: "Sc sale pute",
+      texteMentionDelivrance: null,
       texteMentionPlurilingue: null
-    }
-  },
-  {
-    id: "f69b0825-9b47-4754-9f0b-0191b178b44d",
-    numeroOrdre: null,
-    numeroOrdreExtrait: 1,
-    villeApposition: null,
-    regionApposition: null,
-    dateApposition: null,
-    dateCreation: null,
-    statut: "BROUILLON",
-    dateStatut: 1663159390387,
-    titulaires: null,
-    typeMention: {
-      codeType: "39",
-      libelleType:
-        "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
-      codeSousType: "39-98",
-      libelleSousType: "Séparation de corps - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
-        nom: "NATURE_MENTION",
-        code: "3",
-        libelle: "Séparation de corps",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
-    },
-    autoriteEtatCivil: {
-      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
-      nomOEC: null,
-      prenomOEC: null
-    },
-    evenement: null,
-    textes: {
-      texteMention: null,
-      texteApposition: null,
-      texteOEC: null,
-      texteMentionDelivrance:
-        "Sc JJ-MM-AA <Lieu événement> <NOM du conjoint> <Prénoms du conjoint>",
-      texteMentionPlurilingue:
-        "Sc JJ-MM-AA <Lieu événement> <NOM du conjoint> <Prénoms du conjoint>"
     }
   }
 ];

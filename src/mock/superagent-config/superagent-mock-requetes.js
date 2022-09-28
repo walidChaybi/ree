@@ -337,7 +337,7 @@ export const configRequetes = [
         }
       }
 
-      if (match[1] === "/requetes/8bfa282d-1e66-4538-b242-b9de4f693f0e") {
+      if (match[1] === "/requetes/3f52370d-14ed-4c55-8cf4-afe006d9aa38") {
         return { data: requeteAvecDocsPlurilingue };
       }
 
@@ -562,6 +562,8 @@ export const configRequetes = [
       if (
         match[1] ===
           "/documentsreponses/9bfa865e-6d7a-4d66-900e-b548178854db" ||
+        match[1] ===
+          "/documentsreponses/4475fe91-62f6-4849-9474-1309364866ab" ||
         match[1] ===
           "/documentsreponses/28bc3078-7e53-4b8b-8cf8-7f75a2502573" ||
         match[1] ===

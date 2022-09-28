@@ -1697,82 +1697,84 @@ export const requeteAvecDocs = {
 };
 
 export const requeteAvecDocsPlurilingue = {
-  id: "9bfa282d-1e66-4538-b242-b9de4f683f77",
-  numeroFonctionnel: "BBLMAN",
-  dateCreation: 1646038685506,
+  id: "3f52370d-14ed-4c55-8cf4-afe006d9aa38",
+  numeroFonctionnel: "XZA6TQ",
+  dateCreation: 1664276289612,
   canal: "COURRIER",
   type: "DELIVRANCE",
   actions: [
     {
-      id: "9c09e900-d09f-4a82-8762-2437c811bb4f",
-      numeroOrdre: 4,
-      libelle: "À signer",
-      dateAction: 1646039622822,
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
-    },
-    {
-      id: "9bfa0db6-04ae-4718-b8f8-95ad6628d11c",
+      id: "3f526162-947f-4fc7-af6b-96d6407954ac",
       numeroOrdre: 2,
       libelle: "Prise en charge",
-      dateAction: 1646038685464,
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
+      dateAction: 1664276289608,
+      idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162"
     },
     {
-      id: "9bfa396a-14b9-439a-ac0a-cd42a6314967",
-      numeroOrdre: 3,
-      libelle: "À signer",
-      dateAction: 1646038723435,
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
-    },
-    {
-      id: "9bfa962a-20c9-4596-a070-a6a6a03a74f4",
+      id: "3f527873-8ad7-4fa2-a579-98180e33d488",
       numeroOrdre: 1,
       libelle: "Saisie de la requête",
-      dateAction: 1646038685402,
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
+      dateAction: 1664276289582,
+      idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162"
+    },
+    {
+      id: "4474fb56-81fe-4273-ab06-0b730531b3ab",
+      numeroOrdre: 3,
+      libelle: "À signer",
+      dateAction: 1664355173778,
+      idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162"
     }
   ],
   titulaires: [
     {
-      id: "9bfa6a27-3e1a-44b4-ac57-56ba923a2d16",
+      id: "3f525db0-a4c1-47fc-ab8d-cb6c4048608d",
       position: 1,
-      nomNaissance: "PRODESK",
+      nomNaissance: "V",
       nomUsage: null,
       anneeNaissance: 1990,
       moisNaissance: 6,
       jourNaissance: 25,
       villeNaissance: "V",
-      paysNaissance: "Hn",
+      codePostalNaissance: null,
+      arrondissementNaissance: null,
+      villeEtrangereNaissance: null,
+      regionNaissance: null,
+      paysNaissance: "V",
       sexe: "INCONNU",
-      nationalite: "ETRANGERE",
+      nationalite: "INCONNUE",
       prenoms: [
         {
-          id: "9bfac719-5bc8-4b8e-9e5f-686fed2a6bcb",
+          id: "3f523eaf-6842-442e-b1e7-0dca600113c2",
           numeroOrdre: 1,
-          prenom: "Elodie"
+          prenom: "V",
+          estPrenomFrRetenuSdanf: null
         }
       ],
-      parentsTitulaire: []
+      parentsTitulaire: [],
+      deces: null,
+      domiciliation: null,
+      evenementUnions: [],
+      typeObjetTitulaire: null
     }
   ],
   corbeilleAgent: {
-    id: "8ef08da4-95c3-4425-961e-ff3d2fc4ad1e",
-    idUtilisateur: "idUtilisateurConnectedUser"
+    id: "bbdba5f5-0b65-40d1-a44c-fbbab948b3b6",
+    idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162"
   },
   corbeilleService: {
-    id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-    idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+    id: "99c7aab2-6def-48ae-8493-2bd72b6a32db",
+    idEntiteRattachement: "6737f85c-6207-4174-8825-d5f65d757e4f"
   },
   piecesJustificatives: [],
   requerant: {
-    id: "9bfa2963-43f2-43e9-91a6-aa360fed5dd6",
-    dateCreation: 1646038685506,
-    nomFamille: "PRODESK",
-    prenom: "Elodie",
+    id: "3f523c72-e43e-4aa1-af84-8387843b560e",
+    dateCreation: 1664276289612,
+    nomFamille: "V",
+    prenom: "V",
     courriel: null,
     telephone: null,
     adresse: {
-      id: "9c09b9d6-e86c-4c9d-9545-13b5cb36bdf2",
+      id: "44745762-c433-41c4-b91a-197e082eabb1",
       ligne2: "",
       ligne3: "",
       ligne4: "7 ALLÉE DES PLUVIERS",
@@ -1788,7 +1790,7 @@ export const requeteAvecDocsPlurilingue = {
     detailQualiteInstitutionnel: null,
     detailQualiteAutreProfessionnel: null,
     lienRequerant: {
-      id: "9bfae886-fc59-49b3-85a5-ec535b325f40",
+      id: "3f52ffae-2686-4060-97e0-d9be76bbc0ad",
       typeLienRequerant: "TITULAIRE",
       nature: null
     }
@@ -1796,25 +1798,26 @@ export const requeteAvecDocsPlurilingue = {
   mandant: null,
   observations: [],
   statut: {
-    id: "9bfa4727-6826-448c-b16f-d44e56b733aa",
+    id: "3f52bae7-bd80-4109-a3f3-d7a97e8d40ce",
     statutRequete: "A_SIGNER",
-    dateEffet: 1646039622830,
+    dateEffet: 1664355173796,
     raisonStatut: null
   },
   lienRequerant: {
-    id: "9bfae886-fc59-49b3-85a5-ec535b325f40",
+    id: "3f52ffae-2686-4060-97e0-d9be76bbc0ad",
     typeLienRequerant: "TITULAIRE",
     nature: null
   },
   doublons: null,
   origines: null,
+  numeroRequeteOrigine: null,
   sousType: "RDC",
-  motif: "CERTIFICAT_NATIONALITE_FRANCAISE",
+  motif: "NON_PRECISE_PAR_REQUERANT",
   complementMotif: null,
   dateDelivranceDemat: null,
   provenance: "COURRIER",
   statutReponse: null,
-  documentDemande: "28580709-06dd-4df2-bf6e-70a9482940a1",
+  documentDemande: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
   documentComplementaire: null,
   nombreExemplairesDemandes: 1,
   provenancePlanete: null,
@@ -1822,73 +1825,83 @@ export const requeteAvecDocsPlurilingue = {
   provenanceServicePublic: null,
   documentsReponses: [
     {
-      id: "9c099809-951e-4b05-a27a-01d1344f479f",
+      id: "4474a9a0-4168-4bf1-a394-a6fa80ae5363",
       nom: "Délivrance d'acte (116)",
       typeDocument: "cb1f3518-9457-471d-a31c-10bc8d34c9a2",
       mimeType: "application/pdf",
-      taille: 53976,
+      taille: 47376,
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
       referenceSwift:
-        "9bfa282d-1e66-4538-b242-b9de4f683f0f_9c09e355-6e87-424b-8e4d-2531c59863d6.pdf",
-      conteneurSwift: "documents-delivres-2022-2",
+        "3f52370d-14ed-4c55-8cf4-afe006d9aa38_44745c09-2d1d-4d2a-8b2c-c1a98e03f52e.pdf",
+      conteneurSwift: "documents-delivres-2022-9",
+      empreinte: "�S�`��8,�[�\u0010O��[",
       optionsCourrier: [],
       mentionsRetirees: []
     },
     {
-      id: "9bfa865e-6d7a-4d66-900e-b548178854db",
-      nom: "Extrait copie avec filiation",
+      id: "28bc3078-7e53-4b8b-8cf8-7f75a2502573",
+      nom: "Extrait avec filiation",
       typeDocument: "28580709-06dd-4df2-bf6e-70a9482940a1",
       mimeType: "application/pdf",
-      taille: 28828,
-      avecCtv: false,
+      taille: 23304,
+      avecCtv: true,
       nbPages: 1,
       orientation: "Portrait",
+      documentASignerElec: {
+        id: "4474b85f-9ec6-474d-924a-d332cd2b5aa1",
+        dateSignatureElectronique: null,
+        referenceActe: null,
+        empreinte: null
+      },
       referenceSwift:
-        "9bfa282d-1e66-4538-b242-b9de4f683f0f_9bfaca5e-a9f5-4e68-83fb-4b97d3e50285.pdf",
-      conteneurSwift: "documents-delivres-2022-2",
-      validation: "O",
-      idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
-      optionsCourrier: [],
-      mentionsRetirees: []
-    },
-    {
-      id: "f63223ce-f425-441e-846c-114b0f36936d",
-      nom: "Extrait plurilingue",
-      typeDocument: "ff7fe1fa-a2d6-4bc5-8681-deba65d9e2c6",
-      mimeType: "application/pdf",
-      taille: 81568,
-      avecCtv: true,
-      nbPages: 2,
-      orientation: "Portrait",
-      referenceSwift:
-        "f6321644-be3b-4ac6-85ca-5197df5daa6a_f6326fca-80d5-4f9b-b139-71d16fd2eb63.pdf",
+        "3f52370d-14ed-4c55-8cf4-afe006d9aa38_4474d2b3-82e9-4716-9c77-0343210d166d.pdf",
       conteneurSwift: "documents-delivres-2022-9",
-      empreinte: "���\u0003�nh�,\u001c�ʸ\u0014)",
+      empreinte: "Tj�.�\u0014@d\u0018� 2\u001e\u001fq�",
       validation: "O",
-      idActe: "b41079a5-9e8d-478c-b04c-c4c2ac67134b",
+      idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235e",
       optionsCourrier: [],
       mentionsRetirees: [
         {
-          id: "f632cb4e-b4de-4270-a8a2-ddda30c94490",
-          idMention: "1a0aa3be-8311-465d-b750-d4c19834477b"
-        },
-        {
-          id: "f632561d-7832-469c-845e-cb1cffada2fd",
-          idMention: "1a0aa3be-8311-465d-b750-d4c19834477a"
+          id: "4474742f-e921-4d83-8099-105e5500fff3",
+          idMention: "1a0aa3be-8311-465d-b750-d4c19834430e"
         }
       ]
+    },
+    {
+      id: "4475fe91-62f6-4849-9474-1309364866ab",
+      nom: "Extrait plurilingue",
+      typeDocument: "ff7fe1fa-a2d6-4bc5-8681-deba65d9e2c6",
+      mimeType: "application/pdf",
+      taille: 81060,
+      avecCtv: true,
+      nbPages: 2,
+      orientation: "Portrait",
+      documentASignerElec: {
+        id: "4475738f-0a1d-4fe5-a6d0-d257fca6c502",
+        dateSignatureElectronique: null,
+        referenceActe: null,
+        empreinte: null
+      },
+      referenceSwift:
+        "3f52370d-14ed-4c55-8cf4-afe006d9aa38_447584c8-e195-49de-9e66-b3e41dce3d70.pdf",
+      conteneurSwift: "documents-delivres-2022-9",
+      empreinte: "��<8\u0010���0Ow5Ӿ��",
+      validation: "O",
+      idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235e",
+      optionsCourrier: [],
+      mentionsRetirees: []
     }
   ],
   evenement: {
-    id: "9bfa62a9-670c-4cfc-a180-eaf5bcb07159",
+    id: "3f528202-eb30-4bd6-87fc-d80dc9c8a8e3",
     natureActe: "NAISSANCE",
     jour: 25,
     mois: 6,
     annee: 1990,
     ville: "V",
-    pays: "Hn"
+    pays: "V"
   },
   choixDelivrance: "DELIVRER_EC_EXTRAIT_AVEC_FILIATION"
 };

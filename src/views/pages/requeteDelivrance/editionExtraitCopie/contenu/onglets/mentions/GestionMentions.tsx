@@ -83,18 +83,20 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
         modificationEffectue(
           nouvellesMentions,
           mentionsApi?.mentions,
-          props.document
+          props.document,
+          props.acte?.nature
         )
       );
     },
-    [mentionsApi, props.document, setIsDirty]
+    [mentionsApi, props.document, setIsDirty, props.acte]
   );
 
   const reinitialisation = useCallback(() => {
     if (mentionsApi?.mentions && props.document) {
       const mentionsAAfficher = mappingVersMentionAffichage(
         mentionsApi.mentions,
-        props.document
+        props.document,
+        props.acte?.nature
       );
       if (estTableauNonVide(mentionsAAfficher)) {
         setMentions(mentionsAAfficher);
@@ -107,7 +109,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
         setMentionSelect(premiereMention);
       }
     }
-  }, [mentionsApi, props.document, estExtraitPlurilingue]);
+  }, [mentionsApi, props.document, estExtraitPlurilingue, props.acte]);
 
   useEffect(() => {
     reinitialisation();
@@ -119,7 +121,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
       setSauvegarderMentionsParams({
         mentionsApi,
         mentions,
-        idActe: props.acte?.id,
+        acte: props.acte,
         document: props.document,
         requete: props.requete
       });
@@ -178,7 +180,8 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
           estDeverrouille,
           mentionsApi?.mentions,
           mentions,
-          props.document
+          props.document,
+          props.acte?.nature
         )}
         onClickValider={valider}
       />

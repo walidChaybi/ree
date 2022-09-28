@@ -1,5 +1,14 @@
-import { getValeurOuVide } from "@util/Utils";
-import { NATIONALITE, NatureMention } from "../../enum/NatureMention";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { getDateStringFromDateCompose } from "@util/DateUtils";
+import { DEUX, getValeurOuVide, UN } from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import {
+  MARIAGE,
+  NATIONALITE,
+  NatureMention,
+  natureMentionExtraitPlurilingueMariage,
+  natureMentionExtraitPlurilingueNaissance
+} from "../../enum/NatureMention";
 import { StatutMention } from "../../enum/StatutMention";
 import { IEvenement } from "../IEvenement";
 import { IAutoriteEtatCivil } from "./IAutoriteEtatCivil";
@@ -7,6 +16,8 @@ import { ITexteMention } from "./ITexteMention";
 import { ITitulaireMention } from "./ITitulaireMention";
 import { ITypeMention } from "./ITypeMention";
 
+const REMPLACEMENT_SI_INTROUVABLE = "XXXXXXXXXX";
+const AVEC = "avec";
 export interface IMention {
   id: string;
   numeroOrdre: number;
@@ -109,11 +120,89 @@ export const Mention = {
         )
       : [];
   },
-  filtreSansTexteMentionNiTexteMentionPlurilingue(
+  filtrerTexteMentionPlurilingueEtNatureAdequat(
+    natureActe?: NatureActe,
     mentions?: IMention[]
   ): IMention[] {
+    const tableauNatureFiltrer =
+      natureActe === NatureActe.NAISSANCE
+        ? natureMentionExtraitPlurilingueNaissance
+        : natureMentionExtraitPlurilingueMariage;
     return mentions
-      ? mentions.filter(mention => mention.textes?.texteMentionPlurilingue)
+      ? mentions.filter(
+          mention =>
+            Boolean(mention.textes?.texteMentionPlurilingue) ||
+            tableauNatureFiltrer.includes(mention.typeMention.nature.code)
+        )
       : [];
+  },
+  formaterMentionsPlurilingue(mentions?: IMention[]) {
+    mentions?.forEach(
+      (mention: IMention) =>
+        (mention.textes = {
+          ...mention.textes,
+          texteMentionPlurilingue: mention.textes.texteMentionPlurilingue
+            ? mention.textes.texteMentionPlurilingue
+            : Mention.getTextePlurilingueAPartirMention(mention)
+        })
+    );
+  },
+  getTextePlurilingueAPartirMention(mention: IMention): string {
+    const nature = NatureMention.getCodePourNature(
+      mention.typeMention.nature.code
+    );
+    const date = mention.evenement.annee
+      ? getDateStringFromDateCompose(
+          {
+            annee: mention.evenement.annee.toString(),
+            mois: mention.evenement.mois?.toString(),
+            jour: mention.evenement.jour?.toString()
+          },
+          "-"
+        )
+      : REMPLACEMENT_SI_INTROUVABLE;
+    const lieu = mention.evenement.lieuReprise
+      ? mention.evenement.lieuReprise
+      : LieuxUtils.getLieu(
+          mention.evenement.ville,
+          mention.evenement.region,
+          mention.evenement.pays
+        );
+
+    let conjoint = "";
+    if (
+      mention.typeMention.nature ===
+      NatureMention.getEnumFromCode(NatureMention, MARIAGE)
+    ) {
+      conjoint = getConjoint(mention, conjoint);
+    }
+    let texteMention = `${nature} ${date} ${lieu}`;
+    if (conjoint) {
+      texteMention += ` ${conjoint}`;
+    }
+    return texteMention;
   }
 };
+
+function getConjoint(mention: IMention, conjoint: string) {
+  let texte;
+  if (mention.textes.texteMentionDelivrance?.includes(AVEC)) {
+    texte = mention.textes.texteMentionDelivrance;
+  }
+  if (mention.textes.texteMention?.includes(AVEC)) {
+    texte = mention.textes.texteMention;
+  }
+  if (texte) {
+    const regex = /avec ((?:[\w-]*, ?[\w-]*)*) *([\w -]*)/gm;
+    const matches = new RegExp(regex).exec(texte);
+    if (matches?.[UN]) {
+      conjoint = matches[UN];
+    }
+    if (matches?.[DEUX]) {
+      conjoint += ` ${matches[DEUX]}`;
+    }
+  } else {
+    conjoint = REMPLACEMENT_SI_INTROUVABLE;
+  }
+  return conjoint;
+}
