@@ -382,13 +382,9 @@ export class CommunExtraitOuCopieActeTexteComposition {
     lieuNaissance: string
   ): string {
     let lieuNaissanceFormate = "";
-    const neOuNee = EtatCivilUtil.formatNeOuNee(
-      individu.sexe?.libelle?.localeCompare(Sexe.FEMININ.libelle, undefined, {
-        sensitivity: "base"
-      })
-        ? Sexe.INDETERMINE
-        : Sexe.FEMININ //Test sur féminin ou non : peu importe le sexe par défaut sinon
-    );
+
+    const neOuNee = EtatCivilUtil.formatNeOuNee(individu.sexe);
+
     if (lieuNaissance && individu.naissance?.annee) {
       //date renseignée : né.e *date* à *lieu*
       lieuNaissanceFormate = ` à ${lieuNaissance}`;

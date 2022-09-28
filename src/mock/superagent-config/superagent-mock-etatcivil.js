@@ -510,7 +510,8 @@ export const configEtatcivil = [
 
       if (
         match[1] ===
-        "/acte/alerte/a0adc2b2-03b6-4b80-a90d-7f96e780df15?provenanceRequete=Service%20Public"
+          "/acte/alerte/a0adc2b2-03b6-4b80-a90d-7f96e780df15?provenanceRequete=Service%20Public" ||
+        match[1] === "/acte/alerte/a0adc2b2-03b6-4b80-a90d-7f96e780df15"
       ) {
         return { data: null };
       }

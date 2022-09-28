@@ -189,6 +189,7 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
                       null,
                       entry?.[0]
                     )}
+                    idTypeRegistre={resultatGetAlertesActe?.idTypeRegistre}
                   />
                 )}
                 <ListeAlertes

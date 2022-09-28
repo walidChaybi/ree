@@ -4,6 +4,8 @@ import {
   auMoinsUneProprieteEstRenseigne,
   changeLaPlaceDunElement,
   checkDirty,
+  compareChainesIgnoreCasse,
+  compareChainesIgnoreCasseEtAccent,
   compareNombre,
   enMajuscule,
   estTableauNonVide,
@@ -457,4 +459,34 @@ test("Attendu: aucunAttributRenseigne fonctionne correctement", () => {
 
   objet.b.b1.b11 = "b11";
   expect(aucuneProprieteRenseignee(objet)).toBeFalsy();
+});
+
+test("Attendu: compareChainesIgnoreCasseEtAccent fonctionne correctement", () => {
+  expect(compareChainesIgnoreCasseEtAccent("", "")).toBeTruthy();
+  expect(compareChainesIgnoreCasseEtAccent("test", "")).toBeFalsy();
+  expect(compareChainesIgnoreCasseEtAccent("test", "TesT")).toBeTruthy();
+  expect(compareChainesIgnoreCasseEtAccent("test", "TEST")).toBeTruthy();
+  expect(compareChainesIgnoreCasseEtAccent("tést", "TEST")).toBeTruthy();
+  expect(compareChainesIgnoreCasseEtAccent("testee", "testéè")).toBeTruthy();
+  expect(compareChainesIgnoreCasseEtAccent("TEST", "test")).toBeTruthy();
+  expect(compareChainesIgnoreCasseEtAccent("test", "test2")).toBeFalsy();
+  expect(compareChainesIgnoreCasseEtAccent(undefined, undefined)).toBeTruthy();
+  expect(compareChainesIgnoreCasseEtAccent(null!, null!)).toBeTruthy();
+  expect(compareChainesIgnoreCasseEtAccent(undefined, "")).toBeFalsy();
+  expect(compareChainesIgnoreCasseEtAccent("", null!)).toBeFalsy();
+});
+
+test("Attendu: compareChainesIgnoreCasse fonctionne correctement", () => {
+  expect(compareChainesIgnoreCasse("", "")).toBeTruthy();
+  expect(compareChainesIgnoreCasse("test", "")).toBeFalsy();
+  expect(compareChainesIgnoreCasse("test", "TesT")).toBeTruthy();
+  expect(compareChainesIgnoreCasse("test", "TEST")).toBeTruthy();
+  expect(compareChainesIgnoreCasse("tést", "TEST")).toBeFalsy();
+  expect(compareChainesIgnoreCasse("TEST", "test")).toBeTruthy();
+  expect(compareChainesIgnoreCasse("test", "test2")).toBeFalsy();
+  expect(compareChainesIgnoreCasse("testee", "testéè")).toBeFalsy();
+  expect(compareChainesIgnoreCasse(undefined, undefined)).toBeTruthy();
+  expect(compareChainesIgnoreCasse(null!, null!)).toBeTruthy();
+  expect(compareChainesIgnoreCasse(undefined, "")).toBeFalsy();
+  expect(compareChainesIgnoreCasse("", null!)).toBeFalsy();
 });

@@ -564,6 +564,8 @@ export const configRequetes = [
           "/documentsreponses/9bfa865e-6d7a-4d66-900e-b548178854db" ||
         match[1] ===
           "/documentsreponses/28bc3078-7e53-4b8b-8cf8-7f75a2502573" ||
+        match[1] ===
+          "/documentsreponses/28bc3078-7e53-4b8b-8cf8-7f75a25025743" ||
         match[1] === "/documentsreponses/f63223ce-f425-441e-846c-114b0f36936d"
       ) {
         return { data: documentReponseExtraitAvecFiliation };

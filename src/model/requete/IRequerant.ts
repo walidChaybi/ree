@@ -1,5 +1,6 @@
 import { getAdresse } from "@pages/requeteDelivrance/saisirRequete/hook/mappingFormulaireRDCSCVersRequeteDelivrance";
 import {
+  compareChainesIgnoreCasse,
   enMajuscule,
   formatNom,
   formatPrenom,
@@ -46,13 +47,7 @@ export const Requerant = {
     requerant: IRequerant;
     titulaire?: ITitulaireRequete;
   }) {
-    const equalsIgnoreCase = (str1 = "", str2 = "") => {
-      return (
-        str1.localeCompare(str2, undefined, {
-          sensitivity: "accent"
-        }) === 0
-      );
-    };
+
     let titulaireResultat = { nom: "", prenom: "" };
 
     if (titulaire) {
@@ -65,7 +60,7 @@ export const Requerant = {
 
     return (
       titulaireResultat.nom === requerant.nomFamille &&
-      equalsIgnoreCase(titulaireResultat.prenom, requerant.prenom)
+      compareChainesIgnoreCasse(titulaireResultat.prenom, requerant.prenom)
     );
   },
   estUnTitulaire({

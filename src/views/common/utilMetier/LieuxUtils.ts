@@ -2,6 +2,7 @@ import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { Option } from "@util/Type";
 import {
+  compareChainesIgnoreCasseEtAccent,
   estRenseigne,
   formatMajusculesMinusculesMotCompose,
   formatPremieresLettresMajusculesNomCompose,
@@ -400,9 +401,7 @@ export class LieuxUtils {
   }
 
   public static estVilleJerusalem(ville?: string): boolean {
-    return ville
-      ? ville.localeCompare(JERUSALEM, "fr", { sensitivity: "base" }) === 0
-      : false;
+    return ville ? compareChainesIgnoreCasseEtAccent(ville, JERUSALEM) : false;
   }
 
   public static getEtrangerOuFrance(

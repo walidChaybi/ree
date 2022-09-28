@@ -175,7 +175,7 @@ test("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes acte",
       target: { value: "Test saisie complément description" }
     });
     fireEvent.change(selectTypeAlerte, {
-      target: { value: "6cc42860-9421-4224-be49-2c91309199cd" }
+      target: { value: "058a436b-330d-4c3c-83e0-d49c27390aa1" }
     });
   });
 
@@ -184,7 +184,7 @@ test("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes acte",
       "Test saisie complément description"
     );
     expect(selectTypeAlerte.value).toEqual(
-      "6cc42860-9421-4224-be49-2c91309199cd"
+      "058a436b-330d-4c3c-83e0-d49c27390aa1"
     );
   });
 

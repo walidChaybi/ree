@@ -3,6 +3,7 @@
 import { peupleTypeAlerte } from "@api/nomenclature/NomenclatureEtatcivil";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { Options } from "@util/Type";
+import { compareChainesIgnoreCasseEtAccent } from "@util/Utils";
 
 const CODE_COULEUR_ALERTE_ROUGE = "CodeCouleurAlerteRouge";
 const CODE_COULEUR_ALERTE_ORANGE = "CodeCouleurAlerteOrange";
@@ -85,6 +86,32 @@ export class TypeAlerte extends EnumWithLibelle {
 
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(TypeAlerte);
+  }
+
+  public static getAllEnumsAsOptionsSansRetourSaga(): Options {
+    return EnumWithLibelle.getAllLibellesAsOptions(
+      TypeAlerte,
+      false,
+      true,
+      true,
+      TypeAlerte.getEnumsAPartirSousType("repris SAGA")
+    );
+  }
+
+  public static getEnumsAPartirSousType(sousType: string): TypeAlerte[] {
+    const enumsAvecSousType = [];
+    for (const key in TypeAlerte) {
+      //@ts-ignore
+      const typeAlerteCourant = TypeAlerte[key];
+      const sousTypeCourant = typeAlerteCourant["_sousType"];
+      if (
+        TypeAlerte.hasOwnProperty(key) &&
+        compareChainesIgnoreCasseEtAccent(sousTypeCourant, sousType)
+      ) {
+        enumsAvecSousType.push(typeAlerteCourant);
+      }
+    }
+    return enumsAvecSousType;
   }
 
   public static getCodeCouleurAlerte(typeAlerte: string): string {

@@ -128,11 +128,19 @@ export function officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(
 export function officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(
   idTypeRegistre?: string
 ) {
-  return (
-    officierDroitDelivrerSurLeTypeRegistre(getValeurOuVide(idTypeRegistre)) ||
-    officierALeDroitSurUnDesPerimetres(Droit.DELIVRER, [Perimetre.MEAE]) ||
-    officierALeDroitSurUnDesPerimetres(Droit.DELIVRER_COMEDEC, [Perimetre.MEAE])
-  );
+  
+    if (idTypeRegistre) {
+      return (
+        officierDroitDelivrerSurLeTypeRegistre(
+          getValeurOuVide(idTypeRegistre)
+        ) ||
+        officierALeDroitSurUnDesPerimetres(Droit.DELIVRER, [Perimetre.MEAE]) ||
+        officierALeDroitSurUnDesPerimetres(Droit.DELIVRER_COMEDEC, [
+          Perimetre.MEAE
+        ])
+      );
+    } else return false;
+  
 }
 
 export function officierALeDroitSurLePerimetre(

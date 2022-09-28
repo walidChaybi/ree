@@ -1,6 +1,8 @@
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE } from "@model/agent/IOfficier";
 import { getLibelle } from "@util/Utils";
+import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useState } from "react";
 import {
   IAjouterAlerteFormValue,
@@ -9,15 +11,22 @@ import {
 
 export interface BoutonAjouterAlerteProps {
   ajouterAlerteCallBack: (value: IAjouterAlerteFormValue) => void;
+  idTypeRegistre?: string;
 }
 
 export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({
-  ajouterAlerteCallBack
+  ajouterAlerteCallBack,
+  idTypeRegistre
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
 
   const onClick = (): void => {
-    setIsOpen(true);
+    if (officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(idTypeRegistre)) {
+      setIsOpen(true);
+    } else {
+      setHasMessageBloquant(true);
+    }
   };
 
   const onClosePopin = (): void => {
@@ -41,6 +50,21 @@ export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({
         open={isOpen}
         onClosePopin={onClosePopin}
         onSubmit={onSubmit}
+      />
+      <ConfirmationPopin
+        disablePortal={true}
+        isOpen={hasMessageBloquant}
+        messages={[
+          getLibelle("Vous n'avez pas les droits pour ajouter une alerte.")
+        ]}
+        boutons={[
+          {
+            label: getLibelle("OK"),
+            action: () => {
+              setHasMessageBloquant(false);
+            }
+          }
+        ]}
       />
     </div>
   );

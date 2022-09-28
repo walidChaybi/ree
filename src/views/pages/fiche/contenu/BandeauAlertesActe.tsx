@@ -23,7 +23,10 @@ export const BandeauAlertesActe: React.FC<BandeauAlertesActeProps> = ({
   return (
     <div className="BandeauAlertesActe">
       {afficherBouton && (
-        <BoutonAjouterAlerte ajouterAlerteCallBack={ajouterAlerteCallBack} />
+        <BoutonAjouterAlerte
+          ajouterAlerteCallBack={ajouterAlerteCallBack}
+          idTypeRegistre={idTypeRegistre}
+        />
       )}
       {alertes?.length > 0 && (
         <ListeAlertes

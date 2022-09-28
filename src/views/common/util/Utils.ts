@@ -566,3 +566,35 @@ export function aucuneProprieteRenseignee(objet?: Object): boolean {
   }
   return res;
 }
+
+
+export function compareChaines(
+  sensitivity: "base" | "accent",
+  str1?: string,
+  str2?: string
+): boolean {
+  let res;
+  if (str1 === str2) {
+    res = true;
+  } else if (str1 == null) {
+    res = false;
+  } else {
+    //@ts-ignore str2 non null ici
+    res = str1.localeCompare(str2, "fr", { sensitivity }) === 0;
+  }
+  return res;
+}
+
+export function compareChainesIgnoreCasseEtAccent(
+  str1?: string,
+  str2?: string
+): boolean {
+  return compareChaines("base", str1, str2);
+}
+
+export function compareChainesIgnoreCasse(
+  str1?: string,
+  str2?: string
+): boolean {
+  return compareChaines("accent", str1, str2);
+}

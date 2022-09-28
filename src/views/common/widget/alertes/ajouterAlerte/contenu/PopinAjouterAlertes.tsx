@@ -73,7 +73,7 @@ export const PopinAjouterAlertes: React.FC<PopinAjouterAlertesProps> = ({
             <SelectField
               name={ID_TYPE_ALERTE}
               label={getLibelle("Sélectionner l'alerte à ajouter :")}
-              options={TypeAlerte.getAllEnumsAsOptions()}
+              options={TypeAlerte.getAllEnumsAsOptionsSansRetourSaga()}
             />
             <InputField
               name={COMPLEMENT_DESCRIPTION}

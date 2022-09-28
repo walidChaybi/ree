@@ -20,10 +20,10 @@ test("render ListeAlertes avec droit suppression alerte : test ouverture / ferme
   await act(async () => {
     render(
       <ListeAlertes
-        ajoutAlertePossible={true}
         alertes={Alertes}
         displayReference={false}
         supprimerAlerteCallBack={jest.fn()}
+        idTypeRegistre={"salut"}
       />
     );
   });
@@ -66,7 +66,7 @@ test("render ListeAlertes avec droit suppression alerte : test soumission formul
   await act(async () => {
     render(
       <ListeAlertes
-        ajoutAlertePossible={true}
+        idTypeRegistre="salut"
         alertes={Alertes}
         displayReference={false}
         supprimerAlerteCallBack={jest.fn()}
@@ -113,7 +113,7 @@ test("render ListeAlertes sans droit suppression alerte", async () => {
   await act(async () => {
     render(
       <ListeAlertes
-        ajoutAlertePossible={true}
+        idTypeRegistre="saluts"
         alertes={Alertes}
         displayReference={false}
         supprimerAlerteCallBack={jest.fn()}

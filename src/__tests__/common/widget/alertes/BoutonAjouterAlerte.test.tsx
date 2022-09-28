@@ -6,6 +6,7 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import { BoutonAjouterAlerte } from "@widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
 import {
   COMPLEMENT_DESCRIPTION,
@@ -13,17 +14,25 @@ import {
 } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import React from "react";
 import request from "superagent";
+import { userDroitCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 beforeEach(async () => {
+  storeRece.utilisateurCourant = userDroitCOMEDEC;
+
   TypeAlerte.init();
 });
 
 test("render BoutonAjouterAlerte avec ajout alerte possible : test ouverture / fermeture popin", async () => {
   await act(async () => {
-    render(<BoutonAjouterAlerte ajouterAlerteCallBack={jest.fn()} />);
+    render(
+      <BoutonAjouterAlerte
+        ajouterAlerteCallBack={jest.fn()}
+        idTypeRegistre="salut"
+      />
+    );
   });
 
   const boutonAjouterAlerte = screen.getByTitle(
@@ -59,7 +68,12 @@ test("render BoutonAjouterAlerte avec ajout alerte possible : test ouverture / f
 
 test("render BoutonAjouterAlerte avec ajout alerte possible : test soumission formulaire", async () => {
   await act(async () => {
-    render(<BoutonAjouterAlerte ajouterAlerteCallBack={jest.fn()} />);
+    render(
+      <BoutonAjouterAlerte
+        ajouterAlerteCallBack={jest.fn()}
+        idTypeRegistre="salut"
+      />
+    );
   });
 
   const boutonAjouterAlerte = screen.getByTitle(
@@ -101,7 +115,7 @@ test("render BoutonAjouterAlerte avec ajout alerte possible : test soumission fo
       target: { value: "Test saisie complément description" }
     });
     fireEvent.change(selectTypeAlerte, {
-      target: { value: "6cc42860-9421-4224-be49-2c91309199cd" }
+      target: { value: "058a436b-330d-4c3c-83e0-d49c27390aa6" }
     });
   });
 
@@ -110,7 +124,7 @@ test("render BoutonAjouterAlerte avec ajout alerte possible : test soumission fo
       "Test saisie complément description"
     );
     expect(selectTypeAlerte.value).toEqual(
-      "6cc42860-9421-4224-be49-2c91309199cd"
+      "058a436b-330d-4c3c-83e0-d49c27390aa6"
     );
   });
 
