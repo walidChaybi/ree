@@ -21,7 +21,14 @@ export const VisionneuseDocument: React.FC<IVisionneuseDocumentProps> = ({
 
   useEffect(() => {
     if (contenu && typeMime) {
-      setUrl(base64toBlob(contenu, typeMime));
+
+      let attributUrl = "";
+      if (typeMime === "application/pdf") {
+        attributUrl = "#zoom=page-fit";
+      }
+
+      const urlAvecAttribut = base64toBlob(contenu, typeMime) + attributUrl;
+      setUrl(urlAvecAttribut);
     }
   }, [contenu, typeMime]);
 
