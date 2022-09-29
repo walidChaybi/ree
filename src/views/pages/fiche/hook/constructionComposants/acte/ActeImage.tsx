@@ -33,7 +33,7 @@ export const ActeImage: React.FC<ActeImageProps> = ({ id, estReecrit }) => {
             const documentObjectURL = URL.createObjectURL(
               new Blob([pdf.body], { type: "application/pdf" })
             );
-            setUrl(documentObjectURL);
+            setUrl(documentObjectURL + "#zoom=page-fit");
           }
         })
         .catch((err: any) => {
