@@ -62,7 +62,7 @@ export const TitulaireValidationSchema = Yup.object()
     const paramsError = {
       path: `${error.path}.prenom`,
       message: getLibelle(
-        "L'astérisque est autorisé dans le prénom que si le nom est saisi (avec ou sans *)"
+        "L'astérisque est n'autorisé dans le prénom que si le nom est saisi (avec ou sans *)"
       )
     };
 
