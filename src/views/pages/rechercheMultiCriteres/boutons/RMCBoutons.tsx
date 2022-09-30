@@ -21,7 +21,7 @@ const RMCBoutons: React.FC<RMCBoutonsProps> = props => {
 
   return (
     <>
-      <div className="Boutons">
+      <div className="BoutonsRechercheMulti">
         <div className="rechercher">
           <Bouton
             disabled={!props.formik.isValid || !props.formik.dirty}

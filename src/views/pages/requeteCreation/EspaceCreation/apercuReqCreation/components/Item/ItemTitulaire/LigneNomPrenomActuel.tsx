@@ -11,20 +11,24 @@ interface LigneNomPrenomActuelProps {
   identite: IdentiteType;
   retenueSdanf?: IRetenueSdanf;
   afficherNomActuel?: boolean;
+  afficherNomUsage?: boolean;
 }
 
 export const LigneNomPrenomActuel: React.FC<LigneNomPrenomActuelProps> = ({
   afficherNomActuel = true,
+  afficherNomUsage = true,
   ...props
 }) => {
   return (
     <div className="itemLigneTitulaire">
-      <ItemLigneSdanf
-        texteSdanf={`(${getLibelle("Usage :")}${
-          props.retenueSdanf?.nomNaissance
-        })`}
-        texteTitulaire={props.identite.noms.naissance}
-      />
+      {afficherNomUsage && (
+        <ItemLigneSdanf
+          texteSdanf={`(${getLibelle("Usage :")}${
+            props.retenueSdanf?.nomNaissance
+          })`}
+          texteTitulaire={props.identite.noms.naissance}
+        />
+      )}
 
       {afficherNomActuel && (
         <ItemLigneSdanf

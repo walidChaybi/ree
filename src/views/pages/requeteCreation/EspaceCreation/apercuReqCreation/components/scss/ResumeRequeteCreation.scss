@@ -11,7 +11,7 @@ $height: $spacing * 2.5;
 
     .erreurSdanf {
       background-color: $surlignement-sdanf;
-      padding: 0.0rem 0.185rem;
+      padding: 0rem 0.185rem;
       border-radius: 0.3rem;
     }
   }
@@ -47,13 +47,15 @@ $height: $spacing * 2.5;
   }
   .infoBulle {
     display: flex;
-    // margin-left: $spacing / 3;
 
     .icon {
       cursor: pointer;
       height: $height;
       margin-left: $spacing / 4;
-      
+      justify-content: center;
+      align-items: center;
+      display: flex;
+
       svg {
         height: $height;
         color: $application-color;

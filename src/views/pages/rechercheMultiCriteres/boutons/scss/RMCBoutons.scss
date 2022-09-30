@@ -2,8 +2,12 @@
 
 .Boutons {
   display: flex;
-  flex-direction: column;
+  justify-content: space-evenly;
+}
 
+.BoutonsRechercheMulti {
+  display: flex;
+  flex-direction: column;
   .rechercher {
     display: flex;
     justify-content: center;

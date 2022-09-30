@@ -21,11 +21,19 @@ export const ItemLigneSdanf: React.FC<ItemLigneSdanfProps> = ({
   ...props
 }) => {
   return visible ? (
-    <div className="ligne">
+    <div className="ligne infoBulle">
       <div className={"texte"}>
         {props.label}
         <span className={infoBulleSdanfVisible ? "erreurSdanf" : ""}>
-          {infoBulleSdanfVisible ? texteSdanf : texteTitulaire}
+          {infoBulleSdanfVisible ? (
+            <>
+              <div className="icon" title={texteTitulaire}>
+                {texteSdanf}
+              </div>
+            </>
+          ) : (
+            texteTitulaire
+          )}
         </span>
         <InfoBulle visible={infoBulleSdanfVisible} texte={texteTitulaire} />
       </div>

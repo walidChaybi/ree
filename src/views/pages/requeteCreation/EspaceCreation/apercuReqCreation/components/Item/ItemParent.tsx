@@ -33,6 +33,7 @@ const ItemParent: React.FC<ItemParentProps & ItemProps> = props => {
         identite={props.identite}
         retenueSdanf={props.retenueSdanf}
         afficherNomActuel={false}
+        afficherNomUsage={false}
       />
 
       <LigneDateNaissanceAdresse

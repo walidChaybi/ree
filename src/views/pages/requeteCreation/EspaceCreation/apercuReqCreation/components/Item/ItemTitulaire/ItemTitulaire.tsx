@@ -90,7 +90,6 @@ const ItemTitulaire: React.FC<ItemTitulaireProps & ItemProps> = props => {
               titre={Labels.resume.parent}
               numeroItem={id + 1}
               totalItems={props.parents.length}
-              retenueSdanf={props.retenueSdanf}
             />
           )
       )}
