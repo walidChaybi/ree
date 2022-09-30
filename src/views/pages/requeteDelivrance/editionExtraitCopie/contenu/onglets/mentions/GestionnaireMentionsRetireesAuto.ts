@@ -14,6 +14,7 @@ import {
   MODIFICATION_PACS,
   NATIONALITE,
   natureRetireesMariageAvecFilliation,
+  natureRetireesMariagePlurilingue,
   natureRetireesMariageSansFilliation,
   natureRetireesNaissanceAvecFillation,
   natureRetireesNaissancePlurilingue,
@@ -51,48 +52,30 @@ export class GestionnaireMentionsRetireesAuto {
             this.deselectionneExtraneite(
               this.garderMentionsNonRetiree(mentions)
             );
-            this.deselectionneMentionsSpecifiques(
-              this.garderMentionsNonRetiree(mentions),
-              choixDelivrance,
-              natureActe
-            );
-            this.deselectionneMentionsIncompatibleAvecActe(
-              this.garderMentionsNonRetiree(mentions),
-              natureActe
-            );
             break;
           case NatureActe.MARIAGE:
             this.deselectionnerAnnulationParPaire(
               this.garderMentionsNonRetiree(mentions)
             );
-            this.deselectionneMentionsSpecifiques(
-              this.garderMentionsNonRetiree(mentions),
-              choixDelivrance,
-              natureActe
-            );
-            this.deselectionneMentionsIncompatibleAvecActe(
-              this.garderMentionsNonRetiree(mentions),
-              natureActe
-            );
             break;
         }
       } else {
+        this.deselectionnerAnnulationParPaire(mentions);
         if (natureActe === NatureActe.NAISSANCE) {
-          this.deselectionnerAnnulationParPaire(mentions);
+          this.deselectionneSituationFamilialePassee(
+            this.garderMentionsNonRetiree(mentions)
+          );
         }
-        this.deselectionneSituationFamilialePassee(
-          this.garderMentionsNonRetiree(mentions)
-        );
-        this.deselectionneMentionsSpecifiques(
-          this.garderMentionsNonRetiree(mentions),
-          choixDelivrance,
-          natureActe
-        );
-        this.deselectionneMentionsIncompatibleAvecActe(
-          this.garderMentionsNonRetiree(mentions),
-          natureActe
-        );
       }
+      this.deselectionneMentionsSpecifiques(
+        this.garderMentionsNonRetiree(mentions),
+        choixDelivrance,
+        natureActe
+      );
+      this.deselectionneMentionsIncompatibleAvecActe(
+        this.garderMentionsNonRetiree(mentions),
+        natureActe
+      );
     }
 
     return this.formaterMentionsRetirees(mentions);
@@ -165,8 +148,10 @@ export class GestionnaireMentionsRetireesAuto {
       case NatureActe.MARIAGE:
         if (ChoixDelivrance.estAvecFiliation(choixDelivrance)) {
           mentionsRetirees = natureRetireesMariageAvecFilliation;
-        } else {
+        } else if (ChoixDelivrance.estSansFiliation(choixDelivrance)) {
           mentionsRetirees = natureRetireesMariageSansFilliation;
+        } else if (ChoixDelivrance.estPlurilingue(choixDelivrance)) {
+          mentionsRetirees = natureRetireesMariagePlurilingue;
         }
         break;
     }
