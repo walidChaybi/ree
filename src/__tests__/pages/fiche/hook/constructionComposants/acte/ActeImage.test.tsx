@@ -30,7 +30,7 @@ describe("Display pdf Iframe", () => {
       expect(linkElement).toBeInTheDocument();
     });
     expect(document.querySelector("iframe").getAttribute("src")).toBe(
-      "url_test"
+      "url_test#zoom=page-fit"
     );
     expect(screen.queryByRole("progressbar")).toBeNull();
   });
@@ -49,7 +49,7 @@ describe("Display pdf Iframe", () => {
       expect(linkElement).toBeInTheDocument();
     });
     expect(document.querySelector("iframe").getAttribute("src")).toBe(
-      "url_test"
+      "url_test#zoom=page-fit"
     );
     expect(screen.queryByRole("progressbar")).toBeNull();
 
@@ -62,7 +62,7 @@ describe("Display pdf Iframe", () => {
       expect(screen.queryByRole("progressbar")).toBeNull();
     });
     expect(document.querySelector("iframe").getAttribute("src")).toBe(
-      "url_test_click"
+      "url_test_click#zoom=page-fit"
     );
   });
 });

@@ -21,6 +21,6 @@ test("Attendu: VisionneuseDocument fonctionne correctement", async () => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
     const iframe = screen.getByTitle("titre") as HTMLIFrameElement;
     expect(iframe).toBeInTheDocument();
-    expect(iframe.src).toBe(urlImagePngVideBase64);
+    expect(iframe.src).toBe(urlImagePngVideBase64 + "#zoom=page-fit");
   });
 });
