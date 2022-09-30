@@ -4,16 +4,19 @@ import {
   mAppartientOuAppartientAPersonne,
   provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer
 } from "@model/agent/IOfficier";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import {
   IRequeteDelivrance,
   RequeteDelivrance
 } from "@model/requete/IRequeteDelivrance";
 import { TRequeteTableau } from "@model/requete/IRequeteTableau";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import {
   IRequeteTableauDelivrance,
   mappingUneRequeteTableauDelivrance
@@ -64,39 +67,12 @@ export function getMessagePrioriteDeLaRequete(dateStatut: string): string {
   }
 }
 
-export const statutEstATraiterOuTransferee = (statut: string) =>
-  statut === StatutRequete.A_TRAITER.libelle ||
-  statut === StatutRequete.TRANSFEREE.libelle;
-
-export const statutEstPrendreEnCharge = (statut: string) =>
-  statut === StatutRequete.PRISE_EN_CHARGE.libelle;
-
-export const statutEstBrouillon = (statut: string) =>
-  statut === StatutRequete.BROUILLON.libelle;
-
-export const statutEstASignerAValider = (statut: string) =>
-  statut === StatutRequete.A_VALIDER.libelle ||
-  statut === StatutRequete.A_SIGNER.libelle;
-
-export const statutEstAValider = (statut: string) =>
-  statut === StatutRequete.A_VALIDER.libelle;
-
-export const statutEstASigner = (statut: string) =>
-  statut === StatutRequete.A_SIGNER.libelle;
-
-export const typeEstDelivrance = (type: string) =>
-  type === TypeRequete.DELIVRANCE.libelle;
-
-export const typeEstInformation = (type: string) => {
-  return type === TypeRequete.INFORMATION.libelle;
-};
-
 export const autorisePrendreEnChargeDelivrance = (
   requete: IRequeteDelivrance
 ) => {
   return (
-    typeEstDelivrance(requete.type.libelle) &&
-    statutEstATraiterOuTransferee(requete.statutCourant.statut.libelle) &&
+    TypeRequete.estDelivrance(requete.type) &&
+    StatutRequete.estATraiterOuTransferee(requete.statutCourant.statut) &&
     mAppartientOuAppartientAPersonne(requete.idUtilisateur) &&
     provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
       requete.provenanceRequete.provenance.libelle
@@ -108,39 +84,71 @@ export const autorisePrendreEnChargeDelivrance = (
 export const autorisePrendreEnChargeReqTableauDelivrance = (
   requete: IRequeteTableauDelivrance
 ): boolean => {
+  const type = TypeRequete.getEnumFromLibelle(requete.type);
   const sousType = SousTypeDelivrance.getEnumFromLibelleCourt(requete.sousType);
+  const statut = StatutRequete.getEnumFromLibelle(requete.statut);
+
   return (
+    TypeRequete.estDelivrance(type) &&
     SousTypeDelivrance.possibleAPrendreEnCharge(sousType) &&
-    estAutorisePrendreEnChargeReqTableauDelivrance(requete)
+    StatutRequete.estATraiterOuTransferee(statut) &&
+    mAppartient(requete.idUtilisateur) &&
+    appartientAMonServiceOuServicesMeresOuServicesFilles(
+      requete.idEntiteRattachement
+    ) &&
+    provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
+      requete.provenance
+    )
   );
 };
-
-const estAutorisePrendreEnChargeReqTableauDelivrance = (
-  requete: IRequeteTableauDelivrance
-) =>
-  typeEstDelivrance(requete.type ? requete.type : "") &&
-  statutEstATraiterOuTransferee(requete.statut ? requete.statut : "") &&
-  mAppartient(requete.idUtilisateur ? requete.idUtilisateur : "") &&
-  provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
-    requete.provenance ? requete.provenance : ""
-  ) &&
-  appartientAMonServiceOuServicesMeresOuServicesFilles(
-    requete.idEntiteRattachement ? requete.idEntiteRattachement : ""
-  );
 
 export const autorisePrendreEnChargeReqTableauInformation = (
   requete: IRequeteTableauInformation
 ) => {
-  const amoi = mAppartient(requete.idUtilisateur ? requete.idUtilisateur : "");
-  const statutTransfereeOuTraite =
-    requete.statut === StatutRequete.TRANSFEREE.libelle ||
-    requete.statut === StatutRequete.A_TRAITER.libelle;
+  const type = TypeRequete.getEnumFromLibelle(requete.type);
+  const statut = StatutRequete.getEnumFromLibelle(requete.statut);
 
   return (
-    amoi &&
-    statutTransfereeOuTraite /*||
-    requete.statut === StatutRequete.A_TRAITER.libelle */ &&
-    typeEstInformation(requete.type ? requete.type : "")
+    TypeRequete.estInformation(type) &&
+    StatutRequete.estATraiterOuTransferee(statut) &&
+    mAppartient(requete.idUtilisateur)
+  );
+};
+
+export const estRequeteCreationAuStatutATraiter = (
+  type: TypeRequete,
+  sousType: SousTypeCreation,
+  statut: StatutRequete
+) => {
+  return (
+    TypeRequete.estCreation(type) &&
+    SousTypeCreation.estRCEXR(sousType) &&
+    StatutRequete.estATraiter(statut)
+  );
+};
+
+export const autorisePrendreEnChargeDepuisPageCreation = (
+  requete: IRequeteCreation
+) => {
+  return (
+    estRequeteCreationAuStatutATraiter(
+      requete.type,
+      requete.sousType,
+      requete.statutCourant.statut
+    ) && appartientAMonServiceOuServicesMeresOuServicesFilles(requete.idEntite)
+  );
+};
+
+export const autorisePrendreEnChargeReqTableauCreation = (
+  requete: IRequeteTableauCreation
+): boolean => {
+  const type = TypeRequete.getEnumFromLibelle(requete.type);
+  const sousType = SousTypeCreation.getEnumFromLibelleCourt(requete.sousType);
+  const statut = StatutRequete.getEnumFromLibelle(requete.statut);
+
+  return (
+    estRequeteCreationAuStatutATraiter(type, sousType, statut) &&
+    mAppartient(requete.idUtilisateur)
   );
 };
 

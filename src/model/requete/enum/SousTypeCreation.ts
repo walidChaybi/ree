@@ -59,6 +59,10 @@ export class SousTypeCreation extends EnumWithComplete {
     return EnumWithLibelle.getEnumFor(str, SousTypeCreation);
   }
 
+  public static getEnumFromLibelleCourt(str: string) {
+    return EnumWithComplete.getEnumFromLibelleCourt(SousTypeCreation, str);
+  }
+
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(SousTypeCreation);
   }
@@ -69,5 +73,9 @@ export class SousTypeCreation extends EnumWithComplete {
 
   public static getAllLibellesCourtAsOptions(): Options {
     return EnumWithComplete.getAllLibellesCourtAsOptions(SousTypeCreation);
+  }
+
+  public static estRCEXR(sousType?: SousTypeCreation): boolean {
+    return sousType === SousTypeCreation.RCEXR;
   }
 }

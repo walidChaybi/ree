@@ -22,11 +22,27 @@ export class TypeRequete extends EnumWithComplete {
     return EnumWithLibelle.getEnumFor(str, TypeRequete);
   }
 
+  public static getEnumFromLibelle(str: string) {
+    return EnumWithLibelle.getEnumFromLibelle(TypeRequete, str);
+  }
+
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(TypeRequete);
   }
 
   public static getKey(obj: TypeRequete) {
     return EnumWithLibelle.getKey(TypeRequete, obj);
+  }
+
+  public static estDelivrance(typeRequete?: TypeRequete): boolean {
+    return typeRequete === TypeRequete.DELIVRANCE;
+  }
+
+  public static estInformation(typeRequete?: TypeRequete): boolean {
+    return typeRequete === TypeRequete.INFORMATION;
+  }
+
+  public static estCreation(typeRequete?: TypeRequete): boolean {
+    return typeRequete === TypeRequete.CREATION;
   }
 }

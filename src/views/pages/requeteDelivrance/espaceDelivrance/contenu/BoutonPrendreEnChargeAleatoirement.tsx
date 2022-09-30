@@ -1,5 +1,5 @@
 import {
-  CreationActionMiseAjourStatutEtRmcAutoHookParams,
+  ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
 import {
@@ -22,7 +22,7 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
   const [prendreEnCharge, setPrendreEnCharge] = useState<boolean>(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [paramsDelivrance, setParamsDelivrance] = useState<
-    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+    ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
   const requeteAleatoireResultat: IRequeteAleatoireResultat | undefined =
     useGetRequeteAleatoire(TypeRequete.DELIVRANCE, prendreEnCharge);
@@ -34,7 +34,8 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
           requete: requeteAleatoireResultat.requete,
           libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
           statutRequete: StatutRequete.PRISE_EN_CHARGE,
-          urlCourante: receUrl.getUrlCourante(history)
+          urlCourante: receUrl.getUrlCourante(history),
+          typeRequete: TypeRequete.DELIVRANCE
         });
       } else if (!requeteAleatoireResultat.requete) {
         messageManager.showInfoAndClose(

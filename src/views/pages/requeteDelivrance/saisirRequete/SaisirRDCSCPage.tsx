@@ -1,6 +1,6 @@
 import {
   INavigationApercuRMCAutoParams,
-  useNavigationApercuRMCAuto
+  useNavigationApercuRMCAutoDelivrance
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import {
   CreationActionMiseAjourStatutHookParams,
@@ -211,7 +211,7 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   useCreationActionMiseAjourStatut(metAJourStatutRequeteApresMajPiecesJointes);
 
-  useNavigationApercuRMCAuto(paramsRMCAuto);
+  useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
 
   const resultatReponseSansDelivranceCS = useReponseSansDelivranceCS(
     idRequete,

@@ -93,7 +93,7 @@ export function mappingUneRequeteTableauCreation(
     dateDerniereAction: getFormatDateFromTimestamp(requete?.dateDerniereAction),
     statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
     idUtilisateur: valeurOuUndefined(requete?.idUtilisateur),
-    idEntiteRattachement: valeurOuUndefined(requete?.idEntiteRattachement),
+    idEntiteRattachement: valeurOuUndefined(requete?.idEntite),
     postulant: getPostulant(titulaires),
     attribueA: mapAttribueA(requete)
   };

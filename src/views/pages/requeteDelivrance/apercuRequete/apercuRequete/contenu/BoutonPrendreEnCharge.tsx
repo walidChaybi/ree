@@ -1,8 +1,9 @@
 import {
-  CreationActionMiseAjourStatutEtRmcAutoHookParams,
+  ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { autorisePrendreEnChargeDelivrance } from "@util/RequetesUtils";
@@ -25,7 +26,7 @@ export const BoutonPrendreEnCharge: React.FC<
   const history = useHistory();
 
   const [params, setParams] = useState<
-    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+    ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
 
   const setActionEtUpdateStatut = () => {
@@ -33,7 +34,8 @@ export const BoutonPrendreEnCharge: React.FC<
       requete: mapRequeteRmcAuto(props.requete),
       libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
       statutRequete: StatutRequete.PRISE_EN_CHARGE,
-      urlCourante: getUrlWithParam(history.location.pathname, props.requete.id)
+      urlCourante: getUrlWithParam(history.location.pathname, props.requete.id),
+      typeRequete: TypeRequete.DELIVRANCE
     });
   };
 

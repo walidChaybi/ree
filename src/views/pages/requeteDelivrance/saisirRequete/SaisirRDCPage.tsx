@@ -1,6 +1,6 @@
 import {
   INavigationApercuRMCAutoParams,
-  useNavigationApercuRMCAuto
+  useNavigationApercuRMCAutoDelivrance
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -139,7 +139,7 @@ export const SaisirRDCPage: React.FC = () => {
   const [paramsRMCAuto, setParamsRMCAuto] = useState<
     INavigationApercuRMCAutoParams | undefined
   >();
-  useNavigationApercuRMCAuto(paramsRMCAuto);
+  useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
 
   const onChangeNature = (nature: string) => {
     setEvenementVisible(

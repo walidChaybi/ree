@@ -7,10 +7,11 @@ import {
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
 import {
-  CreationActionMiseAjourStatutEtRmcAutoHookParams,
+  ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
@@ -54,7 +55,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [paramsMiseAJour, setParamsMiseAJour] = useState<
-    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+    ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
   const [lancerMajRequeteBouton, setLancerMajRequeteBouton] =
     useState<CreationActionEtMiseAjourStatutParams>();
@@ -120,7 +121,8 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
         libelleAction: "Prendre en charge",
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
         requete: requeteSelect,
-        urlCourante: URL_MES_REQUETES_DELIVRANCE
+        urlCourante: URL_MES_REQUETES_DELIVRANCE,
+        typeRequete: TypeRequete.DELIVRANCE
       });
     } else {
       props.setParamsRMCAuto(idRequete, data[idx], URL_MES_REQUETES_DELIVRANCE);

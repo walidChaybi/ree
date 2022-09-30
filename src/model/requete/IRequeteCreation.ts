@@ -9,7 +9,6 @@ import { IPieceJustificativeCreation } from "./pieceJointe/IPieceJustificativeCr
 
 export interface IRequeteCreation extends IRequete {
   piecesJustificatives: IPieceJustificativeCreation[];
-  idEntiteRattachement?: string;
   sousType: SousTypeCreation;
   dossierSignale?: boolean;
   documentsPj?: IDocumentPJ[];

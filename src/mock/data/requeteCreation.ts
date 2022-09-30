@@ -1804,3 +1804,17 @@ export const reponseRequeteCreationMessageSdanf = {
   message: "Je suis un message test apiHook",
   pieceJustificativeRequeteCreation: []
 };
+
+export const requeteCreationATraiter = {
+  ...requeteCreation,
+  id: "54ddf213-d9b7-4747-8e92-68c220f66de3",
+  statut: {
+    id: "d135d60e-a7ee-4a45-9f43-ca0e2ca493e2",
+    statutRequete: "A_TRAITER",
+    dateEffet: 1664274211167,
+    raisonStatut: null
+  },
+  corbeilleService: {
+    idEntiteRattachement: "6737e047-16cc-4731-9a2e-d2e228f7d75f"
+  }
+};

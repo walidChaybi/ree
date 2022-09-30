@@ -16,6 +16,7 @@ const superagentMock = require("superagent-mock")(request, configRequetes);
 const requete1: IRequeteTableauDelivrance = {
   idRequete: "0",
   type: TypeRequete.DELIVRANCE.libelle,
+  sousType: SousTypeDelivrance.RDC.libelleCourt!,
   statut: StatutRequete.A_TRAITER.libelle,
   idUtilisateur: "idUtilisateurConnectedUser",
   provenance: Provenance.COURRIER.libelle,
@@ -51,6 +52,7 @@ test("test apercu traitement", async () => {
 const requete2: IRequeteTableauDelivrance = {
   idRequete: "0",
   type: TypeRequete.DELIVRANCE.libelle,
+  sousType: SousTypeDelivrance.RDC.libelleCourt!,
   statut: StatutRequete.A_TRAITER.libelle,
   idUtilisateur: "idUtilisateurConnectedUser",
   provenance: Provenance.COURRIER.libelle,
@@ -86,11 +88,11 @@ test("test apercu traitement", async () => {
 const requete3: IRequeteTableauDelivrance = {
   idRequete: "0",
   type: TypeRequete.DELIVRANCE.libelle,
+  sousType: SousTypeDelivrance.RDCSC.libelleCourt!,
   statut: StatutRequete.BROUILLON.libelle,
   idUtilisateur: "idUtilisateurConnectedUser",
   provenance: Provenance.COURRIER.libelle,
-  idEntiteRattachement: "1",
-  sousType: SousTypeDelivrance.RDCSC.libelleCourt
+  idEntiteRattachement: "1"
 };
 
 const HookConsummerNavigation3: React.FC = () => {
@@ -124,7 +126,7 @@ const requete4: IRequeteTableauDelivrance = {
   idUtilisateur: "idUtilisateurConnectedUser",
   provenance: Provenance.COURRIER.libelle,
   idEntiteRattachement: "1",
-  sousType: SousTypeDelivrance.RDCSC.libelleCourt
+  sousType: SousTypeDelivrance.RDCSC.libelleCourt!
 };
 
 const HookConsummerNavigation4: React.FC = () => {
@@ -153,11 +155,11 @@ test("test Doublon", async () => {
 const requete5: IRequeteTableauDelivrance = {
   idRequete: "0",
   type: TypeRequete.DELIVRANCE.libelle,
+  sousType: SousTypeDelivrance.RDCSC.libelleCourt!,
   statut: StatutRequete.A_VALIDER.libelle,
   idUtilisateur: "idUtilisateurConnectedUser",
   provenance: Provenance.COURRIER.libelle,
-  idEntiteRattachement: "1",
-  sousType: SousTypeDelivrance.RDCSC.libelleCourt
+  idEntiteRattachement: "1"
 };
 
 const HookConsummerNavigation5: React.FC = () => {

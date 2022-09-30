@@ -4,7 +4,7 @@ import {
 } from "@api/appels/requeteApi";
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
 import {
-  CreationActionMiseAjourStatutEtRmcAutoHookParams,
+  ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -64,7 +64,7 @@ export const RequetesServicePage: React.FC<
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
 
   const [paramsMiseAJour, setParamsMiseAJour] = useState<
-    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+    ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
 
   const [linkParameters, setLinkParameters] =
@@ -126,7 +126,8 @@ export const RequetesServicePage: React.FC<
         libelleAction: "Prendre en charge",
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
         requete: requeteSelect,
-        urlCourante: URL_REQUETES_DELIVRANCE_SERVICE
+        urlCourante: URL_REQUETES_DELIVRANCE_SERVICE,
+        typeRequete: TypeRequete.DELIVRANCE
       });
     } else {
       props.setParamsRMCAuto(

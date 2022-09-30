@@ -1,13 +1,13 @@
 import {
   INavigationApercuRMCAutoParams,
-  useNavigationApercuRMCAuto
+  useNavigationApercuRMCAutoDelivrance
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import {
   INavigationApercuReqInfoParams,
   useNavigationApercuInformation
 } from "@hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
 import {
-  CreationActionMiseAjourStatutEtRmcAutoHookParams,
+  ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -22,7 +22,10 @@ import {
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID
 } from "@router/ReceUrls";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
-import { autorisePrendreEnChargeReqTableauDelivrance } from "@util/RequetesUtils";
+import {
+  autorisePrendreEnChargeReqTableauCreation,
+  autorisePrendreEnChargeReqTableauDelivrance
+} from "@util/RequetesUtils";
 import { getUrlWithParam } from "@util/route/routeUtil";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -54,15 +57,15 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
   //**** RMC AUTO ****//
-  const [paramsMAJReqDelivrance, setParamsMAJReqDelivrance] = useState<
-    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+  const [paramsMiseAJour, setParamsMiseAJour] = useState<
+    ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
   const [paramsRMCAuto, setParamsRMCAuto] = useState<
     INavigationApercuRMCAutoParams | undefined
   >();
 
-  useCreationActionMiseAjourStatutEtRmcAuto(paramsMAJReqDelivrance);
-  useNavigationApercuRMCAuto(paramsRMCAuto);
+  useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
+  useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
 
   /**** Navigation vers Apercu Information ****/
   const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
@@ -99,10 +102,10 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     const requeteSelect = data[idx];
     switch (requeteSelect.type) {
       case TypeRequete.DELIVRANCE.libelle:
-        onClickReqDelivrance(requeteSelect);
+        onClickReqDelivrance(requeteSelect as IRequeteTableauDelivrance);
         break;
       case TypeRequete.INFORMATION.libelle:
-        onClickReqInformation(requeteSelect);
+        onClickReqInformation(requeteSelect as IRequeteTableauInformation);
         break;
       case TypeRequete.CREATION.libelle:
         onClickReqCreation(requeteSelect as IRequeteTableauCreation);
@@ -116,11 +119,12 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   const onClickReqDelivrance = (requete: IRequeteTableauDelivrance) => {
     setOperationEnCours(true);
     if (autorisePrendreEnChargeReqTableauDelivrance(requete)) {
-      setParamsMAJReqDelivrance({
+      setParamsMiseAJour({
         libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
         requete,
-        urlCourante
+        urlCourante,
+        typeRequete: TypeRequete.DELIVRANCE
       });
     } else {
       setParamsRMCAuto({
@@ -144,12 +148,23 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   };
 
   const onClickReqCreation = (requete: IRequeteTableauCreation) => {
-    history.push(
-      getUrlWithParam(
-        URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID,
-        requete.idRequete
-      )
-    );
+    setOperationEnCours(true);
+    if (autorisePrendreEnChargeReqTableauCreation(requete)) {
+      setParamsMiseAJour({
+        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
+        statutRequete: StatutRequete.PRISE_EN_CHARGE,
+        requete,
+        urlCourante,
+        typeRequete: TypeRequete.CREATION
+      });
+    } else {
+      history.push(
+        getUrlWithParam(
+          URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID,
+          requete.idRequete
+        )
+      );
+    }
   };
 
   return (

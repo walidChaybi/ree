@@ -143,6 +143,38 @@ export class StatutRequete extends EnumWithComplete {
     return EnumWithLibelle.getEnumFromLibelle(StatutRequete, libelle);
   }
 
+  public static estATraiter(statut?: StatutRequete): boolean {
+    return statut === StatutRequete.A_TRAITER;
+  }
+
+  public static estATraiterOuTransferee(statut?: StatutRequete): boolean {
+    return (
+      StatutRequete.estATraiter(statut) || statut === StatutRequete.TRANSFEREE
+    );
+  }
+
+  public static estPriseEnCharge(statut?: StatutRequete): boolean {
+    return statut === StatutRequete.PRISE_EN_CHARGE;
+  }
+
+  public static estBrouillon(statut?: StatutRequete): boolean {
+    return statut === StatutRequete.BROUILLON;
+  }
+
+  public static estAValider(statut?: StatutRequete): boolean {
+    return statut === StatutRequete.A_VALIDER;
+  }
+
+  public static estASigner(statut?: StatutRequete): boolean {
+    return statut === StatutRequete.A_SIGNER;
+  }
+
+  public static estASignerOuAValider(statut?: StatutRequete): boolean {
+    return (
+      StatutRequete.estASigner(statut) || StatutRequete.estAValider(statut)
+    );
+  }
+
   public static estAuStatutTraiteADelivrerDematOuASigner(
     statut?: StatutRequete
   ) {
@@ -154,12 +186,6 @@ export class StatutRequete extends EnumWithComplete {
 
   public static estAuStatutTraiteAImprimer(statut?: StatutRequete) {
     return statut === StatutRequete.TRAITE_A_IMPRIMER;
-  }
-
-  public static estAuStatutATraiterOuTransferee(statut?: StatutRequete) {
-    return (
-      statut === StatutRequete.A_TRAITER || statut === StatutRequete.TRANSFEREE
-    );
   }
 
   public static getStatutsMesRequetes() {

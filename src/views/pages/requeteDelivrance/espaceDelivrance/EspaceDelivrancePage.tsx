@@ -1,7 +1,7 @@
 import { OfficierContext } from "@core/contexts/OfficierContext";
 import {
   INavigationApercuRMCAutoParams,
-  useNavigationApercuRMCAuto
+  useNavigationApercuRMCAutoDelivrance
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IOngletProps } from "@model/IOnglet";
@@ -96,7 +96,7 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
   const [paramsRMCAuto, setParamsRMCAuto] = useState<
     INavigationApercuRMCAutoParams | undefined
   >();
-  useNavigationApercuRMCAuto(paramsRMCAuto);
+  useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
 
   const recuperationParamsRMCAuto = useCallback(
     (

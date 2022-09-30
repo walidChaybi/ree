@@ -1,58 +1,75 @@
+import {
+  NavigationApercuReqCreationParams,
+  useNavigationApercuCreation
+} from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { useCallback, useEffect, useState } from "react";
 import {
   INavigationApercuRMCAutoParams,
-  useNavigationApercuRMCAuto
+  useNavigationApercuRMCAutoDelivrance
 } from "../navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import {
   CreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "./CreationActionMiseAjourStatutHook";
 
-export interface CreationActionMiseAjourStatutEtRmcAutoHookParams {
+export interface ICreationActionMiseAjourStatutEtRmcAutoHookParams {
   statutRequete: StatutRequete;
   libelleAction: string;
   urlCourante: string;
-  requete?: IRequeteTableauDelivrance;
+  requete?: IRequeteTableauDelivrance | IRequeteTableauCreation;
   pasDeTraitementAuto?: boolean;
+  typeRequete: TypeRequete;
 }
 
 export function useCreationActionMiseAjourStatutEtRmcAuto(
-  params: CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+  params: ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
 ) {
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<
+  const [paramsMiseAjourStatut, setParamsMiseAjourStatut] = useState<
+    CreationActionMiseAjourStatutHookParams | undefined
+  >();
+  const [paramsRMCAutoDelivrance, setParamsRMCAutoDelivrance] = useState<
     INavigationApercuRMCAutoParams | undefined
   >();
-
-  const [newsParams, setNewsParams] = useState<
-    CreationActionMiseAjourStatutHookParams | undefined
+  const [paramsCreation, setParamsCreation] = useState<
+    NavigationApercuReqCreationParams | undefined
   >();
 
   useEffect(() => {
     if (params && params.requete) {
-      setNewsParams({
-        statutRequete: params?.statutRequete,
-        libelleAction: params?.libelleAction,
-        requete: params?.requete,
-        pasDeTraitementAuto: params?.pasDeTraitementAuto,
-        callback: lancerRMCAuto
+      setParamsMiseAjourStatut({
+        ...params,
+        callback
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 
-  const lancerRMCAuto = useCallback(() => {
+  const callback = useCallback(() => {
     if (params && params.requete) {
-      setParamsRMCAuto({
-        requete: params.requete,
-        urlCourante: params.urlCourante,
-        pasDeTraitementAuto: params.pasDeTraitementAuto
-      });
+      switch (params.typeRequete) {
+        case TypeRequete.CREATION:
+          setParamsCreation({
+            idRequete: params.requete.idRequete,
+            urlCourante: params.urlCourante
+          });
+          break;
+        default:
+          setParamsRMCAutoDelivrance({
+            requete: params.requete as IRequeteTableauDelivrance,
+            urlCourante: params.urlCourante,
+            pasDeTraitementAuto: params.pasDeTraitementAuto
+          });
+          break;
+      }
     }
   }, [params]);
 
-  useCreationActionMiseAjourStatut(newsParams);
+  useCreationActionMiseAjourStatut(paramsMiseAjourStatut);
 
-  useNavigationApercuRMCAuto(paramsRMCAuto);
+  useNavigationApercuRMCAutoDelivrance(paramsRMCAutoDelivrance);
+  useNavigationApercuCreation(paramsCreation);
 }

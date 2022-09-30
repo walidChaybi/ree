@@ -2,8 +2,18 @@ import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "@api/appels/requeteApi";
+import {
+  ICreationActionMiseAjourStatutEtRmcAutoHookParams,
+  useCreationActionMiseAjourStatutEtRmcAuto
+} from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
-import { URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID } from "@router/ReceUrls";
+import {
+  URL_MES_REQUETES_CREATION,
+  URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID
+} from "@router/ReceUrls";
+import { autorisePrendreEnChargeReqTableauCreation } from "@util/RequetesUtils";
 import { getUrlWithParam } from "@util/route/routeUtil";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -31,6 +41,9 @@ export const MesRequetesCreation: React.FC<
   const history = useHistory();
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
+  const [paramsMiseAJour, setParamsMiseAJour] = useState<
+    ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+  >();
 
   const [linkParameters, setLinkParameters] =
     React.useState<IQueryParametersPourRequetes>(
@@ -42,6 +55,8 @@ export const MesRequetesCreation: React.FC<
     TypeAppelRequete.MES_REQUETES_CREATION,
     setEnChargement
   );
+
+  useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
 
   const goToLink = useCallback((link: string) => {
     const queryParametersPourRequetes = goToLinkRequete(link, "requetes");
@@ -76,9 +91,21 @@ export const MesRequetesCreation: React.FC<
     data: IRequeteTableauCreation[],
     idx: number
   ) {
-    history.push(
-      getUrlWithParam(URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID, idRequete)
-    );
+    setOperationEnCours(true);
+    const requeteSelect = data[idx];
+    if (autorisePrendreEnChargeReqTableauCreation(requeteSelect)) {
+      setParamsMiseAJour({
+        libelleAction: "Prendre en charge",
+        statutRequete: StatutRequete.PRISE_EN_CHARGE,
+        requete: requeteSelect,
+        urlCourante: URL_MES_REQUETES_CREATION,
+        typeRequete: TypeRequete.CREATION
+      });
+    } else {
+      history.push(
+        getUrlWithParam(URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID, idRequete)
+      );
+    }
   }
 
   return (

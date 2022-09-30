@@ -15,7 +15,7 @@ export interface INavigationApercuRMCAutoParams {
   pasDeTraitementAuto?: boolean;
 }
 
-export function useNavigationApercuRMCAuto(
+export function useNavigationApercuRMCAutoDelivrance(
   rmcAutoNavigationParams?: INavigationApercuRMCAutoParams
 ) {
   const history = useHistory();

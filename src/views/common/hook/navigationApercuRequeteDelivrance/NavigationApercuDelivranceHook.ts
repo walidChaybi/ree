@@ -1,5 +1,6 @@
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import {
   PATH_APERCU_REQ_DEL,
@@ -10,10 +11,7 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import messageManager from "@util/messageManager";
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
-import {
-  autorisePrendreEnChargeReqTableauDelivrance,
-  typeEstDelivrance
-} from "@util/RequetesUtils";
+import { autorisePrendreEnChargeReqTableauDelivrance } from "@util/RequetesUtils";
 import { getUrlPrecedente, getUrlWithParam } from "@util/route/routeUtil";
 import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
@@ -111,7 +109,9 @@ const redirectionEnFonctionMaRequete = (
 function estUneRequeteDeDelivranceAvecUnStatut(
   requete: IRequeteTableauDelivrance
 ) {
-  return requete.statut && requete.type && typeEstDelivrance(requete.type);
+  const type =
+    requete.type != null && TypeRequete.getEnumFromLibelle(requete.type);
+  return requete.statut && requete.type && TypeRequete.estDelivrance(type);
 }
 
 function redirectionVersApercuTraitement(

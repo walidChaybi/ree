@@ -1,3 +1,4 @@
+import { autorisePrendreEnChargeDepuisPageCreation } from "@util/RequetesUtils";
 import React from "react";
 import { useParams } from "react-router";
 import { IUuidRequeteParams } from "../../../../../../model/params/IUuidRequeteParams";
@@ -5,6 +6,7 @@ import { IEchange } from "../../../../../../model/requete/IEchange";
 import { IRequeteCreation } from "../../../../../../model/requete/IRequeteCreation";
 import { SuiviObservationsRequete } from "../../../../../common/composant/suivis/SuiviObservationRequete";
 import { getLibelle } from "../../../../../common/util/Utils";
+import { BoutonPrendreEnChargeCreation } from "./BoutonPrendreEnChargeCreation";
 import { Item } from "./Item/Item";
 import { ItemEchangesRetourSDANF } from "./Item/ItemEchangesRetourSDANF";
 import { ListeActionsRetourSDANF } from "./ListeActions";
@@ -19,6 +21,9 @@ export const OngletAction: React.FC<OngletActionProps> = props => {
   const [echanges, setEchanges] = React.useState<IEchange[] | undefined>(
     props.echanges
   );
+
+  const estPresentBoutonPriseEnCharge =
+    autorisePrendreEnChargeDepuisPageCreation(props.requete);
 
   return (
     <>
@@ -38,6 +43,10 @@ export const OngletAction: React.FC<OngletActionProps> = props => {
         idRequete={idRequeteParam}
         observations={props.requete.observations}
       />
+
+      {estPresentBoutonPriseEnCharge && (
+        <BoutonPrendreEnChargeCreation requete={props.requete} />
+      )}
     </>
   );
 };

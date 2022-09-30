@@ -1,8 +1,9 @@
 import {
-  CreationActionMiseAjourStatutEtRmcAutoHookParams,
+  ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { PATH_APERCU_REQ_PRISE } from "@router/ReceUrls";
 import { getUrlPrecedente, getUrlWithParam } from "@util/route/routeUtil";
@@ -22,7 +23,7 @@ export const BoutonModifierTraitement: React.FC<
   const history = useHistory();
 
   const [params, setParams] = useState<
-    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+    ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
 
   const setActionEtUpdateStatut = () => {
@@ -44,7 +45,8 @@ export const BoutonModifierTraitement: React.FC<
           props.requete.id
         ),
         requete: mappingRequeteDelivranceToRequeteTableau(props.requete),
-        pasDeTraitementAuto: true
+        pasDeTraitementAuto: true,
+        typeRequete: TypeRequete.DELIVRANCE
       });
     }
   };

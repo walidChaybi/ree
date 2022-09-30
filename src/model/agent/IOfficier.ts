@@ -177,28 +177,28 @@ export function officierALeDroitSurUnDesPerimetres(
   return res;
 }
 
-export const mAppartient = (idUtilisateur: string) => {
-  return idUtilisateur === storeRece.utilisateurCourant?.idUtilisateur;
-};
+export const mAppartient = (idUtilisateur?: string): boolean =>
+  idUtilisateur === storeRece.utilisateurCourant?.idUtilisateur;
 
 export const mAppartientOuAppartientAPersonne = (idUtilisateur: string) =>
   !idUtilisateur || mAppartient(idUtilisateur);
 
 export const provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer = (
-  provenance: string
-) =>
+  provenance?: string
+): boolean =>
   (provenance === Provenance.COMEDEC.libelle &&
     officierHabiliterPourLeDroit(Droit.DELIVRER_COMEDEC)) ||
   (provenance !== Provenance.COMEDEC.libelle &&
     officierHabiliterPourLeDroit(Droit.DELIVRER));
 
 export const appartientAMonServiceOuServicesMeresOuServicesFilles = (
-  idEntite: string
-) => {
+  idEntite?: string
+): boolean => {
   return (
-    storeRece.utilisateurCourant?.entite?.idEntite === idEntite ||
-    contientEntiteFille(idEntite) ||
-    contientEntiteMere(idEntite)
+    idEntite != null &&
+    (storeRece.utilisateurCourant?.entite?.idEntite === idEntite ||
+      contientEntiteFille(idEntite) ||
+      contientEntiteMere(idEntite))
   );
 };
 
