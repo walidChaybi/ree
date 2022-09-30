@@ -2,21 +2,25 @@ import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivra
 import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
 import { NOM_DOCUMENT_REFUS_FRANCAIS } from "@model/composition/IReponseSansDelivranceCSFrancaisComposition";
 import { NOM_DOCUMENT_REFUS_MARIAGE } from "@model/composition/IReponseSansDelivranceCSMariageComposition";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IActionOption } from "@model/requete/IActionOption";
 import { receUrl } from "@router/ReceUrls";
 import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
-import { filtrerListeActions } from "@util/RequetesUtils";
+import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
 import { getLibelle, supprimerNullEtUndefinedDuTableau } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { IgnoreRequetePopin } from "../IgnoreRequetePopin";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import { useReponseSansDelivranceCS } from "./hook/ChoixReponseSansDelivranceCSHook";
+import {
+  filtrerListeActionsParDocumentDemande,
+  INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE,
+  menuSansDelivranceActions
+} from "./MenuUtilsCS";
 import {
   createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
   createReponseSansDelivranceCSPourCompositionApiFrancais,
@@ -28,11 +32,6 @@ export const MenuReponseSansDelivranceCS: React.FC<
   IChoixActionDelivranceProps
 > = props => {
   const history = useHistory();
-
-  const refReponseSansDelivranceCSOptions0 = useRef(null);
-  const refReponseSansDelivranceCSOptions1 = useRef(null);
-  const refReponseSansDelivranceCSOptions2 = useRef(null);
-  const refReponseSansDelivranceCSOptions3 = useRef(null);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [reponseSansDelivranceCS, setReponseSansDelivranceCS] = useState<
@@ -59,45 +58,9 @@ export const MenuReponseSansDelivranceCS: React.FC<
 
   const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
 
-  const INDEX_ACTION_REQUETE_INCOMPLETE_ILLISIBLE = 0;
-  const INDEX_ACTION_TRACE_MARIAGE_ACTIF = 1;
-  const INDEX_ACTION_RESSORTISSANT_FRANCAIS = 2;
-  const INDEX_ACTION_IGNORER_REQUETE = 3;
-
-  const reponseSansDelivranceCSOptions: IActionOption[] = [
-    {
-      value: INDEX_ACTION_REQUETE_INCOMPLETE_ILLISIBLE,
-      label: getLibelle(
-        "Requête incomplète ou illisible, complément d'information nécessaire"
-      ),
-      sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-      ref: refReponseSansDelivranceCSOptions0
-    },
-    {
-      value: INDEX_ACTION_TRACE_MARIAGE_ACTIF,
-      label: getLibelle("Trace d'un mariage actif, courrier de non délivrance"),
-      sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-      ref: refReponseSansDelivranceCSOptions1
-    },
-    {
-      value: INDEX_ACTION_RESSORTISSANT_FRANCAIS,
-      label: getLibelle(
-        "Ressortissant français ou né en France, courrier de non délivrance"
-      ),
-      sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-      ref: refReponseSansDelivranceCSOptions2
-    },
-    {
-      value: INDEX_ACTION_IGNORER_REQUETE,
-      label: getLibelle("Ignorer la requête"),
-      sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-      ref: refReponseSansDelivranceCSOptions3
-    }
-  ];
-
   const handleReponseSansDelivranceCSMenu = async (indexMenu: number) => {
     switch (indexMenu) {
-      case INDEX_ACTION_REQUETE_INCOMPLETE_ILLISIBLE:
+      case INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.REQUETE_INCOMPLETE_ILLISIBLE:
         setOperationEnCours(true);
         const contenuReponseSansDelivranceCSDemandeIncomplete =
           await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
@@ -108,7 +71,7 @@ export const MenuReponseSansDelivranceCS: React.FC<
           fichier: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE
         });
         break;
-      case INDEX_ACTION_TRACE_MARIAGE_ACTIF:
+      case INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.MARIAGE_EN_COURS_DE_VALIDITE:
         const actes = supprimerNullEtUndefinedDuTableau(props.actes);
         const inscriptions = supprimerNullEtUndefinedDuTableau(
           props.inscriptions
@@ -128,7 +91,7 @@ export const MenuReponseSansDelivranceCS: React.FC<
           });
         }
         break;
-      case INDEX_ACTION_RESSORTISSANT_FRANCAIS:
+      case INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.NATIONALITE_OU_NAISSANCE_FRANCAIS:
         setOperationEnCours(true);
         const newReponseSansDelivranceCSFrancais =
           await createReponseSansDelivranceCSPourCompositionApiFrancais(
@@ -139,22 +102,20 @@ export const MenuReponseSansDelivranceCS: React.FC<
           fichier: NOM_DOCUMENT_REFUS_FRANCAIS
         });
         break;
-      case INDEX_ACTION_IGNORER_REQUETE:
+      case INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.IGNORER_REQUETE:
         setPopinOuverte(true);
         break;
     }
   };
 
   const resetDoubleSubmit = () => {
-    listeActions.forEach(el => {
+    listeActionsFiltreParSousTypes.forEach(el => {
       DoubleSubmitUtil.reactiveOnClick(el.ref?.current);
     });
   };
 
-  const listeActions = filtrerListeActions(
-    props.requete,
-    reponseSansDelivranceCSOptions
-  );
+  const listeActionsFiltreParSousTypes: IActionOption[] =
+    filtrerListeActionsParSousTypes(props.requete, menuSansDelivranceActions);
 
   return (
     <>
@@ -165,7 +126,10 @@ export const MenuReponseSansDelivranceCS: React.FC<
       />
       <GroupeBouton
         titre={"Réponse sans délivrance"}
-        listeActions={listeActions}
+        listeActions={filtrerListeActionsParDocumentDemande(
+          listeActionsFiltreParSousTypes,
+          props.requete
+        )}
         onSelect={handleReponseSansDelivranceCSMenu}
       />
       <IgnoreRequetePopin

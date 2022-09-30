@@ -3,7 +3,7 @@ import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { IActionOption } from "@model/requete/IActionOption";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { filtrerListeActions } from "@util/RequetesUtils";
+import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
 import { estRenseigne, getLibelle } from "@util/Utils";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import {
@@ -114,7 +114,7 @@ export const MenuReponseSansDelivranceEC: React.FC<
     props.requete.sousType
   ]);
 
-  const actions = filtrerListeActions(
+  const actions = filtrerListeActionsParSousTypes(
     props.requete,
     reponseSansDelivranceOptions
   );

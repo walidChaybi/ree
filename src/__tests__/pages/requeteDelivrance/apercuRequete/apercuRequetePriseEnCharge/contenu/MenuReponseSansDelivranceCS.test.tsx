@@ -1,7 +1,7 @@
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { MenuReponseSansDelivranceCS } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuReponseSansDelivranceCS";
+import { ChoixAction } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ChoixAction";
 import {
   createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
   createReponseSansDelivranceCSPourCompositionApiFrancais,
@@ -27,8 +27,10 @@ import {
 } from "../../../../../../mock/data/Composition";
 import requeteDelivrance, {
   idRequeteRDCSC,
+  idRequeteRDCSCCertificatSituationRCA,
   requeteDelivranceInstitutionnel,
-  requeteRDCSC
+  requeteRDCSC,
+  requeteRDCSCCertificatSituationRCA
 } from "../../../../../../mock/data/requeteDelivrance";
 import { configComposition } from "../../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
@@ -52,140 +54,299 @@ history.push(
 
 beforeEach(() => {
   ParametreBaseRequete.init();
-  render(
-    <Router history={history}>
-      <MenuReponseSansDelivranceCS requete={requeteRDCSC} />
-    </Router>
-  );
-});
-test("renders du bloc Menu Reponse sans délivrance", async () => {
-  const menuReponseSansDelivranceCS = screen.getByText(
-    "Réponse sans délivrance"
-  );
-  const choixRequeteIncomplete = screen.getByText(
-    /Requête incomplète ou illisible.+/
-  );
-  const choixTraceMariage = screen.getByText(/Trace d'un mariage actif.+/);
-
-  await waitFor(() => {
-    expect(menuReponseSansDelivranceCS).toBeDefined();
-    expect(choixRequeteIncomplete).toBeDefined();
-    expect(choixTraceMariage).toBeDefined();
-  });
 });
 
-test("Réponse sans délivrance demande incomplète", async () => {
-  const choixRequeteIncomplete = screen.getByText(
-    /Requête incomplète ou illisible.+/
-  );
-
-  await act(async () => {
-    fireEvent.click(choixRequeteIncomplete);
-  });
-});
-
-test("Réponse sans délivrance français", async () => {
-  const choixFrancais = screen.getByText(
-    /Ressortissant français ou né en France, courrier de non délivrance+/
-  );
-
-  await act(async () => {
-    fireEvent.click(choixFrancais);
-  });
-});
-
-test("Reponse sans délivrance mariage", async () => {
-  const choixTraceMariage = screen.getByText(/Trace d'un mariage actif.+/);
-
-  await act(async () => {
-    fireEvent.click(choixTraceMariage);
-  });
-
-  await waitFor(() => {
-    expect(screen.getByRole("dialog")).toBeDefined();
-  });
-});
-
-test("test de création réponse sans délivrance mariage", async () => {
-  const requete = requeteDelivrance;
-  const acte = { idActe: "b41079a5-9e8d-478c-b04c-c4c2ac671348" };
-  const reponseSansDelivranceCS =
-    await createReponseSansDelivranceCSPourCompositionApiMariage(
-      requete,
-      acte as any as IResultatRMCActe
+describe("Menu réponse sans délivrance", () => {
+  test("Doit rendre le menu des Action réponse sans délivrance", async () => {
+    const history = createMemoryHistory();
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSC
+      )
     );
-  expect(reponseSansDelivranceCS).toStrictEqual(reponseSansDelivranceCSMariage);
-});
 
-test("test de création réponse sans délivrance français", async () => {
-  const requete = requeteDelivrance;
-  const reponseSansDelivranceCS =
-    await createReponseSansDelivranceCSPourCompositionApiFrancais(requete);
-  expect(reponseSansDelivranceCS).toStrictEqual(
-    reponseSansDelivranceCSFrancais
-  );
-});
-
-test("test de création réponse sans délivrance demande incomplete", async () => {
-  const requete = requeteDelivranceInstitutionnel;
-  const reponseSansDelivranceCS =
-    await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
-      requete
+    render(
+      <Router history={history}>
+        <ChoixAction requete={requeteRDCSC} />
+      </Router>
     );
-  expect(reponseSansDelivranceCS).toStrictEqual(
-    reponseSansDelivranceCSDemandeIncomplete
-  );
-});
-
-test("Réponse ignorer", async () => {
-  await act(async () => {
-    fireEvent.click(screen.getByText(/Ignorer+/));
-  });
-
-  const valider = screen.getByText("Valider") as HTMLButtonElement;
-
-  expect(valider.disabled).toBeTruthy();
-});
-
-test("Réponse ignorer", async () => {
-  await act(async () => {
-    fireEvent.click(screen.getByText(/Ignorer+/));
 
     await waitFor(() => {
-      const annuler = screen.getByText("Annuler") as HTMLButtonElement;
-
-      expect(annuler).toBeDefined();
+      expect(screen.getByText("Réponse sans délivrance")).toBeDefined();
     });
   });
 
-  await act(async () => {
-    fireEvent.click(screen.getByText(/Annuler+/));
+  test("Doit rendre l'action - Requête incomplete... - quand le document demandé est une attestation PACS", async () => {
+    const history = createMemoryHistory();
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSC
+      )
+    );
 
-    await waitFor(() => {
-      const annuler = screen.getByText("Annuler") as HTMLButtonElement;
+    act(() => {
+      render(
+        <Router history={history}>
+          <ChoixAction requete={requeteRDCSC} />
+        </Router>
+      );
+    });
 
-      expect(annuler).toBeDefined();
+    await waitFor(async () => {
+      const boutonIgnorer = screen.getByText(
+        "Requête incomplète ou difficilement lisible"
+      );
+      fireEvent.click(boutonIgnorer);
     });
   });
-});
 
-test("message erreur", async () => {
-  const reponseSansDelivranceCS1 =
-    await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
-      {} as IRequeteDelivrance
+  test("Doit rendre l'action - Requête incomplete... - quand le type de documents demandés est autre que Attestation PACS", async () => {
+    const history = createMemoryHistory();
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSCCertificatSituationRCA
+      )
     );
-  expect(reponseSansDelivranceCS1).toStrictEqual({});
-  const reponseSansDelivranceCS2 =
-    await createReponseSansDelivranceCSPourCompositionApiMariage(
-      {} as IRequeteDelivrance,
-      {} as IResultatRMCActe
+
+    render(
+      <Router history={history}>
+        <ChoixAction requete={requeteRDCSCCertificatSituationRCA} />
+      </Router>
     );
-  expect(reponseSansDelivranceCS2).toStrictEqual({});
-  const reponseSansDelivranceCS3 =
-    await createReponseSansDelivranceCSPourCompositionApiFrancais(
-      {} as IRequeteDelivrance
+
+    await act(async () => {
+      expect(
+        screen.getByText("Requête incomplète ou difficilement lisible")
+      ).toBeDefined();
+    });
+  });
+
+  test("Doit rendre l'action - PACS non inscrit - quand le document demandé est Attestion PACS", async () => {
+    const history = createMemoryHistory();
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSC
+      )
     );
-  expect(reponseSansDelivranceCS3).toStrictEqual({});
+
+    render(
+      <Router history={history}>
+        <ChoixAction requete={requeteRDCSC} />
+      </Router>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("PACS non inscrit")).toBeDefined();
+    });
+  });
+
+  test("Doit rendre l'action - Mariage en cours de validité - quand le document demandé est autre qu'une Attestation PACS", async () => {
+    const history = createMemoryHistory();
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSCCertificatSituationRCA
+      )
+    );
+
+    render(
+      <Router history={history}>
+        <ChoixAction requete={requeteRDCSCCertificatSituationRCA} />
+      </Router>
+    );
+
+    const choixActionMariage = screen.getByText("Mariage en cours de validité");
+
+    await act(async () => {
+      fireEvent.click(choixActionMariage);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByRole("dialog")).toBeDefined();
+    });
+  });
+
+  test("Doit rendre l'action - Nationalité française ou naissance... quand le document demandé est une Attestation PACS- ", async () => {
+    const history = createMemoryHistory();
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSC
+      )
+    );
+
+    render(
+      <Router history={history}>
+        <ChoixAction requete={requeteRDCSC} />
+      </Router>
+    );
+
+    await waitFor(async () => {
+      const choixActionNationaliteFrancaise = screen.getByText(
+        "Nationalité française ou naissance en France"
+      );
+      fireEvent.click(choixActionNationaliteFrancaise);
+    });
+  });
+
+  test("Doit rendre l'action - Ignorer la requête - quand le document demandé est autre qu'une Attestation PACS", async () => {
+    const history = createMemoryHistory();
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSCCertificatSituationRCA
+      )
+    );
+
+    render(
+      <Router history={history}>
+        <ChoixAction requete={requeteRDCSCCertificatSituationRCA} />
+      </Router>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("Ignorer la requête")).toBeDefined();
+    });
+  });
+
+  test("test de création réponse sans délivrance mariage", async () => {
+    const requete = requeteDelivrance;
+    const acte = { idActe: "b41079a5-9e8d-478c-b04c-c4c2ac671348" };
+    const reponseSansDelivranceCS =
+      await createReponseSansDelivranceCSPourCompositionApiMariage(
+        requete,
+        acte as any as IResultatRMCActe
+      );
+    expect(reponseSansDelivranceCS).toStrictEqual(
+      reponseSansDelivranceCSMariage
+    );
+  });
+
+  test("test de création réponse sans délivrance français", async () => {
+    const requete = requeteDelivrance;
+    const reponseSansDelivranceCS =
+      await createReponseSansDelivranceCSPourCompositionApiFrancais(requete);
+    expect(reponseSansDelivranceCS).toStrictEqual(
+      reponseSansDelivranceCSFrancais
+    );
+  });
+
+  test("test de création réponse sans délivrance demande incomplete", async () => {
+    const requete = requeteDelivranceInstitutionnel;
+    const reponseSansDelivranceCS =
+      await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
+        requete
+      );
+    expect(reponseSansDelivranceCS).toStrictEqual(
+      reponseSansDelivranceCSDemandeIncomplete
+    );
+  });
+
+  test("Doit avoir le bon comportement au click sur Valider sur - Ignorer la requête -", async () => {
+    const history = createMemoryHistory();
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSC
+      )
+    );
+
+    render(
+      <Router history={history}>
+        <ChoixAction requete={requeteRDCSC} />
+      </Router>
+    );
+    await act(async () => {
+      fireEvent.click(screen.getByText("Ignorer la requête"));
+    });
+
+    const valider = screen.getByText("Valider") as HTMLButtonElement;
+
+    expect(valider.disabled).toBeTruthy();
+  });
+
+  test("Doit avoir le bon comportement au click sur Valider sur - Ignorer la requête - ", async () => {
+    const history = createMemoryHistory();
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSC
+      )
+    );
+
+    render(
+      <Router history={history}>
+        <ChoixAction requete={requeteRDCSC} />
+      </Router>
+    );
+
+    await act(async () => {
+      fireEvent.click(screen.getByText("Ignorer la requête"));
+
+      await waitFor(() => {
+        const annuler = screen.getByText("Annuler") as HTMLButtonElement;
+
+        expect(annuler).toBeDefined();
+      });
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByText(/Annuler+/));
+
+      await waitFor(() => {
+        const annuler = screen.getByText("Annuler") as HTMLButtonElement;
+
+        expect(annuler).toBeDefined();
+      });
+    });
+  });
+
+  test("message erreur", async () => {
+    const history = createMemoryHistory();
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSC
+      )
+    );
+
+    render(
+      <Router history={history}>
+        <ChoixAction requete={requeteRDCSC} />
+      </Router>
+    );
+
+    await act(async () => {
+      fireEvent.click(screen.getByText("Ignorer la requête"));
+
+      await waitFor(() => {
+        const annuler = screen.getByText("Annuler") as HTMLButtonElement;
+
+        expect(annuler).toBeDefined();
+      });
+    });
+
+    const reponseSansDelivranceCS1 =
+      await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
+        {} as IRequeteDelivrance
+      );
+    expect(reponseSansDelivranceCS1).toStrictEqual({});
+    const reponseSansDelivranceCS2 =
+      await createReponseSansDelivranceCSPourCompositionApiMariage(
+        {} as IRequeteDelivrance,
+        {} as IResultatRMCActe
+      );
+    expect(reponseSansDelivranceCS2).toStrictEqual({});
+    const reponseSansDelivranceCS3 =
+      await createReponseSansDelivranceCSPourCompositionApiFrancais(
+        {} as IRequeteDelivrance
+      );
+    expect(reponseSansDelivranceCS3).toStrictEqual({});
+  });
 });
 
 afterAll(() => {

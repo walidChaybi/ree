@@ -144,13 +144,14 @@ export const autorisePrendreEnChargeReqTableauInformation = (
   );
 };
 
-export const filtrerListeActions = (
+export const filtrerListeActionsParSousTypes = (
   requete: IRequeteDelivrance,
   listeOptions: IActionOption[]
 ): IActionOption[] => {
-  return listeOptions?.filter(r => {
-    return r.sousTypes
-      ? r.sousTypes.find(st => st === requete?.sousType) != null
+  return listeOptions?.filter(option => {
+    return option.sousTypes
+      ? option.sousTypes.find(sousType => sousType === requete?.sousType) !=
+          null
       : true;
   });
 };

@@ -9,4 +9,5 @@ export interface IActionOption {
   eviterAntiDoubleClic?: boolean;
   ref?: any;
   choixDelivrance?: ChoixDelivrance;
+  listeDocumentsDemandeAutorise?: string[];
 }

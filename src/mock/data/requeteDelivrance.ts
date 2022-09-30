@@ -294,6 +294,11 @@ export const requeteRDCSC = {
   id: idRequeteRDCSC,
   type: TypeRequete.DELIVRANCE,
   sousType: SousTypeDelivrance.RDCSC,
+  documentDemande: {
+    code: "ATTESTATION_PACS",
+    libelle: "Attestation PACS",
+    categorie: "categorie"
+  },
   statutCourant: {
     statut: StatutRequete.PRISE_EN_CHARGE
   },
@@ -321,6 +326,19 @@ export const requeteRDCSC = {
       parentsTitulaire: []
     }
   ]
+} as any as IRequeteDelivrance;
+
+
+export const idRequeteRDCSCCertificatSituationRCA =
+  "d19650ed-012b-41ec-b7be-9e6ea2101eae";
+export const requeteRDCSCCertificatSituationRCA = {
+  ...requeteRDCSC,
+  id: idRequeteRDCSCCertificatSituationRCA,
+  documentDemande: {
+    code: "CERTIFICAT_SITUATION_RCA",
+    libelle: "Certificat situation RCA",
+    categorie: "categorie"
+  }
 } as any as IRequeteDelivrance;
 
 export const idRequeteRDC = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";

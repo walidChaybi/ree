@@ -1,23 +1,23 @@
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { IActionOption } from "@model/requete/IActionOption";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { receUrl } from "@router/ReceUrls";
-import { filtrerListeActions } from "@util/RequetesUtils";
+import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
 import { getLibelle, supprimerNullEtUndefinedDuTableau } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../../mapping/ReqDelivranceToReqTableau";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import { useDelivrerCertificatSituationHook } from "./hook/DelivrerCertificatSituationHook";
-
-const INDEX_ACTION_CERTIFICAT_SITUATION = 0;
+import {
+  filtrerListeActionsParDocumentDemande,
+  menuDelivrerActions
+} from "./MenuUtilsCS";
 
 export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
   const history = useHistory();
-  const refDelivrerOptions0 = useRef(null);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [actes, setActes] = useState<IResultatRMCActe[] | undefined>();
@@ -31,8 +31,8 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
     actes
   );
 
-  const delivrerOptions: IActionOption[] =
-    getOptionsMenuDelivrer(refDelivrerOptions0);
+  const listeActionsFiltreParSousTypes: IActionOption[] =
+    filtrerListeActionsParSousTypes(props.requete, menuDelivrerActions);
 
   const handleDelivrerMenu = () => {
     setOperationEnCours(true);
@@ -66,22 +66,12 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
       />
       <GroupeBouton
         titre={getLibelle("Délivrer")}
-        listeActions={filtrerListeActions(props.requete, delivrerOptions)}
+        listeActions={filtrerListeActionsParDocumentDemande(
+          listeActionsFiltreParSousTypes,
+          props.requete
+        )}
         onSelect={handleDelivrerMenu}
       />
     </>
   );
 };
-
-function getOptionsMenuDelivrer(
-  refDelivrerOptions0: React.MutableRefObject<null>
-): IActionOption[] {
-  return [
-    {
-      value: INDEX_ACTION_CERTIFICAT_SITUATION,
-      label: getLibelle("Certificat de situation"),
-      sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-      ref: refDelivrerOptions0
-    }
-  ];
-}

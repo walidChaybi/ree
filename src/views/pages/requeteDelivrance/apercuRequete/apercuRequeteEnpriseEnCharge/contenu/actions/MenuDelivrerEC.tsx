@@ -8,7 +8,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { IActionOption } from "@model/requete/IActionOption";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { filtrerListeActions } from "@util/RequetesUtils";
+import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
 import { estRenseigne, getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
@@ -155,7 +155,10 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
     props.requete.sousType
   ]);
 
-  const actions = filtrerListeActions(props.requete, delivrerOptions);
+  const actions = filtrerListeActionsParSousTypes(
+    props.requete,
+    delivrerOptions
+  );
 
   return (
     <>

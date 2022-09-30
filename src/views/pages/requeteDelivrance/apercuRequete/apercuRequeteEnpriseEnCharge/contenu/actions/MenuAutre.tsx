@@ -1,5 +1,5 @@
 import { IActionOption } from "@model/requete/IActionOption";
-import { filtrerListeActions } from "@util/RequetesUtils";
+import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
 import { getLibelle } from "@util/Utils";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import React, { useRef } from "react";
@@ -39,7 +39,7 @@ export const MenuAutre: React.FC<IChoixActionDelivranceProps> = props => {
     <>
       <GroupeBouton
         titre={"Autre"}
-        listeActions={filtrerListeActions(props.requete, reponseAutreOptions)}
+        listeActions={filtrerListeActionsParSousTypes(props.requete, reponseAutreOptions)}
         onSelect={handleRepreponseAutreOptions}
       />
     </>
