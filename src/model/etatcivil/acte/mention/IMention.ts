@@ -193,13 +193,13 @@ function getConjoint(mention: IMention, conjoint: string) {
     texte = mention.textes.texteMention;
   }
   if (texte) {
-    const regex = /avec ((?:[\w-]*, ?[\w-]*)*) *([\w -]*)/gm;
+    const regex = /avec ([^.]*[^'A-ZÀ-Ý .-]) *([A-ZÀ-Ý' -]*).?/gm;
     const matches = new RegExp(regex).exec(texte);
-    if (matches?.[UN]) {
-      conjoint = matches[UN];
-    }
     if (matches?.[DEUX]) {
-      conjoint += ` ${matches[DEUX]}`;
+      conjoint = matches[DEUX];
+    }
+    if (matches?.[UN]) {
+      conjoint += ` ${matches[UN]}`;
     }
   } else {
     conjoint = REMPLACEMENT_SI_INTROUVABLE;

@@ -293,7 +293,8 @@ export function selectionneEtMiseAJour(
   setMentionSelect: React.Dispatch<
     React.SetStateAction<IMentionAffichage | undefined>
   >,
-  index: number
+  index: number,
+  estExtraitPlurilingue: boolean
 ) {
   // Sélection de la mention
   if (mentionSelect?.numeroOrdre === index + 1) {
@@ -301,9 +302,11 @@ export function selectionneEtMiseAJour(
   } else {
     if (mentions?.[index]) {
       const mention = { ...mentions?.[index] };
-      mention.texte = getValeurOuVide(
-        Mention.getTexteAPartirPlurilingue(mention.texte)
-      );
+      if (estExtraitPlurilingue) {
+        mention.texte = getValeurOuVide(
+          Mention.getTexteAPartirPlurilingue(mention.texte)
+        );
+      }
       setMentionSelect(mention);
     }
   }

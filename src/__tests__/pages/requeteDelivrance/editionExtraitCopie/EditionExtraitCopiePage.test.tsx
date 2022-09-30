@@ -623,10 +623,10 @@ test("Test création extrait plurilingue", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("31-01-92 Nantes Jenmi")).toBeDefined();
+    expect(screen.getByText("Sc 31-01-92 Nantes Jenmi")).toBeDefined();
     expect(
       screen.getByText(
-        "Mar 15-06-2021 Nantes (Pays de Loire) Jean-Claude,Marie DUSS"
+        "Mar 15-06-2021 Nantes (Pays de Loire) LES BRONZÉES-FONT'DU SKI Jean-Claude, Popeye Bernard"
       )
     ).toBeDefined();
   });

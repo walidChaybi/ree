@@ -462,7 +462,8 @@ export const mentionsPlurilingues = [
       lieuReprise: null
     },
     textes: {
-      texteMention: "je suis marié avec Jean-Claude,Marie DUSS.",
+      texteMention:
+        "Marié à Francfort (Allemagne) le 22 janvier 2020 avec Jean-Claude, Popeye Bernard LES BRONZÉES-FONT'DU SKI. Acte transcrit au consulat général de France à Berlin (Allemagne) sous le n° 2020/345. ",
       texteApposition: null,
       texteOEC: null,
       texteMentionDelivrance: null,

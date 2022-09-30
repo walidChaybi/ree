@@ -59,7 +59,11 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
 
   useEffect(() => {
     if (props.document && resultatSauvegarde) {
-      props.handleDocumentEnregistre(DocumentEC.Principal);
+      props.handleDocumentEnregistre(
+        props.requete.documentsReponses.findIndex(
+          doc => doc.id === props.document?.id
+        )
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatSauvegarde]);

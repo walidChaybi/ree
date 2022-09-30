@@ -200,7 +200,8 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
                 mentions,
                 mentionSelect,
                 setMentionSelect,
-                id
+                id,
+                estExtraitPlurilingue
               )
             }
             liste={mappingVersListe(mentions)}
@@ -244,8 +245,8 @@ function getNumeroOrdreMention(
 
 function texteParDefautPlurilingue(natureMention?: NatureMention) {
   if (natureMention === NatureMention.getEnumFromCode(NatureMention, MARIAGE)) {
-    return "JJ-MM-AA <Lieu événement> <NOM du conjoint> <Prénoms du conjoint>";
+    return "JJ-MM-AAAA <Lieu événement> <NOM du conjoint> <Prénoms du conjoint>";
   } else {
-    return "JJ-MM-AA <Lieu événement>";
+    return "JJ-MM-AAAA <Lieu événement>";
   }
 }
