@@ -1,12 +1,29 @@
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
-import { IOngletProps } from "@model/IOnglet";
+import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { getLibelle } from "@util/Utils";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { LinkTab } from "./LinkTab";
 import { TabPanel } from "./TabPanel";
+
+export interface EnTeteOnglet {
+  titre: string;
+  url: string;
+  nomHabilitation?: NomComposant;
+}
+
+export interface CorpsOnglet {
+  composant: JSX.Element;
+  nomHabilitation?: NomComposant;
+}
+
+export interface IOngletProps {
+  enTete: EnTeteOnglet;
+  corps: CorpsOnglet;
+}
+
 
 const TabPanelRequetesDelivranceServiceWithHabilitation = WithHabilitation(
   TabPanel,

@@ -4,7 +4,6 @@ import {
   useNavigationApercuRMCAutoDelivrance
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import { IOfficier } from "@model/agent/IOfficier";
-import { IOngletProps } from "@model/IOnglet";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import {
@@ -15,7 +14,7 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import { getLibelle } from "@util/Utils";
-import { BoiteAOnglet } from "@widget/onglets/BoiteAOnglets";
+import { BoiteAOnglet, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import React, { useCallback, useState } from "react";
 import BoutonPrendreEnChargeAleatoirement from "./contenu/BoutonPrendreEnChargeAleatoirement";
 import { CompteurRequete } from "./contenu/CompteurRequete";

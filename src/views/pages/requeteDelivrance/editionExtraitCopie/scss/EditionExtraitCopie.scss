@@ -24,6 +24,12 @@
       .MuiTab-root {
         max-width: 170px !important;
       }
+      .MuiTab-wrapper{
+        display: contents;
+        svg{
+          margin-left: 5px;
+        }
+      }
     }
 
     .Separateur {

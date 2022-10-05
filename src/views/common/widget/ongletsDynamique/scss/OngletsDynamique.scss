@@ -9,6 +9,15 @@
     min-width: -moz-available;
     background-color: #0579be;
     border-radius: 0.25rem 0.25rem 0 0;
+    display: flex;
+    justify-content: space-evenly;
+    span{
+      line-height: 20px;
+    }
+    .warning{
+      margin-left:10px;
+      line-height: 20px
+    }
     &.selected {
       background-color: #03476e;
       //   border-radius: 0 0 0 0;

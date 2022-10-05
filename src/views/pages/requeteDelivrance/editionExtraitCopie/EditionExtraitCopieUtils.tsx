@@ -204,7 +204,9 @@ export const ajoutOngletsExtraitFilliation = (
   }
 
   // Sous-onglet 0
-  res.liste.push(ongletSaisirExtrait(acte, requete, handleDocumentEnregistre));
+  res.liste.push(
+    ongletSaisirExtrait(acte, requete, handleDocumentEnregistre, document)
+  );
   // Sous-onglet 1
   res.liste.push(
     ongletMentions(acte, document, handleDocumentEnregistre, requete)
@@ -232,7 +234,9 @@ export const ajoutOngletsExtraitPlurilingue = (
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) => {
-  res.liste.push(ongletSaisirExtrait(acte, requete, handleDocumentEnregistre));
+  res.liste.push(
+    ongletSaisirExtrait(acte, requete, handleDocumentEnregistre, document)
+  );
   if (
     acte.nature === NatureActe.NAISSANCE ||
     acte.nature === NatureActe.MARIAGE
@@ -275,6 +279,7 @@ export const ongletMentions = (
 ) => {
   return {
     titre: getLibelle("Gérer les mentions"),
+    iconeWarning: doc.validation === Validation.N,
     component: (
       <GestionMentions
         acte={acte}
@@ -289,10 +294,12 @@ export const ongletMentions = (
 const ongletSaisirExtrait = (
   acte: IFicheActe,
   requete: IRequeteDelivrance,
-  handleDocumentEnregistre: (index: DocumentEC) => void
+  handleDocumentEnregistre: (index: DocumentEC) => void,
+  doc: IDocumentReponse
 ) => {
   return {
     titre: getLibelle("Saisir l'extrait"),
+    iconeWarning: doc.validation === Validation.E,
     component: (
       <SaisirExtraitForm
         acte={acte}

@@ -1,4 +1,4 @@
-import { Add } from "@material-ui/icons";
+import { Add, ErrorOutline } from "@material-ui/icons";
 import Clear from "@material-ui/icons/Clear";
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentEC } from "@pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
@@ -11,7 +11,7 @@ import "./scss/OngletsDynamique.scss";
 interface OngletsDynamiqueProps {
   listePlus: IActionOption[];
   ongletSelectionne?: string;
-  listeOnglets?: { libelle: string; id: string }[];
+  listeOnglets?: { libelle: string; id: string; icone: boolean }[];
   actionClick: (document: string) => void;
   actionPlus: (indexMenu: number) => void;
   actionMoins: () => void;
@@ -45,7 +45,8 @@ export const OngletsDynamique: React.FC<OngletsDynamiqueProps> = props => {
                     : ""
                 }`}
               >
-                {onglet.libelle}
+                <span>{onglet.libelle}</span>
+                {onglet.icone && <ErrorOutline className="warning" />}
               </button>
             );
           })}

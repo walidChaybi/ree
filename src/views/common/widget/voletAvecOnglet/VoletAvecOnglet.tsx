@@ -1,8 +1,14 @@
 import { Tab } from "@material-ui/core";
+import { ErrorOutline } from "@material-ui/icons";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
-import { IOnglet } from "@model/requete/IOnglet";
 import React from "react";
 
+export interface IOnglet {
+  titre: string;
+  component: JSX.Element;
+  iconeWarning?: boolean;
+  data?: any;
+}
 export interface OngletProps {
   liste: IOnglet[];
   ongletSelectionne: number;
@@ -28,7 +34,19 @@ export const VoletAvecOnglet: React.FC<VoletOngletProps> = props => {
         >
           {props.liste.map((onglet, index) => {
             return (
-              <Tab key={index} label={onglet.titre} value={index.toString()} />
+              <Tab
+                key={index}
+                label={
+                  onglet.iconeWarning ? (
+                    <>
+                      {onglet.titre} <ErrorOutline />
+                    </>
+                  ) : (
+                    <>{onglet.titre}</>
+                  )
+                }
+                value={index.toString()}
+              />
             );
           })}
         </TabList>

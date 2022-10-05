@@ -1,14 +1,13 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
 import { OfficierContext } from "@core/contexts/OfficierContext";
 import { IOfficier } from "@model/agent/IOfficier";
-import { IOngletProps } from "@model/IOnglet";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import {
   URL_MES_REQUETES_CREATION,
   URL_REQUETES_CREATION_SERVICE
 } from "@router/ReceUrls";
 import { getLibelle } from "@util/Utils";
-import { BoiteAOnglet } from "@widget/onglets/BoiteAOnglets";
+import { BoiteAOnglet, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import BoutonPrendreEnChargePlusAncienneCreation from "./BoutonPrendreEnChargePlusAncienneCreation";

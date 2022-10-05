@@ -5,7 +5,9 @@ import {
   TitulaireActe
 } from "@model/etatcivil/acte/ITitulaireActe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { Validation } from "@model/requete/enum/Validation";
 import {
   DocumentReponse,
   IDocumentReponse
@@ -157,6 +159,9 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
       } else {
         res = documents.map(doc => ({
           id: doc.id,
+          icone:
+            doc.validation !== Validation.O &&
+            !DocumentDelivrance.estCourrierDelivranceEC(doc.typeDocument),
           libelle: DocumentReponse.getLibelle(doc)
         }));
       }

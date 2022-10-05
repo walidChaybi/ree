@@ -1,13 +1,12 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
 import { OfficierContext } from "@core/contexts/OfficierContext";
-import { IOngletProps } from "@model/IOnglet";
 import {
   URL_MES_REQUETES_INFORMATION,
   URL_REQUETES_INFORMATION_SERVICE
 } from "@router/ReceUrls";
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import { getLibelle } from "@util/Utils";
-import { BoiteAOnglet } from "@widget/onglets/BoiteAOnglets";
+import { BoiteAOnglet, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import { BoutonPrendreEnChargeAleatoirementInformation } from "./BoutonPrendreEnChargeAleatoirementInformation";
