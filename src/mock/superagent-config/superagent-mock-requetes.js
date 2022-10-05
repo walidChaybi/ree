@@ -724,7 +724,7 @@ export const configRequetes = [
         return true;
       }
 
-      // Sauvegarde document réponse suite modifier corps extrait
+      //Sauvegarde document réponse suite modifier corps extrait
       if (
         match[1] ===
         "/documentsreponses/update/9bfa282d-1e66-4538-b242-b9de4f683f0f"
@@ -737,22 +737,14 @@ export const configRequetes = [
       ) {
         return { data: ["9bfa282d-1e66-4538-b242-b9de4f683777"] };
       }
-      // if (
-      //   match[1] ===
-      //   "/documentsreponses/update/9bfa282d-1e66-4038-b272-b9de48683a1f"
-      // ) {
-      //   return { data: ["9bfa282d-1e66-4538-b242-b9de4f683777"] };
-      // }
 
       const error = {
         msg: "url api requete non mockée",
         url: match[1],
         method: context.method
       };
-      console.log("Erreur mock api requete v2: ", error);
-      return {
-        data: error
-      };
+      const message = `Erreur mock api requete v2: ${JSON.stringify(error)}`;
+      console.error(message);
     },
 
     /**

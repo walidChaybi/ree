@@ -562,10 +562,8 @@ export const configEtatcivil = [
         url: match[1],
         method: context.method
       };
-      console.log("Erreur mock api etat civil: ", error);
-      return {
-        data: error
-      };
+      const message = `Erreur mock api etatcivil: ${JSON.stringify(error)}`;
+      console.error(message);
     },
 
     /**

@@ -21,6 +21,7 @@ import "./scss/ParentNaissanceForm.scss";
 interface ParentNaissanceFormProps {
   nom: string;
   parent: IFiliation;
+  sansDateAgeEtLieuNaissance?: boolean;
 }
 
 export const ParentNaissanceForm: React.FC<
@@ -42,7 +43,6 @@ export const ParentNaissanceForm: React.FC<
         disabled={estRenseigne(props.parent.prenoms)}
         prenoms={prenoms}
       />
-
       <RadioField
         name={withNamespace(props.nom, SEXE)}
         label={getLibelle("Sexe")}
@@ -51,20 +51,23 @@ export const ParentNaissanceForm: React.FC<
           estRenseigne(props.parent.sexe) && props.parent.sexe !== Sexe.INCONNU
         }
       />
+      {!props.sansDateAgeEtLieuNaissance && (
+        <>
+          <DateNaissanceOuAgeDeForm
+            nom={withNamespace(props.nom, DATE_NAISSANCE_OU_AGE_DE)}
+            naissance={props.parent.naissance}
+            age={props.parent.age}
+          />
 
-      <DateNaissanceOuAgeDeForm
-        nom={withNamespace(props.nom, DATE_NAISSANCE_OU_AGE_DE)}
-        naissance={props.parent.naissance}
-        age={props.parent.age}
-      />
-
-      <LieuEvenementForm
-        nom={withNamespace(props.nom, LIEU_NAISSANCE)}
-        label={getLibelle("Lieu de naissance")}
-        evenement={props.parent.naissance}
-        gestionEtrangerFrance={true}
-        etrangerParDefaut={false}
-      />
+          <LieuEvenementForm
+            nom={withNamespace(props.nom, LIEU_NAISSANCE)}
+            label={getLibelle("Lieu de naissance")}
+            evenement={props.parent.naissance}
+            gestionEtrangerFrance={true}
+            etrangerParDefaut={false}
+          />
+        </>
+      )}
     </div>
   );
 };

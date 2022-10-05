@@ -145,10 +145,8 @@ export const configRequetesInformation = [
       }
 
       const error = { msg: "url params non mockée", url: match[1] };
-      console.log("Erreur mock api requ info: ", error);
-      return {
-        data: error
-      };
+      const message = `Erreur mock api requ info: ${JSON.stringify(error)}`;
+      console.error(message);
     },
 
     /**

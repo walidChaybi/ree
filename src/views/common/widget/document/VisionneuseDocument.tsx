@@ -21,7 +21,6 @@ export const VisionneuseDocument: React.FC<IVisionneuseDocumentProps> = ({
 
   useEffect(() => {
     if (contenu && typeMime) {
-
       let attributUrl = "";
       if (typeMime === "application/pdf") {
         attributUrl = "#zoom=page-fit";
@@ -32,14 +31,6 @@ export const VisionneuseDocument: React.FC<IVisionneuseDocumentProps> = ({
     }
   }, [contenu, typeMime]);
 
-  function addStyle() {
-    if (typeMime !== "application/pdf") {
-      const styleLink = document.createElement("style");
-      styleLink.textContent = "img{width:100%}";
-      iframe.current.contentWindow?.document.head.appendChild(styleLink);
-    }
-  }
-
   return (
     <div className={"VisionneuseDocument"}>
       {url ? (
@@ -48,7 +39,7 @@ export const VisionneuseDocument: React.FC<IVisionneuseDocumentProps> = ({
           src={url}
           id="iframe"
           ref={iframe}
-          onLoad={addStyle}
+          onLoad={() => ajouteStyleIFrame(iframe, typeMime)}
         ></iframe>
       ) : contenu === "" ? (
         <p className="messagePasDoc">
@@ -60,3 +51,11 @@ export const VisionneuseDocument: React.FC<IVisionneuseDocumentProps> = ({
     </div>
   );
 };
+
+export function ajouteStyleIFrame(iframe: any, typeMime?: MimeType) {
+  if (typeMime !== "application/pdf") {
+    const styleLink = document.createElement("style");
+    styleLink.textContent = "img{width:100%}";
+    iframe.current.contentWindow?.document.head.appendChild(styleLink);
+  }
+}

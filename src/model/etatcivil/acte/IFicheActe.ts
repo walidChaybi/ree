@@ -61,6 +61,9 @@ export const FicheActe = {
   estActeNaissance(acte?: IFicheActe): boolean {
     return acte?.nature === NatureActe.NAISSANCE;
   },
+  estActeDeces(acte?: IFicheActe): boolean {
+    return acte?.nature === NatureActe.DECES;
+  },
   acteEstACQouOP2ouOP3(acte?: IFicheActe): boolean {
     return (
       acte?.registre.famille === "ACQ" ||

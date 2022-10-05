@@ -2180,6 +2180,206 @@ export const ficheActeDeces = {
   },
 };
 
+export const ficheActeDeces2 = {
+  errors: [],
+  status: 200,
+  data: {
+    id: "b41079a5-9e8d-478c-b04c-c4c2ac67134c",
+    dateInitialisation: null,
+    dateCreation: 1256986800000,
+    modeCreation: "DRESSE",
+    statut: "VALIDE",
+    dateStatut: 1045652400000,
+    nature: "DECES",
+    numero: "8013",
+    numeroBisTer: "681ABC",
+    nomOec: "MARTIN",
+    prenomOec: "JULIE",
+    dateDerniereDelivrance: 1413972000000,
+    dateDerniereMaj: 1536400800000,
+    visibiliteArchiviste: "NON",
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 13,
+      mois: 4,
+      annee: 2020,
+      voie: null,
+      ville: "Barcelone",
+      arrondissement: null,
+      region: "Catalogne",
+      pays: "Espagne",
+      lieuReprise: null
+    },
+    mentions: [],
+    titulaires: [
+      {
+        nom: "PRODESK",
+        prenoms: ["Elodie"],
+        autresNoms: null,
+        autresPrenoms: null,
+        ordre: 729,
+        sexe: "FEMININ",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 25,
+          mois: 6,
+          annee: 1990,
+          voie: null,
+          ville: "Barcelone",
+          arrondissement: null,
+          region: "Catalogne",
+          pays: "Espagne",
+          lieuReprise: null
+        },
+        profession: "Anseignante",
+        age: null,
+        domicile: {
+          voie: "7 Rue du Noyer",
+          ville: "Bruxelles",
+          arrondissement: null,
+          region: "Flandre",
+          pays: "BELGIQUE"
+        },
+        filiations: [
+          {
+            lienParente: "PARENT",
+            ordre: 752,
+            nom: "Sacken",
+            sexe: "MASCULIN",
+            naissance: null,
+            profession: "Informaticien",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Carmela", "Linzy"]
+          }
+        ],
+        typeDeclarationConjointe: null,
+        dateDeclarationConjointe: null,
+        nomPartie1: null,
+        nomPartie2: null,
+        nomAvantMariage: null,
+        nomApresMariage: null,
+        nomDernierConjoint: "le dernier des ",
+        prenomsDernierConjoint: "mohicans"
+      }
+    ],
+    piecesAnnexes: [],
+    alerteActes: [],
+    personnes: [
+      {
+        id: "e7114c50-d00d-48ad-bbee-af2b01e2da8c",
+        nom: "Prodesk",
+        sexe: "FEMININ",
+        nationalite: "ETRANGERE",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 25,
+          mois: 6,
+          annee: 1990,
+          voie: null,
+          ville: "Barcelone",
+          arrondissement: null,
+          region: "Catalogne",
+          pays: "Espagne",
+          lieuReprise: null
+        },
+        autresNoms: [],
+        prenoms: ["Elodie"],
+        autresPrenoms: [],
+        parents: [],
+        enfants: [],
+        rcs: [],
+        rcas: [],
+        pacss: [],
+        actes: [
+          {
+            id: "b41079a5-9e8d-478c-b04c-c4c2ac67134c",
+            numero: "8013",
+            statut: null,
+            nature: "DECES"
+          }
+        ]
+      }
+    ],
+    estReecrit: true,
+    detailMariage: null,
+    registre: {
+      id: "e60432a7-7fb1-41d9-b6ad-a01fffbd223b",
+      famille: "ACQ",
+      pocopa: "X",
+      annee: 1951,
+      support1: "1",
+      support2: null,
+      numeroDernierActe: "4564",
+      pvOuverture: "pv_ouverture",
+      dateOuverture: [1995, 12, 25],
+      pvFermeture: "pv_fermeture",
+      dateFermeture: [1990, 1, 20],
+      decret2017: null,
+      type: {
+        id: "d5f36d96-f1f8-437e-8371-86dba9837339",
+        famille: "ACQ",
+        pocopa: "TUNIS",
+        paysPocopa: "TUNISIE",
+        dateRattachement: [1993, 6, 6],
+        dateTransfertScec: [1969, 2, 16],
+        gereScec: true,
+        estOuvert: true,
+        description: ""
+      }
+    },
+    motifAnnulation: "motif annulation",
+    dateInitialisationprojet: null,
+    numeroProjet: "a12",
+    corpsExtraitRectifications: [],
+    corpsImage: null,
+    corpsTexte: null,
+    analyseMarginales: [
+      {
+        id: "1ec56ede-ab6f-468a-afa7-61e64147b891",
+        dateDebut: 1605006000000,
+        dateFin: null,
+        nomOec: "Lens",
+        prenomOec: "Alexis",
+        motifModification: "FRANCISATION_NOM_PRENOM",
+        titulaires: [
+          {
+            nom: "PRODESK",
+            prenoms: ["Elodie", "Margaux", "Sara"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 1,
+            sexe: null,
+            naissance: null,
+            profession: null,
+            age: null,
+            domicile: null,
+            filiations: null,
+            typeDeclarationConjointe: null,
+            dateDeclarationConjointe: null,
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null
+          }
+        ]
+      }
+    ],
+    type: "IMAGE"
+  }
+};
+
 const idFicheActeAvecImage = "b41079a5-9e8d-478c-b04c-c4c2ac671777";
 export const ficheActeAvecImage = {
   errors: [],

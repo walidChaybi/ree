@@ -34,10 +34,8 @@ export const configFakeUrl = [
         msg: "url api fake requete non mockée",
         url: match[1]
       };
-      console.log("Erreur mock api (fake url): ", error);
-      return {
-        data: error
-      };
+      const message = `Erreur mock api fake: ${JSON.stringify(error)}`;
+      console.error(message);
     },
 
     /**

@@ -30,10 +30,9 @@ export const configParamsBaseRequete = [
       }
 
       const error = { msg: "url params non mockée", url: match[1] };
-      console.log("Erreur mock api params: ", error);
-      return {
-        data: error
-      };
+      const message = `Erreur mock api params: ${JSON.stringify(error)}`;
+      console.error(message);
+
     },
 
     /**

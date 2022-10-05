@@ -60,10 +60,8 @@ export const configAgent = [
       }
 
       const error = { msg: "url api agent non mockée", url: match[1] };
-      console.log("Erreur mock api agent: ", error);
-      return {
-        data: error
-      };
+      const message = `Erreur mock api agent: ${JSON.stringify(error)}`;
+      console.error(message);
     },
 
     /**

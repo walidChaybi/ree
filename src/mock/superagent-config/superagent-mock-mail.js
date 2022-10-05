@@ -20,10 +20,8 @@ export const configMail = [
       }
 
       const error = { msg: "url params non mockée", url: match[1] };
-      console.log("Erreur mock api mail: ", error);
-      return {
-        data: error
-      };
+      const message = `Erreur mock api mail: ${JSON.stringify(error)}`;
+      console.error(message);
     },
 
     /**

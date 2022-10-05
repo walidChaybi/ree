@@ -12,34 +12,44 @@ import {
   getNombreOuUndefined,
   getTableauAPartirElementsNonVides,
   getValeurOuUndefined,
+  getValeurOuVide,
   UN
 } from "@util/Utils";
 import {
   IDateCompleteForm,
-  ILieuEvenementForm,
+  IEvenementForm,
   IParentNaissanceForm,
   IPrenomsForm,
   ISaisieExtraitForm,
   ITitulaireEvtForm
 } from "./mappingActeVerFormulaireSaisirExtrait";
 
-export function mappingFormulaireSaisirExtraitNaissanceVersExtraitAEnvoyer(
+export function mappingFormulaireSaisirExtraitVersExtraitAEnvoyer(
   extraitSaisi: ISaisieExtraitForm,
   acte: IFicheActe
 ): IExtraitSaisiAEnvoyer {
-  const extraitSaisiAEnvoyer: IExtraitSaisiAEnvoyer =
-    {} as IExtraitSaisiAEnvoyer;
+  const extraitSaisiAEnvoyer = {} as IExtraitSaisiAEnvoyer;
 
-  extraitSaisiAEnvoyer.natureActe = NatureActe.getKey(NatureActe.NAISSANCE);
-
-  extraitSaisiAEnvoyer.evenementActe = mapEvenement({
-    lieuEvenement: extraitSaisi.titulaireEvt1.lieuEvenement,
-    dateEvenement: extraitSaisi.titulaireEvt1.dateEvenement
-  });
-
+  extraitSaisiAEnvoyer.natureActe = NatureActe.getKey(acte.nature);
   extraitSaisiAEnvoyer.titulaire1 = mapTitulaire(extraitSaisi.titulaireEvt1);
-  extraitSaisiAEnvoyer.titulaire1.naissance =
-    extraitSaisiAEnvoyer.evenementActe;
+
+  const evenementNaissance = mapEvenement(extraitSaisi.titulaireEvt1.evenement);
+
+  if (FicheActe.estActeNaissance(acte)) {
+    extraitSaisiAEnvoyer.titulaire1.naissance = evenementNaissance;
+    extraitSaisiAEnvoyer.evenementActe = evenementNaissance;
+  } else {
+    extraitSaisiAEnvoyer.titulaire1.naissance = evenementNaissance;
+    const evenement = mapEvenement(extraitSaisi.evenement);
+    extraitSaisiAEnvoyer.evenementActe = evenement;
+  }
+
+  if (FicheActe.estActeDeces(acte)) {
+    extraitSaisiAEnvoyer.titulaire1.nomDernierConjoint =
+      extraitSaisi.dernierConjoint?.nomNaissance;
+    extraitSaisiAEnvoyer.titulaire1.prenomsDernierConjoint =
+      extraitSaisi.dernierConjoint?.prenoms;
+  }
 
   extraitSaisiAEnvoyer.titulaire1.filiations = [];
   extraitSaisiAEnvoyer.titulaire1.filiations[0] = mapParent(
@@ -104,18 +114,17 @@ function mapPrenoms(prenomSaisis: IPrenomsForm) {
   );
 }
 
-function mapEvenement(saisie: {
-  lieuEvenement: ILieuEvenementForm;
-  dateEvenement: IDateCompleteForm;
-}): IEvenement {
-  let lieuReprise = saisie.lieuEvenement.lieuComplet;
-  let ville = saisie.lieuEvenement.ville;
-  let arrondissement = saisie.lieuEvenement.arrondissement;
-  let region = saisie.lieuEvenement.regionDepartement;
-  let pays = saisie.lieuEvenement.pays;
+function mapEvenement(evenementSaisi?: IEvenementForm): IEvenement {
+  let lieuReprise = getValeurOuVide(evenementSaisi?.lieuEvenement.lieuComplet);
+  let ville = getValeurOuVide(evenementSaisi?.lieuEvenement.ville);
+  let arrondissement = getValeurOuVide(
+    evenementSaisi?.lieuEvenement.arrondissement
+  );
+  let region = getValeurOuVide(evenementSaisi?.lieuEvenement.regionDepartement);
+  let pays = getValeurOuVide(evenementSaisi?.lieuEvenement.pays);
 
   if (
-    saisie.lieuEvenement.EtrangerFrance ===
+    evenementSaisi?.lieuEvenement.EtrangerFrance ===
     EtrangerFrance.getKey(EtrangerFrance.INCONNU)
   ) {
     lieuReprise = "";
@@ -126,14 +135,14 @@ function mapEvenement(saisie: {
   }
 
   if (
-    saisie.lieuEvenement.EtrangerFrance ===
+    evenementSaisi?.lieuEvenement.EtrangerFrance ===
     EtrangerFrance.getKey(EtrangerFrance.FRANCE)
   ) {
     pays = "";
   }
 
   if (
-    saisie.lieuEvenement.EtrangerFrance ===
+    evenementSaisi?.lieuEvenement.EtrangerFrance ===
     EtrangerFrance.getKey(EtrangerFrance.ETRANGER)
   ) {
     arrondissement = "";
@@ -146,11 +155,11 @@ function mapEvenement(saisie: {
     region,
     pays,
 
-    annee: getNombreOuUndefined(saisie.dateEvenement?.annee),
-    mois: getNombreOuUndefined(saisie.dateEvenement?.mois),
-    jour: getNombreOuUndefined(saisie.dateEvenement?.jour),
+    annee: getNombreOuUndefined(evenementSaisi?.dateEvenement?.annee),
+    mois: getNombreOuUndefined(evenementSaisi?.dateEvenement?.mois),
+    jour: getNombreOuUndefined(evenementSaisi?.dateEvenement?.jour),
 
-    heure: getNombreOuUndefined(saisie.dateEvenement?.nbHeure),
-    minute: getNombreOuUndefined(saisie.dateEvenement?.nbMinute)
+    heure: getNombreOuUndefined(evenementSaisi?.dateEvenement?.nbHeure),
+    minute: getNombreOuUndefined(evenementSaisi?.dateEvenement?.nbMinute)
   };
 }

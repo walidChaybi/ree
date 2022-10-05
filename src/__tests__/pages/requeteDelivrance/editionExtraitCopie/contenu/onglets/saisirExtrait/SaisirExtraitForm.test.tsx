@@ -59,7 +59,7 @@ afterAll(() => {
   superagentMock.unset();
 });
 
-test("Attendu: le formulaire SaisirExtraitForm s'affiche correctement", async () => {
+test("Attendu: le formulaire SaisirExtraitForm pour un acte de naissance s'affiche correctement", async () => {
   render(
     <SaisirExtraitForm
       acte={acte}
@@ -129,30 +129,30 @@ test("Attendu: le formulaire SaisirExtraitForm s'affiche correctement", async ()
 
   await waitFor(() => {
     expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.dateEvenement.jour",
+      "titulaireEvt1.evenement.dateEvenement.jour",
       "10"
     );
     expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.dateEvenement.mois",
+      "titulaireEvt1.evenement.dateEvenement.mois",
       "10"
     );
     expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.dateEvenement.annee",
+      "titulaireEvt1.evenement.dateEvenement.annee",
       "1901"
     );
     expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.dateEvenement.nbHeure",
+      "titulaireEvt1.evenement.dateEvenement.nbHeure",
       "13"
     );
     expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.dateEvenement.nbMinute",
+      "titulaireEvt1.evenement.dateEvenement.nbMinute",
       "15"
     );
   });
 
   await waitFor(() => {
     const widget = screen.getByLabelText(
-      "titulaireEvt1.lieuEvenement.lieuComplet"
+      "titulaireEvt1.evenement.lieuEvenement.lieuComplet"
     ) as HTMLInputElement;
     expect(widget).toBeInTheDocument();
     expect(widget.value).toBe("paris île de france");
@@ -160,9 +160,11 @@ test("Attendu: le formulaire SaisirExtraitForm s'affiche correctement", async ()
   });
 
   await waitFor(() => {
-    expectEstAbsent("titulaireEvt1.lieuEvenement.ville");
-    expectSelectEstAbsent("titulaireEvt1.lieuEvenement.arrondissement");
-    expectEstAbsent("titulaireEvt1.lieuEvenement.regionDepartement");
+    expectEstAbsent("titulaireEvt1.evenement.lieuEvenement.ville");
+    expectSelectEstAbsent(
+      "titulaireEvt1.evenement.lieuEvenement.arrondissement"
+    );
+    expectEstAbsent("titulaireEvt1.evenement.lieuEvenement.regionDepartement");
   });
 });
 
@@ -185,16 +187,26 @@ test("Attendu: la saisie des heures et minutes est possible lorsque les valeurs 
   );
 
   await waitFor(() => {
-    expectEstPresentAvecValeurVide("titulaireEvt1.dateEvenement.nbHeure");
-    expectEstPresentAvecValeurVide("titulaireEvt1.dateEvenement.nbMinute");
+    expectEstPresentAvecValeurVide(
+      "titulaireEvt1.evenement.dateEvenement.nbHeure"
+    );
+    expectEstPresentAvecValeurVide(
+      "titulaireEvt1.evenement.dateEvenement.nbMinute"
+    );
   });
 
-  changeInput("titulaireEvt1.dateEvenement.nbHeure", "10");
-  changeInput("titulaireEvt1.dateEvenement.nbMinute", "15");
+  changeInput("titulaireEvt1.evenement.dateEvenement.nbHeure", "10");
+  changeInput("titulaireEvt1.evenement.dateEvenement.nbMinute", "15");
 
   await waitFor(() => {
-    expectEstPresentAvecValeur("titulaireEvt1.dateEvenement.nbHeure", "10");
-    expectEstPresentAvecValeur("titulaireEvt1.dateEvenement.nbMinute", "15");
+    expectEstPresentAvecValeur(
+      "titulaireEvt1.evenement.dateEvenement.nbHeure",
+      "10"
+    );
+    expectEstPresentAvecValeur(
+      "titulaireEvt1.evenement.dateEvenement.nbMinute",
+      "15"
+    );
   });
 });
 
@@ -269,7 +281,7 @@ test("Attendu: l'alimentation du lieu complet en France s'effectue correctement"
 
   await waitFor(() => {
     widgetArrondissmeent = expectEstSelectPresentAvecValeur(
-      "titulaireEvt1.lieuEvenement.arrondissement",
+      "titulaireEvt1.evenement.lieuEvenement.arrondissement",
       "16"
     );
   });
@@ -280,12 +292,12 @@ test("Attendu: l'alimentation du lieu complet en France s'effectue correctement"
 
   await waitFor(() => {
     widgetArrondissmeent = expectEstSelectPresentAvecValeur(
-      "titulaireEvt1.lieuEvenement.arrondissement",
+      "titulaireEvt1.evenement.lieuEvenement.arrondissement",
       "1"
     );
 
     widgetLieu = expectEstPresentAvecValeur(
-      "titulaireEvt1.lieuEvenement.lieuComplet",
+      "titulaireEvt1.evenement.lieuEvenement.lieuComplet",
       "Paris 1er arrondissement (Ile de France)"
     );
   });
@@ -294,12 +306,12 @@ test("Attendu: l'alimentation du lieu complet en France s'effectue correctement"
     expect(widgetDecomposer.disabled).toBeTruthy();
 
     widgetVille = expectEstPresentAvecValeur(
-      "titulaireEvt1.lieuEvenement.ville",
+      "titulaireEvt1.evenement.lieuEvenement.ville",
       "Paris"
     );
 
     widgetDepartement = expectEstPresentAvecValeur(
-      "titulaireEvt1.lieuEvenement.regionDepartement",
+      "titulaireEvt1.evenement.lieuEvenement.regionDepartement",
       "Ile de France"
     );
 
@@ -320,7 +332,9 @@ test("Attendu: l'alimentation du lieu complet en France s'effectue correctement"
 
   await waitFor(() => {
     expect(widgetLieu.value).toBe("Nantes (Loire Atlantique)");
-    expectSelectEstAbsent("titulaireEvt1.lieuEvenement.arrondissement");
+    expectSelectEstAbsent(
+      "titulaireEvt1.evenement.lieuEvenement.arrondissement"
+    );
   });
 });
 

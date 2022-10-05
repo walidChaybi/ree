@@ -173,6 +173,7 @@ export class ApiManager {
         });
       })
       .catch(error => {
+        /* istanbul ignore next */
         error.uri = httpRequestConfig.uri;
         error.parameters = httpRequestConfig.parameters;
         const errorType = this.manageApiError(error);
@@ -187,6 +188,7 @@ export class ApiManager {
       });
   }
 
+  /* istanbul ignore next */
   private manageApiError(error: any): API_ERROR_TYPE {
     let errorType: API_ERROR_TYPE = undefined;
     if (
@@ -207,11 +209,13 @@ export class ApiManager {
         `Une erreur est survenue: ${error ? error.message : "inconnue"}`
       );
     } else if (process.env.NODE_ENV === "test") {
-      console.log("Erreur mock api: ", error?.uri);
-      console.log(
-        "     parameters: ",
-        error?.parameters ? error?.parameters : "pas de paramètres"
-      );
+      const message = `Erreur mock api: ${error?.uri}`;
+      
+      const messageParametres = `     parameters: ${
+        error?.parameters ? JSON.stringify(error?.parameters) : "pas de paramètres"
+      }`;
+      
+      throw new Error(`${message}\n${messageParametres}`);
     }
     return errorType;
   }

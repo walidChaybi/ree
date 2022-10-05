@@ -69,10 +69,8 @@ export const configRequetesCreation = [
       }
 
       const error = { msg: "url params non mockée", url };
-      console.log("Erreur mock api requ info: ", error);
-      return {
-        data: error
-      };
+      const message = `Erreur mock api creation: ${JSON.stringify(error)}`;
+      console.error(message);
     },
 
     /**

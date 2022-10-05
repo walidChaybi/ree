@@ -1,6 +1,6 @@
 import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import {
-  PARENT_NAISS,
+  EVENEMENT,
   TITULAIRE_EVT_1,
   TITULAIRE_EVT_2
 } from "@composant/formulaire/ConstantesNomsForm";
@@ -10,44 +10,48 @@ import {
   ISauvegardeValidationSaisieExtraitParams,
   useSauvegardeValidationSaisieExtrait
 } from "@hook/requete/ValidationSaisieExtraitHook";
-import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { IFiliation } from "@model/etatcivil/acte/IFiliation";
-import {
-  ITitulaireActe,
-  TitulaireActe
-} from "@model/etatcivil/acte/ITitulaireActe";
+import { TitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { useReinitialisationComposant } from "@util/form/useReinitialisation";
 import { getLibelle } from "@util/Utils";
-import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { StaticField } from "@widget/formulaire/champFixe/StaticField";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import FormikEffect from "@widget/formulaire/utils/FormikEffect";
-import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useContext, useState } from "react";
 import * as Yup from "yup";
+import { EvenementValidationSchema } from "../../../../../../common/composant/formulaire/validation/EvenementValidationSchema";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
 import { DocumentEC } from "../../../enum/DocumentEC";
-import { ParentNaissanceForm } from "./contenu/sousFormulaires/ParentNaissanceForm";
-import { TitulaireEvenementForm } from "./contenu/sousFormulaires/TitulaireEvenementForm";
 import { TitulaireEvtValidationSchema } from "./contenu/sousFormulaires/validation/TitulaireEvenementFormValidation";
 import {
   ISaisieExtraitForm,
   mappingActeVerFormulaireSaisirExtrait
 } from "./mapping/mappingActeVerFormulaireSaisirExtrait";
-import { mappingFormulaireSaisirExtraitNaissanceVersExtraitAEnvoyer } from "./mapping/mappingFormulaireSaisirExtraitNaissanceVersExtraitAEnvoyer";
-import { parentMemeSexeOuExtraitPlurilingue } from "./SaisirExtraitFormUtil";
+import { mappingFormulaireSaisirExtraitVersExtraitAEnvoyer } from "./mapping/mappingFormulaireSaisirExtraitVersExtraitAEnvoyer";
+import {
+  getTitulairesEvenementsEtParentsForm,
+  parentMemeSexeOuIndeterminCasPlurilingue
+} from "./SaisirExtraitFormUtil";
 import "./scss/FormulaireSaisirExtrait.scss";
 
 // Schéma de validation en sortie de champs
-const ExtraitValidationUnTitulaireSchema = Yup.object({
+// Validation formulaire naissance
+const ExtraitValidationNaissanceTitulaireSchema = Yup.object({
   [TITULAIRE_EVT_1]: TitulaireEvtValidationSchema
 });
 
-const ExtraitValidationDeuxTitulairesSchema = Yup.object({
+// Validation formulaire décès
+const ExtraitValidationDecesTitulaireSchema = Yup.object({
+  [EVENEMENT]: EvenementValidationSchema,
+  [TITULAIRE_EVT_1]: TitulaireEvtValidationSchema
+});
+
+// Validation formulaire mariage
+const ExtraitValidationMariageTitulairesSchema = Yup.object({
+  [EVENEMENT]: EvenementValidationSchema,
   [TITULAIRE_EVT_1]: TitulaireEvtValidationSchema,
   [TITULAIRE_EVT_2]: TitulaireEvtValidationSchema
 });
@@ -75,13 +79,12 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
   useSauvegardeValidationSaisieExtrait(sauvegarderSaisieParams);
 
   const onSubmitValiderExtraitSaisi = (extraitSaisi: ISaisieExtraitForm) => {
-    const extraitAEnvoyer =
-      mappingFormulaireSaisirExtraitNaissanceVersExtraitAEnvoyer(
-        extraitSaisi,
-        props.acte
-      );
+    const extraitAEnvoyer = mappingFormulaireSaisirExtraitVersExtraitAEnvoyer(
+      extraitSaisi,
+      props.acte
+    );
     setExtraitSaisiAEnvoyer(extraitAEnvoyer);
-    const problemePlurilingue = parentMemeSexeOuExtraitPlurilingue(
+    const problemePlurilingue = parentMemeSexeOuIndeterminCasPlurilingue(
       [extraitAEnvoyer.titulaire1, extraitAEnvoyer.titulaire2],
       props.requete.documentsReponses
     );
@@ -103,7 +106,7 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
 
   const handlePopinOui = useCallback(() => {
     if (extraitSaisiAEnvoyer) {
-      const problemePlurilingue = parentMemeSexeOuExtraitPlurilingue(
+      const problemePlurilingue = parentMemeSexeOuIndeterminCasPlurilingue(
         [extraitSaisiAEnvoyer.titulaire1, extraitSaisiAEnvoyer.titulaire2],
         props.requete.documentsReponses
       );
@@ -142,11 +145,7 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         key={cleReinitialisation}
         className="FormulaireSaisirExtrait"
         formDefaultValues={formDefaultValues}
-        formValidationSchema={
-          titulairesAMs.length > 1
-            ? ExtraitValidationDeuxTitulairesSchema
-            : ExtraitValidationUnTitulaireSchema
-        }
+        formValidationSchema={getValidationSchema(natureActe)}
         onSubmit={onSubmitValiderExtraitSaisi}
       >
         <FormikEffect
@@ -209,77 +208,25 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
   );
 };
 
-function getTitulairesEvenementsEtParentsForm(
-  titulairesAMs: (ITitulaireActe | undefined)[],
-  natureActe: NatureActe,
-  titulaire1Parents: IFiliation[],
-  titulaire2Parents: IFiliation[],
-  evenement?: IEvenement
-) {
-  return (
-    <>
-      {/* Premier titulaire avec accordéon */}
-      {titulairesAMs[0] &&
-        getTitulaireEvenementForm(
-          TITULAIRE_EVT_1,
-          titulairesAMs[0],
-          evenement,
-          natureActe
-        )}
-      {/* Parents titulaire 1 */}
-      {titulairesAMs[0] &&
-        getTitulaireParentsForm(TITULAIRE_EVT_1, titulaire1Parents)}
+function getValidationSchema(natureActe: NatureActe) {
+  let validationSchema;
+  switch (natureActe) {
+    case NatureActe.NAISSANCE:
+      validationSchema = ExtraitValidationNaissanceTitulaireSchema;
+      break;
 
-      {/* Deuxième titulaire avec accordéon */}
-      {titulairesAMs[1] &&
-        getTitulaireEvenementForm(
-          TITULAIRE_EVT_2,
-          titulairesAMs[1],
-          evenement,
-          natureActe
-        )}
-      {/* Parents titulaire 2 */}
-      {titulairesAMs[1] &&
-        getTitulaireParentsForm(TITULAIRE_EVT_2, titulaire2Parents)}
-    </>
-  );
-}
+    case NatureActe.MARIAGE:
+      validationSchema = ExtraitValidationMariageTitulairesSchema;
+      break;
 
-function getTitulaireParentsForm(
-  nomFormTitulaire: string,
-  parents: IFiliation[]
-) {
-  return parents.map((parent: IFiliation, index: number) => {
-    const titreAccordeonParent = getLibelle(`Parent ${index + 1}`);
-    return (
-      <AccordionRece
-        key={titreAccordeonParent}
-        expanded={true}
-        titre={titreAccordeonParent}
-      >
-        <ParentNaissanceForm
-          nom={withNamespace(nomFormTitulaire, `${PARENT_NAISS}${index + 1}`)}
-          parent={parent}
-        />
-      </AccordionRece>
-    );
-  });
-}
+    case NatureActe.DECES:
+      validationSchema = ExtraitValidationDecesTitulaireSchema;
+      break;
 
-function getTitulaireEvenementForm(
-  nomFormTitulaire1: string,
-  titulaire: ITitulaireActe,
-  evenement: IEvenement | undefined,
-  natureActe: NatureActe
-) {
-  return (
-    <AccordionRece expanded={true} titre={getLibelle("Titulaire / Evénement")}>
-      <TitulaireEvenementForm
-        nom={nomFormTitulaire1}
-        titulaire={titulaire}
-        evenement={evenement}
-        natureActe={natureActe}
-      ></TitulaireEvenementForm>
-    </AccordionRece>
-  );
+    default:
+      validationSchema = ExtraitValidationNaissanceTitulaireSchema;
+      break;
+  }
+
+  return validationSchema;
 }

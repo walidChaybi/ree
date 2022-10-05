@@ -6,7 +6,9 @@ import {
   DATE_EVENEMENT,
   DATE_NAISSANCE_OU_AGE_DE,
   DECLARATION_CONJOINTE,
+  DERNIER_CONJOINT,
   ETRANGER_FRANCE,
+  EVENEMENT,
   JOUR,
   LIEU_COMPLET,
   LIEU_EVENEMENT,
@@ -56,8 +58,19 @@ import {
 import { FRANCE, LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export interface ISaisieExtraitForm {
+  [EVENEMENT]?: IEvenementForm;
+  [DERNIER_CONJOINT]?: IDernierConjointForm;
   [TITULAIRE_EVT_1]: ITitulaireEvtForm;
   [TITULAIRE_EVT_2]?: ITitulaireEvtForm;
+}
+
+export interface IDernierConjointForm {
+  [NOM_NAISSANCE]: string;
+  [PRENOMS]: string;
+}
+export interface IEvenementForm {
+  [DATE_EVENEMENT]: IDateCompleteForm;
+  [LIEU_EVENEMENT]: ILieuEvenementForm;
 }
 
 export interface ITitulaireEvtForm {
@@ -66,8 +79,7 @@ export interface ITitulaireEvtForm {
   [DECLARATION_CONJOINTE]: IDeclarationConjointeForm;
   [PRENOMS]: IPrenomsForm;
   [SEXE]?: string;
-  [DATE_EVENEMENT]: IDateCompleteForm;
-  [LIEU_EVENEMENT]: ILieuEvenementForm;
+  [EVENEMENT]: IEvenementForm;
   [PARENT_NAISS1]: IParentNaissanceForm;
   [PARENT_NAISS2]: IParentNaissanceForm;
 }
@@ -87,8 +99,8 @@ export interface IDateCompleteForm {
   [JOUR]: string;
   [MOIS]: string;
   [ANNEE]: string;
-  [NB_HEURE]: string;
-  [NB_MINUTE]: string;
+  [NB_HEURE]?: string;
+  [NB_MINUTE]?: string;
 }
 
 export interface IDateJourMoisAnneForm {
@@ -129,23 +141,55 @@ export function mappingActeVerFormulaireSaisirExtrait(
   acte: IFicheActe,
   titulairesAMs: (ITitulaireActe | undefined)[]
 ): ISaisieExtraitForm {
-  const saisieForm = {
-    [TITULAIRE_EVT_1]: saisieTitulaireEvtForm(titulairesAMs[0], acte.evenement),
-    [TITULAIRE_EVT_2]: titulairesAMs[1]
-      ? saisieTitulaireEvtForm(titulairesAMs[1], acte.evenement)
-      : undefined
-  };
   const titulairesActes = FicheActe.getTitulairesActeDansLOrdre(acte);
-  if (titulairesActes.titulaireActe1) {
-    TitulaireActe.getAuMoinsDeuxParentsDirects(
-      titulairesActes.titulaireActe1
-    ).forEach((parent: IFiliation, index: number) => {
-      //@ts-ignore
-      saisieForm[TITULAIRE_EVT_1][`${PARENT_NAISS}${index + 1}`] =
-        saisieParentForm(parent);
-    });
+
+  // Titulaire 1
+  const saisieForm: ISaisieExtraitForm = {
+    [TITULAIRE_EVT_1]: saisieTitulaireEvtForm(
+      titulairesAMs[0],
+      FicheActe.estActeNaissance(acte)
+        ? acte.evenement
+        : titulairesActes.titulaireActe1.naissance
+    )
+  };
+
+  if (!FicheActe.estActeNaissance(acte)) {
+    // Evenement
+    saisieForm[EVENEMENT] = {
+      dateEvenement: saisieDateEvt(acte.evenement),
+      lieuEvenement: saisieLieuEvt(acte.evenement)
+    };
+
+    saisieForm[DERNIER_CONJOINT] = {
+      nomNaissance: getValeurOuVide(
+        titulairesActes.titulaireActe1.nomDernierConjoint
+      ),
+      prenoms: getValeurOuVide(
+        titulairesActes.titulaireActe1.prenomsDernierConjoint
+      )
+    };
   }
-  // TODO Parent du titulaire 2
+
+  // Parents titulaire 1
+  TitulaireActe.getAuMoinsDeuxParentsDirects(
+    titulairesActes.titulaireActe1
+  ).forEach((parent: IFiliation, index: number) => {
+    //@ts-ignore
+    saisieForm[TITULAIRE_EVT_1][`${PARENT_NAISS}${index + 1}`] =
+      saisieParentForm(parent);
+  });
+
+  // Titulaire 2 (cas mariage)
+  if (titulairesActes.titulaireActe2) {
+    saisieForm[TITULAIRE_EVT_2] = titulairesAMs[1]
+      ? saisieTitulaireEvtForm(
+          titulairesAMs[1],
+          titulairesActes.titulaireActe2.naissance
+        )
+      : undefined;
+    // TODO Parent du titulaire 2
+  }
+
   return saisieForm;
 }
 
@@ -174,10 +218,15 @@ function saisieTitulaireEvtForm(
     [SEXE]: titulaire?.sexe
       ? Sexe.getKey(titulaire.sexe)
       : Sexe.getKey(Sexe.INCONNU),
-    [DATE_EVENEMENT]: saisieDateHeureEvt(evenement),
-
-    [LIEU_EVENEMENT]: saisieLieuEvt(evenement)
+    [EVENEMENT]: saisieDateLieuEvt(evenement)
   } as ITitulaireEvtForm;
+}
+
+function saisieDateLieuEvt(evenement?: IEvenement): IEvenementForm {
+  return {
+    [DATE_EVENEMENT]: saisieDateHeureEvt(evenement),
+    [LIEU_EVENEMENT]: saisieLieuEvt(evenement)
+  };
 }
 
 function saisiePrenomForm(prenoms?: string[]) {

@@ -30,6 +30,10 @@ export const HEURE = "heure";
 export const NB_HEURE = "nbHeure";
 export const NB_MINUTE = "nbMinute";
 
+export const EVENEMENT = "evenement";
+
+export const DERNIER_CONJOINT = "dernierConjoint";
+
 // Titulaire: Lieu evt
 export const LIEU_EVENEMENT = "lieuEvenement";
 export const LIEU_COMPLET = "lieuComplet";
