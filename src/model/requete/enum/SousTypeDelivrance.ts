@@ -106,7 +106,7 @@ export class SousTypeDelivrance extends EnumWithComplete {
     );
   }
 
-  public static possibleAPrendreEnCharge(
+  public static estPossibleAPrendreEnCharge(
     sousType?: SousTypeDelivrance
   ): boolean {
     return (

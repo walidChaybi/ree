@@ -74,10 +74,10 @@ export const autorisePrendreEnChargeDelivrance = (
     TypeRequete.estDelivrance(requete.type) &&
     StatutRequete.estATraiterOuTransferee(requete.statutCourant.statut) &&
     mAppartientOuAppartientAPersonne(requete.idUtilisateur) &&
+    appartientAMonServiceOuServicesMeresOuServicesFilles(requete.idEntite) &&
     provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
       requete.provenanceRequete.provenance.libelle
-    ) &&
-    appartientAMonServiceOuServicesMeresOuServicesFilles(requete.idEntite)
+    )
   );
 };
 
@@ -90,7 +90,7 @@ export const autorisePrendreEnChargeReqTableauDelivrance = (
 
   return (
     TypeRequete.estDelivrance(type) &&
-    SousTypeDelivrance.possibleAPrendreEnCharge(sousType) &&
+    SousTypeDelivrance.estPossibleAPrendreEnCharge(sousType) &&
     StatutRequete.estATraiterOuTransferee(statut) &&
     mAppartient(requete.idUtilisateur) &&
     appartientAMonServiceOuServicesMeresOuServicesFilles(

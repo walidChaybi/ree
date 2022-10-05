@@ -22,6 +22,7 @@ export const configComposition = [
         match[1] === "/composition/CERTIFICAT_INSCRIPTION_RC/1" ||
         match[1] === "/composition/ATTESTATION_PACS/1" ||
         match[1] === "/composition/CARN_CSPAC_01/1" ||
+        match[1] === "/composition/CARN_PAC_01/1" ||
         match[1] === "/composition/CARN_CS_01/1" ||
         match[1] === "/composition/CARN_CSPAC_02/1" ||
         match[1] === "/composition/CARN_EC_117/1" ||

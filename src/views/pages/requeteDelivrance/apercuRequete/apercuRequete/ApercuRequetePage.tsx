@@ -67,7 +67,7 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
 
   const estPresentBoutonPriseEnCharge =
     StatutRequete.estATraiterOuTransferee(requete?.statutCourant?.statut) &&
-    SousTypeDelivrance.possibleAPrendreEnCharge(requete?.sousType);
+    SousTypeDelivrance.estPossibleAPrendreEnCharge(requete?.sousType);
 
   return (
     <ApercuRequeteTemplate

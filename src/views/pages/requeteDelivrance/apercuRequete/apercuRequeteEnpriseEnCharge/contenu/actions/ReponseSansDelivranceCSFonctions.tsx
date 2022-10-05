@@ -12,6 +12,10 @@ import {
   IReponseSansDelivranceCSMariageComposition,
   ReponseSansDelivranceCSMariageComposition
 } from "@model/composition/IReponseSansDelivranceCSMariageComposition";
+import {
+  IReponseSansDelivranceCSPACSNonInscritComposition,
+  ReponseSansDelivranceCSPACSNonInscritComposition
+} from "@model/composition/IReponseSansDelivranceCSPACSNonInscritComposition";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -24,26 +28,48 @@ const ERREUR_PAS_DE_REQUERENT =
   "Erreur inattendue: Pas de requérant pour la requête";
 
 /** REQUETE_INCOMPLETE_ILLISIBLE */
-export const createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete =
-  async (requete?: IRequeteDelivrance) => {
-    let reponseSansDelivranceCS =
-      {} as IReponseSansDelivranceCSDemandeIncompleteComposition;
-    if (requete && requete.requerant) {
-      reponseSansDelivranceCS =
-        ReponseSansDelivranceCSDemandeIncompleteComposition.creerReponseSansDelivranceCS(
-          requete.requerant,
-          requete.canal,
-          requete.numero
-        );
-    } else {
-      messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
-    }
+export const createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete = (
+  requete?: IRequeteDelivrance
+) => {
+  let reponseSansDelivranceCS =
+    {} as IReponseSansDelivranceCSDemandeIncompleteComposition;
+  if (requete && requete.requerant) {
+    reponseSansDelivranceCS =
+      ReponseSansDelivranceCSDemandeIncompleteComposition.creerReponseSansDelivranceCS(
+        requete.requerant,
+        requete.canal,
+        requete.numero
+      );
+  } else {
+    messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
+  }
 
-    return reponseSansDelivranceCS;
-  };
+  return reponseSansDelivranceCS;
+};
+
+/** PACS_NON_INSCRIT */
+export const createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit = (
+  requete: IRequeteDelivrance
+) => {
+  let reponseSansDelivranceCS =
+    {} as IReponseSansDelivranceCSPACSNonInscritComposition;
+  if (requete && requete.requerant) {
+    reponseSansDelivranceCS =
+      ReponseSansDelivranceCSPACSNonInscritComposition.creerReponseSansDelivranceCS(
+        requete.requerant,
+        requete.canal,
+        requete.titulaires?.[0],
+        requete.numero
+      );
+  } else {
+    messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
+  }
+
+  return reponseSansDelivranceCS;
+};
 
 /** ACTION_RESSORTISSANT_FRANCAIS */
-export const createReponseSansDelivranceCSPourCompositionApiFrancais = async (
+export const createReponseSansDelivranceCSPourCompositionApiFrancais = (
   requete: IRequeteDelivrance
 ) => {
   let reponseSansDelivranceCS =

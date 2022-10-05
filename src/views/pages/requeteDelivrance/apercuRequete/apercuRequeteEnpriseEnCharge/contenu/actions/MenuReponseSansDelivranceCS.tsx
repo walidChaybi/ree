@@ -2,6 +2,7 @@ import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivra
 import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
 import { NOM_DOCUMENT_REFUS_FRANCAIS } from "@model/composition/IReponseSansDelivranceCSFrancaisComposition";
 import { NOM_DOCUMENT_REFUS_MARIAGE } from "@model/composition/IReponseSansDelivranceCSMariageComposition";
+import { NOM_DOCUMENT_REFUS_PACS_NON_INSCRIT } from "@model/composition/IReponseSansDelivranceCSPACSNonInscritComposition";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IActionOption } from "@model/requete/IActionOption";
 import { receUrl } from "@router/ReceUrls";
@@ -25,6 +26,7 @@ import {
   createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
   createReponseSansDelivranceCSPourCompositionApiFrancais,
   createReponseSansDelivranceCSPourCompositionApiMariage,
+  createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit,
   estSeulementActeMariage
 } from "./ReponseSansDelivranceCSFonctions";
 
@@ -63,12 +65,23 @@ export const MenuReponseSansDelivranceCS: React.FC<
       case INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.REQUETE_INCOMPLETE_ILLISIBLE:
         setOperationEnCours(true);
         const contenuReponseSansDelivranceCSDemandeIncomplete =
-          await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
+          createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
             props.requete
           );
         setReponseSansDelivranceCS({
           contenu: contenuReponseSansDelivranceCSDemandeIncomplete,
           fichier: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE
+        });
+        break;
+      case INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.PACS_NON_INSCRIT:
+        setOperationEnCours(true);
+        const contenuReponseSansDelivranceCSPACSNonInscrit =
+          createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit(
+            props.requete
+          );
+        setReponseSansDelivranceCS({
+          contenu: contenuReponseSansDelivranceCSPACSNonInscrit,
+          fichier: NOM_DOCUMENT_REFUS_PACS_NON_INSCRIT
         });
         break;
       case INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.MARIAGE_EN_COURS_DE_VALIDITE:
@@ -94,7 +107,7 @@ export const MenuReponseSansDelivranceCS: React.FC<
       case INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.NATIONALITE_OU_NAISSANCE_FRANCAIS:
         setOperationEnCours(true);
         const newReponseSansDelivranceCSFrancais =
-          await createReponseSansDelivranceCSPourCompositionApiFrancais(
+          createReponseSansDelivranceCSPourCompositionApiFrancais(
             props.requete
           );
         setReponseSansDelivranceCS({

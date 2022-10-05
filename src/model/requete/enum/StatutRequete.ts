@@ -147,9 +147,13 @@ export class StatutRequete extends EnumWithComplete {
     return statut === StatutRequete.A_TRAITER;
   }
 
+  public static estATransferer(statut?: StatutRequete): boolean {
+    return statut === StatutRequete.TRANSFEREE;
+  }
+
   public static estATraiterOuTransferee(statut?: StatutRequete): boolean {
     return (
-      StatutRequete.estATraiter(statut) || statut === StatutRequete.TRANSFEREE
+      StatutRequete.estATraiter(statut) || StatutRequete.estATransferer(statut)
     );
   }
 
@@ -175,12 +179,16 @@ export class StatutRequete extends EnumWithComplete {
     );
   }
 
+  public static estATraiteADelivrerDemat(statut?: StatutRequete): boolean {
+    return statut === StatutRequete.TRAITE_A_DELIVRER_DEMAT;
+  }
+
   public static estAuStatutTraiteADelivrerDematOuASigner(
     statut?: StatutRequete
   ) {
     return (
-      statut === StatutRequete.TRAITE_A_DELIVRER_DEMAT ||
-      statut === StatutRequete.A_SIGNER
+      StatutRequete.estATraiteADelivrerDemat(statut) ||
+      StatutRequete.estASigner(statut)
     );
   }
 

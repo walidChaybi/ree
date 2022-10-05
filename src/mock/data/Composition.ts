@@ -3,6 +3,7 @@ import { ICertificatSituationComposition } from "@model/composition/ICertificatS
 import { IReponseSansDelivranceCSDemandeIncompleteComposition } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
 import { IReponseSansDelivranceCSFrancaisComposition } from "@model/composition/IReponseSansDelivranceCSFrancaisComposition";
 import { IReponseSansDelivranceCSMariageComposition } from "@model/composition/IReponseSansDelivranceCSMariageComposition";
+import { IReponseSansDelivranceCSPACSNonInscritComposition } from "@model/composition/IReponseSansDelivranceCSPACSNonInscritComposition";
 import { dateCourrier } from "@util/DateUtils";
 import { imagePngVideBase64 } from "./ImagePng";
 
@@ -76,6 +77,15 @@ export const reponseSansDelivranceCSDemandeIncomplete: IReponseSansDelivranceCSD
     ...baseReponseSansDelivranceCSInstitutionnel,
     objet_courrier:
       "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil"
+  };
+
+export const reponseSansDelivranceCSPACSNonInscrit: IReponseSansDelivranceCSPACSNonInscritComposition =
+  {
+    ...baseReponseSansDelivranceCSInstitutionnel,
+    objet_courrier:
+      "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil",
+    nom_titulaire1: "PRODESK",
+    prenoms_titulaire1: "Elodie"
   };
 
 export const reponseSansDelivranceCSMariage: IReponseSansDelivranceCSMariageComposition =
