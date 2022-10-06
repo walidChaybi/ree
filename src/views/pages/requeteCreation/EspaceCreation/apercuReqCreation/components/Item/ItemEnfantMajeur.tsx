@@ -22,6 +22,7 @@ const ItemEnfantMajeur: React.FC<ItemEnfantMajeurProps & ItemProps> = props => {
         identite={props.identite}
         retenueSdanf={props.retenueSdanf}
         afficherNomActuel={false}
+        afficherNomUsage={false}
       />
 
       <LigneDateNaissanceAdresse

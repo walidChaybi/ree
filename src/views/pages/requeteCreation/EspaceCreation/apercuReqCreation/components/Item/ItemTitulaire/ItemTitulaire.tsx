@@ -47,6 +47,7 @@ const ItemTitulaire: React.FC<ItemTitulaireProps & ItemProps> = props => {
       <LigneNomPrenomActuel
         identite={props.identite}
         retenueSdanf={props.retenueSdanf}
+        afficherNomUsage={false}
       />
 
       <LigneFrancisationIdentification

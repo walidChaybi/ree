@@ -14,6 +14,7 @@ const ItemFraterie: React.FC<ItemFraterieProps & ItemProps> = props => {
         identite={props.identite}
         retenueSdanf={props.retenueSdanf}
         afficherNomActuel={false}
+        afficherNomUsage={false}
       />
 
       <LigneDateNaissanceAdresse

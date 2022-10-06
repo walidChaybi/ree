@@ -21,6 +21,8 @@ export const LigneNomPrenomActuel: React.FC<LigneNomPrenomActuelProps> = ({
 }) => {
   return (
     <div className="itemLigneTitulaire">
+      <ItemLigne texte={`${props.identite.noms.naissance} : `} />
+
       {afficherNomUsage && (
         <ItemLigneSdanf
           texteSdanf={`(${getLibelle("Usage :")}${

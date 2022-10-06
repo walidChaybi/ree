@@ -40,6 +40,7 @@ const ItemUnion: React.FC<ItemUnionProps & ItemProps> = props => {
         identite={props.identite}
         retenueSdanf={props.retenueSdanf}
         afficherNomActuel={false}
+        afficherNomUsage={false}
       />
 
       <LigneDateNaissanceAdresse
