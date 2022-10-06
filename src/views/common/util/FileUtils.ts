@@ -107,7 +107,7 @@ export function validateFile(
   }
 }
 
-export function base64toBlob(base64String: string, type: string): string {
+export function base64toBlobUrl(base64String: string, type: string): string {
   const byteCharacters = atob(base64String);
   const byteNumbers = new Array(byteCharacters.length);
   for (let i = 0; i < byteCharacters.length; i++) {
@@ -116,4 +116,8 @@ export function base64toBlob(base64String: string, type: string): string {
   const byteArray = new Uint8Array(byteNumbers);
   const blob = new Blob([byteArray], { type });
   return URL.createObjectURL(blob);
+}
+
+export function bloblToBlobUrl(blob: Blob, type: string): string {
+  return URL.createObjectURL(new Blob([blob], { type }));
 }

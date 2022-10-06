@@ -1,47 +1,60 @@
 import { LinearProgress } from "@material-ui/core";
-import { base64toBlob } from "@util/FileUtils";
+import { base64toBlobUrl, bloblToBlobUrl } from "@util/FileUtils";
 import { getLibelle } from "@util/Utils";
 import { MimeType } from "file-type";
 import React, { useEffect, useRef, useState } from "react";
+import { MimeType as ReceMimeType } from "../../../../ressources/MimeType";
 import "./scss/VisionneuseDocument.scss";
 
+/**
+ * Visionneuse de document intégrée à Firefox
+ * Gère des documents en bas64 (Tous le document du Rece sont en base64 normalement)
+ * Gère également l'exception concernant l'api '/acte/corps' qui renvoit un document de type Blob (cf. composant 'ActeImage')
+ */
 interface IVisionneuseDocumentProps {
   titre: string;
   contenu?: string; // Base64
+  contenuBlob?: Blob; //Blob
   typeMime?: MimeType;
 }
 
-export const VisionneuseDocument: React.FC<IVisionneuseDocumentProps> = ({
-  titre,
-  contenu,
-  typeMime
-}) => {
+export const VisionneuseDocument: React.FC<
+  IVisionneuseDocumentProps
+> = props => {
   const [url, setUrl] = useState<string>();
   const iframe = useRef<any>();
 
   useEffect(() => {
-    if (contenu && typeMime) {
-      let attributUrl = "";
-      if (typeMime === "application/pdf") {
-        attributUrl = "#zoom=page-fit";
-      }
+    let urlVisionneuseDocument;
 
-      const urlAvecAttribut = base64toBlob(contenu, typeMime) + attributUrl;
-      setUrl(urlAvecAttribut);
+    let attributUrl = "";
+    if (props.typeMime === ReceMimeType.APPLI_PDF) {
+      attributUrl = "#zoom=page-fit";
     }
-  }, [contenu, typeMime]);
+    if (props.contenu && props.typeMime) {
+      urlVisionneuseDocument = base64toBlobUrl(props.contenu, props.typeMime);
+    } else if (props.contenuBlob && props.typeMime) {
+      urlVisionneuseDocument = bloblToBlobUrl(
+        props.contenuBlob,
+        props.typeMime
+      );
+    }
+    if (urlVisionneuseDocument) {
+      setUrl(urlVisionneuseDocument + attributUrl);
+    }
+  }, [props.contenu, props.contenuBlob, props.typeMime]);
 
   return (
     <div className={"VisionneuseDocument"}>
       {url ? (
         <iframe
-          title={titre}
+          title={props.titre}
           src={url}
           id="iframe"
           ref={iframe}
-          onLoad={() => ajouteStyleIFrame(iframe, typeMime)}
+          onLoad={() => ajouteStyleIFrame(iframe, props.typeMime)}
         ></iframe>
-      ) : contenu === "" ? (
+      ) : props.contenu === "" && props.contenuBlob == null ? (
         <p className="messagePasDoc">
           {getLibelle("Aucun document à afficher")}
         </p>

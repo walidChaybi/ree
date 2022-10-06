@@ -1,27 +1,28 @@
 import { getImagesActe, getTexteActe } from "@api/appels/etatcivilApi";
-import { LinearProgress } from "@material-ui/core";
 import { logError } from "@util/LogManager";
 import { getLibelle } from "@util/Utils";
+import { VisionneuseDocument } from "@widget/document/VisionneuseDocument";
 import React, { useEffect, useState } from "react";
-import "./scss/ActeImage.scss";
+import { MimeType } from "../../../../ressources/MimeType";
+import "./scss/VisionneuseActe.scss";
 
 export interface ActeImageProps {
-  id?: string;
+  idActe?: string;
   estReecrit?: boolean;
 }
 
-export const ActeImage: React.FC<ActeImageProps> = ({ id, estReecrit }) => {
-  const [url, setUrl] = useState<string>();
+export const VisionneuseActe: React.FC<ActeImageProps> = props => {
+  const [contenuBlob, setContenuBlob] = useState<Blob>();
   const [error, setError] = useState<string>();
   const [isImage, setIsImage] = useState(true);
 
   useEffect(() => {
-    if (id) {
+    if (props.idActe) {
       let imagesActe;
       if (isImage) {
-        imagesActe = getImagesActe(id);
+        imagesActe = getImagesActe(props.idActe);
       } else {
-        imagesActe = getTexteActe(id);
+        imagesActe = getTexteActe(props.idActe);
       }
       imagesActe
         .then((pdf: any) => {
@@ -30,39 +31,39 @@ export const ActeImage: React.FC<ActeImageProps> = ({ id, estReecrit }) => {
               getLibelle("La visualisation de l'acte n'est pas disponible")
             );
           } else {
-            const documentObjectURL = URL.createObjectURL(
-              new Blob([pdf.body], { type: "application/pdf" })
-            );
-            setUrl(documentObjectURL + "#zoom=page-fit");
+            // Tous les documents du RECE sont en base64 sauf ici où l'api renvoit un Blob
+            setContenuBlob(pdf.body);
           }
         })
-        .catch((err: any) => {
+        .catch(() => {
           logError({
-            error: err
+            messageUtilisateur:
+              "Impossible d'obtenir les informations de l'acte"
           });
-          setError(getLibelle("Une erreur s'est produite"));
         });
     }
-  }, [id, isImage]);
+  }, [props.idActe, isImage]);
 
   const clickSwitch = () => {
-    setUrl("");
+    setContenuBlob(undefined);
     setIsImage(!isImage);
   };
 
   return (
     <div id="docActeViewer" className="DocumentActeViewer">
-      {estReecrit && (
+      {props.estReecrit && (
         <button className="ButtonSwitchActe" onClick={() => clickSwitch()}>
           Texte saisi &lt;-&gt; Image
         </button>
       )}
-      {url ? (
-        <iframe title="Visionneuse PDF" src={url}></iframe>
-      ) : error ? (
-        <span>{error}</span>
+      {error ? (
+        { error }
       ) : (
-        <LinearProgress className="ProgressBar" />
+        <VisionneuseDocument
+          titre="Visionneuse PDF"
+          contenuBlob={contenuBlob}
+          typeMime={MimeType.APPLI_PDF}
+        />
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-import { base64toBlob, validateFile } from "@util/FileUtils";
+import { base64toBlobUrl, validateFile } from "@util/FileUtils";
 import { imagePngVideBase64 } from "../../../mock/data/ImagePng";
 
 test("validateFile : size error", () => {
@@ -33,6 +33,6 @@ test("validateFile : cas passant", () => {
 
 test("Attendu: base64toBlob fonctionne correctement", () => {
   window.URL.createObjectURL = jest.fn(p => p);
-  const blob = base64toBlob(imagePngVideBase64, "image/png");
+  const blob = base64toBlobUrl(imagePngVideBase64, "image/png");
   expect(blob).toBeDefined();
 });

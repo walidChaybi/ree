@@ -9,9 +9,9 @@ import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteAr
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
 import React from "react";
+import { VisionneuseActe } from "../../../../../common/composant/visionneuseActe/VisionneuseActe";
 import { IAccordionReceSection } from "../../../FicheUtils";
 import { getFichesPersonneActe } from "../personne/FichePersonne";
-import { ActeImage } from "./ActeImage";
 import { getEvenement } from "./EvenementActeUtils";
 import { getTitulaires } from "./TitulairesActeUtils";
 
@@ -57,12 +57,12 @@ function getPanelAreasActeImage(
     return [
       {
         value: (
-          <ActeImage
-            id={acte.id}
+          <VisionneuseActe
+            idActe={acte.id}
             estReecrit={
               params.visuActe === "classique" ? acte.estReecrit : undefined
             }
-          ></ActeImage>
+          ></VisionneuseActe>
         ),
         nbColonne: 1
       }

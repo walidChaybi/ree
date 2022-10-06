@@ -2,7 +2,7 @@ import { AlertesActes } from "@composant/alertesActe/AlertesActes";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import React from "react";
-import { ActeImage } from "../../../../fiche/hook/constructionComposants/acte/ActeImage";
+import { VisionneuseActe } from "../../../../../common/composant/visionneuseActe/VisionneuseActe";
 
 interface VisionneuseActeEditionProps {
   acte?: IFicheActe;
@@ -18,7 +18,10 @@ export const VisionneuseActeEdition: React.FC<
         idActeInit={props.acte?.id ? props.acte?.id : ""}
         detailRequete={props.detailRequete}
       />
-      <ActeImage id={props.acte?.id} estReecrit={props.acte?.estReecrit} />
+      <VisionneuseActe
+        idActe={props.acte?.id}
+        estReecrit={props.acte?.estReecrit}
+      />
     </>
   );
 };
