@@ -22,14 +22,13 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { getLibelle } from "@util/Utils";
 import { StaticField } from "@widget/formulaire/champFixe/StaticField";
 import React, { useContext, useEffect, useState } from "react";
-import { DocumentEC } from "../../../enum/DocumentEC";
 import "./scss/ModifierCorpsExtrait.scss";
 
 export interface ModifierCorpsExtraitProps {
   acte: IFicheActe;
   requete: IRequeteDelivrance;
   document: IDocumentReponse;
-  handleDocumentEnregistre: (document: DocumentEC) => void;
+  handleDocumentEnregistre: () => void;
 }
 
 export const ModifierCorpsExtrait: React.FC<
@@ -94,7 +93,7 @@ export const ModifierCorpsExtrait: React.FC<
       resultatGenerationEC &&
       resultatGenerationEC.resultGenerationUnDocument
     ) {
-      props.handleDocumentEnregistre(DocumentEC.Principal);
+      props.handleDocumentEnregistre();
     } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatGenerationEC]);
 

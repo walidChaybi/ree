@@ -8,7 +8,6 @@ import {
   IDocumentReponse
 } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { DocumentEC } from "@pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
 import { useEffect, useState } from "react";
 import {
   IExtraitSaisiAEnvoyer,
@@ -24,7 +23,7 @@ export interface ISauvegardeValidationSaisieExtraitParams {
   requete: IRequeteDelivrance;
   acte: IFicheActe;
   extraitSaisiAEnvoyer: IExtraitSaisiAEnvoyer;
-  callBack?: (arg: any) => void;
+  callBack?: () => void;
   problemePlurilingue: boolean;
 }
 
@@ -102,7 +101,7 @@ export function useSauvegardeValidationSaisieExtrait(
       resultatGenerationEC &&
       params?.callBack
     ) {
-      params.callBack(DocumentEC.Principal);
+      params.callBack();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatGenerationEC]);

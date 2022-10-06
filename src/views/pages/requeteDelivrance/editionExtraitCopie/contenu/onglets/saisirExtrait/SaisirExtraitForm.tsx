@@ -24,7 +24,6 @@ import React, { useCallback, useContext, useState } from "react";
 import * as Yup from "yup";
 import { EvenementValidationSchema } from "../../../../../../common/composant/formulaire/validation/EvenementValidationSchema";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
-import { DocumentEC } from "../../../enum/DocumentEC";
 import { TitulaireEvtValidationSchema } from "./contenu/sousFormulaires/validation/TitulaireEvenementFormValidation";
 import {
   ISaisieExtraitForm,
@@ -59,7 +58,7 @@ const ExtraitValidationMariageTitulairesSchema = Yup.object({
 interface ComponentFormProps {
   acte: IFicheActe;
   requete: IRequeteDelivrance;
-  handleDocumentEnregistre: (index: DocumentEC) => void;
+  handleDocumentEnregistre: () => void;
 }
 
 type SaisirExtraitFormProps = ComponentFormProps;
@@ -96,9 +95,7 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         requete: props.requete,
         acte: props.acte,
         extraitSaisiAEnvoyer: extraitAEnvoyer,
-        callBack: (documentEC: DocumentEC) => {
-          props.handleDocumentEnregistre(documentEC);
-        },
+        callBack: () => props.handleDocumentEnregistre(),
         problemePlurilingue
       });
     }
@@ -114,7 +111,7 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         requete: props.requete,
         acte: props.acte,
         extraitSaisiAEnvoyer,
-        callBack: props.handleDocumentEnregistre,
+        callBack: () => props.handleDocumentEnregistre(),
         problemePlurilingue
       });
     }
@@ -230,3 +227,4 @@ function getValidationSchema(natureActe: NatureActe) {
 
   return validationSchema;
 }
+

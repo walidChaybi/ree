@@ -9,13 +9,12 @@ import {
 } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { getOngletsEdition } from "../../EditionExtraitCopieUtils";
-import { DocumentEC } from "../../enum/DocumentEC";
 
 interface VoletEditionProps {
   requete: IRequeteDelivrance;
   document: IDocumentReponse;
   acte?: IFicheActe;
-  handleDocumentEnregistre: (index: DocumentEC) => void;
+  handleDocumentEnregistre: () => void;
 }
 
 export const VoletEdition: React.FC<VoletEditionProps> = props => {

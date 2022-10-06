@@ -47,7 +47,7 @@ import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
 import { DocumentEC } from "./enum/DocumentEC";
 
 export const getOngletsEdition = (
-  handleDocumentEnregistre: (index: DocumentEC) => void,
+  handleDocumentEnregistre: () => void,
   requete: IRequeteDelivrance,
   document?: IDocumentReponse,
   acte?: IFicheActe
@@ -169,7 +169,7 @@ export const getOngletsVisu = (
 function ajoutOngletsCopie(
   res: OngletProps,
   document: IDocumentReponse,
-  handleDocumentEnregistre: (index: DocumentEC) => void,
+  handleDocumentEnregistre: () => void,
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) {
@@ -187,7 +187,7 @@ function ajoutOngletsCopie(
 export const ajoutOngletsExtraitFilliation = (
   res: OngletProps,
   document: IDocumentReponse,
-  handleDocumentEnregistre: (index: DocumentEC) => void,
+  handleDocumentEnregistre: () => void,
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) => {
@@ -230,7 +230,7 @@ export const ajoutOngletsExtraitFilliation = (
 export const ajoutOngletsExtraitPlurilingue = (
   res: OngletProps,
   document: IDocumentReponse,
-  handleDocumentEnregistre: (index: DocumentEC) => void,
+  handleDocumentEnregistre: () => void,
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) => {
@@ -274,7 +274,7 @@ export const boutonModifierCopiePresent = (
 export const ongletMentions = (
   acte: IFicheActe,
   doc: IDocumentReponse,
-  handleDocumentEnregistre: (index: DocumentEC) => void,
+  handleDocumentEnregistre: () => void,
   requete: IRequeteDelivrance
 ) => {
   return {
@@ -294,7 +294,7 @@ export const ongletMentions = (
 const ongletSaisirExtrait = (
   acte: IFicheActe,
   requete: IRequeteDelivrance,
-  handleDocumentEnregistre: (index: DocumentEC) => void,
+  handleDocumentEnregistre: () => void,
   doc: IDocumentReponse
 ) => {
   return {

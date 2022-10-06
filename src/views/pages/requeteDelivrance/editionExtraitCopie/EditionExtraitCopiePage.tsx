@@ -157,10 +157,16 @@ export const EditionExtraitCopiePage: React.FC = () => {
     choisirDocumentEdite(indexDocEditeDemande, setIndexDocEdite, requete);
   }, [requete, indexDocEditeDemande]);
 
-  function rafraichirRequete(index: DocumentEC) {
+  function rafraichirRequete(index?: DocumentEC) {
     setOperationEnCours(false);
     setDetailRequeteParams({ idRequete: idRequeteParam });
-    setIndexDocEditeDemande(index);
+    setIndexDocEditeDemande(
+      index
+        ? index
+        : requete?.documentsReponses.findIndex(
+            doc => doc.id === documentEdite?.id
+          )
+    );
     setIsDirty(false);
   }
 

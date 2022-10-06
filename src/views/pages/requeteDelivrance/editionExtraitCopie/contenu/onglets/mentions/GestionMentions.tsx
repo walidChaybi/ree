@@ -14,7 +14,6 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { estTableauNonVide, getLibelle, getValeurOuVide } from "@util/Utils";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
-import { DocumentEC } from "../../../enum/DocumentEC";
 import { MentionsCopie } from "./contenu/MentionsCopie";
 import { MentionsExtrait } from "./contenu/MentionsExtrait";
 import {
@@ -32,7 +31,7 @@ export interface GestionMentionsProps {
   acte?: IFicheActe;
   document?: IDocumentReponse;
   requete: IRequeteDelivrance;
-  handleDocumentEnregistre: (index: DocumentEC) => void;
+  handleDocumentEnregistre: () => void;
 }
 
 export const GestionMentions: React.FC<GestionMentionsProps> = props => {
@@ -59,11 +58,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
 
   useEffect(() => {
     if (props.document && resultatSauvegarde) {
-      props.handleDocumentEnregistre(
-        props.requete.documentsReponses.findIndex(
-          doc => doc.id === props.document?.id
-        )
-      );
+      props.handleDocumentEnregistre();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatSauvegarde]);
