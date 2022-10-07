@@ -122,7 +122,15 @@ export function useSignatureDocumentHook(
 
   useEffect(() => {
     if (resultatCreationActionEtMajStatut) {
-      majDateDerniereDelivrance();
+      const currentRequeteProcessing =
+        documentsToSignWating[idRequetesToSign[0]];
+      const idActe = currentRequeteProcessing.idActe;
+      if (idActe) {
+        // En étape 1 les traitements sont effectués par Saga et donc il n'y a pas d'id_acte de renseigné dans la table document_reponse
+        majDateDerniereDelivrance();
+      } else {
+        majRequetesSignees();
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatCreationActionEtMajStatut]);
