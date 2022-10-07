@@ -151,23 +151,41 @@ export const Mention = {
     const nature = NatureMention.getCodePourNature(
       mention.typeMention.nature.code
     );
-    const date = mention.evenement.annee
-      ? getDateStringFromDateCompose(
-          {
-            annee: mention.evenement.annee.toString(),
-            mois: mention.evenement.mois?.toString(),
-            jour: mention.evenement.jour?.toString()
-          },
-          "-"
-        )
-      : REMPLACEMENT_SI_INTROUVABLE;
-    const lieu = mention.evenement.lieuReprise
-      ? mention.evenement.lieuReprise
-      : LieuxUtils.getLieu(
-          mention.evenement.ville,
-          mention.evenement.region,
-          mention.evenement.pays
-        );
+
+    let lieu;
+    let date;
+    if (mention.evenement) {
+      date = mention.evenement.annee
+        ? getDateStringFromDateCompose(
+            {
+              annee: mention.evenement.annee.toString(),
+              mois: mention.evenement.mois?.toString(),
+              jour: mention.evenement.jour?.toString()
+            },
+            "-"
+          )
+        : REMPLACEMENT_SI_INTROUVABLE;
+
+      if (
+        !mention.evenement.ville &&
+        !mention.evenement.region &&
+        !mention.evenement.pays
+      ) {
+        lieu = REMPLACEMENT_SI_INTROUVABLE;
+      } else {
+        lieu = mention.evenement.lieuReprise
+          ? mention.evenement.lieuReprise
+          : LieuxUtils.getLieu(
+              mention.evenement.ville,
+              mention.evenement.region,
+              mention.evenement.pays
+            );
+      }
+    } else {
+      lieu = REMPLACEMENT_SI_INTROUVABLE;
+      date = REMPLACEMENT_SI_INTROUVABLE;
+    }
+        
 
     let conjoint = "";
     if (
@@ -186,11 +204,11 @@ export const Mention = {
 
 function getConjoint(mention: IMention, conjoint: string) {
   let texte;
-  if (mention.textes.texteMentionDelivrance?.includes(AVEC)) {
-    texte = mention.textes.texteMentionDelivrance;
+  if (mention.textes?.texteMentionDelivrance?.includes(AVEC)) {
+    texte = mention.textes?.texteMentionDelivrance;
   }
-  if (mention.textes.texteMention?.includes(AVEC)) {
-    texte = mention.textes.texteMention;
+  if (mention.textes?.texteMention?.includes(AVEC)) {
+    texte = mention.textes?.texteMention;
   }
   if (texte) {
     const regex = /avec ([^.]*[^'A-ZÀ-Ý .-]) *([A-ZÀ-Ý' -]*).?/gm;
