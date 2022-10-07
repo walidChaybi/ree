@@ -95,7 +95,7 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         requete: props.requete,
         acte: props.acte,
         extraitSaisiAEnvoyer: extraitAEnvoyer,
-        callBack: () => props.handleDocumentEnregistre(),
+        callBack: props.handleDocumentEnregistre,
         problemePlurilingue
       });
     }
@@ -111,7 +111,7 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         requete: props.requete,
         acte: props.acte,
         extraitSaisiAEnvoyer,
-        callBack: () => props.handleDocumentEnregistre(),
+        callBack: props.handleDocumentEnregistre,
         problemePlurilingue
       });
     }

@@ -47,7 +47,7 @@ import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
 import { DocumentEC } from "./enum/DocumentEC";
 
 export const getOngletsEdition = (
-  handleDocumentEnregistre: () => void,
+  handleDocumentEnregistre: (indexDocumentAAfficher?: number) => void,
   requete: IRequeteDelivrance,
   document?: IDocumentReponse,
   acte?: IFicheActe

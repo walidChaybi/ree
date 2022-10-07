@@ -161,7 +161,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
     setOperationEnCours(false);
     setDetailRequeteParams({ idRequete: idRequeteParam });
     setIndexDocEditeDemande(
-      index
+      index !== undefined
         ? index
         : requete?.documentsReponses.findIndex(
             doc => doc.id === documentEdite?.id
