@@ -2,7 +2,6 @@ import { HTTP_STATUS_OK } from "@api/ApiManager";
 import { URL_REQUETES_COUNT } from "@api/appels/requeteApi";
 import { OfficierContextProps } from "@core/contexts/OfficierContext";
 import { IOfficier } from "@model/agent/IOfficier";
-import { URL_ACCUEIL, URL_DECONNEXION } from "@router/ReceUrls";
 import { executeEnDiffere, getLibelle } from "@util/Utils";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
@@ -33,10 +32,7 @@ export const GestionnaireFermeture: React.FC<
           resTraitement = props.fctTraitementResultat(res);
         }
       }
-      // Direction la page d'accueil afin de fermer toutes les fenêtres externes ouvertes et de ne pas empecher la deconnexion
-      if (history.location.pathname !== URL_DECONNEXION) {
-        history.push(URL_ACCUEIL);
-      }
+
       if (resTraitement) {
         // Cancel the default event
         event.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
@@ -54,6 +50,7 @@ export const GestionnaireFermeture: React.FC<
       }
     };
     if (window.top) {
+      window.top.removeEventListener("beforeunload", handleBackBeforUnload);
       window.top.addEventListener("beforeunload", handleBackBeforUnload);
     }
 
@@ -62,7 +59,8 @@ export const GestionnaireFermeture: React.FC<
         window.top.removeEventListener("beforeunload", handleBackBeforUnload);
       }
     };
-  }, [props, history]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return null;
 };

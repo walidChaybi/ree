@@ -11,7 +11,7 @@ export function useCompteurRequeteHook(
   useEffect(() => {
     getCompteurRequetes(statuts.join(","))
       .then(result => {
-        setNombreRequetesState(result.body.data);
+        setNombreRequetesState(result?.body.data || 0);
       })
       .catch(error => {
         logError({
