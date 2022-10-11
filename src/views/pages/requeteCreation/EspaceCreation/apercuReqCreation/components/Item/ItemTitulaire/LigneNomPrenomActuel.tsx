@@ -25,21 +25,31 @@ export const LigneNomPrenomActuel: React.FC<LigneNomPrenomActuelProps> = ({
 
       {afficherNomUsage && (
         <ItemLigneSdanf
-          texteSdanf={`(${getLibelle("Usage :")}${
+          texteSdanf={
             props.retenueSdanf?.nomNaissance
-          })`}
-          texteTitulaire={props.identite.noms.naissance}
+              ? `(${getLibelle("Usage :")}${props.retenueSdanf?.nomNaissance})`
+              : undefined
+          }
+          texteTitulaire={
+            props.identite.noms.naissance
+              ? `(${getLibelle("Usage :")}${props.identite.noms.naissance}})`
+              : undefined
+          }
         />
       )}
 
       {afficherNomActuel && (
         <ItemLigneSdanf
-          texteSdanf={`(${getLibelle("Actuel : ")}${
+          texteSdanf={
             props.retenueSdanf?.nomActuel
-          })`}
-          texteTitulaire={`(${getLibelle("Actuel : ")}${
+              ? `(${getLibelle("Actuel : ")}${props.retenueSdanf?.nomActuel})`
+              : undefined
+          }
+          texteTitulaire={
             props.identite.noms.actuel
-          })`}
+              ? `(${getLibelle("Actuel : ")}${props.identite.noms.actuel})`
+              : undefined
+          }
         />
       )}
 
