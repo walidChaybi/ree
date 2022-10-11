@@ -10,10 +10,7 @@ import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import {
-  FormikComponentProps,
-  SubFormProps
-} from "@widget/formulaire/utils/FormUtil";
+import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
@@ -192,13 +189,6 @@ export function getReponseForm(
   reponse?: IReponseRequeteInfo,
   affichageBoutonPrendreEnCharge = false
 ): JSX.Element {
-  const piecesJointesFormProps = {
-    nom: PIECES_JOINTES,
-    titre: getLibelle("Pièces justificatives"),
-    visible: boutonVisible,
-    disabled: formulaireDisabled
-  } as SubFormProps;
-
   const reponseReqInfoFromProps = {
     reponse,
     formulaireDisabled
@@ -209,7 +199,10 @@ export function getReponseForm(
       {!affichageBoutonPrendreEnCharge && (
         <PiecesJointesReqInfoForm
           key={PIECES_JOINTES}
-          {...piecesJointesFormProps}
+          nom={PIECES_JOINTES}
+          titre={getLibelle("Pièces justificatives")}
+          visible={boutonVisible}
+          disabled={formulaireDisabled}
         />
       )}
       <ReponseReqInfoSubForm key={REPONSE} {...reponseReqInfoFromProps} />

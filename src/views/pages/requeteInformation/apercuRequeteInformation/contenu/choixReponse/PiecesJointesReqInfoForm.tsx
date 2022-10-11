@@ -1,45 +1,39 @@
 import { PieceJointe } from "@util/FileUtils";
 import { PiecesJointes } from "@widget/formulaire/piecesJointes/PiecesJointes";
-import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
+import { ISubForm, SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./scss/PiecesJointesReqInfo.scss";
 
 const NOMBRE_PIECE_MAX = 2;
 
 const PiecesJointesReqInfoForm: React.FC<SubFormProps> = props => {
-  const [estDisabled, setEstDisabled] = useState<boolean>(false);
-  const piecesJointes: PieceJointe[] =
-    props.formik.getFieldProps(props.nom).value || [];
-
-  const setPiecesJointes = (nouvellesPiecesJointes: PieceJointe[]) => {
-    props.formik.setFieldValue(props.nom, nouvellesPiecesJointes);
-  };
-
-  useEffect(() => {
-    if (props.disabled) {
-      setEstDisabled(true);
-    } else if (props.formik.getFieldProps(props.nom).value) {
-      setEstDisabled(
-        props.formik.getFieldProps(props.nom).value.length >= NOMBRE_PIECE_MAX
-      );
-    }
-  }, [props.formik, props.nom, props.disabled]);
-
   return (
     <>
       {props.visible && (
         <div className="PiecesJointesReqInfo">
           <PiecesJointes
-            piecesJointes={piecesJointes}
+            piecesJointes={getPiecesJointes()}
             setPiecesJointes={setPiecesJointes}
             libelleBouton="Ajouter une pièce jointe"
-            disabled={estDisabled}
+            disabled={props.disabled || quotaDePiecesJointesAtteint()}
           />
         </div>
       )}
     </>
   );
+
+  function getPiecesJointes(): PieceJointe[] {
+    return props.formik.getFieldProps(props.nom).value || [];
+  }
+
+  function setPiecesJointes(nouvellesPiecesJointes: PieceJointe[]) {
+    props.formik.setFieldValue(props.nom, nouvellesPiecesJointes);
+  }
+
+  function quotaDePiecesJointesAtteint(): boolean {
+    return getPiecesJointes().length >= NOMBRE_PIECE_MAX;
+  }
 };
 
-export default connect(PiecesJointesReqInfoForm);
+export default connect<ISubForm>(PiecesJointesReqInfoForm);
