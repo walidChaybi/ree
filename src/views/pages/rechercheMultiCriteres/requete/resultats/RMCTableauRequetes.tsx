@@ -10,6 +10,9 @@ import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
+import { officierALeDroitSurUnDesPerimetres } from "@model/agent/IOfficier";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -148,22 +151,29 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   };
 
   const onClickReqCreation = (requete: IRequeteTableauCreation) => {
-    setOperationEnCours(true);
-    if (autorisePrendreEnChargeReqTableauCreation(requete)) {
-      setParamsMiseAJour({
-        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-        statutRequete: StatutRequete.PRISE_EN_CHARGE,
-        requete,
-        urlCourante,
-        typeRequete: TypeRequete.CREATION
-      });
-    } else {
-      history.push(
-        getUrlWithParam(
-          URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID,
-          requete.idRequete
-        )
-      );
+    if (
+      officierALeDroitSurUnDesPerimetres(Droit.CREER_ACTE_ETABLI, [
+        Perimetre.MEAE,
+        Perimetre.ETAX
+      ])
+    ) {
+      setOperationEnCours(true);
+      if (autorisePrendreEnChargeReqTableauCreation(requete)) {
+        setParamsMiseAJour({
+          libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
+          statutRequete: StatutRequete.PRISE_EN_CHARGE,
+          requete,
+          urlCourante,
+          typeRequete: TypeRequete.CREATION
+        });
+      } else {
+        history.push(
+          getUrlWithParam(
+            URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID,
+            requete.idRequete
+          )
+        );
+      }
     }
   };
 
