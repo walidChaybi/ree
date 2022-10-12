@@ -1,16 +1,20 @@
-import { getJourOu1er, getMoisEnLettre } from "@util/DateUtils";
+import { getJourOu1er, getMoisEnLettre, IDateCompose } from "@util/DateUtils";
 import { formatPrenoms, getValeurOuVide } from "@util/Utils";
 import { ITitulaireRequeteTableau } from "../../requete/ITitulaireRequeteTableau";
 
 export interface ITitulaireComposition {
-  prenoms: string;
-  nom: string;
+  prenoms?: string;
+  nom?: string;
   jour_naissance?: string;
   mois_naissance?: string;
-  annee_naissance: string;
-  ville_naissance: string;
-  pays_naissance: string;
-  sexe: string;
+  annee_naissance?: string;
+  ville_naissance?: string;
+  date_naissance?: IDateCompose; // Pour les plurilingues
+  pays_naissance?: string;
+  lieu_naissance?: string; // Pour les plurilingues
+  sexe?: string;
+  nom_avant_mariage?: string;
+  nom_apres_mariage?: string;
 }
 
 export const TitulaireComposition = {

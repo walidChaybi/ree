@@ -54,6 +54,14 @@ export const DocumentReponse = {
     );
   },
 
+  getExtraitPlurilingue(
+    documentsReponse?: IDocumentReponse[]
+  ): IDocumentReponse | undefined {
+    return documentsReponse?.find(d =>
+      DocumentDelivrance.estExtraitPlurilingue(d.typeDocument)
+    );
+  },
+
   estExtraitCopie(document: IDocumentReponse) {
     return DocumentDelivrance.estExtraitCopie(document.nom);
   },
@@ -156,6 +164,14 @@ export const DocumentReponse = {
     mention: IMention
   ): boolean {
     return !this.estMentionRetiree(document, mention);
+  },
+
+  getIdsMentionsRetiree(document: IDocumentReponse): string[] {
+    return document.mentionsRetirees
+      ? document.mentionsRetirees.map(
+          mentionRetiree => mentionRetiree.idMention
+        )
+      : [];
   }
 };
 

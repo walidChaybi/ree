@@ -4,6 +4,8 @@ import {
   DEUX,
   getValeurOuVide,
   premiereLettreEnMinuscule,
+  SNP,
+  SPC,
   supprimeSautDeLigneEtEspaceInutiles,
   triListeObjetsSurPropriete,
   TROIS,
@@ -13,6 +15,7 @@ import { ChoixDelivrance } from "../../requete/enum/ChoixDelivrance";
 import { IPersonne } from "../commun/IPersonne";
 import { NatureActe } from "../enum/NatureActe";
 import { NATIONALITE, NatureMention } from "../enum/NatureMention";
+import { Sexe } from "../enum/Sexe";
 import { TypeActe } from "../enum/TypeActe";
 import { TypeDeclarationConjointe } from "../enum/TypeDeclarationConjointe";
 import { TypeVisibiliteArchiviste } from "../enum/TypeVisibiliteArchiviste";
@@ -264,6 +267,128 @@ export const FicheActe = {
         return true;
       }
     }
+  },
+  aNomEtPrenomTitulaireAbsentsAnalyseMarginale(acte: IFicheActe): boolean {
+    const analyseMarginale = AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(
+      acte.analyseMarginales
+    );
+    if (analyseMarginale) {
+      return Boolean(
+        analyseMarginale.titulaires?.find(
+          titulaire =>
+            (!titulaire.nom && titulaire.prenoms?.length === 0) ||
+            (titulaire.nom === SNP && titulaire.prenoms?.[0] === SPC)
+        )
+      );
+    }
+
+    return true;
+  },
+
+  aGenreTitulaireInconnuAnalyseMarginale(acte: IFicheActe): boolean {
+    const titulaires = this.getAnalyseMarginaleLaPlusRecente(acte)?.titulaires;
+
+    return Boolean(
+      titulaires?.find(titulaire => titulaire.sexe === Sexe.INCONNU)
+    );
+  },
+
+  aGenreTitulaireIndetermine(acte: IFicheActe): boolean {
+    const titulaires = acte.titulaires;
+
+    return Boolean(
+      titulaires?.find(titulaire => titulaire.sexe === Sexe.INDETERMINE)
+    );
+  },
+
+  aDonneesLieuOuAnneeEvenementAbsentes(acte: IFicheActe) {
+    return (
+      !acte.evenement?.annee ||
+      (!acte.evenement?.lieuReprise &&
+        !acte.evenement?.ville &&
+        !acte.evenement?.region &&
+        !acte.evenement?.pays)
+    );
+  },
+
+  estIncomplet(acte: IFicheActe): boolean {
+    return (
+      this.aNomEtPrenomTitulaireAbsentsAnalyseMarginale(acte) ||
+      this.aGenreTitulaireInconnuAnalyseMarginale(acte) ||
+      this.aDonneesLieuOuAnneeEvenementAbsentes(acte)
+    );
+  },
+
+  titulairesDeMemeSexe(acte: IFicheActe): boolean {
+    const titulaires = acte.titulaires;
+    return titulaires[0].sexe === titulaires[1].sexe;
+  },
+
+  tousLesTitulairesInconnusOuIndetermines(acte: IFicheActe): boolean {
+    const titulaires = acte.titulaires;
+    return (
+      titulaires.some(el => el.sexe === Sexe.INDETERMINE) ||
+      titulaires.some(el => el.sexe === Sexe.INCONNU)
+    );
+  },
+
+  getTitulaireParSexe(
+    acte: IFicheActe,
+    sexe: Sexe
+  ): ITitulaireActe | undefined {
+    const titulaires = acte.titulaires;
+    return titulaires.find(titulaire => titulaire.sexe === sexe);
+  },
+
+  getTitulaireMasculin(acte: IFicheActe): ITitulaireActe | undefined {
+    const titulaires = acte.titulaires;
+    return titulaires.find(titulaire => titulaire.sexe === Sexe.MASCULIN);
+  },
+
+  getTitulaireInconnuOuIndetermine(
+    acte: IFicheActe
+  ): ITitulaireActe | undefined {
+    const titulaires = acte.titulaires;
+    return titulaires.find(
+      titulaire => titulaire.sexe === Sexe.INCONNU || Sexe.INDETERMINE
+    );
+  },
+
+  getTitulaireMasculinOuAutre(acte: IFicheActe): ITitulaireActe {
+    let titulaireTrouve;
+    if (
+      this.tousLesTitulairesInconnusOuIndetermines(acte) ||
+      this.titulairesDeMemeSexe(acte)
+    ) {
+      titulaireTrouve = this.getTitulairesActeDansLOrdre(acte).titulaireActe1;
+    } else {
+      titulaireTrouve = this.getTitulaireMasculin(acte);
+      if (!titulaireTrouve) {
+        titulaireTrouve = this.getTitulaireInconnuOuIndetermine(acte);
+      }
+    }
+    return titulaireTrouve as ITitulaireActe;
+  },
+
+  getTitulaireFeminin(acte: IFicheActe): ITitulaireActe | undefined {
+    const titulaires = acte.titulaires;
+    return titulaires.find(titulaire => titulaire.sexe === Sexe.FEMININ);
+  },
+
+  getTitulaireFemininOuAutre(acte: IFicheActe): ITitulaireActe {
+    let titulaireTrouve;
+    if (
+      this.tousLesTitulairesInconnusOuIndetermines(acte) ||
+      this.titulairesDeMemeSexe(acte)
+    ) {
+      titulaireTrouve = this.getTitulairesActeDansLOrdre(acte).titulaireActe2;
+    } else {
+      titulaireTrouve = this.getTitulaireFeminin(acte);
+      if (!titulaireTrouve) {
+        titulaireTrouve = this.getTitulaireInconnuOuIndetermine(acte);
+      }
+    }
+    return titulaireTrouve as ITitulaireActe;
   }
 };
 

@@ -109,7 +109,7 @@ export const Mention = {
         )
       : this.trierMentionsNumeroOrdreApposition(mentions);
   },
-  filtreSansTexteMentionNiTexteMentionDelivrance(
+  filtreAvecTexteMentionEtTexteMentionDelivrance(
     mentions?: IMention[]
   ): IMention[] {
     return mentions
@@ -118,6 +118,11 @@ export const Mention = {
             mention.textes?.texteMention ||
             mention.textes?.texteMentionDelivrance
         )
+      : [];
+  },
+  filtreAvecTexteMentionPlurilingue(mentions?: IMention[]): IMention[] {
+    return mentions
+      ? mentions.filter(mention => mention.textes?.texteMentionPlurilingue)
       : [];
   },
   filtrerTexteMentionPlurilingueEtNatureAdequat(
@@ -185,7 +190,6 @@ export const Mention = {
       lieu = REMPLACEMENT_SI_INTROUVABLE;
       date = REMPLACEMENT_SI_INTROUVABLE;
     }
-        
 
     let conjoint = "";
     if (
@@ -224,3 +228,4 @@ function getConjoint(mention: IMention, conjoint: string) {
   }
   return conjoint;
 }
+

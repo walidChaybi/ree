@@ -471,3 +471,726 @@ export const mentionsPlurilingues = [
     }
   }
 ];
+
+export const mentionsPlurilinguesMariageNombre7 = [
+  {
+    id: "f6947623-9959-4d07-8963-f55b16a01071",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 2,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663158980650,
+    titulaires: null,
+    typeMention: {
+      codeType: "39",
+      libelleType:
+        "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
+      codeSousType: "39-98",
+      libelleSousType: "Séparation de corps - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+        nom: "NATURE_MENTION",
+        code: "3",
+        libelle: "Séparation de corps",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 15,
+      mois: 6,
+      annee: 2021,
+      voie: null,
+      ville: "nantes",
+      arrondissement: null,
+      region: "Pays de Loire",
+      pays: "FRANCE",
+      lieuReprise: null
+    },
+    textes: {
+      texteMention: null,
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance: null,
+      texteMentionPlurilingue: "Sc 31-01-92 Nantes Jenmi"
+    }
+  },
+  {
+    id: "f692c7f2-d9f8-4ab0-80f2-f63a026819de",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 3,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663158896811,
+    titulaires: null,
+    typeMention: {
+      codeType: "1",
+      libelleType: "Mariage",
+      codeSousType: "1-99",
+      libelleSousType: "Mariage - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+        nom: "NATURE_MENTION",
+        code: "15",
+        libelle: "Mariage",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 15,
+      mois: 6,
+      annee: 2021,
+      voie: null,
+      ville: "nantes",
+      arrondissement: null,
+      region: "Pays de Loire",
+      pays: "FRANCE",
+      lieuReprise: null
+    },
+    textes: {
+      texteMention: "je suis marié avec Jean-Claude,Marie DUSS.",
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance: null,
+      texteMentionPlurilingue: "Sc 31-01-92 Nantes Jenmi"
+    }
+  },
+  {
+    id: "f692c7f2-d9f8-4ab0-80f2-f63a026815de",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 3,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663158896811,
+    titulaires: null,
+    typeMention: {
+      codeType: "1",
+      libelleType: "Mariage",
+      codeSousType: "1-99",
+      libelleSousType: "Mariage - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+        nom: "NATURE_MENTION",
+        code: "15",
+        libelle: "Mariage",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 15,
+      mois: 6,
+      annee: 2021,
+      voie: null,
+      ville: "nantes",
+      arrondissement: null,
+      region: "Pays de Loire",
+      pays: "FRANCE",
+      lieuReprise: null
+    },
+    textes: {
+      texteMention: "je suis marié avec Jean-Claude,Marie DUSS.",
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance: null,
+      texteMentionPlurilingue: "Div 31-01-92 Nantes Jenmi"
+    }
+  },
+  {
+    id: "f692c742-d9f8-4ab0-80f2-f63a026815de",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 3,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663158896811,
+    titulaires: null,
+    typeMention: {
+      codeType: "1",
+      libelleType: "Mariage",
+      codeSousType: "1-99",
+      libelleSousType: "Mariage - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+        nom: "NATURE_MENTION",
+        code: "15",
+        libelle: "Mariage",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 15,
+      mois: 6,
+      annee: 2021,
+      voie: null,
+      ville: "nantes",
+      arrondissement: null,
+      region: "Pays de Loire",
+      pays: "FRANCE",
+      lieuReprise: null
+    },
+    textes: {
+      texteMention: "je suis marié avec Jean-Claude,Marie DUSS.",
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance: null,
+      texteMentionPlurilingue: "Div 31-01-92 Nantes Jenmi"
+    }
+  },
+  {
+    id: "f696c742-d9f8-4ab0-80f2-f63a026815de",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 3,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663158896811,
+    titulaires: null,
+    typeMention: {
+      codeType: "1",
+      libelleType: "Mariage",
+      codeSousType: "1-99",
+      libelleSousType: "Mariage - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+        nom: "NATURE_MENTION",
+        code: "15",
+        libelle: "Mariage",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 15,
+      mois: 6,
+      annee: 2021,
+      voie: null,
+      ville: "nantes",
+      arrondissement: null,
+      region: "Pays de Loire",
+      pays: "FRANCE",
+      lieuReprise: null
+    },
+    textes: {
+      texteMention: "je suis marié avec Jean-Claude,Marie DUSS.",
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance: null,
+      texteMentionPlurilingue: "Div 31-01-92 Paris Jenmi"
+    }
+  },
+  {
+    id: "f697c742-d9f8-4ab0-80f2-f63a026815de",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 3,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663158896811,
+    titulaires: null,
+    typeMention: {
+      codeType: "1",
+      libelleType: "Mariage",
+      codeSousType: "1-99",
+      libelleSousType: "Mariage - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+        nom: "NATURE_MENTION",
+        code: "15",
+        libelle: "Mariage",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 15,
+      mois: 6,
+      annee: 2021,
+      voie: null,
+      ville: "nantes",
+      arrondissement: null,
+      region: "Pays de Loire",
+      pays: "FRANCE",
+      lieuReprise: null
+    },
+    textes: {
+      texteMention: "je suis marié avec Jean-Claude,Marie DUSS.",
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance: null,
+      texteMentionPlurilingue: "Div 31-01-92 Angers Jenmi"
+    }
+  },
+  {
+    id: "f697c742-y9f8-4ab0-80f2-f63a026815de",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 3,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663158896811,
+    titulaires: null,
+    typeMention: {
+      codeType: "1",
+      libelleType: "Mariage",
+      codeSousType: "1-99",
+      libelleSousType: "Mariage - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+        nom: "NATURE_MENTION",
+        code: "15",
+        libelle: "Mariage",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 15,
+      mois: 6,
+      annee: 2021,
+      voie: null,
+      ville: "nantes",
+      arrondissement: null,
+      region: "Pays de Loire",
+      pays: "FRANCE",
+      lieuReprise: null
+    },
+    textes: {
+      texteMention: "je suis marié avec Jean-Claude,Marie DUSS.",
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance: null,
+      texteMentionPlurilingue: "Div 31-01-92 Angers Jenmi"
+    }
+  }
+];
+
+export const mentionsPlurilinguesMariageAvec6 = [
+  {
+    id: "f6947623-9959-4d07-8963-f55b16a01071",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 2,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663158980650,
+    titulaires: null,
+    typeMention: {
+      codeType: "39",
+      libelleType:
+        "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
+      codeSousType: "39-98",
+      libelleSousType: "Séparation de corps - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+        nom: "NATURE_MENTION",
+        code: "3",
+        libelle: "Séparation de corps",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 15,
+      mois: 6,
+      annee: 2021,
+      voie: null,
+      ville: "nantes",
+      arrondissement: null,
+      region: "Pays de Loire",
+      pays: "FRANCE",
+      lieuReprise: null
+    },
+    textes: {
+      texteMention: null,
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance: null,
+      texteMentionPlurilingue: "Sc 31-01-92 Nantes Jenmi"
+    }
+  },
+  {
+    id: "f692c7f2-d9f8-4ab0-80f2-f63a026819de",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 3,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663158896811,
+    titulaires: null,
+    typeMention: {
+      codeType: "1",
+      libelleType: "Mariage",
+      codeSousType: "1-99",
+      libelleSousType: "Mariage - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+        nom: "NATURE_MENTION",
+        code: "15",
+        libelle: "Mariage",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 15,
+      mois: 6,
+      annee: 2021,
+      voie: null,
+      ville: "nantes",
+      arrondissement: null,
+      region: "Pays de Loire",
+      pays: "FRANCE",
+      lieuReprise: null
+    },
+    textes: {
+      texteMention: "je suis marié avec Jean-Claude,Marie DUSS.",
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance: null,
+      texteMentionPlurilingue: "Sc 31-01-92 Nantes Jenmi"
+    }
+  },
+  {
+    id: "f692c7f2-d9f8-4ab0-80f2-f63a026815de",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 3,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663158896811,
+    titulaires: null,
+    typeMention: {
+      codeType: "1",
+      libelleType: "Mariage",
+      codeSousType: "1-99",
+      libelleSousType: "Mariage - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+        nom: "NATURE_MENTION",
+        code: "15",
+        libelle: "Mariage",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 15,
+      mois: 6,
+      annee: 2021,
+      voie: null,
+      ville: "nantes",
+      arrondissement: null,
+      region: "Pays de Loire",
+      pays: "FRANCE",
+      lieuReprise: null
+    },
+    textes: {
+      texteMention: "je suis marié avec Jean-Claude,Marie DUSS.",
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance: null,
+      texteMentionPlurilingue: "Div 31-01-92 Nantes Jenmi"
+    }
+  },
+  {
+    id: "f692c742-d9f8-4ab0-80f2-f63a026815de",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 3,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663158896811,
+    titulaires: null,
+    typeMention: {
+      codeType: "1",
+      libelleType: "Mariage",
+      codeSousType: "1-99",
+      libelleSousType: "Mariage - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+        nom: "NATURE_MENTION",
+        code: "15",
+        libelle: "Mariage",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 15,
+      mois: 6,
+      annee: 2021,
+      voie: null,
+      ville: "nantes",
+      arrondissement: null,
+      region: "Pays de Loire",
+      pays: "FRANCE",
+      lieuReprise: null
+    },
+    textes: {
+      texteMention: "je suis marié avec Jean-Claude,Marie DUSS.",
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance: null,
+      texteMentionPlurilingue: "Div 31-01-92 Nantes Jenmi"
+    }
+  },
+  {
+    id: "f696c742-d9f8-4ab0-80f2-f63a026815de",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 3,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663158896811,
+    titulaires: null,
+    typeMention: {
+      codeType: "1",
+      libelleType: "Mariage",
+      codeSousType: "1-99",
+      libelleSousType: "Mariage - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+        nom: "NATURE_MENTION",
+        code: "15",
+        libelle: "Mariage",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 15,
+      mois: 6,
+      annee: 2021,
+      voie: null,
+      ville: "nantes",
+      arrondissement: null,
+      region: "Pays de Loire",
+      pays: "FRANCE",
+      lieuReprise: null
+    },
+    textes: {
+      texteMention: "je suis marié avec Jean-Claude,Marie DUSS.",
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance: null,
+      texteMentionPlurilingue: "Div 31-01-92 Paris Jenmi"
+    }
+  },
+  {
+    id: "f697c742-d9f8-4ab0-80f2-f63a026815de",
+    numeroOrdre: null,
+    numeroOrdreExtrait: 3,
+    villeApposition: null,
+    regionApposition: null,
+    dateApposition: null,
+    dateCreation: null,
+    statut: "BROUILLON",
+    dateStatut: 1663158896811,
+    titulaires: null,
+    typeMention: {
+      codeType: "1",
+      libelleType: "Mariage",
+      codeSousType: "1-99",
+      libelleSousType: "Mariage - Autres",
+      estActif: true,
+      modeInformatisation: "NON",
+      nature: {
+        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+        nom: "NATURE_MENTION",
+        code: "15",
+        libelle: "Mariage",
+        estActif: true,
+        opposableAuTiers: true
+      },
+      natureActe: "MARIAGE",
+      estSousType: true
+    },
+    autoriteEtatCivil: {
+      libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
+      nomOEC: null,
+      prenomOEC: null
+    },
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 15,
+      mois: 6,
+      annee: 2021,
+      voie: null,
+      ville: "nantes",
+      arrondissement: null,
+      region: "Pays de Loire",
+      pays: "FRANCE",
+      lieuReprise: null
+    },
+    textes: {
+      texteMention: "je suis marié avec Jean-Claude,Marie DUSS.",
+      texteApposition: null,
+      texteOEC: null,
+      texteMentionDelivrance: null,
+      texteMentionPlurilingue: "Div 31-01-92 Angers Jenmi"
+    }
+  }
+];

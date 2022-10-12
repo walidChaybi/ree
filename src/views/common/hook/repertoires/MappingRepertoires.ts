@@ -125,7 +125,9 @@ export function mapActe(data: any): IFicheActe {
   return dataActe;
 }
 
-function mapAnalysesMarginales(ams: any[]): IAnalyseMarginale[] | undefined {
+function mapAnalysesMarginales(
+  ams: IAnalyseMarginale[]
+): IAnalyseMarginale[] | undefined {
   return ams?.map((am: any) => ({
     ...am,
     dateDebut: am.dateDebut ? getDateFromTimestamp(am.dateDebut) : undefined,
@@ -135,17 +137,21 @@ function mapAnalysesMarginales(ams: any[]): IAnalyseMarginale[] | undefined {
 }
 
 export function mapTitulaires(titulaires: any[]): ITitulaireActe[] {
-  return titulaires.map(titulaire => ({
-    ...titulaire,
-    sexe: titulaire.sexe ? Sexe.getEnumFor(titulaire.sexe) : Sexe.INCONNU,
-    typeDeclarationConjointe: titulaire.typeDeclarationConjointe
-      ? TypeDeclarationConjointe.getEnumFor(titulaire.typeDeclarationConjointe)
-      : TypeDeclarationConjointe.ABSENCE_DECLARATION,
-    dateDeclarationConjointe: titulaire.dateDeclarationConjointe
-      ? getDateFromTimestamp(titulaire.dateDeclarationConjointe)
-      : undefined,
-    filiations: mapFiliation(titulaire.filiations)
-  }));
+  return titulaires
+    .map(titulaire => ({
+      ...titulaire,
+      sexe: titulaire.sexe ? Sexe.getEnumFor(titulaire.sexe) : Sexe.INCONNU,
+      typeDeclarationConjointe: titulaire.typeDeclarationConjointe
+        ? TypeDeclarationConjointe.getEnumFor(
+            titulaire.typeDeclarationConjointe
+          )
+        : TypeDeclarationConjointe.ABSENCE_DECLARATION,
+      dateDeclarationConjointe: titulaire.dateDeclarationConjointe
+        ? getDateFromTimestamp(titulaire.dateDeclarationConjointe)
+        : undefined,
+      filiations: mapFiliation(titulaire.filiations)
+    }))
+    .sort((a, b) => a.ordre - b.ordre);
 }
 
 function mapFiliation(filiations?: any[]) {

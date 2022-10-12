@@ -6,15 +6,10 @@ import {
   NOM_DOCUMENT_EC_PLURILINGUE,
   NOM_DOCUMENT_EC_SANS_FILIATION
 } from "@model/composition/extraitCopie/IExtraitCopieComposition";
-import {
-  AnalyseMarginale,
-  IAnalyseMarginale
-} from "@model/etatcivil/acte/IAnalyseMarginale";
+import { IExtraitPlurilingueComposition } from "@model/composition/extraitCopie/plurilingue/IExtraitPlurilingueComposition";
 import { ICorpsExtraitRectification } from "@model/etatcivil/acte/ICorpsExtraitRectification";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -29,7 +24,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { SNP, SPC, tousRenseignes } from "@util/Utils";
+import { tousRenseignes } from "@util/Utils";
 import { IExtraitCopieApiHookResultat } from "../../composition/CompositionExtraitCopieHook";
 import { ICreerCourrierECParams } from "../../requete/creerCourrierECHook";
 import { creationCompositionCopieActeImage } from "./creationComposition/creationCompositionCopieActeImage";
@@ -140,7 +135,7 @@ export function creationComposition(
   validation: Validation,
   mentionsRetirees: string[],
   choixDelivrance: ChoixDelivrance
-): IExtraitCopieComposition | undefined {
+): IExtraitCopieComposition | IExtraitPlurilingueComposition | undefined {
   let composition;
 
   if (
@@ -154,7 +149,12 @@ export function creationComposition(
       choixDelivrance
     );
   } else if (estDemandeExtraitPlurilingue(choixDelivrance)) {
-    composition = creationCompositionExtraitPlurilingue(acte);
+    composition = creationCompositionExtraitPlurilingue(
+      acte,
+      validation,
+      mentionsRetirees,
+      choixDelivrance
+    );
   } else if (estDemandeCopieActeImage(acte, choixDelivrance)) {
     composition = creationCompositionCopieActeImage(
       acte,
@@ -168,13 +168,15 @@ export function creationComposition(
 export const getValidationEC = (
   acte: IFicheActe,
   choixDelivrance: ChoixDelivrance,
-  validation = Validation.O
+  validation = Validation.O,
+  requete: IRequeteDelivrance
 ) => {
   switch (choixDelivrance) {
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
-    case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
       return getValidationExtrait(acte, choixDelivrance, validation);
+    case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
+      return getValidationExtraitPlurilingue(acte, choixDelivrance, validation);
     case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
     case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
       if (!acte.corpsImage && !acte.corpsTexte) {
@@ -201,11 +203,35 @@ function getValidationExtrait(
       acte.corpsExtraitRectifications,
       choixDelivrance
     ) &&
-    (aNomEtPrenomTitulaireAbsentsAnalyseMarginale(acte.analyseMarginales) ||
-      aGenreTitulaireInconnu(acte.titulaires) ||
-      aDonneesLieuOuAnneeEvenementAbsentes(acte))
+    FicheActe.estIncomplet(acte)
   ) {
     return Validation.E;
+  }
+  return validation;
+}
+
+function getValidationExtraitPlurilingue(
+  acte: IFicheActe,
+  choixDelivrance: ChoixDelivrance,
+  validation: Validation
+) {
+  // Pour un choix de délivrance d'extrait avec ou sans filiation d'un acte de mariage ou de naissance
+  // Si l'acte ne comporte pas de corps d'extrait modifier correspondant au choix de delivrance
+  // ou que les noms et prenoms de l'analyse marginales sont absents
+  // ou que le genre est d'un des titulaires est inconnu
+  // ou que l'année ou le lieux de l'évenement ne sont absents
+  if (
+    (aPasCorpsExtraitRectificationCorrespondant(
+      acte.corpsExtraitRectifications,
+      choixDelivrance
+    ) &&
+      FicheActe.estIncomplet(acte)) ||
+    FicheActe.titulairesDeMemeSexe(acte) ||
+    FicheActe.tousLesTitulairesInconnusOuIndetermines(acte)
+  ) {
+    return Validation.E;
+  } else if (validation === Validation.E) {
+    return Validation.N;
   }
   return validation;
 }
@@ -219,40 +245,6 @@ export const estDelivranceExtraitAvecOuSansFiliationActeNaissanceOuMariage =
         choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION)
     );
   };
-
-export const aDonneesLieuOuAnneeEvenementAbsentes = function (
-  acte: IFicheActe
-) {
-  return (
-    !acte.evenement?.annee ||
-    (!acte.evenement?.lieuReprise &&
-      !acte.evenement?.ville &&
-      !acte.evenement?.region &&
-      !acte.evenement?.pays)
-  );
-};
-
-export const aGenreTitulaireInconnu = function (titulaires?: ITitulaireActe[]) {
-  if (titulaires) {
-    return titulaires?.find(titulaire => titulaire.sexe === Sexe.INCONNU);
-  }
-  return true;
-};
-
-export const aNomEtPrenomTitulaireAbsentsAnalyseMarginale = function (
-  analysesMarginales?: IAnalyseMarginale[]
-) {
-  const analyseMarginale =
-    AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(analysesMarginales);
-  if (analyseMarginale) {
-    return analyseMarginale.titulaires?.find(
-      titulaire =>
-        (!titulaire.nom && titulaire.prenoms?.length === 0) ||
-        (titulaire.nom === SNP && titulaire.prenoms?.[0] === SPC)
-    );
-  }
-  return true;
-};
 
 export const aPasCorpsExtraitRectificationCorrespondant = function (
   corpsExtraitRectifications: ICorpsExtraitRectification[],
@@ -293,7 +285,9 @@ export function creationEC(
       // @ts-ignore NonNull
       choixDelivrance,
       // @ts-ignore NonNull
-      params.validation
+      params.validation,
+      // @ts-ignore NonNull
+      params.requete
     );
 
     const composition = creationComposition(

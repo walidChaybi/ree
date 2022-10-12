@@ -508,7 +508,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     const texteMentions: string[] = [];
 
     let mentionsFiltrees =
-      Mention.filtreSansTexteMentionNiTexteMentionDelivrance(mentions);
+      Mention.filtreAvecTexteMentionEtTexteMentionDelivrance(mentions);
 
     mentionsFiltrees = mentionsFiltrees.filter(mention => {
       return !idMentionsRetirees.some(

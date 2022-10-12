@@ -68,7 +68,7 @@ export function mappingVersMentionAffichagePourExtraitAvecOuSansFiliation(
   document: IDocumentReponse
 ): IMentionAffichage[] {
   const mentions =
-    Mention.filtreSansTexteMentionNiTexteMentionDelivrance(mentionsApi);
+    Mention.filtreAvecTexteMentionEtTexteMentionDelivrance(mentionsApi);
 
   Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions);
 
