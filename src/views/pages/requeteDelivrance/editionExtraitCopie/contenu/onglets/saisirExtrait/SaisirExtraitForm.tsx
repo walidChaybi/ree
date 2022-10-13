@@ -6,6 +6,7 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { RECEContext } from "@core/body/Body";
 import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
+import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import {
   ISauvegardeValidationSaisieExtraitParams,
   useSauvegardeValidationSaisieExtrait
@@ -22,6 +23,7 @@ import FormikEffect from "@widget/formulaire/utils/FormikEffect";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useContext, useState } from "react";
 import * as Yup from "yup";
+import { ficheActeDeces2 } from "../../../../../../../mock/data/ficheActe";
 import { EvenementValidationSchema } from "../../../../../../common/composant/formulaire/validation/EvenementValidationSchema";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
 import { TitulaireEvtValidationSchema } from "./contenu/sousFormulaires/validation/TitulaireEvenementFormValidation";
@@ -117,24 +119,55 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
     }
   }, [extraitSaisiAEnvoyer, props]);
 
+  // const titulairesAMs =
+  //   FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNom(
+  //     props.acte
+  //   );
+  // const evenement = props.acte.evenement;
+
+  // const titulaire1Parents = TitulaireActe.getAuMoinsDeuxParentsDirects(
+  //   props.acte.titulaires[0]
+  // );
+  // const titulaire2Parents = TitulaireActe.getAuMoinsDeuxParentsDirects(
+  //   props.acte.titulaires[1]
+  // );
+  // const natureActe = props.acte.nature;
+
+  // const formDefaultValues = mappingActeVerFormulaireSaisirExtrait(
+  //   props.acte,
+  //   titulairesAMs
+  // );
+
+  const acteTmp = mapActe(ficheActeDeces2.data);
+  console.log("acteTmp", acteTmp);
+
   const titulairesAMs =
-    FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNom(
-      props.acte
-    );
-  const evenement = props.acte.evenement;
+    FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNom(acteTmp);
+
+  const evenement = acteTmp.evenement;
 
   const titulaire1Parents = TitulaireActe.getAuMoinsDeuxParentsDirects(
-    props.acte.titulaires[0]
+    acteTmp.titulaires[0]
   );
   const titulaire2Parents = TitulaireActe.getAuMoinsDeuxParentsDirects(
-    props.acte.titulaires[1]
+    acteTmp.titulaires[1]
   );
-  const natureActe = props.acte.nature;
+
+  const natureActe = acteTmp.nature;
+
+  // acteTmp.evenement!.lieuReprise = "en mer";
+  // acteTmp.evenement!.ville = "en mer";
+  // acteTmp.evenement!.region = "";
+  // acteTmp.evenement!.pays = "";
 
   const formDefaultValues = mappingActeVerFormulaireSaisirExtrait(
-    props.acte,
+    acteTmp,
     titulairesAMs
   );
+  console.log("formDefaultValues", formDefaultValues);
+
+  // TODO A GARDER
+  const titulairesActe = FicheActe.getTitulairesActeTabDansLOrdre(acteTmp);
 
   return (
     <>
@@ -166,7 +199,9 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
           natureActe,
           titulaire1Parents,
           titulaire2Parents,
-          evenement
+          evenement,
+          titulairesActe[0]?.naissance,
+          titulairesActe[1]?.naissance
         )}
 
         <ReinitialiserValiderFormBoutons

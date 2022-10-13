@@ -46,7 +46,9 @@ export function getTitulairesEvenementsEtParentsForm(
   natureActe: NatureActe,
   titulaire1Parents: IFiliation[],
   titulaire2Parents: IFiliation[],
-  evenement?: IEvenement
+  evenement?: IEvenement,
+  naissanceTitulaire1?: IEvenement,
+  naissanceTitulaire2?: IEvenement
 ) {
   return (
     <>
@@ -57,7 +59,7 @@ export function getTitulairesEvenementsEtParentsForm(
         getTitulaireEvenementForm(
           TITULAIRE_EVT_1,
           titulairesAMs[0],
-          evenement,
+          natureActe === NatureActe.NAISSANCE ? evenement : naissanceTitulaire1,
           natureActe
         )}
       {natureActe === NatureActe.DECES &&
@@ -72,7 +74,7 @@ export function getTitulairesEvenementsEtParentsForm(
         getTitulaireEvenementForm(
           TITULAIRE_EVT_2,
           titulairesAMs[1],
-          evenement,
+          natureActe === NatureActe.NAISSANCE ? evenement : naissanceTitulaire2,
           natureActe
         )}
       {/* Parents titulaire 2 */}
@@ -125,7 +127,7 @@ function getTitulaireParentsForm(
         <ParentNaissanceForm
           nom={withNamespace(nomFormTitulaire, `${PARENT_NAISS}${index + 1}`)}
           parent={parent}
-          sansDateAgeEtLieuNaissance={natureActe === NatureActe.DECES}
+          // sansDateAgeEtLieuNaissance={natureActe === NatureActe.DECES} TODO A REMETTRE
         />
       </AccordionRece>
     );

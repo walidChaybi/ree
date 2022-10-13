@@ -243,63 +243,57 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
           />
         )}
 
-      {!estChoixPaysInconnu() &&
-        decomposerLieuActifOuPasDeLieuRepriseRenseigne() && (
-          <>
+      {affichageVilleRegionPays() && (
+        <>
+          <InputField
+            name={nomVille}
+            label="Ville"
+            onChange={onChangeVilleRegionPays}
+            validate={
+              props.validation
+                ? (value: string) =>
+                    valideLieu(props.formik, VILLE, value, props.nom)
+                : undefined
+            }
+          />
+          {estModeSaisieFrance &&
+            LieuxUtils.isVilleAvecArrondissement(
+              props.formik.getFieldProps(nomVille).value
+            ) && (
+              <SelectField
+                name={nomArrondissement}
+                label={getLibelle("Arrondissement")}
+                options={LieuxUtils.getOptionsArrondissement(
+                  props.formik.getFieldProps(nomVille).value
+                )}
+                pasPremiereOptionVide={true}
+                onChange={onChangeArrondissement}
+              />
+            )}
+          <InputField
+            name={nomRegionDepartement}
+            label={getLabelOuDepartement(estModeSaisieFrance)}
+            onChange={onChangeVilleRegionPays}
+            validate={(value: string) =>
+              props.validation
+                ? valideLieu(props.formik, REGION_DEPARTEMENT, value, props.nom)
+                : undefined
+            }
+          />
+          {!estModeSaisieFrance && (
             <InputField
-              name={nomVille}
-              label="Ville"
-              onChange={onChangeVilleRegionPays}
-              validate={
-                props.validation
-                  ? (value: string) =>
-                      valideLieu(props.formik, VILLE, value, props.nom)
-                  : undefined
-              }
-            />
-            {estModeSaisieFrance &&
-              LieuxUtils.isVilleAvecArrondissement(
-                props.formik.getFieldProps(nomVille).value
-              ) && (
-                <SelectField
-                  name={nomArrondissement}
-                  label={getLibelle("Arrondissement")}
-                  options={LieuxUtils.getOptionsArrondissement(
-                    props.formik.getFieldProps(nomVille).value
-                  )}
-                  pasPremiereOptionVide={true}
-                  onChange={onChangeArrondissement}
-                />
-              )}
-            <InputField
-              name={nomRegionDepartement}
-              label={getLabelOuDepartement(estModeSaisieFrance)}
+              name={nomPays}
+              label="Pays"
               onChange={onChangeVilleRegionPays}
               validate={(value: string) =>
                 props.validation
-                  ? valideLieu(
-                      props.formik,
-                      REGION_DEPARTEMENT,
-                      value,
-                      props.nom
-                    )
+                  ? valideLieu(props.formik, PAYS, value, props.nom)
                   : undefined
               }
             />
-            {!estModeSaisieFrance && (
-              <InputField
-                name={nomPays}
-                label="Pays"
-                onChange={onChangeVilleRegionPays}
-                validate={(value: string) =>
-                  props.validation
-                    ? valideLieu(props.formik, PAYS, value, props.nom)
-                    : undefined
-                }
-              />
-            )}
-          </>
-        )}
+          )}
+        </>
+      )}
     </div>
   );
 
@@ -307,10 +301,13 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
     return decomposerLieu || !lieuCompletRenseigne;
   }
 
-  function estChoixPaysInconnu(): boolean {
+  function affichageVilleRegionPays(): boolean {
     return (
-      props.formik.getFieldProps(nomEtrangerFrance).value ===
-      EtrangerFrance.getKey(EtrangerFrance.INCONNU)
+      (props.formik.getFieldProps(nomEtrangerFrance).value !==
+        EtrangerFrance.getKey(EtrangerFrance.INCONNU) &&
+        !lieuCompletRenseigne) ||
+      (!lieuCompletRenseigne && props.gestionEtrangerFrance === false) ||
+      decomposerLieu
     );
   }
 };

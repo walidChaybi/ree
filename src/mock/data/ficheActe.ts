@@ -2205,11 +2205,11 @@ export const ficheActeDeces2 = {
       mois: 4,
       annee: 2020,
       voie: null,
-      ville: "Barcelone",
+      ville: "",
       arrondissement: null,
-      region: "Catalogne",
-      pays: "Espagne",
-      lieuReprise: null
+      region: "",
+      pays: "",
+      lieuReprise: "test test"
     },
     mentions: [],
     titulaires: [
