@@ -9,7 +9,7 @@ test("render composant SectionPart", async () => {
   );
   expect(Personne.getAutresPrenom(personneMock)).toBe("Solomon");
   expect(Personne.getLieuNaissance(personneMock)).toBe(
-    "Marseille arr.2 (Provence-Aples-Côte d'Azur)"
+    "Marseille 2ème arrondissement (Provence-Aples-Côte d'Azur)"
   );
   expect(Personne.getLieuDeces(personneMock)).toBe(
     "Londres, Angleterre (Grande Bretagne)"

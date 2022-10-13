@@ -75,7 +75,7 @@ test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
   ).toBe("Lieu de naissance");
   expect(
     panels.panels[0].panelAreas[1].parts[0].partContent.contents[5].value
-  ).toBe("Paris arr.20");
+  ).toBe("Paris 20ème arrondissement");
 
   expect(
     panels.panels[0].panelAreas[1].parts[0].partContent.contents[6].libelle

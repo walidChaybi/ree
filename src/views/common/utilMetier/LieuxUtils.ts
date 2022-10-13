@@ -10,6 +10,7 @@ import {
   NEUF,
   premiereLettreEnMajuscule,
   SEIZE,
+  supprimerZerosInutiles,
   VINGT
 } from "@util/Utils";
 
@@ -125,6 +126,9 @@ export class LieuxUtils {
     const paysString = pays
       ? formatPremieresLettresMajusculesNomCompose(pays)
       : "";
+    const arrondissementString = arrondissement
+      ? ` ${this.formateArrondissement(arrondissement, true)}`
+      : "";
 
     const regionStringEntreParentheses =
       LieuxUtils.getLieuEntreParentheses(regionString);
@@ -134,22 +138,38 @@ export class LieuxUtils {
       this.estVilleJerusalem(ville) ||
       !pays
     ) {
-      if (
-        !LieuxUtils.isVilleAvecArrondissement(ville) ||
-        arrondissement == null
-      ) {
-        return `${villeString}${regionStringEntreParentheses}`;
-      } else if (!LieuxUtils.isVilleParis(villeString)) {
-        return `${villeString} arr.${arrondissement}${regionStringEntreParentheses}`;
-      } else {
-        return `${villeString} arr.${arrondissement}`;
-      }
+      return this.getLieuModeFrance(
+        villeString,
+        regionStringEntreParentheses,
+        arrondissementString
+      );
     } else {
       return LieuxUtils.formatAdresseEtrangere(
         paysString,
         regionString,
         villeString
       );
+    }
+  }
+
+  public static getLieuModeFrance(
+    ville?: string,
+    region?: string,
+    arrondissement?: string
+  ) {
+    if (
+      !LieuxUtils.isVilleAvecArrondissement(ville) ||
+      arrondissement == null
+    ) {
+      if (!ville) {
+        return region ? `-- ${region}` : "";
+      } else {
+        return `${ville}${region}`;
+      }
+    } else if (!LieuxUtils.isVilleParis(ville)) {
+      return `${ville}${arrondissement}${region}`;
+    } else {
+      return `${ville}${arrondissement}`;
     }
   }
 
@@ -261,7 +281,9 @@ export class LieuxUtils {
       if (arrondissement === "1") {
         arrondissementFormate = "1er arrondissement";
       } else if (arrondissement) {
-        arrondissementFormate = `${arrondissement}ème arrondissement`;
+        arrondissementFormate = `${supprimerZerosInutiles(
+          arrondissement
+        )}ème arrondissement`;
       }
     } else {
       arrondissementFormate = `arr.${arrondissement}`;

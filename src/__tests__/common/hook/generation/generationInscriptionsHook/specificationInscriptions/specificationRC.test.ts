@@ -24,7 +24,7 @@ test("Attendu: specificationRC.getElementsJasper avec une décision Notaire autr
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
 Date de naissance: 1er septembre 1983
-Lieu de naissance: Paris arr.20`;
+Lieu de naissance: Paris 20ème arrondissement`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
   expect(elementsJasper.decisionRecue1).toBe(
@@ -46,7 +46,7 @@ test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de t
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
 Date de naissance: 1er septembre 1983
-Lieu de naissance: Paris arr.20`;
+Lieu de naissance: Paris 20ème arrondissement`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
   expect(elementsJasper.decisionRecue1).toBe(
@@ -70,7 +70,7 @@ test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de t
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
 Date de naissance: 1er septembre 1983
-Lieu de naissance: Paris arr.20`;
+Lieu de naissance: Paris 20ème arrondissement`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
   expect(elementsJasper.decisionRecue1).toBe(

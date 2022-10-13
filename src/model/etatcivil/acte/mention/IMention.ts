@@ -174,7 +174,8 @@ export const Mention = {
       if (
         !mention.evenement.ville &&
         !mention.evenement.region &&
-        !mention.evenement.pays
+        !mention.evenement.pays &&
+        !mention.evenement.lieuReprise
       ) {
         lieu = REMPLACEMENT_SI_INTROUVABLE;
       } else {

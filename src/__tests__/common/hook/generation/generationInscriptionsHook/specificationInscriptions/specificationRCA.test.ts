@@ -16,7 +16,7 @@ test("Attendu: specificationRCA.getElementsJasper AVEC une instruction procureur
   const elementsJasper = specificationRCA.getElementsJasper(data);
   const interesse = `Léo, Jules FLECK
 Date de naissance: 2 septembre 1983
-Lieu de naissance: Lyon arr.8 (Rhône)
+Lieu de naissance: Lyon 8ème arrondissement (Rhône)
 Date de décès: mars 2003
 Lieu de décès: Londres, Grand-Londres (Royaume-Uni)`;
   expect(elementsJasper.anneeInscription).toBe("2020");
@@ -36,7 +36,7 @@ test("Attendu: specificationRCA.getElementsJasper AVEC une decision Juridiction 
   const elementsJasper = specificationRCA.getElementsJasper(data);
   const interesse = `Léo, Jules FLECK
 Date de naissance: 1er septembre 1983
-Lieu de naissance: Lyon arr.8 (Rhône)
+Lieu de naissance: Lyon 8ème arrondissement (Rhône)
 par
 Lucas, Didier DUPONT
 Date de naissance: 1er février 1993

@@ -120,7 +120,7 @@ test("Interesse utils get interesse :  affichage lieu naissance en france dans u
   expect(idxLieuNaissance).toBeGreaterThan(-1);
 
   expect(components[0].partContent?.contents[idxLieuNaissance].value).toBe(
-    "Lyon arr.02 (Auvergne-Rhône-Alpes)"
+    "Lyon 2ème arrondissement (Auvergne-Rhône-Alpes)"
   );
 });
 
@@ -135,7 +135,7 @@ test("Interesse utils get interesse :  affichage lieu naissance en france à Par
   expect(idxLieuNaissance).toBeGreaterThan(-1);
 
   expect(components[0].partContent?.contents[idxLieuNaissance].value).toBe(
-    "Paris arr.02"
+    "Paris 2ème arrondissement"
   );
 });
 
