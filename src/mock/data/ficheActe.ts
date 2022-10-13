@@ -2205,11 +2205,11 @@ export const ficheActeDeces2 = {
       mois: 4,
       annee: 2020,
       voie: null,
-      ville: "",
+      ville: "Barcelone",
       arrondissement: null,
-      region: "",
-      pays: "",
-      lieuReprise: "test test"
+      region: "Catalogne",
+      pays: "Espagne",
+      lieuReprise: null
     },
     mentions: [],
     titulaires: [
@@ -2227,11 +2227,11 @@ export const ficheActeDeces2 = {
           mois: 6,
           annee: 1990,
           voie: null,
-          ville: "Jerusalem",
+          ville: "Barcelone",
           arrondissement: null,
           region: "Catalogne",
-          pays: "",
-          lieuReprise: "test test 2"
+          pays: "Espagne",
+          lieuReprise: null
         },
         profession: "Anseignante",
         age: null,

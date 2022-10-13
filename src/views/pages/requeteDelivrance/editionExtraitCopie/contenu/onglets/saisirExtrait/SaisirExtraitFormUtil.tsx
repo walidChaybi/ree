@@ -128,7 +128,7 @@ function getTitulaireParentsForm(
         <ParentNaissanceForm
           nom={withNamespace(nomFormTitulaire, `${PARENT_NAISS}${index + 1}`)}
           parent={parent}
-          // sansDateAgeEtLieuNaissance={natureActe === NatureActe.DECES} TODO A REMETTRE
+          sansDateAgeEtLieuNaissance={natureActe === NatureActe.DECES}
         />
       </AccordionRece>
     );
