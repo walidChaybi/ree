@@ -31,6 +31,8 @@ interface TitulaireEvenementFormPops {
   titulaire: ITitulaireActe;
   evenement?: IEvenement;
   natureActe: NatureActe;
+  gestionEtrangerFrance: boolean;
+  etrangerParDefaut: boolean;
 }
 
 export const TitulaireEvenementForm: React.FC<
@@ -88,7 +90,8 @@ export const TitulaireEvenementForm: React.FC<
           labelLieu={getLabels(NatureActe.NAISSANCE).lieuEvenement}
           evenement={props.evenement}
           afficheHeure={true}
-          gestionEtrangerFrance={false}
+          gestionEtrangerFrance={props.gestionEtrangerFrance}
+          etrangerParDefaut={props.etrangerParDefaut}
         />
       </div>
     </>

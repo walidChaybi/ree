@@ -106,6 +106,7 @@ function getEvenementForm(natureActe: NatureActe, evenement?: IEvenement) {
         evenement={evenement}
         afficheHeure={false}
         gestionEtrangerFrance={false}
+        etrangerParDefaut={true}
       />
     </AccordionRece>
   );
@@ -150,6 +151,10 @@ function getTitulaireEvenementForm(
         titulaire={titulaire}
         evenement={evenement}
         natureActe={natureActe}
+        gestionEtrangerFrance={
+          natureActe === NatureActe.NAISSANCE ? false : true
+        }
+        etrangerParDefaut={natureActe === NatureActe.NAISSANCE ? true : false}
       ></TitulaireEvenementForm>
     </AccordionRece>
   );

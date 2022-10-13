@@ -31,9 +31,9 @@ interface ComponentFormProps {
   nom: string;
   label: string;
   evenement?: IEvenement;
-  gestionEtrangerFrance?: boolean;
+  gestionEtrangerFrance: boolean;
   validation?: boolean;
-  etrangerParDefaut?: boolean; // on considère que c'est true par défaut via la fonction 'estModeSaisieFrance'
+  etrangerParDefaut: boolean; // on considère que c'est true par défaut via la fonction 'estModeSaisieFrance'
   //  (par défaut le pays des parents est FRANCE et celui du titulaire est ETRANGER)
 }
 

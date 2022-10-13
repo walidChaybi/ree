@@ -2227,11 +2227,11 @@ export const ficheActeDeces2 = {
           mois: 6,
           annee: 1990,
           voie: null,
-          ville: "Barcelone",
+          ville: "Jerusalem",
           arrondissement: null,
           region: "Catalogne",
-          pays: "Espagne",
-          lieuReprise: null
+          pays: "",
+          lieuReprise: "test test 2"
         },
         profession: "Anseignante",
         age: null,

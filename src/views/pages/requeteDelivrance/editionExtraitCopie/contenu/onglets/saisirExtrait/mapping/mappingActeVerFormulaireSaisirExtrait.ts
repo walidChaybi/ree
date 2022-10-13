@@ -43,6 +43,7 @@ import {
   ITitulaireActe,
   TitulaireActe
 } from "@model/etatcivil/acte/ITitulaireActe";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationConjointe";
 import { getDateComposeFromDate, IDateCompose } from "@util/DateUtils";
@@ -146,6 +147,7 @@ export function mappingActeVerFormulaireSaisirExtrait(
   // Titulaire 1
   const saisieForm: ISaisieExtraitForm = {
     [TITULAIRE_EVT_1]: saisieTitulaireEvtForm(
+      acte.nature,
       titulairesAMs[0],
       FicheActe.estActeNaissance(acte)
         ? acte.evenement
@@ -183,6 +185,7 @@ export function mappingActeVerFormulaireSaisirExtrait(
   if (titulairesActes.titulaireActe2) {
     saisieForm[TITULAIRE_EVT_2] = titulairesAMs[1]
       ? saisieTitulaireEvtForm(
+          acte.nature,
           titulairesAMs[1],
           titulairesActes.titulaireActe2.naissance
         )
@@ -207,6 +210,7 @@ function saisieParentForm(parent: IFiliation): IParentNaissanceForm {
 }
 
 function saisieTitulaireEvtForm(
+  natureActe: NatureActe,
   titulaire?: ITitulaireActe,
   evenement?: IEvenement
 ): ITitulaireEvtForm {
@@ -218,14 +222,20 @@ function saisieTitulaireEvtForm(
     [SEXE]: titulaire?.sexe
       ? Sexe.getKey(titulaire.sexe)
       : Sexe.getKey(Sexe.INCONNU),
-    [EVENEMENT]: saisieDateLieuEvt(evenement)
+    [EVENEMENT]: saisieDateLieuEvt(
+      evenement,
+      natureActe === NatureActe.NAISSANCE ? true : false
+    )
   } as ITitulaireEvtForm;
 }
 
-function saisieDateLieuEvt(evenement?: IEvenement): IEvenementForm {
+function saisieDateLieuEvt(
+  evenement?: IEvenement,
+  etrangerParDefaut?: boolean
+): IEvenementForm {
   return {
     [DATE_EVENEMENT]: saisieDateHeureEvt(evenement),
-    [LIEU_EVENEMENT]: saisieLieuEvt(evenement)
+    [LIEU_EVENEMENT]: saisieLieuEvt(evenement, etrangerParDefaut)
   };
 }
 

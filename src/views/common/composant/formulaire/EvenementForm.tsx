@@ -14,6 +14,7 @@ interface EvenementFormProps {
   labelLieu: string;
   afficheHeure: boolean;
   gestionEtrangerFrance: boolean;
+  etrangerParDefaut: boolean;
 }
 
 export const EvenementForm: React.FC<EvenementFormProps> = props => {
@@ -36,6 +37,7 @@ export const EvenementForm: React.FC<EvenementFormProps> = props => {
         evenement={props.evenement}
         validation={true}
         gestionEtrangerFrance={props.gestionEtrangerFrance}
+        etrangerParDefaut={props.etrangerParDefaut}
       />
     </div>
   );
