@@ -23,6 +23,7 @@ export interface ICreationActionMiseAjourStatutEtRmcAutoHookParams {
   requete?: IRequeteTableauDelivrance | IRequeteTableauCreation;
   pasDeTraitementAuto?: boolean;
   typeRequete: TypeRequete;
+  handleTraitementTermine?: () => void;
 }
 
 export function useCreationActionMiseAjourStatutEtRmcAuto(
@@ -37,6 +38,13 @@ export function useCreationActionMiseAjourStatutEtRmcAuto(
   const [paramsCreation, setParamsCreation] = useState<
     NavigationApercuReqCreationParams | undefined
   >();
+
+  // 1)
+  useCreationActionMiseAjourStatut(paramsMiseAjourStatut);
+
+  // 2) Seul l'un des deux hook ci-dessous est appelé
+  useNavigationApercuRMCAutoDelivrance(paramsRMCAutoDelivrance);
+  useNavigationApercuCreation(paramsCreation);
 
   useEffect(() => {
     if (params && params.requete) {
@@ -54,7 +62,8 @@ export function useCreationActionMiseAjourStatutEtRmcAuto(
         case TypeRequete.CREATION:
           setParamsCreation({
             idRequete: params.requete.idRequete,
-            urlCourante: params.urlCourante
+            urlCourante: params.urlCourante,
+            handleTraitementTermine: params.handleTraitementTermine
           });
           break;
         default:
@@ -67,9 +76,4 @@ export function useCreationActionMiseAjourStatutEtRmcAuto(
       }
     }
   }, [params]);
-
-  useCreationActionMiseAjourStatut(paramsMiseAjourStatut);
-
-  useNavigationApercuRMCAutoDelivrance(paramsRMCAutoDelivrance);
-  useNavigationApercuCreation(paramsCreation);
 }

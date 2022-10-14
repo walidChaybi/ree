@@ -4,7 +4,7 @@ import {
   TITULAIRE_EVT_1,
   TITULAIRE_EVT_2
 } from "@composant/formulaire/ConstantesNomsForm";
-import { RECEContext } from "@core/body/Body";
+import { RECEContext } from "@core/body/RECEContext";
 import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
 import {
   ISauvegardeValidationSaisieExtraitParams,

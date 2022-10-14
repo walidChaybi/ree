@@ -4,7 +4,6 @@ import {
   URL_SEPARATEUR
 } from "@util/route/routeUtil";
 import { gestionnaireNavigation } from "@widget/filAriane/FilAriane";
-import { History } from "history";
 
 export interface IUrlData {
   url: string;
@@ -165,22 +164,6 @@ function getUrlCourante(history: any): string {
   return history.location.pathname; // history.location.pathname renvoie une url du type /rece/rece-ui/xxx
 }
 
-const push = ({
-  history,
-  urlCible
-}: {
-  history: History<unknown>;
-  urlCible: string;
-}) => {
-  const urlCourante = getUrlCourante(history);
-
-  if (urlCible !== urlCourante) {
-    history.push(urlCible);
-  } else {
-    history.go(0); // pour recharger la page si on reste sur la même url
-  }
-};
-
 export const receUrl = {
   estUrlApercuRequete,
   estUrlApercuTraitementRequete,
@@ -189,6 +172,5 @@ export const receUrl = {
   estUrlEdition,
   replaceUrl,
   goBack,
-  getUrlCourante,
-  push
+  getUrlCourante
 };

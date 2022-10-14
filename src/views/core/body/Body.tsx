@@ -1,6 +1,7 @@
 import { HTTP_FORBIDDEN, HTTP_UNAUTHORIZED } from "@api/ApiManager";
 import { routesRece } from "@router/ReceRoutes";
 import { RouterComponent } from "@router/RouteComponent";
+import { useReinitialisationComposant } from "@util/form/useReinitialisation";
 import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
 import { logError } from "@util/LogManager";
 import { getLibelle } from "@util/Utils";
@@ -11,15 +12,13 @@ import {
   OfficierContextProps
 } from "../contexts/OfficierContext";
 import { PageMessage } from "../login/PageMessage";
-
-export const RECEContext = React.createContext({
-  isDirty: false,
-  setIsDirty: (isDirty: boolean) => {}
-});
+import { RECEContext } from "./RECEContext";
 
 export const Body: React.FC = () => {
   const [appliDejaOuverte, setAppliDejaOuverte] = useState<boolean>(false);
   const [isDirty, setIsDirty] = useState<boolean>(false);
+  const { cleReinitialisation, reinitialisation } =
+    useReinitialisationComposant();
 
   useEffect(() => {
     gestionnaireDoubleOuverture.lancerVerification(() => {
@@ -40,13 +39,19 @@ export const Body: React.FC = () => {
                   )}
                 />
               ) : (
-                <RECEContext.Provider value={{ isDirty, setIsDirty }}>
+                <RECEContext.Provider
+                  value={{
+                    isDirty,
+                    setIsDirty,
+                    rechargementPage: reinitialisation
+                  }}
+                >
                   <FilAriane
                     routes={routesRece}
                     isDirty={isDirty}
                     setIsDirty={setIsDirty}
                   />
-                  <RouterComponent />
+                  <RouterComponent key={cleReinitialisation} />
                 </RECEContext.Provider>
               )
             ) : (

@@ -1,5 +1,6 @@
+import { RECEContext } from "@core/body/RECEContext";
 import { autorisePrendreEnChargeDepuisPageCreation } from "@util/RequetesUtils";
-import React from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router";
 import { IUuidRequeteParams } from "../../../../../../model/params/IUuidRequeteParams";
 import { IEchange } from "../../../../../../model/requete/IEchange";
@@ -17,6 +18,8 @@ interface OngletActionProps {
 }
 
 export const OngletAction: React.FC<OngletActionProps> = props => {
+  const { rechargementPage } = useContext(RECEContext);
+
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const [echanges, setEchanges] = React.useState<IEchange[] | undefined>(
     props.echanges
@@ -45,7 +48,10 @@ export const OngletAction: React.FC<OngletActionProps> = props => {
       />
 
       {estPresentBoutonPriseEnCharge && (
-        <BoutonPrendreEnChargeCreation requete={props.requete} />
+        <BoutonPrendreEnChargeCreation
+          requete={props.requete}
+          onClick={rechargementPage}
+        />
       )}
     </>
   );

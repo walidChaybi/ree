@@ -1,5 +1,5 @@
 import { ReinitialiserValiderBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
-import { RECEContext } from "@core/body/Body";
+import { RECEContext } from "@core/body/RECEContext";
 import { useMentionsApiHook } from "@hook/acte/mentions/MentionsApiHook";
 import {
   SauvegarderMentionsParam,

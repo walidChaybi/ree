@@ -1,4 +1,4 @@
-import { RECEContext } from "@core/body/Body";
+import { RECEContext } from "@core/body/RECEContext";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";

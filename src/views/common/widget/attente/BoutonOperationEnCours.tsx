@@ -1,4 +1,4 @@
-import { RECEContext } from "@core/body/Body";
+import { RECEContext } from "@core/body/RECEContext";
 import { checkDirty } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { ReactNode, useContext, useEffect, useState } from "react";
@@ -14,6 +14,7 @@ interface BoutonOperationEnCoursProps {
   checkDirtyActive?: boolean;
   id?: string;
   type?: "button" | "reset" | "submit";
+  timeoutInMiliSec?: number;
 }
 
 export const BoutonOperationEnCours: React.FC<
@@ -44,6 +45,7 @@ export const BoutonOperationEnCours: React.FC<
         visible={opEnCours}
         onTimeoutEnd={() => setOpEnCours(false)}
         onClick={() => setOpEnCours(false)}
+        timeoutInMiliSec={props.timeoutInMiliSec}
       ></OperationEnCours>
       <Bouton
         title={props.title}
