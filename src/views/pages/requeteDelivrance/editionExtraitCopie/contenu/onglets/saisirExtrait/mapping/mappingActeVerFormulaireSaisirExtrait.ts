@@ -231,7 +231,7 @@ function saisieTitulaireEvtForm(
 
 function saisieDateLieuEvt(
   evenement?: IEvenement,
-  etrangerParDefaut?: boolean
+  etrangerParDefaut = true
 ): IEvenementForm {
   return {
     [DATE_EVENEMENT]: saisieDateHeureEvt(evenement),
