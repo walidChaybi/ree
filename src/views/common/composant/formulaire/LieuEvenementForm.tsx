@@ -133,10 +133,6 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
       switch (e.target.name) {
         case nomVille:
           lieuEvt.ville = e.target.value;
-          if (LieuxUtils.isVilleAvecArrondissement(lieuEvt.ville)) {
-            props.formik.setFieldValue(nomArrondissement, "1");
-            lieuEvt.arrondissement = "1";
-          }
           break;
         case nomRegionDepartement:
           lieuEvt.region = e.target.value;
@@ -155,7 +151,6 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
       creerEvenementAPartirDeLaSaisie,
       majLieuComplet,
       estModeSaisieFrance,
-      nomArrondissement,
       nomPays,
       nomRegionDepartement,
       nomVille,
@@ -266,7 +261,6 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
                 options={LieuxUtils.getOptionsArrondissement(
                   props.formik.getFieldProps(nomVille).value
                 )}
-                pasPremiereOptionVide={true}
                 onChange={onChangeArrondissement}
               />
             )}

@@ -401,6 +401,7 @@ export class LieuxUtils {
    * Utiliser pour le formulaire de saisi d'un extrait de la page édition du document réponse (cf. getLocalisationEtrangerOuFrance)
    *
    * Libellé par défaut: <Ville naissance> <Intitulé arrondissement naissance> (<Département naissance>)
+   *    - Si ville = "Paris", ignorer le département,
    *    - Si pas d'arrondissement : <Ville> (<Département>)
    *    - Si pas de département : <Ville> <Intitulé arrondissement>
    *    - Si pas de département, ni d'arrondissement : <Ville>
@@ -414,7 +415,9 @@ export class LieuxUtils {
   ): string {
     let libelleLocalisationFrance = "";
     const villeString = ville || "";
-    const libelleDepartement = LieuxUtils.getLieuEntreParentheses(departement);
+    const libelleDepartement = LieuxUtils.isVilleParis(ville)
+      ? ""
+      : LieuxUtils.getLieuEntreParentheses(departement);
 
     const libelleArrondissement =
       estRenseigne(arrondissement) &&

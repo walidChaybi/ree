@@ -298,7 +298,7 @@ test("Attendu: l'alimentation du lieu complet en France s'effectue correctement"
 
     widgetLieu = expectEstPresentAvecValeur(
       "titulaireEvt1.evenement.lieuEvenement.lieuComplet",
-      "Paris 1er arrondissement (Ile de France)"
+      "Paris 1er arrondissement"
     );
   });
 
