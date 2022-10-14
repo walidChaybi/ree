@@ -184,7 +184,8 @@ export const Mention = {
           : LieuxUtils.getLieu(
               mention.evenement.ville,
               mention.evenement.region,
-              mention.evenement.pays
+              mention.evenement.pays,
+              mention.evenement.arrondissement
             );
       }
     } else {

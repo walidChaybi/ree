@@ -32,7 +32,7 @@ export const LigneNomPrenomActuel: React.FC<LigneNomPrenomActuelProps> = ({
           }
           texteTitulaire={
             props.identite.noms.naissance
-              ? `(${getLibelle("Usage :")}${props.identite.noms.naissance}})`
+              ? `(${getLibelle("Usage :")}${props.identite.noms.naissance})`
               : undefined
           }
         />

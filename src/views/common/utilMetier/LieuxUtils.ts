@@ -157,19 +157,18 @@ export class LieuxUtils {
     region?: string,
     arrondissement?: string
   ) {
-    if (
-      !LieuxUtils.isVilleAvecArrondissement(ville) ||
-      arrondissement == null
-    ) {
+    if (LieuxUtils.isVilleAvecArrondissement(ville) && arrondissement) {
+      if (LieuxUtils.isVilleParis(ville)) {
+        return `${ville}${arrondissement}`;
+      } else {
+        return `${ville}${arrondissement}${region}`;
+      }
+    } else {
       if (!ville) {
         return region ? `-- ${region}` : "";
       } else {
         return `${ville}${region}`;
       }
-    } else if (!LieuxUtils.isVilleParis(ville)) {
-      return `${ville}${arrondissement}${region}`;
-    } else {
-      return `${ville}${arrondissement}`;
     }
   }
 
