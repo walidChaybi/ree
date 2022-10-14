@@ -2,10 +2,21 @@ import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "@api/appels/requeteApi";
+import {
+  ICreationActionMiseAjourStatutEtRmcAutoHookParams,
+  useCreationActionMiseAjourStatutEtRmcAuto
+} from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
-import { URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID } from "@router/ReceUrls";
+import {
+  URL_MES_REQUETES_CREATION,
+  URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID
+} from "@router/ReceUrls";
+import { autorisePrendreEnChargeReqTableauCreation } from "@util/RequetesUtils";
 import { getUrlWithParam } from "@util/route/routeUtil";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
@@ -27,38 +38,46 @@ export const RequetesServiceCreation: React.FC<
   RequetesServiceCreationProps
 > = props => {
   const history = useHistory();
-
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
-  const [linkParameters, setLinkParameters] =
-    useState<IQueryParametersPourRequetes>(props.queryParametersPourRequetes);
+  const [opEnCours, setOpEnCours] = useState<boolean>(false);
+  const [paramsMiseAJour, setParamsMiseAJour] = useState<
+    ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+  >();
 
+  const [parametresLienRequete, setParametresLienRequete] =
+    useState<IQueryParametersPourRequetes>(props.queryParametersPourRequetes);
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteCreationApi(
-    linkParameters,
+    parametresLienRequete,
     TypeAppelRequete.REQUETE_CREATION_SERVICE,
     setEnChargement
   );
 
-  const goToLink = useCallback((link: string) => {
+  useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
+
+  const changementDePage = useCallback((link: string) => {
     const queryParametersPourRequetes = goToLinkRequete(
       link,
       "requetesService"
     );
     if (queryParametersPourRequetes) {
-      setLinkParameters(queryParametersPourRequetes);
+      setParametresLienRequete(queryParametersPourRequetes);
     }
   }, []);
 
-  const handleChangeSort = useCallback((tri: string, sens: SortOrder) => {
-    const queryParameters = {
-      statuts: statutsRequetesCreation,
-      tri,
-      sens,
-      range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-    };
+  const handleChangeSortTableau = useCallback(
+    (tri: string, sens: SortOrder) => {
+      const queryParameters = {
+        statuts: statutsRequetesCreation,
+        tri,
+        sens,
+        range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+      };
 
-    setLinkParameters(queryParameters);
-  }, []);
+      setParametresLienRequete(queryParameters);
+    },
+    []
+  );
 
   useEffect(() => {
     if (dataState?.length === 0) {
@@ -66,28 +85,49 @@ export const RequetesServiceCreation: React.FC<
     }
   }, [dataState]);
 
-  function onClickOnLine(
+  const finOpEnCours = () => {
+    setOpEnCours(false);
+  };
+
+  function onClickOnLineTableau(
     idRequete: string,
     data: IRequeteTableauCreation[],
     idx: number
   ) {
-    history.push(
-      getUrlWithParam(URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID, idRequete)
-    );
+    setOpEnCours(true);
+    const requeteSelect = data[idx];
+    if (autorisePrendreEnChargeReqTableauCreation(requeteSelect)) {
+      setParamsMiseAJour({
+        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
+        statutRequete: StatutRequete.PRISE_EN_CHARGE,
+        requete: requeteSelect,
+        urlCourante: URL_MES_REQUETES_CREATION,
+        typeRequete: TypeRequete.CREATION
+      });
+    } else {
+      history.push(
+        getUrlWithParam(URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID, idRequete)
+      );
+    }
   }
 
   return (
     <>
+      <OperationEnCours
+        visible={opEnCours}
+        onTimeoutEnd={finOpEnCours}
+        onClick={finOpEnCours}
+      />
       <TableauRece
         idKey={"idRequete"}
-        sortOrderByState={linkParameters.tri}
-        sortOrderState={linkParameters.sens}
-        onClickOnLine={onClickOnLine}
+        sortOrderByState={parametresLienRequete.tri}
+        sortOrderState={parametresLienRequete.sens}
+        onClickOnLine={onClickOnLineTableau}
         columnHeaders={colonnesTableauRequetesServiceCreation}
         dataState={dataState}
         paramsTableau={paramsTableau}
-        goToLink={goToLink}
-        handleChangeSort={handleChangeSort}
+        goToLink={changementDePage}
+        handleChangeSort={handleChangeSortTableau}
         noRows={zeroRequete}
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}

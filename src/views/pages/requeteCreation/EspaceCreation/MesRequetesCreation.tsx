@@ -46,9 +46,7 @@ export const MesRequetesCreation: React.FC<
   >();
 
   const [linkParameters, setLinkParameters] =
-    React.useState<IQueryParametersPourRequetes>(
-      props.queryParametersPourRequetes
-    );
+    useState<IQueryParametersPourRequetes>(props.queryParametersPourRequetes);
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteCreationApi(
     linkParameters,
@@ -77,7 +75,7 @@ export const MesRequetesCreation: React.FC<
   }, []);
 
   useEffect(() => {
-    if (dataState && dataState.length === 0) {
+    if (dataState?.length === 0) {
       setZeroRequete(getMessageZeroRequete());
     }
   }, [dataState]);
@@ -95,7 +93,7 @@ export const MesRequetesCreation: React.FC<
     const requeteSelect = data[idx];
     if (autorisePrendreEnChargeReqTableauCreation(requeteSelect)) {
       setParamsMiseAJour({
-        libelleAction: "Prendre en charge",
+        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
         requete: requeteSelect,
         urlCourante: URL_MES_REQUETES_CREATION,
@@ -123,13 +121,13 @@ export const MesRequetesCreation: React.FC<
         columnHeaders={colonnesTableauMesRequetesCreation}
         dataState={dataState}
         paramsTableau={paramsTableau}
-        handleChangeSort={handleChangeSort}
         goToLink={goToLink}
+        handleChangeSort={handleChangeSort}
         noRows={zeroRequete}
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
-      ></TableauRece>
+      />
       <BoutonRetour />
     </>
   );
