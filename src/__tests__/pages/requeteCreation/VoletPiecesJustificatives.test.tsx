@@ -24,19 +24,59 @@ test("renders VoletPiecesJustificatives", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("NATALI - Mandat")).toBeDefined();
-    expect(screen.getByText("NATALI - Piece d'identité")).toBeDefined();
-    expect(screen.getAllByText("nom")[2]).toBeDefined();
+    expect(screen.getAllByText("AN parent 1")[0]).toBeDefined();
+    expect(screen.getAllByText("Pièce d'identité postulant")[0]).toBeDefined();
+    expect(screen.getAllByText("Divorce libelle pourri 10")[0]).toBeDefined();
+    expect(screen.getAllByText("fichierPJ")[2]).toBeDefined();
   });
 
   act(() => {
-    fireEvent.click(screen.getAllByText("nom")[2]);
+    fireEvent.click(screen.getAllByText("fichierPJ")[2]);
   });
 
   await waitFor(() => {
     expect(
-      screen.getAllByTitle("nom")[2].classList.contains("Mui-expanded")
+      screen.getAllByTitle("fichierPJ")[2].classList.contains("Mui-expanded")
     ).toBe(true);
+  });
+});
+
+test("Modifier le titre d'un fichier d'une pièce jointe", async () => {
+  await act(async () => {
+    render(
+      <OngletPiecesJustificatives
+        requete={mappingRequeteCreation(requeteCreation)}
+      />
+    );
+  });
+
+  const boutonModifierLibelle = screen.getAllByTitle(
+    "Modifier le libellé"
+  )[1] as HTMLButtonElement;
+
+  await waitFor(() => {
+    expect(boutonModifierLibelle).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(boutonModifierLibelle);
+  });
+
+  const inputModificationLibelle = screen.getByLabelText(
+    "input-creation-fichierPJ"
+  ) as HTMLInputElement;
+
+  act(() => {
+    fireEvent.change(inputModificationLibelle, {
+      target: {
+        value: "nouveauLibelle"
+      }
+    });
+    inputModificationLibelle.blur();
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("nouveauLibelle")).toBeDefined();
   });
 });
 

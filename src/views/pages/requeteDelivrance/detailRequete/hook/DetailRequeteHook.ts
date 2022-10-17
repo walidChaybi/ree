@@ -7,6 +7,8 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { ObjetRequete } from "@model/requete/enum/ObjetRequete";
+import { PieceJustificativeCategorie } from "@model/requete/enum/PieceJustificativeCategorie";
+import { PieceJustificativeLibelle } from "@model/requete/enum/PieceJustificativeLibelle";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -18,6 +20,7 @@ import { TypeMandant } from "@model/requete/enum/TypeMandant";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IAction } from "@model/requete/IActions";
+import { IDocumentPJ } from "@model/requete/IDocumentPj";
 import { IEchange } from "@model/requete/IEchange";
 import { IEvenementReqDelivrance } from "@model/requete/IEvenementReqDelivrance";
 import { IMandant } from "@model/requete/IMandant";
@@ -319,6 +322,19 @@ export function mapEchangeRetourSDANF(echangeServeur?: any): IEchange {
   return echangeMapped;
 }
 
+function mapDocumentPJ(documents?: any): IDocumentPJ[] {
+  return documents?.map((document: any) => ({
+    ...document,
+    categorie: PieceJustificativeCategorie.getEnumFromLibelle(
+      document.categorie
+    ),
+    libelle: document.libelle,
+    libelleTraite: PieceJustificativeLibelle.getEnumFromLibelle(
+      document.libelle
+    )
+  }));
+}
+
 export function mappingRequeteCreation(data: any): IRequeteCreation {
   return {
     ...data,
@@ -334,6 +350,7 @@ export function mappingRequeteCreation(data: any): IRequeteCreation {
     provenanceNatali: {
       ...data.provenanceNatali,
       echanges: mapEchangesRetourSDANF(data.provenanceNatali?.echanges)
-    }
+    },
+    documentsPj: mapDocumentPJ(data.documentsPj)
   };
 }

@@ -1,3 +1,4 @@
+import { useMiseAJourLibellePjApiHook } from "@hook/requete/creation/MiseAJourLibellePjApiHook";
 import { TypePieceJointe } from "@hook/requete/piecesJointes/communPieceJointe";
 import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointeHook";
 import Accordion from "@material-ui/core/Accordion";
@@ -19,10 +20,17 @@ export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
 }) => {
   const [idDocument, setIdDocument] = useState<string>();
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [titreActuel, setTitreActuel] = useState<string>(titre);
 
   useEffect(() => {
     setIdDocument(isExpanded ? idDocumentAAfficher : undefined);
   }, [isExpanded, idDocumentAAfficher]);
+
+  useMiseAJourLibellePjApiHook({
+    idPJ: idDocumentAAfficher,
+    libelle: titre,
+    nouveauLibelle: titreActuel
+  });
 
   const documentApi = useGetPieceJointeApi(
     TypePieceJointe.PIECE_JUSTIFICATIVE,
@@ -34,11 +42,12 @@ export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
       key={`rece-accordion-${titre}`}
       className="AccordionVisionneuse"
       expanded={isExpanded}
-      onChange={() => {
-        setIsExpanded(!isExpanded);
-      }}
+      onChange={() => setIsExpanded(!isExpanded)}
     >
-      <AccordionTitle title={titre} />
+      <AccordionTitle
+        title={titreActuel}
+        handleMiseAJourLibelle={e => setTitreActuel(e)}
+      />
       <AccordionDetails>
         <VisionneuseDocument
           titre={titre}

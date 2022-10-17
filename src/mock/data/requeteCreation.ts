@@ -1,5 +1,22 @@
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 
+const pieceJustificative = {
+  nom: "fichierPJ",
+  mimeType: "application/pdf",
+  extension: null,
+  taille: 0,
+  referenceSwift: "Bon.pdf",
+  conteneurSwift: "pieces_justificatives",
+  contenu: null,
+  typePieceJustificative: "f4e3453b-7713-45ef-a82c-e40df43d5b67",
+  typeObjetPj: "CREATION",
+  idFichierNatali: "idFichierNatali",
+  ordreNatali: 1,
+  estPieceAnnexe: true,
+  idActe: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  documentPj: null
+};
+
 export const requeteCreation = {
   id: "3ed9aa4e-921b-489f-b8fe-531dd703c60c",
   numeroFonctionnel: "2H5U3Q",
@@ -395,8 +412,8 @@ export const requeteCreation = {
       idActe: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
       documentPj: {
         id: "3ed9969b-d439-48d4-b163-4e1a525aaf6d",
-        libelle: "Piece d'identité",
-        categorie: "NATALI",
+        libelle: "etat_civil",
+        categorie: "PIECE_IDENTITE",
         piecesJustificatives: null
       }
     },
@@ -417,8 +434,8 @@ export const requeteCreation = {
       idActe: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
       documentPj: {
         id: "3ed9969b-d439-48d4-b163-4e1a525aaf6d",
-        libelle: "Piece d'identité",
-        categorie: "NATALI",
+        libelle: "etat_civil",
+        categorie: "PIECE_IDENTITE",
         piecesJustificatives: null
       }
     },
@@ -438,9 +455,9 @@ export const requeteCreation = {
       estPieceAnnexe: true,
       idActe: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
       documentPj: {
-        id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9421",
-        libelle: "Mandat",
-        categorie: "NATALI",
+        id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9427",
+        libelle: "etat_civil",
+        categorie: "PIECE_IDENTITE",
         piecesJustificatives: null
       }
     }
@@ -519,68 +536,51 @@ export const requeteCreation = {
   documentsPj: [
     {
       id: "3ed9969b-d439-48d4-b163-4e1a525aaf6d",
-      libelle: "Piece d'identité",
-      categorie: "NATALI",
-      piecesJustificatives: [
-        {
-          id: "3ed92b89-268a-4883-a41f-0763cfea9ef7",
-          nom: "nom",
-          mimeType: "image/jpeg",
-          extension: null,
-          taille: 0,
-          referenceSwift: "thumbnail_IMG-1279.jpg",
-          conteneurSwift: "pieces_justificatives",
-          contenu: null,
-          typePieceJustificative: "f4e3453b-7713-45ef-a82c-e40df43d5b67",
-          typeObjetPj: "CREATION",
-          idFichierNatali: "idFichierNatali",
-          ordreNatali: 1,
-          estPieceAnnexe: true,
-          idActe: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          documentPj: null
-        },
-        {
-          id: "3ed999b9-bdaa-44e6-8c02-84b94635a912",
-          nom: "nom",
-          mimeType: "image/jpeg",
-          extension: null,
-          taille: 0,
-          referenceSwift: "thumbnail_IMG-1279.jpg",
-          conteneurSwift: "pieces_justificatives",
-          contenu: null,
-          typePieceJustificative: "f4e3453b-7713-45ef-a82c-e40df43d5b67",
-          typeObjetPj: "CREATION",
-          idFichierNatali: "idFichierNatali",
-          ordreNatali: 1,
-          estPieceAnnexe: true,
-          idActe: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          documentPj: null
-        }
-      ]
+      libelle: "etat_civil",
+      categorie: "PIECE_IDENTITE",
+      piecesJustificatives: [pieceJustificative, pieceJustificative]
     },
     {
       id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9421",
-      libelle: "Mandat",
-      categorie: "NATALI",
-      piecesJustificatives: [
-        {
-          id: "3ed9ad41-ca61-416a-91df-448690804363",
-          nom: "nom",
-          mimeType: "application/pdf",
-          extension: null,
-          taille: 0,
-          referenceSwift: "Bon.pdf",
-          conteneurSwift: "pieces_justificatives",
-          contenu: null,
-          typePieceJustificative: "f4e3453b-7713-45ef-a82c-e40df43d5b67",
-          typeObjetPj: "CREATION",
-          idFichierNatali: "idFichierNatali",
-          ordreNatali: 1,
-          estPieceAnnexe: true,
-          idActe: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          documentPj: null
-        }
-      ]
+      libelle: "etat_civil",
+      categorie: "TITRE_SEJOUR",
+      piecesJustificatives: [pieceJustificative]
+    },
+    {
+      id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9422",
+      libelle: "union_actuelle",
+      categorie: "ACTE_MARIAGE",
+      piecesJustificatives: [pieceJustificative]
+    },
+    {
+      id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9423",
+      libelle: "parents_et_fratrie",
+      categorie: "ACTE_MARIAGE_PARENTS",
+      piecesJustificatives: [pieceJustificative]
+    },
+    {
+      id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9424",
+      libelle: "parents 2",
+      categorie: "ACTE_ETAT_CIVIL_PARENT",
+      piecesJustificatives: [pieceJustificative]
+    },
+    {
+      id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9425",
+      libelle: "parents 1",
+      categorie: "ACTE_ETAT_CIVIL_PARENT",
+      piecesJustificatives: [pieceJustificative]
+    },
+    {
+      id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9426",
+      libelle: "parents 3",
+      categorie: "ACTE_ETAT_CIVIL_PARENT",
+      piecesJustificatives: [pieceJustificative]
+    },
+    {
+      id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9429",
+      libelle: "libelle pourri 10",
+      categorie: "PREUVE_DIVORCE",
+      piecesJustificatives: [pieceJustificative]
     }
   ],
   campagne: "campagne",

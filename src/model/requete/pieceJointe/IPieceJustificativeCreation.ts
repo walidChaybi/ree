@@ -8,4 +8,5 @@ export interface IPieceJustificativeCreation extends IPieceJustificative {
   estPieceAnnexe: boolean;
   idActe: string;
   documentPj: IDocumentPJ;
+  nouveauLibelleFichierPJ: string;
 }

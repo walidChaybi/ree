@@ -36,6 +36,9 @@ export const URL_PIECES_COMPLEMENT_INFORMATION =
 export const URL_PIECE_COMPLEMENT_INFORMATION = "/piececomplementinformation";
 export const URL_PIECES_JUSTIFICATIVES = "/piecesjustificatives";
 export const URL_PIECE_JUSTIFICATIVE = "/piecejustificative";
+export const URL_FICHIER_PIECE_JUSTIFICATIVE =
+  "/requetes/fichierpiecejustificative/";
+export const URL_LIBELLE = "/libelle";
 export const URL_PARAMETRE = "/parametres";
 export const URL_ACTION = "/requetes/action";
 export const URL_TRANSFERT = "/requetes/action/transfert";
@@ -640,3 +643,15 @@ export function postMessageRetourSDANFEtUpdateStatutRequete(
     data: message
   });
 }
+
+export const patchMiseAJourLibellePJ = (
+  idPJ: string,
+  nouveauLibelle: string
+): Promise<any> =>
+  api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_FICHIER_PIECE_JUSTIFICATIVE}${idPJ}${URL_LIBELLE}`,
+    parameters: {
+      nouveauLibelle
+    }
+  });

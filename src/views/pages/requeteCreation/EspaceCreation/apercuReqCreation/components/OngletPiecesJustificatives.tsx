@@ -1,5 +1,9 @@
+import { PieceJustificativeLibelle } from "@model/requete/enum/PieceJustificativeLibelle";
 import { IDocumentPJ } from "@model/requete/IDocumentPj";
-import { IRequeteCreation } from "@model/requete/IRequeteCreation";
+import {
+  IRequeteCreation,
+  RequeteCreation
+} from "@model/requete/IRequeteCreation";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import { AccordionVisionneuse } from "@widget/accordion/AccordionVisionneuse";
 import {
@@ -20,27 +24,10 @@ export const OngletPiecesJustificatives: React.FC<
 
   useEffect(() => {
     if (props.requete?.documentsPj) {
-      setListe(
-        props.requete.documentsPj.map((document: IDocumentPJ) => ({
-          libelle: `${document.categorie} - ${document.libelle}`,
-          checkbox: false,
-          id: document.id,
-          aPoubelle: false,
-          sousElement: (
-            <>
-              {document.piecesJustificatives.map(
-                (piece: IPieceJustificativeCreation) => (
-                  <AccordionVisionneuse
-                    key={piece.id}
-                    idDocumentAAfficher={piece.id}
-                    titre={piece.nom}
-                  />
-                )
-              )}
-            </>
-          )
-        }))
+      const documentsPj = RequeteCreation.getDocumentsPJtrierParPriorites(
+        props.requete
       );
+      setListe(mappingIDocumentPjToListeItem(documentsPj));
     }
   }, [props.requete]);
 
@@ -56,6 +43,47 @@ export const OngletPiecesJustificatives: React.FC<
     },
     [liste]
   );
+
+  const mappingIDocumentPjToListeItem = (
+    documentsPj: IDocumentPJ[]
+  ): ListeItem[] => {
+    const getLibelleComplet = (
+      libelle: string,
+      libelleTraite?: PieceJustificativeLibelle
+    ) => {
+      const numeroPostLibelle = PieceJustificativeLibelle.getNumero(
+        libelle,
+        libelleTraite
+      );
+
+      return `${libelleTraite?.nom ?? libelle} ${numeroPostLibelle ?? ""}`;
+    };
+
+    return documentsPj.map(
+      (document: IDocumentPJ): ListeItem => ({
+        id: document.id,
+        libelle: `${document.categorie.nom} ${getLibelleComplet(
+          document.libelle,
+          document.libelleTraite
+        )}`,
+        checkbox: false,
+        aPoubelle: false,
+        sousElement: (
+          <>
+            {document.piecesJustificatives.map(
+              (piece: IPieceJustificativeCreation) => (
+                <AccordionVisionneuse
+                  key={piece.id}
+                  idDocumentAAfficher={piece.id}
+                  titre={piece.nouveauLibelleFichierPJ ?? piece.nom}
+                />
+              )
+            )}
+          </>
+        )
+      })
+    );
+  };
 
   return (
     <span className="PiecesJustificatives">

@@ -262,6 +262,14 @@ export const configRequetes = [
         return { data: reponseRequeteCreationMessageSdanf };
       }
 
+      //TODO: id document non recupéré ici (undefined)
+      if (
+        match[1] ===
+        "/requetes/fichierpiecejustificative/undefined/libelle?nouveauLibelle=nouveauLibelle"
+      ) {
+        return { data: "12345" };
+      }
+
       // RMC Requete
       if (
         match[1] === "/requetes/rmc?range=0-100" ||
