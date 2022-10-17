@@ -54,14 +54,17 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
     )
   );
 
-  const lieuCompletRenseigne = estRenseigne(props.evenement?.lieuReprise);
-
   const nomVille = withNamespace(props.nom, VILLE);
   const nomRegionDepartement = withNamespace(props.nom, REGION_DEPARTEMENT);
   const nomPays = withNamespace(props.nom, PAYS);
   const nomArrondissement = withNamespace(props.nom, ARRONDISSEMENT);
   const nomLieuComplet = withNamespace(props.nom, LIEU_COMPLET);
   const nomEtrangerFrance = withNamespace(props.nom, ETRANGER_FRANCE);
+
+  const lieuCompletRenseigne = estRenseigne(props.evenement?.lieuReprise);
+  const modeSaisiLieuInconnu =
+    props.formik.getFieldProps(nomEtrangerFrance).value ===
+    EtrangerFrance.getKey(EtrangerFrance.INCONNU);
 
   const majLieuComplet = useCallback(
     (lieu: ILieuEvenement, modeFrance: boolean) => {
@@ -107,7 +110,6 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
     } else {
       props.formik.setFieldValue(nomLieuComplet, "");
     }
-
     props.formik.setFieldValue(
       nomEtrangerFrance,
       LieuxUtils.getEtrangerOuFranceOuInconnuEnMajuscule(
@@ -297,11 +299,9 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
 
   function affichageVilleRegionPays(): boolean {
     return (
-      (props.formik.getFieldProps(nomEtrangerFrance).value !==
-        EtrangerFrance.getKey(EtrangerFrance.INCONNU) &&
-        !lieuCompletRenseigne) ||
-      (!lieuCompletRenseigne && props.gestionEtrangerFrance === false) ||
-      decomposerLieu
+      (!modeSaisiLieuInconnu && !lieuCompletRenseigne) ||
+      (!lieuCompletRenseigne && !props.gestionEtrangerFrance) ||
+      (decomposerLieu && !modeSaisiLieuInconnu)
     );
   }
 };
