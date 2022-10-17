@@ -27,7 +27,7 @@ import { IDetailMariage } from "./IDetailMariage";
 import { IEvenement } from "./IEvenement";
 import { ICorpsImage } from "./imageActe/ICorpsImage";
 import { IRegistre } from "./IRegistre";
-import { ITitulaireActe } from "./ITitulaireActe";
+import { ITitulaireActe, TitulaireActe } from "./ITitulaireActe";
 import { IMention, Mention } from "./mention/IMention";
 
 export interface IFicheActe {
@@ -61,6 +61,7 @@ export const FicheActe = {
   getNature(acte?: IFicheActe): string {
     return acte && acte.nature ? acte.nature.libelle : "";
   },
+
   estActeNaissance(acte?: IFicheActe): boolean {
     return acte?.nature === NatureActe.NAISSANCE;
   },
@@ -87,6 +88,7 @@ export const FicheActe = {
     };
     return Object.values(compactObject(registre)).join(".");
   },
+
   estActeImage(acte: IFicheActe) {
     return (
       acte.type === TypeActe.IMAGE ||
@@ -95,9 +97,11 @@ export const FicheActe = {
         acte.corpsImage.images.length > 0)
     );
   },
+
   estActeTexte(acte: IFicheActe): boolean {
     return acte.type === TypeActe.TEXTE || !acte.corpsImage;
   },
+
   estActeImageReecrit(acte: IFicheActe): boolean {
     return (
       acte.type === TypeActe.IMAGE &&
@@ -105,6 +109,7 @@ export const FicheActe = {
       Boolean(acte.corpsTexte?.texte)
     );
   },
+
   getCorpsExtraitRectificationTexte(
     acte: IFicheActe,
     typeExtrait: TypeExtrait
@@ -241,6 +246,7 @@ export const FicheActe = {
       ];
     } else return [];
   },
+
   estNombreDeTitulaireErrone(acte: IFicheActe): boolean | undefined {
     let error;
     if (acte && acte.titulaires) {
@@ -268,6 +274,7 @@ export const FicheActe = {
       }
     }
   },
+
   aNomEtPrenomTitulaireAbsentsAnalyseMarginale(acte: IFicheActe): boolean {
     const analyseMarginale = AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(
       acte.analyseMarginales
@@ -301,6 +308,14 @@ export const FicheActe = {
     );
   },
 
+  aGenreTitulaireInconnu(acte: IFicheActe): boolean {
+    const titulaires = acte.titulaires;
+
+    return Boolean(
+      titulaires?.find(titulaire => titulaire.sexe === Sexe.INCONNU)
+    );
+  },
+
   aDonneesLieuOuAnneeEvenementAbsentes(acte: IFicheActe) {
     return (
       !acte.evenement?.annee ||
@@ -311,12 +326,64 @@ export const FicheActe = {
     );
   },
 
-  estIncomplet(acte: IFicheActe): boolean {
-    return (
-      this.aNomEtPrenomTitulaireAbsentsAnalyseMarginale(acte) ||
-      this.aGenreTitulaireInconnuAnalyseMarginale(acte) ||
-      this.aDonneesLieuOuAnneeEvenementAbsentes(acte)
+  aGenreParentsTitulaireInconnu(acte: IFicheActe): boolean {
+    const parents = TitulaireActe.getAuMoinsDeuxParentsDirects(
+      acte.titulaires[0]
     );
+
+    return Boolean(parents.find(parent => parent.sexe === Sexe.INCONNU));
+  },
+
+  estIncomplet(acte: IFicheActe): boolean {
+    switch (acte.nature) {
+      case NatureActe.MARIAGE:
+        return (
+          this.aNomEtPrenomTitulaireAbsentsAnalyseMarginale(acte) ||
+          this.aGenreTitulaireInconnu(acte) ||
+          this.aDonneesLieuOuAnneeEvenementAbsentes(acte)
+        );
+      case NatureActe.NAISSANCE:
+        const titulaire =
+          FicheActe.getTitulairesActeDansLOrdre(acte).titulaireActe1;
+        return (
+          this.aNomEtPrenomTitulaireAbsentsAnalyseMarginale(acte) ||
+          this.aGenreTitulaireInconnu(acte) ||
+          TitulaireActe.aDonneesLieuOuAnneeNaissanceAbsentes(titulaire) ||
+          this.aGenreParentsTitulaireInconnu(acte)
+        );
+      case NatureActe.DECES:
+      default:
+        return false;
+    }
+  },
+
+  estEnErreur(acte: IFicheActe): boolean {
+    switch (acte.nature) {
+      case NatureActe.MARIAGE:
+        return (
+          this.titulairesDeMemeSexe(acte) ||
+          this.aGenreTitulaireIndetermine(acte)
+        );
+      case NatureActe.NAISSANCE:
+        const titulaire =
+          FicheActe.getTitulairesActeDansLOrdre(acte).titulaireActe1;
+        return (
+          this.aGenreTitulaireIndetermine(acte) ||
+          TitulaireActe.parentsSontDeMemeSexe(titulaire) ||
+          this.aGenreParentsTitulaireIndetermine(acte)
+        );
+      case NatureActe.DECES:
+      default:
+        return false;
+    }
+  },
+
+  aGenreParentsTitulaireIndetermine(acte: IFicheActe): boolean {
+    const parents = TitulaireActe.getAuMoinsDeuxParentsDirects(
+      acte.titulaires[0]
+    );
+
+    return Boolean(parents.find(parent => parent.sexe === Sexe.INDETERMINE));
   },
 
   titulairesDeMemeSexe(acte: IFicheActe): boolean {

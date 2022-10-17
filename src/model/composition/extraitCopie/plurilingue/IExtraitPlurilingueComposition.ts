@@ -1,6 +1,6 @@
 import { ITitulaireComposition } from "@model/composition/commun/ITitulaireComposition";
 import { IDateCompose } from "@util/DateUtils";
-import { IMentionsExtraitPlurilingue } from "./createur/ExtraitPlurilingueMariageComposition";
+import { IMentionsExtraitPlurilingue } from "./createur/ExtraitPlurilingueCommunComposition";
 
 export interface IExtraitPlurilingueComposition {
   nature_acte: string;

@@ -193,23 +193,23 @@ export const Mention = {
       date = REMPLACEMENT_SI_INTROUVABLE;
     }
 
-    let conjoint = "";
+    let texteMention = `${nature} ${date} ${lieu}`;
     if (
       mention.typeMention.nature ===
       NatureMention.getEnumFromCode(NatureMention, MARIAGE)
     ) {
-      conjoint = getConjoint(mention, conjoint);
-    }
-    let texteMention = `${nature} ${date} ${lieu}`;
-    if (conjoint) {
-      texteMention += ` ${conjoint}`;
+      const conjoint = getConjoint(mention);
+      if (conjoint) {
+        texteMention += ` ${conjoint}`;
+      }
     }
     return texteMention;
   }
 };
 
-function getConjoint(mention: IMention, conjoint: string) {
+function getConjoint(mention: IMention) {
   let texte;
+  let conjoint = "";
   if (mention.textes?.texteMentionDelivrance?.includes(AVEC)) {
     texte = mention.textes?.texteMentionDelivrance;
   }

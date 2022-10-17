@@ -203,7 +203,9 @@ function getValidationExtrait(
       acte.corpsExtraitRectifications,
       choixDelivrance
     ) &&
-    FicheActe.estIncomplet(acte)
+    (FicheActe.aNomEtPrenomTitulaireAbsentsAnalyseMarginale(acte) ||
+      FicheActe.aGenreTitulaireInconnu(acte) ||
+      FicheActe.aDonneesLieuOuAnneeEvenementAbsentes(acte))
   ) {
     return Validation.E;
   }
@@ -215,24 +217,31 @@ function getValidationExtraitPlurilingue(
   choixDelivrance: ChoixDelivrance,
   validation: Validation
 ) {
-  // Pour un choix de délivrance d'extrait avec ou sans filiation d'un acte de mariage ou de naissance
-  // Si l'acte ne comporte pas de corps d'extrait modifier correspondant au choix de delivrance
-  // ou que les noms et prenoms de l'analyse marginales sont absents
-  // ou que le genre est d'un des titulaires est inconnu
-  // ou que l'année ou le lieux de l'évenement ne sont absents
-  if (
-    (aPasCorpsExtraitRectificationCorrespondant(
-      acte.corpsExtraitRectifications,
-      choixDelivrance
-    ) &&
-      FicheActe.estIncomplet(acte)) ||
-    FicheActe.titulairesDeMemeSexe(acte) ||
-    FicheActe.tousLesTitulairesInconnusOuIndetermines(acte)
-  ) {
-    return Validation.E;
-  } else if (validation === Validation.E) {
+  switch (acte.nature) {
+    case NatureActe.MARIAGE:
+      if (
+        FicheActe.estIncomplet(acte) ||
+        FicheActe.titulairesDeMemeSexe(acte) ||
+        FicheActe.tousLesTitulairesInconnusOuIndetermines(acte)
+      ) {
+        return Validation.E;
+      }
+      break;
+    case NatureActe.NAISSANCE:
+      if (FicheActe.estIncomplet(acte) || FicheActe.estEnErreur(acte)) {
+        return Validation.E;
+      }
+      break;
+    case NatureActe.DECES:
+      return validation;
+    default:
+      return validation;
+  }
+
+  if (validation === Validation.E) {
     return Validation.N;
   }
+
   return validation;
 }
 

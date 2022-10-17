@@ -1,5 +1,6 @@
 import { ITitulaireComposition } from "@model/composition/commun/ITitulaireComposition";
 import { ExtraitPlurilingueMariageComposition } from "@model/composition/extraitCopie/plurilingue/createur/ExtraitPlurilingueMariageComposition";
+import { ExtraitPlurilingueNaissanceComposition } from "@model/composition/extraitCopie/plurilingue/createur/ExtraitPlurilingueNaissanceComposition";
 import { IExtraitPlurilingueComposition } from "@model/composition/extraitCopie/plurilingue/IExtraitPlurilingueComposition";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
@@ -9,7 +10,7 @@ import { Validation } from "@model/requete/enum/Validation";
 export const creationCompositionExtraitPlurilingue = function (
   acteComplet: IFicheActe,
   validation: Validation,
-  mentionsRetirees?: string[],
+  mentionsRetirees: string[],
   choixDelivranceEC?: ChoixDelivrance
 ): IExtraitPlurilingueComposition {
   let composition = {} as IExtraitPlurilingueComposition;
@@ -24,10 +25,12 @@ export const creationCompositionExtraitPlurilingue = function (
         );
       break;
     case NatureActe.NAISSANCE:
-      //TODO
-      composition.nature_acte = NatureActe.getKey(acteComplet.nature);
-      composition.titulaire_1 = acteComplet
-        .titulaires[0] as ITitulaireComposition;
+      composition =
+        ExtraitPlurilingueNaissanceComposition.compositionExtraitPlurilingueDeNaissance(
+          acteComplet,
+          validation,
+          mentionsRetirees
+        );
       break;
     case NatureActe.DECES:
       //TODO

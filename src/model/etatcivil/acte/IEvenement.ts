@@ -1,5 +1,9 @@
-import { formatAHeure, getDateStringFromDateCompose } from "@util/DateUtils";
-import { estRenseigne, numberToString } from "@util/Utils";
+import {
+  formatAHeure,
+  getDateStringFromDateCompose,
+  IDateCompose
+} from "@util/DateUtils";
+import { estRenseigne, getValeurOuVide, numberToString } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export interface IEvenement {
@@ -36,6 +40,11 @@ export const Evenement = {
         )
       : "";
   },
+  getLieuCompositionExtraitPlurilingue(evenement?: IEvenement): string {
+    return evenement
+      ? LieuxUtils.getLieu(evenement.ville, evenement.region, evenement.pays)
+      : "";
+  },
   estRenseigne(evenement?: IEvenement): boolean {
     return estRenseigne(evenement?.annee);
   },
@@ -60,5 +69,14 @@ export const Evenement = {
       !evenement?.region &&
       !evenement?.arrondissement
     );
+  },
+  formatageDateCompositionExtraitPlurilingue(
+    evenement?: IEvenement
+  ): IDateCompose {
+    return {
+      jour: getValeurOuVide(evenement?.jour),
+      mois: getValeurOuVide(evenement?.mois),
+      annee: getValeurOuVide(evenement?.annee)
+    };
   }
 };

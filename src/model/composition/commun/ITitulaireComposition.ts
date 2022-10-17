@@ -15,6 +15,10 @@ export interface ITitulaireComposition {
   sexe?: string;
   nom_avant_mariage?: string;
   nom_apres_mariage?: string;
+  nom_pere?: string;
+  prenom_pere?: string;
+  nom_mere?: string;
+  prenom_mere?: string;
 }
 
 export const TitulaireComposition = {

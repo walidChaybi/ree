@@ -87,11 +87,30 @@ export const TitulaireActe = {
         )
       : "";
   },
+  getLieuDeRepriseOuLieuNaissance(titulaire?: ITitulaireActe): string {
+    if (titulaire && titulaire?.naissance?.lieuReprise) {
+      return titulaire.naissance.lieuReprise;
+    } else {
+      return this.getLieuNaissance(titulaire);
+    }
+  },
   getParentsDirects(titulaire?: ITitulaireActe): IFiliation[] {
     return this.getParents(
       (filiation: IFiliation) => filiation.lienParente === LienParente.PARENT,
       titulaire
     );
+  },
+
+  getParentDirectMasculin(titulaire?: ITitulaireActe): IFiliation | undefined {
+    const parents = TitulaireActe.getParentsDirects(titulaire);
+
+    return parents.find(parent => parent.sexe === Sexe.MASCULIN);
+  },
+
+  getParentDirectFeminin(titulaire?: ITitulaireActe): IFiliation | undefined {
+    const parents = TitulaireActe.getParentsDirects(titulaire);
+
+    return parents.find(parent => parent.sexe === Sexe.FEMININ);
   },
 
   getTousLesParents(titulaire?: ITitulaireActe): IFiliation[] {
@@ -150,5 +169,15 @@ export const TitulaireActe = {
     } else {
       return false;
     }
+  },
+
+  aDonneesLieuOuAnneeNaissanceAbsentes(titulaire: ITitulaireActe) {
+    return (
+      !titulaire.naissance?.annee ||
+      (!titulaire.naissance?.lieuReprise &&
+        !titulaire.naissance?.ville &&
+        !titulaire.naissance?.region &&
+        !titulaire.naissance?.pays)
+    );
   }
 };

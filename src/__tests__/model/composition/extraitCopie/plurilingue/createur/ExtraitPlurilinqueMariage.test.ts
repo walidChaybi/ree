@@ -19,6 +19,7 @@ import { configRequetes } from "../../../../../../mock/superagent-config/superag
 const superagentMock = require("superagent-mock")(request, [configRequetes[0]]);
 
 const validation = "O";
+const mentionsRetirees: string[] = [];
 
 beforeAll(() => {
   DocumentDelivrance.init();
@@ -28,114 +29,121 @@ afterAll(() => {
   superagentMock.unset();
 });
 
-test("Doit retourner les bonnes informations pour les 2 titulaires", () => {
-  const acte = mapActe(ficheActeMariage.data);
+describe("Composition extrait plurilingue de Mariage", () => {
+  test("Doit retourner les bonnes informations pour les 2 titulaires", () => {
+    const acte = mapActe(ficheActeMariage.data);
 
-  const compositionCorps = creationCompositionExtraitPlurilingue(
-    acte as any as IFicheActe,
-    validation as Validation
-  );
+    const compositionCorps = creationCompositionExtraitPlurilingue(
+      acte as any as IFicheActe,
+      validation as Validation,
+      mentionsRetirees
+    );
 
-  const nomApresMariageAttenduT1 = "nomApresMariage";
-  const nomAvantMariageAttenduT1 = "nomAvantMariage";
-  const prenomsT1 = "Jean-Louis Alphonse Raoül";
-  const dateNaissanceT1 = {
-    jour: 29,
-    mois: 11,
-    annee: 1989
-  };
-  const lieuNaissanceT1 = "Paris (Fance)";
+    const nomApresMariageAttenduT1 = "nomApresMariage";
+    const nomAvantMariageAttenduT1 = "MARTIN";
+    const prenomsT1 = "Jean-Louis Alphonse Raoül";
+    const dateNaissanceT1 = {
+      jour: 29,
+      mois: 11,
+      annee: 1989
+    };
+    const lieuNaissanceT1 = "Paris (Fance)";
 
-  const nomApresMariageAttenduT2 = "nomApresMariage";
-  const nomAvantMariageAttenduT2 = "nomAvantMariage";
-  const prenomsT2 = "Elodie Marie-Charlotte Pauline";
-  const dateNaissanceT2 = {
-    jour: 25,
-    mois: 6,
-    annee: 1990
-  };
-  const lieuNaissanceT2 = "Barcelone, Catalogne (Espagne)";
+    const nomApresMariageAttenduT2 = "nomApresMariage";
+    const nomAvantMariageAttenduT2 = "PRODESK";
+    const prenomsT2 = "Elodie Marie-Charlotte Pauline";
+    const dateNaissanceT2 = {
+      jour: 25,
+      mois: 6,
+      annee: 1990
+    };
+    const lieuNaissanceT2 = "Barcelone, Catalogne (Espagne)";
 
-  expect(compositionCorps.titulaire_1.nom_apres_mariage).toBe(
-    nomApresMariageAttenduT1
-  );
-  expect(compositionCorps.titulaire_1.nom_avant_mariage).toBe(
-    nomAvantMariageAttenduT1
-  );
-  expect(compositionCorps.titulaire_1.prenoms).toBe(prenomsT1);
-  expect(compositionCorps.titulaire_1.date_naissance?.jour).toBe(
-    dateNaissanceT1.jour
-  );
-  expect(compositionCorps.titulaire_1?.lieu_naissance).toBe(lieuNaissanceT1);
+    expect(compositionCorps.titulaire_1.nom_apres_mariage).toBe(
+      nomApresMariageAttenduT1
+    );
+    expect(compositionCorps.titulaire_1.nom_avant_mariage).toBe(
+      nomAvantMariageAttenduT1
+    );
+    expect(compositionCorps.titulaire_1.prenoms).toBe(prenomsT1);
+    expect(compositionCorps.titulaire_1.date_naissance?.jour).toBe(
+      dateNaissanceT1.jour
+    );
+    expect(compositionCorps.titulaire_1?.lieu_naissance).toBe(lieuNaissanceT1);
 
-  expect(compositionCorps.titulaire_2?.nom_apres_mariage).toBe(
-    nomApresMariageAttenduT2
-  );
-  expect(compositionCorps.titulaire_2?.nom_avant_mariage).toBe(
-    nomAvantMariageAttenduT2
-  );
-  expect(compositionCorps.titulaire_2?.prenoms).toBe(prenomsT2);
-  expect(compositionCorps.titulaire_2?.date_naissance?.jour).toBe(
-    dateNaissanceT2.jour
-  );
-  expect(compositionCorps.titulaire_2?.lieu_naissance).toBe(lieuNaissanceT2);
-});
+    expect(compositionCorps.titulaire_2?.nom_apres_mariage).toBe(
+      nomApresMariageAttenduT2
+    );
+    expect(compositionCorps.titulaire_2?.nom_avant_mariage).toBe(
+      nomAvantMariageAttenduT2
+    );
+    expect(compositionCorps.titulaire_2?.prenoms).toBe(prenomsT2);
+    expect(compositionCorps.titulaire_2?.date_naissance?.jour).toBe(
+      dateNaissanceT2.jour
+    );
+    expect(compositionCorps.titulaire_2?.lieu_naissance).toBe(lieuNaissanceT2);
+  });
 
-test("Doit mettre le document en erreur quand le nombre de mentions dépasse la limite", () => {
-  const acte = mapActe(ficheActeMariage.data);
-  acte.mentions = mentionsPlurilinguesMariageNombre7 as any as IMention[];
+  test("Doit mettre le document en erreur quand le nombre de mentions dépasse la limite", () => {
+    const acte = mapActe(ficheActeMariage.data);
+    acte.mentions = mentionsPlurilinguesMariageNombre7 as any as IMention[];
 
-  const compositionCorps = creationCompositionExtraitPlurilingue(
-    acte as any as IFicheActe,
-    validation as Validation
-  );
+    const compositionCorps = creationCompositionExtraitPlurilingue(
+      acte as any as IFicheActe,
+      validation as Validation,
+      mentionsRetirees
+    );
 
-  const mentionErreur = "--";
+    const mentionErreur = "--";
 
-  expect(compositionCorps.autres_enonciations_acte.enonciations[0]).toBe(
-    mentionErreur
-  );
-});
+    expect(compositionCorps.autres_enonciations_acte.enonciations[0]).toBe(
+      mentionErreur
+    );
+  });
 
-test("Doit afficher les mentions quand le nombre de mentions est en dessous ou égale de la limite", () => {
-  const acte = mapActe(ficheActeMariage.data);
-  acte.mentions = mentionsPlurilinguesMariageAvec6 as any as IMention[];
+  test("Doit afficher les mentions quand le nombre de mentions est en dessous ou égale de la limite", () => {
+    const acte = mapActe(ficheActeMariage.data);
+    acte.mentions = mentionsPlurilinguesMariageAvec6 as any as IMention[];
 
-  const compositionCorps = creationCompositionExtraitPlurilingue(
-    acte as any as IFicheActe,
-    validation as Validation
-  );
+    const compositionCorps = creationCompositionExtraitPlurilingue(
+      acte as any as IFicheActe,
+      validation as Validation,
+      mentionsRetirees
+    );
 
-  const mentierAfficherUn = "Sc 31-01-92 Nantes Jenmi";
+    const mentierAfficherUn = "Sc 31-01-92 Nantes Jenmi";
 
-  expect(compositionCorps.autres_enonciations_acte.enonciations[0]).toBe(
-    mentierAfficherUn
-  );
-});
+    expect(compositionCorps.autres_enonciations_acte.enonciations[0]).toBe(
+      mentierAfficherUn
+    );
+  });
 
-test("Doit mettre le filigrane en erreur quand un des titulaire est de sexe indeterminé et mettre le sexe indetermine dans la colonne titulaire_2", () => {
-  const acte = mapActe(ficheActeAvecUnTitulaireIndetermine.data);
-  acte.mentions = mentionsPlurilinguesMariageAvec6 as any as IMention[];
+  test("Doit mettre le filigrane en erreur quand un des titulaire est de sexe indeterminé et mettre le sexe indetermine dans la colonne titulaire_2", () => {
+    const acte = mapActe(ficheActeAvecUnTitulaireIndetermine.data);
+    acte.mentions = mentionsPlurilinguesMariageAvec6 as any as IMention[];
 
-  const compositionCorps = creationCompositionExtraitPlurilingue(
-    acte as any as IFicheActe,
-    validation as Validation
-  );
+    const compositionCorps = creationCompositionExtraitPlurilingue(
+      acte as any as IFicheActe,
+      validation as Validation,
+      mentionsRetirees
+    );
 
-  expect(compositionCorps.filigrane_erreur).toEqual(true);
-  expect(compositionCorps.titulaire_2?.prenoms).toBe(
-    "Elodie Marie-Charlotte Pauline"
-  );
-});
+    expect(compositionCorps.filigrane_erreur).toEqual(true);
+    expect(compositionCorps.titulaire_2?.prenoms).toBe(
+      "Elodie Marie-Charlotte Pauline"
+    );
+  });
 
-test("Ne doit pas afficher les même titulaires dans le document quand les 2 titulaire sont de sexe indeterminé suivant l'ordre", () => {
-  const acte = mapActe(ficheActeAvecDeuxTitulaireIndetermine.data);
-  acte.mentions = mentionsPlurilinguesMariageAvec6 as any as IMention[];
+  test("Ne doit pas afficher les même titulaires dans le document quand les 2 titulaire sont de sexe indeterminé suivant l'ordre", () => {
+    const acte = mapActe(ficheActeAvecDeuxTitulaireIndetermine.data);
+    acte.mentions = mentionsPlurilinguesMariageAvec6 as any as IMention[];
 
-  const compositionCorps = creationCompositionExtraitPlurilingue(
-    acte as any as IFicheActe,
-    Validation.O
-  );
+    const compositionCorps = creationCompositionExtraitPlurilingue(
+      acte as any as IFicheActe,
+      Validation.O,
+      mentionsRetirees
+    );
 
-  expect(compositionCorps.filigrane_erreur).toEqual(true);
+    expect(compositionCorps.filigrane_erreur).toEqual(true);
+  });
 });

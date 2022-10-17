@@ -19,8 +19,8 @@ import {
   FONCTION_AGENT
 } from "./ExtraitPlurilingueCommunComposition";
 
-export class ExtraitPlurilingueMariageComposition {
-  public static compositionExtraitPlurilingueDeMariage(
+export class ExtraitPlurilingueNaissanceComposition {
+  public static compositionExtraitPlurilingueDeNaissance(
     acte: IFicheActe,
     validation: Validation,
     mentionsRetirees: string[]
@@ -33,18 +33,11 @@ export class ExtraitPlurilingueMariageComposition {
     composition.reference_acte = FicheActe.getReference(acte);
     composition.date_acte =
       Evenement.formatageDateCompositionExtraitPlurilingue(acte.evenement);
-    composition.lieu_acte = Evenement.getLieu(acte.evenement);
 
     composition.titulaire_1 =
-      this.mappingTitulaireExtraitPlurilingueMariageComposition(
+      this.mappingTitulaireExtraitPlurilingueNaissanceComposition(
         acte,
-        FicheActe.getTitulaireMasculinOuAutre(acte)
-      );
-
-    composition.titulaire_2 =
-      this.mappingTitulaireExtraitPlurilingueMariageComposition(
-        acte,
-        FicheActe.getTitulaireFemininOuAutre(acte)
+        FicheActe.getTitulairesActeDansLOrdre(acte).titulaireActe1
       );
 
     composition.date_delivrance = getDateComposeFromDate(new Date());
@@ -59,6 +52,7 @@ export class ExtraitPlurilingueMariageComposition {
 
     composition.fonction_agent = FONCTION_AGENT;
     composition.filigrane_erreur = FicheActe.estEnErreur(acte);
+
     composition.filigrane_incomplet = FicheActe.estIncomplet(acte);
     composition.code_CTV = "52976 - 36UTD"; //TODO
     composition.pas_de_bloc_signature =
@@ -69,23 +63,37 @@ export class ExtraitPlurilingueMariageComposition {
     return composition;
   }
 
-  public static mappingTitulaireExtraitPlurilingueMariageComposition(
+  public static mappingTitulaireExtraitPlurilingueNaissanceComposition(
     acte: IFicheActe,
     titulaire: ITitulaireActe
   ): ITitulaireComposition {
     return {
-      nom_avant_mariage: getValeurOuVide(
-        ExtraitPlurilingueCommunComposition.getNomDerniereAnalyseMarginale(
-          acte,
-          titulaire
-        )
+      nom: ExtraitPlurilingueCommunComposition.getNomDerniereAnalyseMarginale(
+        acte,
+        titulaire
       ),
-      nom_apres_mariage: getValeurOuVide(titulaire.nomApresMariage),
       prenoms: TitulaireActe.getPrenoms(titulaire),
+      sexe: TitulaireActe.getSexeOuVide(titulaire)[0],
       date_naissance: Evenement.formatageDateCompositionExtraitPlurilingue(
         titulaire.naissance
       ),
-      lieu_naissance: TitulaireActe.getLieuDeRepriseOuLieuNaissance(titulaire)
+      lieu_naissance: TitulaireActe.getLieuDeRepriseOuLieuNaissance(titulaire),
+      nom_pere: getValeurOuVide(
+        TitulaireActe.getParentDirectMasculin(titulaire)?.nom
+      ),
+      prenom_pere: this.getPrenom(
+        TitulaireActe.getParentDirectMasculin(titulaire)
+      ),
+      nom_mere: getValeurOuVide(
+        TitulaireActe.getParentDirectFeminin(titulaire)?.nom
+      ),
+      prenom_mere: this.getPrenom(
+        TitulaireActe.getParentDirectFeminin(titulaire)
+      )
     };
+  }
+
+  public static getPrenom(titulaire?: ITitulaireActe) {
+    return getValeurOuVide(TitulaireActe.getPrenoms(titulaire));
   }
 }

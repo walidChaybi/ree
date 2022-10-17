@@ -1918,7 +1918,7 @@ export const ficheActeNaissance = {
             prenoms: ["Alphonse"],
             autresNoms: null,
             autresPrenoms: null,
-            ordre: 1,
+            ordre: 2,
             sexe: "FEMININ",
             naissance: null,
             profession: null,
@@ -1948,7 +1948,7 @@ export const ficheActeNaissance = {
             prenoms: ["Amandine"],
             autresNoms: null,
             autresPrenoms: null,
-            ordre: 1,
+            ordre: 2,
             sexe: null,
             naissance: null,
             profession: null,
@@ -4928,5 +4928,690 @@ export const ficheActeAvecDeuxTitulaireIndetermine = {
     detailMariage: {
       existenceContrat: "NON"
     }
+  }
+};
+
+export const idFicheActeAvecTitulaireInconnu =
+  "b45079a5-9e8f-488a-b07c-c4c2az613121";
+export const ficheActeNaissanceAvecTitulaireInconnu = {
+  ...ficheActeNaissance,
+  errors: [],
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-etatcivil-api/v1/acte/b45079a5-9e8f-488a-b07c-c4c2az613121",
+  data: {
+    ...ficheActeNaissance.data,
+    titulaires: [
+      {
+        nom: "Micheldelavandièredugrand-large",
+        ordre: 2,
+        prenoms: ["lolita"],
+        sexe: "INCONNU",
+        naissance: {
+          autresNoms: null,
+          autresPrenoms: null,
+          minute: null,
+          heure: null,
+          jour: 17,
+          mois: 4,
+          annee: 1970,
+          voie: null,
+          ville: "Sitka",
+          arrondissement: null,
+          region: "Alaska",
+          pays: "États-Unis",
+          lieuReprise: null
+        },
+        filiations: [
+          {
+            lienParente: "PARENT",
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "MASCULIN",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: null,
+              mois: null,
+              annee: null,
+              voie: null,
+              ville: "Barcelone",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "Espagne",
+              lieuReprise: null
+            },
+            profession: "Informaticien",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Jean", "Louis"]
+          },
+          {
+            lienParente: "PARENT",
+            ordre: 2,
+            nom: "DUPOND",
+            sexe: "FEMININ",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: 26,
+              mois: 6,
+              annee: 1981,
+              voie: null,
+              ville: "Nantes",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "France",
+              lieuReprise: null
+            },
+            profession: "Dentiste",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Louise", "Jocelyne"]
+          }
+        ],
+        profession: "DEVELOPPEUR",
+        age: null,
+        domicile: {
+          voie: "IlotduHéron",
+          ville: "Djibouti",
+          arrondissement: null,
+          region: null,
+          pays: "DJIBOUTI"
+        },
+        typeDeclarationConjointe: "CHOIX_NOM",
+        dateDeclarationConjointe: [1999, 2, 3],
+        nomPartie1: "nom1",
+        nomPartie2: "nom2",
+        nomAvantMariage: "Micheldelavandièredugrand",
+        nomApresMariage: "Micheldelavandièredugrand-large",
+        nomDernierConjoint: "Large",
+        prenomsDernierConjoint: "Jean Maxime"
+      }
+    ]
+  }
+};
+
+export const idFicheActeAvecUnParentTitulaireInconnu =
+  "b45079a5-9e8f-488a-b07c-c4c2az613121";
+export const ficheActeAvecUnParentTitulaireInconnu = {
+  ...ficheActeNaissance,
+  errors: [],
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-etatcivil-api/v1/acte/b45079a5-9e8f-488a-b07c-c4c2az613121",
+  data: {
+    ...ficheActeNaissance.data,
+    titulaires: [
+      {
+        nom: "Micheldelavandièredugrand-large",
+        ordre: 2,
+        prenoms: ["lolita"],
+        sexe: "MASCULIN",
+        naissance: {
+          autresNoms: null,
+          autresPrenoms: null,
+          minute: null,
+          heure: null,
+          jour: 17,
+          mois: 4,
+          annee: 1970,
+          voie: null,
+          ville: "Sitka",
+          arrondissement: null,
+          region: "Alaska",
+          pays: "États-Unis",
+          lieuReprise: null
+        },
+        filiations: [
+          {
+            lienParente: "PARENT",
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "MASCULIN",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: null,
+              mois: null,
+              annee: null,
+              voie: null,
+              ville: "Barcelone",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "Espagne",
+              lieuReprise: null
+            },
+            profession: "Informaticien",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Jean", "Louis"]
+          },
+          {
+            lienParente: "PARENT",
+            ordre: 2,
+            nom: "DUPOND",
+            sexe: "INCONNU",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: 26,
+              mois: 6,
+              annee: 1981,
+              voie: null,
+              ville: "Nantes",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "France",
+              lieuReprise: null
+            },
+            profession: "Dentiste",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Louise", "Jocelyne"]
+          }
+        ],
+        profession: "DEVELOPPEUR",
+        age: null,
+        domicile: {
+          voie: "IlotduHéron",
+          ville: "Djibouti",
+          arrondissement: null,
+          region: null,
+          pays: "DJIBOUTI"
+        },
+        typeDeclarationConjointe: "CHOIX_NOM",
+        dateDeclarationConjointe: [1999, 2, 3],
+        nomPartie1: "nom1",
+        nomPartie2: "nom2",
+        nomAvantMariage: "Micheldelavandièredugrand",
+        nomApresMariage: "Micheldelavandièredugrand-large",
+        nomDernierConjoint: "Large",
+        prenomsDernierConjoint: "Jean Maxime"
+      }
+    ]
+  }
+};
+
+export const idFicheActeAvecAnneeNaissanceTitulaireAbsente =
+  "b45079a5-9e8f-488a-b07c-c4c2az613121";
+export const ficheActeAvecAnneeNaissanceTitulaireAbsente = {
+  ...ficheActeNaissance,
+  errors: [],
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-etatcivil-api/v1/acte/b45079a5-9e8f-488a-b07c-c4c2az613121",
+  data: {
+    ...ficheActeNaissance.data,
+    titulaires: [
+      {
+        nom: "Micheldelavandièredugrand-large",
+        ordre: 2,
+        prenoms: ["lolita"],
+        sexe: "MASCULIN",
+        naissance: {
+          autresNoms: null,
+          autresPrenoms: null,
+          minute: null,
+          heure: null,
+          jour: 17,
+          mois: 4,
+          annee: null,
+          voie: null,
+          ville: "Sitka",
+          arrondissement: null,
+          region: "Alaska",
+          pays: "États-Unis",
+          lieuReprise: null
+        },
+        filiations: [
+          {
+            lienParente: "PARENT",
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "MASCULIN",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: null,
+              mois: null,
+              annee: null,
+              voie: null,
+              ville: "Barcelone",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "Espagne",
+              lieuReprise: null
+            },
+            profession: "Informaticien",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Jean", "Louis"]
+          },
+          {
+            lienParente: "PARENT",
+            ordre: 2,
+            nom: "DUPOND",
+            sexe: "FEMININ",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: 26,
+              mois: 6,
+              annee: 1981,
+              voie: null,
+              ville: "Nantes",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "France",
+              lieuReprise: null
+            },
+            profession: "Dentiste",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Louise", "Jocelyne"]
+          }
+        ],
+        profession: "DEVELOPPEUR",
+        age: null,
+        domicile: {
+          voie: "IlotduHéron",
+          ville: "Djibouti",
+          arrondissement: null,
+          region: null,
+          pays: "DJIBOUTI"
+        },
+        typeDeclarationConjointe: "CHOIX_NOM",
+        dateDeclarationConjointe: [1999, 2, 3],
+        nomPartie1: "nom1",
+        nomPartie2: "nom2",
+        nomAvantMariage: "Micheldelavandièredugrand",
+        nomApresMariage: "Micheldelavandièredugrand-large",
+        nomDernierConjoint: "Large",
+        prenomsDernierConjoint: "Jean Maxime"
+      }
+    ]
+  }
+};
+
+export const idFicheActeAvecTitulaireIndetermine =
+  "b45079a5-9e8f-488a-b07c-c4c2az613121";
+export const ficheActeAvecTitulaireIndetermine = {
+  ...ficheActeNaissance,
+  errors: [],
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-etatcivil-api/v1/acte/b45079a5-9e8f-488a-b07c-c4c2az613121",
+  data: {
+    ...ficheActeNaissance.data,
+    titulaires: [
+      {
+        nom: "Micheldelavandièredugrand-large",
+        ordre: 2,
+        prenoms: ["lolita"],
+        sexe: "INDETERMINE",
+        naissance: {
+          autresNoms: null,
+          autresPrenoms: null,
+          minute: null,
+          heure: null,
+          jour: 17,
+          mois: 4,
+          annee: 1970,
+          voie: null,
+          ville: "Sitka",
+          arrondissement: null,
+          region: "Alaska",
+          pays: "États-Unis",
+          lieuReprise: null
+        },
+        filiations: [
+          {
+            lienParente: "PARENT",
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "MASCULIN",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: null,
+              mois: null,
+              annee: null,
+              voie: null,
+              ville: "Barcelone",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "Espagne",
+              lieuReprise: null
+            },
+            profession: "Informaticien",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Jean", "Louis"]
+          },
+          {
+            lienParente: "PARENT",
+            ordre: 2,
+            nom: "DUPOND",
+            sexe: "FEMININ",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: 26,
+              mois: 6,
+              annee: 1981,
+              voie: null,
+              ville: "Nantes",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "France",
+              lieuReprise: null
+            },
+            profession: "Dentiste",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Louise", "Jocelyne"]
+          }
+        ],
+        profession: "DEVELOPPEUR",
+        age: null,
+        domicile: {
+          voie: "IlotduHéron",
+          ville: "Djibouti",
+          arrondissement: null,
+          region: null,
+          pays: "DJIBOUTI"
+        },
+        typeDeclarationConjointe: "CHOIX_NOM",
+        dateDeclarationConjointe: [1999, 2, 3],
+        nomPartie1: "nom1",
+        nomPartie2: "nom2",
+        nomAvantMariage: "Micheldelavandièredugrand",
+        nomApresMariage: "Micheldelavandièredugrand-large",
+        nomDernierConjoint: "Large",
+        prenomsDernierConjoint: "Jean Maxime"
+      }
+    ]
+  }
+};
+
+export const idFicheActeNaissanceAvecParentsDeMemeSexe =
+  "b45079a5-9e8f-488a-b07c-c4c2az613121";
+export const ficheActeNaissanceAvecParentsDeMemeSexe = {
+  ...ficheActeNaissance,
+  errors: [],
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-etatcivil-api/v1/acte/b45079a5-9e8f-488a-b07c-c4c2az613121",
+  data: {
+    ...ficheActeNaissance.data,
+    id: idFicheActeNaissanceAvecParentsDeMemeSexe,
+    titulaires: [
+      {
+        nom: "Micheldelavandièredugrand-large",
+        ordre: 2,
+        prenoms: ["lolita"],
+        sexe: "MASCULIN",
+        naissance: {
+          autresNoms: null,
+          autresPrenoms: null,
+          minute: null,
+          heure: null,
+          jour: 17,
+          mois: 4,
+          annee: 1970,
+          voie: null,
+          ville: "Sitka",
+          arrondissement: null,
+          region: "Alaska",
+          pays: "États-Unis",
+          lieuReprise: null
+        },
+        filiations: [
+          {
+            lienParente: "PARENT",
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "MASCULIN",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: null,
+              mois: null,
+              annee: null,
+              voie: null,
+              ville: "Barcelone",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "Espagne",
+              lieuReprise: null
+            },
+            profession: "Informaticien",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Jean", "Louis"]
+          },
+          {
+            lienParente: "PARENT",
+            ordre: 2,
+            nom: "DUPOND",
+            sexe: "MASCULIN",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: 26,
+              mois: 6,
+              annee: 1981,
+              voie: null,
+              ville: "Nantes",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "France",
+              lieuReprise: null
+            },
+            profession: "Dentiste",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Louise", "Jocelyne"]
+          }
+        ],
+        profession: "DEVELOPPEUR",
+        age: null,
+        domicile: {
+          voie: "IlotduHéron",
+          ville: "Djibouti",
+          arrondissement: null,
+          region: null,
+          pays: "DJIBOUTI"
+        },
+        typeDeclarationConjointe: "CHOIX_NOM",
+        dateDeclarationConjointe: [1999, 2, 3],
+        nomPartie1: "nom1",
+        nomPartie2: "nom2",
+        nomAvantMariage: "Micheldelavandièredugrand",
+        nomApresMariage: "Micheldelavandièredugrand-large",
+        nomDernierConjoint: "Large",
+        prenomsDernierConjoint: "Jean Maxime"
+      }
+    ]
+  }
+};
+
+export const idFicheActeAvecUnParentTitulaireIndetermine =
+  "b45079a5-9e8f-488a-b07c-c4c2az613121";
+export const ficheActeAvecUnParentTitulaireIndetermine = {
+  ...ficheActeNaissance,
+  errors: [],
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-etatcivil-api/v1/acte/b45079a5-9e8f-488a-b07c-c4c2az613121",
+  data: {
+    ...ficheActeNaissance.data,
+    titulaires: [
+      {
+        nom: "Micheldelavandièredugrand-large",
+        ordre: 2,
+        prenoms: ["lolita"],
+        sexe: "MASCULIN",
+        naissance: {
+          autresNoms: null,
+          autresPrenoms: null,
+          minute: null,
+          heure: null,
+          jour: 17,
+          mois: 4,
+          annee: 1970,
+          voie: null,
+          ville: "Sitka",
+          arrondissement: null,
+          region: "Alaska",
+          pays: "États-Unis",
+          lieuReprise: null
+        },
+        filiations: [
+          {
+            lienParente: "PARENT",
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "INDETERMINE",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: null,
+              mois: null,
+              annee: null,
+              voie: null,
+              ville: "Barcelone",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "Espagne",
+              lieuReprise: null
+            },
+            profession: "Informaticien",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Jean", "Louis"]
+          },
+          {
+            lienParente: "PARENT",
+            ordre: 2,
+            nom: "DUPOND",
+            sexe: "MASCULIN",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: 26,
+              mois: 6,
+              annee: 1981,
+              voie: null,
+              ville: "Nantes",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "France",
+              lieuReprise: null
+            },
+            profession: "Dentiste",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Louise", "Jocelyne"]
+          }
+        ],
+        profession: "DEVELOPPEUR",
+        age: null,
+        domicile: {
+          voie: "IlotduHéron",
+          ville: "Djibouti",
+          arrondissement: null,
+          region: null,
+          pays: "DJIBOUTI"
+        },
+        typeDeclarationConjointe: "CHOIX_NOM",
+        dateDeclarationConjointe: [1999, 2, 3],
+        nomPartie1: "nom1",
+        nomPartie2: "nom2",
+        nomAvantMariage: "Micheldelavandièredugrand",
+        nomApresMariage: "Micheldelavandièredugrand-large",
+        nomDernierConjoint: "Large",
+        prenomsDernierConjoint: "Jean Maxime"
+      }
+    ]
   }
 };
