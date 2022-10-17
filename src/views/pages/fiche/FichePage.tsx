@@ -62,7 +62,6 @@ export const FichePage: React.FC<FichePageProps> = ({
   numeroRequete,
   index,
   fenetreExterneUtil,
-  provenanceRequete = "",
   nbLignesTotales,
   nbLignesParAppel,
   getLignesSuivantesOuPrecedentes
@@ -219,11 +218,10 @@ export const FichePage: React.FC<FichePageProps> = ({
       setAjouterAlerteActeApiHookParameters({
         idActe: dataFicheState?.data?.id,
         idTypeAlerte: value?.idTypeAlerte,
-        complementDescription: value?.complementDescription,
-        provenanceRequete
+        complementDescription: value?.complementDescription
       });
     },
-    [dataFicheState, provenanceRequete]
+    [dataFicheState]
   );
 
   const alerte = useAddAlerteActeApiHook(ajouterAlerteActeApiHookParameters);

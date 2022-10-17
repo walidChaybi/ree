@@ -1,4 +1,6 @@
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { BoutonAjouterAlerte } from "@widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
 import { IAjouterAlerteFormValue } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { ListeAlertes } from "@widget/alertes/listeAlertes/ListeAlertes";
@@ -20,9 +22,16 @@ export const BandeauAlertesActe: React.FC<BandeauAlertesActeProps> = ({
   idTypeRegistre,
   afficherBouton
 }) => {
+  function afficherBoutonSelonFeatureFlag() {
+    return (
+      afficherBouton &&
+      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
+    );
+  }
+
   return (
     <div className="BandeauAlertesActe">
-      {afficherBouton && (
+      {afficherBoutonSelonFeatureFlag() && (
         <BoutonAjouterAlerte
           ajouterAlerteCallBack={ajouterAlerteCallBack}
           idTypeRegistre={idTypeRegistre}

@@ -274,9 +274,6 @@ export function addAlerteActe(
       idActe: parameters?.idActe,
       idTypeAlerte: parameters?.idTypeAlerte,
       complementDescription: parameters?.complementDescription
-    },
-    parameters: {
-      provenanceRequete: parameters?.provenanceRequete
     }
   });
 }

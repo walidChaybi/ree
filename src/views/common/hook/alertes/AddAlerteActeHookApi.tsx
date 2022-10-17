@@ -8,7 +8,6 @@ export interface AddAlerteActeApiHookParameters {
   idActe: string;
   idTypeAlerte: string;
   complementDescription: string;
-  provenanceRequete: string;
 }
 
 export function useAddAlerteActeApiHook(

@@ -94,11 +94,10 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
       setAjouterAlerteActeApiHookParameters({
         idActe,
         idTypeAlerte: value?.idTypeAlerte,
-        complementDescription: value?.complementDescription,
-        provenanceRequete: detailRequete?.provenanceRequete?.provenance?.libelle
+        complementDescription: value?.complementDescription
       });
     },
-    [detailRequete]
+    []
   );
 
   const majAlertes = useCallback(

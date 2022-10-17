@@ -12,7 +12,6 @@ interface IFenetreFicheProps {
   datasFiches: IDataFicheProps[];
   numeroRequete?: string;
   index: IIndex;
-  provenanceRequete?: string;
   nbLignesTotales: number;
   nbLignesParAppel: number;
   getLignesSuivantesOuPrecedentes?: (
@@ -29,7 +28,6 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
   datasFiches,
   numeroRequete,
   index,
-  provenanceRequete = "",
   nbLignesTotales,
   nbLignesParAppel,
   getLignesSuivantesOuPrecedentes
@@ -57,7 +55,6 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
             dataFicheIdentifiant={identifiant}
             fenetreExterneUtil={fenetreExterneUtil}
             index={index}
-            provenanceRequete={provenanceRequete}
             nbLignesTotales={nbLignesTotales}
             nbLignesParAppel={nbLignesParAppel}
             getLignesSuivantesOuPrecedentes={getLignesSuivantesOuPrecedentes}

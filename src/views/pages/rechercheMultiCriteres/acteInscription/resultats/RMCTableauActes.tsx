@@ -2,7 +2,6 @@ import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { Alerte, IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequete } from "@model/requete/IRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { getLibelle, getValeurOuVide, supprimeElement } from "@util/Utils";
@@ -232,10 +231,6 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
                   datasFiches={fenetreFicheActe.datasFiches}
                   numeroRequete={fenetreFicheActe.numeroRequete}
                   onClose={closeFenetre}
-                  provenanceRequete={
-                    (dataRequete as IRequeteDelivrance)?.provenanceRequete
-                      ?.provenance?.libelle
-                  }
                   index={fenetreFicheActe.index}
                   nbLignesTotales={dataTableauRMCActe.rowsNumberState || 0}
                   getLignesSuivantesOuPrecedentes={

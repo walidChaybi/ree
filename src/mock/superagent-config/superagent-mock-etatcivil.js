@@ -509,7 +509,7 @@ export const configEtatcivil = [
         return { data: ReponseAppelGetAlertesActe.data };
       }
 
-      if (match[1] === "/acte/alerte?provenanceRequete=Service%20Public") {
+      if (match[1] === "/acte/alerte") {
         return { data: ReponseAppelAddAlerteActe.data };
       }
 
