@@ -206,7 +206,10 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
         {props.children &&
           React.Children.map(props.children, (child: any) => {
             return React.cloneElement(child, {
-              requetes: dataBody,
+              requetesASigner: dataBody.map(requete => ({
+                requete,
+                acte: undefined
+              })),
               reloadData
             });
           })}

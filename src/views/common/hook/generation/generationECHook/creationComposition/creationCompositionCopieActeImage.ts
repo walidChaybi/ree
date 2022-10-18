@@ -9,7 +9,8 @@ import { getLibelle, getValeurOuVide } from "@util/Utils";
 export const creationCompositionCopieActeImage = function (
   acte: IFicheActe,
   requete: IRequeteDelivrance,
-  validation: Validation
+  validation: Validation,
+  ctv: string
 ) {
   let composition;
   const choixDelivrance = getValeurOuVide(requete.choixDelivrance);
@@ -34,7 +35,8 @@ export const creationCompositionCopieActeImage = function (
       copie,
       archive,
       corpsImage,
-      erreur
+      erreur,
+      ctv
     });
   }
   return composition;

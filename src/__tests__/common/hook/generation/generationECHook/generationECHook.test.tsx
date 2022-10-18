@@ -15,12 +15,14 @@ import {
 import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
+import { configTeleverification } from "../../../../../mock/superagent-config/superagent-mock-televerification";
 import { getRequeteWithChoixDelivrance } from "../../../../__tests__utils__/testsUtil";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],
   configEtatcivil[0],
-  configComposition[0]
+  configComposition[0],
+  configTeleverification[0]
 ]);
 
 const ecMariageSansFiliationparams: IGenerationECParams = {

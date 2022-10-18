@@ -137,6 +137,7 @@ export const configEtatcivil = [
         match[1] ===
           "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f?recupereImagesEtTexte=true" ||
         match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4da" ||
+        match[1] === "/acte/f9279c00-5d2b-11ea-bc55-0242ac130004" ||
         match[1] ===
           "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f?isConsultation=true"
       ) {
@@ -548,7 +549,9 @@ export const configEtatcivil = [
       // Maj de la date de derhière délivrance
       if (
         match[1] ===
-        "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235b/dernieredelivrance"
+          "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235b/dernieredelivrance" ||
+        match[1] ===
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/dernieredelivrance"
       ) {
         return { data: {} };
       }

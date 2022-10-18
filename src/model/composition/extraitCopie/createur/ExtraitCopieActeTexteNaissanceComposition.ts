@@ -5,42 +5,40 @@ import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";
 import { IFicheActe } from "../../../etatcivil/acte/IFicheActe";
 import { NatureActe } from "../../../etatcivil/enum/NatureActe";
 import { Validation } from "../../../requete/enum/Validation";
-import { IRequeteDelivrance } from "../../../requete/IRequeteDelivrance";
 import {
   CommunExtraitOuCopieActeTexteComposition,
+  ICreerExtraitCopieActeTexteAvantCompositionParams,
   ITitulaireCompositionEC
 } from "./CommunExtraitOuCopieActeTexteComposition";
 
 export class ExtraitCopieActeTexteNaissanceComposition {
   public static creerExtraitCopieActeTexteNaissance(
-    acte: IFicheActe,
-    requete: IRequeteDelivrance,
-    validation: Validation,
-    mentionsRetirees: string[],
-    avecFiliation = false,
-    copie = false,
-    archive = false
+    params: ICreerExtraitCopieActeTexteAvantCompositionParams
   ) {
+    const avecFiliation = params.avecFiliation ? params.avecFiliation : false;
+    const copie = params.copie ? params.copie : false;
+    const archive = params.archive ? params.archive : false;
     const natureActe = NatureActe.getKey(NatureActe.NAISSANCE);
     const corpsTexte =
-      Validation.E !== validation
+      Validation.E !== params.validation
         ? ExtraitCopieActeTexteNaissanceComposition.getCorpsTexte(
-            acte,
+            params.acte,
             avecFiliation
           )
         : undefined;
 
     return CommunExtraitOuCopieActeTexteComposition.creerExtraitCopieActeTexte({
-      acte,
+      acte: params.acte,
       natureActe,
-      choixDelivrance: getValeurOuVide(requete.choixDelivrance),
-      sousTypeRequete: requete.sousType,
-      validation,
+      choixDelivrance: getValeurOuVide(params.requete.choixDelivrance),
+      sousTypeRequete: params.requete.sousType,
+      validation: params.validation,
       avecFiliation,
       copie,
       archive,
       corpsTexte,
-      mentionsRetirees
+      mentionsRetirees: params.mentionsRetirees,
+      ctv: params.ctv
     });
   }
 

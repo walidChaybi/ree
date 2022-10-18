@@ -16,17 +16,19 @@ test("Attendu: copie fonctionne correctement", () => {
   const avecFiliation = true;
   const copie = true;
   const archive = false;
+  const ctv = "111111-222222";
 
   const compositionCorps =
-    CopieActeTexteDecesComposition.creerCopieActeTexteDeces(
-      acte as any as IFicheActe,
+    CopieActeTexteDecesComposition.creerCopieActeTexteDeces({
+      acte: acte as any as IFicheActe,
       requete,
       validation,
-      [],
+      mentionsRetirees: [],
       avecFiliation,
       copie,
-      archive
-    );
+      archive,
+      ctv
+    });
 
   const corpsTexteAttendu = `Acte décès`;
 

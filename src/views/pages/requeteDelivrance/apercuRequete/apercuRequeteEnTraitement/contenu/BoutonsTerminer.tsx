@@ -1,5 +1,6 @@
 import { Droit } from "@model/agent/enum/Droit";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
@@ -17,10 +18,12 @@ import { BoutonValiderTerminer } from "./BoutonValiderTerminer";
 
 interface BoutonsTerminerProps {
   requete: IRequeteDelivrance;
+  acte?: IFicheActe;
 }
 
 export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
-  requete
+  requete,
+  acte
 }) => {
   const history = useHistory();
   const [estDisabled, setEstDisabled] = useState(true);
@@ -63,7 +66,12 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
         <>
           <BoutonSignature
             libelle={getLibelle("Terminer et signer")}
-            requetes={[mappingRequeteDelivranceToRequeteTableau(requete)]}
+            requetesASigner={[
+              {
+                requete: mappingRequeteDelivranceToRequeteTableau(requete),
+                acte
+              }
+            ]}
             reloadData={actionApresSignature}
             uniqueSignature={true}
             connectedUser={storeRece.utilisateurCourant}

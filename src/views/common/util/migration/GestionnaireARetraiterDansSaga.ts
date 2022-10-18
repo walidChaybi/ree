@@ -50,7 +50,7 @@ export class GestionnaireARetraiterDansSaga {
     const sousType = requete.sousType;
     return (
       !gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) &&
-      ((SousTypeDelivrance.soustypeRDD(sousType) &&
+      ((SousTypeDelivrance.estRDD(sousType) &&
         StatutRequete.estAuStatutTraiteADelivrerDematOuASigner(statut)) ||
         (SousTypeDelivrance.estRDC(sousType) &&
           StatutRequete.estAuStatutTraiteAImprimer(statut)))

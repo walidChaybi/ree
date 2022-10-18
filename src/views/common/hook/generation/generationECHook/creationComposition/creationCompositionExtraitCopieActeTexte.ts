@@ -14,41 +14,49 @@ export const creationCompositionExtraitCopieActeTexte = function (
   requete: IRequeteDelivrance,
   validation: Validation,
   mentionsRetirees: string[],
-  choixDelivranceEC: ChoixDelivrance
+  choixDelivranceEC: ChoixDelivrance,
+  ctv = "ctv absent"
 ) {
   let composition;
   const choixDelivrance = getValeurOuVide(choixDelivranceEC);
   if (acteComplet.nature === NatureActe.MARIAGE) {
     composition =
       ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexteMariage(
-        acteComplet,
-        requete,
-        validation,
-        mentionsRetirees,
-        ChoixDelivrance.estAvecFiliation(choixDelivrance),
-        ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance),
-        ChoixDelivrance.estCopieArchive(choixDelivrance)
+        {
+          acte: acteComplet,
+          requete,
+          validation,
+          mentionsRetirees,
+          avecFiliation: ChoixDelivrance.estAvecFiliation(choixDelivrance),
+          copie: ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance),
+          archive: ChoixDelivrance.estCopieArchive(choixDelivrance),
+          ctv
+        }
       );
   } else if (acteComplet.nature === NatureActe.DECES) {
-    composition = CopieActeTexteDecesComposition.creerCopieActeTexteDeces(
-      acteComplet,
+    composition = CopieActeTexteDecesComposition.creerCopieActeTexteDeces({
+      acte: acteComplet,
       requete,
       validation,
       mentionsRetirees,
-      ChoixDelivrance.estAvecFiliation(choixDelivrance),
-      ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance),
-      ChoixDelivrance.estCopieArchive(choixDelivrance)
-    );
+      avecFiliation: ChoixDelivrance.estAvecFiliation(choixDelivrance),
+      copie: ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance),
+      archive: ChoixDelivrance.estCopieArchive(choixDelivrance),
+      ctv
+    });
   } else if (acteComplet.nature === NatureActe.NAISSANCE) {
     composition =
       ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance(
-        acteComplet,
-        requete,
-        validation,
-        mentionsRetirees,
-        ChoixDelivrance.estAvecFiliation(choixDelivrance),
-        ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance),
-        ChoixDelivrance.estCopieArchive(choixDelivrance)
+        {
+          acte: acteComplet,
+          requete,
+          validation,
+          mentionsRetirees,
+          avecFiliation: ChoixDelivrance.estAvecFiliation(choixDelivrance),
+          copie: ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance),
+          archive: ChoixDelivrance.estCopieArchive(choixDelivrance),
+          ctv
+        }
       );
   } else {
     /* istanbul ignore next */

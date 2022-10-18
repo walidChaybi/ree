@@ -4,43 +4,41 @@ import { ExistenceContratMariage } from "../../../etatcivil/enum/ExistenceContra
 import { LienParente } from "../../../etatcivil/enum/LienParente";
 import { NatureActe } from "../../../etatcivil/enum/NatureActe";
 import { Validation } from "../../../requete/enum/Validation";
-import { IRequeteDelivrance } from "../../../requete/IRequeteDelivrance";
 import {
   CommunExtraitOuCopieActeTexteComposition,
+  ICreerExtraitCopieActeTexteAvantCompositionParams,
   IParentsTitulaireCompositionEC,
   ITitulaireCompositionEC
 } from "./CommunExtraitOuCopieActeTexteComposition";
 
 export class ExtraitCopieActeTexteMariageComposition {
   public static creerExtraitCopieActeTexteMariage(
-    acte: IFicheActe,
-    requete: IRequeteDelivrance,
-    validation: Validation,
-    mentionsRetirees: string[],
-    avecFiliation = false,
-    copie = false,
-    archive = false
+    params: ICreerExtraitCopieActeTexteAvantCompositionParams
   ) {
+    const avecFiliation = params.avecFiliation ? params.avecFiliation : false;
+    const copie = params.copie ? params.copie : false;
+    const archive = params.archive ? params.archive : false;
     const natureActe = NatureActe.getKey(NatureActe.MARIAGE);
     const corpsTexte =
-      Validation.E !== validation
+      Validation.E !== params.validation
         ? ExtraitCopieActeTexteMariageComposition.getCorpsTexte(
-            acte,
+            params.acte,
             avecFiliation
           )
         : undefined;
 
     return CommunExtraitOuCopieActeTexteComposition.creerExtraitCopieActeTexte({
-      acte,
+      acte: params.acte,
       natureActe,
-      choixDelivrance: getValeurOuVide(requete.choixDelivrance),
-      sousTypeRequete: requete.sousType,
-      validation,
+      choixDelivrance: getValeurOuVide(params.requete.choixDelivrance),
+      sousTypeRequete: params.requete.sousType,
+      validation: params.validation,
       avecFiliation,
       copie,
       archive,
       corpsTexte,
-      mentionsRetirees
+      mentionsRetirees: params.mentionsRetirees,
+      ctv: params.ctv
     });
   }
 

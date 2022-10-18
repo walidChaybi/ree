@@ -1,17 +1,17 @@
-import { ITitulaireComposition } from "@model/composition/commun/ITitulaireComposition";
 import { ExtraitPlurilingueMariageComposition } from "@model/composition/extraitCopie/plurilingue/createur/ExtraitPlurilingueMariageComposition";
 import { ExtraitPlurilingueNaissanceComposition } from "@model/composition/extraitCopie/plurilingue/createur/ExtraitPlurilingueNaissanceComposition";
 import { IExtraitPlurilingueComposition } from "@model/composition/extraitCopie/plurilingue/IExtraitPlurilingueComposition";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 
 export const creationCompositionExtraitPlurilingue = function (
   acteComplet: IFicheActe,
   validation: Validation,
+  sousTypeRequete: SousTypeDelivrance,
   mentionsRetirees: string[],
-  choixDelivranceEC?: ChoixDelivrance
+  ctv?: string
 ): IExtraitPlurilingueComposition {
   let composition = {} as IExtraitPlurilingueComposition;
 
@@ -21,7 +21,9 @@ export const creationCompositionExtraitPlurilingue = function (
         ExtraitPlurilingueMariageComposition.compositionExtraitPlurilingueDeMariage(
           acteComplet,
           validation,
-          mentionsRetirees
+          sousTypeRequete,
+          mentionsRetirees,
+          ctv
         );
       break;
     case NatureActe.NAISSANCE:
@@ -29,14 +31,14 @@ export const creationCompositionExtraitPlurilingue = function (
         ExtraitPlurilingueNaissanceComposition.compositionExtraitPlurilingueDeNaissance(
           acteComplet,
           validation,
-          mentionsRetirees
+          sousTypeRequete,
+          mentionsRetirees,
+          ctv
         );
       break;
     case NatureActe.DECES:
       //TODO
       composition.nature_acte = NatureActe.getKey(acteComplet.nature);
-      composition.titulaire_2 = acteComplet
-        .titulaires[1] as ITitulaireComposition;
       break;
     default:
       composition = {

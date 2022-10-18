@@ -33,7 +33,8 @@ type ApisAutorisees =
   | "rece-etatcivil-api"
   | "rece-outiltech-api"
   | "rece-composition-api"
-  | "rece-mail-api";
+  | "rece-mail-api"
+  | "rece-televerification-api";
 
 export enum HttpMethod {
   GET,

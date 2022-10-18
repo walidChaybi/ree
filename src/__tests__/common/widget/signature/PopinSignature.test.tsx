@@ -11,13 +11,14 @@ import { PopinSignature } from "@widget/signature/PopinSignature";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configParamsBaseRequete } from "../../../../mock/superagent-config/superagent-mock-params";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
+import { configTeleverification } from "../../../../mock/superagent-config/superagent-mock-televerification";
+import { acte } from "../../../pages/fiche/data/ficheActe";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
   configRequetes[0],
-  configParamsBaseRequete[0]
+  configTeleverification[0]
 ]);
 
 beforeAll(() => {
@@ -42,7 +43,7 @@ test("renders PopinSignature, signature event is received and success displayed"
           ],
           documentsToSave: [],
           sousTypeRequete: SousTypeDelivrance.RDD,
-          idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235b"
+          acte: acte
         }
       }}
       open={true}
@@ -95,7 +96,8 @@ test("renders PopinSignature, signature event is received and error displayed", 
             }
           ],
           documentsToSave: [],
-          sousTypeRequete: SousTypeDelivrance.RDD
+          sousTypeRequete: SousTypeDelivrance.RDD,
+          acte: acte
         }
       }}
       open={true}
@@ -153,7 +155,8 @@ test("renders PopinSignature, code erroné", async () => {
             }
           ],
           documentsToSave: [],
-          sousTypeRequete: SousTypeDelivrance.RDD
+          sousTypeRequete: SousTypeDelivrance.RDD,
+          acte: acte
         }
       }}
       open={true}

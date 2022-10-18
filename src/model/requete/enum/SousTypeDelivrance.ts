@@ -62,7 +62,7 @@ export class SousTypeDelivrance extends EnumWithComplete {
     return EnumWithComplete.getAllLibellesCourtAsOptions(SousTypeDelivrance);
   }
 
-  public static soustypeRDD(sousType?: SousTypeDelivrance): boolean {
+  public static estRDD(sousType?: SousTypeDelivrance): boolean {
     return sousType === SousTypeDelivrance.RDD;
   }
 
@@ -80,14 +80,13 @@ export class SousTypeDelivrance extends EnumWithComplete {
 
   public static estRDDouRDC(sousType?: SousTypeDelivrance): boolean {
     return (
-      SousTypeDelivrance.soustypeRDD(sousType) ||
-      SousTypeDelivrance.estRDC(sousType)
+      SousTypeDelivrance.estRDD(sousType) || SousTypeDelivrance.estRDC(sousType)
     );
   }
 
   public static estRDDouRDDP(sousType?: SousTypeDelivrance): boolean {
     return (
-      SousTypeDelivrance.soustypeRDD(sousType) ||
+      SousTypeDelivrance.estRDD(sousType) ||
       SousTypeDelivrance.estRDDP(sousType)
     );
   }

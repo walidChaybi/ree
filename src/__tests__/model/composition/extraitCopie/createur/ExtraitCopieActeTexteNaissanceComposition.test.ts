@@ -17,16 +17,20 @@ test("Attendu: getCorpsTexte fonctionne correctement", () => {
   const avecFiliation = true;
   const copie = false;
   const archive = false;
+  const ctv = "111111-222222";
 
   const compositionCorps =
     ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance(
-      acte as any as IFicheActe,
-      requete,
-      validation,
-      [],
-      avecFiliation,
-      copie,
-      archive
+      {
+        acte: acte as any as IFicheActe,
+        requete,
+        validation,
+        mentionsRetirees: [],
+        avecFiliation,
+        copie,
+        archive,
+        ctv
+      }
     );
 
   const corpsTexteAttendu = `Le 10 octobre 1901 à 13 heures 15 minutes

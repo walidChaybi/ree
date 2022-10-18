@@ -1,5 +1,6 @@
 import { getDocumentReponseById } from "@api/appels/requeteApi";
 import { IResultatPatchDocumentReponse } from "@hook/DocumentReponseHook";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -39,7 +40,7 @@ export interface DocumentsATraiter {
   documentsToSave: DocumentToSave[];
   sousTypeRequete: SousTypeDelivrance;
   canal?: TypeCanal;
-  idActe?: string;
+  acte: IFicheActe;
 }
 
 export interface DocumentToSave {

@@ -16,11 +16,14 @@ export interface ICreerExtraitCopieActeImageParams {
   archive: boolean;
   corpsImage?: ICorpsImage;
   erreur?: string;
+  ctv: string;
 }
 
 export class CopieActeImageComposition {
   public static creerCopieActeImage(params: ICreerExtraitCopieActeImageParams) {
     const composition = {} as IExtraitCopieComposition;
+
+    composition.code_CTV = params.ctv;
 
     // Filigrane archive (le bloc de signature sera automatiquement masqué)
     composition.filigrane_archive = params.archive;

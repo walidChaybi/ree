@@ -40,5 +40,11 @@ export const RequeteDelivrance = {
 
   getDocumentReponseCopieIntegrale(requete?: IRequeteDelivrance) {
     return DocumentReponse.getCopieIntegrale(requete?.documentsReponses);
+  },
+
+  getDocumentsASigner(requete:IRequeteDelivrance){
+    return requete.documentsReponses?.filter(el =>
+      DocumentDelivrance.estExtraitCopieAsigner(el.typeDocument)
+    );
   }
 };

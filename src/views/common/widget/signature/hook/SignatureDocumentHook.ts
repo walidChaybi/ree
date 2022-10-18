@@ -5,6 +5,10 @@ import {
 } from "@hook/acte/DerniereDelivranceActeApiHook";
 import { usePatchDocumentsReponseAvecSignatureApi } from "@hook/DocumentReponseHook";
 import {
+  IStockerDocumentsTeleverifParams,
+  useStockerDocumentTeleverif
+} from "@hook/generation/generationECHook/televerification/stockerDocumentTeleverifApiHook";
+import {
   CreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
@@ -58,6 +62,8 @@ export function useSignatureDocumentHook(
     dateDerniereDelivranceActeParams,
     setDateDerniereDelivranceActeParams
   ] = useState<IDerniereDelivranceActeParams>();
+  const [stockerTeleverificationParams, setStockerTeleverificationParams] =
+    useState<IStockerDocumentsTeleverifParams>();
 
   // ========================================== Hooks ====================================================
   const resultatCreationActionEtMajStatut =
@@ -69,6 +75,10 @@ export function useSignatureDocumentHook(
 
   const resultatPatchDocumentReponse = usePatchDocumentsReponseAvecSignatureApi(
     miseAJourDocumentParams
+  );
+
+  const resultatStockageTeleverif = useStockerDocumentTeleverif(
+    stockerTeleverificationParams
   );
   // =====================================================================================================
 
@@ -92,11 +102,24 @@ export function useSignatureDocumentHook(
   const majDateDerniereDelivrance = useCallback(() => {
     const currentRequeteProcessing = documentsToSignWating[idRequetesToSign[0]];
     setDateDerniereDelivranceActeParams({
-      idActe: getValeurOuVide(currentRequeteProcessing.idActe)
+      idActe: getValeurOuVide(currentRequeteProcessing.acte.id)
     });
   }, [documentsToSignWating, idRequetesToSign]);
 
-  // Etape 4.2 (la maj du tableau des requêtes signées (idRequetesToSign) ne se fait qu'après la maj du statut et la maj de la date de délivrance,
+  // Etape 4.2
+  const envoiATeleverification = useCallback(() => {
+    const currentRequeteProcessing = documentsToSignWating[idRequetesToSign[0]];
+    setStockerTeleverificationParams({
+      documents: currentRequeteProcessing.documentsToSave.map(document => ({
+        id: document.id,
+        contenu: document.contenu
+      })),
+      idRequete: idRequetesToSign[0],
+      acte: currentRequeteProcessing.acte
+    });
+  }, [documentsToSignWating, idRequetesToSign]);
+
+  // Etape 4.3 (la maj du tableau des requêtes signées (idRequetesToSign) ne se fait qu'après la maj du statut et la maj de la date de délivrance,
   //   ceci empêche de recharger la page avant que les maj statut et date délivrance ne soit effectuées)
   const majRequetesSignees = useCallback(() => {
     const currentRequeteProcessing = documentsToSignWating[idRequetesToSign[0]];
@@ -124,7 +147,7 @@ export function useSignatureDocumentHook(
     if (resultatCreationActionEtMajStatut) {
       const currentRequeteProcessing =
         documentsToSignWating[idRequetesToSign[0]];
-      const idActe = currentRequeteProcessing.idActe;
+      const idActe = currentRequeteProcessing.acte?.id;
       if (idActe) {
         // En étape 1 les traitements sont effectués par Saga et donc il n'y a pas d'id_acte de renseigné dans la table document_reponse
         majDateDerniereDelivrance();
@@ -137,10 +160,17 @@ export function useSignatureDocumentHook(
 
   useEffect(() => {
     if (resultatMajDateDerniereDelivranceActe?.resultat) {
-      majRequetesSignees();
+      envoiATeleverification();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatMajDateDerniereDelivranceActe]);
+
+  useEffect(() => {
+    if (resultatStockageTeleverif?.resultat) {
+      majRequetesSignees();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultatStockageTeleverif]);
 
   useEffect(() => {
     handleResultatPatch(

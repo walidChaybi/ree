@@ -26,6 +26,7 @@ export interface IDocumentReponse {
   idRca?: string;
   idPacs?: string;
   avecCtv?: boolean;
+  ctv?: string;
   nbExemplaireImpression?: number;
   referenceSwift?: string;
   conteneurSwift: string;

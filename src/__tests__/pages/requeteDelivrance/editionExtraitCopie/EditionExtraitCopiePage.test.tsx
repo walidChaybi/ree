@@ -30,12 +30,14 @@ import { imagePngVideBase64 } from "../../../../mock/data/ImagePng";
 import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
+import { configTeleverification } from "../../../../mock/superagent-config/superagent-mock-televerification";
 import { MimeType } from "../../../../ressources/MimeType";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
   configRequetes[0],
-  configComposition[0]
+  configComposition[0],
+  configTeleverification[0]
 ]);
 
 let history: MemoryHistory;

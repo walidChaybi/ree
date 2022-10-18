@@ -419,7 +419,10 @@ export function getBoutonsEdition(
             Modifier la copie à délivrer
           </Bouton>
         )}
-        <BoutonsTerminer requete={requete} />
+        <BoutonsTerminer
+          requete={requete}
+          acte={resultatInformationsActeApiHook?.acte}
+        />
       </div>
     </div>
   );

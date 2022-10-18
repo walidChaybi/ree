@@ -1,3 +1,4 @@
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import {
   DEUX,
   getLibelle,
@@ -67,6 +68,17 @@ export interface IParentsTitulaireCompositionEC {
   sexeParent?: Sexe;
 }
 
+export interface ICreerExtraitCopieActeTexteAvantCompositionParams {
+  acte: IFicheActe;
+  requete: IRequeteDelivrance;
+  validation: Validation;
+  mentionsRetirees: string[];
+  avecFiliation?: boolean;
+  copie?: boolean;
+  archive?: boolean;
+  ctv: string;
+}
+
 export interface ICreerExtraitCopieActeTexteParams {
   acte: IFicheActe;
   natureActe: string;
@@ -78,6 +90,7 @@ export interface ICreerExtraitCopieActeTexteParams {
   archive: boolean;
   corpsTexte?: string;
   mentionsRetirees: string[];
+  ctv: string;
 }
 
 export class CommunExtraitOuCopieActeTexteComposition {
@@ -92,6 +105,11 @@ export class CommunExtraitOuCopieActeTexteComposition {
     params: ICreerExtraitCopieActeTexteParams
   ) {
     const composition = {} as IExtraitCopieComposition;
+
+    if (SousTypeDelivrance.estRDD(params.sousTypeRequete)) {
+      // Ajout du ctv pour la signature pour les RDD
+      composition.code_CTV = params.ctv;
+    }
 
     // Filigrane archive (le bloc de signature sera automatiquement masqué)
     composition.filigrane_archive = params.archive;

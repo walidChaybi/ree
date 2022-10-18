@@ -42,6 +42,7 @@ export interface IFicheActe {
   registre: IRegistre;
   dateDerniereMaj?: Date;
   dateDerniereDelivrance?: Date;
+  dateCreation?: Date;
   visibiliteArchiviste: TypeVisibiliteArchiviste;
   analyseMarginales?: IAnalyseMarginale[];
   detailMariage?: IDetailMariage;

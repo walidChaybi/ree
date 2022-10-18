@@ -14,17 +14,22 @@ test("Attendu: getCorpsTexte fonctionne correctement", () => {
   const avecFiliation = true;
   const copie = false;
   const archive = false;
+  const ctv = "111111-222222";
 
   const compositionCorps =
-    ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexteMariage(
+    ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexteMariage({
       acte,
-      { choixDelivrance, sousType: sousTypeRequete } as IRequeteDelivrance,
+      requete: {
+        choixDelivrance,
+        sousType: sousTypeRequete
+      } as IRequeteDelivrance,
       validation,
-      [],
+      mentionsRetirees: [],
       avecFiliation,
       copie,
-      archive
-    );
+      archive,
+      ctv
+    });
 
   const corpsTexteAttendu = `Le 25 juin 1990
 a été célébré à Barcelone, Catalogne (Espagne)

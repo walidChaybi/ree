@@ -32,8 +32,12 @@ import { creationCompositionExtraitCopieActeTexte } from "./creationComposition/
 import { creationCompositionExtraitPlurilingue } from "./creationComposition/creationCompositionExtraitPlurilingue";
 import { IGenerationECParams } from "./generationECHook";
 
-export function nonNull(acte?: IFicheActe, params?: IGenerationECParams) {
-  return params && acte;
+export function nonNull(
+  acte?: IFicheActe,
+  params?: IGenerationECParams,
+  ctv?: string
+) {
+  return params && acte && ctv;
 }
 
 export function estDemandeExtraitAvecOuSansFiliationOuCopieActeTexte(
@@ -134,7 +138,8 @@ export function creationComposition(
   requete: IRequeteDelivrance,
   validation: Validation,
   mentionsRetirees: string[],
-  choixDelivrance: ChoixDelivrance
+  choixDelivrance: ChoixDelivrance,
+  ctv: string
 ): IExtraitCopieComposition | IExtraitPlurilingueComposition | undefined {
   let composition;
 
@@ -146,20 +151,23 @@ export function creationComposition(
       requete,
       validation,
       mentionsRetirees,
-      choixDelivrance
+      choixDelivrance,
+      ctv
     );
   } else if (estDemandeExtraitPlurilingue(choixDelivrance)) {
     composition = creationCompositionExtraitPlurilingue(
       acte,
       validation,
+      requete.sousType,
       mentionsRetirees,
-      choixDelivrance
+      ctv
     );
   } else if (estDemandeCopieActeImage(acte, choixDelivrance)) {
     composition = creationCompositionCopieActeImage(
       acte,
       requete,
-      Validation.O
+      Validation.O,
+      ctv
     );
   }
   return composition;
@@ -279,9 +287,10 @@ export function creationEC(
   acte: IFicheActe | undefined,
   params: IGenerationECParams | undefined,
   setValidation: any,
-  setExtraitCopieApiHookParams: any
+  setExtraitCopieApiHookParams: any,
+  ctv?: string
 ) {
-  if (nonNull(acte, params)) {
+  if (nonNull(acte, params, ctv)) {
     const choixDelivrance = params?.choixDelivrance
       ? params.choixDelivrance
       : params?.requete.choixDelivrance;
@@ -308,7 +317,8 @@ export function creationEC(
       // @ts-ignore NonNull
       params.mentionsRetirees,
       // @ts-ignore NonNull
-      choixDelivrance
+      choixDelivrance,
+      ctv
     );
 
     setValidation(validationControle);

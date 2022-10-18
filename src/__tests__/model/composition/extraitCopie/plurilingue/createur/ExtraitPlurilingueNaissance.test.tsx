@@ -3,6 +3,7 @@ import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import request from "superagent";
 import {
@@ -36,6 +37,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
     const compositionCorps = creationCompositionExtraitPlurilingue(
       acte as any as IFicheActe,
       Validation.O,
+      SousTypeDelivrance.RDC,
       mentionsRetirees
     );
 
@@ -48,6 +50,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
     const compositionCorps = creationCompositionExtraitPlurilingue(
       acte as any as IFicheActe,
       Validation.O,
+      SousTypeDelivrance.RDC,
       mentionsRetirees
     );
 
@@ -60,6 +63,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
     const compositionCorps = creationCompositionExtraitPlurilingue(
       acte as any as IFicheActe,
       Validation.O,
+      SousTypeDelivrance.RDC,
       mentionsRetirees
     );
 
@@ -72,6 +76,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
     const compositionCorps = creationCompositionExtraitPlurilingue(
       acte as any as IFicheActe,
       Validation.O,
+      SousTypeDelivrance.RDC,
       mentionsRetirees
     );
 
@@ -84,6 +89,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
     const compositionCorps = creationCompositionExtraitPlurilingue(
       acte as any as IFicheActe,
       Validation.O,
+      SousTypeDelivrance.RDC,
       mentionsRetirees
     );
 
@@ -96,6 +102,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
     const compositionCorps = creationCompositionExtraitPlurilingue(
       acte as any as IFicheActe,
       Validation.O,
+      SousTypeDelivrance.RDC,
       mentionsRetirees
     );
 
@@ -108,6 +115,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
     const compositionCorps = creationCompositionExtraitPlurilingue(
       acte as any as IFicheActe,
       Validation.O,
+      SousTypeDelivrance.RDC,
       mentionsRetirees
     );
 
@@ -141,6 +149,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
     const compositionCorps = creationCompositionExtraitPlurilingue(
       acte as any as IFicheActe,
       validation as Validation,
+      SousTypeDelivrance.RDC,
       mentionsRetirees
     );
 
@@ -159,6 +168,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
     const compositionCorps = creationCompositionExtraitPlurilingue(
       acte as any as IFicheActe,
       validation as Validation,
+      SousTypeDelivrance.RDC,
       mentionsRetirees
     );
 
