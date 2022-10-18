@@ -164,7 +164,7 @@ const mappingITitulaireRequeteVersItemTitulaireProps = (
     parents: mappingTableau(
       mappingITitulaireRequeteVersItemParentProps,
       parents
-    )
+    ).sort((a, b) => a.position - b.position)
   };
 };
 
@@ -195,6 +195,7 @@ const mappingITitulaireRequeteVersItemParentProps = (
       jourNaissance: parent.jourNaissance,
       codePostalNaissance: parent.codePostalNaissance
     },
+    position: parent.position,
     nationalites: parent.nationalites || [],
     domiciliation: parent.domiciliationEnfant,
     retenueSdanf: parent.retenueSdanf ?? undefined

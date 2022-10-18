@@ -17,6 +17,7 @@ export interface ItemParentProps {
   naissance: DateCoordonneesType;
   nationalites: NationaliteType[];
   domiciliation?: string;
+  position: number;
   retenueSdanf?: IRetenueSdanf;
 }
 
