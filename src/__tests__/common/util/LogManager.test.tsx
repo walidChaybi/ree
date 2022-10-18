@@ -37,5 +37,20 @@ test("renders error msg", async () => {
   await waitFor(() => {
     expect(screen.getByText(/testmessageUtilisateur/)).toBeDefined();
   });
+
+  logError({
+    messageUtilisateur: "Message à l'utilisateur",
+    error: {
+      message:
+        '{"errors": [{"type": "BusinessException","code": "FCT_16031","message": "Message du serveur"}]}'
+    },
+    errorInfo: "testerrorInfo (console.error LogManager)"
+  });
+  await waitFor(() => {
+    expect(screen.getByText(/Message à l'utilisateur/)).toBeDefined();
+    expect(screen.getByText(/Message du serveur/)).toBeDefined();
+  });  
+  
+
   storeRece.logErrorOff = false;
 });

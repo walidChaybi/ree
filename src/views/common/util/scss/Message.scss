@@ -1,5 +1,9 @@
 @import "./../../../../scss/colors";
 
+.Toastify__toast-body {
+  white-space: pre-line;
+}
+
 .Toastify__toast-container {
   width: auto;
   top: 75px;

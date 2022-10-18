@@ -29,8 +29,29 @@ export function logError(logErrorMgs: LogErrorMsg) {
     logErrorOnConsole(logErrorMgs);
   }
   if (logErrorMgs.messageUtilisateur) {
-    logErrorOnScreen(logErrorMgs.messageUtilisateur);
+    const messageDuServeur = getMessageDuServeur(logErrorMgs);
+
+    logErrorOnScreen(
+      messageDuServeur
+        ? `${logErrorMgs.messageUtilisateur}\n(${messageDuServeur})`
+        : logErrorMgs.messageUtilisateur
+    );
   }
+}
+
+function getMessageDuServeur(logErrorMgs: LogErrorMsg) {
+  let messageDuServeur;
+  if (logErrorMgs?.error?.message) {
+    try {
+      const objMessageServeur = JSON.parse(logErrorMgs?.error?.message);
+      if (objMessageServeur?.errors) {
+        messageDuServeur = objMessageServeur?.errors[0]?.message;
+      }
+    } catch (e) {
+      messageDuServeur = "";
+    }
+  }
+  return messageDuServeur;
 }
 
 function logErrorOnScreen(errorMessage: string) {
