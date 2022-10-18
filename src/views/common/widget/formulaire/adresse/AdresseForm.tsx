@@ -28,7 +28,6 @@ import { SousFormulaire } from "../SousFormulaire";
 import { sortieChampEnMajuscule } from "../utils/ControlesUtil";
 import {
   NB_CARACT_ADRESSE,
-  NB_CARACT_CODE_POSTAL,
   NB_CARACT_COMMUNE,
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
@@ -173,7 +172,6 @@ const AdresseForm: React.FC<SubFormProps> = props => {
             <InputField
               name={withNamespace(props.nom, CODE_POSTAL)}
               label={getLibelle("Code postal")}
-              maxLength={NB_CARACT_CODE_POSTAL}
             />
           </div>
           <InputField
