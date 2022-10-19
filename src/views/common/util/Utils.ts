@@ -606,3 +606,11 @@ export function compareChainesIgnoreCasse(
 ): boolean {
   return compareChaines("accent", str1, str2);
 }
+
+export type LigneType = string | false | undefined;
+
+// Création d'un string "A, B, C..." où ", " est le séparateur par défaut et les valeurs vides sont supprimées
+export const formatLigne = (tableau?: LigneType[], separateur = ", ") => {
+  const resultat = tableau?.filter(Boolean).join(separateur);
+  return estRenseigne(resultat) ? resultat : "";
+};

@@ -1,5 +1,5 @@
 import { getDateStringFromDateCompose } from "@util/DateUtils";
-import { estRenseigne } from "@util/Utils";
+import { estRenseigne, formatLigne, LigneType } from "@util/Utils";
 import React from "react";
 import Labels from "../Labels";
 import {
@@ -8,14 +8,6 @@ import {
   IdentiteType,
   NationaliteType
 } from "./Types";
-
-type LigneType = string | false | undefined;
-
-// Création d'un string "A, B, C..." où ", " est le séparateur par défaut et les valeurs vides sont supprimées
-export const formatLigne = (tableau?: LigneType[], separateur = ", ") => {
-  const resultat = tableau?.filter(Boolean).join(separateur);
-  return estRenseigne(resultat) ? resultat : undefined;
-};
 
 // Même utilité que formatLigne(), mais traite également les éléments JSX en plus des string dans tab[]
 export const formatLigneSpecificite = (
@@ -32,7 +24,7 @@ export const formatLigneSpecificite = (
     );
   });
 
-  return estRenseigne(resultat) ? resultat : undefined;
+  return estRenseigne(resultat) ? resultat : "";
 };
 
 export const formatLigneNomsPrenomsGenre = ({

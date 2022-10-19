@@ -42,11 +42,9 @@ describe("ResumeRequetePartieHaute", () => {
               path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
             >
               <ResumeRequete
-                requete={
-                  await mappingRequeteDelivrance(
-                    ReponseAppelDetailRequeteDelivrance.data
-                  )
-                }
+                requete={await mappingRequeteDelivrance(
+                  ReponseAppelDetailRequeteDelivrance.data
+                )}
               />
             </Route>
           </Router>
@@ -55,10 +53,9 @@ describe("ResumeRequetePartieHaute", () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText("Résumé requête")).toBeDefined();
+      expect(screen.getByText("Description requête")).toBeDefined();
       expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
-      expect(screen.getByText("Nom requérant")).toBeDefined();
-      expect(screen.getByText("CHOULARD")).toBeDefined();
+      expect(screen.getByText("CHOULARD Thierry")).toBeDefined();
     });
   });
 
@@ -81,11 +78,9 @@ describe("ResumeRequetePartieHaute", () => {
               path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
             >
               <ResumeRequete
-                requete={
-                  await mappingRequeteDelivrance(
-                    detailRequeteDelivranceAvecRequerantQualiteInstitutionnel.data
-                  )
-                }
+                requete={await mappingRequeteDelivrance(
+                  detailRequeteDelivranceAvecRequerantQualiteInstitutionnel.data
+                )}
               />
             </Route>
           </Router>
@@ -94,9 +89,8 @@ describe("ResumeRequetePartieHaute", () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText("Résumé requête")).toBeDefined();
+      expect(screen.getByText("Description requête")).toBeDefined();
       expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
-      expect(screen.getByText("Nom requérant")).toBeDefined();
       expect(screen.getByText("TRIBUNAL")).toBeDefined();
     });
   });
@@ -120,11 +114,9 @@ describe("ResumeRequetePartieHaute", () => {
               path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
             >
               <ResumeRequete
-                requete={
-                  await mappingRequeteDelivrance(
-                    detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel.data
-                  )
-                }
+                requete={await mappingRequeteDelivrance(
+                  detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel.data
+                )}
               />
             </Route>
           </Router>
@@ -133,7 +125,7 @@ describe("ResumeRequetePartieHaute", () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText("Résumé requête")).toBeDefined();
+      expect(screen.getByText("Description requête")).toBeDefined();
       expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
       expect(screen.getByText("RaisonSocialAutrePro")).toBeDefined();
     });
@@ -158,11 +150,9 @@ describe("ResumeRequetePartieHaute", () => {
               path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
             >
               <ResumeRequete
-                requete={
-                  await mappingRequeteDelivrance(
-                    detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece.data
-                  )
-                }
+                requete={await mappingRequeteDelivrance(
+                  detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece.data
+                )}
               />
             </Route>
           </Router>
@@ -171,11 +161,11 @@ describe("ResumeRequetePartieHaute", () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText("Résumé requête")).toBeDefined();
+      expect(screen.getByText("Description requête")).toBeDefined();
 
       expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
 
-      expect(screen.getByText("UtilRece")).toBeDefined();
+      expect(screen.getByText("UTILRECE Thierry")).toBeDefined();
     });
   });
 });

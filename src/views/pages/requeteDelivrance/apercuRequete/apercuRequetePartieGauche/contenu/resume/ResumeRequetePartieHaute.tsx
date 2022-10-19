@@ -1,21 +1,35 @@
 import { Qualite } from "@model/requete/enum/Qualite";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
 import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
-import { EvenementReqDelivrance } from "@model/requete/IEvenementReqDelivrance";
-import { IRequerant, Requerant } from "@model/requete/IRequerant";
+import { IAdresseRequerant } from "@model/requete/IAdresseRequerant";
+import {
+  EvenementReqDelivrance,
+  IEvenementReqDelivrance
+} from "@model/requete/IEvenementReqDelivrance";
+import { IMandant } from "@model/requete/IMandant";
+import { IParent } from "@model/requete/IParents";
+import { IQualiteRequerant } from "@model/requete/IQualiteRequerant";
+import { IRequerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import {
   ITitulaireRequete,
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
+import { formatagePrenoms } from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/mappingIRequeteCreationVersResumeRequeteCreationProps";
 import {
-  formatPrenom,
+  formatLigne,
+  formatNom,
   getLibelle,
+  premiereLettreEnMajusculeLeResteEnMinuscule,
   triListeObjetsSurPropriete
 } from "@util/Utils";
-import React, { Fragment } from "react";
+import React from "react";
+import { formatLigneLieu, formatLigneNomPrenoms } from "./Formatages";
 import { ItemLibelle } from "./item/ItemLibelle";
+import { ItemMultiLignes } from "./item/ItemMultiLignes";
 import "./scss/ResumeRequetePartieHaute.scss";
+import { IdentiteType } from "./Types";
 
 interface ResumeRequetePartieHauteProps {
   requete: IRequeteDelivrance;
@@ -28,165 +42,259 @@ export const ResumeRequetePartieHaute: React.FC<
     ? triListeObjetsSurPropriete([...props.requete.titulaires], "position")
     : [];
 
-  function affichageLieu(ville: string, pays: string): string {
-    if (ville && pays) {
-      return `${ville} / ${pays}`;
-    } else if (!ville) {
-      return pays;
-    } else if (!pays) {
-      return ville;
-    }
-    return "";
-  }
-
-  function getLienRequerant(requete: IRequeteDelivrance): string {
-    if (
-      requete.mandant !== null &&
-      requete.mandant !== undefined &&
-      requete.mandant.typeLien
-    ) {
-      return requete.mandant.natureLien &&
-        requete.mandant.typeLien === TypeLienMandant.AUTRE
-        ? requete.mandant.natureLien
-        : requete.mandant.typeLien.libelle;
-    } else if (
-      requete.requerant.lienRequerant !== null &&
-      requete.requerant.lienRequerant !== undefined
-    ) {
-      return requete.requerant.lienRequerant.lien === TypeLienRequerant.AUTRE &&
-        requete.requerant.lienRequerant.natureLien
-        ? requete.requerant.lienRequerant.natureLien
-        : requete.requerant.lienRequerant.lien.libelle;
-    }
-
-    return "";
-  }
-
-  function getNomOuRaisonSociale(requerant: IRequerant) {
-    let nom: string | undefined;
-    switch (requerant?.qualiteRequerant.qualite) {
-      case Qualite.MANDATAIRE_HABILITE:
-        if (requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale) {
-          nom = requerant.qualiteRequerant.mandataireHabilite.raisonSociale;
-        } else if (requerant?.nomFamille) {
-          nom = `${requerant.nomFamille} ${requerant.prenom}`;
-        }
-        break;
-      case Qualite.AUTRE_PROFESSIONNEL:
-        nom = requerant?.qualiteRequerant.autreProfessionnel?.raisonSociale;
-        break;
-      case Qualite.INSTITUTIONNEL:
-        nom = requerant?.qualiteRequerant.institutionnel?.nomInstitution;
-        break;
-      case Qualite.PARTICULIER:
-        nom = Requerant.getNomFamille(requerant);
-        break;
-      case Qualite.UTILISATEUR_RECE:
-        nom = requerant?.nomFamille;
-        break;
-      default:
-        nom = "";
-        break;
-    }
-    return nom ? nom : "";
-  }
-
-  function getReferenceDila() {
-    return props.requete.provenanceRequete.provenanceServicePublic
-      ? props.requete.provenanceRequete.provenanceServicePublic?.referenceDila
-      : "";
-  }
-
-  function getPremierPrenom(titulaire: ITitulaireRequete) {
-    return titulaire.prenoms && titulaire.prenoms.length
-      ? formatPrenom(
-          triListeObjetsSurPropriete([...titulaire.prenoms], "numeroOrdre")[0]
-            .prenom
-        )
-      : "";
-  }
-
   return (
     <div className="ResumeRequetePartieHaute">
-      <ItemLibelle libelle={"N° télédossier"} data={getReferenceDila()} />
-
       <ItemLibelle
-        libelle={"Sous-type"}
-        data={props.requete.sousType.libelle}
+        label={"Acte"}
+        texte={props.requete.evenement?.natureActe.libelle}
+        visible={!SousTypeDelivrance.estRDCSDouRDCSC(props.requete.sousType)}
+      />
+      <ItemLibelle
+        label={"Document demandé"}
+        texte={props.requete.documentDemande.libelle}
+      />
+      <ItemLibelle
+        label={"Motif"}
+        texte={props.requete.motif?.libelle}
+        visible={!SousTypeDelivrance.estRDCSDouRDCSC(props.requete.sousType)}
       />
 
-      {!sortedTitulaires.length ? (
-        <span>{getLibelle("Il n'y a pas de titulaire")}</span>
-      ) : (
-        sortedTitulaires.map((titulaire: ITitulaireRequete, idx: number) => (
-          <Fragment key={idx}>
-            <div className="titleTitulaire">
-              <span>{`${getLibelle("Info titulaire")} ${idx + 1}`}</span>
+      <hr className={"separation"} />
+
+      <div className="inline">
+        {!sortedTitulaires.length ? (
+          <span>{getLibelle("Il n'y a pas de titulaire")}</span>
+        ) : (
+          sortedTitulaires.map((titulaire: ITitulaireRequete, idx: number) => (
+            <div
+              key={idx}
+              className={sortedTitulaires.length === 1 ? "inline" : ""}
+            >
+              <ItemMultiLignes key={`titulaire-${idx}`} modeColumn={true}>
+                <ItemLibelle texte={getIdentiteTitulaire(titulaire)} />
+                <ItemLibelle
+                  texte={TitulaireRequete.getDateNaissance(titulaire)}
+                />
+                <ItemLibelle texte={getLieuNaissanceTitulaire(titulaire)} />
+              </ItemMultiLignes>
+
+              <ItemMultiLignes
+                key={`filiation-${idx}`}
+                modeColumn={true}
+                label={"Filiation"}
+              >
+                {TitulaireRequete.getParentsTries(
+                  titulaire.parentsTitulaire
+                )?.map(parent => (
+                  <ItemLibelle
+                    key={`filiation-${parent.id}-${idx}`}
+                    texte={getIdentiteParent(parent)}
+                  />
+                ))}
+              </ItemMultiLignes>
             </div>
-
-            <ItemLibelle
-              libelle={"Nom"}
-              data={TitulaireRequete.getNom(titulaire)}
-            />
-
-            <ItemLibelle
-              libelle={"Prénom"}
-              data={getPremierPrenom(titulaire)}
-            />
-
-            <ItemLibelle
-              libelle={"Né(e) le"}
-              data={TitulaireRequete.getDateNaissance(titulaire)}
-            />
-          </Fragment>
-        ))
-      )}
-
-      <ItemLibelle
-        libelle={"Nature"}
-        data={props.requete.evenement?.natureActe.libelle}
-      />
-
-      <ItemLibelle
-        libelle={"Date de l'évènement"}
-        data={EvenementReqDelivrance.getDate(props.requete.evenement)}
-      />
-
-      <ItemLibelle
-        libelle={"Lieu de l'évènement"}
-        data={affichageLieu(
-          EvenementReqDelivrance.getVille(props.requete.evenement),
-          EvenementReqDelivrance.getPays(props.requete.evenement)
+          ))
         )}
-      />
+      </div>
 
-      <ItemLibelle
-        libelle={"Document"}
-        data={props.requete.documentDemande.libelle}
-      />
-
-      <ItemLibelle libelle={"Motif"} data={props.requete.motif?.libelle} />
-
-      <ItemLibelle libelle={"Canal"} data={props.requete.canal.libelle} />
+      <ItemMultiLignes
+        label={props.requete.evenement?.natureActe.libelle}
+        visible={
+          props.requete.evenement != null &&
+          !SousTypeDelivrance.estRDCSDouRDCSC(props.requete.sousType)
+        }
+      >
+        <ItemLibelle
+          texte={EvenementReqDelivrance.getDate(props.requete.evenement)}
+        />
+        <ItemLibelle texte={getLieuEvenement(props.requete.evenement)} />
+      </ItemMultiLignes>
 
       <hr className={"separation"} />
 
       <div className="sectionPanel">
         <ItemLibelle
-          libelle={"Nom requérant"}
-          data={getNomOuRaisonSociale(props.requete.requerant)}
+          label={"Requérant"}
+          texte={props.requete.requerant.qualiteRequerant.qualite.libelle}
+        />
+        <ItemLibelle
+          label={"Mandant"}
+          texte={getIdentiteMandataire(
+            props.requete.requerant.qualiteRequerant.qualite,
+            props.requete?.mandant
+          )}
+        />
+        <ItemLibelle
+          label={"Lien avec le titulaire"}
+          texte={getLienRequerant(props.requete)}
         />
 
-        <ItemLibelle
-          libelle={"Prénom requérant"}
-          data={Requerant.getPrenom(props.requete.requerant)}
-        />
-
-        <ItemLibelle
-          libelle={"Lien avec le titulaire"}
-          data={getLienRequerant(props.requete)}
-        />
+        <ItemMultiLignes
+          label={"Coordonnées"}
+          visible={props.requete.requerant != null}
+        >
+          <ItemLibelle
+            texte={
+              getRaisonSociale(props.requete.requerant.qualiteRequerant) ??
+              getIdentiteRequerant(props.requete.requerant)
+            }
+          />
+          <ItemLibelle texte={props.requete.requerant.adresse?.ligne2} />
+          <ItemLibelle texte={props.requete.requerant.adresse?.ligne3} />
+          <ItemLibelle texte={props.requete.requerant.adresse?.ligne4} />
+          <ItemLibelle texte={props.requete.requerant.adresse?.ligne5} />
+          <ItemLibelle
+            texte={getCodePostalVilleRequerant(props.requete.requerant.adresse)}
+          />
+          <ItemLibelle
+            texte={getPaysRequerant(props.requete.requerant.adresse)}
+          />
+          <div className="inline">
+            <ItemLibelle texte={props.requete.requerant.courriel} />
+            <ItemLibelle
+              label={"tel"}
+              texte={props.requete.requerant.telephone}
+              classNameLabel={"no-space-between"}
+            />
+          </div>
+        </ItemMultiLignes>
       </div>
     </div>
   );
+};
+
+function getLienRequerant(requete: IRequeteDelivrance): string {
+  if (
+    requete.mandant !== null &&
+    requete.mandant !== undefined &&
+    requete.mandant.typeLien
+  ) {
+    return requete.mandant.natureLien &&
+      requete.mandant.typeLien === TypeLienMandant.AUTRE
+      ? requete.mandant.natureLien
+      : requete.mandant.typeLien.libelle;
+  } else if (
+    requete.requerant.lienRequerant !== null &&
+    requete.requerant.lienRequerant !== undefined
+  ) {
+    return requete.requerant.lienRequerant.lien === TypeLienRequerant.AUTRE &&
+      requete.requerant.lienRequerant.natureLien
+      ? requete.requerant.lienRequerant.natureLien
+      : requete.requerant.lienRequerant.lien.libelle;
+  }
+
+  return "";
+}
+
+const getRaisonSociale = (qualiteRequerant: IQualiteRequerant) => {
+  let resultat = undefined;
+
+  switch (qualiteRequerant.qualite) {
+    case Qualite.MANDATAIRE_HABILITE:
+      resultat = qualiteRequerant.mandataireHabilite?.raisonSociale;
+      break;
+    case Qualite.AUTRE_PROFESSIONNEL:
+      resultat = qualiteRequerant.autreProfessionnel?.raisonSociale;
+      break;
+    case Qualite.INSTITUTIONNEL:
+      resultat = qualiteRequerant.institutionnel?.nomInstitution;
+      break;
+    default:
+      break;
+  }
+
+  return resultat;
+};
+
+const getIdentiteTitulaire = (
+  titulaire: ITitulaireRequete
+): string | undefined => {
+  const identiteTitulaire: IdentiteType = {
+    noms: {
+      naissance: formatNom(titulaire.nomNaissance)
+    },
+    prenoms: {
+      naissance: formatagePrenoms(titulaire.prenoms)
+    }
+  };
+
+  return formatLigneNomPrenoms(identiteTitulaire);
+};
+
+const getIdentiteParent = (parent: IParent): string | undefined => {
+  const identiteParent: IdentiteType = {
+    noms: {
+      naissance: formatNom(parent.nomNaissance)
+    },
+    prenoms: {
+      naissance: formatagePrenoms(parent.prenoms)
+    }
+  };
+
+  return formatLigneNomPrenoms(identiteParent);
+};
+
+const getIdentiteRequerant = (requerant: IRequerant): string | undefined => {
+  let resultat: string | undefined = undefined;
+
+  if (requerant.nomFamille) {
+    const identiteRequerant: IdentiteType = {
+      noms: {
+        naissance: formatNom(requerant.nomFamille)
+      },
+      prenoms: {
+        naissance: requerant.prenom ? [requerant.prenom] : []
+      }
+    };
+    resultat = formatLigneNomPrenoms(identiteRequerant);
+  }
+
+  return resultat;
+};
+
+const getIdentiteMandataire = (
+  qualite: Qualite,
+  mandant?: IMandant
+): string | undefined => {
+  let resultat: string | undefined = undefined;
+
+  if (mandant?.nom && Qualite.estMandataire(qualite)) {
+    const identiteMandataire: IdentiteType = {
+      noms: {
+        naissance: formatNom(mandant.nom)
+      },
+      prenoms: {
+        naissance: mandant.prenom ? [mandant.prenom] : []
+      }
+    };
+    resultat = formatLigneNomPrenoms(identiteMandataire);
+  }
+
+  return resultat;
+};
+
+const getLieuNaissanceTitulaire = (
+  titulaire: ITitulaireRequete
+): string | undefined =>
+  formatLigneLieu(
+    titulaire.villeNaissance,
+    TitulaireRequete.getPays(titulaire)
+  );
+
+const getLieuEvenement = (
+  evenement?: IEvenementReqDelivrance
+): string | undefined =>
+  formatLigneLieu(
+    EvenementReqDelivrance.getVille(evenement),
+    EvenementReqDelivrance.getPays(evenement)
+  );
+
+const getCodePostalVilleRequerant = (
+  adresse?: IAdresseRequerant
+): string | undefined => formatLigne([adresse?.codePostal, adresse?.ville]);
+
+const getPaysRequerant = (adresse?: IAdresseRequerant): string | undefined => {
+  const pays = premiereLettreEnMajusculeLeResteEnMinuscule(adresse?.pays);
+
+  return formatLigne([pays !== "France" && pays]);
 };

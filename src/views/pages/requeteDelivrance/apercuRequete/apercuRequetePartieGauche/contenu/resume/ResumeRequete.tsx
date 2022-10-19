@@ -7,6 +7,7 @@ import { FenetreExterne } from "@util/FenetreExterne";
 import React, { useState } from "react";
 import { DetailRequetePage } from "../../../../detailRequete/DetailRequetePage";
 import { ResumeRequetePartieHaute } from "./ResumeRequetePartieHaute";
+import { ResumeRequeteType } from "./ResumeRequeteType";
 import "./scss/ResumeRequete.scss";
 
 export const titreDetail = "Détails de requête";
@@ -34,7 +35,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
       <div className="ResumeRequete Fieldset">
         <div className="ResumeRequeteTitle">
           <span>
-            {`Résumé requête `}
+            {`Description requête `}
             <span className="LinkNumeroRequete" onClick={onClickNumero}>
               {props.requete.numero}
             </span>
@@ -43,7 +44,9 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
         {props.requete && (
           <div className="PanelsResumeRequete">
             <ResumeRequetePartieHaute requete={props.requete} />
-            <hr className={"SectionPanelAreaSeparation"} />
+
+            <hr className={"separation"} />
+
             <ListePiecesJointes
               pieces={mapPiecesJustificatives(
                 props.requete.piecesJustificatives
@@ -54,6 +57,11 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
           </div>
         )}
       </div>
+      <ResumeRequeteType
+        provenanceRequete={props.requete.provenanceRequete}
+        sousType={props.requete.sousType}
+        statut={props.requete.statutCourant.statut}
+      />
       {fenetreExterne && (
         <FenetreExterne
           titre={`Détails requête : N°${props.requete.numero}`}

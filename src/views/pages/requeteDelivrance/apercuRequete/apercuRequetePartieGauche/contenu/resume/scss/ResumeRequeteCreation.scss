@@ -1,0 +1,70 @@
+@import "../../../../../../../scss/_colors.scss";
+
+$spacing: 0.5rem;
+$height: $spacing * 2.5;
+
+.ResumeRequeteCreation {
+  .ligne {
+    display: flex;
+    padding-top: $spacing;
+    padding-bottom: $spacing;
+
+    .erreurSdanf {
+      background-color: $surlignement-sdanf;
+      padding: 0rem 0.185rem;
+      border-radius: 0.3rem;
+    }
+  }
+  .itemLigneTitulaire {
+    display: flex;
+  }
+
+  .texte {
+    display: flex;
+    flex: 2;
+    text-align: left;
+    align-items: center;
+
+    &.bold {
+      font-weight: bold;
+    }
+  }
+
+  .titre {
+    color: $application-color;
+    display: flex;
+    flex: 1;
+  }
+
+  .separateur {
+    margin: 0 0.11rem;
+  }
+
+  .link {
+    cursor: pointer;
+    color: $application-color;
+    text-decoration: underline;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+  
+  .infoBulle {
+    display: flex;
+
+    .icon {
+      cursor: pointer;
+      height: $height;
+      margin-left: $spacing / 4;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+
+      svg {
+        height: $height;
+        color: $application-color;
+      }
+    }
+  }
+}

@@ -27,4 +27,8 @@ export class Qualite extends EnumWithComplete {
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, Qualite);
   }
+
+  public static estMandataire(qualite?: Qualite): boolean {
+    return qualite === Qualite.MANDATAIRE_HABILITE;
+  }
 }

@@ -48,11 +48,9 @@ test("renders Page requete with all elements", async () => {
             path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
           >
             <ResumeRequete
-              requete={
-                await mappingRequeteDelivrance(
-                  ReponseAppelDetailRequeteDelivrance.data
-                )
-              }
+              requete={await mappingRequeteDelivrance(
+                ReponseAppelDetailRequeteDelivrance.data
+              )}
             />
           </Route>
         </Router>
@@ -61,24 +59,17 @@ test("renders Page requete with all elements", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Résumé requête")).toBeDefined();
+    expect(screen.getByText("Description requête")).toBeDefined();
     expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
     expect(
       screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
-    expect(screen.getByText("Info titulaire 1")).toBeDefined();
     expect(screen.getByText("CAMPBALL")).toBeDefined();
-    expect(screen.getByText("Info titulaire 2")).toBeDefined();
-    expect(screen.getByText("AMBROSIA")).toBeDefined();
-    expect(screen.getByText("Nature")).toBeDefined();
-    expect(screen.getByText("Date de l'évènement")).toBeDefined();
+    expect(screen.getByText("AMBROSIA Antoinette, Zoé, Thérèse")).toBeDefined();
+    expect(screen.getByText("Acte")).toBeDefined();
     expect(screen.getByText("12/05/2019")).toBeDefined();
-    expect(screen.getByText("Lieu de l'évènement")).toBeDefined();
-    expect(screen.getByText("Tunis / Tunisie")).toBeDefined();
-    expect(screen.getByText("Document")).toBeDefined();
+    expect(screen.getByText("Tunis (Tunisie)")).toBeDefined();
     expect(screen.getByText("Motif")).toBeDefined();
-    expect(screen.getByText("Canal")).toBeDefined();
-    expect(screen.getByText("Nom requérant")).toBeDefined();
     expect(screen.getByText("Lien avec le titulaire")).toBeDefined();
     expect(screen.getByText("Père/mère")).toBeDefined();
     expect(screen.getByText("Pièces Justificatives")).toBeDefined();
@@ -104,11 +95,9 @@ test("renders Page requete with 1 titulaire", async () => {
             path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
           >
             <ResumeRequete
-              requete={
-                await mappingRequeteDelivrance(
-                  ReponseAppelDetailRequeteDelivranceUnTitulaire.data
-                )
-              }
+              requete={await mappingRequeteDelivrance(
+                ReponseAppelDetailRequeteDelivranceUnTitulaire.data
+              )}
             />
           </Route>
         </Router>
@@ -117,22 +106,16 @@ test("renders Page requete with 1 titulaire", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Résumé requête")).toBeDefined();
+    expect(screen.getByText("Description requête")).toBeDefined();
     expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
     expect(
       screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
-    expect(screen.getByText("Info titulaire 1")).toBeDefined();
-    expect(screen.getByText("CAMPBALL")).toBeDefined();
-    expect(screen.getByText("Nature")).toBeDefined();
-    expect(screen.getByText("Date de l'évènement")).toBeDefined();
+    expect(screen.getByText("CAMPBALL Gilles, Marc")).toBeDefined();
+    expect(screen.getByText("Acte")).toBeDefined();
     expect(screen.getByText("12/05/2019")).toBeDefined();
-    expect(screen.getByText("Lieu de l'évènement")).toBeDefined();
     expect(screen.getByText("Tunis")).toBeDefined();
-    expect(screen.getByText("Document")).toBeDefined();
     expect(screen.getByText("Motif")).toBeDefined();
-    expect(screen.getByText("Canal")).toBeDefined();
-    expect(screen.getByText("Nom requérant")).toBeDefined();
     expect(screen.getByText("Cabinet WandC")).toBeDefined();
     expect(screen.getByText("Père/mère")).toBeDefined();
     fireEvent.click(screen.getByText("54j654j4jyfjtj456j4"));
@@ -157,11 +140,9 @@ test("renders Page requete with 2 titutaires", async () => {
             path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
           >
             <ResumeRequete
-              requete={
-                await mappingRequeteDelivrance(
-                  ReponseAppelDetailRequeteDelivrance.data
-                )
-              }
+              requete={await mappingRequeteDelivrance(
+                ReponseAppelDetailRequeteDelivrance.data
+              )}
             />
           </Route>
         </Router>
@@ -170,25 +151,18 @@ test("renders Page requete with 2 titutaires", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Résumé requête")).toBeDefined();
+    expect(screen.getByText("Description requête")).toBeDefined();
     expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
     expect(
       screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
-    expect(screen.getByText("Info titulaire 1")).toBeDefined();
     expect(screen.getByText("CAMPBALL")).toBeDefined();
-    expect(screen.getByText("Info titulaire 2")).toBeDefined();
-    expect(screen.getByText("AMBROSIA")).toBeDefined();
-    expect(screen.getByText("Nature")).toBeDefined();
-    expect(screen.getByText("Date de l'évènement")).toBeDefined();
+    expect(screen.getByText("AMBROSIA Antoinette, Zoé, Thérèse")).toBeDefined();
+    expect(screen.getByText("Acte")).toBeDefined();
     expect(screen.getByText("12/05/2019")).toBeDefined();
-    expect(screen.getByText("Lieu de l'évènement")).toBeDefined();
-    expect(screen.getByText("Tunis / Tunisie")).toBeDefined();
-    expect(screen.getByText("Document")).toBeDefined();
+    expect(screen.getByText("Tunis (Tunisie)")).toBeDefined();
     expect(screen.getByText("Motif")).toBeDefined();
-    expect(screen.getByText("Canal")).toBeDefined();
-    expect(screen.getByText("Nom requérant")).toBeDefined();
-    expect(screen.getByText("Thierry")).toBeDefined();
+    expect(screen.getByText("CHOULARD Thierry")).toBeDefined();
     expect(screen.getByText("Père/mère")).toBeDefined();
   });
 });
@@ -211,11 +185,9 @@ test("renders Page requete without titulaire", async () => {
             path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
           >
             <ResumeRequete
-              requete={
-                await mappingRequeteDelivrance(
-                  ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ.data
-                )
-              }
+              requete={await mappingRequeteDelivrance(
+                ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ.data
+              )}
             />
           </Route>
         </Router>
@@ -224,21 +196,16 @@ test("renders Page requete without titulaire", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Résumé requête")).toBeDefined();
+    expect(screen.getByText("Description requête")).toBeDefined();
     expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
     expect(
       screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
     expect(screen.getByText("Il n'y a pas de titulaire")).toBeDefined();
-    expect(screen.getByText("Nature")).toBeDefined();
-    expect(screen.getByText("Date de l'évènement")).toBeDefined();
+    expect(screen.getByText("Acte")).toBeDefined();
     expect(screen.getByText("12/05/2019")).toBeDefined();
-    expect(screen.getByText("Lieu de l'évènement")).toBeDefined();
     expect(screen.getByText("Tunisie")).toBeDefined();
-    expect(screen.getByText("Document")).toBeDefined();
     expect(screen.getByText("Motif")).toBeDefined();
-    expect(screen.getByText("Canal")).toBeDefined();
-    expect(screen.getByText("Nom requérant")).toBeDefined();
     expect(screen.getByText("Lien avec le titulaire")).toBeDefined();
     expect(screen.getByText("Titulaire")).toBeDefined();
     expect(screen.getByText("Pièces Justificatives")).toBeDefined();
@@ -264,11 +231,9 @@ test("renders Page requete type creation", async () => {
             path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
           >
             <ResumeRequete
-              requete={
-                await mappingRequeteDelivrance(
-                  ReponseAppelDetailRequeteCreation.data
-                )
-              }
+              requete={await mappingRequeteDelivrance(
+                ReponseAppelDetailRequeteCreation.data
+              )}
             />
           </Route>
         </Router>
@@ -277,17 +242,15 @@ test("renders Page requete type creation", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Résumé requête")).toBeDefined();
+    expect(screen.getByText("Description requête")).toBeDefined();
     expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
-    expect(screen.getByText("Canal")).toBeDefined();
-    expect(screen.getByText("Nom requérant")).toBeDefined();
     expect(screen.getByText("Lien avec le titulaire")).toBeDefined();
     expect(screen.getByText("Pièces Justificatives")).toBeDefined();
     fireEvent.click(screen.getByText("54j654j4jyfjtj456j4"));
   });
 });
 
-test("renders Page requete with mandataire hablité without raison sociale", async () => {
+test("renders Page requete with mandataire habilité without raison sociale", async () => {
   const reponseAppelDetailRequeteDelivranceUnTitulaireRequerantMandataireHabiliteSansRaisonSociale =
     ReponseAppelDetailRequeteDelivranceUnTitulaire.data;
 
@@ -316,11 +279,9 @@ test("renders Page requete with mandataire hablité without raison sociale", asy
             path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
           >
             <ResumeRequete
-              requete={
-                await mappingRequeteDelivrance(
-                  reponseAppelDetailRequeteDelivranceUnTitulaireRequerantMandataireHabiliteSansRaisonSociale
-                )
-              }
+              requete={await mappingRequeteDelivrance(
+                reponseAppelDetailRequeteDelivranceUnTitulaireRequerantMandataireHabiliteSansRaisonSociale
+              )}
             />
           </Route>
         </Router>
@@ -329,22 +290,16 @@ test("renders Page requete with mandataire hablité without raison sociale", asy
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Résumé requête")).toBeDefined();
+    expect(screen.getByText("Description requête")).toBeDefined();
     expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
     expect(
       screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
-    expect(screen.getByText("Info titulaire 1")).toBeDefined();
-    expect(screen.getByText("CAMPBALL")).toBeDefined();
-    expect(screen.getByText("Nature")).toBeDefined();
-    expect(screen.getByText("Date de l'évènement")).toBeDefined();
+    expect(screen.getByText("CAMPBALL Gilles, Marc")).toBeDefined();
+    expect(screen.getByText("Acte")).toBeDefined();
     expect(screen.getByText("12/05/2019")).toBeDefined();
-    expect(screen.getByText("Lieu de l'évènement")).toBeDefined();
     expect(screen.getByText("Tunis")).toBeDefined();
-    expect(screen.getByText("Document")).toBeDefined();
     expect(screen.getByText("Motif")).toBeDefined();
-    expect(screen.getByText("Canal")).toBeDefined();
-    expect(screen.getByText("Nom requérant")).toBeDefined();
     expect(screen.getByText("JACQUES Charles")).toBeDefined();
     expect(screen.getByText("Père/mère")).toBeDefined();
     fireEvent.click(screen.getByText("54j654j4jyfjtj456j4"));

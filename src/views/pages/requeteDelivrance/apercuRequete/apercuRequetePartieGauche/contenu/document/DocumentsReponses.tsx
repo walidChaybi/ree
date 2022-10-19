@@ -86,8 +86,9 @@ export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({
     <div className="documents-reponses">
       <AccordionRece
         titre={"Documents à délivrer"}
-        disabled={false}
+        disabled={requete.documentsReponses?.length === 0}
         expanded={requete.documentsReponses?.length > 0}
+        expandedPossible={requete.documentsReponses?.length > 0}
       >
         <List>
           {DocumentReponse.triDocumentsDelivrance(

@@ -1,7 +1,6 @@
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
-import { getLibelle } from "@util/Utils";
+import { formatLigne, getLibelle } from "@util/Utils";
 import React from "react";
-import { formatLigne } from "../../Formatages";
 import { IdentiteType } from "../../Types";
 import { ItemLigne } from "../ItemLigne";
 import { ItemLigneSdanf } from "../ItemLigneSdanf";

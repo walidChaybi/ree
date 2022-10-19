@@ -1,16 +1,56 @@
 @import "../../../../../../../../scss/colors";
 
-.ResumeRequetePartieHaute {
-  padding: .5rem;
+$spacing: 0.5rem;
 
-  .panel {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    margin-bottom: 0.7rem;
+.ResumeRequetePartieHaute {
+  padding: $spacing;
+
+  .inline {
+    display: flex;
+    align-items: flex-start;
+    
+    > div {
+      flex: 1;
+    }
   }
 
-  .panel > *:first-child {
-    color: #0579be;
+  .multilignes {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    margin-left: $spacing * -2;
+    margin-right: $spacing * -2;
+  }
+
+  .ligne {
+    display: flex;
+
+    &.column {
+      flex-direction: column;
+    }
+  }
+
+  .texte {
+    display: flex;
+    flex: 2;
+    text-align: left;
+    align-items: center;
+    padding: $spacing;
+
+    &.bold {
+      font-weight: bold;
+    }
+  }
+
+  .titre {
+    color: $application-color;
+    display: flex;
+    flex: 1;
+    padding: $spacing;
+
+    &.no-space-between {
+      flex: none;
+    }
   }
 
   .separation {

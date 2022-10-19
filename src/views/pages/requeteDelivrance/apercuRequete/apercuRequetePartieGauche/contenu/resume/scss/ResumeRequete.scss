@@ -1,7 +1,6 @@
 @import "../../../../../../../../scss/colors";
 
 .ResumeRequete {
-
   .ResumeRequeteTitle {
     text-align: center;
     font-weight: bold;
@@ -17,7 +16,38 @@
     }
   }
 
+  .separation {
+    width: 80%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: $border;
+  }
+
   .PieceJustificativeContent {
     text-align: left !important;
   }
+}
+
+.TypeRequete {
+  margin-top: 0.5em;
+  border: 1px solid;
+  border-color: $border;
+  border-radius: 0.25rem;
+  border-top: 0em;
+  width: 100%;
+
+  .title {
+    height: 2.5em !important;
+    background-color: $application-color;
+    color: white;
+    font-weight: bold;
+    border-radius: 0.25em 0.25em 0 0;
+    svg {
+      color: white;
+    }
+
+    span {
+      text-align: justify;
+    }
+  } 
 }

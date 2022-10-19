@@ -1,6 +1,6 @@
 import { ArrowBackIos, ArrowForwardIos } from "@material-ui/icons";
+import { formatLigne } from "@util/Utils";
 import React from "react";
-import { formatLigne } from "./Formatages";
 import "./scss/ConteneurRetractable.scss";
 
 interface TitreProps {

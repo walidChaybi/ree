@@ -1,7 +1,7 @@
-import { estRenseigne } from "@util/Utils";
+import { estRenseigne, formatLigne } from "@util/Utils";
 import React from "react";
 import Labels, { REQUETE, SDANF } from "../../Labels";
-import { formatLigne, formatLigneSpecificite } from "../Formatages";
+import { formatLigneSpecificite } from "../Formatages";
 import Item from "./Item";
 import { ItemInfoBulle } from "./ItemInfoBulle";
 import { ItemLigne } from "./ItemLigne";

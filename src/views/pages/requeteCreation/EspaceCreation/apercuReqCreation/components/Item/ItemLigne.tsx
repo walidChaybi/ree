@@ -1,6 +1,5 @@
-import { estRenseigne } from "@util/Utils";
+import { estRenseigne, formatLigne } from "@util/Utils";
 import React from "react";
-import { formatLigne } from "../Formatages";
 
 interface ItemLigneInfosProps {
   label?: string;

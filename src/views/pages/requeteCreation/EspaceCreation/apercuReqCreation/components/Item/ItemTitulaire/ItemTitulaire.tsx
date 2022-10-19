@@ -1,12 +1,9 @@
 import { SituationFamiliale } from "@model/requete/enum/SituationFamiliale";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
+import { formatLigne } from "@util/Utils";
 import React from "react";
 import Labels, { INFOS } from "../../../Labels";
-import {
-  formatLigne,
-  formatLigneAdresse,
-  formatLigneNationalites
-} from "../../Formatages";
+import { formatLigneAdresse, formatLigneNationalites } from "../../Formatages";
 import {
   DateCoordonneesType,
   DomiciliationType,

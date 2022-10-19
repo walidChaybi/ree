@@ -154,6 +154,9 @@ export const TitulaireRequete = {
 
     return lieuNissance;
   },
+  getParentsTries(parents?: IParent[]) {
+    return parents?.sort((a, b) => a.position - b.position);
+  },
   getTitulaireByPosition({
     titulaires,
     position

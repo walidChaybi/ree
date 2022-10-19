@@ -174,8 +174,8 @@ export const SuiviObservationsRequete: React.FC<
       />
       <AccordionRece
         titre={"Observations requête"}
-        disabled={false}
         expanded={expanded}
+        expandedPossible={observations?.length > 0}
         bouton={
           <BoutonGaucheAccordionTitle
             iconeBouton={faPlusCircle}

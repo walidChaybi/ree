@@ -1,10 +1,10 @@
+import { formatLigne } from "@util/Utils";
 import {
   AccordionRece,
   AccordionReceClassNameProps
 } from "@widget/accordion/AccordionRece";
 import React from "react";
 import "../../scss/ApercuReqCreationPage.scss";
-import { formatLigne } from "../Formatages";
 
 export interface ItemProps {
   titre: string;

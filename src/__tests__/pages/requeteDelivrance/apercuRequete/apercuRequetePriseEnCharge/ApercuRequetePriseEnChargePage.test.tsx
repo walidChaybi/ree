@@ -272,7 +272,7 @@ test("ignorer requete", async () => {
     );
   });
   const title = screen.getByText(/Documents à délivrer/i);
-  const doc1 = screen.getAllByText(/^Courrier$/)[1]; // Il y a deux fois le libellé Courrier: un pour le canal et un pour les documenets délivrés
+  const doc1 = screen.getByText(/^Courrier$/);
   const doc2 = screen.getByText(/Certificat d'inscription au RCA/i);
 
   await waitFor(() => {
