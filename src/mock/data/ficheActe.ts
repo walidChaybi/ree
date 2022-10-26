@@ -2413,7 +2413,7 @@ export const ficheActeAvecImage = {
       arrondissement: null,
       region: "Catalogne",
       pays: "Espagne",
-      lieuReprise: null
+      lieuReprise: "Lieu de reprise evenement"
     },
     mentions: [],
     titulaires: [
@@ -2434,7 +2434,7 @@ export const ficheActeAvecImage = {
           ville: "Paris",
           arrondissement: null,
           region: "",
-          pays: "Fance",
+          pays: "France",
           lieuReprise: null
         },
         profession: "Enseignante",
@@ -2547,7 +2547,7 @@ export const ficheActeAvecImage = {
           arrondissement: null,
           region: "Catalogne",
           pays: "Espagne",
-          lieuReprise: null
+          lieuReprise: "Lieu de reprise"
         },
         profession: "Enseignante",
         age: null,
@@ -4151,8 +4151,8 @@ export const ficheActeAvecUnTitulaireIndetermine = {
           voie: null,
           ville: "Paris",
           arrondissement: null,
-          region: "",
-          pays: "Fance",
+          region: null,
+          pays: null,
           lieuReprise: null
         },
         profession: "Enseignante",
@@ -4328,115 +4328,24 @@ export const ficheActeAvecUnTitulaireIndetermine = {
     },
     analyseMarginales: [
       {
-        dateDebut: 1612782000000,
+        dateDebut: 1577358000000,
         dateFin: null,
-        nomOec: null,
-        prenomOec: null,
-        motifModification: "FRANCISATION_PRENOM",
+        nomOec: "Lens",
+        prenomOec: "Alexis",
+        motifModification: "CHANGEMENT_PRENOM",
         titulaires: [
           {
-            nom: "MARTIN",
-            prenoms: ["Jean-Louis", "Alphonse", "Raoül"],
+            nom: "Michou né Michel",
+            prenoms: ["Joseph"],
             autresNoms: null,
             autresPrenoms: null,
             ordre: 1,
             sexe: "MASCULIN",
-            naissance: {
-              minute: null,
-              heure: null,
-              jour: 29,
-              mois: 11,
-              annee: 1989,
-              voie: null,
-              ville: "Paris",
-              arrondissement: null,
-              region: "",
-              pays: "Fance",
-              lieuReprise: null
-            },
-            profession: "Enseignante",
+            naissance: null,
+            profession: null,
             age: null,
-            domicile: {
-              voie: "7 Rue du Noyer",
-              ville: "Bruxelles",
-              arrondissement: null,
-              region: "Flandre",
-              pays: "BELGIQUE"
-            },
-            filiations: [
-              {
-                type: null,
-                ordre: 1,
-                nom: "Sacken",
-                sexe: "FEMININ",
-                naissance: null,
-                profession: "Coiffeuse",
-                age: null,
-                lienParente: "PARENT",
-                domicile: {
-                  voie: "16 avenue des Palmiers",
-                  ville: "Djibouti",
-                  arrondissement: null,
-                  region: null,
-                  pays: "DJIBOUTI"
-                },
-                prenoms: ["Carmela", "Linzy"]
-              },
-              {
-                type: null,
-                ordre: 1,
-                nom: "Sacken",
-                sexe: "FEMININ",
-                naissance: null,
-                profession: "Coiffeuse",
-                age: null,
-                lienParente: "PARENT",
-                domicile: {
-                  voie: "16 avenue des Palmiers",
-                  ville: "Djibouti",
-                  arrondissement: null,
-                  region: null,
-                  pays: "DJIBOUTI"
-                },
-                prenoms: ["Carmelaa", "Linzy"]
-              },
-              {
-                type: null,
-                ordre: 1,
-                nom: "Sacken",
-                sexe: "FEMININ",
-                naissance: null,
-                profession: "Coiffeuse",
-                age: null,
-                lienParente: "PARENT_ADOPTANT",
-                domicile: {
-                  voie: "16 avenue des Palmiers",
-                  ville: "Djibouti",
-                  arrondissement: null,
-                  region: null,
-                  pays: "DJIBOUTI"
-                },
-                prenoms: ["Carmelaaa", "Linzy"]
-              },
-              {
-                type: null,
-                ordre: 1,
-                nom: "Sacken",
-                sexe: "FEMININ",
-                naissance: null,
-                profession: "Coiffeuse",
-                age: null,
-                lienParente: "PARENT_ADOPTANT",
-                domicile: {
-                  voie: "16 avenue des Palmiers",
-                  ville: "Djibouti",
-                  arrondissement: null,
-                  region: null,
-                  pays: "DJIBOUTI"
-                },
-                prenoms: ["Carmelaaaa", "Linzy"]
-              }
-            ],
+            domicile: null,
+            filiations: null,
             typeDeclarationConjointe: null,
             dateDeclarationConjointe: null,
             nomPartie1: null,
@@ -4447,54 +4356,17 @@ export const ficheActeAvecUnTitulaireIndetermine = {
             prenomsDernierConjoint: null
           },
           {
-            nom: "PRODESK",
-            prenoms: ["Elodie", "Marie-Charlotte", "Pauline"],
+            nom: "Christine",
+            prenoms: ["Joseph"],
             autresNoms: null,
             autresPrenoms: null,
             ordre: 2,
             sexe: "FEMININ",
-            naissance: {
-              minute: null,
-              heure: null,
-              jour: 25,
-              mois: 6,
-              annee: 1990,
-              voie: null,
-              ville: "Barcelone",
-              arrondissement: null,
-              region: "Catalogne",
-              pays: "Espagne",
-              lieuReprise: null
-            },
-            profession: "Enseignante",
+            naissance: null,
+            profession: null,
             age: null,
-            domicile: {
-              voie: "7 Rue du Noyer",
-              ville: "Bruxelles",
-              arrondissement: null,
-              region: "Flandre",
-              pays: "BELGIQUE"
-            },
-            filiations: [
-              {
-                lienParente: "PARENT_ADOPTANT",
-                type: null,
-                ordre: 752,
-                nom: "Sacken",
-                sexe: "MASCULIN",
-                naissance: null,
-                profession: "Informaticien",
-                age: null,
-                domicile: {
-                  voie: "16 avenue des Palmiers",
-                  ville: "Djibouti",
-                  arrondissement: null,
-                  region: null,
-                  pays: "DJIBOUTI"
-                },
-                prenoms: ["Carmela", "Linzy"]
-              }
-            ],
+            domicile: null,
+            filiations: null,
             typeDeclarationConjointe: null,
             dateDeclarationConjointe: null,
             nomPartie1: null,
@@ -5613,5 +5485,502 @@ export const ficheActeAvecUnParentTitulaireIndetermine = {
         prenomsDernierConjoint: "Jean Maxime"
       }
     ]
+  }
+};
+
+export const idFicheActeAvecUnNomTitulaireSNPEtPrenomSPC =
+  "b45079a5-9e8f-488a-b07c-c4c2az613121";
+export const ficheActeAvecUnNomTitulaireSNP = {
+  ...ficheActeMariage,
+  errors: [],
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-etatcivil-api/v1/acte/b45079a5-9e8f-488a-b07c-c4c2az613121",
+  data: {
+    ...ficheActeMariage.data,
+    analyseMarginales: [
+      {
+        dateDebut: 1612782000000,
+        dateFin: null,
+        nomOec: null,
+        prenomOec: null,
+        motifModification: "FRANCISATION_PRENOM",
+        titulaires: [
+          {
+            nom: "Patamob",
+            prenoms: ["SPC"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 2,
+            sexe: "FEMININ",
+            naissance: null,
+            profession: null,
+            age: null,
+            domicile: null,
+            filiations: null,
+            typeDeclarationConjointe: "CHANGEMENT_NOM",
+            dateDeclarationConjointe: "2000-11-26",
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null
+          },
+          {
+            nom: "SNP",
+            prenoms: ["Antoine"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 1,
+            sexe: "MASCULIN",
+            naissance: null,
+            profession: null,
+            age: null,
+            domicile: null,
+            filiations: null,
+            typeDeclarationConjointe: "CHANGEMENT_NOM",
+            dateDeclarationConjointe: "2000-11-26",
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null
+          }
+        ]
+      },
+      {
+        dateDebut: 1577358000000,
+        dateFin: null,
+        nomOec: "Lens",
+        prenomOec: "Alexis",
+        motifModification: "CHANGEMENT_PRENOM",
+        titulaires: [
+          {
+            nom: "Michel",
+            prenoms: ["Joseph"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 1,
+            sexe: "MASCULIN",
+            naissance: null,
+            profession: null,
+            age: null,
+            domicile: null,
+            filiations: null,
+            typeDeclarationConjointe: null,
+            dateDeclarationConjointe: null,
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null
+          },
+          {
+            nom: "Christine",
+            prenoms: ["Joseph"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 2,
+            sexe: "FEMININ",
+            naissance: null,
+            profession: null,
+            age: null,
+            domicile: null,
+            filiations: null,
+            typeDeclarationConjointe: null,
+            dateDeclarationConjointe: null,
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null
+          }
+        ]
+      }
+    ]
+  }
+};
+
+export const idFicheActeMariageAvecNomContientDesormais = "";
+export const ficheActeMariageAvecNomContientDesormais = {
+  ...ficheActeMariage,
+  errors: [],
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-etatcivil-api/v1/acte/b45079a5-9e8f-488a-b07c-c4c2az613121",
+  data: {
+    ...ficheActeMariage.data,
+    titulaires: [
+      {
+        nom: "MARTIN",
+        prenoms: ["Jean-Louis", "Alphonse", "Raoül"],
+        autresNoms: null,
+        autresPrenoms: null,
+        ordre: 1,
+        sexe: "MASCULIN",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 29,
+          mois: 11,
+          annee: 1989,
+          voie: null,
+          ville: "Paris",
+          arrondissement: null,
+          region: "",
+          pays: "France",
+          lieuReprise: null
+        },
+        profession: "Enseignante",
+        age: null,
+        domicile: {
+          voie: "7 Rue du Noyer",
+          ville: "Bruxelles",
+          arrondissement: null,
+          region: "Flandre",
+          pays: "BELGIQUE"
+        },
+        filiations: [
+          {
+            type: null,
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "FEMININ",
+            naissance: null,
+            profession: "Coiffeuse",
+            age: null,
+            lienParente: "PARENT",
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Carmela", "Linzy"]
+          },
+          {
+            type: null,
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "FEMININ",
+            naissance: null,
+            profession: "Coiffeuse",
+            age: null,
+            lienParente: "PARENT",
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Carmelaa", "Linzy"]
+          },
+          {
+            type: null,
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "FEMININ",
+            naissance: null,
+            profession: "Coiffeuse",
+            age: null,
+            lienParente: "PARENT_ADOPTANT",
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Carmelaaa", "Linzy"]
+          },
+          {
+            type: null,
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "FEMININ",
+            naissance: null,
+            profession: "Coiffeuse",
+            age: null,
+            lienParente: "PARENT_ADOPTANT",
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Carmelaaaa", "Linzy"]
+          }
+        ],
+        typeDeclarationConjointe: null,
+        dateDeclarationConjointe: null,
+        nomPartie1: null,
+        nomPartie2: null,
+        nomAvantMariage: "nomAvantMariage",
+        nomApresMariage: "nomApresMariage",
+        nomDernierConjoint: null,
+        prenomsDernierConjoint: null
+      },
+      {
+        nom: "PRODESK",
+        prenoms: ["Elodie", "Marie-Charlotte", "Pauline"],
+        autresNoms: null,
+        autresPrenoms: null,
+        ordre: 2,
+        sexe: "FEMININ",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 25,
+          mois: 6,
+          annee: 1990,
+          voie: null,
+          ville: "Barcelone",
+          arrondissement: null,
+          region: "Catalogne",
+          pays: "Espagne",
+          lieuReprise: null
+        },
+        profession: "Enseignante",
+        age: null,
+        domicile: {
+          voie: "7 Rue du Noyer",
+          ville: "Bruxelles",
+          arrondissement: null,
+          region: "Flandre",
+          pays: "BELGIQUE"
+        },
+        filiations: [
+          {
+            lienParente: "PARENT_ADOPTANT",
+            type: null,
+            ordre: 752,
+            nom: "Sacken",
+            sexe: "MASCULIN",
+            naissance: null,
+            profession: "Informaticien",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Carmela", "Linzy"]
+          }
+        ],
+        typeDeclarationConjointe: null,
+        dateDeclarationConjointe: null,
+        nomPartie1: null,
+        nomPartie2: null,
+        nomAvantMariage: "nomAvantMariage",
+        nomApresMariage: "nomApresMariage",
+        nomDernierConjoint: null,
+        prenomsDernierConjoint: null
+      }
+    ],
+    analyseMarginales: [
+      {
+        dateDebut: 1612782000000,
+        dateFin: null,
+        nomOec: null,
+        prenomOec: null,
+        motifModification: "FRANCISATION_PRENOM",
+        titulaires: [
+          {
+            nom: "MARTIN",
+            prenoms: ["Jean-Louis", "Alphonse", "Raoül"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 1,
+            sexe: "MASCULIN",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: 29,
+              mois: 11,
+              annee: 1989,
+              voie: null,
+              ville: "Paris",
+              arrondissement: null,
+              region: "",
+              pays: "France",
+              lieuReprise: null
+            },
+            profession: "Enseignante",
+            age: null,
+            domicile: {
+              voie: "7 Rue du Noyer",
+              ville: "Bruxelles",
+              arrondissement: null,
+              region: "Flandre",
+              pays: "BELGIQUE"
+            },
+            filiations: [
+              {
+                type: null,
+                ordre: 1,
+                nom: "Sacken",
+                sexe: "FEMININ",
+                naissance: null,
+                profession: "Coiffeuse",
+                age: null,
+                lienParente: "PARENT",
+                domicile: {
+                  voie: "16 avenue des Palmiers",
+                  ville: "Djibouti",
+                  arrondissement: null,
+                  region: null,
+                  pays: "DJIBOUTI"
+                },
+                prenoms: ["Carmela", "Linzy"]
+              },
+              {
+                type: null,
+                ordre: 1,
+                nom: "Sacken",
+                sexe: "FEMININ",
+                naissance: null,
+                profession: "Coiffeuse",
+                age: null,
+                lienParente: "PARENT",
+                domicile: {
+                  voie: "16 avenue des Palmiers",
+                  ville: "Djibouti",
+                  arrondissement: null,
+                  region: null,
+                  pays: "DJIBOUTI"
+                },
+                prenoms: ["Carmelaa", "Linzy"]
+              },
+              {
+                type: null,
+                ordre: 1,
+                nom: "Sacken",
+                sexe: "FEMININ",
+                naissance: null,
+                profession: "Coiffeuse",
+                age: null,
+                lienParente: "PARENT_ADOPTANT",
+                domicile: {
+                  voie: "16 avenue des Palmiers",
+                  ville: "Djibouti",
+                  arrondissement: null,
+                  region: null,
+                  pays: "DJIBOUTI"
+                },
+                prenoms: ["Carmelaaa", "Linzy"]
+              },
+              {
+                type: null,
+                ordre: 1,
+                nom: "Sacken",
+                sexe: "FEMININ",
+                naissance: null,
+                profession: "Coiffeuse",
+                age: null,
+                lienParente: "PARENT_ADOPTANT",
+                domicile: {
+                  voie: "16 avenue des Palmiers",
+                  ville: "Djibouti",
+                  arrondissement: null,
+                  region: null,
+                  pays: "DJIBOUTI"
+                },
+                prenoms: ["Carmelaaaa", "Linzy"]
+              }
+            ],
+            typeDeclarationConjointe: null,
+            dateDeclarationConjointe: null,
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null
+          },
+          {
+            nom: "PRODESK désormais PRODESKA",
+            prenoms: ["Elodie", "Marie-Charlotte", "Pauline"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 2,
+            sexe: "FEMININ",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: 25,
+              mois: 6,
+              annee: 1990,
+              voie: null,
+              ville: "Barcelone",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "Espagne",
+              lieuReprise: null
+            },
+            profession: "Enseignante",
+            age: null,
+            domicile: {
+              voie: "7 Rue du Noyer",
+              ville: "Bruxelles",
+              arrondissement: null,
+              region: "Flandre",
+              pays: "BELGIQUE"
+            },
+            filiations: [
+              {
+                lienParente: "PARENT_ADOPTANT",
+                type: null,
+                ordre: 752,
+                nom: "Sacken",
+                sexe: "MASCULIN",
+                naissance: null,
+                profession: "Informaticien",
+                age: null,
+                domicile: {
+                  voie: "16 avenue des Palmiers",
+                  ville: "Djibouti",
+                  arrondissement: null,
+                  region: null,
+                  pays: "DJIBOUTI"
+                },
+                prenoms: ["Carmela", "Linzy"]
+              }
+            ],
+            typeDeclarationConjointe: null,
+            dateDeclarationConjointe: null,
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null
+          }
+        ]
+      }
+    ],
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 25,
+      mois: 6,
+      annee: 1990,
+      voie: null,
+      ville: "Barcelone",
+      arrondissement: null,
+      region: "Catalogne",
+      pays: "Espagne",
+      lieuReprise: "Lieu de reprise Nantes"
+    }
   }
 };

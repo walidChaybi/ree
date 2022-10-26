@@ -280,6 +280,7 @@ export const FicheActe = {
     const analyseMarginale = AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(
       acte.analyseMarginales
     );
+
     if (analyseMarginale) {
       return Boolean(
         analyseMarginale.titulaires?.find(
@@ -289,16 +290,7 @@ export const FicheActe = {
         )
       );
     }
-
     return true;
-  },
-
-  aGenreTitulaireInconnuAnalyseMarginale(acte: IFicheActe): boolean {
-    const titulaires = this.getAnalyseMarginaleLaPlusRecente(acte)?.titulaires;
-
-    return Boolean(
-      titulaires?.find(titulaire => titulaire.sexe === Sexe.INCONNU)
-    );
   },
 
   aGenreTitulaireIndetermine(acte: IFicheActe): boolean {
@@ -394,69 +386,19 @@ export const FicheActe = {
 
   tousLesTitulairesInconnusOuIndetermines(acte: IFicheActe): boolean {
     const titulaires = acte.titulaires;
+
     return (
       titulaires.some(el => el.sexe === Sexe.INDETERMINE) ||
       titulaires.some(el => el.sexe === Sexe.INCONNU)
     );
   },
 
-  getTitulaireParSexe(
-    acte: IFicheActe,
-    sexe: Sexe
-  ): ITitulaireActe | undefined {
-    const titulaires = acte.titulaires;
-    return titulaires.find(titulaire => titulaire.sexe === sexe);
-  },
-
   getTitulaireMasculin(acte: IFicheActe): ITitulaireActe | undefined {
-    const titulaires = acte.titulaires;
-    return titulaires.find(titulaire => titulaire.sexe === Sexe.MASCULIN);
-  },
-
-  getTitulaireInconnuOuIndetermine(
-    acte: IFicheActe
-  ): ITitulaireActe | undefined {
-    const titulaires = acte.titulaires;
-    return titulaires.find(
-      titulaire => titulaire.sexe === Sexe.INCONNU || Sexe.INDETERMINE
-    );
-  },
-
-  getTitulaireMasculinOuAutre(acte: IFicheActe): ITitulaireActe {
-    let titulaireTrouve;
-    if (
-      this.tousLesTitulairesInconnusOuIndetermines(acte) ||
-      this.titulairesDeMemeSexe(acte)
-    ) {
-      titulaireTrouve = this.getTitulairesActeDansLOrdre(acte).titulaireActe1;
-    } else {
-      titulaireTrouve = this.getTitulaireMasculin(acte);
-      if (!titulaireTrouve) {
-        titulaireTrouve = this.getTitulaireInconnuOuIndetermine(acte);
-      }
-    }
-    return titulaireTrouve as ITitulaireActe;
+    return acte.titulaires.find(titulaire => titulaire.sexe === Sexe.MASCULIN);
   },
 
   getTitulaireFeminin(acte: IFicheActe): ITitulaireActe | undefined {
-    const titulaires = acte.titulaires;
-    return titulaires.find(titulaire => titulaire.sexe === Sexe.FEMININ);
-  },
-
-  getTitulaireFemininOuAutre(acte: IFicheActe): ITitulaireActe {
-    let titulaireTrouve;
-    if (
-      this.tousLesTitulairesInconnusOuIndetermines(acte) ||
-      this.titulairesDeMemeSexe(acte)
-    ) {
-      titulaireTrouve = this.getTitulairesActeDansLOrdre(acte).titulaireActe2;
-    } else {
-      titulaireTrouve = this.getTitulaireFeminin(acte);
-      if (!titulaireTrouve) {
-        titulaireTrouve = this.getTitulaireInconnuOuIndetermine(acte);
-      }
-    }
-    return titulaireTrouve as ITitulaireActe;
+    return acte.titulaires.find(titulaire => titulaire.sexe === Sexe.FEMININ);
   }
 };
 

@@ -10,11 +10,12 @@ import {
   NEUF,
   premiereLettreEnMajuscule,
   SEIZE,
-  supprimerZerosInutiles,
+  supprimerZerosAGauche,
   VINGT
 } from "@util/Utils";
 
 export const FRANCE = "FRANCE";
+const France = "France";
 const PARIS = "PARIS";
 const MARSEILLE = "MARSEILLE";
 const LYON = "LYON";
@@ -276,13 +277,12 @@ export class LieuxUtils {
     formatVerbeux = false
   ) {
     let arrondissementFormate = "";
+    const arrondissementSansZero = supprimerZerosAGauche(arrondissement);
     if (formatVerbeux) {
-      if (arrondissement === "1") {
+      if (arrondissementSansZero === "1") {
         arrondissementFormate = "1er arrondissement";
       } else if (arrondissement) {
-        arrondissementFormate = `${supprimerZerosInutiles(
-          arrondissement
-        )}ème arrondissement`;
+        arrondissementFormate = `${arrondissementSansZero}ème arrondissement`;
       }
     } else {
       arrondissementFormate = `arr.${arrondissement}`;
@@ -334,6 +334,28 @@ export class LieuxUtils {
   public static getOptionsArrondissement(ville?: string): Option[] {
     const villeNumeros: string[] = LieuxUtils.getNumerosArrondissement(ville);
     return villeNumeros.map(numero => ({ value: numero, str: numero }));
+  }
+
+  /**
+   *  Utilisé pour lagénération d'un extrait plurilingue de la page édition du document réponse
+   *  Si le pays n'est pas renseigné alors on considère que la localisation est France (sauf si la ville est Jérusalem)
+   */
+  public static getLocalisationEtrangerOuFranceParDefaut(
+    ville?: string,
+    regionOuDepartement?: string,
+    pays?: string,
+    arrondissement?: string
+  ) {
+    let paysParDefaut = pays;
+    if (!pays && !this.estVilleJerusalem(ville)) {
+      paysParDefaut = France;
+    }
+    return this.getLocalisationEtrangerOuFrance(
+      ville,
+      regionOuDepartement,
+      paysParDefaut,
+      arrondissement
+    );
   }
 
   /**

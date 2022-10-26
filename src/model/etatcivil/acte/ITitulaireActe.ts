@@ -3,7 +3,9 @@ import {
   formatNom,
   formatPrenom,
   mapPrenomsVersPrenomsOrdonnes,
-  numberToString
+  numberToString,
+  SNP,
+  SPC
 } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { IPrenomOrdonnes } from "../../requete/IPrenomOrdonnes";
@@ -62,6 +64,12 @@ export const TitulaireActe = {
       this.getPrenom3(titulaire) ? " " : ""
     }${this.getPrenom3(titulaire)}`;
   },
+  getPrenomsSeparerPar(
+    titulaire?: ITitulaireActe,
+    separateur: string = ","
+  ): string | undefined {
+    return titulaire && titulaire.prenoms?.join(`${separateur} `);
+  },
   getDateNaissance(titulaire?: ITitulaireActe): string {
     return titulaire && titulaire.naissance
       ? getDateStringFromDateCompose({
@@ -87,11 +95,17 @@ export const TitulaireActe = {
         )
       : "";
   },
+
   getLieuDeRepriseOuLieuNaissance(titulaire?: ITitulaireActe): string {
     if (titulaire && titulaire?.naissance?.lieuReprise) {
       return titulaire.naissance.lieuReprise;
     } else {
-      return this.getLieuNaissance(titulaire);
+      return LieuxUtils.getLocalisationEtrangerOuFranceParDefaut(
+        titulaire?.naissance?.ville,
+        titulaire?.naissance?.region,
+        titulaire?.naissance?.pays,
+        titulaire?.naissance?.arrondissement
+      );
     }
   },
   getParentsDirects(titulaire?: ITitulaireActe): IFiliation[] {
@@ -179,5 +193,11 @@ export const TitulaireActe = {
         !titulaire.naissance?.region &&
         !titulaire.naissance?.pays)
     );
+  },
+  nomAbsentOuNomEgalSNP(titulaire: ITitulaireActe): boolean {
+    return !titulaire.nom || titulaire.nom === SNP;
+  },
+  prenomAbsentOuNomEgalSPC(titulaire: ITitulaireActe): boolean {
+    return titulaire.prenoms?.length === 0 || titulaire.prenoms?.[0] === SPC;
   }
 };

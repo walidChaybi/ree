@@ -30,18 +30,20 @@ export class ExtraitPlurilingueMariageComposition {
       ctv
     );
 
-    composition.lieu_acte = Evenement.getLieu(acte.evenement);
+    composition.lieu_acte = Evenement.getLieuDeRepriseOuLieuEvenement(
+      acte.evenement
+    );
 
     composition.titulaire_1 =
       this.mappingTitulaireExtraitPlurilingueMariageComposition(
         acte,
-        FicheActe.getTitulaireMasculinOuAutre(acte)
+        FicheActe.getTitulaireMasculin(acte)
       );
 
     composition.titulaire_2 =
       this.mappingTitulaireExtraitPlurilingueMariageComposition(
         acte,
-        FicheActe.getTitulaireFemininOuAutre(acte)
+        FicheActe.getTitulaireFeminin(acte)
       );
 
     return composition;
@@ -49,21 +51,24 @@ export class ExtraitPlurilingueMariageComposition {
 
   public static mappingTitulaireExtraitPlurilingueMariageComposition(
     acte: IFicheActe,
-    titulaire: ITitulaireActe
-  ): ITitulaireComposition {
-    return {
-      nom_avant_mariage: getValeurOuVide(
-        ExtraitPlurilingueCommunComposition.getNomDerniereAnalyseMarginale(
+    titulaire: ITitulaireActe | undefined
+  ): ITitulaireComposition | undefined {
+    if (titulaire) {
+      return {
+        nom_avant_mariage: ExtraitPlurilingueCommunComposition.getNomOuVide(
           acte,
           titulaire
-        )
-      ),
-      nom_apres_mariage: getValeurOuVide(titulaire.nomApresMariage),
-      prenoms: TitulaireActe.getPrenoms(titulaire),
-      date_naissance: Evenement.formatageDateCompositionExtraitPlurilingue(
-        titulaire.naissance
-      ),
-      lieu_naissance: TitulaireActe.getLieuNaissance(titulaire)
-    };
+        ),
+        nom_apres_mariage: getValeurOuVide(titulaire.nomApresMariage),
+        prenoms: ExtraitPlurilingueCommunComposition.getPrenomOuVide(
+          acte,
+          titulaire
+        ),
+        date_naissance: Evenement.formatageDateCompositionExtraitPlurilingue(
+          titulaire.naissance
+        ),
+        lieu_naissance: TitulaireActe.getLieuDeRepriseOuLieuNaissance(titulaire)
+      };
+    }
   }
 }

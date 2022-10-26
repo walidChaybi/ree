@@ -40,6 +40,19 @@ export const Evenement = {
         )
       : "";
   },
+  getLieuDeRepriseOuLieuEvenement(evenement?: IEvenement): string {
+    if (evenement?.lieuReprise) {
+      return evenement.lieuReprise;
+    } else {
+      return evenement
+        ? LieuxUtils.getLocalisationEtrangere(
+            evenement.ville,
+            evenement.region,
+            evenement.pays
+          )
+        : "";
+    }
+  },
   getLieuCompositionExtraitPlurilingue(evenement?: IEvenement): string {
     return evenement
       ? LieuxUtils.getLieu(evenement.ville, evenement.region, evenement.pays)

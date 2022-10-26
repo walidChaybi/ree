@@ -544,12 +544,8 @@ function seulementUneProprieteRenseigneeAvecCheminCourant(
   return res;
 }
 
-export function supprimerZerosInutiles(nombre: string) {
-  let i = 0;
-  while (nombre[i] === "0") {
-    i++;
-  }
-  return nombre.slice(i);
+export function supprimerZerosAGauche(str?: string) {
+  return str ? str.replace(/^0+/, "") : "";
 }
 
 export function aucuneProprieteRenseignee(objet?: Object): boolean {

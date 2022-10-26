@@ -1,7 +1,17 @@
-import { getTypeDocument } from "@hook/generation/generationECHook/generationECHookUtil";
+import {
+  getTypeDocument,
+  getValidationExtraitPlurilingue
+} from "@hook/generation/generationECHook/generationECHookUtil";
+import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { Validation } from "@model/requete/enum/Validation";
 import request from "superagent";
+import {
+  ficheActeAvecDeuxTitulaireIndetermine,
+  ficheActeMariageAvecNomContientDesormais
+} from "../../../../../mock/data/ficheActe";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
@@ -29,6 +39,24 @@ test("Attendu: getTypeDocument fonctionne correctement", () => {
   expect(getTypeDocument(ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE)).toBe(
     "8b808725-a83e-4ce5-81a2-192cd09e0cb2"
   );
+});
+
+test("Attendu: getValidationExtraitPlurilingue fonctionne correctement", () => {
+  expect(
+    getValidationExtraitPlurilingue(
+      mapActe(ficheActeAvecDeuxTitulaireIndetermine.data as any as IFicheActe),
+      Validation.O
+    )
+  ).toBe(Validation.E);
+
+  expect(
+    getValidationExtraitPlurilingue(
+      mapActe(
+        ficheActeMariageAvecNomContientDesormais.data as any as IFicheActe
+      ),
+      Validation.E
+    )
+  ).toBe(Validation.N);
 });
 
 afterAll(() => {

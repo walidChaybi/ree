@@ -176,15 +176,14 @@ export function creationComposition(
 export const getValidationEC = (
   acte: IFicheActe,
   choixDelivrance: ChoixDelivrance,
-  validation = Validation.O,
-  requete: IRequeteDelivrance
+  validation = Validation.O
 ) => {
   switch (choixDelivrance) {
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
       return getValidationExtrait(acte, choixDelivrance, validation);
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
-      return getValidationExtraitPlurilingue(acte, choixDelivrance, validation);
+      return getValidationExtraitPlurilingue(acte, validation);
     case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
     case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
       if (!acte.corpsImage && !acte.corpsTexte) {
@@ -220,9 +219,8 @@ function getValidationExtrait(
   return validation;
 }
 
-function getValidationExtraitPlurilingue(
+export function getValidationExtraitPlurilingue(
   acte: IFicheActe,
-  choixDelivrance: ChoixDelivrance,
   validation: Validation
 ) {
   switch (acte.nature) {

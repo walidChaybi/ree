@@ -67,5 +67,14 @@ export const AnalyseMarginale = {
     }
 
     return analyseMarginaleLaPlusRecente;
+  },
+
+  getTitulairesAM(am?: IAnalyseMarginale[]): ITitulaireActe[] | undefined {
+    let titulairesAM: ITitulaireActe[] | undefined = [];
+    if (am) {
+      titulairesAM = this.getAnalyseMarginaleLaPlusRecente(am)?.titulaires;
+    }
+
+    return titulairesAM;
   }
 };

@@ -8,12 +8,15 @@ import { Validation } from "@model/requete/enum/Validation";
 import request from "superagent";
 import {
   ficheActeAvecDeuxTitulaireIndetermine,
+  ficheActeAvecImage,
+  ficheActeAvecUnNomTitulaireSNP,
   ficheActeAvecUnTitulaireIndetermine,
-  ficheActeMariage
+  ficheActeMariage,
+  ficheActeMariageAvecNomContientDesormais
 } from "../../../../../../mock/data/ficheActe";
 import {
   mentionsPlurilinguesMariageAvec6,
-  mentionsPlurilinguesMariageNombre7
+  mentionsPlurilinguesMariageNombre10
 } from "../../../../../../mock/data/mentions";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 
@@ -43,7 +46,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
 
     const nomApresMariageAttenduT1 = "nomApresMariage";
     const nomAvantMariageAttenduT1 = "MARTIN";
-    const prenomsT1 = "Jean-Louis Alphonse Raoül";
+    const prenomsT1 = "Jean-Louis, Alphonse, Raoül";
     const dateNaissanceT1 = {
       jour: 29,
       mois: 11,
@@ -53,7 +56,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
 
     const nomApresMariageAttenduT2 = "nomApresMariage";
     const nomAvantMariageAttenduT2 = "PRODESK";
-    const prenomsT2 = "Elodie Marie-Charlotte Pauline";
+    const prenomsT2 = "Elodie, Marie-Charlotte, Pauline";
     const dateNaissanceT2 = {
       jour: 25,
       mois: 6,
@@ -61,17 +64,21 @@ describe("Composition extrait plurilingue de Mariage", () => {
     };
     const lieuNaissanceT2 = "Barcelone, Catalogne (Espagne)";
 
-    expect(compositionCorps.titulaire_1.nom_apres_mariage).toBe(
-      nomApresMariageAttenduT1
-    );
-    expect(compositionCorps.titulaire_1.nom_avant_mariage).toBe(
-      nomAvantMariageAttenduT1
-    );
-    expect(compositionCorps.titulaire_1.prenoms).toBe(prenomsT1);
-    expect(compositionCorps.titulaire_1.date_naissance?.jour).toBe(
-      dateNaissanceT1.jour
-    );
-    expect(compositionCorps.titulaire_1?.lieu_naissance).toBe(lieuNaissanceT1);
+    if (compositionCorps.titulaire_1) {
+      expect(compositionCorps.titulaire_1.nom_apres_mariage).toBe(
+        nomApresMariageAttenduT1
+      );
+      expect(compositionCorps.titulaire_1.nom_avant_mariage).toBe(
+        nomAvantMariageAttenduT1
+      );
+      expect(compositionCorps.titulaire_1.prenoms).toBe(prenomsT1);
+      expect(compositionCorps.titulaire_1.date_naissance?.jour).toBe(
+        dateNaissanceT1.jour
+      );
+      expect(compositionCorps.titulaire_1?.lieu_naissance).toBe(
+        lieuNaissanceT1
+      );
+    }
 
     expect(compositionCorps.titulaire_2?.nom_apres_mariage).toBe(
       nomApresMariageAttenduT2
@@ -88,7 +95,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
 
   test("Doit mettre le document en erreur quand le nombre de mentions dépasse la limite", () => {
     const acte = mapActe(ficheActeMariage.data);
-    acte.mentions = mentionsPlurilinguesMariageNombre7 as any as IMention[];
+    acte.mentions = mentionsPlurilinguesMariageNombre10 as any as IMention[];
 
     const compositionCorps = creationCompositionExtraitPlurilingue(
       acte as any as IFicheActe,
@@ -122,9 +129,21 @@ describe("Composition extrait plurilingue de Mariage", () => {
     );
   });
 
-  test("Doit mettre le filigrane en erreur quand un des titulaire est de sexe indeterminé et mettre le sexe indetermine dans la colonne titulaire_2", () => {
+  test("Doit retourner undefined quand le nom du titulaire de l'analyse marginale est égal à SNP ou prenom égale à SPC", () => {
+    const acte = mapActe(ficheActeAvecUnNomTitulaireSNP.data);
+
+    const compositionCorps = creationCompositionExtraitPlurilingue(
+      acte as any as IFicheActe,
+      validation as Validation,
+      SousTypeDelivrance.RDC,
+      mentionsRetirees
+    );
+    expect(compositionCorps.titulaire_1?.nom_avant_mariage).toBe("");
+    expect(compositionCorps.titulaire_2?.prenoms).toBe("");
+  });
+
+  test("Doit retourner le premier nom présent dans l'analyse marginale que celui-ci contient né ou née", () => {
     const acte = mapActe(ficheActeAvecUnTitulaireIndetermine.data);
-    acte.mentions = mentionsPlurilinguesMariageAvec6 as any as IMention[];
 
     const compositionCorps = creationCompositionExtraitPlurilingue(
       acte as any as IFicheActe,
@@ -133,10 +152,21 @@ describe("Composition extrait plurilingue de Mariage", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.filigrane_erreur).toEqual(true);
-    expect(compositionCorps.titulaire_2?.prenoms).toBe(
-      "Elodie Marie-Charlotte Pauline"
+    expect(compositionCorps.lieu_acte).toBe("Barcelone, Catalogne (Espagne)");
+    expect(compositionCorps.titulaire_1?.nom_avant_mariage).toBe("Michou");
+  });
+
+  test("Doit retourner le dernier nom présent dans l'analyse marginale que celui-ci contient désormais", () => {
+    const acte = mapActe(ficheActeMariageAvecNomContientDesormais.data);
+
+    const compositionCorps = creationCompositionExtraitPlurilingue(
+      acte as any as IFicheActe,
+      validation as Validation,
+      SousTypeDelivrance.RDC,
+      mentionsRetirees
     );
+
+    expect(compositionCorps.titulaire_2?.nom_avant_mariage).toBe("PRODESKA");
   });
 
   test("Ne doit pas afficher les même titulaires dans le document quand les 2 titulaire sont de sexe indeterminé suivant l'ordre", () => {
@@ -151,5 +181,63 @@ describe("Composition extrait plurilingue de Mariage", () => {
     );
 
     expect(compositionCorps.filigrane_erreur).toEqual(true);
+  });
+
+  test("Doit prendre le lieu de reprise en priorité", () => {
+    const acte = mapActe(ficheActeAvecImage.data);
+
+    const compositionCorps = creationCompositionExtraitPlurilingue(
+      acte as any as IFicheActe,
+      Validation.O,
+      SousTypeDelivrance.RDC,
+      mentionsRetirees
+    );
+
+    expect(compositionCorps.lieu_acte).toEqual("Lieu de reprise evenement");
+    expect(compositionCorps.titulaire_2?.lieu_naissance).toBe(
+      "Lieu de reprise"
+    );
+  });
+
+  test("Doit formater la date de naissance correctement quand le pays est France", () => {
+    const acte = mapActe(ficheActeMariageAvecNomContientDesormais.data);
+
+    const compositionCorps = creationCompositionExtraitPlurilingue(
+      acte as any as IFicheActe,
+      Validation.O,
+      SousTypeDelivrance.RDC,
+      mentionsRetirees
+    );
+
+    expect(compositionCorps.lieu_acte).toEqual("Lieu de reprise Nantes");
+    expect(compositionCorps.titulaire_1?.lieu_naissance).toBe("Paris");
+  });
+
+  test("Doit formater la date de naissance correctement si la ville est Paris ou pas renseigner et Jérusalem", () => {
+    const acte = mapActe(ficheActeAvecUnTitulaireIndetermine.data);
+
+    const compositionCorps = creationCompositionExtraitPlurilingue(
+      acte as any as IFicheActe,
+      Validation.O,
+      SousTypeDelivrance.RDC,
+      mentionsRetirees
+    );
+
+    expect(compositionCorps.titulaire_1?.lieu_naissance).toBe("Paris");
+  });
+
+  test("Doit formater la date de naissance correctement quand le pays est étranger", () => {
+    const acte = mapActe(ficheActeMariageAvecNomContientDesormais.data);
+
+    const compositionCorps = creationCompositionExtraitPlurilingue(
+      acte as any as IFicheActe,
+      Validation.O,
+      SousTypeDelivrance.RDC,
+      mentionsRetirees
+    );
+
+    expect(compositionCorps.titulaire_2?.lieu_naissance).toBe(
+      "Barcelone, Catalogne (Espagne)"
+    );
   });
 });

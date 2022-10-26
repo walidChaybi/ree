@@ -1,6 +1,10 @@
+import { AnalyseMarginale } from "@model/etatcivil/acte/IAnalyseMarginale";
 import { Evenement } from "@model/etatcivil/acte/IEvenement";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import {
+  ITitulaireActe,
+  TitulaireActe
+} from "@model/etatcivil/acte/ITitulaireActe";
 import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { SCEAU_MINISTERE } from "@model/parametres/clesParametres";
@@ -8,7 +12,7 @@ import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseReque
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import { getDateComposeFromDate } from "@util/DateUtils";
-import { getValeurOuVide } from "@util/Utils";
+import { DEUX, getValeurOuVide, TROIS, UN } from "@util/Utils";
 import { IExtraitPlurilingueComposition } from "../IExtraitPlurilingueComposition";
 
 export interface IMentionsExtraitPlurilingue {
@@ -16,10 +20,14 @@ export interface IMentionsExtraitPlurilingue {
   nombre_enonciations: number;
 }
 
-export const NOMBRE_MAX_MENTIONS = 6;
+export const NOMBRE_MAX_MENTIONS = 9;
 export const FONCTION_AGENT = "L'officier de l'état civil";
 export const ETAT = "France";
 export const ETAT_CIVIL = "Service Central d'Etat Civil";
+export const REGEX = /(.*)\s(désormais|né|née)\s(.*)/gm;
+export const DESORMAIS = "désormais";
+export const NE = "né";
+export const NEE = "née";
 export class ExtraitPlurilingueCommunComposition {
   public static pasDeBlocSignature(validation: Validation): boolean {
     if (validation === Validation.E) {
@@ -60,11 +68,16 @@ export class ExtraitPlurilingueCommunComposition {
   ): IMention[] {
     let mentionsFiltrees = Mention.filtreAvecTexteMentionPlurilingue(mentions);
 
-    mentionsFiltrees = mentionsFiltrees.filter(mention => {
-      return !idMentionsRetirees.some(
-        idMentionRetiree => idMentionRetiree === mention.id
+    mentionsFiltrees = mentionsFiltrees
+      .filter(mention => {
+        return !idMentionsRetirees.some(
+          idMentionRetiree => idMentionRetiree === mention.id
+        );
+      })
+      .sort(
+        (mention1, mentions2) =>
+          mention1.numeroOrdreExtrait - mentions2.numeroOrdreExtrait
       );
-    });
 
     return mentionsFiltrees;
   }
@@ -77,6 +90,16 @@ export class ExtraitPlurilingueCommunComposition {
     if (SousTypeDelivrance.estRDD(sousTypeRequete)) {
       composition.code_CTV = ctv ? ctv : "";
     }
+  }
+
+  public static nombreMentionsMax(
+    acte: IFicheActe,
+    idMentionsRetirees: string[]
+  ): boolean {
+    return (
+      this.getMentionsAAfficher(idMentionsRetirees, acte.mentions).length >
+      NOMBRE_MAX_MENTIONS
+    );
   }
 
   public static getNomDerniereAnalyseMarginale(
@@ -117,7 +140,9 @@ export class ExtraitPlurilingueCommunComposition {
       );
 
     composition.fonction_agent = FONCTION_AGENT;
-    composition.filigrane_erreur = FicheActe.estEnErreur(acte);
+    composition.filigrane_erreur =
+      FicheActe.estEnErreur(acte) ||
+      this.nombreMentionsMax(acte, mentionsRetirees);
     composition.filigrane_incomplet = FicheActe.estIncomplet(acte);
     ExtraitPlurilingueCommunComposition.ajouteCTV(
       sousTypeRequete,
@@ -128,5 +153,85 @@ export class ExtraitPlurilingueCommunComposition {
       ExtraitPlurilingueCommunComposition.pasDeBlocSignature(validation);
     composition.sceau_ministere =
       ParametreBaseRequete.getEnumFor(SCEAU_MINISTERE)?.libelle;
+  }
+
+  public static getPrenomOuVide(
+    acte: IFicheActe,
+    titulaire: ITitulaireActe
+  ): string | undefined {
+    let prenom: string | undefined = "";
+    const titulaireAM = this.getTitulaireAM(acte, titulaire);
+
+    if (titulaireAM) {
+      if (TitulaireActe.prenomAbsentOuNomEgalSPC(titulaireAM)) {
+        prenom = "";
+      } else {
+        prenom = TitulaireActe.getPrenomsSeparerPar(titulaireAM);
+      }
+    }
+    return prenom;
+  }
+
+  public static getNomOuVide(
+    acte: IFicheActe,
+    titulaire: ITitulaireActe
+  ): string {
+    const titulaireAM = this.getTitulaireAM(acte, titulaire);
+
+    if (titulaireAM) {
+      if (TitulaireActe.nomAbsentOuNomEgalSNP(titulaireAM)) {
+        return "";
+      } else {
+        return this.getNom(titulaireAM.nom);
+      }
+    } else {
+      return "";
+    }
+  }
+
+  public static getTitulaireAM(
+    acte: IFicheActe,
+    titulaire: ITitulaireActe
+  ): ITitulaireActe | undefined {
+    const titulairesAnalyseMarginale = AnalyseMarginale.getTitulairesAM(
+      acte.analyseMarginales
+    );
+
+    return this.getTitulaireParOrdre(
+      titulairesAnalyseMarginale,
+      titulaire.ordre
+    );
+  }
+
+  public static getTitulaireParOrdre(
+    titulaires: ITitulaireActe[] | undefined,
+    ordre: number
+  ): ITitulaireActe | undefined {
+    return titulaires?.find(titulaire => {
+      return titulaire.ordre === ordre;
+    });
+  }
+
+  public static getNom(nomTitulaire?: string): string {
+    let nom: string = "";
+
+    if (nomTitulaire) {
+      const matches = new RegExp(REGEX).exec(nomTitulaire);
+      if (matches) {
+        nom = this.formatSansDesormaisOuNeOuNee(matches);
+      } else {
+        nom = nomTitulaire;
+      }
+    }
+
+    return nom;
+  }
+
+  public static formatSansDesormaisOuNeOuNee(matches: string[]): string {
+    if (matches[DEUX] === DESORMAIS) {
+      return matches[TROIS];
+    } else {
+      return matches[UN];
+    }
   }
 }

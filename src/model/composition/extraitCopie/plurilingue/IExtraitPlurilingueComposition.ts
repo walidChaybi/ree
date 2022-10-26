@@ -7,7 +7,7 @@ export interface IExtraitPlurilingueComposition {
   etat: string;
   reference_acte: string;
   service_etat_civil: string;
-  titulaire_1: ITitulaireComposition;
+  titulaire_1?: ITitulaireComposition;
   titulaire_2?: ITitulaireComposition;
   date_acte?: IDateCompose;
   lieu_acte: string;
