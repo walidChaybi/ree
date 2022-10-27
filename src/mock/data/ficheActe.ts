@@ -4953,7 +4953,7 @@ export const ficheActeAvecUnParentTitulaireInconnu = {
           {
             lienParente: "PARENT",
             ordre: 1,
-            nom: "Sacken",
+            nom: "SNP",
             sexe: "MASCULIN",
             naissance: {
               minute: null,
@@ -4977,7 +4977,7 @@ export const ficheActeAvecUnParentTitulaireInconnu = {
               region: null,
               pays: "DJIBOUTI"
             },
-            prenoms: ["Jean", "Louis"]
+            prenoms: ["SPC"]
           },
           {
             lienParente: "PARENT",

@@ -120,26 +120,28 @@ describe("Composition extrait plurilingue de Naissance", () => {
     );
 
     const nom = "Patamob";
-    const prenoms = "Lolita";
+    const prenoms = "Alphonse";
     const date_naissance = {
       jour: 17,
       mois: 4,
       annee: 1970
     };
-    const lieuNaissance = "Sitka, Alaska (États-Unis)";
+    const lieuNaissance = "Paris, Paris (France)";
 
-    const nomPere = "Sacken";
-    const prenomPere = "Jean Louis";
+    const nomPere = "";
+    const prenomPere = "";
 
-    expect(compositionCorps.titulaire_1.nom).toBe(nom);
-    expect(compositionCorps.titulaire_1.prenoms).toBe(prenoms);
-    expect(compositionCorps.titulaire_1?.lieu_naissance).toBe(lieuNaissance);
-    expect(compositionCorps.titulaire_1.date_naissance?.jour).toBe(
-      date_naissance.jour
-    );
-    expect(compositionCorps.titulaire_1.nom_pere).toBe(nomPere);
+    if (compositionCorps.titulaire_1) {
+      expect(compositionCorps.titulaire_1.nom).toBe(nom);
+      expect(compositionCorps.titulaire_1.prenoms).toBe(prenoms);
+      expect(compositionCorps.titulaire_1?.lieu_naissance).toBe(lieuNaissance);
+      expect(compositionCorps.titulaire_1.date_naissance?.jour).toBe(
+        date_naissance.jour
+      );
+      expect(compositionCorps.titulaire_1.nom_pere).toBe(nomPere);
 
-    expect(compositionCorps.titulaire_1?.prenom_pere).toBe(prenomPere);
+      expect(compositionCorps.titulaire_1?.prenom_pere).toBe(prenomPere);
+    }
   });
 
   test("Doit afficher les mentions quand le nombre de mentions est en dessous ou égale de la limite", () => {
@@ -177,5 +179,32 @@ describe("Composition extrait plurilingue de Naissance", () => {
     expect(compositionCorps.autres_enonciations_acte.enonciations[0]).toBe(
       mentionAfficherUn
     );
+  });
+
+  test("Ne doit pas éditer le nom si il est égale à SNP et prénom si égale à SPC", () => {
+    const acte = mapActe(ficheActeAvecUnParentTitulaireInconnu.data);
+
+    const compositionCorps = creationCompositionExtraitPlurilingue(
+      acte as any as IFicheActe,
+      validation as Validation,
+      SousTypeDelivrance.RDC,
+      mentionsRetirees
+    );
+
+    expect(compositionCorps.titulaire_1?.nom_pere).toBe("");
+    expect(compositionCorps.titulaire_1?.prenom_pere).toBe("");
+  });
+
+  test("Doit formater les prénom correctement", () => {
+    const acte = mapActe(ficheActeAvecAnneeNaissanceTitulaireAbsente.data);
+
+    const compositionCorps = creationCompositionExtraitPlurilingue(
+      acte as any as IFicheActe,
+      validation as Validation,
+      SousTypeDelivrance.RDC,
+      mentionsRetirees
+    );
+
+    expect(compositionCorps.titulaire_1?.prenom_pere).toBe("Jean, Louis");
   });
 });

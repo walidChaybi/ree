@@ -65,10 +65,15 @@ export const TitulaireActe = {
     }${this.getPrenom3(titulaire)}`;
   },
   getPrenomsSeparerPar(
-    titulaire?: ITitulaireActe,
+    titulaire: ITitulaireActe,
     separateur: string = ","
-  ): string | undefined {
-    return titulaire && titulaire.prenoms?.join(`${separateur} `);
+  ): string {
+    let prenom = "";
+    if (titulaire.prenoms?.length) {
+      prenom = titulaire.prenoms?.join(`${separateur} `);
+    }
+
+    return prenom;
   },
   getDateNaissance(titulaire?: ITitulaireActe): string {
     return titulaire && titulaire.naissance

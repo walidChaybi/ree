@@ -13,7 +13,6 @@ export interface IExtraitPlurilingueComposition {
   lieu_acte: string;
   autres_enonciations_acte: IMentionsExtraitPlurilingue;
   date_delivrance: IDateCompose;
-  fonction_agent: string;
   signature_manuscrite: string;
   sceau_ministere: string;
   pas_de_bloc_signature: boolean;

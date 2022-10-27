@@ -1,12 +1,14 @@
 import { AnalyseMarginale } from "@model/etatcivil/acte/IAnalyseMarginale";
 import { Evenement } from "@model/etatcivil/acte/IEvenement";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IFiliation } from "@model/etatcivil/acte/IFiliation";
 import {
   ITitulaireActe,
   TitulaireActe
 } from "@model/etatcivil/acte/ITitulaireActe";
 import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { SCEAU_MINISTERE } from "@model/parametres/clesParametres";
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -21,7 +23,6 @@ export interface IMentionsExtraitPlurilingue {
 }
 
 export const NOMBRE_MAX_MENTIONS = 9;
-export const FONCTION_AGENT = "L'officier de l'état civil";
 export const ETAT = "France";
 export const ETAT_CIVIL = "Service Central d'Etat Civil";
 export const REGEX = /(.*)\s(désormais|né|née)\s(.*)/gm;
@@ -139,7 +140,6 @@ export class ExtraitPlurilingueCommunComposition {
         )
       );
 
-    composition.fonction_agent = FONCTION_AGENT;
     composition.filigrane_erreur =
       FicheActe.estEnErreur(acte) ||
       this.nombreMentionsMax(acte, mentionsRetirees);
@@ -233,5 +233,43 @@ export class ExtraitPlurilingueCommunComposition {
     } else {
       return matches[UN];
     }
+  }
+
+  public static getSexeOuVideOuTiret(titulaire?: ITitulaireActe): string {
+    let sexe = "";
+    if (titulaire && titulaire.sexe) {
+      if (titulaire.sexe === Sexe.FEMININ || titulaire.sexe === Sexe.MASCULIN) {
+        sexe = titulaire.sexe.libelle;
+      } else {
+        sexe = "-";
+      }
+    }
+
+    return sexe;
+  }
+
+  public static getNomOuVideFiliation(filiation?: IFiliation): string {
+    let nom = "";
+    if (filiation) {
+      if (TitulaireActe.nomAbsentOuNomEgalSNP(filiation)) {
+        nom = "";
+      } else {
+        nom = this.getNom(filiation.nom);
+      }
+    }
+
+    return nom;
+  }
+
+  public static getPrenomOuVideFiliation(filiation?: IFiliation): string {
+    let prenom: string = "";
+    if (filiation) {
+      if (TitulaireActe.prenomAbsentOuNomEgalSPC(filiation)) {
+        prenom = "";
+      } else {
+        prenom = TitulaireActe.getPrenomsSeparerPar(filiation);
+      }
+    }
+    return prenom;
   }
 }

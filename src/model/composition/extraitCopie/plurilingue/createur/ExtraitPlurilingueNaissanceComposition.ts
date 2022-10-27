@@ -44,26 +44,28 @@ export class ExtraitPlurilingueNaissanceComposition {
     titulaire: ITitulaireActe
   ): ITitulaireComposition {
     return {
-      nom: ExtraitPlurilingueCommunComposition.getNomDerniereAnalyseMarginale(
+      nom: ExtraitPlurilingueCommunComposition.getNomOuVide(acte, titulaire),
+      prenoms: ExtraitPlurilingueCommunComposition.getPrenomOuVide(
         acte,
         titulaire
       ),
-      prenoms: TitulaireActe.getPrenoms(titulaire),
-      sexe: TitulaireActe.getSexeOuVide(titulaire)[0],
+      sexe: ExtraitPlurilingueCommunComposition.getSexeOuVideOuTiret(
+        titulaire
+      )[0],
       date_naissance: Evenement.formatageDateCompositionExtraitPlurilingue(
         titulaire.naissance
       ),
-      lieu_naissance: TitulaireActe.getLieuDeRepriseOuLieuNaissance(titulaire),
-      nom_pere: getValeurOuVide(
-        TitulaireActe.getParentDirectMasculin(titulaire)?.nom
-      ),
-      prenom_pere: this.getPrenom(
+      lieu_naissance: Evenement.getLieuDeRepriseOuLieuEvenement(acte.evenement),
+      nom_pere: ExtraitPlurilingueCommunComposition.getNomOuVideFiliation(
         TitulaireActe.getParentDirectMasculin(titulaire)
       ),
-      nom_mere: getValeurOuVide(
-        TitulaireActe.getParentDirectFeminin(titulaire)?.nom
+      prenom_pere: ExtraitPlurilingueCommunComposition.getPrenomOuVideFiliation(
+        TitulaireActe.getParentDirectMasculin(titulaire)
       ),
-      prenom_mere: this.getPrenom(
+      nom_mere: ExtraitPlurilingueCommunComposition.getNomOuVideFiliation(
+        TitulaireActe.getParentDirectFeminin(titulaire)
+      ),
+      prenom_mere: ExtraitPlurilingueCommunComposition.getPrenomOuVideFiliation(
         TitulaireActe.getParentDirectFeminin(titulaire)
       )
     };
