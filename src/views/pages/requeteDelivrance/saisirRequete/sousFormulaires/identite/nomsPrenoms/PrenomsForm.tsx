@@ -138,7 +138,7 @@ const PrenomsForm: React.FC<PrenomsFormProps> = props => {
         disabled={btnSupprimerInactif}
         onClick={() => supprimerPrenom(champ)}
       >
-        {getLibelle("Supprimer un prénom")}
+        {getLibelle("Supprimer le prénom")}
       </button>
     );
   }

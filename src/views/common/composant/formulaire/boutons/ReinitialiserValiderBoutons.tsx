@@ -2,6 +2,7 @@ import { Droit } from "@model/agent/enum/Droit";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErreur";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
@@ -61,8 +62,9 @@ const _ReinitialiserValiderFormBoutons: React.FC<
       onClickValider={
         props.onClickValider !== undefined
           ? props.onClickValider
-          : () => {
-              props.formik.submitForm();
+          : async () => {
+              await props.formik.submitForm();
+              GestionnaireBlockErreur.scrollALaPremiereErreur();
             }
       }
       validerDisabled={

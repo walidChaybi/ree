@@ -141,7 +141,7 @@ test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async (
     );
   });
 
-  const supprPrenom = screen.getByText(/Supprimer un prénom/i);
+  const supprPrenom = screen.getByText(/Supprimer le prénom/i);
   await act(async () => {
     fireEvent.click(supprPrenom);
   });
