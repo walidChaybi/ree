@@ -1,4 +1,7 @@
-import { useMiseAJourLibellePjApiHook } from "@hook/requete/creation/MiseAJourLibellePjApiHook";
+import {
+  IMajLibellePjParams,
+  useMiseAJourLibellePjApiHook
+} from "@hook/requete/creation/MiseAJourLibellePjApiHook";
 import { TypePieceJointe } from "@hook/requete/piecesJointes/communPieceJointe";
 import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointeHook";
 import Accordion from "@material-ui/core/Accordion";
@@ -11,26 +14,32 @@ import "./scss/AccordionVisionneuse.scss";
 
 export interface AccordionVisionneuseProps {
   idDocumentAAfficher: string;
-  titre: string;
+  titre?: string;
+  titreOrigine: string;
 }
 
 export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
   idDocumentAAfficher,
-  titre
+  titre,
+  titreOrigine
 }) => {
   const [idDocument, setIdDocument] = useState<string>();
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const [titreActuel, setTitreActuel] = useState<string>(titre);
+  const [titreActuel, setTitreActuel] = useState<string>(titre ?? titreOrigine);
+  const [majTitreParams, setMajTitreParams] = useState<IMajLibellePjParams>();
 
   useEffect(() => {
     setIdDocument(isExpanded ? idDocumentAAfficher : undefined);
   }, [isExpanded, idDocumentAAfficher]);
 
-  useMiseAJourLibellePjApiHook({
-    idPJ: idDocumentAAfficher,
-    libelle: titre,
-    nouveauLibelle: titreActuel
-  });
+  const resultatMaj = useMiseAJourLibellePjApiHook(majTitreParams);
+
+  useEffect(() => {
+    if (resultatMaj && majTitreParams?.nouveauLibelle) {
+      setTitreActuel(majTitreParams?.nouveauLibelle);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultatMaj]);
 
   const documentApi = useGetPieceJointeApi(
     TypePieceJointe.PIECE_JUSTIFICATIVE,
@@ -45,12 +54,19 @@ export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
       onChange={() => setIsExpanded(!isExpanded)}
     >
       <AccordionTitle
-        title={titreActuel}
-        handleMiseAJourLibelle={e => setTitreActuel(e)}
+        titre={titreActuel}
+        handleMiseAJourLibelle={(nouveauLibelle: string) =>
+          setMajTitreParams({
+            idPJ: idDocumentAAfficher,
+            libelle: titre ?? titreOrigine,
+            nouveauLibelle
+          })
+        }
+        titreOrigine={titreOrigine}
       />
       <AccordionDetails>
         <VisionneuseDocument
-          titre={titre}
+          titre={titre ?? titreOrigine}
           typeMime={getValeurOuVide(documentApi?.mimeType)}
           contenu={documentApi?.contenu}
         />

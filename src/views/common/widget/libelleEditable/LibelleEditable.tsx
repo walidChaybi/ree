@@ -1,11 +1,13 @@
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { BoutonGaucheAccordionTitle } from "@widget/accordion/BoutonGaucheAccordionTitle";
+import { faEdit, faRotateBackward } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getLibelle } from "@util/Utils";
 import React, { useState } from "react";
 import "./scss/LibelleEditable.scss";
 
 interface ILibelleEditable {
   libelle?: string;
   handleMiseAJourLibelle?: (e: any) => void;
+  libelleOrigine?: string;
 }
 
 export const LibelleEditable: React.FC<ILibelleEditable> = props => {
@@ -18,6 +20,14 @@ export const LibelleEditable: React.FC<ILibelleEditable> = props => {
     }
   };
 
+  function afficherBoutonAnnuler() {
+    return (
+      props.handleMiseAJourLibelle &&
+      props.libelle &&
+      props.libelle !== props.libelleOrigine
+    );
+  }
+
   return (
     <div className="LibelleEditable">
       {modeEdition ? (
@@ -29,18 +39,44 @@ export const LibelleEditable: React.FC<ILibelleEditable> = props => {
           type="text"
           defaultValue={props.libelle}
           onBlur={e => fermerInputEdition(e.target.value)}
+          onKeyDown={e => {
+            if (e.key === "Enter") {
+              e.currentTarget.blur();
+              fermerInputEdition(e.currentTarget.value);
+            } else if (e.key === "Escape") {
+              e.currentTarget.blur();
+              setModeEdition(false);
+            }
+          }}
           autoFocus
         />
       ) : (
         props.libelle
       )}
-      {props.handleMiseAJourLibelle && (
-        <BoutonGaucheAccordionTitle
-          iconeBouton={faEdit}
-          titreBouton={"Modifier le libellé"}
-          onClickBouton={() => setModeEdition(true)}
-        />
-      )}
+      <div className={"flexAccordion"}>
+        {afficherBoutonAnnuler() && (
+          <FontAwesomeIcon
+            icon={faRotateBackward}
+            className={`BoutonActionLibelleEditable`}
+            title={getLibelle("Annuler la modification du libellé")}
+            onClick={e => {
+              e.stopPropagation();
+              fermerInputEdition(props.libelleOrigine ?? "");
+            }}
+          />
+        )}
+        {props.handleMiseAJourLibelle && (
+          <FontAwesomeIcon
+            icon={faEdit}
+            className={`BoutonActionLibelleEditable`}
+            title={getLibelle("Modifier le libellé")}
+            onClick={e => {
+              e.stopPropagation();
+              setModeEdition(true);
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 };

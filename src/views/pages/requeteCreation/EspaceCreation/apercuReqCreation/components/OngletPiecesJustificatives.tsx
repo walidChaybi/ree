@@ -71,11 +71,12 @@ export const OngletPiecesJustificatives: React.FC<
         sousElement: (
           <>
             {document.piecesJustificatives.map(
-              (piece: IPieceJustificativeCreation) => (
+              (piece: IPieceJustificativeCreation, index) => (
                 <AccordionVisionneuse
                   key={piece.id}
                   idDocumentAAfficher={piece.id}
-                  titre={piece.nouveauLibelleFichierPJ ?? piece.nom}
+                  titre={piece.nouveauLibelleFichierPJ}
+                  titreOrigine={piece.nom}
                 />
               )
             )}

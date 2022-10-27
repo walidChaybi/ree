@@ -46,7 +46,7 @@ export const AccordionRece: React.FC<AccordionReceProps> = ({
         TransitionProps={{ timeout: 0 }}
       >
         <AccordionTitle
-          title={props.titre}
+          titre={props.titre}
           className={props.className?.title}
           bouton={props.bouton}
           boutonExpanded={expandedPossible}

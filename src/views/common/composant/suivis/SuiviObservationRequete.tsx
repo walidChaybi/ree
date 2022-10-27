@@ -15,7 +15,7 @@ import { logError } from "@util/LogManager";
 import { storeRece } from "@util/storeRece";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
-import { BoutonGaucheAccordionTitle } from "@widget/accordion/BoutonGaucheAccordionTitle";
+import { BoutonAccordionTitle } from "@widget/accordion/BoutonAccordionTitle";
 import React, { useEffect, useState } from "react";
 import {
   IAjouterObservationFormValue,
@@ -177,7 +177,7 @@ export const SuiviObservationsRequete: React.FC<
         expanded={expanded}
         expandedPossible={observations?.length > 0}
         bouton={
-          <BoutonGaucheAccordionTitle
+          <BoutonAccordionTitle
             iconeBouton={faPlusCircle}
             titreBouton={"Ajouter une observation"}
             onClickBouton={onClickBouton}

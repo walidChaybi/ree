@@ -31,6 +31,16 @@ div.accordionTitle {
     margin-right: auto;
     visibility: hidden;
   }
+
+  .BoutonAjouter {
+    margin-left: 10px;
+    align-self: center;
+  }
+  
+  .flexAccordion {
+      margin-left: auto;
+      display: flex;
+  }
 }
 
 .MuiAccordionSummary-root {

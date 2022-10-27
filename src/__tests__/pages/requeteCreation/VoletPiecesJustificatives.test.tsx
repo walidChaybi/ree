@@ -80,6 +80,100 @@ test("Modifier le titre d'un fichier d'une pièce jointe", async () => {
   });
 });
 
+test("Modifier le titre d'un fichier d'une pièce jointe et revenir en arrière", async () => {
+  await act(async () => {
+    render(
+      <OngletPiecesJustificatives
+        requete={mappingRequeteCreation(requeteCreation)}
+      />
+    );
+  });
+
+  const boutonModifierLibelle = screen.getAllByTitle(
+    "Modifier le libellé"
+  )[1] as HTMLButtonElement;
+
+  await waitFor(() => {
+    expect(boutonModifierLibelle).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(boutonModifierLibelle);
+  });
+
+  const inputModificationLibelle = screen.getByLabelText(
+    "input-creation-fichierPJ"
+  ) as HTMLInputElement;
+
+  act(() => {
+    fireEvent.change(inputModificationLibelle, {
+      target: {
+        value: "test libelle"
+      }
+    });
+    fireEvent.keyDown(inputModificationLibelle, {
+      key: "Enter",
+      code: "Enter",
+      charCode: 13
+    });
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("test libelle")).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(screen.getByTitle("Annuler la modification du libellé"));
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Titre de séjour postulant")).toBeDefined();
+  });
+});
+
+test("Modifier le titre", async () => {
+  await act(async () => {
+    render(
+      <OngletPiecesJustificatives
+        requete={mappingRequeteCreation(requeteCreation)}
+      />
+    );
+  });
+
+  const boutonModifierLibelle = screen.getAllByTitle(
+    "Modifier le libellé"
+  )[1] as HTMLButtonElement;
+
+  await waitFor(() => {
+    expect(boutonModifierLibelle).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(boutonModifierLibelle);
+  });
+
+  const inputModificationLibelle = screen.getByLabelText(
+    "input-creation-fichierPJ"
+  ) as HTMLInputElement;
+
+  act(() => {
+    fireEvent.change(inputModificationLibelle, {
+      target: {
+        value: "test libelle"
+      }
+    });
+    fireEvent.keyDown(inputModificationLibelle, {
+      key: "Escape",
+      code: "Escape",
+      charCode: 27
+    });
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Titre de séjour postulant")).toBeDefined();
+  });
+});
+
 afterAll(() => {
   superagentMock.unset();
 });

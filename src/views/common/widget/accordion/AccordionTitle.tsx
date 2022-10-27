@@ -5,7 +5,8 @@ import React from "react";
 import "./scss/AccordionTitle.scss";
 
 export interface AccordionTitleProps {
-  title?: string;
+  titre?: string;
+  titreOrigine?: string;
   className?: string;
   boutonExpanded?: boolean;
   bouton?: JSX.Element;
@@ -20,15 +21,22 @@ export const AccordionTitle: React.FC<AccordionTitleProps> = ({
     <AccordionSummary
       className={["accordionTitle", props.className].join(" ")}
       expandIcon={boutonExpanded && <ExpandMoreIcon />}
-      title={props.title}
+      title={props.titre}
     >
       <div className={props.bouton ? "MuiSummaryFlex" : ""}>
-        {props.bouton && <div className="itemHidden"></div>}
-        <LibelleEditable
-          libelle={props.title}
-          handleMiseAJourLibelle={props.handleMiseAJourLibelle}
-        />
-        {props.bouton}
+        {props.handleMiseAJourLibelle ? (
+          <LibelleEditable
+            libelle={props.titre}
+            libelleOrigine={props.titreOrigine}
+            handleMiseAJourLibelle={props.handleMiseAJourLibelle}
+          />
+        ) : (
+          <>
+            <div className="itemHidden" />
+            {props.titre}
+            {props.bouton}
+          </>
+        )}
       </div>
     </AccordionSummary>
   );

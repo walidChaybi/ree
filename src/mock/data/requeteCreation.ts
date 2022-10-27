@@ -1,6 +1,7 @@
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 
 const pieceJustificative = {
+  id: "1234",
   nom: "fichierPJ",
   mimeType: "application/pdf",
   extension: null,
@@ -538,7 +539,7 @@ export const requeteCreation = {
       id: "3ed9969b-d439-48d4-b163-4e1a525aaf6d",
       libelle: "etat_civil",
       categorie: "PIECE_IDENTITE",
-      piecesJustificatives: [pieceJustificative, pieceJustificative]
+      piecesJustificatives: [pieceJustificative]
     },
     {
       id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9421",

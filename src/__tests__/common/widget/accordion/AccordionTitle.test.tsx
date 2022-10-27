@@ -3,7 +3,7 @@ import { AccordionTitle } from "@widget/accordion/AccordionTitle";
 import React from "react";
 
 test("render composant AccordionTitle", async () => {
-  const { getByText } = render(<AccordionTitle title={"titleTest"} />);
+  const { getByText } = render(<AccordionTitle titre={"titleTest"} />);
 
   await waitFor(() => {
     expect(getByText(/titleTest/i)).toBeDefined();

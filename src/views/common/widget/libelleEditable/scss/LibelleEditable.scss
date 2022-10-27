@@ -1,6 +1,11 @@
 .LibelleEditable {
   display: flex;
 
+.BoutonActionLibelleEditable {
+    margin-left: 10px;
+    align-self: center;
+  }
+
   input {
     flex: 1;
     margin-right: 1rem;

@@ -265,7 +265,9 @@ export const configRequetes = [
       //TODO: id document non recupéré ici (undefined)
       if (
         match[1] ===
-        "/requetes/fichierpiecejustificative/undefined/libelle?nouveauLibelle=nouveauLibelle"
+          "/requetes/fichierpiecejustificative/1234/libelle?nouveauLibelle=nouveauLibelle" ||
+        match[1] ===
+          "/requetes/fichierpiecejustificative/1234/libelle?nouveauLibelle=test%20libelle"
       ) {
         return { data: "12345" };
       }
