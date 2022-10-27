@@ -14,6 +14,7 @@ import { BoutonSignature } from "@widget/signature/BoutonSignature";
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
+import { BoutonTerminerApresImpression } from "./BoutonTerminerApresImpression";
 import { BoutonValiderTerminer } from "./BoutonValiderTerminer";
 
 interface BoutonsTerminerProps {
@@ -60,7 +61,10 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
   return (
     <>
       {afficherBoutonValiderTerminer(requete) && (
-        <BoutonValiderTerminer requete={requete} />
+        <>
+          <BoutonValiderTerminer requete={requete} />
+          <BoutonTerminerApresImpression requete={requete} />
+        </>
       )}
       {aDroitSignerEtStatutSigner && (
         <>

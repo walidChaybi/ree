@@ -35,6 +35,10 @@ export class StatutRequete extends EnumWithComplete {
     "TRAITE_A_IMPRIMER",
     "Traitée - A imprimer"
   );
+  public static readonly TRAITE_IMPRIME_LOCAL = new StatutRequete(
+    "TRAITER_IMPRIME_LOCAL",
+    "Traitée - Imprimée en local"
+  );
   public static readonly TRAITE_A_DELIVRER_DEMAT = new StatutRequete(
     "TRAITE_A_DELIVRER_DEMAT",
     "Traitée - A délivrer Démat"
