@@ -43,13 +43,31 @@ export const PAYS = "pays";
 
 // Parents
 export const PARENT_NAISS = "parentNaiss";
-export const PARENT_NAISS1 = "parentNaiss2";
-export const PARENT_NAISS2 = "parentNaiss1";
+export const PARENT_NAISS1 = "parentNaiss1";
+export const PARENT_NAISS2 = "parentNaiss2";
 export const PARENT = "parent";
 export const DATE_NAISSANCE_OU_AGE_DE = "dateNaissanceOuAgeDe";
 export const AGE = "age";
+
+// Parents Adoptants
+export const PARENT_ADOPTANT_NAISS = "parentAdoptantNaiss";
+export const PARENT_ADOPTANT_NAISS1 = "parentAdoptantNaiss1";
+export const PARENT_ADOPTANT_NAISS2 = "parentAdoptantNaiss2";
 
 // Parents : lieu naissance
 export const ARRONDISSEMENT = "arrondissement";
 export const LIEU_NAISSANCE = "lieuNaissance";
 export const ETRANGER_FRANCE = "EtrangerFrance";
+
+// Evenement Mariage: contrat de mariage
+export const CONTRAT_MARIAGE = "contratMariage";
+export const EXISTENCE = "existence";
+export const TEXTE = "texte";
+
+export const ADOPTE_PAR = "adoptePar";
+
+// Données complémentaires plurilingue
+export const DONNEES_COMPLEMENTAIRES_PLURILINGUE =
+  "donneesComplementairesPlurilingues";
+export const NOM_APRES_MARIAGE_EPOUX = "nomApresMariageEpoux";
+export const NOM_APRES_MARIAGE_EPOUSE = "nomApresMariageEpouse";

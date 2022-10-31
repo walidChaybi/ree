@@ -14,6 +14,7 @@ import {
 } from "@util/Utils";
 import * as Yup from "yup";
 import { IParentNaissanceForm } from "../../../mapping/mappingActeVerFormulaireSaisirExtrait";
+
 export const ParentNaissValidationSchema = Yup.object({
   [DATE_NAISSANCE_OU_AGE_DE]: DateNaissanceOuAgeDeValidationSchema,
   [SEXE]: Yup.string().required()
@@ -22,25 +23,46 @@ export const ParentNaissValidationSchema = Yup.object({
     return sexeObligatoireValidation(this, value, error);
   })
   .test("nomParentObligatoire", function (value: any, error: any) {
-    let res: any = true;
-    const parentNaissanceForm: IParentNaissanceForm = value;
-    const parentNaissanceFormSansValeurInconnu =
-      supprimeValeurInconnu(parentNaissanceForm);
-
-    if (
-      parentNaissanceFormSansValeurInconnu &&
-      estNonRenseigne(parentNaissanceFormSansValeurInconnu.nomNaissance) &&
-      auMoinsUneProprieteEstRenseigne(parentNaissanceFormSansValeurInconnu)
-    ) {
-      const paramsError = {
-        path: `${error.path}.${NOM_NAISSANCE}`,
-        message: getLibelle("Le nom de naissance est obligatoire")
-      };
-      res = this.createError(paramsError);
-    }
-
-    return res;
+    return nomParentObligatoireValidation(this, value, error);
   });
+
+export const ParentNaissSansSexeDateAgeDeValidationSchema = Yup.object().test(
+  "nomParentObligatoire",
+  function (value: any, error: any) {
+    return nomParentObligatoireValidation(this, value, error);
+  }
+);
+
+export const ParentNaissSansDateAgeDeValidationSchema = Yup.object({
+  [SEXE]: Yup.string().required()
+})
+  .test("sexeObligatoireParent", function (value: any, error: any) {
+    return sexeObligatoireValidation(this, value, error);
+  })
+  .test("nomParentObligatoire", function (value: any, error: any) {
+    return nomParentObligatoireValidation(this, value, error);
+  });
+
+
+function nomParentObligatoireValidation(context: any, value: any, error: any) {
+  let res: any = true;
+  const parentNaissanceForm: IParentNaissanceForm = value;
+  const parentNaissanceFormSansValeurInconnu =
+    supprimeValeurInconnu(parentNaissanceForm);
+
+  if (
+    parentNaissanceFormSansValeurInconnu &&
+    estNonRenseigne(parentNaissanceFormSansValeurInconnu.nomNaissance) &&
+    auMoinsUneProprieteEstRenseigne(parentNaissanceFormSansValeurInconnu)
+  ) {
+    const paramsError = {
+      path: `${error.path}.${NOM_NAISSANCE}`,
+      message: getLibelle("Le nom de naissance est obligatoire")
+    };
+    res = context.createError(paramsError);
+  }
+  return res;
+}
 
 function supprimeValeurInconnu(
   parentNaissanceForm: IParentNaissanceForm

@@ -186,13 +186,8 @@ export class CommunExtraitOuCopieActeTexteComposition {
   } {
     // Récupération des titulaires AM
     const [titulaireAM1, titulaireAM2] =
-      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNom(acte);
+      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeEtFiliation(acte);
 
-    // Récupération des titulaires de l'Acte pour la filiation
-    const { titulaireActe1, titulaireActe2 } =
-      FicheActe.getTitulairesActeDansLOrdre(acte);
-
-    titulaireAM1.filiations = titulaireActe1.filiations;
     const ecTitulaire1 =
       CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
         titulaireAM1
@@ -200,9 +195,6 @@ export class CommunExtraitOuCopieActeTexteComposition {
 
     let ecTitulaire2;
     if (titulaireAM2) {
-      if (titulaireActe2) {
-        titulaireAM2.filiations = titulaireActe2.filiations;
-      }
       ecTitulaire2 =
         CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
           titulaireAM2
@@ -254,7 +246,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     let titulaireAMCompositionEC2: ITitulaireAMCompositionEC | undefined;
 
     const titulairesAMs =
-      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNom(acte);
+      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeEtFiliation(acte);
 
     if (titulairesAMs[0]) {
       titulaireAMCompositionEC1 =

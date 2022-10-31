@@ -66,6 +66,9 @@ export const FicheActe = {
   estActeNaissance(acte?: IFicheActe): boolean {
     return acte?.nature === NatureActe.NAISSANCE;
   },
+  estActeMariage(acte?: IFicheActe): boolean {
+    return acte?.nature === NatureActe.MARIAGE;
+  },
   estActeDeces(acte?: IFicheActe): boolean {
     return acte?.nature === NatureActe.DECES;
   },
@@ -157,7 +160,9 @@ export const FicheActe = {
     );
   },
 
-  getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNom(acte: IFicheActe) {
+  getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeEtFiliation(
+    acte: IFicheActe
+  ) {
     const titulairesAMs: ITitulaireActe[] = [];
     const titulairesActeDansLOrdre = this.getTitulairesActeDansLOrdre(acte);
 
@@ -179,6 +184,8 @@ export const FicheActe = {
         );
 
         titulairesAMs[0].sexe = titulairesActeDansLOrdre.titulaireActe1.sexe;
+        titulairesAMs[0].filiations =
+          titulairesActeDansLOrdre.titulaireActe1.filiations;
       }
 
       if (titulairesAMDansLOrdre.titulaireAM2) {
@@ -190,6 +197,8 @@ export const FicheActe = {
 
         if (titulairesActeDansLOrdre.titulaireActe2) {
           titulairesAMs[1].sexe = titulairesActeDansLOrdre.titulaireActe2.sexe;
+          titulairesAMs[1].filiations =
+            titulairesActeDansLOrdre.titulaireActe2.filiations;
         }
       }
     }

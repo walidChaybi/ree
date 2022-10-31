@@ -1,5 +1,15 @@
 import { fireEvent, screen } from "@testing-library/react";
 
+export function expectEstTexteAbsent(texte: string) {
+  const widget = screen.queryByText(texte);
+  expect(widget).not.toBeInTheDocument();
+}
+
+export function expectEstTextePresent(texte: string) {
+  const widget = screen.queryByText(texte);
+  expect(widget).toBeInTheDocument();
+}
+
 export function expectEstAbsent(ariaLabel: string) {
   const widget = screen.queryByLabelText(ariaLabel) as HTMLInputElement;
   expect(widget).not.toBeInTheDocument();

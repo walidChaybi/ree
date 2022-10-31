@@ -1,22 +1,30 @@
 import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
+import { IDetailMariage } from "@model/etatcivil/acte/IDetailMariage";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
+import { ExistenceContratMariage } from "@model/etatcivil/enum/ExistenceContratMariage";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { getDateDebutFromDateCompose } from "@util/DateUtils";
 import {
   DEUX,
+  estRenseigne,
   getNombreOuUndefined,
   getTableauAPartirElementsNonVides,
   getValeurOuUndefined,
   getValeurOuVide,
+  QUATRE,
+  TROIS,
   UN
 } from "@util/Utils";
 import {
+  IContratMariageForm,
   IDateCompleteForm,
+  IDonneesComplementairesPlurilingueForm,
   IEvenementForm,
   IParentNaissanceForm,
   IPrenomsForm,
@@ -25,41 +33,56 @@ import {
 } from "./mappingActeVerFormulaireSaisirExtrait";
 
 export function mappingFormulaireSaisirExtraitVersExtraitAEnvoyer(
-  extraitSaisi: ISaisieExtraitForm,
+  saisiExtrait: ISaisieExtraitForm,
   acte: IFicheActe
 ): IExtraitSaisiAEnvoyer {
   const extraitSaisiAEnvoyer = {} as IExtraitSaisiAEnvoyer;
 
   extraitSaisiAEnvoyer.natureActe = NatureActe.getKey(acte.nature);
-  extraitSaisiAEnvoyer.titulaire1 = mapTitulaire(extraitSaisi.titulaireEvt1);
-
-  const evenementNaissance = mapEvenement(extraitSaisi.titulaireEvt1.evenement);
+  //@ts-ignore non null
+  extraitSaisiAEnvoyer.titulaire1 = mapTitulaireNaissanceEtParents(
+    acte,
+    saisiExtrait.titulaireEvt1
+  );
+  extraitSaisiAEnvoyer.titulaire2 = mapTitulaireNaissanceEtParents(
+    acte,
+    saisiExtrait.titulaireEvt2
+  );
 
   if (FicheActe.estActeNaissance(acte)) {
-    extraitSaisiAEnvoyer.titulaire1.naissance = evenementNaissance;
-    extraitSaisiAEnvoyer.evenementActe = evenementNaissance;
+    //@ts-ignore non null
+    extraitSaisiAEnvoyer.evenementActe =
+      extraitSaisiAEnvoyer.titulaire1.naissance;
   } else {
-    extraitSaisiAEnvoyer.titulaire1.naissance = evenementNaissance;
-    const evenement = mapEvenement(extraitSaisi.evenement);
-    extraitSaisiAEnvoyer.evenementActe = evenement;
+    extraitSaisiAEnvoyer.evenementActe = mapEvenement(saisiExtrait.evenement);
   }
 
   if (FicheActe.estActeDeces(acte)) {
     extraitSaisiAEnvoyer.titulaire1.nomDernierConjoint =
-      extraitSaisi.dernierConjoint?.nomNaissance;
+      saisiExtrait.dernierConjoint?.nomNaissance;
     extraitSaisiAEnvoyer.titulaire1.prenomsDernierConjoint =
-      extraitSaisi.dernierConjoint?.prenoms;
+      saisiExtrait.dernierConjoint?.prenoms;
   }
 
-  extraitSaisiAEnvoyer.titulaire1.filiations = [];
-  extraitSaisiAEnvoyer.titulaire1.filiations[0] = mapParent(
-    extraitSaisi.titulaireEvt1.parentNaiss1,
-    UN
-  );
-  extraitSaisiAEnvoyer.titulaire1.filiations[1] = mapParent(
-    extraitSaisi.titulaireEvt1.parentNaiss2,
-    DEUX
-  );
+  if (FicheActe.estActeMariage(acte)) {
+    extraitSaisiAEnvoyer.detailMariage = mapDetailMariage(
+      saisiExtrait.evenement?.contratMariage
+    );
+    extraitSaisiAEnvoyer.titulaire1.nomApresMariage =
+      mapDonneesComplementairesPlurilingueNomApresMariage(
+        Sexe.getEnumFor(extraitSaisiAEnvoyer.titulaire1.sexe as any as string),
+        saisiExtrait.donneesComplementairesPlurilingues
+      );
+    if (extraitSaisiAEnvoyer.titulaire2) {
+      extraitSaisiAEnvoyer.titulaire2.nomApresMariage =
+        mapDonneesComplementairesPlurilingueNomApresMariage(
+          Sexe.getEnumFor(
+            extraitSaisiAEnvoyer.titulaire2.sexe as any as string
+          ),
+          saisiExtrait.donneesComplementairesPlurilingues
+        );
+    }
+  }
 
   const analyseMarginaleLaPlusRecente =
     FicheActe.getAnalyseMarginaleLaPlusRecente(acte);
@@ -70,20 +93,120 @@ export function mappingFormulaireSaisirExtraitVersExtraitAEnvoyer(
   return extraitSaisiAEnvoyer;
 }
 
-function mapParent(
+function mapDonneesComplementairesPlurilingueNomApresMariage(
+  sexe: Sexe | undefined,
+  donneesComplementairesPlurilingueSaisies?: IDonneesComplementairesPlurilingueForm
+): string {
+  let nomApresMariage = "";
+  if (sexe === Sexe.MASCULIN) {
+    nomApresMariage = getValeurOuVide(
+      donneesComplementairesPlurilingueSaisies?.nomApresMariageEpoux
+    );
+  } else if (sexe === Sexe.FEMININ) {
+    nomApresMariage = getValeurOuVide(
+      donneesComplementairesPlurilingueSaisies?.nomApresMariageEpouse
+    );
+  }
+  return nomApresMariage;
+}
+
+function mapTitulaireNaissanceEtParents(
+  acte: IFicheActe,
+  titulaireEvtSaisi?: ITitulaireEvtForm
+): ITitulaireActe | undefined {
+  let titulaireAEnvoyer: ITitulaireActe | undefined;
+  if (titulaireEvtSaisi) {
+    titulaireAEnvoyer = mapTitulaire(titulaireEvtSaisi);
+
+    titulaireAEnvoyer.naissance = mapEvenementNaissanceTitulaire(
+      acte,
+      titulaireEvtSaisi.evenement
+    );
+
+    titulaireAEnvoyer.filiations = [];
+    titulaireAEnvoyer.filiations.push(
+      mapParent(UN, titulaireEvtSaisi.parentNaiss1)
+    );
+    titulaireAEnvoyer.filiations.push(
+      mapParent(DEUX, titulaireEvtSaisi.parentNaiss2)
+    );
+
+    if (FicheActe.estActeMariage(acte)) {
+      if (parentAdoptantRenseigne(titulaireEvtSaisi.parentAdoptantNaiss1)) {
+        titulaireAEnvoyer.filiations.push(
+          mapParentAdoptant(titulaireEvtSaisi.parentAdoptantNaiss1, TROIS)
+        );
+      }
+      if (parentAdoptantRenseigne(titulaireEvtSaisi.parentAdoptantNaiss2)) {
+        titulaireAEnvoyer.filiations.push(
+          mapParentAdoptant(titulaireEvtSaisi.parentAdoptantNaiss2, QUATRE)
+        );
+      }
+    }
+  }
+  return titulaireAEnvoyer;
+}
+
+function parentAdoptantRenseigne(
+  parentAdoptant?: IParentNaissanceForm
+): boolean {
+  return (
+    estRenseigne(parentAdoptant?.nomNaissance) ||
+    estRenseigne(parentAdoptant?.prenoms.prenom1)
+  );
+}
+
+function mapEvenementNaissanceTitulaire(
+  acte: IFicheActe,
+  evenementNaissanceSaisi?: IEvenementForm
+): IEvenement | undefined {
+  if (evenementNaissanceSaisi) {
+    const evenementNaissanceTitulaire = FicheActe.estActeMariage(acte)
+      ? {
+          lieuEvenement: evenementNaissanceSaisi.lieuEvenement,
+          dateEvenement: evenementNaissanceSaisi.dateNaissanceOuAgeDe
+            ?.date as IDateCompleteForm
+        }
+      : evenementNaissanceSaisi;
+
+    return mapEvenement(evenementNaissanceTitulaire);
+  }
+}
+
+function mapDetailMariage(
+  contratMariageSaisi?: IContratMariageForm
+): IDetailMariage {
+  return {
+    contrat: contratMariageSaisi?.texte,
+    existenceContrat: contratMariageSaisi?.existence
+      ? ExistenceContratMariage.getEnumFor(contratMariageSaisi?.existence)
+      : undefined
+  };
+}
+
+function mapParentAdoptant(
   parentSaisi: IParentNaissanceForm,
   ordre: number
 ): IFiliation {
+  return mapParent(ordre, parentSaisi, LienParente.PARENT_ADOPTANT);
+}
+
+function mapParent(
+  ordre: number,
+  parentSaisi?: IParentNaissanceForm,
+  lienParente = LienParente.PARENT
+): IFiliation {
   return {
-    nom: parentSaisi.nomNaissance,
-    prenoms: mapPrenoms(parentSaisi.prenoms),
-    sexe: mapSexe(parentSaisi.sexe),
-    age: getNombreOuUndefined(parentSaisi.dateNaissanceOuAgeDe.age),
+    nom: parentSaisi?.nomNaissance,
+    prenoms: mapPrenoms(parentSaisi?.prenoms),
+    sexe: mapSexe(parentSaisi?.sexe),
+    age: getNombreOuUndefined(parentSaisi?.dateNaissanceOuAgeDe?.age),
     naissance: mapEvenement({
-      lieuEvenement: parentSaisi.lieuNaissance,
-      dateEvenement: parentSaisi.dateNaissanceOuAgeDe.date as IDateCompleteForm
+      lieuEvenement: parentSaisi?.lieuNaissance,
+      dateEvenement: parentSaisi?.dateNaissanceOuAgeDe
+        ?.date as IDateCompleteForm
     }),
-    lienParente: LienParente.PARENT,
+    lienParente,
     ordre
   } as any as IFiliation;
 }
@@ -102,29 +225,32 @@ function mapTitulaire(titulaireSaisi: ITitulaireEvtForm) {
       titulaireSaisi.declarationConjointe.date
     ),
     prenoms: mapPrenoms(titulaireSaisi.prenoms),
-    sexe: mapSexe(titulaireSaisi.sexe)
+    sexe: mapSexe(titulaireSaisi.sexe),
+    age: titulaireSaisi.evenement.dateNaissanceOuAgeDe?.age
   } as any as ITitulaireActe;
 }
 
-function mapPrenoms(prenomSaisis: IPrenomsForm) {
+function mapPrenoms(prenomSaisis?: IPrenomsForm) {
   return getTableauAPartirElementsNonVides(
-    prenomSaisis.prenom1,
-    prenomSaisis.prenom2,
-    prenomSaisis.prenom3
+    prenomSaisis?.prenom1,
+    prenomSaisis?.prenom2,
+    prenomSaisis?.prenom3
   );
 }
 
 function mapEvenement(evenementSaisi?: IEvenementForm): IEvenement {
-  let lieuReprise = getValeurOuVide(evenementSaisi?.lieuEvenement.lieuComplet);
-  let ville = getValeurOuVide(evenementSaisi?.lieuEvenement.ville);
+  let lieuReprise = getValeurOuVide(evenementSaisi?.lieuEvenement?.lieuComplet);
+  let ville = getValeurOuVide(evenementSaisi?.lieuEvenement?.ville);
   let arrondissement = getValeurOuVide(
-    evenementSaisi?.lieuEvenement.arrondissement
+    evenementSaisi?.lieuEvenement?.arrondissement
   );
-  let region = getValeurOuVide(evenementSaisi?.lieuEvenement.regionDepartement);
-  let pays = getValeurOuVide(evenementSaisi?.lieuEvenement.pays);
+  let region = getValeurOuVide(
+    evenementSaisi?.lieuEvenement?.regionDepartement
+  );
+  let pays = getValeurOuVide(evenementSaisi?.lieuEvenement?.pays);
 
   if (
-    evenementSaisi?.lieuEvenement.EtrangerFrance ===
+    evenementSaisi?.lieuEvenement?.EtrangerFrance ===
     EtrangerFrance.getKey(EtrangerFrance.INCONNU)
   ) {
     lieuReprise = "";
@@ -135,14 +261,14 @@ function mapEvenement(evenementSaisi?: IEvenementForm): IEvenement {
   }
 
   if (
-    evenementSaisi?.lieuEvenement.EtrangerFrance ===
+    evenementSaisi?.lieuEvenement?.EtrangerFrance ===
     EtrangerFrance.getKey(EtrangerFrance.FRANCE)
   ) {
     pays = "";
   }
 
   if (
-    evenementSaisi?.lieuEvenement.EtrangerFrance ===
+    evenementSaisi?.lieuEvenement?.EtrangerFrance ===
     EtrangerFrance.getKey(EtrangerFrance.ETRANGER)
   ) {
     arrondissement = "";

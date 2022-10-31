@@ -25,6 +25,7 @@ import {
   ficheActe1_avecTitulaireAyantDeuxParents,
   ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe
 } from "../../../../../../../mock/data/ficheActe";
+import { configComposition } from "../../../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
 import { configTeleverification } from "../../../../../../../mock/superagent-config/superagent-mock-televerification";
@@ -39,7 +40,6 @@ import {
   expectEstSelectPresentAvecValeur,
   expectSelectEstAbsent
 } from "../../../../../../__tests__utils__/expectUtils";
-import { configComposition } from "./../../../../../../../mock/superagent-config/superagent-mock-composition";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
@@ -569,7 +569,7 @@ test("Attendu: la réinitialisation du formulaire fonctionne correctement", asyn
   });
 });
 
-test("Attendu: la validation du formulaire fonctionne correctement", async () => {
+test("Attendu: la validation du formulaire naissance fonctionne correctement", async () => {
   render(
     <SaisirExtraitForm
       acte={mapActe(ficheActe1_avecTitulaireAyantDeuxParents.data)}

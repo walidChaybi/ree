@@ -1,0 +1,206 @@
+import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { mappingRequeteDelivrance } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
+import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
+import React from "react";
+import request from "superagent";
+import { userDroitnonCOMEDEC } from "../../../../../../../mock/data/connectedUserAvecDroit";
+import { requeteAvecDocs } from "../../../../../../../mock/data/DetailRequeteDelivrance";
+import { ficheActeMariage2 } from "../../../../../../../mock/data/ficheActe";
+import { configComposition } from "../../../../../../../mock/superagent-config/superagent-mock-composition";
+import { configEtatcivil } from "../../../../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
+import { configTeleverification } from "../../../../../../../mock/superagent-config/superagent-mock-televerification";
+import {
+  expectEstAbsent,
+  expectEstPresentAvecValeur,
+  expectEstPresentAvecValeurVide,
+  expectEstPresentEtChecked,
+  expectEstPresentEtNonChecked,
+  expectEstSelectPresentAvecValeur,
+  expectEstTexteAbsent,
+  expectEstTextePresent
+} from "../../../../../../__tests__utils__/expectUtils";
+
+const superagentMock = require("superagent-mock")(request, [
+  configEtatcivil[0],
+  configRequetes[0],
+  configComposition[0],
+  configTeleverification[0]
+]);
+
+const acteMariage = mapActe(ficheActeMariage2.data);
+const requete = {
+  documentsReponses: [{ typeDocument: "ff7fe1fa-a2d6-4bc5-8681-deba65d9e2c6" }]
+} as any as IRequeteDelivrance;
+const handleDocumentEnregistre = jest.fn();
+
+beforeAll(async () => {
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
+  await DocumentDelivrance.init();
+});
+
+afterAll(() => {
+  superagentMock.unset();
+});
+
+test("Attendu: le formulaire SaisirExtraitForm pour un acte de mariage s'affiche correctement", async () => {
+  render(
+    <SaisirExtraitForm
+      acte={acteMariage}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
+
+  await waitFor(() => {
+    expect(screen.getByText("Evénement mariage")).toBeInTheDocument();
+
+    expect(screen.getByText("Contrat de mariage")).toBeInTheDocument();
+    expectEstSelectPresentAvecValeur(
+      "evenement.contratMariage.existence",
+      "OUI"
+    );
+    expect(screen.getByText("Avec contrat")).toBeInTheDocument();
+    expectEstPresentAvecValeur(
+      "evenement.contratMariage.texte",
+      "texte du contrat de mariage"
+    );
+
+    // Titulaire 1
+    expectAbsenceDateLieuSexePourParentTitulaire(1);
+    expectEstPresentEtNonChecked("titulaireevt1.adoptepar.true");
+    expectEstTexteAbsent("Parents adoptants titulaire 1");
+
+    // Titulaire 2
+    expectAbsenceDateLieuSexePourParentTitulaire(2);
+    expectEstPresentEtChecked("titulaireevt2.adoptepar.true");
+    expect(
+      screen.getByText("Parents adoptants titulaire 2")
+    ).toBeInTheDocument();
+    expect(screen.getByText("Parent adoptant 1")).toBeInTheDocument();
+    expectEstPresentAvecValeur(
+      "titulaireEvt2.parentAdoptantNaiss1.nomNaissance",
+      "TEST ADOPTANT"
+    );
+    expectEstPresentAvecValeur(
+      "titulaireEvt2.parentAdoptantNaiss1.prenoms.prenom1",
+      "test"
+    );
+    expect(screen.getByText("Parent adoptant 2")).toBeInTheDocument();
+    expectEstPresentAvecValeurVide(
+      "titulaireEvt2.parentAdoptantNaiss2.nomNaissance"
+    );
+    expectEstPresentAvecValeurVide(
+      "titulaireEvt2.parentAdoptantNaiss2.prenoms.prenom1"
+    );
+
+    // Données complémentaires plurilingues
+    expectEstPresentAvecValeur(
+      "donneesComplementairesPlurilingues.nomApresMariageEpoux",
+      "nomApresMariage masculin"
+    );
+    expectEstPresentAvecValeur(
+      "donneesComplementairesPlurilingues.nomApresMariageEpouse",
+      "nomApresMariage feminin"
+    );
+  });
+});
+
+test("Attendu: la validation du formulaire mariage fonctionne correctement", async () => {
+  render(
+    <SaisirExtraitForm
+      acte={acteMariage}
+      requete={mappingRequeteDelivrance(requeteAvecDocs)}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
+
+  await act(async () => {
+    fireEvent.click(screen.getByLabelText("Valider"));
+  });
+  await waitFor(() => {
+    expect(screen.getByLabelText("Valider")).toBeInTheDocument();
+  });
+});
+
+function expectAbsenceDateLieuSexePourParentTitulaire(numeroTitulaire: number) {
+  // Parent 1: Absence date,lieu de naissance et sexe
+  expectEstAbsent(
+    `titulaireEvt${numeroTitulaire}.parentNaiss1.dateNaissanceOuAgeDe.date.annee`
+  );
+  expectEstAbsent(
+    `titulaireEvt${numeroTitulaire}.parentNaiss1.dateNaissanceOuAgeDe.age`
+  );
+  expectEstAbsent(
+    `titulaireEvt${numeroTitulaire}.parentNaiss1.lieuNaissance.lieuComplet`
+  );
+  expectEstAbsent(`titulaireEvt${numeroTitulaire}.parentNaiss1.sexe`);
+
+  // Parent 2: Absence date, lieu de naissance et sexe
+  expectEstAbsent(
+    `titulaireEvt${numeroTitulaire}.parentNaiss2.dateNaissanceOuAgeDe.date.annee`
+  );
+  expectEstAbsent(
+    `titulaireEvt${numeroTitulaire}.parentNaiss2.dateNaissanceOuAgeDe.age`
+  );
+  expectEstAbsent(
+    `titulaireEvt${numeroTitulaire}.parentNaiss2.lieuNaissance.lieuComplet`
+  );
+  expectEstAbsent(`titulaireEvt${numeroTitulaire}.parentNaiss2.sexe`);
+}
+
+test('Attendu: la case à cocher "Adopté par" fonctionne correctement', async () => {
+  render(
+    <SaisirExtraitForm
+      acte={acteMariage}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
+
+  const caseACocherAdoptePar = expectEstPresentEtNonChecked(
+    "titulaireevt1.adoptepar.true"
+  );
+  expectEstTexteAbsent("Parents adoptants titulaire 1");
+
+  await act(async () => {
+    fireEvent.click(caseACocherAdoptePar);
+  });
+
+  await waitFor(() => {
+    expectEstPresentEtChecked("titulaireevt1.adoptepar.true");
+    expectEstTextePresent("Parents adoptants titulaire 1");
+
+    expectEstPresentAvecValeurVide(
+      "titulaireEvt1.parentAdoptantNaiss1.nomNaissance"
+    );
+    expectEstPresentAvecValeurVide(
+      "titulaireEvt1.parentAdoptantNaiss1.prenoms.prenom1"
+    );
+    expectEstPresentAvecValeurVide(
+      "titulaireEvt1.parentAdoptantNaiss2.nomNaissance"
+    );
+    expectEstPresentAvecValeurVide(
+      "titulaireEvt1.parentAdoptantNaiss2.prenoms.prenom1"
+    );
+  });
+
+  await act(async () => {
+    fireEvent.click(caseACocherAdoptePar);
+  });
+
+  await waitFor(() => {
+    expectEstPresentEtNonChecked("titulaireevt1.adoptepar.true");
+    expectEstTexteAbsent("Parents adoptants titulaire 1");
+  });
+});

@@ -22,6 +22,7 @@ interface ParentNaissanceFormProps {
   nom: string;
   parent: IFiliation;
   sansDateAgeEtLieuNaissance?: boolean;
+  sansSexe?: boolean;
 }
 
 export const ParentNaissanceForm: React.FC<
@@ -43,14 +44,17 @@ export const ParentNaissanceForm: React.FC<
         disabled={estRenseigne(props.parent.prenoms)}
         prenoms={prenoms}
       />
-      <RadioField
-        name={withNamespace(props.nom, SEXE)}
-        label={getLibelle("Sexe")}
-        values={Sexe.getAllEnumsAsOptionsSansInconnu()}
-        disabled={
-          estRenseigne(props.parent.sexe) && props.parent.sexe !== Sexe.INCONNU
-        }
-      />
+      {!props.sansSexe && (
+        <RadioField
+          name={withNamespace(props.nom, SEXE)}
+          label={getLibelle("Sexe")}
+          values={Sexe.getAllEnumsAsOptionsSansInconnu()}
+          disabled={
+            estRenseigne(props.parent.sexe) &&
+            props.parent.sexe !== Sexe.INCONNU
+          }
+        />
+      )}
       {!props.sansDateAgeEtLieuNaissance && (
         <>
           <DateNaissanceOuAgeDeForm

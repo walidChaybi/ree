@@ -42,9 +42,23 @@ export const RequeteDelivrance = {
     return DocumentReponse.getCopieIntegrale(requete?.documentsReponses);
   },
 
-  getDocumentsASigner(requete:IRequeteDelivrance){
+  getDocumentsASigner(requete: IRequeteDelivrance) {
     return requete.documentsReponses?.filter(el =>
       DocumentDelivrance.estExtraitCopieAsigner(el.typeDocument)
+    );
+  },
+
+  possedeUnDocumentPlurilingue(requete: IRequeteDelivrance): boolean {
+    return (
+      DocumentReponse.getExtraitPlurilingue(requete?.documentsReponses) != null
+    );
+  },
+
+  getExtraitsCopies(requete: IRequeteDelivrance): IDocumentReponse[] {
+    return requete.documentsReponses.filter(el =>
+      DocumentDelivrance.estExtraitCopie(
+        DocumentDelivrance.getCodeForKey(el.typeDocument)
+      )
     );
   }
 };

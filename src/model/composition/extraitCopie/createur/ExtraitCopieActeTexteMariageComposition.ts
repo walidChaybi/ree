@@ -177,11 +177,11 @@ ${dateAge}${lieu}`;
   }
 
   private static getEnonciationContratMariage(
-    existanceContratMariage?: ExistenceContratMariage,
+    existenceContratMariage?: ExistenceContratMariage,
     text?: string
   ): string {
     let enonciationContratMariage;
-    switch (existanceContratMariage) {
+    switch (existenceContratMariage) {
       case ExistenceContratMariage.OUI:
         enonciationContratMariage = getValeurOuVide(text);
         break;

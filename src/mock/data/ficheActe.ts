@@ -1597,6 +1597,473 @@ export const ficheActeMariage = {
   }
 };
 
+export const ficheActeMariage2 = {
+  errors: [],
+  data: {
+    id: "0bce8edd-0183-495b-939d-0b3cf6918792",
+    dateInitialisation: null,
+    dateCreation: 1554890400000,
+    modeCreation: "TRANSCRIT",
+    statut: "ANNULE",
+    dateStatut: 1068807600000,
+    nature: "MARIAGE",
+    numero: "736",
+    numeroBisTer: "773",
+    nomOec: "DUBOIS",
+    prenomOec: "BERNARD",
+    dateDerniereDelivrance: 1558173600000,
+    dateDerniereMaj: 1099220400000,
+    visibiliteArchiviste: "NON",
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: null,
+      mois: null,
+      annee: 1947,
+      voie: null,
+      ville: "Lyon",
+      arrondissement: "",
+      region: "Rhône",
+      pays: "",
+      lieuReprise: ""
+    },
+    mentions: [],
+    titulaires: [
+      {
+        nom: "BERTIER",
+        prenoms: ["feliza"],
+        autresNoms: null,
+        autresPrenoms: null,
+        ordre: 940,
+        sexe: "FEMININ",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 10,
+          mois: 10,
+          annee: 1901,
+          voie: null,
+          ville: "Marseille",
+          arrondissement: null,
+          region: "Provence-Alpes-Côte d’Azur",
+          pays: "France",
+          lieuReprise: null
+        },
+        profession: "CHARCUTIER",
+        age: null,
+        domicile: {
+          voie: "route d'amboli",
+          ville: "Djibouti",
+          arrondissement: null,
+          region: null,
+          pays: "DJIBOUTI"
+        },
+        filiations: [
+          {
+            lienParente: "PARENT",
+            ordre: 2,
+            nom: "Martin",
+            sexe: "FEMININ",
+            naissance: null,
+            profession: "Livreuse",
+            age: null,
+            domicile: {
+              voie: "7 Rue du Noyer",
+              ville: "Bruxelles",
+              arrondissement: null,
+              region: "Flandre",
+              pays: "BELGIQUE"
+            },
+            prenoms: ["Isabella"]
+          },
+          {
+            lienParente: "PARENT_ADOPTANT",
+            ordre: 1,
+            nom: "TEST ADOPTANT",
+            sexe: "MASCULIN",
+            naissance: null,
+            profession: "Livreur",
+            age: null,
+            domicile: {
+              voie: "7 Rue du Noyer",
+              ville: "Bruxelles",
+              arrondissement: null,
+              region: "Flandre",
+              pays: "BELGIQUE"
+            },
+            prenoms: ["test"]
+          },
+          {
+            lienParente: "PARENT",
+            ordre: 1,
+            nom: "Washington",
+            sexe: "MASCULIN",
+            naissance: null,
+            profession: "Livreur",
+            age: null,
+            domicile: {
+              voie: "7 Rue du Noyer",
+              ville: "Bruxelles",
+              arrondissement: null,
+              region: "Flandre",
+              pays: "BELGIQUE"
+            },
+            prenoms: ["Jsandye"]
+          }
+        ],
+        typeDeclarationConjointe: null,
+        dateDeclarationConjointe: null,
+        nomPartie1: null,
+        nomPartie2: null,
+        nomAvantMariage: null,
+        nomApresMariage: "nomApresMariage feminin",
+        nomDernierConjoint: null,
+        prenomsDernierConjoint: null
+      },
+      {
+        nom: "ORUS",
+        prenoms: ["loana", "Sara", "judith"],
+        autresNoms: null,
+        autresPrenoms: null,
+        ordre: 1,
+        sexe: "MASCULIN",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: null,
+          mois: 3,
+          annee: 1948,
+          voie: null,
+          ville: "Milan",
+          arrondissement: "",
+          region: "Lombardie",
+          pays: "Italie",
+          lieuReprise: ""
+        },
+        profession: "POMPIER",
+        age: null,
+        domicile: {
+          voie: "7 Rue du Noyer",
+          ville: "Bruxelles",
+          arrondissement: null,
+          region: "Flandre",
+          pays: "BELGIQUE"
+        },
+        filiations: [
+          {
+            lienParente: "PARENT",
+            ordre: 752,
+            nom: "Sacken",
+            sexe: "MASCULIN",
+            naissance: null,
+            profession: "Informaticien",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Carmela", "Linzy"]
+          },
+          {
+            lienParente: "PARENT",
+            ordre: 2,
+            nom: "",
+            sexe: "INCONNU",
+            naissance: null,
+            profession: null,
+            age: null,
+            domicile: null,
+            prenoms: []
+          }
+        ],
+        typeDeclarationConjointe: null,
+        dateDeclarationConjointe: null,
+        nomPartie1: null,
+        nomPartie2: null,
+        nomAvantMariage: null,
+        nomApresMariage: "nomApresMariage masculin",
+        nomDernierConjoint: null,
+        prenomsDernierConjoint: null
+      }
+    ],
+    piecesAnnexes: [],
+    alerteActes: [
+      {
+        id: "ee226a93-acbd-4d5f-a494-de6bcaa33c61",
+        idActe: "0bce8edd-0183-495b-939d-0b3cf6918792",
+        numeroActe: "736",
+        numeroBisTerActe: "773",
+        idTypeAlerte: "058a436b-330d-4c3c-83e0-d49c27390ab0",
+        famille: "AR3",
+        pocopa: "SEOUL",
+        annee: 1986,
+        support1: "support 1",
+        support2: "support 2",
+        complementDescription: "description 1 de l'alerte",
+        dateCreation: 1552604400000,
+        trigrammeUtilisateur: "MVI",
+        idUtilisateur: null
+      },
+      {
+        id: "ee223e0d-24b9-447b-bf75-cb123816d9cd",
+        idActe: "0bce8edd-0183-495b-939d-0b3cf6918792",
+        numeroActe: "736",
+        numeroBisTerActe: "773",
+        idTypeAlerte: "058a436b-330d-4c3c-83e0-d49c27390ab5",
+        famille: "AR3",
+        pocopa: "SEOUL",
+        annee: 1986,
+        support1: "support 1",
+        support2: "support 2",
+        complementDescription: "petit test de description",
+        dateCreation: 1552777200000,
+        trigrammeUtilisateur: "MLA",
+        idUtilisateur: null
+      },
+      {
+        id: "ee22cd2e-c263-43a7-ac7c-f85c68cf4ac8",
+        idActe: "0bce8edd-0183-495b-939d-0b3cf6918792",
+        numeroActe: "736",
+        numeroBisTerActe: "773",
+        idTypeAlerte: "058a436b-330d-4c3c-83e0-d49c27390aaa",
+        famille: "AR3",
+        pocopa: "SEOUL",
+        annee: 1986,
+        support1: "support 1",
+        support2: "support 2",
+        complementDescription: "ça c'est pas délivrable",
+        dateCreation: 1552863600000,
+        trigrammeUtilisateur: "AHE",
+        idUtilisateur: null
+      },
+      {
+        id: "ee22a104-3291-4f5a-9121-39302e2e4973",
+        idActe: "0bce8edd-0183-495b-939d-0b3cf6918792",
+        numeroActe: "736",
+        numeroBisTerActe: "773",
+        idTypeAlerte: "058a436b-330d-4c3c-83e0-d49c27390ab9",
+        famille: "AR3",
+        pocopa: "SEOUL",
+        annee: 1986,
+        support1: "support 1",
+        support2: "support 2",
+        complementDescription:
+          "et encore une description avec du blabla et encore du blabla. Qu'est ce qu'elle est longue. Et une autre phrase. Aller une dernière",
+        dateCreation: 1552690800000,
+        trigrammeUtilisateur: "NSL",
+        idUtilisateur: null
+      },
+      {
+        id: "ee22d6f3-87ff-419b-8e74-c9feac91385d",
+        idActe: "0bce8edd-0183-495b-939d-0b3cf6918792",
+        numeroActe: "736",
+        numeroBisTerActe: "773",
+        idTypeAlerte: "9e00d7c7-10f8-441a-9f57-8051b24f3a65",
+        famille: "AR3",
+        pocopa: "SEOUL",
+        annee: 1986,
+        support1: "support 1",
+        support2: "support 2",
+        complementDescription: "description 2 de l'alerte",
+        dateCreation: 1552518000000,
+        trigrammeUtilisateur: "RECE",
+        idUtilisateur: null
+      }
+    ],
+    personnes: [
+      {
+        id: "e7114c57-d00d-48ad-bbee-af2b01e2da62",
+        nom: "Dupont",
+        sexe: "FEMININ",
+        nationalite: "ETRANGERE",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 15,
+          mois: 6,
+          annee: 1960,
+          voie: null,
+          ville: "paris",
+          arrondissement: "3",
+          region: "Ile de france",
+          pays: "France",
+          lieuReprise: null
+        },
+        autresNoms: [],
+        prenoms: ["Mickaël", "Maxime"],
+        autresPrenoms: ["Jules", "Louis"],
+        parents: [],
+        enfants: [],
+        rcs: [
+          {
+            id: "85df1d10-71b7-4336-9463-bb1c5760d1a0",
+            numero: "3",
+            statut: "INACTIF"
+          }
+        ],
+        rcas: [
+          {
+            id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63c",
+            numero: "4092",
+            statut: "ACTIF"
+          }
+        ],
+        pacss: [
+          {
+            id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
+            numero: "1234507",
+            statut: "ACTIF"
+          }
+        ],
+        actes: [
+          {
+            id: "0bce8edd-0183-495b-939d-0b3cf6918792",
+            numero: "736",
+            statut: null,
+            nature: "MARIAGE"
+          }
+        ]
+      },
+      {
+        id: "e7114c57-d00d-48ad-bbee-af2b01e2da74",
+        nom: "ORUS",
+        sexe: "FEMININ",
+        nationalite: "FRANCAISE",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 3,
+          mois: 8,
+          annee: 1975,
+          voie: null,
+          ville: "Lille",
+          arrondissement: null,
+          region: "Pas-de-Calais",
+          pays: "France",
+          lieuReprise: null
+        },
+        autresNoms: [],
+        prenoms: ["Loana", "Sara", "Judith"],
+        autresPrenoms: ["Alice"],
+        parents: [],
+        enfants: [],
+        rcs: [],
+        rcas: [],
+        pacss: [],
+        actes: [
+          {
+            id: "0bce8edd-0183-495b-939d-0b3cf6918792",
+            numero: "736",
+            statut: null,
+            nature: "MARIAGE"
+          },
+          {
+            id: "ee63e3c9-3636-4071-a511-e9e599580606",
+            numero: "737",
+            statut: null,
+            nature: "NAISSANCE"
+          }
+        ]
+      }
+    ],
+    estReecrit: true,
+    detailMariage: {
+      id: "fe25a6e8-6a79-4598-b912-7ae3cb0ad0e1",
+      existenceContrat: "OUI",
+      contrat: "texte du contrat de mariage"
+    },
+    registre: {
+      id: "5fb45561-e668-4162-a332-aacff7a594c9",
+      famille: "AR3",
+      pocopa: "SEOUL",
+      annee: 1986,
+      support1: "support 1",
+      support2: "support 2",
+      numeroDernierActe: "1231",
+      pvOuverture: "pv_ouverture",
+      dateOuverture: [1936, 12, 24],
+      pvFermeture: "pv_fermeture",
+      dateFermeture: [1991, 11, 13],
+      decret2017: false,
+      type: {
+        id: "d5f36d96-f1f8-437e-8371-86dba9837344",
+        famille: "AR3",
+        pocopa: "SEOUL",
+        paysPocopa: "COREE DU SUD",
+        dateRattachement: [1993, 6, 6],
+        dateTransfertScec: [1969, 2, 16],
+        gereScec: true,
+        estOuvert: true,
+        description: ""
+      }
+    },
+    motifAnnulation: "",
+    dateInitialisationprojet: null,
+    numeroProjet: "a4",
+    corpsExtraitRectifications: [],
+    corpsImage: null,
+    corpsTexte: null,
+    analyseMarginales: [
+      {
+        id: "7f0f998a-5181-4266-a402-c2acad6a4c8f",
+        dateDebut: 1124013600000,
+        dateFin: null,
+        nomOec: "Verse",
+        prenomOec: "Alain",
+        motifModification: "CHANGEMENT_NOM_PRENOM",
+        titulaires: [
+          {
+            nom: "Céouver",
+            prenoms: ["André"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 1,
+            sexe: null,
+            naissance: null,
+            profession: null,
+            age: null,
+            domicile: null,
+            filiations: null,
+            typeDeclarationConjointe: null,
+            dateDeclarationConjointe: null,
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null
+          },
+          {
+            nom: "BERTIER",
+            prenoms: ["feliza"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 2,
+            sexe: null,
+            naissance: null,
+            profession: null,
+            age: null,
+            domicile: null,
+            filiations: null,
+            typeDeclarationConjointe: null,
+            dateDeclarationConjointe: null,
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null
+          }
+        ]
+      }
+    ],
+    type: "IMAGE"
+  }
+};
+
 export const idFicheActeNaissance = "923a10fb-0b15-452d-83c0-d24c76d1de8e";
 export const ficheActeNaissance = {
   errors: [],

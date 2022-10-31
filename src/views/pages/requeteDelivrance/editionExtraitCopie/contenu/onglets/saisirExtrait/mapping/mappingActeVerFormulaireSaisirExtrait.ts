@@ -1,14 +1,18 @@
 import {
+  ADOPTE_PAR,
   AGE,
   ANNEE,
   ARRONDISSEMENT,
+  CONTRAT_MARIAGE,
   DATE,
   DATE_EVENEMENT,
   DATE_NAISSANCE_OU_AGE_DE,
   DECLARATION_CONJOINTE,
   DERNIER_CONJOINT,
+  DONNEES_COMPLEMENTAIRES_PLURILINGUE,
   ETRANGER_FRANCE,
   EVENEMENT,
+  EXISTENCE,
   JOUR,
   LIEU_COMPLET,
   LIEU_EVENEMENT,
@@ -16,10 +20,15 @@ import {
   MOIS,
   NB_HEURE,
   NB_MINUTE,
+  NOM_APRES_MARIAGE_EPOUSE,
+  NOM_APRES_MARIAGE_EPOUX,
   NOM_NAISSANCE,
   NOM_PARTIE1,
   NOM_PARTIE2,
   NOM_SECABLE,
+  PARENT_ADOPTANT_NAISS,
+  PARENT_ADOPTANT_NAISS1,
+  PARENT_ADOPTANT_NAISS2,
   PARENT_NAISS,
   PARENT_NAISS1,
   PARENT_NAISS2,
@@ -31,11 +40,13 @@ import {
   REGION_DEPARTEMENT,
   SECABLE,
   SEXE,
+  TEXTE,
   TITULAIRE_EVT_1,
   TITULAIRE_EVT_2,
   TYPE,
   VILLE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { IDetailMariage } from "@model/etatcivil/acte/IDetailMariage";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";
@@ -43,6 +54,7 @@ import {
   ITitulaireActe,
   TitulaireActe
 } from "@model/etatcivil/acte/ITitulaireActe";
+import { ExistenceContratMariage } from "@model/etatcivil/enum/ExistenceContratMariage";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationConjointe";
@@ -63,6 +75,7 @@ export interface ISaisieExtraitForm {
   [DERNIER_CONJOINT]?: IDernierConjointForm;
   [TITULAIRE_EVT_1]: ITitulaireEvtForm;
   [TITULAIRE_EVT_2]?: ITitulaireEvtForm;
+  [DONNEES_COMPLEMENTAIRES_PLURILINGUE]?: IDonneesComplementairesPlurilingueForm;
 }
 
 export interface IDernierConjointForm {
@@ -70,8 +83,15 @@ export interface IDernierConjointForm {
   [PRENOMS]: string;
 }
 export interface IEvenementForm {
-  [DATE_EVENEMENT]: IDateCompleteForm;
-  [LIEU_EVENEMENT]: ILieuEvenementForm;
+  [DATE_EVENEMENT]?: IDateCompleteForm;
+  [DATE_NAISSANCE_OU_AGE_DE]?: IDateNaissanceAgeDe;
+  [LIEU_EVENEMENT]?: ILieuEvenementForm;
+  [CONTRAT_MARIAGE]?: IContratMariageForm;
+}
+
+export interface IContratMariageForm {
+  [EXISTENCE]?: string;
+  [TEXTE]?: string;
 }
 
 export interface ITitulaireEvtForm {
@@ -81,8 +101,11 @@ export interface ITitulaireEvtForm {
   [PRENOMS]: IPrenomsForm;
   [SEXE]?: string;
   [EVENEMENT]: IEvenementForm;
+  [ADOPTE_PAR]?: string[];
   [PARENT_NAISS1]: IParentNaissanceForm;
   [PARENT_NAISS2]: IParentNaissanceForm;
+  [PARENT_ADOPTANT_NAISS1]: IParentNaissanceForm;
+  [PARENT_ADOPTANT_NAISS2]: IParentNaissanceForm;
 }
 
 export interface INomSecableForm {
@@ -129,13 +152,18 @@ export interface IParentNaissanceForm {
   [NOM_NAISSANCE]: string;
   [PRENOMS]: IPrenomsForm;
   [SEXE]?: string;
-  [DATE_NAISSANCE_OU_AGE_DE]: IDateNAissanceAgeDe;
+  [DATE_NAISSANCE_OU_AGE_DE]: IDateNaissanceAgeDe;
   [LIEU_NAISSANCE]: ILieuEvenementForm;
 }
 
-export interface IDateNAissanceAgeDe {
+export interface IDateNaissanceAgeDe {
   [AGE]: string;
   [DATE]: IDateJourMoisAnneForm;
+}
+
+export interface IDonneesComplementairesPlurilingueForm {
+  [NOM_APRES_MARIAGE_EPOUX]?: string;
+  [NOM_APRES_MARIAGE_EPOUSE]?: string;
 }
 
 export function mappingActeVerFormulaireSaisirExtrait(
@@ -155,34 +183,32 @@ export function mappingActeVerFormulaireSaisirExtrait(
     )
   };
 
-  if (!FicheActe.estActeNaissance(acte)) {
-    // Evenement
-    saisieForm[EVENEMENT] = {
-      dateEvenement: saisieDateEvt(acte.evenement),
-      lieuEvenement: saisieLieuEvt(acte.evenement)
-    };
+  // Evenement (ne sert que pour les actes de décès et mariage)
+  saisieForm[EVENEMENT] = {
+    dateEvenement: saisieDateEvt(acte.evenement),
+    lieuEvenement: saisieLieuEvt(acte.evenement),
+    contratMariage: saisieContratMariage(acte.detailMariage)
+  };
 
-    saisieForm[DERNIER_CONJOINT] = {
-      nomNaissance: getValeurOuVide(
-        titulairesActes.titulaireActe1.nomDernierConjoint
-      ),
-      prenoms: getValeurOuVide(
-        titulairesActes.titulaireActe1.prenomsDernierConjoint
-      )
-    };
-  }
+  // Dernier conjoint (ne sert que pour les actes de décès)
+  saisieForm[DERNIER_CONJOINT] = {
+    nomNaissance: getValeurOuVide(
+      titulairesActes.titulaireActe1.nomDernierConjoint
+    ),
+    prenoms: getValeurOuVide(
+      titulairesActes.titulaireActe1.prenomsDernierConjoint
+    )
+  };
 
   // Parents titulaire 1
-  TitulaireActe.getAuMoinsDeuxParentsDirects(
-    titulairesActes.titulaireActe1
-  ).forEach((parent: IFiliation, index: number) => {
-    //@ts-ignore
-    saisieForm[TITULAIRE_EVT_1][`${PARENT_NAISS}${index + 1}`] =
-      saisieParentForm(parent);
-  });
+  saisieForm[TITULAIRE_EVT_1] = {
+    ...saisieForm[TITULAIRE_EVT_1],
+    ...saisieParentsForm(titulairesActes.titulaireActe1),
+    ...saisieParentsAdoptantsForm(titulairesActes.titulaireActe1)
+  };
 
   // Titulaire 2 (cas mariage)
-  if (titulairesActes.titulaireActe2) {
+  if (FicheActe.estActeMariage(acte) && titulairesActes.titulaireActe2) {
     saisieForm[TITULAIRE_EVT_2] = titulairesAMs[1]
       ? saisieTitulaireEvtForm(
           acte.nature,
@@ -190,22 +216,85 @@ export function mappingActeVerFormulaireSaisirExtrait(
           titulairesActes.titulaireActe2.naissance
         )
       : undefined;
-    // TODO Parent du titulaire 2
+    // Parents titulaire 2
+    saisieForm[TITULAIRE_EVT_2] = {
+      ...saisieForm[TITULAIRE_EVT_2],
+      ...saisieParentsForm(titulairesActes.titulaireActe2),
+      ...saisieParentsAdoptantsForm(titulairesActes.titulaireActe2)
+    };
   }
+
+  //Données complémetaires plurilingues (ne sert que pour les actes de mariage dans le cas d'un document plurilingue)
+  saisieForm[DONNEES_COMPLEMENTAIRES_PLURILINGUE] =
+    saisieDonneesComplementairesPlurilingues(acte);
 
   return saisieForm;
 }
 
-function saisieParentForm(parent: IFiliation): IParentNaissanceForm {
+function saisieDonneesComplementairesPlurilingues(
+  acte: IFicheActe
+): IDonneesComplementairesPlurilingueForm {
+  const titulaireMasculin = FicheActe.getTitulaireMasculin(acte);
+  const titulaireFeminin = FicheActe.getTitulaireFeminin(acte);
+
+  return {
+    [NOM_APRES_MARIAGE_EPOUX]: titulaireMasculin?.nomApresMariage,
+    [NOM_APRES_MARIAGE_EPOUSE]: titulaireFeminin?.nomApresMariage
+  };
+}
+
+function saisieParentsForm(titulaireActe: ITitulaireActe): any {
+  const parents = {};
+  TitulaireActe.getAuMoinsDeuxParentsDirects(titulaireActe).forEach(
+    (parent: IFiliation, index: number) => {
+      //@ts-ignore
+      parents[`${PARENT_NAISS}${index + 1}`] = saisieParentForm(parent);
+    }
+  );
+  return parents;
+}
+
+function saisieParentsAdoptantsForm(titulaireActe: ITitulaireActe): any {
+  const parentsAdoptants = {
+    [PARENT_ADOPTANT_NAISS1]: {
+      nomNaissance: "",
+      prenoms: saisiePrenomForm([])
+    },
+    [PARENT_ADOPTANT_NAISS2]: {
+      nomNaissance: "",
+      prenoms: saisiePrenomForm([])
+    }
+  };
+  TitulaireActe.getDeuxParentsAdoptantsOuVide(titulaireActe).forEach(
+    (parentAdoptant: IFiliation, index: number) => {
+      //@ts-ignore
+      parentsAdoptants[`${PARENT_ADOPTANT_NAISS}${index + 1}`] =
+        saisieParentForm(parentAdoptant);
+    }
+  );
+  return parentsAdoptants;
+}
+
+function saisieParentForm(parent?: IFiliation): IParentNaissanceForm {
   return {
     [NOM_NAISSANCE]: getValeurOuVide(parent?.nom),
     [PRENOMS]: saisiePrenomForm(parent?.prenoms),
-    [DATE_NAISSANCE_OU_AGE_DE]: {
-      [AGE]: getValeurOuVide(parent?.age),
-      [DATE]: saisieDateEvt(parent?.naissance)
-    },
+    [DATE_NAISSANCE_OU_AGE_DE]: saisieDateOuAgeDe(
+      parent?.naissance,
+      parent?.age
+    ),
     [SEXE]: parent?.sexe ? Sexe.getKey(parent.sexe) : Sexe.getKey(Sexe.INCONNU),
-    [LIEU_NAISSANCE]: saisieLieuEvt(parent.naissance, false) // Pour les parents le lieu de naissance est france par défaut
+    [LIEU_NAISSANCE]: saisieLieuEvt(parent?.naissance, false) // Pour les parents le lieu de naissance est france par défaut
+  };
+}
+
+function saisieDateOuAgeDe(
+  dateEvt?: IEvenement,
+  age?: number
+): IDateNaissanceAgeDe {
+  return {
+    [AGE]: getValeurOuVide(age),
+    [DATE]: saisieDateEvt(dateEvt)
   };
 }
 
@@ -222,28 +311,39 @@ function saisieTitulaireEvtForm(
     [SEXE]: titulaire?.sexe
       ? Sexe.getKey(titulaire.sexe)
       : Sexe.getKey(Sexe.INCONNU),
-    [EVENEMENT]: saisieDateLieuEvt(
+    [EVENEMENT]: saisieDateAgeDeLieuEvt(
       evenement,
-      natureActe === NatureActe.NAISSANCE ? true : false
-    )
+      titulaire?.age,
+      titulaire,
+      natureActe === NatureActe.NAISSANCE
+    ),
+    [ADOPTE_PAR]: TitulaireActe.ilExisteUnParentAdoptant(titulaire)
+      ? ["true"]
+      : []
   } as ITitulaireEvtForm;
 }
 
-function saisieDateLieuEvt(
+function saisieDateAgeDeLieuEvt(
   evenement?: IEvenement,
+  age?: number,
+  titulaire?: ITitulaireActe,
   etrangerParDefaut = true
 ): IEvenementForm {
   return {
+    // Pour la naissance la date contient également l'heure, pour le décès il n'a pas d'heure
+    //  (pour le mariage c'est "DATE_NAISSANCE_OU_AGE_DE" qui est utilisé: voir ci-dessous)
     [DATE_EVENEMENT]: saisieDateHeureEvt(evenement),
+    // Pour le mariage la date de naissance est suivi du champ "Agé de"
+    [DATE_NAISSANCE_OU_AGE_DE]: saisieDateOuAgeDe(evenement, age),
     [LIEU_EVENEMENT]: saisieLieuEvt(evenement, etrangerParDefaut)
   };
 }
 
 function saisiePrenomForm(prenoms?: string[]) {
   return {
-    [PRENOM_1]: prenoms ? prenoms[ZERO] : "",
-    [PRENOM_2]: prenoms ? prenoms[UN] : "",
-    [PRENOM_3]: prenoms ? prenoms[DEUX] : ""
+    [PRENOM_1]: prenoms ? getValeurOuVide(prenoms[ZERO]) : "",
+    [PRENOM_2]: prenoms ? getValeurOuVide(prenoms[UN]) : "",
+    [PRENOM_3]: prenoms ? getValeurOuVide(prenoms[DEUX]) : ""
   };
 }
 
@@ -327,6 +427,7 @@ function saisieLieuEvt(
     [ETRANGER_FRANCE]: getEtrangerOuFrance(evenement, etrangerParDefaut)
   };
 }
+
 function getEtrangerOuFrance(
   evenement?: IEvenement,
   etrangerParDefaut = true
@@ -335,4 +436,15 @@ function getEtrangerOuFrance(
     evenement,
     etrangerParDefaut
   );
+}
+
+function saisieContratMariage(
+  detailMariage?: IDetailMariage
+): IContratMariageForm {
+  return {
+    [EXISTENCE]: ExistenceContratMariage.getKey(
+      detailMariage?.existenceContrat
+    ),
+    [TEXTE]: detailMariage?.contrat
+  };
 }

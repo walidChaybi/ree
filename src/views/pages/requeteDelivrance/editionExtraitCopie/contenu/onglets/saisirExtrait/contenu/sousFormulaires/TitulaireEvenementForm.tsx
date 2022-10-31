@@ -1,4 +1,5 @@
 import {
+  ADOPTE_PAR,
   DECLARATION_CONJOINTE,
   EVENEMENT,
   NOM_NAISSANCE,
@@ -18,11 +19,18 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { estRenseigne, getLibelle } from "@util/Utils";
+import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
-import { withNamespace } from "@widget/formulaire/utils/FormUtil";
-import React from "react";
+import {
+  FormikComponentProps,
+  withNamespace
+} from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useContext } from "react";
 import PrenomsForm from "../../../../../../saisirRequete/sousFormulaires/identite/nomsPrenoms/PrenomsForm";
+import { SaisirExtraitFormContext } from "../../SaisirExtraitForm";
+import { EvenementNaissanceAgeDeForm } from "./EvenementNaissanceAgeDeForm";
 import { getLabels } from "./LabelsUtil";
 import "./scss/TitulaireEvenementForm.scss";
 
@@ -35,9 +43,12 @@ interface TitulaireEvenementFormPops {
   etrangerParDefaut: boolean;
 }
 
-export const TitulaireEvenementForm: React.FC<
-  TitulaireEvenementFormPops
+const TitulaireEvenementForm: React.FC<
+  TitulaireEvenementFormPops & FormikComponentProps
 > = props => {
+  const { setAfficheParentsAdoptantsTitulaire } = useContext(
+    SaisirExtraitFormContext
+  );
   const prenoms: IPrenomOrdonnes[] =
     TitulaireActe.mapPrenomsVersPrenomsOrdonnes(props.titulaire);
 
@@ -49,28 +60,28 @@ export const TitulaireEvenementForm: React.FC<
           name={withNamespace(props.nom, NOM_NAISSANCE)}
           disabled={estRenseigne(props.titulaire.nom)}
         />
-        {props.natureActe === NatureActe.NAISSANCE && (
-          <>
-            <NomSecableForm
-              nomComposant={withNamespace(props.nom, NOM_SECABLE)}
-              nomTitulaire={props.titulaire.nom}
-              nomPartie1={props.titulaire.nomPartie1}
-              nomPartie2={props.titulaire.nomPartie2}
-              origineTitulaireActe={
-                props.titulaire.origineNomPartiesTitulaireActe
-              }
-            />
-
-            <DeclarationConjointeForm
-              nom={withNamespace(props.nom, DECLARATION_CONJOINTE)}
-              type={props.titulaire.typeDeclarationConjointe}
-              date={props.titulaire.dateDeclarationConjointe}
-              origineTitulaireActe={
-                props.titulaire.origineDeclarationConjointeTitulaireActe
-              }
-            />
-          </>
+        {props.natureActe !== NatureActe.DECES && (
+          <NomSecableForm
+            nomComposant={withNamespace(props.nom, NOM_SECABLE)}
+            nomTitulaire={props.titulaire.nom}
+            nomPartie1={props.titulaire.nomPartie1}
+            nomPartie2={props.titulaire.nomPartie2}
+            origineTitulaireActe={
+              props.titulaire.origineNomPartiesTitulaireActe
+            }
+          />
         )}
+        {props.natureActe === NatureActe.NAISSANCE && (
+          <DeclarationConjointeForm
+            nom={withNamespace(props.nom, DECLARATION_CONJOINTE)}
+            type={props.titulaire.typeDeclarationConjointe}
+            date={props.titulaire.dateDeclarationConjointe}
+            origineTitulaireActe={
+              props.titulaire.origineDeclarationConjointeTitulaireActe
+            }
+          />
+        )}
+
         <PrenomsForm
           nom={withNamespace(props.nom, PRENOMS)}
           prenoms={prenoms}
@@ -84,16 +95,46 @@ export const TitulaireEvenementForm: React.FC<
           disabled={props.titulaire.sexe !== Sexe.INCONNU}
         />
 
-        <EvenementForm
-          nom={withNamespace(props.nom, EVENEMENT)}
-          labelDate={getLabels(NatureActe.NAISSANCE).dateEvenement}
-          labelLieu={getLabels(NatureActe.NAISSANCE).lieuEvenement}
-          evenement={props.evenement}
-          afficheHeure={true}
-          gestionEtrangerFrance={props.gestionEtrangerFrance}
-          etrangerParDefaut={props.etrangerParDefaut}
-        />
+        {props.natureActe === NatureActe.MARIAGE ? (
+          <>
+            <EvenementNaissanceAgeDeForm
+              nom={withNamespace(props.nom, EVENEMENT)}
+              age={props.titulaire.age}
+              naissance={props.evenement}
+              gestionEtrangerFrance={props.gestionEtrangerFrance}
+              etrangerParDefaut={props.etrangerParDefaut}
+            />
+            <CheckboxField
+              name={withNamespace(props.nom, ADOPTE_PAR)}
+              label={getLibelle("Adopté par")}
+              values={[{ str: "", value: "true" }]}
+              disabled={estRenseigne(
+                TitulaireActe.getParentAdoptant1(props.titulaire)?.nom
+              )}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setAfficheParentsAdoptantsTitulaire(
+                  props.formik,
+                  props.nom,
+                  e.target.checked
+                );
+                props.formik.handleChange(e);
+              }}
+            />
+          </>
+        ) : (
+          <EvenementForm
+            nom={withNamespace(props.nom, EVENEMENT)}
+            labelDate={getLabels(NatureActe.NAISSANCE).dateEvenement}
+            labelLieu={getLabels(NatureActe.NAISSANCE).lieuEvenement}
+            evenement={props.evenement}
+            afficheHeure={true}
+            gestionEtrangerFrance={props.gestionEtrangerFrance}
+            etrangerParDefaut={props.etrangerParDefaut}
+          />
+        )}
       </div>
     </>
   );
 };
+
+export default connect<TitulaireEvenementFormPops>(TitulaireEvenementForm);

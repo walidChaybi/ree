@@ -1,6 +1,8 @@
 import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import {
   EVENEMENT,
+  PARENT_ADOPTANT_NAISS1,
+  PARENT_ADOPTANT_NAISS2,
   TITULAIRE_EVT_1,
   TITULAIRE_EVT_2
 } from "@composant/formulaire/ConstantesNomsForm";
@@ -11,20 +13,30 @@ import {
   useSauvegardeValidationSaisieExtrait
 } from "@hook/requete/ValidationSaisieExtraitHook";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IFiliation } from "@model/etatcivil/acte/IFiliation";
 import { TitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import {
+  IRequeteDelivrance,
+  RequeteDelivrance
+} from "@model/requete/IRequeteDelivrance";
 import { useReinitialisationComposant } from "@util/form/useReinitialisation";
 import { getLibelle } from "@util/Utils";
 import { StaticField } from "@widget/formulaire/champFixe/StaticField";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import FormikEffect from "@widget/formulaire/utils/FormikEffect";
+import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
+import { FormikProps, FormikValues } from "formik";
 import React, { useCallback, useContext, useState } from "react";
 import * as Yup from "yup";
 import { EvenementValidationSchema } from "../../../../../../common/composant/formulaire/validation/EvenementValidationSchema";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
-import { TitulaireEvtValidationSchema } from "./contenu/sousFormulaires/validation/TitulaireEvenementFormValidation";
+import {
+  TitulaireEvtSansDateAgeDePourLesParentsValidationSchema,
+  TitulaireEvtSansSexeDateAgeDePourLesParentsValidationSchema,
+  TitulaireEvtValidationSchema
+} from "./contenu/sousFormulaires/validation/TitulaireEvenementFormValidation";
 import {
   ISaisieExtraitForm,
   mappingActeVerFormulaireSaisirExtrait
@@ -45,14 +57,15 @@ const ExtraitValidationNaissanceTitulaireSchema = Yup.object({
 // Validation formulaire décès
 const ExtraitValidationDecesTitulaireSchema = Yup.object({
   [EVENEMENT]: EvenementValidationSchema,
-  [TITULAIRE_EVT_1]: TitulaireEvtValidationSchema
+  [TITULAIRE_EVT_1]: TitulaireEvtSansDateAgeDePourLesParentsValidationSchema
 });
 
 // Validation formulaire mariage
 const ExtraitValidationMariageTitulairesSchema = Yup.object({
   [EVENEMENT]: EvenementValidationSchema,
-  [TITULAIRE_EVT_1]: TitulaireEvtValidationSchema,
-  [TITULAIRE_EVT_2]: TitulaireEvtValidationSchema
+  [TITULAIRE_EVT_1]:
+    TitulaireEvtSansSexeDateAgeDePourLesParentsValidationSchema,
+  [TITULAIRE_EVT_2]: TitulaireEvtSansSexeDateAgeDePourLesParentsValidationSchema
 });
 
 interface ComponentFormProps {
@@ -62,6 +75,14 @@ interface ComponentFormProps {
 }
 
 type SaisirExtraitFormProps = ComponentFormProps;
+
+export const SaisirExtraitFormContext = React.createContext({
+  setAfficheParentsAdoptantsTitulaire: (
+    formik: FormikProps<FormikValues>,
+    nomComposantTitulaire: string,
+    afficheParentsAdoptants: boolean
+  ) => {}
+});
 
 export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
   const { setOperationEnCours } = useContext(EditionExtraitCopiePageContext);
@@ -74,6 +95,21 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
     useReinitialisationComposant();
   const [extraitSaisiAEnvoyer, setExtraitSaisiAEnvoyer] =
     useState<IExtraitSaisiAEnvoyer>();
+
+  const [titulaire1ParentsAdoptants, setTitulaire1ParentsAdoptants] = useState<
+    IFiliation[]
+  >(
+    TitulaireActe.getDeuxParentsAdoptantsOuVide(
+      FicheActe.getTitulairesActeTabDansLOrdre(props.acte)[0]
+    )
+  );
+  const [titulaire2ParentsAdoptants, setTitulaire2ParentsAdoptants] = useState<
+    IFiliation[]
+  >(
+    TitulaireActe.getDeuxParentsAdoptantsOuVide(
+      FicheActe.getTitulairesActeTabDansLOrdre(props.acte)[1]
+    )
+  );
 
   useSauvegardeValidationSaisieExtrait(sauvegarderSaisieParams);
 
@@ -118,26 +154,26 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
   }, [extraitSaisiAEnvoyer, props]);
 
   const titulairesAMs =
-    FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNom(
+    FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeEtFiliation(
       props.acte
     );
   const evenement = props.acte.evenement;
 
-  const titulaire1Parents = TitulaireActe.getAuMoinsDeuxParentsDirects(
-    props.acte.titulaires[0]
-  );
-  const titulaire2Parents = TitulaireActe.getAuMoinsDeuxParentsDirects(
-    props.acte.titulaires[1]
-  );
+  const titulairesActe = FicheActe.getTitulairesActeTabDansLOrdre(props.acte);
+  const titulaireActe1 = titulairesActe[0];
+  const titulaireActe2 = titulairesActe[1];
+
+  const titulaire1Parents =
+    TitulaireActe.getAuMoinsDeuxParentsDirects(titulaireActe1);
+  const titulaire2Parents =
+    TitulaireActe.getAuMoinsDeuxParentsDirects(titulaireActe2);
+
   const natureActe = props.acte.nature;
 
   const formDefaultValues = mappingActeVerFormulaireSaisirExtrait(
     props.acte,
     titulairesAMs
   );
-
-  const titulairesActe = FicheActe.getTitulairesActeTabDansLOrdre(props.acte);
-
   return (
     <>
       <Formulaire
@@ -163,15 +199,23 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
           ></StaticField>
         </div>
 
-        {getTitulairesEvenementsEtParentsForm(
-          titulairesAMs,
-          natureActe,
-          titulaire1Parents,
-          titulaire2Parents,
-          evenement,
-          titulairesActe[0]?.naissance,
-          titulairesActe[1]?.naissance
-        )}
+        <SaisirExtraitFormContext.Provider
+          value={{ setAfficheParentsAdoptantsTitulaire }}
+        >
+          {getTitulairesEvenementsEtParentsForm({
+            titulairesAMs,
+            natureActe,
+            titulaire1Parents,
+            titulaire2Parents,
+            titulaire1ParentsAdoptants,
+            titulaire2ParentsAdoptants,
+            donneesComplementairesPlurilingue:
+              RequeteDelivrance.possedeUnDocumentPlurilingue(props.requete),
+            evenement,
+            naissanceTitulaire1: titulaireActe1?.naissance,
+            naissanceTitulaire2: titulaireActe2?.naissance
+          })}
+        </SaisirExtraitFormContext.Provider>
 
         <ReinitialiserValiderFormBoutons
           onClickReInitialiser={reinitialisation}
@@ -207,6 +251,38 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
       />
     </>
   );
+
+  function setAfficheParentsAdoptantsTitulaire(
+    formik: FormikProps<FormikValues>,
+    nomComposantTitulaire: string,
+    afficheParentsAdoptants: boolean
+  ) {
+    if (afficheParentsAdoptants) {
+      if (nomComposantTitulaire === TITULAIRE_EVT_1) {
+        setTitulaire1ParentsAdoptants(
+          TitulaireActe.getDeuxParentsAdoptantsVides()
+        );
+      } else {
+        setTitulaire2ParentsAdoptants(
+          TitulaireActe.getDeuxParentsAdoptantsVides()
+        );
+      }
+    } else {
+      if (nomComposantTitulaire === TITULAIRE_EVT_1) {
+        setTitulaire1ParentsAdoptants([]);
+      } else {
+        setTitulaire2ParentsAdoptants([]);
+      }
+      formik.setFieldValue(
+        withNamespace(nomComposantTitulaire, PARENT_ADOPTANT_NAISS1),
+        undefined
+      );
+      formik.setFieldValue(
+        withNamespace(nomComposantTitulaire, PARENT_ADOPTANT_NAISS2),
+        undefined
+      );
+    }
+  }
 };
 
 function getValidationSchema(natureActe: NatureActe) {
@@ -231,4 +307,3 @@ function getValidationSchema(natureActe: NatureActe) {
 
   return validationSchema;
 }
-

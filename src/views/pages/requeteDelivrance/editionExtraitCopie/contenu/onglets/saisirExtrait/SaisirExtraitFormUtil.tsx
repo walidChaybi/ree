@@ -1,6 +1,9 @@
 import {
+  CONTRAT_MARIAGE,
   DERNIER_CONJOINT,
+  DONNEES_COMPLEMENTAIRES_PLURILINGUE,
   EVENEMENT,
+  PARENT_ADOPTANT_NAISS,
   PARENT_NAISS,
   TITULAIRE_EVT_1,
   TITULAIRE_EVT_2
@@ -15,18 +18,20 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_EXTRAIT_PLURILINGUE } from "@model/requete/enum/DocumentDelivranceConstante";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { getLibelle } from "@util/Utils";
+import { DEUX, estRenseigne, getLibelle, UN } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import React from "react";
 import { EvenementForm } from "../../../../../../common/composant/formulaire/EvenementForm";
+import { ContratMariageForm } from "./contenu/sousFormulaires/ContratMariageForm";
 import { DernierConjointForm } from "./contenu/sousFormulaires/DernierConjointForm";
+import { DonneesComplementairesPlurilingue } from "./contenu/sousFormulaires/DonneesComplementairesPlurilingue";
 import { getLabels } from "./contenu/sousFormulaires/LabelsUtil";
 import { ParentNaissanceForm } from "./contenu/sousFormulaires/ParentNaissanceForm";
-import { TitulaireEvenementForm } from "./contenu/sousFormulaires/TitulaireEvenementForm";
+import TitulaireEvenementForm from "./contenu/sousFormulaires/TitulaireEvenementForm";
 
 export function parentMemeSexeOuIndeterminCasPlurilingue(
-  titulaires: ITitulaireActe[],
+  titulaires: (ITitulaireActe | undefined)[],
   documentsReponses: IDocumentReponse[]
 ) {
   return (
@@ -41,46 +46,134 @@ export function parentMemeSexeOuIndeterminCasPlurilingue(
   );
 }
 
-export function getTitulairesEvenementsEtParentsForm(
-  titulairesAMs: (ITitulaireActe | undefined)[],
-  natureActe: NatureActe,
-  titulaire1Parents: IFiliation[],
-  titulaire2Parents: IFiliation[],
-  evenement?: IEvenement,
-  naissanceTitulaire1?: IEvenement,
-  naissanceTitulaire2?: IEvenement
-) {
+export function getTitulairesEvenementsEtParentsForm(params: {
+  titulairesAMs: (ITitulaireActe | undefined)[];
+  natureActe: NatureActe;
+  titulaire1Parents: IFiliation[];
+  titulaire2Parents: IFiliation[];
+  titulaire1ParentsAdoptants: IFiliation[];
+  titulaire2ParentsAdoptants: IFiliation[];
+  donneesComplementairesPlurilingue: boolean;
+  evenement?: IEvenement;
+  naissanceTitulaire1?: IEvenement;
+  naissanceTitulaire2?: IEvenement;
+}) {
+  const {
+    titulairesAMs,
+    natureActe,
+    titulaire1Parents,
+    titulaire2Parents,
+    titulaire1ParentsAdoptants,
+    titulaire2ParentsAdoptants,
+    donneesComplementairesPlurilingue,
+    evenement,
+    naissanceTitulaire1,
+    naissanceTitulaire2
+  } = { ...params };
   return (
     <>
       {natureActe !== NatureActe.NAISSANCE &&
         getEvenementForm(natureActe, evenement)}
       {/* Premier titulaire avec accordéon */}
-      {titulairesAMs[0] &&
+      {getTitulaire1EvenementsEtParentsForm(
+        titulairesAMs[0],
+        natureActe,
+        titulaire1Parents,
+        titulaire1ParentsAdoptants,
+        evenement,
+        naissanceTitulaire1
+      )}
+      ){/* Deuxième titulaire avec accordéon (cas d'un mariage) */}
+      {getTitulaire2EvenementsEtParentsForm(
+        titulairesAMs[1],
+        natureActe,
+        titulaire2Parents,
+        titulaire2ParentsAdoptants,
+        naissanceTitulaire2
+      )}
+      {/* Données complémentaires plurilingue */}
+      {donneesComplementairesPlurilingue &&
+        natureActe === NatureActe.MARIAGE &&
+        getDonneesComplementairesPlurilingue()}
+    </>
+  );
+}
+
+function getTitulaire1EvenementsEtParentsForm(
+  titulairesAM1: ITitulaireActe | undefined,
+  natureActe: NatureActe,
+  titulaire1Parents: IFiliation[],
+  titulaire1ParentsAdoptants: IFiliation[],
+  evenement?: IEvenement,
+  naissanceTitulaire1?: IEvenement
+) {
+  return (
+    <>
+      {titulairesAM1 &&
         getTitulaireEvenementForm(
           TITULAIRE_EVT_1,
-          titulairesAMs[0],
+          titulairesAM1,
           natureActe === NatureActe.NAISSANCE ? evenement : naissanceTitulaire1,
-          natureActe
+          natureActe,
+          UN
         )}
       {natureActe === NatureActe.DECES &&
-        titulairesAMs[0] &&
+        titulairesAM1 &&
         getDernierConjointForm()}
-      {/* Parents titulaire 1 */}
-      {titulairesAMs[0] &&
-        getTitulaireParentsForm(TITULAIRE_EVT_1, natureActe, titulaire1Parents)}
-
-      {/* Deuxième titulaire avec accordéon */}
-      {titulairesAMs[1] &&
-        getTitulaireEvenementForm(
-          TITULAIRE_EVT_2,
-          titulairesAMs[1],
-          natureActe === NatureActe.NAISSANCE ? evenement : naissanceTitulaire2,
-          natureActe
+      {titulairesAM1 /* Parents titulaire 1 */ &&
+        getTitulaireParentsForm(
+          UN,
+          TITULAIRE_EVT_1,
+          natureActe,
+          titulaire1Parents,
+          titulaire1ParentsAdoptants
         )}
-      {/* Parents titulaire 2 */}
-      {titulairesAMs[1] &&
-        getTitulaireParentsForm(TITULAIRE_EVT_2, natureActe, titulaire2Parents)}
     </>
+  );
+}
+
+function getTitulaire2EvenementsEtParentsForm(
+  titulaireAM2: ITitulaireActe | undefined,
+  natureActe: NatureActe,
+  titulaire2Parents: IFiliation[],
+  titulaire2ParentsAdoptants: IFiliation[],
+  naissanceTitulaire2?: IEvenement
+) {
+  return (
+    <>
+      {titulaireAM2 &&
+        natureActe === NatureActe.MARIAGE && [
+          getTitulaireEvenementForm(
+            TITULAIRE_EVT_2,
+            titulaireAM2,
+            naissanceTitulaire2,
+            natureActe,
+            DEUX
+          ),
+          /* Parents titulaire 2 */
+          getTitulaireParentsForm(
+            DEUX,
+            TITULAIRE_EVT_2,
+            natureActe,
+            titulaire2Parents,
+            titulaire2ParentsAdoptants
+          )
+        ]}
+    </>
+  );
+}
+
+function getDonneesComplementairesPlurilingue() {
+  return (
+    <AccordionRece
+      className={{ content: "AccordeonForm" }}
+      expanded={true}
+      titre={getLibelle("Données complémentaires extrait plurilingue")}
+    >
+      <DonneesComplementairesPlurilingue
+        nom={DONNEES_COMPLEMENTAIRES_PLURILINGUE}
+      />
+    </AccordionRece>
   );
 }
 
@@ -95,7 +188,7 @@ function getDernierConjointForm() {
 function getEvenementForm(natureActe: NatureActe, evenement?: IEvenement) {
   return (
     <AccordionRece
-      className={{ content: "AccordeonEvenementForm" }}
+      className={{ content: "AccordeonForm" }}
       expanded={true}
       titre={getLabels(natureActe).evenement}
     >
@@ -108,11 +201,116 @@ function getEvenementForm(natureActe: NatureActe, evenement?: IEvenement) {
         gestionEtrangerFrance={false}
         etrangerParDefaut={true}
       />
+      {natureActe === NatureActe.MARIAGE && (
+        <ContratMariageForm nom={withNamespace(EVENEMENT, CONTRAT_MARIAGE)} />
+      )}
     </AccordionRece>
   );
 }
 
 function getTitulaireParentsForm(
+  numeroTitulaire: number,
+  nomFormTitulaire: string,
+  natureActe: NatureActe,
+  parents: IFiliation[],
+  parentsAdoptants: IFiliation[]
+) {
+  let form;
+  if (natureActe === NatureActe.MARIAGE) {
+    if (estRenseigne(parentsAdoptants)) {
+      form = [
+        getTitulaireParentsDansUnSeulForm(
+          numeroTitulaire,
+          nomFormTitulaire,
+          natureActe,
+          parents
+        ),
+        getTitulaireParentsAdoptantsDansUnSeulForm(
+          numeroTitulaire,
+          nomFormTitulaire,
+          natureActe,
+          parentsAdoptants
+        )
+      ];
+    } else {
+      form = getTitulaireParentsDansUnSeulForm(
+        numeroTitulaire,
+        nomFormTitulaire,
+        natureActe,
+        parents
+      );
+    }
+  } else {
+    form = getTitulaireParentsDansPlusieursForm(
+      nomFormTitulaire,
+      natureActe,
+      parents
+    );
+  }
+
+  return form;
+}
+
+function getTitulaireParentsAdoptantsDansUnSeulForm(
+  numeroTitulaire: number,
+  nomFormTitulaire: string,
+  natureActe: NatureActe,
+  parentsAdoptants: IFiliation[]
+) {
+  return getTitulaireParentsDansUnSeulForm(
+    numeroTitulaire,
+    nomFormTitulaire,
+    natureActe,
+    parentsAdoptants,
+    true
+  );
+}
+
+function getTitulaireParentsDansUnSeulForm(
+  numeroTitulaire: number,
+  nomFormTitulaire: string,
+  natureActe: NatureActe,
+  parents: IFiliation[],
+  parentsAdoptants = false
+) {
+  const titreAccordeonParent = getLibelle(
+    `Parents ${
+      parentsAdoptants ? "adoptants " : ""
+    }titulaire ${numeroTitulaire}`
+  );
+  return (
+    <AccordionRece
+      expanded={true}
+      titre={titreAccordeonParent}
+      key={titreAccordeonParent}
+    >
+      {parents.map((parent: IFiliation, index: number) => {
+        const nomComposant = withNamespace(
+          nomFormTitulaire,
+          `${parentsAdoptants ? PARENT_ADOPTANT_NAISS : PARENT_NAISS}${
+            index + 1
+          }`
+        );
+        return (
+          <div key={nomComposant}>
+            <div className={`SouligneGras parent${index + 1}`}>
+              Parent {parentsAdoptants ? "adoptant " : ""}
+              {index + 1}
+            </div>
+            <ParentNaissanceForm
+              nom={nomComposant}
+              parent={parent}
+              sansDateAgeEtLieuNaissance={natureActe === NatureActe.MARIAGE}
+              sansSexe={true}
+            />
+          </div>
+        );
+      })}
+    </AccordionRece>
+  );
+}
+
+function getTitulaireParentsDansPlusieursForm(
   nomFormTitulaire: string,
   natureActe: NatureActe,
   parents: IFiliation[]
@@ -136,18 +334,22 @@ function getTitulaireParentsForm(
 }
 
 function getTitulaireEvenementForm(
-  nomFormTitulaire1: string,
+  nomFormTitulaire: string,
   titulaire: ITitulaireActe,
   evenement: IEvenement | undefined,
-  natureActe: NatureActe
+  natureActe: NatureActe,
+  numeroTitulaire: number
 ) {
   return (
     <AccordionRece
       expanded={true}
-      titre={getLabels(natureActe).titulaireEtOuEvenenement}
+      key={nomFormTitulaire}
+      titre={`${getLabels(natureActe).titulaireEtOuEvenenement} ${
+        natureActe === NatureActe.MARIAGE ? numeroTitulaire : ""
+      }`}
     >
       <TitulaireEvenementForm
-        nom={nomFormTitulaire1}
+        nom={nomFormTitulaire}
         titulaire={titulaire}
         evenement={evenement}
         natureActe={natureActe}

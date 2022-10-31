@@ -4,10 +4,12 @@ import { CODE_EXTRAIT_PLURILINGUE } from "@model/requete/enum/DocumentDelivrance
 import { Validation } from "@model/requete/enum/Validation";
 import {
   documentDejaCreer,
-  getExtraitsCopies,
   IDocumentReponse
 } from "@model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import {
+  IRequeteDelivrance,
+  RequeteDelivrance
+} from "@model/requete/IRequeteDelivrance";
 import { useEffect, useState } from "react";
 import {
   IExtraitSaisiAEnvoyer,
@@ -51,7 +53,9 @@ export function useSauvegardeValidationSaisieExtrait(
   useEffect(() => {
     if (params) {
       setRegenerationParams({
-        documentsARegenerer: getExtraitsCopies(params.requete), // FIXME JLB : à revoir avec Benoit
+        documentsARegenerer: RequeteDelivrance.getExtraitsCopies(
+          params.requete
+        ),
         majEtatCivilSuiteSaisieExtraitParams: {
           idActe: params.acte.id,
           extraitSaisiAEnvoyer: params.extraitSaisiAEnvoyer

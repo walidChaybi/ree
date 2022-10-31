@@ -1,4 +1,5 @@
 import { majEtatCivilSuiteSaisieExtrait } from "@api/appels/etatcivilApi";
+import { IDetailMariage } from "@model/etatcivil/acte/IDetailMariage";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { logError } from "@util/LogManager";
@@ -7,9 +8,10 @@ import { useEffect, useState } from "react";
 export interface IExtraitSaisiAEnvoyer {
   evenementActe: IEvenement;
   titulaire1: ITitulaireActe;
-  titulaire2: ITitulaireActe;
+  titulaire2?: ITitulaireActe;
   natureActe: string;
   idAnalyseMarginale: string;
+  detailMariage: IDetailMariage;
 }
 
 export interface IMajEtatCivilSuiteSaisieExtraitParams {

@@ -7,7 +7,6 @@ import { COURRIER, DocumentDelivrance } from "./enum/DocumentDelivrance";
 import { MentionsRetirees } from "./enum/MentionsRetirees";
 import { Validation } from "./enum/Validation";
 import { IOptionCourrierDocumentReponse } from "./IOptionCourrierDocumentReponse";
-import { IRequeteDelivrance } from "./IRequeteDelivrance";
 import { ITexteLibreCourrier } from "./ITexteLibreCourrier";
 
 export interface IDocumentReponse {
@@ -202,37 +201,3 @@ export function documentDejaCreer(
   );
 }
 
-export function getDocumentPrincipal(requete: IRequeteDelivrance) {
-  return requete.documentsReponses.find(
-    el =>
-      DocumentDelivrance.getEnumForCode(
-        ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(
-          requete.choixDelivrance
-        )
-      ) === DocumentDelivrance.getEnumForUUID(el.typeDocument)
-  );
-}
-
-export function getDocumentComplementaire(requete: IRequeteDelivrance) {
-  return requete.documentsReponses.find(
-    el =>
-      DocumentDelivrance.getEnumForCode(
-        ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(
-          requete.choixDelivrance
-        )
-      ) !== DocumentDelivrance.getEnumForUUID(el.typeDocument) &&
-      DocumentDelivrance.estExtraitCopie(
-        DocumentDelivrance.getCodeForKey(el.typeDocument)
-      )
-  );
-}
-
-export function getExtraitsCopies(
-  requete: IRequeteDelivrance
-): IDocumentReponse[] {
-  return requete.documentsReponses.filter(el =>
-    DocumentDelivrance.estExtraitCopie(
-      DocumentDelivrance.getCodeForKey(el.typeDocument)
-    )
-  );
-}

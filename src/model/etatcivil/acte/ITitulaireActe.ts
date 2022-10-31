@@ -144,6 +144,32 @@ export const TitulaireActe = {
       titulaire
     );
   },
+  getParentAdoptantsDansLOrdre(titulaire?: ITitulaireActe): IFiliation[] {
+    let parentsAdoptants: IFiliation[] = [];
+    if (titulaire?.filiations) {
+      parentsAdoptants = titulaire.filiations
+        .filter(
+          filiation => filiation.lienParente === LienParente.PARENT_ADOPTANT
+        )
+        .sort(
+          (parent1: IFiliation, parent2: IFiliation) =>
+            parent1.ordre - parent2.ordre
+        );
+    }
+    return parentsAdoptants;
+  },
+
+  getParentAdoptant1(titulaire?: ITitulaireActe): IFiliation | undefined {
+    return this.getParentAdoptantsDansLOrdre(titulaire)[0];
+  },
+
+  ilExisteUnParentAdoptant(titulaire?: ITitulaireActe): boolean {
+    return titulaire?.filiations
+      ? titulaire.filiations.find(
+          filiation => filiation.lienParente === LienParente.PARENT_ADOPTANT
+        ) != null
+      : false;
+  },
 
   getParents(
     filtre: (filiation: IFiliation) => boolean,
@@ -156,6 +182,11 @@ export const TitulaireActe = {
       : [];
   },
 
+  /* Renvoit les parents directs:
+    - soit [{},{}]
+    - soit [p1, {}]
+    - soit [p1, p2]
+  */
   getAuMoinsDeuxParentsDirects(titulaire?: ITitulaireActe): IFiliation[] {
     let parents = this.getParentsDirects(titulaire);
     if (parents.length === 0) {
@@ -164,6 +195,23 @@ export const TitulaireActe = {
       parents = [parents[0], {} as IFiliation];
     }
     return parents;
+  },
+
+  /* Renvoit les parents adoptants:
+    - soit []
+    - soit [p1, {}]
+    - soit [p1, p2]
+  */
+  getDeuxParentsAdoptantsOuVide(titulaire?: ITitulaireActe): IFiliation[] {
+    let parentsAdoptants = this.getParentAdoptantsDansLOrdre(titulaire);
+    if (parentsAdoptants.length === 1) {
+      parentsAdoptants = [parentsAdoptants[0], {} as IFiliation];
+    }
+    return parentsAdoptants;
+  },
+
+  getDeuxParentsAdoptantsVides(): IFiliation[] {
+    return [{} as IFiliation, {} as IFiliation];
   },
 
   mapPrenomsVersPrenomsOrdonnes(titulaire?: ITitulaireActe): IPrenomOrdonnes[] {

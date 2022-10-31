@@ -1,16 +1,25 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { mappingRequeteDelivrance } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
-import { render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import React from "react";
 import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../../../../mock/data/connectedUserAvecDroit";
+import { requeteAvecDocs } from "../../../../../../../mock/data/DetailRequeteDelivrance";
 import { ficheActeDeces2 } from "../../../../../../../mock/data/ficheActe";
 import { configComposition } from "../../../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
+import { configTeleverification } from "../../../../../../../mock/superagent-config/superagent-mock-televerification";
 import {
   expectEstAbsent,
   expectEstPresentAvecValeur,
@@ -20,7 +29,8 @@ import {
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
   configRequetes[0],
-  configComposition[0]
+  configComposition[0],
+  configTeleverification[0]
 ]);
 
 const acteDeces = mapActe(ficheActeDeces2.data);
@@ -96,5 +106,22 @@ test("Attendu: le formulaire SaisirExtraitForm pour un acte de décès s'affiche
     );
     expectEstAbsent("titulaireEvt1.parentNaiss2.dateNaissanceOuAgeDe.age");
     expectEstAbsent("titulaireEvt1.parentNaiss2.lieuNaissance.lieuComplet");
+  });
+});
+
+test("Attendu: la validation du formulaire décès fonctionne correctement", async () => {
+  render(
+    <SaisirExtraitForm
+      acte={mapActe(ficheActeDeces2.data)}
+      requete={mappingRequeteDelivrance(requeteAvecDocs)}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
+
+  await act(async () => {
+    fireEvent.click(screen.getByLabelText("Valider"));
+  });
+  await waitFor(() => {
+    expect(screen.getByLabelText("Valider")).toBeInTheDocument();
   });
 });

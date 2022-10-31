@@ -20,8 +20,10 @@ import {
   ficheActe2,
   ficheActeAvecGenreIndetermine,
   ficheActeAvecTitulaireMultiple,
+  ficheActeDeces2,
   ficheActeEC,
   ficheActeMariage,
+  ficheActeMariage2,
   idFicheActe1,
   idFicheActe2,
   idFicheActeMariage
@@ -184,6 +186,10 @@ export const configEtatcivil = [
         return { data: acteNaissance };
       } else if (match[1] === "/acte/923a10fb-0b15-452d-83c0-d24c76d1d19d") {
         return { data: ActeAnalyseMarginales };
+      } else if (match[1] === "/acte/0bce8edd-0183-495b-939d-0b3cf6918792") {
+        return { data: ficheActeMariage2.data };
+      } else if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134c") {
+        return { data: ficheActeDeces2.data };
       }
 
       if (
@@ -277,6 +283,22 @@ export const configEtatcivil = [
         match[1] === `/acte/${idFicheActeMariage}?recupereImagesEtTexte=true`
       ) {
         return ficheActeMariage;
+      }
+
+      if (
+        match[1] === `/acte/${idFicheActeMariage}` ||
+        match[1] === `/acte/${idFicheActeMariage}?recupereImagesEtTexte=true` ||
+        match[1] ===
+          "/acte/0bce8edd-0183-495b-939d-0b3cf6918792?recupereImagesEtTexte=true"
+      ) {
+        return ficheActeMariage;
+      }
+
+      if (
+        match[1] ===
+        "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134c?recupereImagesEtTexte=true"
+      ) {
+        return ficheActeDeces2;
       }
 
       // RMC Acte
@@ -541,7 +563,11 @@ export const configEtatcivil = [
 
       // Validation de la saisie d'un extrait
       if (
-        match[1] === "/acte/923a10fb-0b15-452d-83c0-d24c76d1de8d/saisieExtrait"
+        match[1] ===
+          "/acte/923a10fb-0b15-452d-83c0-d24c76d1de8d/saisieExtrait" ||
+        match[1] ===
+          "/acte/0bce8edd-0183-495b-939d-0b3cf6918792/saisieExtrait" ||
+        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134c/saisieExtrait"
       ) {
         return { data: {} };
       }
