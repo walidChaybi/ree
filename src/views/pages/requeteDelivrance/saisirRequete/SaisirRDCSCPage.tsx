@@ -21,7 +21,7 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 import { PieceJointe } from "@util/FileUtils";
 import messageManager from "@util/messageManager";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
-import { getLibelle } from "@util/Utils";
+import { DEUX, getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import {
   AdresseFormDefaultValues,
@@ -383,18 +383,14 @@ export const SaisirRDCSCPage: React.FC = () => {
   }, [resultatReponseSansDelivranceCS, history]);
 
   const onSubmitSaisirRDCSC = (values: SaisieRequeteRDCSC) => {
-    const villeNaissance =
-      values.titulaires.titulaire1.naissance.villeEvenement;
-    const paysNaissance = values.titulaires.titulaire1.naissance.paysEvenement;
-    const anneeNaissance =
-      values.titulaires.titulaire1.naissance.dateEvenement.annee;
     setSaisieRequeteRDCSC(values);
     if (
-      (villeNaissance !== "" &&
-        paysNaissance !== "" &&
-        anneeNaissance !== "") ||
+      champManquantTitulaire(values, titulairesState.titulaires) ||
       isBrouillon
     ) {
+      // Pop-in
+      setDonneesNaissanceIncomplete(true);
+    } else {
       // La requête est envoyé au back
       setOperationEnCours(true);
       // Le stockage de la requête s'effectue au statut BROUILON (futurSatut),
@@ -419,9 +415,6 @@ export const SaisirRDCSCPage: React.FC = () => {
             : StatutRequete.PRISE_EN_CHARGE
         });
       }
-    } else {
-      // Pop-in
-      setDonneesNaissanceIncomplete(true);
     }
   };
 
@@ -586,3 +579,27 @@ export const creerTitulaire = (numTitulaire = 1) => {
     titre: getLibelle(`Titulaire ${numTitulaire}`)
   } as IdentiteSubFormProps;
 };
+
+function champManquantTitulaire(
+  values: SaisieRequeteRDCSC,
+  titulaires: IdentiteSubFormProps[]
+) {
+  const villeNaissance = values.titulaires.titulaire1.naissance.villeEvenement;
+  const paysNaissance = values.titulaires.titulaire1.naissance.paysEvenement;
+  const anneeNaissance =
+    values.titulaires.titulaire1.naissance.dateEvenement.annee;
+  const villeNaissance2 = values.titulaires.titulaire2.naissance.villeEvenement;
+  const paysNaissance2 = values.titulaires.titulaire2.naissance.paysEvenement;
+  const anneeNaissance2 =
+    values.titulaires.titulaire2.naissance.dateEvenement.annee;
+  return (
+    villeNaissance === "" ||
+    paysNaissance === "" ||
+    anneeNaissance === "" ||
+    (DocumentDelivrance.estAttestationPacs(values[DOCUMENT]) &&
+      titulaires.length === DEUX &&
+      (villeNaissance2 === "" ||
+        paysNaissance2 === "" ||
+        anneeNaissance2 === ""))
+  );
+}
