@@ -430,12 +430,27 @@ export function getRegistreActe(acte: IFicheActe) {
   return fournisseurDonneesBandeau.getRegistre();
 }
 
-export function aucuneMentionsNationalite(mentions?: IMentionAffichage[]) {
+export function aucuneMentionsAffichageNationalite(
+  mentions?: IMentionAffichage[]
+) {
   return mentions
     ?.filter(el => el.estPresent)
     .every(
+      mention =>
+        mention.nature !==
+        NatureMention.getEnumFromLibelle(NatureMention, "Nationalité")
+    );
+}
+
+export function aucuneMentionsNationalite(
+  mentionsRetirees?: string[],
+  mentions?: IMention[]
+) {
+  return mentions
+    ?.filter(el => !mentionsRetirees?.includes(el.id))
+    .every(
       el =>
-        el.nature !==
+        el.typeMention.nature !==
         NatureMention.getEnumFromLibelle(NatureMention, "Nationalité")
     );
 }
@@ -519,9 +534,9 @@ function controleMentions(
     estExtraitAvecFilliation &&
     FicheActe.acteEstACQouOP2ouOP3(acte) &&
     FicheActe.estActeNaissance(acte) &&
-    aucuneMentionsNationalite(mentions)
+    aucuneMentionsAffichageNationalite(mentions)
   ) {
-    message = `Aucune mention de nationalité n'a été cochée.\n\n`;
+    message = getLibelle(`Aucune mention de nationalité n'a été cochée.\n\n`);
   }
   if (
     document?.typeDocument &&
@@ -532,10 +547,78 @@ function controleMentions(
       DocumentDelivrance.getEnumForUUID(document.typeDocument)
     )
   ) {
-    message += `Vous allez délivrer un extrait avec une mention à intégrer ou à ne pas reporter.\n\n`;
+    message += getLibelle(
+      `Vous allez délivrer un extrait avec une mention à intégrer ou à ne pas reporter.\n\n`
+    );
   }
   if (message) {
-    message += `Voulez-vous continuer ?`;
+    message += getLibelle(`Voulez-vous continuer ?`);
+  }
+  return message;
+}
+
+export function validerMentionsPlusieursDocuments(
+  callback: () => void,
+  acte?: IFicheActe,
+  documents?: IDocumentReponse[]
+) {
+  const messageControleMention = controleMentionsPlusieursDocs(acte, documents);
+  if (messageControleMention) {
+    if (window.confirm(messageControleMention)) {
+      callback();
+    }
+  } else {
+    callback();
+  }
+}
+
+function controleMentionsPlusieursDocs(
+  acte?: IFicheActe,
+  documents?: IDocumentReponse[]
+) {
+  let message = "";
+  documents?.forEach(document => {
+    const estExtraitAvecFilliation =
+      DocumentDelivrance.estExtraitAvecFilliation(document?.typeDocument);
+
+    const estDocumentExtrait =
+      DocumentDelivrance.estExtraitAvecOuSansFilliation(document?.typeDocument);
+    if (
+      estExtraitAvecFilliation &&
+      FicheActe.acteEstACQouOP2ouOP3(acte) &&
+      FicheActe.estActeNaissance(acte) &&
+      aucuneMentionsNationalite(
+        document.mentionsRetirees?.map(
+          mentionRetiree => mentionRetiree.idMention
+        ),
+        acte?.mentions
+      )
+    ) {
+      message = `${getLibelle(
+        "Aucune mention de nationalité n'a été cochée pour le document"
+      )} ${document.nom}\n\n`;
+    }
+    if (
+      document?.typeDocument &&
+      estDocumentExtrait &&
+      NatureMention.ilExisteUneMentionInterdite(
+        getNaturesMentions(
+          document.mentionsRetirees?.map(
+            mentionRetiree => mentionRetiree.idMention
+          ),
+          acte?.mentions
+        ),
+        acte?.nature,
+        DocumentDelivrance.getEnumForUUID(document.typeDocument)
+      )
+    ) {
+      message += `${getLibelle(
+        "Vous allez délivrer un extrait avec une mention à intégrer ou à ne pas reporter pour le document"
+      )} ${document.nom}\n\n`;
+    }
+  });
+  if (message) {
+    message += getLibelle(`Voulez-vous continuer ?`);
   }
   return message;
 }
@@ -547,6 +630,17 @@ export function getNaturesMentionsAffichage(
     ? mentionsAffichage
         .filter(mentionAffichage => mentionAffichage.estPresent)
         .map(mentionAffichage => mentionAffichage.nature)
+    : [];
+}
+
+export function getNaturesMentions(
+  mentionsRetirees?: string[],
+  mentions?: IMention[]
+): NatureMention[] {
+  return mentions
+    ? mentions
+        .filter(mention => !mentionsRetirees?.includes(mention.id))
+        .map(mention => mention.typeMention.nature)
     : [];
 }
 

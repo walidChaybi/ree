@@ -16,6 +16,7 @@ import {
   RequeteDelivrance
 } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { validerMentionsPlusieursDocuments } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import messageManager from "@util/messageManager";
@@ -181,10 +182,26 @@ export const BoutonSignature: React.FC<
           )
         );
       } else {
-        genererDocuments(props.requetesASigner);
+        if (props.requetesASigner.length === 1) {
+          validerMentionsPlusieursDocuments(
+            () => genererDocuments(props.requetesASigner),
+            props.requetesASigner[0].acte,
+            props.requetesASigner[0].requete.documentsReponses
+          );
+        } else {
+          genererDocuments(props.requetesASigner);
+        }
       }
     } else {
-      genererDocuments(props.requetesASigner);
+      if (props.requetesASigner.length === 1) {
+        validerMentionsPlusieursDocuments(
+          () => genererDocuments(props.requetesASigner),
+          props.requetesASigner[0].acte,
+          props.requetesASigner[0].requete.documentsReponses
+        );
+      } else {
+        genererDocuments(props.requetesASigner);
+      }
     }
   };
 

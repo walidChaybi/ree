@@ -3,7 +3,7 @@ import { IMention } from "@model/etatcivil/acte/mention/IMention";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
-  aucuneMentionsNationalite,
+  aucuneMentionsAffichageNationalite,
   handleCheckBox,
   handleReorga,
   IMentionAffichage,
@@ -225,7 +225,7 @@ test("mappingVersMentionApi", () => {
 });
 
 test("aucuneMentionsNationalite", () => {
-  expect(aucuneMentionsNationalite([mentionOpposable])).toBeTruthy();
+  expect(aucuneMentionsAffichageNationalite([mentionOpposable])).toBeTruthy();
 });
 
 test("Attendu: validerMentions fonctionne correctement", () => {
