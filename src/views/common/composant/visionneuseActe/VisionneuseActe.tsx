@@ -57,7 +57,7 @@ export const VisionneuseActe: React.FC<ActeImageProps> = props => {
         </button>
       )}
       {error ? (
-        { error }
+        error
       ) : (
         <VisionneuseDocument
           titre="Visionneuse PDF"
