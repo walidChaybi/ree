@@ -603,6 +603,10 @@ export function compareChainesIgnoreCasse(
   return compareChaines("accent", str1, str2);
 }
 
+export function getPremiereLettreDunMot(mot: string) {
+  return mot[0];
+}
+
 export type LigneType = string | false | undefined;
 
 // Création d'un string "A, B, C..." où ", " est le séparateur par défaut et les valeurs vides sont supprimées

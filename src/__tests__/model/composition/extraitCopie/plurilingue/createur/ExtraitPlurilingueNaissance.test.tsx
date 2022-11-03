@@ -122,9 +122,9 @@ describe("Composition extrait plurilingue de Naissance", () => {
     const nom = "Patamob";
     const prenoms = "Alphonse";
     const date_naissance = {
-      jour: 17,
-      mois: 4,
-      annee: 1970
+      jour: 10,
+      mois: 10,
+      annee: 1901
     };
     const lieuNaissance = "Paris, Paris (France)";
 
@@ -140,7 +140,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
       );
       expect(compositionCorps.titulaire_1.nom_pere).toBe(nomPere);
 
-      expect(compositionCorps.titulaire_1?.prenom_pere).toBe(prenomPere);
+      expect(compositionCorps.titulaire_1?.prenoms_pere).toBe(prenomPere);
     }
   });
 
@@ -192,7 +192,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
     );
 
     expect(compositionCorps.titulaire_1?.nom_pere).toBe("");
-    expect(compositionCorps.titulaire_1?.prenom_pere).toBe("");
+    expect(compositionCorps.titulaire_1?.prenoms_pere).toBe("");
   });
 
   test("Doit formater les prénom correctement", () => {
@@ -205,6 +205,6 @@ describe("Composition extrait plurilingue de Naissance", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.titulaire_1?.prenom_pere).toBe("Jean, Louis");
+    expect(compositionCorps.titulaire_1?.prenoms_pere).toBe("Jean, Louis");
   });
 });

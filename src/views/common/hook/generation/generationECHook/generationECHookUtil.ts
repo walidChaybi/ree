@@ -225,21 +225,12 @@ export function getValidationExtraitPlurilingue(
 ) {
   switch (acte.nature) {
     case NatureActe.MARIAGE:
-      if (
-        FicheActe.estIncomplet(acte) ||
-        FicheActe.titulairesDeMemeSexe(acte) ||
-        FicheActe.tousLesTitulairesInconnusOuIndetermines(acte)
-      ) {
-        return Validation.E;
-      }
-      break;
     case NatureActe.NAISSANCE:
+    case NatureActe.DECES:
       if (FicheActe.estIncomplet(acte) || FicheActe.estEnErreur(acte)) {
         return Validation.E;
       }
       break;
-    case NatureActe.DECES:
-      return validation;
     default:
       return validation;
   }

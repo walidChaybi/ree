@@ -1,3 +1,4 @@
+import { ExtraitPlurilingueDecesComposition } from "@model/composition/extraitCopie/plurilingue/createur/ExtraitPlurilingueDecesComposition";
 import { ExtraitPlurilingueMariageComposition } from "@model/composition/extraitCopie/plurilingue/createur/ExtraitPlurilingueMariageComposition";
 import { ExtraitPlurilingueNaissanceComposition } from "@model/composition/extraitCopie/plurilingue/createur/ExtraitPlurilingueNaissanceComposition";
 import { IExtraitPlurilingueComposition } from "@model/composition/extraitCopie/plurilingue/IExtraitPlurilingueComposition";
@@ -13,7 +14,7 @@ export const creationCompositionExtraitPlurilingue = function (
   mentionsRetirees: string[],
   ctv?: string
 ): IExtraitPlurilingueComposition {
-  let composition = {} as IExtraitPlurilingueComposition;
+  let composition;
 
   switch (acteComplet.nature) {
     case NatureActe.MARIAGE:
@@ -37,8 +38,14 @@ export const creationCompositionExtraitPlurilingue = function (
         );
       break;
     case NatureActe.DECES:
-      //TODO
-      composition.nature_acte = NatureActe.getKey(acteComplet.nature);
+      composition =
+        ExtraitPlurilingueDecesComposition.compositionExtraitPlurilingueDeDeces(
+          acteComplet,
+          validation,
+          sousTypeRequete,
+          mentionsRetirees,
+          ctv
+        );
       break;
     default:
       composition = {

@@ -345,36 +345,36 @@ export const FicheActe = {
           this.aDonneesLieuOuAnneeEvenementAbsentes(acte)
         );
       case NatureActe.NAISSANCE:
-        const titulaire =
-          FicheActe.getTitulairesActeDansLOrdre(acte).titulaireActe1;
+      case NatureActe.DECES:
         return (
           this.aNomEtPrenomTitulaireAbsentsAnalyseMarginale(acte) ||
           this.aGenreTitulaireInconnu(acte) ||
-          TitulaireActe.aDonneesLieuOuAnneeNaissanceAbsentes(titulaire) ||
-          this.aGenreParentsTitulaireInconnu(acte)
+          this.aGenreParentsTitulaireInconnu(acte) ||
+          this.aDonneesLieuOuAnneeEvenementAbsentes(acte)
         );
-      case NatureActe.DECES:
       default:
         return false;
     }
   },
 
   estEnErreur(acte: IFicheActe): boolean {
+    const titulaire =
+      FicheActe.getTitulairesActeDansLOrdre(acte).titulaireActe1;
+
     switch (acte.nature) {
       case NatureActe.MARIAGE:
         return (
           this.titulairesDeMemeSexe(acte) ||
-          this.aGenreTitulaireIndetermine(acte)
+          this.aGenreTitulaireIndetermine(acte) ||
+          this.tousLesTitulairesInconnusOuIndetermines(acte)
         );
       case NatureActe.NAISSANCE:
-        const titulaire =
-          FicheActe.getTitulairesActeDansLOrdre(acte).titulaireActe1;
+      case NatureActe.DECES:
         return (
           this.aGenreTitulaireIndetermine(acte) ||
           TitulaireActe.parentsSontDeMemeSexe(titulaire) ||
           this.aGenreParentsTitulaireIndetermine(acte)
         );
-      case NatureActe.DECES:
       default:
         return false;
     }

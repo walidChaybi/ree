@@ -11,8 +11,8 @@ import { FicheActe, IFicheActe } from "../../../../etatcivil/acte/IFicheActe";
 import { IExtraitPlurilingueComposition } from "../IExtraitPlurilingueComposition";
 import { ExtraitPlurilingueCommunComposition } from "./ExtraitPlurilingueCommunComposition";
 
-export class ExtraitPlurilingueNaissanceComposition {
-  public static compositionExtraitPlurilingueDeNaissance(
+export class ExtraitPlurilingueDecesComposition {
+  public static compositionExtraitPlurilingueDeDeces(
     acte: IFicheActe,
     validation: Validation,
     sousTypeRequete: SousTypeDelivrance,
@@ -31,7 +31,7 @@ export class ExtraitPlurilingueNaissanceComposition {
     );
 
     composition.titulaire_1 =
-      this.mappingTitulaireExtraitPlurilingueNaissanceComposition(
+      this.mappingTitulaireExtraitPlurilingueDecesComposition(
         acte,
         FicheActe.getTitulairesActeDansLOrdre(acte).titulaireActe1
       );
@@ -39,7 +39,7 @@ export class ExtraitPlurilingueNaissanceComposition {
     return composition;
   }
 
-  public static mappingTitulaireExtraitPlurilingueNaissanceComposition(
+  public static mappingTitulaireExtraitPlurilingueDecesComposition(
     acte: IFicheActe,
     titulaire: ITitulaireActe
   ): ITitulaireComposition {
@@ -52,14 +52,21 @@ export class ExtraitPlurilingueNaissanceComposition {
     );
 
     compositionTitulaire.date_naissance =
-      Evenement.formatageDateCompositionExtraitPlurilingue(acte.evenement);
+      Evenement.formatageDateCompositionExtraitPlurilingue(titulaire.naissance);
     compositionTitulaire.lieu_naissance =
-      Evenement.getLieuDeRepriseOuLieuEvenement(acte.evenement);
+      TitulaireActe.getLieuDeRepriseOuLieuNaissance(titulaire);
+    compositionTitulaire.nom_dernier_conjoint = getValeurOuVide(
+      titulaire.nomDernierConjoint
+    );
+    compositionTitulaire.prenoms_dernier_conjoint = getValeurOuVide(
+      titulaire.prenomsDernierConjoint
+    );
+    compositionTitulaire.date_deces =
+      Evenement.formatageDateCompositionExtraitPlurilingue(acte.evenement);
+    compositionTitulaire.lieu_deces = Evenement.getLieuDeRepriseOuLieuEvenement(
+      acte.evenement
+    );
 
     return compositionTitulaire;
-  }
-
-  public static getPrenom(titulaire?: ITitulaireActe) {
-    return getValeurOuVide(TitulaireActe.getPrenoms(titulaire));
   }
 }

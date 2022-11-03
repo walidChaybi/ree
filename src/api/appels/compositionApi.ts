@@ -23,7 +23,7 @@ const URL_COMPOSITION_EXTRAIT_PLURILINGUE_NAISSANCE =
   "/composition/ACTE_NAISSANCE/4";
 const URL_COMPOSITION_EXTRAIT_PLURILINGUE_MARIAGE =
   "/composition/ACTE_MARIAGE/4";
-const URL_COMPOSITION_EXTRAIT_PLURILINGUE_DECES = "/composition/ACTE_DECES/3";
+const URL_COMPOSITION_EXTRAIT_PLURILINGUE_DECES = "/composition/ACTE_DECES/4";
 
 function getCompositionReponseSansDelivranceCS(
   document: string,

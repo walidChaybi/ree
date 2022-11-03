@@ -93,7 +93,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
     expect(compositionCorps.titulaire_2?.lieu_naissance).toBe(lieuNaissanceT2);
   });
 
-  test("Doit mettre le document en erreur quand le nombre de mentions dépasse la limite", () => {
+  test("Ne doit pas éditer les mentions supérieur à 9", () => {
     const acte = mapActe(ficheActeMariage.data);
     acte.mentions = mentionsPlurilinguesMariageNombre10 as any as IMention[];
 
@@ -104,10 +104,8 @@ describe("Composition extrait plurilingue de Mariage", () => {
       mentionsRetirees
     );
 
-    const mentionErreur = "--";
-
-    expect(compositionCorps.autres_enonciations_acte.enonciations[0]).toBe(
-      mentionErreur
+    expect(compositionCorps.autres_enonciations_acte.nombre_enonciations).toBe(
+      9
     );
   });
 

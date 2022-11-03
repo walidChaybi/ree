@@ -44,6 +44,23 @@ export const titulaireSexeInconnu = {
         pays: "France"
       },
       prenoms: ["Constance"]
+    },
+    {
+      lienParente: "PARENT",
+      ordre: 1,
+      nom: "Rodriguez",
+      sexe: "FEMININ",
+      naissance: null,
+      profession: "Technicien",
+      age: null,
+      domicile: {
+        voie: "40 place de la République",
+        ville: "Nantes",
+        arrondissement: null,
+        region: null,
+        pays: "France"
+      },
+      prenoms: ["Constance"]
     }
   ]
 };

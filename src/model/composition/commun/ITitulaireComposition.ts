@@ -10,15 +10,19 @@ export interface ITitulaireComposition {
   annee_naissance?: string;
   ville_naissance?: string;
   date_naissance?: IDateCompose; // Pour les plurilingues
+  date_deces?: IDateCompose;
   pays_naissance?: string;
   lieu_naissance?: string; // Pour les plurilingues
+  lieu_deces?: string;
   sexe?: string;
   nom_avant_mariage?: string;
   nom_apres_mariage?: string;
   nom_pere?: string;
-  prenom_pere?: string;
+  prenoms_pere?: string;
   nom_mere?: string;
-  prenom_mere?: string;
+  prenoms_mere?: string;
+  nom_dernier_conjoint?: string;
+  prenoms_dernier_conjoint?: string;
 }
 
 export const TitulaireComposition = {

@@ -2529,8 +2529,8 @@ export const ficheActeDeces = {
         nomPartie2: null,
         nomAvantMariage: null,
         nomApresMariage: null,
-        nomDernierConjoint: null,
-        prenomsDernierConjoint: null
+        nomDernierConjoint: "De fontaine",
+        prenomsDernierConjoint: "Ratus"
       }
     ],
     piecesAnnexes: [],
@@ -2642,7 +2642,38 @@ export const ficheActeDeces = {
     corpsTexte: {
       texte: `Acte décès`
     },
-    analyseMarginales: [],
+    analyseMarginales: [
+      {
+        dateDebut: 1577358000000,
+        dateFin: null,
+        nomOec: "Lens",
+        prenomOec: "Alexis",
+        motifModification: "CHANGEMENT_PRENOM",
+        titulaires: [
+          {
+            nom: "GREENWALD",
+            prenoms: ["Marie-paulita", "Zaria", "Léna"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 729,
+            sexe: null,
+            naissance: null,
+            profession: null,
+            age: null,
+            domicile: null,
+            filiations: null,
+            typeDeclarationConjointe: null,
+            dateDeclarationConjointe: null,
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null
+          }
+        ]
+      }
+    ],
     type: "TEXTE"
   }
 };
@@ -5380,7 +5411,20 @@ export const ficheActeNaissanceAvecTitulaireInconnu = {
         nomDernierConjoint: "Large",
         prenomsDernierConjoint: "Jean Maxime"
       }
-    ]
+    ],
+    evenement: {
+      minute: 15,
+      heure: 13,
+      jour: null,
+      mois: null,
+      annee: null,
+      voie: null,
+      ville: "Paris",
+      arrondissement: "16",
+      region: "Paris",
+      pays: "France",
+      lieuReprise: null
+    }
   }
 };
 
@@ -5608,7 +5652,20 @@ export const ficheActeAvecAnneeNaissanceTitulaireAbsente = {
         nomDernierConjoint: "Large",
         prenomsDernierConjoint: "Jean Maxime"
       }
-    ]
+    ],
+    evenement: {
+      minute: 15,
+      heure: 13,
+      jour: 10,
+      mois: 10,
+      annee: 1901,
+      voie: null,
+      ville: "",
+      arrondissement: "16",
+      region: "",
+      pays: "",
+      lieuReprise: null
+    }
   }
 };
 

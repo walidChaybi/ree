@@ -1,3 +1,4 @@
+import { ITitulaireComposition } from "@model/composition/commun/ITitulaireComposition";
 import { AnalyseMarginale } from "@model/etatcivil/acte/IAnalyseMarginale";
 import { Evenement } from "@model/etatcivil/acte/IEvenement";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
@@ -14,7 +15,13 @@ import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseReque
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import { getDateComposeFromDate } from "@util/DateUtils";
-import { DEUX, getValeurOuVide, TROIS, UN } from "@util/Utils";
+import {
+  DEUX,
+  getPremiereLettreDunMot,
+  getValeurOuVide,
+  TROIS,
+  UN
+} from "@util/Utils";
 import { IExtraitPlurilingueComposition } from "../IExtraitPlurilingueComposition";
 
 export interface IMentionsExtraitPlurilingue {
@@ -30,6 +37,70 @@ export const DESORMAIS = "désormais";
 export const NE = "né";
 export const NEE = "née";
 export class ExtraitPlurilingueCommunComposition {
+  public static composerPlurilingue(
+    composition: IExtraitPlurilingueComposition,
+    acte: IFicheActe,
+    validation: Validation,
+    sousTypeRequete: SousTypeDelivrance,
+    mentionsRetirees: string[],
+    ctv?: string
+  ) {
+    composition.nature_acte = NatureActe.getKey(acte.nature);
+    composition.etat = ETAT;
+    composition.service_etat_civil = ETAT_CIVIL;
+    composition.reference_acte = FicheActe.getReference(acte);
+    composition.date_acte =
+      Evenement.formatageDateCompositionExtraitPlurilingue(acte.evenement);
+
+    composition.date_delivrance = getDateComposeFromDate(new Date());
+
+    composition.autres_enonciations_acte =
+      ExtraitPlurilingueCommunComposition.mappingMentionsExtraitPlurilingue(
+        ExtraitPlurilingueCommunComposition.getMentionsAAfficher(
+          mentionsRetirees,
+          acte.mentions
+        )
+      );
+
+    composition.filigrane_erreur =
+      FicheActe.estEnErreur(acte) ||
+      this.nombreMentionsMax(acte, mentionsRetirees);
+    composition.filigrane_incomplet = FicheActe.estIncomplet(acte);
+    ExtraitPlurilingueCommunComposition.ajouteCTV(
+      sousTypeRequete,
+      composition,
+      ctv
+    );
+    composition.pas_de_bloc_signature =
+      ExtraitPlurilingueCommunComposition.pasDeBlocSignature(validation);
+    composition.sceau_ministere =
+      ParametreBaseRequete.getEnumFor(SCEAU_MINISTERE)?.libelle;
+  }
+
+  public static composerTitulairePlurilingue(
+    compositionTitulaire: ITitulaireComposition,
+    acte: IFicheActe,
+    titulaire: ITitulaireActe
+  ) {
+    compositionTitulaire.nom = this.getNomOuVide(acte, titulaire);
+    compositionTitulaire.prenoms = this.getPrenomOuVide(acte, titulaire);
+    compositionTitulaire.sexe = getPremiereLettreDunMot(
+      ExtraitPlurilingueCommunComposition.getSexeOuVideOuTiret(titulaire)
+    );
+    compositionTitulaire.nom_pere = this.getNomOuVideFiliation(
+      TitulaireActe.getParentDirectMasculin(titulaire)
+    );
+    compositionTitulaire.prenoms_pere = this.getPrenomOuVideFiliation(
+      TitulaireActe.getParentDirectMasculin(titulaire)
+    );
+    compositionTitulaire.nom_mere = this.getNomOuVideFiliation(
+      TitulaireActe.getParentDirectFeminin(titulaire)
+    );
+    compositionTitulaire.prenoms_mere = this.getPrenomOuVideFiliation(
+      TitulaireActe.getParentDirectFeminin(titulaire)
+    );
+  }
+
   public static pasDeBlocSignature(validation: Validation): boolean {
     if (validation === Validation.E) {
       return true;
@@ -47,8 +118,14 @@ export class ExtraitPlurilingueCommunComposition {
       nombre_enonciations: 0
     };
 
-    if (mentions?.length && mentions.length <= NOMBRE_MAX_MENTIONS) {
+    if (mentions?.length) {
       for (i; i < mentions.length; i++) {
+        if (
+          mentionExtraitPlurilingue.nombre_enonciations === NOMBRE_MAX_MENTIONS
+        ) {
+          break;
+        }
+
         const textMention = mentions[i].textes.texteMentionPlurilingue;
         mentionExtraitPlurilingue.enonciations.push(
           getValeurOuVide(textMention)
@@ -115,51 +192,11 @@ export class ExtraitPlurilingueCommunComposition {
     })?.nom;
   }
 
-  public static composerPlurilingue(
-    composition: IExtraitPlurilingueComposition,
-    acte: IFicheActe,
-    validation: Validation,
-    sousTypeRequete: SousTypeDelivrance,
-    mentionsRetirees: string[],
-    ctv?: string
-  ) {
-    composition.nature_acte = NatureActe.getKey(acte.nature);
-    composition.etat = ETAT;
-    composition.service_etat_civil = ETAT_CIVIL;
-    composition.reference_acte = FicheActe.getReference(acte);
-    composition.date_acte =
-      Evenement.formatageDateCompositionExtraitPlurilingue(acte.evenement);
-
-    composition.date_delivrance = getDateComposeFromDate(new Date());
-
-    composition.autres_enonciations_acte =
-      ExtraitPlurilingueCommunComposition.mappingMentionsExtraitPlurilingue(
-        ExtraitPlurilingueCommunComposition.getMentionsAAfficher(
-          mentionsRetirees,
-          acte.mentions
-        )
-      );
-
-    composition.filigrane_erreur =
-      FicheActe.estEnErreur(acte) ||
-      this.nombreMentionsMax(acte, mentionsRetirees);
-    composition.filigrane_incomplet = FicheActe.estIncomplet(acte);
-    ExtraitPlurilingueCommunComposition.ajouteCTV(
-      sousTypeRequete,
-      composition,
-      ctv
-    );
-    composition.pas_de_bloc_signature =
-      ExtraitPlurilingueCommunComposition.pasDeBlocSignature(validation);
-    composition.sceau_ministere =
-      ParametreBaseRequete.getEnumFor(SCEAU_MINISTERE)?.libelle;
-  }
-
   public static getPrenomOuVide(
     acte: IFicheActe,
     titulaire: ITitulaireActe
-  ): string | undefined {
-    let prenom: string | undefined = "";
+  ): string {
+    let prenom: string = "";
     const titulaireAM = this.getTitulaireAM(acte, titulaire);
 
     if (titulaireAM) {

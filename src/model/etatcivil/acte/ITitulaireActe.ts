@@ -1,5 +1,6 @@
 import { getDateStringFromDateCompose } from "@util/DateUtils";
 import {
+  DEUX,
   formatNom,
   formatPrenom,
   mapPrenomsVersPrenomsOrdonnes,
@@ -230,7 +231,8 @@ export const TitulaireActe = {
 
   parentsSontDeMemeSexe(titulaire: ITitulaireActe) {
     const parents = TitulaireActe.getParentsDirects(titulaire);
-    if (parents?.length) {
+
+    if (parents?.length && parents?.length >= DEUX) {
       const sexe = parents[0].sexe;
       return parents.every(el => el.sexe === sexe);
     } else {
@@ -238,15 +240,6 @@ export const TitulaireActe = {
     }
   },
 
-  aDonneesLieuOuAnneeNaissanceAbsentes(titulaire: ITitulaireActe) {
-    return (
-      !titulaire.naissance?.annee ||
-      (!titulaire.naissance?.lieuReprise &&
-        !titulaire.naissance?.ville &&
-        !titulaire.naissance?.region &&
-        !titulaire.naissance?.pays)
-    );
-  },
   nomAbsentOuNomEgalSNP(titulaire: ITitulaireActe): boolean {
     return !titulaire.nom || titulaire.nom === SNP;
   },
