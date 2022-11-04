@@ -100,7 +100,8 @@ export class StatutRequete extends EnumWithComplete {
     StatutRequete.TRAITE_A_DELIVRER_DEMAT,
     StatutRequete.TRAITE_DELIVRE_DEMAT,
     StatutRequete.TRAITE_REPONDU,
-    StatutRequete.REJET_IMPRESSION
+    StatutRequete.REJET_IMPRESSION,
+    StatutRequete.TRAITE_IMPRIME_LOCAL
   ];
   private static readonly StatutsPourTypeRequeteInformation = [
     StatutRequete.REJET,

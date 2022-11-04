@@ -67,8 +67,8 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
     <>
       {afficherBoutonValiderTerminer(requete) && (
         <>
-          <BoutonValiderTerminer requete={requete} />
           <BoutonTerminerApresImpression requete={requete} />
+          <BoutonValiderTerminer requete={requete} />
         </>
       )}
       {aDroitSignerEtStatutSigner && (
