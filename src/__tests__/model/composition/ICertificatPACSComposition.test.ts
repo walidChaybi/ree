@@ -45,7 +45,7 @@ Date d'effet de la modification du PACS à l'égard des tiers : 22 janvier 2021.
     paragraphe_dissolution: `Dissoute au tribunal judiciaire de Paris arr.18, le 26 novembre 2020.
 Date d'effet de la dissolution du PACS à l'égard des tiers : 26 novembre 2020.`,
     paragraphe_annulation: `Annulée par jugement du tribunal judiciaire de Paris, le 26 novembre 2020.
-Date d'effet d'annulation du PACS à l'égard des tiers : 26 novembre 2020.`
+Date d'effet de l'annulation du PACS à l'égard des tiers : 26 novembre 2020.`
   });
 });
 

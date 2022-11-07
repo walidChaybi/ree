@@ -1,5 +1,5 @@
 import {
-  CreationActionEtMiseAjourStatutParams,
+  ICreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
 import { Droit } from "@model/agent/enum/Droit";
@@ -26,7 +26,7 @@ export const BoutonTerminerApresImpression: React.FC<
   const history = useHistory();
 
   const [majStatutParams, setMajStatutParams] = useState<
-    CreationActionEtMiseAjourStatutParams | undefined
+    ICreationActionEtMiseAjourStatutParams | undefined
   >();
 
   // 1 - Ajout de l'action et mise à jour du statut
@@ -50,37 +50,34 @@ export const BoutonTerminerApresImpression: React.FC<
     props.requete.statutCourant.statut === StatutRequete.A_VALIDER ||
     props.requete.statutCourant.statut === StatutRequete.A_SIGNER;
 
-    
-    const requeteCourrier =
-      props.requete.sousType === SousTypeDelivrance.RDC ||
-      props.requete.sousType === SousTypeDelivrance.RDCSC;
+  const requeteCourrier =
+    props.requete.sousType === SousTypeDelivrance.RDC ||
+    props.requete.sousType === SousTypeDelivrance.RDCSC;
 
-    const afficherBouton = requeteCourrier && estAValiderOuASigner;
+  const afficherBouton = requeteCourrier && estAValiderOuASigner;
 
-    function estActif() {
-      const mAppartient =
-        props.requete.idUtilisateur ===
-        storeRece.utilisateurCourant?.idUtilisateur;
-      return (
-        mAppartient &&
-        officierHabiliterPourLeDroit(Droit.DELIVRER) &&
-        DocumentReponse.verifierDocumentsValides(
-          props.requete.documentsReponses
-        )
-      );
-    }
-
+  function estActif() {
+    const mAppartient =
+      props.requete.idUtilisateur ===
+      storeRece.utilisateurCourant?.idUtilisateur;
     return (
-      <>
-        {afficherBouton && (
-          <BoutonOperationEnCours
-            onClick={setActionEtUpdateStatut}
-            estDesactive={!estActif()}
-            checkDirtyActive={true}
-          >
-            {getLibelle("Terminer après impression locale")}
-          </BoutonOperationEnCours>
-        )}
-      </>
+      mAppartient &&
+      officierHabiliterPourLeDroit(Droit.DELIVRER) &&
+      DocumentReponse.verifierDocumentsValides(props.requete.documentsReponses)
     );
+  }
+
+  return (
+    <>
+      {afficherBouton && (
+        <BoutonOperationEnCours
+          onClick={setActionEtUpdateStatut}
+          estDesactive={!estActif()}
+          checkDirtyActive={true}
+        >
+          {getLibelle("Terminer après impression locale")}
+        </BoutonOperationEnCours>
+      )}
+    </>
+  );
 };

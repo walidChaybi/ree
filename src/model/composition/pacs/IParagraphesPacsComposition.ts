@@ -68,7 +68,7 @@ export const ParagrapheComposition = {
     obj.paragraphe_annulation = `Annulée ${ParagrapheComposition.getAutoriteEtLocalisation(
       annulation.autorite,
       true
-    )}, le ${dateAnnulation}.\nDate d'effet d'annulation du PACS à l'égard des tiers : ${dateEffet}.`;
+    )}, le ${dateAnnulation}.\nDate d'effet de l'annulation du PACS à l'égard des tiers : ${dateEffet}.`;
   },
 
   getAutorite(autorite: IAutorite): string {

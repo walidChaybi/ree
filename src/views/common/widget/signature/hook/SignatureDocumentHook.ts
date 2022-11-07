@@ -9,7 +9,7 @@ import {
   useStockerDocumentTeleverif
 } from "@hook/generation/generationECHook/televerification/stockerDocumentTeleverifApiHook";
 import {
-  CreationActionEtMiseAjourStatutParams,
+  ICreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
 import { FormatDate } from "@util/DateUtils";
@@ -57,7 +57,7 @@ export function useSignatureDocumentHook(
   const [
     creationActionEtMiseAjourStatutParams,
     setCreationActionEtMiseAjourStatutParams
-  ] = useState<CreationActionEtMiseAjourStatutParams>();
+  ] = useState<ICreationActionEtMiseAjourStatutParams>();
   const [
     dateDerniereDelivranceActeParams,
     setDateDerniereDelivranceActeParams

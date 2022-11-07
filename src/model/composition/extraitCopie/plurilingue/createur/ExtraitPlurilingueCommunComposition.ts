@@ -196,7 +196,7 @@ export class ExtraitPlurilingueCommunComposition {
     acte: IFicheActe,
     titulaire: ITitulaireActe
   ): string {
-    let prenom: string = "";
+    let prenom = "";
     const titulaireAM = this.getTitulaireAM(acte, titulaire);
 
     if (titulaireAM) {
@@ -250,7 +250,7 @@ export class ExtraitPlurilingueCommunComposition {
   }
 
   public static getNom(nomTitulaire?: string): string {
-    let nom: string = "";
+    let nom = "";
 
     if (nomTitulaire) {
       const matches = new RegExp(REGEX).exec(nomTitulaire);
@@ -299,7 +299,7 @@ export class ExtraitPlurilingueCommunComposition {
   }
 
   public static getPrenomOuVideFiliation(filiation?: IFiliation): string {
-    let prenom: string = "";
+    let prenom = "";
     if (filiation) {
       if (TitulaireActe.prenomAbsentOuNomEgalSPC(filiation)) {
         prenom = "";

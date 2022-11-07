@@ -3,7 +3,7 @@ import {
   TypeAppelRequete
 } from "@api/appels/requeteApi";
 import {
-  CreationActionEtMiseAjourStatutParams,
+  ICreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
 import {
@@ -58,7 +58,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
   const [lancerMajRequeteBouton, setLancerMajRequeteBouton] =
-    useState<CreationActionEtMiseAjourStatutParams>();
+    useState<ICreationActionEtMiseAjourStatutParams>();
 
   const idAction = usePostCreationActionEtMiseAjourStatutApi(
     lancerMajRequeteBouton

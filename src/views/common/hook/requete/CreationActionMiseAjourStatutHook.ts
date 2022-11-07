@@ -1,5 +1,5 @@
 import {
-  CreationActionEtMiseAjourStatutParams,
+  ICreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -24,7 +24,7 @@ export function useCreationActionMiseAjourStatut(
   const [
     creationActionEtMiseAjourStatutParams,
     setCreationActionEtMiseAjourStatutParams
-  ] = useState<CreationActionEtMiseAjourStatutParams | undefined>();
+  ] = useState<ICreationActionEtMiseAjourStatutParams | undefined>();
 
   useEffect(() => {
     if (params) {

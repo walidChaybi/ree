@@ -3,7 +3,7 @@ import {
   useDerniereDelivranceRcRcaPacsApiHook
 } from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
 import {
-  CreationActionEtMiseAjourStatutParams,
+  ICreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
 import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "@model/agent/IOfficier";
@@ -32,7 +32,7 @@ export const BoutonValiderTerminer: React.FC<
   const [estDisabled, setEstDisabled] = useState(true);
 
   const [majStatutParams, setMajStatutParams] = useState<
-    CreationActionEtMiseAjourStatutParams | undefined
+    ICreationActionEtMiseAjourStatutParams | undefined
   >();
 
   const [majDateDerniereDelivranceParams, setMajDateDerniereDelivranceParams] =

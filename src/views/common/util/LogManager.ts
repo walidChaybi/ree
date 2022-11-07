@@ -69,6 +69,9 @@ export function logErrorOnConsole(logErrorMgs: LogErrorMsg) {
     } else {
       console.error("Une erreur s'est produite");
     }
+    if (process.env.NODE_ENV === "test") {
+      throw new Error(logErrorMgs.messageUtilisateur);
+    }
   }
 }
 

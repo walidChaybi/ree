@@ -92,6 +92,8 @@ export class DocumentDelivrance extends EnumNomemclature {
   ): boolean {
     /* Switch / Case */
     const switchCase: any = {
+      [CODE_ATTESTATION_PACS]: (type: string): boolean =>
+        TypeRepertoire.PACS.libelle === type,
       [CODE_CERTIFICAT_SITUATION_PACS]: (type: string): boolean =>
         TypeRepertoire.PACS.libelle === type,
       [CODE_CERTIFICAT_SITUATION_PACS_RC]: (type: string): boolean =>

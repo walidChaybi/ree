@@ -3,7 +3,7 @@
  * fichier non testé car composant à supprimer dans étape 2
  */
 import {
-  CreationActionEtMiseAjourStatutParams,
+  ICreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
 import { receUrl } from "@router/ReceUrls";
@@ -25,7 +25,7 @@ export const BoutonARetraiterSaga: React.FC<BoutonARetraiterSagaProps> = ({
   const [
     creationActionEtMiseAjourStatutParams,
     setCreationActionEtMiseAjourStatutParams
-  ] = useState<CreationActionEtMiseAjourStatutParams>();
+  ] = useState<ICreationActionEtMiseAjourStatutParams>();
 
   const idActionCreee = usePostCreationActionEtMiseAjourStatutApi(
     creationActionEtMiseAjourStatutParams

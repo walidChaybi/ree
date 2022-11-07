@@ -1,5 +1,5 @@
 import {
-  CreationActionEtMiseAjourStatutParams,
+  ICreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -9,7 +9,7 @@ import request from "superagent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
-const params: CreationActionEtMiseAjourStatutParams = {
+const params: ICreationActionEtMiseAjourStatutParams = {
   libelleAction: "libelleAction",
   statutRequete: StatutRequete.A_VALIDER,
   requeteId: "12345"
