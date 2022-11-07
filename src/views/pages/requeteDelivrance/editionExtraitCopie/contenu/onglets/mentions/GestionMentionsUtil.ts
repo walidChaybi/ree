@@ -60,6 +60,7 @@ export function mappingVersMentionAffichage(
       natureActe
     );
   }
+
   return mentionsPourAffichage;
 }
 
@@ -87,12 +88,11 @@ export function mappingVersMentionAffichagePourExtraitPlurilingue(
   document: IDocumentReponse,
   natureActe?: NatureActe
 ): IMentionAffichage[] {
-  const mentions = Mention.filtrerTexteMentionPlurilingueEtNatureAdequat(
-    natureActe,
-    mentionsApi
+
+  const mentions = Mention.filtrerFormaterEtTrierMentions(
+    mentionsApi,
+    natureActe
   );
-  Mention.formaterMentionsPlurilingue(mentions);
-  Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions);
 
   // @ts-ignore le texteMentionPlurilingue n'est pas undefined
   return mentions.map((mentionApi: IMention) => ({

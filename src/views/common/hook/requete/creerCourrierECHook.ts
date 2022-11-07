@@ -7,6 +7,7 @@ import {
   IFicheActe,
   necessiteMentionNationalite
 } from "@model/etatcivil/acte/IFicheActe";
+import { Mention } from "@model/etatcivil/acte/mention/IMention";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { OptionCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -77,13 +78,27 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
   useEffect(
     () => {
       if (acteApiHookResultat?.acte?.mentions && acteApiHookResultat?.acte) {
+        let mentions;
+        if (
+          params?.requete.choixDelivrance ===
+          ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE
+        ) {
+          mentions = Mention.filtrerFormaterEtTrierMentions(
+            acteApiHookResultat?.acte?.mentions,
+            acteApiHookResultat?.acte?.nature
+          );
+        } else {
+          mentions = acteApiHookResultat?.acte?.mentions;
+        }
+
         setMentionsRetirees(
           gestionnaireMentionsRetireesAuto.getMentionsRetirees(
-            acteApiHookResultat?.acte?.mentions,
+            mentions,
             params?.requete.choixDelivrance,
             acteApiHookResultat?.acte?.nature
           )
         );
+
         if (
           necessiteMentionNationalite(
             acteApiHookResultat.acte,
