@@ -229,6 +229,14 @@ export const TitulaireActe = {
     );
   },
 
+  genreIndetermineOuMemeSexe(titulaires: ITitulaireActe[]) {
+    const sexe = titulaires[0].sexe;
+    return (
+      titulaires.some(titulaire => titulaire.sexe === Sexe.INDETERMINE) ||
+      titulaires.every(titulaire => titulaire.sexe === sexe)
+    );
+  },
+
   parentsSontDeMemeSexe(titulaire: ITitulaireActe) {
     const parents = TitulaireActe.getParentsDirects(titulaire);
 

@@ -37,7 +37,9 @@ interface OngletsDocumentsProps {
   acte?: IFicheActe;
 }
 
-const titulairesEstDeGenreIndetermine = (titulaires: ITitulaireActe[]) => {
+const titulairesEstDeGenreIndetermineOuParentMemeSexe = (
+  titulaires: ITitulaireActe[]
+) => {
   const index = 0;
   let error;
   for (let i = index; i < titulaires.length; i++) {
@@ -68,8 +70,8 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
 
   const messageErreurTitulaireMultiple =
     "Pas de délivrance d'extrait sur la base d'un acte à titulaires multiples.";
-  const messageErreurGenreIndetermine =
-    "Pas de délivrance d'extrait plurilingue de naissance avec une personne de genre indéterminé ou des parents de même sexe.";
+  const messageErreurGenreIndetermineMariage =
+    "Pas de délivrance d'extrait plurilingue de mariage pour des personnes de même sexe ou de genre indéterminé.";
 
   const { isDirty, setIsDirty } = useContext(RECEContext);
   const { setOperationEnCours } = useContext(EditionExtraitCopiePageContext);
@@ -84,12 +86,8 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [documents, retirerDocument]);
 
-  const estDeTypeNaissanceOuMariageOuDeces = (natureActe: any) => {
-    return (
-      natureActe === NatureActeRequete.NAISSANCE ||
-      NatureActeRequete.MARIAGE ||
-      NatureActeRequete.DECES
-    );
+  const getMessageParentDeMemeSexeOuGenreIndetermine = (natureActe: string) => {
+    return `Pas de délivrance d'extrait plurilingue de ${natureActe} avec une personne de genre indéterminé ou des parents de même sexe.`;
   };
 
   const handleSelectPlus = (indexChoix: number) => {
@@ -117,14 +115,30 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
     acteRequete: IFicheActe
   ): string | undefined => {
     let messageErreur: string | undefined;
-    if (
-      indexChoix === INDEX_PLUS.INDEX_EXTRAIT_PLURILINGUE &&
-      estDeTypeNaissanceOuMariageOuDeces(requete.evenement?.natureActe) &&
-      titulairesEstDeGenreIndetermine(acteRequete.titulaires)
-    ) {
-      messageErreur = messageErreurGenreIndetermine;
-    } else if (FicheActe.estNombreDeTitulaireErrone(acteRequete)) {
+    if (FicheActe.estNombreDeTitulaireErrone(acteRequete)) {
       messageErreur = messageErreurTitulaireMultiple;
+    } else if (indexChoix === INDEX_PLUS.INDEX_EXTRAIT_PLURILINGUE) {
+      switch (requete.evenement?.natureActe) {
+        case NatureActeRequete.NAISSANCE:
+        case NatureActeRequete.DECES:
+          if (
+            titulairesEstDeGenreIndetermineOuParentMemeSexe(
+              acteRequete.titulaires
+            )
+          ) {
+            messageErreur = getMessageParentDeMemeSexeOuGenreIndetermine(
+              requete.evenement.natureActe.libelle.toLowerCase()
+            );
+          }
+          break;
+        case NatureActeRequete.MARIAGE:
+          if (
+            TitulaireActe.genreIndetermineOuMemeSexe(acteRequete.titulaires)
+          ) {
+            messageErreur = messageErreurGenreIndetermineMariage;
+          }
+          break;
+      }
     }
 
     return messageErreur;
