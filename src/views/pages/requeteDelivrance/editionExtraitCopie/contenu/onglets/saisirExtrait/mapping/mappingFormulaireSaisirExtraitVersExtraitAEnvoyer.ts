@@ -1,5 +1,4 @@
 import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
-import { IDetailMariage } from "@model/etatcivil/acte/IDetailMariage";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";
@@ -17,8 +16,6 @@ import {
   getTableauAPartirElementsNonVides,
   getValeurOuUndefined,
   getValeurOuVide,
-  QUATRE,
-  TROIS,
   UN
 } from "@util/Utils";
 import {
@@ -44,10 +41,13 @@ export function mappingFormulaireSaisirExtraitVersExtraitAEnvoyer(
     acte,
     saisiExtrait.titulaireEvt1
   );
-  extraitSaisiAEnvoyer.titulaire2 = mapTitulaireNaissanceEtParents(
-    acte,
-    saisiExtrait.titulaireEvt2
-  );
+
+  if (FicheActe.estActeMariage(acte) && saisiExtrait.titulaireEvt2) {
+    extraitSaisiAEnvoyer.titulaire2 = mapTitulaireNaissanceEtParents(
+      acte,
+      saisiExtrait.titulaireEvt2
+    );
+  }
 
   if (FicheActe.estActeNaissance(acte)) {
     //@ts-ignore non null
@@ -124,22 +124,26 @@ function mapTitulaireNaissanceEtParents(
     );
 
     titulaireAEnvoyer.filiations = [];
-    titulaireAEnvoyer.filiations.push(
-      mapParent(UN, titulaireEvtSaisi.parentNaiss1)
-    );
-    titulaireAEnvoyer.filiations.push(
-      mapParent(DEUX, titulaireEvtSaisi.parentNaiss2)
-    );
+    if (parentRenseigne(titulaireEvtSaisi.parentNaiss1)) {
+      titulaireAEnvoyer.filiations.push(
+        mapParent(UN, titulaireEvtSaisi.parentNaiss1)
+      );
+    }
+    if (parentRenseigne(titulaireEvtSaisi.parentNaiss2)) {
+      titulaireAEnvoyer.filiations.push(
+        mapParent(DEUX, titulaireEvtSaisi.parentNaiss2)
+      );
+    }
 
     if (FicheActe.estActeMariage(acte)) {
-      if (parentAdoptantRenseigne(titulaireEvtSaisi.parentAdoptantNaiss1)) {
+      if (parentRenseigne(titulaireEvtSaisi.parentAdoptantNaiss1)) {
         titulaireAEnvoyer.filiations.push(
-          mapParentAdoptant(titulaireEvtSaisi.parentAdoptantNaiss1, TROIS)
+          mapParentAdoptant(titulaireEvtSaisi.parentAdoptantNaiss1, UN)
         );
       }
-      if (parentAdoptantRenseigne(titulaireEvtSaisi.parentAdoptantNaiss2)) {
+      if (parentRenseigne(titulaireEvtSaisi.parentAdoptantNaiss2)) {
         titulaireAEnvoyer.filiations.push(
-          mapParentAdoptant(titulaireEvtSaisi.parentAdoptantNaiss2, QUATRE)
+          mapParentAdoptant(titulaireEvtSaisi.parentAdoptantNaiss2, DEUX)
         );
       }
     }
@@ -147,9 +151,7 @@ function mapTitulaireNaissanceEtParents(
   return titulaireAEnvoyer;
 }
 
-function parentAdoptantRenseigne(
-  parentAdoptant?: IParentNaissanceForm
-): boolean {
+function parentRenseigne(parentAdoptant?: IParentNaissanceForm): boolean {
   return (
     estRenseigne(parentAdoptant?.nomNaissance) ||
     estRenseigne(parentAdoptant?.prenoms.prenom1)
@@ -173,14 +175,12 @@ function mapEvenementNaissanceTitulaire(
   }
 }
 
-function mapDetailMariage(
-  contratMariageSaisi?: IContratMariageForm
-): IDetailMariage {
+function mapDetailMariage(contratMariageSaisi?: IContratMariageForm): any {
   return {
-    contrat: contratMariageSaisi?.texte,
-    existenceContrat: contratMariageSaisi?.existence
-      ? ExistenceContratMariage.getEnumFor(contratMariageSaisi?.existence)
-      : undefined
+    contrat: getValeurOuVide(contratMariageSaisi?.texte),
+    existenceContrat:
+      contratMariageSaisi?.existence ||
+      ExistenceContratMariage.getKey(ExistenceContratMariage.NON)
   };
 }
 
@@ -218,15 +218,15 @@ function mapSexe(sexeSaisi?: string) {
 function mapTitulaire(titulaireSaisi: ITitulaireEvtForm) {
   return {
     nom: titulaireSaisi.nomNaissance,
-    nomPartie1: titulaireSaisi.nomSequable.nomPartie1,
-    nomPartie2: titulaireSaisi.nomSequable.nomPartie2,
-    typeDeclarationConjointe: titulaireSaisi.declarationConjointe.type,
+    nomPartie1: titulaireSaisi.nomSecable?.nomPartie1,
+    nomPartie2: titulaireSaisi.nomSecable?.nomPartie2,
+    typeDeclarationConjointe: titulaireSaisi.declarationConjointe?.type,
     dateDeclarationConjointe: getDateDebutFromDateCompose(
-      titulaireSaisi.declarationConjointe.date
+      titulaireSaisi.declarationConjointe?.date
     ),
     prenoms: mapPrenoms(titulaireSaisi.prenoms),
     sexe: mapSexe(titulaireSaisi.sexe),
-    age: titulaireSaisi.evenement.dateNaissanceOuAgeDe?.age
+    age: titulaireSaisi.evenement?.dateNaissanceOuAgeDe?.age
   } as any as ITitulaireActe;
 }
 

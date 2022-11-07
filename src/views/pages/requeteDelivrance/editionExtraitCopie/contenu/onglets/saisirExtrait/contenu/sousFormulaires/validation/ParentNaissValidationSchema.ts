@@ -22,12 +22,12 @@ export const ParentNaissValidationSchema = Yup.object({
   .test("sexeObligatoireParent", function (value: any, error: any) {
     return sexeObligatoireValidation(this, value, error);
   })
-  .test("nomParentObligatoire", function (value: any, error: any) {
+  .test("nomParentObligatoire1", function (value: any, error: any) {
     return nomParentObligatoireValidation(this, value, error);
   });
 
 export const ParentNaissSansSexeDateAgeDeValidationSchema = Yup.object().test(
-  "nomParentObligatoire",
+  "nomParentObligatoire2",
   function (value: any, error: any) {
     return nomParentObligatoireValidation(this, value, error);
   }
@@ -39,10 +39,9 @@ export const ParentNaissSansDateAgeDeValidationSchema = Yup.object({
   .test("sexeObligatoireParent", function (value: any, error: any) {
     return sexeObligatoireValidation(this, value, error);
   })
-  .test("nomParentObligatoire", function (value: any, error: any) {
+  .test("nomParentObligatoire3", function (value: any, error: any) {
     return nomParentObligatoireValidation(this, value, error);
   });
-
 
 function nomParentObligatoireValidation(context: any, value: any, error: any) {
   let res: any = true;
@@ -65,26 +64,29 @@ function nomParentObligatoireValidation(context: any, value: any, error: any) {
 }
 
 function supprimeValeurInconnu(
-  parentNaissanceForm: IParentNaissanceForm
-): IParentNaissanceForm {
-  const parentNaissanceFormSansValeurInconnu = { ...parentNaissanceForm };
-  if (
-    parentNaissanceForm.lieuNaissance.EtrangerFrance ===
-    EtrangerFrance.getKey(EtrangerFrance.INCONNU)
-  ) {
-    parentNaissanceFormSansValeurInconnu.lieuNaissance = {
-      ...parentNaissanceForm.lieuNaissance
-    };
-    parentNaissanceFormSansValeurInconnu.lieuNaissance.EtrangerFrance = "";
-    parentNaissanceFormSansValeurInconnu.lieuNaissance.lieuComplet = "";
-    parentNaissanceFormSansValeurInconnu.lieuNaissance.ville = "";
-    parentNaissanceFormSansValeurInconnu.lieuNaissance.arrondissement = "";
-    parentNaissanceFormSansValeurInconnu.lieuNaissance.regionDepartement = "";
-    parentNaissanceFormSansValeurInconnu.lieuNaissance.pays = "";
-  }
+  parentNaissanceForm?: IParentNaissanceForm
+): IParentNaissanceForm | undefined {
+  let parentNaissanceFormSansValeurInconnu;
+  if (parentNaissanceForm) {
+    parentNaissanceFormSansValeurInconnu = { ...parentNaissanceForm };
+    if (
+      parentNaissanceForm.lieuNaissance?.EtrangerFrance ===
+      EtrangerFrance.getKey(EtrangerFrance.INCONNU)
+    ) {
+      parentNaissanceFormSansValeurInconnu.lieuNaissance = {
+        ...parentNaissanceForm.lieuNaissance
+      };
+      parentNaissanceFormSansValeurInconnu.lieuNaissance.EtrangerFrance = "";
+      parentNaissanceFormSansValeurInconnu.lieuNaissance.lieuComplet = "";
+      parentNaissanceFormSansValeurInconnu.lieuNaissance.ville = "";
+      parentNaissanceFormSansValeurInconnu.lieuNaissance.arrondissement = "";
+      parentNaissanceFormSansValeurInconnu.lieuNaissance.regionDepartement = "";
+      parentNaissanceFormSansValeurInconnu.lieuNaissance.pays = "";
+    }
 
-  if (parentNaissanceForm.sexe === Sexe.getKey(Sexe.INCONNU)) {
-    parentNaissanceFormSansValeurInconnu.sexe = "";
+    if (parentNaissanceForm.sexe === Sexe.getKey(Sexe.INCONNU)) {
+      parentNaissanceFormSansValeurInconnu.sexe = "";
+    }
   }
 
   return parentNaissanceFormSansValeurInconnu;

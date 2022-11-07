@@ -1,10 +1,8 @@
 import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import {
-  EVENEMENT,
   PARENT_ADOPTANT_NAISS1,
   PARENT_ADOPTANT_NAISS2,
-  TITULAIRE_EVT_1,
-  TITULAIRE_EVT_2
+  TITULAIRE_EVT_1
 } from "@composant/formulaire/ConstantesNomsForm";
 import { RECEContext } from "@core/body/RECEContext";
 import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
@@ -15,7 +13,6 @@ import {
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";
 import { TitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import {
   IRequeteDelivrance,
   RequeteDelivrance
@@ -28,15 +25,8 @@ import FormikEffect from "@widget/formulaire/utils/FormikEffect";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { FormikProps, FormikValues } from "formik";
-import React, { useCallback, useContext, useState } from "react";
-import * as Yup from "yup";
-import { EvenementValidationSchema } from "../../../../../../common/composant/formulaire/validation/EvenementValidationSchema";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
-import {
-  TitulaireEvtSansDateAgeDePourLesParentsValidationSchema,
-  TitulaireEvtSansSexeDateAgeDePourLesParentsValidationSchema,
-  TitulaireEvtValidationSchema
-} from "./contenu/sousFormulaires/validation/TitulaireEvenementFormValidation";
 import {
   ISaisieExtraitForm,
   mappingActeVerFormulaireSaisirExtrait
@@ -44,29 +34,13 @@ import {
 import { mappingFormulaireSaisirExtraitVersExtraitAEnvoyer } from "./mapping/mappingFormulaireSaisirExtraitVersExtraitAEnvoyer";
 import {
   getTitulairesEvenementsEtParentsForm,
-  parentMemeSexeOuIndeterminCasPlurilingue
+  getValidationSchema,
+  initProprietesFormulaire,
+  IProprietesFormulaire,
+  parentMemeSexeOuIndeterminCasPlurilingue,
+  titulairesMemeSexeOuIndeterminCasPlurilingue
 } from "./SaisirExtraitFormUtil";
 import "./scss/FormulaireSaisirExtrait.scss";
-
-// Schéma de validation en sortie de champs
-// Validation formulaire naissance
-const ExtraitValidationNaissanceTitulaireSchema = Yup.object({
-  [TITULAIRE_EVT_1]: TitulaireEvtValidationSchema
-});
-
-// Validation formulaire décès
-const ExtraitValidationDecesTitulaireSchema = Yup.object({
-  [EVENEMENT]: EvenementValidationSchema,
-  [TITULAIRE_EVT_1]: TitulaireEvtSansDateAgeDePourLesParentsValidationSchema
-});
-
-// Validation formulaire mariage
-const ExtraitValidationMariageTitulairesSchema = Yup.object({
-  [EVENEMENT]: EvenementValidationSchema,
-  [TITULAIRE_EVT_1]:
-    TitulaireEvtSansSexeDateAgeDePourLesParentsValidationSchema,
-  [TITULAIRE_EVT_2]: TitulaireEvtSansSexeDateAgeDePourLesParentsValidationSchema
-});
 
 interface ComponentFormProps {
   acte: IFicheActe;
@@ -84,11 +58,25 @@ export const SaisirExtraitFormContext = React.createContext({
   ) => {}
 });
 
+interface IPopinMessageErreur {
+  ouverte: boolean;
+  problemePlurilingueActeMariage: boolean;
+  problemePlurilingueActeNaissanceOuDeces: boolean;
+}
+
 export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
   const { setOperationEnCours } = useContext(EditionExtraitCopiePageContext);
   const { setIsDirty } = useContext(RECEContext);
 
-  const [popinOuverte, setPopinOuverte] = useState<boolean>(false);
+  const [proprietesFormulaire, setProprietesFormulaire] =
+    useState<IProprietesFormulaire>(initProprietesFormulaire());
+
+  const [popinMessageErreur, setPopinMessageErreur] =
+    useState<IPopinMessageErreur>({
+      ouverte: false,
+      problemePlurilingueActeMariage: false,
+      problemePlurilingueActeNaissanceOuDeces: false
+    });
   const [sauvegarderSaisieParams, setSauvegarderSaisieParams] =
     useState<ISauvegardeValidationSaisieExtraitParams>();
   const { cleReinitialisation, reinitialisation } =
@@ -119,12 +107,28 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
       props.acte
     );
     setExtraitSaisiAEnvoyer(extraitAEnvoyer);
-    const problemePlurilingue = parentMemeSexeOuIndeterminCasPlurilingue(
-      [extraitAEnvoyer.titulaire1, extraitAEnvoyer.titulaire2],
-      props.requete.documentsReponses
-    );
-    if (problemePlurilingue) {
-      setPopinOuverte(true);
+    const problemePlurilingueActeNaissanceOuDeces =
+      !FicheActe.estActeMariage(props.acte) &&
+      parentMemeSexeOuIndeterminCasPlurilingue(
+        [extraitAEnvoyer.titulaire1, extraitAEnvoyer.titulaire2],
+        props.requete.documentsReponses
+      );
+
+    const problemePlurilingueActeMariage =
+      FicheActe.estActeMariage(props.acte) &&
+      titulairesMemeSexeOuIndeterminCasPlurilingue(
+        props.acte,
+        props.requete.documentsReponses
+      );
+    if (
+      problemePlurilingueActeNaissanceOuDeces ||
+      problemePlurilingueActeMariage
+    ) {
+      setPopinMessageErreur({
+        ouverte: true,
+        problemePlurilingueActeNaissanceOuDeces,
+        problemePlurilingueActeMariage
+      });
     } else {
       setOperationEnCours(true);
       setSauvegarderSaisieParams({
@@ -132,55 +136,85 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         acte: props.acte,
         extraitSaisiAEnvoyer: extraitAEnvoyer,
         callBack: props.handleDocumentEnregistre,
-        problemePlurilingue
+        problemePlurilingue: false
       });
     }
   };
 
   const handlePopinOui = useCallback(() => {
     if (extraitSaisiAEnvoyer) {
-      const problemePlurilingue = parentMemeSexeOuIndeterminCasPlurilingue(
-        [extraitSaisiAEnvoyer.titulaire1, extraitSaisiAEnvoyer.titulaire2],
-        props.requete.documentsReponses
-      );
+      setOperationEnCours(true);
       setSauvegarderSaisieParams({
         requete: props.requete,
         acte: props.acte,
         extraitSaisiAEnvoyer,
-        callBack: props.handleDocumentEnregistre,
-        problemePlurilingue
+        callBack: () => {
+          setOperationEnCours(false);
+          props.handleDocumentEnregistre();
+        },
+        problemePlurilingue:
+          popinMessageErreur.problemePlurilingueActeNaissanceOuDeces ||
+          popinMessageErreur.problemePlurilingueActeMariage
       });
     }
-  }, [extraitSaisiAEnvoyer, props]);
+  }, [
+    extraitSaisiAEnvoyer,
+    popinMessageErreur.problemePlurilingueActeMariage,
+    popinMessageErreur.problemePlurilingueActeNaissanceOuDeces,
+    props,
+    setOperationEnCours
+  ]);
 
-  const titulairesAMs =
-    FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeEtFiliation(
-      props.acte
-    );
-  const evenement = props.acte.evenement;
+  useEffect(() => {
+    if (props.acte) {
+      const titulairesAMCompletes =
+        FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeFiliationEtAge(
+          props.acte
+        );
 
-  const titulairesActe = FicheActe.getTitulairesActeTabDansLOrdre(props.acte);
-  const titulaireActe1 = titulairesActe[0];
-  const titulaireActe2 = titulairesActe[1];
+      const titulairesActe = FicheActe.getTitulairesActeTabDansLOrdre(
+        props.acte
+      );
 
-  const titulaire1Parents =
-    TitulaireActe.getAuMoinsDeuxParentsDirects(titulaireActe1);
-  const titulaire2Parents =
-    TitulaireActe.getAuMoinsDeuxParentsDirects(titulaireActe2);
+      setProprietesFormulaire({
+        initialise: true,
+        titulairesAMs: titulairesAMCompletes,
+        evenement: props.acte.evenement,
+        titulaireActe1: titulairesActe[0],
+        titulaireActe2: titulairesActe[1],
+        titulaire1Parents: TitulaireActe.getAuMoinsDeuxParentsDirects(
+          titulairesActe[0]
+        ),
+        titulaire2Parents: TitulaireActe.getAuMoinsDeuxParentsDirects(
+          titulairesActe[1]
+        ),
+        natureActe: props.acte.nature,
+        formDefaultValues: mappingActeVerFormulaireSaisirExtrait(
+          props.acte,
+          titulairesAMCompletes
+        )
+      });
+    }
+  }, [props.acte]);
 
-  const natureActe = props.acte.nature;
+  const {
+    titulairesAMs,
+    evenement,
+    titulaireActe1,
+    titulaireActe2,
+    titulaire1Parents,
+    titulaire2Parents,
+    natureActe,
+    formDefaultValues
+  } = proprietesFormulaire;
 
-  const formDefaultValues = mappingActeVerFormulaireSaisirExtrait(
-    props.acte,
-    titulairesAMs
-  );
-  return (
+  return proprietesFormulaire.initialise ? (
     <>
       <Formulaire
         key={cleReinitialisation}
         className="FormulaireSaisirExtrait"
         formDefaultValues={formDefaultValues}
-        formValidationSchema={getValidationSchema(natureActe)}
+        formValidationSchema={getValidationSchema(natureActe, titulairesAMs)}
         onSubmit={onSubmitValiderExtraitSaisi}
       >
         <FormikEffect
@@ -223,11 +257,9 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         />
       </Formulaire>
       <ConfirmationPopin
-        isOpen={popinOuverte}
+        isOpen={popinMessageErreur?.ouverte}
         messages={[
-          getLibelle(
-            "Au moins une personne (le titulaire ou les parents) est de genre indéterminé ou les parents sont de même sexe."
-          ),
+          getMessageErreur(),
           getLibelle(
             "Si vous continuez, l'extrait plurilingue généré sera en erreur."
           ),
@@ -238,19 +270,35 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
             label: getLibelle("Oui"),
             action: () => {
               handlePopinOui();
-              setPopinOuverte(false);
+              setPopinMessageErreur({
+                ...popinMessageErreur,
+                ouverte: false
+              });
             }
           },
           {
             label: getLibelle("Non"),
             action: () => {
-              setPopinOuverte(false);
+              setPopinMessageErreur({
+                ...popinMessageErreur,
+                ouverte: false
+              });
             }
           }
         ]}
       />
     </>
+  ) : (
+    <></>
   );
+
+  function getMessageErreur(): string {
+    return popinMessageErreur.problemePlurilingueActeNaissanceOuDeces
+      ? getLibelle(
+          "Au moins une personne (le titulaire ou les parents) est de genre indéterminé ou les parents sont de même sexe."
+        )
+      : getLibelle("Les titulaires sont de même sexe ou de genre indéterminé");
+  }
 
   function setAfficheParentsAdoptantsTitulaire(
     formik: FormikProps<FormikValues>,
@@ -285,25 +333,3 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
   }
 };
 
-function getValidationSchema(natureActe: NatureActe) {
-  let validationSchema;
-  switch (natureActe) {
-    case NatureActe.NAISSANCE:
-      validationSchema = ExtraitValidationNaissanceTitulaireSchema;
-      break;
-
-    case NatureActe.MARIAGE:
-      validationSchema = ExtraitValidationMariageTitulairesSchema;
-      break;
-
-    case NatureActe.DECES:
-      validationSchema = ExtraitValidationDecesTitulaireSchema;
-      break;
-
-    default:
-      validationSchema = ExtraitValidationNaissanceTitulaireSchema;
-      break;
-  }
-
-  return validationSchema;
-}

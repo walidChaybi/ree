@@ -35,8 +35,12 @@ const DateNaissanceOuAgeDeForm: React.FC<
 
   const onChangeDate = useCallback(
     (date: IDateComposeForm, type?: ChampDateModifie) => {
-      setDisabledAgeDe(estRenseigne(date.annee));
-      if (date.annee) {
+      const unDesChampsDateEstRenseigne =
+        estRenseigne(date.jour) ||
+        estRenseigne(date.mois) ||
+        estRenseigne(date.annee);
+      setDisabledAgeDe(unDesChampsDateEstRenseigne);
+      if (unDesChampsDateEstRenseigne) {
         props.formik.setFieldValue(withNamespace(props.nom, AGE), "");
       }
     },

@@ -21,7 +21,7 @@ interface ComponentFormProps {
 type NomSecableFormProps = ComponentFormProps & FormikComponentProps;
 
 const NomSecableForm: React.FC<NomSecableFormProps> = props => {
-  const [afficheNomSecable, setAfficheNomSequable] = useState<boolean>(
+  const [afficheNomSecable, setAfficheNomSecable] = useState<boolean>(
     estRenseigne(props.nomPartie1) && props.nomPartie1 !== ABSENCE_VALIDEE
   );
   const disabled = estDisabled(props.nomPartie1, props.origineTitulaireActe);
@@ -30,7 +30,7 @@ const NomSecableForm: React.FC<NomSecableFormProps> = props => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       //Provoque un comportement inaproprié : e.preventDefault();
       const nouvelEtatDeAfficheNomSecable = !afficheNomSecable;
-      setAfficheNomSequable(nouvelEtatDeAfficheNomSecable);
+      setAfficheNomSecable(nouvelEtatDeAfficheNomSecable);
 
       let nomPartie1 = "";
       let nomPartie2 = "";

@@ -171,7 +171,6 @@ export function mappingActeVerFormulaireSaisirExtrait(
   titulairesAMs: (ITitulaireActe | undefined)[]
 ): ISaisieExtraitForm {
   const titulairesActes = FicheActe.getTitulairesActeDansLOrdre(acte);
-
   // Titulaire 1
   const saisieForm: ISaisieExtraitForm = {
     [TITULAIRE_EVT_1]: saisieTitulaireEvtForm(
@@ -238,8 +237,12 @@ function saisieDonneesComplementairesPlurilingues(
   const titulaireFeminin = FicheActe.getTitulaireFeminin(acte);
 
   return {
-    [NOM_APRES_MARIAGE_EPOUX]: titulaireMasculin?.nomApresMariage,
-    [NOM_APRES_MARIAGE_EPOUSE]: titulaireFeminin?.nomApresMariage
+    [NOM_APRES_MARIAGE_EPOUX]: getValeurOuVide(
+      titulaireMasculin?.nomApresMariage
+    ),
+    [NOM_APRES_MARIAGE_EPOUSE]: getValeurOuVide(
+      titulaireFeminin?.nomApresMariage
+    )
   };
 }
 

@@ -160,7 +160,7 @@ export const FicheActe = {
     );
   },
 
-  getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeEtFiliation(
+  getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeFiliationEtAge(
     acte: IFicheActe
   ) {
     const titulairesAMs: ITitulaireActe[] = [];
@@ -178,27 +178,29 @@ export const FicheActe = {
           titulairesAMs[0],
           titulairesActeDansLOrdre.titulaireActe1
         );
-        majNomSequable(
+        majNomSecable(
           titulairesAMs[0],
           titulairesActeDansLOrdre.titulaireActe1
         );
 
-        titulairesAMs[0].sexe = titulairesActeDansLOrdre.titulaireActe1.sexe;
-        titulairesAMs[0].filiations =
-          titulairesActeDansLOrdre.titulaireActe1.filiations;
+        majSexeFiliattionEtAge(
+          titulairesAMs[0],
+          titulairesActeDansLOrdre.titulaireActe1
+        );
       }
 
       if (titulairesAMDansLOrdre.titulaireAM2) {
         titulairesAMs[1] = { ...titulairesAMDansLOrdre.titulaireAM2 };
-        majNomSequable(
+        majNomSecable(
           titulairesAMs[1],
           titulairesActeDansLOrdre.titulaireActe2
         );
 
         if (titulairesActeDansLOrdre.titulaireActe2) {
-          titulairesAMs[1].sexe = titulairesActeDansLOrdre.titulaireActe2.sexe;
-          titulairesAMs[1].filiations =
-            titulairesActeDansLOrdre.titulaireActe2.filiations;
+          majSexeFiliattionEtAge(
+            titulairesAMs[1],
+            titulairesActeDansLOrdre.titulaireActe2
+          );
         }
       }
     }
@@ -302,7 +304,7 @@ export const FicheActe = {
     return true;
   },
 
-  aGenreTitulaireIndetermine(acte: IFicheActe): boolean {
+  aTitulaireGenreIndetermine(acte: IFicheActe): boolean {
     const titulaires = acte.titulaires;
 
     return Boolean(
@@ -364,14 +366,14 @@ export const FicheActe = {
     switch (acte.nature) {
       case NatureActe.MARIAGE:
         return (
-          this.titulairesDeMemeSexe(acte) ||
-          this.aGenreTitulaireIndetermine(acte) ||
+          this.aTitulairesDeMemeSexe(acte) ||
+          this.aTitulaireGenreIndetermine(acte) ||
           this.tousLesTitulairesInconnusOuIndetermines(acte)
         );
       case NatureActe.NAISSANCE:
       case NatureActe.DECES:
         return (
-          this.aGenreTitulaireIndetermine(acte) ||
+          this.aTitulaireGenreIndetermine(acte) ||
           TitulaireActe.parentsSontDeMemeSexe(titulaire) ||
           this.aGenreParentsTitulaireIndetermine(acte)
         );
@@ -388,9 +390,11 @@ export const FicheActe = {
     return Boolean(parents.find(parent => parent.sexe === Sexe.INDETERMINE));
   },
 
-  titulairesDeMemeSexe(acte: IFicheActe): boolean {
+  aTitulairesDeMemeSexe(acte: IFicheActe): boolean {
     const titulaires = acte.titulaires;
-    return titulaires[0].sexe === titulaires[1].sexe;
+    return titulaires.length > 1
+      ? titulaires[0].sexe === titulaires[1].sexe
+      : false;
   },
 
   tousLesTitulairesInconnusOuIndetermines(acte: IFicheActe): boolean {
@@ -410,6 +414,15 @@ export const FicheActe = {
     return acte.titulaires.find(titulaire => titulaire.sexe === Sexe.FEMININ);
   }
 };
+
+function majSexeFiliattionEtAge(
+  titulairesAM: ITitulaireActe,
+  titulaireActe: ITitulaireActe
+) {
+  titulairesAM.sexe = titulaireActe.sexe;
+  titulairesAM.filiations = titulaireActe.filiations;
+  titulairesAM.age = titulaireActe.age;
+}
 
 /** Mise à jour des informations de "déclaration conjointe" à partir du titulaire de l'acte si besoin */
 function majDeclarationConjointe(
@@ -436,7 +449,7 @@ function majDeclarationConjointe(
 }
 
 /** Mise à jour des informations de "nom sécable" à partir du titulaire de l'acte si besoin */
-function majNomSequable(
+function majNomSecable(
   titulaireAM?: ITitulaireActe,
   titulaireActe?: ITitulaireActe
 ) {

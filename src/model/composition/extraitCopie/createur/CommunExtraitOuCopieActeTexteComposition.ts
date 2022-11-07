@@ -186,7 +186,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
   } {
     // Récupération des titulaires AM
     const [titulaireAM1, titulaireAM2] =
-      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeEtFiliation(acte);
+      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeFiliationEtAge(acte);
 
     const ecTitulaire1 =
       CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
@@ -246,7 +246,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     let titulaireAMCompositionEC2: ITitulaireAMCompositionEC | undefined;
 
     const titulairesAMs =
-      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeEtFiliation(acte);
+      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeFiliationEtAge(acte);
 
     if (titulairesAMs[0]) {
       titulaireAMCompositionEC1 =

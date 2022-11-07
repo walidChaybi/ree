@@ -379,10 +379,14 @@ export function shallowEgal(obj1: Object, obj2: Object) {
 }
 
 export function estRenseigne(valeur: any): boolean {
+  let valeurTrimee = valeur;
   if (valeur instanceof Array) {
     return valeur != null && valeur.length > 0;
   }
-  return valeur != null && valeur !== "" && valeur !== 0;
+  if (typeof valeur === "string") {
+    valeurTrimee = valeur.trim();
+  }
+  return valeur != null && valeur !== "" && valeurTrimee !== "" && valeur !== 0;
 }
 
 export function estNonRenseigne(valeur: any): boolean {

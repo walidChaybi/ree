@@ -11,7 +11,7 @@ export const TITULAIRE_EVT_2 = "titulaireEvt2";
 export const DECLARATION_CONJOINTE = "declarationConjointe";
 export const TYPE = "type";
 
-export const NOM_SECABLE = "nomSequable";
+export const NOM_SECABLE = "nomSecable";
 export const SECABLE = "secable";
 export const NOM_PARTIE1 = "nomPartie1";
 export const NOM_PARTIE2 = "nomPartie2";

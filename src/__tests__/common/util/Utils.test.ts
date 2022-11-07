@@ -8,6 +8,7 @@ import {
   compareChainesIgnoreCasseEtAccent,
   compareNombre,
   enMajuscule,
+  estRenseigne,
   estTableauNonVide,
   estUnNombre,
   finirAvec3petitsPoints,
@@ -489,4 +490,17 @@ test("Attendu: compareChainesIgnoreCasse fonctionne correctement", () => {
   expect(compareChainesIgnoreCasse(null!, null!)).toBeTruthy();
   expect(compareChainesIgnoreCasse(undefined, "")).toBeFalsy();
   expect(compareChainesIgnoreCasse("", null!)).toBeFalsy();
+});
+
+test("Attendu: estRenseigne fonctionne correctement", () => {
+  expect(estRenseigne("")).toBeFalsy();
+  expect(estRenseigne(0)).toBeFalsy();
+  expect(estRenseigne("  ")).toBeFalsy();
+  expect(estRenseigne([])).toBeFalsy();
+  expect(estRenseigne(null)).toBeFalsy();
+  expect(estRenseigne(undefined)).toBeFalsy();
+  expect(estRenseigne("abc")).toBeTruthy();
+  expect(estRenseigne(123)).toBeTruthy();
+  expect(estRenseigne([1])).toBeTruthy();
+  expect(estRenseigne(["a"])).toBeTruthy();
 });

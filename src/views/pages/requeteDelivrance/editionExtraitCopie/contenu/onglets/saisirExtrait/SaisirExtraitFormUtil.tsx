@@ -1,5 +1,6 @@
 import {
   CONTRAT_MARIAGE,
+  DATE_EVENEMENT,
   DERNIER_CONJOINT,
   DONNEES_COMPLEMENTAIRES_PLURILINGUE,
   EVENEMENT,
@@ -9,6 +10,7 @@ import {
   TITULAIRE_EVT_2
 } from "@composant/formulaire/ConstantesNomsForm";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";
 import {
   ITitulaireActe,
@@ -20,15 +22,86 @@ import { CODE_EXTRAIT_PLURILINGUE } from "@model/requete/enum/DocumentDelivrance
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { DEUX, estRenseigne, getLibelle, UN } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
+import { DateValidationSchema } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import React from "react";
+import * as Yup from "yup";
 import { EvenementForm } from "../../../../../../common/composant/formulaire/EvenementForm";
+import { EvenementValidationSchema } from "../../../../../../common/composant/formulaire/validation/EvenementValidationSchema";
 import { ContratMariageForm } from "./contenu/sousFormulaires/ContratMariageForm";
 import { DernierConjointForm } from "./contenu/sousFormulaires/DernierConjointForm";
 import { DonneesComplementairesPlurilingue } from "./contenu/sousFormulaires/DonneesComplementairesPlurilingue";
 import { getLabels } from "./contenu/sousFormulaires/LabelsUtil";
 import { ParentNaissanceForm } from "./contenu/sousFormulaires/ParentNaissanceForm";
 import TitulaireEvenementForm from "./contenu/sousFormulaires/TitulaireEvenementForm";
+import { ContratMariageValidationSchema } from "./contenu/sousFormulaires/validation/ContratMariageValidationSchema";
+import {
+  TitulaireEvtActeDecesValidationSchema,
+  TitulaireEvtActeMariageValidationSchema,
+  TitulaireEvtActeNaissanceValidationSchema
+} from "./contenu/sousFormulaires/validation/TitulaireEvenementFormValidation";
+import { ISaisieExtraitForm } from "./mapping/mappingActeVerFormulaireSaisirExtrait";
+import "./scss/FormulaireSaisirExtrait.scss";
+
+// Schéma de validation en sortie de champs
+// Validation formulaire naissance
+const ExtraitValidationNaissanceTitulaireSchema = Yup.object({
+  [TITULAIRE_EVT_1]: TitulaireEvtActeNaissanceValidationSchema
+});
+
+// Validation formulaire décès
+const ExtraitValidationDecesTitulaireSchema = Yup.object({
+  [EVENEMENT]: EvenementValidationSchema,
+  [TITULAIRE_EVT_1]: TitulaireEvtActeDecesValidationSchema
+});
+
+// Validation formulaire mariage
+const ExtraitValidationMariageTitulairesSchema = Yup.object({
+  [EVENEMENT]: Yup.object({
+    [DATE_EVENEMENT]: DateValidationSchema,
+    [CONTRAT_MARIAGE]: ContratMariageValidationSchema
+  }),
+  [TITULAIRE_EVT_1]: TitulaireEvtActeMariageValidationSchema,
+  [TITULAIRE_EVT_2]: TitulaireEvtActeMariageValidationSchema
+});
+
+const ExtraitValidationMariageUnTitulaireSchema = Yup.object({
+  [EVENEMENT]: Yup.object({
+    [DATE_EVENEMENT]: DateValidationSchema,
+    [CONTRAT_MARIAGE]: ContratMariageValidationSchema
+  }),
+  [TITULAIRE_EVT_1]: TitulaireEvtActeMariageValidationSchema
+});
+
+export function getValidationSchema(
+  natureActe: NatureActe,
+  titulairesAMs: ITitulaireActe[]
+) {
+  let validationSchema;
+  switch (natureActe) {
+    case NatureActe.NAISSANCE:
+      validationSchema = ExtraitValidationNaissanceTitulaireSchema;
+      break;
+
+    case NatureActe.MARIAGE:
+      if (titulairesAMs.length === DEUX) {
+        validationSchema = ExtraitValidationMariageTitulairesSchema;
+      } else {
+        validationSchema = ExtraitValidationMariageUnTitulaireSchema;
+      }
+      break;
+
+    case NatureActe.DECES:
+      validationSchema = ExtraitValidationDecesTitulaireSchema;
+      break;
+
+    default:
+      validationSchema = ExtraitValidationNaissanceTitulaireSchema;
+      break;
+  }
+
+  return validationSchema;
+}
 
 export function parentMemeSexeOuIndeterminCasPlurilingue(
   titulaires: (ITitulaireActe | undefined)[],
@@ -37,12 +110,28 @@ export function parentMemeSexeOuIndeterminCasPlurilingue(
   return (
     titulaires.some(
       el => el != null && TitulaireActe.genreIndetermineOuParentDeMemeSexe(el)
-    ) &&
-    documentsReponses.some(
-      el =>
-        el.typeDocument ===
-        DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_PLURILINGUE)
-    )
+    ) && unDocumentPlurilingueEstPresent(documentsReponses)
+  );
+}
+
+export function titulairesMemeSexeOuIndeterminCasPlurilingue(
+  acte: IFicheActe,
+  documentsReponses: IDocumentReponse[]
+) {
+  return (
+    (FicheActe.aTitulairesDeMemeSexe(acte) ||
+      FicheActe.aTitulaireGenreIndetermine(acte)) &&
+    unDocumentPlurilingueEstPresent(documentsReponses)
+  );
+}
+
+function unDocumentPlurilingueEstPresent(
+  documentsReponses: IDocumentReponse[]
+) {
+  return documentsReponses.some(
+    documentsReponse =>
+      documentsReponse.typeDocument ===
+      DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_PLURILINGUE)
   );
 }
 
@@ -83,7 +172,7 @@ export function getTitulairesEvenementsEtParentsForm(params: {
         evenement,
         naissanceTitulaire1
       )}
-      ){/* Deuxième titulaire avec accordéon (cas d'un mariage) */}
+      {/* Deuxième titulaire avec accordéon (cas d'un mariage) */}
       {getTitulaire2EvenementsEtParentsForm(
         titulairesAMs[1],
         natureActe,
@@ -353,11 +442,25 @@ function getTitulaireEvenementForm(
         titulaire={titulaire}
         evenement={evenement}
         natureActe={natureActe}
-        gestionEtrangerFrance={
-          natureActe === NatureActe.NAISSANCE ? false : true
-        }
-        etrangerParDefaut={natureActe === NatureActe.NAISSANCE ? true : false}
+        gestionEtrangerFrance={natureActe !== NatureActe.NAISSANCE}
+        etrangerParDefaut={natureActe === NatureActe.NAISSANCE}
       ></TitulaireEvenementForm>
     </AccordionRece>
   );
+}
+
+export interface IProprietesFormulaire {
+  initialise: boolean;
+  titulairesAMs: ITitulaireActe[];
+  evenement?: IEvenement;
+  titulaireActe1: ITitulaireActe;
+  titulaireActe2: ITitulaireActe;
+  titulaire1Parents: IFiliation[];
+  titulaire2Parents: IFiliation[];
+  natureActe: NatureActe;
+  formDefaultValues: ISaisieExtraitForm;
+}
+
+export function initProprietesFormulaire(): IProprietesFormulaire {
+  return { initialise: false } as any as IProprietesFormulaire;
 }

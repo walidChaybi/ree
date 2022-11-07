@@ -81,26 +81,26 @@ test("Attendu: le formulaire SaisirExtraitForm pour un acte de naissance s'affic
 
   await waitFor(() => {
     const widget = screen.getByLabelText(
-      "titulaireevt1.nomsequable.secable.true"
+      "titulaireevt1.nomsecable.secable.true"
     ) as HTMLInputElement;
     expect(widget).toBeInTheDocument();
     expect(widget.checked).toBeFalsy();
   });
 
   fireEvent.click(
-    screen.getByLabelText("titulaireevt1.nomsequable.secable.true")
+    screen.getByLabelText("titulaireevt1.nomsecable.secable.true")
   );
 
   await waitFor(() => {
     const widget = screen.getByLabelText(
-      "titulaireEvt1.nomSequable.nomPartie1"
+      "titulaireEvt1.nomSecable.nomPartie1"
     ) as HTMLInputElement;
     expect(widget).toBeInTheDocument();
     expect(widget.value).toBe("Patamod");
   });
   await waitFor(() => {
     const widget = screen.getByLabelText(
-      "titulaireEvt1.nomSequable.nomPartie2"
+      "titulaireEvt1.nomSecable.nomPartie2"
     ) as HTMLInputElement;
     expect(widget).toBeInTheDocument();
     expect(widget.value).toBe("eler");
@@ -478,22 +478,22 @@ test("Attendu: la case à cocher 'nom sécable' se comporte correctement", async
   );
 
   const caseACocherNomSecable = expectEstPresentEtNonChecked(
-    "titulaireevt1.nomsequable.secable.true"
+    "titulaireevt1.nomsecable.secable.true"
   );
 
   await waitFor(() => {
-    expectEstAbsent("titulaireEvt1.nomSequable.nomPartie1");
-    expectEstAbsent("titulaireEvt1.nomSequable.nomPartie2");
+    expectEstAbsent("titulaireEvt1.nomSecable.nomPartie1");
+    expectEstAbsent("titulaireEvt1.nomSecable.nomPartie2");
   });
 
   fireEvent.click(caseACocherNomSecable!);
 
   await waitFor(() => {
     expectEstPresentAvecValeur(
-      "titulaireEvt1.nomSequable.nomPartie1",
+      "titulaireEvt1.nomSecable.nomPartie1",
       "Patamod"
     );
-    expectEstPresentAvecValeur("titulaireEvt1.nomSequable.nomPartie2", "eler");
+    expectEstPresentAvecValeur("titulaireEvt1.nomSecable.nomPartie2", "eler");
   });
 });
 
