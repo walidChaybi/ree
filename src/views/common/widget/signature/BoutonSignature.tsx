@@ -69,12 +69,12 @@ export const BoutonSignature: React.FC<
         ) {
           props.reloadData(
             Object.keys(documentsByRequeteToSign).length ===
-              requetesASigner.length
+              props.requetesASigner.length
           );
         }
       }
     },
-    [props, documentsByRequeteToSign, requetesASigner, showWaitState]
+    [props, documentsByRequeteToSign, showWaitState]
   );
 
   const genererDocuments = (requetes: RequeteASigner[]) => {
