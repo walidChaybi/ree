@@ -59,7 +59,11 @@ export const Evenement = {
       : "";
   },
   estRenseigne(evenement?: IEvenement): boolean {
-    return estRenseigne(evenement?.annee);
+    return (
+      estRenseigne(evenement?.jour) ||
+      estRenseigne(evenement?.mois) ||
+      estRenseigne(evenement?.annee)
+    );
   },
 
   estHeureRenseignee(evenement?: IEvenement): boolean {
