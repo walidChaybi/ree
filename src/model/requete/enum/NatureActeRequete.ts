@@ -18,4 +18,8 @@ export class NatureActeRequete extends EnumWithLibelle {
       false
     );
   }
+
+  public static estNaissance(natureActe?: NatureActeRequete): boolean {
+    return natureActe === NatureActeRequete.NAISSANCE;
+  }
 }

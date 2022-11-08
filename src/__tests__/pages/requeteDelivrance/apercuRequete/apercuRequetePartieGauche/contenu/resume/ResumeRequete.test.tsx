@@ -64,8 +64,8 @@ test("renders Page requete with all elements", async () => {
     expect(
       screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
-    expect(screen.getByText("CAMPBALL")).toBeDefined();
-    expect(screen.getByText("AMBROSIA Antoinette, Zoé, Thérèse")).toBeDefined();
+    expect(screen.getByText("Campball")).toBeDefined();
+    expect(screen.getByText("Ambrosia Antoinette, Zoé, Thérèse")).toBeDefined();
     expect(screen.getByText("Acte")).toBeDefined();
     expect(screen.getByText("12/05/2019")).toBeDefined();
     expect(screen.getByText("Tunis (Tunisie)")).toBeDefined();
@@ -111,7 +111,7 @@ test("renders Page requete with 1 titulaire", async () => {
     expect(
       screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
-    expect(screen.getByText("CAMPBALL Gilles, Marc")).toBeDefined();
+    expect(screen.getByText("Campball Gilles, Marc")).toBeDefined();
     expect(screen.getByText("Acte")).toBeDefined();
     expect(screen.getByText("12/05/2019")).toBeDefined();
     expect(screen.getByText("Tunis")).toBeDefined();
@@ -156,8 +156,8 @@ test("renders Page requete with 2 titutaires", async () => {
     expect(
       screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
-    expect(screen.getByText("CAMPBALL")).toBeDefined();
-    expect(screen.getByText("AMBROSIA Antoinette, Zoé, Thérèse")).toBeDefined();
+    expect(screen.getByText("Campball")).toBeDefined();
+    expect(screen.getByText("Ambrosia Antoinette, Zoé, Thérèse")).toBeDefined();
     expect(screen.getByText("Acte")).toBeDefined();
     expect(screen.getByText("12/05/2019")).toBeDefined();
     expect(screen.getByText("Tunis (Tunisie)")).toBeDefined();
@@ -295,7 +295,7 @@ test("renders Page requete with mandataire habilité without raison sociale", as
     expect(
       screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
-    expect(screen.getByText("CAMPBALL Gilles, Marc")).toBeDefined();
+    expect(screen.getByText("Campball Gilles, Marc")).toBeDefined();
     expect(screen.getByText("Acte")).toBeDefined();
     expect(screen.getByText("12/05/2019")).toBeDefined();
     expect(screen.getByText("Tunis")).toBeDefined();

@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { formatNom, formatPrenom } from "@util/Utils";
+import { formatPrenom } from "@util/Utils";
 import { TypeLienMandant } from "./enum/TypeLienMandant";
 import { TypeMandant } from "./enum/TypeMandant";
 
@@ -16,7 +16,7 @@ export interface IMandant {
 
 export const Mandant = {
   getNom(requerant?: IMandant): string {
-    return requerant ? formatNom(requerant.nom) : "";
+    return requerant?.nom ?? "";
   },
   getPrenom(requerant?: IMandant): string {
     return requerant ? formatPrenom(requerant.prenom) : "";

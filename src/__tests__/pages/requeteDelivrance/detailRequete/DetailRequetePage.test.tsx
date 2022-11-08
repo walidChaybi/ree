@@ -1,11 +1,7 @@
 import { DetailRequetePage } from "@pages/requeteDelivrance/detailRequete/DetailRequetePage";
-import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
-import { getUrlWithParam } from "@util/route/routeUtil";
-import { createMemoryHistory } from "history";
 import React from "react";
 import { act } from "react-dom/test-utils";
-import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
@@ -13,25 +9,8 @@ const superagentMock = require("superagent-mock")(request, configRequetes);
 
 test("renders Page requete with all elements", async () => {
   act(() => {
-    const history = createMemoryHistory();
-    history.push(
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-        "a4cefb71-8457-4f6b-937e-34b49335d404"
-      )
-    );
-
     render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
-          >
-            <DetailRequetePage />
-          </Route>
-        </Router>
-      </>
+      <DetailRequetePage idRequeteAAfficher="a4cefb71-8457-4f6b-937e-34b49335d404" />
     );
   });
   await waitFor(() => {

@@ -5,11 +5,12 @@
   display: flex;
   .side {
     &.left {
-      width: 25%;
-      min-width: 350px;
+      width: 30vw;
+      min-width: 25rem;
+      font-size: 0.9rem;
     }
     &.right {
-      width: 75%;
+      width: 70vw;
       min-width: 500px;
       margin-left: 0.5em;
     }

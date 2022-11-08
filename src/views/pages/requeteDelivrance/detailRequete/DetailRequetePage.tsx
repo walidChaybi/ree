@@ -18,12 +18,10 @@ export const DetailRequetePage: React.FC<DetailRequetePageProps> = props => {
   const [requete, setRequete] = useState<IRequeteDelivrance>();
 
   useEffect(() => {
-    if (props.requete) {
-      setRequete(props.requete);
-    } else if (props.idRequeteAAfficher) {
+    if (props.idRequeteAAfficher) {
       setIdRequete(props.idRequeteAAfficher);
     }
-  }, [props.idRequeteAAfficher, props.requete]);
+  }, [props.idRequeteAAfficher]);
 
   useEffect(() => {
     if (detailRequeteState) {

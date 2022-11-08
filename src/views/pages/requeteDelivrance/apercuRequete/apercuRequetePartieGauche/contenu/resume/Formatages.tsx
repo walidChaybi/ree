@@ -10,3 +10,9 @@ export const formatLigneLieu = (
   pays?: string
 ): string | undefined =>
   formatLigne([ville, ville && pays ? `(${pays})` : pays], " ");
+  
+  export const formatLigneQualiteType = (
+    qualite?: string,
+    type?: string
+  ): string | undefined => formatLigne([qualite, type && `(${type})`], " ");
+

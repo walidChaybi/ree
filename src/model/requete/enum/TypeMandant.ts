@@ -15,4 +15,12 @@ export class TypeMandant extends EnumWithLibelle {
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(TypeMandant, false, false);
   }
+
+  public static estPhysique(typeMandant?: TypeMandant): boolean {
+    return typeMandant === TypeMandant.PERSONNE_PHYSIQUE;
+  }
+
+  public static estMorale(typeMandant?: TypeMandant): boolean {
+    return typeMandant === TypeMandant.PERSONNE_MORALE;
+  }
 }

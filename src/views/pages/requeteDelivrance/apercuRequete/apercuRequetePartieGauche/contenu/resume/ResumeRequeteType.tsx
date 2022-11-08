@@ -30,15 +30,15 @@ export const ResumeRequeteType: React.FC<TypeRequeteProps> = props => {
               props.provenanceRequete?.provenanceServicePublic?.referenceDila
             }
           />
+          <ItemLibelle texte={props.sousType.libelle} />
           <div className="inline">
-            <ItemLibelle texte={props.sousType.libelle} />
+            <ItemLibelle texte={props.provenanceRequete?.provenance.libelle} />
             <ItemLibelle
               label={"Statut"}
               texte={props.statut.libelle}
               classNameLabel={"no-space-between"}
             />
           </div>
-          <ItemLibelle texte={props.provenanceRequete?.provenance.libelle} />
         </div>
       </AccordionRece>
     </div>

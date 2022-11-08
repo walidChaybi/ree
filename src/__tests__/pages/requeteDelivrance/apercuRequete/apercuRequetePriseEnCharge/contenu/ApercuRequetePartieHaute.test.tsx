@@ -165,7 +165,7 @@ describe("ResumeRequetePartieHaute", () => {
 
       expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
 
-      expect(screen.getByText("UTILRECE Thierry")).toBeDefined();
+      expect(screen.getByText("UtilRece Thierry")).toBeDefined();
     });
   });
 });

@@ -38,7 +38,8 @@ import { Courrier } from "../apercuRequete/apercuCourrier/contenu/Courrier";
 import { sousTypeCreationCourrierAutomatique } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuUtilEC";
 import { BoutonModifierTraitement } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonModifierTraitement";
 import { BoutonsTerminer } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonsTerminer";
-import { DetailRequetePage } from "../detailRequete/DetailRequetePage";
+import { ResumeRequetePartieHaute } from "../apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequetePartieHaute";
+import { ResumeRequeteType } from "../apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequeteType";
 import { GestionMentions } from "./contenu/onglets/mentions/GestionMentions";
 import { ModifierCorpsExtrait } from "./contenu/onglets/modifierCorpsExtrait/ModifierCorpsExtrait";
 import { SaisirExtraitForm } from "./contenu/onglets/saisirExtrait/SaisirExtraitForm";
@@ -139,12 +140,17 @@ export const getOngletsVisu = (
       component: (
         <>
           <AccordionRece
-            titre={getLibelle(`Requête ${requete.numero}`)}
+            titre={getLibelle(`Description requête ${requete.numero}`)}
             disabled={false}
             expanded={true}
           >
-            <DetailRequetePage requete={requete} />
+            <ResumeRequetePartieHaute requete={requete} />
           </AccordionRece>
+          <ResumeRequeteType
+            provenanceRequete={requete.provenanceRequete}
+            sousType={requete.sousType}
+            statut={requete.statutCourant.statut}
+          />
           <SuiviObservationsRequete idRequete={requete.id} />
           <SuiviActionsRequete actions={requete.actions} />
         </>

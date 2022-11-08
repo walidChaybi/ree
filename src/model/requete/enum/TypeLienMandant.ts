@@ -24,4 +24,8 @@ export class TypeLienMandant extends EnumWithLibelle {
       false
     );
   }
+
+  public static estAutre(typeLien?: TypeLienMandant): boolean {
+    return typeLien === TypeLienMandant.AUTRE;
+  }
 }

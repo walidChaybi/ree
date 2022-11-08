@@ -15,6 +15,8 @@ export const ItemLibelle: React.FC<ItemLigneInfosProps> = ({
   visible = true,
   ...props
 }) => {
+  const infoBulle = typeof texte === "string" ? texte : undefined;
+
   props.classNameLabel = formatLigne(["titre", props.classNameLabel], " ");
   props.classNameTexte = formatLigne(["texte", props.classNameTexte], " ");
 
@@ -23,7 +25,7 @@ export const ItemLibelle: React.FC<ItemLigneInfosProps> = ({
       {props.label && <div className={props.classNameLabel}>{props.label}</div>}
 
       <div className={props.classNameTexte} onClick={props.onClickTexte}>
-        {texte}
+        <span title={infoBulle}>{texte}</span>
       </div>
     </div>
   ) : null;

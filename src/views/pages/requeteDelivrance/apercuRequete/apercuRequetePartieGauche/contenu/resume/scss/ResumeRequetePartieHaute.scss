@@ -1,13 +1,17 @@
 @import "../../../../../../../../scss/colors";
 
 $spacing: 0.5rem;
+$min-width-container: 25rem;
+$max-width-container: 30vw;
 
 .ResumeRequetePartieHaute {
   padding: $spacing;
+  font-size: 0.9rem;
 
   .inline {
     display: flex;
     align-items: flex-start;
+    flex-wrap: wrap;
     
     > div {
       flex: 1;
@@ -18,8 +22,7 @@ $spacing: 0.5rem;
     display: flex;
     flex-direction: column;
     flex: 2;
-    margin-left: $spacing * -2;
-    margin-right: $spacing * -2;
+    margin-left: $spacing * -1;
   }
 
   .ligne {
@@ -37,6 +40,14 @@ $spacing: 0.5rem;
     align-items: center;
     padding: $spacing;
 
+    > span {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      min-width: calc(#{$min-width-container} / 2 - #{$spacing} * 8);
+      max-width: calc(#{$max-width-container} / 2 - #{$spacing} * 8);
+    }
+
     &.bold {
       font-weight: bold;
     }
@@ -53,17 +64,17 @@ $spacing: 0.5rem;
     }
   }
 
-  .separation {
-    width: 80%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    color: $border;
-  }
-
   .titleTitulaire {
     color: #03476e;
     font-weight: bold;
     font-size: 1.1rem;
     margin-bottom: .7rem;
+  }
+
+  .separation {
+    width: 80%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: $border;
   }
 }

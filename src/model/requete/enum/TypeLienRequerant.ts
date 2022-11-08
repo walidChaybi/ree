@@ -32,4 +32,8 @@ export class TypeLienRequerant extends EnumWithLibelle {
       return keys.includes(el.value) ? el : undefined;
     });
   }
+
+  public static estAutre(typeLien?: TypeLienRequerant): boolean {
+    return typeLien === TypeLienRequerant.AUTRE;
+  }
 }
