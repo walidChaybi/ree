@@ -68,7 +68,7 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
   const { reponsesReqInfo } = useReponsesReqInfoApiHook();
 
   useEffect(() => {
-    if (requete.reponseChoisie) {
+    if (requete.reponseChoisie?.corpsMail) {
       setReponseChoisie({
         ...requete.reponseChoisie,
         libelle:
