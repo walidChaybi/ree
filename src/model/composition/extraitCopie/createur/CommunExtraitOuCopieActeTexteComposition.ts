@@ -23,7 +23,10 @@ import { NatureActe } from "../../../etatcivil/enum/NatureActe";
 import { Sexe } from "../../../etatcivil/enum/Sexe";
 import { TypeDeclarationConjointe } from "../../../etatcivil/enum/TypeDeclarationConjointe";
 import { TypeExtrait } from "../../../etatcivil/enum/TypeExtrait";
-import { LIBELLE_FONCTION_AGENT_1 } from "../../../parametres/clesParametres";
+import {
+  LIBELLE_FONCTION_AGENT_1,
+  SCEAU_MINISTERE
+} from "../../../parametres/clesParametres";
 import { ParametreBaseRequete } from "../../../parametres/enum/ParametresBaseRequete";
 import { ChoixDelivrance } from "../../../requete/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "../../../requete/enum/SousTypeDelivrance";
@@ -447,6 +450,8 @@ export class CommunExtraitOuCopieActeTexteComposition {
       composition.pas_de_bloc_signature = true;
     } else {
       composition.pas_de_bloc_signature = false;
+      composition.sceau_ministere =
+        ParametreBaseRequete.getEnumFor(SCEAU_MINISTERE)?.libelle;
       CommunExtraitOuCopieActeTexteComposition.creerFormuleSignatureDelivrance(
         composition,
         choixDelivrance,
