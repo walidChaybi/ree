@@ -21,7 +21,7 @@ export const ParagrapheComposition = {
 
     obj.paragraphe_enregistrement = `Enregistrée ${ParagrapheComposition.getAutoriteEtLocalisation(
       fiche.autorite
-    )}, le ${dateEnregistrement}.\nDate d'effet de la déclaration du PACS à l'égard des tiers : ${dateInscription}.`;
+    )}, le ${dateEnregistrement}.\nDate d'effet de la déclaration du PACS à l'égard des tiers : ${dateInscription}.\n`;
   },
 
   ajoutParagrapheModificationPACS(
@@ -36,7 +36,7 @@ export const ParagrapheComposition = {
     );
     obj.paragraphe_modification = `Modifiée ${ParagrapheComposition.getAutoriteEtLocalisation(
       modifications[0].autorite
-    )}, le ${dateConvention}.\nDate d'effet de la modification du PACS à l'égard des tiers : ${dateModif}.`;
+    )}, le ${dateConvention}.\nDate d'effet de la modification du PACS à l'égard des tiers : ${dateModif}.\n`;
   },
 
   ajoutParagrapheDissolutionPACS(
@@ -51,7 +51,7 @@ export const ParagrapheComposition = {
     );
     obj.paragraphe_dissolution = `Dissoute ${ParagrapheComposition.getAutoriteEtLocalisation(
       dissolution.autorite
-    )}, le ${dateDissolution}.\nDate d'effet de la dissolution du PACS à l'égard des tiers : ${dateEffet}.`;
+    )}, le ${dateDissolution}.\nDate d'effet de la dissolution du PACS à l'égard des tiers : ${dateEffet}.\n`;
   },
 
   ajoutParagrapheAnnulationPACS(
@@ -68,7 +68,7 @@ export const ParagrapheComposition = {
     obj.paragraphe_annulation = `Annulée ${ParagrapheComposition.getAutoriteEtLocalisation(
       annulation.autorite,
       true
-    )}, le ${dateAnnulation}.\nDate d'effet de l'annulation du PACS à l'égard des tiers : ${dateEffet}.`;
+    )}, le ${dateAnnulation}.\nDate d'effet de l'annulation du PACS à l'égard des tiers : ${dateEffet}.\n`;
   },
 
   getAutorite(autorite: IAutorite): string {

@@ -50,7 +50,7 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
     let messageErreur = "";
 
     if (props.requete.documentDemande.code === CODE_ATTESTATION_PACS) {
-      if (props.inscriptions?.length === 0) {
+      if (props.inscriptions?.length === 0 && props.actes?.length === 0) {
         messageErreur = getLibelle(
           "Il faut sélectionner au moins un PACS au statut fiche actif"
         );

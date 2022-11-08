@@ -127,7 +127,7 @@ test("attestationPACS sans inscription", async () => {
   );
   render(
     <Router history={history}>
-      <MenuDelivrerCS requete={requete} inscriptions={[]} />
+      <MenuDelivrerCS requete={requete} inscriptions={[]} actes={[]} />
     </Router>
   );
   let menuDelivrer = screen.getByText("Délivrer");
