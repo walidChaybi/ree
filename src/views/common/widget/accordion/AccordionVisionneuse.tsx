@@ -35,7 +35,7 @@ export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
   const resultatMaj = useMiseAJourLibellePjApiHook(majTitreParams);
 
   useEffect(() => {
-    if (resultatMaj && majTitreParams?.nouveauLibelle) {
+    if (resultatMaj && resultatMaj.resultat && majTitreParams?.nouveauLibelle) {
       setTitreActuel(majTitreParams?.nouveauLibelle);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

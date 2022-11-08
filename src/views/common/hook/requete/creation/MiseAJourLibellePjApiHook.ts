@@ -7,15 +7,18 @@ export interface IMajLibellePjParams {
   libelle: string;
   nouveauLibelle: string;
 }
+export interface IMajLibellePjResultat {
+  resultat: boolean;
+}
 
 export function useMiseAJourLibellePjApiHook(params?: IMajLibellePjParams) {
-  const [resultat, setResultat] = useState<boolean>(false);
+  const [resultat, setResultat] = useState<IMajLibellePjResultat>();
 
   useEffect(() => {
     if (params && params.libelle !== params.nouveauLibelle) {
       patchMiseAJourLibellePJ(params.idPJ, params.nouveauLibelle)
         .then(() => {
-          setResultat(true);
+          setResultat({ resultat: true });
         })
         .catch(error => {
           logError({
