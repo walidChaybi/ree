@@ -205,16 +205,19 @@ test("RG 3 Exemple 2", () => {
   const mentionBase = [
     {
       id: "1",
+      numeroOrdreExtrait: 1,
       numeroOrdre: 1,
       textes: { texteMentionDelivrance: "1" }
     } as IMention,
     {
       id: "2",
+      numeroOrdreExtrait: 2,
       numeroOrdre: 2,
       textes: { texteMentionDelivrance: "2" }
     } as IMention,
     {
       id: "3",
+      numeroOrdreExtrait: 3,
       numeroOrdre: 3,
       textes: { texteMentionDelivrance: "3" }
     } as IMention

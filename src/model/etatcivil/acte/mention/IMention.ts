@@ -205,17 +205,19 @@ export const Mention = {
     }
     return texteMention;
   },
-  filtrerFormaterEtTrierMentions(mentions: IMention[], natureActe?: NatureActe): IMention[] {
-    let mentionsMapped: IMention[] = []
-      mentionsMapped =
-      Mention.filtrerTexteMentionPlurilingueEtNatureAdequat(
-        natureActe,
-        mentions
-        );
-        Mention.formaterMentionsPlurilingue(mentionsMapped);
-        Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentionsMapped);
+  filtrerFormaterEtTrierMentions(
+    mentions: IMention[],
+    natureActe?: NatureActe
+  ): IMention[] {
+    let mentionsMapped: IMention[] = [];
+    mentionsMapped = Mention.filtrerTexteMentionPlurilingueEtNatureAdequat(
+      natureActe,
+      mentions
+    );
+    Mention.formaterMentionsPlurilingue(mentionsMapped);
+    Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentionsMapped);
 
-    return mentionsMapped
+    return mentionsMapped;
   }
 };
 
@@ -242,4 +244,3 @@ function getConjoint(mention: IMention) {
   }
   return conjoint;
 }
-

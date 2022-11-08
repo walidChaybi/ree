@@ -182,10 +182,10 @@ export class GestionnaireRenumerotationMentions {
         !mentionsEnBase.map(mentionMap => mentionMap.id).includes(mention.id)
     );
 
-    const mentionsAAjouter: any[] = [];
     mentionsSurEcranPasEnBase.forEach(mention => {
       mentionsEnBase.sort(
-        (a, b) => a.numeroOrdreExtrait - b.numeroOrdreExtrait
+        (mentionA, mentionB) =>
+          mentionA.numeroOrdreExtrait - mentionB.numeroOrdreExtrait
       );
 
       if (mentionsSurEcran[0].id === mention.id) {
@@ -195,9 +195,17 @@ export class GestionnaireRenumerotationMentions {
         const indexMention = mentionsSurEcran.findIndex(
           el => el.id === mention.id
         );
-        const numeroOrdreExtrait =
-          mentionsSurEcran[indexMention - 1].numeroOrdre + 1;
-        mention.numeroOrdre = numeroOrdreExtrait;
+
+        const mentionEnBaseAvantMentionCourrante = mentionsEnBase.find(
+          el => el.id === mentionsSurEcran[indexMention - 1].id
+        );
+
+        let numeroOrdreExtrait = mentionsSurEcran[indexMention - 1].numeroOrdre;
+        if (mentionEnBaseAvantMentionCourrante) {
+          numeroOrdreExtrait =
+            mentionEnBaseAvantMentionCourrante.numeroOrdreExtrait + 1;
+          mention.numeroOrdre = numeroOrdreExtrait;
+        }
 
         let i = mentionsEnBase.findIndex(
           el => el.numeroOrdreExtrait === numeroOrdreExtrait
@@ -207,9 +215,10 @@ export class GestionnaireRenumerotationMentions {
           i++;
         }
       }
+
       const estExtraitPlurilingue =
         DocumentDelivrance.estExtraitPlurilingue(typeDocument);
-      mentionsAAjouter.push({
+      const mentionAAjouter = {
         id: mention.id,
         numeroOrdreExtrait: mention.numeroOrdre,
         textes: {
@@ -225,9 +234,11 @@ export class GestionnaireRenumerotationMentions {
             id: NatureMention.getUuidFromNature(mention.nature)
           }
         }
-      });
+      };
+      mentionsEnBase.push(
+        mentionAAjouter as unknown as MentionPourRenumerotation
+      );
     });
-    mentionsAAjouter.forEach(el => mentionsEnBase.push(el));
     mentionsEnBase.sort((a, b) => a.numeroOrdreExtrait - b.numeroOrdreExtrait);
   }
 }
