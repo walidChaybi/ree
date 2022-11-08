@@ -86,18 +86,10 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
 
   const [titulaire1ParentsAdoptants, setTitulaire1ParentsAdoptants] = useState<
     IFiliation[]
-  >(
-    TitulaireActe.getDeuxParentsAdoptantsOuVide(
-      FicheActe.getTitulairesActeTabDansLOrdre(props.acte)[0]
-    )
-  );
+  >(initTitulaire1ParentAdoptants(props.acte));
   const [titulaire2ParentsAdoptants, setTitulaire2ParentsAdoptants] = useState<
     IFiliation[]
-  >(
-    TitulaireActe.getDeuxParentsAdoptantsOuVide(
-      FicheActe.getTitulairesActeTabDansLOrdre(props.acte)[1]
-    )
-  );
+  >(initTitulaire2ParentAdoptants(props.acte));
 
   useSauvegardeValidationSaisieExtrait(sauvegarderSaisieParams);
 
@@ -252,7 +244,15 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         </SaisirExtraitFormContext.Provider>
 
         <ReinitialiserValiderFormBoutons
-          onClickReInitialiser={reinitialisation}
+          onClickReInitialiser={() => {
+            reinitialisation();
+            setTitulaire1ParentsAdoptants(
+              initTitulaire1ParentAdoptants(props.acte)
+            );
+            setTitulaire2ParentsAdoptants(
+              initTitulaire2ParentAdoptants(props.acte)
+            );
+          }}
           validerDisabled={false}
         />
       </Formulaire>
@@ -332,4 +332,26 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
     }
   }
 };
+
+function initTitulaireParentAdoptants(
+  acte: IFicheActe,
+  numeroTitulaire: number
+): IFiliation[] | (() => IFiliation[]) {
+  return TitulaireActe.getDeuxParentsAdoptantsOuVide(
+    FicheActe.getTitulairesActeTabDansLOrdre(acte)[numeroTitulaire]
+  );
+}
+
+function initTitulaire1ParentAdoptants(
+  acte: IFicheActe
+): IFiliation[] | (() => IFiliation[]) {
+  return initTitulaireParentAdoptants(acte, 0);
+}
+
+function initTitulaire2ParentAdoptants(
+  acte: IFicheActe
+): IFiliation[] | (() => IFiliation[]) {
+  return initTitulaireParentAdoptants(acte, 1);
+}
+
 
