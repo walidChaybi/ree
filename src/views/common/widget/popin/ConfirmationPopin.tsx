@@ -5,7 +5,7 @@ import {
   DialogContentText,
   DialogTitle
 } from "@material-ui/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "reakit/Button";
 
 export interface IBoutonPopin {
@@ -29,6 +29,14 @@ export const ConfirmationPopin: React.FC<ConfirmationPopinProps> = ({
   title,
   disablePortal = false
 }) => {
+  const [messagesPopin, setMessagesPopin] = useState<string[]>();
+
+  useEffect(() => {
+    if (messages?.length) {
+      setMessagesPopin(messages);
+    }
+  }, [messages, isOpen]);
+
   return (
     <Dialog
       disablePortal={disablePortal}
@@ -38,7 +46,7 @@ export const ConfirmationPopin: React.FC<ConfirmationPopinProps> = ({
     >
       {title && <DialogTitle id="alert-dialog-title">title</DialogTitle>}
       <DialogContent>
-        {messages?.map((msg: string, idx: number) => {
+        {messagesPopin?.map((msg: string, idx: number) => {
           return (
             <DialogContentText
               id="alert-dialog-description"
