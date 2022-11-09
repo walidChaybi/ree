@@ -58,7 +58,7 @@ export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
         handleMiseAJourLibelle={(nouveauLibelle: string) =>
           setMajTitreParams({
             idPJ: idDocumentAAfficher,
-            libelle: titre ?? titreOrigine,
+            libelle: titreActuel ?? titreOrigine,
             nouveauLibelle
           })
         }

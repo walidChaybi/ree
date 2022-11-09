@@ -267,7 +267,9 @@ export const configRequetes = [
         match[1] ===
           "/requetes/fichierpiecejustificative/1234/libelle?nouveauLibelle=nouveauLibelle" ||
         match[1] ===
-          "/requetes/fichierpiecejustificative/1234/libelle?nouveauLibelle=test%20libelle"
+          "/requetes/fichierpiecejustificative/1234/libelle?nouveauLibelle=test%20libelle" ||
+        match[1] ===
+          "/requetes/fichierpiecejustificative/1234/libelle?nouveauLibelle=fichierPJ"
       ) {
         return { data: "12345" };
       }
