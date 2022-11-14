@@ -38,13 +38,14 @@
     .SelectNature {
       display: flex;
       flex-direction: inherit;
-      justify-content: space-evenly;
+      justify-content: space-between;
+      padding: 0 1rem 0 0;
     }
 
     &.Modification {
       .SelectModif {
         display: inline-grid;
-        grid-template-columns: 80% 20%;
+        grid-template-columns: 30% 40%;
         width: 100%;
         margin-bottom: 5px;
         line-height: 30px;
@@ -54,18 +55,19 @@
     &.Ajout {
       .SelectAjout {
         display: inline-grid;
-        grid-template-columns: 80% 20%;
+        grid-template-columns: 30% 40%;
         width: 100%;
         margin-bottom: 5px;
         line-height: 30px;
 
         .ConteneurBouton {
           display:flex;
+          justify-self: flex-start;
           button {
             width: 30px;
             line-height: 30px;
             border-radius: 50px;
-            background-color: $success-icon-color;
+            background-color: $application-color;
             font-size: 2rem;
             padding: 0 0 0 0;
             margin:auto;
