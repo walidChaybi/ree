@@ -1,7 +1,11 @@
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { ILieuEvenement } from "@model/etatcivil/commun/ILieuEvenement";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
-import { estRenseigne, getLibelle } from "@util/Utils";
+import {
+  estRenseigne,
+  getLibelle,
+  getValeurProprieteAPartirChemin
+} from "@util/Utils";
 import { FRANCE, LieuxUtils } from "@utilMetier/LieuxUtils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
@@ -18,8 +22,7 @@ import {
   LIEU_COMPLET,
   PAYS,
   REGION_DEPARTEMENT,
-  VILLE,
-  VILLE_EST_AFFICHEE
+  VILLE
 } from "./ConstantesNomsForm";
 import {
   estModeSaisieFrance as getEstModeSaisieFrance,
@@ -303,15 +306,18 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
       (!modeSaisiLieuInconnu && !lieuCompletRenseigne) ||
       (!lieuCompletRenseigne && !props.gestionEtrangerFrance) ||
       (decomposerLieu && !modeSaisiLieuInconnu);
-    if (
-      props.formik.getFieldProps(withNamespace(props.nom, VILLE_EST_AFFICHEE))
-        .value !== afficheVilleRegionPays
-    ) {
-      props.formik.setFieldValue(
-        withNamespace(props.nom, VILLE_EST_AFFICHEE),
-        afficheVilleRegionPays
-      );
+
+    // Mise à jour de la propriété "villeEstAffichee" sans passer par Formik pour ne pas positionner le flag dirty à true
+    // On a besoin de de positionner cette propriété pour le mapping (cf. mappingFormulaireSaisirExtraitVersExtraitAEnvoyer.ts)
+    //   mais sans que pour autant le formulaire soit dirty
+    const lieuEvenementForm: any = getValeurProprieteAPartirChemin(
+      props.nom,
+      props.formik.values
+    );
+    if (lieuEvenementForm) {
+      lieuEvenementForm.villeEstAffichee = afficheVilleRegionPays;
     }
+
     return afficheVilleRegionPays;
   }
 };
