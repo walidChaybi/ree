@@ -44,7 +44,8 @@ import {
   TITULAIRE_EVT_1,
   TITULAIRE_EVT_2,
   TYPE,
-  VILLE
+  VILLE,
+  VILLE_EST_AFFICHEE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { IDetailMariage } from "@model/etatcivil/acte/IDetailMariage";
 import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
@@ -146,6 +147,7 @@ export interface ILieuEvenementForm {
   [REGION_DEPARTEMENT]: string;
   [PAYS]: string;
   [ETRANGER_FRANCE]: string;
+  [VILLE_EST_AFFICHEE]?: boolean;
 }
 
 export interface IParentNaissanceForm {
@@ -429,7 +431,8 @@ function saisieLieuEvt(
     [PAYS]: getValeurOuVide(
       LieuxUtils.isPaysFrance(evenement?.pays) ? "" : evenement?.pays
     ),
-    [ETRANGER_FRANCE]: getEtrangerOuFrance(evenement, etrangerParDefaut)
+    [ETRANGER_FRANCE]: getEtrangerOuFrance(evenement, etrangerParDefaut),
+    villeEstAffichee: false
   };
 }
 

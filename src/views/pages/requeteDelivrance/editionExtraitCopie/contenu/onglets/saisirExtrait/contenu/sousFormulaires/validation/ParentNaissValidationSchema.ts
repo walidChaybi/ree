@@ -69,13 +69,15 @@ function supprimeValeurInconnu(
   let parentNaissanceFormSansValeurInconnu;
   if (parentNaissanceForm) {
     parentNaissanceFormSansValeurInconnu = { ...parentNaissanceForm };
+    parentNaissanceFormSansValeurInconnu.lieuNaissance = {
+      ...parentNaissanceForm.lieuNaissance
+    };
+    parentNaissanceFormSansValeurInconnu.lieuNaissance.villeEstAffichee =
+      undefined;
     if (
       parentNaissanceForm.lieuNaissance?.EtrangerFrance ===
       EtrangerFrance.getKey(EtrangerFrance.INCONNU)
     ) {
-      parentNaissanceFormSansValeurInconnu.lieuNaissance = {
-        ...parentNaissanceForm.lieuNaissance
-      };
       parentNaissanceFormSansValeurInconnu.lieuNaissance.EtrangerFrance = "";
       parentNaissanceFormSansValeurInconnu.lieuNaissance.lieuComplet = "";
       parentNaissanceFormSansValeurInconnu.lieuNaissance.ville = "";

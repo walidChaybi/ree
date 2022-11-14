@@ -18,6 +18,7 @@ import {
   getValeurOuVide,
   UN
 } from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
   IContratMariageForm,
   IDateCompleteForm,
@@ -266,7 +267,11 @@ function mapEvenement(evenementSaisi?: IEvenementForm): IEvenement {
     evenementSaisi?.lieuEvenement?.EtrangerFrance ===
     EtrangerFrance.getKey(EtrangerFrance.FRANCE)
   ) {
-    pays = "";
+    pays = EtrangerFrance.getKey(EtrangerFrance.FRANCE);
+
+    if (LieuxUtils.isVilleParis(ville)) {
+      region = "";
+    }
   }
 
   if (
@@ -274,6 +279,10 @@ function mapEvenement(evenementSaisi?: IEvenementForm): IEvenement {
     EtrangerFrance.getKey(EtrangerFrance.ETRANGER)
   ) {
     arrondissement = "";
+  }
+
+  if (evenementSaisi?.lieuEvenement?.villeEstAffichee) {
+    lieuReprise = "";
   }
 
   return {

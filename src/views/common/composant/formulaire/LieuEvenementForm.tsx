@@ -18,7 +18,8 @@ import {
   LIEU_COMPLET,
   PAYS,
   REGION_DEPARTEMENT,
-  VILLE
+  VILLE,
+  VILLE_EST_AFFICHEE
 } from "./ConstantesNomsForm";
 import {
   estModeSaisieFrance as getEstModeSaisieFrance,
@@ -298,11 +299,20 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
   }
 
   function affichageVilleRegionPays(): boolean {
-    return (
+    const afficheVilleRegionPays =
       (!modeSaisiLieuInconnu && !lieuCompletRenseigne) ||
       (!lieuCompletRenseigne && !props.gestionEtrangerFrance) ||
-      (decomposerLieu && !modeSaisiLieuInconnu)
-    );
+      (decomposerLieu && !modeSaisiLieuInconnu);
+    if (
+      props.formik.getFieldProps(withNamespace(props.nom, VILLE_EST_AFFICHEE))
+        .value !== afficheVilleRegionPays
+    ) {
+      props.formik.setFieldValue(
+        withNamespace(props.nom, VILLE_EST_AFFICHEE),
+        afficheVilleRegionPays
+      );
+    }
+    return afficheVilleRegionPays;
   }
 };
 
