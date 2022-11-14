@@ -545,43 +545,43 @@ export const requeteCreation = {
       id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9421",
       libelle: "etat_civil",
       categorie: "TITRE_SEJOUR",
-      piecesJustificatives: [pieceJustificative]
+      piecesJustificatives: [{ ...pieceJustificative }]
     },
     {
       id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9422",
       libelle: "union_actuelle",
       categorie: "ACTE_MARIAGE",
-      piecesJustificatives: [pieceJustificative]
+      piecesJustificatives: [{ ...pieceJustificative }]
     },
     {
       id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9423",
       libelle: "parents_et_fratrie",
       categorie: "ACTE_MARIAGE_PARENTS",
-      piecesJustificatives: [pieceJustificative]
+      piecesJustificatives: [{ ...pieceJustificative }]
     },
     {
       id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9424",
       libelle: "parents 2",
       categorie: "ACTE_ETAT_CIVIL_PARENT",
-      piecesJustificatives: [pieceJustificative]
+      piecesJustificatives: [{ ...pieceJustificative }]
     },
     {
       id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9425",
       libelle: "parents 1",
       categorie: "ACTE_ETAT_CIVIL_PARENT",
-      piecesJustificatives: [pieceJustificative]
+      piecesJustificatives: [{ ...pieceJustificative }]
     },
     {
       id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9426",
       libelle: "parents 3",
       categorie: "ACTE_ETAT_CIVIL_PARENT",
-      piecesJustificatives: [pieceJustificative]
+      piecesJustificatives: [{ ...pieceJustificative }]
     },
     {
       id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9429",
       libelle: "libelle pourri 10",
       categorie: "PREUVE_DIVORCE",
-      piecesJustificatives: [pieceJustificative]
+      piecesJustificatives: [{ ...pieceJustificative }]
     }
   ],
   campagne: "campagne",

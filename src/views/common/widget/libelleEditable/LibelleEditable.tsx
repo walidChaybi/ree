@@ -32,12 +32,12 @@ export const LibelleEditable: React.FC<ILibelleEditable> = props => {
     <div className="LibelleEditable">
       {modeEdition ? (
         <input
-          id={`input-creation-${props.libelle}`}
-          name={`input-creation-${props.libelle}`}
+          id={`input-creation-${props.libelle ?? props.libelleOrigine}`}
+          name={`input-creation-${props.libelle ?? props.libelleOrigine}`}
           title={props.libelle}
-          aria-label={`input-creation-${props.libelle}`}
+          aria-label={`input-creation-${props.libelle ?? props.libelleOrigine}`}
           type="text"
-          defaultValue={props.libelle}
+          defaultValue={props.libelle ?? props.libelleOrigine}
           onBlur={e => fermerInputEdition(e.target.value)}
           onKeyDown={e => {
             if (e.key === "Enter") {
@@ -51,7 +51,7 @@ export const LibelleEditable: React.FC<ILibelleEditable> = props => {
           autoFocus
         />
       ) : (
-        props.libelle
+        props.libelle ?? props.libelleOrigine
       )}
       <div className={"flexAccordion"}>
         {afficherBoutonAnnuler() && (

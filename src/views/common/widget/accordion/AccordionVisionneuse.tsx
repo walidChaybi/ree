@@ -16,16 +16,17 @@ export interface AccordionVisionneuseProps {
   idDocumentAAfficher: string;
   titre?: string;
   titreOrigine: string;
+  setTitreActuel: (nouveauTitre: string) => void;
 }
 
 export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
   idDocumentAAfficher,
   titre,
-  titreOrigine
+  titreOrigine,
+  setTitreActuel
 }) => {
   const [idDocument, setIdDocument] = useState<string>();
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const [titreActuel, setTitreActuel] = useState<string>(titre ?? titreOrigine);
   const [majTitreParams, setMajTitreParams] = useState<IMajLibellePjParams>();
 
   useEffect(() => {
@@ -54,11 +55,11 @@ export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
       onChange={() => setIsExpanded(!isExpanded)}
     >
       <AccordionTitle
-        titre={titreActuel}
+        titre={titre}
         handleMiseAJourLibelle={(nouveauLibelle: string) =>
           setMajTitreParams({
             idPJ: idDocumentAAfficher,
-            libelle: titreActuel ?? titreOrigine,
+            libelle: titre ?? titreOrigine,
             nouveauLibelle
           })
         }

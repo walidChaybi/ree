@@ -35,7 +35,10 @@ import {
   ReponseAppelNomenclatureTypePiecesJustificative
 } from "../data/nomenclatures";
 import { pieceComplementInformation } from "../data/PieceComplementInformation";
-import { reponseRequeteCreationMessageSdanf } from "../data/requeteCreation";
+import {
+  reponseRequeteCreationMessageSdanf,
+  requeteCreation
+} from "../data/requeteCreation";
 import { idRequeteRDCSC } from "../data/requeteDelivrance";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 import { CreationRDCSC, UpdateRDCSC } from "../data/SaisirRequeteDelivrance";
@@ -243,6 +246,13 @@ export const configRequetes = [
             link: ""
           },
           data: reponseMesRequeteCreation
+        };
+      }
+
+      // Mes requêtes création
+      if (match[1] === "/requetes/3ed9aa4e-921b-489f-b8fe-531dd703c60c") {
+        return {
+          data: requeteCreation
         };
       }
 
