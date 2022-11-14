@@ -17,7 +17,6 @@ import { checkDirty, getLibelle, TROIS } from "@util/Utils";
 import { OngletsDynamique } from "@widget/ongletsDynamique/OngletsDynamique";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useEffect, useState } from "react";
-import { EditionExtraitCopiePageContext } from "../EditionExtraitCopiePage";
 import { DocumentEC } from "../enum/DocumentEC";
 import {
   genererListeAjoutComplementaire,
@@ -74,7 +73,6 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
     "Pas de délivrance d'extrait plurilingue de mariage pour des personnes de même sexe ou de genre indéterminé.";
 
   const { isDirty, setIsDirty } = useContext(RECEContext);
-  const { setOperationEnCours } = useContext(EditionExtraitCopiePageContext);
   const [liste, setListe] = useState<ItemListe[]>(listePlus);
   const [openPopinErreur, setOpenPopinErreur] = useState(false);
   const [erreurMessagePopin, setErreurMessagePopin] = useState("");
@@ -104,7 +102,6 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
       if (messageErreur) {
         showMessageErreur(messageErreur);
       } else {
-        setOperationEnCours(true);
         ajouterDocument(typeDocument);
       }
     }
@@ -150,7 +147,6 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
   };
 
   const handleSelectMoins = () => {
-    setOperationEnCours(true);
     retirerDocument();
   };
 

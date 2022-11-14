@@ -107,6 +107,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
 
   const ajouteDocument = (typeDocument: string) => {
     if (checkDirty(isDirty, setIsDirty) && requete) {
+      setOperationEnCours(true);
       if (estDocumentComplementaireDeTypeCopieIntegrale(typeDocument)) {
         setCreationECParams({
           idActe: resultatInformationsActeApiHook?.acte?.id,
@@ -138,6 +139,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
       );
 
       if (checkDirty(isDirty, setIsDirty) && documentASupprimer) {
+        setOperationEnCours(true);
         setSupprimerDocument({
           idDocumentReponse: documentASupprimer.id,
           idRequete: requete.id
