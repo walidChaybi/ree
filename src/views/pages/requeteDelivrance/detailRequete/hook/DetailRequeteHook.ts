@@ -314,12 +314,10 @@ export function mapEchangesRetourSDANF(echangesServeur?: any): IEchange[] {
 export function mapEchangeRetourSDANF(echangeServeur?: any): IEchange {
   const { dateMessage, ...reste } = echangeServeur;
 
-  const echangeMapped: IEchange = {
+  return {
     date: getFormatDateFromTimestamp(dateMessage),
     ...reste
   };
-
-  return echangeMapped;
 }
 
 function mapDocumentPJ(documents?: any): IDocumentPJ[] {

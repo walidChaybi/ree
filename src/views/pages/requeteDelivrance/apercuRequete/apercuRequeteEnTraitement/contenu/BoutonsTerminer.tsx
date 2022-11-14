@@ -1,3 +1,4 @@
+import { RECEContext } from "@core/body/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
@@ -9,10 +10,10 @@ import { validerMentionsPlusieursDocuments } from "@pages/requeteDelivrance/edit
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { storeRece } from "@util/storeRece";
-import { getLibelle } from "@util/Utils";
-import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
+import { checkDirty, getLibelle } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { BoutonSignature } from "@widget/signature/BoutonSignature";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import { BoutonTerminerApresImpression } from "./BoutonTerminerApresImpression";
@@ -29,6 +30,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
 }) => {
   const history = useHistory();
   const [estDisabled, setEstDisabled] = useState(true);
+  const { isDirty, setIsDirty } = useContext(RECEContext);
 
   const aDroitSignerEtStatutSigner =
     officierHabiliterPourLeDroit(Droit.SIGNER) &&
@@ -47,12 +49,14 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
   }
 
   const goBack = useCallback(() => {
-    validerMentionsPlusieursDocuments(
-      () => history.goBack(),
-      acte,
-      requete.documentsReponses
-    );
-  }, [history, acte, requete.documentsReponses]);
+    if (checkDirty(isDirty, setIsDirty)) {
+      validerMentionsPlusieursDocuments(
+        () => history.goBack(),
+        acte,
+        requete.documentsReponses
+      );
+    }
+  }, [history, acte, requete.documentsReponses, isDirty, setIsDirty]);
 
   const actionApresSignature = useCallback(
     (allsigned: boolean) => {
@@ -86,14 +90,13 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
             connectedUser={storeRece.utilisateurCourant}
           />
           {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) && (
-            <BoutonOperationEnCours
+            <Bouton
               title={getLibelle("Terminer")}
               onClick={goBack}
-              estDesactive={estDisabled}
-              checkDirtyActive={true}
+              disabled={estDisabled}
             >
               Terminer
-            </BoutonOperationEnCours>
+            </Bouton>
           )}
         </>
       )}
