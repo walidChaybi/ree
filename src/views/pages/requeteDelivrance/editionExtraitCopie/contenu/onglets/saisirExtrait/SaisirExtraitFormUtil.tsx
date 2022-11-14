@@ -109,7 +109,9 @@ export function parentMemeSexeOuIndeterminCasPlurilingue(
 ) {
   return (
     titulaires.some(
-      el => el != null && TitulaireActe.genreIndetermineOuParentDeMemeSexe(el)
+      titulaire =>
+        titulaire != null &&
+        TitulaireActe.genreIndetermineOuParentDeMemeSexe(titulaire)
     ) && unDocumentPlurilingueEstPresent(documentsReponses)
   );
 }

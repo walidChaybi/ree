@@ -65,10 +65,7 @@ export const TitulaireActe = {
       this.getPrenom3(titulaire) ? " " : ""
     }${this.getPrenom3(titulaire)}`;
   },
-  getPrenomsSeparerPar(
-    titulaire: ITitulaireActe,
-    separateur: string = ","
-  ): string {
+  getPrenomsSeparerPar(titulaire: ITitulaireActe, separateur = ","): string {
     let prenom = "";
     if (titulaire.prenoms?.length) {
       prenom = titulaire.prenoms?.join(`${separateur} `);
@@ -221,10 +218,10 @@ export const TitulaireActe = {
 
   genreIndetermineOuParentDeMemeSexe(titulaire: ITitulaireActe) {
     return (
-      titulaire.sexe === Sexe.INDETERMINE ||
+      Sexe.estIndetermine(titulaire.sexe) ||
       TitulaireActe.parentsSontDeMemeSexe(titulaire) ||
-      TitulaireActe.getParentsDirects(titulaire).some(
-        el => el.sexe === Sexe.INDETERMINE
+      TitulaireActe.getParentsDirects(titulaire).some(titul =>
+        Sexe.estIndetermine(titul.sexe)
       )
     );
   },
@@ -232,7 +229,7 @@ export const TitulaireActe = {
   genreIndetermineOuMemeSexe(titulaires: ITitulaireActe[]) {
     const sexe = titulaires[0].sexe;
     return (
-      titulaires.some(titulaire => titulaire.sexe === Sexe.INDETERMINE) ||
+      titulaires.some(titulaire => Sexe.estIndetermine(titulaire.sexe)) ||
       titulaires.every(titulaire => titulaire.sexe === sexe)
     );
   },

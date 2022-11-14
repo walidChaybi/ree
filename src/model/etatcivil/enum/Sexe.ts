@@ -29,4 +29,14 @@ export class Sexe extends EnumWithLibelle {
       Sexe.INCONNU
     ]);
   }
+
+  public static estIndetermine(sexe: any) {
+    let estSexeIndetermine;
+    if (typeof sexe === "string") {
+      estSexeIndetermine = sexe === Sexe.getKey(Sexe.INDETERMINE);
+    } else {
+      estSexeIndetermine = sexe === Sexe.INDETERMINE;
+    }
+    return estSexeIndetermine;
+  }
 }
