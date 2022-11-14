@@ -78,6 +78,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
       {aDroitSignerEtStatutSigner && (
         <>
           <BoutonSignature
+            checkDirtyActive={true}
             libelle={getLibelle("Terminer et signer")}
             requetesASigner={[
               {

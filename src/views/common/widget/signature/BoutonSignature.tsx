@@ -1,3 +1,4 @@
+import { RECEContext } from "@core/body/RECEContext";
 import {
   IActeApiHookParams,
   useInformationsActeApiHook
@@ -20,9 +21,9 @@ import { validerMentionsPlusieursDocuments } from "@pages/requeteDelivrance/edit
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import messageManager from "@util/messageManager";
-import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { checkDirty, getLibelle, getValeurOuVide } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
 import { PopinSignature } from "../signature/PopinSignature";
 import {
@@ -34,6 +35,7 @@ interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
   uniqueSignature?: boolean;
   connectedUser?: IOfficier;
+  checkDirtyActive: boolean;
 }
 
 interface RequeteASigner {
@@ -49,6 +51,8 @@ export interface TableauDataToUse {
 export const BoutonSignature: React.FC<
   BoutonSignatureProps & TableauDataToUse
 > = props => {
+  const { isDirty, setIsDirty } = useContext(RECEContext);
+
   const [showWaitState, setShowWaitState] = useState<boolean>(false);
   const [requetesASigner, setRequetesASigner] = useState<RequeteASigner[]>([]);
   const [requetesASignerSansActes, setRequetesASignerSansActes] =
@@ -215,7 +219,14 @@ export const BoutonSignature: React.FC<
             props.connectedUser
           )
         }
-        onClick={handleClickSignature}
+        onClick={() => {
+          if (
+            !props.checkDirtyActive ||
+            (props.checkDirtyActive && checkDirty(isDirty, setIsDirty))
+          ) {
+            handleClickSignature();
+          }
+        }}
       >
         {props.libelle}
       </Bouton>
