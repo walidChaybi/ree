@@ -23,9 +23,9 @@ export const EvenementForm: React.FC<EvenementFormProps> = props => {
       <DateComposeForm
         nomDate={withNamespace(props.nom, DATE_EVENEMENT)}
         labelDate={props.labelDate}
-        disabledJour={Evenement.estJourRenseigne(props.evenement)}
-        disabledMois={Evenement.estMoisRenseigne(props.evenement)}
-        disabledAnnee={Evenement.estAnneeRenseignee(props.evenement)}
+        disabledJour={Evenement.estTotalementRenseigne(props.evenement)}
+        disabledMois={Evenement.estTotalementRenseigne(props.evenement)}
+        disabledAnnee={Evenement.estTotalementRenseigne(props.evenement)}
         disabledHeure={Evenement.estHeureRenseignee(props.evenement)}
         afficheHeure={props.afficheHeure}
         showCroixSuppression={false}

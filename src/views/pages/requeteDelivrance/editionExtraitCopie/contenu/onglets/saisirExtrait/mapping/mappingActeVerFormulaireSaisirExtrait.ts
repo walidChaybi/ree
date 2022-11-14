@@ -47,7 +47,7 @@ import {
   VILLE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { IDetailMariage } from "@model/etatcivil/acte/IDetailMariage";
-import { IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";
 import {
@@ -296,7 +296,9 @@ function saisieDateOuAgeDe(
   age?: number
 ): IDateNaissanceAgeDe {
   return {
-    [AGE]: getValeurOuVide(age),
+    [AGE]: Evenement.estPartiellementRenseigne(dateEvt)
+      ? ""
+      : getValeurOuVide(age),
     [DATE]: saisieDateEvt(dateEvt)
   };
 }

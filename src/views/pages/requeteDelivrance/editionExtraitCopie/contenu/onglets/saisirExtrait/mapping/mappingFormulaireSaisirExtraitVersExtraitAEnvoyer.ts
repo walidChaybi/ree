@@ -226,7 +226,9 @@ function mapTitulaire(titulaireSaisi: ITitulaireEvtForm) {
     ),
     prenoms: mapPrenoms(titulaireSaisi.prenoms),
     sexe: mapSexe(titulaireSaisi.sexe),
-    age: titulaireSaisi.evenement?.dateNaissanceOuAgeDe?.age
+    age: getValeurOuUndefined(
+      titulaireSaisi.evenement?.dateNaissanceOuAgeDe?.age
+    )
   } as any as ITitulaireActe;
 }
 

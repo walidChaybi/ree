@@ -127,7 +127,7 @@ const TitulaireEvenementForm: React.FC<
             labelDate={getLabels(NatureActe.NAISSANCE).dateEvenement}
             labelLieu={getLabels(NatureActe.NAISSANCE).lieuEvenement}
             evenement={props.evenement}
-            afficheHeure={true}
+            afficheHeure={props.natureActe === NatureActe.NAISSANCE}
             gestionEtrangerFrance={props.gestionEtrangerFrance}
             etrangerParDefaut={props.etrangerParDefaut}
           />

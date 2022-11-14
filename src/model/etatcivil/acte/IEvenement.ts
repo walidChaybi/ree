@@ -58,12 +58,25 @@ export const Evenement = {
       ? LieuxUtils.getLieu(evenement.ville, evenement.region, evenement.pays)
       : "";
   },
-  estRenseigne(evenement?: IEvenement): boolean {
+
+  estPartiellementRenseigne(evenement?: IEvenement): boolean {
     return (
       estRenseigne(evenement?.jour) ||
       estRenseigne(evenement?.mois) ||
       estRenseigne(evenement?.annee)
     );
+  },
+
+  estTotalementRenseigne(evenement?: IEvenement): boolean {
+    return (
+      estRenseigne(evenement?.jour) &&
+      estRenseigne(evenement?.mois) &&
+      estRenseigne(evenement?.annee)
+    );
+  },
+
+  estNonRenseigne(evenement?: IEvenement): boolean {
+    return !this.estPartiellementRenseigne(evenement);
   },
 
   estHeureRenseignee(evenement?: IEvenement): boolean {

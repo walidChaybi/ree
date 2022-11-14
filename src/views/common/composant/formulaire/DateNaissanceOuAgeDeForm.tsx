@@ -24,14 +24,15 @@ type DateNaissanceOuAgeDeFormProps = ComponentProps & FormikComponentProps;
 const DateNaissanceOuAgeDeForm: React.FC<
   DateNaissanceOuAgeDeFormProps
 > = props => {
-  const estRenseigneAgeOuNaissance =
-    estRenseigne(props.age) || Evenement.estRenseigne(props.naissance);
-
   const [disabledAgeDe, setDisabledAgeDe] = useState<boolean>(
-    estRenseigneAgeOuNaissance
+    Evenement.estPartiellementRenseigne(props.naissance) ||
+      estRenseigne(props.age)
   );
 
-  const [disabledDate, setDisabledDate] = useState<boolean>(false);
+  const [disabledDate, setDisabledDate] = useState<boolean>(
+    Evenement.estTotalementRenseigne(props.naissance) ||
+      (Evenement.estNonRenseigne(props.naissance) && estRenseigne(props.age))
+  );
 
   const onChangeDate = useCallback(
     (date: IDateComposeForm, type?: ChampDateModifie) => {
@@ -77,21 +78,7 @@ const DateNaissanceOuAgeDeForm: React.FC<
         <DateComposeForm
           nomDate={withNamespace(props.nom, DATE)}
           labelDate="Date de naissance"
-          disabledJour={
-            disabledDate ||
-            estRenseigne(props.age) ||
-            Evenement.estJourRenseigne(props.naissance)
-          }
-          disabledMois={
-            disabledDate ||
-            estRenseigne(props.age) ||
-            Evenement.estMoisRenseigne(props.naissance)
-          }
-          disabledAnnee={
-            disabledDate ||
-            estRenseigne(props.age) ||
-            Evenement.estAnneeRenseignee(props.naissance)
-          }
+          disabled={disabledDate}
           onChange={onChangeDate}
           showCroixSuppression={false}
         />
