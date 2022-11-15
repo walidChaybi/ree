@@ -39,7 +39,6 @@ import {
   useStockeCTV
 } from "./televerification/stockeCtvApiHook";
 
-// Paramètre du hook useGenerationEC
 export interface IGenerationECParams {
   idActe?: string;
   acte?: IFicheActe;
@@ -55,34 +54,24 @@ export interface IGenerationECResultat {
   erreur?: any;
 }
 
+// prettier-ignore
 export function useGenerationEC(
   params?: IGenerationECParams
 ): IGenerationECResultat | undefined {
   const [resultat, setResultat] = useState<IGenerationECResultat>();
 
-  const [extraitCopieApiHookParams, setExtraitCopieApiHookParams] =
-    useState<IExtraitCopieApiHookParams>();
-
-  const [sauvegarderDocumentParams, setSauvegarderDocumentParams] =
-    useState<ISauvegarderDocumentsParams>();
-
-  const [
-    stockerDocumentCreerActionMajStatutRequeteParams,
-    setStockerDocumentCreerActionMajStatutRequeteParams
-  ] = useState<IStockerDocumentCreerActionMajStatutRequeteParams>();
-
-  const [acteApiHookParams, setActeApiHookParams] =
-    useState<IActeApiHookParams>();
+  const [extraitCopieApiHookParams, setExtraitCopieApiHookParams] = useState<IExtraitCopieApiHookParams>();
+  const [sauvegarderDocumentParams, setSauvegarderDocumentParams] = useState<ISauvegarderDocumentsParams>();
+  const [stockerDocumentCreerActionMajStatutRequeteParams, setStockerDocumentCreerActionMajStatutRequeteParams] 
+                                                                    = useState<IStockerDocumentCreerActionMajStatutRequeteParams>();
+  const [acteApiHookParams, setActeApiHookParams] = useState<IActeApiHookParams>();
   const [acteDejaPresent, setActeDejaPresent] = useState<IFicheActe>();
   const [validation, setValidation] = useState<Validation>();
-  const [recupererCtvApiHookParam, setRecupererCtvApiHookParam] =
-    useState<{}>();
-  const [stockeCtvApiHookParam, setStockeCtvApiHookParam] =
-    useState<IStockeCTVParams>();
+  const [recupererCtvApiHookParam, setRecupererCtvApiHookParam] = useState<{}>();
+  const [stockeCtvApiHookParam, setStockeCtvApiHookParam] = useState<IStockeCTVParams>();
 
   useEffect(() => {
     if (estPresentIdActeEtChoixDelivrance(params)) {
-      setRecupererCtvApiHookParam({});
       setActeApiHookParams({
         idActe: params?.idActe,
         recupereImagesEtTexte: ChoixDelivrance.estCopieIntegraleOuArchive(
@@ -102,6 +91,20 @@ export function useGenerationEC(
   // 1bis - Récuperer code CTV
   const recupererCtvResultat = useRecupererCTV(recupererCtvApiHookParam);
 
+  useEffect(() => {
+    if (acteApiHookResultat) {
+      setRecupererCtvApiHookParam({});
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [acteApiHookResultat]);
+
+  useEffect(() => {
+    if (acteDejaPresent) {
+      setRecupererCtvApiHookParam({});
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [acteDejaPresent]);
+
   // 2- Création du bon EC composition suivant le choix de délivrance
   useEffect(() => {
     creationEC(
@@ -112,7 +115,7 @@ export function useGenerationEC(
       recupererCtvResultat?.ctv
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [acteApiHookResultat, acteDejaPresent, recupererCtvResultat]);
+  }, [recupererCtvResultat]);
 
   // 3 - Création de l'EC PDF pour un acte: appel api composition
   // récupération du document en base64
@@ -216,11 +219,7 @@ export function useGenerationEC(
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    uuidDocumentReponse,
-    uuidDocumentReponseSansAction,
-    recupererCtvResultat
-  ]);
+  }, [uuidDocumentReponse, uuidDocumentReponseSansAction]);
 
   // 7- Maj du résultat
   useEffect(() => {

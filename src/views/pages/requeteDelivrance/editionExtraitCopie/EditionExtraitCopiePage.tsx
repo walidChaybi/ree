@@ -256,7 +256,10 @@ export const EditionExtraitCopiePage: React.FC = () => {
   );
 
   useEffect(() => {
-    if (resultatGenerationEC || resulatSuppressionDocumentComplementaire) {
+    if (
+      resultatGenerationEC ||
+      resulatSuppressionDocumentComplementaire?.suppressionOk
+    ) {
       rafraichirRequete(DocumentEC.Principal);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
