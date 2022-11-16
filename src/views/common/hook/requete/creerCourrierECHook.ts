@@ -49,7 +49,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
     useState<IGenerationCourrierParams>();
   const [generationDocumentECParams, setGenerationDocumentECParams] =
     useState<IGenerationECParams>();
-  const [mentionsRetirees, setMentionsRetirees] = useState<string[]>();
+  const [idsMentionsRetirees, setIdsMentionsRetirees] = useState<string[]>();
   const [majMentionsParams, setMajMentionsParams] =
     useState<IMiseAJourMentionsParams>();
   const [acteApiHookParams, setActeApiHookParams] =
@@ -83,7 +83,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
           params?.requete.choixDelivrance ===
           ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE
         ) {
-          mentions = Mention.filtrerFormaterEtTrierMentions(
+          mentions = Mention.filtrerFormaterEtTrierMentionsPlurilingues(
             acteApiHookResultat?.acte?.mentions,
             acteApiHookResultat?.acte?.nature
           );
@@ -91,8 +91,8 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
           mentions = acteApiHookResultat?.acte?.mentions;
         }
 
-        setMentionsRetirees(
-          gestionnaireMentionsRetireesAuto.getMentionsRetirees(
+        setIdsMentionsRetirees(
+          gestionnaireMentionsRetireesAuto.getIdsMentionsRetirees(
             mentions,
             params?.requete.choixDelivrance,
             acteApiHookResultat?.acte?.nature
@@ -124,7 +124,8 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
     [params, acteApiHookResultat]
   );
 
-  const majMentionFait = useMiseAJourMentionsApiHook(majMentionsParams);
+  const mentionNationaliteAjoutee =
+    useMiseAJourMentionsApiHook(majMentionsParams);
 
   // 3 - Création des paramètres pour la création du courrier
   useEffect(() => {
@@ -160,7 +161,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
   useEffect(() => {
     if (params) {
       const mentionNationaliteAjoute = nationaliteAjouteSiBesoin(
-        majMentionFait,
+        mentionNationaliteAjoutee,
         params,
         acteApiHookResultat?.acte
       );
@@ -171,20 +172,26 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
           params.requete.choixDelivrance
         ) &&
         params.requete.documentsReponses.length < DEUX &&
-        mentionsRetirees &&
+        idsMentionsRetirees &&
         mentionNationaliteAjoute
       ) {
         setGenerationDocumentECParams({
-          acte: majMentionFait ? undefined : acteApiHookResultat?.acte,
-          idActe: majMentionFait ? params.idActe : undefined,
+          acte: mentionNationaliteAjoutee
+            ? undefined
+            : acteApiHookResultat?.acte,
+          idActe: mentionNationaliteAjoutee ? params.idActe : undefined,
           requete: params.requete,
-          mentionsRetirees,
+          mentionsRetirees: idsMentionsRetirees,
           choixDelivrance: params.requete.choixDelivrance
         });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mentionsRetirees, resultatGenerationCourrier, majMentionFait]);
+  }, [
+    idsMentionsRetirees,
+    resultatGenerationCourrier,
+    mentionNationaliteAjoutee
+  ]);
 
   // Génération du document demandé
   const resultatGenerationEC = useGenerationEC(generationDocumentECParams);

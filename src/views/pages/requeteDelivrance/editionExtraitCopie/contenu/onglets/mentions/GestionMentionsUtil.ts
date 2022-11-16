@@ -88,8 +88,7 @@ export function mappingVersMentionAffichagePourExtraitPlurilingue(
   document: IDocumentReponse,
   natureActe?: NatureActe
 ): IMentionAffichage[] {
-
-  const mentions = Mention.filtrerFormaterEtTrierMentions(
+  const mentions = Mention.filtrerFormaterEtTrierMentionsPlurilingues(
     mentionsApi,
     natureActe
   );

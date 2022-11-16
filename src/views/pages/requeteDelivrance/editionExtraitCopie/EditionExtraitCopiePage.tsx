@@ -90,6 +90,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
 
   const { detailRequeteState } =
     useAvecRejeuDetailRequeteApiHook(detailRequeteParams);
+
   const resulatEC = useGenerationEC(creationECParams);
 
   const resultatInformationsActeApiHook = useInformationsActeApiHook(

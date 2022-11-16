@@ -205,7 +205,7 @@ export const Mention = {
     }
     return texteMention;
   },
-  filtrerFormaterEtTrierMentions(
+  filtrerFormaterEtTrierMentionsPlurilingues(
     mentions: IMention[],
     natureActe?: NatureActe
   ): IMention[] {

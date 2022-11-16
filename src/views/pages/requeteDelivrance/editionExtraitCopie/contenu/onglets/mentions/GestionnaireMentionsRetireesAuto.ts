@@ -29,7 +29,7 @@ import { DEUX } from "@util/Utils";
 export type IMentionAvecRetiree = IMention & { retiree?: boolean };
 
 export class GestionnaireMentionsRetireesAuto {
-  public getMentionsRetirees(
+  public getIdsMentionsRetirees(
     mentions: IMentionAvecRetiree[],
     choixDelivrance?: ChoixDelivrance,
     natureActe?: NatureActe

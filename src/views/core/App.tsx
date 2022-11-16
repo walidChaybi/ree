@@ -54,7 +54,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     GestionnaireARetraiterDansSaga.init();
-    loadFonts();
+    chargerPolices();
   }, []);
 
   useEffect(() => {
@@ -126,7 +126,7 @@ const App: React.FC = () => {
   );
 };
 
-const loadFonts = () => {
+const chargerPolices = () => {
   // Ajout des polices dynamiquement pour pouvoir être copié dans fenêtre externe
   const notoSansRegular = new FontFace(
     "NotoSansUI-Regular",
