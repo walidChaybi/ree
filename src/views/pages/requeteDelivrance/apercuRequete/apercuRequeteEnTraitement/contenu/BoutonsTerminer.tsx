@@ -17,6 +17,7 @@ import React, { useCallback, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import { BoutonTerminerApresImpression } from "./BoutonTerminerApresImpression";
+import { BoutonTransmettreAValideur } from "./BoutonTransmettreAValideur";
 import { BoutonValiderTerminer } from "./BoutonValiderTerminer";
 
 interface BoutonsTerminerProps {
@@ -69,10 +70,13 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
 
   return (
     <>
+      {StatutRequete.estASignerOuAValider(requete.statutCourant.statut) && (
+        <BoutonTransmettreAValideur idRequete={requete.id} />
+      )}
       {afficherBoutonValiderTerminer(requete) && (
         <>
-          <BoutonTerminerApresImpression requete={requete} />
           <BoutonValiderTerminer requete={requete} />
+          <BoutonTerminerApresImpression requete={requete} />
         </>
       )}
       {aDroitSignerEtStatutSigner && (
@@ -110,3 +114,4 @@ const afficherBoutonValiderTerminer = (requete: IRequeteDelivrance) =>
     SousTypeDelivrance.estRDDouRDCouRDDP(requete?.sousType)) ||
   (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
     SousTypeDelivrance.estRDCSDouRDCSC(requete.sousType));
+

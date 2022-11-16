@@ -15,9 +15,10 @@ import "./scss/TransfertPopin.scss";
 interface TransfertPopinProps {
   open: boolean;
   onClose: () => void;
-  onValidate: (entite: Option | undefined) => void;
+  onValidate: (entite: Option | undefined, texte?: string) => void;
   options: Options;
   titre: string;
+  zoneTexte?: boolean;
 }
 
 export const TransfertPopin: React.FC<TransfertPopinProps> = ({
@@ -25,13 +26,14 @@ export const TransfertPopin: React.FC<TransfertPopinProps> = ({
   onClose,
   onValidate,
   options,
-  titre
+  titre,
+  zoneTexte
 }) => {
   const [optionChoisie, setOptionChoisie] = useState<Option>({
     value: "",
     str: ""
   });
-  const [validerDesactive, setvaliderDesactive] = useState<boolean>(true);
+  const [texte, setTexte] = useState<string>();
 
   const filterOptions = (
     optionsAutocomplete: Option[],
@@ -63,7 +65,6 @@ export const TransfertPopin: React.FC<TransfertPopinProps> = ({
             componentName="TransfertPopin"
             options={options}
             onClickClear={() => {
-              setvaliderDesactive(true);
               setOptionChoisie({ value: "", str: "" });
             }}
             value={optionChoisie}
@@ -71,18 +72,29 @@ export const TransfertPopin: React.FC<TransfertPopinProps> = ({
             onChange={newValue => {
               if (newValue && newValue.str) {
                 setOptionChoisie(newValue);
-                setvaliderDesactive(false);
               }
             }}
           />
+          {zoneTexte && (
+            <>
+              <h5>{getLibelle("Message pour valideur :")}</h5>{" "}
+              <textarea
+                placeholder={getLibelle("Pouvez-vous vérifier mon travail ?")}
+                value={texte}
+                onChange={e => {
+                  setTexte(e.target.value);
+                }}
+              ></textarea>
+            </>
+          )}
         </DialogContent>
         <DialogActions>
           <button type="button" onClick={onClose}>
             {getLibelle("Annuler")}
           </button>
           <BoutonOperationEnCours
-            onClick={() => onValidate(optionChoisie)}
-            estDesactive={validerDesactive}
+            onClick={() => onValidate(optionChoisie, texte)}
+            estDesactive={estDesactive(optionChoisie, texte, zoneTexte)}
           >
             {getLibelle("Valider")}
           </BoutonOperationEnCours>
@@ -91,3 +103,14 @@ export const TransfertPopin: React.FC<TransfertPopinProps> = ({
     </>
   );
 };
+
+function estDesactive(
+  optionChoisie: Option,
+  texte?: string,
+  zoneTexte = false
+): boolean {
+  return (
+    (zoneTexte && (!texte || optionChoisie.value === "")) ||
+    (!zoneTexte && optionChoisie.value === "")
+  );
+}

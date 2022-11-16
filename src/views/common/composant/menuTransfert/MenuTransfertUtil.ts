@@ -102,12 +102,7 @@ export function listeUtilisateursToOptionsBis(
         )
       )
       .sort((a, b) => a.nom.localeCompare(b.nom))
-      .map(utilisateur => {
-        return {
-          value: utilisateur.idUtilisateur,
-          str: `${utilisateur.nom} ${utilisateur.prenom}`
-        };
-      })
+      .map(utilisateur => mapUtilisateurToOption(utilisateur))
   ];
 }
 
@@ -180,6 +175,35 @@ export function filtreUtilisateurRequeteDelivrance(
       idUtilisateurRequete !== utilisateur.idUtilisateur &&
       estDansMonEntiteOuEntiteFille
   );
+}
+
+export function filtrerValideur(
+  utilisateur: IUtilisateur,
+  idUtilisateurRequete?: string
+): boolean {
+  const estDuSCEC = utilisateur.entite?.estDansSCEC;
+  const aDroit = utilisateurADroit(Droit.DELIVRER, utilisateur);
+
+  return Boolean(
+    estDuSCEC && aDroit && idUtilisateurRequete !== utilisateur.idUtilisateur
+  );
+}
+
+export function listeValideurToOptions(idUtilisateurRequete?: string): Options {
+  return [
+    { value: "", str: "" },
+    ...storeRece.listeUtilisateurs
+      .filter(utilisateur => filtrerValideur(utilisateur, idUtilisateurRequete))
+      .sort((a, b) => a.nom.localeCompare(b.nom))
+      .map(utilisateur => mapUtilisateurToOption(utilisateur))
+  ];
+}
+
+function mapUtilisateurToOption(utilisateur: IUtilisateur): Option {
+  return {
+    value: utilisateur.idUtilisateur,
+    str: `${utilisateur.nom} ${utilisateur.prenom}`
+  };
 }
 
 function estDansEntiteFille(idEntite: string) {

@@ -73,4 +73,4 @@ export const NOM_APRES_MARIAGE_EPOUX = "nomApresMariageEpoux";
 export const NOM_APRES_MARIAGE_EPOUSE = "nomApresMariageEpouse";
 
 // Divers
-export const VILLE_EST_AFFICHEE = "villeEstAffichee"
+export const VILLE_EST_AFFICHEE = "villeEstAffichee";

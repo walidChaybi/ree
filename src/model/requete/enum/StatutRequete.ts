@@ -84,6 +84,11 @@ export class StatutRequete extends EnumWithComplete {
     "ALERTE_SDANF",
     "Alerte SDANF"
   );
+  public static readonly TRANSMISE_A_VALIDEUR = new StatutRequete(
+    "TRANSMISE_A_VALIDEUR",
+    "Transmise à valideur"
+  );
+  public static readonly A_REVOIR = new StatutRequete("A_REVOIR", "À revoir");
   public static readonly TRAITE = new StatutRequete("TRAITE", "Traité");
 
   private static readonly StatutsPourTypeRequeteDelivrance = [
@@ -208,7 +213,9 @@ export class StatutRequete extends EnumWithComplete {
       StatutRequete.TRANSFEREE.nom,
       StatutRequete.A_SIGNER.nom,
       StatutRequete.A_VALIDER.nom,
-      StatutRequete.TRAITE_REPONDU.nom
+      StatutRequete.TRAITE_REPONDU.nom,
+      StatutRequete.A_REVOIR.nom,
+      StatutRequete.TRANSMISE_A_VALIDEUR.nom
     ];
   }
 

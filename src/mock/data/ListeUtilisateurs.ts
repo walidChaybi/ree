@@ -6,27 +6,31 @@ export const LISTE_UTILISATEURS = [
     prenom: "Ashley",
     nom: "Young",
     trigramme: "FOO",
-    habilitations: MockMappedHabilitation.habilitations
+    habilitations: MockMappedHabilitation.habilitations,
+    entite: { estDansSCEC: true }
   },
   {
     idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985894",
     prenom: "John",
     nom: "Lennon",
     trigramme: "APP",
-    habilitations: MockMappedHabilitation.habilitations
+    habilitations: MockMappedHabilitation.habilitations,
+    entite: { estDansSCEC: true }
   },
   {
     idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985895",
     prenom: "Bob",
     nom: "Dylan",
     trigramme: "BOB",
-    habilitations: MockMappedHabilitation.habilitations
+    habilitations: MockMappedHabilitation.habilitations,
+    entite: { estDansSCEC: true }
   },
   {
     idUtilisateur: "90c6aee1-21be-4ba6-9e55-fc8831252646",
     prenom: "Benoît",
     nom: "Tanguy",
     trigramme: "BTY",
-    habilitations: MockMappedHabilitation.habilitations
+    habilitations: MockMappedHabilitation.habilitations,
+    entite: { estDansSCEC: true }
   }
 ];

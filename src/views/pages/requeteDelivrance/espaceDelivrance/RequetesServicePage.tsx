@@ -14,7 +14,6 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 import { URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { autorisePrendreEnChargeReqTableauDelivrance } from "@util/RequetesUtils";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -32,7 +31,10 @@ import {
   HeaderTableauRequete,
   requeteColumnHeaders
 } from "./EspaceDelivranceParams";
-import { goToLinkRequete } from "./EspaceDelivranceUtils";
+import {
+  goToLinkRequete,
+  miseAjourOuRedirection
+} from "./EspaceDelivranceUtils";
 import { useRequeteDelivranceApi } from "./hook/DonneesRequeteDelivranceHook";
 import "./scss/RequeteTableau.scss";
 
@@ -121,21 +123,15 @@ export const RequetesServicePage: React.FC<
   ) {
     setOperationEnCours(true);
     const requeteSelect = data[idx];
-    if (autorisePrendreEnChargeReqTableauDelivrance(requeteSelect)) {
-      setParamsMiseAJour({
-        libelleAction: "Prendre en charge",
-        statutRequete: StatutRequete.PRISE_EN_CHARGE,
-        requete: requeteSelect,
-        urlCourante: URL_REQUETES_DELIVRANCE_SERVICE,
-        typeRequete: TypeRequete.DELIVRANCE
-      });
-    } else {
-      props.setParamsRMCAuto(
-        idRequete,
-        data[idx],
-        URL_REQUETES_DELIVRANCE_SERVICE
-      );
-    }
+    miseAjourOuRedirection(
+      requeteSelect,
+      setParamsMiseAJour,
+      props,
+      idRequete,
+      data,
+      idx,
+      URL_REQUETES_DELIVRANCE_SERVICE
+    );
   }
 
   useEffect(() => {

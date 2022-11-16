@@ -1,7 +1,11 @@
+import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
-import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID } from "@router/ReceUrls";
+import {
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID
+} from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -16,6 +20,7 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
+import { userDroitnonCOMEDEC } from "../../../../../mock/data/connectedUserAvecDroit";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 
@@ -29,7 +34,8 @@ const sauvFonctionEstActive = gestionnaireFeatureFlag.estActif;
 let history: any;
 
 beforeEach(() => {
-  storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
+  storeRece.listeUtilisateurs = LISTE_UTILISATEURS as IUtilisateur[];
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
   DocumentDelivrance.init();
   TypePieceJustificative.init();
   gestionnaireFeatureFlag.estActif = function () {
@@ -121,5 +127,75 @@ test("renders document réponses", async () => {
 
   await act(async () => {
     fireEvent.click(doc1);
+  });
+});
+
+test("transmettre à valideur", async () => {
+  await act(async () => {
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID}
+          >
+            <ApercuRequeteTraitementPage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Transmettre à valideur")).toBeDefined();
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText("Transmettre à valideur"));
+  });
+
+  const autocomplete = screen.getByTestId("autocomplete");
+  const inputChampRecherche = screen.getByLabelText(
+    "TransfertPopin"
+  ) as HTMLInputElement;
+  autocomplete.focus();
+  act(() => {
+    fireEvent.change(inputChampRecherche, {
+      target: {
+        value: "d"
+      }
+    });
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Dylan Bob")).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(screen.getByText("Dylan Bob"));
+    fireEvent.change(
+      screen.getByPlaceholderText("Pouvez-vous vérifier mon travail ?"),
+      {
+        target: {
+          value: "salut"
+        }
+      }
+    );
+  });
+
+  await waitFor(() => {
+    expect(
+      (screen.getByText("Valider") as HTMLButtonElement).disabled
+    ).toBeFalsy();
+  });
+
+  act(() => {
+    fireEvent.click(screen.getByText("Valider"));
+  });
+
+  await waitFor(() => {
+    expect(history.location.pathname).toStrictEqual(
+      URL_MES_REQUETES_DELIVRANCE
+    );
   });
 });

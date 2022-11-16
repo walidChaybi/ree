@@ -42,6 +42,7 @@ export const URL_LIBELLE = "/libelle";
 export const URL_PARAMETRE = "/parametres";
 export const URL_ACTION = "/requetes/action";
 export const URL_TRANSFERT = "/requetes/action/transfert";
+export const URL_TRANSFERT_VALIDEUR = "/requetes/action/transfertValideur";
 export const URL_OBSERVATION = "/requetes/observation";
 export const URL_IGNORER = "/requetes/action/ignorer";
 export const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
@@ -458,6 +459,24 @@ export function postTransfertRequete(
       statutRequete: StatutRequete.getKey(statutRequete),
       libelleAction,
       attribuer: !estTransfert
+    }
+  });
+}
+
+export function postTransfertValideur(
+  idRequete: string,
+  idUtilisateurValideur: string,
+  libelleAction: string,
+  texteObservation: string
+) {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_TRANSFERT_VALIDEUR}`,
+    data: {
+      idRequete,
+      idUtilisateurValideur,
+      libelleAction,
+      texteObservation
     }
   });
 }
