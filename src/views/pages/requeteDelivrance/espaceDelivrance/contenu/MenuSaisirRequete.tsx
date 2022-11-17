@@ -20,6 +20,8 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import "./scss/MenuSaisirRequete.scss";
 
+const DUREE_OUVERTURE_POPIN = 100;
+
 interface MenuSaisirRequeteProps {
   indexTabPanel: number;
   disabled?: boolean;
@@ -97,6 +99,7 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
         keepMounted
         open={Boolean(menu)}
         onClose={handleCloseMenu}
+        transitionDuration={DUREE_OUVERTURE_POPIN}
         getContentAnchorEl={null}
         anchorOrigin={{
           vertical: "bottom",
