@@ -40,7 +40,7 @@ est née à Paris, Paris (France)
 (1re partie : nom1  2nde partie : nom2)
 du sexe féminin
 fille de Jean, Louis Sacken né à Barcelone, Catalogne (Espagne)
-et de Louise, Jocelyne DUPOND née le 26 juin 1981 à Nantes, Catalogne (France)`;
+et de Louise, Jocelyne DUPOND née le 26 juin 1981 à Nantes (Catalogne)`;
 
   expect(compositionCorps.corps_texte).toBe(corpsTexteAttendu);
 });

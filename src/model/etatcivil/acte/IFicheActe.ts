@@ -160,13 +160,12 @@ export const FicheActe = {
     );
   },
 
-  getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeFiliationEtAge(
-    acte: IFicheActe
-  ) {
+  getTitulairesAMDansLOrdreAvecMajDonneesTitulaireActe(acte: IFicheActe) {
     const titulairesAMs: ITitulaireActe[] = [];
     const titulairesActeDansLOrdre = this.getTitulairesActeDansLOrdre(acte);
 
     const analyseMarginale = this.getAnalyseMarginaleLaPlusRecente(acte);
+
     if (analyseMarginale) {
       const titulairesAMDansLOrdre =
         AnalyseMarginale.getTitulairesDansLOrdre(analyseMarginale);
@@ -183,7 +182,7 @@ export const FicheActe = {
           titulairesActeDansLOrdre.titulaireActe1
         );
 
-        majSexeFiliattionEtAge(
+        majSexeAgeNaissanceEtFiliattion(
           titulairesAMs[0],
           titulairesActeDansLOrdre.titulaireActe1
         );
@@ -197,7 +196,7 @@ export const FicheActe = {
         );
 
         if (titulairesActeDansLOrdre.titulaireActe2) {
-          majSexeFiliattionEtAge(
+          majSexeAgeNaissanceEtFiliattion(
             titulairesAMs[1],
             titulairesActeDansLOrdre.titulaireActe2
           );
@@ -415,13 +414,14 @@ export const FicheActe = {
   }
 };
 
-function majSexeFiliattionEtAge(
+function majSexeAgeNaissanceEtFiliattion(
   titulairesAM: ITitulaireActe,
   titulaireActe: ITitulaireActe
 ) {
   titulairesAM.sexe = titulaireActe.sexe;
   titulairesAM.filiations = titulaireActe.filiations;
   titulairesAM.age = titulaireActe.age;
+  titulairesAM.naissance = titulaireActe.naissance;
 }
 
 /** Mise à jour des informations de "déclaration conjointe" à partir du titulaire de l'acte si besoin */

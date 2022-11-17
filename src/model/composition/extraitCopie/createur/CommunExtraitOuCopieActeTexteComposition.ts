@@ -189,7 +189,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
   } {
     // Récupération des titulaires AM
     const [titulaireAM1, titulaireAM2] =
-      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeFiliationEtAge(acte);
+      FicheActe.getTitulairesAMDansLOrdreAvecMajDonneesTitulaireActe(acte);
 
     const ecTitulaire1 =
       CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
@@ -249,7 +249,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     let titulaireAMCompositionEC2: ITitulaireAMCompositionEC | undefined;
 
     const titulairesAMs =
-      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeFiliationEtAge(acte);
+      FicheActe.getTitulairesAMDansLOrdreAvecMajDonneesTitulaireActe(acte);
 
     if (titulairesAMs[0]) {
       titulaireAMCompositionEC1 =
@@ -338,7 +338,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
 
     const lieuNaissance = this.formatLieuNaissance(
       titulaire,
-      this.creerLieuNaissanceDeTitulaireOuFiliation(titulaire.naissance)
+      TitulaireActe.getLieuDeRepriseOuLieuNaissance(titulaire)
     ); // <Lieu de naissance titulaire>
 
     const dateNaissanceOuAge =
@@ -357,7 +357,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
             : this.creerFilsOuFilleDeFiliationAdoptantTitulaire(titulaire); //'adopté par', 'adoptée par' [accord selon genre du titulaire]
         const lieuNaissanceParent = this.formatLieuNaissance(
           parent,
-          this.creerLieuNaissanceDeTitulaireOuFiliation(parent.naissance)
+          TitulaireActe.getLieuDeRepriseOuLieuNaissance(parent)
         ); // <Lieu de naissance parent>
         const dateNaissanceOuAgeParent =
           this.creerDateNaissanceOuAgeDeTitulaireOuFiliation(parent);

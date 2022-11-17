@@ -1143,7 +1143,7 @@ export const ficheActeMariage = {
           ville: "Paris",
           arrondissement: null,
           region: "",
-          pays: "Fance",
+          pays: "France",
           lieuReprise: null
         },
         profession: "Enseignante",
@@ -1424,19 +1424,6 @@ export const ficheActeMariage = {
             autresPrenoms: null,
             ordre: 1,
             sexe: "MASCULIN",
-            naissance: {
-              minute: null,
-              heure: null,
-              jour: 29,
-              mois: 11,
-              annee: 1989,
-              voie: null,
-              ville: "Paris",
-              arrondissement: null,
-              region: "",
-              pays: "Fance",
-              lieuReprise: null
-            },
             profession: "Enseignante",
             age: null,
             domicile: {

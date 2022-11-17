@@ -30,6 +30,7 @@ export const Evenement = {
         })} ${formatAHeure(evenement.heure, evenement.minute)}`
       : "";
   },
+
   getLieu(evenement?: IEvenement): string {
     return evenement
       ? LieuxUtils.getLieu(
@@ -40,6 +41,7 @@ export const Evenement = {
         )
       : "";
   },
+
   getLieuDeRepriseOuLieuEvenement(evenement?: IEvenement): string {
     if (evenement?.lieuReprise) {
       return evenement.lieuReprise;
@@ -52,11 +54,6 @@ export const Evenement = {
           )
         : "";
     }
-  },
-  getLieuCompositionExtraitPlurilingue(evenement?: IEvenement): string {
-    return evenement
-      ? LieuxUtils.getLieu(evenement.ville, evenement.region, evenement.pays)
-      : "";
   },
 
   estPartiellementRenseigne(evenement?: IEvenement): boolean {
@@ -82,15 +79,7 @@ export const Evenement = {
   estHeureRenseignee(evenement?: IEvenement): boolean {
     return evenement?.heure != null && evenement.minute != null;
   },
-  estJourRenseigne(evenement?: IEvenement): boolean {
-    return evenement?.jour != null;
-  },
-  estMoisRenseigne(evenement?: IEvenement): boolean {
-    return evenement?.mois != null;
-  },
-  estAnneeRenseignee(evenement?: IEvenement): boolean {
-    return evenement?.annee != null;
-  },
+
   aucuneDonneeDuLieuRenseignee(evenement?: IEvenement): boolean {
     return (
       !evenement?.lieuReprise &&
@@ -100,6 +89,7 @@ export const Evenement = {
       !evenement?.arrondissement
     );
   },
+
   formatageDateCompositionExtraitPlurilingue(
     evenement?: IEvenement
   ): IDateCompose {

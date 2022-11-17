@@ -160,7 +160,7 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
   useEffect(() => {
     if (props.acte) {
       const titulairesAMCompletes =
-        FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNomSexeFiliationEtAge(
+        FicheActe.getTitulairesAMDansLOrdreAvecMajDonneesTitulaireActe(
           props.acte
         );
 

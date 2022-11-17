@@ -35,7 +35,7 @@ test("Attendu: getCorpsTexte fonctionne correctement", () => {
 a été célébré à Barcelone, Catalogne (Espagne)
 le mariage
 de Jean-Louis, Alphonse, Raoül MARTIN 
-né le 29 novembre 1989 à Paris (Fance)
+né le 29 novembre 1989 à Paris
   fils de Carmela, Linzy Sacken
   et de Carmelaa, Linzy Sacken
   adopté par Carmelaaa, Linzy Sacken et par Carmelaaaa, Linzy Sacken

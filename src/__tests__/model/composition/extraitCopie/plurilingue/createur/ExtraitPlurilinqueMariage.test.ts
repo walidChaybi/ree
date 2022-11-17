@@ -52,7 +52,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
       mois: 11,
       annee: 1989
     };
-    const lieuNaissanceT1 = "Paris (Fance)";
+    const lieuNaissanceT1 = "Paris";
 
     const nomApresMariageAttenduT2 = "nomApresMariage";
     const nomAvantMariageAttenduT2 = "PRODESK";
