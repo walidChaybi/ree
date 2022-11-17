@@ -1,6 +1,5 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
 import { ICreationActionMiseAjourStatutEtRmcAutoHookParams } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
@@ -46,16 +45,16 @@ export function miseAjourOuRedirection(
   const aPrendreEnCharge =
     autorisePrendreEnChargeReqTableauDelivrance(requeteSelect);
   const statutARevoir = requeteSelect.statut === StatutRequete.A_REVOIR.libelle;
-  const estRDCSDouRDCSC =
-    requeteSelect.sousType === SousTypeDelivrance.RDCSC.libelleCourt ||
-    requeteSelect.sousType === SousTypeDelivrance.RDCSD.libelleCourt;
+  const aDocumentASigner = requeteSelect.documentsReponses?.some(
+    document => document.avecCtv
+  );
 
   if (aPrendreEnCharge || statutARevoir) {
     const statut = aPrendreEnCharge
       ? StatutRequete.PRISE_EN_CHARGE
-      : estRDCSDouRDCSC
-      ? StatutRequete.A_VALIDER
-      : StatutRequete.A_SIGNER;
+      : aDocumentASigner
+      ? StatutRequete.A_SIGNER
+      : StatutRequete.A_VALIDER;
 
     setParamsMiseAJour({
       libelleAction: statut.libelle,

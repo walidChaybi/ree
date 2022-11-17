@@ -91,6 +91,7 @@ function checkURLDelivrance(
         .includes(`${PATH_APERCU_REQ_DEL}/`);
     case StatutRequete.A_VALIDER:
     case StatutRequete.A_SIGNER:
+    case StatutRequete.TRANSMISE_A_VALIDEUR:
       return (
         receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_TRAITEMENT) ||
         receUrl.getUrlCourante(history).includes(PATH_EDITION)

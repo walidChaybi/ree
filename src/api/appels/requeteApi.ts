@@ -43,6 +43,7 @@ export const URL_PARAMETRE = "/parametres";
 export const URL_ACTION = "/requetes/action";
 export const URL_TRANSFERT = "/requetes/action/transfert";
 export const URL_TRANSFERT_VALIDEUR = "/requetes/action/transfertValideur";
+export const URL_RETOUR_VALIDEUR = "/requetes/action/retourValideur";
 export const URL_OBSERVATION = "/requetes/observation";
 export const URL_IGNORER = "/requetes/action/ignorer";
 export const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
@@ -475,6 +476,24 @@ export function postTransfertValideur(
     data: {
       idRequete,
       idUtilisateurValideur,
+      libelleAction,
+      texteObservation
+    }
+  });
+}
+
+export function postRetourValideur(
+  idRequete: string,
+  statutDemande: string,
+  libelleAction: string,
+  texteObservation: string
+) {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_RETOUR_VALIDEUR}`,
+    data: {
+      idRequete,
+      statutDemande,
       libelleAction,
       texteObservation
     }

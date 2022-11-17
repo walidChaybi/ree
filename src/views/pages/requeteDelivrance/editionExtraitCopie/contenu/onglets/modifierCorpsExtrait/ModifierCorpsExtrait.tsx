@@ -19,6 +19,7 @@ import {
 import { Validation } from "@model/requete/enum/Validation";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import { getLibelle } from "@util/Utils";
 import { StaticField } from "@widget/formulaire/champFixe/StaticField";
 import React, { useContext, useEffect, useState } from "react";
@@ -28,13 +29,13 @@ export interface ModifierCorpsExtraitProps {
   acte: IFicheActe;
   requete: IRequeteDelivrance;
   document: IDocumentReponse;
-  handleDocumentEnregistre: () => void;
 }
 
 export const ModifierCorpsExtrait: React.FC<
   ModifierCorpsExtraitProps
 > = props => {
   const { setIsDirty } = useContext(RECEContext);
+  const { rafraichirRequete } = useContext(EditionExtraitCopiePageContext);
 
   const [corpsTexte] = useState<string | undefined>(
     getCorpsTexte(props.acte, props.requete, props.document)
@@ -93,7 +94,7 @@ export const ModifierCorpsExtrait: React.FC<
       resultatGenerationEC &&
       resultatGenerationEC.resultGenerationUnDocument
     ) {
-      props.handleDocumentEnregistre();
+      rafraichirRequete();
     } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatGenerationEC]);
 

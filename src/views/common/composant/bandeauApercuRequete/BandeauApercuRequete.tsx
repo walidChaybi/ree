@@ -104,6 +104,17 @@ const getRequeteASigner = (responsable: string, requete: TRequete) => {
   );
 };
 
+const getRequeteTransmiseAValideur = (
+  responsable: string,
+  requete: TRequete
+) => {
+  return getLibelle(
+    `Requête transmise à valideur le ${getFormatDateFromTimestamp(
+      requete.statutCourant.dateEffet
+    )} par ${responsable}`
+  );
+};
+
 const getRequeteBrouillon = (responsable: string, requete: TRequete) => {
   return getLibelle(
     `Requête au statut brouillon initiée par ${responsable} - Le : ${getFormatDateFromTimestamp(
@@ -210,6 +221,9 @@ function getStatutLibelleSuite(requete: TRequete, responsable: string) {
       libelle = getRequeteRejetImpression(responsable, requete);
       break;
 
+    case StatutRequete.TRANSMISE_A_VALIDEUR:
+      libelle = getRequeteTransmiseAValideur(responsable, requete);
+      break;
     default:
       libelle = "";
       break;

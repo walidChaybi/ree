@@ -16,9 +16,10 @@ interface TransfertPopinProps {
   open: boolean;
   onClose: () => void;
   onValidate: (entite: Option | undefined, texte?: string) => void;
-  options: Options;
+  options?: Options;
   titre: string;
-  zoneTexte?: boolean;
+  libelleAvantTexte?: string;
+  placeholder?: string;
 }
 
 export const TransfertPopin: React.FC<TransfertPopinProps> = ({
@@ -27,7 +28,8 @@ export const TransfertPopin: React.FC<TransfertPopinProps> = ({
   onValidate,
   options,
   titre,
-  zoneTexte
+  libelleAvantTexte,
+  placeholder
 }) => {
   const [optionChoisie, setOptionChoisie] = useState<Option>({
     value: "",
@@ -61,25 +63,27 @@ export const TransfertPopin: React.FC<TransfertPopinProps> = ({
       >
         <DialogTitle>{getLibelle(titre)}</DialogTitle>
         <DialogContent>
-          <ChampRecherche
-            componentName="TransfertPopin"
-            options={options}
-            onClickClear={() => {
-              setOptionChoisie({ value: "", str: "" });
-            }}
-            value={optionChoisie}
-            filterOptions={filterOptions}
-            onChange={newValue => {
-              if (newValue && newValue.str) {
-                setOptionChoisie(newValue);
-              }
-            }}
-          />
-          {zoneTexte && (
+          {options && (
+            <ChampRecherche
+              componentName="TransfertPopin"
+              options={options}
+              onClickClear={() => {
+                setOptionChoisie({ value: "", str: "" });
+              }}
+              value={optionChoisie}
+              filterOptions={filterOptions}
+              onChange={newValue => {
+                if (newValue && newValue.str) {
+                  setOptionChoisie(newValue);
+                }
+              }}
+            />
+          )}
+          {placeholder && (
             <>
-              <h5>{getLibelle("Message pour valideur :")}</h5>{" "}
+              {libelleAvantTexte && <h5>{libelleAvantTexte}</h5>}
               <textarea
-                placeholder={getLibelle("Pouvez-vous vérifier mon travail ?")}
+                placeholder={placeholder}
                 value={texte}
                 onChange={e => {
                   setTexte(e.target.value);
@@ -94,7 +98,12 @@ export const TransfertPopin: React.FC<TransfertPopinProps> = ({
           </button>
           <BoutonOperationEnCours
             onClick={() => onValidate(optionChoisie, texte)}
-            estDesactive={estDesactive(optionChoisie, texte, zoneTexte)}
+            estDesactive={estDesactive(
+              optionChoisie,
+              texte,
+              Boolean(placeholder),
+              Boolean(options)
+            )}
           >
             {getLibelle("Valider")}
           </BoutonOperationEnCours>
@@ -107,10 +116,12 @@ export const TransfertPopin: React.FC<TransfertPopinProps> = ({
 function estDesactive(
   optionChoisie: Option,
   texte?: string,
-  zoneTexte = false
+  zoneTextePresente = false,
+  selectPresent = false
 ): boolean {
   return (
-    (zoneTexte && (!texte || optionChoisie.value === "")) ||
-    (!zoneTexte && optionChoisie.value === "")
+    (zoneTextePresente &&
+      (!texte || (selectPresent && optionChoisie.value === ""))) ||
+    (!zoneTextePresente && optionChoisie.value === "")
   );
 }

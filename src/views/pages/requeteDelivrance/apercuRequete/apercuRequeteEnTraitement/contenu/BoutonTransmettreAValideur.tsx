@@ -31,7 +31,7 @@ export const BoutonTransmettreAValideur: React.FC<
         setParams({
           libelleAction: getLibelle("Requête transmise"),
           texteObservation: `${getLibelle("Requête transmise")}${
-            texte ?? texteObservation
+            texte ? texteObservation : ""
           }`,
           requeteId: props.idRequete,
           idUtilisateur: optionUtilisateur.value
@@ -64,7 +64,8 @@ export const BoutonTransmettreAValideur: React.FC<
           storeRece.utilisateurCourant?.idUtilisateur
         )}
         titre={getLibelle("Transmettre à valideur")}
-        zoneTexte={true}
+        placeholder={getLibelle("Pour vérification")}
+        libelleAvantTexte={getLibelle("Message pour valideur :")}
       />
     </>
   );

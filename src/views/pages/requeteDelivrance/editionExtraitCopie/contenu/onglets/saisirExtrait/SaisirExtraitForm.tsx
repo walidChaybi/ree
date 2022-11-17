@@ -45,7 +45,6 @@ import "./scss/FormulaireSaisirExtrait.scss";
 interface ComponentFormProps {
   acte: IFicheActe;
   requete: IRequeteDelivrance;
-  handleDocumentEnregistre: () => void;
 }
 
 type SaisirExtraitFormProps = ComponentFormProps;
@@ -65,7 +64,9 @@ interface IPopinMessageErreur {
 }
 
 export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
-  const { setOperationEnCours } = useContext(EditionExtraitCopiePageContext);
+  const { setOperationEnCours, rafraichirRequete } = useContext(
+    EditionExtraitCopiePageContext
+  );
   const { setIsDirty } = useContext(RECEContext);
 
   const [proprietesFormulaire, setProprietesFormulaire] =
@@ -127,7 +128,7 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         requete: props.requete,
         acte: props.acte,
         extraitSaisiAEnvoyer: extraitAEnvoyer,
-        callBack: props.handleDocumentEnregistre,
+        callBack: rafraichirRequete,
         problemePlurilingue: false
       });
     }
@@ -142,7 +143,7 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         extraitSaisiAEnvoyer,
         callBack: () => {
           setOperationEnCours(false);
-          props.handleDocumentEnregistre();
+          rafraichirRequete();
         },
         problemePlurilingue:
           popinMessageErreur.problemePlurilingueActeNaissanceOuDeces ||
@@ -154,7 +155,8 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
     popinMessageErreur.problemePlurilingueActeMariage,
     popinMessageErreur.problemePlurilingueActeNaissanceOuDeces,
     props,
-    setOperationEnCours
+    setOperationEnCours,
+    rafraichirRequete
   ]);
 
   useEffect(() => {
@@ -353,5 +355,3 @@ function initTitulaire2ParentAdoptants(
 ): IFiliation[] | (() => IFiliation[]) {
   return initTitulaireParentAdoptants(acte, 1);
 }
-
-

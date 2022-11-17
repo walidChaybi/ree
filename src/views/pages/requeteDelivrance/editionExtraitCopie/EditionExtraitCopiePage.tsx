@@ -46,7 +46,8 @@ import "./scss/EditionExtraitCopie.scss";
 
 export const EditionExtraitCopiePageContext = React.createContext({
   operationEnCours: false,
-  setOperationEnCours: (operationEnCours: boolean) => {}
+  setOperationEnCours: (operationEnCours: boolean) => {},
+  rafraichirRequete: (index?: DocumentEC) => {}
 });
 
 export interface ISuppressionDocumentComplementaireParams {
@@ -280,7 +281,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
         onRetoucheTerminee={onRetoucheTerminee}
       />
       <EditionExtraitCopiePageContext.Provider
-        value={{ operationEnCours, setOperationEnCours }}
+        value={{ operationEnCours, setOperationEnCours, rafraichirRequete }}
       >
         <div className="EditionExtraitCopie">
           <title>{getLibelle("Édition extrait copie")}</title>
@@ -308,7 +309,6 @@ export const EditionExtraitCopiePage: React.FC = () => {
                       requete={requete}
                       document={documentEdite}
                       acte={resultatInformationsActeApiHook?.acte}
-                      handleDocumentEnregistre={rafraichirRequete}
                     />
                   </>
                 )}

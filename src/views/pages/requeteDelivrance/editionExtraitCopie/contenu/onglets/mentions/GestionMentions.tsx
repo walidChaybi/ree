@@ -31,13 +31,14 @@ export interface GestionMentionsProps {
   acte?: IFicheActe;
   document?: IDocumentReponse;
   requete: IRequeteDelivrance;
-  handleDocumentEnregistre: () => void;
 }
 
 export const GestionMentions: React.FC<GestionMentionsProps> = props => {
   const { setIsDirty } = useContext(RECEContext);
 
-  const { setOperationEnCours } = useContext(EditionExtraitCopiePageContext);
+  const { setOperationEnCours, rafraichirRequete } = useContext(
+    EditionExtraitCopiePageContext
+  );
 
   const [mentionSelect, setMentionSelect] = useState<IMentionAffichage>();
   const [mentionAjout, setMentionAjout] = useState<IMentionAffichage>();
@@ -58,7 +59,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
 
   useEffect(() => {
     if (props.document && resultatSauvegarde) {
-      props.handleDocumentEnregistre();
+      rafraichirRequete();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatSauvegarde]);

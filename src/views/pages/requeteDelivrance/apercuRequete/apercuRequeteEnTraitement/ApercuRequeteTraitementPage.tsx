@@ -1,4 +1,5 @@
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
@@ -12,7 +13,7 @@ import { useHistory } from "react-router-dom";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
 import { BoutonARetraiterSaga } from "./contenu/BoutonARetraiterSaga";
 import { BoutonModifierTraitement } from "./contenu/BoutonModifierTraitement";
-import { BoutonsTerminer } from "./contenu/BoutonsTerminer";
+import { BoutonsTerminerOuRelecture } from "./contenu/BoutonsTerminerOuRelecture";
 import "./scss/ApercuRequeteTraitementPage.scss";
 
 export const ApercuRequeteTraitementPage: React.FC = () => {
@@ -54,13 +55,14 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
             typeMime={documentAffiche?.mimeType}
           ></VisionneuseAvecTitre>
           <BoutonRetour />
+          <BoutonsTerminerOuRelecture requete={requete} />
           <div className="BoutonsAction">
             {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
-              SousTypeDelivrance.estRDCSDouRDCSC(requete?.sousType) && (
+              SousTypeDelivrance.estRDCSDouRDCSC(requete?.sousType) &&
+              requete.statutCourant.statut !==
+                StatutRequete.TRANSMISE_A_VALIDEUR && (
                 <BoutonModifierTraitement requete={requete} />
               )}
-
-            <BoutonsTerminer requete={requete} />
 
             {GestionnaireARetraiterDansSaga.estARetraiterSaga(requete) &&
               !GestionnaireARetraiterDansSaga.possedeDocumentSigne(requete) && (

@@ -79,6 +79,7 @@ const redirectionEnFonctionMaRequete = (
       case StatutRequete.A_SIGNER.libelle:
       case StatutRequete.A_VALIDER.libelle:
       case StatutRequete.A_REVOIR.libelle:
+      case StatutRequete.TRANSMISE_A_VALIDEUR.libelle:
         // US 207 et au statut "À signer" ou "À valider", redirection vers "Aperçu du traitement"
         redirectionAValider(setRedirection, urlWithoutParam, requete);
         break;

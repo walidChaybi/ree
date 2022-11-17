@@ -42,12 +42,6 @@ beforeEach(() => {
     return true;
   };
   history = createMemoryHistory();
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-      "a4cefb71-8457-4f6b-937e-34b49335d494"
-    )
-  );
 });
 
 afterAll(() => {
@@ -56,6 +50,12 @@ afterAll(() => {
 });
 
 test("renders ApercuRequeteTraitementPage", async () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+      "a4cefb71-8457-4f6b-937e-34b49335d494"
+    )
+  );
   await act(async () => {
     render(
       <>
@@ -101,6 +101,12 @@ test("renders ApercuRequeteTraitementPage", async () => {
 });
 
 test("renders document réponses", async () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+      "a4cefb71-8457-4f6b-937e-34b49335d494"
+    )
+  );
   await act(async () => {
     render(
       <>
@@ -131,6 +137,12 @@ test("renders document réponses", async () => {
 });
 
 test("transmettre à valideur", async () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+      "a4cefb71-8457-4f6b-937e-34b49335d494"
+    )
+  );
   await act(async () => {
     render(
       <>
@@ -173,14 +185,66 @@ test("transmettre à valideur", async () => {
 
   act(() => {
     fireEvent.click(screen.getByText("Dylan Bob"));
-    fireEvent.change(
-      screen.getByPlaceholderText("Pouvez-vous vérifier mon travail ?"),
-      {
-        target: {
-          value: "salut"
-        }
+    fireEvent.change(screen.getByPlaceholderText("Pour vérification"), {
+      target: {
+        value: "salut"
       }
+    });
+  });
+
+  await waitFor(() => {
+    expect(
+      (screen.getByText("Valider") as HTMLButtonElement).disabled
+    ).toBeFalsy();
+  });
+
+  act(() => {
+    fireEvent.click(screen.getByText("Valider"));
+  });
+
+  await waitFor(() => {
+    expect(history.location.pathname).toStrictEqual(
+      URL_MES_REQUETES_DELIVRANCE
     );
+  });
+});
+
+test("retour approuvé", async () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+      "a4cefb71-8457-4f6b-937e-34b49335d495"
+    )
+  );
+  await act(async () => {
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID}
+          >
+            <ApercuRequeteTraitementPage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Relecture commentée")).toBeDefined();
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText("Relecture commentée"));
+  });
+
+  act(() => {
+    fireEvent.change(screen.getByPlaceholderText("En retour"), {
+      target: {
+        value: "c'est nul"
+      }
+    });
   });
 
   await waitFor(() => {

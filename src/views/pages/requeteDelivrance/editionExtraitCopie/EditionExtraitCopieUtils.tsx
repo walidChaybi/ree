@@ -16,6 +16,7 @@ import {
   CODE_EXTRAIT_SANS_FILIATION
 } from "@model/requete/enum/DocumentDelivranceConstante";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import {
@@ -37,7 +38,7 @@ import React from "react";
 import { Courrier } from "../apercuRequete/apercuCourrier/contenu/Courrier";
 import { sousTypeCreationCourrierAutomatique } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuUtilEC";
 import { BoutonModifierTraitement } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonModifierTraitement";
-import { BoutonsTerminer } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonsTerminer";
+import { BoutonsTerminerOuRelecture } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonsTerminerOuRelecture";
 import { ResumeRequetePartieHaute } from "../apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequetePartieHaute";
 import { ResumeRequeteType } from "../apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequeteType";
 import { GestionMentions } from "./contenu/onglets/mentions/GestionMentions";
@@ -47,8 +48,9 @@ import { VisionneuseActeEdition } from "./contenu/onglets/VisionneuseActeEdition
 import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
 import { DocumentEC } from "./enum/DocumentEC";
 
+const DOCUMENT_EDITE = "Document édité";
+
 export const getOngletsEdition = (
-  handleDocumentEnregistre: (indexDocumentAAfficher?: number) => void,
   requete: IRequeteDelivrance,
   document?: IDocumentReponse,
   acte?: IFicheActe
@@ -57,65 +59,11 @@ export const getOngletsEdition = (
     liste: [],
     ongletSelectionne: -1
   };
-  if (document) {
-    if (acte) {
-      switch (
-        DocumentDelivrance.getDocumentDelivrance(document.typeDocument).code
-      ) {
-        case CODE_COPIE_INTEGRALE:
-        case CODE_COPIE_NON_SIGNEE:
-          ajoutOngletsCopie(
-            res,
-            document,
-            handleDocumentEnregistre,
-            acte,
-            requete
-          );
-          break;
-        case CODE_EXTRAIT_AVEC_FILIATION:
-        case CODE_EXTRAIT_SANS_FILIATION:
-          ajoutOngletsExtraitFilliation(
-            res,
-            document,
-            handleDocumentEnregistre,
-            acte,
-            requete
-          );
-          break;
-        case CODE_EXTRAIT_PLURILINGUE:
-          ajoutOngletsExtraitPlurilingue(
-            res,
-            document,
-            handleDocumentEnregistre,
-            acte,
-            requete
-          );
-          break;
-      }
-    }
-    if (DocumentDelivrance.estCourrierDelivranceEC(document.typeDocument)) {
-      res.liste.push({
-        titre: "Modifier le courrier",
-        component: (
-          <Courrier
-            requete={requete}
-            idActe={acte?.id}
-            handleDocumentEnregistre={handleDocumentEnregistre}
-          ></Courrier>
-        )
-      });
-      res.ongletSelectionne = 0;
-    } else {
-      res.liste.push({
-        titre: getLibelle("Document édité"),
-        component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
-      });
-    }
-    if (res.ongletSelectionne === -1) {
-      res.ongletSelectionne = res.liste.findIndex(
-        el => el.titre === "Document édité"
-      );
-    }
+  if (requete.statutCourant.statut === StatutRequete.TRANSMISE_A_VALIDEUR) {
+    ajoutDocumentEditeeOuModifierCourrier(res, requete, acte, document);
+    res.ongletSelectionne = 0;
+  } else {
+    getOngletsEditionComplet(document, acte, res, requete);
   }
   return res;
 };
@@ -126,63 +74,124 @@ export const getOngletsVisu = (
   acte?: IFicheActe
 ) => {
   const res: OngletProps = { liste: [], ongletSelectionne: -1 };
-  if (document) {
-    if (acte) {
-      res.liste.push({
-        titre: getLibelle("Acte registre"),
-        component: (
-          <VisionneuseActeEdition acte={acte} detailRequete={requete} />
-        )
-      });
-    }
-    res.liste.push({
-      titre: getLibelle("Requête"),
-      component: (
-        <>
-          <AccordionRece
-            titre={getLibelle(`Description requête ${requete.numero}`)}
-            disabled={false}
-            expanded={true}
-          >
-            <ResumeRequetePartieHaute requete={requete} />
-          </AccordionRece>
-          <ResumeRequeteType
-            provenanceRequete={requete.provenanceRequete}
-            sousType={requete.sousType}
-            statut={requete.statutCourant.statut}
-          />
-          <SuiviObservationsRequete idRequete={requete.id} />
-          <SuiviActionsRequete actions={requete.actions} />
-        </>
-      )
-    });
-    res.ongletSelectionne = 0;
-    if (
-      DocumentDelivrance.estCourrierDelivranceEC(document.typeDocument) &&
-      document.nbPages !== 0
-    ) {
-      res.liste.push({
-        titre: getLibelle("Courrier édité"),
-        component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
-      });
-      res.ongletSelectionne = res.liste.length - 1;
+  if (requete.statutCourant.statut === StatutRequete.TRANSMISE_A_VALIDEUR) {
+    ajouterOngletRequete(res, requete);
+  } else {
+    if (document) {
+      if (acte) {
+        res.liste.push({
+          titre: getLibelle("Acte registre"),
+          component: (
+            <VisionneuseActeEdition acte={acte} detailRequete={requete} />
+          )
+        });
+      }
+      ajouterOngletRequete(res, requete);
+      if (
+        DocumentDelivrance.estCourrierDelivranceEC(document.typeDocument) &&
+        document.nbPages !== 0
+      ) {
+        res.liste.push({
+          titre: getLibelle("Courrier édité"),
+          component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
+        });
+        res.ongletSelectionne = res.liste.length - 1;
+      }
     }
   }
 
   return res;
 };
 
+function ajouterOngletRequete(res: OngletProps, requete: IRequeteDelivrance) {
+  res.liste.push({
+    titre: getLibelle("Requête"),
+    component: (
+      <>
+        <AccordionRece
+          titre={getLibelle(`Description requête ${requete.numero}`)}
+          disabled={false}
+          expanded={true}
+        >
+          <ResumeRequetePartieHaute requete={requete} />
+        </AccordionRece>
+        <ResumeRequeteType
+          provenanceRequete={requete.provenanceRequete}
+          sousType={requete.sousType}
+          statut={requete.statutCourant.statut}
+        />
+        <SuiviObservationsRequete idRequete={requete.id} />
+        <SuiviActionsRequete actions={requete.actions} />
+      </>
+    )
+  });
+  res.ongletSelectionne = 0;
+}
+
+function getOngletsEditionComplet(
+  document: IDocumentReponse | undefined,
+  acte: IFicheActe | undefined,
+  ongletProps: OngletProps,
+  requete: IRequeteDelivrance
+) {
+  if (document) {
+    if (acte) {
+      switch (
+        DocumentDelivrance.getDocumentDelivrance(document.typeDocument).code
+      ) {
+        case CODE_COPIE_INTEGRALE:
+        case CODE_COPIE_NON_SIGNEE:
+          ajoutOngletsCopie(ongletProps, document, acte, requete);
+          break;
+        case CODE_EXTRAIT_AVEC_FILIATION:
+        case CODE_EXTRAIT_SANS_FILIATION:
+          ajoutOngletsExtraitFilliation(ongletProps, document, acte, requete);
+          break;
+        case CODE_EXTRAIT_PLURILINGUE:
+          ajoutOngletsExtraitPlurilingue(ongletProps, document, acte, requete);
+          break;
+      }
+    }
+    ajoutDocumentEditeeOuModifierCourrier(ongletProps, requete, acte, document);
+    if (ongletProps.ongletSelectionne === -1) {
+      ongletProps.ongletSelectionne = ongletProps.liste.findIndex(
+        onglet => onglet.titre === DOCUMENT_EDITE
+      );
+    }
+  }
+}
+
+function ajoutDocumentEditeeOuModifierCourrier(
+  res: OngletProps,
+  requete: IRequeteDelivrance,
+  acte: IFicheActe | undefined,
+  document?: IDocumentReponse
+) {
+  if (
+    document &&
+    DocumentDelivrance.estCourrierDelivranceEC(document.typeDocument)
+  ) {
+    res.liste.push({
+      titre: "Modifier le courrier",
+      component: <Courrier requete={requete} idActe={acte?.id}></Courrier>
+    });
+    res.ongletSelectionne = 0;
+  } else {
+    res.liste.push({
+      titre: getLibelle(DOCUMENT_EDITE),
+      component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
+    });
+  }
+}
+
 function ajoutOngletsCopie(
   res: OngletProps,
   document: IDocumentReponse,
-  handleDocumentEnregistre: () => void,
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) {
   if (acte.type === TypeActe.TEXTE) {
-    res.liste.push(
-      ongletMentions(acte, document, handleDocumentEnregistre, requete)
-    );
+    res.liste.push(ongletMentions(acte, document, requete));
     res.ongletSelectionne = document.validation === Validation.O ? 1 : 0;
   } else {
     res.ongletSelectionne = 0;
@@ -193,7 +202,6 @@ function ajoutOngletsCopie(
 export const ajoutOngletsExtraitFilliation = (
   res: OngletProps,
   document: IDocumentReponse,
-  handleDocumentEnregistre: () => void,
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) => {
@@ -210,13 +218,9 @@ export const ajoutOngletsExtraitFilliation = (
   }
 
   // Sous-onglet 0
-  res.liste.push(
-    ongletSaisirExtrait(acte, requete, handleDocumentEnregistre, document)
-  );
+  res.liste.push(ongletSaisirExtrait(acte, requete, document));
   // Sous-onglet 1
-  res.liste.push(
-    ongletMentions(acte, document, handleDocumentEnregistre, requete)
-  );
+  res.liste.push(ongletMentions(acte, document, requete));
   if (document.validation !== "E") {
     // Sous-onglet 2
     res.liste.push({
@@ -226,7 +230,6 @@ export const ajoutOngletsExtraitFilliation = (
           acte={acte}
           requete={requete}
           document={document}
-          handleDocumentEnregistre={handleDocumentEnregistre}
         />
       )
     });
@@ -236,20 +239,15 @@ export const ajoutOngletsExtraitFilliation = (
 export const ajoutOngletsExtraitPlurilingue = (
   res: OngletProps,
   document: IDocumentReponse,
-  handleDocumentEnregistre: () => void,
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) => {
-  res.liste.push(
-    ongletSaisirExtrait(acte, requete, handleDocumentEnregistre, document)
-  );
+  res.liste.push(ongletSaisirExtrait(acte, requete, document));
   if (
     acte.nature === NatureActe.NAISSANCE ||
     acte.nature === NatureActe.MARIAGE
   ) {
-    res.liste.push(
-      ongletMentions(acte, document, handleDocumentEnregistre, requete)
-    );
+    res.liste.push(ongletMentions(acte, document, requete));
     switch (document.validation) {
       case Validation.N:
         res.ongletSelectionne = UN;
@@ -265,6 +263,7 @@ export const ajoutOngletsExtraitPlurilingue = (
 };
 
 export const boutonModifierCopiePresent = (
+  statut: StatutRequete,
   acte?: IFicheActe,
   documentEdite?: IDocumentReponse
 ) => {
@@ -272,7 +271,11 @@ export const boutonModifierCopiePresent = (
     const codeDoc = DocumentDelivrance.getDocumentDelivrance(
       documentEdite.typeDocument
     ).code;
-    return codeDoc === CODE_COPIE_INTEGRALE && FicheActe.estActeImage(acte);
+    return (
+      codeDoc === CODE_COPIE_INTEGRALE &&
+      FicheActe.estActeImage(acte) &&
+      statut !== StatutRequete.TRANSMISE_A_VALIDEUR
+    );
   }
   return false;
 };
@@ -280,7 +283,6 @@ export const boutonModifierCopiePresent = (
 export const ongletMentions = (
   acte: IFicheActe,
   doc: IDocumentReponse,
-  handleDocumentEnregistre: () => void,
   requete: IRequeteDelivrance
 ) => {
   return {
@@ -290,7 +292,6 @@ export const ongletMentions = (
       <GestionMentions
         acte={acte}
         document={doc}
-        handleDocumentEnregistre={handleDocumentEnregistre}
         requete={requete}
       ></GestionMentions>
     )
@@ -300,18 +301,13 @@ export const ongletMentions = (
 const ongletSaisirExtrait = (
   acte: IFicheActe,
   requete: IRequeteDelivrance,
-  handleDocumentEnregistre: () => void,
   doc: IDocumentReponse
 ) => {
   return {
     titre: getLibelle("Saisir l'extrait"),
     iconeWarning: doc.validation === Validation.E,
     component: (
-      <SaisirExtraitForm
-        acte={acte}
-        requete={requete}
-        handleDocumentEnregistre={handleDocumentEnregistre}
-      ></SaisirExtraitForm>
+      <SaisirExtraitForm acte={acte} requete={requete}></SaisirExtraitForm>
     )
   };
 };
@@ -402,10 +398,14 @@ export function getBoutonsEdition(
   return (
     <div className="BoutonsEdition">
       <div className="Gauche">
-        <BoutonModifierTraitement requete={requete} />
+        {requete.statutCourant.statut !==
+          StatutRequete.TRANSMISE_A_VALIDEUR && (
+          <BoutonModifierTraitement requete={requete} />
+        )}
       </div>
       <div className="Droite">
         {boutonModifierCopiePresent(
+          requete.statutCourant.statut,
           resultatInformationsActeApiHook?.acte,
           documentEdite
         ) && (
@@ -425,7 +425,7 @@ export function getBoutonsEdition(
             Modifier la copie à délivrer
           </Bouton>
         )}
-        <BoutonsTerminer
+        <BoutonsTerminerOuRelecture
           requete={requete}
           acte={resultatInformationsActeApiHook?.acte}
         />

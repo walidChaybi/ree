@@ -10,6 +10,7 @@ import {
   OptionsCourrier
 } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import { useReinitialisationComposant } from "@util/form/useReinitialisation";
 import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -19,9 +20,8 @@ import {
 } from "@widget/formulaire/adresse/AdresseForm";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
-import { DocumentEC } from "../../../editionExtraitCopie/enum/DocumentEC";
 import {
   controleFormulaire,
   courrierExiste,
@@ -51,7 +51,6 @@ import "./scss/Courrier.scss";
 interface ModificationCourrierProps {
   requete: IRequeteDelivrance;
   idActe?: string;
-  handleDocumentEnregistre: (index: DocumentEC) => void;
 }
 
 export const Courrier: React.FC<ModificationCourrierProps> = props => {
@@ -60,6 +59,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
     ? getLibelle("Modification du courrier")
     : getLibelle("Création du courrier");
 
+  const { rafraichirRequete } = useContext(EditionExtraitCopiePageContext);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [idTypeCourrier, setIdTypeCourrier] = useState<string>();
   const [messagesBloquant, setMessagesBloquant] = useState<string>();
@@ -108,7 +108,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
         optionsChoisies,
         requete: props.requete,
         idActe: props.idActe,
-        handleDocumentEnregistre: props.handleDocumentEnregistre,
+        handleDocumentEnregistre: rafraichirRequete,
         saisieCourrier: { ...values },
         setOperationEnCours
       });

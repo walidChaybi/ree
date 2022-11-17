@@ -261,6 +261,7 @@ export const configRequetes = [
           "/requetes/action/transfert?idRequete=54ddf213-d9b7-4747-8e92-68c220f66de3&idEntite=12345&idUtilisateur=&statutRequete=A_TRAITER&libelleAction=Attribu%C3%A9e%20%C3%A0%20str2&attribuer=true" ||
         match[1] ===
           "/requetes/action/transfert?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce635d0&idEntite=12345&idUtilisateur=&statutRequete=A_TRAITER&libelleAction=Attribu%C3%A9e%20%C3%A0%20str2&attribuer=true" ||
+        match[1] === "/requetes/action/retourValideur" ||
         match[1] === "/requetes/action/transfertValideur"
       ) {
         return { data: "12345" };
@@ -323,6 +324,11 @@ export const configRequetes = [
       }
       if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d494") {
         return { data: ReponseAppelDetailRequeteDelivranceASigner.data };
+      }
+      if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d495") {
+        const temp = { ...ReponseAppelDetailRequeteDelivranceASigner.data };
+        temp.statut.statutRequete = "TRANSMISE_A_VALIDEUR";
+        return { data: temp };
       }
       if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d884") {
         return { data: ReponseAppelDetailRequeteDelivrancePriseEnCharge.data };

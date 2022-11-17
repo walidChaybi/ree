@@ -14,30 +14,17 @@ interface VoletEditionProps {
   requete: IRequeteDelivrance;
   document: IDocumentReponse;
   acte?: IFicheActe;
-  handleDocumentEnregistre: () => void;
 }
 
 export const VoletEdition: React.FC<VoletEditionProps> = props => {
   const { isDirty, setIsDirty } = useContext(RECEContext);
 
   const [{ liste, ongletSelectionne }, setOnglets] = useState<OngletProps>(
-    getOngletsEdition(
-      props.handleDocumentEnregistre,
-      props.requete,
-      props.document,
-      props.acte
-    )
+    getOngletsEdition(props.requete, props.document, props.acte)
   );
 
   useEffect(() => {
-    setOnglets(
-      getOngletsEdition(
-        props.handleDocumentEnregistre,
-        props.requete,
-        props.document,
-        props.acte
-      )
-    );
+    setOnglets(getOngletsEdition(props.requete, props.document, props.acte));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.document, props.acte]);
 
