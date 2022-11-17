@@ -80,7 +80,6 @@ export function useGenerationEC(
         )
       });
     } else if (estPresentActeEtChoixDelivrance(params)) {
-      setRecupererCtvApiHookParam({});
       setActeDejaPresent(params?.acte);
     }
   }, [params]);
