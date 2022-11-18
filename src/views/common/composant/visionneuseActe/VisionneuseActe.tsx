@@ -1,3 +1,4 @@
+import { HTTP_NOT_FOUND } from "@api/ApiManager";
 import { getImagesActe, getTexteActe } from "@api/appels/etatcivilApi";
 import { logError } from "@util/LogManager";
 import { getLibelle } from "@util/Utils";
@@ -35,11 +36,17 @@ export const VisionneuseActe: React.FC<ActeImageProps> = props => {
             setContenuBlob(pdf.body);
           }
         })
-        .catch(() => {
-          logError({
-            messageUtilisateur:
-              "Impossible d'obtenir les informations de l'acte"
-          });
+        .catch(erreurAppel => {
+          if (erreurAppel?.response.status === HTTP_NOT_FOUND) {
+            setError(
+              getLibelle("La visualisation de l'acte n'est pas disponible")
+            );
+          } else {
+            logError({
+              messageUtilisateur:
+                "Impossible d'obtenir les informations de l'acte"
+            });
+          }
         });
     }
   }, [props.idActe, isImage]);
