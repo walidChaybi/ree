@@ -120,7 +120,10 @@ function ajouterOngletRequete(res: OngletProps, requete: IRequeteDelivrance) {
           sousType={requete.sousType}
           statut={requete.statutCourant.statut}
         />
-        <SuiviObservationsRequete idRequete={requete.id} />
+        <SuiviObservationsRequete
+          idRequete={requete.id}
+          observations={requete.observations}
+        />
         <SuiviActionsRequete actions={requete.actions} />
       </>
     )
