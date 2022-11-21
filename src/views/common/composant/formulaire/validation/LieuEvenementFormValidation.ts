@@ -1,6 +1,5 @@
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { getLibelle } from "@util/Utils";
-import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import {
   ETRANGER_FRANCE,
@@ -10,12 +9,14 @@ import {
   VILLE
 } from "../ConstantesNomsForm";
 
-export function valideLieu(
+export function valideCompletudeLieu(
   formik: any,
   nomChamp: string,
   value: string,
   nomForm: string
 ) {
+  let messageErreur;
+
   let lieuComplet = formik.getFieldProps(
     withNamespace(nomForm, LIEU_COMPLET)
   ).value;
@@ -47,35 +48,11 @@ export function valideLieu(
     withNamespace(nomForm, ETRANGER_FRANCE)
   ).value;
 
-  return getMessageErreur(
-    lieuComplet,
-    ville,
-    region,
-    pays,
-    nomChamp,
-    modeSaisie
-  );
-}
-
-function getMessageErreur(
-  lieuComplet: string,
-  ville: string,
-  region: string,
-  pays: string,
-  nomChamp: string,
-  modeSaisie: any
-) {
-  let messageErreur;
   const erreur: boolean = !lieuComplet && !ville && !region && !pays;
   if (erreur && modeSaisie !== EtrangerFrance.getKey(EtrangerFrance.INCONNU)) {
     messageErreur = getLibelle("Au moins un des champs est obligatoire");
-  } else if (
-    nomChamp === PAYS &&
-    !LieuxUtils.estVilleJerusalem(ville) &&
-    modeSaisie === EtrangerFrance.getKey(EtrangerFrance.ETRANGER) &&
-    !pays
-  ) {
-    messageErreur = getLibelle("Le pays est obligatoire");
   }
+
   return messageErreur;
 }
+

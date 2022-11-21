@@ -1,20 +1,20 @@
-import { valideLieu } from "@composant/formulaire/validation/LieuEvenementFormValidation";
+import { valideCompletudeLieu } from "@composant/formulaire/validation/LieuEvenementFormValidation";
 test("Attendu: la validation du formulaire LieuEvenementForm fonctionne correctement", () => {
   const mockFormik = {
     getFieldProps(): any {
       return "";
     }
   };
-  expect(valideLieu(mockFormik, "lieuComplet", "", "")).toBe(
+  expect(valideCompletudeLieu(mockFormik, "lieuComplet", "", "")).toBe(
     "Au moins un des champs est obligatoire"
   );
-  expect(valideLieu(mockFormik, "ville", "", "")).toBe(
+  expect(valideCompletudeLieu(mockFormik, "ville", "", "")).toBe(
     "Au moins un des champs est obligatoire"
   );
-  expect(valideLieu(mockFormik, "regionDepartement", "", "")).toBe(
+  expect(valideCompletudeLieu(mockFormik, "regionDepartement", "", "")).toBe(
     "Au moins un des champs est obligatoire"
   );
-  expect(valideLieu(mockFormik, "pays", "", "")).toBe(
+  expect(valideCompletudeLieu(mockFormik, "pays", "", "")).toBe(
     "Au moins un des champs est obligatoire"
   );
 
@@ -22,8 +22,12 @@ test("Attendu: la validation du formulaire LieuEvenementForm fonctionne correcte
     return { value: "non vide" };
   };
 
-  expect(valideLieu(mockFormik, "lieuComplet", "", "")).toBeUndefined();
-  expect(valideLieu(mockFormik, "ville", "", "")).toBeUndefined();
-  expect(valideLieu(mockFormik, "regionDepartement", "", "")).toBeUndefined();
-  expect(valideLieu(mockFormik, "pays", "", "")).toBeUndefined();
+  expect(
+    valideCompletudeLieu(mockFormik, "lieuComplet", "", "")
+  ).toBeUndefined();
+  expect(valideCompletudeLieu(mockFormik, "ville", "", "")).toBeUndefined();
+  expect(
+    valideCompletudeLieu(mockFormik, "regionDepartement", "", "")
+  ).toBeUndefined();
+  expect(valideCompletudeLieu(mockFormik, "pays", "", "")).toBeUndefined();
 });

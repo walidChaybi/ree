@@ -11,6 +11,7 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { getDateDebutFromDateCompose } from "@util/DateUtils";
 import {
   DEUX,
+  estNonRenseigne,
   estRenseigne,
   getNombreOuUndefined,
   getTableauAPartirElementsNonVides,
@@ -252,37 +253,39 @@ function mapEvenement(evenementSaisi?: IEvenementForm): IEvenement {
   );
   let pays = getValeurOuVide(evenementSaisi?.lieuEvenement?.pays);
 
-  if (
-    evenementSaisi?.lieuEvenement?.EtrangerFrance ===
-    EtrangerFrance.getKey(EtrangerFrance.INCONNU)
-  ) {
+  switch (evenementSaisi?.lieuEvenement?.EtrangerFrance) {
+    case EtrangerFrance.getKey(EtrangerFrance.INCONNU):
+      lieuReprise = "";
+      ville = "";
+      arrondissement = "";
+      region = "";
+      pays = "";
+      break;
+    case EtrangerFrance.getKey(EtrangerFrance.FRANCE):
+      pays = EtrangerFrance.getKey(EtrangerFrance.FRANCE);
+      if (LieuxUtils.isVilleParis(ville)) {
+        region = "";
+      }
+      if (!LieuxUtils.isVilleAvecArrondissement(ville)) {
+        arrondissement = "";
+      }
+      break;
+    case EtrangerFrance.getKey(EtrangerFrance.ETRANGER):
+      arrondissement = "";
+      break;
+
+    default:
+      break;
+  }
+
+  if (evenementSaisi?.lieuEvenement?.villeEstAffichee) {
+    lieuReprise = "";
+  } else if (estNonRenseigne(lieuReprise)) {
     lieuReprise = "";
     ville = "";
     arrondissement = "";
     region = "";
     pays = "";
-  }
-
-  if (
-    evenementSaisi?.lieuEvenement?.EtrangerFrance ===
-    EtrangerFrance.getKey(EtrangerFrance.FRANCE)
-  ) {
-    pays = EtrangerFrance.getKey(EtrangerFrance.FRANCE);
-
-    if (LieuxUtils.isVilleParis(ville)) {
-      region = "";
-    }
-  }
-
-  if (
-    evenementSaisi?.lieuEvenement?.EtrangerFrance ===
-    EtrangerFrance.getKey(EtrangerFrance.ETRANGER)
-  ) {
-    arrondissement = "";
-  }
-
-  if (evenementSaisi?.lieuEvenement?.villeEstAffichee) {
-    lieuReprise = "";
   }
 
   return {
