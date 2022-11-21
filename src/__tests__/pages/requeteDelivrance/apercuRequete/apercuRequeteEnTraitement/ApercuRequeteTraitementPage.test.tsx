@@ -263,3 +263,35 @@ test("retour approuvé", async () => {
     );
   });
 });
+
+test("reprendre traitement", async () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+      "a4cefb71-8457-4f6b-937e-34b49335d495"
+    )
+  );
+  await act(async () => {
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID}
+          >
+            <ApercuRequeteTraitementPage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Reprendre le traitement")).toBeDefined();
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText("Reprendre le traitement"));
+  });
+});
+

@@ -369,6 +369,11 @@ export const configRequetes = [
       if (match[1] === "/requetes/3f52370d-14ed-4c55-8cf4-afe006d9aa38") {
         return { data: requeteAvecDocsPlurilingue };
       }
+      if (match[1] === "/requetes/3f52370d-14ed-4c55-8cf4-afe006d9aa39") {
+        const temp = { ...requeteAvecDocsPlurilingue };
+        temp.statut.statutRequete = "TRANSMISE_A_VALIDEUR";
+        return { data: temp };
+      }
 
       if (match[1] === "/requetes/9bfa282d-1e66-4538-b242-b9de4f693f0e") {
         if (compteur === 0) {
@@ -696,6 +701,8 @@ export const configRequetes = [
           match[1] ===
             "/requetes/action?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=A%20signer&statutRequete=A_SIGNER" ||
           match[1] ===
+            "/requetes/action?idRequete=a4cefb71-8457-4f6b-937e-34b49335d494&libelleAction=Requ%C3%AAte%20reprise&statutRequete=A_VALIDER" ||
+          match[1] ===
             `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=A%20valider&statutRequete=A_VALIDER` ||
           match[1] ===
             `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE` ||
@@ -707,6 +714,8 @@ export const configRequetes = [
             "/requetes/action?idRequete=id1&libelleAction=Trait%C3%A9e%20-%20A%20d%C3%A9livrer%20D%C3%A9mat&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
           match[1] ===
             "/requetes/action?idRequete=104b8563-c7f8-4748-9daa-f26558985894&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
+          match[1] ===
+            "/requetes/action?idRequete=3f52370d-14ed-4c55-8cf4-afe006d9aa38&libelleAction=Requ%C3%AAte%20reprise&statutRequete=A_SIGNER" ||
           match[1] ===
             "/requetes/action?idRequete=104b8563-c7f8-4748-9daa-f26558985894&libelleAction=Trait%C3%A9e%20-%20A%20d%C3%A9livrer%20D%C3%A9mat&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
           // Passage du statut la requête de "A_SIGNE" à "TRAITE_A_IMPRIMER"
@@ -761,7 +770,9 @@ export const configRequetes = [
       //Sauvegarde document réponse suite modifier corps extrait
       if (
         match[1] ===
-        "/documentsreponses/update/9bfa282d-1e66-4538-b242-b9de4f683f0f"
+          "/documentsreponses/update/9bfa282d-1e66-4538-b242-b9de4f683f0f" ||
+        match[1] ===
+          "/documentsreponses/update/3f52370d-14ed-4c55-8cf4-afe006d9aa38"
       ) {
         return { data: ["9bfa282d-1e66-4538-b242-b9de4f683777"] };
       }

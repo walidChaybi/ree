@@ -1,18 +1,29 @@
 import { TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
 import {
+  ICreationActionMiseAjourStatutHookParams,
+  useCreationActionMiseAjourStatut
+} from "@hook/requete/CreationActionMiseAjourStatutHook";
+import {
+  IRegenerationDocumentsParams,
+  useRegenerationDocumentsHook
+} from "@hook/requete/RegenerationDocumentsHook";
+import {
   IRetourValideurParams,
   useRetourValideurApiHook
 } from "@hook/requete/RetourValideur";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import { receUrl } from "@router/ReceUrls";
 import { getUrlPrecedente } from "@util/route/routeUtil";
 import { Option } from "@util/Type";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import { BoutonsTerminer } from "./BoutonsTerminer";
 
 interface BoutonsTerminerOuRelectureProps {
@@ -23,12 +34,21 @@ interface BoutonsTerminerOuRelectureProps {
 export const BoutonsTerminerOuRelecture: React.FC<
   BoutonsTerminerOuRelectureProps
 > = props => {
-  const [params, setParams] = useState<IRetourValideurParams>();
+  const [retourParams, setRetourParams] = useState<IRetourValideurParams>();
+  const [majStatutParams, setMajStatutParams] =
+    useState<ICreationActionMiseAjourStatutHookParams>();
+  const [regenerationParams, setRegenerationParams] =
+    useState<IRegenerationDocumentsParams>();
   const [open, setOpen] = useState<boolean>(false);
   const history = useHistory();
+  const { rafraichirRequete } = useContext(EditionExtraitCopiePageContext);
+
+  useRegenerationDocumentsHook(regenerationParams);
+
+  useCreationActionMiseAjourStatut(majStatutParams);
 
   function onClickValidate(statut: StatutRequete, texte?: string) {
-    setParams({
+    setRetourParams({
       libelleAction: statut.libelle,
       statutDemande: statut.nom,
       requeteId: props.requete.id,
@@ -39,22 +59,47 @@ export const BoutonsTerminerOuRelecture: React.FC<
     });
   }
 
-  const idAction = useRetourValideurApiHook(params);
+  const idActionRetour = useRetourValideurApiHook(retourParams);
 
   useEffect(() => {
-    if (idAction) {
+    if (idActionRetour) {
       receUrl.replaceUrl(history, getUrlPrecedente(history.location.pathname));
     }
-  }, [idAction, history]);
+  }, [idActionRetour, history]);
+
+  function onClickReprise(statut: StatutRequete) {
+    setRegenerationParams({
+      requete: props.requete,
+      callBack: () =>
+        setMajStatutParams({
+          libelleAction: "Requête reprise",
+          statutRequete: statut,
+          requete: mappingRequeteDelivranceToRequeteTableau(props.requete),
+          callback: rafraichirRequete
+        })
+    });
+  }
 
   return (
     <>
       {props.requete.statutCourant.statut ===
       StatutRequete.TRANSMISE_A_VALIDEUR ? (
         <>
-          <Bouton onClick={() => setOpen(true)}>
-            {getLibelle("Reprendre le traitement")}
-          </Bouton>
+          {!SousTypeDelivrance.estRDCSDouRDCSC(props.requete.sousType) && (
+            <Bouton
+              onClick={() =>
+                onClickReprise(
+                  props.requete.documentsReponses.some(
+                    document => document.avecCtv
+                  )
+                    ? StatutRequete.A_SIGNER
+                    : StatutRequete.A_VALIDER
+                )
+              }
+            >
+              {getLibelle("Reprendre le traitement")}
+            </Bouton>
+          )}
           <Bouton
             onClick={() =>
               onClickValidate(

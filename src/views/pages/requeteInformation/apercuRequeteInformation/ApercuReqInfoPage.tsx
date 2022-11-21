@@ -2,7 +2,7 @@ import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuReq
 import { SuiviActionsRequete } from "@composant/suivis/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationRequete";
 import {
-  CreationActionMiseAjourStatutHookParams,
+  ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
 import { appartientAMonServiceOuServicesMeresOuServicesFilles } from "@model/agent/IOfficier";
@@ -39,7 +39,7 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
     useState(false);
 
   const [paramsMAJReqInfo, setParamsMAJReqInfo] =
-    useState<CreationActionMiseAjourStatutHookParams>();
+    useState<ICreationActionMiseAjourStatutHookParams>();
 
   useCreationActionMiseAjourStatut(paramsMAJReqInfo);
 

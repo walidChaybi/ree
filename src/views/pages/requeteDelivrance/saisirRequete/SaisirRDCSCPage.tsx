@@ -3,7 +3,7 @@ import {
   useNavigationApercuRMCAutoDelivrance
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import {
-  CreationActionMiseAjourStatutHookParams,
+  ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
 import {
@@ -156,7 +156,7 @@ export const SaisirRDCSCPage: React.FC = () => {
   const [
     metAJourStatutRequeteApresMajPiecesJointes,
     setMetAJourStatutRequeteApresMajPiecesJointes
-  ] = useState<CreationActionMiseAjourStatutHookParams>();
+  ] = useState<ICreationActionMiseAjourStatutHookParams>();
 
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
 

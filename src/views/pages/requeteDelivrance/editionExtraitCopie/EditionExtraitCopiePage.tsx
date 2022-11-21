@@ -33,7 +33,7 @@ import {
 } from "../detailRequete/hook/DetailRequeteHook";
 import { VoletEdition } from "./contenu/onglets/VoletEdition";
 import { VoletVisualisation } from "./contenu/onglets/VoletVisualisation";
-import { OngletDocumentsEdites } from "./contenu/OngletsDocumentsEdites";
+import { OngletsDocumentsEdites } from "./contenu/OngletsDocumentsEdites";
 import {
   choisirDocumentEdite,
   estDocumentComplementaireDeTypeCopieIntegrale,
@@ -287,7 +287,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
           <title>{getLibelle("Édition extrait copie")}</title>
           {requete && (
             <>
-              <OngletDocumentsEdites
+              <OngletsDocumentsEdites
                 documents={documents}
                 idDocumentEdite={documentEdite?.id}
                 acte={resultatInformationsActeApiHook?.acte}

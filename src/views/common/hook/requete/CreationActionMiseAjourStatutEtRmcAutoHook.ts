@@ -12,7 +12,7 @@ import {
   useNavigationApercuRMCAutoDelivrance
 } from "../navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import {
-  CreationActionMiseAjourStatutHookParams,
+  ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "./CreationActionMiseAjourStatutHook";
 
@@ -30,7 +30,7 @@ export function useCreationActionMiseAjourStatutEtRmcAuto(
   params: ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
 ) {
   const [paramsMiseAjourStatut, setParamsMiseAjourStatut] = useState<
-    CreationActionMiseAjourStatutHookParams | undefined
+    ICreationActionMiseAjourStatutHookParams | undefined
   >();
   const [paramsRMCAutoDelivrance, setParamsRMCAutoDelivrance] = useState<
     INavigationApercuRMCAutoParams | undefined

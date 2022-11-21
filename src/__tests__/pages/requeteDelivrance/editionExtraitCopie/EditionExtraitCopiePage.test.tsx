@@ -633,3 +633,28 @@ test("Test création extrait plurilingue", async () => {
     ).toBeDefined();
   });
 });
+
+test("Test reprendre traitement", async () => {
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  history.push(
+    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/3f52370d-14ed-4c55-8cf4-afe006d9aa39/19c0d767-64e5-4376-aa1f-6d781a2a235e`
+  );
+
+  await act(async () => {
+    render(
+      <Router history={history}>
+        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
+          <EditionExtraitCopiePage />
+        </Route>
+      </Router>
+    );
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Reprendre le traitement")).toBeDefined();
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText("Reprendre le traitement"));
+  });
+});

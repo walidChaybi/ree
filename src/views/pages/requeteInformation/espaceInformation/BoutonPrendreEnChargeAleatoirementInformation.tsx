@@ -1,5 +1,5 @@
 import {
-  CreationActionMiseAjourStatutHookParams,
+  ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
 import {
@@ -25,7 +25,7 @@ export const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [prendreEnCharge, setPrendreEnCharge] = useState<boolean>(false);
   const [paramsInformation, setParamsInformation] = useState<
-    CreationActionMiseAjourStatutHookParams | undefined
+    ICreationActionMiseAjourStatutHookParams | undefined
   >();
   const requeteAleatoireResultat: IRequeteAleatoireResultat | undefined =
     useGetRequeteAleatoire(TypeRequete.INFORMATION, prendreEnCharge);

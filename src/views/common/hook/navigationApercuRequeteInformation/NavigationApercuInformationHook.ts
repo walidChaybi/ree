@@ -6,7 +6,7 @@ import { getUrlWithParam } from "@util/route/routeUtil";
 import { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
-  CreationActionMiseAjourStatutHookParams,
+  ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "../requete/CreationActionMiseAjourStatutHook";
 
@@ -20,7 +20,7 @@ export function useNavigationApercuInformation(
   params?: INavigationApercuReqInfoParams
 ) {
   const [paramsMAJReqInfo, setParamsMAJReqInfo] = useState<
-    CreationActionMiseAjourStatutHookParams | undefined
+    ICreationActionMiseAjourStatutHookParams | undefined
   >();
 
   const history = useHistory();

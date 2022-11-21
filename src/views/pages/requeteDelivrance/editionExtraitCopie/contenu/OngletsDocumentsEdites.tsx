@@ -7,6 +7,7 @@ import {
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
 import {
   DocumentReponse,
@@ -51,7 +52,7 @@ const titulairesEstDeGenreIndetermineOuParentMemeSexe = (
 
 const NB_DOCUMENT_MAX = 3;
 
-export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
+export const OngletsDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
   documents,
   idDocumentEdite,
   setDocumentEdite,
@@ -190,7 +191,10 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
         afficherPlus={afficherPlus(requete, documents)}
         listePlus={liste}
         nombreOngletsMax={NB_DOCUMENT_MAX}
-        afficherMoins={documents?.length === TROIS}
+        afficherMoins={
+          documents?.length === TROIS &&
+          StatutRequete.TRANSMISE_A_VALIDEUR !== requete.statutCourant.statut
+        }
       />
 
       <ConfirmationPopin
@@ -210,6 +214,7 @@ function afficherPlus(
     !ChoixDelivrance.estReponseSansDelivrance(requete.choixDelivrance) &&
     documents?.length === DocumentEC.Complementaire &&
     requete.choixDelivrance !== ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE &&
-    !requete.provenanceRequete.provenancePlanete
+    !requete.provenanceRequete.provenancePlanete &&
+    StatutRequete.TRANSMISE_A_VALIDEUR !== requete.statutCourant.statut
   );
 }

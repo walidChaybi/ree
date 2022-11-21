@@ -1,5 +1,5 @@
 import {
-  CreationActionMiseAjourStatutHookParams,
+  ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -31,7 +31,7 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
 
   const [requete, setRequete] = useState<IRequeteDelivrance>();
   const [lancerMajRequete, setLancerMajRequete] =
-    useState<CreationActionMiseAjourStatutHookParams>();
+    useState<ICreationActionMiseAjourStatutHookParams>();
 
   useCreationActionMiseAjourStatut(lancerMajRequete);
 

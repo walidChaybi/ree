@@ -9,7 +9,7 @@ import { storeRece } from "@util/storeRece";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-export interface CreationActionMiseAjourStatutHookParams {
+export interface ICreationActionMiseAjourStatutHookParams {
   statutRequete: StatutRequete;
   libelleAction: string;
   requete?: IRequeteTableauInformation | IRequeteTableauDelivrance;
@@ -18,7 +18,7 @@ export interface CreationActionMiseAjourStatutHookParams {
 }
 
 export function useCreationActionMiseAjourStatut(
-  params: CreationActionMiseAjourStatutHookParams | undefined
+  params: ICreationActionMiseAjourStatutHookParams | undefined
 ) {
   const history = useHistory();
   const [
