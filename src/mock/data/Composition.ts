@@ -75,6 +75,8 @@ const baseReponseSansDelivranceCSInstitutionnel = {
 export const reponseSansDelivranceCSDemandeIncomplete: IReponseSansDelivranceCSDemandeIncompleteComposition =
   {
     ...baseReponseSansDelivranceCSInstitutionnel,
+    nom_titulaire: "Prodesk",
+    prenom_titulaire: "Elodie",
     objet_courrier:
       "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil"
   };
@@ -95,12 +97,17 @@ export const reponseSansDelivranceCSMariage: IReponseSansDelivranceCSMariageComp
     nom_titulaire1: "GREENWALD",
     prenoms_titulaire1: "Paulita, Zaria",
     nom_titulaire2: "DUPE",
-    prenoms_titulaire2: "Laurent"
+    prenoms_titulaire2: "Laurent",
+    prenom_titulaire: "Elodie",
+    nom_titulaire: "Prodesk",
+    reference_acte: "CSL.DX.NA.T.410.681"
   };
 
 export const reponseSansDelivranceCSFrancais: IReponseSansDelivranceCSFrancaisComposition =
   {
     ...baseReponseSansDelivranceCS,
+    prenom_titulaire: "Elodie",
+    nom_titulaire: "Prodesk",
     objet_courrier:
       "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil",
     url: "https://www.service-public.fr"

@@ -36,9 +36,7 @@ export const createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete = 
   if (requete && requete.requerant) {
     reponseSansDelivranceCS =
       ReponseSansDelivranceCSDemandeIncompleteComposition.creerReponseSansDelivranceCS(
-        requete.requerant,
-        requete.canal,
-        requete.numero
+        requete
       );
   } else {
     messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
@@ -56,10 +54,8 @@ export const createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit = (
   if (requete && requete.requerant) {
     reponseSansDelivranceCS =
       ReponseSansDelivranceCSPACSNonInscritComposition.creerReponseSansDelivranceCS(
-        requete.requerant,
-        requete.canal,
-        requete.titulaires?.[0],
-        requete.numero
+        requete,
+        requete.canal
       );
   } else {
     messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);

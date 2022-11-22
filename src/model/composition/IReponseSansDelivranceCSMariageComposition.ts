@@ -1,5 +1,6 @@
+import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { formatPrenoms } from "@util/Utils";
-import { IFicheActe } from "../etatcivil/acte/IFicheActe";
+import { FicheActe, IFicheActe } from "../etatcivil/acte/IFicheActe";
 import { TitulaireActe } from "../etatcivil/acte/ITitulaireActe";
 import { IRequeteDelivrance } from "../requete/IRequeteDelivrance";
 import {
@@ -24,6 +25,7 @@ export interface IReponseSansDelivranceCSMariageComposition
   prenoms_titulaire1: string;
   nom_titulaire2: string;
   prenoms_titulaire2: string;
+  reference_acte: string;
 }
 
 export const ReponseSansDelivranceCSMariageComposition = {
@@ -46,7 +48,14 @@ export const ReponseSansDelivranceCSMariageComposition = {
       requete.requerant
     );
 
-    if (requete.titulaires) {
+    reponseSansDelivranceCS.reference_acte = FicheActe.getReference(infoActe);
+
+    if (requete.titulaires?.length) {
+      reponseSansDelivranceCS.prenom_titulaire = TitulaireRequete.getPrenom1(
+        requete.titulaires[0]
+      );
+      reponseSansDelivranceCS.nom_titulaire =
+        requete.titulaires[0].nomNaissance;
       reponseSansDelivranceCS.nom_titulaire1 = TitulaireActe.getNom(
         infoActe.titulaires[0]
       );

@@ -1,3 +1,4 @@
+import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { IRequeteDelivrance } from "../requete/IRequeteDelivrance";
 import {
   CommunComposition,
@@ -23,7 +24,8 @@ export interface IReponseSansDelivranceCSFrancaisComposition
 
 export const ReponseSansDelivranceCSFrancaisComposition = {
   creerReponseSansDelivranceCS(requete: IRequeteDelivrance) {
-    const reponseSansDelivranceCS = {} as IReponseSansDelivranceCSFrancaisComposition;
+    const reponseSansDelivranceCS =
+      {} as IReponseSansDelivranceCSFrancaisComposition;
     ParametresComposition.ajoutParametres(reponseSansDelivranceCS);
 
     CommunComposition.ajoutParamCommuns(
@@ -31,6 +33,14 @@ export const ReponseSansDelivranceCSFrancaisComposition = {
       requete.numero,
       OBJET_COURRIER_CERTIFICAT_SITUATION
     );
+
+    if (requete.titulaires?.length) {
+      reponseSansDelivranceCS.prenom_titulaire = TitulaireRequete.getPrenom1(
+        requete.titulaires[0]
+      );
+      reponseSansDelivranceCS.nom_titulaire =
+        requete.titulaires[0].nomNaissance;
+    }
 
     reponseSansDelivranceCS.url = "https://www.service-public.fr";
 

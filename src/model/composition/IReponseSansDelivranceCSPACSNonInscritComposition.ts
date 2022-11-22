@@ -1,9 +1,6 @@
-import {
-  ITitulaireRequete,
-  TitulaireRequete
-} from "@model/requete/ITitulaireRequete";
+import { IRequete } from "@model/requete/IRequete";
+import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { TypeCanal } from "../requete/enum/TypeCanal";
-import { IRequerant } from "../requete/IRequerant";
 import {
   CommunComposition,
   ICommunComposition
@@ -28,33 +25,30 @@ export interface IReponseSansDelivranceCSPACSNonInscritComposition
 }
 
 export const ReponseSansDelivranceCSPACSNonInscritComposition = {
-  creerReponseSansDelivranceCS(
-    requerant: IRequerant,
-    canal: TypeCanal,
-    titulaire?: ITitulaireRequete,
-    numeroRequete?: string
-  ) {
+  creerReponseSansDelivranceCS(requete: IRequete, canal: TypeCanal) {
     const reponseSansDelivranceCS =
       {} as IReponseSansDelivranceCSPACSNonInscritComposition;
     ParametresComposition.ajoutParametres(reponseSansDelivranceCS);
 
     CommunComposition.ajoutParamCommuns(
       reponseSansDelivranceCS,
-      numeroRequete,
+      requete.numero,
       OBJET_COURRIER_CERTIFICAT_SITUATION
     );
 
     RequerantComposition.ajoutInfosRequerant(
       reponseSansDelivranceCS,
       canal,
-      requerant
+      requete.requerant
     );
 
-    if (titulaire) {
-      reponseSansDelivranceCS.nom_titulaire1 =
-        TitulaireRequete.getNom(titulaire);
-      reponseSansDelivranceCS.prenoms_titulaire1 =
-        TitulaireRequete.getPrenoms(titulaire);
+    if (requete.titulaires?.length) {
+      reponseSansDelivranceCS.nom_titulaire1 = TitulaireRequete.getNom(
+        requete.titulaires[0]
+      );
+      reponseSansDelivranceCS.prenoms_titulaire1 = TitulaireRequete.getPrenoms(
+        requete.titulaires[0]
+      );
     }
 
     return reponseSansDelivranceCS;

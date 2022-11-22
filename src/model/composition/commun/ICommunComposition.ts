@@ -1,3 +1,4 @@
+import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { getDateDuJour, getDateFormatJasper } from "@util/DateUtils";
 import { getValeurOuVide } from "@util/Utils";
 
@@ -7,6 +8,9 @@ export interface ICommunComposition {
   numero_requete?: string;
   date_jour?: string;
   date_delivrance: string;
+  titulaire?: ITitulaireRequete;
+  prenom_titulaire?: string;
+  nom_titulaire?: string;
 }
 
 export const CommunComposition = {

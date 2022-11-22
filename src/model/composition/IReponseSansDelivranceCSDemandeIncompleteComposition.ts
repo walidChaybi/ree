@@ -1,5 +1,5 @@
-import { TypeCanal } from "../requete/enum/TypeCanal";
-import { IRequerant } from "../requete/IRequerant";
+import { IRequete } from "@model/requete/IRequete";
+import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import {
   CommunComposition,
   ICommunComposition
@@ -21,24 +21,29 @@ export interface IReponseSansDelivranceCSDemandeIncompleteComposition
     IRequerantComposition {}
 
 export const ReponseSansDelivranceCSDemandeIncompleteComposition = {
-  creerReponseSansDelivranceCS(
-    requerant: IRequerant,
-    canal: TypeCanal,
-    numeroRequete?: string
-  ) {
-    const reponseSansDelivranceCS = {} as IReponseSansDelivranceCSDemandeIncompleteComposition;
+  creerReponseSansDelivranceCS(requete: IRequete) {
+    const reponseSansDelivranceCS =
+      {} as IReponseSansDelivranceCSDemandeIncompleteComposition;
     ParametresComposition.ajoutParametres(reponseSansDelivranceCS);
 
     CommunComposition.ajoutParamCommuns(
       reponseSansDelivranceCS,
-      numeroRequete,
+      requete.numero,
       OBJET_COURRIER_CERTIFICAT_SITUATION
     );
 
+    if (requete.titulaires?.length) {
+      reponseSansDelivranceCS.prenom_titulaire = TitulaireRequete.getPrenom1(
+        requete.titulaires[0]
+      );
+      reponseSansDelivranceCS.nom_titulaire =
+        requete.titulaires[0].nomNaissance;
+    }
+
     RequerantComposition.ajoutInfosRequerant(
       reponseSansDelivranceCS,
-      canal,
-      requerant
+      requete.canal,
+      requete.requerant
     );
 
     return reponseSansDelivranceCS;
