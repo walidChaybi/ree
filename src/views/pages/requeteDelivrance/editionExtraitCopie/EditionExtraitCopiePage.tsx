@@ -13,7 +13,9 @@ import {
   useGenerationEC
 } from "@hook/generation/generationECHook/generationECHook";
 import { useSupprimerDocumentComplementaireApi } from "@hook/requete/SupprimerDocumentComplementaireHook";
+import { Mention } from "@model/etatcivil/acte/mention/IMention";
 import { IUuidEditionParams } from "@model/params/IUuidEditionParams";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { ACTE_NON_TROUVE } from "@model/requete/enum/DocumentDelivranceConstante";
 import { Validation } from "@model/requete/enum/Validation";
@@ -31,12 +33,12 @@ import {
   IDetailRequeteParams,
   useAvecRejeuDetailRequeteApiHook
 } from "../detailRequete/hook/DetailRequeteHook";
+import { gestionnaireMentionsRetireesAuto } from "./contenu/onglets/mentions/GestionnaireMentionsRetireesAuto";
 import { VoletEdition } from "./contenu/onglets/VoletEdition";
 import { VoletVisualisation } from "./contenu/onglets/VoletVisualisation";
 import { OngletsDocumentsEdites } from "./contenu/OngletsDocumentsEdites";
 import {
   choisirDocumentEdite,
-  estDocumentComplementaireDeTypeCopieIntegrale,
   filtrerDocumentComplementaireASupprimer,
   getBoutonsEdition,
   retoucheImage
@@ -110,7 +112,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
   const ajouteDocument = (typeDocument: string) => {
     if (checkDirty(isDirty, setIsDirty) && requete) {
       setOperationEnCours(true);
-      if (estDocumentComplementaireDeTypeCopieIntegrale(typeDocument)) {
+      if (DocumentDelivrance.estCopieIntegrale(typeDocument)) {
         setCreationECParams({
           idActe: resultatInformationsActeApiHook?.acte?.id,
           requete,
@@ -121,12 +123,31 @@ export const EditionExtraitCopiePage: React.FC = () => {
             DocumentDelivrance.getChoixDelivranceFromUUID(typeDocument)
         });
       } else {
+        let mentions = resultatInformationsActeApiHook?.acte?.mentions
+          ? resultatInformationsActeApiHook?.acte?.mentions
+          : [];
+        const choixDelivrance =
+          DocumentDelivrance.getChoixDelivranceFromUUID(typeDocument);
+        if (ChoixDelivrance.estPlurilingue(choixDelivrance)) {
+          mentions = Mention.filtrerFormaterEtTrierMentionsPlurilingues(
+            resultatInformationsActeApiHook?.acte?.mentions
+              ? resultatInformationsActeApiHook?.acte?.mentions
+              : [],
+            resultatInformationsActeApiHook?.acte?.nature
+          );
+        }
+
         setCreationECParams({
           acte: resultatInformationsActeApiHook?.acte,
           requete,
           validation: Validation.O,
           pasDAction: true,
-          mentionsRetirees: [],
+          mentionsRetirees:
+            gestionnaireMentionsRetireesAuto.getIdsMentionsRetirees(
+              mentions,
+              choixDelivrance,
+              resultatInformationsActeApiHook?.acte?.nature
+            ),
           choixDelivrance:
             DocumentDelivrance.getChoixDelivranceFromUUID(typeDocument)
         });
