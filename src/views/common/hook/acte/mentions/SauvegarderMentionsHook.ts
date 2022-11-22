@@ -92,7 +92,9 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
           params.requete.choixDelivrance
         ),
         mentionsRetirees: mentionsRetireesSaved,
-        choixDelivrance: params.requete.choixDelivrance
+        choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(
+          params.document.typeDocument
+        )
       });
     }
   }, [resultatMiseAjourMentions, params, mentionsRetireesSaved]);
@@ -164,7 +166,10 @@ function sauvegarderEnFonctionTypeDocument(
             params.requete.documentsReponses,
             params.requete.choixDelivrance
           ),
-          mentionsRetirees
+          mentionsRetirees,
+          choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(
+            params.document.typeDocument
+          )
         });
       }
     } else {

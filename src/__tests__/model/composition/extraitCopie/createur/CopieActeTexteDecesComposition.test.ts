@@ -13,9 +13,6 @@ test("Attendu: copie fonctionne correctement", () => {
     sousType: SousTypeDelivrance.RDD
   } as IRequeteDelivrance;
   const validation = Validation.N;
-  const avecFiliation = true;
-  const copie = true;
-  const archive = false;
   const ctv = "111111-222222";
 
   const compositionCorps =
@@ -24,9 +21,7 @@ test("Attendu: copie fonctionne correctement", () => {
       requete,
       validation,
       mentionsRetirees: [],
-      avecFiliation,
-      copie,
-      archive,
+      choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION,
       ctv
     });
 

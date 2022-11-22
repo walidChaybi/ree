@@ -76,10 +76,8 @@ export interface ICreerExtraitCopieActeTexteAvantCompositionParams {
   requete: IRequeteDelivrance;
   validation: Validation;
   mentionsRetirees: string[];
-  avecFiliation?: boolean;
-  copie?: boolean;
-  archive?: boolean;
   ctv: string;
+  choixDelivrance: ChoixDelivrance;
 }
 
 export interface ICreerExtraitCopieActeTexteParams {
@@ -88,11 +86,8 @@ export interface ICreerExtraitCopieActeTexteParams {
   choixDelivrance: ChoixDelivrance;
   sousTypeRequete: SousTypeDelivrance;
   validation: Validation;
-  avecFiliation: boolean;
-  copie: boolean;
-  archive: boolean;
-  corpsTexte?: string;
   mentionsRetirees: string[];
+  corpsTexte?: string;
   ctv: string;
 }
 
@@ -115,7 +110,9 @@ export class CommunExtraitOuCopieActeTexteComposition {
     }
 
     // Filigrane archive (le bloc de signature sera automatiquement masqué)
-    composition.filigrane_archive = params.archive;
+    composition.filigrane_archive = ChoixDelivrance.estCopieArchive(
+      params.choixDelivrance
+    );
 
     // Création de l'entête
     CommunExtraitOuCopieActeTexteComposition.creerReferenceActeEtDateDuJour(
@@ -123,8 +120,12 @@ export class CommunExtraitOuCopieActeTexteComposition {
       params.acte
     );
 
+    const estCopie = ChoixDelivrance.estCopieIntegraleOuArchive(
+      params.choixDelivrance
+    );
+
     // Type et nature de document
-    composition.type_document = params.copie ? "COPIE" : "EXTRAIT";
+    composition.type_document = estCopie ? "COPIE" : "EXTRAIT";
     composition.nature_acte = params.natureActe;
 
     CommunExtraitOuCopieActeTexteComposition.creerAnalyseMarginale(
@@ -145,7 +146,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
       const corpsExtraitRectification =
         FicheActe.getCorpsExtraitRectificationTexte(
           params.acte,
-          params.avecFiliation
+          ChoixDelivrance.estAvecOuSansFiliation(params.choixDelivrance)
             ? TypeExtrait.EXTRAIT_AVEC_FILIATION
             : TypeExtrait.EXTRAIT_SANS_FILIATION
         );
@@ -153,7 +154,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
       const texteMentions =
         CommunExtraitOuCopieActeTexteComposition.getTexteMentions(
           params.acte.mentions,
-          params.copie,
+          estCopie,
           params.mentionsRetirees
         );
 
@@ -161,7 +162,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
         composition.mentions = jointAvecRetourALaLigne(texteMentions);
       }
 
-      if (params.copie && params.acte.corpsTexte) {
+      if (estCopie && params.acte.corpsTexte) {
         // Une copie est demandée (et non un extrait) pour un acte texte
         composition.corps_texte = params.acte.corpsTexte.texte;
       } else if (corpsExtraitRectification) {
@@ -177,8 +178,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
       params.choixDelivrance,
       params.sousTypeRequete,
       params.acte.nature,
-      params.validation,
-      params.archive
+      params.validation
     );
     return composition;
   }
@@ -443,10 +443,12 @@ export class CommunExtraitOuCopieActeTexteComposition {
     choixDelivrance: ChoixDelivrance,
     sousTypeRequete: SousTypeDelivrance,
     natureActe: NatureActe,
-    validation: Validation,
-    archive: boolean
+    validation: Validation
   ) {
-    if (validation === Validation.E || archive) {
+    if (
+      validation === Validation.E ||
+      ChoixDelivrance.estCopieArchive(choixDelivrance)
+    ) {
       composition.pas_de_bloc_signature = true;
     } else {
       composition.pas_de_bloc_signature = false;

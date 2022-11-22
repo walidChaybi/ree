@@ -166,6 +166,7 @@ export function creationComposition(
     composition = creationCompositionCopieActeImage(
       acte,
       requete,
+      choixDelivrance,
       Validation.O,
       ctv
     );
@@ -280,17 +281,13 @@ export function creationEC(
   ctv?: string
 ) {
   if (nonNull(acte, params, ctv)) {
-    const choixDelivrance = params?.choixDelivrance
-      ? params.choixDelivrance
-      : params?.requete.choixDelivrance;
-
     // Verification des données pour la génération d'extrait mariage/naissance
     // En cas de validation en erreur alors un extrait en erreur sera généré
     const validationControle = getValidationEC(
       // @ts-ignore NonNull
       acte,
       // @ts-ignore NonNull
-      choixDelivrance,
+      params.choixDelivrance,
       // @ts-ignore NonNull
       params.validation,
       // @ts-ignore NonNull
@@ -306,14 +303,14 @@ export function creationEC(
       // @ts-ignore NonNull
       params.mentionsRetirees,
       // @ts-ignore NonNull
-      choixDelivrance,
+      params.choixDelivrance,
       ctv
     );
 
     setValidation(validationControle);
     setExtraitCopieApiHookParams({
       // @ts-ignore NonNull
-      choixDelivrance,
+      choixDelivrance: params.choixDelivrance,
       extraitCopieComposition: composition
     });
   }

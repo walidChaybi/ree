@@ -4,21 +4,19 @@ import { TypeActe } from "@model/etatcivil/enum/TypeActe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { getLibelle } from "@util/Utils";
 
 export const creationCompositionCopieActeImage = function (
   acte: IFicheActe,
   requete: IRequeteDelivrance,
+  choixDelivrance: ChoixDelivrance,
   validation: Validation,
   ctv: string
 ) {
   let composition;
-  const choixDelivrance = getValeurOuVide(requete.choixDelivrance);
   if (acte.type === TypeActe.IMAGE) {
     const natureActe = acte.nature.libelle;
-    const avecFiliation = ChoixDelivrance.estAvecFiliation(choixDelivrance);
-    const copie = true;
-    const archive = ChoixDelivrance.estCopieArchive(choixDelivrance);
+
     const corpsImage = acte.corpsImage;
     const erreur =
       Validation.E === validation
@@ -29,11 +27,9 @@ export const creationCompositionCopieActeImage = function (
     composition = CopieActeImageComposition.creerCopieActeImage({
       acte,
       natureActe,
+      choixDelivrance,
       requete,
       validation,
-      avecFiliation,
-      copie,
-      archive,
       corpsImage,
       erreur,
       ctv

@@ -182,6 +182,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
           idActe: mentionNationaliteAjoutee ? params.idActe : undefined,
           requete: params.requete,
           mentionsRetirees: idsMentionsRetirees,
+          // @ts-ignore cf. estReponseAvecDelivrance
           choixDelivrance: params.requete.choixDelivrance
         });
       }

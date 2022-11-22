@@ -1,4 +1,4 @@
-import { getValeurOuVide } from "@util/Utils";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { IFicheActe } from "../../../etatcivil/acte/IFicheActe";
 import { ICorpsImage } from "../../../etatcivil/acte/imageActe/ICorpsImage";
 import { Validation } from "../../../requete/enum/Validation";
@@ -11,9 +11,7 @@ export interface ICreerExtraitCopieActeImageParams {
   natureActe: string;
   requete: IRequeteDelivrance;
   validation: Validation;
-  avecFiliation: boolean;
-  copie: boolean;
-  archive: boolean;
+  choixDelivrance: ChoixDelivrance;
   corpsImage?: ICorpsImage;
   erreur?: string;
   ctv: string;
@@ -26,7 +24,9 @@ export class CopieActeImageComposition {
     composition.code_CTV = params.ctv;
 
     // Filigrane archive (le bloc de signature sera automatiquement masqué)
-    composition.filigrane_archive = params.archive;
+    composition.filigrane_archive = ChoixDelivrance.estCopieArchive(
+      params.choixDelivrance
+    );
 
     // Création de l'entête
     CommunExtraitOuCopieActeTexteComposition.creerReferenceActeEtDateDuJour(
@@ -47,11 +47,10 @@ export class CopieActeImageComposition {
 
     CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(
       composition,
-      getValeurOuVide(params.requete.choixDelivrance),
+      params.choixDelivrance,
       params.requete.sousType,
       params.acte.nature,
-      params.validation,
-      params.archive
+      params.validation
     );
     return composition;
   }

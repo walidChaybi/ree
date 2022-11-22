@@ -83,7 +83,9 @@ export const ModifierCorpsExtrait: React.FC<
           ? props.document.mentionsRetirees.map(el => el.idMention)
           : [],
         pasDAction: true,
-        choixDelivrance: props.requete.choixDelivrance
+        choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(
+          props.document.typeDocument
+        )
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -148,17 +150,16 @@ export function getCorpsTexte(
   document: IDocumentReponse
 ) {
   let composition;
-  if (requete?.choixDelivrance) {
-    composition = creationCompositionExtraitCopieActeTexte(
-      acte,
-      requete,
-      document.validation ? document.validation : Validation.O,
-      document.mentionsRetirees
-        ? document.mentionsRetirees.map(el => el.idMention)
-        : [],
-      requete.choixDelivrance
-    );
-  }
+  composition = creationCompositionExtraitCopieActeTexte(
+    acte,
+    requete,
+    document.validation ? document.validation : Validation.O,
+    document.mentionsRetirees
+      ? document.mentionsRetirees.map(el => el.idMention)
+      : [],
+    DocumentDelivrance.getChoixDelivranceFromUUID(document.typeDocument)
+  );
+  
   return composition?.corps_texte;
 }
 

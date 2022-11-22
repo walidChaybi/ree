@@ -46,7 +46,7 @@ export interface IGenerationECParams {
   validation?: Validation;
   pasDAction?: boolean;
   mentionsRetirees: string[];
-  choixDelivrance?: ChoixDelivrance;
+  choixDelivrance: ChoixDelivrance;
 }
 
 export interface IGenerationECResultat {

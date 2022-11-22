@@ -91,15 +91,13 @@ test("Attendu: creerBlocSignature fonctionne correctement", () => {
   let sousType = SousTypeDelivrance.RDD;
   let natureActe = NatureActe.ADOPTION;
   let validation = Validation.O;
-  let archive = false;
 
   CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(
     composition,
     choixDelivrance,
     sousType,
     natureActe,
-    validation,
-    archive
+    validation
   );
   expect(composition.pas_de_bloc_signature).toBeFalsy();
   expect(composition.cachet_signature).toBe(
@@ -112,8 +110,7 @@ test("Attendu: creerBlocSignature fonctionne correctement", () => {
     choixDelivrance,
     sousType,
     natureActe,
-    validation,
-    archive
+    validation
   );
   expect(composition.pas_de_bloc_signature).toBeTruthy();
 
@@ -124,21 +121,19 @@ test("Attendu: creerBlocSignature fonctionne correctement", () => {
     choixDelivrance,
     sousType,
     natureActe,
-    validation,
-    archive
+    validation
   );
   expect(composition.pas_de_signature).toBeTruthy();
   expect(composition.pas_de_nomPrenomAgent).toBeTruthy();
 
   sousType = SousTypeDelivrance.RDD;
-  archive = true;
+  choixDelivrance = ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE;
   CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(
     composition,
     choixDelivrance,
     sousType,
     natureActe,
-    validation,
-    archive
+    validation
   );
   expect(composition.pas_de_bloc_signature).toBeTruthy();
 });

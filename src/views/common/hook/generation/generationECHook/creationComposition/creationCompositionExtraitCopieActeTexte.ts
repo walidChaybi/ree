@@ -26,10 +26,7 @@ export const creationCompositionExtraitCopieActeTexte = function (
           acte: acteComplet,
           requete,
           validation,
-          mentionsRetirees,
-          avecFiliation: ChoixDelivrance.estAvecFiliation(choixDelivrance),
-          copie: ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance),
-          archive: ChoixDelivrance.estCopieArchive(choixDelivrance),
+          mentionsRetirees,choixDelivrance,
           ctv
         }
       );
@@ -38,10 +35,7 @@ export const creationCompositionExtraitCopieActeTexte = function (
       acte: acteComplet,
       requete,
       validation,
-      mentionsRetirees,
-      avecFiliation: ChoixDelivrance.estAvecFiliation(choixDelivrance),
-      copie: ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance),
-      archive: ChoixDelivrance.estCopieArchive(choixDelivrance),
+      mentionsRetirees,choixDelivrance,
       ctv
     });
   } else if (acteComplet.nature === NatureActe.NAISSANCE) {
@@ -51,10 +45,7 @@ export const creationCompositionExtraitCopieActeTexte = function (
           acte: acteComplet,
           requete,
           validation,
-          mentionsRetirees,
-          avecFiliation: ChoixDelivrance.estAvecFiliation(choixDelivrance),
-          copie: ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance),
-          archive: ChoixDelivrance.estCopieArchive(choixDelivrance),
+          mentionsRetirees,choixDelivrance,
           ctv
         }
       );

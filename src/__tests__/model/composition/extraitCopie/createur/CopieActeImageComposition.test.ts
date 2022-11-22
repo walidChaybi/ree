@@ -14,9 +14,6 @@ test("Attendu: corps image correct", () => {
     sousType: SousTypeDelivrance.RDD
   } as IRequeteDelivrance;
   const validation = Validation.O;
-  const avecFiliation = true;
-  const copie = true;
-  const archive = false;
   const corpsImage = acte.corpsImage;
   const erreur = "erreur";
 
@@ -25,11 +22,10 @@ test("Attendu: corps image correct", () => {
     natureActe,
     requete,
     validation,
-    avecFiliation,
-    copie,
-    archive,
+    choixDelivrance: ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE,
     corpsImage,
-    erreur
+    erreur,
+    ctv: "111111-222222"
   });
 
   const corpsImageAttendu = ["base64"];

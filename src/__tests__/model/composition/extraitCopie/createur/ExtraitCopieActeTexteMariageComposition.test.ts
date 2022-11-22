@@ -11,9 +11,6 @@ test("Attendu: getCorpsTexte fonctionne correctement", () => {
   const choixDelivrance = ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION;
   const sousTypeRequete = SousTypeDelivrance.RDD;
   const validation = Validation.N;
-  const avecFiliation = true;
-  const copie = false;
-  const archive = false;
   const ctv = "111111-222222";
 
   const compositionCorps =
@@ -25,10 +22,8 @@ test("Attendu: getCorpsTexte fonctionne correctement", () => {
       } as IRequeteDelivrance,
       validation,
       mentionsRetirees: [],
-      avecFiliation,
-      copie,
-      archive,
-      ctv
+      ctv,
+      choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
     });
 
   const corpsTexteAttendu = `Le 25 juin 1990
