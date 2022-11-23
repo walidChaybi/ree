@@ -1,5 +1,5 @@
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import {
   Base64File,
   ExtensionDocumentTypeMime,
@@ -26,7 +26,7 @@ export interface UploadFileFieldProps {
   verificationAvantDOuvriLeMenu?: () => boolean;
 }
 
-const UploadFileField: React.FC<UploadFileFieldProps> = props => {
+const UploadFileField: React.FC<UploadFileFieldProps> = (props) => {
   const [fileState, setFileState] = useState<Base64File>();
   const [menuItemState, setMenuItemState] = useState<Option>();
 
@@ -103,7 +103,6 @@ const UploadFileField: React.FC<UploadFileFieldProps> = props => {
             keepMounted
             open={Boolean(menu)}
             onClose={handleCloseMenu}
-            getContentAnchorEl={null}
             anchorOrigin={{
               vertical: "bottom",
               horizontal: "right"
@@ -146,7 +145,7 @@ const UploadFileField: React.FC<UploadFileFieldProps> = props => {
    * Ex: ["png", "pdf", "jpg", "jpeg"] => ".png, .pdf, .jpg, .jpeg"
    */
   function formatAcceptFileTypes(fileTypes: ExtensionDocumentTypeMime[]) {
-    return "." + fileTypes.map(f => f.extension).join(", .");
+    return "." + fileTypes.map((f) => f.extension).join(", .");
   }
 };
 

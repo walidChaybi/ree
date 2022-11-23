@@ -1,5 +1,5 @@
-import AttachFileOutlinedIcon from "@material-ui/icons/AttachFileOutlined";
-import InsertDriveFileOutlinedIcon from "@material-ui/icons/InsertDriveFileOutlined";
+import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
+import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
 import {
   Base64File,
   ExtensionDocumentTypeMime,

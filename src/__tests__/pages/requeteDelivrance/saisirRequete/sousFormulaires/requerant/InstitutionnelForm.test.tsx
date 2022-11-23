@@ -51,8 +51,9 @@ test("render composant Institutionnel Formulaire", async () => {
     render(<HookInstitutionnelForm />);
   });
 
-  const inputType = screen.getByTestId("institutionnel.type")
-    .childNodes[0] as HTMLInputElement;
+  const inputType = screen.getByTestId(
+    "institutionnel.type"
+  ) as HTMLSelectElement;
   const inputNomInstitution = screen.getByLabelText(
     "institutionnel.nomInstitution"
   ) as HTMLInputElement;
@@ -107,8 +108,9 @@ test("render input Nature Institutionnel Formulaire", async () => {
     render(<HookInstitutionnelForm />);
   });
 
-  const inputType = screen.getByTestId("institutionnel.type")
-    .childNodes[0] as HTMLInputElement;
+  const inputType = screen.getByTestId(
+    "institutionnel.type"
+  ) as HTMLSelectElement;
 
   act(() => {
     fireEvent.change(inputType, {

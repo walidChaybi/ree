@@ -1,10 +1,10 @@
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
 import { IActionOption } from "@model/requete/IActionOption";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React from "react";
@@ -23,7 +23,7 @@ interface IMenuActionProps {
   actionMoins?: () => void;
 }
 
-export const MenuAction: React.FC<IMenuActionProps> = props => {
+export const MenuAction: React.FC<IMenuActionProps> = (props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -67,13 +67,12 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
         className="Menu"
         anchorEl={anchorEl}
         keepMounted
-        getContentAnchorEl={null}
         open={Boolean(anchorEl)}
         onClose={handleClose}
         TransitionProps={{
           onEnter: () => {
             props.listeActions &&
-              props.listeActions.forEach(el => {
+              props.listeActions.forEach((el) => {
                 DoubleSubmitUtil.reactiveOnClick(el.ref?.current);
               });
           }
@@ -93,10 +92,10 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
         }}
       >
         {props.listeActions &&
-          props.listeActions.map(el => (
+          props.listeActions.map((el) => (
             <MenuItem
               ref={el.ref}
-              onClick={event => {
+              onClick={(event) => {
                 DoubleSubmitUtil.desactiveOnClick(el.ref?.current);
                 handleClose();
                 props.onSelect(el.value);

@@ -1,5 +1,6 @@
-import { makeStyles } from "@material-ui/core";
-import { Autocomplete, FilterOptionsState } from "@material-ui/lab";
+import { Autocomplete } from "@mui/material";
+import { FilterOptionsState } from "@mui/material/useAutocomplete";
+import makeStyles from "@mui/styles/makeStyles";
 import { Option } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { connect, Field } from "formik";
@@ -52,7 +53,7 @@ export const ChampRecherche: React.FC<ChampRechercheProps> = props => {
           : getLibelle("Aucun résultats")
       }
       getOptionLabel={(option: Option) => option.str}
-      getOptionSelected={(option, val) => {
+      isOptionEqualToValue={(option, val) => {
         return option.value === val.value;
       }}
       options={props.options}
@@ -87,8 +88,12 @@ export const ChampRecherche: React.FC<ChampRechercheProps> = props => {
           />
         </div>
       )}
-      renderOption={option => {
-        return <span key={option.value}>{option.str}</span>;
+      renderOption={(renderProps, option: Option, { inputValue, selected }) => {
+        return (
+          <li {...renderProps} key={option.value}>
+            {option.str}
+          </li>
+        );
       }}
     />
   );

@@ -1,5 +1,5 @@
-import { Snackbar, SnackbarOrigin } from "@material-ui/core";
-import MuiAlert from "@material-ui/lab/Alert";
+import { Snackbar, SnackbarOrigin } from "@mui/material";
+import MuiAlert from '@mui/material/Alert';
 import React, { useEffect } from "react";
 import "./scss/MessagePopin.scss";
 

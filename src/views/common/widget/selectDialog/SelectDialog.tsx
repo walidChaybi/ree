@@ -7,10 +7,10 @@ import {
   DialogContent,
   DialogActions,
   TextField,
-} from "@material-ui/core";
+} from "@mui/material";
 import Autocomplete, {
   createFilterOptions,
-} from "@material-ui/lab/Autocomplete";
+} from '@mui/material/Autocomplete';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserAlt } from "@fortawesome/free-solid-svg-icons";
 
@@ -82,7 +82,7 @@ export const SelectDialog: React.FC<SelectDialogProps> = (props) => {
           <div>
             <DialogContent>
               <Autocomplete
-                getOptionSelected={(option: SelectElements) => {
+                isOptionEqualToValue={(option: SelectElements) => {
                   if (formik.initialValues.selectedItem === undefined) {
                     return false;
                   }

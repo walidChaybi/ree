@@ -1,10 +1,11 @@
-import { Backdrop, CircularProgress, makeStyles } from "@material-ui/core";
+import { Backdrop, CircularProgress } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import gestionnaireTimer from "@util/timer/GestionnaireTimer";
 import React, { useEffect } from "react";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: 99,
     color: "#fff"
   }
 }));
@@ -19,7 +20,7 @@ export interface OperationEnCoursProps {
 const DEFAULT_TIMEOUT = 20000;
 const BACKDROP_TIMER_NAME = "BackdropTimer";
 
-export const OperationEnCours: React.FC<OperationEnCoursProps> = props => {
+export const OperationEnCours: React.FC<OperationEnCoursProps> = (props) => {
   const classes = useStyles();
 
   useEffect(() => {

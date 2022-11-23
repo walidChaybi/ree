@@ -60,8 +60,9 @@ test("renders ChoixCourrierForm", async () => {
   const inputDelivrance = screen.getByLabelText(
     "choixCourrier.delivrance"
   ) as HTMLInputElement;
-  const inputCourrier = screen.getByTestId("choixCourrier.courrier")
-    .childNodes[0] as HTMLInputElement;
+  const inputCourrier = screen.getByTestId(
+    "choixCourrier.courrier"
+  ) as HTMLSelectElement;
 
   await waitFor(() => {
     expect(inputDelivrance.value).toBe(

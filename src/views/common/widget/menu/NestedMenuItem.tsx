@@ -3,12 +3,10 @@
 /* Lien GitHub du composant https://github.com/azmenak/material-ui-nested-menu-item */
 /********************************************************************************** */
 
-import Menu from "@material-ui/core/Menu";
-import MenuItem, { MenuItemProps } from "@material-ui/core/MenuItem";
-import { makeStyles } from "@material-ui/core/styles";
-import { ArrowLeft } from "@material-ui/icons";
-import ArrowRight from "@material-ui/icons/ArrowRight";
-import clsx from "clsx";
+import { ArrowLeft } from "@mui/icons-material";
+import ArrowRight from "@mui/icons-material/ArrowRight";
+import Menu from "@mui/material/Menu";
+import MenuItem, { MenuItemProps } from "@mui/material/MenuItem";
 import React, { useImperativeHandle, useRef, useState } from "react";
 
 export interface NestedMenuItemProps extends Omit<MenuItemProps, "button"> {
@@ -33,13 +31,6 @@ export interface NestedMenuItemProps extends Omit<MenuItemProps, "button"> {
   button?: true;
   openDirection?: "left" | "right";
 }
-
-const TRANSPARENT = "rgba(0,0,0,0)";
-const useMenuItemStyles = makeStyles(theme => ({
-  root: (props: any) => ({
-    backgroundColor: props.open ? theme.palette.action.hover : TRANSPARENT
-  })
-}));
 
 /**
  * Use as a drop-in replacement for `<MenuItem>` when you need to add cascading
@@ -138,8 +129,6 @@ const NestedMenuItem = React.forwardRef<
 
   const open = isSubMenuOpen && parentMenuOpen;
 
-  const menuItemClasses = useMenuItemStyles({ open });
-
   // Root element must have a `tabIndex` attribute for keyboard navigation
   let tabIndex;
   if (!props.disabled) {
@@ -156,11 +145,7 @@ const NestedMenuItem = React.forwardRef<
       onMouseLeave={handleMouseLeave}
       onKeyDown={handleKeyDown}
     >
-      <MenuItem
-        {...menuItemProps}
-        className={clsx(menuItemClasses.root, className)}
-        ref={menuItemRef}
-      >
+      <MenuItem {...menuItemProps} className={className} ref={menuItemRef}>
         {openDirection === "left" && <ArrowLeft />}
         {label}
         {openDirection === "right" && <ArrowRight />}

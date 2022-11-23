@@ -1,7 +1,7 @@
-import { MenuItem } from "@material-ui/core";
-import Menu from "@material-ui/core/Menu";
 import { ObjetRequete } from "@model/requete/enum/ObjetRequete";
 import { IReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
+import { MenuItem } from "@mui/material";
+import Menu from "@mui/material/Menu";
 import { Option } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import NestedMenuItem from "@widget/menu/NestedMenuItem";
@@ -14,11 +14,11 @@ interface MenuToutesLesReponsesProps {
   disabled: boolean;
 }
 
-export const MenuToutesLesReponses: React.FC<MenuToutesLesReponsesProps> = props => {
-  const [
-    menuToutesLesReponses,
-    setMenuToutesLesReponses
-  ] = React.useState<null | HTMLElement>(null);
+export const MenuToutesLesReponses: React.FC<MenuToutesLesReponsesProps> = (
+  props
+) => {
+  const [menuToutesLesReponses, setMenuToutesLesReponses] =
+    React.useState<null | HTMLElement>(null);
 
   const handleClickBoutonReponse = (e: React.MouseEvent<HTMLButtonElement>) => {
     setMenuToutesLesReponses(e.currentTarget);
@@ -39,7 +39,7 @@ export const MenuToutesLesReponses: React.FC<MenuToutesLesReponsesProps> = props
         <div>
           <button
             disabled={props.disabled}
-            onClick={e => handleClickBoutonReponse(e)}
+            onClick={(e) => handleClickBoutonReponse(e)}
           >
             {getLibelle("Toutes les réponses disponibles")}
           </button>
@@ -50,7 +50,6 @@ export const MenuToutesLesReponses: React.FC<MenuToutesLesReponsesProps> = props
             keepMounted
             open={Boolean(menuToutesLesReponses)}
             onClose={handleCloseMenu}
-            getContentAnchorEl={null}
             anchorOrigin={{
               vertical: "bottom",
               horizontal: "left"
@@ -66,7 +65,7 @@ export const MenuToutesLesReponses: React.FC<MenuToutesLesReponsesProps> = props
                 let reponsesFiltees: IReponseRequeteInfo[] = [];
                 if (props.listeReponse) {
                   reponsesFiltees = props.listeReponse.filter(
-                    rep => rep.objet === obj.value
+                    (rep) => rep.objet === obj.value
                   );
                 }
                 return (

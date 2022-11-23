@@ -3,8 +3,8 @@ import {
   DialogContent,
   DialogTitle,
   IconButton
-} from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
 import React from "react";
@@ -44,7 +44,7 @@ export const PopinNouvelleRMCRequete: React.FC<PopinNouvelleRMCRequeteProps> = (
           aria-label="CloseButtonNouvelleRMCRequete"
           className="CloseButtonNouvelleRMCRequete"
           onClick={handleClose}
-        >
+          size="large">
           <CloseIcon />
         </IconButton>
       </DialogTitle>

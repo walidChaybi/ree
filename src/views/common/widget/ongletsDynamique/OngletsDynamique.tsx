@@ -1,6 +1,6 @@
-import { Add, ErrorOutline } from "@material-ui/icons";
-import Clear from "@material-ui/icons/Clear";
 import { IActionOption } from "@model/requete/IActionOption";
+import { Add, ErrorOutline } from "@mui/icons-material";
+import Clear from "@mui/icons-material/Clear";
 import { DocumentEC } from "@pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";

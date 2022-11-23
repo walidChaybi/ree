@@ -54,15 +54,16 @@ const HookRequeteForm: React.FC = () => {
 test("render component Requete Formulaire", async () => {
   render(<HookRequeteForm />);
 
-  const inputNatureActe = screen.getByTestId("requete.natureActe")
-    .childNodes[0] as HTMLInputElement;
-  const inputDocumentDemande = screen.getByTestId("requete.documentDemande")
-    .childNodes[0] as HTMLInputElement;
+  const inputNatureActe = screen.getByTestId(
+    "requete.natureActe"
+  ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId(
+    "requete.documentDemande"
+  ) as HTMLSelectElement;
   const inputNbExemplaire = screen.getByLabelText(
     "requete.nbExemplaire"
   ) as HTMLInputElement;
-  const inputMotif = screen.getByTestId("requete.motif")
-    .childNodes[0] as HTMLInputElement;
+  const inputMotif = screen.getByTestId("requete.motif") as HTMLSelectElement;
 
   const submit = screen.getByText(/Submit/i);
 

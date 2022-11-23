@@ -52,8 +52,9 @@ test("test onChangeNature", async () => {
     );
   });
 
-  const inputNatureActe = screen.getByTestId("requete.natureActe")
-    .childNodes[0] as HTMLInputElement;
+  const inputNatureActe = screen.getByTestId(
+    "requete.natureActe"
+  ) as HTMLSelectElement;
 
   await waitFor(() => {
     expect(inputNatureActe).toBeDefined();
@@ -151,15 +152,16 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
   );
 
   // Champs Requete
-  const inputNatureActe = screen.getByTestId("requete.natureActe")
-    .childNodes[0] as HTMLSelectElement;
-  const inputDocumentDemande = screen.getByTestId("requete.documentDemande")
-    .childNodes[0] as HTMLSelectElement;
+  const inputNatureActe = screen.getByTestId(
+    "requete.natureActe"
+  ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId(
+    "requete.documentDemande"
+  ) as HTMLSelectElement;
   const inputNbExemplaire = screen.getByLabelText(
     "requete.nbExemplaire"
   ) as HTMLSelectElement;
-  const inputMotif = screen.getByTestId("requete.motif")
-    .childNodes[0] as HTMLSelectElement;
+  const inputMotif = screen.getByTestId("requete.motif") as HTMLSelectElement;
 
   await act(async () => {
     fireEvent.change(inputNatureActe, {
@@ -293,15 +295,16 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
   );
 
   // Champs Requete
-  const inputNatureActe = screen.getByTestId("requete.natureActe")
-    .childNodes[0] as HTMLSelectElement;
-  const inputDocumentDemande = screen.getByTestId("requete.documentDemande")
-    .childNodes[0] as HTMLSelectElement;
+  const inputNatureActe = screen.getByTestId(
+    "requete.natureActe"
+  ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId(
+    "requete.documentDemande"
+  ) as HTMLSelectElement;
   const inputNbExemplaire = screen.getByLabelText(
     "requete.nbExemplaire"
   ) as HTMLSelectElement;
-  const inputMotif = screen.getByTestId("requete.motif")
-    .childNodes[0] as HTMLSelectElement;
+  const inputMotif = screen.getByTestId("requete.motif") as HTMLSelectElement;
 
   await act(async () => {
     fireEvent.change(inputNatureActe, {

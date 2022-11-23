@@ -68,8 +68,9 @@ test("input Nature du formulaire LienTitulaire", async () => {
     render(<HookLienTitulaireForm />);
   });
 
-  const inputLien = screen.getByTestId("lienTitulaire.lien")
-    .childNodes[0] as HTMLInputElement;
+  const inputLien = screen.getByTestId(
+    "lienTitulaire.lien"
+  ) as HTMLSelectElement;
 
   act(() => {
     fireEvent.change(inputLien, {

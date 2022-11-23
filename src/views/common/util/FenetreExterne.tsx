@@ -169,19 +169,19 @@ function copyStyles(sourceDoc: Document, targetDoc: Document) {
 
   // Copie des fonts dans la nouvelle fenêtre
   if (sourceDoc.fonts && targetDoc.fonts) {
-    sourceDoc.fonts.forEach(fontFace => {
+    sourceDoc.fonts.forEach((fontFace) => {
       targetDoc.fonts.add(fontFace);
     });
   }
 
-  Array.from(sourceDoc.styleSheets).forEach(styleSheet => {
+  Array.from(sourceDoc.styleSheets).forEach((styleSheet) => {
     try {
       // pour sonar: as any as CSSStyleSheet
       const cSSStyleSheet = styleSheet as any as CSSStyleSheet;
       if (cSSStyleSheet.cssRules) {
         const newStyleEl = sourceDoc.createElement("style");
 
-        Array.from(cSSStyleSheet.cssRules).forEach(cssRule => {
+        Array.from(cSSStyleSheet.cssRules).forEach((cssRule) => {
           newStyleEl.appendChild(sourceDoc.createTextNode(cssRule.cssText));
         });
 

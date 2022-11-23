@@ -1,4 +1,4 @@
-import { Dialog, DialogContent } from "@material-ui/core";
+import { Dialog, DialogContent } from "@mui/material";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { getLibelle } from "@util/Utils";
 import React from "react";
