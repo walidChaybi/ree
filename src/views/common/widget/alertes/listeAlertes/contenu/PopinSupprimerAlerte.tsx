@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent } from "@mui/material";
+import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React from "react";

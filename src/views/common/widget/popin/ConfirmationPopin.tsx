@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle
-} from "@mui/material";
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Button } from "reakit/Button";
 

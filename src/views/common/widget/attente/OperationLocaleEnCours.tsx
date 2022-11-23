@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { CircularProgress } from "@material-ui/core";
 import gestionnaireTimer from "@util/timer/GestionnaireTimer";
 import React, { useEffect } from "react";
 import "./scss/OperationLocaleEnCours.scss";

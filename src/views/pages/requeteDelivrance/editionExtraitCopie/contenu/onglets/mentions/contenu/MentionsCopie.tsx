@@ -1,4 +1,4 @@
-import { Warning } from "@mui/icons-material";
+import { Warning } from "@material-ui/icons";
 import { getLibelle } from "@util/Utils";
 import { ListeGlisserDeposer } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useCallback } from "react";

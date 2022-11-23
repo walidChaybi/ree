@@ -1,4 +1,4 @@
-import ReportIcon from "@mui/icons-material/Report";
+import ReportIcon from "@material-ui/icons/Report";
 import { TRequete } from "@model/requete/IRequete";
 import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { IRMCRequestRequete } from "@model/rmc/requete/IRMCRequestRequete";

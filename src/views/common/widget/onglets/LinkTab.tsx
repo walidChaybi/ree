@@ -1,4 +1,4 @@
-import Tab from "@mui/material/Tab";
+import Tab from "@material-ui/core/Tab";
 import React from "react";
 
 interface LinkTabProps {

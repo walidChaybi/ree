@@ -1,6 +1,6 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button } from "@mui/material";
+import { Button } from "@material-ui/core";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { FenetreExterne, FenetreExterneUtil } from "@util/FenetreExterne";
 import { getLibelle } from "@util/Utils";

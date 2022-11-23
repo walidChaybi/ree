@@ -3,8 +3,8 @@ import {
   DialogContent,
   DialogTitle,
   IconButton
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+} from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 import React from "react";
 import { RMCActeInscriptionForm } from "../acteInscription/RMCActeInscriptionForm";
 import "./scss/PopinNouvelleRMCActeInscription.scss";
@@ -34,7 +34,7 @@ export const PopinNouvelleRMCActeInscription: React.FC<
           aria-label="CloseButtonNouvelleRMCActeInscription"
           className="CloseButtonNouvelleRMCActeInscription"
           onClick={handleClose}
-          size="large">
+        >
           <CloseIcon />
         </IconButton>
       </DialogTitle>

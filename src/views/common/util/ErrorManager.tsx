@@ -49,7 +49,7 @@ export class ErrorManager extends React.Component<LocalProps, LocalState> {
           messageUtilisateur: erreurMsgUtilisateur
         });
       };
-      window.addEventListener("unhandledrejection", (event) => {
+      window.addEventListener("unhandledrejection", event => {
         logError({
           error: event.promise,
           errorInfo: event.reason,

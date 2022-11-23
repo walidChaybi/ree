@@ -1,4 +1,4 @@
-import { Tooltip } from "@mui/material";
+import { Tooltip } from "@material-ui/core";
 import { Droit } from "@model/agent/enum/Droit";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { URL_ACCUEIL } from "@router/ReceUrls";

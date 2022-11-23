@@ -1,5 +1,5 @@
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { LibelleEditable } from "@widget/libelleEditable/LibelleEditable";
 import React from "react";
 import "./scss/AccordionTitle.scss";

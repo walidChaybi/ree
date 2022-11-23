@@ -1,4 +1,4 @@
-import ReportIcon from "@mui/icons-material/Report";
+import ReportIcon from "@material-ui/icons/Report";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { NatureRca } from "@model/etatcivil/enum/NatureRca";
 import { StatutFiche } from "@model/etatcivil/enum/StatutFiche";

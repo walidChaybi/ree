@@ -1,6 +1,6 @@
-import { ErrorOutline } from "@mui/icons-material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Tab } from "@mui/material";
+import { Tab } from "@material-ui/core";
+import { ErrorOutline } from "@material-ui/icons";
+import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import React from "react";
 
 export interface IOnglet {

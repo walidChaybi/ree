@@ -1,4 +1,4 @@
-import { InfoRounded } from "@mui/icons-material";
+import { InfoRounded } from "@material-ui/icons";
 import { estRenseigne } from "@util/Utils";
 import React from "react";
 

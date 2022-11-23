@@ -1,4 +1,4 @@
-import { LinearProgress } from "@mui/material";
+import { LinearProgress } from "@material-ui/core";
 import { base64toBlobUrl, bloblToBlobUrl } from "@util/FileUtils";
 import { getLibelle } from "@util/Utils";
 import { MimeType } from "file-type";

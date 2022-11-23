@@ -1,3 +1,4 @@
+import { FormControl, Select } from "@material-ui/core";
 import { Option } from "@util/Type";
 import {
   connect,
@@ -9,6 +10,7 @@ import {
 import React, { useEffect } from "react";
 import { IconErrorMessage } from "../erreur/IconeErreurMessage";
 import { FormikComponentProps } from "../utils/FormUtil";
+import "./scss/SelectField.scss";
 
 interface SelectProps {
   componentName?: string;
@@ -40,27 +42,31 @@ export const SelectRece: React.FC<SelectProps> = props => {
   }, []);
 
   return (
-    <select
-      value={props.value}
-      onChange={handleChange}
-      name={props.componentName}
-      disabled={props.disabled}
-      onBlur={props.onBlur}
-      arial-label={props.ariaLabel}
-      data-testid={props.componentName}
-      placeholder={props.placeholder ? props.placeholder : props.label}
-    >
-      {!props.pasPremiereOptionVide && (
-        <option defaultValue={""}>
-          {props.description ? props.description : ""}
-        </option>
-      )}
-      {props.options.map((option, index) => (
-        <option key={index} value={option.value}>
-          {option.str}
-        </option>
-      ))}
-    </select>
+    <FormControl variant="outlined">
+      <Select
+        value={props.value}
+        onChange={handleChange}
+        name={props.componentName}
+        className="SelectField"
+        disabled={props.disabled}
+        native={true}
+        onBlur={props.onBlur}
+        arial-label={props.ariaLabel}
+        data-testid={props.componentName}
+        placeholder={props.placeholder ? props.placeholder : props.label}
+      >
+        {!props.pasPremiereOptionVide && (
+          <option defaultValue={""}>
+            {props.description ? props.description : ""}
+          </option>
+        )}
+        {props.options.map((option, index) => (
+          <option key={index} value={option.value}>
+            {option.str}
+          </option>
+        ))}
+      </Select>
+    </FormControl>
   );
 };
 

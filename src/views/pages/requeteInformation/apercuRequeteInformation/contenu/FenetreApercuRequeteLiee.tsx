@@ -1,4 +1,4 @@
-import { Link } from "@mui/material";
+import { Link } from "@material-ui/core";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { FenetreExterne } from "@util/FenetreExterne";
 import React, { useState } from "react";
@@ -35,24 +35,22 @@ export const FenetreApercuRequeteLiee: React.FC<
     }
   };
 
-  return <>
-    <Link
-      className={"lienFiche"}
-      href={"#"}
-      onClick={onClickNumero}
-      underline="hover">
-      {props.numeroRequeteLiee}
-    </Link>
+  return (
+    <>
+      <Link className={"lienFiche"} href={"#"} onClick={onClickNumero}>
+        {props.numeroRequeteLiee}
+      </Link>
 
-    {fenetreExterne && (
-      <FenetreExterne
-        titre={`Aperçu requête : N°${props.numeroRequeteLiee}`}
-        onCloseHandler={onClose}
-        height={height}
-        width={width}
-      >
-        {navigationRequeteLiee(props.typeRequeteLiee, props.idRequeteLiee)}
-      </FenetreExterne>
-    )}
-  </>;
+      {fenetreExterne && (
+        <FenetreExterne
+          titre={`Aperçu requête : N°${props.numeroRequeteLiee}`}
+          onCloseHandler={onClose}
+          height={height}
+          width={width}
+        >
+          {navigationRequeteLiee(props.typeRequeteLiee, props.idRequeteLiee)}
+        </FenetreExterne>
+      )}
+    </>
+  );
 };

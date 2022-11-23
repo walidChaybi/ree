@@ -13,8 +13,8 @@ import {
   verticalListSortingStrategy
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Checkbox } from "@mui/material";
-import { DeleteOutlined, DragHandle } from "@mui/icons-material";
+import { Checkbox } from "@material-ui/core";
+import { DeleteOutlined, DragHandle } from "@material-ui/icons";
 import { finirAvec3petitsPoints, getLibelle } from "@util/Utils";
 import React, { useCallback } from "react";
 import "./scss/ListeGlisserDeposer.scss";

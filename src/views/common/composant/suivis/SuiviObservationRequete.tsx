@@ -9,7 +9,7 @@ import {
   ISuppressionObservationParams,
   useSuppressionObservationApi
 } from "@hook/observation/SuppressionObservationApiHook";
-import { List, ListItemText } from "@mui/material";
+import { List, ListItemText } from "@material-ui/core";
 import { IObservation, Observation } from "@model/requete/IObservation";
 import { logError } from "@util/LogManager";
 import { storeRece } from "@util/storeRece";

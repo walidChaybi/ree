@@ -29,17 +29,14 @@ test("Bouton réinitialisation des champs", async () => {
   const numeroRequete = screen.getByLabelText(
     "requete.numeroRequete"
   ) as HTMLInputElement;
-  const typeRequete = screen.getByTestId(
-    "requete.typeRequete"
-  ) as HTMLSelectElement;
+  const typeRequete = screen.getByTestId("requete.typeRequete")
+    .childNodes[0] as HTMLInputElement;
 
-  const sousTypeRequete = screen.getByTestId(
-    "requete.sousTypeRequete"
-  ) as HTMLSelectElement;
+  const sousTypeRequete = screen.getByTestId("requete.sousTypeRequete")
+    .childNodes[0] as HTMLInputElement;
 
-  const statutRequete = screen.getByTestId(
-    "requete.statutRequete"
-  ) as HTMLSelectElement;
+  const statutRequete = screen.getByTestId("requete.statutRequete")
+    .childNodes[0] as HTMLInputElement;
 
   const reset = screen.getByText(/Réinitialiser les critères/i);
 

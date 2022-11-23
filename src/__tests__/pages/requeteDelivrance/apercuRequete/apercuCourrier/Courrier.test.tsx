@@ -38,9 +38,8 @@ test("renders courrier", async () => {
   });
 
   const boutonValider = screen.getByText(/Valider/i) as HTMLButtonElement;
-  const inputCourrier = screen.getByTestId(
-    "choixCourrier.courrier"
-  ) as HTMLSelectElement;
+  const inputCourrier = screen.getByTestId("choixCourrier.courrier")
+    .childNodes[0] as HTMLSelectElement;
 
   await waitFor(() => {
     expect(screen.getAllByText(/Modification du courrier/i)).toBeDefined();

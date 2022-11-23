@@ -1,5 +1,5 @@
-import SwapHoriz from "@mui/icons-material/SwapHoriz";
-import IconButton from "@mui/material/IconButton";
+import { IconButton } from "@material-ui/core";
+import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import DateComposeForm, {
@@ -110,9 +110,9 @@ const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
               aria-label="inverser nom et prénom"
               className="BtnNomPrenom"
               onClick={switchNomPrenom}
-              tabIndex={-1}
+              tabIndex="-1"
             >
-              <SwapHoriz />
+              <SwapHorizIcon />
             </IconButton>
             <InputField
               name={withNamespace(props.nomFiltre, PRENOM)}

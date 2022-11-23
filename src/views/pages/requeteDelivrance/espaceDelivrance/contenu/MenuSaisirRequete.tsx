@@ -1,8 +1,8 @@
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import { Droit } from "@model/agent/enum/Droit";
 import { utilisateurADroit } from "@model/agent/IUtilisateur";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import {
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
@@ -100,6 +100,7 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
         open={Boolean(menu)}
         onClose={handleCloseMenu}
         transitionDuration={DUREE_OUVERTURE_POPIN}
+        getContentAnchorEl={null}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "right"

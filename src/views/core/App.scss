@@ -52,13 +52,15 @@
     text-align: end;
     margin: 0 1rem;
     line-height: 4rem;
-    
-    button {
+
+    button span {
       color: white;
       text-transform: initial;
       font-family: $application-font-family;
-      font-size: 1.2rem;      
+      font-size: 1.2rem;
+    }
 
+    button {
       &:focus,
       &:hover {
         box-shadow: none;

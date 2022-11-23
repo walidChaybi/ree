@@ -1,4 +1,4 @@
-import TableCell from "@mui/material/TableCell";
+import TableCell from "@material-ui/core/TableCell";
 import { getValeurOuVide } from "@util/Utils";
 import React from "react";
 import "../../../../../scss/_library.scss";

@@ -61,9 +61,8 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
     </Router>
   );
 
-  const inputDocumentDemande = screen.getByTestId(
-    "document"
-  ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId("document")
+    .childNodes[0] as HTMLSelectElement;
   const inputPaysNaissance = screen.getByLabelText(
     "titulaires.titulaire1.naissance.paysEvenement"
   ) as HTMLInputElement;
@@ -126,9 +125,8 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
       <SaisirRDCSCPage />
     </Router>
   );
-  const inputDocumentDemande = screen.getByTestId(
-    "document"
-  ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId("document")
+    .childNodes[0] as HTMLSelectElement;
   const inputPaysNaissance = screen.getByLabelText(
     "titulaires.titulaire1.naissance.paysEvenement"
   ) as HTMLInputElement;
@@ -180,9 +178,8 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
     </Router>
   );
 
-  const inputDocumentDemande = screen.getByTestId(
-    "document"
-  ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId("document")
+    .childNodes[0] as HTMLSelectElement;
   const inputPaysNaissance = screen.getByLabelText(
     "titulaires.titulaire1.naissance.paysEvenement"
   ) as HTMLInputElement;
@@ -241,9 +238,8 @@ test("test du Sauvegarder du formulaire de saisie d'une Requête de Délivrance 
       <SaisirRDCSCPage />
     </Router>
   );
-  const inputDocumentDemande = screen.getByTestId(
-    "document"
-  ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId("document")
+    .childNodes[0] as HTMLSelectElement;
   const inputPaysNaissance = screen.getByLabelText(
     "titulaires.titulaire1.naissance.paysEvenement"
   ) as HTMLInputElement;
@@ -314,9 +310,8 @@ test("Remplissage du formulaire avec requete", () => {
     </Router>
   );
 
-  const inputDocumentDemande = screen.getByTestId(
-    "document"
-  ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId("document")
+    .childNodes[0] as HTMLSelectElement;
   waitFor(() => {
     expect(inputDocumentDemande.value).toEqual(
       "34da88e2-c5c7-4324-ac8e-b35193352e64"
@@ -388,7 +383,7 @@ test(`Document demandé = "Attestation PACS" => bouton "ajouter un titulaire" vi
 
   const inputDocumentDemande: ChildNode = screen.getByTestId(
     Labels.documentDemande
-  );
+  ).childNodes[0];
   let boutonAjoutTitulaire: HTMLElement | null = screen.queryByLabelText(
     Labels.titulaire.ajout
   );
@@ -423,7 +418,7 @@ test(`Document demandé != "Attestation PACS" => bouton "ajouter un titulaire" &
 
   const inputDocumentDemande: ChildNode = screen.getByTestId(
     Labels.documentDemande
-  );
+  ).childNodes[0];
   let boutonAjoutTitulaire: HTMLElement | null = screen.queryByLabelText(
     Labels.titulaire.ajout
   );
@@ -465,7 +460,7 @@ test(`Clic sur "ajouter un titulaire" => bloc titulaire2 & bouton "supprimer un 
 
   const inputDocumentDemande: ChildNode = screen.getByTestId(
     Labels.documentDemande
-  );
+  ).childNodes[0];
   let boutonAjoutTitulaire: HTMLElement | null = screen.queryByLabelText(
     Labels.titulaire.ajout
   );
@@ -518,7 +513,7 @@ test(`Clic sur "supprimer un titulaire" => bloc titulaire2 & bouton "supprimer u
 
   const inputDocumentDemande: ChildNode = screen.getByTestId(
     Labels.documentDemande
-  );
+  ).childNodes[0];
   let boutonAjoutTitulaire: HTMLElement | null = screen.queryByLabelText(
     Labels.titulaire.ajout
   );

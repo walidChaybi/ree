@@ -1,5 +1,5 @@
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
 import React, { useEffect, useState } from "react";
 import { SectionPanel, SectionPanelProps } from "../section/SectionPanel";
 import { AccordionTitle } from "./AccordionTitle";

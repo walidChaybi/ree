@@ -1,5 +1,5 @@
-import TableCell, { SortDirection } from "@mui/material/TableCell";
-import TableSortLabel from "@mui/material/TableSortLabel";
+import TableCell, { SortDirection } from "@material-ui/core/TableCell";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
 import { getLibelle } from "@util/Utils";
 import classNames from "classnames";
 import React from "react";

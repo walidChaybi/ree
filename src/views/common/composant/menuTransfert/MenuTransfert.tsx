@@ -1,10 +1,10 @@
 import { TransfertParams, useTransfertApi } from "@hook/requete/TransfertHook";
+import { Menu, MenuItem } from "@material-ui/core";
+import { AssignmentInd } from "@material-ui/icons";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IActionOption } from "@model/requete/IActionOption";
 import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
-import { AssignmentInd } from "@mui/icons-material";
-import { Menu, MenuItem } from "@mui/material";
 import {
   receUrl,
   URL_MES_REQUETES_DELIVRANCE,
@@ -46,7 +46,7 @@ export interface IMenuTransfertProps {
   rafraichirParent?: () => void;
 }
 
-export const MenuTransfert: React.FC<IMenuTransfertProps> = (props) => {
+export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
   const history = useHistory();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const refReponseTransfertOptions0 = useRef(null);
@@ -158,12 +158,12 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = (props) => {
         <div>
           {props.icone ? (
             <span title={getLibelle("Attribuer requête")}>
-              <AssignmentInd onClick={(e) => handleClickBoutonReponse(e)} />
+              <AssignmentInd onClick={e => handleClickBoutonReponse(e)} />
             </span>
           ) : (
             <Bouton
               disabled={props.disabled}
-              onClick={(e) => handleClickBoutonReponse(e)}
+              onClick={e => handleClickBoutonReponse(e)}
             >
               {getLibelle("Transférer")}
             </Bouton>
@@ -175,6 +175,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = (props) => {
             keepMounted
             open={Boolean(menuReponsesProposees)}
             onClose={handleCloseMenu}
+            getContentAnchorEl={null}
             anchorOrigin={{
               vertical: "bottom",
               horizontal: "left"
@@ -188,7 +189,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = (props) => {
             {options.map((action: IActionOption) => {
               return (
                 <MenuItem
-                  onClick={(e) => handleTransfertMenu(action.value, e)}
+                  onClick={e => handleTransfertMenu(action.value, e)}
                   key={`action${action.value}`}
                 >
                   {action.label}

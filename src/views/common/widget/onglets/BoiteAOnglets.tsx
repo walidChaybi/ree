@@ -1,5 +1,5 @@
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { getLibelle } from "@util/Utils";
@@ -23,6 +23,7 @@ export interface IOngletProps {
   enTete: EnTeteOnglet;
   corps: CorpsOnglet;
 }
+
 
 const TabPanelRequetesDelivranceServiceWithHabilitation = WithHabilitation(
   TabPanel,

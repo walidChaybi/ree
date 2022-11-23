@@ -1,5 +1,5 @@
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import Breadcrumbs from "@material-ui/core/Breadcrumbs";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { URL_ACCUEIL, URL_CONTEXT_APP } from "@router/ReceUrls";
 import { IRoute } from "@util/route/IRoute";
 import {

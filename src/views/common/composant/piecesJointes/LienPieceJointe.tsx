@@ -1,4 +1,4 @@
-import { Link } from "@mui/material";
+import { Link } from "@material-ui/core";
 import { IPieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { getLibelle } from "@util/Utils";
 import React, { useState } from "react";
@@ -23,33 +23,35 @@ export const LienPieceJointe: React.FC<IDataLienFicheProps> = props => {
     setFenetreOuverteState(!fenetreOuverteState);
   };
 
-  return <>
-    {props.pieceJointe.id && (
-      <>
-        <Link
-          className={"lienFiche"}
-          href={"#"}
-          onClick={onClick}
-          title={props.pieceJointe.nom}
-          underline="hover">
-          {getNomPieceJointeOuDefaut(props.index, props.pieceJointe.libelle)}
-        </Link>
+  return (
+    <>
+      {props.pieceJointe.id && (
+        <>
+          <Link
+            className={"lienFiche"}
+            href={"#"}
+            onClick={onClick}
+            title={props.pieceJointe.nom}
+          >
+            {getNomPieceJointeOuDefaut(props.index, props.pieceJointe.libelle)}
+          </Link>
 
-        {fenetreOuverteState && (
-          <FenetrePiecesJointes
-            toggleFenetre={toggleFenetre}
-            numRequete={props.numRequete}
-            nom={getNomPieceJointeOuDefaut(
-              props.index,
-              props.pieceJointe.nom
-            )}
-            idPiece={props.pieceJointe.id}
-            typePiece={props.pieceJointe.typePiece}
-          ></FenetrePiecesJointes>
-        )}
-      </>
-    )}
-  </>;
+          {fenetreOuverteState && (
+            <FenetrePiecesJointes
+              toggleFenetre={toggleFenetre}
+              numRequete={props.numRequete}
+              nom={getNomPieceJointeOuDefaut(
+                props.index,
+                props.pieceJointe.nom
+              )}
+              idPiece={props.pieceJointe.id}
+              typePiece={props.pieceJointe.typePiece}
+            ></FenetrePiecesJointes>
+          )}
+        </>
+      )}
+    </>
+  );
 };
 
 function getNomPieceJointeOuDefaut(index: number, propriete?: string): string {

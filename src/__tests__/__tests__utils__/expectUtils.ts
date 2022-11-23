@@ -16,8 +16,9 @@ export function expectEstAbsent(ariaLabel: string) {
 }
 
 export function expectSelectEstAbsent(testId: string) {
-  const widget = screen.queryByTestId(testId) as HTMLSelectElement;
-  expect(widget).toBeNull();
+  const widget = screen.queryByTestId(testId)
+    ?.childNodes[0] as HTMLSelectElement;
+  expect(widget).toBeUndefined();
 }
 
 export function expectEstBoutonDisabled(ariaLabel: string) {
@@ -70,7 +71,7 @@ export function expectEstSelectPresentAvecValeur(
   testId: string,
   value: string
 ) {
-  const widget = screen.getByTestId(testId) as HTMLSelectElement;
+  const widget = screen.getByTestId(testId).childNodes[0] as HTMLSelectElement;
   expect(widget).toBeInTheDocument();
   expect(widget.value).toBe(value);
 

@@ -62,7 +62,13 @@ afterAll(() => {
 });
 
 test("Attendu: le formulaire SaisirExtraitForm pour un acte de naissance s'affiche correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
 
   await waitFor(() => {
     const widget = screen.getByLabelText(
@@ -101,9 +107,8 @@ test("Attendu: le formulaire SaisirExtraitForm pour un acte de naissance s'affic
   });
 
   await waitFor(() => {
-    const widget = screen.getByTestId(
-      "titulaireEvt1.declarationConjointe.type"
-    ) as HTMLSelectElement;
+    const widget = screen.getByTestId("titulaireEvt1.declarationConjointe.type")
+      .childNodes[0] as HTMLInputElement;
     expect(widget).toBeInTheDocument();
     expect(widget.value).toBe("ABSENCE_DECLARATION");
   });
@@ -179,6 +184,7 @@ test("Attendu: la saisie des heures et minutes est possible lorsque les valeurs 
     <SaisirExtraitForm
       acte={acteAvecEvenementSansHeureNiMinute}
       requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
     />
   );
 
@@ -207,7 +213,13 @@ test("Attendu: la saisie des heures et minutes est possible lorsque les valeurs 
 });
 
 test("Attendu: le sous formulaire DateNaissanceOuAgeDeForm se comporte correctement ", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
   const widgetAnnee = expectEstPresentAvecValeur(
     "titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.date.annee",
     ""
@@ -250,7 +262,13 @@ test("Attendu: le sous formulaire DateNaissanceOuAgeDeForm se comporte correctem
 });
 
 test("Attendu: l'alimentation du lieu complet en France s'effectue correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
 
   const widgetDecomposer = screen.getByLabelText(
     "décomposer le lieu"
@@ -323,7 +341,13 @@ test("Attendu: l'alimentation du lieu complet en France s'effectue correctement"
 });
 
 test("Attendu: l'alimentation du lieu complet à l'étranger s'effectue correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
 
   const widgetEtranger = screen.getByLabelText(
     "titulaireevt1.parentnaiss1.lieunaissance.etrangerfrance.etranger"
@@ -381,7 +405,13 @@ test("Attendu: l'alimentation du lieu complet à l'étranger s'effectue correcte
 });
 
 test("Attendu: l'alimentation du lieu complet en mode 'inconnu' s'effectue correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
 
   const widgetEtranger = screen.getByLabelText(
     "titulaireevt1.parentnaiss1.lieunaissance.etrangerfrance.etranger"
@@ -439,7 +469,13 @@ test("Attendu: l'alimentation du lieu complet en mode 'inconnu' s'effectue corre
 });
 
 test("Attendu: la case à cocher 'nom sécable' se comporte correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
 
   const caseACocherNomSecable = expectEstPresentEtNonChecked(
     "titulaireevt1.nomsecable.secable.true"
@@ -462,7 +498,13 @@ test("Attendu: la case à cocher 'nom sécable' se comporte correctement", async
 });
 
 test("Attendu: le changement de type de déclaration conjointe s'effectue correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
 
   const typeDeclConjointe = expectEstSelectPresentAvecValeur(
     "titulaireEvt1.declarationConjointe.type",
@@ -499,7 +541,13 @@ test("Attendu: le changement de type de déclaration conjointe s'effectue correc
 });
 
 test("Attendu: la réinitialisation du formulaire fonctionne correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
   const boutonReinitialiser = expectEstBoutonDisabled("Réinitialiser");
 
   // On effectue un changement dans le formulaire
@@ -526,6 +574,7 @@ test("Attendu: la validation du formulaire naissance fonctionne correctement", a
     <SaisirExtraitForm
       acte={mapActe(ficheActe1_avecTitulaireAyantDeuxParents.data)}
       requete={mappingRequeteDelivrance(requeteAvecDocs)}
+      handleDocumentEnregistre={handleDocumentEnregistre}
     />
   );
 
@@ -542,6 +591,7 @@ test("Attendu: controle sexe titulaire et parent de même sexe dans le cas pluri
     <SaisirExtraitForm
       acte={mapActe(ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe.data)}
       requete={mappingRequeteDelivrance(requeteAvecDocsPlurilingue)}
+      handleDocumentEnregistre={handleDocumentEnregistre}
     />
   );
   await act(async () => {

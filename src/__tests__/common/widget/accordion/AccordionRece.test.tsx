@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
 
@@ -60,7 +60,7 @@ test("render composant AccordionRece", async () => {
 });
 
 test("render composant AccordionRece can close", async () => {
-  render(
+  const { container } = render(
     <AccordionRece
       panel={{
         panelAreas: [
@@ -109,7 +109,9 @@ test("render composant AccordionRece can close", async () => {
       expanded={true}
     />
   );
-  const button = screen.getByTestId("ExpandMoreIcon") as HTMLButtonElement;
+  const button = container.querySelector(
+    ".MuiIconButton-label"
+  ) as HTMLButtonElement;
 
   fireEvent.click(
     button,

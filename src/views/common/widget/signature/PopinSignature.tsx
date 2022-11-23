@@ -3,7 +3,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle
-} from "@mui/material";
+} from "@material-ui/core";
 import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
 import React from "react";

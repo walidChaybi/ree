@@ -1,5 +1,5 @@
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
 import React from "react";
 import { SortOrder } from "../TableUtils";
 import { TableauHeaderCell } from "./TableauHeaderCell";
