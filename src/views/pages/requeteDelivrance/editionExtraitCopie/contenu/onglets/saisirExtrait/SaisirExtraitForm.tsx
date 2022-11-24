@@ -108,10 +108,11 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         props.requete.documentsReponses
       );
 
+    
     const problemePlurilingueActeMariage =
       FicheActe.estActeMariage(props.acte) &&
       titulairesMemeSexeOuIndeterminCasPlurilingue(
-        props.acte,
+        [extraitAEnvoyer.titulaire1, extraitAEnvoyer.titulaire2],
         props.requete.documentsReponses
       );
     if (

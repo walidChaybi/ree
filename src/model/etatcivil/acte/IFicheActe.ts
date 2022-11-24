@@ -307,7 +307,7 @@ export const FicheActe = {
     const titulaires = acte.titulaires;
 
     return Boolean(
-      titulaires?.find(titulaire => titulaire.sexe === Sexe.INDETERMINE)
+      titulaires?.find(titulaire => titulaire?.sexe === Sexe.INDETERMINE)
     );
   },
 
@@ -392,7 +392,7 @@ export const FicheActe = {
   aTitulairesDeMemeSexe(acte: IFicheActe): boolean {
     const titulaires = acte.titulaires;
     return titulaires.length > 1
-      ? titulaires[0].sexe === titulaires[1].sexe
+      ? titulaires[0]?.sexe === titulaires[1]?.sexe
       : false;
   },
 

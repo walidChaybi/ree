@@ -117,12 +117,13 @@ export function parentMemeSexeOuIndeterminCasPlurilingue(
 }
 
 export function titulairesMemeSexeOuIndeterminCasPlurilingue(
-  acte: IFicheActe,
+  titulaires: (ITitulaireActe | undefined)[],
   documentsReponses: IDocumentReponse[]
 ) {
+  const pseudoActe = { titulaires } as IFicheActe;
   return (
-    (FicheActe.aTitulairesDeMemeSexe(acte) ||
-      FicheActe.aTitulaireGenreIndetermine(acte)) &&
+    (FicheActe.aTitulairesDeMemeSexe(pseudoActe) ||
+      FicheActe.aTitulaireGenreIndetermine(pseudoActe)) &&
     unDocumentPlurilingueEstPresent(documentsReponses)
   );
 }
