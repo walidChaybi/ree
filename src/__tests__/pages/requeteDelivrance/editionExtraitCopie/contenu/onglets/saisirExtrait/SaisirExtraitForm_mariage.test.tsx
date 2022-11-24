@@ -1,5 +1,6 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { mappingRequeteDelivrance } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
@@ -40,8 +41,9 @@ const superagentMock = require("superagent-mock")(request, [
 
 const acteMariage = mapActe(ficheActeMariage2.data);
 const requete = {
+  statutCourant: { statut: StatutRequete.A_SIGNER },
   documentsReponses: [{ typeDocument: "ff7fe1fa-a2d6-4bc5-8681-deba65d9e2c6" }]
-} as any as IRequeteDelivrance;
+} as IRequeteDelivrance;
 const handleDocumentEnregistre = jest.fn();
 
 beforeAll(async () => {

@@ -49,12 +49,14 @@ export const BoutonsTerminerOuRelecture: React.FC<
 
   function onClickValidate(statut: StatutRequete, texte?: string) {
     setRetourParams({
-      libelleAction: statut.libelle,
+      libelleAction: StatutRequete.A_REVOIR
+        ? StatutRequete.A_REVOIR.libelle
+        : `Requête approuvée - ${statut.libelle}`,
       statutDemande: statut.nom,
       requeteId: props.requete.id,
       texteObservation:
         statut === StatutRequete.A_REVOIR
-          ? getValeurOuVide(texte)
+          ? `Requête relue" - ${getValeurOuVide(texte)}`
           : getLibelle("Requête approuvée")
     });
   }

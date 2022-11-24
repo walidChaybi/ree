@@ -9,6 +9,7 @@ import React from "react";
 import "./scss/ReinitialiserValiderBoutons.scss";
 
 interface ReinitialiserValiderBoutonsProps {
+  afficherBouton: boolean;
   onClickReInitialiser?: any;
   reInitialiserDisabled?: boolean;
   onClickValider?: any;
@@ -20,26 +21,31 @@ export const ReinitialiserValiderBoutons: React.FC<
   ReinitialiserValiderBoutonsProps
 > = props => {
   return (
-    <div className="ReinitialiserValiderBoutons">
-      <Bouton
-        type="reset"
-        onClick={props.onClickReInitialiser}
-        disabled={props.reInitialiserDisabled}
-        aria-label="Réinitialiser"
-      >
-        {getLibelle("Réinitialiser")}
-      </Bouton>
-      <Bouton
-        type="button"
-        onClick={props.onClickValider}
-        disabled={
-          props.validerDisabled || !officierHabiliterPourLeDroit(Droit.DELIVRER)
-        }
-        aria-label="Valider"
-      >
-        {getLibelle("Valider")}
-      </Bouton>
-    </div>
+    <>
+      {props.afficherBouton && (
+        <div className="ReinitialiserValiderBoutons">
+          <Bouton
+            type="reset"
+            onClick={props.onClickReInitialiser}
+            disabled={props.reInitialiserDisabled}
+            aria-label="Réinitialiser"
+          >
+            {getLibelle("Réinitialiser")}
+          </Bouton>
+          <Bouton
+            type="button"
+            onClick={props.onClickValider}
+            disabled={
+              props.validerDisabled ||
+              !officierHabiliterPourLeDroit(Droit.DELIVRER)
+            }
+            aria-label="Valider"
+          >
+            {getLibelle("Valider")}
+          </Bouton>
+        </div>
+      )}
+    </>
   );
 };
 
@@ -72,6 +78,7 @@ const _ReinitialiserValiderFormBoutons: React.FC<
           ? props.validerDisabled
           : !props.formik.dirty
       }
+      afficherBouton={props.afficherBouton}
     />
   );
 };

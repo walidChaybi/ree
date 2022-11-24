@@ -5,6 +5,7 @@ import {
 } from "@hook/requete/creerCourrierECHook";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import {
   OptionCourrier,
   OptionsCourrier
@@ -178,6 +179,11 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
         <ReinitialiserValiderFormBoutons
           onClickReInitialiser={reinitialisation}
           validerDisabled={!optionsToutesValides}
+          afficherBouton={
+            !StatutRequete.estTransmiseAValideur(
+              props.requete.statutCourant.statut
+            )
+          }
         />
       </Formulaire>
       {messagesBloquant && (

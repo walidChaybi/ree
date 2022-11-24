@@ -107,7 +107,9 @@ export class StatutRequete extends EnumWithComplete {
     StatutRequete.TRAITE_REPONDU,
     StatutRequete.REJET_IMPRESSION,
     StatutRequete.TRAITE_IMPRIME_LOCAL,
-    StatutRequete.REJET
+    StatutRequete.REJET,
+    StatutRequete.TRANSMISE_A_VALIDEUR,
+    StatutRequete.A_REVOIR
   ];
   private static readonly StatutsPourTypeRequeteInformation = [
     StatutRequete.REJET,
@@ -178,6 +180,10 @@ export class StatutRequete extends EnumWithComplete {
 
   public static estAValider(statut?: StatutRequete): boolean {
     return statut === StatutRequete.A_VALIDER;
+  }
+
+  public static estTransmiseAValideur(statut?: StatutRequete): boolean {
+    return statut === StatutRequete.TRANSMISE_A_VALIDEUR;
   }
 
   public static estASigner(statut?: StatutRequete): boolean {

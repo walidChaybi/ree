@@ -16,6 +16,7 @@ import {
   CODE_EXTRAIT_AVEC_FILIATION,
   CODE_EXTRAIT_SANS_FILIATION
 } from "@model/requete/enum/DocumentDelivranceConstante";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -130,6 +131,11 @@ export const ModifierCorpsExtrait: React.FC<
         )}
         onClickReInitialiser={reinitialisation}
         onClickValider={valider}
+        afficherBouton={
+          !StatutRequete.estTransmiseAValideur(
+            props.requete.statutCourant.statut
+          )
+        }
       />
     </div>
   );

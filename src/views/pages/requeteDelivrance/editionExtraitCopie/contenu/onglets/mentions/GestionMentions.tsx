@@ -9,6 +9,7 @@ import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { Mention } from "@model/etatcivil/acte/mention/IMention";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_COPIE_INTEGRALE } from "@model/requete/enum/DocumentDelivranceConstante";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { estTableauNonVide, getLibelle, getValeurOuVide } from "@util/Utils";
@@ -184,6 +185,11 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
           props.acte?.nature
         )}
         onClickValider={valider}
+        afficherBouton={
+          !StatutRequete.estTransmiseAValideur(
+            props.requete.statutCourant.statut
+          )
+        }
       />
     </div>
   );

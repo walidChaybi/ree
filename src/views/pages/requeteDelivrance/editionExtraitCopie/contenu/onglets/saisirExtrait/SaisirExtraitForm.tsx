@@ -13,6 +13,7 @@ import {
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";
 import { TitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import {
   IRequeteDelivrance,
   RequeteDelivrance
@@ -256,6 +257,11 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
             );
           }}
           validerDisabled={false}
+          afficherBouton={
+            !StatutRequete.estTransmiseAValideur(
+              props.requete.statutCourant.statut
+            )
+          }
         />
       </Formulaire>
       <ConfirmationPopin
