@@ -146,7 +146,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
       const corpsExtraitRectification =
         FicheActe.getCorpsExtraitRectificationTexte(
           params.acte,
-          ChoixDelivrance.estAvecOuSansFiliation(params.choixDelivrance)
+          ChoixDelivrance.estAvecFiliation(params.choixDelivrance)
             ? TypeExtrait.EXTRAIT_AVEC_FILIATION
             : TypeExtrait.EXTRAIT_SANS_FILIATION
         );
