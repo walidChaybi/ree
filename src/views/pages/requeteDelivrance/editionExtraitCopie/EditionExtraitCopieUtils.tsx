@@ -49,6 +49,7 @@ import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
 import { DocumentEC } from "./enum/DocumentEC";
 
 const DOCUMENT_EDITE = "Document édité";
+const REQUETE = "Requête";
 
 export const getOngletsEdition = (
   requete: IRequeteDelivrance,
@@ -115,7 +116,9 @@ export const getOngletsVisu = (
     }
   }
   if (requete.statutCourant.statut === StatutRequete.TRANSMISE_A_VALIDEUR) {
-    res.ongletSelectionne = 1;
+    res.ongletSelectionne = res.liste.findIndex(
+      onglet => onglet.titre === REQUETE
+    );
   }
 
   return res;
@@ -123,7 +126,7 @@ export const getOngletsVisu = (
 
 function ajouterOngletRequete(res: OngletProps, requete: IRequeteDelivrance) {
   res.liste.push({
-    titre: getLibelle("Requête"),
+    titre: getLibelle(REQUETE),
     component: (
       <>
         <AccordionRece

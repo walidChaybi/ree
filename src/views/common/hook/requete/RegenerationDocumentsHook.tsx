@@ -15,6 +15,7 @@ import {
 
 export interface IRegenerationDocumentsParams {
   requete: IRequeteDelivrance;
+  regenererCourrier: boolean;
   callBack?: () => void;
 }
 

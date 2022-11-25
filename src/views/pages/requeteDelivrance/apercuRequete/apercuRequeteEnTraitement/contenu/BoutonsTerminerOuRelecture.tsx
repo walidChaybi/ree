@@ -49,14 +49,15 @@ export const BoutonsTerminerOuRelecture: React.FC<
 
   function onClickValidate(statut: StatutRequete, texte?: string) {
     setRetourParams({
-      libelleAction: StatutRequete.A_REVOIR
-        ? StatutRequete.A_REVOIR.libelle
-        : `Requête approuvée - ${statut.libelle}`,
+      libelleAction:
+        statut === StatutRequete.A_REVOIR
+          ? statut.libelle
+          : `Requête approuvée - ${statut.libelle}`,
       statutDemande: statut.nom,
       requeteId: props.requete.id,
       texteObservation:
         statut === StatutRequete.A_REVOIR
-          ? `Requête relue" - ${getValeurOuVide(texte)}`
+          ? `Requête relue - ${getValeurOuVide(texte)}`
           : getLibelle("Requête approuvée")
     });
   }
@@ -72,6 +73,7 @@ export const BoutonsTerminerOuRelecture: React.FC<
   function onClickReprise(statut: StatutRequete) {
     setRegenerationParams({
       requete: props.requete,
+      regenererCourrier: true,
       callBack: () =>
         setMajStatutParams({
           libelleAction: "Requête reprise",
