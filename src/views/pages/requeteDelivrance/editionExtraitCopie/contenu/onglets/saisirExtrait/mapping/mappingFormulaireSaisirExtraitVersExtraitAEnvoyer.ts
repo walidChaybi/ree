@@ -56,7 +56,10 @@ export function mappingFormulaireSaisirExtraitVersExtraitAEnvoyer(
     extraitSaisiAEnvoyer.evenementActe =
       extraitSaisiAEnvoyer.titulaire1.naissance;
   } else {
-    extraitSaisiAEnvoyer.evenementActe = mapEvenement(saisiExtrait.evenement);
+    extraitSaisiAEnvoyer.evenementActe = mapEvenement(
+      saisiExtrait.evenement,
+      true
+    );
   }
 
   if (FicheActe.estActeDeces(acte)) {
@@ -173,7 +176,10 @@ function mapEvenementNaissanceTitulaire(
         }
       : evenementNaissanceSaisi;
 
-    return mapEvenement(evenementNaissanceTitulaire);
+    return mapEvenement(
+      evenementNaissanceTitulaire,
+      FicheActe.estActeNaissance()
+    );
   }
 }
 
@@ -203,11 +209,14 @@ function mapParent(
     prenoms: mapPrenoms(parentSaisi?.prenoms),
     sexe: mapSexe(parentSaisi?.sexe),
     age: getNombreOuUndefined(parentSaisi?.dateNaissanceOuAgeDe?.age),
-    naissance: mapEvenement({
-      lieuEvenement: parentSaisi?.lieuNaissance,
-      dateEvenement: parentSaisi?.dateNaissanceOuAgeDe
-        ?.date as IDateCompleteForm
-    }),
+    naissance: mapEvenement(
+      {
+        lieuEvenement: parentSaisi?.lieuNaissance,
+        dateEvenement: parentSaisi?.dateNaissanceOuAgeDe
+          ?.date as IDateCompleteForm
+      },
+      false
+    ),
     lienParente,
     ordre
   } as any as IFiliation;
@@ -242,7 +251,10 @@ function mapPrenoms(prenomSaisis?: IPrenomsForm) {
   );
 }
 
-function mapEvenement(evenementSaisi?: IEvenementForm): IEvenement {
+function mapEvenement(
+  evenementSaisi: IEvenementForm | undefined,
+  lieuEvenementEstObligatoire: boolean
+): IEvenement {
   let lieuReprise = getValeurOuVide(evenementSaisi?.lieuEvenement?.lieuComplet);
   let ville = getValeurOuVide(evenementSaisi?.lieuEvenement?.ville);
   let arrondissement = getValeurOuVide(
@@ -255,11 +267,13 @@ function mapEvenement(evenementSaisi?: IEvenementForm): IEvenement {
 
   switch (evenementSaisi?.lieuEvenement?.EtrangerFrance) {
     case EtrangerFrance.getKey(EtrangerFrance.INCONNU):
-      lieuReprise = "";
-      ville = "";
-      arrondissement = "";
-      region = "";
-      pays = "";
+      if (!lieuEvenementEstObligatoire) {
+        lieuReprise = "";
+        ville = "";
+        arrondissement = "";
+        region = "";
+        pays = "";
+      }
       break;
     case EtrangerFrance.getKey(EtrangerFrance.FRANCE):
       pays = EtrangerFrance.getKey(EtrangerFrance.FRANCE);
@@ -280,7 +294,7 @@ function mapEvenement(evenementSaisi?: IEvenementForm): IEvenement {
 
   if (evenementSaisi?.lieuEvenement?.villeEstAffichee) {
     lieuReprise = "";
-  } else if (estNonRenseigne(lieuReprise)) {
+  } else if (estNonRenseigne(lieuReprise) && !lieuEvenementEstObligatoire) {
     lieuReprise = "";
     ville = "";
     arrondissement = "";
