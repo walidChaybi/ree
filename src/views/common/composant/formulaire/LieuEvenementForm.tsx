@@ -47,8 +47,7 @@ type LieuEvenementFormProps = ComponentFormProps & FormikComponentProps;
  * - Un événement en France: affichage ville/arrondissement/département
  * - Radios boutons Etranger/France pour basculer d'un affichage à l'autre si props.gestionEtrangerFrance = true
  *
- */
- /* prettier-ignore */
+ */ 
 const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
   const [decomposerLieu, setDecomposerLieu] = useState(false);
   const [estModeSaisieFrance, setEstModeSaisieFrance] = useState<boolean>(getEstModeSaisieFrance(props.evenement?.ville, props.evenement?.pays, props.etrangerParDefaut));
