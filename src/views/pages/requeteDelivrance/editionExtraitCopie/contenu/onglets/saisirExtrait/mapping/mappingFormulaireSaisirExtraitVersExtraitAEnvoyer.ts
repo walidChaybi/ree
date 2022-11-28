@@ -178,7 +178,7 @@ function mapEvenementNaissanceTitulaire(
 
     return mapEvenement(
       evenementNaissanceTitulaire,
-      FicheActe.estActeNaissance()
+      FicheActe.estActeNaissance(acte)
     );
   }
 }
