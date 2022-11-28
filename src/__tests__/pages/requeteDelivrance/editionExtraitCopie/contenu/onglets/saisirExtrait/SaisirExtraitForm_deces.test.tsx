@@ -50,13 +50,7 @@ afterAll(() => {
 });
 
 test("Attendu: le formulaire SaisirExtraitForm pour un acte de décès s'affiche correctement", async () => {
-  render(
-    <SaisirExtraitForm
-      acte={acteDeces}
-      requete={requete}
-      handleDocumentEnregistre={handleDocumentEnregistre}
-    />
-  );
+  render(<SaisirExtraitForm acte={acteDeces} requete={requete} />);
 
   await waitFor(() => {
     expect(screen.getByText("Evénement décès")).toBeInTheDocument();
@@ -117,7 +111,6 @@ test("Attendu: la validation du formulaire décès fonctionne correctement", asy
     <SaisirExtraitForm
       acte={mapActe(ficheActeDeces2.data)}
       requete={mappingRequeteDelivrance(requeteAvecDocs)}
-      handleDocumentEnregistre={handleDocumentEnregistre}
     />
   );
 

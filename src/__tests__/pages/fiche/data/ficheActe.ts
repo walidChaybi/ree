@@ -2761,7 +2761,39 @@ export const acteNationalite = {
     texte:
       "ACTE DE NAISSANCE\nDe Hung AGANGNI\nNom : AGANGNI\nPrénom : Hung\nSexe : féminin\nnée le : vingt cinq février mil neuf cent soixante six\nà : Khang-Hung (Vietnam)\nNom du père : AGANGNI\nPrénoms : Giai, Pierre\nné le : 20 septembre 1932\nà : Bienne (Suisse)\nNom de la mère : CHANG\nPrénoms : Thach, Anh\nnée le : 26 aôut 1934\nà : Le Landeron (Suisse)\nson épouse\nAdresse : Ouri - 69380 CHASSELAY\nFrançaise par      : \nEffet de la déclaration souscrite par son père\nle 10 février 1967 sous l'identité de Salah BELLAGHA (dossier n° 62009 DR 67)\n\nActe établi par le Service Central de l'Etat Civil\n- Ministère des Affaires Etrangères - (Loi n°78-731 du 12 juillet 1978).\nPar Nous, Manh TSAN, Officier de l'Etat Civil.\nNantes, le 23 février 1993 "
   },
-  analyseMarginales: [],
+  analyseMarginales: [
+    {
+      id: "1ec56ede-ab6f-468a-afa7-61e64147b891",
+      dateDebut: 1605006000000,
+      dateFin: null,
+      nomOec: "Lens",
+      prenomOec: "Alexis",
+      motifModification: "FRANCISATION_NOM_PRENOM",
+      titulaires: [
+        {
+          nom: "PRODESK",
+          prenoms: ["Elodie", "Margaux", "Sara"],
+          autresNoms: null,
+          autresPrenoms: null,
+          ordre: 1,
+          sexe: null,
+          naissance: null,
+          profession: null,
+          age: null,
+          domicile: null,
+          filiations: null,
+          typeDeclarationConjointe: null,
+          dateDeclarationConjointe: null,
+          nomPartie1: null,
+          nomPartie2: null,
+          nomAvantMariage: null,
+          nomApresMariage: null,
+          nomDernierConjoint: null,
+          prenomsDernierConjoint: null
+        }
+      ]
+    }
+  ],
   type: "TEXTE"
 };
 

@@ -1,4 +1,6 @@
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { CODE_EXTRAIT_PLURILINGUE } from "@model/requete/enum/DocumentDelivranceConstante";
+import { Validation } from "@model/requete/enum/Validation";
 import {
   documentDejaCreer,
   IDocumentReponse
@@ -16,11 +18,8 @@ import {
 export interface IRegenerationDocumentsParams {
   requete: IRequeteDelivrance;
   regenererCourrier: boolean;
+  problemePlurilingue?: boolean;
   callBack?: () => void;
-}
-
-interface IRegenerationParams {
-  documentsARegenerer: IDocumentReponse[];
 }
 
 export function useRegenerationDocumentsHook(
@@ -29,79 +28,85 @@ export function useRegenerationDocumentsHook(
   const [generationECParams, setGenerationECParams] =
     useState<IGenerationECParams>();
 
-  const [regenerationParams, setRegenerationParams] =
-    useState<IRegenerationParams>();
+  const [documentsARegenerer, setDocumentsARegenerer] =
+    useState<IDocumentReponse[]>();
 
   const resultatGenerationEC = useGenerationEC(generationECParams);
 
-  // 1 - Sauvegarde des données de l'acte
+  // 1 - Regénérer tous les documents
   useEffect(() => {
     if (params) {
-      const docARegenerer = RequeteDelivrance.getExtraitsCopies(params.requete);
-      if (docARegenerer.length) {
-        setRegenerationParams({
-          documentsARegenerer: docARegenerer
-        });
+      const docsARegenerer = RequeteDelivrance.getExtraitsCopies(
+        params.requete
+      );
+      if (docsARegenerer.length) {
+        setDocumentsARegenerer([...docsARegenerer]);
       } else if (params.callBack) {
         params.callBack();
       }
     }
   }, [params]);
 
-  // 2 - Regénérer tous les fichiers
+  // 2 - Regénérer un document
   useEffect(() => {
-    RegenererDocument(
-      regenerationParams,
-      setRegenerationParams,
-      params,
-      setGenerationECParams
-    );
+    if (documentsARegenerer?.length && params) {
+      const document = documentsARegenerer[0];
+      genereEC(setGenerationECParams, document, params);
+    } else if (documentsARegenerer?.length === 0 && params?.callBack) {
+      params.callBack();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultatGenerationEC, regenerationParams]);
+  }, [documentsARegenerer]);
 
   useEffect(() => {
-    if (
-      regenerationParams?.documentsARegenerer.length === 0 &&
-      resultatGenerationEC &&
-      params?.callBack
-    ) {
-      params.callBack();
+    if (resultatGenerationEC && documentsARegenerer) {
+      documentsARegenerer.shift();
+      setDocumentsARegenerer([...documentsARegenerer]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatGenerationEC]);
 }
-function RegenererDocument(
-  regenerationParams: IRegenerationParams | undefined,
-  setRegenerationParams: any,
-  params: IRegenerationDocumentsParams | undefined,
-  setGenerationECParams: any
+
+function genereEC(
+  setGenerationECParams: any,
+  document: IDocumentReponse,
+  params: IRegenerationDocumentsParams
 ) {
-  let document;
+  setGenerationECParams({
+    idActe: document.idActe,
+    requete: params.requete,
+    validation:
+      params.problemePlurilingue === undefined
+        ? document.validation
+        : getValidation(document, params.problemePlurilingue),
+    mentionsRetirees: document.mentionsRetirees
+      ? document.mentionsRetirees?.map(el => el.idMention)
+      : [],
+    pasDAction: documentDejaCreer(
+      params.requete.documentsReponses,
+      params.requete.choixDelivrance
+    ),
+    choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(
+      document.typeDocument
+    )
+  });
+}
+
+function getValidation(
+  document: IDocumentReponse,
+  problemePlurilingue: boolean
+) {
   if (
-    regenerationParams &&
-    regenerationParams.documentsARegenerer.length !== 0
+    document.typeDocument ===
+      DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_PLURILINGUE) &&
+    problemePlurilingue
   ) {
-    const documentsARegenerer = regenerationParams.documentsARegenerer;
-    document = documentsARegenerer.pop();
-    setRegenerationParams({
-      documentsARegenerer
-    });
+    return Validation.E;
+  } else if (
+    DocumentDelivrance.estExtraitAvecOuSansFilliation(document.typeDocument) &&
+    document.validation === Validation.E
+  ) {
+    return Validation.N;
   }
-  if (params && document) {
-    setGenerationECParams({
-      idActe: document.idActe,
-      requete: params.requete,
-      validation: document.validation,
-      mentionsRetirees: document.mentionsRetirees
-        ? document.mentionsRetirees?.map(el => el.idMention)
-        : [],
-      pasDAction: documentDejaCreer(
-        params.requete.documentsReponses,
-        params.requete.choixDelivrance
-      ),
-      choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(
-        document.typeDocument
-      )
-    });
-  }
+  return document.validation ? document.validation : Validation.N;
 }

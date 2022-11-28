@@ -56,13 +56,7 @@ afterAll(() => {
 });
 
 test("Attendu: le formulaire SaisirExtraitForm pour un acte de mariage s'affiche correctement", async () => {
-  render(
-    <SaisirExtraitForm
-      acte={acteMariage}
-      requete={requete}
-      handleDocumentEnregistre={handleDocumentEnregistre}
-    />
-  );
+  render(<SaisirExtraitForm acte={acteMariage} requete={requete} />);
 
   await waitFor(() => {
     expect(screen.getByText("Evénement mariage")).toBeInTheDocument();
@@ -123,7 +117,6 @@ test("Attendu: la validation du formulaire mariage fonctionne correctement", asy
     <SaisirExtraitForm
       acte={acteMariage}
       requete={mappingRequeteDelivrance(requeteAvecDocs)}
-      handleDocumentEnregistre={handleDocumentEnregistre}
     />
   );
 
@@ -162,13 +155,7 @@ function expectAbsenceDateLieuSexePourParentTitulaire(numeroTitulaire: number) {
 }
 
 test('Attendu: la case à cocher "Adopté par" fonctionne correctement', async () => {
-  render(
-    <SaisirExtraitForm
-      acte={acteMariage}
-      requete={requete}
-      handleDocumentEnregistre={handleDocumentEnregistre}
-    />
-  );
+  render(<SaisirExtraitForm acte={acteMariage} requete={requete} />);
 
   const caseACocherAdoptePar = expectEstPresentEtNonChecked(
     "titulaireevt1.adoptepar.true"
