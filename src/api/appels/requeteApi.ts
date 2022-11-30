@@ -41,6 +41,7 @@ export const URL_FICHIER_PIECE_JUSTIFICATIVE =
 export const URL_LIBELLE = "/libelle";
 export const URL_PARAMETRE = "/parametres";
 export const URL_ACTION = "/requetes/action";
+export const URL_ACTION_MAJ_STATUT = "/requetes/action/majStatut";
 export const URL_TRANSFERT = "/requetes/action/transfert";
 export const URL_TRANSFERT_VALIDEUR = "/requetes/action/transfertValideur";
 export const URL_RETOUR_VALIDEUR = "/requetes/action/retourValideur";
@@ -426,6 +427,17 @@ export function postPieceJustificative(
   });
 }
 
+export function postCreationAction(idRequete: string, libelleAction: string) {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_ACTION}`,
+    parameters: {
+      idRequete,
+      libelleAction
+    }
+  });
+}
+
 export function postCreationActionEtMiseAjourStatut(
   idRequete: string,
   libelleAction: string,
@@ -433,7 +445,7 @@ export function postCreationActionEtMiseAjourStatut(
 ) {
   return api.fetch({
     method: HttpMethod.POST,
-    uri: `${URL_ACTION}`,
+    uri: `${URL_ACTION_MAJ_STATUT}`,
     parameters: {
       idRequete,
       libelleAction,

@@ -25,6 +25,10 @@ export class TypeLienMandant extends EnumWithLibelle {
     );
   }
 
+  public static getKey(typeLienMandant?: TypeLienMandant): string {
+    return EnumWithLibelle.getKey(TypeLienMandant, typeLienMandant);
+  }
+
   public static estAutre(typeLien?: TypeLienMandant): boolean {
     return typeLien === TypeLienMandant.AUTRE;
   }

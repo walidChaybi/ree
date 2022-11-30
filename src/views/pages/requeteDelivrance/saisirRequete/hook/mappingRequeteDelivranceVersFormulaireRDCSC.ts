@@ -89,7 +89,7 @@ export function mappingRequeteDelivranceVersFormulaireRDCSC(
   return saisie;
 }
 
-const saisieTitulaire = (titulaire: ITitulaireRequete | undefined) => {
+export const saisieTitulaire = (titulaire: ITitulaireRequete | undefined) => {
   return titulaire
     ? {
         [NOMS]: {
@@ -116,7 +116,7 @@ const saisieTitulaire = (titulaire: ITitulaireRequete | undefined) => {
     : interesseVide;
 };
 
-const saisieRequerant = (requete: IRequeteDelivrance) => {
+export const saisieRequerant = (requete: IRequeteDelivrance) => {
   switch (requete.requerant.qualiteRequerant.qualite) {
     case Qualite.INSTITUTIONNEL:
       return {
@@ -215,7 +215,7 @@ const saisieRequerant = (requete: IRequeteDelivrance) => {
   }
 };
 
-const saisieAdresse = (requete: IRequeteDelivrance) => {
+export const saisieAdresse = (requete: IRequeteDelivrance) => {
   return {
     [VOIE]: getValeurOuVide(requete.requerant.adresse?.ligne4),
     [LIEU_DIT]: getValeurOuVide(requete.requerant.adresse?.ligne5),

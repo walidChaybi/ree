@@ -40,7 +40,7 @@ export class MotifDelivrance extends EnumWithLibelle {
     return EnumWithLibelle.getAllLibellesAsOptions(MotifDelivrance);
   }
 
-  public static getKey(motif: MotifDelivrance): string {
+  public static getKey(motif?: MotifDelivrance): string {
     return EnumWithLibelle.getKey(MotifDelivrance, motif);
   }
 }

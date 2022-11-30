@@ -1,3 +1,4 @@
+import { TRequete } from "@model/requete/IRequete";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import AdresseForm from "@widget/formulaire/adresse/AdresseForm";
@@ -79,6 +80,7 @@ export function getTitulaire2Form(visible: boolean): JSX.Element {
 }
 
 export function getRequerantForm(
+  requete: TRequete | undefined,
   optionsRequerant: Options,
   onChangeRequerant: (requerant: string) => void
 ): JSX.Element {
@@ -86,7 +88,8 @@ export function getRequerantForm(
     nom: REQUERANT,
     titre: getLibelle("Identité du requérant"),
     options: optionsRequerant,
-    onChange: onChangeRequerant
+    onChange: onChangeRequerant,
+    requete
   } as SubFormProps;
   return <RequerantForm key={REQUERANT} {...requerantFromProps} />;
 }

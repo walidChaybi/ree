@@ -328,7 +328,6 @@ export const requeteRDCSC = {
   ]
 } as any as IRequeteDelivrance;
 
-
 export const idRequeteRDCSCCertificatSituationRCA =
   "d19650ed-012b-41ec-b7be-9e6ea2101eae";
 export const requeteRDCSCCertificatSituationRCA = {
@@ -530,3 +529,159 @@ export const requeteRDD = {
     statut: StatutRequete.PRISE_EN_CHARGE
   }
 } as IRequeteDelivrance;
+
+export const idRequeteRDCPourModification =
+  "9d00fe88-9d21-482e-bb02-223636f78386";
+export const requeteRDCPourModification = {
+  id: "9d00fe88-9d21-482e-bb02-223636f78386",
+  numeroFonctionnel: "SIE5G4",
+  dateCreation: 1669647394371,
+  canal: "COURRIER",
+  type: "DELIVRANCE",
+  actions: [
+    {
+      id: "9d00b2fb-748f-4575-b318-eef17e10462b",
+      numeroOrdre: 1,
+      libelle: "Saisie de la requête",
+      dateAction: 1669647394274,
+      idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162",
+      nomUtilisateur: null,
+      prenomUtilisateur: null,
+      courrielUtilisateur: null
+    },
+    {
+      id: "9d006f4d-cc7a-488d-b710-8527fe4bd19b",
+      numeroOrdre: 2,
+      libelle: "Prise en charge",
+      dateAction: 1669647394351,
+      idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162",
+      nomUtilisateur: null,
+      prenomUtilisateur: null,
+      courrielUtilisateur: null
+    },
+    {
+      id: "9d0057b4-ed50-414e-b19c-2fb41c15f923",
+      numeroOrdre: 3,
+      libelle: "Requête modifiée",
+      dateAction: 1669647394738,
+      idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162",
+      nomUtilisateur: null,
+      prenomUtilisateur: null,
+      courrielUtilisateur: null
+    }
+  ],
+  titulaires: [
+    {
+      id: "9d007c26-114f-422f-8e37-7e8c4f37c3a9",
+      position: 1,
+      nomNaissance: "NOMRDCMODIFIEE",
+      nomUsage: null,
+      anneeNaissance: 2000,
+      moisNaissance: 10,
+      jourNaissance: 10,
+      villeNaissance: "Ville",
+      codePostalNaissance: null,
+      arrondissementNaissance: null,
+      villeEtrangereNaissance: null,
+      regionNaissance: null,
+      paysNaissance: "Pays",
+      sexe: "MASCULIN",
+      nationalite: "INCONNUE",
+      prenoms: [
+        {
+          id: "9d00beb9-8106-4ddb-812b-c31b92dc6534",
+          numeroOrdre: 1,
+          prenom: "PrenomRDCModifiée",
+          estPrenomFrRetenuSdanf: null
+        }
+      ],
+      parentsTitulaire: [],
+      deces: null,
+      domiciliation: null,
+      evenementUnions: [],
+      typeObjetTitulaire: null
+    }
+  ],
+  corbeilleAgent: {
+    id: "bbdba5f5-0b65-40d1-a44c-fbbab948b3b6",
+    idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162"
+  },
+  corbeilleService: {
+    id: "99c7aab2-6def-48ae-8493-2bd72b6a32db",
+    idEntiteRattachement: "6737f85c-6207-4174-8825-d5f65d757e4f"
+  },
+  piecesJustificatives: [],
+  requerant: {
+    id: "9d00116e-d7f7-419d-b9e2-44d47ac8f18c",
+    dateCreation: 1669647394371,
+    nomFamille: "NOMRDCMODIFIEE1",
+    prenom: "PrenomRDCModifiée1",
+    courriel: null,
+    telephone: null,
+    adresse: null,
+    qualite: "MANDATAIRE_HABILITE",
+    detailQualiteRece: null,
+    detailQualiteParticulier: null,
+    detailQualiteMandataireHabilite: {
+      id: "9d00d161-7fe6-4383-9f0b-5d901a8f5d0e",
+      type: "GENEALOGISTE",
+      raisonSociale: "raisonSocialeRDC",
+      nature: null,
+      crpcen: null
+    },
+    detailQualiteInstitutionnel: null,
+    detailQualiteAutreProfessionnel: null,
+    lienRequerant: {
+      id: "9d009a3d-a07f-4c7d-860b-52ac64f77bb1",
+      typeLienRequerant: "GRAND_PARENT",
+      nature: null
+    }
+  },
+  mandant: {
+    id: "9d00c2c5-cd7d-4c2e-ab02-83d88634137f",
+    typeMandant: "PERSONNE_PHYSIQUE",
+    nom: "NOMRDCMODIFIEE2",
+    prenom: "PrenomRDCModifiée2",
+    raisonSociale: null,
+    lienMandant: "GRAND_PARENT",
+    natureLien: null
+  },
+  observations: [],
+  statut: {
+    id: "9d002653-710b-4a78-b651-e5c8cce92ed8",
+    statutRequete: "PRISE_EN_CHARGE",
+    dateEffet: 1669647394274,
+    raisonStatut: null
+  },
+  lienRequerant: {
+    id: "9d009a3d-a07f-4c7d-860b-52ac64f77bb1",
+    typeLienRequerant: "GRAND_PARENT",
+    nature: null
+  },
+  doublons: null,
+  origines: null,
+  numeroRequeteOrigine: null,
+  sousType: "RDC",
+  motif: "NON_PRECISE_PAR_REQUERANT",
+  complementMotif: null,
+  dateDelivranceDemat: null,
+  provenance: "COURRIER",
+  statutReponse: null,
+  documentDemande: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
+  documentComplementaire: null,
+  nombreExemplairesDemandes: 1,
+  provenancePlanete: null,
+  provenanceRece: null,
+  provenanceServicePublic: null,
+  documentsReponses: [],
+  evenement: {
+    id: "9d008794-acae-4969-b00a-77bd95988a9b",
+    natureActe: "NAISSANCE",
+    jour: 10,
+    mois: 10,
+    annee: 2000,
+    ville: "Ville",
+    pays: "Pays"
+  },
+  choixDelivrance: null
+} as any;

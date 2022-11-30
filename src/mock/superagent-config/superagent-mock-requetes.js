@@ -39,7 +39,11 @@ import {
   reponseRequeteCreationMessageSdanf,
   requeteCreation
 } from "../data/requeteCreation";
-import { idRequeteRDCSC } from "../data/requeteDelivrance";
+import {
+  idRequeteRDCPourModification,
+  idRequeteRDCSC,
+  requeteRDCPourModification
+} from "../data/requeteDelivrance";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 import { CreationRDCSC, UpdateRDCSC } from "../data/SaisirRequeteDelivrance";
 
@@ -493,6 +497,12 @@ export const configRequetes = [
       }
 
       // Update Requete Delivrance
+      // Delivrance Extrait/Copie courrier
+      if (match[1] === `/requetes/${idRequeteRDCPourModification}`) {
+        return {
+          data: requeteRDCPourModification
+        };
+      }
       // Certificat de Situation Courrier
       if (
         match[1] ===
@@ -687,56 +697,56 @@ export const configRequetes = [
       // Création d'une action et maj statut de la requête
       if (
         (match[1] ===
-          "/requetes/action?idRequete=85b32284-d3dd-4502-bfbd-5634ba52ba22&libelleAction=A%20valider&statutRequete=A_VALIDER" ||
+          "/requetes/action/majStatut?idRequete=85b32284-d3dd-4502-bfbd-5634ba52ba22&libelleAction=A%20valider&statutRequete=A_VALIDER" ||
           match[1] ===
-            "/requetes/action?idRequete=12345&libelleAction=libelleAction&statutRequete=A_VALIDER" ||
+            "/requetes/action/majStatut?idRequete=12345&libelleAction=libelleAction&statutRequete=A_VALIDER" ||
           match[1] ===
-            "/requetes/action?idRequete=54ddf213-d9b7-4747-8e92-68c220f66de3&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
+            "/requetes/action/majStatut?idRequete=54ddf213-d9b7-4747-8e92-68c220f66de3&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
           match[1] ===
-            "/requetes/action?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&libelleAction=Revue%20du%20traitement&statutRequete=PRISE_EN_CHARGE" ||
+            "/requetes/action/majStatut?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&libelleAction=Revue%20du%20traitement&statutRequete=PRISE_EN_CHARGE" ||
           match[1] ===
-            "/requetes/action?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&libelleAction=Trait%C3%A9e%20-%20Imprim%C3%A9e%20en%20local&statutRequete=TRAITE_IMPRIME_LOCAL" ||
+            "/requetes/action/majStatut?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&libelleAction=Trait%C3%A9e%20-%20Imprim%C3%A9e%20en%20local&statutRequete=TRAITE_IMPRIME_LOCAL" ||
           match[1] ===
-            "/requetes/action?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER" ||
+            "/requetes/action/majStatut?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER" ||
           match[1] ===
-            "/requetes/action?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=A%20signer&statutRequete=A_SIGNER" ||
+            "/requetes/action/majStatut?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=A%20signer&statutRequete=A_SIGNER" ||
           match[1] ===
-            "/requetes/action?idRequete=a4cefb71-8457-4f6b-937e-34b49335d494&libelleAction=Requ%C3%AAte%20reprise&statutRequete=A_VALIDER" ||
+            "/requetes/action/majStatut?idRequete=a4cefb71-8457-4f6b-937e-34b49335d494&libelleAction=Requ%C3%AAte%20reprise&statutRequete=A_VALIDER" ||
           match[1] ===
-            `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=A%20valider&statutRequete=A_VALIDER` ||
+            `/requetes/action/majStatut?idRequete=${idRequeteRDCSC}&libelleAction=A%20valider&statutRequete=A_VALIDER` ||
           match[1] ===
-            `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE` ||
+            `/requetes/action/majStatut?idRequete=${idRequeteRDCSC}&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE` ||
           match[1] ===
-            `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=Trait%C3%A9e%20-%20A%20d%C3%A9livrer%20D%C3%A9mat&statutRequete=TRAITE_A_DELIVRER_DEMAT` ||
+            `/requetes/action/majStatut?idRequete=${idRequeteRDCSC}&libelleAction=Trait%C3%A9e%20-%20A%20d%C3%A9livrer%20D%C3%A9mat&statutRequete=TRAITE_A_DELIVRER_DEMAT` ||
           match[1] ===
-            "/requetes/action?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce635d0&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
+            "/requetes/action/majStatut?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce635d0&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
           match[1] ===
-            "/requetes/action?idRequete=id1&libelleAction=Trait%C3%A9e%20-%20A%20d%C3%A9livrer%20D%C3%A9mat&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
+            "/requetes/action/majStatut?idRequete=id1&libelleAction=Trait%C3%A9e%20-%20A%20d%C3%A9livrer%20D%C3%A9mat&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
           match[1] ===
-            "/requetes/action?idRequete=104b8563-c7f8-4748-9daa-f26558985894&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
+            "/requetes/action/majStatut?idRequete=104b8563-c7f8-4748-9daa-f26558985894&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
           match[1] ===
-            "/requetes/action?idRequete=3f52370d-14ed-4c55-8cf4-afe006d9aa38&libelleAction=Requ%C3%AAte%20reprise&statutRequete=A_SIGNER" ||
+            "/requetes/action/majStatut?idRequete=3f52370d-14ed-4c55-8cf4-afe006d9aa38&libelleAction=Requ%C3%AAte%20reprise&statutRequete=A_SIGNER" ||
           match[1] ===
-            "/requetes/action?idRequete=104b8563-c7f8-4748-9daa-f26558985894&libelleAction=Trait%C3%A9e%20-%20A%20d%C3%A9livrer%20D%C3%A9mat&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
+            "/requetes/action/majStatut?idRequete=104b8563-c7f8-4748-9daa-f26558985894&libelleAction=Trait%C3%A9e%20-%20A%20d%C3%A9livrer%20D%C3%A9mat&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
           // Passage du statut la requête de "A_SIGNE" à "TRAITE_A_IMPRIMER"
           match[1] ===
-            "/requetes/action?idRequete=id2&libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER" ||
+            "/requetes/action/majStatut?idRequete=id2&libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER" ||
           match[1] ===
-            "/requetes/action?idRequete=id1&libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER" ||
+            "/requetes/action/majStatut?idRequete=id1&libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER" ||
           match[1] ===
-            "/requetes/action?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=%C3%80%20traiter&statutRequete=A_TRAITER" ||
+            "/requetes/action/majStatut?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=%C3%80%20traiter&statutRequete=A_TRAITER" ||
           match[1] ===
-            "/requetes/action?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
+            "/requetes/action/majStatut?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
           match[1] ===
-            "/requetes/action?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=Brouillon&statutRequete=BROUILLON" ||
+            "/requetes/action/majStatut?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=Brouillon&statutRequete=BROUILLON" ||
           match[1] ===
-            "/requetes/action?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce63999&libelleAction=Trait%C3%A9e%20-%20D%C3%A9livr%C3%A9e%20D%C3%A9mat&statutRequete=TRAITE_DELIVRE_DEMAT" ||
+            "/requetes/action/majStatut?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce63999&libelleAction=Trait%C3%A9e%20-%20D%C3%A9livr%C3%A9e%20D%C3%A9mat&statutRequete=TRAITE_DELIVRE_DEMAT" ||
           match[1] ===
-            "/requetes/action?idRequete=4578e56c-421c-4e6a-b587-a238a665daf8&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
+            "/requetes/action/majStatut?idRequete=4578e56c-421c-4e6a-b587-a238a665daf8&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
           match[1] ===
-            "/requetes/action?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
+            "/requetes/action/majStatut?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
           match[1] ===
-            "/requetes/action?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce63999&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE") &&
+            "/requetes/action/majStatut?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce63999&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE") &&
         context.method === "post"
       ) {
         return { data: "123456789" };
@@ -762,7 +772,7 @@ export const configRequetes = [
       // Prise en charge requete
       if (
         match[1] ===
-        "/requetes/action?idRequete=0&libelleAction=Prendre%20en%20charge&statutRequete=PRISE_EN_CHARGE"
+        "/requetes/action/majStatut?idRequete=0&libelleAction=Prendre%20en%20charge&statutRequete=PRISE_EN_CHARGE"
       ) {
         return true;
       }

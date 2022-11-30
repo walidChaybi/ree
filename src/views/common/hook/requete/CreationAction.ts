@@ -1,0 +1,44 @@
+import { ICreationActionParams } from "@hook/requete/ActionHook";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
+import { storeRece } from "@util/storeRece";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { usePostCreationActionApi } from "./CreationActionHook";
+
+export interface CreationActionHookParams {
+  libelleAction: string;
+  requete?: IRequeteTableauInformation | IRequeteTableauDelivrance;
+  callback?: () => void;
+}
+
+export function useCreationAction(
+  params: CreationActionHookParams | undefined
+) {
+  const history = useHistory();
+  const [creationActionParams, setCreationActionParams] = useState<
+    ICreationActionParams | undefined
+  >();
+
+  useEffect(() => {
+    if (params) {
+      setCreationActionParams({
+        libelleAction: params?.libelleAction,
+        requeteId: params?.requete?.idRequete
+      });
+    }
+  }, [params]);
+
+  const idAction = usePostCreationActionApi(creationActionParams);
+
+  useEffect(() => {
+    if (idAction && params?.requete) {
+      // Mise à jour de l'id utilisateur
+      params.requete.idUtilisateur =
+        storeRece.utilisateurCourant?.idUtilisateur;
+      if (params.callback) {
+        params.callback();
+      }
+    }
+  }, [idAction, params, history]);
+}

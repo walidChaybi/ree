@@ -105,13 +105,13 @@ export const configRequetesInformation = [
       // Mise à jour statut requête Information
       if (
         match[1] ===
-        "/requetes/action?idRequete=0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE"
+        "/requetes/action/majStatut?idRequete=0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE"
       ) {
         return { data: ["0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62"] };
       }
       if (
         match[1] ===
-        "/requetes/action?idRequete=bbd05aed-8ea9-45ba-a7d7-b8d55ad10857&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE"
+        "/requetes/action/majStatut?idRequete=bbd05aed-8ea9-45ba-a7d7-b8d55ad10857&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE"
       ) {
         return { data: ["bbd05aed-8ea9-45ba-a7d7-b8d55ad10857"] };
       }
@@ -126,7 +126,7 @@ export const configRequetesInformation = [
       // Création d'une action et maj statut de la requête
       if (
         match[1] ===
-          "/requetes/action?idRequete=0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" &&
+          "/requetes/action/majStatut?idRequete=0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" &&
         context.method === "post"
       ) {
         return { data: "123456789" };

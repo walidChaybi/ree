@@ -2,6 +2,7 @@ import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAutoDelivrance
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import { CreationActionHookParams, useCreationAction } from "@hook/requete/CreationAction";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
@@ -12,12 +13,14 @@ import {
 } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
+import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_ATTESTATION_PACS } from "@model/requete/enum/DocumentDelivranceConstante";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { PATH_MODIFIER_RDCSC, receUrl } from "@router/ReceUrls";
 import { PieceJointe } from "@util/FileUtils";
 import messageManager from "@util/messageManager";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
@@ -132,6 +135,8 @@ export const SaisirRDCSCPage: React.FC = () => {
   /** Sauvegarder la requête */
   const [isBrouillon, setIsBrouillon] = useState<boolean>(false);
 
+  const [modeModification, setModeModification] = useState(false);
+
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
   const [donneesNaissanceIncomplete, setDonneesNaissanceIncomplete] =
@@ -153,6 +158,10 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   const [piecesjointesAMettreAJour, setPiecesjointesAMettreAJour] =
     useState<PieceJointe[]>();
+
+  const [paramsCreationAction, setParamsCreationAction] = useState<
+    CreationActionHookParams | undefined
+  >();
 
   const [
     metAJourStatutRequeteApresMajPiecesJointes,
@@ -210,6 +219,8 @@ export const SaisirRDCSCPage: React.FC = () => {
     piecesjointesAMettreAJour
   );
 
+  useCreationAction(paramsCreationAction);
+
   useCreationActionMiseAjourStatut(metAJourStatutRequeteApresMajPiecesJointes);
 
   useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
@@ -224,18 +235,23 @@ export const SaisirRDCSCPage: React.FC = () => {
   const documentDemandeOptions =
     DocumentDelivrance.getAllCertificatSituationDemandeEtAttestationAsOptions();
 
-  const boutonsProps = { setIsBrouillon } as SaisirRequeteBoutonsProps;
+  const boutonsProps = {
+    setIsBrouillon,
+    modeModification
+  } as SaisirRequeteBoutonsProps;
+
+  const { idRequeteParam } = useParams<IUuidRequeteParams>();
 
   useEffect(() => {
-    if (
-      detailRequeteState &&
-      detailRequeteState.statutCourant.statut === StatutRequete.BROUILLON
-    ) {
-      setSaisieRequeteRDCSC(
-        mappingRequeteDelivranceVersFormulaireRDCSC(
-          detailRequeteState as IRequeteDelivrance
-        )
+    setIdRequete(idRequeteParam);
+  }, [idRequeteParam]);
+
+  useEffect(() => {
+    if (detailRequeteState) {
+      const requeteForm = mappingRequeteDelivranceVersFormulaireRDCSC(
+        detailRequeteState as IRequeteDelivrance
       );
+      setSaisieRequeteRDCSC(requeteForm);
     }
   }, [detailRequeteState]);
 
@@ -263,7 +279,7 @@ export const SaisirRDCSCPage: React.FC = () => {
 
           if (SousTypeDelivrance.estRDCSC(requeteSauvegardee.sousType)) {
             pasDeTraitementAuto =
-              ADonneesTitulaireRequeteAbsentes(requeteSauvegardee);
+              ADonneesTitulaireRequeteAbsentes(requeteSauvegardee) || modeModification;
           }
           setParamsRMCAuto({
             requete:
@@ -276,7 +292,7 @@ export const SaisirRDCSCPage: React.FC = () => {
 
       setOperationEnCours(false);
     },
-    [history]
+    [history, modeModification]
   );
 
   const redirectApresCreationOuModification = useCallback(
@@ -349,6 +365,27 @@ export const SaisirRDCSCPage: React.FC = () => {
     updateRequeteRDCSC
   ]);
 
+  const majActionEtRedirection = useCallback(() => {
+    const statutFinal: StatutRequete | undefined =
+      updateRequeteRDCSC?.statutFinal;
+    majIdRequete();
+    if (statutFinal) {
+      setParamsCreationAction({
+        libelleAction: "Requête modifiée",
+        requete: {
+          idRequete: getIdRequeteCreee()
+        } as IRequeteTableauDelivrance,
+        // redirection ensuite
+        callback: () => redirectApresCreationOuModification(statutFinal)
+      });
+    }
+  }, [
+    updateRequeteRDCSC,
+    majIdRequete,
+    getIdRequeteCreee,
+    redirectApresCreationOuModification
+  ]);
+
   // Après la création ou la mise à jour de la requête, la mise à jour des pièces jointes est effectuée
   useEffect(() => {
     if (
@@ -361,6 +398,8 @@ export const SaisirRDCSCPage: React.FC = () => {
       );
       if (pjAMettreAjour && pjAMettreAjour.length > 0) {
         setPiecesjointesAMettreAJour(pjAMettreAjour);
+      } else if (modeModification) {
+        majActionEtRedirection();
       } else {
         majStatutRequeteSiBesoinEtRedirection();
       }
@@ -374,7 +413,11 @@ export const SaisirRDCSCPage: React.FC = () => {
   useEffect(() => {
     // Une fois les pièces jointes mises à jour, la maj du bon statut de la requête puis la redirection sont effectuées
     if (postPiecesJointesApiResultat && !postPiecesJointesApiResultat.erreur) {
-      majStatutRequeteSiBesoinEtRedirection();
+      if (modeModification) {
+        majActionEtRedirection();
+      } else {
+        majStatutRequeteSiBesoinEtRedirection();
+      }
     } else if (postPiecesJointesApiResultat?.erreur) {
       setOperationEnCours(false);
     }
@@ -510,6 +553,13 @@ export const SaisirRDCSCPage: React.FC = () => {
       onRetraitTitulaire(formik);
     }
   };
+
+  useEffect(() => {
+    if (history) {
+      const url = receUrl.getUrlCourante(history);
+      setModeModification(url.includes(PATH_MODIFIER_RDCSC));
+    }
+  }, [history]);
 
   return (
     <ProtectionApercu

@@ -7,6 +7,7 @@ import {
   PATH_APERCU_REQ_PRISE,
   PATH_APERCU_REQ_TRAITEMENT,
   PATH_EDITION,
+  PATH_MODIFIER_RDCSC,
   PATH_SAISIR_RDCSC,
   receUrl
 } from "@router/ReceUrls";
@@ -83,7 +84,10 @@ function checkURLDelivrance(
     case StatutRequete.BROUILLON:
       return receUrl.getUrlCourante(history).includes(PATH_SAISIR_RDCSC);
     case StatutRequete.PRISE_EN_CHARGE:
-      return receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_PRISE);
+      return (
+        receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_PRISE) ||
+        receUrl.getUrlCourante(history).includes(PATH_MODIFIER_RDCSC)
+      );
     case StatutRequete.TRANSFEREE:
     case StatutRequete.A_TRAITER:
       return receUrl

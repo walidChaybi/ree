@@ -19,6 +19,10 @@ export class NatureActeRequete extends EnumWithLibelle {
     );
   }
 
+  public static getKey(natureActeRequete?: NatureActeRequete): string {
+    return EnumWithLibelle.getKey(NatureActeRequete, natureActeRequete);
+  }
+
   public static estNaissance(natureActe?: NatureActeRequete): boolean {
     return natureActe === NatureActeRequete.NAISSANCE;
   }

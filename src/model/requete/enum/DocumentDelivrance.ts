@@ -404,4 +404,8 @@ export class DocumentDelivrance extends EnumNomemclature {
       documentDelivrance.categorieDocumentDelivrance.startsWith(COURRIER)
     );
   }
+
+  public static getKey(document?: DocumentDelivrance): string {
+    return EnumWithLibelle.getKey(DocumentDelivrance, document);
+  }
 }

@@ -1,4 +1,4 @@
-import { postCreationActionEtMiseAjourStatut } from "@api/appels/requeteApi";
+import { postCreationAction } from "@api/appels/requeteApi";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
@@ -14,30 +14,18 @@ export interface ICreationActionParams {
   requeteId?: string;
 }
 
-export function usePostCreationActionEtMiseAjourStatutApi(
-  params?: ICreationActionEtMiseAjourStatutParams
-) {
+export function usePostCreationActionApi(params?: ICreationActionParams) {
   const [idAction, setIdAction] = useState<string | undefined>();
   useEffect(() => {
-    if (
-      params &&
-      params.requeteId &&
-      params.libelleAction &&
-      params.statutRequete
-    ) {
-      postCreationActionEtMiseAjourStatut(
-        params.requeteId,
-        params.libelleAction,
-        params.statutRequete
-      )
+    if (params?.libelleAction && params?.requeteId) {
+      postCreationAction(params.requeteId, params.libelleAction)
         .then(result => {
           setIdAction(result.body.data);
         })
         .catch(error => {
           logError({
             error,
-            messageUtilisateur:
-              "Impossible de mettre à jour le statut de la requête ou de créer une action associée"
+            messageUtilisateur: "Impossible de créer l'action pour la requête"
           });
         });
     }

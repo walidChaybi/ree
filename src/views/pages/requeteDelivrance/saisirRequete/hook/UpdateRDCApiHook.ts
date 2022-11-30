@@ -4,40 +4,37 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import { mappingRequeteDelivrance } from "../../detailRequete/hook/DetailRequeteHook";
-import { UpdateRequeteRDCSC } from "../modelForm/ISaisirRDCSCPageModel";
-import { mappingFormulaireRDCSCVersRequeteDelivrance } from "./mappingFormulaireRDCSCVersRequeteDelivrance";
+import { UpdateRequeteRDC } from "../modelForm/ISaisirRDCPageModel";
+import { mappingFormulaireRDCVersRequeteDelivrance } from "./mappingFormulaireRDCVersRequeteDelivrance";
 
-export interface IUpdateRequeteDelivranceRDCSCResultat {
+export interface IUpdateRequeteDelivranceRDCResultat {
   requete: IRequeteDelivrance;
   futurStatut: StatutRequete;
-  libelleAction?: string;
   refus?: boolean;
 }
 
-export function useUpdateRequeteDelivranceRDCSC(
-  requeteRDCSC?: UpdateRequeteRDCSC,
-  nbTitulaires?: number
-): IUpdateRequeteDelivranceRDCSCResultat | undefined {
+export function useUpdateRequeteDelivranceRDC(
+  requeteRDC?: UpdateRequeteRDC
+): IUpdateRequeteDelivranceRDCResultat | undefined {
   const [resultat, setResultat] = useState<
-    IUpdateRequeteDelivranceRDCSCResultat | undefined
+    IUpdateRequeteDelivranceRDCResultat | undefined
   >();
+
   useEffect(() => {
-    if (requeteRDCSC?.saisie) {
-      const requete = mappingFormulaireRDCSCVersRequeteDelivrance(
-        requeteRDCSC,
-        nbTitulaires
-      );
+    if (requeteRDC?.saisie) {
+      const { idRequete, futurStatut, refus } = requeteRDC;
+
       updateRequeteDelivrance({
-        idRequete: requeteRDCSC.idRequete,
-        requete,
-        futurStatut: requeteRDCSC.futurStatut,
-        refus: requeteRDCSC.refus
+        idRequete,
+        requete: mappingFormulaireRDCVersRequeteDelivrance(requeteRDC),
+        futurStatut,
+        refus
       })
         .then((result: any) => {
           setResultat({
             requete: mappingRequeteDelivrance(result.body.data),
-            futurStatut: requeteRDCSC.futurStatut,
-            refus: requeteRDCSC.refus
+            futurStatut,
+            refus
           });
         })
         .catch((error: any) => {
@@ -49,6 +46,6 @@ export function useUpdateRequeteDelivranceRDCSC(
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [requeteRDCSC]);
+  }, [requeteRDC]);
   return resultat;
 }

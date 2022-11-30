@@ -1,28 +1,53 @@
 import { Droit } from "@model/agent/enum/Droit";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
+import { receUrl } from "@router/ReceUrls";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
+import { useHistory } from "react-router";
 import "./scss/SaisirRequeteBoutons.scss";
 
 export type SaisirRequeteBoutonsProps = {
   setIsBrouillon: any;
+  modeModification?: boolean;
 } & FormikComponentProps;
 
 const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
+  const history = useHistory();
+  const annuler = () => receUrl.goBack(history);
+  const valider = () => props.formik.submitForm();
+  const prendreEnCharge = () => {
+    props.setIsBrouillon(false);
+    valider();
+  };
+  const sauvegarder = () => {
+    props.setIsBrouillon(true);
+    valider();
+  };
+
   return (
     <>
       <div className="Boutons">
-        {officierHabiliterPourLeDroit(Droit.DELIVRER) ? (
+        {props.modeModification ? (
+          <div>
+            <Bouton id="boutonAnnulerModif" onClick={annuler}>
+              {getLibelle("Annuler")}
+            </Bouton>
+            <Bouton
+              disabled={!props.formik.dirty}
+              id="boutonValiderModif"
+              onClick={valider}
+            >
+              {getLibelle("Valider")}
+            </Bouton>
+          </div>
+        ) : officierHabiliterPourLeDroit(Droit.DELIVRER) ? (
           <Bouton
             disabled={!props.formik.dirty}
             id="boutonPrendreEnCharge"
-            onClick={() => {
-              props.setIsBrouillon(false);
-              props.formik.submitForm();
-            }}
+            onClick={prendreEnCharge}
           >
             {getLibelle("Prendre en charge")}
           </Bouton>
@@ -30,10 +55,7 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
           <Bouton
             disabled={!props.formik.dirty}
             id="boutonSauvegarder"
-            onClick={() => {
-              props.setIsBrouillon(true);
-              props.formik.submitForm();
-            }}
+            onClick={sauvegarder}
           >
             {getLibelle("Sauvegarder")}
           </Bouton>

@@ -1,7 +1,12 @@
+import { mappingOfficier } from "@core/login/LoginHook";
+import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
-import { URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC } from "@router/ReceUrls";
+import {
+  URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
+  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC
+} from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -9,13 +14,18 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { getLastPathElem } from "@util/route/routeUtil";
+import { getLastPathElem, getUrlWithParam } from "@util/route/routeUtil";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
-import { Router } from "react-router-dom";
+import { Route, Router } from "react-router-dom";
 import request from "superagent";
-import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
+import {
+  resultatHeaderUtilistateurLaurenceBourdeau,
+  resultatRequeteUtilistateurLaurenceBourdeau,
+  userDroitnonCOMEDEC
+} from "../../../../mock/data/connectedUserAvecDroit";
+import { idRequeteRDCPourModification } from "../../../../mock/data/requeteDelivrance";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
@@ -29,6 +39,21 @@ beforeAll(() => {
 });
 
 test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie", async () => {
+  act(() => {
+    render(
+      <Router history={history}>
+        <SaisirRDCPage />
+      </Router>
+    );
+  });
+  const titre = SousTypeDelivrance.getEnumFor("RDC").libelle;
+
+  await waitFor(() => {
+    expect(screen.getAllByText(titre)).toHaveLength(2);
+  });
+});
+
+test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie déjà existante", async () => {
   act(() => {
     render(
       <Router history={history}>
@@ -398,6 +423,43 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
     );
     // Re-init pour les tests suivants
     history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC);
+  });
+});
+
+test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie déjà existante", async () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
+      idRequeteRDCPourModification
+    )
+  );
+  storeRece.utilisateurCourant = mappingOfficier(
+    resultatHeaderUtilistateurLaurenceBourdeau,
+    resultatRequeteUtilistateurLaurenceBourdeau.data
+  );
+  storeRece.utilisateurCourant.habilitations = mapHabilitationsUtilisateur(
+    resultatRequeteUtilistateurLaurenceBourdeau.data.habilitations
+  );
+  act(() => {
+    render(
+      <Router history={history}>
+        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID}>
+          <SaisirRDCPage />
+        </Route>
+      </Router>
+    );
+  });
+
+  await waitFor(() => {
+    const inputNomNaissance = screen.getByLabelText(
+      "titulaire1.noms.nomNaissance"
+    ) as HTMLInputElement;
+    const inputPrenomNaissance = screen.getByLabelText(
+      "titulaire1.prenoms.prenom1"
+    ) as HTMLInputElement;
+
+    expect(inputNomNaissance.value).toEqual("NOMRDCMODIFIEE");
+    expect(inputPrenomNaissance.value).toEqual("Prenomrdcmodifiée");
   });
 });
 

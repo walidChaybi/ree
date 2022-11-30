@@ -22,6 +22,8 @@ export const PATH_EDITION = "edition";
 export const PATH_SAISIR_RDCSC = "saisircertificatsituation";
 export const PATH_SAISIR_RDC = "saisirextraitcopie";
 export const PATH_SAISIR_RDLFC = "saisirlivretfamille";
+export const PATH_MODIFIER_RDC = "modifierextraitcopie";
+export const PATH_MODIFIER_RDCSC = "modifiercertificatsituation";
 
 ///////////// URLs    //////////////
 export const GO_BACK = "goBack";
@@ -50,6 +52,10 @@ export const URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC = `${URL_MES_REQUETES_DELI
 export const URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC_ID = `${URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC}/:idRequete`;
 export const URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC_ID = `${URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC}/:idRequete`;
 export const URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC_ID = `${URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC}/:idRequete`;
+
+// Modification requête ... depuis Aperçu requête de DELIVRANCE
+export const URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID = `${URL_MES_REQUETES_DELIVRANCE}/${PATH_MODIFIER_RDC}/${ID}`;
+export const URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDCSC_ID = `${URL_MES_REQUETES_DELIVRANCE}/${PATH_MODIFIER_RDCSC}/${ID}`;
 
 /////////////////////////////////////////////////////
 ///// REQUETES DE DELIVRANCE MON SERVICE (RDMS) /////
@@ -135,7 +141,9 @@ function estUrlSaisirCourrier(url: string) {
   return (
     url.indexOf(`/${PATH_SAISIR_RDCSC}`) > 0 ||
     url.indexOf(`/${PATH_SAISIR_RDC}`) > 0 ||
-    url.indexOf(`/${PATH_SAISIR_RDLFC}`) > 0
+    url.indexOf(`/${PATH_SAISIR_RDLFC}`) > 0 ||
+    url.indexOf(`/${PATH_MODIFIER_RDC}`) > 0 ||
+    url.indexOf(`/${PATH_MODIFIER_RDCSC}`) > 0
   );
 }
 

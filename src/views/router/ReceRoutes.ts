@@ -35,6 +35,8 @@ import {
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+  URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDCSC_ID,
+  URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC_ID,
@@ -160,6 +162,20 @@ export const routesRece: IRoute[] = [
     auMoinsUnDesDroits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC),
     libelle: getLibelle("Édition")
+  },
+  {
+    url: URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
+    component: SaisirRDCPage,
+    auMoinsUnDesDroits: [Droit.CONSULTER, Droit.SAISIR_REQUETE],
+    libelle: getLibelle(
+      "Modification requête de délivrance d'extrait copie Courrier"
+    )
+  },
+  {
+    url: URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDCSC_ID,
+    component: SaisirRDCSCPage,
+    auMoinsUnDesDroits: [Droit.CONSULTER, Droit.SAISIR_REQUETE],
+    libelle: getLibelle(`Modification requête de ${Labels.RDCSC}`)
   },
   ////////////////////////////////////////////////////////
   ///// REQUETES DE DELIVRANCE DE MON SERVICE (RDMS) /////

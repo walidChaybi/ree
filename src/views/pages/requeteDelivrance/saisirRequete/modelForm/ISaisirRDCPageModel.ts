@@ -24,6 +24,12 @@ export interface CreationRequeteRDC {
   refus?: boolean;
   futurStatut: StatutRequete;
 }
+export interface UpdateRequeteRDC {
+  idRequete: string;
+  saisie: SaisieRequeteRDC;
+  refus?: boolean;
+  futurStatut: StatutRequete;
+}
 
 export interface SaisieRequeteRDC {
   [REQUETE]: Requete;
