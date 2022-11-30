@@ -23,37 +23,37 @@ const villesMarseilleLyonParis = [MARSEILLE, LYON, PARIS];
 const JERUSALEM = "JERUSALEM";
 
 export class LieuxUtils {
-  public static isVilleFranceAvecArrondissement(
+  public static estVilleFranceAvecArrondissement(
     pays?: string,
     ville?: string
   ): boolean {
     return (
-      LieuxUtils.isPaysFrance(pays) &&
-      LieuxUtils.isVilleMarseilleLyonParis(ville)
+      LieuxUtils.estPaysFrance(pays) &&
+      LieuxUtils.estVilleMarseilleLyonParis(ville)
     );
   }
 
-  public static isVilleAvecArrondissement(ville?: string): boolean {
-    return LieuxUtils.isVilleMarseilleLyonParis(ville);
+  public static estVilleAvecArrondissement(ville?: string): boolean {
+    return LieuxUtils.estVilleMarseilleLyonParis(ville);
   }
 
-  public static isPaysFrance(pays?: string): boolean {
+  public static estPaysFrance(pays?: string): boolean {
     return pays != null && pays.toUpperCase() === FRANCE;
   }
 
-  public static isVilleParis(ville?: string): boolean {
+  public static estVilleParis(ville?: string): boolean {
     return ville != null && ville.toUpperCase() === PARIS;
   }
 
-  public static isVilleMarseille(ville?: string): boolean {
+  public static estVilleMarseille(ville?: string): boolean {
     return ville != null && ville.toUpperCase() === MARSEILLE;
   }
 
-  public static isVilleLyon(ville?: string): boolean {
+  public static estVilleLyon(ville?: string): boolean {
     return ville != null && ville.toUpperCase() === LYON;
   }
 
-  public static isVilleMarseilleLyonParis(ville?: string): boolean {
+  public static estVilleMarseilleLyonParis(ville?: string): boolean {
     return (
       ville != null && villesMarseilleLyonParis.includes(ville.toUpperCase())
     );
@@ -61,14 +61,14 @@ export class LieuxUtils {
 
   public static getDepartement(ville?: string, departement?: string): string {
     // Quand la ville vaut "Paris" le champ "Département" est vide
-    return LieuxUtils.isVilleParis(ville)
+    return LieuxUtils.estVilleParis(ville)
       ? ""
       : getValeurOuVide(formatMajusculesMinusculesMotCompose(departement));
   }
 
   public static getArrondissement(ville?: string, arrondissement?: string) {
     // Le champ "Arrondissement" s'affiche quand la ville vaut Lyon, Marseille ou Paris.
-    return LieuxUtils.isVilleMarseilleLyonParis(ville)
+    return LieuxUtils.estVilleMarseilleLyonParis(ville)
       ? getValeurOuVide(arrondissement)
       : "";
   }
@@ -82,7 +82,7 @@ export class LieuxUtils {
     let res = "";
     // Le champ "Région/dpt" vaut le libellé du département et le numéro entre parenthèses (si connu)
     // Quand la ville vaut "Paris" le champ "Département" est vide
-    if (!this.isVilleParis(ville)) {
+    if (!this.estVilleParis(ville)) {
       if (departement) {
         res = premiereLettreEnMajuscule(departement);
       }
@@ -135,7 +135,7 @@ export class LieuxUtils {
       LieuxUtils.getLieuEntreParentheses(regionString);
 
     if (
-      LieuxUtils.isPaysFrance(pays) ||
+      LieuxUtils.estPaysFrance(pays) ||
       this.estVilleJerusalem(ville) ||
       !pays
     ) {
@@ -158,8 +158,8 @@ export class LieuxUtils {
     region?: string,
     arrondissement?: string
   ) {
-    if (LieuxUtils.isVilleAvecArrondissement(ville) && arrondissement) {
-      if (LieuxUtils.isVilleParis(ville)) {
+    if (LieuxUtils.estVilleAvecArrondissement(ville) && arrondissement) {
+      if (LieuxUtils.estVilleParis(ville)) {
         return `${ville}${arrondissement}`;
       } else {
         return `${ville}${arrondissement}${region}`;
@@ -242,9 +242,9 @@ export class LieuxUtils {
       ? formatPremieresLettresMajusculesNomCompose(pays)
       : "";
 
-    if (LieuxUtils.isPaysFrance(pays)) {
+    if (LieuxUtils.estPaysFrance(pays)) {
       if (
-        !LieuxUtils.isVilleAvecArrondissement(ville) ||
+        !LieuxUtils.estVilleAvecArrondissement(ville) ||
         arrondissement == null
       ) {
         if (!ville) {
@@ -252,7 +252,7 @@ export class LieuxUtils {
         } else {
           return `${villeString}${libelleDepartementString}`;
         }
-      } else if (!LieuxUtils.isVilleParis(villeString)) {
+      } else if (!LieuxUtils.estVilleParis(villeString)) {
         return `${villeString} ${LieuxUtils.formateArrondissement(
           arrondissement,
           false
@@ -310,7 +310,7 @@ export class LieuxUtils {
   }
 
   public static affichagePaysCourrier(pays: string) {
-    return this.isPaysFrance(pays) ? "" : pays;
+    return this.estPaysFrance(pays) ? "" : pays;
   }
 
   public static getNumeros(debut: number, finComprise: number): string[] {
@@ -320,11 +320,11 @@ export class LieuxUtils {
   public static getNumerosArrondissement(ville?: string) {
     let numeros: string[] = [];
 
-    if (LieuxUtils.isVilleParis(ville)) {
+    if (LieuxUtils.estVilleParis(ville)) {
       numeros = LieuxUtils.getNumeros(1, VINGT);
-    } else if (LieuxUtils.isVilleMarseille(ville)) {
+    } else if (LieuxUtils.estVilleMarseille(ville)) {
       numeros = LieuxUtils.getNumeros(1, SEIZE);
-    } else if (LieuxUtils.isVilleLyon(ville)) {
+    } else if (LieuxUtils.estVilleLyon(ville)) {
       numeros = LieuxUtils.getNumeros(1, NEUF);
     }
 
@@ -368,7 +368,7 @@ export class LieuxUtils {
     pays?: string,
     arrondissement?: string
   ): string {
-    if (LieuxUtils.isPaysFrance(pays)) {
+    if (LieuxUtils.estPaysFrance(pays)) {
       return LieuxUtils.getLocalisationFrance(
         ville,
         regionOuDepartement,
@@ -436,19 +436,19 @@ export class LieuxUtils {
   ): string {
     let libelleLocalisationFrance = "";
     const villeString = ville || "";
-    const libelleDepartement = LieuxUtils.isVilleParis(ville)
+    const libelleDepartement = LieuxUtils.estVilleParis(ville)
       ? ""
       : LieuxUtils.getLieuEntreParentheses(departement);
 
     const libelleArrondissement =
       estRenseigne(arrondissement) &&
-      LieuxUtils.isVilleAvecArrondissement(ville)
+      LieuxUtils.estVilleAvecArrondissement(ville)
         ? LieuxUtils.formateArrondissement(arrondissement, true)
         : "";
 
     const libelleArrondissementAvecEspace =
       estRenseigne(arrondissement) &&
-      LieuxUtils.isVilleAvecArrondissement(ville)
+      LieuxUtils.estVilleAvecArrondissement(ville)
         ? ` ${libelleArrondissement}`
         : "";
 
@@ -475,7 +475,7 @@ export class LieuxUtils {
     let etrangerOuFrance: EtrangerFrance;
 
     if (pays) {
-      etrangerOuFrance = LieuxUtils.isPaysFrance(pays)
+      etrangerOuFrance = LieuxUtils.estPaysFrance(pays)
         ? EtrangerFrance.FRANCE
         : EtrangerFrance.ETRANGER;
     } else {

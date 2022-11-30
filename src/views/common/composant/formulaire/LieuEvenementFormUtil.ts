@@ -11,9 +11,9 @@ export function estModeSaisieFrance(
   }
 
   if (etrangerParDefaut) {
-    return LieuxUtils.isPaysFrance(pays);
+    return LieuxUtils.estPaysFrance(pays);
   } else {
-    return estNonRenseigne(pays) || LieuxUtils.isPaysFrance(pays);
+    return estNonRenseigne(pays) || LieuxUtils.estPaysFrance(pays);
   }
 }
 

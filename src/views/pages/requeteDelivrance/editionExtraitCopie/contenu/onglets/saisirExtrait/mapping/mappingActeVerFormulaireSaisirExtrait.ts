@@ -429,7 +429,7 @@ function saisieLieuEvt(
     [ARRONDISSEMENT]: getValeurOuVide(evenement?.arrondissement),
     [REGION_DEPARTEMENT]: getValeurOuVide(evenement?.region),
     [PAYS]: getValeurOuVide(
-      LieuxUtils.isPaysFrance(evenement?.pays) ? "" : evenement?.pays
+      LieuxUtils.estPaysFrance(evenement?.pays) ? "" : evenement?.pays
     ),
     [ETRANGER_FRANCE]: getEtrangerOuFrance(evenement, etrangerParDefaut),
     villeEstAffichee: false

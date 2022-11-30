@@ -262,7 +262,7 @@ function getLignesMariageInteresses(data: IMariageInteresse) {
   let mariageInteresses = "\nmariés";
 
   mariageInteresses +=
-    !data.aletranger && !LieuxUtils.isPaysFrance(data.paysMariage)
+    !data.aletranger && !LieuxUtils.estPaysFrance(data.paysMariage)
       ? ` devant les autorités consulaires de ${data.paysMariage} en France`
       : ` à ${LieuxUtils.getLieu(
           data.villeMariage,

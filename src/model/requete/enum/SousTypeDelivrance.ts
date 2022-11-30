@@ -74,6 +74,10 @@ export class SousTypeDelivrance extends EnumWithComplete {
     return sousType === SousTypeDelivrance.RDDP;
   }
 
+  public static estRDCSC(sousType?: SousTypeDelivrance): boolean {
+    return sousType === SousTypeDelivrance.RDCSC;
+  }
+
   public static estPlanete(sousType?: SousTypeDelivrance): boolean {
     return SousTypeDelivrance.estRDDP(sousType);
   }

@@ -11,7 +11,7 @@ export interface IMariageInteresse {
 }
 
 export function getLibelleLieuMariage(mariage: IMariageInteresse): string {
-  if (!mariage.aletranger && !LieuxUtils.isPaysFrance(mariage.paysMariage)) {
+  if (!mariage.aletranger && !LieuxUtils.estPaysFrance(mariage.paysMariage)) {
     return "Mariés";
   } else {
     return "Mariés à";
@@ -40,13 +40,13 @@ export function getLieuMariage(mariage: IMariageInteresse) {
     return `${villeString} ${
       regionString ? regionMariage : ""
     } (${paysString})`;
-  } else if (!LieuxUtils.isPaysFrance(paysString)) {
+  } else if (!LieuxUtils.estPaysFrance(paysString)) {
     return `devant les autorités consulaires de ${paysString} en France`;
   } else if (!mariage.arrondissementMariage) {
     return `${villeString} (${regionString})`;
   } else {
     return `${villeString} (Arr.${mariage.arrondissementMariage} ${
-      LieuxUtils.isVilleParis(villeString) ? "" : regionString
+      LieuxUtils.estVilleParis(villeString) ? "" : regionString
     })`;
   }
 }

@@ -1,3 +1,4 @@
+import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { formatNom, formatPrenom } from "@util/Utils";
 import { Sexe } from "../etatcivil/enum/Sexe";
 import { QualiteFamille } from "./enum/QualiteFamille";
@@ -13,6 +14,7 @@ export interface ITitulaireRequeteTableau {
   paysNaissance?: string;
   sexe?: Sexe;
   qualite?: QualiteFamille;
+  nationalite?: Nationalite;
 }
 
 export function mapTitulaires(
@@ -32,6 +34,7 @@ export function mapTitulaires(
     titulaire.anneeNaissance = t?.anneeNaissance;
     titulaire.sexe = Sexe.getEnumFor(t?.sexe);
     titulaire.villeNaissance = t?.villeNaissance;
+    titulaire.nationalite = Nationalite.getEnumFor(t?.nationalite);
     titulaire.paysNaissance = t?.paysNaissance;
     titulaire.qualite = t?.qualite;
     return titulaire;

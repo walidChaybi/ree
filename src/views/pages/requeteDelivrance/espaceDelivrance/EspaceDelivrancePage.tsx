@@ -50,7 +50,8 @@ const getOnglets = (
   recuperationParamsRMCAuto: (
     idRequete: string,
     requete: IRequeteTableauDelivrance,
-    urlWithParam: string
+    urlWithParam: string,
+    pasDeTraitementAuto: boolean
   ) => void
 ): IOngletProps[] => {
   return [
@@ -101,11 +102,13 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
     (
       idRequete: string,
       requete: IRequeteTableauDelivrance,
-      urlWithParam: string
+      urlWithParam: string,
+      pasDeTraitementAuto: boolean = false
     ) => {
       setParamsRMCAuto({
         requete,
-        urlCourante: urlWithParam
+        urlCourante: urlWithParam,
+        pasDeTraitementAuto
       });
     },
     []

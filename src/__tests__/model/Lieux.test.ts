@@ -1,28 +1,28 @@
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 test("Lieux model", () => {
-  expect(LieuxUtils.isPaysFrance("france")).toBe(true);
-  expect(LieuxUtils.isVilleParis("paris")).toBe(true);
-  expect(LieuxUtils.isVilleAvecArrondissement("paris")).toBe(true);
-  expect(LieuxUtils.isVilleAvecArrondissement("lyon")).toBe(true);
-  expect(LieuxUtils.isVilleAvecArrondissement("nantes")).toBe(false);
-  expect(LieuxUtils.isVilleAvecArrondissement("Marseille")).toBe(true);
+  expect(LieuxUtils.estPaysFrance("france")).toBe(true);
+  expect(LieuxUtils.estVilleParis("paris")).toBe(true);
+  expect(LieuxUtils.estVilleAvecArrondissement("paris")).toBe(true);
+  expect(LieuxUtils.estVilleAvecArrondissement("lyon")).toBe(true);
+  expect(LieuxUtils.estVilleAvecArrondissement("nantes")).toBe(false);
+  expect(LieuxUtils.estVilleAvecArrondissement("Marseille")).toBe(true);
 });
 
 test("Attendu: isVilleAvecArrondissement fonctionne correctement", () => {
-  expect(LieuxUtils.isVilleAvecArrondissement()).toBe(false);
-  expect(LieuxUtils.isVilleAvecArrondissement("Marseille")).toBe(true);
-  expect(LieuxUtils.isVilleAvecArrondissement("paris")).toBe(true);
-  expect(LieuxUtils.isVilleAvecArrondissement("LYON")).toBe(true);
-  expect(LieuxUtils.isVilleAvecArrondissement("Nantes")).toBe(false);
+  expect(LieuxUtils.estVilleAvecArrondissement()).toBe(false);
+  expect(LieuxUtils.estVilleAvecArrondissement("Marseille")).toBe(true);
+  expect(LieuxUtils.estVilleAvecArrondissement("paris")).toBe(true);
+  expect(LieuxUtils.estVilleAvecArrondissement("LYON")).toBe(true);
+  expect(LieuxUtils.estVilleAvecArrondissement("Nantes")).toBe(false);
 });
 
 test("Attendu: isVilleMarseilleLyonParis fonctionne correctement", () => {
-  expect(LieuxUtils.isVilleMarseilleLyonParis()).toBe(false);
-  expect(LieuxUtils.isVilleMarseilleLyonParis("Marseille")).toBe(true);
-  expect(LieuxUtils.isVilleMarseilleLyonParis("paris")).toBe(true);
-  expect(LieuxUtils.isVilleMarseilleLyonParis("LYON")).toBe(true);
-  expect(LieuxUtils.isVilleMarseilleLyonParis("Nantes")).toBe(false);
+  expect(LieuxUtils.estVilleMarseilleLyonParis()).toBe(false);
+  expect(LieuxUtils.estVilleMarseilleLyonParis("Marseille")).toBe(true);
+  expect(LieuxUtils.estVilleMarseilleLyonParis("paris")).toBe(true);
+  expect(LieuxUtils.estVilleMarseilleLyonParis("LYON")).toBe(true);
+  expect(LieuxUtils.estVilleMarseilleLyonParis("Nantes")).toBe(false);
 });
 
 test("Attendu: getDepartement fonctionne correctement", () => {

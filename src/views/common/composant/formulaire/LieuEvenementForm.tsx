@@ -185,7 +185,7 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
             validate={getFonctionValidation(VILLE)}
           />
           {estModeSaisieFrance &&
-            LieuxUtils.isVilleAvecArrondissement(
+            LieuxUtils.estVilleAvecArrondissement(
               props.formik.getFieldProps(nomVille).value
             ) && (
               <SelectField

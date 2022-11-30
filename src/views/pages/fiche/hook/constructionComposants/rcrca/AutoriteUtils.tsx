@@ -46,7 +46,7 @@ function getContentAutorite(
   autorite: IAutorite,
   typeFiche: TypeFiche
 ): SectionContentProps[] {
-  if (LieuxUtils.isPaysFrance(autorite.pays)) {
+  if (LieuxUtils.estPaysFrance(autorite.pays)) {
     return getContentAutoriteFrance(autorite, typeFiche);
   } else if (TypeAutoriteUtil.isJuridiction(autorite.typeAutorite)) {
     return getContentJuridictionEtEtranger(autorite);
@@ -85,7 +85,7 @@ function getContentOnacEtFrance(autorite: IAutorite): SectionContentProps[] {
     getVilleAutoriteContent(autorite.ville)
   ];
 
-  if (LieuxUtils.isVilleAvecArrondissement(autorite.ville)) {
+  if (LieuxUtils.estVilleAvecArrondissement(autorite.ville)) {
     content.push(getArrondissementAutoriteContent(autorite.arrondissement));
   }
 
@@ -239,7 +239,7 @@ function addArrondissementAutoriteContentIfPossible(
   autorite: IAutorite,
   contents: SectionContentProps[]
 ): void {
-  if (autorite.ville && LieuxUtils.isVilleAvecArrondissement(autorite.ville)) {
+  if (autorite.ville && LieuxUtils.estVilleAvecArrondissement(autorite.ville)) {
     contents.push({
       libelle: "Arrondissement",
       value: `${autorite.arrondissement || ""}`
@@ -252,8 +252,8 @@ function addDepartementAutoriteContentIfPossible(
   contents: SectionContentProps[]
 ): void {
   if (
-    !LieuxUtils.isVilleParis(autorite.ville) &&
-    LieuxUtils.isPaysFrance(autorite.pays)
+    !LieuxUtils.estVilleParis(autorite.ville) &&
+    LieuxUtils.estPaysFrance(autorite.pays)
   ) {
     contents.push({
       libelle: "Département",

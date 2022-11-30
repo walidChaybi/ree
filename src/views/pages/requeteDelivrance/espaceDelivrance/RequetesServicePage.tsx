@@ -56,13 +56,12 @@ interface MesRequetesServicePageProps {
   setParamsRMCAuto: (
     id: string,
     requete: IRequeteTableauDelivrance,
-    urlWithParam: string
+    urlWithParam: string,
+    pasDeTraitementAuto: boolean
   ) => void;
 }
 
-export const RequetesServicePage: React.FC<
-  MesRequetesServicePageProps
-> = props => {
+export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props => {
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
 
   const [paramsMiseAJour, setParamsMiseAJour] = useState<

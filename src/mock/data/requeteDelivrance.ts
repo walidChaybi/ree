@@ -338,7 +338,30 @@ export const requeteRDCSCCertificatSituationRCA = {
     code: "CERTIFICAT_SITUATION_RCA",
     libelle: "Certificat situation RCA",
     categorie: "categorie"
-  }
+  },
+  titulaires: [
+    {
+      id: "8ef12021-61df-421b-9b3d-ab6b4344df88",
+      position: 1,
+      nomNaissance: "Brown",
+      nomUsage: "",
+      anneeNaissance: 1993,
+      moisNaissance: 10,
+      jourNaissance: 14,
+      villeNaissance: "Sydney",
+      paysNaissance: "Australie",
+      sexe: "MASCULIN",
+      nationalite: "ETRANGERE",
+      prenoms: [
+        {
+          id: "8ef12d35-0d01-4ed1-b026-0038f901a13e",
+          numeroOrdre: 1,
+          prenom: "Alphonse"
+        }
+      ],
+      parentsTitulaire: []
+    }
+  ]
 } as any as IRequeteDelivrance;
 
 export const idRequeteRDC = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";

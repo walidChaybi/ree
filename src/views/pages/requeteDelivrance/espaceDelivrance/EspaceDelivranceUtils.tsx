@@ -1,12 +1,16 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
 import { ICreationActionMiseAjourStatutEtRmcAutoHookParams } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import {
   autorisePrendreEnChargeReqTableauDelivrance,
   indexParamsReq
 } from "@util/RequetesUtils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { SortOrder } from "@widget/tableau/TableUtils";
 
 export function goToLinkRequete(
@@ -42,6 +46,7 @@ export function miseAjourOuRedirection(
   idx: number,
   url: string
 ) {
+  let pasDeTraitementAuto;
   const aPrendreEnCharge =
     autorisePrendreEnChargeReqTableauDelivrance(requeteSelect);
   const statutARevoir = requeteSelect.statut === StatutRequete.A_REVOIR.libelle;
@@ -49,21 +54,48 @@ export function miseAjourOuRedirection(
     document => document.avecCtv
   );
 
+  if (
+    SousTypeDelivrance.estRDCSC(
+      SousTypeDelivrance.getEnumFromLibelleCourt(data[idx].sousType)
+    )
+  ) {
+    pasDeTraitementAuto = ADonneesTitulaireRequeteAbsentes(data[idx]);
+  }
+
   if (aPrendreEnCharge || statutARevoir) {
-    const statut = aPrendreEnCharge
+    const statutFutur = aPrendreEnCharge
       ? StatutRequete.PRISE_EN_CHARGE
       : aDocumentASigner
       ? StatutRequete.A_SIGNER
       : StatutRequete.A_VALIDER;
 
     setParamsMiseAJour({
-      libelleAction: statut.libelle,
-      statutRequete: statut,
+      libelleAction: statutFutur.libelle,
+      statutRequete: statutFutur,
       requete: requeteSelect,
       urlCourante: url,
+      pasDeTraitementAuto,
       typeRequete: TypeRequete.DELIVRANCE
     });
   } else {
-    props.setParamsRMCAuto(idRequete, data[idx], url);
+    props.setParamsRMCAuto(idRequete, data[idx], url, pasDeTraitementAuto);
+  }
+}
+
+export function ADonneesTitulaireRequeteAbsentes(
+  requete: IRequeteTableauDelivrance | IRequeteDelivrance
+): boolean {
+  const titulaire = requete.titulaires?.[0];
+
+  if (titulaire) {
+    return (
+      LieuxUtils.estPaysFrance(titulaire.paysNaissance) ||
+      !titulaire.anneeNaissance ||
+      !titulaire.villeNaissance ||
+      !titulaire.paysNaissance ||
+      titulaire.nationalite === Nationalite.FRANCAISE
+    );
+  } else {
+    return false;
   }
 }

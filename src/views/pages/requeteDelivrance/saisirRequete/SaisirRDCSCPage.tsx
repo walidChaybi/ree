@@ -38,6 +38,7 @@ import * as Yup from "yup";
 import { useReponseSansDelivranceCS } from "../../requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/hook/ChoixReponseSansDelivranceCSHook";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";
+import { ADonneesTitulaireRequeteAbsentes } from "../espaceDelivrance/EspaceDelivranceUtils";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
 } from "./boutons/SaisirRequeteBoutons";
@@ -254,13 +255,21 @@ export const SaisirRDCSCPage: React.FC = () => {
             fichier: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE
           });
         } else {
+          let pasDeTraitementAuto;
+
           messageManager.showSuccessAndClose(
             getLibelle("La requête a bien été enregistrée")
           );
+
+          if (SousTypeDelivrance.estRDCSC(requeteSauvegardee.sousType)) {
+            pasDeTraitementAuto =
+              ADonneesTitulaireRequeteAbsentes(requeteSauvegardee);
+          }
           setParamsRMCAuto({
             requete:
               mappingRequeteDelivranceToRequeteTableau(requeteSauvegardee),
-            urlCourante: history.location.pathname
+            urlCourante: history.location.pathname,
+            pasDeTraitementAuto
           });
         }
       }

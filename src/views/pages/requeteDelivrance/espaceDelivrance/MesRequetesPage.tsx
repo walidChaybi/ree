@@ -48,7 +48,8 @@ interface MesRequetesPageProps {
   setParamsRMCAuto: (
     id: string,
     requete: IRequeteTableauDelivrance,
-    urlWithParam: string
+    urlWithParam: string,
+    pasDeTraitementAuto: boolean
   ) => void;
 }
 

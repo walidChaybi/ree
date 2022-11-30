@@ -277,10 +277,10 @@ function mapEvenement(
       break;
     case EtrangerFrance.getKey(EtrangerFrance.FRANCE):
       pays = EtrangerFrance.getKey(EtrangerFrance.FRANCE);
-      if (LieuxUtils.isVilleParis(ville)) {
+      if (LieuxUtils.estVilleParis(ville)) {
         region = "";
       }
-      if (!LieuxUtils.isVilleAvecArrondissement(ville)) {
+      if (!LieuxUtils.estVilleAvecArrondissement(ville)) {
         arrondissement = "";
       }
       break;
