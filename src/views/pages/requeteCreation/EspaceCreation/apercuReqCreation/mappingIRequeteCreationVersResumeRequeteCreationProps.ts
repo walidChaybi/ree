@@ -116,7 +116,8 @@ const mappingITitulaireRequeteVersItemTitulaireProps = (
         naissance: titulaire.nomNaissance,
         actuel: titulaire.nomActuel,
         francisation: titulaire.nomDemandeFrancisation,
-        identification: titulaire.nomDemandeIdentification
+        identification: titulaire.nomDemandeIdentification,
+        usage: titulaire.nomUsage
       },
       prenoms: {
         naissance: formatagePrenoms(titulaire.prenoms),
@@ -276,7 +277,8 @@ const mappingITitulaireRequeteVersItemEffetCollectifProps = (
       noms: {
         naissance: effetCollectif.nomNaissance,
         actuel: effetCollectif.nomActuel,
-        francisation: effetCollectif.nomDemandeFrancisation
+        francisation: effetCollectif.nomDemandeFrancisation,
+        usage: effetCollectif.nomUsage
       },
       prenoms: {
         naissance: formatagePrenoms(effetCollectif.prenoms),

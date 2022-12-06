@@ -20,18 +20,30 @@ export const LigneNomPrenomActuel: React.FC<LigneNomPrenomActuelProps> = ({
 }) => {
   return (
     <div className="itemLigneTitulaire">
-      <ItemLigne texte={`${props.identite.noms.naissance} : `} />
+      <ItemLigneSdanf
+        separateur={""}
+        texteSdanf={
+          props.retenueSdanf?.nomNaissance
+            ? `${props.retenueSdanf?.nomNaissance}${getLibelle(" : ")}`
+            : undefined
+        }
+        texteTitulaire={
+          props.identite.noms.naissance
+            ? `${props.identite.noms.naissance}${getLibelle(" : ")}`
+            : undefined
+        }
+      />
 
       {afficherNomUsage && (
         <ItemLigneSdanf
           texteSdanf={
-            props.retenueSdanf?.nomNaissance
-              ? `(${getLibelle("Usage :")}${props.retenueSdanf?.nomNaissance})`
+            props.retenueSdanf?.nomUsage
+              ? `(${getLibelle("Usage :")}${props.retenueSdanf?.nomUsage})`
               : undefined
           }
           texteTitulaire={
-            props.identite.noms.naissance
-              ? `(${getLibelle("Usage :")}${props.identite.noms.naissance})`
+            props.identite.noms.usage
+              ? `(${getLibelle("Usage :")}${props.identite.noms.usage})`
               : undefined
           }
         />

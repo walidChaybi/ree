@@ -4,6 +4,7 @@ export type IdentiteType = {
     actuel?: string;
     francisation?: string;
     identification?: string;
+    usage?: string;
   };
   prenoms: {
     naissance: string[];
