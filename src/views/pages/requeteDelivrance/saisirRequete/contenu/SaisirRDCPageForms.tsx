@@ -2,6 +2,7 @@ import { TRequete } from "@model/requete/IRequete";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import AdresseForm from "@widget/formulaire/adresse/AdresseForm";
+import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
 import RequeteForm from "@widget/formulaire/requete/RequeteForm";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
@@ -11,6 +12,7 @@ import {
   EVENEMENT,
   LIEN_TITULAIRE,
   MANDANT,
+  PIECES_JOINTES,
   REQUERANT,
   REQUETE,
   TITULAIRE1,
@@ -128,6 +130,14 @@ export function getAdresseForm(): JSX.Element {
     titre: getLibelle("Adresse postale du requérant")
   } as SubFormProps;
   return <AdresseForm key={ADRESSE} {...adresseFormProps} />;
+}
+
+export function getPiecesJointesForm(): JSX.Element {
+  const piecesJointesFormProps = {
+    nom: PIECES_JOINTES,
+    titre: getLibelle("Pièces justificatives")
+  } as SubFormProps;
+  return <PiecesJointesForm key={PIECES_JOINTES} {...piecesJointesFormProps} />;
 }
 
 export function getBoutonsPopin(

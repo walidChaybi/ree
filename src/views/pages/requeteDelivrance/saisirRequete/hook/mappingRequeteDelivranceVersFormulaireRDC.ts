@@ -16,6 +16,7 @@ import {
   EVENEMENT,
   LIEN_TITULAIRE,
   MANDANT,
+  PIECES_JOINTES,
   REQUERANT,
   REQUETE,
   SaisieRequeteRDC,
@@ -45,6 +46,7 @@ import {
   TYPE_MANDANT,
   VILLE_EVENEMENT
 } from "../modelForm/ISaisirRequetePageModel";
+import { saisiePJ } from "./mappingCommun";
 import {
   saisieAdresse,
   saisieRequerant,
@@ -54,9 +56,9 @@ import {
 export function mappingRequeteDelivranceVersFormulaireRDC(
   requete: IRequeteDelivrance
 ): SaisieRequeteRDC {
-  const { titulaires } = requete;
+  const { titulaires, piecesJustificatives } = requete;
 
-  return {
+  const saisie = {
     [REQUETE]: saisieRequete(requete),
     [EVENEMENT]: saisieEvenement(requete.evenement),
     [TITULAIRE1]: saisieTitulaire(
@@ -70,6 +72,12 @@ export function mappingRequeteDelivranceVersFormulaireRDC(
     [LIEN_TITULAIRE]: saisieLienTitulaire(requete.requerant, requete.mandant),
     [ADRESSE]: saisieAdresse(requete)
   } as SaisieRequeteRDC;
+
+  if (piecesJustificatives.length !== 0) {
+    saisie[PIECES_JOINTES] = saisiePJ(requete);
+  }
+
+  return saisie;
 }
 
 const saisieRequete = (requete?: IRequeteDelivrance): Requete => {
@@ -119,16 +127,13 @@ const saisieLienTitulaire = (
       };
     case Qualite.INSTITUTIONNEL:
     case Qualite.AUTRE_PROFESSIONNEL:
+    case Qualite.PARTICULIER:
+    default:
       return {
         [LIEN]: getValeurOuVide(
           TypeLienRequerant.getKey(requerant.lienRequerant?.lien)
         ),
         [NATURE_LIEN]: getValeurOuVide(requerant.lienRequerant?.natureLien)
-      };
-    default:
-      return {
-        [LIEN]: "",
-        [NATURE_LIEN]: ""
       };
   }
 };

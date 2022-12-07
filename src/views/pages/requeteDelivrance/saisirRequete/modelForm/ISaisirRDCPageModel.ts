@@ -1,4 +1,5 @@
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { PieceJointe } from "@util/FileUtils";
 import {
   Adresse,
   Evenement,
@@ -18,6 +19,7 @@ export const REQUERANT = "requerant";
 export const MANDANT = "mandant";
 export const LIEN_TITULAIRE = "lienTitulaire";
 export const ADRESSE = "adresse";
+export const PIECES_JOINTES = "piecesJointes";
 
 export interface CreationRequeteRDC {
   saisie: SaisieRequeteRDC;
@@ -40,4 +42,5 @@ export interface SaisieRequeteRDC {
   [MANDANT]: Mandant;
   [LIEN_TITULAIRE]: LienTitulaire;
   [ADRESSE]: Adresse;
+  [PIECES_JOINTES]?: PieceJointe[];
 }

@@ -1,6 +1,9 @@
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { getValeurOuVide } from "@util/Utils";
+import { FileExtension, MimeType } from "file-type";
 
 export function getPrenoms(prenoms: any): IPrenomOrdonnes[] {
   const prenomsInteresse = [] as IPrenomOrdonnes[];
@@ -38,4 +41,26 @@ export function getDocumentSwift(document: any): any {
     referenceSwift: getValeurOuVide(document.base64File.identifiantSwift),
     conteneurSwift: getValeurOuVide(document.base64File.conteneurSwift)
   };
+}
+
+export function saisiePJ(requete: IRequeteDelivrance) {
+  return requete.piecesJustificatives.map(PJ => {
+    return {
+      base64File: {
+        fileName: PJ.nom || "",
+        base64String: PJ.contenu,
+        taille: PJ.taille,
+        conteneurSwift: PJ.conteneurSwift,
+        identifiantSwift: PJ.referenceSwift,
+        mimeType: PJ.mimeType as MimeType,
+        extension: PJ.extension as FileExtension
+      },
+      type: {
+        value: TypePieceJustificative.getKeyForLibelle(
+          PJ.typePieceJustificative.libelle
+        ),
+        str: PJ.typePieceJustificative.libelle
+      }
+    };
+  });
 }

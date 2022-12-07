@@ -6,6 +6,14 @@ import {
   CreationActionHookParams,
   useCreationAction
 } from "@hook/requete/CreationAction";
+import {
+  ICreationActionMiseAjourStatutHookParams,
+  useCreationActionMiseAjourStatut
+} from "@hook/requete/CreationActionMiseAjourStatutHook";
+import {
+  TypePieceJointe,
+  usePostPiecesJointesApi
+} from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -22,6 +30,7 @@ import {
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { PATH_MODIFIER_RDC, receUrl } from "@router/ReceUrls";
+import { PieceJointe } from "@util/FileUtils";
 import messageManager from "@util/messageManager";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
@@ -54,6 +63,7 @@ import {
   getEvenementForm,
   getLienTitulaireForm,
   getMandantForm,
+  getPiecesJointesForm,
   getRequerantForm,
   getRequeteForm,
   getTitulaire1Form,
@@ -68,6 +78,7 @@ import {
   EVENEMENT,
   LIEN_TITULAIRE,
   MANDANT,
+  PIECES_JOINTES,
   REQUERANT,
   REQUETE,
   SaisieRequeteRDC,
@@ -125,6 +136,10 @@ const ValidationSchemaRDCRequete = Yup.object({
   [ADRESSE]: AdresseFormValidationSchema
 });
 
+interface IComplementCreationUpdateRequete {
+  statutFinal?: StatutRequete;
+}
+
 export const titreForm = SousTypeDelivrance.getEnumFor("RDC").libelle;
 
 export const SaisirRDCPage: React.FC = () => {
@@ -150,13 +165,17 @@ export const SaisirRDCPage: React.FC = () => {
   const [modeModification, setModeModification] = useState(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [saisieRequeteRDC, setSaisieRequeteRDC] = useState<SaisieRequeteRDC>();
-  const [creationRequeteRDC, setCreationRequeteRDC] =
-    useState<CreationRequeteRDC>();
-  const [updateRequeteRDC, setUpdateRequeteRDC] = useState<UpdateRequeteRDC>();
+  const [creationRequeteRDC, setCreationRequeteRDC] = useState<
+    CreationRequeteRDC & IComplementCreationUpdateRequete
+  >();
+  const [piecesjointesAMettreAJour, setPiecesjointesAMettreAJour] =
+    useState<PieceJointe[]>();
+  const [updateRequeteRDC, setUpdateRequeteRDC] = useState<
+    UpdateRequeteRDC & IComplementCreationUpdateRequete
+  >();
   const [paramsRMCAuto, setParamsRMCAuto] = useState<
     INavigationApercuRMCAutoParams | undefined
   >();
-  useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
 
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const [idRequete, setIdRequete] = useState<string>();
@@ -165,6 +184,11 @@ export const SaisirRDCPage: React.FC = () => {
   const [paramsCreationAction, setParamsCreationAction] = useState<
     CreationActionHookParams | undefined
   >();
+
+  const [
+    metAJourStatutRequeteApresMajPiecesJointes,
+    setMetAJourStatutRequeteApresMajPiecesJointes
+  ] = useState<ICreationActionMiseAjourStatutHookParams>();
 
   useEffect(() => {
     setIdRequete(idRequeteParam);
@@ -181,6 +205,34 @@ export const SaisirRDCPage: React.FC = () => {
       onChangeRequerant(requeteForm[REQUERANT][TYPE_REQUERANT]);
     }
   }, [detailRequeteState]);
+
+  const creationRequeteDelivranceRDCResultat =
+    useCreationRequeteDelivranceRDC(creationRequeteRDC);
+
+  const updateRequeteDelivranceRDCResultat =
+    useUpdateRequeteDelivranceRDC(updateRequeteRDC);
+
+  const getIdRequeteCreee = useCallback(() => {
+    if (updateRequeteDelivranceRDCResultat) {
+      return updateRequeteDelivranceRDCResultat.requete.id;
+    } else if (creationRequeteDelivranceRDCResultat) {
+      return creationRequeteDelivranceRDCResultat.requete.id;
+    }
+    return undefined;
+  }, [
+    creationRequeteDelivranceRDCResultat,
+    updateRequeteDelivranceRDCResultat
+  ]);
+
+  const postPiecesJointesApiResultat = usePostPiecesJointesApi(
+    TypePieceJointe.PIECE_JUSTIFICATIVE,
+    getIdRequeteCreee(),
+    piecesjointesAMettreAJour
+  );
+
+  useCreationAction(paramsCreationAction);
+  useCreationActionMiseAjourStatut(metAJourStatutRequeteApresMajPiecesJointes);
+  useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
 
   const onChangeNature = (nature: string) => {
     setEvenementVisible(
@@ -244,11 +296,15 @@ export const SaisirRDCPage: React.FC = () => {
     getAdresseForm()
   ];
 
-  const creationRequeteDelivranceRDCResultat =
-    useCreationRequeteDelivranceRDC(creationRequeteRDC);
-  const updateRequeteDelivranceRDCResultat =
-    useUpdateRequeteDelivranceRDC(updateRequeteRDC);
-  useCreationAction(paramsCreationAction);
+  function getPiecesJointesAMettreAJour(
+    formulairePiecesJointes?: PieceJointe[]
+  ) {
+    // On ne prend que les pjs dont le contenu est renseigné,
+    //   en effet si le contenu est vide c'est qu'il a été écrasé par la requête lors de la sauvegarde (la requête ramène ses pièces jointes mais sans le contenu)
+    return formulairePiecesJointes?.filter(
+      formulairePj => formulairePj.base64File.base64String
+    );
+  }
 
   const redirectionPage = useCallback(
     async (requeteSauvegardee: IRequeteDelivrance) => {
@@ -267,39 +323,112 @@ export const SaisirRDCPage: React.FC = () => {
     [history]
   );
 
+  const redirectApresCreationOuModification = useCallback(() => {
+    if (updateRequeteDelivranceRDCResultat && updateRequeteRDC) {
+      // Maj du statut de la requête suite à l'appel d'api de mise à jour de statut de la requête
+      //   pour éviter de faire un nouvelle appel d'api pour recharger la requête avec le bon statut
+      redirectionPage(updateRequeteDelivranceRDCResultat.requete);
+    } else if (creationRequeteDelivranceRDCResultat && creationRequeteRDC) {
+      // Maj du statut de la requête suite à l'appel d'api de mise à jour de statut de la requête
+      //   pour éviter de faire un nouvelle appel d'api pour recharger la requête avec le bon statut
+      redirectionPage(creationRequeteDelivranceRDCResultat.requete);
+    }
+  }, [
+    creationRequeteDelivranceRDCResultat,
+    creationRequeteRDC,
+    redirectionPage,
+    updateRequeteDelivranceRDCResultat,
+    updateRequeteRDC
+  ]);
+
   const majActionEtRedirection = useCallback(
-    async (requeteSauvegardee: IRequeteDelivrance) => {
+    async (requeteSauvegardee: any) => {
       setParamsCreationAction({
         libelleAction: "Requête modifiée",
         requete: {
-          idRequete: requeteSauvegardee.id
+          idRequete: requeteSauvegardee.requete.id
         } as IRequeteTableauDelivrance,
-        callback: () => redirectionPage(requeteSauvegardee)
+        callback: () => redirectApresCreationOuModification()
       });
     },
-    [redirectionPage]
+    [redirectApresCreationOuModification]
   );
+
+  const majIdRequete = useCallback(() => {
+    const idReq = getIdRequeteCreee();
+    if (idReq) {
+      setIdRequete(idReq);
+    }
+  }, [getIdRequeteCreee]);
 
   useEffect(() => {
     if (
-      creationRequeteDelivranceRDCResultat ||
-      updateRequeteDelivranceRDCResultat
+      creationRequeteDelivranceRDCResultat?.requete ||
+      updateRequeteDelivranceRDCResultat?.requete
     ) {
       const resultat =
         creationRequeteDelivranceRDCResultat ??
         updateRequeteDelivranceRDCResultat;
-      if (resultat) {
-        modeModification
-          ? majActionEtRedirection(resultat.requete)
-          : redirectionPage(resultat.requete);
+      // Une fois la requête créée ou mise à jour, la mise à jour des pièces jointes peut se faire
+      const pjAMettreAjour = getPiecesJointesAMettreAJour(
+        saisieRequeteRDC?.[PIECES_JOINTES]
+      );
+      if (pjAMettreAjour && pjAMettreAjour.length > 0) {
+        setPiecesjointesAMettreAJour(pjAMettreAjour);
+      } else if (modeModification) {
+        majActionEtRedirection(resultat);
+      } else {
+        majStatutRequeteSiBesoinEtRedirection();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     creationRequeteDelivranceRDCResultat,
-    updateRequeteDelivranceRDCResultat,
-    redirectionPage,
-    majActionEtRedirection,
-    modeModification
+    updateRequeteDelivranceRDCResultat
+  ]);
+
+  useEffect(() => {
+    // Une fois les pièces jointes mises à jour, la maj du bon statut de la requête puis la redirection sont effectuées
+    if (postPiecesJointesApiResultat && !postPiecesJointesApiResultat.erreur) {
+      if (modeModification) {
+        majActionEtRedirection(
+          updateRequeteDelivranceRDCResultat ??
+            creationRequeteDelivranceRDCResultat
+        );
+      } else {
+        majStatutRequeteSiBesoinEtRedirection();
+      }
+    } else if (postPiecesJointesApiResultat?.erreur) {
+      setOperationEnCours(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [postPiecesJointesApiResultat]);
+
+  const majStatutRequeteSiBesoinEtRedirection = useCallback(() => {
+    const statutFinal: StatutRequete | undefined =
+      updateRequeteRDC?.statutFinal || creationRequeteRDC?.statutFinal;
+    const futurStatut: StatutRequete | undefined =
+      updateRequeteRDC?.futurStatut || creationRequeteRDC?.futurStatut;
+    majIdRequete();
+    if (statutFinal && statutFinal !== futurStatut) {
+      setMetAJourStatutRequeteApresMajPiecesJointes({
+        libelleAction: statutFinal.libelle,
+        statutRequete: statutFinal,
+        requete: {
+          idRequete: getIdRequeteCreee()
+        } as IRequeteTableauDelivrance,
+        // redirection ensuite
+        callback: () => redirectApresCreationOuModification()
+      });
+    } else {
+      redirectApresCreationOuModification();
+    }
+  }, [
+    creationRequeteRDC,
+    getIdRequeteCreee,
+    majIdRequete,
+    redirectApresCreationOuModification,
+    updateRequeteRDC
   ]);
 
   const onSubmitSaisirRequete = (values: SaisieRequeteRDC) => {
@@ -370,7 +499,7 @@ export const SaisirRDCPage: React.FC = () => {
         onSubmit={onSubmitSaisirRequete}
         className="FormulaireSaisirRDC"
       >
-        <div>{blocsForm}</div>
+        <div>{[blocsForm, getPiecesJointesForm()]}</div>
         <SaisirRequeteBoutons {...boutonsProps} />
       </Formulaire>
       <ConfirmationPopin
