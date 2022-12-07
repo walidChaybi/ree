@@ -50,9 +50,9 @@ export const MenuReponseSansDelivranceCS: React.FC<
 
   useEffect(() => {
     if (resultatReponseSansDelivranceCS) {
-      const url = receUrl.getUrlApercuTraitementAPartirDe(
-        history.location.pathname
-      );
+      const url = receUrl.getUrlApercuTraitementAPartirDe({
+        url: history.location.pathname
+      });
       receUrl.replaceUrl(history, url);
     }
     setOperationEnCours(false);

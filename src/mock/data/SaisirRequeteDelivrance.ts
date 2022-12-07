@@ -1,3 +1,5 @@
+import { idRequeteRDCPourModification } from "./requeteDelivrance";
+
 export const CreationRDCSC = {
   id: "1072bc37-f889-4365-8f75-912166b767dd",
   numeroFonctionnel: "U2UN5W",
@@ -28,4 +30,11 @@ export const CreationRDCSC = {
 export const UpdateRDCSC = {
   ...CreationRDCSC,
   id: "1072bc37-f889-4365-8f75-912166b767dd"
+};
+
+export const UpdateRDC = {
+  ...CreationRDCSC,
+  id: idRequeteRDCPourModification,
+  sousType: "RDC",
+  statut: "PRISE_EN_CHARGE"
 };

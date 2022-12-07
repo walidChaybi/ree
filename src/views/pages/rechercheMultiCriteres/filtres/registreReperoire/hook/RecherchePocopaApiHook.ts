@@ -23,7 +23,7 @@ export function useRecherchePocopa(
         .catch((error: any) => {
           messageManager.showErrorAndClose(
             getLibelle(
-              "Une erreur est survenu lors de la récupération des pocopas"
+              "Une erreur est survenue lors de la récupération des pocopas"
             )
           );
         });

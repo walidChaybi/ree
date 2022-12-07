@@ -151,12 +151,38 @@ function estUrlEdition(url: string) {
   return url.indexOf(`/${PATH_EDITION}`) > 0;
 }
 
-function getUrlApercuTraitementAPartirDe(url: string, idRequeteParam?: string) {
-  const id = idRequeteParam || getUrlParamId(url);
-  return `${getUrlPrecedente(
-    url
-  )}${URL_SEPARATEUR}${PATH_APERCU_REQ_TRAITEMENT}${URL_SEPARATEUR}${id}`;
-}
+type urlApercuParams = {
+  url: string;
+  idRequete?: string;
+};
+
+type urlApercuParamsAvecPathApercu = urlApercuParams & {
+  pathApercu: string;
+};
+
+const getUrlApercuAvecIdRequete = ({
+  url,
+  pathApercu,
+  idRequete
+}: urlApercuParamsAvecPathApercu) => {
+  return [
+    getUrlPrecedente(url),
+    pathApercu,
+    idRequete ?? getUrlParamId(url)
+  ].join(URL_SEPARATEUR);
+};
+
+const getUrlApercuPriseEnChargeAPartirDe = (params: urlApercuParams) =>
+  getUrlApercuAvecIdRequete({
+    ...params,
+    pathApercu: PATH_APERCU_REQ_PRISE
+  });
+
+const getUrlApercuTraitementAPartirDe = (params: urlApercuParams) =>
+  getUrlApercuAvecIdRequete({
+    ...params,
+    pathApercu: PATH_APERCU_REQ_TRAITEMENT
+  });
 
 function replaceUrl(history: any, url: string, data?: any) {
   gestionnaireNavigation.deleteLastUrl();
@@ -176,6 +202,7 @@ export const receUrl = {
   estUrlApercuRequete,
   estUrlApercuTraitementRequete,
   getUrlApercuTraitementAPartirDe,
+  getUrlApercuPriseEnChargeAPartirDe,
   estUrlSaisirCourrier,
   estUrlEdition,
   replaceUrl,

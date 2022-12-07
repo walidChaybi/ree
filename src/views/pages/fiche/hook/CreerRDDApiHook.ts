@@ -34,7 +34,7 @@ export const useCreationRequeteDelivranceRDD = (
         .catch((error: any) => {
           logError({
             messageUtilisateur: getLibelle(
-              "Une erreur est survenu lors de la création de la requête"
+              "Une erreur est survenue lors de la création de la requête"
             ),
             error
           });

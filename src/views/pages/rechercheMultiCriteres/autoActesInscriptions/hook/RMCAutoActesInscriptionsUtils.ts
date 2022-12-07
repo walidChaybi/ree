@@ -77,7 +77,10 @@ export function redirectionRMCAutoApercuTraitement(
     receUrl.estUrlApercuRequete(urlCourante) ||
     receUrl.estUrlSaisirCourrier(urlCourante)
   ) {
-    url = receUrl.getUrlApercuTraitementAPartirDe(urlCourante, idRequete);
+    url = receUrl.getUrlApercuTraitementAPartirDe({
+      url: urlCourante,
+      idRequete
+    });
   }
   return url;
 }

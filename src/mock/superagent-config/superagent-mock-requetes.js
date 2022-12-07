@@ -45,7 +45,11 @@ import {
   requeteRDCPourModification
 } from "../data/requeteDelivrance";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
-import { CreationRDCSC, UpdateRDCSC } from "../data/SaisirRequeteDelivrance";
+import {
+  CreationRDCSC,
+  UpdateRDC,
+  UpdateRDCSC
+} from "../data/SaisirRequeteDelivrance";
 
 export const NORESULT = "NORESULT";
 let compteur = 0;
@@ -503,6 +507,16 @@ export const configRequetes = [
           data: requeteRDCPourModification
         };
       }
+      if (
+        match[1] ===
+          `/requetes/delivrance/${idRequeteRDCPourModification}?refus=false&futurStatut=PRISE_EN_CHARGE` &&
+        context.method === "patch"
+      ) {
+        return {
+          data: UpdateRDC
+        };
+      }
+
       // Certificat de Situation Courrier
       if (
         match[1] ===
@@ -747,6 +761,15 @@ export const configRequetes = [
             "/requetes/action/majStatut?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
           match[1] ===
             "/requetes/action/majStatut?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce63999&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE") &&
+        context.method === "post"
+      ) {
+        return { data: "123456789" };
+      }
+
+      // Création d'une action uniquement (pendant l'update d'une requête délivrance)
+      if (
+        match[1] ===
+          `/requetes/action?idRequete=${idRequeteRDCPourModification}&libelleAction=Requ%C3%AAte%20modifi%C3%A9e` &&
         context.method === "post"
       ) {
         return { data: "123456789" };

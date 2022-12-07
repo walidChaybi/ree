@@ -82,9 +82,9 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
   useEffect(() => {
     if (resultDeliverCertificatSituation) {
       setOperationEnCours(false);
-      const url = receUrl.getUrlApercuTraitementAPartirDe(
-        history.location.pathname
-      );
+      const url = receUrl.getUrlApercuTraitementAPartirDe({
+        url: history.location.pathname
+      });
       receUrl.replaceUrl(history, url);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

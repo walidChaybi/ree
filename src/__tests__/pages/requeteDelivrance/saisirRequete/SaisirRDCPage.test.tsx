@@ -1,5 +1,4 @@
 import { mappingOfficier } from "@core/login/LoginHook";
-import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
@@ -29,13 +28,50 @@ import { idRequeteRDCPourModification } from "../../../../mock/data/requeteDeliv
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
-
 const history = createMemoryHistory();
-history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC);
+
+const saisieRDC = () => {
+  history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC);
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
+};
+
+const modificationRDC = () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
+      idRequeteRDCPourModification
+    )
+  );
+  storeRece.utilisateurCourant = mappingOfficier(
+    resultatHeaderUtilistateurLaurenceBourdeau,
+    resultatRequeteUtilistateurLaurenceBourdeau.data
+  );
+};
+
+const contextes = {
+  saisieRDC,
+  modificationRDC
+};
+
+const getInput = (label: string): HTMLInputElement =>
+  screen.getByLabelText(label) as HTMLInputElement;
+
+const changeInput = (
+  value: string,
+  element: Document | Node | Element | Window
+) =>
+  fireEvent.change(element, {
+    target: {
+      value
+    }
+  });
 
 beforeAll(() => {
   DocumentDelivrance.init();
-  storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
+});
+
+beforeEach(() => {
+  contextes.saisieRDC();
 });
 
 test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie", async () => {
@@ -46,6 +82,7 @@ test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie",
       </Router>
     );
   });
+
   const titre = SousTypeDelivrance.getEnumFor("RDC").libelle;
 
   await waitFor(() => {
@@ -53,18 +90,61 @@ test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie",
   });
 });
 
-test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie déjà existante", async () => {
+test("renders formulaire de modification d'une Requête de Délivrance Extrait Copie", async () => {
+  contextes.modificationRDC();
   act(() => {
     render(
       <Router history={history}>
-        <SaisirRDCPage />
+        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID}>
+          <SaisirRDCPage />
+        </Route>
       </Router>
     );
   });
-  const titre = SousTypeDelivrance.getEnumFor("RDC").libelle;
 
   await waitFor(() => {
-    expect(screen.getAllByText(titre)).toHaveLength(2);
+    const inputNomNaissance = getInput("titulaire1.noms.nomNaissance");
+    const inputPrenomNaissance = getInput("titulaire1.prenoms.prenom1");
+
+    expect(inputNomNaissance.value).toEqual("NOMRDCMODIFIEE");
+    expect(inputPrenomNaissance.value).toEqual("Prenomrdcmodifiée");
+  });
+});
+
+test("Validation d'une modification de Requête de Délivrance Extrait Copie", async () => {
+  contextes.modificationRDC();
+  act(() => {
+    render(
+      <Router history={history}>
+        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID}>
+          <SaisirRDCPage />
+        </Route>
+      </Router>
+    );
+  });
+
+  const inputNomNaissance = getInput("titulaire1.noms.nomNaissance");
+  const buttonValider = screen.getByText(/Valider/i) as HTMLButtonElement;
+
+  await waitFor(() => {
+    expect(buttonValider.disabled).toBeTruthy();
+  });
+
+  await act(async () => {
+    changeInput("DUPONT", inputNomNaissance);
+  });
+  await waitFor(() => {
+    expect(inputNomNaissance.value).toBe("DUPONT");
+    expect(buttonValider.disabled).toBeFalsy();
+  });
+
+  await act(async () => {
+    fireEvent.click(buttonValider);
+  });
+  await waitFor(() => {
+    expect(getLastPathElem(history.location.pathname)).toEqual(
+      idRequeteRDCPourModification
+    );
   });
 });
 
@@ -85,25 +165,15 @@ test("test onChangeNature", async () => {
   });
 
   await act(async () => {
-    fireEvent.change(inputNatureActe, {
-      target: {
-        value: "NAISSANCE"
-      }
-    });
+    changeInput("NAISSANCE", inputNatureActe);
   });
-
   await waitFor(() => {
     expect(inputNatureActe.value).toBe("NAISSANCE");
   });
 
   await act(async () => {
-    fireEvent.change(inputNatureActe, {
-      target: {
-        value: "MARIAGE"
-      }
-    });
+    changeInput("MARIAGE", inputNatureActe);
   });
-
   await waitFor(() => {
     expect(inputNatureActe.value).toBe("MARIAGE");
   });
@@ -119,21 +189,21 @@ test("test onChangeRequerant", async () => {
   });
 
   // Mandataire
-  const inputMandataire = screen.getByLabelText(
-    "requerant.typerequerant.mandataire"
-  ) as HTMLInputElement;
+  const inputMandataire = getInput("requerant.typerequerant.mandataire");
+
   await act(async () => {
     fireEvent.click(inputMandataire);
   });
   await waitFor(() => {
-    expect(
-      screen.getByLabelText("requerant.mandataire.raisonSociale")
-    ).toBeDefined();
+    const inputRaisonSociale = getInput("requerant.mandataire.raisonSociale");
+    expect(inputRaisonSociale).toBeDefined();
   });
+
   // Institutionnel
-  const inputInstitutionnel = screen.getByLabelText(
+  const inputInstitutionnel = getInput(
     "requerant.typerequerant.institutionnel"
-  ) as HTMLInputElement;
+  );
+
   await act(async () => {
     fireEvent.click(inputInstitutionnel);
   });
@@ -142,10 +212,9 @@ test("test onChangeRequerant", async () => {
       screen.getByLabelText("requerant.institutionnel.nomInstitution")
     ).toBeDefined();
   });
+
   // Particulier
-  const inputParticulier = screen.getByLabelText(
-    "requerant.typerequerant.particulier"
-  ) as HTMLInputElement;
+  const inputParticulier = getInput("requerant.typerequerant.particulier");
   await act(async () => {
     fireEvent.click(inputParticulier);
   });
@@ -154,10 +223,12 @@ test("test onChangeRequerant", async () => {
       screen.getByLabelText("requerant.particulier.nomNaissance")
     ).toBeDefined();
   });
+
   // Autre Professionnel
-  const inputAutreProfessionnel = screen.getByLabelText(
+  const inputAutreProfessionnel = getInput(
     "requerant.typerequerant.autre_professionnel"
-  ) as HTMLInputElement;
+  );
+
   await act(async () => {
     fireEvent.click(inputAutreProfessionnel);
   });
@@ -180,49 +251,26 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
     .childNodes[0] as HTMLSelectElement;
   const inputDocumentDemande = screen.getByTestId("requete.documentDemande")
     .childNodes[0] as HTMLSelectElement;
-  const inputNbExemplaire = screen.getByLabelText(
-    "requete.nbExemplaire"
-  ) as HTMLSelectElement;
+  const inputNbExemplaire = getInput("requete.nbExemplaire");
   const inputMotif = screen.getByTestId("requete.motif")
     .childNodes[0] as HTMLSelectElement;
 
   await act(async () => {
-    fireEvent.change(inputNatureActe, {
-      target: {
-        value: "DECES"
-      }
-    });
+    changeInput("DECES", inputNatureActe);
   });
   await waitFor(() => {
     expect(inputNatureActe.value).toEqual("DECES");
   });
 
   // Champs Evenement
-  const inputPaysEvenement = screen.getByLabelText(
-    "evenement.paysEvenement"
-  ) as HTMLInputElement;
-  const inputVilleEvenement = screen.getByLabelText(
-    "evenement.villeEvenement"
-  ) as HTMLInputElement;
-  const inputAnneeEvenement = screen.getByLabelText(
-    "evenement.dateEvenement.annee"
-  ) as HTMLInputElement;
+  const inputPaysEvenement = getInput("evenement.paysEvenement");
+  const inputVilleEvenement = getInput("evenement.villeEvenement");
+  const inputAnneeEvenement = getInput("evenement.dateEvenement.annee");
+
   act(() => {
-    fireEvent.change(inputPaysEvenement, {
-      target: {
-        value: "mockPaysEvenement"
-      }
-    });
-    fireEvent.change(inputVilleEvenement, {
-      target: {
-        value: "mockVilleEvenement"
-      }
-    });
-    fireEvent.change(inputAnneeEvenement, {
-      target: {
-        value: "1990"
-      }
-    });
+    changeInput("mockPaysEvenement", inputPaysEvenement);
+    changeInput("mockVilleEvenement", inputVilleEvenement);
+    changeInput("1990", inputAnneeEvenement);
   });
   await waitFor(() => {
     expect(inputAnneeEvenement.value).toEqual("1990");
@@ -237,76 +285,45 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
   });
 
   // Champs Filiation
-  const inputNomParent1 = screen.getByLabelText(
-    "titulaire1.parent1.nomNaissance"
-  ) as HTMLInputElement;
-  const inputNomParent2 = screen.getByLabelText(
-    "titulaire1.parent2.nomNaissance"
-  ) as HTMLInputElement;
+  const inputNomParent1 = getInput("titulaire1.parent1.nomNaissance");
+  const inputNomParent2 = getInput("titulaire1.parent2.nomNaissance");
+  const submit = screen.getByText(/Prendre en charge/i);
 
   await act(async () => {
-    fireEvent.change(inputNomParent1, {
-      target: {
-        value: "mockNom1"
-      }
-    });
-    fireEvent.change(inputNomParent2, {
-      target: {
-        value: "mockNom2"
-      }
-    });
+    changeInput("mockNom1", inputNomParent1);
+    changeInput("mockNom2", inputNomParent2);
   });
 
   await act(async () => {
-    fireEvent.change(inputMotif, {
-      target: {
-        value: "CERTIFICAT_NATIONALITE_FRANCAISE"
-      }
-    });
+    changeInput("CERTIFICAT_NATIONALITE_FRANCAISE", inputMotif);
   });
-
   await waitFor(() => {
     expect(inputMotif.value).toEqual("CERTIFICAT_NATIONALITE_FRANCAISE");
   });
 
   await act(async () => {
-    fireEvent.change(inputNbExemplaire, {
-      target: {
-        value: "1"
-      }
-    });
+    changeInput("1", inputNbExemplaire);
   });
-
   await waitFor(() => {
     expect(inputNbExemplaire.value).toEqual("1");
   });
 
   await act(async () => {
-    fireEvent.change(inputDocumentDemande, {
-      target: {
-        value: "0e1e909f-f74c-4b16-9c03-b3733354c6ce"
-      }
-    });
+    changeInput("0e1e909f-f74c-4b16-9c03-b3733354c6ce", inputDocumentDemande);
   });
-
   await waitFor(() => {
     expect(inputDocumentDemande.value).toEqual(
       "0e1e909f-f74c-4b16-9c03-b3733354c6ce"
     );
   });
 
-  const submit = screen.getByText(/Prendre en charge/i);
-
   await act(async () => {
     fireEvent.click(submit);
   });
-
   await waitFor(() => {
     expect(getLastPathElem(history.location.pathname)).toEqual(
       "1072bc37-f889-4365-8f75-912166b767dd"
     );
-    // Re-init pour les tests suivants
-    history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC);
   });
 });
 
@@ -317,149 +334,70 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
     </Router>
   );
 
+  const submit = screen.getByText(/Prendre en charge/i);
+
   // Champs Requete
   const inputNatureActe = screen.getByTestId("requete.natureActe")
     .childNodes[0] as HTMLSelectElement;
   const inputDocumentDemande = screen.getByTestId("requete.documentDemande")
     .childNodes[0] as HTMLSelectElement;
-  const inputNbExemplaire = screen.getByLabelText(
-    "requete.nbExemplaire"
-  ) as HTMLSelectElement;
+  const inputNbExemplaire = getInput("requete.nbExemplaire");
   const inputMotif = screen.getByTestId("requete.motif")
     .childNodes[0] as HTMLSelectElement;
 
   await act(async () => {
-    fireEvent.change(inputNatureActe, {
-      target: {
-        value: "NAISSANCE"
-      }
-    });
+    changeInput("NAISSANCE", inputNatureActe);
   });
-
   await waitFor(() => {
     expect(inputNatureActe.value).toEqual("NAISSANCE");
   });
 
   // Champs Evenement
-  const inputPaysEvenement = screen.getByLabelText(
-    "titulaire1.naissance.paysEvenement"
-  ) as HTMLInputElement;
-  const inputVilleEvenement = screen.getByLabelText(
-    "titulaire1.naissance.villeEvenement"
-  ) as HTMLInputElement;
-  const inputAnneeEvenement = screen.getByLabelText(
+  const inputPaysEvenement = getInput("titulaire1.naissance.paysEvenement");
+  const inputVilleEvenement = getInput("titulaire1.naissance.villeEvenement");
+  const inputAnneeEvenement = getInput(
     "titulaire1.naissance.dateEvenement.annee"
-  ) as HTMLInputElement;
+  );
 
   act(() => {
-    fireEvent.change(inputPaysEvenement, {
-      target: {
-        value: "mockPaysEvenement"
-      }
-    });
-    fireEvent.change(inputVilleEvenement, {
-      target: {
-        value: "mockVilleEvenement"
-      }
-    });
-    fireEvent.change(inputAnneeEvenement, {
-      target: {
-        value: "1990"
-      }
-    });
+    changeInput("mockPaysEvenement", inputPaysEvenement);
+    changeInput("mockVilleEvenement", inputVilleEvenement);
+    changeInput("1990", inputAnneeEvenement);
   });
-
   await waitFor(() => {
     expect(inputAnneeEvenement.value).toEqual("1990");
   });
 
   await act(async () => {
-    fireEvent.change(inputMotif, {
-      target: {
-        value: "CERTIFICAT_NATIONALITE_FRANCAISE"
-      }
-    });
+    changeInput("CERTIFICAT_NATIONALITE_FRANCAISE", inputMotif);
   });
-
   await waitFor(() => {
     expect(inputMotif.value).toEqual("CERTIFICAT_NATIONALITE_FRANCAISE");
   });
 
   await act(async () => {
-    fireEvent.change(inputNbExemplaire, {
-      target: {
-        value: "1"
-      }
-    });
+    changeInput("1", inputNbExemplaire);
   });
-
   await waitFor(() => {
     expect(inputNbExemplaire.value).toEqual("1");
   });
 
   await act(async () => {
-    fireEvent.change(inputDocumentDemande, {
-      target: {
-        value: "0e1e909f-f74c-4b16-9c03-b3733354c6ce"
-      }
-    });
+    changeInput("0e1e909f-f74c-4b16-9c03-b3733354c6ce", inputDocumentDemande);
   });
-
   await waitFor(() => {
     expect(inputDocumentDemande.value).toEqual(
       "0e1e909f-f74c-4b16-9c03-b3733354c6ce"
     );
   });
 
-  const submit = screen.getByText(/Prendre en charge/i);
-
   await act(async () => {
     fireEvent.click(submit);
   });
-
   await waitFor(() => {
     expect(getLastPathElem(history.location.pathname)).toEqual(
       "1072bc37-f889-4365-8f75-912166b767dd"
     );
-    // Re-init pour les tests suivants
-    history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC);
-  });
-});
-
-test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie déjà existante", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
-      idRequeteRDCPourModification
-    )
-  );
-  storeRece.utilisateurCourant = mappingOfficier(
-    resultatHeaderUtilistateurLaurenceBourdeau,
-    resultatRequeteUtilistateurLaurenceBourdeau.data
-  );
-  storeRece.utilisateurCourant.habilitations = mapHabilitationsUtilisateur(
-    resultatRequeteUtilistateurLaurenceBourdeau.data.habilitations
-  );
-  act(() => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID}>
-          <SaisirRDCPage />
-        </Route>
-      </Router>
-    );
-  });
-
-  await waitFor(() => {
-    const inputNomNaissance = screen.getByLabelText(
-      "titulaire1.noms.nomNaissance"
-    ) as HTMLInputElement;
-    const inputPrenomNaissance = screen.getByLabelText(
-      "titulaire1.prenoms.prenom1"
-    ) as HTMLInputElement;
-
-    expect(inputNomNaissance.value).toEqual("NOMRDCMODIFIEE");
-    expect(inputPrenomNaissance.value).toEqual("Prenomrdcmodifiée");
   });
 });
 

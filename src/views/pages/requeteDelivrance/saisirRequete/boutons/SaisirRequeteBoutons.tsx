@@ -16,7 +16,12 @@ export type SaisirRequeteBoutonsProps = {
 
 const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
   const history = useHistory();
-  const annuler = () => receUrl.goBack(history);
+  const annuler = () => {
+    const url = receUrl.getUrlApercuPriseEnChargeAPartirDe({
+      url: history.location.pathname
+    });
+    receUrl.replaceUrl(history, url);
+  };
   const valider = () => props.formik.submitForm();
   const prendreEnCharge = () => {
     props.setIsBrouillon(false);

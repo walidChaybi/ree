@@ -38,7 +38,7 @@ export function useCreationRequeteDelivranceRDC(
         .catch((error: any) => {
           logError({
             messageUtilisateur:
-              "Une erreur est survenu lors de la création de la requête",
+              "Une erreur est survenue lors de la création de la requête",
             error
           });
         });

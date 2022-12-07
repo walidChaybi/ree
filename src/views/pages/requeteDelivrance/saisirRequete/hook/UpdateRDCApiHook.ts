@@ -40,7 +40,7 @@ export function useUpdateRequeteDelivranceRDC(
         .catch((error: any) => {
           logError({
             messageUtilisateur:
-              "Une erreur est survenu lors de la mise à jour de la requête",
+              "Une erreur est survenue lors de la mise à jour de la requête",
             error
           });
         });

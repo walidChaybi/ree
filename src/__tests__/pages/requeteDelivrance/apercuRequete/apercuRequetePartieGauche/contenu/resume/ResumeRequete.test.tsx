@@ -1,20 +1,28 @@
+import { mappingOfficier } from "@core/login/LoginHook";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ResumeRequete } from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequete";
 import { mappingRequeteDelivrance } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { getUrlWithParam } from "@util/route/routeUtil";
+import { getLastPathElem, getUrlWithParam } from "@util/route/routeUtil";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
+import {
+  resultatHeaderUtilistateurLaurenceBourdeau,
+  resultatRequeteUtilistateurLaurenceBourdeau
+} from "../../../../../../../mock/data/connectedUserAvecDroit";
 import { ReponseAppelDetailRequeteCreation } from "../../../../../../../mock/data/DetailRequeteCreation";
 import {
   ReponseAppelDetailRequeteDelivrance,
+  ReponseAppelDetailRequeteDelivranceRDC,
   ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ,
   ReponseAppelDetailRequeteDelivranceUnTitulaire
 } from "../../../../../../../mock/data/DetailRequeteDelivrance";
+import { idRequeteRDCPourModification } from "../../../../../../../mock/data/requeteDelivrance";
 import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
@@ -303,6 +311,61 @@ test("renders Page requete with mandataire habilité without raison sociale", as
     expect(screen.getByText("JACQUES Charles")).toBeDefined();
     expect(screen.getByText("Père/mère")).toBeDefined();
     fireEvent.click(screen.getByText("54j654j4jyfjtj456j4"));
+  });
+});
+
+test("renders Page requete avec droit de modification de la requête", async () => {
+  const dataRDC = ReponseAppelDetailRequeteDelivranceRDC.data;
+  const dataLaurence = resultatRequeteUtilistateurLaurenceBourdeau.data;
+  const reponseAppelDetailRequeteDelivranceAvecDroitModification = {
+    ...dataRDC,
+    id: idRequeteRDCPourModification,
+    idUtilisateur: dataLaurence.idUtilisateur,
+    corbeilleAgent: {
+      ...dataRDC.corbeilleAgent,
+      idUtilisateur: dataLaurence.idUtilisateur
+    }
+  };
+
+  const history = createMemoryHistory();
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+      idRequeteRDCPourModification
+    )
+  );
+  storeRece.utilisateurCourant = mappingOfficier(
+    resultatHeaderUtilistateurLaurenceBourdeau,
+    dataLaurence
+  );
+  act(() => {
+    render(
+      <Router history={history}>
+        <Route
+          exact={true}
+          path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
+        >
+          <ResumeRequete
+            requete={mappingRequeteDelivrance(
+              reponseAppelDetailRequeteDelivranceAvecDroitModification
+            )}
+          />
+        </Route>
+      </Router>
+    );
+  });
+
+  const buttonModifierRequete = screen.getByText(
+    /Modifier la requête/i
+  ) as HTMLButtonElement;
+
+  act(() => {
+    fireEvent.click(buttonModifierRequete);
+  });
+  await waitFor(() => {
+    expect(getLastPathElem(history.location.pathname)).toEqual(
+      idRequeteRDCPourModification
+    );
   });
 });
 
