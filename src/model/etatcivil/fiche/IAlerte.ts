@@ -2,6 +2,7 @@ import { storeRece } from "@util/storeRece";
 import { compactObject } from "@util/Utils";
 import {
   DESCRIPTION_SAGA,
+  A_NE_PAS_DELIVRER,
   TypeAlerte,
   TypeCodeCouleur
 } from "../enum/TypeAlerte";
@@ -72,5 +73,9 @@ export const Alerte = {
 
   estDeTypeDescriptionSAGA(alerte?: IAlerte) {
     return alerte?.type?.type !== DESCRIPTION_SAGA;
+  },
+
+  estDeTypeANePasDelivrer(alerte?: IAlerte) {
+    return alerte?.type?.type === A_NE_PAS_DELIVRER;
   }
 };

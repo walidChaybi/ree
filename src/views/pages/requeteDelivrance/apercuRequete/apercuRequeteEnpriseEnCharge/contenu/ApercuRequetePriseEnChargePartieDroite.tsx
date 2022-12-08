@@ -1,5 +1,8 @@
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
-import { IGetAlertesActeApiHookParameters } from "@hook/alertes/GetAlertesActeApiHook";
+import {
+  IGetAlertesActeApiHookParameters,
+  useGetAlertesActeApiHook
+} from "@hook/alertes/GetAlertesActeApiHook";
 import {
   GetNbrTitulairesActeHookParameters,
   useGetNbrTitulairesActeApiHook
@@ -52,6 +55,10 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
   const [nbrTitulairesActeHookParameters, setNbrTitulairesActeHookParameters] =
     useState<GetNbrTitulairesActeHookParameters>();
 
+  /* Etat paramètres d'appel de l'API de récupération des alertes d'un acte */
+  const [alertesActeHookParameters, setAlertesActeHookParameters] =
+    useState<IGetAlertesActeApiHookParameters>();
+
   /* Titulaires associés aux actes sélectionnés */
   const [titulairesActe, setTitulairesActe] = useState<
     Map<string, ITitulaireActe[]>
@@ -76,6 +83,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
       setActes(newSelected);
       setNbrTitulairesActeHookParameters({ idActe: data?.idActe, isChecked });
       setTitulairesActeHookParameters({ idActe: data?.idActe, isChecked });
+      setAlertesActeHookParameters({ idActe: data?.idActe, isChecked });
     },
     [actes]
   );
@@ -106,6 +114,11 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
   /* Hook d'appel de l'API de récupération du nombre de titulaires associés à un acte */
   const resultatGetNbrTitulairesActe = useGetNbrTitulairesActeApiHook(
     nbrTitulairesActeHookParameters
+  );
+
+  /* Hook d'appel de l'API de récupération des alertes associées à un acte */
+  const resultatGetAlertesActe = useGetAlertesActeApiHook(
+    alertesActeHookParameters
   );
 
   /* Actualisation de la liste des nombres de titulaires et des titulaires des actes sélectionnés */
@@ -168,6 +181,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
         inscriptions={Array.from(inscriptions.values())}
         titulairesActe={titulairesActe}
         nbrTitulairesActe={nbrTitulairesActe}
+        alertesActe={resultatGetAlertesActe?.alertes}
       />
       <BoutonRetour />
     </>

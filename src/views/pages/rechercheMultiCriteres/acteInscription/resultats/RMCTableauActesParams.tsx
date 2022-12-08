@@ -2,6 +2,7 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { HeaderTableauRMCActe } from "@model/rmc/acteInscription/HeaderTableauRMC";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
+import { getLibelle } from "@util/Utils";
 import React from "react";
 import { CheckboxColumn } from "./checkboxColumn/CheckboxColumn";
 import {
@@ -24,6 +25,7 @@ const columnsTableauRmc = [
 export function determinerColonnes(
   typeRMC: TypeRMC,
   hasWarning: (isChecked: boolean, data: IResultatRMCActe) => boolean,
+  isDisabled: (data: IResultatRMCActe) => boolean,
   onClickCheckbox: (
     index: number,
     isChecked: boolean,
@@ -38,7 +40,12 @@ export function determinerColonnes(
       new TableauTypeColumn({
         keys: [HeaderTableauRMCActe.Checkbox],
         title: "",
-        getElement: getCheckBoxElement.bind(null, hasWarning, onClickCheckbox),
+        getElement: getCheckBoxElement.bind(
+          null,
+          hasWarning,
+          isDisabled,
+          onClickCheckbox
+        ),
         style: { width: "50px" }
       })
     ];
@@ -48,6 +55,7 @@ export function determinerColonnes(
 
 function getCheckBoxElement(
   hasWarningCallBack: (isChecked: boolean, data: IResultatRMCActe) => boolean,
+  isDisabledCallBack: (data: IResultatRMCActe) => boolean,
   onClickCheckboxCallBack: (
     index: number,
     isChecked: boolean,
@@ -61,6 +69,10 @@ function getCheckBoxElement(
       index={index}
       data={data}
       hasWarningCallBack={hasWarningCallBack}
+      disabledMessage={getLibelle(
+        "Pas de délivrance pour un projet d'acte non finalisé"
+      )}
+      isDisabledCallBack={isDisabledCallBack}
       onClickCheckboxCallBack={onClickCheckboxCallBack}
     />
   );

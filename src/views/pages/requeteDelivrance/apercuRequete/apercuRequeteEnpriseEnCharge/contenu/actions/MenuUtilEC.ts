@@ -2,6 +2,11 @@ import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { TypeActe } from "@model/etatcivil/enum/TypeActe";
+import {
+  A_NE_PAS_DELIVRER,
+  TypeAlerte
+} from "@model/etatcivil/enum/TypeAlerte";
+import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
@@ -59,6 +64,7 @@ type ControleCoherenceType = {
   requete?: IRequeteDelivrance;
   titulairesActeMap?: Map<string, ITitulaireActe[]>;
   nbTitulairesActeMap?: Map<string, number>;
+  alertesActe?: IAlerte[];
   setMessagesBloquant: React.Dispatch<
     React.SetStateAction<string[] | undefined>
   >;
@@ -299,7 +305,6 @@ const getGenreTitulaireConjointEtParents = (
         .map(parent => parent.sexe) || []
   } as unknown as GenresType);
 
-
 export const aGenreIdentique = (
   genrePersonneA?: string,
   genrePersonneB?: string
@@ -504,6 +509,25 @@ const genresIndeterminesOuIdentiquesDeces = (
   };
 };
 
+export const acteAvecAlerteDeTypeANePasDelivrer = (
+  alertesActe?: IAlerte[]
+): ErreurResult => {
+  return {
+    enErreur:
+      alertesActe != null &&
+      alertesActe.find(
+        alerte =>
+          TypeAlerte.getEnumsAPartirType(A_NE_PAS_DELIVRER).filter(
+            type => type === alerte.type
+          ).length !== 0
+      ) != null,
+    popinErreur: {
+      message: "L'acte n'est pas délivrable. Voulez-vous continuer ?",
+      nonBloquant: true
+    }
+  };
+};
+
 export const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = ({
   indexMenu,
   actes,
@@ -512,6 +536,7 @@ export const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = ({
   requete,
   titulairesActeMap,
   nbTitulairesActeMap,
+  alertesActe,
   setBoutonsPopin,
   setMessagesBloquant
 }: ControleCoherenceType) => {
@@ -558,9 +583,9 @@ export const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = ({
       natureActeDemandeSelectionneDifferents({
         acte,
         natureActeRequete: requete?.evenement?.natureActe?.libelle
-      })
+      }),
+      acteAvecAlerteDeTypeANePasDelivrer(alertesActe)
     ]);
-
     if (erreur) {
       const {
         popinErreur: { message, nonBloquant }

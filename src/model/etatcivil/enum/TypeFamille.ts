@@ -49,4 +49,13 @@ export class TypeFamille extends EnumWithLibelle {
   public static getKey(typeFamille: TypeFamille) {
     return EnumWithLibelle.getKey(TypeFamille, typeFamille);
   }
+
+  public static estTypeFamilleProjetActe(typeFamille: TypeFamille) {
+    return (
+      typeFamille === TypeFamille.AFF ||
+      typeFamille === TypeFamille.OPT ||
+      typeFamille === TypeFamille.PR ||
+      typeFamille === TypeFamille.XDX
+    );
+  }
 }

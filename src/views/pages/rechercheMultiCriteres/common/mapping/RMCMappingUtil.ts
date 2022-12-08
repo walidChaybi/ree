@@ -1,5 +1,6 @@
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeActe } from "@model/etatcivil/enum/TypeActe";
+import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
@@ -43,6 +44,7 @@ export function mappingActes(data: any): IResultatRMCActe[] {
       paysNaissance: getValeurOuVide(acte.paysNaissance),
       nature: NatureActe.getEnumFor(acte.nature).libelle,
       registre: getValeurOuVide(acte.registre),
+      familleRegistre: TypeFamille.getEnumFor(acte.familleRegistre),
       type: TypeActe.getEnumFor(acte.type).libelle
     };
     actesMapper.push(acteMapper);

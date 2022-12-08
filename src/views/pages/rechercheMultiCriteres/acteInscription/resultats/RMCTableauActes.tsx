@@ -1,7 +1,10 @@
+import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { Alerte, IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequete } from "@model/requete/IRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { getLibelle, getValeurOuVide, supprimeElement } from "@util/Utils";
@@ -168,6 +171,13 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
     [dataAlertes]
   );
 
+  const isCheckboxDisabled = useCallback(
+    (data: IResultatRMCActe): boolean => {
+      return estProjetActe(dataRequete, data);
+    },
+    [dataRequete]
+  );
+
   const onClickCheckbox = useCallback(
     (index: number, isChecked: boolean, data: IResultatRMCActe): void => {
       const newSelected = new Map(selected);
@@ -187,12 +197,13 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
     const colonnes = determinerColonnes(
       typeRMC,
       hasWarning,
+      isCheckboxDisabled,
       onClickCheckbox,
       dataRequete?.type
     );
     setColumnHeaders(colonnes);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [typeRMC, hasWarning, onClickCheckbox]);
+  }, [typeRMC, hasWarning, isCheckboxDisabled, onClickCheckbox]);
 
   useEffect(() => {
     setSelected(new Map([]));
@@ -246,3 +257,19 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
     </>
   );
 };
+
+function estProjetActe(
+  dataRequete: TRequete | undefined,
+  data: IResultatRMCActe
+): boolean {
+  if (dataRequete?.type === TypeRequete.DELIVRANCE) {
+    const requeteDelivrance = dataRequete as IRequeteDelivrance;
+    if (
+      SousTypeDelivrance.estRDDouRDCouRDDP(requeteDelivrance?.sousType) &&
+      TypeFamille.estTypeFamilleProjetActe(data.familleRegistre)
+    ) {
+      return true;
+    }
+  }
+  return false;
+}

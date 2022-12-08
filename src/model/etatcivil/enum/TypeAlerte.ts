@@ -16,7 +16,7 @@ export type TypeCodeCouleur =
   | typeof CODE_COULEUR_ALERTE_VERT
   | typeof CODE_COULEUR_ALERTE_NOIR;
 
-const A_NE_PAS_DELIVRER = "A ne pas délivrer";
+export const A_NE_PAS_DELIVRER = "A ne pas délivrer";
 const A_DELIVRER_SOUS_CONDITIONS = "A délivrer sous conditions";
 const ACTE_NON_EXPLOITABLE = "Acte non exploitable";
 const PROBLEME_FONCTIONNEL = "Problème fonctionnel";
@@ -116,5 +116,21 @@ export class TypeAlerte extends EnumWithLibelle {
 
   public static getCodeCouleurAlerte(typeAlerte: string): string {
     return typeAlerte && mapTypesAlerteCodeCouleur[typeAlerte];
+  }
+
+  public static getEnumsAPartirType(type: string): TypeAlerte[] {
+    const enumsAvecType = [];
+    for (const key in TypeAlerte) {
+      //@ts-ignore
+      const typeAlerteCourant = TypeAlerte[key];
+      const typeCourant = typeAlerteCourant["_type"];
+      if (
+        TypeAlerte.hasOwnProperty(key) &&
+        chainesEgalesIgnoreCasseEtAccent(typeCourant, type)
+      ) {
+        enumsAvecType.push(typeAlerteCourant);
+      }
+    }
+    return enumsAvecType;
   }
 }

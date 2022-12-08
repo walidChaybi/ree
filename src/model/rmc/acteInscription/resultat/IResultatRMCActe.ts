@@ -1,3 +1,5 @@
+import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
+
 export interface IResultatRMCActe {
   idActe: string;
   nom: string;
@@ -7,5 +9,6 @@ export interface IResultatRMCActe {
   paysNaissance: string;
   nature: string;
   registre: string;
+  familleRegistre: TypeFamille;
   type: string;
 }

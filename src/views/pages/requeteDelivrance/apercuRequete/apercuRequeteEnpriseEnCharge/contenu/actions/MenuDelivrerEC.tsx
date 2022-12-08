@@ -123,6 +123,7 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
       requete: props.requete,
       titulairesActeMap: props.titulairesActe,
       nbTitulairesActeMap: props.nbrTitulairesActe,
+      alertesActe: props.alertesActe,
       setBoutonsPopin,
       setMessagesBloquant
     });

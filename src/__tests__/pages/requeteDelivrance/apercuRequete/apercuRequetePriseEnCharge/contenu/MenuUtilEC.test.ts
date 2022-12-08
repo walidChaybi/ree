@@ -1,7 +1,14 @@
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import {
+  A_NE_PAS_DELIVRER,
+  DESCRIPTION_SAGA,
+  TypeAlerte
+} from "@model/etatcivil/enum/TypeAlerte";
+import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
+  acteAvecAlerteDeTypeANePasDelivrer,
   aGenreIdentique,
   aGenreIndetermine,
   aNombreTitulairesIncoherent,
@@ -13,6 +20,11 @@ import {
   IndexAction,
   nombreActesSelectionnesDifferentDeUn
 } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuUtilEC";
+import { act } from "@testing-library/react";
+import request from "superagent";
+import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
+
+const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const testsCasMultiples = <T>({
   casOK,
@@ -199,4 +211,42 @@ test("choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero", () =
     fonction:
       choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero
   });
+});
+
+test("acteAvecAlerteDeTypeANePasDelivrer OK", async () => {
+  await act(async () => {
+    TypeAlerte.init();
+  });
+
+  const alertes = [
+    {
+      type: TypeAlerte.getEnumsAPartirType(DESCRIPTION_SAGA)[0]
+    } as IAlerte
+  ] as IAlerte[];
+
+  expect(acteAvecAlerteDeTypeANePasDelivrer(alertes)).toEqual({
+    enErreur: false,
+    popinErreur: {
+      message: "L'acte n'est pas délivrable. Voulez-vous continuer ?",
+      nonBloquant: true
+    }
+  });
+
+  const alertesANePasDelivrer = [
+    {
+      type: TypeAlerte.getEnumsAPartirType(A_NE_PAS_DELIVRER)[0]
+    } as IAlerte
+  ] as IAlerte[];
+
+  expect(acteAvecAlerteDeTypeANePasDelivrer(alertesANePasDelivrer)).toEqual({
+    enErreur: true,
+    popinErreur: {
+      message: "L'acte n'est pas délivrable. Voulez-vous continuer ?",
+      nonBloquant: true
+    }
+  });
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });
