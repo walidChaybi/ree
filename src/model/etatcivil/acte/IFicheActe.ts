@@ -307,7 +307,7 @@ export const FicheActe = {
     const titulaires = acte.titulaires;
 
     return Boolean(
-      titulaires?.find(titulaire => titulaire?.sexe === Sexe.INDETERMINE)
+      titulaires?.find(titulaire => Sexe.estIndetermine(titulaire.sexe))
     );
   },
 

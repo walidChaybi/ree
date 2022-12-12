@@ -3,6 +3,7 @@ import { ILieuEvenement } from "@model/etatcivil/commun/ILieuEvenement";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import {
   estRenseigne,
+  executeEnDiffere,
   getLibelle,
   getValeurProprieteAPartirChemin
 } from "@util/Utils";
@@ -29,7 +30,7 @@ import {
   getLabelOuDepartement
 } from "./LieuEvenementFormUtil";
 import "./scss/LieuEvenementForm.scss";
-import { valideCompletudeLieu } from "./validation/LieuEvenementFormValidation";
+import { valideCompletudeLieu, valideLieuReprise } from "./validation/LieuEvenementFormValidation";
 
 interface ComponentFormProps {
   nom: string;
@@ -98,8 +99,12 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
     props.formik.setFieldValue(
       nomEtrangerFrance,
         LieuxUtils.getEtrangerOuFranceOuInconnuEnMajuscule(evt, props.etrangerParDefaut));
+
+    // Force la validatin du champs lieu en différé car il faut le temps de mettre sa valeur à jour (cf. majLieuComplet)
+    executeEnDiffere(()=>props.formik.validateField(nomLieuComplet));
+
     }, [creerEvenementAPartirDeLaSaisie, majLieuComplet, estModeSaisieFrance, nomEtrangerFrance, nomLieuComplet, props.etrangerParDefaut, props.evenement, props.formik]
-    );
+  );
 
   const onChangeVilleRegionPays = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -162,7 +167,9 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
           label={props.label}
           name={nomLieuComplet}
           disabled={decomposerLieuActifOuPasDeLieuRepriseRenseigne()}
-          validate={getFonctionValidation(LIEU_COMPLET)}
+          validate={props.validation    ? 
+            (value:string)=>valideLieuReprise(value, !decomposerLieuActifOuPasDeLieuRepriseRenseigne())
+            : undefined}
         />
         {lieuCompletRenseigne && (
           <button type="button" onClick={onClickDecomposer} disabled={decomposerLieu} aria-label="décomposer le lieu" >
@@ -204,11 +211,7 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
             validate={getFonctionValidation(REGION_DEPARTEMENT)}
           />
           {!estModeSaisieFrance && (
-            <InputField
-              name={nomPays}
-              label="Pays"
-              onChange={onChangeVilleRegionPays}
-              validate={getFonctionValidation(PAYS)}
+            <InputField name={nomPays} label="Pays" onChange={onChangeVilleRegionPays} validate={getFonctionValidation(PAYS)}
             />
           )}
         </>

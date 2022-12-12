@@ -1,4 +1,4 @@
-import { getLibelle } from "@util/Utils";
+import { estNonRenseigne, getLibelle } from "@util/Utils";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import {
   LIEU_COMPLET,
@@ -16,7 +16,7 @@ export function valideCompletudeLieu(
 ) {
   let messageErreur;
 
-  let lieuComplet = formik.getFieldProps(
+  const lieuComplet = formik.getFieldProps(
     withNamespace(nomForm, LIEU_COMPLET)
   ).value;
   let ville = formik.getFieldProps(withNamespace(nomForm, VILLE)).value;
@@ -26,9 +26,6 @@ export function valideCompletudeLieu(
   let pays = formik.getFieldProps(withNamespace(nomForm, PAYS)).value;
 
   switch (nomChamp) {
-    case LIEU_COMPLET:
-      lieuComplet = value;
-      break;
     case VILLE:
       ville = value;
       break;
@@ -49,4 +46,13 @@ export function valideCompletudeLieu(
   }
 
   return messageErreur;
+}
+
+export function valideLieuReprise(
+  lieuReprise: string,
+  lieuRepriseAfficheSeul: boolean
+) {
+  return lieuRepriseAfficheSeul && estNonRenseigne(lieuReprise)
+    ? "Lieu obligatoire"
+    : undefined;
 }
