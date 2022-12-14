@@ -1,4 +1,3 @@
-import { PieceJustificativeLibelle } from "@model/requete/enum/PieceJustificativeLibelle";
 import { IDocumentPJ } from "@model/requete/IDocumentPj";
 import {
   IRequeteCreation,
@@ -58,25 +57,10 @@ export const OngletPiecesJustificatives: React.FC<
 
   const mappingIDocumentPjToListeItem = useCallback(
     (documentsPj: IDocumentPJ[]): ListeItem[] => {
-      const getLibelleComplet = (
-        libelle: string,
-        libelleTraite?: PieceJustificativeLibelle
-      ) => {
-        const numeroPostLibelle = PieceJustificativeLibelle.getNumero(
-          libelle,
-          libelleTraite
-        );
-
-        return `${libelleTraite?.nom ?? libelle} ${numeroPostLibelle ?? ""}`;
-      };
-
       return documentsPj.map(
         (document: IDocumentPJ): ListeItem => ({
           id: document.id,
-          libelle: `${document.categorie.nom} ${getLibelleComplet(
-            document.libelle,
-            document.libelleTraite
-          )}`,
+          libelle: document.categorie.libelleAAfficher,
           checkbox: false,
           aPoubelle: false,
           sousElement: (

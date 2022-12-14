@@ -7,8 +7,6 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { ObjetRequete } from "@model/requete/enum/ObjetRequete";
-import { PieceJustificativeCategorie } from "@model/requete/enum/PieceJustificativeCategorie";
-import { PieceJustificativeLibelle } from "@model/requete/enum/PieceJustificativeLibelle";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -35,6 +33,7 @@ import { IStatutCourant } from "@model/requete/IStatutCourant";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
+import { PieceJustificativeCategorie } from "@model/requete/PieceJustificativeCategorie";
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { logError } from "@util/LogManager";
 import { storeRece } from "@util/storeRece";
@@ -106,7 +105,7 @@ async function fetchDetailRequete(
           break;
         case TypeRequete.CREATION:
           const detailRequeteCreation = mappingRequeteCreation(
-            result.body.data
+            result?.body?.data
           );
           setDetailRequeteState(detailRequeteCreation);
           break;
@@ -321,16 +320,16 @@ export function mapEchangeRetourSDANF(echangeServeur?: any): IEchange {
 }
 
 function mapDocumentPJ(documents?: any): IDocumentPJ[] {
-  return documents?.map((document: any) => ({
-    ...document,
-    categorie: PieceJustificativeCategorie.getEnumFromLibelle(
-      document.categorie
-    ),
-    libelle: document.libelle,
-    libelleTraite: PieceJustificativeLibelle.getEnumFromLibelle(
-      document.libelle
-    )
-  }));
+  return documents?.map(
+    (document: any): IDocumentPJ => ({
+      ...document,
+      categorie:
+        PieceJustificativeCategorie.creationPieceJustificativeCategorie(
+          document.categorie,
+          document.libelle
+        )
+    })
+  );
 }
 
 export function mappingRequeteCreation(data: any): IRequeteCreation {

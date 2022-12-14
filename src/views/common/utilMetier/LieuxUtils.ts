@@ -2,7 +2,7 @@ import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { Option } from "@util/Type";
 import {
-  compareChainesIgnoreCasseEtAccent,
+  chainesEgalesIgnoreCasseEtAccent,
   estRenseigne,
   formatMajusculesMinusculesMotCompose,
   formatPremieresLettresMajusculesNomCompose,
@@ -464,7 +464,7 @@ export class LieuxUtils {
   }
 
   public static estVilleJerusalem(ville?: string): boolean {
-    return ville ? compareChainesIgnoreCasseEtAccent(ville, JERUSALEM) : false;
+    return ville ? chainesEgalesIgnoreCasseEtAccent(ville, JERUSALEM) : false;
   }
 
   public static getEtrangerOuFrance(

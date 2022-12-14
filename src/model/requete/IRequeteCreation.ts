@@ -1,6 +1,6 @@
 import { Provenance } from "./enum/Provenance";
 import { SousTypeCreation } from "./enum/SousTypeCreation";
-import { DocumentPJ, IDocumentPJ } from "./IDocumentPj";
+import { IDocumentPJ } from "./IDocumentPj";
 import { IMandant } from "./IMandant";
 import { IProvenanceNatali } from "./IProvenanceNatali";
 import { IProvenanceServicePublic } from "./IProvenanceServicePublic";
@@ -31,22 +31,10 @@ export interface IRequeteCreation extends IRequete {
 export const RequeteCreation = {
   getDocumentsPJtrierParPriorites(requete: IRequeteCreation): IDocumentPJ[] {
     return requete.documentsPj
-      ? requete.documentsPj.sort((a, b) => trieIDocumentsPJParPriorites(a, b))
+      ? requete.documentsPj.sort(
+          (documentPj1, documentPj2) =>
+            documentPj1.categorie.ordre - documentPj2.categorie.ordre
+        )
       : [];
   }
-};
-
-const trieIDocumentsPJParPriorites = (
-  documentA: IDocumentPJ,
-  documentB: IDocumentPJ
-): number => {
-  const prioritesA = DocumentPJ.getPriorites(documentA);
-  const prioritesB = DocumentPJ.getPriorites(documentB);
-
-  let i = 0;
-  while (prioritesA[i] === prioritesB[i] && i <= prioritesA.length) {
-    i++;
-  }
-
-  return prioritesA[i] - prioritesB[i];
 };

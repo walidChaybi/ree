@@ -58,7 +58,7 @@ test("renders VoletPiecesJustificatives", async () => {
   await waitFor(() => {
     expect(screen.getAllByText("AN parent 1")[0]).toBeDefined();
     expect(screen.getAllByText("Pièce d'identité postulant")[0]).toBeDefined();
-    expect(screen.getAllByText("Divorce libelle pourri 10")[0]).toBeDefined();
+    expect(screen.getAllByText("Divorce union antérieure 1")[0]).toBeDefined();
     expect(screen.getAllByText("fichierPJ")[2]).toBeDefined();
   });
 });

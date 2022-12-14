@@ -26,6 +26,8 @@ export const VINGT = 20;
 export const VINGT_QUATRE = 24;
 export const SOIXANTE = 60;
 
+export const CAR_ETOILE = "*";
+
 function triObjetsSurPropriete(o1: any, o2: any, propertyName: string) {
   if (o1[propertyName] < o2[propertyName]) {
     return -1;
@@ -576,7 +578,7 @@ export function aucuneProprieteRenseignee(objet?: Object): boolean {
 }
 
 
-export function compareChaines(
+export function chainesEgales(
   sensitivity: "base" | "accent",
   str1?: string,
   str2?: string
@@ -593,18 +595,18 @@ export function compareChaines(
   return res;
 }
 
-export function compareChainesIgnoreCasseEtAccent(
+export function chainesEgalesIgnoreCasseEtAccent(
   str1?: string,
   str2?: string
 ): boolean {
-  return compareChaines("base", str1, str2);
+  return chainesEgales("base", str1, str2);
 }
 
-export function compareChainesIgnoreCasse(
+export function chainesEgalesIgnoreCasse(
   str1?: string,
   str2?: string
 ): boolean {
-  return compareChaines("accent", str1, str2);
+  return chainesEgales("accent", str1, str2);
 }
 
 export function getPremiereLettreDunMot(mot: string) {
@@ -618,3 +620,16 @@ export const formatLigne = (tableau?: LigneType[], separateur = ", ") => {
   const resultat = tableau?.filter(Boolean).join(separateur);
   return estRenseigne(resultat) ? resultat : "";
 };
+
+/** Retourne le nombre en fin d'une chaîne de caractère (ex: abc_123 => 123) ou undefined s'il n'y en a pas */
+export function getNombreCommeSuffix(str: string): number | undefined {
+  let nombreStr = "";
+  if (str) {
+    let index = str.length - 1;
+    while (index >= 0 && estUnNombre(str[index])) {
+      nombreStr = `${str[index]}${nombreStr}`;
+      index--;
+    }
+  }
+  return nombreStr ? Number(nombreStr) : undefined;
+}

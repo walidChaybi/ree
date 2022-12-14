@@ -2,10 +2,10 @@ import { IPrenom } from "@model/etatcivil/fiche/IPrenom";
 import {
   aucuneProprieteRenseignee,
   auMoinsUneProprieteEstRenseigne,
+  chainesEgalesIgnoreCasse,
+  chainesEgalesIgnoreCasseEtAccent,
   changeLaPlaceDunElement,
   checkDirty,
-  compareChainesIgnoreCasse,
-  compareChainesIgnoreCasseEtAccent,
   compareNombre,
   enMajuscule,
   estRenseigne,
@@ -17,6 +17,7 @@ import {
   formatNoms,
   formatPrenom,
   formatPrenoms,
+  getNombreCommeSuffix,
   getPremierElemOuVide,
   getValeurOuVide,
   getValeurProprieteAPartirChemin,
@@ -462,34 +463,34 @@ test("Attendu: aucunAttributRenseigne fonctionne correctement", () => {
   expect(aucuneProprieteRenseignee(objet)).toBeFalsy();
 });
 
-test("Attendu: compareChainesIgnoreCasseEtAccent fonctionne correctement", () => {
-  expect(compareChainesIgnoreCasseEtAccent("", "")).toBeTruthy();
-  expect(compareChainesIgnoreCasseEtAccent("test", "")).toBeFalsy();
-  expect(compareChainesIgnoreCasseEtAccent("test", "TesT")).toBeTruthy();
-  expect(compareChainesIgnoreCasseEtAccent("test", "TEST")).toBeTruthy();
-  expect(compareChainesIgnoreCasseEtAccent("tést", "TEST")).toBeTruthy();
-  expect(compareChainesIgnoreCasseEtAccent("testee", "testéè")).toBeTruthy();
-  expect(compareChainesIgnoreCasseEtAccent("TEST", "test")).toBeTruthy();
-  expect(compareChainesIgnoreCasseEtAccent("test", "test2")).toBeFalsy();
-  expect(compareChainesIgnoreCasseEtAccent(undefined, undefined)).toBeTruthy();
-  expect(compareChainesIgnoreCasseEtAccent(null!, null!)).toBeTruthy();
-  expect(compareChainesIgnoreCasseEtAccent(undefined, "")).toBeFalsy();
-  expect(compareChainesIgnoreCasseEtAccent("", null!)).toBeFalsy();
+test("Attendu: chainesEgalesIgnoreCasseEtAccent fonctionne correctement", () => {
+  expect(chainesEgalesIgnoreCasseEtAccent("", "")).toBeTruthy();
+  expect(chainesEgalesIgnoreCasseEtAccent("test", "")).toBeFalsy();
+  expect(chainesEgalesIgnoreCasseEtAccent("test", "TesT")).toBeTruthy();
+  expect(chainesEgalesIgnoreCasseEtAccent("test", "TEST")).toBeTruthy();
+  expect(chainesEgalesIgnoreCasseEtAccent("tést", "TEST")).toBeTruthy();
+  expect(chainesEgalesIgnoreCasseEtAccent("testee", "testéè")).toBeTruthy();
+  expect(chainesEgalesIgnoreCasseEtAccent("TEST", "test")).toBeTruthy();
+  expect(chainesEgalesIgnoreCasseEtAccent("test", "test2")).toBeFalsy();
+  expect(chainesEgalesIgnoreCasseEtAccent(undefined, undefined)).toBeTruthy();
+  expect(chainesEgalesIgnoreCasseEtAccent(null!, null!)).toBeTruthy();
+  expect(chainesEgalesIgnoreCasseEtAccent(undefined, "")).toBeFalsy();
+  expect(chainesEgalesIgnoreCasseEtAccent("", null!)).toBeFalsy();
 });
 
-test("Attendu: compareChainesIgnoreCasse fonctionne correctement", () => {
-  expect(compareChainesIgnoreCasse("", "")).toBeTruthy();
-  expect(compareChainesIgnoreCasse("test", "")).toBeFalsy();
-  expect(compareChainesIgnoreCasse("test", "TesT")).toBeTruthy();
-  expect(compareChainesIgnoreCasse("test", "TEST")).toBeTruthy();
-  expect(compareChainesIgnoreCasse("tést", "TEST")).toBeFalsy();
-  expect(compareChainesIgnoreCasse("TEST", "test")).toBeTruthy();
-  expect(compareChainesIgnoreCasse("test", "test2")).toBeFalsy();
-  expect(compareChainesIgnoreCasse("testee", "testéè")).toBeFalsy();
-  expect(compareChainesIgnoreCasse(undefined, undefined)).toBeTruthy();
-  expect(compareChainesIgnoreCasse(null!, null!)).toBeTruthy();
-  expect(compareChainesIgnoreCasse(undefined, "")).toBeFalsy();
-  expect(compareChainesIgnoreCasse("", null!)).toBeFalsy();
+test("Attendu: chainesEgalesIgnoreCasse fonctionne correctement", () => {
+  expect(chainesEgalesIgnoreCasse("", "")).toBeTruthy();
+  expect(chainesEgalesIgnoreCasse("test", "")).toBeFalsy();
+  expect(chainesEgalesIgnoreCasse("test", "TesT")).toBeTruthy();
+  expect(chainesEgalesIgnoreCasse("test", "TEST")).toBeTruthy();
+  expect(chainesEgalesIgnoreCasse("tést", "TEST")).toBeFalsy();
+  expect(chainesEgalesIgnoreCasse("TEST", "test")).toBeTruthy();
+  expect(chainesEgalesIgnoreCasse("test", "test2")).toBeFalsy();
+  expect(chainesEgalesIgnoreCasse("testee", "testéè")).toBeFalsy();
+  expect(chainesEgalesIgnoreCasse(undefined, undefined)).toBeTruthy();
+  expect(chainesEgalesIgnoreCasse(null!, null!)).toBeTruthy();
+  expect(chainesEgalesIgnoreCasse(undefined, "")).toBeFalsy();
+  expect(chainesEgalesIgnoreCasse("", null!)).toBeFalsy();
 });
 
 test("Attendu: estRenseigne fonctionne correctement", () => {
@@ -503,4 +504,19 @@ test("Attendu: estRenseigne fonctionne correctement", () => {
   expect(estRenseigne(123)).toBeTruthy();
   expect(estRenseigne([1])).toBeTruthy();
   expect(estRenseigne(["a"])).toBeTruthy();
+});
+
+test("Attendu: getNombreCommeSuffix fonctionne correctement", () => {
+  expect(getNombreCommeSuffix("")).toBe(undefined);
+  expect(getNombreCommeSuffix(undefined!)).toBe(undefined);
+  expect(getNombreCommeSuffix("abc")).toBe(undefined);
+  expect(getNombreCommeSuffix("abc123")).toBe(123);
+  expect(getNombreCommeSuffix("abc 123")).toBe(123);
+  expect(getNombreCommeSuffix("abc_123")).toBe(123);
+  expect(getNombreCommeSuffix("abc1")).toBe(1);
+  expect(getNombreCommeSuffix("abc 1")).toBe(1);
+  expect(getNombreCommeSuffix("abc_1")).toBe(1);
+  expect(getNombreCommeSuffix("ab1c_1")).toBe(1);
+  expect(getNombreCommeSuffix("ab1c 1")).toBe(1);
+  expect(getNombreCommeSuffix("ab1 c1")).toBe(1);
 });

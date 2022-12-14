@@ -1,6 +1,6 @@
 import { getAdresse } from "@pages/requeteDelivrance/saisirRequete/hook/mappingFormulaireRDCSCVersRequeteDelivrance";
 import {
-  compareChainesIgnoreCasse,
+  chainesEgalesIgnoreCasse,
   enMajuscule,
   formatNom,
   formatPrenom,
@@ -47,7 +47,6 @@ export const Requerant = {
     requerant: IRequerant;
     titulaire?: ITitulaireRequete;
   }) {
-
     let titulaireResultat = { nom: "", prenom: "" };
 
     if (titulaire) {
@@ -60,7 +59,7 @@ export const Requerant = {
 
     return (
       titulaireResultat.nom === requerant.nomFamille &&
-      compareChainesIgnoreCasse(titulaireResultat.prenom, requerant.prenom)
+      chainesEgalesIgnoreCasse(titulaireResultat.prenom, requerant.prenom)
     );
   },
   estUnTitulaire({
