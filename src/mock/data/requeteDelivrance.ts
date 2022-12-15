@@ -574,7 +574,7 @@ export const requeteRDCPourModification = {
     {
       id: "9d007c26-114f-422f-8e37-7e8c4f37c3a9",
       position: 1,
-      nomNaissance: "NOMRDCMODIFIEE",
+      nomNaissance: "NomRDCModifiée",
       nomUsage: null,
       anneeNaissance: 2000,
       moisNaissance: 10,

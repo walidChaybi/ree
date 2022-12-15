@@ -4,11 +4,9 @@ import { Option } from "@util/Type";
 import {
   chainesEgalesIgnoreCasseEtAccent,
   estRenseigne,
-  formatMajusculesMinusculesMotCompose,
-  formatPremieresLettresMajusculesNomCompose,
+  formatLigne,
   getValeurOuVide,
   NEUF,
-  premiereLettreEnMajuscule,
   SEIZE,
   supprimerZerosAGauche,
   VINGT
@@ -61,9 +59,7 @@ export class LieuxUtils {
 
   public static getDepartement(ville?: string, departement?: string): string {
     // Quand la ville vaut "Paris" le champ "Département" est vide
-    return LieuxUtils.estVilleParis(ville)
-      ? ""
-      : getValeurOuVide(formatMajusculesMinusculesMotCompose(departement));
+    return LieuxUtils.estVilleParis(ville) ? "" : getValeurOuVide(departement);
   }
 
   public static getArrondissement(ville?: string, arrondissement?: string) {
@@ -84,7 +80,7 @@ export class LieuxUtils {
     // Quand la ville vaut "Paris" le champ "Département" est vide
     if (!this.estVilleParis(ville)) {
       if (departement) {
-        res = premiereLettreEnMajuscule(departement);
+        res = departement;
       }
 
       if (numero) {
@@ -92,7 +88,7 @@ export class LieuxUtils {
       }
 
       if (!res) {
-        res = premiereLettreEnMajuscule(getValeurOuVide(region));
+        res = getValeurOuVide(region);
       }
     }
     return res;
@@ -118,21 +114,12 @@ export class LieuxUtils {
     pays?: string,
     arrondissement?: string
   ): string {
-    const villeString = ville
-      ? formatPremieresLettresMajusculesNomCompose(ville)
-      : "";
-    const regionString = region
-      ? formatPremieresLettresMajusculesNomCompose(region)
-      : "";
-    const paysString = pays
-      ? formatPremieresLettresMajusculesNomCompose(pays)
-      : "";
-    const arrondissementString = arrondissement
-      ? ` ${this.formateArrondissement(arrondissement, true)}`
-      : "";
-
-    const regionStringEntreParentheses =
-      LieuxUtils.getLieuEntreParentheses(regionString);
+    const villeString = getValeurOuVide(ville);
+    const regionString = getValeurOuVide(region);
+    const paysString = getValeurOuVide(pays);
+    const arrondissementString = getValeurOuVide(
+      arrondissement && this.formateArrondissement(arrondissement, true)
+    );
 
     if (
       LieuxUtils.estPaysFrance(pays) ||
@@ -141,7 +128,7 @@ export class LieuxUtils {
     ) {
       return this.getLieuModeFrance(
         villeString,
-        regionStringEntreParentheses,
+        regionString,
         arrondissementString
       );
     } else {
@@ -158,19 +145,25 @@ export class LieuxUtils {
     region?: string,
     arrondissement?: string
   ) {
-    if (LieuxUtils.estVilleAvecArrondissement(ville) && arrondissement) {
-      if (LieuxUtils.estVilleParis(ville)) {
-        return `${ville}${arrondissement}`;
-      } else {
-        return `${ville}${arrondissement}${region}`;
-      }
-    } else {
-      if (!ville) {
-        return region ? `-- ${region}` : "";
-      } else {
-        return `${ville}${region}`;
-      }
-    }
+    const arrondissementFormate =
+      LieuxUtils.estVilleAvecArrondissement(ville) && arrondissement;
+    const regionFormate =
+      !LieuxUtils.estVilleParis(ville) && region && `(${region})`;
+
+    const villeArrondissement = formatLigne(
+      [ville, arrondissementFormate],
+      " "
+    );
+    return getValeurOuVide(
+      formatLigne(
+        [
+          villeArrondissement,
+          !villeArrondissement && regionFormate && `--`,
+          regionFormate
+        ],
+        " "
+      )
+    );
   }
 
   public static getLieuExtraitCopie(
@@ -204,15 +197,9 @@ export class LieuxUtils {
     region?: string,
     pays?: string
   ) {
-    const villeString = formateElements
-      ? formatPremieresLettresMajusculesNomCompose(ville)
-      : ville;
-    const regionString = formateElements
-      ? formatPremieresLettresMajusculesNomCompose(region)
-      : region;
-    const paysString = formateElements
-      ? formatPremieresLettresMajusculesNomCompose(pays)
-      : pays;
+    const villeString = getValeurOuVide(ville);
+    const regionString = getValeurOuVide(region);
+    const paysString = getValeurOuVide(pays);
     return { paysString, regionString, villeString };
   }
 
@@ -227,20 +214,12 @@ export class LieuxUtils {
     pays?: string,
     arrondissement?: string
   ): string {
-    const villeString = ville
-      ? formatPremieresLettresMajusculesNomCompose(ville)
-      : "";
+    const villeString = getValeurOuVide(ville);
     const libelleDepartementString = LieuxUtils.getLieuEntreParentheses(
-      libelleDepartement
-        ? formatPremieresLettresMajusculesNomCompose(libelleDepartement)
-        : ""
+      getValeurOuVide(libelleDepartement)
     );
-    const regionString = region
-      ? formatPremieresLettresMajusculesNomCompose(region)
-      : "";
-    const paysString = pays
-      ? formatPremieresLettresMajusculesNomCompose(pays)
-      : "";
+    const regionString = getValeurOuVide(region);
+    const paysString = getValeurOuVide(pays);
 
     if (LieuxUtils.estPaysFrance(pays)) {
       if (
@@ -255,12 +234,12 @@ export class LieuxUtils {
       } else if (!LieuxUtils.estVilleParis(villeString)) {
         return `${villeString} ${LieuxUtils.formateArrondissement(
           arrondissement,
-          false
+          true
         )}${libelleDepartementString}`;
       } else {
         return `${villeString} ${LieuxUtils.formateArrondissement(
           arrondissement,
-          false
+          true
         )}`;
       }
     } else {
@@ -272,7 +251,7 @@ export class LieuxUtils {
     }
   }
 
-  private static formateArrondissement(
+  public static formateArrondissement(
     arrondissement?: string,
     formatVerbeux = false
   ) {
@@ -295,18 +274,12 @@ export class LieuxUtils {
     region: string,
     ville: string
   ) {
-    const paysAffichage = pays ? ` (${pays})` : "";
-    if (!ville && !region) {
-      return `--${paysAffichage}`;
-    } else if (!ville) {
-      return `${region}${paysAffichage}`;
-    } else if (!region) {
-      return `${ville}${paysAffichage}`;
-    } else if (!pays) {
-      return `${ville}, ${region}`;
-    } else {
-      return `${ville}, ${region}${paysAffichage}`;
-    }
+    const villeRegion = formatLigne([ville, region]);
+    const paysFormate = pays && `(${pays})`;
+
+    return getValeurOuVide(
+      formatLigne([villeRegion, !villeRegion && pays && `--`, paysFormate], " ")
+    );
   }
 
   public static affichagePaysCourrier(pays: string) {

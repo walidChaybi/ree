@@ -27,7 +27,7 @@ Lieu de décès: Londres, Grand-Londres (Royaume-Uni)`;
   expect(elementsJasper.interesseDecision).toBe(interesse);
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.paragrapheFin).toBe(
-    "Conformément à l'Article 4-1 du décret 65-422 du 1er juin 1965, et sur instruction du procureur de la République de Nantes Arr.arrondissement (Loire-Atlantique) (N° réf. 56848) du 26 novembre 2020, une inscription a été prise au répertoire civil annexe le 23 février 2020 sous la référence : RCA n°2020 - 4012."
+    "Conformément à l'Article 4-1 du décret 65-422 du 1er juin 1965, et sur instruction du procureur de la République de Nantes 1er arrondissement (Loire-Atlantique) (N° réf. 56848) du 26 novembre 2020, une inscription a été prise au répertoire civil annexe le 23 février 2020 sous la référence : RCA n°2020 - 4012."
   );
 });
 
@@ -44,7 +44,7 @@ Lieu de naissance: Nantes (Loire-Atlantique)`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("4013");
   expect(elementsJasper.decisionRecue).toBe(
-    "Le Service central d'état civil a reçu le jugement du Tribunal judiciaire de Paris arr.18, en date du 26 novembre 2020 concernant le changement de régime matrimonial par acte notarié étranger / instruction du Procureur de : "
+    "Le Service central d'état civil a reçu le jugement du Tribunal judiciaire de Paris 18ème arrondissement, en date du 26 novembre 2020 concernant le changement de régime matrimonial par acte notarié étranger / instruction du Procureur de : "
   );
   expect(elementsJasper.interesseDecision).toBe(interesse);
   expect(elementsJasper.decisionExequatur).toBe(
@@ -60,7 +60,7 @@ test("Attendu: specificationRCA.getElementsJasper AVEC une decision Notaire type
   const elementsJasper = specificationRCA.getElementsJasper(data);
   const interesses = `Julie, Sarah DURANT
 Date de naissance: octobre 1960
-Lieu de naissance: Brooklyn, New-York (États-Unis d'Amériques)
+Lieu de naissance: Brooklyn, New-York (États-unis d'Amériques)
 
 et
 

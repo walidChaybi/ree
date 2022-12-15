@@ -155,7 +155,7 @@ export function formatDe(str: string) {
 }
 
 export function getValeurOuVide(str?: any) {
-  return str ? str : "";
+  return str ?? "";
 }
 
 export function getPremierElemOuVide(tab?: string[]): string {

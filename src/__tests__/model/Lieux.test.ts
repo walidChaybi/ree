@@ -28,8 +28,8 @@ test("Attendu: isVilleMarseilleLyonParis fonctionne correctement", () => {
 test("Attendu: getDepartement fonctionne correctement", () => {
   expect(LieuxUtils.getDepartement()).toBe("");
   expect(LieuxUtils.getDepartement("paris", "paris")).toBe("");
-  expect(LieuxUtils.getDepartement("nantes", "Loire atlantique")).toBe(
-    "Loire Atlantique"
+  expect(LieuxUtils.getDepartement("nantes", "loire atlantique")).toBe(
+    "loire atlantique"
   );
 });
 
@@ -43,56 +43,70 @@ test("Attendu: getRegionDepartement fonctionne correctement", () => {
   expect(
     LieuxUtils.getRegionDepartement(
       "nantes",
-      "Loire atlantique",
+      "loire atlantique",
       "44",
       "pays de la loire"
     )
-  ).toBe("Loire atlantique (44)");
+  ).toBe("loire atlantique (44)");
   expect(LieuxUtils.getRegionDepartement("paris", "paris", "18", "")).toBe("");
   expect(LieuxUtils.getRegionDepartement("", "", "", "Dakar")).toBe("Dakar");
 });
 
 test("Attendu: getLieu fonctionne correctement", () => {
-  expect(LieuxUtils.getLieu()).toBe("");
   expect(
-    LieuxUtils.getLieu("nantes", "pays de la loire", "France", "naparaitpas")
-  ).toBe("Nantes (Pays de la Loire)");
+    LieuxUtils.getLieu("nantes", "pays de la loire", "France", "n'apparait pas")
+  ).toBe("nantes (pays de la loire)");
+
+  expect(
+    LieuxUtils.getLieu(
+      undefined,
+      "pays de la loire",
+      "France",
+      "n'apparait pas"
+    )
+  ).toBe("-- (pays de la loire)");
 
   expect(LieuxUtils.getLieu("Lyon", "rhône", "France", "3")).toBe(
-    "Lyon 3ème arrondissement (Rhône)"
+    "Lyon 3ème arrondissement (rhône)"
   );
 
-  expect(LieuxUtils.getLieu("paris", "napparaitpas", "France", "18")).toBe(
-    "Paris 18ème arrondissement"
+  expect(LieuxUtils.getLieu("paris", "n'apparait pas", "France", "18")).toBe(
+    "paris 18ème arrondissement"
   );
 
   expect(
-    LieuxUtils.getLieu("casablanca", "sahara", "Maroc", "naparaitpas")
-  ).toBe("Casablanca, Sahara (Maroc)");
+    LieuxUtils.getLieu("casablanca", "sahara", "Maroc", "n'apparait pas")
+  ).toBe("casablanca, sahara (Maroc)");
 
-  expect(LieuxUtils.getLieu("casablanca")).toBe("Casablanca");
+  expect(
+    LieuxUtils.getLieu(undefined, undefined, "Maroc", "n'apparait pas")
+  ).toBe("-- (Maroc)");
+
+  expect(LieuxUtils.getLieu("casablanca")).toBe("casablanca");
+
+  expect(LieuxUtils.getLieu()).toBe("");
 });
 
-test("Attendu: getLieu fonctionne correctement", () => {
+test("Attendu: getLieuExtraitCopie fonctionne correctement", () => {
   expect(
     LieuxUtils.getLieuExtraitCopie("nantes", "pays de la loire", "france")
-  ).toBe("Nantes, Pays de la Loire (France)");
+  ).toBe("nantes, pays de la loire (france)");
 
   expect(LieuxUtils.getLieuExtraitCopie("Lyon", "rhône", "france", "3")).toBe(
-    "Lyon 3, Rhône (France)"
+    "Lyon 3, rhône (france)"
   );
 
   expect(LieuxUtils.getLieuExtraitCopie("paris", undefined, "france")).toBe(
-    "Paris (France)"
+    "paris (france)"
   );
 
   expect(LieuxUtils.getLieuExtraitCopie(undefined, undefined, "france")).toBe(
-    "-- (France)"
+    "-- (france)"
   );
 
   expect(
     LieuxUtils.getLieuExtraitCopie("paris", undefined, "france", "18")
-  ).toBe("Paris 18 (France)");
+  ).toBe("paris 18 (france)");
 
   expect(LieuxUtils.getLieuExtraitCopie()).toBe("");
 });

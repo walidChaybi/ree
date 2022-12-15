@@ -1,11 +1,9 @@
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import InputFieldAvecBoutonMajuscule from "@widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
-import {
-  sortieChampEnMajuscule,
-  sortieChampPremiereLettreEnMajuscule
-} from "@widget/formulaire/utils/ControlesUtil";
+import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
@@ -39,6 +37,7 @@ export const InstitutionnelFormValidationSchema =
 const InstitutionnelForm: React.FC<SubFormProps> = props => {
   const nomWithNamespace = withNamespace(props.nom, NOM);
   const prenomWithNamespace = withNamespace(props.nom, PRENOM);
+
   const [natureInactif, setNatureInactif] = useState<boolean>(true);
 
   const onChangeTypeInstitutionnel = (
@@ -77,11 +76,10 @@ const InstitutionnelForm: React.FC<SubFormProps> = props => {
         label={getLibelle("Nom institution")}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
-      <InputField
+      <InputFieldAvecBoutonMajuscule
         name={nomWithNamespace}
         label={getLibelle("Nom représentant")}
         maxLength={NB_CARACT_MAX_SAISIE}
-        onBlur={e => sortieChampEnMajuscule(e, props.formik, nomWithNamespace)}
       />
       <InputField
         name={prenomWithNamespace}

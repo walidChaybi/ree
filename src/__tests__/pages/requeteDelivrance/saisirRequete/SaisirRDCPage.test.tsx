@@ -106,8 +106,37 @@ test("renders formulaire de modification d'une Requête de Délivrance Extrait C
     const inputNomNaissance = getInput("titulaire1.noms.nomNaissance");
     const inputPrenomNaissance = getInput("titulaire1.prenoms.prenom1");
 
-    expect(inputNomNaissance.value).toEqual("NOMRDCMODIFIEE");
-    expect(inputPrenomNaissance.value).toEqual("Prenomrdcmodifiée");
+    expect(inputNomNaissance.value).toEqual("NomRDCModifiée");
+    expect(inputPrenomNaissance.value).toEqual("PrenomRDCModifiée");
+  });
+});
+
+test(`test du bouton "mettre en majuscule" pour le nom d'une Requête de Délivrance Extrait Copie`, async () => {
+  contextes.modificationRDC();
+  act(() => {
+    render(
+      <Router history={history}>
+        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID}>
+          <SaisirRDCPage />
+        </Route>
+      </Router>
+    );
+  });
+
+  const inputNomNaissance = getInput("titulaire1.noms.nomNaissance");
+  const buttonChampEnMajuscule = screen.getByTestId(
+    "BoutonChampEnMajuscule"
+  ) as HTMLButtonElement;
+
+  await waitFor(() => {
+    expect(inputNomNaissance.value).toEqual("NomRDCModifiée");
+  });
+
+  await act(async () => {
+    fireEvent.click(buttonChampEnMajuscule);
+  });
+  await waitFor(() => {
+    expect(inputNomNaissance.value).toEqual("NOMRDCMODIFIÉE");
   });
 });
 

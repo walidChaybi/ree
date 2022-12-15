@@ -26,7 +26,7 @@ import { formatagePrenoms } from "@pages/requeteCreation/EspaceCreation/apercuRe
 import {
   formatLigne,
   getLibelle,
-  premiereLettreEnMajusculeLeResteEnMinuscule,
+  getValeurOuVide,
   triListeObjetsSurPropriete
 } from "@util/Utils";
 import React from "react";
@@ -331,7 +331,7 @@ const getCodePostalVilleRequerant = (
   formatLigne([adresse?.codePostal, adresse?.ville], " ");
 
 const getPaysRequerant = (adresse?: IAdresseRequerant): string | undefined => {
-  const pays = premiereLettreEnMajusculeLeResteEnMinuscule(adresse?.pays);
+  const pays = getValeurOuVide(adresse?.pays);
 
   return formatLigne([pays !== "France" && pays]);
 };

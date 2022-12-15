@@ -1,9 +1,6 @@
 /* istanbul ignore file */
 import { getDateStringFromDateCompose } from "@util/DateUtils";
-import {
-  numberToString,
-  premiereLettreEnMajusculeLeResteEnMinuscule
-} from "@util/Utils";
+import { getValeurOuVide, numberToString } from "@util/Utils";
 import { NatureActeRequete } from "./enum/NatureActeRequete";
 
 export interface IEvenementReqDelivrance {
@@ -27,13 +24,9 @@ export const EvenementReqDelivrance = {
       : "";
   },
   getVille(event?: IEvenementReqDelivrance): string {
-    return event && event.ville
-      ? premiereLettreEnMajusculeLeResteEnMinuscule(event.ville)
-      : "";
+    return getValeurOuVide(event?.ville);
   },
   getPays(event?: IEvenementReqDelivrance): string {
-    return event && event.pays
-      ? premiereLettreEnMajusculeLeResteEnMinuscule(event.pays)
-      : "";
+    return getValeurOuVide(event?.pays);
   }
 };

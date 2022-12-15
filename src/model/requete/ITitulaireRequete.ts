@@ -1,12 +1,7 @@
 /* istanbul ignore file */
 
 import { getDateStringFromDateCompose } from "@util/DateUtils";
-import {
-  formatNom,
-  formatPrenom,
-  numberToString,
-  premiereLettreEnMajusculeLeResteEnMinuscule
-} from "@util/Utils";
+import { formatNom, getValeurOuVide, numberToString } from "@util/Utils";
 import { Nationalite } from "../etatcivil/enum/Nationalite";
 import { Sexe } from "../etatcivil/enum/Sexe";
 import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
@@ -94,7 +89,7 @@ export const TitulaireRequete = {
       const prenom = titulaire.prenoms.find(
         element => element.numeroOrdre === numero
       );
-      res = prenom ? formatPrenom(prenom.prenom) : "";
+      res = prenom?.prenom ?? "";
     }
     return res;
   },
@@ -131,14 +126,10 @@ export const TitulaireRequete = {
       : "";
   },
   getVille(titulaire?: ITitulaireRequete): string {
-    return titulaire && titulaire.villeNaissance
-      ? premiereLettreEnMajusculeLeResteEnMinuscule(titulaire.villeNaissance)
-      : "";
+    return getValeurOuVide(titulaire?.villeNaissance);
   },
   getPays(titulaire?: ITitulaireRequete): string {
-    return titulaire && titulaire.paysNaissance
-      ? premiereLettreEnMajusculeLeResteEnMinuscule(titulaire.paysNaissance)
-      : "";
+    return getValeurOuVide(titulaire?.paysNaissance);
   },
   getLieuNaissance(titulaire?: ITitulaireRequete): string {
     let lieuNissance = "";

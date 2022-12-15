@@ -97,7 +97,7 @@ test("render composant Institutionnel Formulaire", async () => {
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"institutionnel":{"type":"TRIBUNAL","nature":"","nomInstitution":"mockNomInstitution","nom":"MOCKNOM","prenom":"MockPrenom"}}'
+      '{"institutionnel":{"type":"TRIBUNAL","nature":"","nomInstitution":"mockNomInstitution","nom":"mockNom","prenom":"MockPrenom"}}'
     );
   });
 });

@@ -1,5 +1,5 @@
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
-import { formatNom, formatPrenom } from "@util/Utils";
+import { formatNom } from "@util/Utils";
 import { Sexe } from "../etatcivil/enum/Sexe";
 import { QualiteFamille } from "./enum/QualiteFamille";
 import { SEPARATOR_NUMERO_ELEMENT } from "./IRequeteTableauDelivrance";
@@ -45,7 +45,7 @@ function getPrenoms(prenoms: string[]): string[] {
   const prenomsTitulaire: string[] = [];
   if (prenoms) {
     prenoms.forEach((p: any) => {
-      prenomsTitulaire.push(formatPrenom(p.split(SEPARATOR_NUMERO_ELEMENT)[1]));
+      prenomsTitulaire.push(p.split(SEPARATOR_NUMERO_ELEMENT)[1]);
     });
   }
   return prenomsTitulaire;

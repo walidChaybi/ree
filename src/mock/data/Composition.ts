@@ -94,9 +94,9 @@ export const reponseSansDelivranceCSMariage: IReponseSansDelivranceCSMariageComp
   {
     ...baseReponseSansDelivranceCS,
     objet_courrier: undefined,
-    nom_titulaire1: "GREENWALD",
+    nom_titulaire1: "Greenwald",
     prenoms_titulaire1: "Paulita, Zaria",
-    nom_titulaire2: "DUPE",
+    nom_titulaire2: "DUPe",
     prenoms_titulaire2: "Laurent",
     prenom_titulaire: "Elodie",
     nom_titulaire: "Prodesk",

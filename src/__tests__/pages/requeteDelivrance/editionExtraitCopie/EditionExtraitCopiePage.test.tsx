@@ -628,7 +628,7 @@ test("Test création extrait plurilingue", async () => {
     expect(screen.getByText("Sc 31-01-92 Nantes Jenmi")).toBeDefined();
     expect(
       screen.getByText(
-        "Mar 15-06-2021 Nantes (Pays de Loire) LES BRONZÉES-FONT'DU SKI Jean-Claude, Popeye Bernard"
+        "Mar 15-06-2021 nantes (Pays de Loire) LES BRONZÉES-FONT'DU SKI Jean-Claude, Popeye Bernard"
       )
     ).toBeDefined();
   });

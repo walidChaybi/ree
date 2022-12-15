@@ -2,17 +2,17 @@ import { Personne } from "@model/etatcivil/commun/IPersonne";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { personneMock } from "../../../fiche/hook/constructionComposants/mock/PersonneMock";
 test("render composant SectionPart", async () => {
-  expect(Personne.getNom(personneMock)).toBe("FAULKNER");
-  expect(Personne.getAutresNoms(personneMock)).toBe("ELISA (Pseudonyme)");
+  expect(Personne.getNom(personneMock)).toBe("Faulkner");
+  expect(Personne.getAutresNoms(personneMock)).toBe("Elisa (Pseudonyme)");
   expect(Personne.getPrenoms(personneMock)).toBe(
-    "Elie_madelaine-Henriette, Maëlla, Marie-Charlotte"
+    "Elie_madelaine-henriette, Maëlla, Marie-Charlotte"
   );
   expect(Personne.getAutresPrenom(personneMock)).toBe("Solomon");
   expect(Personne.getLieuNaissance(personneMock)).toBe(
-    "Marseille 2ème arrondissement (Provence-Aples-Côte d'Azur)"
+    "marseille 2ème arrondissement (Provence-Aples-côte d'azur)"
   );
   expect(Personne.getLieuDeces(personneMock)).toBe(
-    "Londres, Angleterre (Grande Bretagne)"
+    "londres, Angleterre (Grande bretagne)"
   );
   expect(Personne.getDateNaissance(personneMock)).toBe("26/02/1980");
   expect(Personne.getDateDeces(personneMock)).toBe("07/2020");

@@ -3,7 +3,7 @@ import React from "react";
 import { IconErrorMessage } from "../erreur/IconeErreurMessage";
 
 const NB_LIGNE = 5;
-interface InputFieldProps {
+export interface InputFieldProps {
   name: string;
   label?: string;
   ariaLabel?: string;

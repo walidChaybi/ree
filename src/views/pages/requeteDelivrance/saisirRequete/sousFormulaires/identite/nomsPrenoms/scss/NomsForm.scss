@@ -1,14 +1,11 @@
 $spacing: 0.5rem;
 
-.PrenomsForm {  
+.NomsForm{
   display: grid;
-  grid-template-columns: 65% auto;
+  grid-template-columns: 72% auto;
 
-  .BlockInput {
-    grid-template-columns: 30.7% auto !important;
-  }
-  .BlockErreur {
-    margin-left: 30.7% !important;
+  .InputFieldMajuscule {
+    grid-template-columns: 90.25% auto;
   }
   .BoutonsConteneur {
     margin-top: $spacing * -1;

@@ -1,9 +1,4 @@
-import {
-  formatNom,
-  formatPrenom,
-  getValeurOuVide,
-  premiereLettreEnMajusculeLeResteEnMinuscule
-} from "@util/Utils";
+import { formatNom, formatPrenom, getValeurOuVide } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { TypeAutorite, TypeAutoriteUtil } from "../enum/TypeAutorite";
 
@@ -30,9 +25,7 @@ export interface IAutorite {
 
 export const Autorite = {
   getVille(autorite?: IAutorite): string {
-    return autorite
-      ? premiereLettreEnMajusculeLeResteEnMinuscule(autorite.ville)
-      : "";
+    return getValeurOuVide(autorite?.ville);
   },
   getDepartement(autorite?: IAutorite): string {
     return autorite
@@ -68,7 +61,7 @@ export const Autorite = {
       : "";
   },
   getNumeroCrpcen(autorite?: IAutorite): string {
-    return autorite ? getValeurOuVide(autorite.numeroCrpcen) : "";
+    return getValeurOuVide(autorite?.numeroCrpcen);
   },
   getTypeAutorite(autorite?: IAutorite): string {
     let res = "";

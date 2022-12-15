@@ -91,3 +91,13 @@ export function sortieChampPremiereLettreEnMajuscule(
   formik.setFieldValue(nomChamp, e.target.value);
   formik.handleBlur(e);
 }
+
+export function sortieChampSupprimerEspacesInutiles(
+  e: any,
+  formik: FormikProps<FormikValues>,
+  nomChamp: string
+) {
+  e.target.value = supprimerEspacesInutiles(e.target.value);
+  formik.setFieldValue(nomChamp, e.target.value);
+  formik.handleBlur(e);
+}

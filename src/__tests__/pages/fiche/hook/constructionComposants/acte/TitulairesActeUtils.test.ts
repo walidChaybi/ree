@@ -14,7 +14,7 @@ test("Acte utils : affichage correcte des infos d'un titulaire", async () => {
   const valueNomTitulaire: JSX.Element = components[0].partContent.contents[
     idxNomTitulaire
   ].value as JSX.Element;
-  expect(valueNomTitulaire.props.children).toBe("GREENWALD");
+  expect(valueNomTitulaire.props.children).toBe("Greenwald");
 
   const idxPrenom1 = components[0].partContent.contents.findIndex(
     content => content.libelle === "Prénom 1"

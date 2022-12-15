@@ -75,7 +75,7 @@ test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
   ).toBe("Lieu de naissance");
   expect(
     panels.panels[0].panelAreas[1].parts[0].partContent.contents[5].value
-  ).toBe("Paris 20ème arrondissement");
+  ).toBe("paris 20ème arrondissement");
 
   expect(
     panels.panels[0].panelAreas[1].parts[0].partContent.contents[6].libelle
@@ -188,7 +188,7 @@ test("ficheUtils Pacs fonctionne avec annulation juridiction", async () => {
   ).toBe("Ville");
   expect(
     panels.panels[0].panelAreas[2].parts[1].partContent.contents[0].value
-  ).toBe("Paris");
+  ).toBe("paris");
   // Vérif Departement vide
   expect(
     panels.panels[0].panelAreas[2].parts[1].partContent.contents[2].libelle

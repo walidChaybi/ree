@@ -1,4 +1,4 @@
-@import "../../../../../../../scss/colors";
+$spacing: 0.5rem;
 
 .MandantForm {
   .BlockInput {
@@ -6,5 +6,14 @@
   }
   .BlockErreur {
     margin-left: 20%;
+  }
+  .BoutonsConteneur {
+    margin-top: $spacing * -1;
+    padding-left: $spacing;
+    padding-right: $spacing;
+  
+    button {
+      margin: $spacing;
+    }
   }
 }

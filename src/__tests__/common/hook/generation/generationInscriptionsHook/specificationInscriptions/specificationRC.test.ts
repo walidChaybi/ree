@@ -24,11 +24,11 @@ test("Attendu: specificationRC.getElementsJasper avec une décision Notaire autr
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
 Date de naissance: 1er septembre 1983
-Lieu de naissance: Paris 20ème arrondissement`;
+Lieu de naissance: paris 20ème arrondissement`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
   expect(elementsJasper.decisionRecue1).toBe(
-    "Le Service central d'état civil a reçu un acte établi par Maître Jean DUPONT, notaire à Paris arr.18, office notarial n°1234567, le 26 novembre 2020"
+    "Le Service central d'état civil a reçu un acte établi par Maître Jean DUPONT, notaire à paris 18ème arrondissement, office notarial n°1234567, le 26 novembre 2020"
   );
   expect(elementsJasper.decisionRecue2).toBe("concernant le placement de : ");
   expect(elementsJasper.interesseDecision).toBe(interesse);
@@ -46,11 +46,11 @@ test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de t
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
 Date de naissance: 1er septembre 1983
-Lieu de naissance: Paris 20ème arrondissement`;
+Lieu de naissance: paris 20ème arrondissement`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
   expect(elementsJasper.decisionRecue1).toBe(
-    "Le Service central d'état civil a reçu un extrait de la requête présentée auprès du Tribunal judiciaire de Paris arr.20 afin d'obtenir homologation de l'acte reçu par Maître Jean DUPONT, notaire à Paris arr.18, office notarial n°1234567, le 26 novembre 2020"
+    "Le Service central d'état civil a reçu un extrait de la requête présentée auprès du Tribunal judiciaire de paris 20ème arrondissement afin d'obtenir homologation de l'acte reçu par Maître Jean DUPONT, notaire à paris 18ème arrondissement, office notarial n°1234567, le 26 novembre 2020"
   );
   expect(elementsJasper.decisionRecue2).toBe(
     "concernant le transfert des pouvoirs de : "
@@ -70,11 +70,11 @@ test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de t
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
 Date de naissance: 1er septembre 1983
-Lieu de naissance: Paris 20ème arrondissement`;
+Lieu de naissance: paris 20ème arrondissement`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
   expect(elementsJasper.decisionRecue1).toBe(
-    "Le Service central d'état civil a reçu un extrait de la requête présentée auprès du Tribunal judiciaire de Paris arr.20 afin d'obtenir homologation de l'acte reçu par Maître Jean DUPONT, notaire à Paris arr.18, office notarial n°1234567, le 26 novembre 2020"
+    "Le Service central d'état civil a reçu un extrait de la requête présentée auprès du Tribunal judiciaire de paris 20ème arrondissement afin d'obtenir homologation de l'acte reçu par Maître Jean DUPONT, notaire à paris 18ème arrondissement, office notarial n°1234567, le 26 novembre 2020"
   );
   expect(elementsJasper.decisionRecue2).toBe(
     "concernant l'habilitation familiale générale de : "
@@ -102,11 +102,11 @@ Pierre-Olivier, Félix-Antoine, François-Xavier LE ROUX
 Date de naissance: 24 décembre 1987
 Lieu de naissance: Châteauneuf-du-Faou (Finistère, Bretagne)
 
-mariés à Nanning, Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 juin 2020`;
+mariés à Nanning, zhuang du Guangxi (Chine, Pays du soleil levant) le 12 juin 2020`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("2");
   expect(elementsJasper.decisionRecue1).toBe(
-    "Le Service central d'état civil a reçu le jugement du Tribunal judiciaire de Nantes (Loire-Atlantique), en date du 26 novembre 2020"
+    "Le Service central d'état civil a reçu le jugement du Tribunal judiciaire de nantes (Loire-Atlantique), en date du 26 novembre 2020"
   );
   expect(elementsJasper.decisionRecue2).toBe("concernant : ");
   expect(elementsJasper.interesseDecision).toBe(interesses);
@@ -137,11 +137,11 @@ Pierre-Olivier, Félix-Antoine, François-Xavier LE ROUX
 Date de naissance: 24 décembre 1987
 Lieu de naissance: Châteauneuf-du-Faou (Finistère, Bretagne)
 
-mariés à Nanning, Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 juin 2020`;
+mariés à Nanning, zhuang du Guangxi (Chine, Pays du soleil levant) le 12 juin 2020`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("2");
   expect(elementsJasper.decisionRecue1).toBe(
-    "Le Service central d'état civil a reçu le jugement du Tribunal judiciaire de Nantes (Loire-Atlantique), en date du 26 novembre 2020"
+    "Le Service central d'état civil a reçu le jugement du Tribunal judiciaire de nantes (Loire-Atlantique), en date du 26 novembre 2020"
   );
   expect(elementsJasper.decisionRecue2).toBe("concernant : ");
   expect(elementsJasper.interesseDecision).toBe(interesses);
@@ -169,11 +169,11 @@ Marie-Charlotte, Anne-Claire, Lily-Rose, Abby-Gaëlle SLAOUI
 Date de naissance: 1er septembre 1983
 Lieu de naissance: Brest (Finistère)
 
-mariés à Nanning, Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 juin 2020`;
+mariés à Nanning, zhuang du Guangxi (Chine, Pays du soleil levant) le 12 juin 2020`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("2");
   expect(elementsJasper.decisionRecue1).toBe(
-    "Le Service central d'état civil a reçu l'ordonnance du Tribunal judiciaire de Paris arr.18, en date du 26 novembre 2020"
+    "Le Service central d'état civil a reçu l'ordonnance du Tribunal judiciaire de paris 18ème arrondissement, en date du 26 novembre 2020"
   );
   expect(elementsJasper.decisionRecue2).toBe("concernant le placement de : ");
   expect(elementsJasper.interesseDecision).toBe(interesses);

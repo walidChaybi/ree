@@ -1,7 +1,6 @@
 import { getLibelle } from "@util/Utils";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import InputFieldAvecBoutonMajuscule from "@widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
 import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
-import { sortieChampEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   IGNORER_TABULATION,
   NB_CARACT_MAX_SAISIE,
@@ -16,7 +15,7 @@ import {
   NOM_NAISSANCE,
   NOM_USAGE
 } from "../../../modelForm/ISaisirRequetePageModel";
-import "./scss/PrenomsForm.scss";
+import "./scss/NomsForm.scss";
 
 // Valeurs par défaut des champs
 export const NomsFormDefaultValues = {
@@ -87,29 +86,24 @@ const NomsForm: React.FC<SubFormProps> = props => {
 
   return (
     <>
-      <div className="PrenomsForm">
-        <InputField
+      <div className="NomsForm">
+        <InputFieldAvecBoutonMajuscule
           name={nomNaissanceWithNamespace}
           label={getLibelle("Nom de naissance")}
           maxLength={NB_CARACT_MAX_SAISIE}
-          onBlur={e =>
-            sortieChampEnMajuscule(e, props.formik, nomNaissanceWithNamespace)
-          }
         />
-
-        {!nomUsagePresent && <div>{getBoutonAjouter()}</div>}
+        {!nomUsagePresent && (
+          <div className="BoutonsConteneur">{getBoutonAjouter()}</div>
+        )}
       </div>
       {nomUsagePresent && (
-        <div className="PrenomsForm">
-          <InputField
+        <div className="NomsForm">
+          <InputFieldAvecBoutonMajuscule
             name={nomUsageWithNamespace}
             label={getLibelle("Nom d'usage")}
             maxLength={NB_CARACT_MAX_SAISIE}
-            onBlur={e =>
-              sortieChampEnMajuscule(e, props.formik, nomUsageWithNamespace)
-            }
           />
-          {nomUsagePresent && <div>{getBoutonSupprimer()}</div>}
+          <div className="BoutonsConteneur">{getBoutonSupprimer()}</div>
         </div>
       )}
     </>

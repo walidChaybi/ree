@@ -1,8 +1,6 @@
 import { getDateStringFromDateCompose } from "@util/DateUtils";
 import {
   DEUX,
-  formatNom,
-  formatPrenom,
   mapPrenomsVersPrenomsOrdonnes,
   numberToString,
   SNP,
@@ -41,12 +39,10 @@ export interface ITitulaireActe {
 
 export const TitulaireActe = {
   getNom(titulaire?: ITitulaireActe): string {
-    return titulaire ? formatNom(titulaire.nom) : "";
+    return titulaire?.nom ?? "";
   },
   getPrenom(numero: number, titulaire?: ITitulaireActe): string {
-    return titulaire && titulaire.prenoms
-      ? formatPrenom(titulaire.prenoms[numero])
-      : "";
+    return titulaire?.prenoms?.[numero] ?? "";
   },
   getPrenom1(titulaire?: ITitulaireActe): string {
     return this.getPrenom(0, titulaire);

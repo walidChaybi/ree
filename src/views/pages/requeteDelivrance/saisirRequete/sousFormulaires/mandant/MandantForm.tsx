@@ -3,10 +3,7 @@ import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
-import {
-  sortieChampEnMajuscule,
-  sortieChampPremiereLettreEnMajuscule
-} from "@widget/formulaire/utils/ControlesUtil";
+import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
@@ -15,6 +12,7 @@ import {
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
+import InputFieldAvecBoutonMajuscule from "../../../../../common/widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
 import {
   NOM,
   PRENOM,
@@ -44,6 +42,7 @@ const MandantForm: React.FC<SubFormProps> = props => {
   const raisonSocialeWithNamespace = withNamespace(props.nom, RAISON_SOCIALE);
   const nomWithNamespace = withNamespace(props.nom, NOM);
   const prenomWithNamespace = withNamespace(props.nom, PRENOM);
+
   const [raisonSocialeVisible, setRaisonSocialeVisible] =
     useState<boolean>(false);
 
@@ -82,13 +81,10 @@ const MandantForm: React.FC<SubFormProps> = props => {
               maxLength={NB_CARACT_MAX_SAISIE}
             />
           )}
-          <InputField
+          <InputFieldAvecBoutonMajuscule
             name={nomWithNamespace}
             label={getLibelle("Nom")}
             maxLength={NB_CARACT_MAX_SAISIE}
-            onBlur={e =>
-              sortieChampEnMajuscule(e, props.formik, nomWithNamespace)
-            }
           />
           <InputField
             name={prenomWithNamespace}

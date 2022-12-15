@@ -18,7 +18,6 @@ import { storeRece } from "@util/storeRece";
 import {
   compareNombre,
   formatNom,
-  formatPrenom,
   triListeObjetsSurPropriete
 } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
@@ -124,7 +123,7 @@ export function getParagrapheFin(infosRcRca: IFicheRcRca) {
 
     paragrapheFin += ` et sur instruction du procureur de la République de ${procureur.ville}`;
     paragrapheFin += procureur.arrondissement
-      ? ` Arr.${procureur.arrondissement}`
+      ? ` ${LieuxUtils.formateArrondissement(procureur.arrondissement, true)}`
       : "";
     paragrapheFin += procureur.departement ? ` (${procureur.departement})` : "";
 
@@ -164,7 +163,7 @@ function getPrenomsParents(data: IParent) {
       [...data.prenomsParents],
       "numeroOrdre"
     )
-      .map(prenom => formatPrenom(prenom.valeur))
+      .map(prenom => prenom.valeur)
       .join(", ");
     prenoms += " ";
   }
@@ -176,7 +175,7 @@ function getPrenomsInteresse(data: IInteresse) {
 
   if (data.prenoms) {
     prenoms = triListeObjetsSurPropriete([...data.prenoms], "numeroOrdre")
-      .map(prenom => formatPrenom(prenom.valeur))
+      .map(prenom => prenom.valeur)
       .join(", ");
     prenoms += " ";
   }

@@ -1,15 +1,23 @@
-@import "../../../../../../../scss/colors";
+$spacing: 0.5rem;
 
 .RequerantForm {
+  .RequerantSousForm .BlockInput {
+    grid-template-columns: 20% 45%;
+  }
+  
   .BlockInput {
-    grid-template-columns: 20% 80%;
+    grid-template-columns: 20% auto;
   }
   .BlockErreur {
     margin-left: 20%;
   }
-  .RequerantSousForm {
-    .BlockInput {
-      grid-template-columns: 20% 40%;
+  .BoutonsConteneur {
+    margin-top: $spacing * -1;
+    padding-left: $spacing;
+    padding-right: $spacing;
+  
+    button {
+      margin: $spacing;
     }
   }
 }

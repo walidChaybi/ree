@@ -76,7 +76,7 @@ test("renders Page requete with all elements", async () => {
     expect(screen.getByText("Ambrosia Antoinette, Zoé, Thérèse")).toBeDefined();
     expect(screen.getByText("Acte")).toBeDefined();
     expect(screen.getByText("12/05/2019")).toBeDefined();
-    expect(screen.getByText("Tunis (Tunisie)")).toBeDefined();
+    expect(screen.getByText("Tunis (TUNISIE)")).toBeDefined();
     expect(screen.getByText("Motif")).toBeDefined();
     expect(screen.getByText("Lien avec le titulaire")).toBeDefined();
     expect(screen.getByText("Père/mère")).toBeDefined();
@@ -168,7 +168,7 @@ test("renders Page requete with 2 titutaires", async () => {
     expect(screen.getByText("Ambrosia Antoinette, Zoé, Thérèse")).toBeDefined();
     expect(screen.getByText("Acte")).toBeDefined();
     expect(screen.getByText("12/05/2019")).toBeDefined();
-    expect(screen.getByText("Tunis (Tunisie)")).toBeDefined();
+    expect(screen.getByText("Tunis (TUNISIE)")).toBeDefined();
     expect(screen.getByText("Motif")).toBeDefined();
     expect(screen.getByText("CHOULARD Thierry")).toBeDefined();
     expect(screen.getByText("Père/mère")).toBeDefined();
@@ -212,7 +212,7 @@ test("renders Page requete without titulaire", async () => {
     expect(screen.getByText("Il n'y a pas de titulaire")).toBeDefined();
     expect(screen.getByText("Acte")).toBeDefined();
     expect(screen.getByText("12/05/2019")).toBeDefined();
-    expect(screen.getByText("Tunisie")).toBeDefined();
+    expect(screen.getByText("TUNISIE")).toBeDefined();
     expect(screen.getByText("Motif")).toBeDefined();
     expect(screen.getByText("Lien avec le titulaire")).toBeDefined();
     expect(screen.getByText("Titulaire")).toBeDefined();

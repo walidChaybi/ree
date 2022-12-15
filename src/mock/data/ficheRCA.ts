@@ -162,7 +162,7 @@ export const FicheRcaDecisionAvecInstructionProcureur = {
       numeroRef: "56848",
       ville: "Nantes",
       departement: "Loire-Atlantique",
-      arrondissement: "arrondissement"
+      arrondissement: "1"
     }
   },
   interesses: [

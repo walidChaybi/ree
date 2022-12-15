@@ -1,10 +1,8 @@
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import InputFieldAvecBoutonMajuscule from "@widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
 import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
-import {
-  sortieChampEnMajuscule,
-  sortieChampPremiereLettreEnMajuscule
-} from "@widget/formulaire/utils/ControlesUtil";
+import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
@@ -48,21 +46,15 @@ const ParticulierForm: React.FC<SubFormProps> = props => {
 
   return (
     <div className="RequerantSousForm">
-      <InputField
+      <InputFieldAvecBoutonMajuscule
         name={nomNaissanceWithNamespace}
         label={getLibelle("Nom de naissance")}
         maxLength={NB_CARACT_MAX_SAISIE}
-        onBlur={e =>
-          sortieChampEnMajuscule(e, props.formik, nomNaissanceWithNamespace)
-        }
       />
-      <InputField
+      <InputFieldAvecBoutonMajuscule
         name={nomUsageWithNamespace}
         label={getLibelle("Nom d'usage")}
         maxLength={NB_CARACT_MAX_SAISIE}
-        onBlur={e =>
-          sortieChampEnMajuscule(e, props.formik, nomUsageWithNamespace)
-        }
       />
       <InputField
         name={withNamespace(props.nom, PRENOM)}

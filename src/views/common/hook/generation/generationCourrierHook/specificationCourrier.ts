@@ -17,11 +17,7 @@ import {
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
 import { SaisieCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
-import {
-  formatPrenom,
-  getValeurOuVide,
-  triListeObjetsSurPropriete
-} from "@util/Utils";
+import { getValeurOuVide, triListeObjetsSurPropriete } from "@util/Utils";
 
 export interface OptionsJasper {
   option?: string;
@@ -100,7 +96,7 @@ function getPrenomsTitulaireActe(prenomsTitulaire?: string[]): string {
   let prenoms = "";
 
   if (prenomsTitulaire) {
-    prenoms = prenomsTitulaire.map(prenom => formatPrenom(prenom)).join(", ");
+    prenoms = prenomsTitulaire.join(", ");
   }
   return prenoms;
 }

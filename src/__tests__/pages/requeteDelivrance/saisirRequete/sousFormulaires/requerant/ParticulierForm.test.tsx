@@ -86,7 +86,7 @@ test("render composant Particulier Formulaire", async () => {
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"particulier":{"nomNaissance":"MOCKNOMNAISSANCE","nomUsage":"MOCKNOMUSAGE","prenom":"MockPrenom"}}'
+      '{"particulier":{"nomNaissance":"mockNomNaissance","nomUsage":"mockNomUsage","prenom":"MockPrenom"}}'
     );
   });
 });

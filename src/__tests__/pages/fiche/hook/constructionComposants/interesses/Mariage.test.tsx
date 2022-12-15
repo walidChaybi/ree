@@ -67,7 +67,9 @@ test("renders mariage : l'arondissement est donné et le mariage a lieu en franc
       aletranger={false}
     />
   );
-  expect(getByText("VilleMariage (Arr.08 RegionMariage)")).toBeDefined();
+  expect(
+    getByText("VilleMariage 8ème arrondissement (RegionMariage)")
+  ).toBeDefined();
 });
 
 test("renders mariage : le mariage a lieu à l'étranger", () => {

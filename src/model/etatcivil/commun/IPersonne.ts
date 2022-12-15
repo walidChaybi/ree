@@ -1,9 +1,5 @@
 import { getDateStringFromDateCompose, IDateCompose } from "@util/DateUtils";
-import {
-  formatNom,
-  formatPrenom,
-  premiereLettreEnMajusculeLeResteEnMinuscule
-} from "@util/Utils";
+import { getValeurOuVide } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { AutresNoms } from "../enum/AutresNoms";
 import { Nationalite } from "../enum/Nationalite";
@@ -35,7 +31,7 @@ export interface IPersonne {
 
 export const Personne = {
   getNom(personne: IPersonne): string {
-    return personne.nom ? formatNom(personne.nom) : "";
+    return personne.nom ?? "";
   },
 
   getAutresNoms(personne: IPersonne): string {
@@ -43,26 +39,18 @@ export const Personne = {
       ? personne.autresNoms
           .map(nom => {
             const typeNom = ` (${nom.type.libelle})`;
-            return `${formatNom(nom.nom)}${
-              AutresNoms.isAutre(nom.type) ? "" : typeNom
-            }`;
+            return `${nom.nom}${AutresNoms.isAutre(nom.type) ? "" : typeNom}`;
           })
           .join(", ")
       : "";
   },
 
   getPrenoms(personne: IPersonne): string {
-    return personne.prenoms
-      ? personne.prenoms.map(prenom => formatPrenom(prenom)).join(", ")
-      : "";
+    return personne.prenoms ? personne.prenoms.join(", ") : "";
   },
 
   getAutresPrenom(personne: IPersonne): string {
-    return personne.autresPrenoms
-      ? personne.autresPrenoms
-          .map(autrePrenom => formatPrenom(autrePrenom))
-          .join(", ")
-      : "";
+    return personne.autresPrenoms ? personne.autresPrenoms.join(", ") : "";
   },
 
   getLieuNaissance(personne: IPersonne): string {
@@ -100,11 +88,7 @@ export const Personne = {
   },
 
   getNationalite(personne: IPersonne): string {
-    return personne.nationalite
-      ? premiereLettreEnMajusculeLeResteEnMinuscule(
-          personne.nationalite.libelle
-        )
-      : "";
+    return getValeurOuVide(personne.nationalite?.libelle);
   },
 
   getSexe(personne: IPersonne): string {
