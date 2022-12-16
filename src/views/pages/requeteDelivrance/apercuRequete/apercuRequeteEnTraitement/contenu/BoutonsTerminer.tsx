@@ -49,23 +49,28 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
     setEstDisabled(false);
   }
 
-  const goBack = useCallback(() => {
+  const goBack = () => {
+    history.goBack();
+  };
+
+  const onClickTerminer = useCallback(() => {
     if (checkDirty(isDirty, setIsDirty)) {
       validerMentionsPlusieursDocuments(
-        () => history.goBack(),
+        () => goBack(),
         acte,
         requete.documentsReponses
       );
     }
-  }, [history, acte, requete.documentsReponses, isDirty, setIsDirty]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [acte, requete.documentsReponses, isDirty, setIsDirty]);
 
   const actionApresSignature = useCallback(
     (allsigned: boolean) => {
       if (allsigned === true) {
-        goBack();
+        onClickTerminer();
       }
     },
-    [goBack]
+    [onClickTerminer]
   );
 
   return (
@@ -97,7 +102,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
           {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) && (
             <Bouton
               title={getLibelle("Terminer")}
-              onClick={goBack}
+              onClick={onClickTerminer}
               disabled={estDisabled}
             >
               Terminer
