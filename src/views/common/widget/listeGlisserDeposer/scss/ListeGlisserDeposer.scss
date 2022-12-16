@@ -35,6 +35,9 @@
       cursor: grab;
       vertical-align: middle;
     }
+    .titre {
+      margin: 5px 0px;
+    }
   }
   li:hover {
     background-color: $application-hoover !important;

@@ -1,3 +1,4 @@
+import { TypePieceJointe } from "@hook/requete/piecesJointes/communPieceJointe";
 import { IDocumentPJ } from "@model/requete/IDocumentPj";
 import {
   IRequeteCreation,
@@ -15,11 +16,12 @@ import "./scss/VoletPiecesJustificatives.scss";
 
 interface OngletPiecesJustificativesProps {
   requete: IRequeteCreation;
+  autoriseOuvertureFenetreExt?: boolean;
 }
 
 export const OngletPiecesJustificatives: React.FC<
   OngletPiecesJustificativesProps
-> = props => {
+> = ({ autoriseOuvertureFenetreExt = false, ...props }) => {
   const [liste, setListe] = useState<ListeItem[]>([]);
   const { setRequete } = useContext(ApercuReqCreationPageContext);
 
@@ -72,9 +74,12 @@ export const OngletPiecesJustificatives: React.FC<
                     idDocumentAAfficher={piece.id}
                     titre={piece.nouveauLibelleFichierPJ}
                     titreOrigine={piece.nom}
+                    typePiece={TypePieceJointe.PIECE_JUSTIFICATIVE}
+                    numRequete={props.requete.numero}
                     setTitreActuel={(nouveauLibelle: string) =>
                       setTitreActuel(document.id, piece.id, nouveauLibelle)
                     }
+                    autoriseOuvertureFenetreExt={autoriseOuvertureFenetreExt}
                   />
                 )
               )}
@@ -83,7 +88,7 @@ export const OngletPiecesJustificatives: React.FC<
         })
       );
     },
-    [setTitreActuel]
+    [props.requete.numero, autoriseOuvertureFenetreExt, setTitreActuel]
   );
 
   useEffect(() => {

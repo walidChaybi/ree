@@ -1,7 +1,8 @@
 .LibelleEditable {
   display: flex;
+  flex: 1;
 
-.BoutonActionLibelleEditable {
+  .BoutonActionLibelleEditable {
     margin-left: 10px;
     align-self: center;
   }

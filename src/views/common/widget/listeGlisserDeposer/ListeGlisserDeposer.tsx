@@ -123,7 +123,7 @@ export const ListeGlisserDeposer: React.FC<
             />
           )}
           {props.libellesSontTitres ? (
-            <h2 title={item.libelle}>
+            <h2 className="titre" title={item.libelle}>
               {finirAvec3petitsPoints(item.libelle, MAX_CARACTERE)}
             </h2>
           ) : (

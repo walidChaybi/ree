@@ -22,7 +22,12 @@ export const VoletPieceJustificativesEtActions: React.FC<
   const liste: ItemListe[] = [
     {
       titre: "Pièces justificatives / annexes",
-      component: <OngletPiecesJustificatives requete={props.requete} />,
+      component: (
+        <OngletPiecesJustificatives
+          requete={props.requete}
+          autoriseOuvertureFenetreExt={true}
+        />
+      ),
       index: 0
     },
     {

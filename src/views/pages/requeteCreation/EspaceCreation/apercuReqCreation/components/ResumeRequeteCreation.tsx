@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import Labels, { UNION } from "../Labels";
-import ConteneurRetractable from "./ConteneurRetractable";
 import ItemEffetCollectif, {
   ItemEffetCollectifProps
 } from "./Item/ItemEffetCollectif";
@@ -27,15 +26,8 @@ export interface ResumeRequeteCreationProps {
 }
 
 const ResumeRequeteCreation: React.FC<ResumeRequeteCreationProps> = props => {
-  const [pleinEcran, setPleinEcran] = useState<boolean>(false);
-
   return (
-    <ConteneurRetractable
-      titre={Labels.resume.requete.description}
-      pleinEcran={pleinEcran}
-      setPleinEcran={setPleinEcran}
-      className="ResumeRequeteCreation"
-    >
+    <>
       <ItemRequete {...props.requete} />
 
       {props.titulaire && (
@@ -85,7 +77,7 @@ const ResumeRequeteCreation: React.FC<ResumeRequeteCreationProps> = props => {
           etendu={false}
         />
       ))}
-    </ConteneurRetractable>
+    </>
   );
 };
 

@@ -179,7 +179,8 @@ export const SuiviObservationsRequete: React.FC<
         bouton={
           <BoutonAccordionTitle
             iconeBouton={faPlusCircle}
-            titreBouton={"Ajouter une observation"}
+            descriptionBouton={getLibelle("Ajouter une observation")}
+            classNameBouton={"BoutonAjouter"}
             onClickBouton={onClickBouton}
           />
         }

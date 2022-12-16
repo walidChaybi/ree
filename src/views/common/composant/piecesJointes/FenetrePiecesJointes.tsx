@@ -17,6 +17,7 @@ const RATIO_WIDTH = 0.33;
 const RATIO_HEIGHT = 0.66;
 export const FenetrePiecesJointes: React.FC<FenetrePieceProps> = props => {
   const contenuPiece = useGetPieceJointeApi(props.typePiece, props.idPiece);
+
   return (
     <FenetreExterne
       titre={`${props.nom} - Req N°${props.numRequete}`}

@@ -7,7 +7,8 @@ import "./scss/BoutonAccordionTitle.scss";
 export interface BoutonAccordionTitleProps {
   iconeBouton: IconDefinition;
   onClickBouton?: any;
-  titreBouton: string;
+  classNameBouton: string;
+  descriptionBouton: string;
 }
 
 export const BoutonAccordionTitle: React.FC<
@@ -22,8 +23,8 @@ export const BoutonAccordionTitle: React.FC<
     <div className={props.iconeBouton ? "flexAccordion" : ""}>
       <FontAwesomeIcon
         icon={props.iconeBouton}
-        className={`BoutonAjouter`}
-        title={getLibelle(props.titreBouton)}
+        className={`BoutonAccordionTitle ${props.classNameBouton}`}
+        title={getLibelle(props.descriptionBouton)}
         onClick={onClickBouton}
       />
     </div>

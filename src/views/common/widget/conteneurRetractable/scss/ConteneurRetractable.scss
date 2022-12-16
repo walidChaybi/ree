@@ -1,4 +1,4 @@
-@import "../../../../../../../scss/_colors.scss";
+@import "../../../../../scss/colors";
 
 $spacing: 0.4rem;
 $radius: $spacing;
@@ -21,6 +21,12 @@ $min-width: $spacing * 10;
 
     .body {
       visibility: hidden;
+    }
+  }
+
+  &.is-open.a-droite {
+    .header {
+      flex-direction: row-reverse;
     }
   }
 

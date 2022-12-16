@@ -539,13 +539,23 @@ export const requeteCreation = {
       id: "3ed9969b-d439-48d4-b163-4e1a525aaf6d",
       libelle: "etat_civil",
       categorie: "PIECE_IDENTITE",
-      piecesJustificatives: [pieceJustificative]
+      piecesJustificatives: [
+        {
+          ...pieceJustificative,
+          nom: "carteIdentite"
+        }
+      ]
     },
     {
       id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9421",
       libelle: "etat_civil",
       categorie: "TITRE_SEJOUR",
-      piecesJustificatives: [{ ...pieceJustificative }]
+      piecesJustificatives: [
+        {
+          ...pieceJustificative,
+          nom: "titreSejour"
+        }
+      ]
     },
     {
       id: "3ed90e37-a51b-4f1e-bd5a-6b2423ea9422",

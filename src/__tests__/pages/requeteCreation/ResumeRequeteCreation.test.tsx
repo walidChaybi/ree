@@ -5,13 +5,7 @@ import {
 } from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/Labels";
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/mappingIRequeteCreationVersResumeRequeteCreationProps";
 import { mappingRequeteCreation } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitulaireEtUnEnfantMajeur } from "../../../mock/data/requeteCreation";
@@ -31,24 +25,6 @@ const renduResumeRequeteCreation = async () => {
     );
   });
 };
-
-test("Attendu: Un clic sur un conteneur retractable fait apparaitre/disparaitre son contenu", async () => {
-  await renduResumeRequeteCreation();
-
-  const conteneurRetractable = screen.getByText(Labels.requete.description);
-
-  await waitFor(() => {
-    expect(conteneurRetractable.classList.contains("vertical")).toBeFalsy();
-  });
-
-  act(() => {
-    fireEvent.click(conteneurRetractable);
-  });
-
-  await waitFor(() => {
-    expect(conteneurRetractable.classList.contains("vertical")).toBeTruthy();
-  });
-});
 
 test("Attendu: La requête doit contenir un et un seul titulaire postulant, obligatoirement", async () => {
   await renduResumeRequeteCreation();

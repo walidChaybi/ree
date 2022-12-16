@@ -60,6 +60,10 @@ test("renders VoletPiecesJustificatives", async () => {
     expect(screen.getAllByText("Pièce d'identité postulant")[0]).toBeDefined();
     expect(screen.getAllByText("Divorce union antérieure 1")[0]).toBeDefined();
     expect(screen.getAllByText("fichierPJ")[2]).toBeDefined();
+
+    expect(screen.getAllByText("AN parent 1")).toHaveLength(2);
+    expect(screen.getAllByText("Pièce d'identité postulant")).toHaveLength(2);
+    expect(screen.getAllByText("Divorce union antérieure 1")).toHaveLength(2);
   });
 });
 
@@ -85,7 +89,7 @@ test("Modifier le titre d'un fichier d'une pièce jointe", async () => {
   await waitFor(() => {
     boutonModifierLibelle = screen.getAllByTitle(
       "Modifier le libellé"
-    )[1] as HTMLButtonElement;
+    )[3] as HTMLButtonElement;
     expect(boutonModifierLibelle).toBeDefined();
   });
 
@@ -110,7 +114,7 @@ test("Modifier le titre d'un fichier d'une pièce jointe", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("nouveauLibelle")).toBeDefined();
+    expect(screen.getAllByText("nouveauLibelle")[0]).toBeDefined();
   });
 });
 
@@ -136,7 +140,7 @@ test("Modifier le titre d'un fichier et revenir en arrière", async () => {
   await waitFor(() => {
     boutonModifierLibelle = screen.getAllByTitle(
       "Modifier le libellé"
-    )[1] as HTMLButtonElement;
+    )[3] as HTMLButtonElement;
     expect(boutonModifierLibelle).toBeDefined();
   });
 
@@ -162,15 +166,17 @@ test("Modifier le titre d'un fichier et revenir en arrière", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("test libelle")).toBeDefined();
+    expect(screen.getAllByText("test libelle")[0]).toBeDefined();
   });
 
   act(() => {
-    fireEvent.click(screen.getByTitle("Annuler la modification du libellé"));
+    fireEvent.click(
+      screen.getAllByTitle("Annuler la modification du libellé")[0]
+    );
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Titre de séjour postulant")).toBeDefined();
+    expect(screen.getAllByText("Titre de séjour postulant")[0]).toBeDefined();
   });
 });
 
@@ -196,7 +202,7 @@ test("Modifier le titre puis annuler", async () => {
   await waitFor(() => {
     boutonModifierLibelle = screen.getAllByTitle(
       "Modifier le libellé"
-    )[1] as HTMLButtonElement;
+    )[3] as HTMLButtonElement;
     expect(boutonModifierLibelle).toBeDefined();
   });
 
@@ -222,7 +228,66 @@ test("Modifier le titre puis annuler", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Titre de séjour postulant")).toBeDefined();
+    expect(screen.getAllByText("Titre de séjour postulant")[0]).toBeDefined();
+  });
+});
+
+test("Ouvrir deux pièces jointes côte à côte.", async () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+      "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+    )
+  );
+  act(() => {
+    render(
+      <Router history={history}>
+        <Route exact={true} path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}>
+          <ApercuReqCreationPage />
+        </Route>
+      </Router>
+    );
+  });
+
+  let accordionAlpha1: HTMLDivElement;
+  let accordionAlpha2: HTMLDivElement;
+  let accordionBeta1: HTMLDivElement;
+  let accordionBeta2: HTMLDivElement;
+
+  await waitFor(() => {
+    const titreAccordions = screen.getAllByRole("button", { expanded: false });
+
+    const accordionsAlpha = titreAccordions.filter(accordion =>
+      accordion.textContent?.includes("carteIdentite")
+    );
+    const accordionsBeta = titreAccordions.filter(accordion =>
+      accordion.textContent?.includes("titreSejour")
+    );
+
+    expect(accordionsAlpha).toHaveLength(2);
+    expect(accordionsBeta).toHaveLength(2);
+
+    accordionAlpha1 = accordionsAlpha[0] as HTMLDivElement;
+    accordionAlpha2 = accordionsAlpha[1] as HTMLDivElement;
+    accordionBeta1 = accordionsBeta[0] as HTMLDivElement;
+    accordionBeta2 = accordionsBeta[1] as HTMLDivElement;
+
+    expect(accordionAlpha1.classList.contains("Mui-expanded")).toBeFalsy();
+    expect(accordionAlpha2.classList.contains("Mui-expanded")).toBeFalsy();
+    expect(accordionBeta1.classList.contains("Mui-expanded")).toBeFalsy();
+    expect(accordionBeta2.classList.contains("Mui-expanded")).toBeFalsy();
+  });
+
+  act(() => {
+    fireEvent.click(accordionAlpha1);
+    fireEvent.click(accordionBeta1);
+  });
+
+  await waitFor(() => {
+    expect(accordionAlpha1.classList.contains("Mui-expanded")).toBeTruthy();
+    expect(accordionAlpha2.classList.contains("Mui-expanded")).toBeFalsy();
+    expect(accordionBeta1.classList.contains("Mui-expanded")).toBeTruthy();
+    expect(accordionBeta2.classList.contains("Mui-expanded")).toBeFalsy();
   });
 });
 

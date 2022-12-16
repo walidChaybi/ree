@@ -34,9 +34,9 @@ export const AccordionTitle: React.FC<AccordionTitleProps> = ({
           <>
             <div className="itemHidden" />
             {props.titre}
-            {props.bouton}
           </>
         )}
+        {props.bouton}
       </div>
     </AccordionSummary>
   );
