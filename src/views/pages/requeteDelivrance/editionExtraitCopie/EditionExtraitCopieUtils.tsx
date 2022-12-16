@@ -115,11 +115,6 @@ export const getOngletsVisu = (
       res.ongletSelectionne = res.liste.length - 1;
     }
   }
-  if (requete.statutCourant.statut === StatutRequete.TRANSMISE_A_VALIDEUR) {
-    res.ongletSelectionne = res.liste.findIndex(
-      onglet => onglet.titre === REQUETE
-    );
-  }
 
   return res;
 };

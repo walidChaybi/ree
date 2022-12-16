@@ -41,7 +41,9 @@ export const BoutonsTerminerOuRelecture: React.FC<
     useState<IRegenerationDocumentsParams>();
   const [open, setOpen] = useState<boolean>(false);
   const history = useHistory();
-  const { rafraichirRequete } = useContext(EditionExtraitCopiePageContext);
+  const { rafraichirRequete, setOperationEnCours } = useContext(
+    EditionExtraitCopiePageContext
+  );
 
   useRegenerationDocumentsHook(regenerationParams);
 
@@ -71,9 +73,11 @@ export const BoutonsTerminerOuRelecture: React.FC<
   }, [idActionRetour, history]);
 
   function onClickReprise(statut: StatutRequete) {
+    setOperationEnCours(true);
     setRegenerationParams({
       requete: props.requete,
       regenererCourrier: true,
+      acte: props.acte,
       callBack: () =>
         setMajStatutParams({
           libelleAction: "Requête reprise",

@@ -63,7 +63,7 @@ export const DocumentReponse = {
   },
 
   estExtraitCopie(document: IDocumentReponse) {
-    return DocumentDelivrance.estExtraitCopie(document.nom);
+    return DocumentDelivrance.estExtraitCopieViaUUID(document.typeDocument);
   },
 
   triDocumentsDelivrance(documents: IDocumentReponse[]): IDocumentReponse[] {

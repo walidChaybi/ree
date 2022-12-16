@@ -55,10 +55,16 @@ export const RequeteDelivrance = {
   },
 
   getExtraitsCopies(requete: IRequeteDelivrance): IDocumentReponse[] {
-    return requete.documentsReponses.filter(el =>
-      DocumentDelivrance.estExtraitCopie(
-        DocumentDelivrance.getCodeForKey(el.typeDocument)
+    return requete.documentsReponses.filter(documentReponse =>
+      DocumentDelivrance.estExtraitCopieViaUUID(documentReponse.typeDocument)
+    );
+  },
+
+  getCourrier(requete: IRequeteDelivrance): IDocumentReponse | undefined {
+    return requete.documentsReponses.find(el =>
+      DocumentDelivrance.estCourrierDelivranceEC(el.typeDocument
       )
     );
   }
+
 };

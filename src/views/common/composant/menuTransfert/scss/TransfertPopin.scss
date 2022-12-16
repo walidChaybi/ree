@@ -12,6 +12,7 @@
   }
 
   textarea{
-    width:-webkit-fill-available
+    width:-webkit-fill-available;
+    width: -moz-available;
   }
 }

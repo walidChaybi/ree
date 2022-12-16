@@ -259,8 +259,14 @@ export class DocumentDelivrance extends EnumNomemclature {
     );
   }
 
-  public static estExtraitCopie(code: string): boolean {
+  public static estExtraitCopieViaCode(code: string): boolean {
     return CodesExtraitCopie.includes(code);
+  }
+
+  public static estExtraitCopieViaUUID(uuid: string): boolean {
+    return CodesExtraitCopie.includes(
+      DocumentDelivrance.getEnumForUUID(uuid).code
+    );
   }
 
   public static getCodeForKey(key: string): string {
