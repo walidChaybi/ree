@@ -69,6 +69,7 @@ export const ReponseAppelRMCInscription = {
 export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
   {
     idInscription: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
+    idPersonne: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
     nom: "ROSE",
     autresNoms: "DUPE",
     prenoms: "Jean-pierre, Michel",
@@ -84,6 +85,7 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
   },
   {
     idInscription: "85160d6e-893b-47c2-a9a8-b25573189f0c",
+    idPersonne: "89c9d030-26c3-41d3-bdde-8b4dcc042fe0",
     nom: "ROSE",
     autresNoms: "DUPE",
     prenoms: "Jean-pierre, Michel",
@@ -99,6 +101,7 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
   },
   {
     idInscription: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
+    idPersonne: "89c9d030-26c3-41d3-bdde-8b4dcc0a20e0",
     nom: "ROSE",
     autresNoms: "DUPE",
     prenoms: "Jean-pierre, Michel",
@@ -114,6 +117,7 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
   },
   {
     idInscription: "135e4dfe-9757-4d5d-8715-359c6e73289b",
+    idPersonne: "89c9d030-26c3-41d3-bcde-8b4dcc0420e0",
     nom: "ROSE",
     autresNoms: "DUPE",
     prenoms: "Jean-pierre, Michel",
@@ -129,6 +133,7 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
   },
   {
     idInscription: "8244d136-729b-4fd3-b88a-fa1fe30a2216",
+    idPersonne: "89c9d030-26c3-41d3-bdde-8b4bcc0420e0",
     nom: "ROSE",
     autresNoms: "DUPE",
     prenoms: "Jean-pierre, Michel",
@@ -144,6 +149,7 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
   },
   {
     idInscription: "85160d6e-893b-47c2-a9a8-b25573189f0d",
+    idPersonne: "89c9d030-26c3-4dd3-bdde-8b4dcc0420e0",
     nom: "ROSE",
     autresNoms: "DUPE",
     prenoms: "Jean-pierre, Michel",
@@ -162,6 +168,7 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
 export const DataRMCInscriptionAvecUnRCA: IResultatRMCInscription[] = [
   {
     idInscription: "215e4dfe-9757-4d5d-8715-359c6e73288c",
+    idPersonne: "89c9d030-26c3-41d3-bdde-8b4dcs0420e0",
     nom: "ROSE",
     autresNoms: "DUPE",
     prenoms: "Jean-pierre, Michel",
@@ -180,6 +187,7 @@ export const DataRMCInscriptionAvecUnRCA: IResultatRMCInscription[] = [
 export const DataRMCInscriptionAvecUnRC: IResultatRMCInscription[] = [
   {
     idInscription: "135e4dfe-9757-4d5d-8715-359c6e73289b",
+    idPersonne: "89d9d030-26c3-41d3-bdde-8b4dcc0420e0",
     nom: "ROSE",
     autresNoms: "DUPE",
     prenoms: "Jean-pierre, Michel",
@@ -198,6 +206,7 @@ export const DataRMCInscriptionAvecUnRC: IResultatRMCInscription[] = [
 export const DataRMCInscriptionAvecUnPACS: IResultatRMCInscription[] = [
   {
     idInscription: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
+    idPersonne: "89c9d030-2jc3-41d3-bdde-8b4dcc0420e0",
     nom: "Rose",
     autresNoms: "DUPE",
     prenoms: "Jean-pierre, Michel",

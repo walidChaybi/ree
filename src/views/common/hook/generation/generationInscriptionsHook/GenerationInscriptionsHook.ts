@@ -2,6 +2,7 @@ import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
 import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { useEffect, useState } from "react";
@@ -14,7 +15,8 @@ import { useGenerationCertificatPACSOuRCOuRCAHook } from "./generationCertificat
 export function useGenerationInscriptionsHook(
   requete?: IRequeteTableauDelivrance,
   dataRMCAutoInscription?: IResultatRMCInscription[],
-  isOldDocumentsDeleted?: boolean | false
+  isOldDocumentsDeleted?: boolean | false,
+  inscriptionsRcRadiation?: IInscriptionRc
 ) {
   const [listeRC, setListeRC] = useState<IResultatRMCInscription[]>();
 
@@ -46,7 +48,8 @@ export function useGenerationInscriptionsHook(
   const resultGenerationCertificatRC = useGenerationCertificatPACSOuRCOuRCAHook(
     TypePacsRcRca.RC,
     requete,
-    listeRC
+    listeRC,
+    inscriptionsRcRadiation
   );
 
   // 2 - Stockage en mémoire des RC générés

@@ -1,10 +1,6 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { StatutPacesUtil } from "@model/etatcivil/enum/StatutPacs";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import {
-  InscriptionRcUtil,
-  TypeInscriptionRc
-} from "@model/etatcivil/enum/TypeInscriptionRc";
 import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -125,17 +121,6 @@ class SpecificationDeliver {
       infoComplementaire = ` (${StatutPacesUtil.getLibelle(
         info.statut
       ).toLowerCase()})`;
-    }
-    if (type === TypeFiche.RC) {
-      info = info as IFicheRcRca;
-      infoComplementaire =
-        info.typeInscription === TypeInscriptionRc.MODIFICATION
-          ? ` (${InscriptionRcUtil.getLibelle(
-              info.typeInscription
-            ).toLowerCase()} RC n°${info.inscriptionsImpactees[0].annee}-${
-              info.inscriptionsImpactees[0].numero
-            })`
-          : "";
     }
 
     return infoComplementaire;

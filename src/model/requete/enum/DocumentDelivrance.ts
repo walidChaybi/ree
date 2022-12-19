@@ -37,6 +37,14 @@ const CodesExtraitCopieASigner = [
   CODE_EXTRAIT_SANS_FILIATION
 ];
 
+const CodesRC = [
+  CODE_CERTIFICAT_SITUATION_PACS_RC,
+  CODE_CERTIFICAT_INSCRIPTION_RC,
+  CODE_CERTIFICAT_SITUATION_PACS_RC_RCA,
+  CODE_CERTIFICAT_SITUATION_RC,
+  CODE_CERTIFICAT_SITUATION_RC_RCA
+];
+
 export const CodesExtraitCopie = [
   ...CodesExtraitCopieASigner,
   CODE_COPIE_NON_SIGNEE
@@ -413,5 +421,11 @@ export class DocumentDelivrance extends EnumNomemclature {
 
   public static getKey(document?: DocumentDelivrance): string {
     return EnumWithLibelle.getKey(DocumentDelivrance, document);
+  }
+
+  public static estDocumentDemandeDeTypeRc(
+    document: DocumentDelivrance
+  ): boolean {
+    return CodesRC.includes(document.code);
   }
 }

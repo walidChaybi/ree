@@ -23,12 +23,10 @@ export interface RMCActeInscriptionResultatsProps {
   setRangeInscription?: (range: string) => void;
   resetRMC?: boolean;
   onClickCheckboxTableauActes?: (
-    index: number,
     isChecked: boolean,
     data: IResultatRMCActe
   ) => void;
   onClickCheckboxTableauInscriptions?: (
-    index: number,
     isChecked: boolean,
     data: IResultatRMCInscription
   ) => void;

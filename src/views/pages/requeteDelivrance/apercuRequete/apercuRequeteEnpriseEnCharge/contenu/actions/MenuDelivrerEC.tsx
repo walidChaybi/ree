@@ -53,10 +53,9 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
 
   useCreerCourrierEC(courrierEcParams);
 
-  // 0 - Initialiser inscriptions & actes (en retirant les valeurs falsy)
   useEffect(() => {
-    setInscriptions(props.inscriptions?.filter(Boolean));
-    setActes(props.actes?.filter(Boolean));
+    setInscriptions(props.inscriptions);
+    setActes(props.actes);
   }, [props.actes, props.inscriptions]);
 
   // 1 - Mise à jour du choix delivrance

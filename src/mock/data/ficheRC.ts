@@ -335,6 +335,26 @@ export const FicheRcDecisionNotaireTypeRequete2 = {
   duree: { nombreDuree: 1, uniteDuree: "année", dateFinDeMesure: 1470204367000 }
 } as any as IFicheRcRca;
 
+export const FicheRcRadiation = [
+  {
+    id: "85df1d10-71b7-4336-9463-bb1c5760d1a0",
+    dateInscription: [2020, 11, 29],
+    nature: {
+      // "058a436b-330d-4c3c-83e0-e49d2739012d"
+      id: "058a436b-330d-4c3c-83e0-e49d27390138",
+      nom: "NATURE_RC",
+      code: "TUTELLE_AMENAGEE",
+      libelle: "tutelle aménagée",
+      estActif: true,
+      type: "Protection des majeurs",
+      decisionCouple: false,
+      article: "la",
+      categorieRCRCA: "TUTELLE"
+    },
+    typeInscription: "RADIATION"
+  }
+];
+
 export const FicheRcRenouvellementTypeJugement = {
   id: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
   categorie: "RC",
@@ -1086,3 +1106,70 @@ export const FicheRcModification = {
   ],
   duree: { nombreDuree: 1, uniteDuree: "mois", dateFinDeMesure: 1652162767000 }
 } as any as IFicheRcRca;
+
+export const inscriptionsRc = [
+  {
+    id: "747c0b00-03f3-4c6e-9db3-ec73cbdc0747",
+    dateInscription: [2020, 11, 23],
+    nature: {
+      id: "058a436b-330d-4c3c-83e0-e49d27390135",
+      nom: "NATURE_RC",
+      code: "TRANSFERT_POUVOIRS",
+      libelle: "transfert de pouvoirs",
+      estActif: true,
+      type: "Requête",
+      decisionCouple: true,
+      article: "le",
+      categorieRCRCA: "REGIME MATRIMONIAL"
+    },
+    typeInscription: "MODIFICATION"
+  },
+  {
+    id: "85df1d10-71b7-4336-9463-bb1c5760d1a0",
+    dateInscription: [2020, 11, 29],
+    nature: {
+      id: "058a436b-330d-4c3c-83e0-e49d27390138",
+      nom: "NATURE_RC",
+      code: "TUTELLE_AMENAGEE",
+      libelle: "tutelle aménagée",
+      estActif: true,
+      type: "Protection des majeurs",
+      decisionCouple: false,
+      article: "la",
+      categorieRCRCA: "TUTELLE"
+    },
+    typeInscription: "RADIATION"
+  },
+  {
+    id: "76b62678-8b06-4442-ad5b-b9207627a6ec",
+    dateInscription: [2020, 11, 18],
+    nature: {
+      id: "058a436b-330d-4c3c-83e0-e49d27390121",
+      nom: "NATURE_RC",
+      code: "PRESOMPTION_ABSENCE",
+      libelle: "présomption d'absence",
+      estActif: true,
+      type: "Requête",
+      decisionCouple: false,
+      article: "la",
+      categorieRCRCA: "ABSENCE"
+    },
+    typeInscription: "RADIATION"
+  },
+  {
+    id: "747cd416-fcf5-4490-b540-59a89b7f5123",
+    dateInscription: [2020, 10, 20],
+    nature: {
+      id: "058a436b-330d-4c3c-83e0-e49d27390131",
+      nom: "NATURE_RC",
+      code: "INTERDICTION",
+      libelle: "interdiction",
+      estActif: false,
+      type: "Requête",
+      decisionCouple: false,
+      article: "l'",
+      categorieRCRCA: "INTERDICTION"
+    },
+    typeInscription: "MODIFICATION"
+  }
+];

@@ -92,6 +92,7 @@ export function mappingInscriptions(data: any): IResultatRMCInscription[] {
   return data?.map((inscription: any) => {
     return {
       idInscription: inscription?.id,
+      idPersonne: inscription?.idPersonne,
       nom: formatNom(inscription?.nom),
       autresNoms: formatNoms(inscription?.autresNoms),
       prenoms: formatPrenoms(inscription?.prenoms),

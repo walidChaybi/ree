@@ -35,12 +35,10 @@ export interface RMCAutoProps {
   dataHistory?: DataRMCAuto;
   dataAlertes?: IAlerte[];
   onClickCheckboxTableauActes?: (
-    index: number,
     isChecked: boolean,
     data: IResultatRMCActe
   ) => void;
   onClickCheckboxTableauInscriptions?: (
-    index: number,
     isChecked: boolean,
     data: IResultatRMCInscription
   ) => void;

@@ -5,6 +5,7 @@ import {
   TypeInscriptionRc
 } from "@model/etatcivil/enum/TypeInscriptionRc";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { getDateFormatJasper, getDateFromTimestamp } from "@util/DateUtils";
 import { formatDe } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
@@ -94,33 +95,59 @@ export function getResume(data: IFicheRcRca) {
   return resume;
 }
 
-export function getRenouvellementModification(data: IFicheRcRca) {
-  let renouvellementModification = undefined;
-
-  if (
-    data.typeInscription === TypeInscriptionRc.RENOUVELLEMENT ||
-    data.typeInscription === TypeInscriptionRc.MODIFICATION
-  ) {
-    const typeInscription = InscriptionRcUtil.getLibelle(data.typeInscription);
-    const natureInscriptionImpactee = NatureRc.getEnumFor(
-      data.inscriptionsImpactees[0].nature
-    ).libelle as string;
-
-    renouvellementModification =
-      data.typeInscription === TypeInscriptionRc.RENOUVELLEMENT
-        ? `prononçant le ${typeInscription.toLocaleLowerCase()}`
-        : `prononçant la ${typeInscription.toLocaleLowerCase()}`;
-    renouvellementModification += ` de la mesure ${formatDe(
-      natureInscriptionImpactee.toUpperCase()
-    )}${natureInscriptionImpactee.toLocaleLowerCase()} RC n°`;
-    renouvellementModification += ` ${data.inscriptionsImpactees[0].annee} - ${data.inscriptionsImpactees[0].numero}`;
-    renouvellementModification +=
-      data.typeInscription === TypeInscriptionRc.MODIFICATION
-        ? ` en ${data.nature.libelle}`
-        : "";
+export function getRenouvellementModification(
+  data?: IFicheRcRca,
+  inscriptionsRcRadiation?: IInscriptionRc
+): string | undefined {
+  let renouvellementModification;
+  if (data) {
+    if (
+      inscriptionsRcRadiation &&
+      InscriptionRcUtil.estDeTypeModification(data.typeInscription)
+    ) {
+      renouvellementModification = getModificationJasper(
+        data,
+        inscriptionsRcRadiation
+      );
+    } else if (
+      InscriptionRcUtil.estDeTypeRenouvellement(data.typeInscription)
+    ) {
+      renouvellementModification = getRenouvellementJasper(data);
+    }
   }
 
   return renouvellementModification;
+}
+
+export function getModificationJasper(
+  data: IFicheRcRca,
+  inscriptionRcRadiation: IInscriptionRc
+): string {
+  const typeInscription = InscriptionRcUtil.getLibelle(data.typeInscription);
+  let modificationTexte = `prononçant la ${typeInscription.toLocaleLowerCase()}`;
+
+  modificationTexte += ` de la mesure de ${inscriptionRcRadiation.nature.libelle}`;
+
+  modificationTexte += ` en ${data.nature.libelle}`;
+
+  return modificationTexte;
+}
+
+export function getRenouvellementJasper(inscription: IFicheRcRca) {
+  const typeInscription = InscriptionRcUtil.getLibelle(
+    inscription.typeInscription
+  );
+  const natureInscriptionImpactee = NatureRc.getEnumFor(
+    inscription.inscriptionsImpactees[0].nature
+  ).libelle as string;
+
+  let renouvellementTexte = `prononçant le ${typeInscription.toLocaleLowerCase()}`;
+  renouvellementTexte += ` de la mesure ${formatDe(
+    natureInscriptionImpactee.toUpperCase()
+  )}${natureInscriptionImpactee.toLocaleLowerCase()} RC n°`;
+  renouvellementTexte += ` ${inscription.inscriptionsImpactees[0].annee} - ${inscription.inscriptionsImpactees[0].numero}`;
+
+  return renouvellementTexte;
 }
 
 export function getDuree(data: IFicheRcRca) {
@@ -133,7 +160,10 @@ export function getDuree(data: IFicheRcRca) {
 
 /////////////////////////////////////////////////////////////////////
 class SpecificationRC {
-  getElementsJasper(infosRC: IFicheRcRca) {
+  getElementsJasper(
+    infosRC: IFicheRcRca,
+    inscriptionsRcRadiation?: IInscriptionRc
+  ) {
     const elementsJasper = {} as IElementsJasperCertificatRC;
 
     if (infosRC) {
@@ -143,8 +173,10 @@ class SpecificationRC {
       elementsJasper.decisionRecue2 = getParagrapheDecisionRecue2(infosRC);
       elementsJasper.interesseDecision = getInteressesDecision(infosRC);
       elementsJasper.regime = getResume(infosRC);
-      elementsJasper.renouvellementModification =
-        getRenouvellementModification(infosRC);
+      elementsJasper.renouvellementModification = getRenouvellementModification(
+        infosRC,
+        inscriptionsRcRadiation
+      );
       elementsJasper.decisionExequatur = getDecisionExequatur(infosRC);
       elementsJasper.duree = getDuree(infosRC);
       elementsJasper.paragrapheFin = getParagrapheFin(infosRC);

@@ -1,3 +1,6 @@
+import { InscriptionRcUtil } from "@model/etatcivil/enum/TypeInscriptionRc";
+import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_ATTESTATION_PACS } from "@model/requete/enum/DocumentDelivranceConstante";
 import { IActionOption } from "@model/requete/IActionOption";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
@@ -18,8 +21,11 @@ import { mappingRequeteDelivranceToRequeteTableau } from "../../../mapping/ReqDe
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import { useDelivrerCertificatSituationHook } from "./hook/DelivrerCertificatSituationHook";
 import {
+  estMemeNombreDeRCModificationEtRadiation,
   filtrerListeActionsParDocumentDemande,
-  menuDelivrerActions
+  getInscriptionsDeTypeModificationEtRadiation,
+  menuDelivrerActions,
+  triTableauRCRadiationParDate
 } from "./MenuUtilsCS";
 
 export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
@@ -28,6 +34,9 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [actes, setActes] = useState<IResultatRMCActe[] | undefined>();
+  const [inscriptionRcRadiation, setInscriptionsRcRadiation] = useState<
+    IInscriptionRc | undefined
+  >();
   const [inscriptions, setInscriptions] = useState<
     IResultatRMCInscription[] | undefined
   >();
@@ -36,33 +45,49 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
     action: () => setMessagesBloquant(undefined)
   };
 
+  useEffect(() => {
+    if (
+      props.inscriptions?.length &&
+      props.inscriptionsRC?.length &&
+      InscriptionRcUtil.estDeTypeModificationViaLibelle(
+        props.inscriptions?.[0].typeInscription
+      )
+    ) {
+      const { inscrptionsRCModification, inscriptionsRCRadiation } =
+        getInscriptionsDeTypeModificationEtRadiation(props.inscriptionsRC);
+
+      if (
+        estMemeNombreDeRCModificationEtRadiation(
+          inscriptionsRCRadiation,
+          inscrptionsRCModification
+        )
+      ) {
+        const tableauRCRadiationTrier: IInscriptionRc[] =
+          triTableauRCRadiationParDate(inscriptionsRCRadiation);
+
+        setInscriptionsRcRadiation(
+          tableauRCRadiationTrier[tableauRCRadiationTrier.length - 1]
+        );
+      }
+    }
+  }, [props.inscriptionsRC, props.inscriptions]);
+
   const resultDeliverCertificatSituation = useDelivrerCertificatSituationHook(
     props.requete.documentDemande.code,
     mappingRequeteDelivranceToRequeteTableau(props.requete),
     inscriptions,
-    actes
+    actes,
+    inscriptionRcRadiation
   );
 
   const listeActionsFiltreParSousTypes: IActionOption[] =
     filtrerListeActionsParSousTypes(props.requete, menuDelivrerActions);
 
   const handleDelivrerMenu = () => {
-    let messageErreur = "";
+    const messageBloquant = afficherMessageBloquant();
 
-    if (props.requete.documentDemande.code === CODE_ATTESTATION_PACS) {
-      if (props.inscriptions?.length === 0 && props.actes?.length === 0) {
-        messageErreur = getLibelle(
-          "Il faut sélectionner au moins un PACS au statut fiche actif"
-        );
-      } else if (props.actes && props.actes.length > 0) {
-        messageErreur = getLibelle(
-          "Votre sélection n'est pas cohérente avec le choix de l'action de réponse"
-        );
-      }
-    }
-
-    if (messageErreur) {
-      setMessagesBloquant([messageErreur]);
+    if (messageBloquant) {
+      setMessagesBloquant([messageBloquant]);
     } else {
       setOperationEnCours(true);
       setInscriptions(
@@ -74,6 +99,32 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
         props.actes ? supprimerNullEtUndefinedDuTableau(props.actes) : []
       );
     }
+  };
+
+  const afficherMessageBloquant = (): string => {
+    let messageBloquant = "";
+    if (props.requete.documentDemande.code === CODE_ATTESTATION_PACS) {
+      if (props.inscriptions?.length === 0 && props.actes?.length === 0) {
+        messageBloquant = getLibelle(
+          "Il faut sélectionner au moins un PACS au statut fiche actif"
+        );
+      } else if (props.actes && props.actes.length > 0) {
+        messageBloquant = getLibelle(
+          "Votre sélection n'est pas cohérente avec le choix de l'action de réponse"
+        );
+      }
+    }
+
+    if (
+      !inscriptionRcRadiation &&
+      DocumentDelivrance.estDocumentDemandeDeTypeRc(
+        props.requete.documentDemande
+      )
+    ) {
+      messageBloquant = getLibelle("La radiation n'est pas enregistrée");
+    }
+
+    return messageBloquant;
   };
 
   /////////////////////////////////////

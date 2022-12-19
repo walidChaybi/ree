@@ -1,6 +1,7 @@
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -23,6 +24,7 @@ export interface IChoixActionDelivranceProps {
   requete: IRequeteDelivrance;
   actes?: IResultatRMCActe[];
   inscriptions?: IResultatRMCInscription[];
+  inscriptionsRC?: IInscriptionRc[];
   dataHistory?: any;
   menuFermer?: boolean;
   titulairesActe?: Map<string, ITitulaireActe[]>;
@@ -73,6 +75,7 @@ export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
               actes={props.actes}
               inscriptions={props.inscriptions}
               dataHistory={props.dataHistory}
+              inscriptionsRC={props.inscriptionsRC}
             />
             <MenuReponseSansDelivranceCS
               requete={props.requete}

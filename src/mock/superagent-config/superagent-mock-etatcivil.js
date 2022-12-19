@@ -29,6 +29,7 @@ import {
   idFicheActeMariage
 } from "../data/ficheActe";
 import { fichePacs, idFichePacs } from "../data/fichePacs";
+import { inscriptionsRc } from "../data/ficheRC";
 import {
   ficheRca,
   FicheRcaDecisionJuridictionEtrangere,
@@ -368,6 +369,12 @@ export const configEtatcivil = [
       if (match[1] === "/acte/rmc?range=1-4") {
         return ReponseAppelRMCActe4DernierResultats;
       }
+
+      // Incriptions RC
+      if (match[1] === "/personne/0bce8edd-0183-497b-139d-0a3cf6918792/rc") {
+        return inscriptionsRc;
+      }
+
       ////////////////////////////////////////////////////////////////////////
 
       if (match[1] === "/nomenclature/NATURE_RC") {

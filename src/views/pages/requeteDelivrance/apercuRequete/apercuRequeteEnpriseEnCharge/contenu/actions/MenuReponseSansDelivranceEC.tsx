@@ -45,7 +45,6 @@ export const MenuReponseSansDelivranceEC: React.FC<
   const [popinIgnorerOuverte, setPopinIgnorerOuverte] =
     useState<boolean>(false);
 
-  // 0 - Initialiser inscriptions & actes (en retirant les valeurs falsy)
   useEffect(() => {
     setInscriptions(props.inscriptions?.filter(Boolean));
     setActes(props.actes?.filter(Boolean));

@@ -34,6 +34,8 @@ export const URL_DERNIERE_DELIVRANCE = "/dernieredelivrance";
 export const URL_DERNIERE_DELIVRANCE_RC_RCA_PACS =
   "/repertoirecivil/datedernieredelivrance";
 export const URL_SAISIE_EXTRAIT = "/saisieExtrait";
+export const URL_PERSONNE = "/personne";
+export const URL_RC = "/rc";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -112,6 +114,13 @@ export function getNbrTitulairesActe(identifiant: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
     uri: `${URL_ACTE}/${identifiant}${URL_COUNT_TITULAIRE}`
+  });
+}
+
+export function getInscriptionsRC(identifiant: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_PERSONNE}/${identifiant}${URL_RC}`
   });
 }
 

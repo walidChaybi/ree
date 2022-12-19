@@ -1,4 +1,5 @@
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
+import { useGetInscriptionsRCApiHook } from "@hook/acte/InscriptionsRcHook";
 import {
   IGetAlertesActeApiHookParameters,
   useGetAlertesActeApiHook
@@ -12,6 +13,7 @@ import {
   useGetTitulairesActeApiHook
 } from "@hook/repertoires/TitulairesActeHook";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { InscriptionRcUtil } from "@model/etatcivil/enum/TypeInscriptionRc";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
@@ -32,20 +34,21 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
   ApercuRequetePriseEnChargePartieDroiteProps
 > = ({ detailRequete, dataHistory }) => {
   /* Etat actes sélectionnés */
-  const [actes, setActes] = useState<Map<number, IResultatRMCActe>>(
-    new Map([])
-  );
+  const [actesSelectionnes, setActesSelectionnees] = useState<
+    IResultatRMCActe[]
+  >([]);
 
-  /* Etat alertes associées aux aajoutAlertePossiblectes sélectionnés */
+  /* Etat alertes associées aux aajoutAlertePossible actes sélectionnés */
   const [alertes, setAlertes] = useState<Map<string, IAlerte[]>>(new Map([]));
 
   /* Etat inscriptions sélectionnées */
-  const [inscriptions, setInscriptions] = useState<
-    Map<number, IResultatRMCInscription>
-  >(new Map([]));
+  const [inscriptionsSelectionnees, setInscriptionsSelectionnees] = useState<
+    IResultatRMCInscription[]
+  >([]);
 
   /* Etat inscriptions sélectionnées */
   const [addActe, setAddActe] = useState<IGetAlertesActeApiHookParameters>();
+  const [idPersonne, setIdPersonne] = useState<string>("");
 
   /* Etat paramètres d'appel de l'API de récupération des titulaires d'un acte */
   const [titulairesActeHookParameters, setTitulairesActeHookParameters] =
@@ -71,39 +74,49 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
 
   /* Gestion du clic sur une colonne de type checkbox dans le tableau des actes */
   const onClickCheckboxActe = useCallback(
-    (index: number, isChecked: boolean, data: IResultatRMCActe): void => {
-      const newSelected = new Map(actes);
+    (isChecked: boolean, data: IResultatRMCActe): void => {
+      let nouveauxActesSelectionnes = actesSelectionnes;
       if (isChecked) {
-        newSelected.set(index, data);
+        nouveauxActesSelectionnes.push(data);
         setAddActe({ idActe: data.idActe, isChecked: true });
       } else {
         setAddActe({ idActe: data.idActe, isChecked: false });
-        newSelected.delete(index);
+        nouveauxActesSelectionnes = decocheElementDuTableauActe(
+          actesSelectionnes,
+          data.idActe
+        );
       }
-      setActes(newSelected);
+      setActesSelectionnees(nouveauxActesSelectionnes);
       setNbrTitulairesActeHookParameters({ idActe: data?.idActe, isChecked });
       setTitulairesActeHookParameters({ idActe: data?.idActe, isChecked });
       setAlertesActeHookParameters({ idActe: data?.idActe, isChecked });
     },
-    [actes]
+    [actesSelectionnes]
   );
 
   /* Gestion du clic sur une colonne de type checkbox dans le tableau des inscriptions */
   const onClickCheckboxInscription = useCallback(
-    (
-      index: number,
-      isChecked: boolean,
-      data: IResultatRMCInscription
-    ): void => {
-      const newSelected = new Map(inscriptions);
+    (isChecked: boolean, data: IResultatRMCInscription): void => {
+      let nouvellesInscriptionsSelectionnees = inscriptionsSelectionnees;
+
       if (isChecked) {
-        newSelected.set(index, data);
+        nouvellesInscriptionsSelectionnees.push(data);
       } else {
-        newSelected.delete(index);
+        nouvellesInscriptionsSelectionnees = decocheElementDuTableauInscription(
+          inscriptionsSelectionnees,
+          data.idInscription
+        );
       }
-      setInscriptions(newSelected);
+
+      setInscriptionsSelectionnees(nouvellesInscriptionsSelectionnees);
+      if (
+        nouvellesInscriptionsSelectionnees.length &&
+        InscriptionRcUtil.estDeTypeModificationViaLibelle(data.typeInscription)
+      ) {
+        setIdPersonne(nouvellesInscriptionsSelectionnees[0].idPersonne);
+      }
     },
-    [inscriptions]
+    [inscriptionsSelectionnees]
   );
 
   /* Hook d'appel de l'API de récupération des titulaires associés à un acte */
@@ -120,6 +133,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
   const resultatGetAlertesActe = useGetAlertesActeApiHook(
     alertesActeHookParameters
   );
+  const resultatGetInscriptionsRC = useGetInscriptionsRCApiHook(idPersonne);
 
   /* Actualisation de la liste des nombres de titulaires et des titulaires des actes sélectionnés */
   useEffect(() => {
@@ -156,8 +170,8 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
 
   /* Remise à zéro des résultats de la RMC */
   const resetActeInscription = useCallback(() => {
-    setActes(new Map([]));
-    setInscriptions(new Map([]));
+    setActesSelectionnees([]);
+    setInscriptionsSelectionnees([]);
   }, []);
 
   return (
@@ -177,8 +191,9 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
       />
       <ChoixAction
         requete={detailRequete}
-        actes={Array.from(actes.values())}
-        inscriptions={Array.from(inscriptions.values())}
+        actes={actesSelectionnes}
+        inscriptions={inscriptionsSelectionnees}
+        inscriptionsRC={resultatGetInscriptionsRC}
         titulairesActe={titulairesActe}
         nbrTitulairesActe={nbrTitulairesActe}
         alertesActe={resultatGetAlertesActe?.alertes}
@@ -187,3 +202,18 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
     </>
   );
 };
+
+function decocheElementDuTableauInscription(
+  inscriptions: IResultatRMCInscription[],
+  id: string
+): IResultatRMCInscription[] {
+  return inscriptions.filter(inscription => inscription.idInscription !== id);
+}
+
+function decocheElementDuTableauActe(
+  actes: IResultatRMCActe[],
+  id: string
+): IResultatRMCActe[] {
+  return actes.filter(inscription => inscription.idActe !== id);
+}
+

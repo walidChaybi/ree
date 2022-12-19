@@ -3,6 +3,7 @@ import { TypeCertificatComposition } from "@model/composition/type/TypeCertifica
 import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
 import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
@@ -27,7 +28,8 @@ import {
 export function useGenerationCertificatPACSOuRCOuRCAHook(
   typeCertificat: TypePacsRcRca,
   requete?: IRequeteTableauDelivrance,
-  listePacsRcRca?: IResultatRMCInscription[]
+  listePacsRcRca?: IResultatRMCInscription[],
+  inscriptionsRcRadiation?: IInscriptionRc
 ): IResultGenerationInscriptions | undefined {
   const [certificatComposition, setCertificatComposition] =
     useState<TypeCertificatComposition>();
@@ -76,7 +78,8 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
         construitCertificatPacsRcRca(
           typeCertificat,
           requete,
-          informationsPacsRcRca
+          informationsPacsRcRca,
+          inscriptionsRcRadiation
         )
       );
     } else if (informationsPacsRcRca !== undefined) {

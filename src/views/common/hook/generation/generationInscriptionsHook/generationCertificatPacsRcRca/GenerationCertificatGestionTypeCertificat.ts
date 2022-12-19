@@ -15,6 +15,7 @@ import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
 import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
@@ -85,7 +86,8 @@ export function getTypeFiche(
 export function construitCertificatPacsRcRca(
   typeCertificat: TypePacsRcRca,
   requete: IRequeteTableauDelivrance,
-  fichePacs: IFichePacs | IFicheRcRca
+  fichePacs: IFichePacs | IFicheRcRca,
+  inscriptionsRcRadiation?: IInscriptionRc
 ): TypeCertificatComposition | undefined {
   let certificatComposition: TypeCertificatComposition | undefined;
   let titulaire: ITitulaireRequeteTableau | undefined;
@@ -105,14 +107,16 @@ export function construitCertificatPacsRcRca(
       break;
     case TypePacsRcRca.RC:
       certificatComposition = CertificatRCComposition.creerCertificatRC(
-        specificationRC.getElementsJasper(fichePacs as IFicheRcRca),
+        specificationRC.getElementsJasper(
+          fichePacs as IFicheRcRca,
+          inscriptionsRcRadiation
+        ),
         requete?.canal,
         requete?.requerant,
         requete?.numero,
         titulaire
       );
       break;
-
     case TypePacsRcRca.RCA:
       certificatComposition = CertificatRCAComposition.creerCertificatRCA(
         specificationRCA.getElementsJasper(fichePacs as IFicheRcRca),

@@ -26,4 +26,17 @@ export class InscriptionRcUtil {
       ? this.libelles[inscriptionRc]
       : "";
   }
+
+  public static estDeTypeModification(type?: TypeInscriptionRc): boolean {
+    return type === TypeInscriptionRc.MODIFICATION;
+  }
+
+  public static estDeTypeRenouvellement(type?: string): boolean {
+    return type === TypeInscriptionRc.RENOUVELLEMENT;
+  }
+
+  public static estDeTypeModificationViaLibelle(libelleType?: string) {
+    return libelleType === this.libelles[TypeInscriptionRc.MODIFICATION];
+  }
 }
+

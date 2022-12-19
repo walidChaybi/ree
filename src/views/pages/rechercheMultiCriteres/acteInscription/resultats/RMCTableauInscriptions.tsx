@@ -34,7 +34,6 @@ export interface RMCResultatInscriptionProps {
   setRangeInscription?: (range: string) => void;
   resetTableauInscription?: boolean;
   onClickCheckboxCallBack?: (
-    index: number,
     isChecked: boolean,
     data: IResultatRMCInscription
   ) => void;
@@ -203,8 +202,7 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
         newSelected.delete(index);
       }
       setSelected(newSelected);
-      onClickCheckboxCallBack &&
-        onClickCheckboxCallBack(index, isChecked, data);
+      onClickCheckboxCallBack && onClickCheckboxCallBack(isChecked, data);
     },
     [selected, onClickCheckboxCallBack]
   );

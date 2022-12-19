@@ -1,5 +1,7 @@
+import { mappingInscriptionsRC } from "@hook/acte/InscriptionsRcHook";
 import { specificationRC } from "@hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRC";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
+import { NatureRca } from "@model/etatcivil/enum/NatureRca";
 import { TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
 import { storeRece } from "@util/storeRece";
 import request from "superagent";
@@ -7,6 +9,7 @@ import {
   FicheRcDecisionNotaire,
   FicheRcDecisionNotaireTypeRequete,
   FicheRcDecisionNotaireTypeRequete2,
+  FicheRcRadiation,
   FicheRcRenouvellementTypeJugement,
   FicheRcRenouvellementTypeOrdonnance
 } from "../../../../../../mock/data/ficheRC";
@@ -16,9 +19,14 @@ import { configEtatcivil } from "../../../../../../mock/superagent-config/supera
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 beforeAll(() => {
-  NatureRc.init();
   storeRece.decrets = decrets;
 });
+
+beforeEach(async () => {
+  NatureRc.init();
+  NatureRca.init();
+});
+
 test("Attendu: specificationRC.getElementsJasper avec une décision Notaire autre que Requete", async () => {
   const data = FicheRcDecisionNotaire;
   const elementsJasper = specificationRC.getElementsJasper(data);
@@ -91,6 +99,7 @@ Lieu de naissance: paris 20ème arrondissement`;
 
 test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une décision de type 'Jugement'", async () => {
   const data = FicheRcRenouvellementTypeJugement;
+
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesses = `Marie-Charlotte, Anne-Claire, Lily-Rose, Abby-Gaëlle SLAOUI
 Date de naissance: 1er septembre 1983
@@ -126,7 +135,12 @@ test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une dé
     ...FicheRcRenouvellementTypeJugement
   };
   data.typeInscription = TypeInscriptionRc.MODIFICATION;
-  const elementsJasper = specificationRC.getElementsJasper(data);
+
+  const elementsJasper = specificationRC.getElementsJasper(
+    data,
+    mappingInscriptionsRC(FicheRcRadiation)[0]
+  );
+
   const interesses = `Marie-Charlotte, Anne-Claire, Lily-Rose, Abby-Gaëlle SLAOUI
 Date de naissance: 1er septembre 1983
 Lieu de naissance: Brest (Finistère)
@@ -147,7 +161,7 @@ mariés à Nanning, zhuang du Guangxi (Chine, Pays du soleil levant) le 12 juin 
   expect(elementsJasper.interesseDecision).toBe(interesses);
   expect(elementsJasper.regime).toBeUndefined();
   expect(elementsJasper.renouvellementModification).toBe(
-    "prononçant la modification de la mesure de curatelle simple RC n° 2020 - 3 en tutelle aux biens et à la personne"
+    "prononçant la modification de la mesure de tutelle aménagée en tutelle aux biens et à la personne"
   );
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.duree).toBe("pour une durée de 1 mois");

@@ -32,7 +32,6 @@ export interface RMCResultatActeProps {
   setRangeActe?: (range: string) => void;
   resetTableauActe?: boolean;
   onClickCheckboxCallBack?: (
-    index: number,
     isChecked: boolean,
     data: IResultatRMCActe
   ) => void;
@@ -187,8 +186,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
         newSelected.delete(index);
       }
       setSelected(newSelected);
-      onClickCheckboxCallBack &&
-        onClickCheckboxCallBack(index, isChecked, data);
+      onClickCheckboxCallBack && onClickCheckboxCallBack(isChecked, data);
     },
     [selected, onClickCheckboxCallBack]
   );

@@ -99,7 +99,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
     }
   );
   expect(phrase.phrasesLiees).toBe(
-    "- Est inscrite au répertoire civil depuis le 18 novembre 2020 sous la référence RC n°2020-11.\n- Est inscrite au répertoire civil depuis le 22 novembre 2020 sous la référence RC n°2020-2 (modification RC n°2020-3)."
+    "- Est inscrite au répertoire civil depuis le 18 novembre 2020 sous la référence RC n°2020-11.\n- Est inscrite au répertoire civil depuis le 22 novembre 2020 sous la référence RC n°2020-2."
   );
 });
 
@@ -137,7 +137,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
     }
   );
   expect(phrase.phrasesLiees).toBe(
-    "- Est inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le 1er décembre 2020 sous la référence PAC n°2018-123456 (modifié).\n- Est inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le 4 décembre 2020 sous la référence PAC n°2018-123456 (annulé).\n- Est inscrite au répertoire civil depuis le 18 novembre 2020 sous la référence RC n°2020-11.\n- Est inscrite au répertoire civil depuis le 22 novembre 2020 sous la référence RC n°2020-2 (modification RC n°2020-3).\n- Est inscrite au répertoire civil annexe depuis le 23 février 2020 sous la référence RCA n°2020-4013.\n- Est inscrite au répertoire civil annexe depuis le 23 février 2020 sous la référence RCA n°2020-4012."
+    "- Est inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le 1er décembre 2020 sous la référence PAC n°2018-123456 (modifié).\n- Est inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le 4 décembre 2020 sous la référence PAC n°2018-123456 (annulé).\n- Est inscrite au répertoire civil depuis le 18 novembre 2020 sous la référence RC n°2020-11.\n- Est inscrite au répertoire civil depuis le 22 novembre 2020 sous la référence RC n°2020-2.\n- Est inscrite au répertoire civil annexe depuis le 23 février 2020 sous la référence RCA n°2020-4013.\n- Est inscrite au répertoire civil annexe depuis le 23 février 2020 sous la référence RCA n°2020-4012."
   );
 });
 

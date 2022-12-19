@@ -9,6 +9,7 @@ import {
   ICreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
+import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { CODE_ATTESTATION_PACS } from "@model/requete/enum/DocumentDelivranceConstante";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
@@ -32,7 +33,8 @@ export function useDelivrerCertificatSituationHook(
   codeDocumentDemande: string,
   requete?: IRequeteTableauDelivrance,
   dataRMCAutoInscription?: IResultatRMCInscription[],
-  dataRMCAutoActe?: IResultatRMCActe[]
+  dataRMCAutoActe?: IResultatRMCActe[],
+  inscriptionsRcRadiation?: IInscriptionRc
 ) {
   const [
     resultDelivrerCertificatSituation,
@@ -56,7 +58,8 @@ export function useDelivrerCertificatSituationHook(
   const resultGenerationInscription = useGenerationInscriptionsHook(
     requete,
     dataRMCAutoInscription,
-    isOldDocumentsDeleted
+    isOldDocumentsDeleted,
+    inscriptionsRcRadiation
   );
 
   useEffect(() => {
