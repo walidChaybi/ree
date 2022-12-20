@@ -7,6 +7,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { validerMentionsPlusieursDocuments } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
+import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { storeRece } from "@util/storeRece";
@@ -49,14 +50,10 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
     setEstDisabled(false);
   }
 
-  const goBack = () => {
-    history.goBack();
-  };
-
   const onClickTerminer = useCallback(() => {
     if (checkDirty(isDirty, setIsDirty)) {
       validerMentionsPlusieursDocuments(
-        () => goBack(),
+        () => history.push(URL_MES_REQUETES_DELIVRANCE),
         acte,
         requete.documentsReponses
       );
