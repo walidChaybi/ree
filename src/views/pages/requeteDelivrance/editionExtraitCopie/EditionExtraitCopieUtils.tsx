@@ -176,7 +176,10 @@ function ajoutOngletsCopie(
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) {
-  if (acte.type === TypeActe.TEXTE) {
+  if (
+    acte.type === TypeActe.TEXTE &&
+    requete.choixDelivrance !== ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE // Pas d'onglet mention pour les copies d'archives
+  ) {
     res.liste.push(ongletMentions(acte, document, requete));
     res.ongletSelectionne = document.validation === Validation.O ? 1 : 0;
   } else {
