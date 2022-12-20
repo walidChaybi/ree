@@ -119,6 +119,9 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
       !inscriptionRcRadiation &&
       DocumentDelivrance.estDocumentDemandeDeTypeRc(
         props.requete.documentDemande
+      ) &&
+      InscriptionRcUtil.estDeTypeModificationViaLibelle(
+        props.inscriptions?.[0].typeInscription
       )
     ) {
       messageBloquant = getLibelle("La radiation n'est pas enregistrée");
