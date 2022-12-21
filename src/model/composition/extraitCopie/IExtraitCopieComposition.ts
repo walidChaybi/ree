@@ -22,7 +22,9 @@ export interface IExtraitCopieComposition
   corps_image?: string[];
   filigrane_archive: boolean;
   formule_signature_delivrance: string;
+  formule_notice_delivrance: string;
   pas_de_bloc_signature: boolean;
+  pas_de_bloc_notice: boolean;
   pas_de_signature: boolean;
   pas_de_nomPrenomAgent: boolean;
   code_CTV: string;

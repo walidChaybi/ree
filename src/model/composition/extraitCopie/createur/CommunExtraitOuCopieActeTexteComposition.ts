@@ -99,6 +99,11 @@ export class CommunExtraitOuCopieActeTexteComposition {
     "Cette transcription ne tient pas lieu d’acte de naissance"
   ];
 
+  public static readonly FORMULE_NOTICE_DELIVRANCE = [
+    "Données contenues dans l'extrait d’acte transmises par le Service central d’état civil n’ayant pas valeur authentique.",
+    "Données contenues dans la copie d’acte transmises par le Service central d’état civil n’ayant pas valeur authentique."
+  ];
+
   public static creerExtraitCopieActeTexte(
     params: ICreerExtraitCopieActeTexteParams
   ) {
@@ -172,7 +177,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
         composition.corps_texte = params.corpsTexte;
       }
     }
-
+    
     CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(
       composition,
       params.choixDelivrance,
@@ -180,6 +185,15 @@ export class CommunExtraitOuCopieActeTexteComposition {
       params.acte.nature,
       params.validation
     );
+
+    CommunExtraitOuCopieActeTexteComposition.creerBlocNotice(
+      composition,
+      params.choixDelivrance,
+      params.sousTypeRequete,
+      params.acte.nature,
+      params.validation
+    );
+
     return composition;
   }
 
@@ -476,6 +490,31 @@ export class CommunExtraitOuCopieActeTexteComposition {
     }
   }
 
+  public static creerBlocNotice(
+    composition: IExtraitCopieComposition,
+    choixDelivrance: ChoixDelivrance,
+    sousTypeRequete: SousTypeDelivrance,
+    natureActe: NatureActe,
+    validation: Validation
+  ) {
+    if (sousTypeRequete !== SousTypeDelivrance.RDDP) {
+      composition.pas_de_bloc_notice = true;
+    } else {
+      composition.pas_de_bloc_notice = false;
+      composition.pas_de_nomPrenomAgent = true;
+      
+      CommunExtraitOuCopieActeTexteComposition.creerFormuleNoticeDelivrance(
+        composition,
+        choixDelivrance,
+        sousTypeRequete,
+        natureActe
+      );
+
+      // Ajout de la date de délivrance
+      CommunComposition.ajoutDateDujour(composition);
+    }
+  }
+
   public static creerFormuleSignatureDelivrance(
     composition: IExtraitCopieComposition,
     choixDelivrance: ChoixDelivrance,
@@ -515,6 +554,30 @@ export class CommunExtraitOuCopieActeTexteComposition {
           DEUX
         ];
     }
+  }
+
+  public static creerFormuleNoticeDelivrance(
+    composition: IExtraitCopieComposition,
+    choixDelivrance: ChoixDelivrance,
+    sousTypeRequete: SousTypeDelivrance,
+    natureActe: NatureActe
+  ) {
+    // Formule de notice délivrance
+    if (choixDelivrance === ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE) {
+      composition.formule_notice_delivrance =
+        CommunExtraitOuCopieActeTexteComposition.FORMULE_NOTICE_DELIVRANCE[
+          UN
+        ];
+    } else if (
+      choixDelivrance ===
+        ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION ||
+      choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
+    ) {
+      composition.formule_notice_delivrance =
+        CommunExtraitOuCopieActeTexteComposition.FORMULE_NOTICE_DELIVRANCE[
+          ZERO
+        ];
+      }
   }
 
   public static getTexteMentions(

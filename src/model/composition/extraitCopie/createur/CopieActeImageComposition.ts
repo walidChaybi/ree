@@ -52,6 +52,15 @@ export class CopieActeImageComposition {
       params.acte.nature,
       params.validation
     );
+
+    CommunExtraitOuCopieActeTexteComposition.creerBlocNotice(
+      composition,
+      params.choixDelivrance,
+      params.requete.sousType,
+      params.acte.nature,
+      params.validation
+    );
+
     return composition;
   }
 
