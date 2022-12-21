@@ -1,4 +1,4 @@
-import { TRequete } from "@model/requete/IRequete";
+import { Requete, TRequete } from "@model/requete/IRequete";
 import { getLibelle } from "@util/Utils";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect, FormikProps, FormikValues } from "formik";
@@ -51,11 +51,15 @@ const IdentitesForm: React.FC<
 
   return (
     <>
-      {props.titulaires.map(titulaire => (
+      {props.titulaires.map((titulaireForm, index) => (
         <IdentiteForm
-          key={titulaire.nom}
-          requete={props.requete}
-          {...titulaire}
+          key={titulaireForm.nom}
+          titulaire={
+            Requete.getTitulairesTriesParPosition(props.requete?.titulaires)?.[
+              index
+            ]
+          }
+          {...titulaireForm}
         />
       ))}
       <BoutonTitulaire

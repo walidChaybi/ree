@@ -1,3 +1,4 @@
+import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { getLibelle } from "@util/Utils";
 import InputFieldAvecBoutonMajuscule from "@widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
 import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
@@ -35,7 +36,13 @@ export const NomsFormValidationSchema = Yup.object().shape({
   )
 });
 
-const NomsForm: React.FC<SubFormProps> = props => {
+interface INomsFormProps {
+  titulaire?: ITitulaireRequete;
+}
+
+export type NomsFormProps = SubFormProps & INomsFormProps;
+
+const NomsForm: React.FC<NomsFormProps> = props => {
   const nomNaissanceWithNamespace = withNamespace(props.nom, NOM_NAISSANCE);
   const nomUsageWithNamespace = withNamespace(props.nom, NOM_USAGE);
 
@@ -47,15 +54,10 @@ const NomsForm: React.FC<SubFormProps> = props => {
   };
 
   useEffect(() => {
-    if (
-      props.requete &&
-      props.requete.titulaires &&
-      props.requete.titulaires[0] &&
-      props.requete.titulaires[0].nomUsage
-    ) {
+    if (props.titulaire && props.titulaire.nomUsage) {
       setNomUsagePresent(true);
     }
-  }, [props.requete]);
+  }, [props.requete, props.titulaire]);
 
   function getBoutonAjouter(): JSX.Element {
     return (

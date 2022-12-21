@@ -54,5 +54,13 @@ export const Requete = {
   },
   estATraiterOuEstATransferer(requete?: IRequete) {
     return this.estATraiter(requete) || this.estATransferer(requete);
+  },
+  getTitulairesTriesParPosition(
+    titulaires?: ITitulaireRequete[]): ITitulaireRequete[] | undefined {
+    return titulaires
+      ? titulaires.sort((titulaire1, titulaire2) => {
+          return titulaire1.position - titulaire2.position;
+        })
+      : undefined;
   }
 };

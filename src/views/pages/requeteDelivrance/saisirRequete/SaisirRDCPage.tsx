@@ -150,15 +150,12 @@ export const SaisirRDCPage: React.FC = () => {
   const [mandantVisible, setMandantVisible] = useState<boolean>(false);
   const [lienTitulaireVisible, setLienTitulaireVisible] =
     useState<boolean>(true);
-
   const [optionsRequerant, setOptionsRequerant] = useState<Options>(
     TypeRequerantRDC.getListEnumsAsOptions(UN_TITULAIRE)
   );
-
   const [optionsLienTitulaire, setOptionsLienTitulaire] = useState<Options>(
     TypeLienRequerant.getListEnumsAsOptions(TYPE_LIEN_REQUERANT_POUR_TITULAIRE)
   );
-
   const [donneesIncompletes, setDonneesIncompletes] =
     React.useState<boolean>(false);
   const [isBrouillon, setIsBrouillon] = useState<boolean>(false);
@@ -176,41 +173,26 @@ export const SaisirRDCPage: React.FC = () => {
   const [paramsRMCAuto, setParamsRMCAuto] = useState<
     INavigationApercuRMCAutoParams | undefined
   >();
-
-  const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const [idRequete, setIdRequete] = useState<string>();
-  const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
   const [requete, setRequete] = useState<SaisieRequeteRDC>();
   const [paramsCreationAction, setParamsCreationAction] = useState<
     CreationActionHookParams | undefined
   >();
-
   const [
     metAJourStatutRequeteApresMajPiecesJointes,
     setMetAJourStatutRequeteApresMajPiecesJointes
   ] = useState<ICreationActionMiseAjourStatutHookParams>();
 
-  useEffect(() => {
-    setIdRequete(idRequeteParam);
-  }, [idRequeteParam]);
+  const { idRequeteParam } = useParams<IUuidRequeteParams>();
 
-  useEffect(() => {
-    if (detailRequeteState) {
-      const requeteForm = mappingRequeteDelivranceVersFormulaireRDC(
-        detailRequeteState as IRequeteDelivrance
-      );
-
-      setRequete(requeteForm);
-      onChangeNature(requeteForm[REQUETE][NATURE_ACTE]);
-      onChangeRequerant(requeteForm[REQUERANT][TYPE_REQUERANT]);
-    }
-  }, [detailRequeteState]);
-
+  const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
   const creationRequeteDelivranceRDCResultat =
     useCreationRequeteDelivranceRDC(creationRequeteRDC);
-
   const updateRequeteDelivranceRDCResultat =
     useUpdateRequeteDelivranceRDC(updateRequeteRDC);
+  useCreationAction(paramsCreationAction);
+  useCreationActionMiseAjourStatut(metAJourStatutRequeteApresMajPiecesJointes);
+  useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
 
   const getIdRequeteCreee = useCallback(() => {
     if (updateRequeteDelivranceRDCResultat) {
@@ -230,81 +212,71 @@ export const SaisirRDCPage: React.FC = () => {
     piecesjointesAMettreAJour
   );
 
-  useCreationAction(paramsCreationAction);
-  useCreationActionMiseAjourStatut(metAJourStatutRequeteApresMajPiecesJointes);
-  useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
+  useEffect(() => {
+    setIdRequete(idRequeteParam);
+  }, [idRequeteParam]);
 
-  const onChangeNature = (nature: string) => {
-    setEvenementVisible(
-      NatureActeRequete.getEnumFor(nature) !== NatureActeRequete.NAISSANCE
-    );
-    setTitulaire2Visible(
-      NatureActeRequete.getEnumFor(nature) === NatureActeRequete.MARIAGE
-    );
-
-    if (NatureActeRequete.getEnumFor(nature) === NatureActeRequete.MARIAGE) {
-      setOptionsRequerant(TypeRequerantRDC.getAllEnumsAsOptions());
-    } else {
-      setOptionsRequerant(TypeRequerantRDC.getListEnumsAsOptions(UN_TITULAIRE));
-    }
-  };
-
-  const onChangeRequerant = (typeRequerant: string) => {
-    setMandantVisible(
-      TypeRequerantRDC.getEnumFor(typeRequerant) === TypeRequerantRDC.MANDATAIRE
-    );
-
-    setLienTitulaireVisible(
-      !(
-        TypeRequerantRDC.getEnumFor(typeRequerant) ===
-          TypeRequerantRDC.INSTITUTIONNEL ||
-        TypeRequerantRDC.getEnumFor(typeRequerant) ===
-          TypeRequerantRDC.AUTRE_PROFESSIONNEL
-      )
-    );
-
-    if (
-      TypeRequerantRDC.getEnumFor(typeRequerant) ===
-        TypeRequerantRDC.TITULAIRE1 ||
-      TypeRequerantRDC.getEnumFor(typeRequerant) === TypeRequerantRDC.TITULAIRE2
-    ) {
-      setOptionsLienTitulaire(
-        TypeLienRequerant.getListEnumsAsOptions(
-          TYPE_LIEN_REQUERANT_POUR_TITULAIRE
-        )
+  useEffect(() => {
+    if (detailRequeteState) {
+      const requeteForm = mappingRequeteDelivranceVersFormulaireRDC(
+        detailRequeteState as IRequeteDelivrance
       );
-    } else if (
-      TypeRequerantRDC.getEnumFor(typeRequerant) ===
-      TypeRequerantRDC.PARTICULIER
-    ) {
-      setOptionsLienTitulaire(TypeLienRequerant.getAllEnumsAsOptions());
-    } else if (
-      TypeRequerantRDC.getEnumFor(typeRequerant) === TypeRequerantRDC.MANDATAIRE
-    ) {
-      setOptionsLienTitulaire(TypeLienMandant.getAllEnumsAsOptions());
+
+      setRequete(requeteForm);
+      onChangeNature(requeteForm[REQUETE][NATURE_ACTE]);
+      onChangeRequerant(requeteForm[REQUERANT][TYPE_REQUERANT]);
     }
-  };
+  }, [detailRequeteState]);
 
-  const blocsForm: JSX.Element[] = [
-    getRequeteForm(onChangeNature),
-    getEvenementForm(evenementVisible),
-    getTitulaire1Form(),
-    getTitulaire2Form(titulaire2Visible),
-    getRequerantForm(detailRequeteState, optionsRequerant, onChangeRequerant),
-    getMandantForm(mandantVisible),
-    getLienTitulaireForm(lienTitulaireVisible, optionsLienTitulaire),
-    getAdresseForm()
-  ];
+  useEffect(() => {
+    if (
+      creationRequeteDelivranceRDCResultat?.requete ||
+      updateRequeteDelivranceRDCResultat?.requete
+    ) {
+      const resultat =
+        creationRequeteDelivranceRDCResultat ??
+        updateRequeteDelivranceRDCResultat;
+      // Une fois la requête créée ou mise à jour, la mise à jour des pièces jointes peut se faire
+      const pjAMettreAjour = getPiecesJointesAMettreAJour(
+        saisieRequeteRDC?.[PIECES_JOINTES]
+      );
+      if (pjAMettreAjour && pjAMettreAjour.length > 0) {
+        setPiecesjointesAMettreAJour(pjAMettreAjour);
+      } else if (modeModification) {
+        majActionEtRedirection(resultat);
+      } else {
+        majStatutRequeteSiBesoinEtRedirection();
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    creationRequeteDelivranceRDCResultat,
+    updateRequeteDelivranceRDCResultat
+  ]);
 
-  function getPiecesJointesAMettreAJour(
-    formulairePiecesJointes?: PieceJointe[]
-  ) {
-    // On ne prend que les pjs dont le contenu est renseigné,
-    //   en effet si le contenu est vide c'est qu'il a été écrasé par la requête lors de la sauvegarde (la requête ramène ses pièces jointes mais sans le contenu)
-    return formulairePiecesJointes?.filter(
-      formulairePj => formulairePj.base64File.base64String
-    );
-  }
+  useEffect(() => {
+    // Une fois les pièces jointes mises à jour, la maj du bon statut de la requête puis la redirection sont effectuées
+    if (postPiecesJointesApiResultat && !postPiecesJointesApiResultat.erreur) {
+      if (modeModification) {
+        majActionEtRedirection(
+          updateRequeteDelivranceRDCResultat ??
+            creationRequeteDelivranceRDCResultat
+        );
+      } else {
+        majStatutRequeteSiBesoinEtRedirection();
+      }
+    } else if (postPiecesJointesApiResultat?.erreur) {
+      setOperationEnCours(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [postPiecesJointesApiResultat]);
+
+  useEffect(() => {
+    if (history) {
+      const url = receUrl.getUrlCourante(history);
+      setModeModification(url.includes(PATH_MODIFIER_RDC));
+    }
+  }, [history]);
 
   const redirectionPage = useCallback(
     async (requeteSauvegardee: IRequeteDelivrance) => {
@@ -361,49 +333,6 @@ export const SaisirRDCPage: React.FC = () => {
     }
   }, [getIdRequeteCreee]);
 
-  useEffect(() => {
-    if (
-      creationRequeteDelivranceRDCResultat?.requete ||
-      updateRequeteDelivranceRDCResultat?.requete
-    ) {
-      const resultat =
-        creationRequeteDelivranceRDCResultat ??
-        updateRequeteDelivranceRDCResultat;
-      // Une fois la requête créée ou mise à jour, la mise à jour des pièces jointes peut se faire
-      const pjAMettreAjour = getPiecesJointesAMettreAJour(
-        saisieRequeteRDC?.[PIECES_JOINTES]
-      );
-      if (pjAMettreAjour && pjAMettreAjour.length > 0) {
-        setPiecesjointesAMettreAJour(pjAMettreAjour);
-      } else if (modeModification) {
-        majActionEtRedirection(resultat);
-      } else {
-        majStatutRequeteSiBesoinEtRedirection();
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    creationRequeteDelivranceRDCResultat,
-    updateRequeteDelivranceRDCResultat
-  ]);
-
-  useEffect(() => {
-    // Une fois les pièces jointes mises à jour, la maj du bon statut de la requête puis la redirection sont effectuées
-    if (postPiecesJointesApiResultat && !postPiecesJointesApiResultat.erreur) {
-      if (modeModification) {
-        majActionEtRedirection(
-          updateRequeteDelivranceRDCResultat ??
-            creationRequeteDelivranceRDCResultat
-        );
-      } else {
-        majStatutRequeteSiBesoinEtRedirection();
-      }
-    } else if (postPiecesJointesApiResultat?.erreur) {
-      setOperationEnCours(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [postPiecesJointesApiResultat]);
-
   const majStatutRequeteSiBesoinEtRedirection = useCallback(() => {
     const statutFinal: StatutRequete | undefined =
       updateRequeteRDC?.statutFinal || creationRequeteRDC?.statutFinal;
@@ -430,6 +359,67 @@ export const SaisirRDCPage: React.FC = () => {
     redirectApresCreationOuModification,
     updateRequeteRDC
   ]);
+
+  const onChangeNature = (nature: string) => {
+    setEvenementVisible(
+      NatureActeRequete.getEnumFor(nature) !== NatureActeRequete.NAISSANCE
+    );
+    setTitulaire2Visible(
+      NatureActeRequete.getEnumFor(nature) === NatureActeRequete.MARIAGE
+    );
+
+    if (NatureActeRequete.getEnumFor(nature) === NatureActeRequete.MARIAGE) {
+      setOptionsRequerant(TypeRequerantRDC.getAllEnumsAsOptions());
+    } else {
+      setOptionsRequerant(TypeRequerantRDC.getListEnumsAsOptions(UN_TITULAIRE));
+    }
+  };
+
+  const onChangeRequerant = (typeRequerant: string) => {
+    setMandantVisible(
+      TypeRequerantRDC.getEnumFor(typeRequerant) === TypeRequerantRDC.MANDATAIRE
+    );
+
+    setLienTitulaireVisible(
+      !(
+        TypeRequerantRDC.getEnumFor(typeRequerant) ===
+          TypeRequerantRDC.INSTITUTIONNEL ||
+        TypeRequerantRDC.getEnumFor(typeRequerant) ===
+          TypeRequerantRDC.AUTRE_PROFESSIONNEL
+      )
+    );
+
+    if (
+      TypeRequerantRDC.getEnumFor(typeRequerant) ===
+        TypeRequerantRDC.TITULAIRE1 ||
+      TypeRequerantRDC.getEnumFor(typeRequerant) === TypeRequerantRDC.TITULAIRE2
+    ) {
+      setOptionsLienTitulaire(
+        TypeLienRequerant.getListEnumsAsOptions(
+          TYPE_LIEN_REQUERANT_POUR_TITULAIRE
+        )
+      );
+    } else if (
+      TypeRequerantRDC.getEnumFor(typeRequerant) ===
+      TypeRequerantRDC.PARTICULIER
+    ) {
+      setOptionsLienTitulaire(TypeLienRequerant.getAllEnumsAsOptions());
+    } else if (
+      TypeRequerantRDC.getEnumFor(typeRequerant) === TypeRequerantRDC.MANDATAIRE
+    ) {
+      setOptionsLienTitulaire(TypeLienMandant.getAllEnumsAsOptions());
+    }
+  };
+
+  function getPiecesJointesAMettreAJour(
+    formulairePiecesJointes?: PieceJointe[]
+  ) {
+    // On ne prend que les pjs dont le contenu est renseigné,
+    //   en effet si le contenu est vide c'est qu'il a été écrasé par la requête lors de la sauvegarde (la requête ramène ses pièces jointes mais sans le contenu)
+    return formulairePiecesJointes?.filter(
+      formulairePj => formulairePj.base64File.base64String
+    );
+  }
 
   const onSubmitSaisirRequete = (values: SaisieRequeteRDC) => {
     setSaisieRequeteRDC(values);
@@ -477,12 +467,17 @@ export const SaisirRDCPage: React.FC = () => {
     modeModification
   } as SaisirRequeteBoutonsProps;
 
-  useEffect(() => {
-    if (history) {
-      const url = receUrl.getUrlCourante(history);
-      setModeModification(url.includes(PATH_MODIFIER_RDC));
-    }
-  }, [history]);
+  const blocsForm: JSX.Element[] = [
+    getRequeteForm(onChangeNature),
+    getEvenementForm(evenementVisible),
+    getTitulaire1Form(detailRequeteState),
+    getTitulaire2Form(detailRequeteState, titulaire2Visible),
+    getRequerantForm(detailRequeteState, optionsRequerant, onChangeRequerant),
+    getMandantForm(mandantVisible),
+    getLienTitulaireForm(lienTitulaireVisible, optionsLienTitulaire),
+    getAdresseForm(),
+    getPiecesJointesForm()
+  ];
 
   return (
     <>
@@ -499,7 +494,7 @@ export const SaisirRDCPage: React.FC = () => {
         onSubmit={onSubmitSaisirRequete}
         className="FormulaireSaisirRDC"
       >
-        <div>{[blocsForm, getPiecesJointesForm()]}</div>
+        <div>{blocsForm}</div>
         <SaisirRequeteBoutons {...boutonsProps} />
       </Formulaire>
       <ConfirmationPopin

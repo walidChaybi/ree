@@ -376,13 +376,17 @@ export const SaisirRDCSCPage: React.FC = () => {
           idRequete: getIdRequeteCreee()
         } as IRequeteTableauDelivrance,
         // redirection ensuite
-        callback: () => redirectApresCreationOuModification(statutFinal)
+        callback: () =>
+          updateRequeteRDCSC?.refus
+            ? majStatutRequeteSiBesoinEtRedirection()
+            : redirectApresCreationOuModification(statutFinal)
       });
     }
   }, [
     updateRequeteRDCSC,
     majIdRequete,
     getIdRequeteCreee,
+    majStatutRequeteSiBesoinEtRedirection,
     redirectApresCreationOuModification
   ]);
 
@@ -508,16 +512,10 @@ export const SaisirRDCSCPage: React.FC = () => {
     const defautTitulaire2 = DefaultValuesSaisirRDCSC[TITULAIRES].titulaire2;
     const defautTypeRequerant =
       DefaultValuesSaisirRDCSC[REQUERANT].typeRequerant;
-    const futurNbTitulaires =
-      titulairesState.titulaires.length === limitesTitulaires.MAX
-        ? limitesTitulaires.MIN
-        : limitesTitulaires.MAX;
 
-    if (futurNbTitulaires === limitesTitulaires.MIN) {
-      formik.setFieldValue(nomTitulaire2, defautTitulaire2);
-      if (formik.getFieldProps(nomTypeRequerant).value === "TITULAIRE2") {
-        formik.setFieldValue(nomTypeRequerant, defautTypeRequerant);
-      }
+    formik.setFieldValue(nomTitulaire2, defautTitulaire2);
+    if (formik.getFieldProps(nomTypeRequerant).value === "TITULAIRE2") {
+      formik.setFieldValue(nomTypeRequerant, defautTypeRequerant);
     }
 
     setTitulairesState(precTitulaires => ({

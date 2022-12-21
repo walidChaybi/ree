@@ -5,6 +5,7 @@ import ParentForm, {
 } from "@composant/formulaire/ParentForm";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { getLibelle } from "@util/Utils";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
@@ -28,6 +29,7 @@ import EvenementForm, {
 } from "../evenement/EvenementForm";
 import NomsForm, {
   NomsFormDefaultValues,
+  NomsFormProps,
   NomsFormValidationSchema
 } from "./nomsPrenoms/NomsForm";
 import PrenomsForm, {
@@ -67,6 +69,7 @@ export const IdentiteFormValidationSchema = Yup.object().shape({
 
 interface IdentiteFormProps {
   filiation?: boolean;
+  titulaire?: ITitulaireRequete;
 }
 
 export type IdentiteSubFormProps = SubFormProps & IdentiteFormProps;
@@ -76,14 +79,12 @@ const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
 
   const nomsFormProps = {
     nom: withNamespace(props.nom, NOMS),
-    requete: props.requete
-  } as SubFormProps;
+    titulaire: props.titulaire
+  } as NomsFormProps;
 
   const prenomsFormProps = {
     nom: withNamespace(props.nom, PRENOMS),
-    prenoms: props.requete?.titulaires
-      ? props.requete?.titulaires[0].prenoms
-      : undefined
+    prenoms: props.titulaire ? props.titulaire?.prenoms : undefined
   } as PrenomsFormProps;
 
   const naissanceFormProps = {
