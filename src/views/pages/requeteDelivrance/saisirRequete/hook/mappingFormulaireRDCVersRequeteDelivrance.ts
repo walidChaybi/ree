@@ -5,6 +5,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
 import { DEUX, getValeurOuVide, SNP } from "@util/Utils";
 import {
@@ -12,7 +13,7 @@ import {
   SaisieRequeteRDC
 } from "../modelForm/ISaisirRDCPageModel";
 import { Adresse, Identite } from "../modelForm/ISaisirRequetePageModel";
-import { getPrenoms } from "./mappingCommun";
+import { getPieceJustificative, getPrenoms } from "./mappingCommun";
 
 export function mappingFormulaireRDCVersRequeteDelivrance(
   requeteRDC: CreationRequeteRDC
@@ -29,10 +30,20 @@ export function mappingFormulaireRDCVersRequeteDelivrance(
     mandant: getMandant(requeteRDC.saisie),
     titulaires: getTitulairesRequete(requeteRDC.saisie),
     requerant: getRequerant(requeteRDC.saisie),
-    lienRequerant: getLienRequerant(requeteRDC.saisie)
+    lienRequerant: getLienRequerant(requeteRDC.saisie),
+    piecesJustificatives: getPiecesJustificativesAGarder(requeteRDC.saisie)
   } as any as IRequeteDelivrance;
 
   return supprimeProprietesVides(requete);
+}
+
+// Renvoie des PJs déjà intégrées (sans contenu base64String) afin de gérer les suppressions
+function getPiecesJustificativesAGarder(saisie: SaisieRequeteRDC) {
+  const piecesJustificatives: IPieceJustificative[] = [];
+  saisie?.piecesJointes
+    ?.filter(pj => !pj.base64File.base64String)
+    .forEach(pj => piecesJustificatives.push(getPieceJustificative(pj)));
+  return piecesJustificatives;
 }
 
 function getEvenement(saisie: SaisieRequeteRDC) {

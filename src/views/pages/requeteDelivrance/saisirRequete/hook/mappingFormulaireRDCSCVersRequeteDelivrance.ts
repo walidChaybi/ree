@@ -4,6 +4,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
 import { getValeurOuVide, SNP } from "@util/Utils";
 import {
@@ -13,7 +14,7 @@ import {
 } from "../modelForm/ISaisirRDCSCPageModel";
 import { Adresse, Identite } from "../modelForm/ISaisirRequetePageModel";
 import { limitesTitulaires } from "../SaisirRDCSCPage";
-import { getPrenoms } from "./mappingCommun";
+import { getPieceJustificative, getPrenoms } from "./mappingCommun";
 
 export function mappingFormulaireRDCSCVersRequeteDelivrance(
   requeteRDCSC: CreationRequeteRDCSC | UpdateRequeteRDCSC,
@@ -34,9 +35,19 @@ export function mappingFormulaireRDCSCVersRequeteDelivrance(
           )
         : {}
     ],
-    requerant: getRequerant(requeteRDCSC.saisie)
+    requerant: getRequerant(requeteRDCSC.saisie),
+    piecesJustificatives: getPiecesJustificativesAGarder(requeteRDCSC.saisie)
   } as any as IRequeteDelivrance;
   return supprimeProprietesVides(requete);
+}
+
+// Renvoie des PJs déjà intégrées (sans contenu base64String) afin de gérer les suppressions
+function getPiecesJustificativesAGarder(saisie: SaisieRequeteRDCSC) {
+  const piecesJustificatives: IPieceJustificative[] = [];
+  saisie?.piecesJointes
+    ?.filter(pj => !pj.base64File.base64String)
+    .forEach(pj => piecesJustificatives.push(getPieceJustificative(pj)));
+  return piecesJustificatives;
 }
 
 function getTitulaireRequete(titulaire: Identite, position = 1) {
