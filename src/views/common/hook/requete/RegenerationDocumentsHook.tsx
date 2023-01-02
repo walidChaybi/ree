@@ -127,6 +127,7 @@ function genereCourrier(
     requete: params.requete,
     optionsChoisies: document.optionsCourrier
       ? (document.optionsCourrier.map(option => ({
+          code: option.code,
           texteOptionCourrier: option.texte,
           ordreEdition: option.numeroOrdreEdition
         })) as OptionsCourrier)

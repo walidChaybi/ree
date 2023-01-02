@@ -309,13 +309,13 @@ function mapCourrierPourSauvergarde(
       typeDocument: DocumentDelivrance.getUuidFromDocument(courrier), // UUID du courrier (nomenclature)
       nbPages: donneesComposition.nbPages,
       orientation: Orientation.PORTRAIT,
-      optionsCourrier: optionsChoisies?.map(el => {
+      optionsCourrier: optionsChoisies?.map(optionCourrier => {
         return {
-          code: el.id,
-          numeroOrdreEdition: el.ordreEdition,
-          texte: el.texteOptionCourrierModifier
-            ? el.texteOptionCourrierModifier
-            : el.texteOptionCourrier
+          code: optionCourrier.code,
+          numeroOrdreEdition: optionCourrier.ordreEdition,
+          texte: optionCourrier.texteOptionCourrierModifier
+            ? optionCourrier.texteOptionCourrierModifier
+            : optionCourrier.texteOptionCourrier
         };
       }),
       texteLibreCourrier: {
