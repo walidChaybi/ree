@@ -19,6 +19,7 @@ const MARSEILLE = "MARSEILLE";
 const LYON = "LYON";
 const villesMarseilleLyonParis = [MARSEILLE, LYON, PARIS];
 const JERUSALEM = "JERUSALEM";
+const INCONNU = "INCONNU";
 
 export class LieuxUtils {
   public static estVilleFranceAvecArrondissement(
@@ -37,6 +38,10 @@ export class LieuxUtils {
 
   public static estPaysFrance(pays?: string): boolean {
     return pays != null && pays.toUpperCase() === FRANCE;
+  }
+
+  public static estPaysInconnu(pays?: string): boolean {
+    return pays != null && pays.toUpperCase() === INCONNU;
   }
 
   public static estVilleParis(ville?: string): boolean {

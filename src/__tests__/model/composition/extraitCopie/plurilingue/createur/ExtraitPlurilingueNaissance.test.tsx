@@ -195,7 +195,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
     expect(compositionCorps.titulaire_1?.prenoms_pere).toBe("");
   });
 
-  test("Doit formater les prénom correctement", () => {
+  test("Doit formater les prénoms correctement", () => {
     const acte = mapActe(ficheActeAvecAnneeNaissanceTitulaireAbsente.data);
 
     const compositionCorps = creationCompositionExtraitPlurilingue(

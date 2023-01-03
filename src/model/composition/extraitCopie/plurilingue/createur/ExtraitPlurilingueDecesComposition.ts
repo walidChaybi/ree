@@ -7,6 +7,7 @@ import {
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import { getValeurOuVide } from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { FicheActe, IFicheActe } from "../../../../etatcivil/acte/IFicheActe";
 import { IExtraitPlurilingueComposition } from "../IExtraitPlurilingueComposition";
 import { ExtraitPlurilingueCommunComposition } from "./ExtraitPlurilingueCommunComposition";
@@ -54,7 +55,10 @@ export class ExtraitPlurilingueDecesComposition {
     compositionTitulaire.date_naissance =
       Evenement.formatageDateCompositionExtraitPlurilingue(titulaire.naissance);
     compositionTitulaire.lieu_naissance =
-      TitulaireActe.getLieuDeRepriseOuLieuNaissance(titulaire);
+      TitulaireActe.getLieuDeRepriseOuLieuNaissance(
+        titulaire,
+        LieuxUtils.estPaysInconnu(titulaire.naissance?.pays)
+      );
     compositionTitulaire.nom_dernier_conjoint = getValeurOuVide(
       titulaire.nomDernierConjoint
     );

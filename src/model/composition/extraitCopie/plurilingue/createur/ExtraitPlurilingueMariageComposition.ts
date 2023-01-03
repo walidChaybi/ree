@@ -7,6 +7,7 @@ import {
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import { getValeurOuVide } from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { FicheActe, IFicheActe } from "../../../../etatcivil/acte/IFicheActe";
 import { IExtraitPlurilingueComposition } from "../IExtraitPlurilingueComposition";
 import { ExtraitPlurilingueCommunComposition } from "./ExtraitPlurilingueCommunComposition";
@@ -67,7 +68,10 @@ export class ExtraitPlurilingueMariageComposition {
         date_naissance: Evenement.formatageDateCompositionExtraitPlurilingue(
           titulaire.naissance
         ),
-        lieu_naissance: TitulaireActe.getLieuDeRepriseOuLieuNaissance(titulaire)
+        lieu_naissance: TitulaireActe.getLieuDeRepriseOuLieuNaissance(
+          titulaire,
+          LieuxUtils.estPaysInconnu(titulaire.naissance?.pays)
+        )
       };
     }
   }

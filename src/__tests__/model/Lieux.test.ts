@@ -2,6 +2,7 @@ import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 test("Lieux model", () => {
   expect(LieuxUtils.estPaysFrance("france")).toBe(true);
+  expect(LieuxUtils.estPaysInconnu("inconnu")).toBe(true);
   expect(LieuxUtils.estVilleParis("paris")).toBe(true);
   expect(LieuxUtils.estVilleAvecArrondissement("paris")).toBe(true);
   expect(LieuxUtils.estVilleAvecArrondissement("lyon")).toBe(true);

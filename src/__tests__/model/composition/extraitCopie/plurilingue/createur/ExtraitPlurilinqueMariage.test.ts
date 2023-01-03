@@ -224,7 +224,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
     expect(compositionCorps.titulaire_1?.lieu_naissance).toBe("Paris");
   });
 
-  test("Doit formater la date de naissance correctement quand le pays est étranger", () => {
+  test("Doit formater la date de naissance des correctement quand le pays est étranger", () => {
     const acte = mapActe(ficheActeMariageAvecNomContientDesormais.data);
 
     const compositionCorps = creationCompositionExtraitPlurilingue(
@@ -237,5 +237,192 @@ describe("Composition extrait plurilingue de Mariage", () => {
     expect(compositionCorps.titulaire_2?.lieu_naissance).toBe(
       "Barcelone, Catalogne (Espagne)"
     );
+  });
+
+  test("Doit composer correctement le lieu de naissance quand le pays est inconnu", () => {
+    const ficheActeMariageAvecPaysInconnu = {
+      ...ficheActeMariage.data,
+      ...(ficheActeMariage.data.titulaires = [
+        {
+          nom: "MARTIN",
+          prenoms: ["Jean-Louis", "Alphonse", "Raoül"],
+          autresNoms: null,
+          autresPrenoms: null,
+          ordre: 1,
+          sexe: "MASCULIN",
+          naissance: {
+            minute: null,
+            heure: null,
+            jour: 29,
+            mois: 11,
+            annee: 1989,
+            voie: null,
+            ville: "Paris",
+            arrondissement: null,
+            region: "",
+            pays: "Inconnu",
+            lieuReprise: null
+          },
+          profession: "Enseignante",
+          age: null,
+          domicile: {
+            voie: "7 Rue du Noyer",
+            ville: "Bruxelles",
+            arrondissement: null,
+            region: "Flandre",
+            pays: "BELGIQUE"
+          },
+          filiations: [
+            {
+              type: null,
+              ordre: 1,
+              nom: "Sacken",
+              sexe: "FEMININ",
+              naissance: null,
+              profession: "Coiffeuse",
+              age: null,
+              lienParente: "PARENT",
+              domicile: {
+                voie: "16 avenue des Palmiers",
+                ville: "Djibouti",
+                arrondissement: null,
+                region: null,
+                pays: "DJIBOUTI"
+              },
+              prenoms: ["Carmela", "Linzy"]
+            },
+            {
+              type: null,
+              ordre: 1,
+              nom: "Sacken",
+              sexe: "FEMININ",
+              naissance: null,
+              profession: "Coiffeuse",
+              age: null,
+              lienParente: "PARENT",
+              domicile: {
+                voie: "16 avenue des Palmiers",
+                ville: "Djibouti",
+                arrondissement: null,
+                region: null,
+                pays: "DJIBOUTI"
+              },
+              prenoms: ["Carmelaa", "Linzy"]
+            },
+            {
+              type: null,
+              ordre: 1,
+              nom: "Sacken",
+              sexe: "FEMININ",
+              naissance: null,
+              profession: "Coiffeuse",
+              age: null,
+              lienParente: "PARENT_ADOPTANT",
+              domicile: {
+                voie: "16 avenue des Palmiers",
+                ville: "Djibouti",
+                arrondissement: null,
+                region: null,
+                pays: "DJIBOUTI"
+              },
+              prenoms: ["Carmelaaa", "Linzy"]
+            },
+            {
+              type: null,
+              ordre: 1,
+              nom: "Sacken",
+              sexe: "FEMININ",
+              naissance: null,
+              profession: "Coiffeuse",
+              age: null,
+              lienParente: "PARENT_ADOPTANT",
+              domicile: {
+                voie: "16 avenue des Palmiers",
+                ville: "Djibouti",
+                arrondissement: null,
+                region: null,
+                pays: "DJIBOUTI"
+              },
+              prenoms: ["Carmelaaaa", "Linzy"]
+            }
+          ],
+          typeDeclarationConjointe: null,
+          dateDeclarationConjointe: null,
+          nomPartie1: null,
+          nomPartie2: null,
+          nomAvantMariage: "nomAvantMariage",
+          nomApresMariage: "nomApresMariage",
+          nomDernierConjoint: null,
+          prenomsDernierConjoint: null
+        },
+        {
+          nom: "PRODESK",
+          prenoms: ["Elodie", "Marie-Charlotte", "Pauline"],
+          autresNoms: null,
+          autresPrenoms: null,
+          ordre: 2,
+          sexe: "FEMININ",
+          naissance: {
+            minute: null,
+            heure: null,
+            jour: 25,
+            mois: 6,
+            annee: 1990,
+            voie: null,
+            ville: "Barcelone",
+            arrondissement: null,
+            region: "Catalogne",
+            pays: "Espagne",
+            lieuReprise: null
+          },
+          profession: "Enseignante",
+          age: null,
+          domicile: {
+            voie: "7 Rue du Noyer",
+            ville: "Bruxelles",
+            arrondissement: null,
+            region: "Flandre",
+            pays: "BELGIQUE"
+          },
+          filiations: [
+            {
+              lienParente: "PARENT_ADOPTANT",
+              type: null,
+              ordre: 752,
+              nom: "Sacken",
+              sexe: "MASCULIN",
+              naissance: null,
+              profession: "Informaticien",
+              age: null,
+              domicile: {
+                voie: "16 avenue des Palmiers",
+                ville: "Djibouti",
+                arrondissement: null,
+                region: null,
+                pays: "DJIBOUTI"
+              },
+              prenoms: ["Carmela", "Linzy"]
+            }
+          ],
+          typeDeclarationConjointe: null,
+          dateDeclarationConjointe: null,
+          nomPartie1: null,
+          nomPartie2: null,
+          nomAvantMariage: "nomAvantMariage",
+          nomApresMariage: "nomApresMariage",
+          nomDernierConjoint: null,
+          prenomsDernierConjoint: null
+        }
+      ])
+    };
+
+    const compositionCorps = creationCompositionExtraitPlurilingue(
+      mapActe(ficheActeMariageAvecPaysInconnu) as any as IFicheActe,
+      Validation.O,
+      SousTypeDelivrance.RDC,
+      mentionsRetirees
+    );
+
+    expect(compositionCorps.titulaire_1?.lieu_naissance).toBe("Paris");
   });
 });

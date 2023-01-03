@@ -207,6 +207,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
 
     const ecTitulaire1 =
       CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
+        acte,
         titulaireAM1
       );
 
@@ -214,6 +215,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     if (titulaireAM2) {
       ecTitulaire2 =
         CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
+          acte,
           titulaireAM2
         );
     }
@@ -341,8 +343,12 @@ export class CommunExtraitOuCopieActeTexteComposition {
   }
 
   public static creerTitulaireCompositionEC(
+    acte: IFicheActe,
     titulaire: ITitulaireActe
   ): ITitulaireCompositionEC {
+    const estActeMariageOuDecesEtPaysInconnu =
+      (FicheActe.estActeDeces(acte) || FicheActe.estActeMariage) &&
+      LieuxUtils.estPaysInconnu(titulaire.naissance?.pays);
     const prenoms = EtatCivilUtil.getPrenomsOuVide(titulaire.prenoms); //<Prénom(s) titulaire 1)>
     const nom = EtatCivilUtil.getNomOuVide(titulaire.nom); //<Nom titulaire 1>
     const partiesNom = EtatCivilUtil.formatPartiesNomOuVide(
@@ -352,7 +358,10 @@ export class CommunExtraitOuCopieActeTexteComposition {
 
     const lieuNaissance = this.formatLieuNaissance(
       titulaire,
-      TitulaireActe.getLieuDeRepriseOuLieuNaissance(titulaire)
+      TitulaireActe.getLieuDeRepriseOuLieuNaissance(
+        titulaire,
+        estActeMariageOuDecesEtPaysInconnu
+      )
     ); // <Lieu de naissance titulaire>
 
     const dateNaissanceOuAge =
@@ -362,6 +371,9 @@ export class CommunExtraitOuCopieActeTexteComposition {
 
     const parentsTitulaire: IParentsTitulaireCompositionEC[] = parents.map(
       (parent: IFiliation): IParentsTitulaireCompositionEC => {
+        const estActeDeNaissanceEtPaysInconnu =
+          FicheActe.estActeNaissance(acte) &&
+          LieuxUtils.estPaysInconnu(parent.naissance?.pays);
         const prenomsParent = EtatCivilUtil.getPrenomsOuVide(parent.prenoms); //<Prénom(s) filiation)>
         const nomParent = EtatCivilUtil.getNomOuVide(parent.nom); //<Nom filiation>
         const lienParente = parent.lienParente;
@@ -371,7 +383,10 @@ export class CommunExtraitOuCopieActeTexteComposition {
             : this.creerFilsOuFilleDeFiliationAdoptantTitulaire(titulaire); //'adopté par', 'adoptée par' [accord selon genre du titulaire]
         const lieuNaissanceParent = this.formatLieuNaissance(
           parent,
-          TitulaireActe.getLieuDeRepriseOuLieuNaissance(parent)
+          TitulaireActe.getLieuDeRepriseOuLieuNaissance(
+            parent,
+            estActeDeNaissanceEtPaysInconnu
+          )
         ); // <Lieu de naissance parent>
         const dateNaissanceOuAgeParent =
           this.creerDateNaissanceOuAgeDeTitulaireOuFiliation(parent);

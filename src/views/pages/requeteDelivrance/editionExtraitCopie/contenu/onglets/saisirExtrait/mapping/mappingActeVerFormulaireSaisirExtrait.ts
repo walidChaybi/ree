@@ -56,6 +56,7 @@ import {
   TitulaireActe
 } from "@model/etatcivil/acte/ITitulaireActe";
 import { ExistenceContratMariage } from "@model/etatcivil/enum/ExistenceContratMariage";
+import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationConjointe";
@@ -204,7 +205,7 @@ export function mappingActeVerFormulaireSaisirExtrait(
   // Parents titulaire 1
   saisieForm[TITULAIRE_EVT_1] = {
     ...saisieForm[TITULAIRE_EVT_1],
-    ...saisieParentsForm(titulairesActes.titulaireActe1),
+    ...saisieParentsForm(titulairesActes.titulaireActe1, acte.nature),
     ...saisieParentsAdoptantsForm(titulairesActes.titulaireActe1)
   };
 
@@ -220,7 +221,7 @@ export function mappingActeVerFormulaireSaisirExtrait(
     // Parents titulaire 2
     saisieForm[TITULAIRE_EVT_2] = {
       ...saisieForm[TITULAIRE_EVT_2],
-      ...saisieParentsForm(titulairesActes.titulaireActe2),
+      ...saisieParentsForm(titulairesActes.titulaireActe2, acte.nature),
       ...saisieParentsAdoptantsForm(titulairesActes.titulaireActe2)
     };
   }
@@ -248,12 +249,18 @@ function saisieDonneesComplementairesPlurilingues(
   };
 }
 
-function saisieParentsForm(titulaireActe: ITitulaireActe): any {
+function saisieParentsForm(
+  titulaireActe: ITitulaireActe,
+  natureActe: NatureActe
+): any {
   const parents = {};
   TitulaireActe.getAuMoinsDeuxParentsDirects(titulaireActe).forEach(
     (parent: IFiliation, index: number) => {
       //@ts-ignore
-      parents[`${PARENT_NAISS}${index + 1}`] = saisieParentForm(parent);
+      parents[`${PARENT_NAISS}${index + 1}`] = saisieParentForm(
+        parent,
+        natureActe
+      );
     }
   );
   return parents;
@@ -280,7 +287,25 @@ function saisieParentsAdoptantsForm(titulaireActe: ITitulaireActe): any {
   return parentsAdoptants;
 }
 
-function saisieParentForm(parent?: IFiliation): IParentNaissanceForm {
+export function saisieParentPaysInconnu(
+  natureActe?: NatureActe,
+  parent?: IFiliation
+): boolean {
+  if (parent?.naissance && parent?.lienParente === LienParente.PARENT) {
+    return (
+      LieuxUtils.estPaysInconnu(parent?.naissance.pays) &&
+      NatureActe.NAISSANCE === natureActe
+    );
+  } else {
+    return false;
+  }
+}
+
+function saisieParentForm(
+  parent?: IFiliation,
+  natureActe?: NatureActe
+): IParentNaissanceForm {
+  const estNaissancePaysInconnu = saisieParentPaysInconnu(natureActe, parent);
   return {
     [NOM_NAISSANCE]: getValeurOuVide(parent?.nom),
     [PRENOMS]: saisiePrenomForm(parent?.prenoms),
@@ -289,7 +314,11 @@ function saisieParentForm(parent?: IFiliation): IParentNaissanceForm {
       parent?.age
     ),
     [SEXE]: parent?.sexe ? Sexe.getKey(parent.sexe) : Sexe.getKey(Sexe.INCONNU),
-    [LIEU_NAISSANCE]: saisieLieuEvt(parent?.naissance, false) // Pour les parents le lieu de naissance est france par défaut
+    [LIEU_NAISSANCE]: saisieLieuEvt(
+      parent?.naissance,
+      false,
+      estNaissancePaysInconnu
+    ) // Pour les parents le lieu de naissance est france par défaut
   };
 }
 
@@ -319,6 +348,7 @@ function saisieTitulaireEvtForm(
       ? Sexe.getKey(titulaire.sexe)
       : Sexe.getKey(Sexe.INCONNU),
     [EVENEMENT]: saisieDateAgeDeLieuEvt(
+      natureActe,
       evenement,
       titulaire?.age,
       titulaire,
@@ -331,19 +361,38 @@ function saisieTitulaireEvtForm(
 }
 
 function saisieDateAgeDeLieuEvt(
+  natureActe: NatureActe,
   evenement?: IEvenement,
   age?: number,
   titulaire?: ITitulaireActe,
   etrangerParDefaut = true
 ): IEvenementForm {
+  const estNaissancePaysInconnu = saisiePaysInconnuTitulaire(
+    natureActe,
+    titulaire
+  );
   return {
     // Pour la naissance la date contient également l'heure, pour le décès il n'a pas d'heure
     //  (pour le mariage c'est "DATE_NAISSANCE_OU_AGE_DE" qui est utilisé: voir ci-dessous)
     [DATE_EVENEMENT]: saisieDateHeureEvt(evenement),
     // Pour le mariage la date de naissance est suivi du champ "Agé de"
     [DATE_NAISSANCE_OU_AGE_DE]: saisieDateOuAgeDe(evenement, age),
-    [LIEU_EVENEMENT]: saisieLieuEvt(evenement, etrangerParDefaut)
+    [LIEU_EVENEMENT]: saisieLieuEvt(
+      evenement,
+      etrangerParDefaut,
+      estNaissancePaysInconnu
+    )
   };
+}
+
+export function saisiePaysInconnuTitulaire(
+  natureActe: NatureActe,
+  titulaire?: ITitulaireActe
+): boolean {
+  return (
+    LieuxUtils.estPaysInconnu(titulaire?.naissance?.pays) &&
+    (NatureActe.MARIAGE === natureActe || NatureActe.DECES === natureActe)
+  );
 }
 
 function saisiePrenomForm(prenoms?: string[]) {
@@ -409,7 +458,8 @@ function saisieDateForm(date?: IDateCompose) {
 
 function saisieLieuEvt(
   evenement?: IEvenement,
-  etrangerParDefaut = true
+  etrangerParDefaut = true,
+  estNaissancePaysInconnu = false
 ): ILieuEvenementForm {
   const pays =
     evenement?.pays ||
@@ -429,7 +479,9 @@ function saisieLieuEvt(
     [ARRONDISSEMENT]: getValeurOuVide(evenement?.arrondissement),
     [REGION_DEPARTEMENT]: getValeurOuVide(evenement?.region),
     [PAYS]: getValeurOuVide(
-      LieuxUtils.estPaysFrance(evenement?.pays) ? "" : evenement?.pays
+      LieuxUtils.estPaysFrance(evenement?.pays) || estNaissancePaysInconnu
+        ? ""
+        : evenement?.pays
     ),
     [ETRANGER_FRANCE]: getEtrangerOuFrance(evenement, etrangerParDefaut),
     villeEstAffichee: false

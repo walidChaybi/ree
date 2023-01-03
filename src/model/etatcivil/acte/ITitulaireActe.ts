@@ -95,14 +95,19 @@ export const TitulaireActe = {
       : "";
   },
 
-  getLieuDeRepriseOuLieuNaissance(titulaire?: ITitulaireActe): string {
+  getLieuDeRepriseOuLieuNaissance(
+    titulaire?: ITitulaireActe,
+    paysInconnu = false
+  ): string {
+    const paysParDefaut = paysInconnu ? "" : titulaire?.naissance?.pays;
+
     if (titulaire && titulaire?.naissance?.lieuReprise) {
       return titulaire.naissance.lieuReprise;
     } else {
       return LieuxUtils.getLocalisationEtrangerOuFranceParDefaut(
         titulaire?.naissance?.ville,
         titulaire?.naissance?.region,
-        titulaire?.naissance?.pays,
+        paysParDefaut,
         titulaire?.naissance?.arrondissement
       );
     }

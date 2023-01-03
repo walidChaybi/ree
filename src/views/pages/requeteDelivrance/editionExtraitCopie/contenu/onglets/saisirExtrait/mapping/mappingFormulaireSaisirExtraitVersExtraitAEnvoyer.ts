@@ -25,6 +25,7 @@ import {
   IDateCompleteForm,
   IDonneesComplementairesPlurilingueForm,
   IEvenementForm,
+  ILieuEvenementForm,
   IParentNaissanceForm,
   IPrenomsForm,
   ISaisieExtraitForm,
@@ -38,6 +39,7 @@ export function mappingFormulaireSaisirExtraitVersExtraitAEnvoyer(
   const extraitSaisiAEnvoyer = {} as IExtraitSaisiAEnvoyer;
 
   extraitSaisiAEnvoyer.natureActe = NatureActe.getKey(acte.nature);
+
   //@ts-ignore non null
   extraitSaisiAEnvoyer.titulaire1 = mapTitulaireNaissanceEtParents(
     acte,
@@ -98,6 +100,38 @@ export function mappingFormulaireSaisirExtraitVersExtraitAEnvoyer(
   return extraitSaisiAEnvoyer;
 }
 
+function paysSaisieEtrangerActiveEtPasRenseigneEtAuMoinsVilleOuRegionSaisie(
+  titulaireEvtSaisi?: IEvenementForm,
+  parentEvtSaisi?: IParentNaissanceForm
+): boolean {
+  const lieuOuEvenementNaissance =
+    titulaireEvtSaisi?.lieuEvenement || parentEvtSaisi?.lieuNaissance;
+
+  return (
+    !estRenseigne(lieuOuEvenementNaissance?.pays) &&
+    villeOuRegionEstSaisie(lieuOuEvenementNaissance) &&
+    paysEtrangerActive(lieuOuEvenementNaissance)
+  );
+}
+
+function paysEtrangerActive(
+  lieuEvenementOuNaissance?: ILieuEvenementForm
+): boolean {
+  return (
+    lieuEvenementOuNaissance?.EtrangerFrance ===
+    EtrangerFrance.getKey(EtrangerFrance.ETRANGER)
+  );
+}
+
+function villeOuRegionEstSaisie(
+  lieuEvenementOuNaissance?: ILieuEvenementForm
+): boolean {
+  return (
+    estRenseigne(lieuEvenementOuNaissance?.ville) ||
+    estRenseigne(lieuEvenementOuNaissance?.regionDepartement)
+  );
+}
+
 function mapDonneesComplementairesPlurilingueNomApresMariage(
   sexe: Sexe | undefined,
   donneesComplementairesPlurilingueSaisies?: IDonneesComplementairesPlurilingueForm
@@ -115,11 +149,12 @@ function mapDonneesComplementairesPlurilingueNomApresMariage(
   return nomApresMariage;
 }
 
-function mapTitulaireNaissanceEtParents(
+export function mapTitulaireNaissanceEtParents(
   acte: IFicheActe,
   titulaireEvtSaisi?: ITitulaireEvtForm
 ): ITitulaireActe | undefined {
   let titulaireAEnvoyer: ITitulaireActe | undefined;
+
   if (titulaireEvtSaisi) {
     titulaireAEnvoyer = mapTitulaire(titulaireEvtSaisi);
 
@@ -131,13 +166,27 @@ function mapTitulaireNaissanceEtParents(
     titulaireAEnvoyer.filiations = [];
     if (parentRenseigne(titulaireEvtSaisi.parentNaiss1)) {
       titulaireAEnvoyer.filiations.push(
-        mapParent(UN, titulaireEvtSaisi.parentNaiss1)
+        mapParent(
+          UN,
+          titulaireEvtSaisi.parentNaiss1,
+          LienParente.PARENT,
+          FicheActe.estActeNaissance(acte)
+        )
       );
     }
     if (parentRenseigne(titulaireEvtSaisi.parentNaiss2)) {
       titulaireAEnvoyer.filiations.push(
-        mapParent(DEUX, titulaireEvtSaisi.parentNaiss2)
+        mapParent(
+          DEUX,
+          titulaireEvtSaisi.parentNaiss2,
+          LienParente.PARENT,
+          FicheActe.estActeNaissance(acte)
+        )
       );
+    }
+
+    if (FicheActe.estActeDecesOuMariage(acte)) {
+      saisirPaysNaissanceInconnu(titulaireAEnvoyer, titulaireEvtSaisi);
     }
 
     if (FicheActe.estActeMariage(acte)) {
@@ -154,6 +203,25 @@ function mapTitulaireNaissanceEtParents(
     }
   }
   return titulaireAEnvoyer;
+}
+
+function saisirPaysNaissanceInconnu(
+  titulaireAEnvoyer: ITitulaireActe,
+  titulaireEvtSaisi?: ITitulaireEvtForm
+): ITitulaireActe {
+  const copieTitulaireAEnvoyer = { ...titulaireAEnvoyer };
+  const saisirPaysInconnu =
+    paysSaisieEtrangerActiveEtPasRenseigneEtAuMoinsVilleOuRegionSaisie(
+      titulaireEvtSaisi?.evenement
+    );
+
+  if (saisirPaysInconnu && copieTitulaireAEnvoyer.naissance) {
+    copieTitulaireAEnvoyer.naissance.pays = EtrangerFrance.getKey(
+      EtrangerFrance.INCONNU
+    );
+  }
+
+  return copieTitulaireAEnvoyer;
 }
 
 function parentRenseigne(parentAdoptant?: IParentNaissanceForm): boolean {
@@ -202,9 +270,16 @@ function mapParentAdoptant(
 function mapParent(
   ordre: number,
   parentSaisi?: IParentNaissanceForm,
-  lienParente = LienParente.PARENT
+  lienParente = LienParente.PARENT,
+  estActeNaissance = false
 ): IFiliation {
-  return {
+  const estPaysInconnu =
+    paysSaisieEtrangerActiveEtPasRenseigneEtAuMoinsVilleOuRegionSaisie(
+      undefined,
+      parentSaisi
+    );
+
+  const parent = {
     nom: parentSaisi?.nomNaissance,
     prenoms: mapPrenoms(parentSaisi?.prenoms),
     sexe: mapSexe(parentSaisi?.sexe),
@@ -219,7 +294,13 @@ function mapParent(
     ),
     lienParente,
     ordre
-  } as any as IFiliation;
+  };
+
+  if (estActeNaissance && estPaysInconnu) {
+    parent.naissance.pays = EtrangerFrance.getKey(EtrangerFrance.INCONNU);
+  }
+
+  return parent as any as IFiliation;
 }
 
 function mapSexe(sexeSaisi?: string) {
