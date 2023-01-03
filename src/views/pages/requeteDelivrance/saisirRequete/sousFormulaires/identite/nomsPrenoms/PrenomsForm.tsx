@@ -201,25 +201,23 @@ const PrenomsForm: React.FC<PrenomsFormProps> = props => {
       )}
       {nbPrenom === NB_MAX_PRENOMS && (
         <div className="PrenomsForm">
-          <div className="InputFieldMajuscule">
-            <InputField
-              name={prenomWithNamespace3}
-              label={getLibelle("Prénom 3")}
-              maxLength={NB_CARACT_MAX_SAISIE}
-              disabled={estPrenomDisabled(DEUX)}
-              onBlur={e =>
-                sortieChampPremiereLettreEnMajuscule(
-                  e,
-                  props.formik,
-                  prenomWithNamespace3
-                )
-              }
-            />
-            <div className="BoutonsConteneur">
-              {
-                !estPrenomDisabled(DEUX) && getBoutonSupprimer(PRENOM_3) // pas d'affichage du bouton "supprimer" si le champs prénom est disabled
-              }
-            </div>
+          <InputField
+            name={prenomWithNamespace3}
+            label={getLibelle("Prénom 3")}
+            maxLength={NB_CARACT_MAX_SAISIE}
+            disabled={estPrenomDisabled(DEUX)}
+            onBlur={e =>
+              sortieChampPremiereLettreEnMajuscule(
+                e,
+                props.formik,
+                prenomWithNamespace3
+              )
+            }
+          />
+          <div className="BoutonsConteneur">
+            {
+              !estPrenomDisabled(DEUX) && getBoutonSupprimer(PRENOM_3) // pas d'affichage du bouton "supprimer" si le champs prénom est disabled
+            }
           </div>
         </div>
       )}

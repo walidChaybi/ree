@@ -44,7 +44,6 @@ const requete = {
   statutCourant: { statut: StatutRequete.A_SIGNER },
   documentsReponses: [{ typeDocument: "ff7fe1fa-a2d6-4bc5-8681-deba65d9e2c6" }]
 } as IRequeteDelivrance;
-const handleDocumentEnregistre = jest.fn();
 
 beforeAll(async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
@@ -59,6 +58,8 @@ test("Attendu: le formulaire SaisirExtraitForm pour un acte de mariage s'affiche
   render(<SaisirExtraitForm acte={acteMariage} requete={requete} />);
 
   await waitFor(() => {
+    expect(screen.getByTitle("Cliquer pour déverrouiller")).toBeInTheDocument();
+
     expect(screen.getByText("Evénement mariage")).toBeInTheDocument();
 
     expect(screen.getByText("Contrat de mariage")).toBeInTheDocument();
@@ -191,5 +192,187 @@ test('Attendu: la case à cocher "Adopté par" fonctionne correctement', async (
   await waitFor(() => {
     expectEstPresentEtNonChecked("titulaireevt1.adoptepar.true");
     expectEstTexteAbsent("Parents adoptants titulaire 1");
+  });
+});
+
+test("Attendu: le déverrouillage des champs fonctionne correctement.", async () => {
+  render(<SaisirExtraitForm acte={acteMariage} requete={requete} />);
+
+  const dateEvenementJour = screen.getByLabelText(
+    "evenement.dateEvenement.jour"
+  ) as HTMLInputElement;
+  const dateEvenementMois = screen.getByLabelText(
+    "evenement.dateEvenement.mois"
+  ) as HTMLInputElement;
+  const dateEvenementAnnee = screen.getByLabelText(
+    "evenement.dateEvenement.annee"
+  ) as HTMLInputElement;
+  const lieuEvenement = screen.getByLabelText(
+    "evenement.lieuEvenement.lieuComplet"
+  ) as HTMLInputElement;
+  const villeEvenement = screen.getByLabelText(
+    "evenement.lieuEvenement.ville"
+  ) as HTMLInputElement;
+  const nomNaissance = screen.getByLabelText(
+    "titulaireEvt2.nomNaissance"
+  ) as HTMLInputElement;
+  const prenom = screen.getByLabelText(
+    "titulaireEvt2.prenoms.prenom1"
+  ) as HTMLInputElement;
+  const sexe = screen.getByLabelText(
+    "titulaireevt2.sexe.feminin"
+  ) as HTMLInputElement;
+  const dateNaissanceTitulaireJour = screen.getByLabelText(
+    "titulaireEvt2.evenement.dateNaissanceOuAgeDe.date.jour"
+  ) as HTMLInputElement;
+  const dateNaissanceTitulaireMois = screen.getByLabelText(
+    "titulaireEvt2.evenement.dateNaissanceOuAgeDe.date.mois"
+  ) as HTMLInputElement;
+  const dateNaissanceTitulaireAnnee = screen.getByLabelText(
+    "titulaireEvt2.evenement.dateNaissanceOuAgeDe.date.annee"
+  ) as HTMLInputElement;
+  const ageDe = screen.getByLabelText(
+    "titulaireEvt2.evenement.dateNaissanceOuAgeDe.age"
+  ) as HTMLInputElement;
+
+  const parentNomNaissance = screen.getByLabelText(
+    "titulaireEvt2.parentNaiss1.nomNaissance"
+  ) as HTMLInputElement;
+  const parentPrenom = screen.getByLabelText(
+    "titulaireEvt2.parentNaiss1.prenoms.prenom1"
+  ) as HTMLInputElement;
+
+  const boutonDeverrouillage = screen.getByTitle(
+    "Cliquer pour déverrouiller"
+  ) as HTMLInputElement;
+  await waitFor(() => {
+    expect(boutonDeverrouillage).toBeInTheDocument();
+  });
+
+  await waitFor(() => {
+    // Lieu evenement
+    expect(lieuEvenement).toBeInTheDocument();
+    expect(lieuEvenement.value).toBe("Lyon, Rhône");
+    expect(villeEvenement).toBeInTheDocument();
+    expect(villeEvenement.value).toBe("Lyon");
+    // Date evenement
+    expect(dateEvenementJour).toBeInTheDocument();
+    expect(dateEvenementJour.value).toBe("");
+    expect(dateEvenementMois).toBeInTheDocument();
+    expect(dateEvenementMois.value).toBe("");
+    expect(dateEvenementAnnee).toBeInTheDocument();
+    expect(dateEvenementAnnee.value).toBe("1947");
+    // Nom de naissance
+    expect(nomNaissance).toBeInTheDocument();
+    expect(nomNaissance.value).toBe("BERTIER");
+    // Prenom
+    expect(prenom).toBeInTheDocument();
+    expect(prenom.value).toBe("feliza");
+    // Sexe
+    expect(sexe).toBeInTheDocument();
+    expect(sexe.value).toBe("FEMININ");
+    // Date naissance titulaire
+    expect(dateNaissanceTitulaireJour).toBeInTheDocument();
+    expect(dateNaissanceTitulaireJour.value).toBe("10");
+    expect(dateNaissanceTitulaireMois).toBeInTheDocument();
+    expect(dateNaissanceTitulaireMois.value).toBe("10");
+    expect(dateNaissanceTitulaireAnnee).toBeInTheDocument();
+    expect(dateNaissanceTitulaireAnnee.value).toBe("1901");
+    expect(ageDe).toBeInTheDocument();
+    expect(ageDe.value).toBe("");
+    // Parent
+    expect(parentNomNaissance).toBeInTheDocument();
+    expect(parentNomNaissance.value).toBe("Washington");
+    expect(parentPrenom).toBeInTheDocument();
+    expect(parentPrenom.value).toBe("Jsandye");
+
+    expect(lieuEvenement.disabled).toBeTruthy();
+    expect(villeEvenement.disabled).toBeFalsy();
+    expect(dateEvenementJour.disabled).toBeFalsy();
+    expect(dateEvenementMois.disabled).toBeFalsy();
+    expect(dateEvenementAnnee.disabled).toBeFalsy();
+    expect(nomNaissance.disabled).toBeTruthy();
+    expect(prenom.disabled).toBeTruthy();
+    expect(sexe.disabled).toBeTruthy();
+    expect(dateNaissanceTitulaireJour.disabled).toBeTruthy();
+    expect(dateNaissanceTitulaireMois.disabled).toBeTruthy();
+    expect(dateNaissanceTitulaireAnnee.disabled).toBeTruthy();
+    expect(ageDe.disabled).toBeTruthy();
+    expect(parentNomNaissance.disabled).toBeTruthy();
+    expect(parentPrenom.disabled).toBeTruthy();
+  });
+
+  // Déverrouille
+  await act(async () => {
+    fireEvent.click(boutonDeverrouillage);
+  });
+
+  await waitFor(() => {
+    expect(lieuEvenement.disabled).toBeTruthy();
+    expect(villeEvenement.disabled).toBeFalsy();
+    expect(dateEvenementJour.disabled).toBeFalsy();
+    expect(dateEvenementMois.disabled).toBeFalsy();
+    expect(dateEvenementAnnee.disabled).toBeFalsy();
+    expect(nomNaissance.disabled).toBeFalsy();
+    expect(prenom.disabled).toBeFalsy();
+    expect(sexe.disabled).toBeFalsy();
+    expect(dateNaissanceTitulaireJour.disabled).toBeFalsy();
+    expect(dateNaissanceTitulaireMois.disabled).toBeFalsy();
+    expect(dateNaissanceTitulaireAnnee.disabled).toBeFalsy();
+    expect(ageDe.disabled).toBeTruthy();
+    expect(parentNomNaissance.disabled).toBeFalsy();
+    expect(parentPrenom.disabled).toBeFalsy();
+  });
+
+  await act(async () => {
+    fireEvent.input(dateNaissanceTitulaireJour, {
+      target: { value: "" }
+    });
+  });
+  await act(async () => {
+    fireEvent.input(dateNaissanceTitulaireMois, {
+      target: { value: "" }
+    });
+  });
+  await act(async () => {
+    fireEvent.input(dateNaissanceTitulaireAnnee, {
+      target: { value: "" }
+    });
+  });
+
+  await waitFor(() => {
+    expect(dateNaissanceTitulaireJour.disabled).toBeFalsy();
+    expect(dateNaissanceTitulaireMois.disabled).toBeFalsy();
+    expect(dateNaissanceTitulaireAnnee.disabled).toBeFalsy();
+    expect(ageDe.disabled).toBeFalsy();
+  });
+
+  // Verrouille
+  await act(async () => {
+    fireEvent.input(ageDe, {
+      target: { value: 26 }
+    });
+    fireEvent.click(boutonDeverrouillage);
+  });
+
+  await waitFor(() => {
+    expect(lieuEvenement.disabled).toBeTruthy();
+    expect(villeEvenement.disabled).toBeFalsy();
+
+    expect(dateEvenementJour.disabled).toBeFalsy();
+    expect(dateEvenementMois.disabled).toBeFalsy();
+    expect(dateEvenementAnnee.disabled).toBeFalsy();
+
+    expect(nomNaissance.disabled).toBeTruthy();
+    expect(prenom.disabled).toBeTruthy();
+    expect(sexe.disabled).toBeTruthy();
+
+    expect(dateNaissanceTitulaireJour.disabled).toBeTruthy();
+    expect(dateNaissanceTitulaireMois.disabled).toBeTruthy();
+    expect(dateNaissanceTitulaireAnnee.disabled).toBeTruthy();
+    expect(ageDe.disabled).toBeFalsy();
+
+    expect(parentNomNaissance.disabled).toBeTruthy();
+    expect(parentPrenom.disabled).toBeTruthy();
   });
 });

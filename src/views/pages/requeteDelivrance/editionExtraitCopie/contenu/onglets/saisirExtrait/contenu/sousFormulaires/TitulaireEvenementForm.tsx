@@ -46,7 +46,7 @@ interface TitulaireEvenementFormPops {
 const TitulaireEvenementForm: React.FC<
   TitulaireEvenementFormPops & FormikComponentProps
 > = props => {
-  const { setAfficheParentsAdoptantsTitulaire } = useContext(
+  const { setAfficheParentsAdoptantsTitulaire, saisieVerrouillee } = useContext(
     SaisirExtraitFormContext
   );
   const prenoms: IPrenomOrdonnes[] =
@@ -58,7 +58,7 @@ const TitulaireEvenementForm: React.FC<
         <InputField
           label="Nom de naissance"
           name={withNamespace(props.nom, NOM_NAISSANCE)}
-          disabled={estRenseigne(props.titulaire.nom)}
+          disabled={estRenseigne(props.titulaire.nom) && saisieVerrouillee}
         />
         {props.natureActe !== NatureActe.DECES && (
           <NomSecableForm
@@ -69,6 +69,7 @@ const TitulaireEvenementForm: React.FC<
             origineTitulaireActe={
               props.titulaire.origineNomPartiesTitulaireActe
             }
+            saisieVerrouillee={saisieVerrouillee}
           />
         )}
         {props.natureActe === NatureActe.NAISSANCE && (
@@ -79,20 +80,21 @@ const TitulaireEvenementForm: React.FC<
             origineTitulaireActe={
               props.titulaire.origineDeclarationConjointeTitulaireActe
             }
+            saisieVerrouillee={saisieVerrouillee}
           />
         )}
 
         <PrenomsForm
           nom={withNamespace(props.nom, PRENOMS)}
           prenoms={prenoms}
-          disabled={estRenseigne(props.titulaire.prenoms)}
+          disabled={estRenseigne(props.titulaire.prenoms) && saisieVerrouillee}
           prenom1Obligatoire={true}
         />
         <RadioField
           name={withNamespace(props.nom, SEXE)}
           label={getLibelle("Sexe")}
           values={Sexe.getAllEnumsAsOptionsSansInconnu()}
-          disabled={props.titulaire.sexe !== Sexe.INCONNU}
+          disabled={props.titulaire.sexe !== Sexe.INCONNU && saisieVerrouillee}
         />
 
         {props.natureActe === NatureActe.MARIAGE ? (
@@ -103,14 +105,17 @@ const TitulaireEvenementForm: React.FC<
               naissance={props.evenement}
               gestionEtrangerFrance={props.gestionEtrangerFrance}
               etrangerParDefaut={props.etrangerParDefaut}
+              saisieVerrouillee={saisieVerrouillee}
             />
             <CheckboxField
               name={withNamespace(props.nom, ADOPTE_PAR)}
               label={getLibelle("Adopté par")}
               values={[{ str: "", value: "true" }]}
-              disabled={estRenseigne(
-                TitulaireActe.getParentAdoptant1(props.titulaire)?.nom
-              )}
+              disabled={
+                estRenseigne(
+                  TitulaireActe.getParentAdoptant1(props.titulaire)?.nom
+                ) && saisieVerrouillee
+              }
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setAfficheParentsAdoptantsTitulaire(
                   props.formik,

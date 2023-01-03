@@ -1,4 +1,4 @@
-import { Warning } from "@material-ui/icons";
+import { BoutonVerrouillage } from "@composant/formulaire/boutons/BoutonVerrouillage";
 import { getLibelle } from "@util/Utils";
 import { ListeGlisserDeposer } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useCallback } from "react";
@@ -35,7 +35,6 @@ export const MentionsCopie: React.FC<MentionsCopieProps> = props => {
         deverrouille={props.estDeverrouille}
         libellesSontTitres={false}
       />
-
       {props.estDeverrouille && (
         <p>
           {getLibelle(
@@ -48,18 +47,13 @@ export const MentionsCopie: React.FC<MentionsCopieProps> = props => {
         </p>
       )}
       {props.mentions && props.mentions.length > 0 && (
-        <div className="Deverouillage">
-          <p>
-            <input
-              type="checkbox"
-              checked={props.estDeverrouille}
-              title={getLibelle("Cliquer pour déverrouiller")}
-              onChange={() => props.setEstdeverrouille(!props.estDeverrouille)}
-            />
-            {getLibelle("Déverrouillage des mentions de la copie intégrale")}
-          </p>
-          <Warning />
-        </div>
+        <BoutonVerrouillage
+          estVerrouille={!props.estDeverrouille}
+          toggleVerrouilllage={() =>
+            props.setEstdeverrouille(!props.estDeverrouille)
+          }
+          libelle="les mentions de la copie intégrale"
+        />
       )}
     </>
   );

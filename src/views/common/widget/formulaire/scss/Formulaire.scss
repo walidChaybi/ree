@@ -4,8 +4,11 @@
   margin: 1.5rem 7rem;
 
   .DeuxColonnes {
-    display: grid;
-    grid-template-columns: 50% 50%;
+    display: flex;
+  }
+
+  .DeuxColonnes > * {
+    width: 50%;
   }
 
   input:not([type="checkbox"]):not([type="radio"]):disabled {

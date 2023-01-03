@@ -16,6 +16,7 @@ interface ComponentFormProps {
   nomPartie1?: string;
   nomPartie2?: string;
   origineTitulaireActe?: boolean;
+  saisieVerrouillee: boolean;
 }
 
 type NomSecableFormProps = ComponentFormProps & FormikComponentProps;
@@ -24,7 +25,9 @@ const NomSecableForm: React.FC<NomSecableFormProps> = props => {
   const [afficheNomSecable, setAfficheNomSecable] = useState<boolean>(
     estRenseigne(props.nomPartie1) && props.nomPartie1 !== ABSENCE_VALIDEE
   );
-  const disabled = estDisabled(props.nomPartie1, props.origineTitulaireActe);
+  const disabled =
+    estDisabled(props.nomPartie1, props.origineTitulaireActe) &&
+    props.saisieVerrouillee;
 
   const onCaseACocherNomSecableChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

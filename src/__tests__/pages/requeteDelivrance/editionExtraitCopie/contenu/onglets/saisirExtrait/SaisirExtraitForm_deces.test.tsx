@@ -38,7 +38,6 @@ const acteDeces = mapActe(ficheActeDeces2.data);
 const requete = {
   statutCourant: { statut: StatutRequete.A_SIGNER }
 } as IRequeteDelivrance;
-const handleDocumentEnregistre = jest.fn();
 
 beforeAll(async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
@@ -53,6 +52,7 @@ test("Attendu: le formulaire SaisirExtraitForm pour un acte de décès s'affiche
   render(<SaisirExtraitForm acte={acteDeces} requete={requete} />);
 
   await waitFor(() => {
+    expect(screen.getByTitle("Cliquer pour déverrouiller")).toBeInTheDocument();
     expect(screen.getByText("Evénement décès")).toBeInTheDocument();
 
     expectEstPresentAvecValeurEtDisabled("evenement.dateEvenement.jour", "13");

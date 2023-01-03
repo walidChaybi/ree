@@ -17,6 +17,7 @@ interface ComponentProps {
   nom: string;
   age?: number;
   naissance?: IEvenement;
+  saisieVerrouillee: boolean;
 }
 
 type DateNaissanceOuAgeDeFormProps = ComponentProps & FormikComponentProps;
@@ -78,7 +79,7 @@ const DateNaissanceOuAgeDeForm: React.FC<
         <DateComposeForm
           nomDate={withNamespace(props.nom, DATE)}
           labelDate="Date de naissance"
-          disabled={disabledDate}
+          disabled={props.saisieVerrouillee && disabledDate}
           onChange={onChangeDate}
           showCroixSuppression={false}
         />

@@ -64,7 +64,6 @@ const acte = mapActe(ficheActe1.data);
 const requete = {
   statutCourant: { statut: StatutRequete.A_SIGNER }
 } as IRequeteDelivrance;
-const handleDocumentEnregistre = jest.fn();
 
 beforeAll(async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
@@ -77,6 +76,10 @@ afterAll(() => {
 
 test("Attendu: le formulaire SaisirExtraitForm pour un acte de naissance s'affiche correctement", async () => {
   render(<SaisirExtraitForm acte={acte} requete={requete} />);
+
+  await waitFor(() => {
+    expect(screen.getByTitle("Cliquer pour déverrouiller")).toBeInTheDocument();
+  });
 
   await waitFor(() => {
     const widget = screen.getByLabelText(

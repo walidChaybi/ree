@@ -1,3 +1,4 @@
+import { BoutonVerrouillage } from "@composant/formulaire/boutons/BoutonVerrouillage";
 import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import {
   PARENT_ADOPTANT_NAISS1,
@@ -55,7 +56,8 @@ export const SaisirExtraitFormContext = React.createContext({
     formik: FormikProps<FormikValues>,
     nomComposantTitulaire: string,
     afficheParentsAdoptants: boolean
-  ) => {}
+  ) => {},
+  saisieVerrouillee: true
 });
 
 interface IPopinMessageErreur {
@@ -93,6 +95,8 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
     IFiliation[]
   >(initTitulaire2ParentAdoptants(props.acte));
 
+  const [saisieVerrouillee, setSaisieVerrouillee] = useState<boolean>(true);
+
   useSauvegardeValidationSaisieExtrait(sauvegarderSaisieParams);
 
   const onSubmitValiderExtraitSaisi = (extraitSaisi: ISaisieExtraitForm) => {
@@ -108,7 +112,6 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         props.requete.documentsReponses
       );
 
-    
     const problemePlurilingueActeMariage =
       FicheActe.estActeMariage(props.acte) &&
       titulairesMemeSexeOuIndeterminCasPlurilingue(
@@ -229,8 +232,17 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
           ></StaticField>
         </div>
 
+        <BoutonVerrouillage
+          estVerrouille={saisieVerrouillee}
+          toggleVerrouilllage={() => setSaisieVerrouillee(!saisieVerrouillee)}
+          libelle={getLibelle("la saisie des champs")}
+        />
+
         <SaisirExtraitFormContext.Provider
-          value={{ setAfficheParentsAdoptantsTitulaire }}
+          value={{
+            setAfficheParentsAdoptantsTitulaire,
+            saisieVerrouillee
+          }}
         >
           {getTitulairesEvenementsEtParentsForm({
             titulairesAMs,

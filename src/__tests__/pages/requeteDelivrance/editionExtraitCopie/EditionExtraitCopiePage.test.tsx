@@ -402,7 +402,7 @@ test("Test affichage Edition Copie", async () => {
 
   await waitFor(() => {
     expect(
-      screen.getByText("Déverrouillage des mentions de la copie intégrale")
+      screen.getByText("Déverrouiller les mentions de la copie intégrale")
     ).toBeDefined();
   });
 

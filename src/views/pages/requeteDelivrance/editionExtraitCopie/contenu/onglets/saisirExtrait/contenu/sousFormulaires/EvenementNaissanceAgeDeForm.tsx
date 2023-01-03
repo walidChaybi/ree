@@ -15,6 +15,7 @@ interface IEvenementNaissanceAgeDeFormPops {
   age?: number;
   gestionEtrangerFrance: boolean;
   etrangerParDefaut: boolean;
+  saisieVerrouillee: boolean;
 }
 export const EvenementNaissanceAgeDeForm: React.FC<
   IEvenementNaissanceAgeDeFormPops
@@ -25,6 +26,7 @@ export const EvenementNaissanceAgeDeForm: React.FC<
         nom={withNamespace(props.nom, DATE_NAISSANCE_OU_AGE_DE)}
         naissance={props.naissance}
         age={props.age}
+        saisieVerrouillee={props.saisieVerrouillee}
       />
 
       <LieuEvenementForm
