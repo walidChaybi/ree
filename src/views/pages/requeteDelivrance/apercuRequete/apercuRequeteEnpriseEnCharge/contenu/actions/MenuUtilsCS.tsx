@@ -1,4 +1,7 @@
-import { TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
+import {
+  InscriptionRcUtil,
+  TypeInscriptionRc
+} from "@model/etatcivil/enum/TypeInscriptionRc";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import {
   CODE_ATTESTATION_PACS,
@@ -13,6 +16,7 @@ import {
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { IActionOption } from "@model/requete/IActionOption";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { getLibelle } from "@util/Utils";
 
 export enum INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE {
@@ -174,6 +178,18 @@ export function getInscriptionsRCDeTypeModification(
 
   return inscriptionRC;
 }
+
+export const estPresentRcTypeModification = (
+  inscriptions?: IResultatRMCInscription[]
+): IResultatRMCInscription | undefined => {
+  if (inscriptions) {
+    return inscriptions.find(inscription =>
+      InscriptionRcUtil.estDeTypeModificationViaLibelle(
+        inscription.typeInscription
+      )
+    );
+  }
+};
 
 export function getInscriptionsDeTypeModificationEtRadiation(
   inscriptionsRC?: IInscriptionRc[]

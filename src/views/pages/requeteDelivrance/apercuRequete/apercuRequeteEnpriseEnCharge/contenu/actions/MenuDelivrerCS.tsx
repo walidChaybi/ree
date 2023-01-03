@@ -1,4 +1,3 @@
-import { InscriptionRcUtil } from "@model/etatcivil/enum/TypeInscriptionRc";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_ATTESTATION_PACS } from "@model/requete/enum/DocumentDelivranceConstante";
@@ -22,6 +21,7 @@ import { IChoixActionDelivranceProps } from "./ChoixAction";
 import { useDelivrerCertificatSituationHook } from "./hook/DelivrerCertificatSituationHook";
 import {
   estMemeNombreDeRCModificationEtRadiation,
+  estPresentRcTypeModification,
   filtrerListeActionsParDocumentDemande,
   getInscriptionsDeTypeModificationEtRadiation,
   menuDelivrerActions,
@@ -49,9 +49,7 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
     if (
       props.inscriptions?.length &&
       props.inscriptionsRC?.length &&
-      InscriptionRcUtil.estDeTypeModificationViaLibelle(
-        props.inscriptions?.[0].typeInscription
-      )
+      estPresentRcTypeModification(props.inscriptions)
     ) {
       const { inscrptionsRCModification, inscriptionsRCRadiation } =
         getInscriptionsDeTypeModificationEtRadiation(props.inscriptionsRC);
@@ -120,9 +118,7 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
       DocumentDelivrance.estDocumentDemandeDeTypeRc(
         props.requete.documentDemande
       ) &&
-      InscriptionRcUtil.estDeTypeModificationViaLibelle(
-        props.inscriptions?.[0].typeInscription
-      )
+      estPresentRcTypeModification(props.inscriptions)
     ) {
       messageBloquant = getLibelle("La radiation n'est pas enregistrée");
     }
