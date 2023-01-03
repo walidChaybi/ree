@@ -500,6 +500,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     if (sousTypeRequete !== SousTypeDelivrance.RDDP) {
       composition.pas_de_bloc_notice = true;
     } else {
+      composition.pas_de_bloc_signature = true;
       composition.pas_de_bloc_notice = false;
       composition.pas_de_nomPrenomAgent = true;
       
