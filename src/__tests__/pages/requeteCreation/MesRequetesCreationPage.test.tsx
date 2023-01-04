@@ -36,7 +36,7 @@ test("renders Page requete création with all elements", async () => {
   await waitFor(() => {
     expect(screen.getByText("N°")).toBeDefined();
     expect(screen.getByText("Sous-type")).toBeDefined();
-    expect(screen.getByText("Postulant/Titulaire")).toBeDefined();
+    expect(screen.getByText("Postulant/Déclarant")).toBeDefined();
     expect(screen.getByText("Requérant")).toBeDefined();
     expect(screen.getByText("Initialisation")).toBeDefined();
     expect(screen.getByText("Dernière action")).toBeDefined();

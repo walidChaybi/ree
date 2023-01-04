@@ -17,6 +17,7 @@ $height: $spacing * 2.5;
   }
   .itemLigneTitulaire {
     display: flex;
+    flex-wrap: wrap;
   }
 
   .texte {

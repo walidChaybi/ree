@@ -21,7 +21,7 @@ export const VoletPieceJustificativesEtActions: React.FC<
 
   const liste: ItemListe[] = [
     {
-      titre: "Pièces justificatives / annexes",
+      titre: "Pièces justificatives / Annexes",
       component: (
         <OngletPiecesJustificatives
           requete={props.requete}

@@ -1,5 +1,5 @@
 import React from "react";
-import Labels, { UNION } from "../Labels";
+import Labels, { UNION, UNION_ACTUELLE } from "../Labels";
 import ItemEffetCollectif, {
   ItemEffetCollectifProps
 } from "./Item/ItemEffetCollectif";
@@ -34,7 +34,7 @@ const ResumeRequeteCreation: React.FC<ResumeRequeteCreationProps> = props => {
         <ItemTitulaire {...props.titulaire} titre={Labels.resume.titulaire} />
       )}
 
-      {props.union && <ItemUnion {...props.union} titre={UNION} />}
+      {props.union && <ItemUnion {...props.union} titre={UNION_ACTUELLE} />}
 
       {props.unionsAnterieurs.map((union, id) => (
         <ItemUnion

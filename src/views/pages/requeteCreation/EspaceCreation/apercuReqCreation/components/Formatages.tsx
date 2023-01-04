@@ -1,5 +1,10 @@
 import { getDateStringFromDateCompose } from "@util/DateUtils";
-import { estRenseigne, formatLigne, LigneType } from "@util/Utils";
+import {
+  estRenseigne,
+  formatLigne,
+  getValeurOuVide,
+  LigneType
+} from "@util/Utils";
 import React from "react";
 import Labels from "../Labels";
 import {
@@ -26,21 +31,6 @@ export const formatLigneSpecificite = (
 
   return estRenseigne(resultat) ? resultat : "";
 };
-
-export const formatLigneNomsPrenomsGenre = ({
-  noms,
-  prenoms,
-  genre
-}: IdentiteType) =>
-  formatLigne(
-    [
-      noms.naissance,
-      noms.actuel && `(Actuel : ${noms.actuel})`,
-      formatLigne(prenoms.naissance),
-      genre
-    ],
-    " ; "
-  );
 
 export const formatLigneFrancisationIdentification = ({
   noms,
@@ -109,3 +99,20 @@ export const formatageDateNaissanceRetenueSdanf = (
         }
       : undefined
   );
+
+export const formatDomiciliation = (
+  domiciliation?: DomiciliationType
+): string | undefined => {
+  let ligneDomiciliation;
+  if (domiciliation) {
+    ligneDomiciliation = `
+      ${formatLigne(domiciliation?.lignes, "; ")};
+      ${getValeurOuVide(domiciliation?.codePostal)};
+      ${
+        getValeurOuVide(domiciliation?.ville) ||
+        getValeurOuVide(domiciliation?.lieuVilleEtranger)
+      }`;
+  }
+
+  return ligneDomiciliation;
+};

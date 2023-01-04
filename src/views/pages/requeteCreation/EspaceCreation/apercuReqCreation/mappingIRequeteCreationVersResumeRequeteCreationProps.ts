@@ -1,3 +1,4 @@
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { Residence } from "@model/requete/enum/Residence";
 import { SituationFamiliale } from "@model/requete/enum/SituationFamiliale";
@@ -36,6 +37,7 @@ const mappingIRequeteCreationVersResumeRequeteCreationProps = (
     },
     sousType: requeteCreation.sousType.libelle,
     natureDANF: requeteCreation.nature,
+    tagPriorisation: requeteCreation.provenanceNatali?.tagPriorisation,
     SDANF: {
       statut: requeteCreation.provenanceNatali?.statutNatali,
       mailAgent: requeteCreation.provenanceNatali?.agentSdanf?.courriel,
@@ -123,7 +125,7 @@ const mappingITitulaireRequeteVersItemTitulaireProps = (
         naissance: formatagePrenoms(titulaire.prenoms),
         francisation: formatagePrenoms(titulaire.prenomsDemande)
       },
-      genre: titulaire.sexe
+      genre: Sexe.getEnumFor(titulaire.sexe)
     },
     naissance: {
       date: mappingDateNaissance(titulaire),
@@ -183,7 +185,7 @@ const mappingITitulaireRequeteVersItemParentProps = (
       prenoms: {
         naissance: formatagePrenoms(parent.prenoms)
       },
-      genre: parent.sexe
+      genre: Sexe.getEnumFor(parent.sexe)
     },
     naissance: {
       date: mappingDateNaissance(parent),
@@ -198,7 +200,20 @@ const mappingITitulaireRequeteVersItemParentProps = (
     },
     position: parent.position,
     nationalites: parent.nationalites || [],
-    domiciliation: parent.domiciliationEnfant,
+    domiciliation: {
+      lignes: [
+        parent.domiciliation?.ligne2,
+        parent.domiciliation?.ligne3,
+        parent.domiciliation?.ligne4,
+        parent.domiciliation?.ligne5
+      ],
+      codePostal: parent.domiciliation?.codePostal,
+      ville: parent.domiciliation?.ville,
+      lieuVilleEtranger: parent.domiciliation?.villeEtrangere,
+      arrondissement: parent.domiciliation?.arrondissement,
+      regionDeptEtat: parent.domiciliation?.region,
+      pays: parent.domiciliation?.pays
+    },
     retenueSdanf: parent.retenueSdanf ?? undefined
   };
 };
@@ -217,7 +232,7 @@ const mappingITitulaireRequeteVersItemUnionProps = (
       prenoms: {
         naissance: formatagePrenoms(union.prenoms)
       },
-      genre: union.sexe
+      genre: Sexe.getEnumFor(union.sexe)
     },
     naissance: {
       date: mappingDateNaissance(union),
@@ -284,7 +299,7 @@ const mappingITitulaireRequeteVersItemEffetCollectifProps = (
         naissance: formatagePrenoms(effetCollectif.prenoms),
         francisation: formatagePrenoms(effetCollectif.prenomsDemande)
       },
-      genre: effetCollectif.sexe
+      genre: Sexe.getEnumFor(effetCollectif.sexe)
     },
     naissance: {
       date: mappingDateNaissance(effetCollectif),
@@ -320,7 +335,7 @@ const mappingITitulaireRequeteVersItemEnfantMajeurProps = (
       prenoms: {
         naissance: formatagePrenoms(enfantMajeur.prenoms)
       },
-      genre: enfantMajeur.sexe
+      genre: Sexe.getEnumFor(enfantMajeur.sexe)
     },
     naissance: {
       date: mappingDateNaissance(enfantMajeur),
@@ -350,7 +365,7 @@ const mappingITitulaireRequeteVersItemFraterieProps = (
       prenoms: {
         naissance: formatagePrenoms(fraterie.prenoms)
       },
-      genre: fraterie.sexe
+      genre: Sexe.getEnumFor(fraterie.sexe)
     },
     naissance: {
       date: mappingDateNaissance(fraterie),

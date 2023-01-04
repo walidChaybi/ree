@@ -14,6 +14,7 @@ import { SousTypeDelivrance } from "./enum/SousTypeDelivrance";
 import { SousTypeInformation } from "./enum/SousTypeInformation";
 import { SousTypeMiseAJour } from "./enum/SousTypeMiseAJour";
 import { StatutRequete } from "./enum/StatutRequete";
+import { TagPriorisation } from "./enum/TagPriorisation";
 import { TypeCanal } from "./enum/TypeCanal";
 import { TypeRequete } from "./enum/TypeRequete";
 import { IDocumentReponse } from "./IDocumentReponse";
@@ -94,7 +95,8 @@ export function mappingUneRequeteTableauDelivrance(
     idCorbeilleAgent: valeurOuUndefined(requete?.idCorbeilleAgent),
     idEntiteRattachement: valeurOuUndefined(requete?.idEntiteRattachement),
     canal: TypeCanal.getEnumFor(requete.canal),
-    documentsReponses: requete.documentsReponses
+    documentsReponses: requete.documentsReponses,
+    tagPriorisation: TagPriorisation.getEnumFor(requete.tagPriorisation).libelle
   };
 }
 

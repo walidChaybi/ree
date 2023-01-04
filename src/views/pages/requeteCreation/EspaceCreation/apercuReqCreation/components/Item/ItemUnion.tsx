@@ -10,7 +10,7 @@ import { DateCoordonneesType, IdentiteType, NationaliteType } from "../Types";
 import Item, { ItemProps } from "./Item";
 import { ItemLigne } from "./ItemLigne";
 import { LigneDateNaissanceAdresse } from "./ItemTitulaire/LigneDateNaissanceAdresse";
-import { LigneNomPrenomActuel } from "./ItemTitulaire/LigneNomPrenomActuel";
+import { LignesNomPrenoms } from "./ItemTitulaire/LignesNomPrenom";
 
 export interface ItemUnionProps {
   numeros?: {
@@ -36,12 +36,12 @@ const ItemUnion: React.FC<ItemUnionProps & ItemProps> = props => {
         visible={estRenseigne(props.numeros?.requeteLiee)}
       />
 
-      <LigneNomPrenomActuel
+      <LignesNomPrenoms
         identite={props.identite}
         retenueSdanf={props.retenueSdanf}
-        afficherNomActuel={false}
-        afficherNomUsage={false}
       />
+
+      <ItemLigne texte={props.identite.genre.libelle} />
 
       <LigneDateNaissanceAdresse
         naissance={props.naissance}
@@ -56,15 +56,6 @@ const ItemUnion: React.FC<ItemUnionProps & ItemProps> = props => {
       />
 
       <ItemLigne
-        label={Labels.resume.union.mariage}
-        texte={formatLigneDateCoordonnees(props.mariage)}
-      />
-      <ItemLigne
-        label={Labels.resume.union.PACS}
-        texte={formatLigneDateCoordonnees(props.PACS)}
-      />
-
-      <ItemLigne
         label={UNION}
         texte={formatLigneDateCoordonnees(props.union)}
       />
@@ -72,6 +63,15 @@ const ItemUnion: React.FC<ItemUnionProps & ItemProps> = props => {
       <ItemLigne
         label={Labels.resume.union.dissolution}
         texte={formatLigneDateCoordonnees(props.dissolution)}
+      />
+
+      <ItemLigne
+        label={Labels.resume.union.mariage}
+        texte={formatLigneDateCoordonnees(props.mariage)}
+      />
+      <ItemLigne
+        label={Labels.resume.union.PACS}
+        texte={formatLigneDateCoordonnees(props.PACS)}
       />
 
       <ItemLigne

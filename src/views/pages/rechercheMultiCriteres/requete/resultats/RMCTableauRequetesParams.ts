@@ -14,6 +14,7 @@ export enum HeaderTableauRequete {
   IdSagaDila = "idSagaDila",
   Type = "type",
   SousType = "sousType",
+  Priorisation = "tagPriorisation",
   Provenance = "provenance",
   Titulaires = "titulaires",
   DatesNaissancesTitulaires = "datesNaissancesTitulaires",
@@ -53,6 +54,11 @@ export const columnsTableauRequete = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.SousType],
     title: "Sous-Type",
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequete.Priorisation],
+    title: "Priorisation",
     align: "center"
   }),
   new TableauTypeColumn({

@@ -13,6 +13,7 @@ export interface ItemProps {
   numeroItem?: number;
   totalItems?: number;
   className?: AccordionReceClassNameProps;
+  parent2Enfant?: boolean;
 }
 
 export const Item: React.FC<ItemProps> = ({

@@ -6,6 +6,7 @@ import {
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TagPriorisation } from "@model/requete/enum/TagPriorisation";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
@@ -86,6 +87,8 @@ export function mappingUneRequeteTableauCreation(
     numeroAffichage: getValeurOuVide(requete?.numeroAffichage),
     type: TypeRequete.getEnumFor("CREATION")?.libelle,
     sousType: SousTypeCreation.getEnumFor(requete?.sousType).libelleCourt,
+    tagPriorisation: TagPriorisation.getEnumFor(requete?.tagPriorisation)
+      .libelle,
     numeroAncien: requete?.numeroAncien,
     titulaires,
     nomCompletRequerant: requete?.nomCompletRequerant,

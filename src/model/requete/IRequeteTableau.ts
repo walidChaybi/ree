@@ -1,5 +1,6 @@
 /* istanbul ignore file */
 
+import { TagPriorisation } from "./enum/TagPriorisation";
 import { IRequeteTableauCreation } from "./IRequeteTableauCreation";
 import { IRequeteTableauDelivrance } from "./IRequeteTableauDelivrance";
 import { IRequeteTableauInformation } from "./IRequeteTableauInformation";
@@ -20,4 +21,5 @@ export interface IRequeteTableau {
   nomCompletRequerant?: string;
   titulaires?: ITitulaireRequeteTableau[];
   idUtilisateur?: string;
+  tagPriorisation?: TagPriorisation;
 }

@@ -1,8 +1,10 @@
 import { SituationFamiliale } from "@model/requete/enum/SituationFamiliale";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
-import { formatLigne } from "@util/Utils";
+import { formatLigne, getLibelle } from "@util/Utils";
 import React from "react";
+import { LienEmail } from "../../../../../../../common/widget/contact/LienEmail";
 import Labels, { INFOS } from "../../../Labels";
+import { formatagePrenoms } from "../../../mappingIRequeteCreationVersResumeRequeteCreationProps";
 import { formatLigneAdresse, formatLigneNationalites } from "../../Formatages";
 import {
   DateCoordonneesType,
@@ -12,10 +14,10 @@ import {
 } from "../../Types";
 import Item, { ItemProps } from "../Item";
 import { ItemLigne } from "../ItemLigne";
+import { ItemLigneSdanf } from "../ItemLigneSdanf";
 import ItemParent, { ItemParentProps } from "../ItemParent";
 import { LigneDateNaissanceAdresse } from "./LigneDateNaissanceAdresse";
 import { LigneFrancisationIdentification } from "./LigneFrancisationIdentification";
-import { LigneNomPrenomActuel } from "./LigneNomPrenomActuel";
 
 export interface ItemTitulaireProps {
   identite: IdentiteType;
@@ -34,27 +36,63 @@ export interface ItemTitulaireProps {
 }
 
 const ItemTitulaire: React.FC<ItemTitulaireProps & ItemProps> = props => {
-  const texteContacts = formatLigne(
-    [props.contacts.mail, props.contacts.telephone],
-    " "
-  );
-
   return (
     <Item {...props}>
-      <LigneNomPrenomActuel
-        identite={props.identite}
-        retenueSdanf={props.retenueSdanf}
-        afficherNomUsage={false}
-      />
+      <div className="itemLigneTitulaire">
+        <ItemLigneSdanf
+          separateur={""}
+          texteSdanf={
+            props.retenueSdanf?.nomNaissance
+              ? `${props.retenueSdanf?.nomNaissance}`
+              : undefined
+          }
+          texteTitulaire={
+            props.identite.noms.naissance
+              ? `${props.identite.noms.naissance}`
+              : undefined
+          }
+        />
+
+        <ItemLigneSdanf
+          texteSdanf={
+            props.retenueSdanf?.nomActuel
+              ? `(${getLibelle("Actuel : ")}${props.retenueSdanf?.nomActuel})`
+              : undefined
+          }
+          texteTitulaire={
+            props.identite.noms.actuel
+              ? `(${getLibelle("Actuel : ")}${props.identite.noms.actuel})`
+              : undefined
+          }
+        />
+      </div>
+
+      <div className="itemLigneTitulaire">
+        <ItemLigneSdanf
+          texteTitulaire={formatLigne(props.identite.prenoms.naissance)}
+          texteSdanf={formatLigne(
+            formatagePrenoms(props.retenueSdanf?.prenomsRetenu)
+          )}
+        />
+      </div>
 
       <LigneFrancisationIdentification
         identite={props.identite}
         retenueSdanf={props.retenueSdanf}
       />
 
+      <ItemLigne texte={props.identite.genre.libelle} />
+
       <LigneDateNaissanceAdresse
         naissance={props.naissance}
         retenueSdanf={props.retenueSdanf}
+      />
+
+      <ItemLigne
+        texte={
+          formatLigneNationalites(props.nationalites) ??
+          Labels.resume.nationalite.defaut
+        }
       />
 
       <Item titre={INFOS} className={{ title: "bg-clair" }} etendu={false}>
@@ -67,17 +105,15 @@ const ItemTitulaire: React.FC<ItemTitulaireProps & ItemProps> = props => {
           label={Labels.resume.enfant.mineurs}
           texte={props.nbMineurs?.toString()}
         />
-        <ItemLigne
-          texte={
-            formatLigneNationalites(props.nationalites) ??
-            Labels.resume.nationalite.defaut
-          }
-        />
         {props.domiciliation.lignes.map((ligne, id) => (
           <ItemLigne key={`ligne${id}`} texte={ligne} />
         ))}
         <ItemLigne texte={formatLigneAdresse(props.domiciliation)} />
-        <ItemLigne texte={texteContacts} />
+
+        <div className="contact">
+          <LienEmail email={props.contacts.mail} />
+          <ItemLigne texte={props.contacts.telephone} />
+        </div>
       </Item>
       {props.parents.map(
         (parent, id) =>

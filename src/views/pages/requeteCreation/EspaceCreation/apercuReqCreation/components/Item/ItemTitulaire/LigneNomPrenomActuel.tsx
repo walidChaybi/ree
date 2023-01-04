@@ -71,7 +71,7 @@ export const LigneNomPrenomActuel: React.FC<LigneNomPrenomActuelProps> = ({
         )}
       />
 
-      <ItemLigne texte={props.identite.genre} />
+      <ItemLigne texte={props.identite.genre.libelle} />
     </div>
   );
 };

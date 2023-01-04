@@ -1,3 +1,5 @@
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+
 export type IdentiteType = {
   noms: {
     naissance: string;
@@ -10,7 +12,7 @@ export type IdentiteType = {
     naissance: string[];
     francisation?: string[];
   };
-  genre: string;
+  genre: Sexe;
 };
 
 export type NationaliteType = {

@@ -26,6 +26,8 @@ export interface ItemEffetCollectifProps {
   retenueSdanf?: IRetenueSdanf;
 }
 
+const VALIDE = "Validé";
+
 const ItemEffetCollectif: React.FC<
   ItemEffetCollectifProps & ItemProps
 > = props => {
@@ -61,18 +63,18 @@ const ItemEffetCollectif: React.FC<
           Labels.resume.nationalite.defaut
         }
       />
-      <ItemLigne label={Labels.resume.effetCollectif} texte={props.statut} />
-      <ItemLigne
-        label={Labels.resume.residence}
-        texte={props.residence?.libelle}
-      />
-      <ItemLigne texte={props.domiciliation} />
+
+      {props.statut === VALIDE && (
+        <ItemLigne label={Labels.resume.effetCollectif} texte={props.statut} />
+      )}
+
       {props.parent && (
         <ItemParent
           {...props.parent}
           titre={Labels.resume.parent}
           numeroItem={idDeuxiemeParent}
           retenueSdanf={props.parent.retenueSdanf}
+          parent2Enfant={true}
         />
       )}
     </Item>

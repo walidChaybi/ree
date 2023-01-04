@@ -5,10 +5,11 @@ export const REQUETE = getLibelle("Requête");
 export const UNION = getLibelle("Union");
 export const ENFANT = getLibelle("Enfant");
 export const INFOS = getLibelle("Informations");
+export const UNION_ACTUELLE = getLibelle("Union actuelle");
 
 const requete = {
   liee: getLibelle(`${REQUETE} liée`),
-  description: getLibelle(`Description ${REQUETE}`),
+  description: getLibelle(`Description de la requête`),
   sousType: getLibelle("Sous-type")
 };
 
@@ -22,8 +23,8 @@ const sdanf = {
 };
 
 const union = {
-  anterieur: getLibelle(`${UNION} antérieur`),
-  anterieurs: getLibelle(`${UNION}s antérieurs`),
+  anterieur: getLibelle(`${UNION} antérieure`),
+  anterieurs: getLibelle(`${UNION}s antérieures`),
   mariage: getLibelle("Mariage"),
   PACS: getLibelle("PACS"),
   dissolution: getLibelle("Dissolution"),

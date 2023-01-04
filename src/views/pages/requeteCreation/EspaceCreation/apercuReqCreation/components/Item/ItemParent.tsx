@@ -2,12 +2,17 @@ import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { estRenseigne } from "@util/Utils";
 import React from "react";
 import Labels from "../../Labels";
-import { formatLigneNationalites } from "../Formatages";
-import { DateCoordonneesType, IdentiteType, NationaliteType } from "../Types";
+import { formatDomiciliation, formatLigneNationalites } from "../Formatages";
+import {
+  DateCoordonneesType,
+  DomiciliationType,
+  IdentiteType,
+  NationaliteType
+} from "../Types";
 import Item, { ItemProps } from "./Item";
 import { ItemLigne } from "./ItemLigne";
 import { LigneDateNaissanceAdresse } from "./ItemTitulaire/LigneDateNaissanceAdresse";
-import { LigneNomPrenomActuel } from "./ItemTitulaire/LigneNomPrenomActuel";
+import { LignesNomPrenoms } from "./ItemTitulaire/LignesNomPrenom";
 
 export interface ItemParentProps {
   numeros: {
@@ -16,12 +21,15 @@ export interface ItemParentProps {
   identite: IdentiteType;
   naissance: DateCoordonneesType;
   nationalites: NationaliteType[];
-  domiciliation?: string;
+  domiciliation?: DomiciliationType;
   position: number;
   retenueSdanf?: IRetenueSdanf;
 }
 
-const ItemParent: React.FC<ItemParentProps & ItemProps> = props => {
+const ItemParent: React.FC<ItemParentProps & ItemProps> = ({
+  parent2Enfant = false,
+  ...props
+}) => {
   return (
     <Item className={{ title: "bg-clair" }} {...props}>
       <ItemLigne
@@ -30,12 +38,12 @@ const ItemParent: React.FC<ItemParentProps & ItemProps> = props => {
         visible={estRenseigne(props.numeros.requeteLiee)}
       />
 
-      <LigneNomPrenomActuel
+      <LignesNomPrenoms
         identite={props.identite}
         retenueSdanf={props.retenueSdanf}
-        afficherNomActuel={false}
-        afficherNomUsage={false}
       />
+
+      <ItemLigne texte={props.identite.genre.libelle} />
 
       <LigneDateNaissanceAdresse
         naissance={props.naissance}
@@ -49,7 +57,15 @@ const ItemParent: React.FC<ItemParentProps & ItemProps> = props => {
         }
       />
 
-      <ItemLigne texte={props.domiciliation} />
+      {parent2Enfant && (
+        <>
+          <ItemLigne
+            texte={`${formatLigneNationalites(
+              props.nationalites
+            )} ${formatDomiciliation(props.domiciliation)}`}
+          />
+        </>
+      )}
     </Item>
   );
 };

@@ -17,6 +17,7 @@ $height: $spacing * 2.5;
   }
   .itemLigneTitulaire {
     display: flex;
+    flex-wrap: wrap;
   }
   .texte {
     display: flex;
@@ -60,6 +61,31 @@ $height: $spacing * 2.5;
         height: $height;
         color: $application-color;
       }
+    }
+  }
+
+  .contact {
+    display: flex;
+    align-items: center;
+
+    a {
+      margin-right: 5px;
+    }
+  }
+
+  .titleAccordion {
+    display: flex;
+    justify-content: center;
+
+    .numero {
+      flex:1;
+      display: flex;
+      justify-content: center;
+      transform: translateX(10px)
+    }
+
+    .tagPriorisation {
+      margin-left: auto
     }
   }
 }

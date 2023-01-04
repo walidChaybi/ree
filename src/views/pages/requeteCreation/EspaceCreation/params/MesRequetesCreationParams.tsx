@@ -5,6 +5,7 @@ import { styleColonne } from "./EspaceCreationParams";
 export enum HeaderTableauMesRequetesCreation {
   NumeroAffichage = "numeroAffichage",
   SousType = "sousType",
+  Priorisation = "tagPriorisation",
   Postulant = "postulant",
   NomCompletRequerant = "nomCompletRequerant",
   DateCreation = "dateCreation",
@@ -26,8 +27,14 @@ export const colonnesTableauMesRequetesCreation = [
     align: "center"
   }),
   new TableauTypeColumn({
+    keys: [HeaderTableauMesRequetesCreation.Priorisation],
+    title: getLibelle("Priorisation"),
+    align: "center",
+    sortable: true
+  }),
+  new TableauTypeColumn({
     keys: [HeaderTableauMesRequetesCreation.Postulant],
-    title: getLibelle("Postulant/Titulaire"),
+    title: getLibelle("Postulant/Déclarant"),
     align: "center"
   }),
   new TableauTypeColumn({

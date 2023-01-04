@@ -1,3 +1,4 @@
+import { TagPriorisation } from "./enum/TagPriorisation";
 import { IRequeteTableau } from "./IRequeteTableau";
 
 export interface IRequeteTableauCreation extends IRequeteTableau {
@@ -10,4 +11,5 @@ export interface IRequeteTableauCreation extends IRequeteTableau {
   numeroAffichage: string;
   idEntiteRattachement?: string;
   attribueA?: string;
+  tagPriorisation: TagPriorisation;
 }

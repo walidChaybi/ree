@@ -5,17 +5,17 @@ import Item, { ItemProps } from "./Item";
 import { ItemEnfantMajeurProps as ItemFraterieProps } from "./ItemEnfantMajeur";
 import { ItemLigne } from "./ItemLigne";
 import { LigneDateNaissanceAdresse } from "./ItemTitulaire/LigneDateNaissanceAdresse";
-import { LigneNomPrenomActuel } from "./ItemTitulaire/LigneNomPrenomActuel";
+import { LignesNomPrenoms } from "./ItemTitulaire/LignesNomPrenom";
 
 const ItemFraterie: React.FC<ItemFraterieProps & ItemProps> = props => {
   return (
     <Item {...props}>
-      <LigneNomPrenomActuel
+      <LignesNomPrenoms
         identite={props.identite}
         retenueSdanf={props.retenueSdanf}
-        afficherNomActuel={false}
-        afficherNomUsage={false}
       />
+
+      <ItemLigne texte={props.identite.genre.libelle} />
 
       <LigneDateNaissanceAdresse
         naissance={props.naissance}

@@ -12,6 +12,7 @@ import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TagPriorisation } from "@model/requete/enum/TagPriorisation";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
 import { TypeMandant } from "@model/requete/enum/TypeMandant";
@@ -346,6 +347,9 @@ export function mappingRequeteCreation(data: any): IRequeteCreation {
     mandant: data.mandant ? getMandant(data.mandant) : undefined,
     provenanceNatali: {
       ...data.provenanceNatali,
+      tagPriorisation: TagPriorisation.getEnumFor(
+        data.provenanceNatali?.tagPriorisation
+      ),
       echanges: mapEchangesRetourSDANF(data.provenanceNatali?.echanges)
     },
     documentsPj: mapDocumentPJ(data.documentsPj)

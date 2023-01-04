@@ -6,7 +6,7 @@ import { DateCoordonneesType, IdentiteType, NationaliteType } from "../Types";
 import Item, { ItemProps } from "./Item";
 import { ItemLigne } from "./ItemLigne";
 import { LigneDateNaissanceAdresse } from "./ItemTitulaire/LigneDateNaissanceAdresse";
-import { LigneNomPrenomActuel } from "./ItemTitulaire/LigneNomPrenomActuel";
+import { LignesNomPrenoms } from "./ItemTitulaire/LignesNomPrenom";
 
 export interface ItemEnfantMajeurProps {
   identite: IdentiteType;
@@ -18,12 +18,12 @@ export interface ItemEnfantMajeurProps {
 const ItemEnfantMajeur: React.FC<ItemEnfantMajeurProps & ItemProps> = props => {
   return (
     <Item {...props}>
-      <LigneNomPrenomActuel
+      <LignesNomPrenoms
         identite={props.identite}
         retenueSdanf={props.retenueSdanf}
-        afficherNomActuel={false}
-        afficherNomUsage={false}
       />
+
+      <ItemLigne texte={props.identite.genre.libelle} />
 
       <LigneDateNaissanceAdresse
         naissance={props.naissance}

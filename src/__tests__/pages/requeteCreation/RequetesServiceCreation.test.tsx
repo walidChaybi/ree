@@ -43,7 +43,8 @@ test("Attendu: les requêtes de service s'affichent correctement", async () => {
     // Attendu: les titres des colonnes sont corrects
     expect(screen.getByText("N°")).toBeDefined();
     expect(screen.getByText("Sous-type")).toBeDefined();
-    expect(screen.getByText("Postulant/Titulaire")).toBeDefined();
+    expect(screen.getByText("Priorisation")).toBeDefined();
+    expect(screen.getByText("Postulant/Déclarant")).toBeDefined();
     expect(screen.getByText("Requérant")).toBeDefined();
     expect(screen.getByText("Initialisation")).toBeDefined();
     expect(screen.getByText("Attribuée à")).toBeDefined();

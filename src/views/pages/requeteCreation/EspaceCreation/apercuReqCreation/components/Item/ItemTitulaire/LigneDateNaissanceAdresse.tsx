@@ -32,11 +32,6 @@ export const LigneDateNaissanceAdresse: React.FC<
       />
 
       <ItemLigneSdanf
-        texteSdanf={props.retenueSdanf?.codePostalNaissance}
-        texteTitulaire={props.naissance.codePostalNaissance}
-      />
-
-      <ItemLigneSdanf
         texteSdanf={props.retenueSdanf?.villeNaissance}
         texteTitulaire={props.naissance.villeNaissance}
       />
@@ -52,9 +47,8 @@ export const LigneDateNaissanceAdresse: React.FC<
       />
 
       <ItemLigneSdanf
-        texteSdanf={props.retenueSdanf?.paysNaissance}
-        texteTitulaire={props.naissance.paysNaissance}
-        separateur={""}
+        texteSdanf={`(${props.retenueSdanf?.paysNaissance})`}
+        texteTitulaire={`(${props.naissance.paysNaissance})`}
       />
     </div>
   );
