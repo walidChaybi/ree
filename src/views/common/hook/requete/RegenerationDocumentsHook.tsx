@@ -126,10 +126,10 @@ function genereCourrier(
     mettreAJourStatut: false,
     requete: params.requete,
     optionsChoisies: document.optionsCourrier
-      ? (document.optionsCourrier.map(option => ({
-          code: option.code,
-          texteOptionCourrier: option.texte,
-          ordreEdition: option.numeroOrdreEdition
+      ? (document.optionsCourrier.map(optionCourrier => ({
+          id: optionCourrier.code,
+          texteOptionCourrier: optionCourrier.texte,
+          ordreEdition: optionCourrier.numeroOrdreEdition
         })) as OptionsCourrier)
       : [],
     saisieCourrier: getDefaultValuesCourrier(params.requete),
