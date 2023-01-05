@@ -1,5 +1,6 @@
 import { getDateStringFromDateCompose } from "@util/DateUtils";
 import {
+  chainesEgalesIgnoreCasse,
   estRenseigne,
   formatLigne,
   getValeurOuVide,
@@ -77,12 +78,14 @@ export const formatLigneNationalites = (nationalites?: NationaliteType[]) =>
   formatLigne(nationalites?.map(nationalite => nationalite.nationalite));
 
 export const presenceCorrectionSdanf = (
-  champAControlerSdanf?: string | number | string[],
-  champAControlerTitulaire?: string | number | string[]
+  champAControlerSdanf?: string,
+  champAControlerTitulaire?: string
 ): boolean => {
-  return champAControlerSdanf
-    ? champAControlerSdanf !== champAControlerTitulaire
-    : false;
+
+  return (
+    estRenseigne(champAControlerSdanf) &&
+    !chainesEgalesIgnoreCasse(champAControlerSdanf, champAControlerTitulaire)
+  );
 };
 
 export const formatageDateNaissanceRetenueSdanf = (

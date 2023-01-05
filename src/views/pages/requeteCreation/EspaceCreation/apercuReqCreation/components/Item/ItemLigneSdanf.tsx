@@ -1,4 +1,4 @@
-import { estRenseigne } from "@util/Utils";
+import { chainesEgalesIgnoreCasse, estRenseigne } from "@util/Utils";
 import { InfoBulle } from "@widget/infoBulle/InfoBulle";
 import React from "react";
 import { presenceCorrectionSdanf } from "../Formatages";
@@ -31,6 +31,8 @@ export const ItemLigneSdanf: React.FC<ItemLigneSdanfProps> = ({
                 {texteSdanf}
               </div>
             </>
+          ) : chainesEgalesIgnoreCasse(texteTitulaire, texteSdanf) ? (
+            texteSdanf
           ) : (
             texteTitulaire
           )}
