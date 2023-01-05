@@ -558,7 +558,7 @@ né le 29 novembre 1989 à Paris
   et de Carmelaa, Linzy Sacken
   adopté par Carmelaaa, Linzy Sacken et par Carmelaaaa, Linzy Sacken
 et de Sophie, Marie-Charlotte, Pauline PRODESK 
-née le 25 juin 1990 à Barcelone (Catalogne)
+née le 25 juin 1990 à Barcelone, Catalogne
   adoptée par Carmela, Linzy Sacken
 
 Contrat de mariage : Sans contrat préalable`;

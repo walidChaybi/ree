@@ -21,7 +21,7 @@ afterAll(() => {
   superagentMock.unset();
 });
 
-describe("Composition extrait plurilingue de Naissance", () => {
+describe("Composition extrait plurilingue de Décès", () => {
   test("Doit composer l'extrait avec les bonne données", () => {
     const acte = mapActe(ficheActeDeces.data);
 
@@ -97,7 +97,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
           ville: "Milan",
           arrondissement: null,
           region: "Lombardie",
-          pays: "Inconnu",
+          pays: "Alger",
           lieuReprise: null
         },
         profession: "POMPIER",
@@ -159,7 +159,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
       mois: 3,
       annee: 1995
     };
-    const lieuNaissance = "Milan (Lombardie)";
+    const lieuNaissance = "Milan, Lombardie (Alger)";
 
     const nomPere = "Sacken";
     const prenomsPere = "Carmela, Linzy";
@@ -273,7 +273,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
       mois: 3,
       annee: 1995
     };
-    const lieuNaissance = "Milan (Lombardie)";
+    const lieuNaissance = "Milan, Lombardie";
 
     const nomPere = "Sacken";
     const prenomsPere = "Carmela, Linzy";

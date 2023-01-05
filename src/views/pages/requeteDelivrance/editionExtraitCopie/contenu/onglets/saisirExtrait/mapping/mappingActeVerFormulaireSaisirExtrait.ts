@@ -461,11 +461,17 @@ function saisieLieuEvt(
   etrangerParDefaut = true,
   estNaissancePaysInconnu = false
 ): ILieuEvenementForm {
-  const pays =
-    evenement?.pays ||
-    (etrangerParDefaut || LieuxUtils.estVilleJerusalem(evenement?.ville)
-      ? ""
-      : FRANCE);
+  let pays;
+  if (estNaissancePaysInconnu) {
+    pays = "";
+  } else {
+    pays =
+      evenement?.pays ||
+      (etrangerParDefaut || LieuxUtils.estVilleJerusalem(evenement?.ville)
+        ? ""
+        : FRANCE);
+  }
+
   return {
     [LIEU_COMPLET]: evenement?.lieuReprise
       ? getValeurOuVide(evenement?.lieuReprise)

@@ -103,6 +103,13 @@ export const TitulaireActe = {
 
     if (titulaire && titulaire?.naissance?.lieuReprise) {
       return titulaire.naissance.lieuReprise;
+    } else if (paysInconnu) {
+      return LieuxUtils.getLocalisationEtrangerOuFrance(
+        titulaire?.naissance?.ville,
+        titulaire?.naissance?.region,
+        paysParDefaut,
+        titulaire?.naissance?.arrondissement
+      );
     } else {
       return LieuxUtils.getLocalisationEtrangerOuFranceParDefaut(
         titulaire?.naissance?.ville,

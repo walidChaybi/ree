@@ -577,7 +577,6 @@ export function aucuneProprieteRenseignee(objet?: Object): boolean {
   return res;
 }
 
-
 export function chainesEgales(
   sensitivity: "base" | "accent",
   str1?: string,
