@@ -75,7 +75,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
   /* Gestion du clic sur une colonne de type checkbox dans le tableau des actes */
   const onClickCheckboxActe = useCallback(
     (isChecked: boolean, data: IResultatRMCActe): void => {
-      let nouveauxActesSelectionnes = actesSelectionnes;
+      let nouveauxActesSelectionnes = [...actesSelectionnes];
       if (isChecked) {
         nouveauxActesSelectionnes.push(data);
         setAddActe({ idActe: data.idActe, isChecked: true });
@@ -97,7 +97,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
   /* Gestion du clic sur une colonne de type checkbox dans le tableau des inscriptions */
   const onClickCheckboxInscription = useCallback(
     (isChecked: boolean, data: IResultatRMCInscription): void => {
-      let nouvellesInscriptionsSelectionnees = inscriptionsSelectionnees;
+      let nouvellesInscriptionsSelectionnees = [...inscriptionsSelectionnees];
 
       if (isChecked) {
         nouvellesInscriptionsSelectionnees.push(data);
