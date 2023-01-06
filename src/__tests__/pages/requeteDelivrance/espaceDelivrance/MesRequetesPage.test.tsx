@@ -34,13 +34,13 @@ test("renders Page requete with all elements", async () => {
 
   await waitFor(() => {
     const numero = screen.getByText("1234");
-    expect(screen.getByText("Fin de consultation")).toBeDefined();
+    expect(screen.getByText("Fin consultation")).toBeDefined();
     expect(titreNumero).toBeDefined();
     expect(numero).toBeDefined();
   });
 
   act(() => {
-    fireEvent.click(screen.getByText("Fin de consultation"));
+    fireEvent.click(screen.getByText("Fin consultation"));
   });
 
   await waitFor(() => {
