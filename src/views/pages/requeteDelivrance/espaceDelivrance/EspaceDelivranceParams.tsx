@@ -60,7 +60,8 @@ export const requeteColumnHeaders = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.Document],
     title: getLibelle("Document"),
-    align: "center"
+    align: "center",
+    style: { width: "15%" }
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.Titulaires],
@@ -68,7 +69,7 @@ export const requeteColumnHeaders = [
     align: "center",
     dataIsArray: true,
     getElement: getCellTitulaires,
-    style: { width: "150px" }
+    style: { width: "20%" }
   })
 ];
 
@@ -96,7 +97,8 @@ export const dateStatutColumnHeaders = [
     title: getLibelle("Priorité"),
     getElement: getIconPrioriteRequete,
     align: "center",
-    sortable: true
+    sortable: true,
+    style: { width: "3rem" }
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.Actions],

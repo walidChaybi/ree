@@ -168,8 +168,11 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     return (
       <>
         {statut === "Traitée - Répondue" && (
-          <Bouton onClick={e => finDeConsultation(id, e)}>
-            {getLibelle("Fin de consultation")}
+          <Bouton
+            className="finConsultation"
+            onClick={e => finDeConsultation(id, e)}
+          >
+            {getLibelle("Fin consultation")}
           </Bouton>
         )}
       </>

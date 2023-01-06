@@ -88,7 +88,7 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
             requete.idUtilisateur
           ) && (
             <Bouton onClick={finDeConsultation}>
-              {getLibelle("Fin de consultation")}
+              {getLibelle("Fin consultation")}
             </Bouton>
           )}
           {!idRequeteAAfficher && <BoutonRetour />}
