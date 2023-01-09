@@ -1,4 +1,5 @@
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
+import { formatMajusculesMinusculesMotCompose } from "@util/Utils";
 import React from "react";
 import Labels from "../../Labels";
 import { formatLigneNationalites } from "../Formatages";
@@ -32,8 +33,9 @@ const ItemEnfantMajeur: React.FC<ItemEnfantMajeurProps & ItemProps> = props => {
 
       <ItemLigne
         texte={
-          formatLigneNationalites(props.nationalites) ??
-          Labels.resume.nationalite.defaut
+          formatMajusculesMinusculesMotCompose(
+            formatLigneNationalites(props.nationalites)
+          ) ?? Labels.resume.nationalite.defaut
         }
       />
     </Item>

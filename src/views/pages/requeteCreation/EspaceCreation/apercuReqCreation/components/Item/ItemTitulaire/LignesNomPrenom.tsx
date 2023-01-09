@@ -1,5 +1,5 @@
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
-import { formatLigne, getLibelle } from "@util/Utils";
+import { formatLigne } from "@util/Utils";
 import React from "react";
 import { formatagePrenoms } from "../../../mappingIRequeteCreationVersResumeRequeteCreationProps";
 import { IdentiteType } from "../../Types";
@@ -17,12 +17,12 @@ export const LignesNomPrenoms: React.FC<LigneNomPrenomsProps> = props => {
         separateur={""}
         texteSdanf={
           props.retenueSdanf?.nomNaissance
-            ? `${props.retenueSdanf?.nomNaissance}${getLibelle(" : ")}`
+            ? `${props.retenueSdanf?.nomNaissance}`
             : undefined
         }
         texteTitulaire={
           props.identite.noms.naissance
-            ? `${props.identite.noms.naissance}${getLibelle(" : ")}`
+            ? `${props.identite.noms.naissance}`
             : undefined
         }
       />
@@ -32,6 +32,7 @@ export const LignesNomPrenoms: React.FC<LigneNomPrenomsProps> = props => {
         texteSdanf={formatLigne(
           formatagePrenoms(props.retenueSdanf?.prenomsRetenu)
         )}
+        sepatateurVisible={false}
       />
     </div>
   );

@@ -1,6 +1,10 @@
 import { SituationFamiliale } from "@model/requete/enum/SituationFamiliale";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
-import { formatLigne, getLibelle } from "@util/Utils";
+import {
+  formatLigne,
+  formatMajusculesMinusculesMotCompose,
+  getLibelle
+} from "@util/Utils";
 import React from "react";
 import { LienEmail } from "../../../../../../../common/widget/contact/LienEmail";
 import Labels, { INFOS } from "../../../Labels";
@@ -64,11 +68,13 @@ const ItemTitulaire: React.FC<ItemTitulaireProps & ItemProps> = props => {
               ? `(${getLibelle("Actuel : ")}${props.identite.noms.actuel})`
               : undefined
           }
+          sepatateurVisible={false}
         />
       </div>
 
       <div className="itemLigneTitulaire">
         <ItemLigneSdanf
+          sepatateurVisible={false}
           texteTitulaire={formatLigne(props.identite.prenoms.naissance)}
           texteSdanf={formatLigne(
             formatagePrenoms(props.retenueSdanf?.prenomsRetenu)
@@ -90,8 +96,9 @@ const ItemTitulaire: React.FC<ItemTitulaireProps & ItemProps> = props => {
 
       <ItemLigne
         texte={
-          formatLigneNationalites(props.nationalites) ??
-          Labels.resume.nationalite.defaut
+          formatMajusculesMinusculesMotCompose(
+            formatLigneNationalites(props.nationalites)
+          ) ?? Labels.resume.nationalite.defaut
         }
       />
 

@@ -37,7 +37,7 @@ export const CopierTexte: React.FC<CopierTexteProps> = ({
       >
         <span onClick={e => handleClick(e)}>
           {props.numero && separateur && ",  "}
-          {props.label} {props.numero && `"n° " ${props.numero}`}
+          {props.label} {props.numero && `n° ${props.numero}`}
         </span>
       </Tooltip>
     </div>

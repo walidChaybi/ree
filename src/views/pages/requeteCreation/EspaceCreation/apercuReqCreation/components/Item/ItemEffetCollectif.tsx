@@ -1,6 +1,9 @@
 import { Residence } from "@model/requete/enum/Residence";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
-import { estRenseigne } from "@util/Utils";
+import {
+  estRenseigne,
+  formatMajusculesMinusculesMotCompose
+} from "@util/Utils";
 import React from "react";
 import Labels from "../../Labels";
 import { formatLigneNationalites } from "../Formatages";
@@ -59,8 +62,9 @@ const ItemEffetCollectif: React.FC<
 
       <ItemLigne
         texte={
-          formatLigneNationalites(props.nationalites) ??
-          Labels.resume.nationalite.defaut
+          formatMajusculesMinusculesMotCompose(
+            formatLigneNationalites(props.nationalites)
+          ) ?? Labels.resume.nationalite.defaut
         }
       />
 

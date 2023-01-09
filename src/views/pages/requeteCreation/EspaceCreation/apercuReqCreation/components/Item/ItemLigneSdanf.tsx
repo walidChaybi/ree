@@ -8,6 +8,7 @@ interface ItemLigneSdanfProps {
   texteTitulaire?: string;
   visible?: boolean;
   separateur?: string;
+  sepatateurVisible?: boolean;
   infoBulleSdanfVisible?: boolean;
   texteSdanf?: any;
 }
@@ -16,6 +17,7 @@ export const ItemLigneSdanf: React.FC<ItemLigneSdanfProps> = ({
   texteTitulaire,
   visible = estRenseigne(texteTitulaire),
   separateur = ";",
+  sepatateurVisible = true,
   texteSdanf,
   infoBulleSdanfVisible = presenceCorrectionSdanf(texteSdanf, texteTitulaire),
   ...props
@@ -40,7 +42,7 @@ export const ItemLigneSdanf: React.FC<ItemLigneSdanfProps> = ({
         <InfoBulle visible={infoBulleSdanfVisible} texte={texteTitulaire} />
       </div>
 
-      <span className="separateur">{separateur}</span>
+      <span className="separateur">{sepatateurVisible && separateur}</span>
     </div>
   ) : (
     <></>
