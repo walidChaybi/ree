@@ -20,7 +20,6 @@ interface ComponentFormProps {
   type?: TypeDeclarationConjointe;
   date?: Date;
   origineTitulaireActe?: boolean;
-  saisieVerrouillee: boolean;
 }
 
 type DeclarationConjointeFormProps = ComponentFormProps & FormikComponentProps;
@@ -62,8 +61,7 @@ const DeclarationConjointeForm: React.FC<
     showDatePicker: false,
     disabled:
       estDisabled(props.type, props.origineTitulaireActe) &&
-      estRenseigne(props.date) &&
-      props.saisieVerrouillee
+      estRenseigne(props.date)
   } as DateComposeFormProps;
 
   return (

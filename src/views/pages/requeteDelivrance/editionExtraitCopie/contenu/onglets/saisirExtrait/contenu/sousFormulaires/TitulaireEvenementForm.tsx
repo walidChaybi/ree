@@ -80,7 +80,6 @@ const TitulaireEvenementForm: React.FC<
             origineTitulaireActe={
               props.titulaire.origineDeclarationConjointeTitulaireActe
             }
-            saisieVerrouillee={saisieVerrouillee}
           />
         )}
 

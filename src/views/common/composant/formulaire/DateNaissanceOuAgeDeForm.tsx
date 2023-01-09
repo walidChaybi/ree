@@ -73,13 +73,26 @@ const DateNaissanceOuAgeDeForm: React.FC<
     [props.formik, props.nom]
   );
 
+  const getDateNaissanceSaisie = () => {
+    return props.formik.getFieldProps(withNamespace(props.nom, DATE)).value;
+  };
+
+  const getAgeSaisi = () => {
+    return props.formik.getFieldProps(withNamespace(props.nom, AGE)).value;
+  };
+
   return (
     <div>
       {
         <DateComposeForm
           nomDate={withNamespace(props.nom, DATE)}
           labelDate="Date de naissance"
-          disabled={props.saisieVerrouillee && disabledDate}
+          disabled={
+            (props.saisieVerrouillee ||
+              (Evenement.estNonRenseigne(getDateNaissanceSaisie()) &&
+                estRenseigne(getAgeSaisi()))) &&
+            disabledDate
+          }
           onChange={onChangeDate}
           showCroixSuppression={false}
         />
@@ -88,7 +101,11 @@ const DateNaissanceOuAgeDeForm: React.FC<
         <InputField
           label={getLibelle("Agé(e) de")}
           name={withNamespace(props.nom, AGE)}
-          disabled={disabledAgeDe}
+          disabled={
+            (props.saisieVerrouillee ||
+              Evenement.estPartiellementRenseigne(getDateNaissanceSaisie())) &&
+            disabledAgeDe
+          }
           onChange={onChangeAge}
         />
       }
