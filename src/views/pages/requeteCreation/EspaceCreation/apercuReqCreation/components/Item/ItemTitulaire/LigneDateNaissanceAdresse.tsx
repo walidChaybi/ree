@@ -19,9 +19,9 @@ export const LigneDateNaissanceAdresse: React.FC<
   );
 
   const dateNaissanceTitulaire = formatageDateNaissanceRetenueSdanf(
-    props.naissance.jourNaissance?.toString(),
-    props.naissance.moisNaissance?.toString(),
-    props.naissance.anneeNaissance?.toString()
+    props.naissance.jour?.toString(),
+    props.naissance.mois?.toString(),
+    props.naissance.annee?.toString()
   );
 
   return (
@@ -34,26 +34,22 @@ export const LigneDateNaissanceAdresse: React.FC<
 
       <ItemLigneSdanf
         texteSdanf={props.retenueSdanf?.villeNaissance}
-        texteTitulaire={props.naissance.villeNaissance}
-        separateur={", "}
+        texteTitulaire={props.naissance.ville}
       />
 
       <ItemLigneSdanf
         texteSdanf={props.retenueSdanf?.arrondissementNaissance}
-        texteTitulaire={props.naissance.arrondissementNaissance}
-        separateur={", "}
+        texteTitulaire={props.naissance.arrondissement}
       />
 
       <ItemLigneSdanf
         texteSdanf={props.retenueSdanf?.regionNaissance}
-        texteTitulaire={props.naissance.regionNaissance}
-        separateur={", "}
+        texteTitulaire={props.naissance.region}
       />
 
       <ItemLigneSdanf
-        texteSdanf={` (${props.retenueSdanf?.paysNaissance})`}
-        texteTitulaire={` (${props.naissance.paysNaissance})`}
-        sepatateurVisible={false}
+        texteSdanf={`(${props.retenueSdanf?.paysNaissance})`}
+        texteTitulaire={`(${props.naissance.pays})`}
       />
     </div>
   );

@@ -4,11 +4,8 @@ import { getDateStringFromDateCompose } from "@util/DateUtils";
 import { formatNom, getValeurOuVide, numberToString } from "@util/Utils";
 import { Nationalite } from "../etatcivil/enum/Nationalite";
 import { Sexe } from "../etatcivil/enum/Sexe";
-import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
-import { IEvenementUnion } from "./IEvenementUnion";
 import { IParent } from "./IParents";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
-import { IRetenueSdanf } from "./IRetenueSdanf";
 
 export interface ITitulaireRequete {
   id: string;
@@ -25,47 +22,15 @@ export interface ITitulaireRequete {
   nationalite: Nationalite;
   parentsTitulaire?: IParent[];
   codePostalNaissance?: string;
-
-  // Nouveaux champs création
   situationFamiliale?: string;
-  villeEtrangereNaissance?: string;
-  arrondissementNaissance?: string;
-  regionNaissance?: string;
-  nationalites?: INationalite[];
-  domiciliation?: IDomiciliation;
-  prenomsDemande?: IPrenomOrdonnes[];
-  nomDemandeFrancisation?: string;
-  nomDemandeIdentification?: string;
-  nomActuel?: string;
-  nombreEnfantMineur?: number;
-  typeObjetTitulaire?: TypeObjetTitulaire;
-  qualite?: string;
-  courriel?: string;
-  telephone?: string;
-
-  // Titulaire creation Effet collectif
-  parent2Enfant?: ITitulaireRequete;
-  valideEffetCollectif?: string;
-  demandeEffetCollectif?: boolean;
-  residence?: string;
-
-  // Titulaire creation Parent / Union / EffetCollectif
-  numeroDossierNational?: string;
-
-  // Titulaire creation Parent2 / EffetCollectif (parce que pour ces deux cas, l'adresse s'affiche en un string simple)
-  domiciliationEnfant?: string;
-
-  // Titulaire creation Union
-  evenementUnions?: IEvenementUnion[];
-  retenueSdanf?: IRetenueSdanf;
 }
 
-interface INationalite {
+export interface INationalite {
   id: string;
   nationalite: string;
 }
 
-interface IDomiciliation {
+export interface IDomiciliation {
   id: string;
   ligne2?: string;
   ligne3?: string;

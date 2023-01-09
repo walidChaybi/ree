@@ -1,4 +1,5 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { ITitulaireRequeteCreation } from "@model/requete/enum/ITitulaireRequeteCreation";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { Residence } from "@model/requete/enum/Residence";
 import { SituationFamiliale } from "@model/requete/enum/SituationFamiliale";
@@ -7,7 +8,6 @@ import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { IEvenementUnion } from "@model/requete/IEvenementUnion";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
-import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import {
   getDateStringFromDateCompose,
   getFormatDateFromTimestamp
@@ -82,34 +82,34 @@ const mappingIRequeteCreationVersResumeRequeteCreationProps = (
     requete,
     titulaire:
       titulaire &&
-      mappingITitulaireRequeteVersItemTitulaireProps(
+      mappingITitulaireRequeteCreationVersItemTitulaireProps(
         titulaire,
         parentsTitulaire,
         nbUnionsAnterieurs
       ),
-    union: union && mappingITitulaireRequeteVersItemUnionProps(union),
+    union: union && mappingITitulaireRequeteCreationVersItemUnionProps(union),
     unionsAnterieurs: mappingTableau(
-      mappingITitulaireRequeteVersItemUnionProps,
+      mappingITitulaireRequeteCreationVersItemUnionProps,
       unionsAnterieurs
     ),
     effetsCollectifs: mappingTableau(
-      mappingITitulaireRequeteVersItemEffetCollectifProps,
+      mappingITitulaireRequeteCreationVersItemEffetCollectifProps,
       effetsCollectifs
     ),
     enfantsMajeurs: mappingTableau(
-      mappingITitulaireRequeteVersItemEnfantMajeurProps,
+      mappingITitulaireRequeteCreationVersItemEnfantMajeurProps,
       enfantsMajeurs
     ),
     frateries: mappingTableau(
-      mappingITitulaireRequeteVersItemFraterieProps,
+      mappingITitulaireRequeteCreationVersItemFraterieProps,
       frateries
     )
   };
 };
 
-const mappingITitulaireRequeteVersItemTitulaireProps = (
-  titulaire: ITitulaireRequete,
-  parents: ITitulaireRequete[],
+const mappingITitulaireRequeteCreationVersItemTitulaireProps = (
+  titulaire: ITitulaireRequeteCreation,
+  parents: ITitulaireRequeteCreation[],
   nbUnionsAnterieurs = 0
 ): ItemTitulaireProps => {
   return {
@@ -129,15 +129,14 @@ const mappingITitulaireRequeteVersItemTitulaireProps = (
     },
     naissance: {
       date: mappingDateNaissance(titulaire),
-      villeNaissance:
-        titulaire.villeNaissance || titulaire.villeEtrangereNaissance,
-      arrondissementNaissance: titulaire.arrondissementNaissance,
-      regionNaissance: titulaire.regionNaissance,
-      paysNaissance: titulaire.paysNaissance,
-      anneeNaissance: titulaire.anneeNaissance,
-      moisNaissance: titulaire.moisNaissance,
-      jourNaissance: titulaire.jourNaissance,
-      codePostalNaissance: titulaire.codePostalNaissance
+      ville: titulaire.villeNaissance || titulaire.villeEtrangereNaissance,
+      arrondissement: titulaire.arrondissementNaissance,
+      region: titulaire.regionNaissance,
+      pays: titulaire.paysNaissance,
+      annee: titulaire.anneeNaissance,
+      mois: titulaire.moisNaissance,
+      jour: titulaire.jourNaissance,
+      codePostal: titulaire.codePostalNaissance
     },
     nbUnionsAnterieurs,
     situationFamiliale: SituationFamiliale.getEnumFor(
@@ -165,14 +164,14 @@ const mappingITitulaireRequeteVersItemTitulaireProps = (
     },
     retenueSdanf: titulaire.retenueSdanf ?? undefined,
     parents: mappingTableau(
-      mappingITitulaireRequeteVersItemParentProps,
+      mappingITitulaireRequeteCreationVersItemParentProps,
       parents
     ).sort((a, b) => a.position - b.position)
   };
 };
 
-const mappingITitulaireRequeteVersItemParentProps = (
-  parent: ITitulaireRequete
+const mappingITitulaireRequeteCreationVersItemParentProps = (
+  parent: ITitulaireRequeteCreation
 ): ItemParentProps => {
   return {
     numeros: {
@@ -189,14 +188,14 @@ const mappingITitulaireRequeteVersItemParentProps = (
     },
     naissance: {
       date: mappingDateNaissance(parent),
-      villeNaissance: parent.villeNaissance || parent.villeEtrangereNaissance,
-      arrondissementNaissance: parent.arrondissementNaissance,
-      regionNaissance: parent.regionNaissance,
-      paysNaissance: parent.paysNaissance,
-      anneeNaissance: parent.anneeNaissance,
-      moisNaissance: parent.moisNaissance,
-      jourNaissance: parent.jourNaissance,
-      codePostalNaissance: parent.codePostalNaissance
+      ville: parent.villeNaissance || parent.villeEtrangereNaissance,
+      arrondissement: parent.arrondissementNaissance,
+      region: parent.regionNaissance,
+      pays: parent.paysNaissance,
+      annee: parent.anneeNaissance,
+      mois: parent.moisNaissance,
+      jour: parent.jourNaissance,
+      codePostal: parent.codePostalNaissance
     },
     position: parent.position,
     nationalites: parent.nationalites || [],
@@ -218,8 +217,8 @@ const mappingITitulaireRequeteVersItemParentProps = (
   };
 };
 
-const mappingITitulaireRequeteVersItemUnionProps = (
-  union: ITitulaireRequete
+const mappingITitulaireRequeteCreationVersItemUnionProps = (
+  union: ITitulaireRequeteCreation
 ): ItemUnionProps => {
   return {
     numeros: {
@@ -236,14 +235,14 @@ const mappingITitulaireRequeteVersItemUnionProps = (
     },
     naissance: {
       date: mappingDateNaissance(union),
-      villeNaissance: union.villeNaissance || union.villeEtrangereNaissance,
-      arrondissementNaissance: union.arrondissementNaissance,
-      regionNaissance: union.regionNaissance,
-      paysNaissance: union.paysNaissance,
-      anneeNaissance: union.anneeNaissance,
-      moisNaissance: union.moisNaissance,
-      jourNaissance: union.jourNaissance,
-      codePostalNaissance: union.codePostalNaissance
+      ville: union.villeNaissance || union.villeEtrangereNaissance,
+      arrondissement: union.arrondissementNaissance,
+      region: union.regionNaissance,
+      pays: union.paysNaissance,
+      annee: union.anneeNaissance,
+      mois: union.moisNaissance,
+      jour: union.jourNaissance,
+      codePostal: union.codePostalNaissance
     },
     nationalites: union.nationalites || [],
     retenueSdanf: union.retenueSdanf ?? undefined,
@@ -260,15 +259,30 @@ const mappingITitulaireRequeteVersItemUnionProps = (
       union.evenementUnions,
       TypeEvenementUnion.DISSOLUTION_DIVORCE
     ),
-    deces: mappingEvenementUnion(
-      union.evenementUnions,
-      TypeEvenementUnion.DECES
-    )
+    deces: mappingEvenementUnionDeces(union.deces)
   };
 };
 
-const mappingITitulaireRequeteVersItemEffetCollectifProps = (
-  effetCollectif: ITitulaireRequete
+const mappingEvenementUnionDeces = (dateDeces: any): DateCoordonneesType => {
+  return {
+    date: getDateStringFromDateCompose(
+      dateDeces?.annee
+        ? {
+            jour: dateDeces.jour?.toString(),
+            mois: dateDeces.mois?.toString(),
+            annee: dateDeces.annee?.toString()
+          }
+        : undefined
+    ),
+    ville: dateDeces?.ville,
+    arrondissement: dateDeces?.arrondissement,
+    region: dateDeces?.region,
+    pays: dateDeces?.pays
+  };
+};
+
+const mappingITitulaireRequeteCreationVersItemEffetCollectifProps = (
+  effetCollectif: ITitulaireRequeteCreation
 ): ItemEffetCollectifProps => {
   // TODO: cette version de la condition sera correcte lorsque demandeEffetCollectif sera utilisé (voir avec Alice)
   // const statut =
@@ -303,15 +317,15 @@ const mappingITitulaireRequeteVersItemEffetCollectifProps = (
     },
     naissance: {
       date: mappingDateNaissance(effetCollectif),
-      villeNaissance:
+      ville:
         effetCollectif.villeNaissance || effetCollectif.villeEtrangereNaissance,
-      arrondissementNaissance: effetCollectif.arrondissementNaissance,
-      regionNaissance: effetCollectif.regionNaissance,
-      paysNaissance: effetCollectif.paysNaissance,
-      anneeNaissance: effetCollectif.anneeNaissance,
-      moisNaissance: effetCollectif.moisNaissance,
-      jourNaissance: effetCollectif.jourNaissance,
-      codePostalNaissance: effetCollectif.codePostalNaissance
+      arrondissement: effetCollectif.arrondissementNaissance,
+      region: effetCollectif.regionNaissance,
+      pays: effetCollectif.paysNaissance,
+      annee: effetCollectif.anneeNaissance,
+      mois: effetCollectif.moisNaissance,
+      jour: effetCollectif.jourNaissance,
+      codePostal: effetCollectif.codePostalNaissance
     },
     nationalites: effetCollectif.nationalites || [],
     statut,
@@ -320,12 +334,14 @@ const mappingITitulaireRequeteVersItemEffetCollectifProps = (
     retenueSdanf: effetCollectif.retenueSdanf ?? undefined,
     parent:
       effetCollectif.parent2Enfant &&
-      mappingITitulaireRequeteVersItemParentProps(effetCollectif.parent2Enfant)
+      mappingITitulaireRequeteCreationVersItemParentProps(
+        effetCollectif.parent2Enfant
+      )
   };
 };
 
-const mappingITitulaireRequeteVersItemEnfantMajeurProps = (
-  enfantMajeur: ITitulaireRequete
+const mappingITitulaireRequeteCreationVersItemEnfantMajeurProps = (
+  enfantMajeur: ITitulaireRequeteCreation
 ): ItemEnfantMajeurProps => {
   return {
     identite: {
@@ -339,23 +355,23 @@ const mappingITitulaireRequeteVersItemEnfantMajeurProps = (
     },
     naissance: {
       date: mappingDateNaissance(enfantMajeur),
-      villeNaissance:
+      ville:
         enfantMajeur.villeNaissance || enfantMajeur.villeEtrangereNaissance,
-      arrondissementNaissance: enfantMajeur.arrondissementNaissance,
-      regionNaissance: enfantMajeur.regionNaissance,
-      paysNaissance: enfantMajeur.paysNaissance,
-      anneeNaissance: enfantMajeur.anneeNaissance,
-      moisNaissance: enfantMajeur.moisNaissance,
-      jourNaissance: enfantMajeur.jourNaissance,
-      codePostalNaissance: enfantMajeur.codePostalNaissance
+      arrondissement: enfantMajeur.arrondissementNaissance,
+      region: enfantMajeur.regionNaissance,
+      pays: enfantMajeur.paysNaissance,
+      annee: enfantMajeur.anneeNaissance,
+      mois: enfantMajeur.moisNaissance,
+      jour: enfantMajeur.jourNaissance,
+      codePostal: enfantMajeur.codePostalNaissance
     },
     retenueSdanf: enfantMajeur.retenueSdanf ?? undefined,
     nationalites: enfantMajeur.nationalites || []
   };
 };
 
-const mappingITitulaireRequeteVersItemFraterieProps = (
-  fraterie: ITitulaireRequete
+const mappingITitulaireRequeteCreationVersItemFraterieProps = (
+  fraterie: ITitulaireRequeteCreation
 ): ItemFraterieProps => {
   return {
     identite: {
@@ -369,22 +385,21 @@ const mappingITitulaireRequeteVersItemFraterieProps = (
     },
     naissance: {
       date: mappingDateNaissance(fraterie),
-      villeNaissance:
-        fraterie.villeNaissance || fraterie.villeEtrangereNaissance,
-      arrondissementNaissance: fraterie.arrondissementNaissance,
-      regionNaissance: fraterie.regionNaissance,
-      paysNaissance: fraterie.paysNaissance,
-      anneeNaissance: fraterie.anneeNaissance,
-      moisNaissance: fraterie.moisNaissance,
-      jourNaissance: fraterie.jourNaissance,
-      codePostalNaissance: fraterie.codePostalNaissance
+      ville: fraterie.villeNaissance || fraterie.villeEtrangereNaissance,
+      arrondissement: fraterie.arrondissementNaissance,
+      region: fraterie.regionNaissance,
+      pays: fraterie.paysNaissance,
+      annee: fraterie.anneeNaissance,
+      mois: fraterie.moisNaissance,
+      jour: fraterie.jourNaissance,
+      codePostal: fraterie.codePostalNaissance
     },
     nationalites: fraterie.nationalites || [],
     retenueSdanf: fraterie.retenueSdanf ?? undefined
   };
 };
 
-const triTitulaires = (titulaires?: ITitulaireRequete[]) => {
+const triTitulaires = (titulaires?: ITitulaireRequeteCreation[]) => {
   const parentsTitulaire = titulaires?.filter(
     titulaireRequete =>
       titulaireRequete.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
@@ -444,7 +459,7 @@ export const mappingDateNaissance = ({
   jourNaissance,
   moisNaissance,
   anneeNaissance
-}: ITitulaireRequete) =>
+}: ITitulaireRequeteCreation) =>
   getDateStringFromDateCompose(
     anneeNaissance
       ? {
@@ -471,10 +486,10 @@ const mappingEvenementUnion = (
           }
         : undefined
     ),
-    villeNaissance: evenementUnion?.ville,
-    arrondissementNaissance: evenementUnion?.arrondissement,
-    regionNaissance: evenementUnion?.region,
-    paysNaissance: evenementUnion?.pays
+    ville: evenementUnion?.ville,
+    arrondissement: evenementUnion?.arrondissement,
+    region: evenementUnion?.region,
+    pays: evenementUnion?.pays
   };
 };
 

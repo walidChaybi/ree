@@ -22,14 +22,14 @@ export type NationaliteType = {
 
 export type DateCoordonneesType = {
   date?: string;
-  villeNaissance?: string;
-  arrondissementNaissance?: string;
-  regionNaissance?: string;
-  paysNaissance?: string;
-  anneeNaissance?: number;
-  moisNaissance?: number;
-  jourNaissance?: number;
-  codePostalNaissance?: string;
+  ville?: string;
+  arrondissement?: string;
+  region?: string;
+  pays?: string;
+  annee?: number;
+  mois?: number;
+  jour?: number;
+  codePostal?: string;
 };
 
 export type DomiciliationType = {

@@ -56,15 +56,13 @@ export const formatLigneFrancisationIdentification = ({
   );
 };
 
-export const formatLigneDateCoordonnees = (
-  dateCoordonnees?: DateCoordonneesType
-) =>
+export const formatLigneDateCoordonnees = (dateCoordonnees?: DateCoordonneesType) =>
   formatLigne([
     dateCoordonnees?.date,
-    dateCoordonnees?.villeNaissance,
-    dateCoordonnees?.arrondissementNaissance,
-    dateCoordonnees?.regionNaissance,
-    dateCoordonnees?.paysNaissance
+    dateCoordonnees?.ville,
+    dateCoordonnees?.arrondissement,
+    dateCoordonnees?.region,
+    dateCoordonnees?.pays
   ]);
 
 export const formatLigneAdresse = (adresse?: DomiciliationType) =>
