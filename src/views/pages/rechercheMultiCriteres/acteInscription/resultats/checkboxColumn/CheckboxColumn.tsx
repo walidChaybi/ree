@@ -4,6 +4,10 @@ import WarningIcon from "@material-ui/icons/Warning";
 import React, { useEffect, useState } from "react";
 import "./scss/CheckboxColumn.scss";
 
+export interface IEtatCheckboxColonne {
+  coche: boolean;
+}
+
 export interface CheckboxColumnProps {
   index: number;
   data: any;
@@ -15,6 +19,7 @@ export interface CheckboxColumnProps {
     isChecked: boolean,
     data: any
   ) => void;
+  etat?: IEtatCheckboxColonne;
 }
 
 export const CheckboxColumn: React.FC<CheckboxColumnProps> = ({
@@ -23,11 +28,18 @@ export const CheckboxColumn: React.FC<CheckboxColumnProps> = ({
   disabledMessage = "",
   isDisabledCallBack,
   hasWarningCallBack,
-  onClickCheckboxCallBack
+  onClickCheckboxCallBack,
+  etat
 }) => {
-  const [checked, setChecked] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(etat ? etat.coche : false);
   const [displayWarning, setDisplayWarning] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (etat) {
+      setChecked(etat.coche);
+    }
+  }, [etat]);
 
   useEffect(() => {
     isDisabledCallBack && setDisabled(isDisabledCallBack(data));
@@ -54,6 +66,7 @@ export const CheckboxColumn: React.FC<CheckboxColumnProps> = ({
         onClick={onClick}
         role="checkbox"
         className="Checkbox"
+        checked={checked}
       />
       {displayWarning === true && <WarningIcon className="WarningIcon" />}
       {disabled === true && <InfoIcon className="InfoIcon" />}

@@ -1,6 +1,10 @@
-import { TransfertParams } from "@hook/requete/TransfertHook";
+import { TransfertUnitaireParams } from "@hook/requete/TransfertHook";
 import { Droit } from "@model/agent/enum/Droit";
-import { IUtilisateur, utilisateurADroit } from "@model/agent/IUtilisateur";
+import {
+  IUtilisateur,
+  utilisateurADroit,
+  utilisateurALeDroitSurUnDesPerimetres
+} from "@model/agent/IUtilisateur";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -9,11 +13,14 @@ import { IActionOption } from "@model/requete/IActionOption";
 import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
 import { storeRece } from "@util/storeRece";
 import { Option, Options } from "@util/Type";
+import { Perimetre } from "./../../../../model/agent/enum/Perimetre";
 import { IMenuTransfertProps } from "./MenuTransfert";
 
 export function onValidateService(
   setOperationEnCours: React.Dispatch<React.SetStateAction<boolean>>,
-  setParam: React.Dispatch<React.SetStateAction<TransfertParams | undefined>>,
+  setParam: React.Dispatch<
+    React.SetStateAction<TransfertUnitaireParams | undefined>
+  >,
   props: React.PropsWithChildren<IMenuTransfertProps>,
   setServicePopinOpen: React.Dispatch<React.SetStateAction<boolean>>,
   entite?: Option
@@ -45,7 +52,9 @@ export function resetDoubleSubmit(
 }
 
 export function onValidateAgent(
-  setParam: React.Dispatch<React.SetStateAction<TransfertParams | undefined>>,
+  setParam: React.Dispatch<
+    React.SetStateAction<TransfertUnitaireParams | undefined>
+  >,
   props: React.PropsWithChildren<IMenuTransfertProps>,
   setAgentPopinOpen: React.Dispatch<React.SetStateAction<boolean>>,
   setOperationEnCours: (operation: boolean) => void,
@@ -113,7 +122,9 @@ export function filterUtilisateur(
   idUtilisateurRequete: string,
   estTransfert: boolean
 ) {
-  if (typeRequete === TypeRequete.DELIVRANCE) {
+  if (typeRequete === TypeRequete.CREATION) {
+    return filtreUtilisateurRequeteCreation(utilisateur, idUtilisateurRequete);
+  } else if (typeRequete === TypeRequete.DELIVRANCE) {
     return filtreUtilisateurRequeteDelivrance(
       utilisateur,
       sousTypeRequete,
@@ -127,6 +138,29 @@ export function filterUtilisateur(
       estTransfert
     );
   }
+}
+
+export function filtreUtilisateurRequeteCreation(
+  utilisateur: IUtilisateur,
+  idUtilisateurRequete: string
+) {
+  const aDroit: boolean = utilisateurALeDroitSurUnDesPerimetres(
+    Droit.CREER_ACTE_ETABLI,
+    [Perimetre.MEAE, Perimetre.ETAX],
+    utilisateur
+  );
+  let estDansMonEntiteOuEntiteFille = false;
+  if (utilisateur.entite) {
+    estDansMonEntiteOuEntiteFille =
+      estDansEntiteFille(utilisateur.entite.idEntite) ||
+      utilisateur.entite.idEntite ===
+        storeRece.utilisateurCourant?.entite?.idEntite;
+  }
+  return Boolean(
+    estDansMonEntiteOuEntiteFille &&
+      aDroit &&
+      idUtilisateurRequete !== utilisateur.idUtilisateur
+  );
 }
 
 export function filtreUtilisateurRequeteInformation(

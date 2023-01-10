@@ -1,11 +1,15 @@
 import { storeRece } from "@util/storeRece";
-import { estTableauNonVide, getValeurOuVide } from "@util/Utils";
+import { getValeurOuVide } from "@util/Utils";
 import { Provenance } from "../requete/enum/Provenance";
 import { Droit } from "./enum/Droit";
-import { Perimetre, PerimetreEnum } from "./enum/Perimetre";
+import { Perimetre } from "./enum/Perimetre";
 import { Habilitation } from "./Habilitation";
 import { IEntite } from "./IEntiteRattachement";
-import { IUtilisateur, utilisateurADroit } from "./IUtilisateur";
+import {
+  IUtilisateur,
+  utilisateurADroit,
+  utilisateurALeDroitSurUnDesPerimetres
+} from "./IUtilisateur";
 
 export interface IOfficier extends IUtilisateur {
   idSSO: string;
@@ -128,19 +132,15 @@ export function officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(
 export function officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(
   idTypeRegistre?: string
 ) {
-  
-    if (idTypeRegistre) {
-      return (
-        officierDroitDelivrerSurLeTypeRegistre(
-          getValeurOuVide(idTypeRegistre)
-        ) ||
-        officierALeDroitSurUnDesPerimetres(Droit.DELIVRER, [Perimetre.MEAE]) ||
-        officierALeDroitSurUnDesPerimetres(Droit.DELIVRER_COMEDEC, [
-          Perimetre.MEAE
-        ])
-      );
-    } else return false;
-  
+  if (idTypeRegistre) {
+    return (
+      officierDroitDelivrerSurLeTypeRegistre(getValeurOuVide(idTypeRegistre)) ||
+      officierALeDroitSurUnDesPerimetres(Droit.DELIVRER, [Perimetre.MEAE]) ||
+      officierALeDroitSurUnDesPerimetres(Droit.DELIVRER_COMEDEC, [
+        Perimetre.MEAE
+      ])
+    );
+  } else return false;
 }
 
 export function officierALeDroitSurLePerimetre(
@@ -150,32 +150,15 @@ export function officierALeDroitSurLePerimetre(
   return officierALeDroitSurUnDesPerimetres(droit, [refPerimetre]);
 }
 
-export function officierALeDroitSurUnDesPerimetres(
+export const officierALeDroitSurUnDesPerimetres = (
   droit: Droit,
   refPerimetres: Perimetre[]
-) {
-  const officier = storeRece.utilisateurCourant;
-  let res = false;
-
-  if (estTableauNonVide(refPerimetres)) {
-    officier?.habilitations?.forEach(h => {
-      if (
-        h.perimetre &&
-        h.profil.droits.find(d => d.nom === droit) &&
-        refPerimetres.find(
-          refPerimetre =>
-            PerimetreEnum.getEnum(h.perimetre.nom) === refPerimetre
-        )
-      ) {
-        res = true;
-      }
-    });
-  } else {
-    res = true;
-  }
-
-  return res;
-}
+): boolean =>
+  utilisateurALeDroitSurUnDesPerimetres(
+    droit,
+    refPerimetres,
+    storeRece.utilisateurCourant
+  );
 
 export const mAppartient = (idUtilisateur?: string): boolean =>
   idUtilisateur === storeRece.utilisateurCourant?.idUtilisateur;

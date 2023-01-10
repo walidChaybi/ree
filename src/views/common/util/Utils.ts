@@ -632,3 +632,8 @@ export function getNombreCommeSuffix(str: string): number | undefined {
   }
   return nombreStr ? Number(nombreStr) : undefined;
 }
+
+// Vérifie si un élément 'obj' est de type 'type', retourne un boolean.
+export function estDeType(obj: any, type: string): boolean {
+  return typeof obj === type;
+}

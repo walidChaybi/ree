@@ -12,4 +12,5 @@ export interface IRequeteTableauCreation extends IRequeteTableau {
   idEntiteRattachement?: string;
   attribueA?: string;
   tagPriorisation: TagPriorisation;
+  attribueAChecked?: boolean;
 }

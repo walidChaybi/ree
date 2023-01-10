@@ -98,7 +98,8 @@ export function mappingUneRequeteTableauCreation(
     idUtilisateur: valeurOuUndefined(requete?.idUtilisateur),
     idEntiteRattachement: valeurOuUndefined(requete?.idEntite),
     postulant: getPostulant(titulaires),
-    attribueA: mapAttribueA(requete)
+    attribueA: mapAttribueA(requete),
+    attribueAChecked: false
   };
 }
 

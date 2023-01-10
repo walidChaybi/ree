@@ -1,4 +1,7 @@
+import { storeRece } from "@util/storeRece";
+import { estTableauNonVide, ZERO } from "@util/Utils";
 import { Droit } from "./enum/Droit";
+import { Perimetre, PerimetreEnum } from "./enum/Perimetre";
 import { IDroit, IHabilitation, IProfil } from "./Habilitation";
 import { IEntite } from "./IEntiteRattachement";
 import { IOfficier } from "./IOfficier";
@@ -82,6 +85,33 @@ export const utilisateurADroit = (
   return droitTrouve != null;
 };
 
+export function utilisateurALeDroitSurUnDesPerimetres(
+  droit: Droit,
+  refPerimetres: Perimetre[],
+  utilisateur: IUtilisateur | undefined
+) {
+  let res = false;
+
+  if (estTableauNonVide(refPerimetres)) {
+    utilisateur?.habilitations?.forEach(h => {
+      if (
+        h.perimetre &&
+        h.profil.droits.find(d => d.nom === droit) &&
+        refPerimetres.find(
+          refPerimetre =>
+            PerimetreEnum.getEnum(h.perimetre.nom) === refPerimetre
+        )
+      ) {
+        res = true;
+      }
+    });
+  } else {
+    res = true;
+  }
+
+  return res;
+}
+
 export const mappingUtilisateurs = (data: any) => {
   const utilisateurs: IUtilisateur[] = [];
   for (const utilisateur of data) {
@@ -115,3 +145,11 @@ export const mappingUtilisateurs = (data: any) => {
   }
   return utilisateurs;
 };
+
+export function getEntiteParUtilisateurId(
+  idUtilisateur: string
+): IEntite | undefined {
+  return storeRece.listeUtilisateurs
+    .filter(utilisateur => utilisateur.idUtilisateur === idUtilisateur)
+    .at(ZERO)?.entite;
+}

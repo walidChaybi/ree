@@ -1,6 +1,6 @@
 import TableCell, { SortDirection } from "@material-ui/core/TableCell";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
-import { getLibelle } from "@util/Utils";
+import { estDeType, getLibelle } from "@util/Utils";
 import classNames from "classnames";
 import React from "react";
 import "../../../../../scss/_library.scss";
@@ -59,7 +59,9 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = ({
         onClick={e => onClickCell(e, column.keys[0])}
         hideSortIcon={orderBy !== column.keys[0]}
       >
-        {getLibelle(column.title)}
+        {estDeType(column.title, "string")
+          ? getLibelle(column.title as string)
+          : column.title}
       </TableSortLabel>
     </TableCell>
   );

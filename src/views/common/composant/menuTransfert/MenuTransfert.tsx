@@ -1,4 +1,7 @@
-import { TransfertParams, useTransfertApi } from "@hook/requete/TransfertHook";
+import {
+  TransfertUnitaireParams,
+  useTransfertApi
+} from "@hook/requete/TransfertHook";
 import { Menu, MenuItem } from "@material-ui/core";
 import { AssignmentInd } from "@material-ui/icons";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
@@ -118,7 +121,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
   /* Gestion des pop-in de transfère */
   const [servicePopinOpen, setServicePopinOpen] = useState<boolean>(false);
   const [agentPopinOpen, setAgentPopinOpen] = useState<boolean>(false);
-  const [param, setParam] = useState<TransfertParams>();
+  const [param, setParam] = useState<TransfertUnitaireParams>();
 
   const onCloseService = () => {
     setServicePopinOpen(false);

@@ -9,7 +9,8 @@ import {
 import { getLibelle } from "@util/Utils";
 import { BoiteAOnglet, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import React from "react";
+import React, { useState } from "react";
+import { BoutonAttribuerRequete } from "./BoutonAttribuerRequete";
 import BoutonPrendreEnChargePlusAncienneCreation from "./BoutonPrendreEnChargePlusAncienneCreation";
 import { MesRequetesCreation } from "./MesRequetesCreation";
 import { statutsRequetesCreation } from "./params/EspaceCreationParams";
@@ -26,15 +27,31 @@ const queryParametersPourRequetes = {
   range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
 } as IQueryParametersPourRequetes;
 
-const getElementEntreDeux = (selectedTabState: number, officier: IOfficier) => (
-  <div className="BlocBoutons">
-    <BoutonPrendreEnChargePlusAncienneCreation
-      typeRequete={TypeRequete.CREATION}
-    />
-  </div>
-);
+const getBlocBoutons = (
+  selectedTabState: number,
+  officier: IOfficier,
+  setPopinAttribuerAOuvert: Function
+) => {
+  const ouvrirPopinAttribuerA = () => {
+    setPopinAttribuerAOuvert(true);
+  };
 
-const getOnglets = (): IOngletProps[] => {
+  return (
+    <div className="BlocBoutons">
+      {selectedTabState === 1 && (
+        <BoutonAttribuerRequete onClick={ouvrirPopinAttribuerA} />
+      )}
+      <BoutonPrendreEnChargePlusAncienneCreation
+        typeRequete={TypeRequete.CREATION}
+      />
+    </div>
+  );
+};
+
+const getOnglets = (
+  popinAttribuerAOuvert: boolean,
+  setPopinAttribuerAOuvert: Function
+): IOngletProps[] => {
   return [
     {
       enTete: {
@@ -59,6 +76,8 @@ const getOnglets = (): IOngletProps[] => {
         composant: (
           <RequetesServiceCreation
             queryParametersPourRequetes={queryParametersPourRequetes}
+            popinAttribuerAOuvert={popinAttribuerAOuvert}
+            setPopinAttribuerAOuvert={setPopinAttribuerAOuvert}
           />
         ),
         nomHabilitation: "TabPanelRequetesCreationService"
@@ -69,6 +88,8 @@ const getOnglets = (): IOngletProps[] => {
 
 const EspaceCreationPage: React.FC<LocalProps> = ({ selectedTab }) => {
   const selectedTabState = selectedTab || 0;
+  const [popinAttribuerAOuvert, setPopinAttribuerAOuvert] =
+    useState<boolean>(false);
 
   return (
     <>
@@ -81,10 +102,14 @@ const EspaceCreationPage: React.FC<LocalProps> = ({ selectedTab }) => {
                 <>
                   <BoiteAOnglet
                     selectedTab={selectedTabState}
-                    onglets={getOnglets()}
-                    elementEntreTitreEtContenu={getElementEntreDeux(
+                    onglets={getOnglets(
+                      popinAttribuerAOuvert,
+                      setPopinAttribuerAOuvert
+                    )}
+                    elementEntreTitreEtContenu={getBlocBoutons(
                       selectedTabState,
-                      officier.officierDataState
+                      officier.officierDataState,
+                      setPopinAttribuerAOuvert
                     )}
                     titre="Menu espace création"
                     classOnglet="ongletPageEspace"
