@@ -20,6 +20,7 @@ interface ComponentFormProps {
   type?: TypeDeclarationConjointe;
   date?: Date;
   origineTitulaireActe?: boolean;
+  saisieVerrouillee: boolean;
 }
 
 type DeclarationConjointeFormProps = ComponentFormProps & FormikComponentProps;
@@ -50,7 +51,9 @@ const DeclarationConjointeForm: React.FC<
     name: withNamespace(props.nom, TYPE),
     label: getLibelle("Déclaration conjointe"),
     options: TypeDeclarationConjointe.getAllEnumsAsOptions(props.type),
-    disabled: estDisabled(props.type, props.origineTitulaireActe),
+    disabled:
+      estDisabled(props.type, props.origineTitulaireActe) &&
+      props.saisieVerrouillee,
     pasPremiereOptionVide: true,
     onChange: onTypeChange
   } as SelectFieldProps;
@@ -61,7 +64,8 @@ const DeclarationConjointeForm: React.FC<
     showDatePicker: false,
     disabled:
       estDisabled(props.type, props.origineTitulaireActe) &&
-      estRenseigne(props.date)
+      estRenseigne(props.date) &&
+      props.saisieVerrouillee
   } as DateComposeFormProps;
 
   return (
