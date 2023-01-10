@@ -11,8 +11,7 @@ export interface AccordionReceProps {
   expanded: boolean;
   expandedPossible?: boolean;
   disabled?: boolean;
-  titre?: string | JSX.Element;
-  tooltip?: string;
+  titre?: string;
   className?: AccordionReceClassNameProps;
   bouton?: JSX.Element;
 }
@@ -51,7 +50,6 @@ export const AccordionRece: React.FC<AccordionReceProps> = ({
           className={props.className?.title}
           bouton={props.bouton}
           boutonExpanded={expandedPossible}
-          tooltip={props.tooltip}
         />
         <AccordionDetails>
           {props.panel && (

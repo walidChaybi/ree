@@ -8,12 +8,14 @@ interface ItemLigneInfosProps {
   onClickTexte?: () => void;
   visible?: boolean;
   separateur?: string;
+  separateurVisible?: boolean;
 }
 
 export const ItemLigne: React.FC<ItemLigneInfosProps> = ({
   texte,
   visible = estRenseigne(texte),
   separateur,
+  separateurVisible = true,
   ...props
 }) => {
   props.classNameTexte = formatLigne(
@@ -23,6 +25,7 @@ export const ItemLigne: React.FC<ItemLigneInfosProps> = ({
 
   return visible ? (
     <div className="ligne">
+      <span className="separateur">{separateurVisible && separateur}</span>
       {props.label && <div className="titre">{props.label}</div>}
 
       <div className={props.classNameTexte} onClick={props.onClickTexte}>

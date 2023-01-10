@@ -68,13 +68,13 @@ const ItemTitulaire: React.FC<ItemTitulaireProps & ItemProps> = props => {
               ? `(${getLibelle("Actuel : ")}${props.identite.noms.actuel})`
               : undefined
           }
-          sepatateurVisible={false}
+          separateurVisible={false}
         />
       </div>
 
       <div className="itemLigneTitulaire">
         <ItemLigneSdanf
-          sepatateurVisible={false}
+          separateurVisible={false}
           texteTitulaire={formatLigne(props.identite.prenoms.naissance)}
           texteSdanf={formatLigne(
             formatagePrenoms(props.retenueSdanf?.prenomsRetenu)

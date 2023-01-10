@@ -19,11 +19,12 @@ export const LigneFrancisationIdentification: React.FC<
         texteTitulaire={props.identite.noms.francisation}
         texteSdanf={props.retenueSdanf?.nomDemandeFrancisation}
         label={getLibelle("Francisation : ")}
+        separateurVisible={false}
       />
 
       <ItemLigne
         texte={formatLigne(props.identite.prenoms.francisation)}
-        separateur={";"}
+        separateur={" ,"}
       />
 
       <ItemLigneSdanf

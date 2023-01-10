@@ -32,7 +32,7 @@ export const LignesNomPrenoms: React.FC<LigneNomPrenomsProps> = props => {
         texteSdanf={formatLigne(
           formatagePrenoms(props.retenueSdanf?.prenomsRetenu)
         )}
-        sepatateurVisible={false}
+        separateurVisible={false}
       />
     </div>
   );

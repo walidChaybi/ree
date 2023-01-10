@@ -29,27 +29,37 @@ export const LigneDateNaissanceAdresse: React.FC<
       <ItemLigneSdanf
         texteSdanf={dataNaissanceTitulaireRetenueSdanf}
         texteTitulaire={dateNaissanceTitulaire}
-        separateur={", "}
+        separateurVisible={false}
       />
 
       <ItemLigneSdanf
         texteSdanf={props.retenueSdanf?.villeNaissance}
         texteTitulaire={props.naissance.ville}
+        separateur=", "
       />
 
       <ItemLigneSdanf
         texteSdanf={props.retenueSdanf?.arrondissementNaissance}
         texteTitulaire={props.naissance.arrondissement}
+        separateur=", "
       />
 
       <ItemLigneSdanf
         texteSdanf={props.retenueSdanf?.regionNaissance}
         texteTitulaire={props.naissance.region}
+        separateur=", "
       />
 
       <ItemLigneSdanf
-        texteSdanf={`(${props.retenueSdanf?.paysNaissance})`}
-        texteTitulaire={`(${props.naissance.pays})`}
+        separateurVisible={false}
+        texteSdanf={
+          props.retenueSdanf?.paysNaissance
+            ? `(${props.retenueSdanf?.paysNaissance})`
+            : undefined
+        }
+        texteTitulaire={
+          props.naissance.pays ? `(${props.naissance.pays})` : undefined
+        }
       />
     </div>
   );

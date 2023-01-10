@@ -1,7 +1,6 @@
 import { TagPriorisation } from "@model/requete/enum/TagPriorisation";
-import { estRenseigne, formatLigne, getLibelle } from "@util/Utils";
+import { estRenseigne, formatLigne } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
-import { CopierTexte } from "@widget/copie/CopierTexte";
 import React from "react";
 import Labels, { REQUETE, SDANF } from "../../Labels";
 import { formatLigneSpecificite } from "../Formatages";
@@ -68,31 +67,10 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
     " • "
   );
 
-  const TitreAccordionRequete = () => {
-    return (
-      <div className="titleAccordion">
-        <div className="tagPriorisation">
-          <span>{props.tagPriorisation?.libelle}</span>
-        </div>
-        <div className="numero">
-          <CopierTexte
-            label={getLibelle("Requête")}
-            numero={props.numeros.rece}
-            separateur={false}
-          />
-          <CopierTexte numero={props.numeros.sdanf} />
-          <CopierTexte numero={props.numeros.dila} />
-          <CopierTexte numero={props.numeros.ancienSI} />
-        </div>
-      </div>
-    );
-  };
-
   return estRenseigne(numerosRequete) ? (
     <AccordionRece
       key={`${REQUETE} ${numerosRequete}`}
-      titre={<TitreAccordionRequete />}
-      tooltip={numerosRequete}
+      titre={`Requête ${numerosRequete}`}
       expanded={estRenseigne(props.numeros.requeteLiee)}
       className={{
         container: "accordionContainer",
