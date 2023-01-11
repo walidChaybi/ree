@@ -32,7 +32,7 @@ export const ItemLigne: React.FC<ItemLigneInfosProps> = ({
         {texte}
       </div>
 
-      <span className="separateur">{separateur}</span>
+      <span className="separateur">{separateurVisible && separateur}</span>
     </div>
   ) : (
     <></>

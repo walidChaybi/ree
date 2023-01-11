@@ -1,9 +1,9 @@
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
-import { formatLigne, getLibelle } from "@util/Utils";
+import { getLibelle } from "@util/Utils";
 import React from "react";
 import { IdentiteType } from "../../Types";
-import { ItemLigne } from "../ItemLigne";
 import { ItemLigneSdanf } from "../ItemLigneSdanf";
+import { LigneNomPrenomFrancisation } from "./LigneNomPrenomFrancisation";
 
 interface LigneFrancisationIdentificationProps {
   identite: IdentiteType;
@@ -15,16 +15,9 @@ export const LigneFrancisationIdentification: React.FC<
 > = props => {
   return (
     <div className="itemLigneTitulaire">
-      <ItemLigneSdanf
-        texteTitulaire={props.identite.noms.francisation}
-        texteSdanf={props.retenueSdanf?.nomDemandeFrancisation}
-        label={getLibelle("Francisation : ")}
-        separateurVisible={false}
-      />
-
-      <ItemLigne
-        texte={formatLigne(props.identite.prenoms.francisation)}
-        separateur={" ,"}
+      <LigneNomPrenomFrancisation
+        identite={props.identite}
+        retenueSdanf={props.retenueSdanf}
       />
 
       <ItemLigneSdanf

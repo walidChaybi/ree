@@ -2,18 +2,21 @@ import { Residence } from "@model/requete/enum/Residence";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import {
   estRenseigne,
-  formatMajusculesMinusculesMotCompose
+  formatLigne,
+  formatMajusculesMinusculesMotCompose,
+  getLibelle
 } from "@util/Utils";
 import React from "react";
 import Labels from "../../Labels";
+import { formatagePrenoms } from "../../mappingIRequeteCreationVersResumeRequeteCreationProps";
 import { formatLigneNationalites } from "../Formatages";
 import { DateCoordonneesType, IdentiteType, NationaliteType } from "../Types";
 import Item, { ItemProps } from "./Item";
 import { ItemLigne } from "./ItemLigne";
+import { ItemLigneSdanf } from "./ItemLigneSdanf";
 import ItemParent, { ItemParentProps } from "./ItemParent";
 import { LigneDateNaissanceAdresse } from "./ItemTitulaire/LigneDateNaissanceAdresse";
 import { LigneFrancisationIdentification } from "./ItemTitulaire/LigneFrancisationIdentification";
-import { LigneNomPrenomActuel } from "./ItemTitulaire/LigneNomPrenomActuel";
 
 export interface ItemEffetCollectifProps {
   numeros: {
@@ -44,11 +47,45 @@ const ItemEffetCollectif: React.FC<
         visible={estRenseigne(props.numeros.requeteLiee)}
       />
 
-      <LigneNomPrenomActuel
-        identite={props.identite}
-        retenueSdanf={props.retenueSdanf}
-        afficherNomActuel={false}
-      />
+      <div className="itemLigneEffetCollectif">
+        <ItemLigneSdanf
+          separateur={""}
+          texteSdanf={
+            props.retenueSdanf?.nomNaissance
+              ? `${props.retenueSdanf?.nomNaissance}`
+              : undefined
+          }
+          texteTitulaire={
+            props.identite.noms.naissance
+              ? `${props.identite.noms.naissance}`
+              : undefined
+          }
+        />
+
+        <ItemLigneSdanf
+          texteSdanf={
+            props.retenueSdanf?.nomUsage
+              ? `(${getLibelle("Usage :")}${props.retenueSdanf?.nomUsage})`
+              : undefined
+          }
+          texteTitulaire={
+            props.identite.noms.usage
+              ? `(${getLibelle("Usage :")}${props.identite.noms.usage})`
+              : undefined
+          }
+          separateurVisible={false}
+        />
+      </div>
+
+      <div>
+        <ItemLigneSdanf
+          texteTitulaire={formatLigne(props.identite.prenoms.naissance)}
+          texteSdanf={formatLigne(
+            formatagePrenoms(props.retenueSdanf?.prenomsRetenu)
+          )}
+          separateurVisible={false}
+        />
+      </div>
 
       <LigneFrancisationIdentification
         identite={props.identite}

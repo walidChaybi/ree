@@ -19,6 +19,14 @@ $height: $spacing * 2.5;
     display: flex;
     flex-wrap: wrap;
   }
+  .itemLigneFrancisation {
+    display: flex;
+    align-items: center;
+  }
+
+  .itemLigneEffetCollectif {
+    display: flex;
+  }
   .texte {
     display: flex;
     flex: 2;

@@ -63,11 +63,7 @@ const ItemParent: React.FC<ItemParentProps & ItemProps> = ({
 
       {parent2Enfant && (
         <>
-          <ItemLigne
-            texte={`${formatLigneNationalites(
-              props.nationalites
-            )} ${formatDomiciliation(props.domiciliation)}`}
-          />
+          <ItemLigne texte={`${formatDomiciliation(props.domiciliation)}`} />
         </>
       )}
     </Item>
