@@ -1,7 +1,7 @@
-import { TablePagination } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
-import Table from "@material-ui/core/Table";
-import TableContainer from "@material-ui/core/TableContainer";
+import { TablePagination } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableContainer from "@mui/material/TableContainer";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { getLibelle } from "@util/Utils";
 import React, { useCallback, useEffect } from "react";
@@ -199,8 +199,9 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
           pageState > 0 && paramsTableau.rowsNumberState === 0 ? 0 : pageState
         }
         onPageChange={handleChangePage}
-        backIconButtonText={getLibelle("Page précédente")}
-        nextIconButtonText={getLibelle("Page suivante")}
+        getItemAriaLabel={(type: string) => {
+          return type === "previous" ? "Page précédente" : "Page suivante";
+        }}
       />
       <div className="ToolbarBottom">
         {props.children &&

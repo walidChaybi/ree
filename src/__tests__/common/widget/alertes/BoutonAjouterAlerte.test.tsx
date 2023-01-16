@@ -97,8 +97,9 @@ test("render BoutonAjouterAlerte avec ajout alerte possible : test soumission fo
   });
 
   const boutonValider = screen.getByText("Valider") as HTMLButtonElement;
-  const selectTypeAlerte = screen.getByTestId(ID_TYPE_ALERTE)
-    .childNodes[0] as HTMLInputElement;
+  const selectTypeAlerte = screen.getByTestId(
+    ID_TYPE_ALERTE
+  ) as HTMLSelectElement;
   const textareaComplementDescription = screen.getByLabelText(
     COMPLEMENT_DESCRIPTION
   ) as HTMLInputElement;

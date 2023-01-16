@@ -48,10 +48,12 @@ test("render composant RegistreActeFiltre", async () => {
     render(<HookRegistreActeFiltre />);
   });
 
-  const natureActe = screen.getByTestId("registre.natureActe")
-    .childNodes[0] as HTMLInputElement;
-  const familleRegistre = screen.getByTestId("registre.familleRegistre")
-    .childNodes[0] as HTMLInputElement;
+  const natureActe = screen.getByTestId(
+    "registre.natureActe"
+  ) as HTMLSelectElement;
+  const familleRegistre = screen.getByTestId(
+    "registre.familleRegistre"
+  ) as HTMLSelectElement;
   const autocomplete = screen.getByTestId("autocomplete");
   const pocopa = screen.getByLabelText("registre.pocopa") as HTMLInputElement;
   const numeroActe = screen.getByLabelText(

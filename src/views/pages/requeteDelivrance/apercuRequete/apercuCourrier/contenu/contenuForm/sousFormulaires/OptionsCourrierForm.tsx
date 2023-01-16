@@ -1,4 +1,4 @@
-import { SettingsBackupRestore } from "@material-ui/icons";
+import { SettingsBackupRestore } from "@mui/icons-material";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   OptionCourrier,

@@ -5,9 +5,9 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText
-} from "@material-ui/core";
-import Image from "@material-ui/icons/Image";
-import PictureAsPdf from "@material-ui/icons/PictureAsPdf";
+} from "@mui/material";
+import Image from "@mui/icons-material/Image";
+import PictureAsPdf from "@mui/icons-material/PictureAsPdf";
 import {
   DocumentReponse,
   IDocumentReponse

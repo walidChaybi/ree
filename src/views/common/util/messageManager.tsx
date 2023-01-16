@@ -1,4 +1,4 @@
-import { Alert, AlertTitle } from "@material-ui/lab";
+import { Alert, AlertTitle } from '@mui/material';
 import { getLibelle } from "@util/Utils";
 import * as React from "react";
 import { toast } from "react-toastify";

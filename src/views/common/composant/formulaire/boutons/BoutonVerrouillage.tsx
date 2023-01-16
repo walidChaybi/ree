@@ -1,9 +1,7 @@
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import { Warning } from "@material-ui/icons";
+import { Warning } from "@mui/icons-material";
+import { FormControlLabel, Switch } from "@mui/material";
 import { getLibelle } from "@util/Utils";
 import React from "react";
-
 import "./scss/BoutonVerrouillage.scss";
 
 interface BoutonVerrouillageProps {

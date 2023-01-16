@@ -27,6 +27,6 @@
       "@model/*": ["./src/model/*"],
       "@scss/*": ["./src/scss/*"]
     }
-  }, 
+  },
   "include": ["src"]
-}
+} 

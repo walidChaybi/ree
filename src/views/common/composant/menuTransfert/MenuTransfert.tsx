@@ -2,12 +2,12 @@ import {
   TransfertUnitaireParams,
   useTransfertApi
 } from "@hook/requete/TransfertHook";
-import { Menu, MenuItem } from "@material-ui/core";
-import { AssignmentInd } from "@material-ui/icons";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IActionOption } from "@model/requete/IActionOption";
 import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
+import { AssignmentInd } from "@mui/icons-material";
+import { Menu, MenuItem } from "@mui/material";
 import {
   receUrl,
   URL_MES_REQUETES_DELIVRANCE,
@@ -178,7 +178,6 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
             keepMounted
             open={Boolean(menuReponsesProposees)}
             onClose={handleCloseMenu}
-            getContentAnchorEl={null}
             anchorOrigin={{
               vertical: "bottom",
               horizontal: "left"

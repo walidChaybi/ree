@@ -2,8 +2,7 @@
 
 import { GestionnaireCacheApi } from "@api/appels/cache/GestionnaireCacheApi";
 import { GestionnaireNomenclature } from "@api/nomenclature/GestionnaireNomenclature";
-import { createTheme } from "@material-ui/core";
-import { ThemeProvider } from "@material-ui/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import "@scss/_colors.scss";
 import "@scss/_library.scss";
@@ -64,7 +63,7 @@ const App: React.FC = () => {
         GestionnaireCacheApi.chargerTousLesUtilisateurs(),
         GestionnaireCacheApi.chargerToutesLesEntites(),
         GestionnaireCacheApi.chargerTousLesDecrets()
-      ]).then(values => {
+      ]).then((values) => {
         setOperationEnCours(false);
       });
     }
@@ -88,13 +87,13 @@ const App: React.FC = () => {
             <div className="App">
               <OfficierContext.Provider value={login}>
                 <OfficierContext.Consumer>
-                  {officier => {
+                  {(officier) => {
                     storeRece.utilisateurCourant = officier?.officierDataState;
                     return null;
                   }}
                 </OfficierContext.Consumer>
                 <OfficierContext.Consumer>
-                  {officier => (
+                  {(officier) => (
                     <GestionnaireFermeture
                       paramsFctAAppler={officier}
                       fctAAppeler={appelRequetesASigner}
@@ -134,10 +133,10 @@ const chargerPolices = () => {
   );
   notoSansRegular
     .load()
-    .then(loadedFace => {
+    .then((loadedFace) => {
       document.fonts.add(loadedFace);
     })
-    .catch(error => {
+    .catch((error) => {
       erreurChargementPolice("Regular");
     });
   const notoSansBold = new FontFace(
@@ -146,10 +145,10 @@ const chargerPolices = () => {
   );
   notoSansBold
     .load()
-    .then(loadedFace => {
+    .then((loadedFace) => {
       document.fonts.add(loadedFace);
     })
-    .catch(error => {
+    .catch((error) => {
       erreurChargementPolice("Bold");
     });
 };

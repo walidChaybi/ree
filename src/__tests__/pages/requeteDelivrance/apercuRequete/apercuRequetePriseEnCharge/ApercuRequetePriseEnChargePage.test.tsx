@@ -291,8 +291,7 @@ test("ignorer requete", async () => {
     fireEvent.click(bontonIgnore);
   });
 
-  const select = screen.getByTestId(MOTIF_IGNORE)
-    .childNodes[0] as HTMLSelectElement;
+  const select = screen.getByTestId(MOTIF_IGNORE) as HTMLSelectElement;
 
   await act(async () => {
     expect(select).toBeDefined();

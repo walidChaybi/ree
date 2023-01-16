@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle
-} from "@material-ui/core";
+} from "@mui/material";
 import { IRequete } from "@model/requete/IRequete";
 import { getUrlPrecedente } from "@util/route/routeUtil";
 import { getLibelle } from "@util/Utils";

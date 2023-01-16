@@ -1,7 +1,7 @@
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import { IReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import { getLibelle } from "@util/Utils";
 import React, { useEffect, useState } from "react";
 
@@ -12,11 +12,11 @@ interface MenuReponsesProposeesProps {
   disabled: boolean;
 }
 
-export const MenuReponsesProposees: React.FC<MenuReponsesProposeesProps> = props => {
-  const [
-    menuReponsesProposees,
-    setMenuReponsesProposees
-  ] = React.useState<null | HTMLElement>(null);
+export const MenuReponsesProposees: React.FC<MenuReponsesProposeesProps> = (
+  props
+) => {
+  const [menuReponsesProposees, setMenuReponsesProposees] =
+    React.useState<null | HTMLElement>(null);
   const [reponsesFiltees, setReponsesFiltees] = useState<IReponseRequeteInfo[]>(
     []
   );
@@ -37,7 +37,7 @@ export const MenuReponsesProposees: React.FC<MenuReponsesProposeesProps> = props
     if (props.listeReponse) {
       setReponsesFiltees(
         props.listeReponse.filter(
-          reponse =>
+          (reponse) =>
             reponse.objet === props.requete.objet.nom &&
             reponse.complementObjet === props.requete.complementObjet.nom
         )
@@ -52,7 +52,7 @@ export const MenuReponsesProposees: React.FC<MenuReponsesProposeesProps> = props
         <div>
           <button
             disabled={props.disabled}
-            onClick={e => handleClickBoutonReponse(e)}
+            onClick={(e) => handleClickBoutonReponse(e)}
           >
             {getLibelle("Réponses proposées")}
           </button>
@@ -63,7 +63,6 @@ export const MenuReponsesProposees: React.FC<MenuReponsesProposeesProps> = props
             keepMounted
             open={Boolean(menuReponsesProposees)}
             onClose={handleCloseMenu}
-            getContentAnchorEl={null}
             anchorOrigin={{
               vertical: "bottom",
               horizontal: "left"

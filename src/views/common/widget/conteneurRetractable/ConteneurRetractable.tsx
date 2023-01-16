@@ -1,4 +1,4 @@
-import { ArrowBackIos, ArrowForwardIos } from "@material-ui/icons";
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { formatLigne } from "@util/Utils";
 import React, { useState } from "react";
 import "./scss/ConteneurRetractable.scss";

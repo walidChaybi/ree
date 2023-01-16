@@ -118,8 +118,9 @@ test("Attendu: le formulaire SaisirExtraitForm pour un acte de naissance s'affic
   });
 
   await waitFor(() => {
-    const widget = screen.getByTestId("titulaireEvt1.declarationConjointe.type")
-      .childNodes[0] as HTMLInputElement;
+    const widget = screen.getByTestId(
+      "titulaireEvt1.declarationConjointe.type"
+    ) as HTMLSelectElement;
     expect(widget).toBeInTheDocument();
     expect(widget.value).toBe("ABSENCE_DECLARATION");
   });
@@ -2026,4 +2027,3 @@ test("Attendu: saisieParentPaysInconnu fonctionne correctement", () => {
     saisieParentPaysInconnu(natureActeNaissance as any as NatureActe, parent2)
   ).toBe(true);
 });
-

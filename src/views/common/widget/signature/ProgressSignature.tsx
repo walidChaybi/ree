@@ -1,4 +1,4 @@
-import { Box, LinearProgress, Typography } from "@material-ui/core";
+import { Box, LinearProgress, Typography } from "@mui/material";
 import { getLibelle } from "@util/Utils";
 import React, { useCallback, useEffect } from "react";
 import { Button } from "reakit/Button";

@@ -30,8 +30,7 @@ test("Attendu: composant SelectField fonctionne correctement", async () => {
     </Formik>
   );
 
-  const select = screen.getByTestId("testSelectField")
-    .childNodes[0] as HTMLInputElement;
+  const select = screen.getByTestId("testSelectField") as HTMLSelectElement;
 
   expect(select).toBeDefined();
 

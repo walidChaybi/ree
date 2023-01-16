@@ -1,6 +1,6 @@
-import Checkbox from "@material-ui/core/Checkbox";
-import InfoIcon from "@material-ui/icons/Info";
-import WarningIcon from "@material-ui/icons/Warning";
+import Checkbox from "@mui/material/Checkbox";
+import InfoIcon from "@mui/icons-material/Info";
+import WarningIcon from "@mui/icons-material/Warning";
 import React, { useEffect, useState } from "react";
 import "./scss/CheckboxColumn.scss";
 

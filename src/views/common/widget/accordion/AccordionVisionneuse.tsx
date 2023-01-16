@@ -9,8 +9,8 @@ import {
 } from "@hook/requete/creation/MiseAJourLibellePjApiHook";
 import { TypePieceJointe } from "@hook/requete/piecesJointes/communPieceJointe";
 import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointeHook";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
 import React, { useEffect, useState } from "react";
 import { VisionneuseDocument } from "../document/VisionneuseDocument";

@@ -186,8 +186,9 @@ test("test onChangeNature", async () => {
     );
   });
 
-  const inputNatureActe = screen.getByTestId("requete.natureActe")
-    .childNodes[0] as HTMLInputElement;
+  const inputNatureActe = screen.getByTestId(
+    "requete.natureActe"
+  ) as HTMLSelectElement;
 
   await waitFor(() => {
     expect(inputNatureActe).toBeDefined();
@@ -276,13 +277,14 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
   );
 
   // Champs Requete
-  const inputNatureActe = screen.getByTestId("requete.natureActe")
-    .childNodes[0] as HTMLSelectElement;
-  const inputDocumentDemande = screen.getByTestId("requete.documentDemande")
-    .childNodes[0] as HTMLSelectElement;
+  const inputNatureActe = screen.getByTestId(
+    "requete.natureActe"
+  ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId(
+    "requete.documentDemande"
+  ) as HTMLSelectElement;
   const inputNbExemplaire = getInput("requete.nbExemplaire");
-  const inputMotif = screen.getByTestId("requete.motif")
-    .childNodes[0] as HTMLSelectElement;
+  const inputMotif = screen.getByTestId("requete.motif") as HTMLSelectElement;
 
   await act(async () => {
     changeInput("DECES", inputNatureActe);
@@ -296,11 +298,12 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
   const inputVilleEvenement = getInput("evenement.villeEvenement");
   const inputAnneeEvenement = getInput("evenement.dateEvenement.annee");
 
-  act(() => {
-    changeInput("mockPaysEvenement", inputPaysEvenement);
-    changeInput("mockVilleEvenement", inputVilleEvenement);
-    changeInput("1990", inputAnneeEvenement);
+  await act(async () => {
+    changeInput("mockPaysEvenement", getInput("evenement.paysEvenement"));
+    changeInput("mockVilleEvenement", getInput("evenement.villeEvenement"));
+    changeInput("1990", getInput("evenement.dateEvenement.annee"));
   });
+
   await waitFor(() => {
     expect(inputAnneeEvenement.value).toEqual("1990");
   });
@@ -366,13 +369,14 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
   const submit = screen.getByText(/Prendre en charge/i);
 
   // Champs Requete
-  const inputNatureActe = screen.getByTestId("requete.natureActe")
-    .childNodes[0] as HTMLSelectElement;
-  const inputDocumentDemande = screen.getByTestId("requete.documentDemande")
-    .childNodes[0] as HTMLSelectElement;
+  const inputNatureActe = screen.getByTestId(
+    "requete.natureActe"
+  ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId(
+    "requete.documentDemande"
+  ) as HTMLSelectElement;
   const inputNbExemplaire = getInput("requete.nbExemplaire");
-  const inputMotif = screen.getByTestId("requete.motif")
-    .childNodes[0] as HTMLSelectElement;
+  const inputMotif = screen.getByTestId("requete.motif") as HTMLSelectElement;
 
   await act(async () => {
     changeInput("NAISSANCE", inputNatureActe);

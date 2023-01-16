@@ -51,8 +51,7 @@ test("render composant Mandataire Formulaire", async () => {
     render(<HookMandataireForm />);
   });
 
-  const inputType = screen.getByTestId("mandataire.type")
-    .childNodes[0] as HTMLInputElement;
+  const inputType = screen.getByTestId("mandataire.type") as HTMLSelectElement;
   const inputRaisonSociale = screen.getByLabelText(
     "mandataire.raisonSociale"
   ) as HTMLInputElement;
@@ -105,8 +104,7 @@ test("render composant Mandataire Formulaire : Affichage de l'input Nature", asy
     render(<HookMandataireForm />);
   });
 
-  const inputType = screen.getByTestId("mandataire.type")
-    .childNodes[0] as HTMLInputElement;
+  const inputType = screen.getByTestId("mandataire.type") as HTMLSelectElement;
 
   act(() => {
     fireEvent.change(inputType, {

@@ -1,10 +1,10 @@
 import { getCompteurRequetes } from "@api/appels/requeteApi";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import { URL_DECONNEXION, URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
 import { logError } from "@util/LogManager";
@@ -132,7 +132,6 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
                       keepMounted
                       open={Boolean(menu)}
                       onClose={handleCloseMenu}
-                      getContentAnchorEl={null}
                       anchorOrigin={{
                         vertical: "bottom",
                         horizontal: "center"

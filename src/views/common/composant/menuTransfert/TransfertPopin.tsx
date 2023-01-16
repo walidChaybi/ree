@@ -3,8 +3,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle
-} from "@material-ui/core";
-import { FilterOptionsState } from "@material-ui/lab";
+} from "@mui/material";
+import { FilterOptionsState } from '@mui/material/useAutocomplete';
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";

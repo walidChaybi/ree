@@ -1,4 +1,4 @@
-import { Button, ButtonGroup } from "@material-ui/core";
+import { Button, ButtonGroup } from "@mui/material";
 import { IActionOption } from "@model/requete/IActionOption";
 import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
 import React from "react";

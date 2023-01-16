@@ -1,4 +1,4 @@
-import { Link } from "@material-ui/core";
+import { Link } from "@mui/material";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { FenetreExterne, FenetreExterneUtil } from "@util/FenetreExterne";
 import React, { useState } from "react";
@@ -27,40 +27,38 @@ export const LienFiche: React.FC<IDataLienFicheProps> = props => {
     setFenetreOuverteState(!fenetreOuverteState);
   };
 
-  return (
-    <>
-      <Link
-        className={"lienFiche"}
-        href={"#"}
-        onClick={onClick}
-        title={props.numero}
-      >
-        {`${props.numero}`}
-      </Link>
+  return <>
+    <Link
+      className={"lienFiche"}
+      href={"#"}
+      onClick={onClick}
+      title={props.numero}
+      underline="hover">
+      {`${props.numero}`}
+    </Link>
 
-      {fenetreOuverteState && (
-        <FenetreExterne
-          titre={props.title}
-          onCloseHandler={() => {
-            toggleFenetre();
-          }}
-          setFenetreExterneUtil={setFenetreExterneUtil}
-        >
-          <FichePage
-            dataFicheIdentifiant={props.identifiant}
-            datasFiches={[
-              {
-                identifiant: props.identifiant,
-                categorie: props.categorie
-              }
-            ]}
-            fenetreExterneUtil={fenetreExterneUtil}
-            index={{ value: 0 }}
-            nbLignesTotales={1}
-            nbLignesParAppel={1}
-          />
-        </FenetreExterne>
-      )}
-    </>
-  );
+    {fenetreOuverteState && (
+      <FenetreExterne
+        titre={props.title}
+        onCloseHandler={() => {
+          toggleFenetre();
+        }}
+        setFenetreExterneUtil={setFenetreExterneUtil}
+      >
+        <FichePage
+          dataFicheIdentifiant={props.identifiant}
+          datasFiches={[
+            {
+              identifiant: props.identifiant,
+              categorie: props.categorie
+            }
+          ]}
+          fenetreExterneUtil={fenetreExterneUtil}
+          index={{ value: 0 }}
+          nbLignesTotales={1}
+          nbLignesParAppel={1}
+        />
+      </FenetreExterne>
+    )}
+  </>;
 };
