@@ -10,6 +10,7 @@ export interface AccordionTitleProps {
   className?: string;
   boutonExpanded?: boolean;
   bouton?: JSX.Element;
+  tag?: JSX.Element;
   handleMiseAJourLibelle?: (e: any) => void;
 }
 
@@ -24,7 +25,12 @@ export const AccordionTitle: React.FC<AccordionTitleProps> = ({
       title={props.titre}
       style={{ userSelect: "text" }}
     >
-      <div className={props.bouton ? "MuiSummaryFlex" : ""}>
+      <div
+        className={[props.bouton ? "MuiSummaryFlex" : "", props.className].join(
+          " "
+        )}
+      >
+        {props.tag}
         {props.handleMiseAJourLibelle ? (
           <LibelleEditable
             libelle={props.titre}
@@ -34,7 +40,9 @@ export const AccordionTitle: React.FC<AccordionTitleProps> = ({
         ) : (
           <>
             <div className="itemHidden" />
-            <span onClick={e => e.stopPropagation()}>{props.titre}</span>
+            <span className="title" onClick={e => e.stopPropagation()}>
+              {props.titre}
+            </span>
           </>
         )}
         {props.bouton}

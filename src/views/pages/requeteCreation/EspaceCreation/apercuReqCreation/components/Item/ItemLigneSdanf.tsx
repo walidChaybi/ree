@@ -24,9 +24,16 @@ export const ItemLigneSdanf: React.FC<ItemLigneSdanfProps> = ({
 }) => {
   return visible ? (
     <div className="ligne infoBulle">
-      <div className={"texte"}>
-        {props.label}
+      <div className="texte">
         <span className="separateur">{separateurVisible && separateur}</span>
+        {props.label ? (
+          <>
+            <span>{props.label}</span>
+            <span>&nbsp;</span>
+          </>
+        ) : (
+          <></>
+        )}
         <span
           className={
             infoBulleSdanfVisible && estRenseigne(texteTitulaire)

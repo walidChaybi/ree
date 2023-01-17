@@ -30,9 +30,12 @@ div.accordionTitle {
 
   .itemHidden {
     margin-right: auto;
-    visibility: hidden;
+    visibility: hidden; 
   }
-
+  
+  .title {
+    cursor: text;
+  }
   .BoutonAccordionTitle {
     margin-left: 10px;
   }

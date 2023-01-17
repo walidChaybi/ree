@@ -14,6 +14,7 @@ export interface AccordionReceProps {
   titre?: string;
   className?: AccordionReceClassNameProps;
   bouton?: JSX.Element;
+  tag?: JSX.Element;
 }
 export interface AccordionReceClassNameProps {
   container?: string;
@@ -50,6 +51,7 @@ export const AccordionRece: React.FC<AccordionReceProps> = ({
           className={props.className?.title}
           bouton={props.bouton}
           boutonExpanded={expandedPossible}
+          tag={props.tag}
         />
         <AccordionDetails>
           {props.panel && (
