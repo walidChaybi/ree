@@ -5,7 +5,7 @@ export const NORESULT = "NORESULT";
 
 export const configRequetesCreation = [
   {
-    compteurRequeteInformation: 0,
+
     /**
      * regular expression of URL
      */
@@ -66,6 +66,19 @@ export const configRequetesCreation = [
           "/requetes/creation/requetesService?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER&tri=statut&sens=ASC&range=0-105"
       ) {
         return requetesServiceCreationTableauResultatQuery;
+      }
+
+      /////////////////////////////////
+      // Attribution requête service //
+      /////////////////////////////////
+      if (
+        url ===
+        "/requetes/action/transfert?idRequete=c9b817ca-1899-450e-9f04-979541946011&idEntite=6737d2f8-f2af-450d-a376-f22f6df6ff1d&idUtilisateur=7a091a3b-6835-4824-94fb-527d68926d56&statutRequete=A_SIGNER&libelleAction=Attribu%C3%A9e%20%C3%A0%20%20Young%20Ashley&attribuer=true"
+      ) {
+        let result = requetesServiceCreationTableauResultatQuery;
+        result.data[0].idUtilisateur = "7a091a3b-6835-4824-94fb-527d68926d56";
+
+        return result;
       }
 
       const error = { msg: "url params non mockée", url };

@@ -40,7 +40,8 @@ export const getColonnesTableauRequetesServiceCreation = (
   new TableauTypeColumn({
     keys: [HeaderTableauRequetesServiceCreation.AttribueA],
     title: getLibelle("Attribuée à"),
-    align: "center"
+    align: "center",
+    sortable: true
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequetesServiceCreation.AttribueACheckbox],

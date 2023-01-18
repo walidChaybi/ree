@@ -1,6 +1,8 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
 import { OfficierContext } from "@core/contexts/OfficierContext";
+import { Droit } from "@model/agent/enum/Droit";
 import { IOfficier } from "@model/agent/IOfficier";
+import { utilisateurADroit } from "@model/agent/IUtilisateur";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import {
   URL_MES_REQUETES_CREATION,
@@ -32,15 +34,14 @@ const getBlocBoutons = (
   officier: IOfficier,
   setPopinAttribuerAOuvert: Function
 ) => {
-  const ouvrirPopinAttribuerA = () => {
-    setPopinAttribuerAOuvert(true);
-  };
-
   return (
     <div className="BlocBoutons">
-      {selectedTabState === 1 && (
-        <BoutonAttribuerRequete onClick={ouvrirPopinAttribuerA} />
-      )}
+      {selectedTabState === 1 &&
+        utilisateurADroit(Droit.ATTRIBUER, officier) && (
+          <BoutonAttribuerRequete
+            onClick={() => setPopinAttribuerAOuvert(true)}
+          />
+        )}
       <BoutonPrendreEnChargePlusAncienneCreation
         typeRequete={TypeRequete.CREATION}
       />

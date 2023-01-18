@@ -3,7 +3,13 @@ import { mappingOfficier } from "@core/login/LoginHook";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import EspaceCreationPage from "@pages/requeteCreation/EspaceCreation/EspaceCreationPage";
 import { URL_ACCUEIL } from "@router/ReceUrls";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
@@ -13,9 +19,12 @@ import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic
 } from "../../../mock/data/connectedUserAvecDroit";
-import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
+import { configRequetesCreation } from "../../../mock/superagent-config/superagent-mock-requetes-creation";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
+const superagentMock = require("superagent-mock")(
+  request,
+  configRequetesCreation
+);
 
 beforeAll(() => {
   storeRece.utilisateurCourant = mappingOfficier(
@@ -25,6 +34,10 @@ beforeAll(() => {
   storeRece.utilisateurCourant.habilitations = mapHabilitationsUtilisateur(
     resultatRequeteUtilistateurLeBiannic.data.habilitations
   );
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });
 
 test("renders creationPage", async () => {
@@ -49,16 +62,16 @@ test("renders creationPage", async () => {
 
   const title = screen.getByText(/Espace création/i);
   const mesRequetes = screen.getByText(/Mes requêtes de création/i);
-  /*const requetesService = screen.getByText(
-    /Les requêtes de délivrance de mon service/i
-  );*/
+  const requetesService = screen.getByText(
+    /Les requêtes de création de mon service/i
+  );
 
   await waitFor(() => {
     expect(title).toBeDefined();
     expect(mesRequetes).toBeDefined();
   });
 
-  /*act(() => {
+  act(() => {
     fireEvent.click(requetesService);
   });
 
@@ -69,9 +82,5 @@ test("renders creationPage", async () => {
     expect(mesRequetes).toBeDefined();
     expect(requetesService).toBeDefined();
     expect(attribueA).toBeDefined();
-  });*/
-});
-
-afterAll(() => {
-  superagentMock.unset();
+  });
 });

@@ -354,4 +354,9 @@ test("Sous Type Requete : Disabled / message d'erreur CARACTERES_ALPHANUMERIQUE 
       }
     });
   });
+
+  await waitFor(() => {
+    expect(sousTypeRequete.disabled).toBeFalsy();
+    expect(statutRequete.disabled).toBeFalsy();
+  });
 });

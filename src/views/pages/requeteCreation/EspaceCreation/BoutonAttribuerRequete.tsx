@@ -8,7 +8,5 @@ interface BoutonAttribuerRequeteProps {
 export const BoutonAttribuerRequete: React.FC<
   BoutonAttribuerRequeteProps
 > = props => {
-  return (
-    <button onClick={() => props.onClick()}>{getLibelle("Attribuer à")}</button>
-  );
+  return <button onClick={props.onClick}>{getLibelle("Attribuer à")}</button>;
 };

@@ -294,8 +294,6 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
   });
 
   // Champs Evenement
-  const inputPaysEvenement = getInput("evenement.paysEvenement");
-  const inputVilleEvenement = getInput("evenement.villeEvenement");
   const inputAnneeEvenement = getInput("evenement.dateEvenement.annee");
 
   await act(async () => {

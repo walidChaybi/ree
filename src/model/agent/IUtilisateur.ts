@@ -149,7 +149,7 @@ export const mappingUtilisateurs = (data: any) => {
 export function getEntiteParUtilisateurId(
   idUtilisateur: string
 ): IEntite | undefined {
-  return storeRece.listeUtilisateurs
-    .filter(utilisateur => utilisateur.idUtilisateur === idUtilisateur)
-    .at(ZERO)?.entite;
+  return storeRece.listeUtilisateurs.filter(
+    utilisateur => utilisateur.idUtilisateur === idUtilisateur
+  )[ZERO]?.entite;
 }
