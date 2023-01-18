@@ -370,7 +370,8 @@ module.exports = function (webpackEnv) {
         ])
       ],
       fallback: {
-        fs: false
+        fs: false,
+        buffer: require.resolve("buffer/")
       }
     },
     module: {
@@ -777,7 +778,10 @@ module.exports = function (webpackEnv) {
               })
             }
           }
-        })
+        }),
+      new webpack.ProvidePlugin({
+        Buffer: ["buffer", "Buffer"]
+      })
     ].filter(Boolean),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
