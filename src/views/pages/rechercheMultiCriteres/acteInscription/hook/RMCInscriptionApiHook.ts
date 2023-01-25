@@ -57,6 +57,9 @@ export function useRMCInscriptionApiHook(
             "Impossible de récupérer les inscriptions de la recherche multi-critères",
           error
         });
+        if (criteres?.onErreur) {
+          criteres.onErreur();
+        }
       }
     }
     fetchInscriptions();

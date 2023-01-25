@@ -1,4 +1,3 @@
-import ReportIcon from "@mui/icons-material/Report";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { NatureRca } from "@model/etatcivil/enum/NatureRca";
 import { StatutFiche } from "@model/etatcivil/enum/StatutFiche";
@@ -8,6 +7,7 @@ import { IRMCRequestActesInscriptions } from "@model/rmc/acteInscription/envoi/I
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { RMCRepertoire } from "@model/rmc/acteInscription/rechercheForm/IRMCRepertoire";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import ReportIcon from "@mui/icons-material/Report";
 import {
   getDateDebutFromDateCompose,
   getDateFinFromDateCompose,
@@ -28,6 +28,7 @@ export interface ICriteresRechercheActeInscription {
   range?: string;
   // Ajout de l'identifiant de la fiche qui a demandé la rmc (lors d'une navigation qui nécessite le rappel de la rmc pour obtenir les actes suivants ou précédents)
   ficheIdentifiant?: string;
+  onErreur?: () => void;
 }
 
 /** Critères de recherche: mapping avant appel d'api */

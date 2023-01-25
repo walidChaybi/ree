@@ -23,14 +23,18 @@ export const RMCRequetePage: React.FC = () => {
     if (valuesRMCRequete && rangeRequete !== "") {
       setCriteresRechercheRequete({
         valeurs: valuesRMCRequete,
-        range: rangeRequete
+        range: rangeRequete,
+        onErreur: () => setOpEnCours(false)
       });
     }
   };
 
   const lancerRercherche = useCallback((criteres: ICriteresRMCRequete) => {
     setOpEnCours(true);
-    setCriteresRechercheRequete(criteres);
+    setCriteresRechercheRequete({
+      ...criteres,
+      onErreur: () => setOpEnCours(false)
+    });
   }, []);
 
   useEffect(() => {
@@ -45,7 +49,6 @@ export const RMCRequetePage: React.FC = () => {
     <>
       <OperationEnCours
         visible={opEnCours}
-        onClick={() => setOpEnCours(false)}
         onTimeoutEnd={() => setOpEnCours(false)}
       ></OperationEnCours>
       <RMCRequeteForm

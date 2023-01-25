@@ -40,6 +40,9 @@ export function useRMCActeApiHook(
                 "Impossible de récupérer les actes de la recherche multi-critères",
               error
             });
+            if (criteres?.onErreur) {
+              criteres.onErreur();
+            }
           });
       } else {
         setResultat({

@@ -89,7 +89,8 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
       if (valuesRMCActeInscription && range !== "") {
         setCriteresRechercheActe({
           valeurs: valuesRMCActeInscription,
-          range
+          range,
+          onErreur: () => setOpEnCours(false)
         });
       }
     },
@@ -100,7 +101,8 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
     if (valuesRMCActeInscription && range !== "") {
       setCriteresRechercheInscription({
         valeurs: valuesRMCActeInscription,
-        range
+        range,
+        onErreur: () => setOpEnCours(false)
       });
     }
   };
@@ -112,7 +114,8 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
         setCriteresRechercheFicheActe({
           valeurs: valuesRMCActeInscription,
           range,
-          ficheIdentifiant
+          ficheIdentifiant,
+          onErreur: () => setOpEnCours(false)
         });
       }
     },
@@ -150,11 +153,13 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
         setValuesRMCActeInscription(values);
         setCriteresRechercheActe({
           valeurs: values,
-          range: `0-${NB_LIGNES_PAR_APPEL_ACTE}`
+          range: `0-${NB_LIGNES_PAR_APPEL_ACTE}`,
+          onErreur: () => setOpEnCours(false)
         });
         setCriteresRechercheInscription({
           valeurs: values,
-          range: `0-${NB_LIGNES_PAR_APPEL_INSCRIPTION}`
+          range: `0-${NB_LIGNES_PAR_APPEL_INSCRIPTION}`,
+          onErreur: () => setOpEnCours(false)
         });
         stockageDonnees.stockerCriteresRMCActeInspt(values);
         setNouvelleRMCActeInscription(false);

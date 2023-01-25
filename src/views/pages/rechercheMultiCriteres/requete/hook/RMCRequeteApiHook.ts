@@ -34,6 +34,9 @@ export function useRMCRequeteApiHook(criteres?: ICriteresRMCRequete) {
             "Impossible de récupérer les requetes de la recherche multi-critères",
           error
         });
+        if (criteres?.onErreur) {
+          criteres.onErreur();
+        }
       }
     }
     fetchRequetes();

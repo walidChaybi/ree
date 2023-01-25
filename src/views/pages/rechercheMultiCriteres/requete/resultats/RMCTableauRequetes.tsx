@@ -182,7 +182,6 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
       <OperationEnCours
         visible={operationEnCours}
         onTimeoutEnd={finOperationEnCours}
-        onClick={finOperationEnCours}
       />
       <TableauRece
         idKey={"idRequete"}

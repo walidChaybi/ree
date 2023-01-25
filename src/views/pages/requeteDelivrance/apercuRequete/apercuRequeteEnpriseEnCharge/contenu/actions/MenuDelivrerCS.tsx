@@ -145,6 +145,7 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
       <OperationEnCours
         visible={operationEnCours}
         onTimeoutEnd={() => setOperationEnCours(false)}
+        onClick={finOperationEnCours}
       />
       <GroupeBouton
         titre={getLibelle("Délivrer")}
