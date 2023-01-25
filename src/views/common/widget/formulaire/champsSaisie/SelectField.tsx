@@ -40,7 +40,7 @@ export const SelectRece: React.FC<SelectProps> = props => {
         name={props.componentName}
         disabled={props.disabled}
         onBlur={props.onBlur}
-        arial-label={props.ariaLabel}
+        aria-label={props.ariaLabel}
         data-testid={props.componentName}
         placeholder={props.placeholder ? props.placeholder : props.label}
       >

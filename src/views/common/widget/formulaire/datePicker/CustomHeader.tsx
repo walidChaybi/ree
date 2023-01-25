@@ -69,14 +69,17 @@ export const customHeaderRenderer = ({
     </button>
 
     <SelectRece
-      label="select month"
+      label="Mois"
+      ariaLabel="select month"
       value={months[getMonth(date)]}
       onChange={({ target: { value } }) => changeMonth(months.indexOf(value))}
       options={months.map(month => ({ value: month, str: month }))}
+      pasPremiereOptionVide={true}
     />
 
     <SelectRece
-      label="select year"
+      label="Année"
+      ariaLabel="select year"
       value={getYear(date)}
       onChange={({ target: { value } }) => changeYear(Number(value))}
       options={years.map(year => ({ value: year, str: year }))}

@@ -1,4 +1,10 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { customHeaderRenderer } from "@widget/formulaire/datePicker/CustomHeader";
 import React from "react";
 
@@ -20,24 +26,45 @@ test("Attendu: customHeaderRenderer fonctionne correctement", async () => {
     return customHeaderRenderer(headerParams);
   };
 
-  render(<CustomHeaderDatePicker />);
+  await act(async () => {
+    render(<CustomHeaderDatePicker />);
+  });
 
   const buttons = screen.getAllByRole("button");
-  fireEvent.click(buttons[0], evt);
-  expect(headerParams.decreaseMonth).toHaveBeenCalledTimes(1);
 
-  fireEvent.click(buttons[1], evt);
-  expect(headerParams.increaseMonth).toHaveBeenCalledTimes(1);
+  await act(async () => {
+    fireEvent.click(buttons[0], evt);
+  });
 
-  const selectMonth = screen.getByLabelText(
-    "select month"
-  ) as HTMLSelectElement;
+  await waitFor(() => {
+    expect(headerParams.decreaseMonth).toHaveBeenCalledTimes(1);
+  });
+
+  await act(async () => {
+    fireEvent.click(buttons[1], evt);
+  });
+
+  await waitFor(() => {
+    expect(headerParams.increaseMonth).toHaveBeenCalledTimes(1);
+  });
+
   evt.value = "6";
-  fireEvent.change(selectMonth, evt);
-  expect(headerParams.changeMonth).toHaveBeenCalledTimes(1);
 
-  const selectYear = screen.getByLabelText("select year");
+  await act(async () => {
+    fireEvent.change(screen.getByLabelText("select month"), evt);
+  });
+
+  await waitFor(() => {
+    expect(headerParams.changeMonth).toHaveBeenCalledTimes(1);
+  });
+
   evt.value = "2000";
-  fireEvent.change(selectYear, evt);
-  expect(headerParams.changeYear).toHaveBeenCalledTimes(1);
+
+  await act(async () => {
+    fireEvent.change(screen.getByLabelText("select year"), evt);
+  });
+
+  await waitFor(() => {
+    expect(headerParams.changeYear).toHaveBeenCalledTimes(1);
+  });
 });
