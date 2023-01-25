@@ -296,7 +296,10 @@ export const EditionExtraitCopiePage: React.FC = () => {
 
   return (
     <>
-      <OperationEnCours visible={operationEnCours} />
+      <OperationEnCours
+        visible={operationEnCours}
+        onTimeoutEnd={() => setOperationEnCours(false)}
+      />
       <RetoucheImage
         images={imagesDeLActe}
         onRetoucheTerminee={onRetoucheTerminee}

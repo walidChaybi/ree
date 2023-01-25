@@ -46,6 +46,7 @@ export const RMCRequetePage: React.FC = () => {
       <OperationEnCours
         visible={opEnCours}
         onClick={() => setOpEnCours(false)}
+        onTimeoutEnd={() => setOpEnCours(false)}
       ></OperationEnCours>
       <RMCRequeteForm
         setNouvelleRMCRequete={setNouvelleRMCRequete}

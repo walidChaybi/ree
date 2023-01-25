@@ -166,7 +166,10 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
   const RMCActeInscriptionRef = useRef();
   return (
     <>
-      <OperationEnCours visible={opEnCours}></OperationEnCours>
+      <OperationEnCours
+        visible={opEnCours}
+        onTimeoutEnd={() => setOpEnCours(false)}
+      ></OperationEnCours>
       <RMCActeInscriptionForm onSubmit={onSubmitRMCActeInscription} />
       {!noAutoScroll && (
         <AutoScroll

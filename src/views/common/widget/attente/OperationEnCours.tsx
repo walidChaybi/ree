@@ -17,17 +17,19 @@ export interface OperationEnCoursProps {
   timeoutInMiliSec?: number;
 }
 
-const DEFAULT_TIMEOUT = 20000;
+const DEFAULT_TIMEOUT_MILI_SEC = 16000;
 const BACKDROP_TIMER_NAME = "BackdropTimer";
 
-export const OperationEnCours: React.FC<OperationEnCoursProps> = (props) => {
+export const OperationEnCours: React.FC<OperationEnCoursProps> = props => {
   const classes = useStyles();
 
   useEffect(() => {
     if (props.visible && props.onTimeoutEnd) {
       gestionnaireTimer.declancheTimer(
         BACKDROP_TIMER_NAME,
-        props.timeoutInMiliSec ? props.timeoutInMiliSec : DEFAULT_TIMEOUT,
+        props.timeoutInMiliSec
+          ? props.timeoutInMiliSec
+          : DEFAULT_TIMEOUT_MILI_SEC,
         true,
         () => {
           if (props.onTimeoutEnd) {

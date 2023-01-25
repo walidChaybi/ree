@@ -1,11 +1,11 @@
 import { IgnorerParams, useIgnorerApi } from "@hook/requete/IgnorerHook";
+import { IRequete } from "@model/requete/IRequete";
 import {
   Dialog,
   DialogContent,
   DialogContentText,
   DialogTitle
 } from "@mui/material";
-import { IRequete } from "@model/requete/IRequete";
 import { getUrlPrecedente } from "@util/route/routeUtil";
 import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -111,7 +111,10 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
 
   return (
     <>
-      <OperationEnCours visible={operationEnCours}></OperationEnCours>
+      <OperationEnCours
+        visible={operationEnCours}
+        onTimeoutEnd={() => setOperationEnCours(false)}
+      ></OperationEnCours>
       <Dialog
         open={isOpen}
         aria-labelledby="alert-dialog-title"
