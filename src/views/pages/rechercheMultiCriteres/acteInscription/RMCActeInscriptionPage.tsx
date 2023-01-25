@@ -70,6 +70,14 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
     criteresRechercheFicheInscription
   );
 
+  //  Obligatoire pour les styles qui sont chargés dynamiquement lorsque le select est dans une fenetre externe
+  useEffect(() => {
+    const event = new CustomEvent("refreshStyles");
+    if (window.top) {
+      window.top.dispatchEvent(event);
+    }
+  }, []);
+
   useEffect(() => {
     if (dataRMCActe || dataRMCInscription) {
       setOpEnCours(false);

@@ -1,4 +1,5 @@
 import React from "react";
+import { SelectRece } from "../champsSaisie/SelectField";
 
 function range(n1: number, n2: number) {
   const resRange: string[] = [];
@@ -67,29 +68,19 @@ export const customHeaderRenderer = ({
       {"<"}
     </button>
 
-    <select
-      aria-label="select month"
+    <SelectRece
+      label="select month"
       value={months[getMonth(date)]}
       onChange={({ target: { value } }) => changeMonth(months.indexOf(value))}
-    >
-      {months.map(option => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
+      options={months.map(month => ({ value: month, str: month }))}
+    />
 
-    <select
-      aria-label="select year"
+    <SelectRece
+      label="select year"
       value={getYear(date)}
       onChange={({ target: { value } }) => changeYear(Number(value))}
-    >
-      {years.map(option => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
+      options={years.map(year => ({ value: year, str: year }))}
+    />
 
     <button
       name="increase"

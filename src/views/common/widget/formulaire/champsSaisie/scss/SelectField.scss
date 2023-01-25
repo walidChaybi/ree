@@ -1,0 +1,11 @@
+.SelectField {
+  position: relative;
+  .flecheExpansionSelect {
+    position: absolute;
+    right: 7px;
+    top: calc(50% - 12px);
+    pointer-events: none;
+    width: 2em;
+    height: 2em;
+  }
+}

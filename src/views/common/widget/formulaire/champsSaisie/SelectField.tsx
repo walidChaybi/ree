@@ -6,9 +6,10 @@ import {
   FormikProps,
   FormikValues
 } from "formik";
-import React, { useEffect } from "react";
+import React from "react";
 import { IconErrorMessage } from "../erreur/IconeErreurMessage";
 import { FormikComponentProps } from "../utils/FormUtil";
+import "./scss/SelectField.scss";
 
 interface SelectProps {
   componentName?: string;
@@ -31,36 +32,41 @@ export const SelectRece: React.FC<SelectProps> = props => {
     }
   };
 
-  // Obligatoire pour les styles qui sont chargés dynamiquement lorsque le select est dans une fenetre externe
-  useEffect(() => {
-    const event = new CustomEvent("refreshStyles");
-    if (window.top) {
-      window.top.dispatchEvent(event);
-    }
-  }, []);
-
   return (
-    <select
-      value={props.value}
-      onChange={handleChange}
-      name={props.componentName}
-      disabled={props.disabled}
-      onBlur={props.onBlur}
-      arial-label={props.ariaLabel}
-      data-testid={props.componentName}
-      placeholder={props.placeholder ? props.placeholder : props.label}
-    >
-      {!props.pasPremiereOptionVide && (
-        <option defaultValue={""}>
-          {props.description ? props.description : ""}
-        </option>
-      )}
-      {props.options.map((option, index) => (
-        <option key={index} value={option.value}>
-          {option.str}
-        </option>
-      ))}
-    </select>
+    <div className="SelectField">
+      <select
+        value={props.value}
+        onChange={handleChange}
+        name={props.componentName}
+        disabled={props.disabled}
+        onBlur={props.onBlur}
+        arial-label={props.ariaLabel}
+        data-testid={props.componentName}
+        placeholder={props.placeholder ? props.placeholder : props.label}
+      >
+        {!props.pasPremiereOptionVide && (
+          <option defaultValue={""}>
+            {props.description ? props.description : ""}
+          </option>
+        )}
+        {props.options.map((option, index) => (
+          <option key={index} value={option.value}>
+            {option.str}
+          </option>
+        ))}
+      </select>
+      {
+        <svg
+          className="flecheExpansionSelect"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="grey"
+        >
+          <path d="M7 10l5 5 5-5H7z" />
+          <path d="M0 0h24v24H0V0z" fill="none" />
+        </svg>
+      }
+    </div>
   );
 };
 
