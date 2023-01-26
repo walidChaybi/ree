@@ -456,6 +456,12 @@ export const executeEnDiffere = (fct: any, tempsMs?: number) => {
   setTimeout(fct, tempsMs ? tempsMs : TIME_OUT_MS);
 };
 
+export function execute(fct?: any) {
+  if (fct) {
+    fct();
+  }
+}
+
 export function auMoinsUneProprieteEstRenseigne(objet: Object): boolean {
   let res = false;
   const proprietes = Object.getOwnPropertyNames(objet);

@@ -78,11 +78,6 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
     }
   }, []);
 
-  useEffect(() => {
-    if (dataRMCActe || dataRMCInscription) {
-      setOpEnCours(false);
-    }
-  }, [dataRMCActe, dataRMCInscription]);
 
   const setRangeActe = useCallback(
     (range: string) => {
@@ -90,7 +85,8 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
         setCriteresRechercheActe({
           valeurs: valuesRMCActeInscription,
           range,
-          onErreur: () => setOpEnCours(false)
+          onErreur: () => setOpEnCours(false),
+          onFinTraitement: () => setOpEnCours(false)
         });
       }
     },
@@ -102,7 +98,8 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
       setCriteresRechercheInscription({
         valeurs: valuesRMCActeInscription,
         range,
-        onErreur: () => setOpEnCours(false)
+        onErreur: () => setOpEnCours(false),
+        onFinTraitement: () => setOpEnCours(false)
       });
     }
   };
@@ -115,7 +112,8 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
           valeurs: valuesRMCActeInscription,
           range,
           ficheIdentifiant,
-          onErreur: () => setOpEnCours(false)
+          onErreur: () => setOpEnCours(false),
+          onFinTraitement: () => setOpEnCours(false)
         });
       }
     },
@@ -154,12 +152,14 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
         setCriteresRechercheActe({
           valeurs: values,
           range: `0-${NB_LIGNES_PAR_APPEL_ACTE}`,
-          onErreur: () => setOpEnCours(false)
+          onErreur: () => setOpEnCours(false),
+          onFinTraitement: () => setOpEnCours(false)
         });
         setCriteresRechercheInscription({
           valeurs: values,
           range: `0-${NB_LIGNES_PAR_APPEL_INSCRIPTION}`,
-          onErreur: () => setOpEnCours(false)
+          onErreur: () => setOpEnCours(false),
+          onFinTraitement: () => setOpEnCours(false)
         });
         stockageDonnees.stockerCriteresRMCActeInspt(values);
         setNouvelleRMCActeInscription(false);

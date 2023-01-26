@@ -1,6 +1,7 @@
 import { rechercheMultiCriteresActes } from "@api/appels/etatcivilApi";
 import { getParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
+import { execute } from "@util/Utils";
 import { useEffect, useState } from "react";
 import {
   IRMCActeApiHookResultat,
@@ -33,6 +34,7 @@ export function useRMCActeApiHook(
               //  de la fiche acte pour sa pagination/navigation
               ficheIdentifiant: criteres.ficheIdentifiant
             });
+            execute(criteres.onFinTraitement);
           })
           .catch(error => {
             logError({
@@ -40,9 +42,7 @@ export function useRMCActeApiHook(
                 "Impossible de récupérer les actes de la recherche multi-critères",
               error
             });
-            if (criteres?.onErreur) {
-              criteres.onErreur();
-            }
+            execute(criteres?.onErreur);
           });
       } else {
         setResultat({

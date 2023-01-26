@@ -2,6 +2,7 @@ import { rechercheMultiCriteresInscriptions } from "@api/appels/etatcivilApi";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
+import { execute } from "@util/Utils";
 import { useEffect, useState } from "react";
 import {
   ICriteresRechercheActeInscription,
@@ -44,6 +45,7 @@ export function useRMCInscriptionApiHook(
               //  de la fiche Inscription pour sa pagination/navigation
               ficheIdentifiant: criteres.ficheIdentifiant
             });
+            execute(criteres.onFinTraitement);
           } else {
             setResultat({
               dataRMCInscription: [],
@@ -57,9 +59,7 @@ export function useRMCInscriptionApiHook(
             "Impossible de récupérer les inscriptions de la recherche multi-critères",
           error
         });
-        if (criteres?.onErreur) {
-          criteres.onErreur();
-        }
+        execute(criteres?.onErreur);
       }
     }
     fetchInscriptions();

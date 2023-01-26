@@ -114,7 +114,7 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
       <OperationEnCours
         visible={operationEnCours}
         onTimeoutEnd={() => setOperationEnCours(false)}
-        onClick={finOperationEnCours}
+        onClick={() => setOperationEnCours(false)}
       ></OperationEnCours>
       <Dialog
         open={isOpen}
