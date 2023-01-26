@@ -4,7 +4,7 @@ export interface IRegistre {
   id: string;
   famille: string;
   pocopa: string;
-  type: ITypeRegistre;
+  type?: ITypeRegistre;
   annee: string;
   support1: string;
   support2: string;

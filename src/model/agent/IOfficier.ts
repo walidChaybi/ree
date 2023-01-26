@@ -73,7 +73,7 @@ export function officierHabiliterUniquementPourLeDroit(droit: Droit): boolean {
 }
 
 export function officierDroitConsulterSurLeTypeRegistre(
-  idTypeRegistre: string
+  idTypeRegistre?: string
 ): boolean {
   const officier = storeRece.utilisateurCourant;
   let res = false;
@@ -121,7 +121,7 @@ export function officierDroitDelivrerSurLeTypeRegistre(idTypeRegistre: string) {
 }
 
 export function officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(
-  idTypeRegistre: string
+  idTypeRegistre?: string
 ) {
   return (
     officierDroitConsulterSurLeTypeRegistre(idTypeRegistre) ||

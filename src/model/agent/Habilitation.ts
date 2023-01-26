@@ -22,13 +22,14 @@ export interface IHabilitation {
 export const Habilitation = {
   aDroitConsulterSurPerimetre(
     habiliation: IHabilitation,
-    idTypeRegistre: string
+    idTypeRegistre?: string
   ) {
     return (
       habiliation.perimetre &&
       habiliation.perimetre.listeIdTypeRegistre &&
       habiliation.profil.droits.find(d => d.nom === Droit.CONSULTER) &&
-      habiliation.perimetre.listeIdTypeRegistre.includes(idTypeRegistre)
+      (!idTypeRegistre ||
+        habiliation.perimetre.listeIdTypeRegistre.includes(idTypeRegistre))
     );
   },
   aDroitDelivrerEtDelivrerComedecSurPerimetre(

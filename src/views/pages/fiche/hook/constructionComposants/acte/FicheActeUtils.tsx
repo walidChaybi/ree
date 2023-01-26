@@ -80,7 +80,7 @@ export interface IParamsAffichage {
 }
 
 export function getParamsAffichageFicheActe(
-  idTypeRegistre: string,
+  idTypeRegistre: string | undefined,
   typeVisibiliteArchiviste: TypeVisibiliteArchiviste
 ): IParamsAffichage {
   const params: IParamsAffichage = {

@@ -285,7 +285,7 @@ export const FichePage: React.FC<FichePageProps> = ({
             <>
               <BandeauAlertesActe
                 alertes={alertes}
-                idTypeRegistre={acte?.registre.type.id}
+                idTypeRegistre={acte?.registre?.type?.id}
                 ajouterAlerteCallBack={ajouterAlerteCallBack}
                 supprimerAlerteCallBack={supprimerAlerteCallBack}
                 afficherBouton={visuBoutonAlertes}
