@@ -1,6 +1,6 @@
-import { VoletPieceJustificativesEtActions } from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/components/VoletPieceJusticativesEtActions";
+import { VoletPieceJustificativesEtActions } from "@pages/requeteCreation/apercuRequete/etablissement/composants/VoletPieceJusticativesEtActions";
 import { mappingRequeteCreation } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
-import { URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID } from "@router/ReceUrls";
+import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -37,7 +37,7 @@ test("L'encart retour SDANF est present dans la page", async () => {
 
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
         "a4cefb71-8457-4f6b-937e-34b49335d404"
       )
     );
@@ -47,7 +47,7 @@ test("L'encart retour SDANF est present dans la page", async () => {
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
             <VoletPieceJustificativesEtActions
               requete={mappingRequeteCreation(requeteCreation)}
@@ -74,7 +74,7 @@ test("Doit afficher le message avec le bon format titre - message - prenomNom", 
 
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
         "3ed9aa4e-921b-429f-b8fe-531dd103c68s"
       )
     );
@@ -84,7 +84,7 @@ test("Doit afficher le message avec le bon format titre - message - prenomNom", 
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
             <VoletPieceJustificativesEtActions
               requete={mappingRequeteCreation(
@@ -117,7 +117,7 @@ test("Doit afficher la liste des messages avec le bon nombre de messages", async
 
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
         "a4cefb71-8457-4f6b-937e-34b49335d404"
       )
     );
@@ -127,7 +127,7 @@ test("Doit afficher la liste des messages avec le bon nombre de messages", async
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
             <VoletPieceJustificativesEtActions
               requete={mappingRequeteCreation(
@@ -162,7 +162,7 @@ test("Doit desactiver les boutons quand la requete n'est pas en statut PRISE_EN_
 
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
         "3ed97a35-c9b0-4ae4-b2dc-75eb84e4085c"
       )
     );
@@ -172,7 +172,7 @@ test("Doit desactiver les boutons quand la requete n'est pas en statut PRISE_EN_
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
             <VoletPieceJustificativesEtActions
               requete={mappingRequeteCreation(
@@ -204,7 +204,7 @@ test("Doit desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete 
 
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
         "3ed9aa4e-921b-489f-b8fe-531dd703c68f"
       )
     );
@@ -214,7 +214,7 @@ test("Doit desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete 
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
             <VoletPieceJustificativesEtActions
               requete={mappingRequeteCreation(
@@ -247,7 +247,7 @@ test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requ
 
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
       "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
     )
   );
@@ -257,7 +257,7 @@ test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requ
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
             <VoletPieceJustificativesEtActions
               requete={mappingRequeteCreation(
@@ -292,7 +292,7 @@ test("Doit ouvrir et changer le titre de la popin au click sur une action", asyn
 
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
         "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
       )
     );
@@ -302,7 +302,7 @@ test("Doit ouvrir et changer le titre de la popin au click sur une action", asyn
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
             <VoletPieceJustificativesEtActions
               requete={mappingRequeteCreation(
@@ -371,7 +371,7 @@ test("Doit ouvrir la popin au click sur une action", async () => {
 
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
       "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
     )
   );
@@ -382,7 +382,7 @@ test("Doit ouvrir la popin au click sur une action", async () => {
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
             <VoletPieceJustificativesEtActions
               requete={mappingRequeteCreation(
@@ -428,7 +428,7 @@ test("Doit afficher un message d'erreur quand la taille maximale est dépassée"
 
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
       "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
     )
   );
@@ -439,7 +439,7 @@ test("Doit afficher un message d'erreur quand la taille maximale est dépassée"
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
             <VoletPieceJustificativesEtActions
               requete={mappingRequeteCreation(

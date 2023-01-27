@@ -88,6 +88,10 @@ export class StatutRequete extends EnumWithComplete {
     "TRANSMISE_A_VALIDEUR",
     "Transmise à valideur"
   );
+  public static readonly EN_TRAITEMENT = new StatutRequete(
+    "EN_TRAITEMENT",
+    "En traitement"
+  );
   public static readonly A_REVOIR = new StatutRequete("A_REVOIR", "À revoir");
   public static readonly TRAITE = new StatutRequete("TRAITE", "Traité");
 
@@ -180,6 +184,10 @@ export class StatutRequete extends EnumWithComplete {
 
   public static estAValider(statut?: StatutRequete): boolean {
     return statut === StatutRequete.A_VALIDER;
+  }
+
+  public static estEnTraitement(statut?: StatutRequete): boolean {
+    return statut === StatutRequete.EN_TRAITEMENT;
   }
 
   public static estTransmiseAValideur(statut?: StatutRequete): boolean {

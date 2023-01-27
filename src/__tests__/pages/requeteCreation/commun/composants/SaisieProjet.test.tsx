@@ -1,0 +1,10 @@
+import { SaisieProjet } from "@pages/requeteCreation/commun/composants/SaisirProjet";
+import { act, render } from "@testing-library/react";
+import React from "react";
+
+test("Doit rendre le composant SaisieProjet de la page création correctement", async () => {
+  await act(async () => {
+    const { container } = render(<SaisieProjet />);
+    expect(container.getElementsByClassName("SaisieProjet").length).toBe(1);
+  });
+});

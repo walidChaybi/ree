@@ -1,13 +1,16 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { MesRequetesCreation } from "@pages/requeteCreation/EspaceCreation/MesRequetesCreation";
-import { statutsRequetesCreation } from "@pages/requeteCreation/EspaceCreation/params/EspaceCreationParams";
+import { MesRequetesCreation } from "@pages/requeteCreation/espaceCreation/MesRequetesCreation";
+import { statutsRequetesCreation } from "@pages/requeteCreation/espaceCreation/params/EspaceCreationParams";
 import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { createMemoryHistory } from "history";
 import React from "react";
+import { act } from "react-dom/test-utils";
 import { Router } from "react-router-dom";
 import request from "superagent";
+import { userDroitCreerActeTranscritPerimetreMEAE } from "../../../mock/data/connectedUserAvecDroit";
 import { configRequetesCreation } from "../../../mock/superagent-config/superagent-mock-requetes-creation";
 
 const superagentMock = require("superagent-mock")(
@@ -17,6 +20,8 @@ const superagentMock = require("superagent-mock")(
 const history = createMemoryHistory();
 history.push(URL_MES_REQUETES_CREATION);
 
+storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
+
 const queryParametersPourRequetes = {
   statuts: statutsRequetesCreation,
   tri: "dateCreation",
@@ -24,14 +29,16 @@ const queryParametersPourRequetes = {
   range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
 } as IQueryParametersPourRequetes;
 
-test("renders Page requete création with all elements", async () => {
-  render(
-    <Router history={history}>
-      <MesRequetesCreation
-        queryParametersPourRequetes={queryParametersPourRequetes}
-      />
-    </Router>
-  );
+test("Doit rendre le tableau des requêtes création", async () => {
+  act(() => {
+    render(
+      <Router history={history}>
+        <MesRequetesCreation
+          queryParametersPourRequetes={queryParametersPourRequetes}
+        />
+      </Router>
+    );
+  });
 
   await waitFor(() => {
     expect(screen.getByText("N°")).toBeDefined();
@@ -42,35 +49,25 @@ test("renders Page requete création with all elements", async () => {
     expect(screen.getByText("Dernière action")).toBeDefined();
     expect(screen.getByText("Statut")).toBeDefined();
   });
+});
 
-  // act(() => {
-  //   fireEvent.click(screen.getByText("N°"));
-  // });
-
-  /*act(() => {
-    fireEvent.click(pageSuivante);
-  });
-
-  await waitFor(() => {
-    const numero = screen.getByText("9021");
-    expect(numero).toBeDefined();
-  });
-
+test("DOIT passer dans la fonction onClickOnLine QUAND je click sur une requête", async () => {
   act(() => {
-    // Clic sur une ligne
-    fireEvent.click(screen.getByText("9021"));
-  });
-  await waitFor(() => {
-    expect(screen.getByText("9021")).toBeDefined();
+    render(
+      <Router history={history}>
+        <MesRequetesCreation
+          queryParametersPourRequetes={queryParametersPourRequetes}
+        />
+      </Router>
+    );
   });
 
-  act(() => {
-    // Clic sur un titre de colonne
-    fireEvent.click(titreNumero);
-  });
+  let requete: HTMLElement;
+
   await waitFor(() => {
-    expect(screen.getByText("9021")).toBeDefined();
-  });*/
+    requete = screen.getByText("IWSZGB / 46478614");
+    fireEvent.click(requete);
+  });
 });
 
 afterAll(() => {

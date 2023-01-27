@@ -1,4 +1,4 @@
-import { DateCoordonneesType } from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/components/Types";
+import { DateCoordonneesType } from "@pages/requeteCreation/apercuRequete/etablissement/composants/Types";
 import { IEvenementUnion } from "../IEvenementUnion";
 import { IPrenomOrdonnes } from "../IPrenomOrdonnes";
 import { IRetenueSdanf } from "../IRetenueSdanf";

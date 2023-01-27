@@ -18,8 +18,8 @@ import { mapHabilitationsUtilisateur } from "../../../model/agent/IUtilisateur";
 import { getUrlWithParam } from "../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../views/common/util/storeRece";
 import { mappingOfficier } from "../../../views/core/login/LoginHook";
-import ApercuReqCreationPage from "../../../views/pages/requeteCreation/EspaceCreation/apercuReqCreation/ApercuReqCreationPage";
-import { URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID } from "../../../views/router/ReceUrls";
+import { ApercuReqCreationEtablissementPage } from "../../../views/pages/requeteCreation/apercuRequete/etablissement/ApercuReqCreationEtablissementPage";
+import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID } from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -41,15 +41,18 @@ beforeEach(() => {
 test("renders VoletPiecesJustificatives", async () => {
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
   act(() => {
     render(
       <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}>
-          <ApercuReqCreationPage />
+        <Route
+          exact={true}
+          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+        >
+          <ApercuReqCreationEtablissementPage />
         </Route>
       </Router>
     );
@@ -70,15 +73,18 @@ test("renders VoletPiecesJustificatives", async () => {
 test("Modifier le titre d'un fichier d'une pièce jointe", async () => {
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
   act(() => {
     render(
       <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}>
-          <ApercuReqCreationPage />
+        <Route
+          exact={true}
+          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+        >
+          <ApercuReqCreationEtablissementPage />
         </Route>
       </Router>
     );
@@ -121,15 +127,18 @@ test("Modifier le titre d'un fichier d'une pièce jointe", async () => {
 test("Modifier le titre d'un fichier et revenir en arrière", async () => {
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
   act(() => {
     render(
       <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}>
-          <ApercuReqCreationPage />
+        <Route
+          exact={true}
+          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+        >
+          <ApercuReqCreationEtablissementPage />
         </Route>
       </Router>
     );
@@ -183,15 +192,18 @@ test("Modifier le titre d'un fichier et revenir en arrière", async () => {
 test("Modifier le titre puis annuler", async () => {
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
   act(() => {
     render(
       <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}>
-          <ApercuReqCreationPage />
+        <Route
+          exact={true}
+          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+        >
+          <ApercuReqCreationEtablissementPage />
         </Route>
       </Router>
     );
@@ -235,15 +247,18 @@ test("Modifier le titre puis annuler", async () => {
 test("Ouvrir deux pièces jointes côte à côte.", async () => {
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
   act(() => {
     render(
       <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}>
-          <ApercuReqCreationPage />
+        <Route
+          exact={true}
+          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+        >
+          <ApercuReqCreationEtablissementPage />
         </Route>
       </Router>
     );

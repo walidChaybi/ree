@@ -11,9 +11,9 @@ import {
   IUtilisateur,
   mapHabilitationsUtilisateur
 } from "@model/agent/IUtilisateur";
-import EspaceCreationPage from "@pages/requeteCreation/EspaceCreation/EspaceCreationPage";
-import { statutsRequetesCreation } from "@pages/requeteCreation/EspaceCreation/params/EspaceCreationParams";
-import { RequetesServiceCreation } from "@pages/requeteCreation/EspaceCreation/RequetesServiceCreation";
+import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
+import { statutsRequetesCreation } from "@pages/requeteCreation/espaceCreation/params/EspaceCreationParams";
+import { RequetesServiceCreation } from "@pages/requeteCreation/espaceCreation/RequetesServiceCreation";
 import { URL_REQUETES_CREATION_SERVICE } from "@router/ReceUrls";
 import {
   act,
@@ -219,4 +219,19 @@ test("Attendu: L'affichage de l'attribution des requêtes de service s'effectue 
   await waitFor(() => {
     expect(getPopinAttribution()).not.toBeInTheDocument();
   });
+});
+
+test("DOIT rendre possible le click sur une requête", async () => {
+  render(<HookConsummer />);
+
+  let requete: HTMLElement;
+
+  await waitFor(() => {
+    requete = screen.getByText("N7MMP8 / B-2-8GRZFCS3P");
+    fireEvent.click(requete);
+  });
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });

@@ -7,7 +7,7 @@ import { TypeRequete } from "./enum/TypeRequete";
 import { IAction } from "./IActions";
 import { IObservation } from "./IObservation";
 import { IRequerant } from "./IRequerant";
-import { IRequeteCreation } from "./IRequeteCreation";
+import { IRequeteCreationEtablissement } from "./IRequeteCreationEtablissement";
 import { IRequeteDelivrance } from "./IRequeteDelivrance";
 import { IRequeteInformation } from "./IRequeteInformation";
 import { IRequeteMiseAjour } from "./IRequeteMiseAjour";
@@ -16,7 +16,7 @@ import { ITitulaireRequete } from "./ITitulaireRequete";
 
 export type TRequete =
   | IRequeteDelivrance
-  | IRequeteCreation
+  | IRequeteCreationEtablissement
   | IRequeteMiseAjour
   | IRequeteInformation;
 

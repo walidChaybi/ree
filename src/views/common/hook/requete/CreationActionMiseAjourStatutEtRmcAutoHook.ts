@@ -2,6 +2,7 @@ import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
 } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
@@ -58,11 +59,18 @@ export function useCreationActionMiseAjourStatutEtRmcAuto(
 
   const callback = useCallback(() => {
     if (params && params.requete) {
+      const sousType = SousTypeCreation.getEnumFromLibelleCourt(
+        params?.requete?.sousType
+      );
+      const statut = StatutRequete.getEnumFromLibelle(
+        params?.requete?.sousType
+      );
       switch (params.typeRequete) {
         case TypeRequete.CREATION:
           setParamsCreation({
             idRequete: params.requete.idRequete,
-            urlCourante: params.urlCourante,
+            sousType,
+            statut,
             handleTraitementTermine: params.handleTraitementTermine
           });
           break;

@@ -1,3 +1,4 @@
+import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { MockMappedHabilitation } from "./mockMappedHabilitations";
 
 export const LISTE_UTILISATEURS = [
@@ -33,4 +34,4 @@ export const LISTE_UTILISATEURS = [
     habilitations: MockMappedHabilitation.habilitations,
     entite: { estDansSCEC: true }
   }
-];
+] as any as IUtilisateur[];

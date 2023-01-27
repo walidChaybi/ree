@@ -7,8 +7,11 @@ import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { RMCArchivePage } from "@pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
-import ApercuReqCreationPage from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/ApercuReqCreationPage";
-import EspaceCreationPage from "@pages/requeteCreation/EspaceCreation/EspaceCreationPage";
+import { ApercuReqCreationEtablissementPage } from "@pages/requeteCreation/apercuRequete/etablissement/ApercuReqCreationEtablissementPage";
+import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
+import { ApercuReqCreationTranscriptionSaisieProjetPage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSaisieProjetPage";
+import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
+import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
@@ -29,7 +32,10 @@ import {
   URL_DECONNEXION,
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
   URL_MES_REQUETES_CREATION,
-  URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
@@ -46,6 +52,9 @@ import {
   URL_RECHERCHE_ACTE_INSCRIPTION,
   URL_RECHERCHE_REQUETE,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_APERCU_SIMPLE_ID,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_EN_TRAITEMENT_ID,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_INFORMATION_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
@@ -53,6 +62,9 @@ import {
   URL_RECHERCHE_REQUETE_EDITION_ID,
   URL_REQUETES_CREATION_SERVICE,
   URL_REQUETES_CREATION_SERVICE_APERCU_REQUETE_ID,
+  URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+  URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+  URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
   URL_REQUETES_DELIVRANCE_SERVICE,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
@@ -68,9 +80,11 @@ import {
   URL_SAISIR_RDC_RMC
 } from "./ReceUrls";
 
+
 const LIBELLE_APERCU_REQUETE_TRAITEMENT = "Aperçu requête (traitement)";
 const LIBELLE_APERCU_REQUETE = "Aperçu de requête";
 const LIBELLE_APERCU_PRISE_EN_CHARGE = "Aperçu requête (prise en charge)";
+const LIBELLE_APERCU_SAISIE_PROJET = "Aperçu requête (saisie de projet)";
 const Labels = {
   RDCSC: "certificat & attestation RC/RCA/PACS courrier"
 };
@@ -325,12 +339,40 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID,
-    component: ApercuReqCreationPage,
+    component: ApercuReqCreationEtablissementPage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
       perimetres: [Perimetre.ETAX, Perimetre.MEAE]
     },
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
+
+  {
+    url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_APERCU_SIMPLE_ID,
+    component: ApercuReqCreationTranscriptionSimplePage,
+    droitPerimetres: {
+      droit: Droit.CREER_ACTE_TRANSCRIT,
+      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+    },
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
+  {
+    url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID,
+    component: ApercuReqCreationTranscriptionPriseEnChargePage,
+    droitPerimetres: {
+      droit: Droit.CREER_ACTE_TRANSCRIT,
+      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+    },
+    libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
+  },
+  {
+    url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_EN_TRAITEMENT_ID,
+    component: ApercuReqCreationTranscriptionSaisieProjetPage,
+    droitPerimetres: {
+      droit: Droit.CREER_ACTE_TRANSCRIT,
+      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+    },
+    libelle: getLibelle(LIBELLE_APERCU_SAISIE_PROJET)
   },
   //////////////////////////////////////////////
   ///////// REQUETE D'INFORMATION (RI) /////////
@@ -387,13 +429,40 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle("Mes requêtes de création")
   },
   {
-    url: URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
-    component: ApercuReqCreationPage,
+    url: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+    component: ApercuReqCreationEtablissementPage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
       perimetres: [Perimetre.ETAX, Perimetre.MEAE]
     },
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
+  {
+    url: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+    component: ApercuReqCreationTranscriptionSimplePage,
+    droitPerimetres: {
+      droit: Droit.CREER_ACTE_TRANSCRIT,
+      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+    },
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
+  {
+    url: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+    component: ApercuReqCreationTranscriptionPriseEnChargePage,
+    droitPerimetres: {
+      droit: Droit.CREER_ACTE_TRANSCRIT,
+      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+    },
+    libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
+  },
+  {
+    url: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+    component: ApercuReqCreationTranscriptionSaisieProjetPage,
+    droitPerimetres: {
+      droit: Droit.CREER_ACTE_TRANSCRIT,
+      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+    },
+    libelle: getLibelle(LIBELLE_APERCU_SAISIE_PROJET)
   },
   ////////////////////////////////////////////////////////
   ///////// REQUETES DE CRÉATION DE MON SERVICE //////////
@@ -412,11 +481,38 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_REQUETES_CREATION_SERVICE_APERCU_REQUETE_ID,
-    component: ApercuReqCreationPage,
+    component: ApercuReqCreationEtablissementPage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
       perimetres: [Perimetre.ETAX, Perimetre.MEAE]
     },
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
+  {
+    url: URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+    component: ApercuReqCreationTranscriptionSimplePage,
+    droitPerimetres: {
+      droit: Droit.CREER_ACTE_TRANSCRIT,
+      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+    },
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
+  {
+    url: URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+    component: ApercuReqCreationTranscriptionPriseEnChargePage,
+    droitPerimetres: {
+      droit: Droit.CREER_ACTE_TRANSCRIT,
+      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+    },
+    libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
+  },
+  {
+    url: URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+    component: ApercuReqCreationTranscriptionSaisieProjetPage,
+    droitPerimetres: {
+      droit: Droit.CREER_ACTE_TRANSCRIT,
+      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+    },
+    libelle: getLibelle(LIBELLE_APERCU_SAISIE_PROJET)
   }
 ];

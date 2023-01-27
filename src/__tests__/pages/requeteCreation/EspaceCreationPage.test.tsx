@@ -1,7 +1,7 @@
 import { OfficierContext } from "@core/contexts/OfficierContext";
 import { mappingOfficier } from "@core/login/LoginHook";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
-import EspaceCreationPage from "@pages/requeteCreation/EspaceCreation/EspaceCreationPage";
+import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import { URL_ACCUEIL } from "@router/ReceUrls";
 import {
   act,

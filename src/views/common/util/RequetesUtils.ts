@@ -10,7 +10,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
-import { IRequeteCreation } from "@model/requete/IRequeteCreation";
+import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import {
   IRequeteDelivrance,
   RequeteDelivrance
@@ -122,13 +122,13 @@ export const estRequeteCreationAuStatutATraiter = (
 ) => {
   return (
     TypeRequete.estCreation(type) &&
-    SousTypeCreation.estRCEXR(sousType) &&
+    SousTypeCreation.estRCEXROuRCTDOuRCTC(sousType) &&
     StatutRequete.estATraiter(statut)
   );
 };
 
 export const autorisePrendreEnChargeDepuisPageCreation = (
-  requete: IRequeteCreation
+  requete: IRequeteCreationEtablissement
 ) => {
   return (
     estRequeteCreationAuStatutATraiter(

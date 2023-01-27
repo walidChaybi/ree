@@ -1,4 +1,8 @@
 import {
+  NavigationApercuReqCreationParams,
+  useNavigationApercuCreation
+} from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
+import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAutoDelivrance
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
@@ -13,6 +17,7 @@ import {
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { officierALeDroitSurUnDesPerimetres } from "@model/agent/IOfficier";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -20,16 +25,13 @@ import { TRequeteTableau } from "@model/requete/IRequeteTableau";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
-import {
-  URL_RECHERCHE_REQUETE,
-  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID
-} from "@router/ReceUrls";
+import { setParamsUseApercuCreation } from "@pages/requeteCreation/commun/requeteCreationUtils";
+import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import {
   autorisePrendreEnChargeReqTableauCreation,
   autorisePrendreEnChargeReqTableauDelivrance
 } from "@util/RequetesUtils";
-import { getUrlWithParam } from "@util/route/routeUtil";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import {
@@ -38,7 +40,6 @@ import {
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { columnsTableauRequete } from "./RMCTableauRequetesParams";
 
@@ -66,9 +67,13 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   const [paramsRMCAuto, setParamsRMCAuto] = useState<
     INavigationApercuRMCAutoParams | undefined
   >();
+  const [paramsCreation, setParamsCreation] = useState<
+    NavigationApercuReqCreationParams | undefined
+  >();
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
   useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
+  useNavigationApercuCreation(paramsCreation);
 
   /**** Navigation vers Apercu Information ****/
   const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
@@ -117,7 +122,6 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   };
 
   const urlCourante = URL_RECHERCHE_REQUETE;
-  const history = useHistory();
 
   const onClickReqDelivrance = (requete: IRequeteTableauDelivrance) => {
     setOperationEnCours(true);
@@ -150,12 +154,33 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     });
   };
 
-  const onClickReqCreation = (requete: IRequeteTableauCreation) => {
-    if (
+  function estRequeteRCTDOuRCTCEtALeDroitActeTranscrit(
+    sousType: SousTypeCreation
+  ) {
+    return (
+      SousTypeCreation.estRCTDOuRCTC(sousType) &&
+      officierALeDroitSurUnDesPerimetres(Droit.CREER_ACTE_TRANSCRIT, [
+        Perimetre.MEAE,
+        Perimetre.ETAX
+      ])
+    );
+  }
+
+  function estRequeteRCEXREtALeDroitActeEtabli(sousType: SousTypeCreation) {
+    return (
+      SousTypeCreation.estRCEXR(sousType) &&
       officierALeDroitSurUnDesPerimetres(Droit.CREER_ACTE_ETABLI, [
         Perimetre.MEAE,
         Perimetre.ETAX
       ])
+    );
+  }
+
+  const onClickReqCreation = (requete: IRequeteTableauCreation) => {
+    const sousType = SousTypeCreation.getEnumFromLibelleCourt(requete.sousType);
+    if (
+      estRequeteRCTDOuRCTCEtALeDroitActeTranscrit(sousType) ||
+      estRequeteRCEXREtALeDroitActeEtabli(sousType)
     ) {
       setOperationEnCours(true);
       if (autorisePrendreEnChargeReqTableauCreation(requete)) {
@@ -167,11 +192,12 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
           typeRequete: TypeRequete.CREATION
         });
       } else {
-        history.push(
-          getUrlWithParam(
-            URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID,
-            requete.idRequete
-          )
+        setParamsUseApercuCreation(
+          requete.idRequete,
+          setParamsCreation,
+          requete.sousType,
+          requete.statut,
+          requete.idUtilisateur
         );
       }
     }

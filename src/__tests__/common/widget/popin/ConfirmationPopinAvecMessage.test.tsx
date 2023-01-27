@@ -1,7 +1,7 @@
 import {
   estSuperieurA500Caracteres,
   getPrenomEtNom
-} from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/components/ListeActions";
+} from "@pages/requeteCreation/apercuRequete/etablissement/composants/action/ListeActions";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { ConfirmationPopinAvecMessage } from "@widget/popin/ConfirmationPopinAvecMessage";

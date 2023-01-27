@@ -78,4 +78,25 @@ export class SousTypeCreation extends EnumWithComplete {
   public static estRCEXR(sousType?: SousTypeCreation): boolean {
     return sousType === SousTypeCreation.RCEXR;
   }
+
+  public static estRCTD(sousType?: SousTypeCreation): boolean {
+    return sousType === SousTypeCreation.RCTD;
+  }
+
+  public static estRCTC(sousType?: SousTypeCreation): boolean {
+    return sousType === SousTypeCreation.RCTC;
+  }
+
+  public static estRCTDOuRCTC(sousType?: SousTypeCreation): boolean {
+    return (
+      SousTypeCreation.estRCTD(sousType) || SousTypeCreation.estRCTC(sousType)
+    );
+  }
+
+  public static estRCEXROuRCTDOuRCTC(sousType?: SousTypeCreation): boolean {
+    return (
+      SousTypeCreation.estRCTDOuRCTC(sousType) ||
+      SousTypeCreation.estRCEXR(sousType)
+    );
+  }
 }

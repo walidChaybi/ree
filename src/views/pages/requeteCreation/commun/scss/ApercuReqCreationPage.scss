@@ -1,0 +1,51 @@
+@import "../../../../../scss/_colors.scss";
+
+.ApercuReqCreationEtablissementPage {
+  display: flex;
+}
+
+
+.ApercuReqCreationTranscriptionSimplePage
+ {
+  display: flex;
+
+  .VoletAvecOnglet {
+    margin-top: 0.8rem;
+    flex: 1;
+
+    .BarreOnglet {
+      .MuiButtonBase-root {
+        border-radius: 0.4rem;
+      }
+    }
+    
+    .MuiTabPanel-root .ContenuVolet {
+      padding: 5px 0px;
+    }
+
+    .MuiTabPanel-root {
+      padding: 0.2rem 0;
+    }
+  }
+}
+
+.ApercuReqCreationTranscriptionPriseEnChargePage, .ApercuReqCreationTranscriptionSaisieProjetPage {
+  display: flex;
+
+  .VoletAvecOnglet {
+    margin-top: 0.8rem;
+    flex: 1;
+
+    .BarreOnglet {
+      border-radius: 0.4rem;      
+      .MuiTabs-flexContainer .MuiButtonBase-root:last-child {
+        border-top-right-radius: 0.4rem;
+        border-bottom-right-radius: 0.4rem;
+      }
+    }
+
+    .ContenuVolet {
+      padding: 5px 0px;
+    }
+  }
+}

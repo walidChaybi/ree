@@ -1,9 +1,6 @@
-import ResumeRequeteCreation from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/components/ResumeRequeteCreation";
-import {
-  INFOS,
-  resume as Labels
-} from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/Labels";
-import mappingIRequeteCreationVersResumeRequeteCreationProps from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/mappingIRequeteCreationVersResumeRequeteCreationProps";
+import ResumeRequeteCreation from "@pages/requeteCreation/apercuRequete/etablissement/composants/ResumeRequeteCreation";
+import mappingIRequeteCreationVersResumeRequeteCreationProps from "@pages/requeteCreation/apercuRequete/etablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
+import { INFOS, resume as Labels } from "@pages/requeteCreation/commun/Labels";
 import { mappingRequeteCreation } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";

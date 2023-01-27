@@ -1,4 +1,4 @@
-import { IRequeteCreation } from "@model/requete/IRequeteCreation";
+import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 
 const pieceJustificative = {
   id: "1234",
@@ -17,6 +17,268 @@ const pieceJustificative = {
   idActe: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   documentPj: null
 };
+
+export const requetesCreationAlimentationTableau = [
+  {
+    id: "b63ebccd-ba5e-443a-8837-c5e1e111e846",
+    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
+    idEntiteRattachement: "67371a3c-5d2c-477c-8217-3f0041122997",
+    numeroAffichage: "LKI17B / 45648231",
+    numeroFonctionnel: "LKI17B",
+    numeroNatali: "45648231",
+    numeroDila: null,
+    numeroAncien: "numeroAncienSI",
+    tagPriorisation: "SCEC",
+    sousType: "RCEXR",
+    dateCreation: 1673967260164,
+    dateDerniereAction: 1673967260164,
+    statut: "A_TRAITER",
+    nomCompletRequerant: "nomFamille prenom",
+    titulaires: [
+      {
+        nom: "CEBALLOS",
+        prenoms: ["ETHAN"],
+        jourNaissance: 1,
+        moisNaissance: 2,
+        anneeNaissance: 2000,
+        sexe: "MASCULIN",
+        villeNaissance: "villeNaissance",
+        paysNaissance: "paysNaissance",
+        qualite: "PARENT",
+        nationalite: "FRANCAISE",
+        typeObjetTitulaire: "FAMILLE"
+      },
+      {
+        nom: "ALLON",
+        prenoms: ["BENOIT"],
+        jourNaissance: 4,
+        moisNaissance: 3,
+        anneeNaissance: 1963,
+        sexe: "MASCULIN",
+        villeNaissance: "nantes",
+        paysNaissance: "paysNaissance",
+        qualite: null,
+        nationalite: "FRANCAISE",
+        typeObjetTitulaire: "POSTULANT_NATIONALITE"
+      },
+      {
+        nom: "TITU 2",
+        prenoms: ["ETHAN"],
+        jourNaissance: 1,
+        moisNaissance: 2,
+        anneeNaissance: 2000,
+        sexe: "MASCULIN",
+        villeNaissance: "villeNaissance",
+        paysNaissance: "paysNaissance",
+        qualite: "PARENT",
+        nationalite: "FRANCAISE",
+        typeObjetTitulaire: "FAMILLE"
+      }
+    ]
+  },
+  {
+    id: "b63e0757-c702-4d14-a99e-7fd84f1d8807",
+    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
+    idEntiteRattachement: "67371a3c-5d2c-477c-8217-3f0041122997",
+    numeroAffichage: "H1SJ1N / 96135321",
+    numeroFonctionnel: "H1SJ1N",
+    numeroNatali: "96135321",
+    numeroDila: null,
+    numeroAncien: "numeroAncienSI",
+    tagPriorisation: "SCEC",
+    sousType: "RCEXR",
+    dateCreation: 1673967260778,
+    dateDerniereAction: 1673967260778,
+    statut: "A_TRAITER",
+    nomCompletRequerant: "nomFamille prenom",
+    titulaires: [
+      {
+        nom: "MERLE",
+        prenoms: ["MICHEL"],
+        jourNaissance: 1,
+        moisNaissance: 2,
+        anneeNaissance: 2000,
+        sexe: "MASCULIN",
+        villeNaissance: "villeNaissance",
+        paysNaissance: "paysNaissance",
+        qualite: "PARENT",
+        nationalite: "FRANCAISE",
+        typeObjetTitulaire: "FAMILLE"
+      },
+      {
+        nom: "LEMOINE",
+        prenoms: ["THIBAUT"],
+        jourNaissance: 4,
+        moisNaissance: 3,
+        anneeNaissance: 1963,
+        sexe: "MASCULIN",
+        villeNaissance: "nantes",
+        paysNaissance: "paysNaissance",
+        qualite: null,
+        nationalite: "FRANCAISE",
+        typeObjetTitulaire: "POSTULANT_NATIONALITE"
+      }
+    ]
+  },
+  {
+    id: "b63eccb0-fca0-4a7d-92a7-4d9fb983c0cf",
+    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
+    idEntiteRattachement: "67371a3c-5d2c-477c-8217-3f0041122997",
+    numeroAffichage: "3GFQGF / 894361894",
+    numeroFonctionnel: "3GFQGF",
+    numeroNatali: "894361894",
+    numeroDila: null,
+    numeroAncien: "numeroAncienSI",
+    tagPriorisation: "SCEC",
+    sousType: "RCEXR",
+    dateCreation: 1673967260898,
+    dateDerniereAction: 1673967260898,
+    statut: "A_TRAITER",
+    nomCompletRequerant: "nomFamille prenom",
+    titulaires: [
+      {
+        nom: "VEZZANI",
+        prenoms: ["Elizabeth"],
+        jourNaissance: 1,
+        moisNaissance: 2,
+        anneeNaissance: 2000,
+        sexe: "MASCULIN",
+        villeNaissance: "villeNaissance",
+        paysNaissance: "paysNaissance",
+        qualite: "PARENT",
+        nationalite: "FRANCAISE",
+        typeObjetTitulaire: "FAMILLE"
+      },
+      {
+        nom: "TYOMKIM",
+        prenoms: ["HAORAN"],
+        jourNaissance: 4,
+        moisNaissance: 3,
+        anneeNaissance: 1963,
+        sexe: "MASCULIN",
+        villeNaissance: "nantes",
+        paysNaissance: "paysNaissance",
+        qualite: null,
+        nationalite: "FRANCAISE",
+        typeObjetTitulaire: "POSTULANT_NATIONALITE"
+      }
+    ]
+  },
+  {
+    id: "b63e801e-8fe7-4c4b-80bd-76bfad28d58c",
+    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
+    idEntiteRattachement: "67371a3c-5d2c-477c-8217-3f0041122997",
+    numeroAffichage: "IWSZGB / 589762198",
+    numeroFonctionnel: "IWSZGB",
+    numeroNatali: "589762198",
+    numeroDila: null,
+    numeroAncien: "numeroAncienSI",
+    tagPriorisation: "SCEC",
+    sousType: "RCEXR",
+    dateCreation: 1673967260988,
+    dateDerniereAction: 1673967260988,
+    statut: "A_TRAITER",
+    nomCompletRequerant: "nomFamille prenom",
+    titulaires: [
+      {
+        nom: "KIWI",
+        prenoms: ["MATTHIAS"],
+        jourNaissance: 1,
+        moisNaissance: 2,
+        anneeNaissance: 2000,
+        sexe: "MASCULIN",
+        villeNaissance: "villeNaissance",
+        paysNaissance: "paysNaissance",
+        qualite: "ENFANT_MINEUR",
+        nationalite: "FRANCAISE",
+        typeObjetTitulaire: "FAMILLE"
+      },
+      {
+        nom: "LAGERBERG",
+        prenoms: ["MARTIN"],
+        jourNaissance: 1,
+        moisNaissance: 2,
+        anneeNaissance: 2000,
+        sexe: "MASCULIN",
+        villeNaissance: "villeNaissance",
+        paysNaissance: "paysNaissance",
+        qualite: "PARENT2ENFANT",
+        nationalite: "FRANCAISE",
+        typeObjetTitulaire: "FAMILLE"
+      },
+      {
+        nom: "LANG",
+        prenoms: ["LIONEL"],
+        jourNaissance: 4,
+        moisNaissance: 3,
+        anneeNaissance: 1963,
+        sexe: "MASCULIN",
+        villeNaissance: "nantes",
+        paysNaissance: "paysNaissance",
+        qualite: null,
+        nationalite: "FRANCAISE",
+        typeObjetTitulaire: "POSTULANT_NATIONALITE"
+      }
+    ]
+  },
+  {
+    id: "b63e801e-8fe7-4c4b-80bd-76bfad28d58c",
+    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
+    idEntiteRattachement: "67371a3c-5d2c-477c-8217-3f0041122997",
+    numeroAffichage: "IWSZGB / 46478614",
+    numeroFonctionnel: "IWSZGB",
+    numeroNatali: "589762198",
+    numeroDila: null,
+    numeroAncien: "numeroAncienSI",
+    tagPriorisation: "SCEC",
+    sousType: "RCTC",
+    dateCreation: 1673967260988,
+    dateDerniereAction: 1673967260988,
+    statut: "A_TRAITER",
+    nomCompletRequerant: "nomFamille prenom",
+    titulaires: [
+      {
+        nom: "KIWI",
+        prenoms: ["MATTHIAS"],
+        jourNaissance: 1,
+        moisNaissance: 2,
+        anneeNaissance: 2000,
+        sexe: "MASCULIN",
+        villeNaissance: "villeNaissance",
+        paysNaissance: "paysNaissance",
+        qualite: "ENFANT_MINEUR",
+        nationalite: "FRANCAISE",
+        typeObjetTitulaire: "FAMILLE"
+      },
+      {
+        nom: "LAGERBERG",
+        prenoms: ["MARTIN"],
+        jourNaissance: 1,
+        moisNaissance: 2,
+        anneeNaissance: 2000,
+        sexe: "MASCULIN",
+        villeNaissance: "villeNaissance",
+        paysNaissance: "paysNaissance",
+        qualite: "PARENT2ENFANT",
+        nationalite: "FRANCAISE",
+        typeObjetTitulaire: "FAMILLE"
+      },
+      {
+        nom: "MICHELINE",
+        prenoms: ["LIONEL"],
+        jourNaissance: 4,
+        moisNaissance: 3,
+        anneeNaissance: 1963,
+        sexe: "MASCULIN",
+        villeNaissance: "nantes",
+        paysNaissance: "paysNaissance",
+        qualite: null,
+        nationalite: "FRANCAISE",
+        typeObjetTitulaire: "POSTULANT_NATIONALITE"
+      }
+    ]
+  }
+];
 
 export const requeteCreation = {
   id: "3ed9aa4e-921b-489f-b8fe-531dd703c60c",
@@ -599,7 +861,7 @@ export const requeteCreation = {
   dossierNouveaux: null,
   dossierOrigines: null,
   decret: null
-} as any as IRequeteCreation;
+} as any as IRequeteCreationEtablissement;
 
 export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitulaireEtUnEnfantMajeur =
   {
@@ -1665,7 +1927,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
     dossierNouveaux: null,
     dossierOrigines: null,
     decret: null
-  } as any as IRequeteCreation;
+  } as any as IRequeteCreationEtablissement;
 
 export const requeteCreationAvecMessagesRetourSDANFSansLesDroits = {
   ...requeteCreation,

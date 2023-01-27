@@ -22,7 +22,7 @@ import {
   ITitulaireRequete,
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
-import { formatagePrenoms } from "@pages/requeteCreation/EspaceCreation/apercuReqCreation/mappingIRequeteCreationVersResumeRequeteCreationProps";
+import { formatagePrenoms } from "@pages/requeteCreation/apercuRequete/etablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
 import {
   formatLigne,
   getLibelle,

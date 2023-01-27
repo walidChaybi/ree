@@ -1,3 +1,5 @@
+import { requetesCreationAlimentationTableau } from "../data/requeteCreation";
+import { requeteCreationTranscription } from "../data/requeteCreationTranscription";
 import { requetesServiceCreationTableauResultatQuery } from "../data/requetesServiceCreation";
 import { requeteTableauCreation } from "../data/requeteTableauCreation";
 
@@ -29,6 +31,12 @@ export const configRequetesCreation = [
         };
       }
 
+      if (url === "/requetes/dd96cc3a-9865-4c83-b634-37fad2680f41") {
+        return {
+          data: requeteCreationTranscription
+        };
+      }
+
       if (
         url ===
         "/requetes/creation/54ddf213-d9b7-4747-8e92-68c220f66de3/statut?statut=PRISE_EN_CHARGE"
@@ -43,27 +51,28 @@ export const configRequetesCreation = [
       ////////////////////////////
       if (
         url ===
-          "/requetes/creation/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER&tri=numeroAffichage&sens=ASC&range=0-105" ||
+          "/requetes/creation/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER%2CEN_TRAITEMENT&tri=numeroAffichage&sens=ASC&range=0-105" ||
         url ===
-          "/requetes/creation/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER&tri=dateCreation&sens=ASC&range=0-105"
+          "/requetes/creation/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER%2CEN_TRAITEMENT&tri=dateCreation&sens=ASC&range=0-105"
       ) {
         return {
           headers: {
             "content-range": "",
             link: ""
           },
-          data: []
+          data: requetesCreationAlimentationTableau
         };
       }
 
       ////////////////////////////
       // Requêtes de mon service
       ////////////////////////////
+
       if (
         url ===
-          "/requetes/creation/requetesService?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER&tri=dateCreation&sens=ASC&range=0-105" ||
+          "/requetes/creation/requetesService?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER%2CEN_TRAITEMENT&tri=dateCreation&sens=ASC&range=0-105" ||
         url ===
-          "/requetes/creation/requetesService?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER&tri=statut&sens=ASC&range=0-105"
+          "/requetes/creation/requetesService?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER%2CEN_TRAITEMENT&tri=statut&sens=ASC&range=0-105"
       ) {
         return requetesServiceCreationTableauResultatQuery;
       }
