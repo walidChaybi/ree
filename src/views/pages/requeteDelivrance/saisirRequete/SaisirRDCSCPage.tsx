@@ -226,10 +226,10 @@ export const SaisirRDCSCPage: React.FC = () => {
   useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
 
   const resultatReponseSansDelivranceCS = useReponseSansDelivranceCS(
-    idRequete,
     StatutRequete.TRAITE_A_IMPRIMER.libelle,
     StatutRequete.TRAITE_A_IMPRIMER,
-    reponseSansDelivranceCS
+    reponseSansDelivranceCS,
+    idRequete
   );
 
   const documentDemandeOptions =

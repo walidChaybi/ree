@@ -12,10 +12,10 @@ import { useEffect, useState } from "react";
 import { MimeType } from "../../../../../../../../ressources/MimeType";
 
 export function useReponseSansDelivranceCS(
-  requeteId: string,
   libelleAction: string,
   statutRequete: StatutRequete,
-  reponseSansDelivranceCS?: IReponseSansDelivranceCS
+  reponseSansDelivranceCS?: IReponseSansDelivranceCS,
+  requeteId?: string
 ) {
   const [resultat, setResultat] = useState<any>();
 

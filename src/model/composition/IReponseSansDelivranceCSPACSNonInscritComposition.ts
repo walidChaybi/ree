@@ -25,7 +25,7 @@ export interface IReponseSansDelivranceCSPACSNonInscritComposition
 }
 
 export const ReponseSansDelivranceCSPACSNonInscritComposition = {
-  creerReponseSansDelivranceCS(requete: IRequete, canal: TypeCanal) {
+  creerReponseSansDelivranceCS(requete: IRequete, canal?: TypeCanal) {
     const reponseSansDelivranceCS =
       {} as IReponseSansDelivranceCSPACSNonInscritComposition;
     ParametresComposition.ajoutParametres(reponseSansDelivranceCS);
@@ -46,6 +46,7 @@ export const ReponseSansDelivranceCSPACSNonInscritComposition = {
       reponseSansDelivranceCS.nom_titulaire1 = TitulaireRequete.getNom(
         requete.titulaires[0]
       );
+
       reponseSansDelivranceCS.prenoms_titulaire1 = TitulaireRequete.getPrenoms(
         requete.titulaires[0]
       );

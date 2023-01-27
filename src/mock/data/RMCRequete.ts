@@ -147,7 +147,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
         anneeNaissance: 1983,
         sexe: Sexe.FEMININ
       }
-    ],
+    ]
   },
   {
     idRequete: "8ef11b8b-652c-4c6a-ad27-a544fce635d0",
@@ -166,7 +166,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
     statut: "Traitée - A délivrer Démat",
     priorite: "HAUTE",
     observations: [],
-    titulaires: [],
+    titulaires: []
   },
   {
     idRequete: "4578e56c-421c-4e6a-b587-a238a665daf8",
@@ -184,7 +184,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
     statut: "Brouillon",
     priorite: "BASSE",
     observations: [],
-    titulaires: [],
+    titulaires: []
   },
   {
     idRequete: "532a8a9d-91c0-4405-9f5f-503629405422",
@@ -203,7 +203,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
     statut: "À signer",
     priorite: "MOYENNE",
     observations: [],
-    titulaires: [],
+    titulaires: []
   },
   {
     idRequete: "54ddf213-d9b7-4747-8e92-68c220f66de4",
@@ -239,7 +239,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
         anneeNaissance: 1983,
         sexe: Sexe.FEMININ
       }
-    ],
+    ]
   },
   {
     idRequete: "8ef11b8b-652c-4c6a-ad27-a544fce635d1",
@@ -258,7 +258,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
     statut: "Prise en charge",
     priorite: "HAUTE",
     observations: [],
-    titulaires: [],
+    titulaires: []
   },
   {
     idRequete: "4578e56c-421c-4e6a-b587-a238a665daf9",
@@ -294,7 +294,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
         anneeNaissance: 1983,
         sexe: Sexe.FEMININ
       }
-    ],
+    ]
   },
   {
     idRequete: "532a8a9d-91c0-4405-9f5f-503629405423",
@@ -313,7 +313,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
     statut: "À signer",
     priorite: "MOYENNE",
     observations: [],
-    titulaires: [],
+    titulaires: []
   },
   {
     idRequete: "54ddf213-d9b7-4747-8e92-68c220f66de1",
@@ -349,7 +349,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
         anneeNaissance: 1983,
         sexe: Sexe.FEMININ
       }
-    ],
+    ]
   },
   {
     idRequete: "8ef11b8b-652c-4c6a-ad27-a544fce635df",
@@ -368,7 +368,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
     statut: "Traitée - A délivrer Démat",
     priorite: "HAUTE",
     observations: [],
-    titulaires: [],
+    titulaires: []
   },
   {
     idRequete: "4578e56c-421c-4e6a-b587-a238a665daf7",
@@ -387,7 +387,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
     statut: "Brouillon",
     priorite: "BASSE",
     observations: [],
-    titulaires: [],
+    titulaires: []
   },
   {
     idRequete: "532a8a9d-91c0-4405-9f5f-503629405421",
@@ -406,6 +406,6 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
     statut: "À signer",
     priorite: "MOYENNE",
     observations: [],
-    titulaires: [],
+    titulaires: []
   }
 ];

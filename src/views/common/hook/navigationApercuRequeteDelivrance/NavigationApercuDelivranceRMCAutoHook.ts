@@ -32,6 +32,7 @@ export function useNavigationApercuRMCAutoDelivrance(
       rmcAutoNavigationParams?.requete
     );
 
+
   useEffect(() => {
     if (navigation) {
       if (tousRenseignes(navigation.isRmcAuto, rmcAutoNavigationParams)) {

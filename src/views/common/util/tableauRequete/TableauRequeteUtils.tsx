@@ -1,9 +1,9 @@
-import { Box } from "@mui/material";
+import { Priorite } from "@model/requete/enum/Priorite";
+import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import ClearIcon from "@mui/icons-material/Clear";
 import LabelIcon from "@mui/icons-material/Label";
 import ReportIcon from "@mui/icons-material/Report";
-import { Priorite } from "@model/requete/enum/Priorite";
-import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
+import { Box } from "@mui/material";
 import { getLibelle, numberToString } from "@util/Utils";
 import React from "react";
 import { getDateStringFromDateCompose } from "../DateUtils";
