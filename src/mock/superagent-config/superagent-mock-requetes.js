@@ -13,6 +13,7 @@ import {
   requeteAvecCopieIntegraleActeImage,
   requeteAvecDocs,
   requeteAvecDocsPlurilingue,
+  requeteRDDPAvecDocs,
   requeteSansDocument
 } from "../data/DetailRequeteDelivrance";
 import {
@@ -358,6 +359,9 @@ export const configRequetes = [
       }
       if (match[1] === "/requetes/9bfa282d-1e66-4538-b242-b9de4f683f0f") {
         return { data: requeteAvecDocs };
+      }
+      if (match[1] === "/requetes/9bfa282d-1e66-4538-b212-b7de4f683f0f") {
+        return { data: requeteRDDPAvecDocs };
       }
       if (match[1] === "/requetes/9bfa282d-1e66-4538-b242-b9de4f683f77") {
         return { data: requeteAvecCopieIntegraleActeImage };

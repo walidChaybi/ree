@@ -7,6 +7,7 @@ import {
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
 import {
@@ -215,6 +216,7 @@ function afficherPlus(
     documents?.length === DocumentEC.Complementaire &&
     requete.choixDelivrance !== ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE &&
     !requete.provenanceRequete.provenancePlanete &&
-    StatutRequete.TRANSMISE_A_VALIDEUR !== requete.statutCourant.statut
+    StatutRequete.TRANSMISE_A_VALIDEUR !== requete.statutCourant.statut &&
+    !SousTypeDelivrance.estRDDP(requete.sousType)
   );
 }

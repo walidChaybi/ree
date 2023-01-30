@@ -210,7 +210,6 @@ describe("Test onglets documents édites", () => {
     });
 
     await waitFor(() => {
-      // expect(screen.getByText("Extrait avec filiation")).not.toBeDefined();
       expect(
         screen.getByText(
           "Pas de délivrance d'extrait plurilingue de naissance avec une personne de genre indéterminé ou des parents de même sexe."
@@ -219,39 +218,6 @@ describe("Test onglets documents édites", () => {
     });
   });
 });
-
-// test("Doit afficher un message d'erreur quand le nombre de titulaire est > 2 dans un acte de mariage plurilinque/EC avec ou sans filiation", async () => {
-//   history.push(
-//     `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4038-b271-b9de48283a1f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
-//   );
-
-//   await act(async () => {
-//     render(
-//       <Router history={history}>
-//         <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-//           <EditionExtraitCopiePage />
-//         </Route>
-//       </Router>
-//     );
-//   });
-
-//   await waitFor(() => {
-//     let boutonAjouterDocument: HTMLElement;
-//     expect(screen.getByTitle("Ajout d'un document complémentaire")).toBeDefined();
-//     fireEvent.click(screen.getByTitle("Ajout d'un document complémentaire"));
-//     boutonAjouterDocument = screen.getByText("Extrait plurilingue");
-//     expect(boutonAjouterDocument).toBeDefined();
-//     fireEvent.click(boutonAjouterDocument);
-//   });
-
-//   await waitFor(() => {
-//     expect(
-//       screen.getByText(
-//         "Pas de délivrance d'extrait sur la base d'un acte à titulaires multiples."
-//       )
-//     ).toBeDefined();
-//   });
-// });
 
 afterAll(() => {
   superagentMock.unset();

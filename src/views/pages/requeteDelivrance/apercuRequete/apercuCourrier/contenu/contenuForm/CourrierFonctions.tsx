@@ -17,6 +17,7 @@ import {
 } from "@model/requete/enum/DocumentDelivranceConstante";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
@@ -59,6 +60,42 @@ import { OptionCourrierFormDefaultValues } from "./sousFormulaires/OptionsCourri
 
 const LIMIT_ORDRE_EDITION_STANTARD = 900;
 
+function getTypesCourrierRequeteIncomplete(sousType: SousTypeDelivrance) {
+  let typesCourrier;
+  typesCourrier = [
+    DocumentDelivrance.getOptionFromCode(INFORMATION_DIVERSES_MANQUANTE) // Courrier 117
+  ];
+
+  if (!SousTypeDelivrance.estRDDP(sousType)) {
+    typesCourrier = [
+      ...typesCourrier,
+      DocumentDelivrance.getOptionFromCode(MANDAT_GENEALOGIQUE), // Courrier 18
+      DocumentDelivrance.getOptionFromCode(JUSTIFICATIF_REPRESENTANT_MANQUANT) // Courrier 19]
+    ];
+  }
+
+  return typesCourrier;
+}
+
+function getTypesCourrierActeNonDetenuAuScec(sousType: SousTypeDelivrance) {
+  let typesCourrier;
+  typesCourrier = [
+    DocumentDelivrance.getOptionFromCode(ACTE_NON_TROUVE), // Courrier 115
+    DocumentDelivrance.getOptionFromCode(ACTE_NON_TROUVE_ALGERIE), // Courrier 64
+    DocumentDelivrance.getOptionFromCode(ACTE_NAISSANCE_NON_TROUVE_MARIAGE) // Courrier 24
+  ];
+
+  if (!SousTypeDelivrance.estRDDP(sousType)) {
+    typesCourrier = [
+      ...typesCourrier,
+      DocumentDelivrance.getOptionFromCode(ATTESTATION_PENSION), // Courrier ??
+      DocumentDelivrance.getOptionFromCode(PROPOSITION_TRANSCRIPTION) // Courrier ??
+    ];
+  }
+
+  return typesCourrier;
+}
+
 export const getTypesCourrier = (
   requete: IRequeteDelivrance,
   acteSelected?: IResultatRMCActe[]
@@ -66,20 +103,10 @@ export const getTypesCourrier = (
   let typesCourrier: Options = [];
   switch (requete.choixDelivrance) {
     case ChoixDelivrance.REP_SANS_DEL_EC_REQUETE_INCOMPLETE:
-      typesCourrier = [
-        DocumentDelivrance.getOptionFromCode(INFORMATION_DIVERSES_MANQUANTE), // Courrier 117
-        DocumentDelivrance.getOptionFromCode(MANDAT_GENEALOGIQUE), // Courrier 18
-        DocumentDelivrance.getOptionFromCode(JUSTIFICATIF_REPRESENTANT_MANQUANT) // Courrier 19
-      ];
+      typesCourrier = getTypesCourrierRequeteIncomplete(requete.sousType);
       break;
     case ChoixDelivrance.REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC:
-      typesCourrier = [
-        DocumentDelivrance.getOptionFromCode(ACTE_NON_TROUVE), // Courrier 115
-        DocumentDelivrance.getOptionFromCode(ACTE_NON_TROUVE_ALGERIE), // Courrier 64
-        DocumentDelivrance.getOptionFromCode(ACTE_NAISSANCE_NON_TROUVE_MARIAGE), // Courrier 24
-        DocumentDelivrance.getOptionFromCode(ATTESTATION_PENSION), // Courrier ??
-        DocumentDelivrance.getOptionFromCode(PROPOSITION_TRANSCRIPTION) // Courrier ??
-      ];
+      typesCourrier = getTypesCourrierActeNonDetenuAuScec(requete.sousType);
       break;
     case ChoixDelivrance.REP_SANS_DEL_EC_DIVERS:
       typesCourrier = [

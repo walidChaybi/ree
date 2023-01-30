@@ -7,6 +7,7 @@ import {
 } from "@model/composition/ICourrierComposition";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { IAdresseRequerant } from "@model/requete/IAdresseRequerant";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
@@ -121,7 +122,12 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
       )
     ) {
       setBasculerConstructionCourrier(false);
-      if (presenceDesElementsPourLaGeneration(params, courrier?.doc)) {
+      if (
+        presenceDesElementsPourLaGenerationEtControleSousType(
+          params,
+          courrier?.doc
+        )
+      ) {
         const elements: IElementsJasperCourrier =
           specificationCourrier.getElementsJasper(
             // @ts-ignore presenceDesElementsPourLaGeneration
@@ -253,7 +259,7 @@ function presenceDeLaRequeteDuDocEtSaisieCourrier(
   );
 }
 
-function presenceDesElementsPourLaGeneration(
+function presenceDesElementsPourLaGenerationEtControleSousType(
   params: IGenerationCourrierParams | undefined,
   courrier: DocumentDelivrance | undefined
 ) {
@@ -261,7 +267,8 @@ function presenceDesElementsPourLaGeneration(
     params?.requete &&
     params?.requete.titulaires &&
     params.requete.titulaires.length > 0 &&
-    courrier
+    courrier &&
+    !SousTypeDelivrance.estRDDP(params?.requete?.sousType)
   );
 }
 
