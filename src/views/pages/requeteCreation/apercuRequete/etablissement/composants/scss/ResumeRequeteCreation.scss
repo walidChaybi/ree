@@ -1,13 +1,13 @@
 @import "../../../../../../../scss/_colors.scss";
 
-$spacing: 0.5rem;
-$height: $spacing * 2.5;
+$spacing: 0.35rem;
+$height: calc($spacing * 2.5);
 
 .ResumeRequeteCreation {
   .ligne {
     display: flex;
-    padding-top: $spacing;
-    padding-bottom: $spacing;
+    padding-top: calc($spacing / 1.5);
+    padding-bottom: calc($spacing / 1.5);
 
     .erreurSdanf {
       background-color: $surlignement-sdanf;
@@ -59,14 +59,11 @@ $height: $spacing * 2.5;
 
     .icon {
       cursor: pointer;
-      height: $height;
-      margin-left: calc($spacing / 4);
-      justify-content: center;
       align-items: center;
       display: flex;
 
       svg {
-        height: $height;
+        height: calc($height * 1.4);
         color: $application-color;
       }
     }
@@ -81,11 +78,12 @@ $height: $spacing * 2.5;
     }
   }
 
-  .titleAccordion {
+
+  .tagTitleAccordion {
     display: flex;
     justify-content: center;
 
-    .numero {
+    .title {
       flex:1;
       display: flex;
       justify-content: center;

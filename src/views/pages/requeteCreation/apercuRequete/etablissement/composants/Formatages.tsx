@@ -3,7 +3,6 @@ import {
   chainesEgalesIgnoreCasse,
   estRenseigne,
   formatLigne,
-  getValeurOuVide,
   LigneType
 } from "@util/Utils";
 import React from "react";
@@ -102,19 +101,9 @@ export const formatageDateNaissanceRetenueSdanf = (
       : undefined
   );
 
-export const formatDomiciliation = (
-  domiciliation?: DomiciliationType
-): string | undefined => {
-  let ligneDomiciliation;
-  if (domiciliation) {
-    ligneDomiciliation = `
-      ${formatLigne(domiciliation?.lignes, "; ")};
-      ${getValeurOuVide(domiciliation?.codePostal)};
-      ${
-        getValeurOuVide(domiciliation?.ville) ||
-        getValeurOuVide(domiciliation?.lieuVilleEtranger)
-      }`;
-  }
-
-  return ligneDomiciliation;
+export const auMoinsUnDesDeuxChampsEstRenseigne = (
+  texteTitulaire?: string,
+  texteRetenueSdanf?: string
+): boolean => {
+  return estRenseigne(texteTitulaire) || estRenseigne(texteRetenueSdanf);
 };

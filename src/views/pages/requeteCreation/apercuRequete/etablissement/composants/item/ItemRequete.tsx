@@ -1,5 +1,5 @@
 import { TagPriorisation } from "@model/requete/enum/TagPriorisation";
-import { estRenseigne, formatLigne } from "@util/Utils";
+import { estRenseigne, formatLigne, getValeurOuVide } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
 import Labels, { REQUETE, SDANF } from "../../../../commun/Labels";
@@ -67,6 +67,13 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
     " • "
   );
 
+  const TitreTag = () => {
+    return (
+      <div className="tagPriorisation">
+        <span>{getValeurOuVide(props.tagPriorisation?.libelle)}</span>
+      </div>
+    );
+  };
   return estRenseigne(numerosRequete) ? (
     <AccordionRece
       key={`${REQUETE} ${numerosRequete}`}
@@ -74,8 +81,10 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
       expanded={estRenseigne(props.numeros.requeteLiee)}
       className={{
         container: "accordionContainer",
-        content: "accordionContent"
+        content: "accordionContent",
+        title: "tagTitleAccordion"
       }}
+      tag={<TitreTag />}
     >
       <ItemLigne
         label={Labels.resume.requete.sousType}

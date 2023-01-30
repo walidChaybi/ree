@@ -5,7 +5,7 @@ import {
 } from "@util/Utils";
 import React from "react";
 import Labels from "../../../../commun/Labels";
-import { formatDomiciliation, formatLigneNationalites } from "../Formatages";
+import { formatLigneNationalites } from "../Formatages";
 import {
   DateCoordonneesType,
   DomiciliationType,
@@ -25,6 +25,7 @@ export interface ItemParentProps {
   naissance: DateCoordonneesType;
   nationalites: NationaliteType[];
   domiciliation?: DomiciliationType;
+  domiciliationParent2?: string;
   position: number;
   retenueSdanf?: IRetenueSdanf;
 }
@@ -63,7 +64,7 @@ const ItemParent: React.FC<ItemParentProps & ItemProps> = ({
 
       {parent2Enfant && (
         <>
-          <ItemLigne texte={`${formatDomiciliation(props.domiciliation)}`} />
+          <ItemLigne texte={props.domiciliationParent2} />
         </>
       )}
     </Item>

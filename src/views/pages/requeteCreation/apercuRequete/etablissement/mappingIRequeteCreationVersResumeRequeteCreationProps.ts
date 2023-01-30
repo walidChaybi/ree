@@ -214,6 +214,7 @@ const mappingITitulaireRequeteCreationVersItemParentProps = (
       regionDeptEtat: parent.domiciliation?.region,
       pays: parent.domiciliation?.pays
     },
+    domiciliationParent2: parent.domiciliationEnfant,
     retenueSdanf: parent.retenueSdanf ?? undefined
   };
 };
