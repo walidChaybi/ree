@@ -37,7 +37,8 @@ import {
 import { pieceComplementInformation } from "../data/PieceComplementInformation";
 import {
   reponseRequeteCreationMessageSdanf,
-  requeteCreation
+  requeteCreationEtablissement,
+  requeteCreationTranscription
 } from "../data/requeteCreation";
 import {
   idRequeteRDCPourModification,
@@ -257,10 +258,16 @@ export const configRequetes = [
         };
       }
 
-      // Mes requêtes création
+      // Mes requêtes création Etablissement
       if (match[1] === "/requetes/3ed9aa4e-921b-489f-b8fe-531dd703c60c") {
         return {
-          data: requeteCreation
+          data: requeteCreationEtablissement
+        };
+      }
+      // Mes requêtes création Transcription
+      if (match[1] === "/requetes/d4f9e898-cf26-42cc-850b-007e9e475e7a") {
+        return {
+          data: requeteCreationTranscription
         };
       }
 
@@ -286,6 +293,8 @@ export const configRequetes = [
       if (
         match[1] ===
           "/requetes/fichierpiecejustificative/1234/libelle?nouveauLibelle=nouveauLibelle" ||
+        match[1] ===
+          "/requetes/fichierpiecejustificative/3ed92b89-268a-4883-a41f-0763cfea9ef7/libelle?nouveauLibelle=nouveauLibelle" ||
         match[1] ===
           "/requetes/fichierpiecejustificative/1234/libelle?nouveauLibelle=test%20libelle" ||
         match[1] ===

@@ -1,9 +1,12 @@
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequete } from "@model/requete/IRequete";
 import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import AdresseForm from "@widget/formulaire/adresse/AdresseForm";
-import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
+import PiecesJointesForm, {
+  PiecesJointesFormProps
+} from "@widget/formulaire/piecesJointes/PiecesJointesForm";
 import RequeteForm from "@widget/formulaire/requete/RequeteForm";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
@@ -147,8 +150,9 @@ export function getAdresseForm(): JSX.Element {
 export function getPiecesJointesForm(): JSX.Element {
   const piecesJointesFormProps = {
     nom: PIECES_JOINTES,
-    titre: getLibelle("Pièces justificatives")
-  } as SubFormProps;
+    titre: getLibelle("Pièces justificatives"),
+    typeRequete: TypeRequete.DELIVRANCE
+  } as PiecesJointesFormProps;
   return <PiecesJointesForm key={PIECES_JOINTES} {...piecesJointesFormProps} />;
 }
 

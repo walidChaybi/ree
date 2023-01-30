@@ -24,7 +24,8 @@ export async function peupleTypePieceJustificative() {
           new TypePieceJustificative(
             data.code,
             premiereLettreEnMajuscule(data.libelle),
-            data.categorie
+            data.categorie,
+            data.typeRequete
           )
         );
       }

@@ -17,7 +17,7 @@ import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
 import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
 import {
-  requeteCreation,
+  requeteCreationEtablissement,
   requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut,
   requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut,
   requeteCreationAvecMessagesRetourSDANFAvecMauvaisStatus,
@@ -50,7 +50,7 @@ test("L'encart retour SDANF est present dans la page", async () => {
             path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
             <VoletPieceJustificativesEtActions
-              requete={mappingRequeteCreation(requeteCreation)}
+              requete={mappingRequeteCreation(requeteCreationEtablissement)}
             />
           </Route>
         </Router>

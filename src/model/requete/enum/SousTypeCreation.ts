@@ -99,4 +99,8 @@ export class SousTypeCreation extends EnumWithComplete {
       SousTypeCreation.estRCEXR(sousType)
     );
   }
+
+  public static estSousTypeTranscription(sousType?: SousTypeCreation): boolean {
+    return SousTypeCreation.estRCTDOuRCTC(sousType);
+  }
 }

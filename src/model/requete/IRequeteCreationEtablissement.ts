@@ -28,8 +28,8 @@ export interface IRequeteCreationEtablissement extends IRequete {
   campagne?: string;
 }
 
-export const RequeteCreation = {
-  getDocumentsPJtrierParPriorites(
+export const RequeteCreationEtablissement = {
+  getDocumentsPJtriesParPriorites(
     requete: IRequeteCreationEtablissement
   ): IDocumentPJ[] {
     return requete.documentsPj

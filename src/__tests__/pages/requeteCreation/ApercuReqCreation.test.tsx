@@ -1,3 +1,5 @@
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import {
   act,
   fireEvent,
@@ -19,7 +21,10 @@ import { getUrlWithParam } from "../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../views/common/util/storeRece";
 import { mappingOfficier } from "../../../views/core/login/LoginHook";
 import { ApercuReqCreationEtablissementPage } from "../../../views/pages/requeteCreation/apercuRequete/etablissement/ApercuReqCreationEtablissementPage";
-import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID } from "../../../views/router/ReceUrls";
+import {
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
+} from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -36,9 +41,10 @@ beforeAll(() => {
 let history: MemoryHistory;
 beforeEach(() => {
   history = createMemoryHistory();
+  TypePieceJustificative.init();
 });
 
-test("renders VoletPiecesJustificatives", async () => {
+test("renders VoletPiecesJustificatives Etablissement", async () => {
   history.push(
     getUrlWithParam(
       URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
@@ -70,7 +76,39 @@ test("renders VoletPiecesJustificatives", async () => {
   });
 });
 
-test("Modifier le titre d'un fichier d'une pièce jointe", async () => {
+test("renders VoletPiecesJustificatives Transcription", async () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+      "d4f9e898-cf26-42cc-850b-007e9e475e7a"
+    )
+  );
+  act(() => {
+    render(
+      <Router history={history}>
+        <Route
+          exact={true}
+          path={
+            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
+          }
+        >
+          <ApercuReqCreationTranscriptionSimplePage />
+        </Route>
+      </Router>
+    );
+  });
+
+  await waitFor(() => {
+    expect(screen.getAllByText("Acte à transcrire")[0]).toBeDefined();
+    expect(screen.getAllByText("Titulaire")[0]).toBeDefined();
+    expect(screen.getAllByText("Parents du titulaire")[0]).toBeDefined();
+    expect(
+      screen.getAllByText("Autres pièces justificatives")[0]
+    ).toBeDefined();
+  });
+});
+
+test("Modifier le titre d'un fichier d'une pièce jointe Etablissement", async () => {
   history.push(
     getUrlWithParam(
       URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
@@ -105,6 +143,62 @@ test("Modifier le titre d'un fichier d'une pièce jointe", async () => {
 
   const inputModificationLibelle = screen.getByLabelText(
     "input-creation-fichierPJ"
+  ) as HTMLInputElement;
+
+  act(() => {
+    fireEvent.change(inputModificationLibelle, {
+      target: {
+        value: "nouveauLibelle"
+      }
+    });
+  });
+
+  act(() => {
+    inputModificationLibelle.blur();
+  });
+
+  await waitFor(() => {
+    expect(screen.getAllByText("nouveauLibelle")[0]).toBeDefined();
+  });
+});
+
+test("Modifier le titre d'un fichier d'une pièce jointe Transcription", async () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+      "d4f9e898-cf26-42cc-850b-007e9e475e7a"
+    )
+  );
+  act(() => {
+    render(
+      <Router history={history}>
+        <Route
+          exact={true}
+          path={
+            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
+          }
+        >
+          <ApercuReqCreationTranscriptionSimplePage />
+        </Route>
+      </Router>
+    );
+  });
+
+  let boutonModifierLibelle: any;
+
+  await waitFor(() => {
+    boutonModifierLibelle = screen.getAllByTitle(
+      "Modifier le libellé"
+    )[0] as HTMLButtonElement;
+    expect(boutonModifierLibelle).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(boutonModifierLibelle);
+  });
+
+  const inputModificationLibelle = screen.getByLabelText(
+    "input-creation-nom"
   ) as HTMLInputElement;
 
   act(() => {

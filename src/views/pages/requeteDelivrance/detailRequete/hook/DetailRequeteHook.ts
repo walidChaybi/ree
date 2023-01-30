@@ -33,7 +33,10 @@ import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { IStatutCourant } from "@model/requete/IStatutCourant";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
-import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
+import {
+  IPieceJustificativeCreation,
+  PieceJustificativeCreation
+} from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import { PieceJustificativeCategorie } from "@model/requete/PieceJustificativeCategorie";
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { logError } from "@util/LogManager";
@@ -292,14 +295,17 @@ function mapPiecesJustificativesCreation(
   const piecesJustificatives: IPieceJustificativeCreation[] = [];
   pieces?.forEach((pj: any) => {
     const piece = pj as IPieceJustificativeCreation;
-    piece.typePieceJustificative = TypePieceJustificative?.getEnumFor(
+    piece.typePieceJustificative = TypePieceJustificative.getEnumFor(
       pj.typePieceJustificative
     ); // pj.typePieceJustificative est un UUID car il vient du back
     piecesJustificatives.push(piece);
   });
 
+  PieceJustificativeCreation.setOrdre(piecesJustificatives);
+
   return piecesJustificatives;
 }
+
 
 export function mapEchangesRetourSDANF(echangesServeur?: any): IEchange[] {
   const echanges: IEchange[] = [];

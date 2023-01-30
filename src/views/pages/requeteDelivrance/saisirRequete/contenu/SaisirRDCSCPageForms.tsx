@@ -1,11 +1,14 @@
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { TypeRequerant } from "@model/requete/enum/TypeRequerant";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequete } from "@model/requete/IRequete";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import AdresseForm from "@widget/formulaire/adresse/AdresseForm";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
-import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
+import PiecesJointesForm, {
+  PiecesJointesFormProps
+} from "@widget/formulaire/piecesJointes/PiecesJointesForm";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { FormikProps, FormikValues } from "formik";
 import React from "react";
@@ -86,8 +89,9 @@ export function getAdresseForm(): JSX.Element {
 export function getPiecesJointesForm(): JSX.Element {
   const piecesJointesFormProps = {
     nom: PIECES_JOINTES,
-    titre: getLibelle("Pièces justificatives")
-  } as SubFormProps;
+    titre: getLibelle("Pièces justificatives"),
+    typeRequete: TypeRequete.DELIVRANCE
+  } as PiecesJointesFormProps;
   return <PiecesJointesForm key={PIECES_JOINTES} {...piecesJointesFormProps} />;
 }
 

@@ -1,4 +1,5 @@
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { PieceJointe } from "@util/FileUtils";
 import { Options } from "@util/Type";
 import { connect } from "formik";
@@ -8,7 +9,11 @@ import { SousFormulaire } from "../SousFormulaire";
 import { SubFormProps } from "../utils/FormUtil";
 import { PiecesJointes } from "./PiecesJointes";
 
-const PiecesJointesForm: React.FC<SubFormProps> = props => {
+export interface PiecesJointesFormProps extends SubFormProps {
+  typeRequete?: TypeRequete;
+}
+
+const PiecesJointesForm: React.FC<PiecesJointesFormProps> = props => {
   const [menuItemsState, setMenuItemsState] = React.useState<Options>([]);
 
   const piecesJointes: PieceJointe[] =
@@ -19,13 +24,17 @@ const PiecesJointesForm: React.FC<SubFormProps> = props => {
   };
 
   const getPiecesJustificatives = async () => {
-    const piecesJustificatives = TypePieceJustificative.getAllEnumsAsOptions();
+    const piecesJustificatives =
+      TypePieceJustificative.getAllEnumsByTypeRequeteAsOptions(
+        props.typeRequete
+      );
     setMenuItemsState(piecesJustificatives);
   };
 
   useEffect(() => {
     getPiecesJustificatives();
-  }, []);
+    // eslint-disable-next-line
+  }, [props.typeRequete]);
 
   return (
     <SousFormulaire titre={props.titre}>

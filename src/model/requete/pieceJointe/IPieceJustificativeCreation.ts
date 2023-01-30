@@ -1,3 +1,9 @@
+import {
+  CODE_TRANSCRIPTION_ACTE,
+  CODE_TRANSCRIPTION_AUTRE,
+  CODE_TRANSCRIPTION_PARENT_TITULAIRE_ACTE,
+  CODE_TRANSCRIPTION_TITULAIRE_ACTE
+} from "../enum/TypePieceJustificative";
 import { IDocumentPJ } from "../IDocumentPj";
 import { IPieceJustificative } from "./IPieceJustificative";
 
@@ -9,4 +15,41 @@ export interface IPieceJustificativeCreation extends IPieceJustificative {
   idActe: string;
   documentPj: IDocumentPJ;
   nouveauLibelleFichierPJ: string;
+}
+
+export class PieceJustificativeCreation {
+  private static readonly pieceJustificativeCreationSpec = {
+    [CODE_TRANSCRIPTION_ACTE]: {
+      ordre: 1000
+    },
+    [CODE_TRANSCRIPTION_TITULAIRE_ACTE]: {
+      ordre: 2000
+    },
+    [CODE_TRANSCRIPTION_PARENT_TITULAIRE_ACTE]: {
+      ordre: 3000
+    },
+    [CODE_TRANSCRIPTION_AUTRE]: {
+      ordre: 4000
+    }
+  };
+
+  public static getNumeroOrdre(
+    pjCreation: IPieceJustificativeCreation
+  ): number {
+    const spec =
+      //@ts-ignore
+      PieceJustificativeCreation.pieceJustificativeCreationSpec[
+        pjCreation.typePieceJustificative.code
+      ];
+    return spec ? spec.ordre : 0;
+  }
+
+  public static setOrdre(piecesJustificatives: IPieceJustificativeCreation[]) {
+    let cpt = 0;
+    piecesJustificatives.forEach(pieceJustificative => {
+      const ordre = this.getNumeroOrdre(pieceJustificative) + cpt;
+      cpt++;
+      pieceJustificative.ordreNatali = ordre;
+    });
+  }
 }

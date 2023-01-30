@@ -1,4 +1,5 @@
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
+import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 
 const pieceJustificative = {
   id: "1234",
@@ -280,7 +281,7 @@ export const requetesCreationAlimentationTableau = [
   }
 ];
 
-export const requeteCreation = {
+export const requeteCreationEtablissement = {
   id: "3ed9aa4e-921b-489f-b8fe-531dd703c60c",
   numeroFonctionnel: "2H5U3Q",
   dateCreation: 1656404736683,
@@ -862,6 +863,305 @@ export const requeteCreation = {
   dossierOrigines: null,
   decret: null
 } as any as IRequeteCreationEtablissement;
+
+export const requeteCreationTranscription = {
+  id: "d4f9e898-cf26-42cc-850b-007e9e475e7a",
+  numeroFonctionnel: "2H5U3Q",
+  dateCreation: 1656404736683,
+  canal: "RIE",
+  type: "CREATION",
+  actions: [
+    {
+      id: "3ed97fb3-54ff-4bd4-925e-f0711ea215ec",
+      numeroOrdre: 1,
+      libelle: "A traiter",
+      dateAction: 1656404736683,
+      idUtilisateur: "c4b37383-54c8-4f65-afdf-be1355a90ee2"
+    }
+  ],
+  titulaires: [
+    {
+      id: "3ed9efe4-c196-4888-8ffe-938f37a5f73f",
+      position: 3,
+      nomNaissance: "nomNaissance",
+      nomUsage: "nomUsage",
+      anneeNaissance: 2000,
+      moisNaissance: 2,
+      jourNaissance: 1,
+      villeNaissance: "villeNaissance",
+      codePostalNaissance: "codePostalNaissance",
+      arrondissementNaissance: "arrondissementNaissance",
+      villeEtrangereNaissance: "villeEtrangereNaissance",
+      regionNaissance: "regionNaissance",
+      paysNaissance: "paysNaissance",
+      sexe: "MASCULIN",
+      nationalite: "FRANCAISE",
+      prenoms: [
+        {
+          id: "3ed9b068-0bd6-4238-a1a0-eebf314f0f2b",
+          numeroOrdre: 1,
+          prenom: "prenom",
+          estPrenomFrRetenuSdanf: null
+        }
+      ],
+      parentsTitulaire: [
+        {
+          id: "3ed998db-c315-4c4a-91d7-91a4d96d15ca",
+          position: 1,
+          nomNaissance: "nomNaissance",
+          prenoms: [
+            {
+              id: "3ed94f2b-5cfe-4f49-ab33-1d3e4be2fc8e",
+              numeroOrdre: 1,
+              prenom: "prenom",
+              estPrenomFrRetenuSdanf: null
+            }
+          ]
+        }
+      ],
+      deces: {
+        id: "3ed93fb2-693e-4e2b-af82-5977e02962b2",
+        jour: 1,
+        mois: 2,
+        annee: 2000,
+        ville: "ville",
+        arrondissement: "arrondissement",
+        region: "region",
+        pays: "pays"
+      },
+      domiciliation: {
+        id: "3ed9df35-de02-4930-a4e0-6bbd1163aac1",
+        ligne2: "ligne2",
+        ligne3: "ligne3",
+        ligne4: "ligne4",
+        ligne5: "ligne5",
+        codePostal: "codePostal",
+        ville: "ville",
+        villeEtrangere: "villeEtrangere",
+        arrondissement: "arrondissement",
+        region: "region",
+        pays: "pays"
+      },
+      evenementUnions: [],
+      typeObjetTitulaire: "TITULAIRE_ACTE_TRANSCRIT_DRESSE",
+      nomDemandeFrancisation: "nomDemandeFrancisation",
+      nomDemandeIdentification: "nomDemandeIdentification",
+      nomSecable: true,
+      nomPremierePartie: "nomPremierePartie",
+      nomSecondePartie: "nomSecondePartie",
+      courriel: "courriel",
+      telephone: "telephone",
+      situationFamilliale: "CELIBATAIRE",
+      nationalites: [
+        {
+          id: "3ed9cf6f-137c-4193-87ea-901373a5e75e",
+          nationalite: "nationalite"
+        }
+      ],
+      prenomsDemande: [
+        {
+          id: "3ed90039-998d-4597-a4f7-a11423a68a46",
+          numeroOrdre: 1,
+          prenom: "prenom",
+          estPrenomFrRetenuSdanf: null
+        }
+      ],
+      lienEtatCivil: [],
+      retenueSdanf: {
+        id: "3ed91e46-24ce-46ae-b366-665bfddae946",
+        nomNaissance: "nomNaissance",
+        nomUsage: "nomUsage",
+        nomActuel: "nomActuel",
+        nomDemandeFrancisation: null,
+        nomDemandeIdentification: null,
+        jourNaissance: 1,
+        moisNaissance: 2,
+        anneeNaissance: 2000,
+        codePostalNaissance: "codePostalNaissance",
+        villeNaissance: "villeNaissance",
+        villeEtrangereNaissance: "villeEtrangereNaissance",
+        arrondissementNaissance: "arrondissementNaissance",
+        regionNaissance: "regionNaissance",
+        paysNaissance: "paysNaissance",
+        prenomsRetenu: [
+          {
+            id: "3ed9afff-6da3-489b-bc06-be897bdfe279",
+            numeroOrdre: 1,
+            prenom: "prenom",
+            estPrenomFrRetenuSdanf: null
+          }
+        ]
+      },
+      nomEtrangerUtilise: true,
+      nomEtranger: "nomEtranger",
+      choixDeNom: "NOM_PERE"
+    }
+  ],
+  corbeilleAgent: {
+    id: "bbdba5f5-0b65-40d1-a44c-fbbab948b3b6",
+    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55"
+  },
+  corbeilleService: {
+    id: "8035fb6c-df33-11eb-ba80-0242ac130004",
+    idEntiteRattachement: "6737566d-0f25-45dc-8443-97b444e6753a"
+  },
+  piecesJustificatives: [
+    {
+      id: "3ed92b89-268a-4883-a41f-0763cfea9ef7",
+      nom: "nom",
+      mimeType: "image/jpeg",
+      extension: null,
+      taille: 0,
+      referenceSwift: "thumbnail_IMG-1279.jpg",
+      conteneurSwift: "pieces_justificatives",
+      contenu: null,
+      typePieceJustificative: "0f1f9eba-a0a7-47ea-bfb2-f473f88beb9a",
+      typeObjetPj: "CREATION",
+      idFichierNatali: "idFichierNatali",
+      ordreNatali: 1,
+      estPieceAnnexe: true,
+      idActe: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    },
+    {
+      id: "3ed92b89-268a-4883-a41f-0763cfea9ef8",
+      nom: "nom",
+      mimeType: "image/jpeg",
+      extension: null,
+      taille: 0,
+      referenceSwift: "thumbnail_IMG-1279.jpg",
+      conteneurSwift: "pieces_justificatives",
+      contenu: null,
+      typePieceJustificative: "0f1f9eba-a0a7-47ea-bfb2-f473f88beb9a",
+      typeObjetPj: "CREATION",
+      idFichierNatali: "idFichierNatali",
+      ordreNatali: 1,
+      estPieceAnnexe: true,
+      idActe: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    },
+    {
+      id: "3ed999b9-bdaa-44e6-8c02-84b94635a912",
+      nom: "nom",
+      mimeType: "image/jpeg",
+      extension: null,
+      taille: 0,
+      referenceSwift: "thumbnail_IMG-1279.jpg",
+      conteneurSwift: "pieces_justificatives",
+      contenu: null,
+      typePieceJustificative: "6c95641f-59fe-4155-a6ba-8b42433c04ec",
+      typeObjetPj: "CREATION",
+      idFichierNatali: "idFichierNatali",
+      ordreNatali: 1,
+      estPieceAnnexe: true,
+      idActe: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    },
+    {
+      id: "3ed9ad41-ca61-416a-91df-448690804363",
+      nom: "nom",
+      mimeType: "application/pdf",
+      extension: null,
+      taille: 0,
+      referenceSwift: "Bon.pdf",
+      conteneurSwift: "pieces_justificatives",
+      contenu: null,
+      typePieceJustificative: "93e4f39b-0fc5-47f4-8434-2d362f897987",
+      typeObjetPj: "CREATION",
+      idFichierNatali: "idFichierNatali",
+      ordreNatali: 1,
+      estPieceAnnexe: true,
+      idActe: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    },
+    {
+      id: "3ed9ad41-ca61-416a-91df-448690804364",
+      nom: "nom",
+      mimeType: "application/pdf",
+      extension: null,
+      taille: 0,
+      referenceSwift: "Bon.pdf",
+      conteneurSwift: "pieces_justificatives",
+      contenu: null,
+      typePieceJustificative: "f14f8f0d-a146-48c3-a04e-285b9a2a4451",
+      typeObjetPj: "CREATION",
+      idFichierNatali: "idFichierNatali",
+      ordreNatali: 1,
+      estPieceAnnexe: true,
+      idActe: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    }
+  ],
+  requerant: {
+    id: "3ed9ea0d-9e13-4249-a82c-3ec2e600175a",
+    dateCreation: 1,
+    nomFamille: "nomFamille",
+    prenom: "prenom",
+    courriel: "courriel",
+    telephone: "telephone",
+    adresse: {
+      id: "3ed9e295-ef27-4ea3-9034-79da79947fdb",
+      ligne2: "ligne2",
+      ligne3: "ligne3",
+      ligne4: "ligne4",
+      ligne5: "ligne5",
+      codePostal: "codePostal",
+      ville: "ville",
+      pays: "pays"
+    },
+    qualite: "PARTICULIER",
+    detailQualiteRece: null,
+    detailQualiteParticulier: null,
+    detailQualiteMandataireHabilite: null,
+    detailQualiteInstitutionnel: null,
+    detailQualiteAutreProfessionnel: null,
+    lienRequerant: {
+      id: "3ed961da-d02e-4a6d-8855-a01d6b719488",
+      typeLienRequerant: "TITULAIRE",
+      nature: "nature"
+    }
+  },
+  mandant: null,
+  observations: [],
+  statut: {
+    id: "3ed97a35-c9b0-4ae4-b2dc-75eb84e4e82d",
+    statutRequete: "PRISE_EN_CHARGE",
+    dateEffet: 1656404736683,
+    raisonStatut: null
+  },
+  lienRequerant: {
+    id: "3ed961da-d02e-4a6d-8855-a01d6b719488",
+    typeLienRequerant: "TITULAIRE",
+    nature: "nature"
+  },
+  doublons: [],
+  origines: null,
+  numeroRequeteOrigine: null,
+  sousType: "RCTC",
+  numeroAncienSI: "numeroAncienSI",
+  dossierSignale: true,
+  commentaire: "commentaire",
+  demandeIdentification: null,
+  demandeFrancisation: true,
+  provenance: "COURRIER",
+  provenanceServicePublic: null,
+  provenanceNatali: {
+    id: "3ed9bc79-6d67-45c6-98a1-d4b3b53d3132",
+    numeroDossierNational: "numeroDossierNational",
+    statutNatali: "statutNatali",
+    provenanceNaturalisation: "NATALI",
+    numeroDossierLocal: "numeroDossierLocal",
+    dateDepot: 0,
+    datePriseEnChargeSdanf: 0,
+    decisionSdanf: "decisionSdanf",
+    tagPriorisation: "SCEC",
+    agentSdanf: {
+      id: "3ed92284-1ef8-468f-b920-2edd64a9d1a0",
+      nom: "nom",
+      prenom: "prenom",
+      courriel: "courriel"
+    }
+  },
+  provenanceRece: null,
+  documentsPj: [],
+  dossierNouveaux: null,
+  dossierOrigines: null
+} as any as IRequeteCreationTranscription;
 
 export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitulaireEtUnEnfantMajeur =
   {
@@ -1930,9 +2230,9 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
   } as any as IRequeteCreationEtablissement;
 
 export const requeteCreationAvecMessagesRetourSDANFSansLesDroits = {
-  ...requeteCreation,
+  ...requeteCreationEtablissement,
   provenanceNatali: {
-    ...requeteCreation.provenanceNatali,
+    ...requeteCreationEtablissement.provenanceNatali,
     echanges: [
       {
         id: "0feca576-2766-4937-af7c-d921270518e6",
@@ -1956,10 +2256,10 @@ export const requeteCreationAvecMessagesRetourSDANFSansLesDroits = {
 };
 
 export const requeteCreationAvecMessagesRetourSDANFAvecMauvaisStatus = {
-  ...requeteCreation,
+  ...requeteCreationEtablissement,
   id: "3ed97a35-c9b0-4ae4-b2dc-75eb84e4085c",
   provenanceNatali: {
-    ...requeteCreation.provenanceNatali,
+    ...requeteCreationEtablissement.provenanceNatali,
     echanges: [
       {
         id: "0feca576-2766-4937-af7c-d921270518e6",
@@ -1984,7 +2284,7 @@ export const requeteCreationAvecMessagesRetourSDANFAvecMauvaisStatus = {
 
 export const requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut =
   {
-    ...requeteCreation,
+    ...requeteCreationEtablissement,
     id: "3ed9aa4e-921b-489f-b8fe-531dd703c68f",
     statut: {
       id: "3ed97a35-c9b0-4ae4-b2dc-75eb84e4082d",
@@ -1996,7 +2296,7 @@ export const requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBon
       idUtilisateur: "90c6aee1-21be-4ba6-9e55-fc8831252646"
     },
     provenanceNatali: {
-      ...requeteCreation.provenanceNatali,
+      ...requeteCreationEtablissement.provenanceNatali,
       echanges: [
         {
           id: "0fe2a576-2766-4937-af7c-d921270518e7",
@@ -2021,7 +2321,7 @@ export const requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBon
 
 export const requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut =
   {
-    ...requeteCreation,
+    ...requeteCreationEtablissement,
     id: "3ed9aa4e-921b-429f-b8fe-531dd103c68f",
     statut: {
       id: "3ed97a35-c9b0-4ae4-b2dc-75eb84e4082d",
@@ -2035,7 +2335,7 @@ export const requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
   };
 
 export const requeteCreationAvecMessagesRetourSDANFAvecMessages = {
-  ...requeteCreation,
+  ...requeteCreationEtablissement,
   id: "3ed9aa4e-921b-429f-b8fe-531dd103c68s",
   statut: {
     id: "3ed97a35-c9b0-4ae4-b2dc-75eb84e4082d",
@@ -2047,7 +2347,7 @@ export const requeteCreationAvecMessagesRetourSDANFAvecMessages = {
     idUtilisateur: "90c6aee1-21be-4ba6-9e55-fc8831252646"
   },
   provenanceNatali: {
-    ...requeteCreation.provenanceNatali,
+    ...requeteCreationEtablissement.provenanceNatali,
     echanges: [
       {
         id: "0fe2a576-2766-4937-af7c-d921270518e7",
@@ -2079,7 +2379,7 @@ export const reponseRequeteCreationMessageSdanf = {
 };
 
 export const requeteCreationATraiter = {
-  ...requeteCreation,
+  ...requeteCreationEtablissement,
   id: "54ddf213-d9b7-4747-8e92-68c220f66de3",
   statut: {
     id: "d135d60e-a7ee-4a45-9f43-ca0e2ca493e2",
