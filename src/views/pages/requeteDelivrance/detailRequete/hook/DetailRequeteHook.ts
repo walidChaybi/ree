@@ -1,5 +1,6 @@
 import { getDetailRequete } from "@api/appels/requeteApi";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { CategorieDocument } from "@model/requete/CategorieDocument";
 import { BesoinUsager } from "@model/requete/enum/BesoinUsager";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
@@ -37,7 +38,6 @@ import {
   IPieceJustificativeCreation,
   PieceJustificativeCreation
 } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
-import { PieceJustificativeCategorie } from "@model/requete/PieceJustificativeCategorie";
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { logError } from "@util/LogManager";
 import { storeRece } from "@util/storeRece";
@@ -306,7 +306,6 @@ function mapPiecesJustificativesCreation(
   return piecesJustificatives;
 }
 
-
 export function mapEchangesRetourSDANF(echangesServeur?: any): IEchange[] {
   const echanges: IEchange[] = [];
 
@@ -330,11 +329,10 @@ function mapDocumentPJ(documents?: any): IDocumentPJ[] {
   return documents?.map(
     (document: any): IDocumentPJ => ({
       ...document,
-      categorie:
-        PieceJustificativeCategorie.creationPieceJustificativeCategorie(
-          document.categorie,
-          document.libelle
-        )
+      categorie: CategorieDocument.creationCategorieDocument(
+        document.categorie,
+        document.libelle
+      )
     })
   );
 }

@@ -2,13 +2,13 @@
 
 import { CAR_ETOILE, chainesEgalesIgnoreCasse, getNombreCommeSuffix } from "@util/Utils";
 
-interface IPieceJustificativeCategorieSpec {
+interface ICategorieDocumentSpec {
   categorie: string;
   libelleAAfficher: string;
   ordre: number;
 }
-export class PieceJustificativeCategorie {
-  private static readonly piecesJustificativesCategorieSpec: IPieceJustificativeCategorieSpec[] =
+export class CategorieDocument {
+  private static readonly piecesJustificativesCategorieSpec: ICategorieDocumentSpec[] =
     [
       {categorie: "ACTE_NAISSANCE", libelleAAfficher: "AN Postulant", ordre: 1000},
       {categorie: "ETAT_CIVIL_OFPRA", libelleAAfficher: "AN Postulant",ordre: 2000},
@@ -36,23 +36,23 @@ export class PieceJustificativeCategorie {
     public readonly ordre: number // Numéro d'ordre dans piecesJustificativesCategorieSpec + numéro d'ordre des parents, unions antérieures, enfants, ...
   ) {}
 
-  public static creationPieceJustificativeCategorie(
+  public static creationCategorieDocument(
     categorie: string,
     libelleOrigine: string
-  ): PieceJustificativeCategorie {
-    const spec: IPieceJustificativeCategorieSpec =
-      PieceJustificativeCategorie.piecesJustificativesCategorieSpec.find(
-        pieceJustificativeCategorieSpec => chainesEgalesIgnoreCasse(pieceJustificativeCategorieSpec.categorie,categorie)
-      ) || PieceJustificativeCategorie.createPieceJustificativeCategorieInconnue(categorie);
+  ): CategorieDocument {
+    const spec: ICategorieDocumentSpec =
+      CategorieDocument.piecesJustificativesCategorieSpec.find(
+        categorieDocumentSpec => chainesEgalesIgnoreCasse(categorieDocumentSpec.categorie,categorie)
+      ) || CategorieDocument.createCategorieDocumentInconnue(categorie);
 
-    return new PieceJustificativeCategorie(
-      PieceJustificativeCategorie.getLibelleAAfficher(spec, libelleOrigine),
+    return new CategorieDocument(
+      CategorieDocument.getLibelleAAfficher(spec, libelleOrigine),
       spec.ordre + (getNombreCommeSuffix(libelleOrigine) || 0)
     );
   }
 
   private static getLibelleAAfficher(
-    spec: IPieceJustificativeCategorieSpec,
+    spec: ICategorieDocumentSpec,
     libelleOrigine: string
   ): string {
     let libelleAAfficher = spec.libelleAAfficher;
@@ -65,7 +65,7 @@ export class PieceJustificativeCategorie {
     return libelleAAfficher;
   }
 
-  private static createPieceJustificativeCategorieInconnue(categorie: string) : IPieceJustificativeCategorieSpec {
+  private static createCategorieDocumentInconnue(categorie: string) : ICategorieDocumentSpec {
     return { categorie, libelleAAfficher: "unknown", ordre: 0 };
   }
 }
