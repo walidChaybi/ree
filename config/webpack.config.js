@@ -27,6 +27,7 @@ const ForkTsCheckerWebpackPlugin =
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 const createEnvironmentHash = require("./webpack/persistentCache/createEnvironmentHash");
+const packageJson = require("../package.json");
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
@@ -636,12 +637,27 @@ module.exports = function (webpackEnv) {
       // This gives some necessary context to module not found errors, such as
       // the requesting resource.
       new ModuleNotFoundPlugin(paths.appPath),
+
       // Makes some environment variables available to the JS code, for example:
       // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
       // It is absolutely essential that NODE_ENV is set to production
       // during a production build.
       // Otherwise React will be compiled in the very slow development mode.
-      new webpack.DefinePlugin(env.stringified),
+
+      // Ajout des variables VERSION et DATE_BUILD dans "process.env"
+      new webpack.DefinePlugin({
+        ...env.stringified,
+        "process.env": {
+          ...env.stringified["process.env"],
+          VERSION: JSON.stringify(packageJson.version),
+          DATE_BUILD: JSON.stringify(
+            `${new Date(Date.now()).toISOString()} (${new Date(
+              Date.now()
+            ).toLocaleString()})`
+          )
+        }
+      }),
+
       // Experimental hot reloading for React .
       // https://github.com/facebook/react/tree/main/packages/react-refresh
       isEnvDevelopment &&

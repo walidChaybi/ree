@@ -1,6 +1,6 @@
-import { Tooltip } from "@mui/material";
 import { Droit } from "@model/agent/enum/Droit";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
+import { Tooltip } from "@mui/material";
 import { URL_ACCUEIL } from "@router/ReceUrls";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
@@ -17,7 +17,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onClick }) => {
   const history = useHistory();
-  const version = "[AIV]{version}_{date}[/AIV]";
+  const version = `${process.env.VERSION}_${process.env.DATE_BUILD}`;
 
   function onClickLogo(event: React.MouseEvent) {
     if (onClick) {
