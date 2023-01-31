@@ -33,7 +33,11 @@
     overflow: hidden;
   }
 
-  .coloree{
-    background-color: #9bcbe747;
+  .lignePaire{
+    background-color: $tableau-body-ligne-paire;
+  }
+
+  .ligneImpaire {
+    background-color: $tableau-body-ligne-impaire;
   }
 }

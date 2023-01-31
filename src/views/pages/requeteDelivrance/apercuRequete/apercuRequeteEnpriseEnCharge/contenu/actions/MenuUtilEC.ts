@@ -593,7 +593,9 @@ export const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = ({
 
       setMessagesBloquant([getLibelle(message)]);
       setBoutonsPopin(nonBloquant ? boutonsOuiNon : boutonOK);
-    } else setMessagesBloquant([]);
+    } else {
+      setMessagesBloquant([]);
+    }
   }
 };
 
@@ -633,6 +635,8 @@ export const controleCoherenceEntreDocumentSelectionneEtActionReponseSansDelivra
 
         setMessagesBloquant([getLibelle(message)]);
         setBoutonsPopin(boutonOK);
-      } else setMessagesBloquant([]);
+      } else {
+        setMessagesBloquant([]);
+      }
     }
   };

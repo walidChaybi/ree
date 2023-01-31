@@ -1,4 +1,4 @@
-import { HeaderTableauRMC } from "@model/rmc/acteInscription/HeaderTableauRMC";
+import { HeaderTableauRMC } from "@model/rmc/acteInscription/HeaderTableauRMCActeInscription";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 
 export type TypeRMC = "Classique" | "Auto";

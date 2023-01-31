@@ -1,7 +1,8 @@
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { useRMCAutoPersonneApiHook } from "@pages/rechercheMultiCriteres/autoPersonne/hook/RMCAutoPersonneApiHook";
 import { AnalyseDuDossier } from "@pages/requeteCreation/commun/composants/AnalyseDuDossier";
-import { RMCTableauCreation } from "@pages/requeteCreation/commun/composants/RMCTableauCreation";
+import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/OngletRMCPersonne";
 import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { useDetailRequeteApiHook } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
@@ -24,6 +25,7 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
   const [requete, setRequete] = useState<IRequeteCreationTranscription>();
   const [ongletSelectionne, setOngletSelectionne] = useState(0);
   const history = useHistory();
+  const { resultatRMCAutoPersonne } = useRMCAutoPersonneApiHook(requete);
   const { detailRequeteState } = useDetailRequeteApiHook(
     idRequeteParam,
     history.location.pathname.includes(URL_RECHERCHE_REQUETE)
@@ -49,7 +51,11 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
           },
           {
             titre: "RMC",
-            component: <RMCTableauCreation />,
+            component: (
+              <OngletRMCPersonne
+                rmcAutoPersonneResultat={resultatRMCAutoPersonne}
+              />
+            ),
             index: 1
           },
           {

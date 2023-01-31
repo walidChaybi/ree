@@ -21,3 +21,7 @@ export const NB_LIGNES_PAR_PAGE_REQUETE_ASSOCIEES = 5;
 // RMC Requete
 export const NB_LIGNES_PAR_APPEL_REQUETE = 100;
 export const NB_LIGNES_PAR_PAGE_REQUETE = 10;
+
+// Personnes
+export const NB_LIGNES_PAR_APPEL_PERSONNE = 25;
+export const NB_LIGNES_PAR_PAGE_PERSONNE = -1;

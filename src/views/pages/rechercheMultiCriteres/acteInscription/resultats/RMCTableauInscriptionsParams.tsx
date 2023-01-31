@@ -1,5 +1,5 @@
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { HeaderTableauRMCInscription } from "@model/rmc/acteInscription/HeaderTableauRMC";
+import { HeaderTableauRMCInscription } from "@model/rmc/acteInscription/HeaderTableauRMCActeInscription";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { getLibelle } from "@util/Utils";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";

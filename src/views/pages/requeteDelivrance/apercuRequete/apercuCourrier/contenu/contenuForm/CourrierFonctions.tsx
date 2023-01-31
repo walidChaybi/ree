@@ -261,7 +261,8 @@ function controleActeNonTrouve(
       "Le choix d'une option standard est obligatoire pour ce courrier"
     );
     return false;
-  } else return true;
+  }
+  return true;
 }
 
 function controleDivers(
@@ -279,7 +280,8 @@ function controleDivers(
       "Le choix d'une option standard ou la saisie d'un texte libre est obligatoire pour ce courrier"
     );
     return false;
-  } else return true;
+  }
+  return true;
 }
 
 export function getStatutApresChoixDelivrance(

@@ -1,8 +1,8 @@
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { HeaderTableauRMCActe } from "@model/rmc/acteInscription/HeaderTableauRMC";
+import { HeaderTableauRMCActe } from "@model/rmc/acteInscription/HeaderTableauRMCActeInscription";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { getLibelle } from "@util/Utils";
+import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React from "react";
 import { CheckboxColumn } from "./checkboxColumn/CheckboxColumn";
 import {

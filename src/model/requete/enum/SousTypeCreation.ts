@@ -79,12 +79,24 @@ export class SousTypeCreation extends EnumWithComplete {
     return sousType === SousTypeCreation.RCEXR;
   }
 
+  public static estRCEDXR(sousType?: SousTypeCreation): boolean {
+    return sousType === SousTypeCreation.RCEDXR;
+  }
+
+  public static estRCEDXC(sousType?: SousTypeCreation): boolean {
+    return sousType === SousTypeCreation.RCEDXC;
+  }
+
   public static estRCTD(sousType?: SousTypeCreation): boolean {
     return sousType === SousTypeCreation.RCTD;
   }
 
   public static estRCTC(sousType?: SousTypeCreation): boolean {
     return sousType === SousTypeCreation.RCTC;
+  }
+
+  public static estRCADC(sousType?: SousTypeCreation): boolean {
+    return sousType === SousTypeCreation.RCADC;
   }
 
   public static estRCTDOuRCTC(sousType?: SousTypeCreation): boolean {
@@ -102,5 +114,13 @@ export class SousTypeCreation extends EnumWithComplete {
 
   public static estSousTypeTranscription(sousType?: SousTypeCreation): boolean {
     return SousTypeCreation.estRCTDOuRCTC(sousType);
+  }
+
+  public static estRCEXROuRCEDXROuRCEDXC(sousType?: SousTypeCreation): boolean {
+    return (
+      SousTypeCreation.estRCEXR(sousType) ||
+      SousTypeCreation.estRCEDXR(sousType) ||
+      SousTypeCreation.estRCEDXC(sousType)
+    );
   }
 }

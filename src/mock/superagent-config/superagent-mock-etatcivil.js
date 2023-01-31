@@ -54,6 +54,7 @@ import {
   ReponseAppelRMCActe4DernierResultats,
   ReponseAppelRMCActe4PremiersResultats
 } from "../data/RMCActe";
+import { RMCAutoPersonneResponse } from "../data/RMCAutoPersonne";
 import {
   ReponseAppelRMCInscription,
   ReponseAppelRMCInscription4DernierResultats,
@@ -368,6 +369,12 @@ export const configEtatcivil = [
       }
       if (match[1] === "/acte/rmc?range=1-4") {
         return ReponseAppelRMCActe4DernierResultats;
+      }
+
+      //////////////////
+      // RMC Personne //
+      if (match[1] === "/personne/rmcauto?range=0-25") {
+        return RMCAutoPersonneResponse;
       }
 
       // Incriptions RC

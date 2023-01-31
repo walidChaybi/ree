@@ -5,14 +5,18 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { getDateStringFromDateCompose } from "@util/DateUtils";
+import { IRMCAutoPersonneResultat } from "@model/rmc/personne/IRMCAutoPersonneResultat";
+import { getDateStringFromDateCompose, IDateCompose } from "@util/DateUtils";
 import {
   formatNom,
   formatNoms,
   formatPrenoms,
   getValeurOuVide,
+  jointAvec,
+  TROIS,
   valeurOuUndefined
 } from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export function getCriteresTitulaire(
   criteres: IRMCActeInscription | IRMCActeArchive
@@ -79,3 +83,52 @@ export const mappingRequeteDelivranceToRMC = (
     }
   };
 };
+
+export function mappingPersonnesTableau(
+  data: any[]
+): IRMCAutoPersonneResultat[] {
+  const tableauMapper: IRMCAutoPersonneResultat[] = [];
+  data.forEach((personne: any) => {
+    const personneMapper: IRMCAutoPersonneResultat = mapPersonne(personne);
+    const actesLiesMapper: IRMCAutoPersonneResultat[] =
+      personne.actesRepertoiresLies.map((arl: any) =>
+        mapActeOuRepertoireLie(arl)
+      );
+    tableauMapper.push(...[personneMapper, ...actesLiesMapper]);
+  });
+  return tableauMapper;
+}
+
+function mapPersonne(data: any): IRMCAutoPersonneResultat {
+  return {
+    idPersonne: getValeurOuVide(data.idPersonne),
+    nom: getValeurOuVide(data.nom),
+    autresNoms: formatNoms(getValeurOuVide(data.autresNoms)),
+    prenoms: formatPrenoms(getValeurOuVide(data.prenoms).slice(0, TROIS)),
+    sexe: getValeurOuVide(data.sexe).charAt(0),
+    dateNaissance: getDateStringFromDateCompose({
+      annee: getValeurOuVide(data.anneeNaissance),
+      mois: getValeurOuVide(data.moisNaissance),
+      jour: getValeurOuVide(data.jourNaissance)
+    } as IDateCompose),
+    lieuNaissance: LieuxUtils.getLieu(
+      data.villeNaissance,
+      undefined,
+      data.paysNaissance
+    )
+  } as IRMCAutoPersonneResultat;
+}
+
+function mapActeOuRepertoireLie(data: any): IRMCAutoPersonneResultat {
+  return {
+    idDocument: getValeurOuVide(data.id),
+    nature: getValeurOuVide(data.nature),
+    statut: getValeurOuVide(data.statut),
+    reference: getValeurOuVide(data.reference),
+    categorieRepertoire: getValeurOuVide(data.categorieRepertoire),
+    statutOuType: jointAvec(
+      [getValeurOuVide(data.statut), getValeurOuVide(data.typeInscription)],
+      " / "
+    )
+  } as IRMCAutoPersonneResultat;
+}

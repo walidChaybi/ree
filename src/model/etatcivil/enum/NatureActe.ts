@@ -25,6 +25,12 @@ export class NatureActe extends EnumWithLibelle {
     return EnumWithLibelle.getEnumFor(str, NatureActe);
   }
 
+  public static getEnumFromLibelle(str?: string): NatureActe {
+    return str
+      ? EnumWithLibelle.getEnumFromLibelle(NatureActe, str)
+      : undefined;
+  }
+
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(NatureActe, false, false);
   }

@@ -38,13 +38,15 @@ export interface TableauReceProps {
   icone?: IconeParams;
   handleChangeSort?: (tri: string, sens: SortOrder) => void;
   onClickOnLine: (id: string, data: any[], idxGlobal: number) => void;
-  goToLink: (value: string) => void;
+  goToLink?: (value: string) => void;
   handleReload?: () => void;
   nbLignesParPage: number;
   nbLignesParAppel: number;
   resetTableau?: boolean;
   noRows?: JSX.Element;
   enChargement?: boolean;
+  stickyHeader?: boolean;
+  getRowClassName?: (data: any) => string;
 }
 
 export const TableauRece: React.FC<TableauReceProps> = props => {
@@ -54,11 +56,17 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
 
   const nbPages = props.nbLignesParAppel / props.nbLignesParPage;
 
+  const estTableauPagine = useCallback(() => {
+    return props.nbLignesParPage !== -1;
+  }, [props.nbLignesParPage]);
+
   const processData = useCallback(
     (data: any[], page: number) => {
-      return getPaginatedData(data, page, props.nbLignesParPage, nbPages);
+      return estTableauPagine()
+        ? getPaginatedData(data, page, props.nbLignesParPage, nbPages)
+        : data;
     },
-    [props.nbLignesParPage, nbPages]
+    [props.nbLignesParPage, nbPages, estTableauPagine]
   );
 
   // Contenu réellement affiché par ex: 15 lignes (contrairement à props.dataState qui contient toutes les données récupérées du serveur par ex 105 lignes)
@@ -97,6 +105,7 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     if (
+      props.goToLink &&
       laProchainePageEstEnDehors(
         newPage,
         pageState,
@@ -109,6 +118,7 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
       setMultiplicateur(Number(multiplicateur) + 1);
       props.goToLink(paramsTableau.nextDataLinkState);
     } else if (
+      props.goToLink &&
       laPageDAvantEstEnDehors(
         pageState,
         newPage,
@@ -134,15 +144,13 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
         // Si toutes les requêtes de la page étaient à signer et qu'elles ont été signées alors on revient sur la page d'avant
         let newPageState = pageState;
         if (
-          newPageState > 0 &&
-          paramsTableau.nextDataLinkState === undefined &&
-          newPageState - 1 * props.nbLignesParPage >= props.dataState.length
-        ) {
-          newPageState--;
-        } else if (
-          newPageState * props.nbLignesParPage >=
+          (newPageState > 0 &&
+            paramsTableau.nextDataLinkState === undefined &&
+            newPageState - 1 * props.nbLignesParPage >=
+              props.dataState.length) ||
+          (newPageState * props.nbLignesParPage >=
             props.dataState.length - props.nbLignesParPage &&
-          paramsTableau.nextDataLinkState !== undefined
+            paramsTableau.nextDataLinkState !== undefined)
         ) {
           newPageState--;
         }
@@ -153,8 +161,9 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
   );
 
   function onClickOnLine(identifiant: string, idxOnePage: number) {
-    const idxDataState =
-      (pageState % nbPages) * props.nbLignesParPage + idxOnePage;
+    const idxDataState = estTableauPagine()
+      ? (pageState % nbPages) * props.nbLignesParPage + idxOnePage
+      : idxOnePage;
     props.onClickOnLine(identifiant, props.dataState, idxDataState);
   }
 
@@ -169,7 +178,12 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
   return (
     <div className="TableauRece">
       <TableContainer component={Paper}>
-        <Box as={Table} role="presentation" size="small">
+        <Box
+          as={Table}
+          role="presentation"
+          size="small"
+          stickyHeader={props.stickyHeader}
+        >
           <TableauHeader
             order={props.sortOrderState}
             orderBy={props.sortOrderByState}
@@ -184,25 +198,28 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
             noRows={props.noRows}
             enChargement={props.enChargement}
             icone={props.icone}
+            getRowClassName={props.getRowClassName}
           />
         </Box>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[props.nbLignesParPage]}
-        component="div"
-        count={paramsTableau.rowsNumberState || 0}
-        rowsPerPage={props.nbLignesParPage}
-        labelDisplayedRows={({ from, to, count }) =>
-          getLibelle(`${from}-${to} sur ${count}`)
-        }
-        page={
-          pageState > 0 && paramsTableau.rowsNumberState === 0 ? 0 : pageState
-        }
-        onPageChange={handleChangePage}
-        getItemAriaLabel={(type: string) => {
-          return type === "previous" ? "Page précédente" : "Page suivante";
-        }}
-      />
+      {estTableauPagine() && (
+        <TablePagination
+          rowsPerPageOptions={[props.nbLignesParPage]}
+          component="div"
+          count={paramsTableau.rowsNumberState || 0}
+          rowsPerPage={props.nbLignesParPage}
+          labelDisplayedRows={({ from, to, count }) =>
+            getLibelle(`${from}-${to} sur ${count}`)
+          }
+          page={
+            pageState > 0 && paramsTableau.rowsNumberState === 0 ? 0 : pageState
+          }
+          onPageChange={handleChangePage}
+          getItemAriaLabel={(type: string) => {
+            return type === "previous" ? "Page précédente" : "Page suivante";
+          }}
+        />
+      )}
       <div className="ToolbarBottom">
         {props.children &&
           React.Children.map(props.children, (child: any) => {

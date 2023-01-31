@@ -1,8 +1,10 @@
+import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 /* istanbul ignore file */
 
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { StatutRequete } from "./enum/StatutRequete";
 import { TypeCanal } from "./enum/TypeCanal";
+import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 import { TypeRequete } from "./enum/TypeRequete";
 import { IAction } from "./IActions";
 import { IObservation } from "./IObservation";
@@ -12,7 +14,6 @@ import { IRequeteDelivrance } from "./IRequeteDelivrance";
 import { IRequeteInformation } from "./IRequeteInformation";
 import { IRequeteMiseAjour } from "./IRequeteMiseAjour";
 import { IStatutCourant } from "./IStatutCourant";
-import { ITitulaireRequete } from "./ITitulaireRequete";
 
 export type TRequete =
   | IRequeteDelivrance
@@ -56,11 +57,26 @@ export const Requete = {
     return this.estATraiter(requete) || this.estATransferer(requete);
   },
   getTitulairesTriesParPosition(
-    titulaires?: ITitulaireRequete[]): ITitulaireRequete[] | undefined {
+    titulaires?: ITitulaireRequete[]
+  ): ITitulaireRequete[] | undefined {
     return titulaires
       ? titulaires.sort((titulaire1, titulaire2) => {
           return titulaire1.position - titulaire2.position;
         })
       : undefined;
+  },
+  getTitulaireEnPosition(
+    requete: IRequete,
+    position: number
+  ): ITitulaireRequete | undefined {
+    return requete?.titulaires?.filter(t => t.position === position).pop();
+  },
+  getTitulaireAvecTypeObjet(
+    requete: IRequeteCreationEtablissement,
+    typeObjet: TypeObjetTitulaire
+  ): ITitulaireRequete | undefined {
+    return requete?.titulaires
+      ?.filter(t => t.typeObjetTitulaire === typeObjet)
+      .pop();
   }
 };

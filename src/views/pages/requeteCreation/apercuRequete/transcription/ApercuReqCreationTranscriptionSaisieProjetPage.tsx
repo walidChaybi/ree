@@ -1,10 +1,11 @@
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { useRMCAutoPersonneApiHook } from "@pages/rechercheMultiCriteres/autoPersonne/hook/RMCAutoPersonneApiHook";
 import { ApercuProjet } from "@pages/requeteCreation/commun/composants/ApercuProjet";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { GestionMentions } from "@pages/requeteCreation/commun/composants/GestionMentions";
+import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/OngletRMCPersonne";
 import { PiecesAnnexes } from "@pages/requeteCreation/commun/composants/PiecesAnnexes";
-import { RMCTableauCreation } from "@pages/requeteCreation/commun/composants/RMCTableauCreation";
 import { SaisieProjet } from "@pages/requeteCreation/commun/composants/SaisirProjet";
 import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { useDetailRequeteApiHook } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
@@ -28,6 +29,7 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
     useState(0);
   const [ongletSelectionnePartieDroite, setOngletSelectionnePartieDroite] =
     useState(0);
+  const { resultatRMCAutoPersonne } = useRMCAutoPersonneApiHook(requete);
   const { detailRequeteState } = useDetailRequeteApiHook(
     idRequeteParam,
     history.location.pathname.includes(URL_RECHERCHE_REQUETE)
@@ -66,7 +68,11 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
           },
           {
             titre: "RMC",
-            component: <RMCTableauCreation />,
+            component: (
+              <OngletRMCPersonne
+                rmcAutoPersonneResultat={resultatRMCAutoPersonne}
+              />
+            ),
             index: 1
           },
           {

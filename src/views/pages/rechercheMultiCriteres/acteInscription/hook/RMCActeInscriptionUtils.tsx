@@ -36,8 +36,7 @@ export interface ICriteresRechercheActeInscription {
 export function mappingCriteres(
   criteres: IRMCActeInscription
 ): IRMCRequestActesInscriptions {
-  let criteresMapper: IRMCRequestActesInscriptions;
-  criteresMapper = {
+  return {
     // Filtre Titulaire
     ...getCriteresTitulaire(criteres),
     // Filtre Date de création
@@ -86,7 +85,6 @@ export function mappingCriteres(
       criteres.registreRepertoire?.evenement?.paysEvenement
     )
   };
-  return criteresMapper;
 }
 
 /** RC/RCA/PACS: mapping après appel d'api */

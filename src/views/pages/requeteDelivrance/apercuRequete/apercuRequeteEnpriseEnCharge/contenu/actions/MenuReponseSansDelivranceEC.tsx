@@ -72,12 +72,15 @@ export const MenuReponseSansDelivranceEC: React.FC<
 
   const handleReponseSansDelivranceMenu = (indexMenu: number) => {
     //TODO: Avec une seule popin, on pourrait faire estChoixIgnorerRequete() dans controleCoherence
-    if (estChoixIgnorerRequete(indexMenu)) setPopinIgnorerOuverte(true);
-    else {
+    if (estChoixIgnorerRequete(indexMenu)) {
+      setPopinIgnorerOuverte(true);
+    } else {
       setChoixDelivrance(
         reponseSansDelivranceOptions[indexMenu].choixDelivrance
       );
-      if (estChoixActeNonDetenu(indexMenu)) setActes([]);
+      if (estChoixActeNonDetenu(indexMenu)) {
+        setActes([]);
+      }
       controleCoherenceEntreDocumentSelectionneEtActionReponseSansDelivrance({
         indexMenu,
         actes,

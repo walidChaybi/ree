@@ -16,12 +16,13 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router";
 import request from "superagent";
+import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetesCreation } from "../../../../mock/superagent-config/superagent-mock-requetes-creation";
 
-const superagentMock = require("superagent-mock")(
-  request,
-  configRequetesCreation
-);
+const superagentMock = require("superagent-mock")(request, [
+  configEtatcivil[0],
+  configRequetesCreation[0]
+]);
 afterAll(() => {
   superagentMock.unset();
 });

@@ -18,6 +18,7 @@ interface TableauBodyProps {
   noRows?: JSX.Element;
   enChargement?: boolean;
   icone?: IconeParams;
+  getRowClassName?: (data: any) => string;
 }
 
 export const TableauBody: React.FC<TableauBodyProps> = ({
@@ -27,7 +28,8 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
   onClickOnLine,
   noRows,
   enChargement,
-  icone
+  icone,
+  getRowClassName
 }) => {
   function onClickRowHandler(identifiant: string, idx: number) {
     onClickOnLine(identifiant, idx);
@@ -45,7 +47,10 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
                   onClickRowHandler(row[idKey], idx);
                 }}
                 data-testid={row[idKey]}
-                className={`${chiffreEstPair(idx) ? "coloree" : ""}`}
+                className={
+                  (getRowClassName && getRowClassName(row)) ??
+                  `${chiffreEstPair(idx) ? "lignePaire" : "ligneImpaire"}`
+                }
               >
                 {getRowRender(columnHeaders, row, idx, icone)}
               </TableRow>

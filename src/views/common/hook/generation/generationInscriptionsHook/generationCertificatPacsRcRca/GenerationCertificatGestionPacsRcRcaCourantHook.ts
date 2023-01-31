@@ -37,10 +37,7 @@ export function useGestionCertificatCourant(
     if (listePacsRcRcaATraiter && requete) {
       if (listePacsRcRcaATraiter.length > 0) {
         setPacsRcRcaCourant(listePacsRcRcaATraiter[0]);
-      } else if (
-        listePacsRcRcaATraiter &&
-        listePacsRcRcaATraiter.length === 0
-      ) {
+      } else if (listePacsRcRcaATraiter.length === 0) {
         // Il n'y a plus de doc à traiter on créé et renvoie le résultat
         setResultGenerationCertificat({
           idDocumentsReponse: uuidDocumentsGeneres,

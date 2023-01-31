@@ -5,6 +5,7 @@ import { IDerniereDelivranceRcRcaPacsParams } from "@hook/repertoires/DerniereDe
 import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IRMCRequestActesInscriptions } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
+import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
 import { ICriteresRMCAuto } from "@pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
@@ -36,6 +37,7 @@ export const URL_DERNIERE_DELIVRANCE_RC_RCA_PACS =
 export const URL_SAISIE_EXTRAIT = "/saisieExtrait";
 export const URL_PERSONNE = "/personne";
 export const URL_RC = "/rc";
+export const URL_PERSONNE_RMC_AUTO = "/personne/rmcauto";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -145,6 +147,20 @@ export function rechercheMultiCriteresInscriptions(
   return api.fetch({
     method: HttpMethod.POST,
     uri: `${URL_ETAT_CIVIL_RMC}`,
+    data: criteres,
+    parameters: {
+      range
+    }
+  });
+}
+
+export function rechercheMultiCriteresPersonne(
+  criteres: IRMCAutoPersonneRequest,
+  range?: string
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_PERSONNE_RMC_AUTO}`,
     data: criteres,
     parameters: {
       range

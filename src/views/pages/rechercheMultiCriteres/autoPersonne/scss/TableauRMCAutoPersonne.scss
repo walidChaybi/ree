@@ -1,0 +1,28 @@
+@import "../../../../../scss/colors";
+
+
+.RMCAutoPersonne {
+  .MuiTableContainer-root {
+    max-height: 22rem;
+  }
+
+  .lignePersonne {
+    background-color: $tableau-body-ligne-main;
+
+    * {
+      font-weight:900;
+    }
+  }
+
+  .ligneAnnuleInactif {
+    background-color: $tableau-body-ligne-grise;
+  }
+
+  .ligneActe {
+    background-color: $tableau-body-ligne-secondary;
+  }
+
+  .ligneRcRcaPacs {
+    background-color: $tableau-body-ligne-blanche;
+  }
+}

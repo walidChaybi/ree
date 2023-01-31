@@ -7,7 +7,8 @@ import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
-import { getLibelle, getValeurOuVide, supprimeElement } from "@util/Utils";
+import { getValeurOuVide, supprimeElement } from "@util/Utils";
+import { CompteurElementsCoches } from "@widget/compteurElementsCoches/CompteurElementsCoches";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React, { useCallback, useEffect, useState } from "react";
@@ -222,9 +223,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
         noRows={zeroActe}
       />
       {typeRMC === "Auto" && dataRequete?.type === TypeRequete.DELIVRANCE && (
-        <div className="ElementsCoches">
-          {getLibelle(`${selected.size} élément(s) coché(s)`)}
-        </div>
+        <CompteurElementsCoches nombreElements={selected.size} />
       )}
 
       {etatFenetres && etatFenetres.length > 0 && (

@@ -1,3 +1,4 @@
+import { ITitulaireRequeteCreation } from "./enum/ITitulaireRequeteCreation";
 import { Provenance } from "./enum/Provenance";
 import { SousTypeCreation } from "./enum/SousTypeCreation";
 import { IDocumentPJ } from "./IDocumentPj";
@@ -8,6 +9,7 @@ import { IRequete } from "./IRequete";
 import { IPieceJustificativeCreation } from "./pieceJointe/IPieceJustificativeCreation";
 
 export interface IRequeteCreationEtablissement extends IRequete {
+  titulaires?: ITitulaireRequeteCreation[];
   piecesJustificatives: IPieceJustificativeCreation[];
   sousType: SousTypeCreation;
   dossierSignale?: boolean;

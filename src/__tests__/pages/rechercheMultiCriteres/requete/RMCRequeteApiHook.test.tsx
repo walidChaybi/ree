@@ -18,8 +18,7 @@ const criteres: ICriteresRMCRequete = {
     },
     datesDebutFinAnnee: {
       dateDebut: { jour: "", mois: "", annee: "" },
-      dateFin: { jour: "", mois: "", annee: "" },
-      annee: ""
+      dateFin: { jour: "", mois: "", annee: "" }
     }
   },
   range: `0-${NB_LIGNES_PAR_APPEL_REQUETE}`
