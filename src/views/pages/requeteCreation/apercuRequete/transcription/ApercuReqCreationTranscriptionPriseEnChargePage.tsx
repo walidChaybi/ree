@@ -17,11 +17,6 @@ import mappingIRequeteCreationVersResumeRequeteCreationProps from "../etablissem
 
 interface ApercuReqCreationTranscriptionPriseEnChargeProps {}
 
-export const ApercuReqCreationTranscriptionPriseEnChargePageContext =
-  React.createContext({
-    setRequete: (requete: IRequeteCreationTranscription) => {}
-  });
-
 export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
   ApercuReqCreationTranscriptionPriseEnChargeProps
 > = props => {
@@ -69,9 +64,7 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
   return (
     <div className="ApercuReqCreationTranscriptionPriseEnChargePage">
       {requete && (
-        <ApercuReqCreationTranscriptionPriseEnChargePageContext.Provider
-          value={{ setRequete }}
-        >
+        <>
           <ConteneurRetractable
             titre={Labels.resume.requete.description}
             className="ResumeRequeteCreation"
@@ -98,7 +91,7 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
           >
             <OngletPiecesJustificatives requete={requete} />
           </ConteneurRetractable>
-        </ApercuReqCreationTranscriptionPriseEnChargePageContext.Provider>
+        </>
       )}
     </div>
   );

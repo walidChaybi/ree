@@ -18,11 +18,6 @@ import mappingIRequeteCreationVersResumeRequeteCreationProps from "../etablissem
 
 interface ApercuReqCreationTranscriptionSaisieProjetPageProps {}
 
-export const ApercuReqCreationTranscriptionSaisieProjetPageContext =
-  React.createContext({
-    setRequete: (requete: IRequeteCreationTranscription) => {}
-  });
-
 export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
   ApercuReqCreationTranscriptionSaisieProjetPageProps
 > = props => {
@@ -113,9 +108,7 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
   return (
     <div className="ApercuReqCreationTranscriptionSaisieProjetPage">
       {requete && (
-        <ApercuReqCreationTranscriptionSaisieProjetPageContext.Provider
-          value={{ setRequete }}
-        >
+        <>
           <VoletAvecOnglet
             liste={getListeOngletsPartieGauche()}
             ongletSelectionne={ongletSelectionnePartieGauche}
@@ -127,7 +120,7 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
             ongletSelectionne={ongletSelectionnePartieDroite}
             handleChange={handleChangeOngletPartieDroite}
           />
-        </ApercuReqCreationTranscriptionSaisieProjetPageContext.Provider>
+        </>
       )}
     </div>
   );

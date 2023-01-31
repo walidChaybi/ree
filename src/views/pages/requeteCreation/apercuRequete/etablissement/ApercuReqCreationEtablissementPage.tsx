@@ -12,9 +12,7 @@ import ResumeRequeteCreation from "./composants/ResumeRequeteCreation";
 import { VoletPieceJustificativesEtActions } from "./composants/VoletPieceJusticativesEtActions";
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "./mappingIRequeteCreationVersResumeRequeteCreationProps";
 
-export const ApercuReqCreationPageContext = React.createContext({
-  setRequete: (requete: IRequeteCreationEtablissement) => {}
-});
+
 
 export const ApercuReqCreationEtablissementPage: React.FC = () => {
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
@@ -34,7 +32,7 @@ export const ApercuReqCreationEtablissementPage: React.FC = () => {
   return (
     <div className="ApercuReqCreationEtablissementPage">
       {requete && (
-        <ApercuReqCreationPageContext.Provider value={{ setRequete }}>
+        <>
           <ConteneurRetractable
             titre={Labels.resume.requete.description}
             className="ResumeRequeteCreation"
@@ -57,7 +55,7 @@ export const ApercuReqCreationEtablissementPage: React.FC = () => {
           >
             <OngletPiecesJustificatives requete={requete} />
           </ConteneurRetractable>
-        </ApercuReqCreationPageContext.Provider>
+        </>
       )}
     </div>
   );
