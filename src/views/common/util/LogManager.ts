@@ -1,4 +1,7 @@
-import { ID_CORRELATION_HEADER_NAME } from "@api/ApiManager";
+import {
+  HTTP_PAYLOAD_TOO_LARGE,
+  ID_CORRELATION_HEADER_NAME
+} from "@api/ApiManager";
 import { IQueryParameterPostLog, postLog } from "@api/appels/outiltechApi";
 import moment from "moment";
 import { FeatureFlag } from "./featureFlag/FeatureFlag";
@@ -28,7 +31,11 @@ export function logError(logErrorMgs: LogErrorMsg) {
   ) {
     logErrorOnConsole(logErrorMgs);
   }
-  if (logErrorMgs.messageUtilisateur) {
+  if (logErrorMgs.error?.status === HTTP_PAYLOAD_TOO_LARGE) {
+    logErrorOnScreen(
+      "La requête ramène trop de résultats. Veuillez affiner vos critères."
+    );
+  } else if (logErrorMgs.messageUtilisateur) {
     const messageDuServeur = getMessageDuServeur(logErrorMgs);
 
     logErrorOnScreen(

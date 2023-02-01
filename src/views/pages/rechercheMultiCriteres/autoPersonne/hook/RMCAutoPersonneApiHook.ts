@@ -4,7 +4,6 @@ import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import { IRMCAutoPersonneResultat } from "../../../../../model/rmc/personne/IRMCAutoPersonneResultat";
 import { mappingPersonnesTableau } from "../../common/mapping/RMCMappingUtil";
-import { HTTP_PAYLOAD_TOO_LARGE } from "./../../../../../api/ApiManager";
 import { IRequeteCreationTranscription } from "./../../../../../model/requete/IRequeteCreationTranscription";
 import { mapRequeteVersRMCAutoPersonneParams } from "./RMCAutoPersonneUtils";
 
@@ -30,20 +29,12 @@ export function useRMCAutoPersonneApiHook(
           );
         })
         .catch((error: any) => {
-          /* istanbul ignore if */
-          if (error.status === HTTP_PAYLOAD_TOO_LARGE) {
-            logError({
-              messageUtilisateur:
-                "La recherche ramène trop de résultats. Veuillez affiner votre recherche.",
-              error
-            });
-          } else {
-            logError({
-              messageUtilisateur:
-                "Impossible de récupérer les personnes de la recherche multi-critères.",
-              error
-            });
-          }
+          /* istanbul ignore next */
+          logError({
+            messageUtilisateur:
+              "Impossible de récupérer les personnes de la recherche multi-critères.",
+            error
+          });
         });
     }
   }, [requete]);
