@@ -1,5 +1,6 @@
 import {
   HTTP_PAYLOAD_TOO_LARGE,
+  HTTP_REQUEST_TIME_OUT,
   ID_CORRELATION_HEADER_NAME
 } from "@api/ApiManager";
 import { IQueryParameterPostLog, postLog } from "@api/appels/outiltechApi";
@@ -33,7 +34,11 @@ export function logError(logErrorMgs: LogErrorMsg) {
   }
   if (logErrorMgs.error?.status === HTTP_PAYLOAD_TOO_LARGE) {
     logErrorOnScreen(
-      "La requête ramène trop de résultats. Veuillez affiner vos critères."
+      `La requête ramène trop de résultats. Veuillez affiner vos critères.\n(${logErrorMgs.messageUtilisateur})`
+    );
+  } else if (logErrorMgs.error?.status === HTTP_REQUEST_TIME_OUT) {
+    logErrorOnScreen(
+      `Le service est momentanément indisponible, veuillez réessayer ultérieurement\n(${logErrorMgs.messageUtilisateur})`
     );
   } else if (logErrorMgs.messageUtilisateur) {
     const messageDuServeur = getMessageDuServeur(logErrorMgs);
