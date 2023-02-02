@@ -350,28 +350,19 @@ export const routesRece: IRoute[] = [
   {
     url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_APERCU_SIMPLE_ID,
     component: ApercuReqCreationTranscriptionSimplePage,
-    droitPerimetres: {
-      droit: Droit.CREER_ACTE_TRANSCRIT,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
-    },
+    auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
   {
     url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID,
     component: ApercuReqCreationTranscriptionPriseEnChargePage,
-    droitPerimetres: {
-      droit: Droit.CREER_ACTE_TRANSCRIT,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
-    },
+    auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
   },
   {
     url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_EN_TRAITEMENT_ID,
     component: ApercuReqCreationTranscriptionSaisieProjetPage,
-    droitPerimetres: {
-      droit: Droit.CREER_ACTE_TRANSCRIT,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
-    },
+    auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: getLibelle(LIBELLE_APERCU_SAISIE_PROJET)
   },
   //////////////////////////////////////////////
@@ -440,28 +431,19 @@ export const routesRece: IRoute[] = [
   {
     url: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
     component: ApercuReqCreationTranscriptionSimplePage,
-    droitPerimetres: {
-      droit: Droit.CREER_ACTE_TRANSCRIT,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
-    },
+    auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
   {
     url: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
     component: ApercuReqCreationTranscriptionPriseEnChargePage,
-    droitPerimetres: {
-      droit: Droit.CREER_ACTE_TRANSCRIT,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
-    },
+    auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
   },
   {
     url: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
     component: ApercuReqCreationTranscriptionSaisieProjetPage,
-    droitPerimetres: {
-      droit: Droit.CREER_ACTE_TRANSCRIT,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
-    },
+    auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: getLibelle(LIBELLE_APERCU_SAISIE_PROJET)
   },
   ////////////////////////////////////////////////////////
@@ -491,28 +473,19 @@ export const routesRece: IRoute[] = [
   {
     url: URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
     component: ApercuReqCreationTranscriptionSimplePage,
-    droitPerimetres: {
-      droit: Droit.CREER_ACTE_TRANSCRIT,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
-    },
+    auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
   {
     url: URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
     component: ApercuReqCreationTranscriptionPriseEnChargePage,
-    droitPerimetres: {
-      droit: Droit.CREER_ACTE_TRANSCRIT,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
-    },
+    auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
   },
   {
     url: URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
     component: ApercuReqCreationTranscriptionSaisieProjetPage,
-    droitPerimetres: {
-      droit: Droit.CREER_ACTE_TRANSCRIT,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
-    },
+    auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: getLibelle(LIBELLE_APERCU_SAISIE_PROJET)
   }
 ];
