@@ -213,11 +213,13 @@ export class ApiManager {
       );
     } else if (process.env.NODE_ENV === "test") {
       const message = `Erreur mock api: ${error?.uri}`;
-      
+
       const messageParametres = `     parameters: ${
-        error?.parameters ? JSON.stringify(error?.parameters) : "pas de paramètres"
+        error?.parameters
+          ? JSON.stringify(error?.parameters)
+          : "pas de paramètres"
       }`;
-      
+
       throw new Error(`${message}\n${messageParametres}`);
     }
     return errorType;

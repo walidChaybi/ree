@@ -58,6 +58,8 @@ window.URL.createObjectURL = jest.fn(() => "url_test");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
+window.alert = () => {};
+
 const TIME_OUT_MS = 30000;
 jest.setTimeout(TIME_OUT_MS);
 

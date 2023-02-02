@@ -29,7 +29,7 @@ export const LigneNomPrenomFrancisation: React.FC<
 
       <ItemLigne
         texte={formatLigne(props.identite.prenoms.francisation)}
-        separateur={";"}
+        separateur={" "}
         separateurFin={false}
         separateurDebut={auMoinsUnDesDeuxChampsEstRenseigne(
           props.identite.noms.francisation,
