@@ -6,6 +6,7 @@ import {
   ICourrierComposition
 } from "@model/composition/ICourrierComposition";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { IAdresseRequerant } from "@model/requete/IAdresseRequerant";
@@ -122,12 +123,7 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
       )
     ) {
       setBasculerConstructionCourrier(false);
-      if (
-        presenceDesElementsPourLaGenerationEtControleSousType(
-          params,
-          courrier?.doc
-        )
-      ) {
+      if (verificationElementPourLaGeneration(params, courrier?.doc)) {
         const elements: IElementsJasperCourrier =
           specificationCourrier.getElementsJasper(
             // @ts-ignore presenceDesElementsPourLaGeneration
@@ -259,7 +255,7 @@ function presenceDeLaRequeteDuDocEtSaisieCourrier(
   );
 }
 
-function presenceDesElementsPourLaGenerationEtControleSousType(
+function verificationElementPourLaGeneration(
   params: IGenerationCourrierParams | undefined,
   courrier: DocumentDelivrance | undefined
 ) {
@@ -268,8 +264,20 @@ function presenceDesElementsPourLaGenerationEtControleSousType(
     params?.requete.titulaires &&
     params.requete.titulaires.length > 0 &&
     courrier &&
-    !SousTypeDelivrance.estRDDP(params?.requete?.sousType)
+    estSousTypeRequeteRDDPEtChoixDelivranceEstReponseSansDelivrance(params)
   );
+}
+
+function estSousTypeRequeteRDDPEtChoixDelivranceEstReponseSansDelivrance(
+  params: IGenerationCourrierParams | undefined
+): boolean {
+  if (SousTypeDelivrance.estRDDP(params?.requete?.sousType)) {
+    return ChoixDelivrance.estReponseSansDelivrance(
+      params?.requete?.choixDelivrance
+    );
+  } else {
+    return true;
+  }
 }
 
 async function construitCourrier(
