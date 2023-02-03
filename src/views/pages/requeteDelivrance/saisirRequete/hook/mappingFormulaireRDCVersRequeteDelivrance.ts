@@ -7,7 +7,12 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
-import { DEUX, getValeurOuVide, SNP } from "@util/Utils";
+import {
+  auMoinsUneProprieteEstRenseigne,
+  DEUX,
+  getValeurOuVide,
+  SNP
+} from "@util/Utils";
 import {
   CreationRequeteRDC,
   SaisieRequeteRDC
@@ -107,7 +112,10 @@ function getTitulaire(titulaire: Identite, position: number) {
 }
 
 function getFiliation(titulaire: Identite) {
-  if (titulaire.parent1 !== undefined && titulaire.parent2 !== undefined) {
+  if (
+    auMoinsUneProprieteEstRenseigne(titulaire.parent1) &&
+    auMoinsUneProprieteEstRenseigne(titulaire.parent2)
+  ) {
     const parents = [];
     parents.push({
       position: 1,

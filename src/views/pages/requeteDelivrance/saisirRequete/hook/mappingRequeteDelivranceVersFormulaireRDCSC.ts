@@ -1,8 +1,10 @@
+import { ParentFormDefaultValues } from "@composant/formulaire/ParentForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { IParent, Parent } from "@model/requete/IParents";
 import { Requerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import {
@@ -41,6 +43,8 @@ import {
   NOM_NAISSANCE,
   NOM_USAGE,
   NUMERO_TELEPHONE,
+  PARENT1,
+  PARENT2,
   PARTICULIER,
   PAYS,
   PAYS_EVENEMENT,
@@ -56,12 +60,10 @@ import {
   VILLE_EVENEMENT,
   VOIE
 } from "../modelForm/ISaisirRequetePageModel";
-import {
-  institutionnelVide,
-  interesseVide,
-  mandataireVide,
-  particulierVide
-} from "../SaisirRequeteUtils";
+import { IdentiteFormDefaultValuesRDCSC } from "../sousFormulaires/identite/IdentiteForm";
+import { InstitutionnelFormDefaultValues } from "../sousFormulaires/requerant/institutionnel/InstitutionnelForm";
+import { MandataireFormDefaultValues } from "../sousFormulaires/requerant/mandataire/MandataireForm";
+import { ParticulierFormDefaultValues } from "../sousFormulaires/requerant/particulier/ParticulierForm";
 
 export function mappingRequeteDelivranceVersFormulaireRDCSC(
   requete: IRequeteDelivrance
@@ -71,10 +73,10 @@ export function mappingRequeteDelivranceVersFormulaireRDCSC(
   const saisie = {
     [DOCUMENT]: DocumentDelivrance.getUuidFromDocument(documentDemande),
     [TITULAIRES]: {
-      titulaire1: saisieTitulaire(
+      titulaire1: saisieTitulaireRDCSC(
         TitulaireRequete.getTitulaireByPosition({ titulaires, position: 1 })
       ),
-      titulaire2: saisieTitulaire(
+      titulaire2: saisieTitulaireRDCSC(
         TitulaireRequete.getTitulaireByPosition({ titulaires, position: 2 })
       )
     },
@@ -89,7 +91,12 @@ export function mappingRequeteDelivranceVersFormulaireRDCSC(
   return saisie;
 }
 
-export const saisieTitulaire = (titulaire: ITitulaireRequete | undefined) => {
+export const saisieTitulaireRDCSC = (titulaire?: ITitulaireRequete) => {
+  const titulaireForm = saisieTitulaire(titulaire);
+  return titulaireForm || IdentiteFormDefaultValuesRDCSC;
+};
+
+export const saisieTitulaire = (titulaire?: ITitulaireRequete) => {
   return titulaire
     ? {
         [NOMS]: {
@@ -111,9 +118,24 @@ export const saisieTitulaire = (titulaire: ITitulaireRequete | undefined) => {
           [VILLE_EVENEMENT]: getValeurOuVide(titulaire.villeNaissance),
           [PAYS_EVENEMENT]: getValeurOuVide(titulaire.paysNaissance)
         },
-        [NATIONALITE]: getValeurOuVide(titulaire.nationalite.nom)
+        [NATIONALITE]: getValeurOuVide(titulaire.nationalite.nom),
+        [PARENT1]: saisieFiliation(TitulaireRequete.getParent1(titulaire)),
+        [PARENT2]: saisieFiliation(TitulaireRequete.getParent2(titulaire))
       }
-    : interesseVide;
+    : undefined;
+};
+
+const saisieFiliation = (parent?: IParent) => {
+  return parent
+    ? {
+        [NOM_NAISSANCE]: getValeurOuVide(parent.nomNaissance),
+        [PRENOMS]: {
+          [PRENOM_1]: Parent.getPrenom1(parent),
+          [PRENOM_2]: Parent.getPrenom2(parent),
+          [PRENOM_3]: Parent.getPrenom3(parent)
+        }
+      }
+    : ParentFormDefaultValues;
 };
 
 export const saisieRequerant = (requete: IRequeteDelivrance) => {
@@ -121,7 +143,7 @@ export const saisieRequerant = (requete: IRequeteDelivrance) => {
     case Qualite.INSTITUTIONNEL:
       return {
         [TYPE_REQUERANT]: "INSTITUTIONNEL",
-        [MANDATAIRE]: mandataireVide,
+        [MANDATAIRE]: MandataireFormDefaultValues,
         [INSTITUTI0NNEL]: {
           [TYPE]: getValeurOuVide(
             TypeInstitutionnel.getKey(
@@ -137,7 +159,7 @@ export const saisieRequerant = (requete: IRequeteDelivrance) => {
           [NOM]: getValeurOuVide(requete.requerant.nomFamille),
           [PRENOM]: getValeurOuVide(requete.requerant.prenom)
         },
-        [PARTICULIER]: particulierVide
+        [PARTICULIER]: ParticulierFormDefaultValues
       };
     case Qualite.MANDATAIRE_HABILITE:
       return {
@@ -157,8 +179,8 @@ export const saisieRequerant = (requete: IRequeteDelivrance) => {
           [NOM]: getValeurOuVide(requete.requerant.nomFamille),
           [PRENOM]: getValeurOuVide(requete.requerant.prenom)
         },
-        [INSTITUTI0NNEL]: institutionnelVide,
-        [PARTICULIER]: particulierVide
+        [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
+        [PARTICULIER]: ParticulierFormDefaultValues
       };
     case Qualite.PARTICULIER:
       if (
@@ -172,9 +194,9 @@ export const saisieRequerant = (requete: IRequeteDelivrance) => {
       ) {
         return {
           [TYPE_REQUERANT]: "TITULAIRE1",
-          [MANDATAIRE]: mandataireVide,
-          [INSTITUTI0NNEL]: institutionnelVide,
-          [PARTICULIER]: particulierVide
+          [MANDATAIRE]: MandataireFormDefaultValues,
+          [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
+          [PARTICULIER]: ParticulierFormDefaultValues
         };
       } else if (
         Requerant.estTitulaireX({
@@ -187,15 +209,15 @@ export const saisieRequerant = (requete: IRequeteDelivrance) => {
       ) {
         return {
           [TYPE_REQUERANT]: "TITULAIRE2",
-          [MANDATAIRE]: mandataireVide,
-          [INSTITUTI0NNEL]: institutionnelVide,
-          [PARTICULIER]: particulierVide
+          [MANDATAIRE]: MandataireFormDefaultValues,
+          [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
+          [PARTICULIER]: ParticulierFormDefaultValues
         };
       } else {
         return {
           [TYPE_REQUERANT]: "PARTICULIER",
-          [MANDATAIRE]: mandataireVide,
-          [INSTITUTI0NNEL]: institutionnelVide,
+          [MANDATAIRE]: MandataireFormDefaultValues,
+          [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
           [PARTICULIER]: {
             [NOM_NAISSANCE]: getValeurOuVide(requete.requerant.nomFamille),
             [NOM_USAGE]: getValeurOuVide(
@@ -208,9 +230,9 @@ export const saisieRequerant = (requete: IRequeteDelivrance) => {
     default:
       return {
         [TYPE_REQUERANT]: "TITULAIRE1",
-        [MANDATAIRE]: mandataireVide,
-        [INSTITUTI0NNEL]: institutionnelVide,
-        [PARTICULIER]: particulierVide
+        [MANDATAIRE]: MandataireFormDefaultValues,
+        [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
+        [PARTICULIER]: ParticulierFormDefaultValues
       };
   }
 };

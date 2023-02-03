@@ -383,7 +383,7 @@ export function shallowEgal(obj1: Object, obj2: Object) {
 export function estRenseigne(valeur: any): boolean {
   let valeurTrimee = valeur;
   if (valeur instanceof Array) {
-    return valeur != null && valeur.length > 0;
+    return valeur.length > 0;
   }
   if (typeof valeur === "string") {
     valeurTrimee = valeur.trim();

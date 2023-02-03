@@ -46,8 +46,8 @@ export const IdentiteFormDefaultValues = {
   [SEXE]: "INCONNU",
   [NAISSANCE]: EvenementFormDefaultValues,
   [NATIONALITE]: "INCONNUE",
-  [PARENT1]: undefined,
-  [PARENT2]: undefined
+  [PARENT1]: ParentFormDefaultValues,
+  [PARENT2]: ParentFormDefaultValues
 };
 
 // La valeur par défaut de la nationalité est ETRANGERE uniquement pour la saisie de RDCSC
@@ -109,11 +109,11 @@ const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
     // Permet de re-initilaiser les champs PARENT1 et PARENT2
     props.formik.setFieldValue(
       withNamespace(props.nom, PARENT1),
-      afficherParents ? undefined : ParentFormDefaultValues
+      ParentFormDefaultValues
     );
     props.formik.setFieldValue(
       withNamespace(props.nom, PARENT2),
-      afficherParents ? undefined : ParentFormDefaultValues
+      ParentFormDefaultValues
     );
   };
 

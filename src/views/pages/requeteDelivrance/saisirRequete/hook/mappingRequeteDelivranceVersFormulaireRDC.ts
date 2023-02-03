@@ -9,7 +9,10 @@ import { IEvenementReqDelivrance } from "@model/requete/IEvenementReqDelivrance"
 import { IMandant } from "@model/requete/IMandant";
 import { IRequerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
+import {
+  ITitulaireRequete,
+  TitulaireRequete
+} from "@model/requete/ITitulaireRequete";
 import { getValeurOuVide } from "@util/Utils";
 import {
   ADRESSE,
@@ -46,6 +49,7 @@ import {
   TYPE_MANDANT,
   VILLE_EVENEMENT
 } from "../modelForm/ISaisirRequetePageModel";
+import { IdentiteFormDefaultValues } from "../sousFormulaires/identite/IdentiteForm";
 import { saisiePJ } from "./mappingCommun";
 import {
   saisieAdresse,
@@ -61,10 +65,10 @@ export function mappingRequeteDelivranceVersFormulaireRDC(
   const saisie = {
     [REQUETE]: saisieRequete(requete),
     [EVENEMENT]: saisieEvenement(requete.evenement),
-    [TITULAIRE1]: saisieTitulaire(
+    [TITULAIRE1]: saisieTitulaireRDC(
       TitulaireRequete.getTitulaireByPosition({ titulaires, position: 1 })
     ),
-    [TITULAIRE2]: saisieTitulaire(
+    [TITULAIRE2]: saisieTitulaireRDC(
       TitulaireRequete.getTitulaireByPosition({ titulaires, position: 2 })
     ),
     [REQUERANT]: saisieRequerant(requete),
@@ -79,6 +83,11 @@ export function mappingRequeteDelivranceVersFormulaireRDC(
 
   return saisie;
 }
+
+export const saisieTitulaireRDC = (titulaire?: ITitulaireRequete) => {
+  const titulaireForm = saisieTitulaire(titulaire);
+  return titulaireForm || IdentiteFormDefaultValues;
+};
 
 const saisieRequete = (requete?: IRequeteDelivrance): Requete => {
   return {

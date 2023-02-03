@@ -1,3 +1,4 @@
+import { ParentFormDefaultValues } from "@composant/formulaire/ParentForm";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import requeteDelivrance, {
   requeteDelivranceInstitutionnel
@@ -7,42 +8,7 @@ test("test du mapping Particulier", () => {
   const res = mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
   expect(res).toStrictEqual({
     document: "",
-    titulaires: {
-      titulaire1: {
-        noms: {
-          nomNaissance: "Prodesk",
-          nomUsage: ""
-        },
-        prenoms: { prenom1: "Elodie", prenom2: "", prenom3: "" },
-        sexe: "FEMININ",
-        naissance: {
-          dateEvenement: {
-            annee: 1990,
-            jour: 25,
-            mois: 6
-          },
-          villeEvenement: "Barcelone",
-          paysEvenement: "Espagne"
-        },
-        nationalite: "ETRANGERE"
-      },
-      titulaire2: {
-        nomNaissance: "",
-        nomUsage: "",
-        prenoms: { prenom1: "", prenom2: "", prenom3: "" },
-        sexe: "",
-        naissance: {
-          dateEvenement: {
-            annee: "",
-            jour: "",
-            mois: ""
-          },
-          villeEvenement: "",
-          paysEvenement: ""
-        },
-        nationalite: ""
-      }
-    },
+    titulaires,
     requerant: {
       typeRequerant: "PARTICULIER",
       mandataire: {
@@ -95,42 +61,7 @@ test("test du mapping Institutionnel", () => {
   );
   expect(res).toStrictEqual({
     document: "",
-    titulaires: {
-      titulaire1: {
-        noms: {
-          nomNaissance: "Prodesk",
-          nomUsage: ""
-        },
-        prenoms: { prenom1: "Elodie", prenom2: "", prenom3: "" },
-        sexe: "FEMININ",
-        naissance: {
-          dateEvenement: {
-            annee: 1990,
-            jour: 25,
-            mois: 6
-          },
-          villeEvenement: "Barcelone",
-          paysEvenement: "Espagne"
-        },
-        nationalite: "ETRANGERE"
-      },
-      titulaire2: {
-        nomNaissance: "",
-        nomUsage: "",
-        prenoms: { prenom1: "", prenom2: "", prenom3: "" },
-        sexe: "",
-        naissance: {
-          dateEvenement: {
-            annee: "",
-            jour: "",
-            mois: ""
-          },
-          villeEvenement: "",
-          paysEvenement: ""
-        },
-        nationalite: ""
-      }
-    },
+    titulaires,
     requerant: {
       typeRequerant: "INSTITUTIONNEL",
       mandataire: {
@@ -176,3 +107,46 @@ test("test du mapping Institutionnel", () => {
     ]
   });
 });
+
+const titulaires = {
+  titulaire1: {
+    noms: {
+      nomNaissance: "Prodesk",
+      nomUsage: ""
+    },
+    prenoms: { prenom1: "Elodie", prenom2: "", prenom3: "" },
+    sexe: "FEMININ",
+    naissance: {
+      dateEvenement: {
+        annee: 1990,
+        jour: 25,
+        mois: 6
+      },
+      villeEvenement: "Barcelone",
+      paysEvenement: "Espagne"
+    },
+    nationalite: "ETRANGERE",
+    parent1: { ...ParentFormDefaultValues },
+    parent2: { ...ParentFormDefaultValues }
+  },
+  titulaire2: {
+    noms: {
+      nomNaissance: "",
+      nomUsage: ""
+    },
+    prenoms: { prenom1: "", prenom2: "", prenom3: "" },
+    sexe: "INCONNU",
+    naissance: {
+      dateEvenement: {
+        annee: "",
+        jour: "",
+        mois: ""
+      },
+      villeEvenement: "",
+      paysEvenement: ""
+    },
+    nationalite: "ETRANGERE",
+    parent1: { ...ParentFormDefaultValues },
+    parent2: { ...ParentFormDefaultValues }
+  }
+};

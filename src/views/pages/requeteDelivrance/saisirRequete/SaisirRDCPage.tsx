@@ -179,8 +179,8 @@ export const SaisirRDCPage: React.FC = () => {
     CreationActionHookParams | undefined
   >();
   const [
-    metAJourStatutRequeteApresMajPiecesJointes,
-    setMetAJourStatutRequeteApresMajPiecesJointes
+    creationActionMiseAjourStatutParams,
+    setCreationActionMiseAjourStatutParams
   ] = useState<ICreationActionMiseAjourStatutHookParams>();
 
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
@@ -191,7 +191,7 @@ export const SaisirRDCPage: React.FC = () => {
   const updateRequeteDelivranceRDCResultat =
     useUpdateRequeteDelivranceRDC(updateRequeteRDC);
   useCreationAction(paramsCreationAction);
-  useCreationActionMiseAjourStatut(metAJourStatutRequeteApresMajPiecesJointes);
+  useCreationActionMiseAjourStatut(creationActionMiseAjourStatutParams);
   useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
 
   const getIdRequeteCreee = useCallback(() => {
@@ -326,21 +326,13 @@ export const SaisirRDCPage: React.FC = () => {
     [redirectApresCreationOuModification]
   );
 
-  const majIdRequete = useCallback(() => {
-    const idReq = getIdRequeteCreee();
-    if (idReq) {
-      setIdRequete(idReq);
-    }
-  }, [getIdRequeteCreee]);
-
   const majStatutRequeteSiBesoinEtRedirection = useCallback(() => {
     const statutFinal: StatutRequete | undefined =
       updateRequeteRDC?.statutFinal || creationRequeteRDC?.statutFinal;
     const futurStatut: StatutRequete | undefined =
       updateRequeteRDC?.futurStatut || creationRequeteRDC?.futurStatut;
-    majIdRequete();
     if (statutFinal && statutFinal !== futurStatut) {
-      setMetAJourStatutRequeteApresMajPiecesJointes({
+      setCreationActionMiseAjourStatutParams({
         libelleAction: statutFinal.libelle,
         statutRequete: statutFinal,
         requete: {
@@ -355,7 +347,6 @@ export const SaisirRDCPage: React.FC = () => {
   }, [
     creationRequeteRDC,
     getIdRequeteCreee,
-    majIdRequete,
     redirectApresCreationOuModification,
     updateRequeteRDC
   ]);

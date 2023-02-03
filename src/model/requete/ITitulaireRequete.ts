@@ -1,7 +1,13 @@
 /* istanbul ignore file */
 
 import { getDateStringFromDateCompose } from "@util/DateUtils";
-import { formatNom, getValeurOuVide, numberToString } from "@util/Utils";
+import {
+  DEUX,
+  formatNom,
+  getValeurOuVide,
+  numberToString,
+  UN
+} from "@util/Utils";
 import { Nationalite } from "../etatcivil/enum/Nationalite";
 import { Sexe } from "../etatcivil/enum/Sexe";
 import { IParent } from "./IParents";
@@ -125,5 +131,25 @@ export const TitulaireRequete = {
           return titulaire.position === position;
         })
       : undefined;
+  },
+  getParent(
+    titulaire: ITitulaireRequete | undefined,
+    position: number
+  ): IParent | undefined {
+    let parent: IParent | undefined;
+
+    if (titulaire) {
+      parent = titulaire.parentsTitulaire?.find(
+        parentTitulaire => parentTitulaire.position === position
+      );
+    }
+
+    return parent;
+  },
+  getParent1(titulaire?: ITitulaireRequete): IParent | undefined {
+    return this.getParent(titulaire, UN);
+  },
+  getParent2(titulaire?: ITitulaireRequete): IParent | undefined {
+    return this.getParent(titulaire, DEUX);
   }
 };
