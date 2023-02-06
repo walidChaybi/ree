@@ -6,8 +6,8 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
 import { getLibelle } from "@util/Utils";
-import { VisionneuseAvecTitre } from "@widget/document/VisionneuseAvecTitre";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
+import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAvecTitre";
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
@@ -49,11 +49,13 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
           {dataHistory && dataHistory.info && (
             <div className="MessageInfo">{dataHistory.info}</div>
           )}
-          <VisionneuseAvecTitre
-            titre="Aperçu des documents"
-            contenu={documentAffiche?.contenu}
-            typeMime={documentAffiche?.mimeType}
-          ></VisionneuseAvecTitre>
+          {documentAffiche && (
+            <VisionneuseAvecTitre
+              titre="Aperçu des documents"
+              contenuBase64={documentAffiche.contenu}
+              typeMime={documentAffiche.mimeType}
+            />
+          )}
           <BoutonRetour />
           <BoutonsTerminerOuRelecture requete={requete} />
           <div className="BoutonsAction">

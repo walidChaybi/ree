@@ -1,8 +1,5 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
-import {
-  ajouteStyleIFrame,
-  VisionneuseDocument
-} from "@widget/document/VisionneuseDocument";
+import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
 import React from "react";
 import {
   imagePngVideBase64,
@@ -15,8 +12,8 @@ test("Attendu: VisionneuseDocument fonctionne correctement", async () => {
   await act(async () => {
     render(
       <VisionneuseDocument
-        titre="titre"
-        contenu={imagePngVideBase64}
+        infoBulle="titre"
+        contenuBase64={imagePngVideBase64}
         typeMime={"application/pdf"}
       />
     );
@@ -27,22 +24,5 @@ test("Attendu: VisionneuseDocument fonctionne correctement", async () => {
     expect(iframe).toBeInTheDocument();
     expect(iframe.src).toBe(urlImagePngVideBase64 + "#zoom=page-fit");
 
-    const appendChild = jest.fn();
-    ajouteStyleIFrame(
-      {
-        current: {
-          contentWindow: {
-            document: {
-              head: {
-                appendChild
-              }
-            }
-          }
-        }
-      },
-      "image/png"
-    );
-
-    expect(appendChild).toBeCalledTimes(1);
   });
 });

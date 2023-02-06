@@ -12,8 +12,8 @@ import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointe
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
 import React, { useEffect, useState } from "react";
-import { VisionneuseDocument } from "../document/VisionneuseDocument";
 import { AccordionTitle } from "./AccordionTitle";
 import { BoutonAccordionTitle } from "./BoutonAccordionTitle";
 import "./scss/AccordionVisionneuse.scss";
@@ -103,9 +103,9 @@ export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
         />
         <AccordionDetails>
           <VisionneuseDocument
-            titre={titre ?? titreOrigine}
+            infoBulle={titre ?? titreOrigine}
             typeMime={getValeurOuVide(documentApi?.mimeType)}
-            contenu={documentApi?.contenu}
+            contenuBase64={documentApi?.contenu}
           />
         </AccordionDetails>
       </Accordion>

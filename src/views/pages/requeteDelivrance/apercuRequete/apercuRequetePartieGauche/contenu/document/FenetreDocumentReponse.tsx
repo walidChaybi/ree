@@ -1,7 +1,6 @@
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { FenetreExterne } from "@util/FenetreExterne";
-import { VisionneuseAvecTitre } from "@widget/document/VisionneuseAvecTitre";
-import { MimeType } from "file-type/core";
+import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAvecTitre";
 import React from "react";
 
 interface DocumentReponseProps {
@@ -24,11 +23,13 @@ export const FenetreDocumentReponse: React.FC<DocumentReponseProps> = props => {
       ratioWidth={ratioWidth}
       ratioHeight={ratioHeight}
     >
-      <VisionneuseAvecTitre
-        titre={"Document réponse"}
-        contenu={props.contenuPiece?.contenu}
-        typeMime={props.contenuPiece?.mimeType as MimeType}
-      ></VisionneuseAvecTitre>
+      {props.contenuPiece && (
+        <VisionneuseAvecTitre
+          titre={"Document réponse"}
+          contenuBase64={props.contenuPiece.contenu}
+          typeMime={props.contenuPiece.mimeType}
+        />
+      )}
     </FenetreExterne>
   );
 };

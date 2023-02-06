@@ -121,3 +121,7 @@ export function base64toBlobUrl(base64String: string, type: string): string {
 export function bloblToBlobUrl(blob: Blob, type: string): string {
   return URL.createObjectURL(new Blob([blob], { type }));
 }
+
+export function estTypeMimePdf(typeMime?: MimeType) {
+  return typeMime === "application/pdf";
+}

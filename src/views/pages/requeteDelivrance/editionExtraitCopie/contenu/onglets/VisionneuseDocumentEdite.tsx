@@ -1,6 +1,6 @@
 import { useGetDocumentReponseApi } from "@hook/DocumentReponseHook";
 import { getValeurOuVide } from "@util/Utils";
-import { VisionneuseDocument } from "@widget/document/VisionneuseDocument";
+import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
 import React from "react";
 
 interface VisionneuseEditionProps {
@@ -14,8 +14,8 @@ export const VisionneuseEdition: React.FC<VisionneuseEditionProps> = ({
 
   return (
     <VisionneuseDocument
-      contenu={documentApi?.contenu}
-      titre={getValeurOuVide(documentApi?.nom)}
+      contenuBase64={documentApi?.contenu}
+      infoBulle={getValeurOuVide(documentApi?.nom)}
       typeMime={getValeurOuVide(documentApi?.mimeType)}
     ></VisionneuseDocument>
   );

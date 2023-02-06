@@ -11,8 +11,8 @@ import { getUrlPrecedente } from "@util/route/routeUtil";
 import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
-import { VisionneuseAvecTitre } from "@widget/document/VisionneuseAvecTitre";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
+import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAvecTitre";
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
@@ -78,11 +78,13 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
     >
       {requete && (
         <>
-          <VisionneuseAvecTitre
-            titre={getLibelle("Aperçu des documents")}
-            contenu={documentAffiche?.contenu}
-            typeMime={documentAffiche?.mimeType}
-          />
+          {documentAffiche && (
+            <VisionneuseAvecTitre
+              titre={getLibelle("Aperçu des documents")}
+              contenuBase64={documentAffiche.contenu}
+              typeMime={documentAffiche.mimeType}
+            />
+          )}
           {afficherBoutonFinConsultation(
             requete.statutCourant.statut,
             requete.idUtilisateur

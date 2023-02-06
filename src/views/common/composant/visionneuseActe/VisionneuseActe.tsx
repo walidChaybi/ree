@@ -2,7 +2,7 @@ import { HTTP_NOT_FOUND } from "@api/ApiManager";
 import { getImagesActe, getTexteActe } from "@api/appels/etatcivilApi";
 import { logError } from "@util/LogManager";
 import { getLibelle } from "@util/Utils";
-import { VisionneuseDocument } from "@widget/document/VisionneuseDocument";
+import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
 import React, { useEffect, useState } from "react";
 import { MimeType } from "../../../../ressources/MimeType";
 import "./scss/VisionneuseActe.scss";
@@ -67,7 +67,7 @@ export const VisionneuseActe: React.FC<ActeImageProps> = props => {
         error
       ) : (
         <VisionneuseDocument
-          titre="Visionneuse PDF"
+          infoBulle="Visionneuse PDF"
           contenuBlob={contenuBlob}
           typeMime={MimeType.APPLI_PDF}
         />
