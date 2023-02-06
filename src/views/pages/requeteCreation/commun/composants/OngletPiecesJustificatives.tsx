@@ -5,9 +5,16 @@ import { ListePiecesJustificativesTranscription } from "@pages/requeteCreation/a
 import React from "react";
 import "./scss/VoletPiecesJustificatives.scss";
 
+export type typeFctRenommePieceJustificative = (
+  idPieceJustificative: string,
+  nouveauLibelle: string,
+  idDocumentPJ?: string
+) => void;
+
 interface OngletPiecesJustificativesProps {
   requete: IRequeteCreation;
   autoriseOuvertureFenetreExt?: boolean;
+  onRenommePieceJustificative: typeFctRenommePieceJustificative;
 }
 
 export const OngletPiecesJustificatives: React.FC<
@@ -19,12 +26,14 @@ export const OngletPiecesJustificatives: React.FC<
         <ListePiecesJustificativesTranscription
           requete={props.requete}
           autoriseOuvertureFenetreExt={autoriseOuvertureFenetreExt}
+          onRenommePieceJustificative={props.onRenommePieceJustificative}
         />
       )}
       {!SousTypeCreation.estSousTypeTranscription(props.requete.sousType) && (
         <ListePiecesJustificativesEtablissement
           requete={props.requete}
           autoriseOuvertureFenetreExt={autoriseOuvertureFenetreExt}
+          onRenommePieceJustificative={props.onRenommePieceJustificative}
         />
       )}
     </span>

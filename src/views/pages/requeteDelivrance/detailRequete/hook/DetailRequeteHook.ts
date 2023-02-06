@@ -20,7 +20,7 @@ import { TypeMandant } from "@model/requete/enum/TypeMandant";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IAction } from "@model/requete/IActions";
-import { IDocumentPJ } from "@model/requete/IDocumentPj";
+import { DocumentPJ, IDocumentPJ } from "@model/requete/IDocumentPj";
 import { IEchange } from "@model/requete/IEchange";
 import { IEvenementReqDelivrance } from "@model/requete/IEvenementReqDelivrance";
 import { IMandant } from "@model/requete/IMandant";
@@ -303,7 +303,7 @@ function mapPiecesJustificativesCreation(
 
   PieceJustificativeCreation.setOrdre(piecesJustificatives);
 
-  return piecesJustificatives;
+  return PieceJustificativeCreation.tri(piecesJustificatives);
 }
 
 export function mapEchangesRetourSDANF(echangesServeur?: any): IEchange[] {
@@ -326,14 +326,16 @@ export function mapEchangeRetourSDANF(echangeServeur?: any): IEchange {
 }
 
 function mapDocumentPJ(documents?: any): IDocumentPJ[] {
-  return documents?.map(
-    (document: any): IDocumentPJ => ({
-      ...document,
-      categorie: CategorieDocument.creationCategorieDocument(
-        document.categorie,
-        document.libelle
-      )
-    })
+  return DocumentPJ.trie(
+    documents?.map(
+      (document: any): IDocumentPJ => ({
+        ...document,
+        categorie: CategorieDocument.creationCategorieDocument(
+          document.categorie,
+          document.libelle
+        )
+      })
+    )
   );
 }
 

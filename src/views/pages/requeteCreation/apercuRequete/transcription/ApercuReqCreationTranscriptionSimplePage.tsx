@@ -12,6 +12,7 @@ import Labels from "../../commun/Labels";
 import "../../commun/scss/ApercuReqCreationPage.scss";
 import ResumeRequeteCreation from "../etablissement/composants/ResumeRequeteCreation";
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "../etablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
+import { onRenommePieceJustificative } from "./ApercuReqCreationTranscriptionUtil";
 
 interface ApercuReqCreationTranscriptionSimplePageProps {}
 
@@ -37,6 +38,18 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
     setOngletSelectionne(parseInt(newValue));
   };
 
+  function onRenommePieceJustificativeApercuSimple(
+    idPieceJustificative: string,
+    nouveauLibelle: string
+  ) {
+    onRenommePieceJustificative(
+      idPieceJustificative,
+      nouveauLibelle,
+      requete,
+      setRequete
+    );
+  }
+
   function getListeOnglets(): OngletProps[] {
     return requete
       ? [
@@ -46,6 +59,9 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
               <OngletPiecesJustificatives
                 requete={requete}
                 autoriseOuvertureFenetreExt={true}
+                onRenommePieceJustificative={
+                  onRenommePieceJustificativeApercuSimple
+                }
               />
             ),
 
@@ -83,7 +99,12 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
             className="FocusPieceJustificative"
             estADroite={true}
           >
-            <OngletPiecesJustificatives requete={requete} />
+            <OngletPiecesJustificatives
+              requete={requete}
+              onRenommePieceJustificative={
+                onRenommePieceJustificativeApercuSimple
+              }
+            />
           </ConteneurRetractable>
         </>
       )}

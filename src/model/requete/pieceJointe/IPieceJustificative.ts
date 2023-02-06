@@ -12,3 +12,15 @@ export interface IPieceJustificative {
   contenu: string;
   typePieceJustificative: TypePieceJustificative;
 }
+
+export const PieceJustificative = {
+  getPieceJustificative(
+    piecesJustificatives: IPieceJustificative[] | undefined,
+    idPieceJustificative: string
+  ) {
+    return piecesJustificatives?.find(
+      pieceJustificative => pieceJustificative.id === idPieceJustificative
+    );
+  }
+};
+

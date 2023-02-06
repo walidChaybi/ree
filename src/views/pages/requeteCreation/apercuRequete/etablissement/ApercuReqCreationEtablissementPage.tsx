@@ -1,5 +1,8 @@
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
-import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
+import {
+  IRequeteCreationEtablissement,
+  RequeteCreationEtablissement
+} from "@model/requete/IRequeteCreationEtablissement";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
@@ -11,8 +14,6 @@ import "../../commun/scss/ApercuReqCreationPage.scss";
 import ResumeRequeteCreation from "./composants/ResumeRequeteCreation";
 import { VoletPieceJustificativesEtActions } from "./composants/VoletPieceJusticativesEtActions";
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "./mappingIRequeteCreationVersResumeRequeteCreationProps";
-
-
 
 export const ApercuReqCreationEtablissementPage: React.FC = () => {
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
@@ -28,6 +29,22 @@ export const ApercuReqCreationEtablissementPage: React.FC = () => {
       setRequete(detailRequeteState as IRequeteCreationEtablissement);
     }
   }, [detailRequeteState]);
+
+  function onRenommePieceJustificative(
+    idPieceJustificative: string,
+    nouveauLibelle: string,
+    idDocumentPJ?: string
+  ) {
+    const pjARenommer = RequeteCreationEtablissement.getPieceJustificative(
+      requete,
+      idDocumentPJ,
+      idPieceJustificative
+    );
+    if (pjARenommer) {
+      pjARenommer.libelle = nouveauLibelle;
+      setRequete({ ...requete } as IRequeteCreationEtablissement);
+    }
+  }
 
   return (
     <div className="ApercuReqCreationEtablissementPage">
@@ -46,14 +63,20 @@ export const ApercuReqCreationEtablissementPage: React.FC = () => {
             />
           </ConteneurRetractable>
 
-          <VoletPieceJustificativesEtActions requete={requete} />
+          <VoletPieceJustificativesEtActions
+            requete={requete}
+            onRenommePieceJustificative={onRenommePieceJustificative}
+          />
 
           <ConteneurRetractable
             titre="Pièces justificatives"
             className="FocusPieceJustificative"
             estADroite={true}
           >
-            <OngletPiecesJustificatives requete={requete} />
+            <OngletPiecesJustificatives
+              requete={requete}
+              onRenommePieceJustificative={onRenommePieceJustificative}
+            />
           </ConteneurRetractable>
         </>
       )}

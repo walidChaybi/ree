@@ -1,10 +1,10 @@
 import { TypePieceJointe } from "@hook/requete/piecesJointes/communPieceJointe";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
-import {
-  IRequeteCreationTranscription,
-  RequeteCreationTranscription
-} from "@model/requete/IRequeteCreationTranscription";
+import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { PieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
+import { typeFctRenommePieceJustificative } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
+import { estRenseigne } from "@util/Utils";
 import { AccordionVisionneuse } from "@widget/accordion/AccordionVisionneuse";
 import {
   ListeGlisserDeposer,
@@ -12,7 +12,7 @@ import {
 } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useEffect, useState } from "react";
 
-interface GroupPjTranscription {
+interface GroupePJTranscription {
   typePieceJustificative: TypePieceJustificative;
   piecesJustificatives: IPieceJustificativeCreation[];
 }
@@ -20,32 +20,35 @@ interface GroupPjTranscription {
 interface ListePiecesJustificativesTranscriptionProps {
   requete: IRequeteCreationTranscription;
   autoriseOuvertureFenetreExt?: boolean;
+  onRenommePieceJustificative: typeFctRenommePieceJustificative;
 }
 
 export const ListePiecesJustificativesTranscription: React.FC<
   ListePiecesJustificativesTranscriptionProps
 > = props => {
-  const [groupesPjsTsranscriptionTries, setGroupesPjsTsranscriptionTries] =
-    useState<GroupPjTranscription[]>([]);
+  const [groupesPJsTsranscriptionTries, setGroupesPJsTsranscriptionTries] =
+    useState<GroupePJTranscription[]>([]);
 
-  const setTitreActuelPjTranscription = (
-    idPiece: string,
+  const setNouveauLibellePieceJointe = (
+    idPieceJustificative: string,
     nouveauLibelle: string
   ) => {
-    const nouvelleRequete = { ...props.requete };
-    const pieceJ = nouvelleRequete.piecesJustificatives?.find(
-      piece => piece.id === idPiece
-    );
-    if (pieceJ) {
-      pieceJ.nouveauLibelleFichierPJ = nouveauLibelle;
-      setGroupesPjsTsranscriptionTries([...groupesPjsTsranscriptionTries]);
+    const pieceJustificativeARenommer =
+      PieceJustificative.getPieceJustificative(
+        props.requete.piecesJustificatives,
+        idPieceJustificative
+      ) as IPieceJustificativeCreation;
+    if (pieceJustificativeARenommer) {
+      pieceJustificativeARenommer.nouveauLibelleFichierPJ = nouveauLibelle;
+      setGroupesPJsTsranscriptionTries([...groupesPJsTsranscriptionTries]);
+      props.onRenommePieceJustificative(idPieceJustificative, nouveauLibelle);
     }
   };
 
   const mappingIPiecesJustificativesCreationTrieesVersListeItem =
     (): ListeItem[] => {
-      return groupesPjsTsranscriptionTries.map(
-        (group: GroupPjTranscription): ListeItem => ({
+      return groupesPJsTsranscriptionTries.map(
+        (group: GroupePJTranscription): ListeItem => ({
           id: group.typePieceJustificative.code,
           libelle: group.typePieceJustificative.libelle,
           checkbox: false,
@@ -62,7 +65,7 @@ export const ListePiecesJustificativesTranscription: React.FC<
                     typePiece={TypePieceJointe.PIECE_JUSTIFICATIVE}
                     numRequete={props.requete.numero}
                     setTitreActuel={(nouveauLibelle: string) =>
-                      setTitreActuelPjTranscription(piece.id, nouveauLibelle)
+                      setNouveauLibellePieceJointe(piece.id, nouveauLibelle)
                     }
                     autoriseOuvertureFenetreExt={
                       props.autoriseOuvertureFenetreExt
@@ -79,19 +82,26 @@ export const ListePiecesJustificativesTranscription: React.FC<
   // Recuperation des PJ triées et assignation de la liste (ListeItem)
   useEffect(() => {
     if (props.requete?.piecesJustificatives) {
-      const piecesJustificativesTriees =
-        RequeteCreationTranscription.getPJsTranscriptionTrieesParPriorites(
-          props.requete
+      let nouveauxGroupesPJsTsranscriptionTries;
+      if (estRenseigne(groupesPJsTsranscriptionTries)) {
+        nouveauxGroupesPJsTsranscriptionTries = majLibellesPiecesJustificatives(
+          groupesPJsTsranscriptionTries,
+          props.requete?.piecesJustificatives
         );
-      setGroupesPjsTsranscriptionTries(
-        creationGroupesPjsTranscrition(piecesJustificativesTriees)
-      );
+      } else {
+        nouveauxGroupesPJsTsranscriptionTries = creerGroupesPJsTranscrition(
+          props.requete?.piecesJustificatives
+        );
+      }
+
+      setGroupesPJsTsranscriptionTries(nouveauxGroupesPJsTsranscriptionTries);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.requete]);
 
   return (
     <>
-      {props.requete && groupesPjsTsranscriptionTries && (
+      {props.requete && groupesPJsTsranscriptionTries && (
         <ListeGlisserDeposer
           liste={mappingIPiecesJustificativesCreationTrieesVersListeItem()}
           deverrouille={true}
@@ -104,10 +114,10 @@ export const ListePiecesJustificativesTranscription: React.FC<
     </>
   );
 
-  function creationGroupesPjsTranscrition(
+  function creerGroupesPJsTranscrition(
     piecesJustificativesCreationTriees: IPieceJustificativeCreation[]
-  ): GroupPjTranscription[] {
-    const groups: GroupPjTranscription[] = [];
+  ): GroupePJTranscription[] {
+    const groups: GroupePJTranscription[] = [];
     piecesJustificativesCreationTriees.forEach(pj => {
       const group = groups.find(
         grp => grp.typePieceJustificative === pj.typePieceJustificative
@@ -126,14 +136,30 @@ export const ListePiecesJustificativesTranscription: React.FC<
   }
 
   function handleReorga(oldIndex: number, newIndex: number) {
-    if (groupesPjsTsranscriptionTries) {
-      const newList = [...groupesPjsTsranscriptionTries];
+    if (groupesPJsTsranscriptionTries) {
+      const newList = [...groupesPJsTsranscriptionTries];
       const item = newList[oldIndex];
       newList.splice(oldIndex, 1);
       newList.splice(newIndex, 0, item);
-      setGroupesPjsTsranscriptionTries(newList);
+      setGroupesPJsTsranscriptionTries(newList);
     }
   }
 };
 
-
+function majLibellesPiecesJustificatives(
+  groupesPJAMettreAJour: GroupePJTranscription[],
+  pjsReference: IPieceJustificativeCreation[]
+): GroupePJTranscription[] {
+  groupesPJAMettreAJour.forEach(groupePJAMettreAjour => {
+    groupePJAMettreAjour.piecesJustificatives.forEach(pjAMettreAJour => {
+      const pjReference = PieceJustificative.getPieceJustificative(
+        pjsReference,
+        pjAMettreAJour.id
+      ) as IPieceJustificativeCreation;
+      if (pjReference) {
+        pjAMettreAJour.libelle = pjReference.libelle;
+      }
+    });
+  });
+  return groupesPJAMettreAJour;
+}

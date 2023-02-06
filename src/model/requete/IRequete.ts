@@ -1,6 +1,5 @@
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 /* istanbul ignore file */
-
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { StatutRequete } from "./enum/StatutRequete";
 import { TypeCanal } from "./enum/TypeCanal";
@@ -14,6 +13,7 @@ import { IRequeteDelivrance } from "./IRequeteDelivrance";
 import { IRequeteInformation } from "./IRequeteInformation";
 import { IRequeteMiseAjour } from "./IRequeteMiseAjour";
 import { IStatutCourant } from "./IStatutCourant";
+import { IPieceJustificative, PieceJustificative } from "./pieceJointe/IPieceJustificative";
 
 export type TRequete =
   | IRequeteDelivrance
@@ -35,6 +35,7 @@ export interface IRequete {
   observations?: IObservation[];
   actions?: IAction[];
   numeroRequeteOrigine?: string;
+  piecesJustificatives?: IPieceJustificative[];
 }
 
 export const Requete = {
@@ -78,5 +79,14 @@ export const Requete = {
     return requete?.titulaires
       ?.filter(t => t.typeObjetTitulaire === typeObjet)
       .pop();
+  },
+  getPieceJustificative(
+    requete: IRequete | undefined,
+    idPieceJustificative: string
+  ): IPieceJustificative | undefined{
+    return PieceJustificative.getPieceJustificative(
+      requete?.piecesJustificatives,
+      idPieceJustificative
+    );
   }
 };

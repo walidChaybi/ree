@@ -15,6 +15,7 @@ import Labels from "../../commun/Labels";
 import "../../commun/scss/ApercuReqCreationPage.scss";
 import ResumeRequeteCreation from "../etablissement/composants/ResumeRequeteCreation";
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "../etablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
+import { onRenommePieceJustificative } from "./ApercuReqCreationTranscriptionUtil";
 
 interface ApercuReqCreationTranscriptionPriseEnChargeProps {}
 
@@ -37,6 +38,18 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
     }
   }, [detailRequeteState]);
 
+  function onRenommePieceJustificativeApercuPriseEnCharge(
+    idPieceJustificative: string,
+    nouveauLibelle: string
+  ) {
+    onRenommePieceJustificative(
+      idPieceJustificative,
+      nouveauLibelle,
+      requete,
+      setRequete
+    );
+  }
+
   const handleChange = (e: any, newValue: string) => {
     setOngletSelectionne(parseInt(newValue));
   };
@@ -46,7 +59,14 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
       ? [
           {
             titre: "Pièces justificatives / Annexes",
-            component: <OngletPiecesJustificatives requete={requete} />,
+            component: (
+              <OngletPiecesJustificatives
+                requete={requete}
+                onRenommePieceJustificative={
+                  onRenommePieceJustificativeApercuPriseEnCharge
+                }
+              />
+            ),
             index: 0
           },
           {
@@ -95,7 +115,12 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
             className="FocusPieceJustificative"
             estADroite={true}
           >
-            <OngletPiecesJustificatives requete={requete} />
+            <OngletPiecesJustificatives
+              requete={requete}
+              onRenommePieceJustificative={
+                onRenommePieceJustificativeApercuPriseEnCharge
+              }
+            />
           </ConteneurRetractable>
         </>
       )}

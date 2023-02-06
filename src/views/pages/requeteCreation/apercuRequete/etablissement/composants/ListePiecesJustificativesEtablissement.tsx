@@ -1,10 +1,9 @@
 import { TypePieceJointe } from "@hook/requete/piecesJointes/communPieceJointe";
-import { IDocumentPJ } from "@model/requete/IDocumentPj";
-import {
-  IRequeteCreationEtablissement,
-  RequeteCreationEtablissement
-} from "@model/requete/IRequeteCreationEtablissement";
+import { DocumentPJ, IDocumentPJ } from "@model/requete/IDocumentPj";
+import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
+import { typeFctRenommePieceJustificative } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
+import { estRenseigne } from "@util/Utils";
 import { AccordionVisionneuse } from "@widget/accordion/AccordionVisionneuse";
 import {
   ListeGlisserDeposer,
@@ -15,34 +14,37 @@ import React, { useEffect, useState } from "react";
 interface ListePiecesJustificativesEtablissementProps {
   requete: IRequeteCreationEtablissement;
   autoriseOuvertureFenetreExt?: boolean;
+  onRenommePieceJustificative: typeFctRenommePieceJustificative;
 }
 
 export const ListePiecesJustificativesEtablissement: React.FC<
   ListePiecesJustificativesEtablissementProps
 > = ({ autoriseOuvertureFenetreExt = false, ...props }) => {
-  const [documentsPjTries, setDocumentsPjTries] = useState<IDocumentPJ[]>([]);
+  const [documentPJTries, setDocumentPjTries] = useState<IDocumentPJ[]>([]);
 
   const setNouveauLibellePieceJointe = (
-    idDocument: string,
-    idPiece: string,
+    idDocumentPJ: string,
+    idPieceJustificative: string,
     nouveauLibelle: string
   ) => {
-    const documentPjTrouve = documentsPjTries.find(
-      document => document.id === idDocument
+    const pieceJTrouvee = DocumentPJ.getPieceJustificative(
+      documentPJTries,
+      idDocumentPJ,
+      idPieceJustificative
     );
-    if (documentPjTrouve) {
-      const pieceJTrouvee = documentPjTrouve.piecesJustificatives.find(
-        piece => piece.id === idPiece
+    if (pieceJTrouvee) {
+      pieceJTrouvee.nouveauLibelleFichierPJ = nouveauLibelle;
+      setDocumentPjTries([...documentPJTries]);
+      props.onRenommePieceJustificative(
+        idPieceJustificative,
+        nouveauLibelle,
+        idDocumentPJ
       );
-      if (pieceJTrouvee) {
-        pieceJTrouvee.nouveauLibelleFichierPJ = nouveauLibelle;
-        setDocumentsPjTries([...documentsPjTries]);
-      }
     }
   };
 
   const mapDocumentsPjTriesVersListeItem = (): ListeItem[] => {
-    return documentsPjTries.map(
+    return documentPJTries.map(
       (document: IDocumentPJ): ListeItem => ({
         id: document.id,
         libelle: document.categorie.libelleAAfficher,
@@ -78,17 +80,23 @@ export const ListePiecesJustificativesEtablissement: React.FC<
 
   useEffect(() => {
     if (props.requete?.documentsPj) {
-      setDocumentsPjTries([
-        ...RequeteCreationEtablissement.getDocumentsPJtriesParPriorites(
-          props.requete
-        )
-      ]);
+      let nouveauxDocumentPJTries;
+      if (estRenseigne(documentPJTries)) {
+        nouveauxDocumentPJTries = majLibellesPiecesJustificatives(
+          documentPJTries,
+          props.requete.documentsPj
+        );
+      } else {
+        nouveauxDocumentPJTries = [...props.requete?.documentsPj];
+      }
+      setDocumentPjTries(nouveauxDocumentPJTries);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.requete]);
 
   return (
     <span className="PiecesJustificatives">
-      {props.requete?.documentsPj && documentsPjTries && (
+      {props.requete?.documentsPj && documentPJTries && (
         <ListeGlisserDeposer
           liste={mapDocumentsPjTriesVersListeItem()}
           deverrouille={true}
@@ -102,12 +110,31 @@ export const ListePiecesJustificativesEtablissement: React.FC<
   );
 
   function handleReorga(oldIndex: number, newIndex: number) {
-    if (documentsPjTries) {
-      const newList = [...documentsPjTries];
+    if (documentPJTries) {
+      const newList = [...documentPJTries];
       const item = newList[oldIndex];
       newList.splice(oldIndex, 1);
       newList.splice(newIndex, 0, item);
-      setDocumentsPjTries(newList);
+      setDocumentPjTries(newList);
     }
   }
 };
+
+function majLibellesPiecesJustificatives(
+  documentsPJAMettreAJour: IDocumentPJ[],
+  documentsPJReference: IDocumentPJ[]
+) {
+  documentsPJAMettreAJour.forEach(documentPJAMettreAJour => {
+    documentPJAMettreAJour.piecesJustificatives.forEach(pjAMettreAJour => {
+      const pjReference = DocumentPJ.getPieceJustificative(
+        documentsPJReference,
+        documentPJAMettreAJour.id,
+        pjAMettreAJour.id
+      );
+      if (pjReference) {
+        pjAMettreAJour.libelle = pjReference.libelle;
+      }
+    });
+  });
+  return documentsPJAMettreAJour;
+}

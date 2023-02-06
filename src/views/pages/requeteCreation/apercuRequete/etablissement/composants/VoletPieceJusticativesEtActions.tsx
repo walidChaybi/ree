@@ -1,11 +1,15 @@
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useState } from "react";
-import { OngletPiecesJustificatives } from "../../../commun/composants/OngletPiecesJustificatives";
+import {
+  OngletPiecesJustificatives,
+  typeFctRenommePieceJustificative
+} from "../../../commun/composants/OngletPiecesJustificatives";
 import { Action } from "./action/Action";
 import "./scss/VoletPieceJustificativesEtActions.scss";
 interface VoletPieceJusticativesEtActionsProps {
   requete: IRequeteCreationEtablissement;
+  onRenommePieceJustificative: typeFctRenommePieceJustificative;
 }
 
 interface ItemListe {
@@ -26,6 +30,7 @@ export const VoletPieceJustificativesEtActions: React.FC<
         <OngletPiecesJustificatives
           requete={props.requete}
           autoriseOuvertureFenetreExt={true}
+          onRenommePieceJustificative={props.onRenommePieceJustificative}
         />
       ),
       index: 0

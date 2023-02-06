@@ -1,7 +1,7 @@
 import { ITitulaireRequeteCreation } from "./enum/ITitulaireRequeteCreation";
 import { Provenance } from "./enum/Provenance";
 import { SousTypeCreation } from "./enum/SousTypeCreation";
-import { IDocumentPJ } from "./IDocumentPj";
+import { DocumentPJ, IDocumentPJ } from "./IDocumentPj";
 import { IMandant } from "./IMandant";
 import { IProvenanceNatali } from "./IProvenanceNatali";
 import { IProvenanceServicePublic } from "./IProvenanceServicePublic";
@@ -10,7 +10,7 @@ import { IPieceJustificativeCreation } from "./pieceJointe/IPieceJustificativeCr
 
 export interface IRequeteCreationEtablissement extends IRequete {
   titulaires?: ITitulaireRequeteCreation[];
-  piecesJustificatives: IPieceJustificativeCreation[];
+  piecesJustificatives?: IPieceJustificativeCreation[];
   sousType: SousTypeCreation;
   dossierSignale?: boolean;
   documentsPj?: IDocumentPJ[];
@@ -31,14 +31,21 @@ export interface IRequeteCreationEtablissement extends IRequete {
 }
 
 export const RequeteCreationEtablissement = {
-  getDocumentsPJtriesParPriorites(
-    requete: IRequeteCreationEtablissement
-  ): IDocumentPJ[] {
-    return requete.documentsPj
-      ? requete.documentsPj.sort(
-          (documentPj1, documentPj2) =>
-            documentPj1.categorie.ordre - documentPj2.categorie.ordre
-        )
-      : [];
+  getDocumentPJ(
+    requete: IRequeteCreationEtablissement,
+    idDocumentPJ: string
+  ): IDocumentPJ | undefined {
+    return DocumentPJ.getDocumentPJ(requete.documentsPj, idDocumentPJ);
+  },
+  getPieceJustificative(
+    requete: IRequeteCreationEtablissement | undefined,
+    idDocumentPJ: string | undefined,
+    idPieceJustificative: string
+  ): IPieceJustificativeCreation | undefined {
+    return DocumentPJ.getPieceJustificative(
+      requete?.documentsPj,
+      idDocumentPJ,
+      idPieceJustificative
+    );
   }
 };

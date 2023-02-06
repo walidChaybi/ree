@@ -52,4 +52,14 @@ export class PieceJustificativeCreation {
       pieceJustificative.ordreNatali = ordre;
     });
   }
+
+  public static tri(
+    piecesJustificatives?: IPieceJustificativeCreation[]
+  ): IPieceJustificativeCreation[] {
+    return (
+      piecesJustificatives?.sort(
+        (pj1, pj2) => pj1.ordreNatali - pj2.ordreNatali
+      ) || []
+    );
+  }
 }
