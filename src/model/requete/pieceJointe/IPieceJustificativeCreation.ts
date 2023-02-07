@@ -46,11 +46,13 @@ export class PieceJustificativeCreation {
 
   public static setOrdre(piecesJustificatives: IPieceJustificativeCreation[]) {
     let cpt = 0;
-    piecesJustificatives.forEach(pieceJustificative => {
-      const ordre = this.getNumeroOrdre(pieceJustificative) + cpt;
-      cpt++;
-      pieceJustificative.ordreNatali = ordre;
-    });
+    piecesJustificatives
+      .sort((pj1, pj2) => pj1.nom.localeCompare(pj2.nom))
+      .forEach(pieceJustificative => {
+        const ordre = this.getNumeroOrdre(pieceJustificative) + cpt;
+        cpt++;
+        pieceJustificative.ordreNatali = ordre;
+      });
   }
 
   public static tri(
