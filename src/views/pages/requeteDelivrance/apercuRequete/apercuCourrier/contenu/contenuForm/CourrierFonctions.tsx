@@ -46,7 +46,6 @@ import {
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { Requerant } from "@model/requete/IRequerant";
@@ -282,20 +281,3 @@ function controleDivers(
   return true;
 }
 
-export function getStatutApresChoixDelivrance(
-  choixDelivrance?: ChoixDelivrance
-): StatutRequete {
-  let statutRequete: StatutRequete;
-  if (ChoixDelivrance.estExtraitOuCopieIntegrale(choixDelivrance)) {
-    statutRequete = StatutRequete.A_SIGNER;
-  } else if (
-    ChoixDelivrance.estReponseSansDelivrance(choixDelivrance) ||
-    ChoixDelivrance.estCopieArchive(choixDelivrance)
-  ) {
-    statutRequete = StatutRequete.A_VALIDER;
-  } else {
-    statutRequete = StatutRequete.A_TRAITER;
-  }
-
-  return statutRequete;
-}

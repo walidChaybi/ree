@@ -1,9 +1,10 @@
+import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { SelectRece } from "@widget/formulaire/champsSaisie/SelectField";
 import React from "react";
-import { getOptionsMentions, IMentionAffichage } from "../GestionMentionsUtil";
+import { getOptionsMentions } from "../GestionMentionsUtil";
 
 interface AjoutMentionProps {
   natureActe?: NatureActe;

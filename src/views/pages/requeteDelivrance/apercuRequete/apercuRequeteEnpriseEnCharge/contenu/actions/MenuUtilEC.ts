@@ -7,12 +7,14 @@ import {
   TypeAlerte
 } from "@model/etatcivil/enum/TypeAlerte";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   DELIVRANCE_ACTE,
   DELIVRANCE_ACTE_NON_ANTHENTIQUE
 } from "@model/requete/enum/DocumentDelivranceConstante";
+import { DocumentEC } from "@model/requete/enum/DocumentEC";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -31,8 +33,6 @@ import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { IBoutonPopin } from "@widget/popin/ConfirmationPopin";
 import { History } from "history";
 import React from "react";
-import { SaisieCourrier } from "../../../../../../../model/form/delivrance/ISaisieCourrier";
-import { DocumentEC } from "../../../../editionExtraitCopie/enum/DocumentEC";
 
 const ORDRE_OPTION_MAX = 900;
 const enum MaxTitulaireDelivrance {
@@ -224,9 +224,6 @@ export const getOptionsMenuReponseSansDelivrance = (
 };
 
 // Courrier auto ---------------------------------------------------------
-
-export const sousTypeCreationCourrierAutomatique = (type: SousTypeDelivrance) =>
-  SousTypeDelivrance.estRDDouRDDP(type);
 
 export const getIdCourrierAuto = (choixDelivrance?: ChoixDelivrance) => {
   let res = "";

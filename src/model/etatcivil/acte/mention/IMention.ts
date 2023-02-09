@@ -244,3 +244,19 @@ function getConjoint(mention: IMention) {
   }
   return conjoint;
 }
+
+
+export function mappingVersMentionApi(mention: IMention) {
+  return {
+    numeroOrdreExtrait: mention.numeroOrdreExtrait,
+    textes: {
+      texteMentionDelivrance: mention.textes.texteMentionDelivrance
+    },
+    typeMention: {
+      nature: {
+        id: NatureMention.getUuidFromNature(mention.typeMention.nature)
+      }
+    },
+    id: mention.id
+  };
+}

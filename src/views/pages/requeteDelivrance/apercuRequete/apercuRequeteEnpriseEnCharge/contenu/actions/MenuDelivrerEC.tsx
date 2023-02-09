@@ -18,7 +18,7 @@ import {
 } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { DocumentEC } from "../../../../editionExtraitCopie/enum/DocumentEC";
+import { DocumentEC } from "../../../../../../../model/requete/enum/DocumentEC";
 import { useOptionsCourriersApiHook } from "../../../apercuCourrier/contenu/hook/OptionsCourriersHook";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {
@@ -30,8 +30,7 @@ import {
   controleCoherenceEntreDocumentSelectionneEtActionDelivrer,
   getIdCourrierAuto,
   getOptionsMenuDelivrer,
-  redirection,
-  sousTypeCreationCourrierAutomatique
+  redirection
 } from "./MenuUtilEC";
 
 export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
@@ -90,7 +89,9 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
       updateChoixDelivranceResultat?.idRequete &&
       choixDelivrance &&
       options &&
-      sousTypeCreationCourrierAutomatique(props.requete.sousType)
+      SousTypeDelivrance.estSousTypeCreationCourrierAutomatique(
+        props.requete.sousType
+      )
     ) {
       const requeteAvecChoixDelivrance = { ...props.requete, choixDelivrance };
       setOperationEnCours(true);

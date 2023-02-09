@@ -17,7 +17,6 @@ import {
   RequeteDelivrance
 } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { validerMentionsPlusieursDocuments } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import messageManager from "@util/messageManager";
@@ -36,6 +35,11 @@ interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   uniqueSignature?: boolean;
   connectedUser?: IOfficier;
   checkDirtyActive: boolean;
+  validerMentionsPlusieursDocuments: (
+    callback: () => void,
+    acte?: IFicheActe,
+    documents?: IDocumentReponse[]
+  ) => void;
 }
 
 interface RequeteASigner {
@@ -187,7 +191,7 @@ export const BoutonSignature: React.FC<
         );
       } else {
         if (props.requetesASigner.length === 1) {
-          validerMentionsPlusieursDocuments(
+          props.validerMentionsPlusieursDocuments(
             () => genererDocuments(props.requetesASigner),
             props.requetesASigner[0].acte,
             props.requetesASigner[0].requete.documentsReponses
@@ -198,7 +202,7 @@ export const BoutonSignature: React.FC<
       }
     } else {
       if (props.requetesASigner.length === 1) {
-        validerMentionsPlusieursDocuments(
+        props.validerMentionsPlusieursDocuments(
           () => genererDocuments(props.requetesASigner),
           props.requetesASigner[0].acte,
           props.requetesASigner[0].requete.documentsReponses

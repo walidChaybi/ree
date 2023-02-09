@@ -126,4 +126,8 @@ export class SousTypeDelivrance extends EnumWithComplete {
         SousTypeDelivrance.estRDCSDouRDCSC(sousType))
     );
   }
+
+  public static estSousTypeCreationCourrierAutomatique = (
+    type: SousTypeDelivrance
+  ) => SousTypeDelivrance.estRDDouRDDP(type);
 }

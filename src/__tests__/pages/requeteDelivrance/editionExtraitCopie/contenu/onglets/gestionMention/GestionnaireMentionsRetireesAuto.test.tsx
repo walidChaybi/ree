@@ -27,7 +27,7 @@ import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import {
   gestionnaireMentionsRetireesAuto,
   IMentionAvecRetiree
-} from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionnaireMentionsRetireesAuto";
+} from "@utilMetier/GestionnaireMentionsRetireesAuto";
 
 test("deselectionnerRadieParPaire", () => {
   const deselectionnerRadieParPaire = [

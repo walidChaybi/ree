@@ -7,16 +7,18 @@ import {
   IFicheActe,
   necessiteMentionNationalite
 } from "@model/etatcivil/acte/IFicheActe";
-import { Mention } from "@model/etatcivil/acte/mention/IMention";
+import {
+  mappingVersMentionApi,
+  Mention
+} from "@model/etatcivil/acte/mention/IMention";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DocumentEC } from "@model/requete/enum/DocumentEC";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { OptionCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { mappingVersMentionApi } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
-import { gestionnaireMentionsRetireesAuto } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionnaireMentionsRetireesAuto";
-import { getOngletSelectVenantDePriseEnCharge } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
-import { DocumentEC } from "@pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
 import { DEUX } from "@util/Utils";
+import { gestionnaireMentionsRetireesAuto } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
 import { useEffect, useState } from "react";
 import {
   IActeApiHookParams,
@@ -251,6 +253,19 @@ function getIndexDocument(
     res = DocumentEC.Principal;
   }
   return res;
+}
+
+function getOngletSelectVenantDePriseEnCharge(
+  sousType: SousTypeDelivrance,
+  choixDelivrance?: ChoixDelivrance
+) {
+  if (
+    choixDelivrance &&
+    ChoixDelivrance.estReponseAvecDelivrance(choixDelivrance) &&
+    SousTypeDelivrance.estSousTypeCreationCourrierAutomatique(sousType)
+  ) {
+    return DocumentEC.Principal;
+  } else return DocumentEC.Courrier;
 }
 
 function traitementFini(

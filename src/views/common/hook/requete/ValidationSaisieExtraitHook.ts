@@ -1,4 +1,5 @@
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { useEffect, useState } from "react";
 import {
@@ -17,6 +18,7 @@ export interface ISauvegardeValidationSaisieExtraitParams {
   extraitSaisiAEnvoyer: IExtraitSaisiAEnvoyer;
   callBack?: () => void;
   problemePlurilingue?: boolean;
+  valeursCourrierParDefaut: SaisieCourrier;
 }
 
 export function useSauvegardeValidationSaisieExtrait(
@@ -52,7 +54,8 @@ export function useSauvegardeValidationSaisieExtrait(
         requete: params.requete,
         regenererCourrier: false,
         callBack: params.callBack,
-        problemePlurilingue: params.problemePlurilingue
+        problemePlurilingue: params.problemePlurilingue,
+        valeursCourrierParDefaut: params.valeursCourrierParDefaut
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

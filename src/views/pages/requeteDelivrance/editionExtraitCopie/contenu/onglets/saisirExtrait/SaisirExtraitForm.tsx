@@ -20,6 +20,7 @@ import {
   IRequeteDelivrance,
   RequeteDelivrance
 } from "@model/requete/IRequeteDelivrance";
+import { getDefaultValuesCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import { useReinitialisationComposant } from "@util/form/useReinitialisation";
 import { getLibelle } from "@util/Utils";
 import { StaticField } from "@widget/formulaire/champFixe/StaticField";
@@ -132,7 +133,8 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         acte: props.acte,
         extraitSaisiAEnvoyer: extraitAEnvoyer,
         callBack: rafraichirRequete,
-        problemePlurilingue: false
+        problemePlurilingue: false,
+        valeursCourrierParDefaut: getDefaultValuesCourrier(props.requete)
       });
     }
   };
@@ -144,6 +146,7 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         requete: props.requete,
         acte: props.acte,
         extraitSaisiAEnvoyer,
+        valeursCourrierParDefaut: getDefaultValuesCourrier(props.requete),
         callBack: () => {
           setOperationEnCours(false);
           rafraichirRequete();

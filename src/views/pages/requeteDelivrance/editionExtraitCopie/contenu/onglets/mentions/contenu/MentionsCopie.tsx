@@ -1,12 +1,9 @@
 import { BoutonVerrouillage } from "@composant/formulaire/boutons/BoutonVerrouillage";
+import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { getLibelle } from "@util/Utils";
 import { ListeGlisserDeposer } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useCallback } from "react";
-import {
-  handleCheckBox,
-  IMentionAffichage,
-  mappingVersListe
-} from "./../GestionMentionsUtil";
+import { handleCheckBox, mappingVersListe } from "./../GestionMentionsUtil";
 
 interface MentionsCopieProps {
   mentions?: IMentionAffichage[];

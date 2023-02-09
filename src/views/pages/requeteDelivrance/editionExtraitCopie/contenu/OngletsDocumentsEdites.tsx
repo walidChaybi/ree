@@ -19,7 +19,7 @@ import { checkDirty, getLibelle, TROIS } from "@util/Utils";
 import { OngletsDynamique } from "@widget/ongletsDynamique/OngletsDynamique";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useEffect, useState } from "react";
-import { DocumentEC } from "../enum/DocumentEC";
+import { DocumentEC } from "../../../../../model/requete/enum/DocumentEC";
 import {
   genererListeAjoutComplementaire,
   getTypeDocument,

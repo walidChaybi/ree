@@ -1,4 +1,5 @@
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_EXTRAIT_PLURILINGUE } from "@model/requete/enum/DocumentDelivranceConstante";
 import { Validation } from "@model/requete/enum/Validation";
@@ -12,7 +13,6 @@ import {
   IRequeteDelivrance,
   RequeteDelivrance
 } from "@model/requete/IRequeteDelivrance";
-import { getDefaultValuesCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import { useEffect, useState } from "react";
 import {
   IGenerationECParams,
@@ -29,6 +29,7 @@ export interface IRegenerationDocumentsParams {
   problemePlurilingue?: boolean;
   acte?: IFicheActe;
   callBack?: () => void;
+  valeursCourrierParDefaut: SaisieCourrier;
 }
 
 export function useRegenerationDocumentsHook(
@@ -132,7 +133,7 @@ function genereCourrier(
           ordreEdition: optionCourrier.numeroOrdreEdition
         })) as OptionsCourrier)
       : [],
-    saisieCourrier: getDefaultValuesCourrier(params.requete),
+    saisieCourrier: params.valeursCourrierParDefaut,
     acte: params.acte
   });
 }

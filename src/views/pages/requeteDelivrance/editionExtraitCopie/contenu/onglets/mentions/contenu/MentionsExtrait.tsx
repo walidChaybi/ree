@@ -1,4 +1,5 @@
 import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
+import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { MARIAGE, NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { Generateur } from "@util/generateur/Generateur";
@@ -8,7 +9,6 @@ import {
   handleBlur,
   handleCheckBox,
   handleReorga,
-  IMentionAffichage,
   mappingVersListe,
   selectionneEtMiseAJour
 } from "../GestionMentionsUtil";

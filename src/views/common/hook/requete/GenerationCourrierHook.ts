@@ -30,7 +30,6 @@ import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ISauvegardeCourrier } from "@model/requete/ISauvegardeCourrier";
-import { getStatutApresChoixDelivrance } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import { getValeurOuVide } from "@util/Utils";
 import { useEffect, useState } from "react";
 import { MimeType } from "../../../../ressources/MimeType";
@@ -173,7 +172,9 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
   // 6- Mise à jour du status de la requête + création d'une action
   const uuidDocumentsReponse =
     useSauvegarderCourrierCreerActionMajStatutRequete(
-      getStatutApresChoixDelivrance(params?.requete?.choixDelivrance),
+      ChoixDelivrance.getStatutApresChoixDelivrance(
+        params?.requete?.choixDelivrance
+      ),
       libelleSelonMajStatut(params),
       requeteDelivrancePourSauvegarde,
       params?.requete?.id
@@ -204,7 +205,9 @@ function libelleSelonMajStatut(
   params: IGenerationCourrierParams | undefined
 ): string | undefined {
   return params?.mettreAJourStatut
-    ? getStatutApresChoixDelivrance(params?.requete?.choixDelivrance).libelle
+    ? ChoixDelivrance.getStatutApresChoixDelivrance(
+        params?.requete?.choixDelivrance
+      ).libelle
     : undefined;
 }
 

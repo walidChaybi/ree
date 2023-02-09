@@ -8,6 +8,7 @@ import {
   CODE_EXTRAIT_PLURILINGUE,
   CODE_EXTRAIT_SANS_FILIATION
 } from "./DocumentDelivranceConstante";
+import { StatutRequete } from "./StatutRequete";
 
 export class ChoixDelivrance extends EnumWithComplete {
   public static readonly DELIVRER_EC_COPIE_INTEGRALE = new ChoixDelivrance(
@@ -140,5 +141,23 @@ export class ChoixDelivrance extends EnumWithComplete {
         choixDelivrance
       )
     );
+  }
+
+  public static getStatutApresChoixDelivrance(
+    choixDelivrance?: ChoixDelivrance
+  ): StatutRequete {
+    let statutRequete: StatutRequete;
+    if (ChoixDelivrance.estExtraitOuCopieIntegrale(choixDelivrance)) {
+      statutRequete = StatutRequete.A_SIGNER;
+    } else if (
+      ChoixDelivrance.estReponseSansDelivrance(choixDelivrance) ||
+      ChoixDelivrance.estCopieArchive(choixDelivrance)
+    ) {
+      statutRequete = StatutRequete.A_VALIDER;
+    } else {
+      statutRequete = StatutRequete.A_TRAITER;
+    }
+
+    return statutRequete;
   }
 }

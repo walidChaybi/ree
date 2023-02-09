@@ -1,6 +1,6 @@
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
-import { IMentionAffichage } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
-import { gestionnaireRenumerotationMentions } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionnaireRenumerotationMentions";
+import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
+import { gestionnaireRenumerotationMentions } from "@utilMetier/mention/GestionnaireRenumerotationMentions";
 
 ///////// RG 2
 

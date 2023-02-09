@@ -26,14 +26,15 @@ import {
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { checkDirty, getLibelle } from "@util/Utils";
+import { gestionnaireMentionsRetireesAuto } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { DocumentEC } from "../../../../model/requete/enum/DocumentEC";
 import {
   IDetailRequeteParams,
   useAvecRejeuDetailRequeteApiHook
 } from "../../../common/hook/requete/DetailRequeteHook";
-import { gestionnaireMentionsRetireesAuto } from "./contenu/onglets/mentions/GestionnaireMentionsRetireesAuto";
 import { VoletEdition } from "./contenu/onglets/VoletEdition";
 import { VoletVisualisation } from "./contenu/onglets/VoletVisualisation";
 import { OngletsDocumentsEdites } from "./contenu/OngletsDocumentsEdites";
@@ -43,7 +44,6 @@ import {
   getBoutonsEdition,
   retoucheImage
 } from "./EditionExtraitCopieUtils";
-import { DocumentEC } from "./enum/DocumentEC";
 import "./scss/EditionExtraitCopie.scss";
 
 export const EditionExtraitCopiePageContext = React.createContext({

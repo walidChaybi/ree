@@ -5,7 +5,7 @@ import { logError } from "@util/LogManager";
 import { getValeurOuVide } from "@util/Utils";
 import { useEffect, useState } from "react";
 
-interface TransfertParams {
+export interface TransfertParams {
   idEntite?: string;
   idUtilisateur?: string;
   libelleAction: string;

@@ -15,7 +15,6 @@ import {
   CODE_EXTRAIT_PLURILINGUE,
   CODE_EXTRAIT_SANS_FILIATION
 } from "@model/requete/enum/DocumentDelivranceConstante";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -35,8 +34,8 @@ import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { OngletProps } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React from "react";
+import { DocumentEC } from "../../../../model/requete/enum/DocumentEC";
 import { Courrier } from "../apercuRequete/apercuCourrier/contenu/Courrier";
-import { sousTypeCreationCourrierAutomatique } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuUtilEC";
 import { BoutonModifierTraitement } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonModifierTraitement";
 import { BoutonsTerminerOuRelecture } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonsTerminerOuRelecture";
 import { ResumeRequetePartieHaute } from "../apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequetePartieHaute";
@@ -46,7 +45,6 @@ import { ModifierCorpsExtrait } from "./contenu/onglets/modifierCorpsExtrait/Mod
 import { SaisirExtraitForm } from "./contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import { VisionneuseActeEdition } from "./contenu/onglets/VisionneuseActeEdition";
 import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
-import { DocumentEC } from "./enum/DocumentEC";
 
 const DOCUMENT_EDITE = "Document édité";
 const REQUETE = "Requête";
@@ -301,18 +299,7 @@ const ongletSaisirExtrait = (
   };
 };
 
-export function getOngletSelectVenantDePriseEnCharge(
-  sousType: SousTypeDelivrance,
-  choixDelivrance?: ChoixDelivrance
-) {
-  if (
-    choixDelivrance &&
-    ChoixDelivrance.estReponseAvecDelivrance(choixDelivrance) &&
-    sousTypeCreationCourrierAutomatique(sousType)
-  ) {
-    return DocumentEC.Principal;
-  } else return DocumentEC.Courrier;
-}
+
 
 export function choisirDocumentEdite(
   indexDocEditeDemande: DocumentEC | undefined,

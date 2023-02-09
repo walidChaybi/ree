@@ -12,7 +12,7 @@ import {
 } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { DocumentEC } from "../../../../editionExtraitCopie/enum/DocumentEC";
+import { DocumentEC } from "../../../../../../../model/requete/enum/DocumentEC";
 import { IgnoreRequetePopin } from "../IgnoreRequetePopin";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {

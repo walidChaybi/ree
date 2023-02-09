@@ -23,6 +23,7 @@ import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import { getDefaultValuesCourrier } from "../../apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import { BoutonsTerminer } from "./BoutonsTerminer";
 
@@ -78,6 +79,7 @@ export const BoutonsTerminerOuRelecture: React.FC<
       requete: props.requete,
       regenererCourrier: true,
       acte: props.acte,
+      valeursCourrierParDefaut: getDefaultValuesCourrier(props.requete),
       callBack: () =>
         setMajStatutParams({
           libelleAction: "Requête reprise",

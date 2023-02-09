@@ -1,5 +1,9 @@
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
+import {
+  IMentionAffichage,
+  modificationEffectue
+} from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import {
@@ -9,116 +13,10 @@ import {
 } from "@model/etatcivil/enum/NatureMention";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import {
-  DocumentReponse,
-  IDocumentReponse
-} from "@model/requete/IDocumentReponse";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import messageManager from "@util/messageManager";
-import {
-  estNonRenseigne,
-  getLibelle,
-  getValeurOuVide,
-  shallowEgalTableau
-} from "@util/Utils";
+import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { fournisseurDonneesBandeauFactory } from "../../../../../fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
-import { gestionnaireRenumerotationMentions } from "./GestionnaireRenumerotationMentions";
-
-export interface IMentionAffichage {
-  texte: string;
-  estPresent: boolean;
-  nature: NatureMention;
-  id: string;
-  numeroOrdre: number;
-  aPoubelle: boolean;
-  nouveau?: boolean;
-}
-
-export function mappingVersMentionAffichage(
-  mentionsApi: IMention[],
-  document: IDocumentReponse,
-  natureActe?: NatureActe
-): IMentionAffichage[] {
-  let mentionsPourAffichage: IMentionAffichage[] = [];
-
-  if (DocumentDelivrance.estCopieIntegrale(document.typeDocument)) {
-    mentionsPourAffichage = mappingVersMentionAffichagePourCopieIntegrale(
-      mentionsApi,
-      document
-    );
-  } else if (
-    DocumentDelivrance.estExtraitAvecOuSansFilliation(document.typeDocument)
-  ) {
-    mentionsPourAffichage =
-      mappingVersMentionAffichagePourExtraitAvecOuSansFiliation(
-        mentionsApi,
-        document
-      );
-  } else if (DocumentDelivrance.estExtraitPlurilingue(document.typeDocument)) {
-    mentionsPourAffichage = mappingVersMentionAffichagePourExtraitPlurilingue(
-      mentionsApi,
-      document,
-      natureActe
-    );
-  }
-
-  return mentionsPourAffichage;
-}
-
-export function mappingVersMentionAffichagePourExtraitAvecOuSansFiliation(
-  mentionsApi: IMention[],
-  document: IDocumentReponse
-): IMentionAffichage[] {
-  const mentions =
-    Mention.filtreAvecTexteMentionEtTexteMentionDelivrance(mentionsApi);
-
-  Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions);
-
-  return mentions.map((mentionApi: IMention) => ({
-    nature: mentionApi.typeMention.nature,
-    texte: Mention.getTexteExtrait(mentionApi),
-    estPresent: DocumentReponse.nEstPasMentionRetiree(document, mentionApi),
-    id: mentionApi.id,
-    numeroOrdre: mentionApi.numeroOrdreExtrait,
-    aPoubelle: estNonRenseigne(mentionApi.textes.texteMention)
-  }));
-}
-
-export function mappingVersMentionAffichagePourExtraitPlurilingue(
-  mentionsApi: IMention[],
-  document: IDocumentReponse,
-  natureActe?: NatureActe
-): IMentionAffichage[] {
-  const mentions = Mention.filtrerFormaterEtTrierMentionsPlurilingues(
-    mentionsApi,
-    natureActe
-  );
-
-  // @ts-ignore le texteMentionPlurilingue n'est pas undefined
-  return mentions.map((mentionApi: IMention) => ({
-    nature: mentionApi.typeMention.nature,
-    texte: mentionApi.textes.texteMentionPlurilingue,
-    estPresent: DocumentReponse.nEstPasMentionRetiree(document, mentionApi),
-    id: mentionApi.id,
-    numeroOrdre: mentionApi.numeroOrdreExtrait,
-    aPoubelle: estNonRenseigne(mentionApi.textes.texteMention)
-  }));
-}
-
-export function mappingVersMentionAffichagePourCopieIntegrale(
-  mentionsApi: IMention[],
-  document: IDocumentReponse
-): IMentionAffichage[] {
-  const mentions = Mention.trierMentionsNumeroOrdreApposition([...mentionsApi]);
-
-  return mentions.map((mentionApi: IMention) => ({
-    nature: mentionApi.typeMention.nature,
-    texte: Mention.getTexteCopie(mentionApi),
-    estPresent: DocumentReponse.nEstPasMentionRetiree(document, mentionApi),
-    id: mentionApi.id,
-    numeroOrdre: mentionApi.numeroOrdre,
-    aPoubelle: mentionApi.textes.texteMention === null
-  }));
-}
 
 export function mappingVersListe(mentionsAffichage: IMentionAffichage[]) {
   return mentionsAffichage
@@ -132,71 +30,6 @@ export function mappingVersListe(mentionsAffichage: IMentionAffichage[]) {
         nouveau: mentionAffichage.nouveau
       };
     });
-}
-
-export function mappingVersMentionApi(mention: IMention) {
-  return {
-    numeroOrdreExtrait: mention.numeroOrdreExtrait,
-    textes: {
-      texteMentionDelivrance: mention.textes.texteMentionDelivrance
-    },
-    typeMention: {
-      nature: {
-        id: NatureMention.getUuidFromNature(mention.typeMention.nature)
-      }
-    },
-    id: mention.id
-  };
-}
-
-export function mappingVersMentionsApi(
-  mentionsApi: IMention[],
-  mentionsAffichage: IMentionAffichage[],
-  typeDocument: string
-) {
-  const mentionsRetirees: string[] = [];
-  const mentionsAEnvoyer: any[] = [];
-  const mentionsRenumerote =
-    gestionnaireRenumerotationMentions.renumerotationMentions(
-      mentionsAffichage,
-      mentionsApi,
-      typeDocument
-    );
-
-  mentionsRenumerote.forEach(mR => {
-    const mention = mentionsAffichage.find(mA => mA.id === mR.id);
-    const mentionAAjouter = {
-      numeroOrdreExtrait: mR.numeroOrdreExtrait,
-      textes: {
-        texteMentionDelivrance: mR.textes.texteMentionDelivrance,
-        texteMentionPlurilingue: mR.textes.texteMentionPlurilingue
-      },
-      typeMention: {
-        nature: {
-          id: NatureMention.getUuidFromNature(mR.typeMention.nature)
-        }
-      },
-      id: mR.id
-    };
-    if (mention) {
-      if (DocumentDelivrance.estExtraitPlurilingue(typeDocument)) {
-        mentionAAjouter.textes.texteMentionPlurilingue = mention.texte;
-      } else {
-        mentionAAjouter.textes.texteMentionDelivrance = mention.texte;
-      }
-      mentionAAjouter.typeMention.nature.id = NatureMention.getUuidFromNature(
-        mention.nature
-      );
-      mentionsAEnvoyer.push(mentionAAjouter);
-      if (!mention.estPresent) {
-        mentionsRetirees.push(mention.id);
-      }
-    } else {
-      mentionsAEnvoyer.push(mentionAAjouter);
-    }
-  });
-
-  return { mentionsAEnvoyer, mentionsRetirees };
 }
 
 export function miseAJourMention(
@@ -234,27 +67,7 @@ export function miseAJourMention(
   }
 }
 
-export function modificationEffectue(
-  mentions?: IMentionAffichage[],
-  mentionsApi?: IMention[],
-  document?: IDocumentReponse,
-  natureActe?: NatureActe
-) {
-  if (mentions && mentionsApi && document) {
-    if (
-      !shallowEgalTableau(
-        mentions,
-        mappingVersMentionAffichage(mentionsApi, document, natureActe)
-      )
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    return false;
-  }
-}
+
 
 export function handleReorga(
   mentions: IMentionAffichage[] | undefined,

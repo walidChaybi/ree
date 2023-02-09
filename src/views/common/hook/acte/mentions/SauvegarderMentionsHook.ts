@@ -1,4 +1,9 @@
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import {
+  IMentionAffichage,
+  mappingVersMentionsApi,
+  modificationEffectue
+} from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import {
@@ -6,11 +11,6 @@ import {
   IDocumentReponse
 } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import {
-  IMentionAffichage,
-  mappingVersMentionsApi,
-  modificationEffectue
-} from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import { getValeurOuVide, tousRenseignes } from "@util/Utils";
 import { useEffect, useState } from "react";
 import {

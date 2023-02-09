@@ -1,5 +1,5 @@
 import { sexeObligatoireValidation } from "@composant/formulaire/validation/SexeObligatoireValidation";
-import { IParentNaissanceForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/mapping/mappingActeVerFormulaireSaisirExtrait";
+import { IParentNaissanceForm } from "@model/form/delivrance/ISaisieExtraitForm";
 test("Attendu: sexeObligatoireValidation fonctionne correctement", () => {
   const createError = jest.fn(() => "erreur");
   const mockContext = {

@@ -95,6 +95,9 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
             reloadData={actionApresSignature}
             uniqueSignature={true}
             connectedUser={storeRece.utilisateurCourant}
+            validerMentionsPlusieursDocuments={
+              validerMentionsPlusieursDocuments
+            }
           />
           {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) && (
             <Bouton
