@@ -1,5 +1,7 @@
+import { useRMCActeApiHook } from "@hook/rmcActeInscription/RMCActeApiHook";
 import { ICriteresRechercheActeInscription } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
 import { useRMCInscriptionApiHook } from "@hook/rmcActeInscription/RMCInscriptionApiHook";
+import { useRMCAutoActeApiHook } from "@hook/rmcAuto/RMCAutoActeApiHook";
 import { useRMCAutoInscriptionApiHook } from "@hook/rmcAuto/RMCAutoInscriptionApiHook";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { TRequete } from "@model/requete/IRequete";
@@ -17,8 +19,6 @@ import {
   NB_LIGNES_PAR_PAGE_INSCRIPTION
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useCallback, useEffect, useState } from "react";
-import { useRMCActeApiHook } from "../../../common/hook/rmcActeInscription/RMCActeApiHook";
-import { useRMCAutoActeApiHook } from "../../../common/hook/rmcAuto/RMCAutoActeApiHook";
 import { DataRMCAuto } from "../../requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { RMCActeInscriptionResultats } from "../acteInscription/resultats/RMCActeInscriptionResultats";
 import { goToLinkRMC } from "../acteInscription/resultats/RMCTableauCommun";

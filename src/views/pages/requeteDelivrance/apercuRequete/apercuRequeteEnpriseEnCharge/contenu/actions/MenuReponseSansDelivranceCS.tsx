@@ -1,3 +1,4 @@
+import { useReponseSansDelivranceCS } from "@hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
 import { NOM_DOCUMENT_REFUS_FRANCAIS } from "@model/composition/IReponseSansDelivranceCSFrancaisComposition";
@@ -14,7 +15,6 @@ import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useReponseSansDelivranceCS } from "../../../../../../common/hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
 import {
   createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
   createReponseSansDelivranceCSPourCompositionApiFrancais,

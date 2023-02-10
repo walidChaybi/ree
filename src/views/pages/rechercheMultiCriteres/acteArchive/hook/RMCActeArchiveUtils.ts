@@ -1,3 +1,4 @@
+import { getCriteresTitulaire } from "@hook/rmcActeInscription/mapping/RMCMappingUtil";
 import { IRMCArchiveRequest } from "@model/rmc/acteArchive/envoi/IRMCArchiveRequest";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import {
@@ -5,7 +6,6 @@ import {
   getDateFinFromDateCompose
 } from "@util/DateUtils";
 import { getValeurOuUndefined } from "@util/Utils";
-import { getCriteresTitulaire } from "../../../../common/hook/rmcActeInscription/mapping/RMCMappingUtil";
 
 /** Critères de recherche: mapping avant appel d'api */
 export function mappingCriteres(criteres: IRMCActeArchive): IRMCArchiveRequest {

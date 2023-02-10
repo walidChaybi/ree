@@ -9,6 +9,8 @@ import {
   TITULAIRE_EVT_1,
   TITULAIRE_EVT_2
 } from "@composant/formulaire/ConstantesNomsForm";
+import { EvenementForm } from "@composant/formulaire/EvenementForm";
+import { EvenementValidationSchema } from "@composant/formulaire/validation/EvenementValidationSchema";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";
@@ -27,8 +29,6 @@ import { DateValidationSchema } from "@widget/formulaire/champsDate/DateComposeF
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import React from "react";
 import * as Yup from "yup";
-import { EvenementForm } from "../../../../../../common/composant/formulaire/EvenementForm";
-import { EvenementValidationSchema } from "../../../../../../common/composant/formulaire/validation/EvenementValidationSchema";
 import { ContratMariageForm } from "./contenu/sousFormulaires/ContratMariageForm";
 import { DernierConjointForm } from "./contenu/sousFormulaires/DernierConjointForm";
 import { DonneesComplementairesPlurilingue } from "./contenu/sousFormulaires/DonneesComplementairesPlurilingue";

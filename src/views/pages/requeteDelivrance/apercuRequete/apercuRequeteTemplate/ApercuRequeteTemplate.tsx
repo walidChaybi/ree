@@ -1,4 +1,5 @@
 import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuRequete";
+import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -6,7 +7,6 @@ import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { useDetailRequeteApiHook } from "../../../../common/hook/requete/DetailRequeteHook";
 import { ApercuRequetePartieGauche } from "../apercuRequetePartieGauche/ApercuRequetePartieGauche";
 import "./scss/ApercuRequeteTemplate.scss";
 

@@ -1,3 +1,4 @@
+import { useRMCActeApiHook } from "@hook/rmcActeInscription/RMCActeApiHook";
 import { ICriteresRechercheActeInscription } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
 import { useRMCInscriptionApiHook } from "@hook/rmcActeInscription/RMCInscriptionApiHook";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
@@ -6,14 +7,13 @@ import { stockageDonnees } from "@util/stockageDonnees";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { AutoScroll } from "@widget/autoScroll/autoScroll";
 import {
-  NB_LIGNES_PAR_APPEL_ACTE,
-  NB_LIGNES_PAR_APPEL_INSCRIPTION,
-  NB_LIGNES_PAR_PAGE_ACTE,
-  NB_LIGNES_PAR_PAGE_INSCRIPTION
+    NB_LIGNES_PAR_APPEL_ACTE,
+    NB_LIGNES_PAR_APPEL_INSCRIPTION,
+    NB_LIGNES_PAR_PAGE_ACTE,
+    NB_LIGNES_PAR_PAGE_INSCRIPTION
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ToastContainer } from "react-toastify";
-import { useRMCActeApiHook } from "../../../common/hook/rmcActeInscription/RMCActeApiHook";
 import { RMCActeInscriptionResultats } from "./resultats/RMCActeInscriptionResultats";
 import { goToLinkRMC } from "./resultats/RMCTableauCommun";
 import { RMCActeInscriptionForm } from "./RMCActeInscriptionForm";

@@ -1,3 +1,4 @@
+import { VisionneuseActe } from "@composant/visionneuseActe/VisionneuseActe";
 import { Droit } from "@model/agent/enum/Droit";
 import {
   officierDroitConsulterSurLeTypeRegistre,
@@ -9,7 +10,6 @@ import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteAr
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
 import React from "react";
-import { VisionneuseActe } from "../../../../../common/composant/visionneuseActe/VisionneuseActe";
 import { IAccordionReceSection } from "../../../FicheUtils";
 import { getFichesPersonneActe } from "../personne/FichePersonne";
 import { getEvenement } from "./EvenementActeUtils";

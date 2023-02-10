@@ -1,9 +1,9 @@
 import { creationRequeteDelivrance } from "@api/appels/requeteApi";
+import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { mappingRequeteDelivrance } from "../../../../common/hook/requete/DetailRequeteHook";
 import { CreationRequeteRDC } from "../modelForm/ISaisirRDCPageModel";
 import { mappingFormulaireRDCVersRequeteDelivrance } from "./mappingFormulaireRDCVersRequeteDelivrance";
 

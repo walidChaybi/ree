@@ -1,8 +1,8 @@
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import InputFieldAvecBoutonMajuscule from "@widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import { NB_CARACT_MAX_SAISIE } from "@widget/formulaire/utils/FormUtil";
 import React from "react";
-import InputFieldAvecBoutonMajuscule from "../../../../../common/widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
 export function getBlockRaisonSocialeNomPrenom(
   raisonSocialeWithNamespace: string,
   libelleChampRaisonSociale: string,

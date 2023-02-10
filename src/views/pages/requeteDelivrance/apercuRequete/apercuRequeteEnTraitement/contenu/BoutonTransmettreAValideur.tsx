@@ -1,17 +1,17 @@
+import { listeValideurToOptions } from "@composant/menuTransfert/MenuTransfertUtil";
+import { TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
 import {
   ITransmettreAValideurParams,
   useTransmettreAValideurApiHook
 } from "@hook/requete/TransmettreAValideur";
 import { receUrl } from "@router/ReceUrls";
 import { getUrlPrecedente } from "@util/route/routeUtil";
+import { storeRece } from "@util/storeRece";
 import { Option } from "@util/Type";
+import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { listeValideurToOptions } from "../../../../../common/composant/menuTransfert/MenuTransfertUtil";
-import { TransfertPopin } from "../../../../../common/composant/menuTransfert/TransfertPopin";
-import { storeRece } from "../../../../../common/util/storeRece";
-import { getLibelle } from "../../../../../common/util/Utils";
 
 interface BoutonTransmettreAValideurProps {
   idRequete: string;

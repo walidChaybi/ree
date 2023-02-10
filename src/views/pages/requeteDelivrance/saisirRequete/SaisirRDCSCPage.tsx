@@ -9,6 +9,7 @@ import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAutoDelivrance
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import { useReponseSansDelivranceCS } from "@hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
 import {
   CreationActionHookParams,
   useCreationAction
@@ -17,6 +18,7 @@ import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
+import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import {
   TypePieceJointe,
   usePostPiecesJointesApi
@@ -48,8 +50,6 @@ import { FormikProps, FormikValues } from "formik";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import { useReponseSansDelivranceCS } from "../../../common/hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
-import { useDetailRequeteApiHook } from "../../../common/hook/requete/DetailRequeteHook";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { ADonneesTitulaireRequeteAbsentes } from "../espaceDelivrance/EspaceDelivranceUtils";
 import SaisirRequeteBoutons, {

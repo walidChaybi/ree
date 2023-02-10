@@ -1,13 +1,13 @@
+import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import {
   IRequeteCreationEtablissement,
   RequeteCreationEtablissement
 } from "@model/requete/IRequeteCreationEtablissement";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
+import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { useDetailRequeteApiHook } from "../../../../common/hook/requete/DetailRequeteHook";
-import ConteneurRetractable from "../../../../common/widget/conteneurRetractable/ConteneurRetractable";
 import { OngletPiecesJustificatives } from "../../commun/composants/OngletPiecesJustificatives";
 import Labels from "../../commun/Labels";
 import "../../commun/scss/ApercuReqCreationPage.scss";

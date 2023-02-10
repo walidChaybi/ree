@@ -5,8 +5,8 @@ import {
   formatMajusculesMinusculesMotCompose,
   getLibelle
 } from "@util/Utils";
+import { LienEmail } from "@widget/contact/LienEmail";
 import React from "react";
-import { LienEmail } from "../../../../../../../common/widget/contact/LienEmail";
 import Labels, { INFOS } from "../../../../../commun/Labels";
 import { formatagePrenoms } from "../../../mappingIRequeteCreationVersResumeRequeteCreationProps";
 import { formatLigneAdresse, formatLigneNationalites } from "../../Formatages";

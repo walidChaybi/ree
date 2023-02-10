@@ -1,9 +1,9 @@
 import { rechercheMultiCriteresPersonne } from "@api/appels/etatcivilApi";
+import { mappingPersonnesTableau } from "@hook/rmcActeInscription/mapping/RMCMappingUtil";
 import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import { IRMCAutoPersonneResultat } from "../../../../../model/rmc/personne/IRMCAutoPersonneResultat";
-import { mappingPersonnesTableau } from "../../../../common/hook/rmcActeInscription/mapping/RMCMappingUtil";
 import { IRequeteCreationTranscription } from "./../../../../../model/requete/IRequeteCreationTranscription";
 import { mapRequeteVersRMCAutoPersonneParams } from "./RMCAutoPersonneUtils";
 

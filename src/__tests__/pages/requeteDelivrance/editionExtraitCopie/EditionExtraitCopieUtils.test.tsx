@@ -1,7 +1,7 @@
+import { getOngletSelectVenantDePriseEnCharge } from "@hook/requete/creerCourrierECHook";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentEC } from "@model/requete/enum/DocumentEC";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { getOngletSelectVenantDePriseEnCharge } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
 
 test("getOngletSelectVenantDePriseEnCharge", () => {
   expect(

@@ -7,6 +7,7 @@ import {
 import { TypeMandant } from "@model/requete/enum/TypeMandant";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import InputFieldAvecBoutonMajuscule from "@widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
@@ -18,7 +19,6 @@ import {
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import InputFieldAvecBoutonMajuscule from "../../../../../common/widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
 import "./scss/MandantForm.scss";
 
 // Valeurs par défaut des champs

@@ -12,7 +12,6 @@ import { OptionCourrier } from "@model/requete/IOptionCourrier";
 import {
   controleFormulaire,
   getDefaultValuesCourrier,
-  getStatutApresChoixDelivrance,
   getTypesCourrier
 } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import request from "superagent";
@@ -212,12 +211,14 @@ test("controle formulaire", () => {
 
 test("getStatutEnTraitement", () => {
   expect(
-    getStatutApresChoixDelivrance(
+    ChoixDelivrance.getStatutApresChoixDelivrance(
       ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
     )
   ).toBe(StatutRequete.A_SIGNER);
   expect(
-    getStatutApresChoixDelivrance(ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE)
+    ChoixDelivrance.getStatutApresChoixDelivrance(
+      ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE
+    )
   ).toBe(StatutRequete.A_VALIDER);
 });
 

@@ -1,9 +1,9 @@
 import { rechercheMultiCriteresActes } from "@api/appels/etatcivilApi";
+import { mappingActes } from "@hook/rmcActeInscription/mapping/RMCMappingUtil";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { getParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { mappingActes } from "../../../../common/hook/rmcActeInscription/mapping/RMCMappingUtil";
 import {
   IRMCActeApiHookResultat,
   RESULTAT_NON_DEFINIT

@@ -255,7 +255,7 @@ function getIndexDocument(
   return res;
 }
 
-function getOngletSelectVenantDePriseEnCharge(
+export function getOngletSelectVenantDePriseEnCharge(
   sousType: SousTypeDelivrance,
   choixDelivrance?: ChoixDelivrance
 ) {

@@ -1,16 +1,18 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
+import {
+  IMentionAffichage,
+  mappingVersMentionAffichage,
+  mappingVersMentionsApi,
+  modificationEffectue
+} from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   aucuneMentionsAffichageNationalite,
   handleCheckBox,
   handleReorga,
-  IMentionAffichage,
-  mappingVersMentionAffichage,
-  mappingVersMentionsApi,
   miseAjourEnFonctionNature,
-  modificationEffectue,
   texteEnFonctionOpposableAuTiers,
   texteNonModifieNatureChangePasDeTexteDelivrance,
   validerMentions

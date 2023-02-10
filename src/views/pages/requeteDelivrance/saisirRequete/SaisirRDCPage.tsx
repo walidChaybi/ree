@@ -23,6 +23,7 @@ import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
+import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import {
   TypePieceJointe,
   usePostPiecesJointesApi
@@ -61,7 +62,6 @@ import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import { useDetailRequeteApiHook } from "../../../common/hook/requete/DetailRequeteHook";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps

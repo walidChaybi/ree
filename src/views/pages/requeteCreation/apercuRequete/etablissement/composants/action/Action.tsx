@@ -1,12 +1,12 @@
+import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationRequete";
 import { RECEContext } from "@core/body/RECEContext";
 import { autorisePrendreEnChargeDepuisPageCreation } from "@util/RequetesUtils";
+import { getLibelle } from "@util/Utils";
 import React, { useContext } from "react";
 import { useParams } from "react-router";
 import { IUuidRequeteParams } from "../../../../../../../model/params/IUuidRequeteParams";
 import { IEchange } from "../../../../../../../model/requete/IEchange";
 import { IRequeteCreationEtablissement } from "../../../../../../../model/requete/IRequeteCreationEtablissement";
-import { SuiviObservationsRequete } from "../../../../../../common/composant/suivis/SuiviObservationRequete";
-import { getLibelle } from "../../../../../../common/util/Utils";
 import { BoutonPrendreEnChargeCreation } from "../BoutonPrendreEnChargeCreation";
 import { Item } from "../item/Item";
 import { ItemEchangesRetourSDANF } from "../item/ItemEchangesRetourSDANF";

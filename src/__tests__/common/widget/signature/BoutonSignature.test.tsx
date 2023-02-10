@@ -2,6 +2,7 @@ import { Orientation } from "@model/composition/enum/Orientation";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { validerMentionsPlusieursDocuments } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import { createEvent, fireEvent, screen, waitFor } from "@testing-library/dom";
 import { act, render } from "@testing-library/react";
 import { BoutonSignature } from "@widget/signature/BoutonSignature";
@@ -74,6 +75,8 @@ test("renders titre bouton signature par lot", async () => {
         reloadData={() => {
           return null;
         }}
+        checkDirtyActive={false}
+        validerMentionsPlusieursDocuments={validerMentionsPlusieursDocuments}
       />
     );
   });
@@ -97,6 +100,8 @@ test("renders titre bouton signature", () => {
       reloadData={() => {
         return null;
       }}
+      checkDirtyActive={false}
+      validerMentionsPlusieursDocuments={validerMentionsPlusieursDocuments}
     />
   );
   const linkElement = screen.getByText(/Signer/i);
@@ -115,6 +120,8 @@ test("renders titre bouton signature 2", async () => {
       reloadData={() => {
         return null;
       }}
+      checkDirtyActive={false}
+      validerMentionsPlusieursDocuments={validerMentionsPlusieursDocuments}
     />
   );
   const linkElement = screen.getByText(/Signer/i);

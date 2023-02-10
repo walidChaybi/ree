@@ -1,8 +1,8 @@
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
+import { VisionneuseActe } from "@composant/visionneuseActe/VisionneuseActe";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import React from "react";
-import { VisionneuseActe } from "../../../../../common/composant/visionneuseActe/VisionneuseActe";
 
 interface VisionneuseActeEditionProps {
   acte?: IFicheActe;

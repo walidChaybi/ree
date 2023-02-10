@@ -10,6 +10,7 @@ import {
 import DeclarationConjointeForm from "@composant/formulaire/DeclarationConjointeForm";
 import { EvenementForm } from "@composant/formulaire/EvenementForm";
 import NomSecableForm from "@composant/formulaire/NomSecableForm";
+import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import {
   ITitulaireActe,
@@ -28,7 +29,6 @@ import {
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useContext } from "react";
-import PrenomsForm from "../../../../../../../../common/composant/formulaire/nomsPrenoms/PrenomsForm";
 import { SaisirExtraitFormContext } from "../../SaisirExtraitForm";
 import { EvenementNaissanceAgeDeForm } from "./EvenementNaissanceAgeDeForm";
 import { getLabels } from "./LabelsUtil";
