@@ -1,12 +1,11 @@
 import { IPrenom } from "@model/etatcivil/fiche/IPrenom";
+import { SimplePersonne } from "@model/etatcivil/fiche/SimplePersonne";
 import {
   formatNom,
   formatPrenom,
   triListeObjetsSurPropriete
 } from "@util/Utils";
 import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
-import { SimplePersonne } from "./IFournisseurDonneesBandeau";
-
 export class FournisseurDonneeBandeauRcRca extends FournisseurDonneesBandeau {
   getPersonnesAsAny(): any[] {
     return triListeObjetsSurPropriete(this.data.interesses, "numeroOrdreSaisi");

@@ -26,6 +26,12 @@ import {
   TYPE_MANDANT,
   VILLE_EVENEMENT
 } from "@composant/formulaire/ConstantesNomsForm";
+import {
+  Evenement,
+  LienTitulaire,
+  Mandant,
+  Requete
+} from "@model/form/delivrance/ISaisirRequetePageForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
@@ -41,14 +47,8 @@ import {
   ITitulaireRequete,
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
-import {
-  Evenement,
-  LienTitulaire,
-  Mandant,
-  Requete
-} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import { getValeurOuVide } from "@util/Utils";
-import { SaisieRequeteRDC } from "../modelForm/ISaisirRDCPageModel";
+import { SaisieRequeteRDC } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
 import { IdentiteFormDefaultValues } from "../sousFormulaires/identite/IdentiteForm";
 import { saisiePJ } from "./mappingCommun";
 import {

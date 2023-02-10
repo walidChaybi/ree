@@ -1,7 +1,3 @@
-import {
-  IElementsJasperCourrier,
-  OptionsJasper
-} from "@hook/generation/generationCourrierHook/specificationCourrier";
 import { IRequeteDelivrance } from "../requete/IRequeteDelivrance";
 import {
   CommunComposition,
@@ -15,6 +11,25 @@ import {
   IRequerantComposition,
   RequerantComposition
 } from "./commun/IRequerantComposition";
+
+export interface OptionsJasper {
+  option?: string;
+  option_puce?: string;
+}
+
+export interface IElementsJasperCourrier {
+  nomTitulaire1: string;
+  prenomsTitulaire1: string;
+  nomTitulaire2: string;
+  prenomsTitulaire2: string;
+  options: OptionsJasper[];
+  texteLibre: string;
+  optionsTexteLibre: OptionsJasper[];
+  referenceActe: string;
+  natureActe: string;
+  texte_variable_RDD?: string;
+  texte_variable_RDC?: string;
+}
 
 export interface ICourrierComposition
   extends IParametresComposition,

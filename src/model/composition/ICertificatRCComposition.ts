@@ -1,4 +1,3 @@
-import { IElementsJasperCertificatRC } from "@hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRC";
 import { TypeCanal } from "../requete/enum/TypeCanal";
 import { IRequerant } from "../requete/IRequerant";
 import { ITitulaireRequeteTableau } from "../requete/ITitulaireRequeteTableau";
@@ -20,6 +19,19 @@ import {
 } from "./commun/ITitulaireComposition";
 
 export const NOM_DOCUMENT_CERTIFICAT_RC = "Certificat d'inscription au RC";
+
+export interface IElementsJasperCertificatRC {
+  anneeInscription?: string;
+  numeroInscription?: string;
+  decisionRecue1?: string;
+  decisionRecue2?: string;
+  interesseDecision?: string;
+  regime?: string;
+  renouvellementModification?: string;
+  decisionExequatur?: string;
+  duree?: string;
+  paragrapheFin?: string;
+}
 export interface ICertificatRCComposition
   extends IParametresComposition,
     ICommunComposition,

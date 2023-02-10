@@ -10,6 +10,7 @@ import {
   TITULAIRE2
 } from "@composant/formulaire/ConstantesNomsForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { PieceJointe } from "@util/FileUtils";
 import {
   Adresse,
   Evenement,
@@ -18,8 +19,7 @@ import {
   Mandant,
   Requerant,
   Requete
-} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
-import { PieceJointe } from "@util/FileUtils";
+} from "./ISaisirRequetePageForm";
 
 export interface CreationRequeteRDC {
   saisie: SaisieRequeteRDC;

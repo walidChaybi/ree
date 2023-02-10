@@ -1,5 +1,5 @@
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { useEffect, useState } from "react";
 import {

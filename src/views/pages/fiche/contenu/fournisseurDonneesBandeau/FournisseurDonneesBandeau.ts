@@ -1,9 +1,9 @@
-import IFournisseurDonneesBandeau, {
-  SimplePersonne
-} from "./IFournisseurDonneesBandeau";
+import { SimplePersonne } from "@model/etatcivil/fiche/SimplePersonne";
+import IFournisseurDonneesBandeau from "./IFournisseurDonneesBandeau";
 
 export abstract class FournisseurDonneesBandeau
-  implements IFournisseurDonneesBandeau {
+  implements IFournisseurDonneesBandeau
+{
   personnes: SimplePersonne[];
 
   constructor(protected data: any) {

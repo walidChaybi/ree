@@ -1,8 +1,7 @@
 /* istanbul ignore file */
 
-export class SimplePersonne {
-  constructor(public nom: string, public prenom: string) {}
-}
+import { SimplePersonne } from "@model/etatcivil/fiche/SimplePersonne";
+
 
 export default interface IFournisseurDonneesBandeau {
   getData(): any;

@@ -5,6 +5,7 @@ import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
 import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
 import { TypeMandant } from "@model/requete/enum/TypeMandant";
 import { IAdresseRequerant } from "@model/requete/IAdresseRequerant";
+import { IdentiteType } from "@model/requete/IdentiteType";
 import {
   EvenementReqDelivrance,
   IEvenementReqDelivrance
@@ -38,7 +39,6 @@ import {
 import { ItemLibelle } from "./item/ItemLibelle";
 import { ItemMultiLignes } from "./item/ItemMultiLignes";
 import "./scss/ResumeRequetePartieHaute.scss";
-import { IdentiteType } from "./Types";
 
 interface ResumeRequetePartieHauteProps {
   requete: IRequeteDelivrance;

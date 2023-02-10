@@ -1,7 +1,7 @@
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import React from "react";
+import { DateCoordonneesType } from "../../../../../../../../model/requete/DateCoordonneesType";
 import { formatageDateNaissanceRetenueSdanf } from "../../Formatages";
-import { DateCoordonneesType } from "../../Types";
 import { ItemLigneSdanf } from "../ItemLigneSdanf";
 
 interface LigneDateNaissanceAdresseProps {

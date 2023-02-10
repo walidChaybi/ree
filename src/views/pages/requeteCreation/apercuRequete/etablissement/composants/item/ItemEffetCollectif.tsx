@@ -1,5 +1,8 @@
+import { DateCoordonneesType } from "@model/requete/DateCoordonneesType";
 import { Residence } from "@model/requete/enum/Residence";
+import { IdentiteType } from "@model/requete/IdentiteType";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
+import { NationaliteType } from "@model/requete/NationaliteType";
 import {
   estRenseigne,
   formatLigne,
@@ -10,14 +13,12 @@ import React from "react";
 import Labels from "../../../../commun/Labels";
 import { formatagePrenoms } from "../../mappingIRequeteCreationVersResumeRequeteCreationProps";
 import { formatLigneNationalites } from "../Formatages";
-import { DateCoordonneesType, IdentiteType, NationaliteType } from "../Types";
 import Item, { ItemProps } from "./Item";
 import { ItemLigne } from "./ItemLigne";
 import { ItemLigneSdanf } from "./ItemLigneSdanf";
 import ItemParent, { ItemParentProps } from "./ItemParent";
 import { LigneDateNaissanceAdresse } from "./itemTitulaire/LigneDateNaissanceAdresse";
 import { LigneFrancisationIdentification } from "./itemTitulaire/LigneFrancisationIdentification";
-
 export interface ItemEffetCollectifProps {
   numeros: {
     requeteLiee?: string;

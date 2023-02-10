@@ -1,6 +1,6 @@
-import { TypePieceJointe } from "@hook/requete/piecesJointes/communPieceJointe";
 import { DocumentPJ, IDocumentPJ } from "@model/requete/IDocumentPj";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
+import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import { typeFctRenommePieceJustificative } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { estRenseigne } from "@util/Utils";

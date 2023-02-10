@@ -8,6 +8,7 @@ import {
   ICreerCourrierECParams,
   useCreerCourrierEC
 } from "@hook/requete/creerCourrierECHook";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -28,7 +29,6 @@ import { Formulaire } from "@widget/formulaire/Formulaire";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
-import { SaisieCourrier } from "../../../../../../model/form/delivrance/ISaisieCourrier";
 import {
   controleFormulaire,
   courrierExiste,

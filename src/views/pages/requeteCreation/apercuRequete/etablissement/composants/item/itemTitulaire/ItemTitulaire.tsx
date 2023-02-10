@@ -7,15 +7,13 @@ import {
 } from "@util/Utils";
 import { LienEmail } from "@widget/contact/LienEmail";
 import React from "react";
+import { DateCoordonneesType } from "../../../../../../../../model/requete/DateCoordonneesType";
+import { DomiciliationType } from "../../../../../../../../model/requete/DomiciliationType";
+import { IdentiteType } from "../../../../../../../../model/requete/IdentiteType";
+import { NationaliteType } from "../../../../../../../../model/requete/NationaliteType";
 import Labels, { INFOS } from "../../../../../commun/Labels";
 import { formatagePrenoms } from "../../../mappingIRequeteCreationVersResumeRequeteCreationProps";
 import { formatLigneAdresse, formatLigneNationalites } from "../../Formatages";
-import {
-  DateCoordonneesType,
-  DomiciliationType,
-  IdentiteType,
-  NationaliteType
-} from "../../Types";
 import Item, { ItemProps } from "../Item";
 import { ItemLigne } from "../ItemLigne";
 import { ItemLigneSdanf } from "../ItemLigneSdanf";
@@ -87,7 +85,7 @@ const ItemTitulaire: React.FC<ItemTitulaireProps & ItemProps> = props => {
         retenueSdanf={props.retenueSdanf}
       />
 
-      <ItemLigne texte={props.identite.genre.libelle} />
+      <ItemLigne texte={props.identite.genre?.libelle} />
 
       <LigneDateNaissanceAdresse
         naissance={props.naissance}

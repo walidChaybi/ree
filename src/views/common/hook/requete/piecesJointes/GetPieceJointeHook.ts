@@ -3,10 +3,10 @@ import {
   getPieceJustificativeById
 } from "@api/appels/requeteApi";
 import { IPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
+import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { TypePieceJointe } from "./PostPiecesJointesHook";
 
 export function useGetPieceJointeApi(
   type: TypePieceJointe,

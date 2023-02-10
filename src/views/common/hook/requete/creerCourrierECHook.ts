@@ -11,7 +11,7 @@ import {
   mappingVersMentionApi,
   Mention
 } from "@model/etatcivil/acte/mention/IMention";
-import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentEC } from "@model/requete/enum/DocumentEC";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -36,6 +36,7 @@ import {
 } from "../generation/generationECHook/generationECHook";
 import { estPresentIdActeEtChoixDelivrance } from "../generation/generationECHook/generationECHookUtil";
 import { IResultGenerationUnDocument } from "../generation/generationUtils";
+
 
 export interface ICreerCourrierECParams {
   idActe?: string;

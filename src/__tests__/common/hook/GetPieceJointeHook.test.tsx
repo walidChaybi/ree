@@ -1,5 +1,5 @@
-import { TypePieceJointe } from "@hook/requete/piecesJointes/communPieceJointe";
 import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointeHook";
+import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";

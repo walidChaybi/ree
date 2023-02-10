@@ -1,12 +1,14 @@
 import { ListePiecesJointes } from "@composant/piecesJointes/ListePiecesJointes";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { TypePieceJointe } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { mAppartient } from "@model/agent/IOfficier";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IPieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
+import {
+  IPieceJointe,
+  TypePieceJointe
+} from "@model/requete/pieceJointe/IPieceJointe";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import {
   receUrl,

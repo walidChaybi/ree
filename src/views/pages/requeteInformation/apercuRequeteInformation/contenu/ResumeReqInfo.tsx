@@ -1,12 +1,14 @@
 import { ListePiecesJointes } from "@composant/piecesJointes/ListePiecesJointes";
-import { TypePieceJointe } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { Requerant } from "@model/requete/IRequerant";
 import { Requete } from "@model/requete/IRequete";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { IPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
-import { IPieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
+import {
+  IPieceJointe,
+  TypePieceJointe
+} from "@model/requete/pieceJointe/IPieceJointe";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPanel, SectionPanelProps } from "@widget/section/SectionPanel";

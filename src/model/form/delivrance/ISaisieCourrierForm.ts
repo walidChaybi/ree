@@ -15,10 +15,7 @@ import {
   TEXTE_LIBRE,
   TYPE_MEMO
 } from "@composant/formulaire/ConstantesNomsForm";
-import {
-  Adresse,
-  Requete
-} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import { Adresse, Requete } from "./ISaisirRequetePageForm";
 
 export interface SaisieCourrier {
   [CHOIX_COURRIER]: ChoixCourrier;

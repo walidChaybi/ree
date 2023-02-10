@@ -25,7 +25,7 @@ import {
   TEXTE_LIBRE,
   VOIE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {

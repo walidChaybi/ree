@@ -1,4 +1,4 @@
-import { TypePieceJointe } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
+import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import {
   act,
   fireEvent,

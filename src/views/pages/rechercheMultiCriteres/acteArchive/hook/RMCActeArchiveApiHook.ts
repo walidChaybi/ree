@@ -1,13 +1,13 @@
 import { rechercheMultiCriteresActes } from "@api/appels/etatcivilApi";
 import { mappingActes } from "@hook/rmcActeInscription/mapping/RMCMappingUtil";
+import {
+  IRMCActeApiHookResultat,
+  RESULTAT_NON_DEFINIT
+} from "@hook/rmcActeInscription/RMCActeEtActeArchiveHookUtil";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { getParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import {
-  IRMCActeApiHookResultat,
-  RESULTAT_NON_DEFINIT
-} from "../../common/hook/RMCActeEtActeArchiveHookUtil";
 import { mappingCriteres } from "./RMCActeArchiveUtils";
 
 export interface ICriteresRechercheActeArchive {

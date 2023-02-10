@@ -1,3 +1,4 @@
+import { SimplePersonne } from "@model/etatcivil/fiche/SimplePersonne";
 import {
   compactObject,
   formatDe,
@@ -9,8 +10,6 @@ import {
   triListeObjetsSurPropriete
 } from "@util/Utils";
 import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
-import { SimplePersonne } from "./IFournisseurDonneesBandeau";
-
 export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
   getPersonnesAsAny(): any[] {
     return this.data

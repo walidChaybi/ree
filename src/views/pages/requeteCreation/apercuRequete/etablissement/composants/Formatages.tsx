@@ -6,13 +6,11 @@ import {
   LigneType
 } from "@util/Utils";
 import React from "react";
+import { DateCoordonneesType } from "../../../../../../model/requete/DateCoordonneesType";
+import { DomiciliationType } from "../../../../../../model/requete/DomiciliationType";
+import { IdentiteType } from "../../../../../../model/requete/IdentiteType";
+import { NationaliteType } from "../../../../../../model/requete/NationaliteType";
 import Labels from "../../../commun/Labels";
-import {
-  DateCoordonneesType,
-  DomiciliationType,
-  IdentiteType,
-  NationaliteType
-} from "./Types";
 
 // Même utilité que formatLigne(), mais traite également les éléments JSX en plus des string dans tab[]
 export const formatLigneSpecificite = (

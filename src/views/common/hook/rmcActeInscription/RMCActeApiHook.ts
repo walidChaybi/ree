@@ -3,16 +3,17 @@ import { getParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { execute } from "@util/Utils";
 import { useEffect, useState } from "react";
+import { mappingActes } from "./mapping/RMCMappingUtil";
 import {
   IRMCActeApiHookResultat,
   RESULTAT_NON_DEFINIT
-} from "../../../pages/rechercheMultiCriteres/common/hook/RMCActeEtActeArchiveHookUtil";
-import { mappingActes } from "./mapping/RMCMappingUtil";
+} from "./RMCActeEtActeArchiveHookUtil";
 import {
   ICriteresRechercheActeInscription,
   mappingCriteres,
   rechercherActeAutorise
 } from "./RMCActeInscriptionUtils";
+
 
 export function useRMCActeApiHook(
   criteres?: ICriteresRechercheActeInscription

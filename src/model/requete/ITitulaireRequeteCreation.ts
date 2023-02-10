@@ -1,13 +1,13 @@
-import { DateCoordonneesType } from "@pages/requeteCreation/apercuRequete/etablissement/composants/Types";
-import { IEvenementUnion } from "../IEvenementUnion";
-import { IPrenomOrdonnes } from "../IPrenomOrdonnes";
-import { IRetenueSdanf } from "../IRetenueSdanf";
+import { DateCoordonneesType } from "@model/requete/DateCoordonneesType";
+import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
+import { IEvenementUnion } from "./IEvenementUnion";
+import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
+import { IRetenueSdanf } from "./IRetenueSdanf";
 import {
   IDomiciliation,
   INationalite,
   ITitulaireRequete
-} from "../ITitulaireRequete";
-import { TypeObjetTitulaire } from "./TypeObjetTitulaire";
+} from "./ITitulaireRequete";
 
 export interface ITitulaireRequeteCreation extends ITitulaireRequete {
   villeEtrangereNaissance?: string;

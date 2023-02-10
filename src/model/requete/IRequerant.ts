@@ -1,4 +1,3 @@
-import { getAdresse } from "@pages/requeteDelivrance/saisirRequete/hook/mappingFormulaireRDCSCVersRequeteDelivrance";
 import {
   chainesEgalesIgnoreCasse,
   enMajuscule,
@@ -160,20 +159,7 @@ export const Requerant = {
     }
     return { premiereLigne: ligne1, deuxiemeLigne: ligne2 };
   },
-  ///////// mapping des requerants pour envoi au serveur //////////
-  setRequerant(requeteSaisie: any): IRequerant | undefined {
-    if (requeteSaisie.requerant.typeRequerant === "MANDATAIRE") {
-      return getRequerantMandataire(requeteSaisie);
-    } else if (requeteSaisie.requerant.typeRequerant === "INSTITUTIONNEL") {
-      return getRequerantInstitutionnel(requeteSaisie);
-    } else if (requeteSaisie.requerant.typeRequerant === "PARTICULIER") {
-      return getRequerantParticulier(requeteSaisie);
-    } else if (requeteSaisie.requerant.typeRequerant === "INTERESSE") {
-      return getRequerantInteresse(requeteSaisie);
-    } else {
-      return undefined;
-    }
-  },
+
   ///////// mapping des requerants venant du serveur //////////
   mappingRequerant(requerant: any): IRequerant {
     return {
@@ -236,79 +222,4 @@ function getInstitutionnel(institutionnel: any): IInstitutionnel {
     };
   }
   return {} as IInstitutionnel;
-}
-
-///////// mapping des requerants pour envoi au serveur //////////
-function getRequerantMandataire(requeteSaisie: any): IRequerant {
-  const requerantSaisi = requeteSaisie.requerant;
-  return {
-    nomFamille: requerantSaisi.mandataire.nom
-      ? requerantSaisi.mandataire.nom
-      : SNP,
-    prenom: getValeurOuVide(requerantSaisi.mandataire.prenom),
-    courriel: requeteSaisie.adresse.adresseCourriel,
-    telephone: requeteSaisie.adresse.numeroTelephone,
-    adresse: getAdresse(requeteSaisie.adresse),
-    qualiteRequerant: {
-      qualite: Qualite.MANDATAIRE_HABILITE,
-      mandataireHabilite: {
-        type: TypeMandataireReq.getEnumFor(requerantSaisi.mandataire.type),
-        nature: requerantSaisi.mandataire.nature,
-        raisonSociale: requerantSaisi.mandataire.raisonSociale
-      }
-    }
-  } as IRequerant;
-}
-
-function getRequerantInstitutionnel(requeteSaisie: any): IRequerant {
-  const requerantSaisi = requeteSaisie.requerant;
-  return {
-    nomFamille: requerantSaisi.institutionnel.nom
-      ? requerantSaisi.institutionnel.nom
-      : SNP,
-    prenom: getValeurOuVide(requerantSaisi.institutionnel.prenom),
-    courriel: requeteSaisie.adresse.adresseCourriel,
-    telephone: requeteSaisie.adresse.numeroTelephone,
-    adresse: getAdresse(requeteSaisie.adresse),
-    qualiteRequerant: {
-      qualite: Qualite.INSTITUTIONNEL,
-      institutionnel: {
-        type: TypeInstitutionnel.getEnumFor(requerantSaisi.institutionnel.type),
-        nature: requerantSaisi.institutionnel.nature,
-        nomInstitution: requerantSaisi.institutionnel.nomInstitution
-      }
-    }
-  } as IRequerant;
-}
-
-function getRequerantParticulier(requeteSaisie: any): IRequerant {
-  const requerantSaisi = requeteSaisie.requerant;
-  return {
-    nomFamille: requerantSaisi.particulier.nomNaissance
-      ? requerantSaisi.particulier.nomNaissance
-      : SNP,
-    prenom: getValeurOuVide(requerantSaisi.particulier.prenom),
-    courriel: requeteSaisie.adresse.adresseCourriel,
-    telephone: requeteSaisie.adresse.numeroTelephone,
-    adresse: getAdresse(requeteSaisie.adresse),
-    qualiteRequerant: {
-      qualite: Qualite.PARTICULIER,
-      particulier: {
-        nomUsage: requerantSaisi.particulier.nomUsage
-      }
-    }
-  } as IRequerant;
-}
-
-function getRequerantInteresse(requeteSaisie: any): IRequerant {
-  return {
-    nomFamille: requeteSaisie.interesse.nomFamille,
-    prenom: requeteSaisie.interesse.prenoms.prenom1,
-    courriel: requeteSaisie.adresse.adresseCourriel,
-    telephone: requeteSaisie.adresse.numeroTelephone,
-    adresse: getAdresse(requeteSaisie.adresse),
-    qualiteRequerant: {
-      qualite: Qualite.PARTICULIER
-    }
-  } as IRequerant;
 }

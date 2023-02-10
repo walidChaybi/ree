@@ -1,6 +1,6 @@
 import { LienPieceJointe } from "@composant/piecesJointes/LienPieceJointe";
-import { TypePieceJointe } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";

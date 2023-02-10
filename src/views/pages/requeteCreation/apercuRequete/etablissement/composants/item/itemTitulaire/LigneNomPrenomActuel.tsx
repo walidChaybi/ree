@@ -1,11 +1,10 @@
+import { IdentiteType } from "@model/requete/IdentiteType";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { formatLigne, getLibelle } from "@util/Utils";
 import React from "react";
 import { formatagePrenoms } from "../../../mappingIRequeteCreationVersResumeRequeteCreationProps";
-import { IdentiteType } from "../../Types";
 import { ItemLigne } from "../ItemLigne";
 import { ItemLigneSdanf } from "../ItemLigneSdanf";
-
 interface LigneNomPrenomActuelProps {
   identite: IdentiteType;
   retenueSdanf?: IRetenueSdanf;
@@ -71,7 +70,7 @@ export const LigneNomPrenomActuel: React.FC<LigneNomPrenomActuelProps> = ({
         )}
       />
 
-      <ItemLigne texte={props.identite.genre.libelle} />
+      <ItemLigne texte={props.identite.genre?.libelle} />
     </div>
   );
 };

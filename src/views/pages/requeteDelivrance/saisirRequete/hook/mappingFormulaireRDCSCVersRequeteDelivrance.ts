@@ -1,3 +1,12 @@
+import {
+  CreationRequeteRDCSC,
+  SaisieRequeteRDCSC,
+  UpdateRequeteRDCSC
+} from "@model/form/delivrance/ISaisirRDCSCPageForm";
+import {
+  Adresse,
+  Identite
+} from "@model/form/delivrance/ISaisirRequetePageForm";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -8,17 +17,8 @@ import {
   IPieceJustificative,
   mapPieceJustificative
 } from "@model/requete/pieceJointe/IPieceJustificative";
-import {
-  Adresse,
-  Identite
-} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
 import { getValeurOuVide, SNP } from "@util/Utils";
-import {
-  CreationRequeteRDCSC,
-  SaisieRequeteRDCSC,
-  UpdateRequeteRDCSC
-} from "../modelForm/ISaisirRDCSCPageModel";
 import { limitesTitulaires } from "../SaisirRDCSCPage";
 import { getPrenoms } from "./mappingCommun";
 

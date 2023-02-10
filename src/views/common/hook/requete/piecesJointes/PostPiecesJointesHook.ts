@@ -3,15 +3,13 @@ import {
   postPieceJustificative
 } from "@api/appels/requeteApi";
 import { mapPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
+import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { mapPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { PieceJointe } from "@util/FileUtils";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
-export enum TypePieceJointe {
-  PIECE_COMPLEMENT_INFORMATION,
-  PIECE_JUSTIFICATIVE
-}
+
 
 export interface IPostPiecesJointesApiResultat {
   uuidDocuments: string[];

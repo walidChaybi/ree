@@ -7,8 +7,8 @@ import {
   IMajLibellePjParams,
   useMiseAJourLibellePjApiHook
 } from "@hook/requete/creation/MiseAJourLibellePjApiHook";
-import { TypePieceJointe } from "@hook/requete/piecesJointes/communPieceJointe";
 import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointeHook";
+import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import { getLibelle, getValeurOuVide } from "@util/Utils";

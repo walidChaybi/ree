@@ -1,6 +1,10 @@
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
+import {
+  Adresse,
+  Requete
+} from "@model/form/delivrance/ISaisirRequetePageForm";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
@@ -12,10 +16,6 @@ import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import {
-  Adresse,
-  Requete
-} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 
 export const SaisieCourrier17 = {
   choixCourrier: {

@@ -1,6 +1,7 @@
-import { TypePieceJointe } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
-
-// Objet générique (peut être une pièce justificative ou pièce complément information)
+export enum TypePieceJointe {
+  PIECE_COMPLEMENT_INFORMATION,
+  PIECE_JUSTIFICATIVE
+}
 export interface IPieceJointe {
   id: string;
   libelle?: string;

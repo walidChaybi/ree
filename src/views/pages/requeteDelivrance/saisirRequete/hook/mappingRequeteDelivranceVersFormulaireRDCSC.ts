@@ -43,6 +43,7 @@ import {
   VOIE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { ParentFormDefaultValues } from "@composant/formulaire/ParentForm";
+import { SaisieRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
@@ -57,7 +58,6 @@ import {
 } from "@model/requete/ITitulaireRequete";
 import { getValeurOuVide } from "@util/Utils";
 import { FileExtension, MimeType } from "file-type";
-import { SaisieRequeteRDCSC } from "../modelForm/ISaisirRDCSCPageModel";
 import { IdentiteFormDefaultValuesRDCSC } from "../sousFormulaires/identite/IdentiteForm";
 import { InstitutionnelFormDefaultValues } from "../sousFormulaires/requerant/institutionnel/InstitutionnelForm";
 import { MandataireFormDefaultValues } from "../sousFormulaires/requerant/mandataire/MandataireForm";

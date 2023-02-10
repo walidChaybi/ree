@@ -2,7 +2,7 @@ import {
   FenetrePiecesJointes,
   onClose
 } from "@composant/piecesJointes/FenetrePiecesJointes";
-import { TypePieceJointe } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
+import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";

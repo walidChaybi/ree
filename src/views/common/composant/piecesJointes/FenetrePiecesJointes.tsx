@@ -1,5 +1,5 @@
 import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointeHook";
-import { TypePieceJointe } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
+import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { FenetreExterne } from "@util/FenetreExterne";
 import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAvecTitre";
 import { MimeType } from "file-type/core";

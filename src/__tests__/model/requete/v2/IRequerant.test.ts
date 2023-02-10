@@ -1,43 +1,12 @@
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
-import { IRequerant, Requerant } from "@model/requete/IRequerant";
+import { Requerant } from "@model/requete/IRequerant";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import request from "superagent";
 import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 const superagentMock = require("superagent-mock")(request, configRequetes);
-
-test("Attendu: Requerant.setRequerant particulier", async () => {
-  const saisieRequeteRdcsc =
-    mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
-
-  const requerantAttendu = {
-    adresse: {
-      codePostal: "310 GL24",
-      ligne2: "Appartement 258",
-      ligne3: "Batiment Z",
-      ligne4: "61 avenue Foch",
-      ligne5: "lieu dit la martinière",
-      pays: "France",
-      ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont"
-    },
-    courriel: "ldubois@wanadoo.fr",
-    nomFamille: "RUIZ",
-    prenom: "Paul",
-    qualiteRequerant: {
-      particulier: {
-        nomUsage: ""
-      },
-      qualite: Qualite.PARTICULIER
-    },
-    telephone: ""
-  } as IRequerant;
-
-  const requerant = Requerant.setRequerant(saisieRequeteRdcsc);
-
-  expect(requerant).toEqual(requerantAttendu);
-});
 
 test("Attendu: Requerant.setRequerant mandataire", async () => {
   const qualiteMandataire = {
@@ -52,26 +21,139 @@ test("Attendu: Requerant.setRequerant mandataire", async () => {
   const saisieRequeteRdcsc =
     mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
 
-  const requerantAttendu = {
-    adresse: {
-      codePostal: "310 GL24",
-      ligne2: "Appartement 258",
-      ligne3: "Batiment Z",
-      ligne4: "61 avenue Foch",
-      ligne5: "lieu dit la martinière",
-      pays: "France",
-      ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont"
+  const attendu = {
+    document: "",
+    titulaires: {
+      titulaire1: {
+        noms: {
+          nomNaissance: "Prodesk",
+          nomUsage: ""
+        },
+        prenoms: {
+          prenom1: "Elodie",
+          prenom2: "",
+          prenom3: ""
+        },
+        sexe: "FEMININ",
+        naissance: {
+          dateEvenement: {
+            jour: 25,
+            mois: 6,
+            annee: 1990
+          },
+          villeEvenement: "Barcelone",
+          paysEvenement: "Espagne"
+        },
+        nationalite: "ETRANGERE",
+        parent1: {
+          nomNaissance: "",
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: ""
+          }
+        },
+        parent2: {
+          nomNaissance: "",
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: ""
+          }
+        }
+      },
+      titulaire2: {
+        noms: {
+          nomNaissance: "",
+          nomUsage: ""
+        },
+        prenoms: {
+          prenom1: "",
+          prenom2: "",
+          prenom3: ""
+        },
+        sexe: "INCONNU",
+        naissance: {
+          dateEvenement: {
+            jour: "",
+            mois: "",
+            annee: ""
+          },
+          villeEvenement: "",
+          paysEvenement: ""
+        },
+        nationalite: "ETRANGERE",
+        parent1: {
+          nomNaissance: "",
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: ""
+          }
+        },
+        parent2: {
+          nomNaissance: "",
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: ""
+          }
+        }
+      }
     },
-    courriel: "ldubois@wanadoo.fr",
-    nomFamille: "RUIZ",
-    prenom: "Paul",
-    qualiteRequerant: qualiteMandataire,
-    telephone: ""
-  } as IRequerant;
+    requerant: {
+      typeRequerant: "MANDATAIRE",
+      mandataire: {
+        type: "NOTAIRE",
+        nature: "",
+        raisonSociale: "Maître Duflan",
+        nom: "RUIZ",
+        prenom: "Paul"
+      },
+      institutionnel: {
+        type: "",
+        nature: "",
+        nomInstitution: "",
+        nom: "",
+        prenom: ""
+      },
+      particulier: {
+        nomNaissance: "",
+        nomUsage: "",
+        prenom: ""
+      }
+    },
+    adresse: {
+      voie: "61 avenue Foch",
+      lieuDit: "lieu dit la martinière",
+      complementDestinataire: "Appartement 258",
+      complementPointGeo: "Batiment Z",
+      codePostal: "310 GL24",
+      commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
+      pays: "France",
+      adresseCourriel: "ldubois@wanadoo.fr",
+      numeroTelephone: ""
+    },
+    piecesJointes: [
+      {
+        base64File: {
+          fileName: "Jérome",
+          base64String: "",
+          taille: 0,
+          conteneurSwift: undefined,
+          identifiantSwift: undefined,
+          mimeType: "",
+          extension: undefined
+        },
+        type: {
+          value: "",
+          str: "Carte professionnelle"
+        }
+      }
+    ]
+  };
 
-  const requerant = Requerant.setRequerant(saisieRequeteRdcsc);
-
-  expect(requerant).toEqual(requerantAttendu);
+  expect(saisieRequeteRdcsc).toEqual(attendu);
 });
 
 test("Attendu: Requerant.setRequerant institutionnel", async () => {
@@ -87,26 +169,139 @@ test("Attendu: Requerant.setRequerant institutionnel", async () => {
   const saisieRequeteRdcsc =
     mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
 
-  const requerantAttendu = {
-    adresse: {
-      codePostal: "310 GL24",
-      ligne2: "Appartement 258",
-      ligne3: "Batiment Z",
-      ligne4: "61 avenue Foch",
-      ligne5: "lieu dit la martinière",
-      pays: "France",
-      ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont"
+  const attendu = {
+    document: "",
+    titulaires: {
+      titulaire1: {
+        noms: {
+          nomNaissance: "Prodesk",
+          nomUsage: ""
+        },
+        prenoms: {
+          prenom1: "Elodie",
+          prenom2: "",
+          prenom3: ""
+        },
+        sexe: "FEMININ",
+        naissance: {
+          dateEvenement: {
+            jour: 25,
+            mois: 6,
+            annee: 1990
+          },
+          villeEvenement: "Barcelone",
+          paysEvenement: "Espagne"
+        },
+        nationalite: "ETRANGERE",
+        parent1: {
+          nomNaissance: "",
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: ""
+          }
+        },
+        parent2: {
+          nomNaissance: "",
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: ""
+          }
+        }
+      },
+      titulaire2: {
+        noms: {
+          nomNaissance: "",
+          nomUsage: ""
+        },
+        prenoms: {
+          prenom1: "",
+          prenom2: "",
+          prenom3: ""
+        },
+        sexe: "INCONNU",
+        naissance: {
+          dateEvenement: {
+            jour: "",
+            mois: "",
+            annee: ""
+          },
+          villeEvenement: "",
+          paysEvenement: ""
+        },
+        nationalite: "ETRANGERE",
+        parent1: {
+          nomNaissance: "",
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: ""
+          }
+        },
+        parent2: {
+          nomNaissance: "",
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: ""
+          }
+        }
+      }
     },
-    courriel: "ldubois@wanadoo.fr",
-    nomFamille: "RUIZ",
-    prenom: "Paul",
-    qualiteRequerant: qualiteInstitutionnel,
-    telephone: ""
-  } as IRequerant;
+    requerant: {
+      typeRequerant: "INSTITUTIONNEL",
+      mandataire: {
+        type: "",
+        nature: "",
+        raisonSociale: "",
+        nom: "",
+        prenom: ""
+      },
+      institutionnel: {
+        type: "AMBASSADE",
+        nature: "",
+        nomInstitution: "Ambassade de France",
+        nom: "RUIZ",
+        prenom: "Paul"
+      },
+      particulier: {
+        nomNaissance: "",
+        nomUsage: "",
+        prenom: ""
+      }
+    },
+    adresse: {
+      voie: "61 avenue Foch",
+      lieuDit: "lieu dit la martinière",
+      complementDestinataire: "Appartement 258",
+      complementPointGeo: "Batiment Z",
+      codePostal: "310 GL24",
+      commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
+      pays: "France",
+      adresseCourriel: "ldubois@wanadoo.fr",
+      numeroTelephone: ""
+    },
+    piecesJointes: [
+      {
+        base64File: {
+          fileName: "Jérome",
+          base64String: "",
+          taille: 0,
+          conteneurSwift: undefined,
+          identifiantSwift: undefined,
+          mimeType: "",
+          extension: undefined
+        },
+        type: {
+          value: "",
+          str: "Carte professionnelle"
+        }
+      }
+    ]
+  };
 
-  const requerant = Requerant.setRequerant(saisieRequeteRdcsc);
-
-  expect(requerant).toEqual(requerantAttendu);
+  expect(saisieRequeteRdcsc).toEqual(attendu);
 });
 
 test("Attendu: Requerant.setRequerant interessé", async () => {
@@ -120,26 +315,139 @@ test("Attendu: Requerant.setRequerant interessé", async () => {
   const saisieRequeteRdcsc =
     mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
 
-  const requerantAttendu = {
-    adresse: {
-      codePostal: "310 GL24",
-      ligne2: "Appartement 258",
-      ligne3: "Batiment Z",
-      ligne4: "61 avenue Foch",
-      ligne5: "lieu dit la martinière",
-      pays: "France",
-      ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont"
+  const attendu = {
+    document: "",
+    titulaires: {
+      titulaire1: {
+        noms: {
+          nomNaissance: "Prodesk",
+          nomUsage: ""
+        },
+        prenoms: {
+          prenom1: "Elodie",
+          prenom2: "",
+          prenom3: ""
+        },
+        sexe: "FEMININ",
+        naissance: {
+          dateEvenement: {
+            jour: 25,
+            mois: 6,
+            annee: 1990
+          },
+          villeEvenement: "Barcelone",
+          paysEvenement: "Espagne"
+        },
+        nationalite: "ETRANGERE",
+        parent1: {
+          nomNaissance: "",
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: ""
+          }
+        },
+        parent2: {
+          nomNaissance: "",
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: ""
+          }
+        }
+      },
+      titulaire2: {
+        noms: {
+          nomNaissance: "",
+          nomUsage: ""
+        },
+        prenoms: {
+          prenom1: "",
+          prenom2: "",
+          prenom3: ""
+        },
+        sexe: "INCONNU",
+        naissance: {
+          dateEvenement: {
+            jour: "",
+            mois: "",
+            annee: ""
+          },
+          villeEvenement: "",
+          paysEvenement: ""
+        },
+        nationalite: "ETRANGERE",
+        parent1: {
+          nomNaissance: "",
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: ""
+          }
+        },
+        parent2: {
+          nomNaissance: "",
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: ""
+          }
+        }
+      }
     },
-    courriel: "ldubois@wanadoo.fr",
-    nomFamille: "RUIZ",
-    prenom: "Paul",
-    qualiteRequerant: qualiteParticulier,
-    telephone: ""
-  } as IRequerant;
+    requerant: {
+      typeRequerant: "PARTICULIER",
+      mandataire: {
+        type: "",
+        nature: "",
+        raisonSociale: "",
+        nom: "",
+        prenom: ""
+      },
+      institutionnel: {
+        type: "",
+        nature: "",
+        nomInstitution: "",
+        nom: "",
+        prenom: ""
+      },
+      particulier: {
+        nomNaissance: "RUIZ",
+        nomUsage: "",
+        prenom: "Paul"
+      }
+    },
+    adresse: {
+      voie: "61 avenue Foch",
+      lieuDit: "lieu dit la martinière",
+      complementDestinataire: "Appartement 258",
+      complementPointGeo: "Batiment Z",
+      codePostal: "310 GL24",
+      commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
+      pays: "France",
+      adresseCourriel: "ldubois@wanadoo.fr",
+      numeroTelephone: ""
+    },
+    piecesJointes: [
+      {
+        base64File: {
+          fileName: "Jérome",
+          base64String: "",
+          taille: 0,
+          conteneurSwift: undefined,
+          identifiantSwift: undefined,
+          mimeType: "",
+          extension: undefined
+        },
+        type: {
+          value: "",
+          str: "Carte professionnelle"
+        }
+      }
+    ]
+  };
 
-  const requerant = Requerant.setRequerant(saisieRequeteRdcsc);
-
-  expect(requerant).toEqual(requerantAttendu);
+  expect(saisieRequeteRdcsc).toEqual(attendu);
 });
 
 test("Attendu: Requerant.organiserRequerant autreProfessionnel", async () => {

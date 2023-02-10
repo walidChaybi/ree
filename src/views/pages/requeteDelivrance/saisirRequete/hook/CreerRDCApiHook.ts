@@ -4,7 +4,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { CreationRequeteRDC } from "../modelForm/ISaisirRDCPageModel";
+import { CreationRequeteRDC } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
 import { mappingFormulaireRDCVersRequeteDelivrance } from "./mappingFormulaireRDCVersRequeteDelivrance";
 
 export interface ICreationRequeteDelivranceRDCResultat {

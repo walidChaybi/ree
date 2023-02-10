@@ -24,10 +24,7 @@ import {
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
-import {
-  TypePieceJointe,
-  usePostPiecesJointesApi
-} from "@hook/requete/piecesJointes/PostPiecesJointesHook";
+import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -43,6 +40,7 @@ import {
 } from "@model/requete/enum/TypeRequerantRDC";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { PATH_MODIFIER_RDC, receUrl } from "@router/ReceUrls";
 import { PieceJointe } from "@util/FileUtils";
 import messageManager from "@util/messageManager";
@@ -62,6 +60,11 @@ import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import * as Yup from "yup";
+import {
+  CreationRequeteRDC,
+  SaisieRequeteRDC,
+  UpdateRequeteRDC
+} from "../../../../model/form/delivrance/ISaisirRDCPageForm";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
@@ -85,11 +88,6 @@ import {
 import { useCreationRequeteDelivranceRDC } from "./hook/CreerRDCApiHook";
 import { mappingRequeteDelivranceVersFormulaireRDC } from "./hook/mappingRequeteDelivranceVersFormulaireRDC";
 import { useUpdateRequeteDelivranceRDC } from "./hook/UpdateRDCApiHook";
-import {
-  CreationRequeteRDC,
-  SaisieRequeteRDC,
-  UpdateRequeteRDC
-} from "./modelForm/ISaisirRDCPageModel";
 import "./scss/SaisirRequetePage.scss";
 import {
   EvenementFormDefaultValues,

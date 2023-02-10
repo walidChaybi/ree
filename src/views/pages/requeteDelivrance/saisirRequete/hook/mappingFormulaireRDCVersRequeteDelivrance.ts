@@ -1,3 +1,7 @@
+import {
+  Adresse,
+  Identite
+} from "@model/form/delivrance/ISaisirRequetePageForm";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { Qualite } from "@model/requete/enum/Qualite";
@@ -9,10 +13,6 @@ import {
   IPieceJustificative,
   mapPieceJustificative
 } from "@model/requete/pieceJointe/IPieceJustificative";
-import {
-  Adresse,
-  Identite
-} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
 import {
   auMoinsUneProprieteEstRenseigne,
@@ -23,7 +23,7 @@ import {
 import {
   CreationRequeteRDC,
   SaisieRequeteRDC
-} from "../modelForm/ISaisirRDCPageModel";
+} from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
 import { getPrenoms } from "./mappingCommun";
 
 export function mappingFormulaireRDCVersRequeteDelivrance(

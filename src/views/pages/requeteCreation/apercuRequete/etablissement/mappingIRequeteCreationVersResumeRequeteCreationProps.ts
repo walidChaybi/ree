@@ -1,5 +1,4 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { ITitulaireRequeteCreation } from "@model/requete/enum/ITitulaireRequeteCreation";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { Residence } from "@model/requete/enum/Residence";
 import { SituationFamiliale } from "@model/requete/enum/SituationFamiliale";
@@ -9,10 +8,12 @@ import { IEvenementUnion } from "@model/requete/IEvenementUnion";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import {
   getDateStringFromDateCompose,
   getFormatDateFromTimestamp
 } from "@util/DateUtils";
+import { DateCoordonneesType } from "../../../../../model/requete/DateCoordonneesType";
 import { ItemEffetCollectifProps } from "./composants/item/ItemEffetCollectif";
 import {
   ItemEnfantMajeurProps,
@@ -23,7 +24,6 @@ import { ItemRequeteProps } from "./composants/item/ItemRequete";
 import { ItemTitulaireProps } from "./composants/item/itemTitulaire/ItemTitulaire";
 import { ItemUnionProps } from "./composants/item/ItemUnion";
 import { ResumeRequeteCreationProps } from "./composants/ResumeRequeteCreation";
-import { DateCoordonneesType } from "./composants/Types";
 
 const mappingIRequeteCreationVersResumeRequeteCreationProps = (
   requeteCreation: IRequeteCreationEtablissement | IRequeteCreationTranscription

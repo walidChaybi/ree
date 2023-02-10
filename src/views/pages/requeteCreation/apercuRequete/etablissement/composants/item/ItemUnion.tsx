@@ -1,4 +1,7 @@
+import { DateCoordonneesType } from "@model/requete/DateCoordonneesType";
+import { IdentiteType } from "@model/requete/IdentiteType";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
+import { NationaliteType } from "@model/requete/NationaliteType";
 import {
   estRenseigne,
   formatMajusculesMinusculesMotCompose
@@ -9,7 +12,6 @@ import {
   formatLigneDateCoordonnees,
   formatLigneNationalites
 } from "../Formatages";
-import { DateCoordonneesType, IdentiteType, NationaliteType } from "../Types";
 import Item, { ItemProps } from "./Item";
 import { ItemLigne } from "./ItemLigne";
 import { LigneDateNaissanceAdresse } from "./itemTitulaire/LigneDateNaissanceAdresse";
@@ -44,7 +46,7 @@ const ItemUnion: React.FC<ItemUnionProps & ItemProps> = props => {
         retenueSdanf={props.retenueSdanf}
       />
 
-      <ItemLigne texte={props.identite.genre.libelle} />
+      <ItemLigne texte={props.identite.genre?.libelle} />
 
       <LigneDateNaissanceAdresse
         naissance={props.naissance}

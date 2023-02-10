@@ -2,12 +2,10 @@ import {
   PIECES_JOINTES,
   REPONSE
 } from "@composant/formulaire/ConstantesNomsForm";
-import {
-  TypePieceJointe,
-  usePostPiecesJointesApi
-} from "@hook/requete/piecesJointes/PostPiecesJointesHook";
+import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { IReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
+import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { URL_MES_REQUETES_INFORMATION } from "@router/ReceUrls";
 import { PieceJointe } from "@util/FileUtils";
 import { getLibelle } from "@util/Utils";

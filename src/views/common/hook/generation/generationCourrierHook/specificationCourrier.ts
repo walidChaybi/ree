@@ -1,10 +1,14 @@
 import {
+  IElementsJasperCourrier,
+  OptionsJasper
+} from "@model/composition/ICourrierComposition";
+import {
   AnalyseMarginale,
   IAnalyseMarginale
 } from "@model/etatcivil/acte/IAnalyseMarginale";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
-import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import {
@@ -18,25 +22,6 @@ import {
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
 import { getValeurOuVide, triListeObjetsSurPropriete } from "@util/Utils";
-
-export interface OptionsJasper {
-  option?: string;
-  option_puce?: string;
-}
-
-export interface IElementsJasperCourrier {
-  nomTitulaire1: string;
-  prenomsTitulaire1: string;
-  nomTitulaire2: string;
-  prenomsTitulaire2: string;
-  options: OptionsJasper[];
-  texteLibre: string;
-  optionsTexteLibre: OptionsJasper[];
-  referenceActe: string;
-  natureActe: string;
-  texte_variable_RDD?: string;
-  texte_variable_RDC?: string;
-}
 
 async function ajoutInfosTitulaire(
   elementsJasper: IElementsJasperCourrier,

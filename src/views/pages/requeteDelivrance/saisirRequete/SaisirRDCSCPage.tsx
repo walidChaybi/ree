@@ -19,12 +19,14 @@ import {
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
-import {
-  TypePieceJointe,
-  usePostPiecesJointesApi
-} from "@hook/requete/piecesJointes/PostPiecesJointesHook";
+import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
+import {
+  CreationRequeteRDCSC,
+  SaisieRequeteRDCSC,
+  UpdateRequeteRDCSC
+} from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_ATTESTATION_PACS } from "@model/requete/enum/DocumentDelivranceConstante";
@@ -32,6 +34,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { PATH_MODIFIER_RDCSC, receUrl } from "@router/ReceUrls";
 import { PieceJointe } from "@util/FileUtils";
 import messageManager from "@util/messageManager";
@@ -70,11 +73,6 @@ import {
 import { useCreationRequeteDelivranceRDCSC } from "./hook/CreerRDCSCApiHook";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "./hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import { useUpdateRequeteDelivranceRDCSC } from "./hook/UpdateRDCSCApiHook";
-import {
-  CreationRequeteRDCSC,
-  SaisieRequeteRDCSC,
-  UpdateRequeteRDCSC
-} from "./modelForm/ISaisirRDCSCPageModel";
 import "./scss/SaisirRequetePage.scss";
 import {
   IdentiteFormDefaultValuesRDCSC,
@@ -85,6 +83,7 @@ import {
   RequerantFormDefaultValues,
   RequerantFormValidationSchema
 } from "./sousFormulaires/requerant/RequerantForm";
+
 
 // Valeurs par défaut des champs
 const DefaultValuesSaisirRDCSC = {

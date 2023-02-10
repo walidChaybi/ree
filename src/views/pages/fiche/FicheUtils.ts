@@ -3,10 +3,10 @@ import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
+import { SimplePersonne } from "@model/etatcivil/fiche/SimplePersonne";
 import { jointAvec } from "@util/Utils";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { setDataBandeau } from "./contenu/BandeauFicheUtils";
-import { SimplePersonne } from "./contenu/fournisseurDonneesBandeau/IFournisseurDonneesBandeau";
 import { IDataFicheProps } from "./FichePage";
 import {
   getPanelsActe,

@@ -18,10 +18,11 @@ import { IDonneesComposition } from "@model/composition/commun/retourApiComposit
 import { Orientation } from "@model/composition/enum/Orientation";
 import {
   CourrierComposition,
-  ICourrierComposition
+  ICourrierComposition,
+  IElementsJasperCourrier
 } from "@model/composition/ICourrierComposition";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -41,10 +42,7 @@ import {
   ICourrierParams,
   useCourrierApiHook
 } from "../composition/CompositionCourrierHook";
-import {
-  IElementsJasperCourrier,
-  specificationCourrier
-} from "../generation/generationCourrierHook/specificationCourrier";
+import { specificationCourrier } from "../generation/generationCourrierHook/specificationCourrier";
 import {
   IResultGenerationUnDocument,
   RESULTAT_VIDE

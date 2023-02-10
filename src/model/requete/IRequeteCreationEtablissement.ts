@@ -1,4 +1,3 @@
-import { ITitulaireRequeteCreation } from "./enum/ITitulaireRequeteCreation";
 import { Provenance } from "./enum/Provenance";
 import { SousTypeCreation } from "./enum/SousTypeCreation";
 import { DocumentPJ, IDocumentPJ } from "./IDocumentPj";
@@ -6,6 +5,7 @@ import { IMandant } from "./IMandant";
 import { IProvenanceNatali } from "./IProvenanceNatali";
 import { IProvenanceServicePublic } from "./IProvenanceServicePublic";
 import { IRequete } from "./IRequete";
+import { ITitulaireRequeteCreation } from "./ITitulaireRequeteCreation";
 import { IPieceJustificativeCreation } from "./pieceJointe/IPieceJustificativeCreation";
 
 export interface IRequeteCreationEtablissement extends IRequete {

@@ -7,7 +7,7 @@ import {
   TypeAlerte
 } from "@model/etatcivil/enum/TypeAlerte";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
-import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {

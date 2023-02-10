@@ -1,10 +1,10 @@
 import { updateRequeteDelivrance } from "@api/appels/requeteApi";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
+import { UpdateRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { UpdateRequeteRDCSC } from "../modelForm/ISaisirRDCSCPageModel";
 import { mappingFormulaireRDCSCVersRequeteDelivrance } from "./mappingFormulaireRDCSCVersRequeteDelivrance";
 
 export interface IUpdateRequeteDelivranceRDCSCResultat {

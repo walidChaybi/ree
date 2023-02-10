@@ -1,6 +1,6 @@
-import { TypePieceJointe } from "@hook/requete/piecesJointes/communPieceJointe";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { PieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import { typeFctRenommePieceJustificative } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";

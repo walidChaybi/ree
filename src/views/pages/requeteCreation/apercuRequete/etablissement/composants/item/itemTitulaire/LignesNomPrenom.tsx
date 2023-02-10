@@ -1,8 +1,8 @@
+import { IdentiteType } from "@model/requete/IdentiteType";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { formatLigne } from "@util/Utils";
 import React from "react";
 import { formatagePrenoms } from "../../../mappingIRequeteCreationVersResumeRequeteCreationProps";
-import { IdentiteType } from "../../Types";
 import { ItemLigneSdanf } from "../ItemLigneSdanf";
 
 interface LigneNomPrenomsProps {

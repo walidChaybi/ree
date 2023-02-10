@@ -124,11 +124,7 @@ export const ModifierCorpsExtrait: React.FC<
       ></textarea>
       <ReinitialiserValiderBoutons
         reInitialiserDisabled={!corpsModifie(corpsTexteNew, corpsTexte)}
-        validerDisabled={corpsNonModifierOuCorpsVide(
-          corpsTexteNew,
-          setIsDirty,
-          corpsTexte
-        )}
+        validerDisabled={corpsNonModifierOuCorpsVide(corpsTexteNew, corpsTexte)}
         onClickReInitialiser={reinitialisation}
         onClickValider={valider}
         afficherBouton={
@@ -165,13 +161,12 @@ export function getCorpsTexte(
       : [],
     DocumentDelivrance.getChoixDelivranceFromUUID(document.typeDocument)
   );
-  
+
   return composition?.corps_texte;
 }
 
 export function corpsNonModifierOuCorpsVide(
   corpsTexteNew: string,
-  setIsDirty: (isDirty: boolean) => void,
   corpsTexte?: string
 ) {
   return !corpsModifie(corpsTexteNew, corpsTexte) || corpsTexteNew === "";

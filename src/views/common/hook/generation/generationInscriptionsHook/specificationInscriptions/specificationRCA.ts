@@ -1,3 +1,4 @@
+import { IElementsJasperCertificatRCA } from "@model/composition/ICertificatRCAComposition";
 import { TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
 import { TypeDecision } from "@model/etatcivil/enum/TypeDecision";
 import { TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
@@ -11,15 +12,6 @@ import {
   getInteressesDecision,
   getParagrapheFin
 } from "./specificationCommunes";
-
-export interface IElementsJasperCertificatRCA {
-  anneeInscription?: string;
-  numeroInscription?: string;
-  decisionRecue?: string;
-  interesseDecision?: string;
-  paragrapheFin?: string;
-  decisionExequatur?: string;
-}
 
 function getParagrapheDecisionRecue(infosRCA: IFicheRcRca) {
   let decisionRecue = "";

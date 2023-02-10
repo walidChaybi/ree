@@ -16,7 +16,7 @@ const ItemFraterie: React.FC<ItemFraterieProps & ItemProps> = props => {
         retenueSdanf={props.retenueSdanf}
       />
 
-      <ItemLigne texte={props.identite.genre.libelle} />
+      <ItemLigne texte={props.identite.genre?.libelle} />
 
       <LigneDateNaissanceAdresse
         naissance={props.naissance}

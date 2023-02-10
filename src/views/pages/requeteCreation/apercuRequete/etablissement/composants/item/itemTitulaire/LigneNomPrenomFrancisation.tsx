@@ -1,11 +1,10 @@
+import { IdentiteType } from "@model/requete/IdentiteType";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { formatLigne } from "@util/Utils";
 import React from "react";
 import { auMoinsUnDesDeuxChampsEstRenseigne } from "../../Formatages";
-import { IdentiteType } from "../../Types";
 import { ItemLigne } from "../ItemLigne";
 import { ItemLigneSdanf } from "../ItemLigneSdanf";
-
 interface LigneNomPrenomFrancisationProps {
   identite: IdentiteType;
   retenueSdanf?: IRetenueSdanf;

@@ -1,6 +1,6 @@
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { getLibelle } from "@util/Utils";
-import { SaisieRequeteRDC } from "../modelForm/ISaisirRDCPageModel";
+import { SaisieRequeteRDC } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
 
 /** Elements Popin "Confirmation" */
 export function getMessagesPopin() {

@@ -6,12 +6,8 @@ import {
   TITULAIRES
 } from "@composant/formulaire/ConstantesNomsForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import {
-  Adresse,
-  Identite,
-  Requerant
-} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import { PieceJointe } from "@util/FileUtils";
+import { Adresse, Identite, Requerant } from "./ISaisirRequetePageForm";
 
 export interface CreationRequeteRDCSC {
   id?: string;

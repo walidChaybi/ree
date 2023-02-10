@@ -1,5 +1,5 @@
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_EXTRAIT_PLURILINGUE } from "@model/requete/enum/DocumentDelivranceConstante";
 import { Validation } from "@model/requete/enum/Validation";
