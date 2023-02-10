@@ -1,3 +1,4 @@
+import { CHOIX_COURRIER } from "@composant/formulaire/ConstantesNomsForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   getDefaultValuesCourrier,
@@ -7,7 +8,6 @@ import ChoixCourrierForm, {
   ChoixCourrierSubFormProps,
   ValidationSchemaChoixCourrier
 } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/ChoixCourrierForm";
-import { CHOIX_COURRIER } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 import {
   act,
   fireEvent,

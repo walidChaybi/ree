@@ -31,8 +31,8 @@ import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { IBoutonPopin } from "@widget/popin/ConfirmationPopin";
 import { History } from "history";
 import React from "react";
+import { SaisieCourrier } from "../../../../../../../model/form/delivrance/ISaisieCourrier";
 import { DocumentEC } from "../../../../editionExtraitCopie/enum/DocumentEC";
-import { SaisieCourrier } from "../../../apercuCourrier/contenu/modelForm/ISaisiePageModel";
 
 const ORDRE_OPTION_MAX = 900;
 const enum MaxTitulaireDelivrance {

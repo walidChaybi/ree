@@ -14,6 +14,7 @@ import {
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";
 import { TitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { ISaisieExtraitForm } from "@model/form/delivrance/ISaisieExtraitForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import {
   IRequeteDelivrance,
@@ -29,10 +30,7 @@ import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { FormikProps, FormikValues } from "formik";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
-import {
-  ISaisieExtraitForm,
-  mappingActeVerFormulaireSaisirExtrait
-} from "./mapping/mappingActeVerFormulaireSaisirExtrait";
+import { mappingActeVerFormulaireSaisirExtrait } from "./mapping/mappingActeVerFormulaireSaisirExtrait";
 import { mappingFormulaireSaisirExtraitVersExtraitAEnvoyer } from "./mapping/mappingFormulaireSaisirExtraitVersExtraitAEnvoyer";
 import {
   getTitulairesEvenementsEtParentsForm,
@@ -255,7 +253,8 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
               RequeteDelivrance.possedeUnDocumentPlurilingue(props.requete),
             evenement,
             naissanceTitulaire1: titulaireActe1?.naissance,
-            naissanceTitulaire2: titulaireActe2?.naissance
+            naissanceTitulaire2: titulaireActe2?.naissance,
+            saisieVerrouillee
           })}
         </SaisirExtraitFormContext.Provider>
 

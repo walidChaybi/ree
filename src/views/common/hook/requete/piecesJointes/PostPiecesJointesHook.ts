@@ -2,10 +2,8 @@ import {
   postPieceComplementInformationApi,
   postPieceJustificative
 } from "@api/appels/requeteApi";
-import {
-  getPieceComplementInformation,
-  getPieceJustificative
-} from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
+import { mapPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
+import { mapPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { PieceJointe } from "@util/FileUtils";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
@@ -50,12 +48,12 @@ export function usePostPiecesJointesApi(
           if (typePiece === TypePieceJointe.PIECE_COMPLEMENT_INFORMATION) {
             result = await postPieceComplementInformationApi(
               idRequete,
-              getPieceComplementInformation(pieceJointeAEnvoyer)
+              mapPieceComplementInformation(pieceJointeAEnvoyer)
             );
           } else if (typePiece === TypePieceJointe.PIECE_JUSTIFICATIVE) {
             result = await postPieceJustificative(
               idRequete,
-              getPieceJustificative(pieceJointeAEnvoyer)
+              mapPieceJustificative(pieceJointeAEnvoyer)
             );
           }
           if (result) {
@@ -84,3 +82,4 @@ export function usePostPiecesJointesApi(
 
   return resultat;
 }
+

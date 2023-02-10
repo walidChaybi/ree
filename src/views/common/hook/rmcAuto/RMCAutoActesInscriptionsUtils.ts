@@ -6,7 +6,10 @@ import {
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
-import { IRMCRequestActesInscriptions } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
+import {
+  ICriteresRMCAutoActeInscription,
+  IRMCRequestActesInscriptions
+} from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import {
   PATH_APERCU_REQ_PRISE,
   PATH_APERCU_REQ_TRAITEMENT,
@@ -16,11 +19,7 @@ import {
   URL_REQUETES_DELIVRANCE_SERVICE
 } from "@router/ReceUrls";
 import { getUrlPrecedente, getUrlWithParam } from "@util/route/routeUtil";
-import { valeurOuUndefined } from "@util/Utils";
-
-export interface ICriteresRMCAuto {
-  criteres: IRMCRequestActesInscriptions[];
-}
+import { getValeurOuUndefined } from "@util/Utils";
 
 export function redirectionRMCAuto(
   requete: IRequeteTableauDelivrance,
@@ -87,8 +86,8 @@ export function redirectionRMCAutoApercuTraitement(
 
 export function determinerCriteresRMCAuto(
   requete: TRequete | IRequeteTableauDelivrance
-): ICriteresRMCAuto {
-  const criteresRMCAuto = {} as ICriteresRMCAuto;
+): ICriteresRMCAutoActeInscription {
+  const criteresRMCAuto = {} as ICriteresRMCAutoActeInscription;
   criteresRMCAuto.criteres = criteresRMCAutoMapper(requete?.titulaires);
   return criteresRMCAuto;
 }
@@ -102,9 +101,9 @@ function criteresRMCAutoMapper(
         return {
           nomTitulaire: getNomTitulaire(titulaire),
           prenomTitulaire: getPrenomTitulaire(titulaire),
-          jourNaissance: valeurOuUndefined(titulaire?.jourNaissance),
-          moisNaissance: valeurOuUndefined(titulaire?.moisNaissance),
-          anneeNaissance: valeurOuUndefined(titulaire?.anneeNaissance)
+          jourNaissance: getValeurOuUndefined(titulaire?.jourNaissance),
+          moisNaissance: getValeurOuUndefined(titulaire?.moisNaissance),
+          anneeNaissance: getValeurOuUndefined(titulaire?.anneeNaissance)
         } as IRMCRequestActesInscriptions;
       }
     ) || []
@@ -120,7 +119,7 @@ function getNomTitulaire(
     nomTitulaire = TitulaireRequete.getNom(titulaire);
   } else {
     /* titulaire de type ITitulaireRequeteTableau*/
-    nomTitulaire = valeurOuUndefined(titulaire?.nom);
+    nomTitulaire = getValeurOuUndefined(titulaire?.nom);
   }
   return nomTitulaire;
 }
@@ -134,7 +133,7 @@ function getPrenomTitulaire(
     prenomTitulaire = TitulaireRequete.getPrenom1(titulaire);
   } else {
     /* titulaire de type ITitulaireRequeteTableau*/
-    prenomTitulaire = valeurOuUndefined(titulaire?.prenoms?.[0]);
+    prenomTitulaire = getValeurOuUndefined(titulaire?.prenoms?.[0]);
   }
   return prenomTitulaire;
 }

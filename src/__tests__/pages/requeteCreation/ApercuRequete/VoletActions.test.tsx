@@ -1,5 +1,5 @@
+import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { VoletPieceJustificativesEtActions } from "@pages/requeteCreation/apercuRequete/etablissement/composants/VoletPieceJusticativesEtActions";
-import { mappingRequeteCreation } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import {
   act,
@@ -17,12 +17,12 @@ import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
 import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
 import {
-  requeteCreationEtablissement,
   requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut,
   requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut,
   requeteCreationAvecMessagesRetourSDANFAvecMauvaisStatus,
   requeteCreationAvecMessagesRetourSDANFAvecMessages,
-  requeteCreationAvecMessagesRetourSDANFSansLesDroits
+  requeteCreationAvecMessagesRetourSDANFSansLesDroits,
+  requeteCreationEtablissement
 } from "../../../../mock/data/requeteCreation";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 const superagentMock = require("superagent-mock")(request, configRequetes);

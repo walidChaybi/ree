@@ -2,10 +2,12 @@ import {
   DATE_NAISSANCE_OU_AGE_DE,
   LIEU_NAISSANCE,
   NOM_NAISSANCE,
+  PRENOMS,
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
 import DateNaissanceOuAgeDeForm from "@composant/formulaire/DateNaissanceOuAgeDeForm";
 import LieuEvenementForm from "@composant/formulaire/LieuEvenementForm";
+import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Filiation, IFiliation } from "@model/etatcivil/acte/IFiliation";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
@@ -14,8 +16,6 @@ import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import React, { useContext } from "react";
-import { PRENOMS } from "../../../../../../saisirRequete/modelForm/ISaisirRequetePageModel";
-import PrenomsForm from "../../../../../../saisirRequete/sousFormulaires/identite/nomsPrenoms/PrenomsForm";
 import { SaisirExtraitFormContext } from "../../SaisirExtraitForm";
 import "./scss/ParentNaissanceForm.scss";
 

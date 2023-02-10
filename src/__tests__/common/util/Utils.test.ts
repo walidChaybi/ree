@@ -19,6 +19,7 @@ import {
   formatPrenoms,
   getNombreCommeSuffix,
   getPremierElemOuVide,
+  getValeurOuUndefined,
   getValeurOuVide,
   getValeurProprieteAPartirChemin,
   joint,
@@ -31,8 +32,7 @@ import {
   supprimerNullEtUndefinedDuTableau,
   tousNonRenseignes,
   tousRenseignes,
-  triListeObjetsSurPropriete,
-  valeurOuUndefined
+  triListeObjetsSurPropriete
 } from "@util/Utils";
 
 test("Attendu: premiereLettreEnMajusculeLeResteEnMinuscule fonctionne correctement", () => {
@@ -176,10 +176,10 @@ test("Attendu: numberToString fonctionne correctement", () => {
   expect(numberToString(nb)).toBe("7");
 });
 
-test("Attendu: valeurOuUndefined fonctionne correctement", () => {
-  expect(valeurOuUndefined()).toBe(undefined);
-  expect(valeurOuUndefined("")).toBe(undefined);
-  expect(valeurOuUndefined("azer")).toBe("azer");
+test("Attendu: getValeurOuUndefined fonctionne correctement", () => {
+  expect(getValeurOuUndefined()).toBe(undefined);
+  expect(getValeurOuUndefined("")).toBe(undefined);
+  expect(getValeurOuUndefined("azer")).toBe("azer");
 });
 
 test("Attendu: changeLaPlaceDunElement fonctionne correctement", () => {

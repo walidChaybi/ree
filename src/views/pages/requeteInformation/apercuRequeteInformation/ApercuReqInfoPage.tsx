@@ -16,12 +16,12 @@ import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import { getLibelle } from "@util/Utils";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { RMCAuto } from "../../rechercheMultiCriteres/autoActesInscriptions/RMCAuto";
-import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import {
   IDetailRequeteParams,
   useAvecRejeuDetailRequeteApiHook
-} from "../../requeteDelivrance/detailRequete/hook/DetailRequeteHook";
+} from "../../../common/hook/requete/DetailRequeteHook";
+import { RMCAuto } from "../../rechercheMultiCriteres/autoActesInscriptions/RMCAuto";
+import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { ReponseReqInfo } from "./contenu/ReponseReqInfo";
 import { ResumeReqInfo } from "./contenu/ResumeReqInfo";
 import "./scss/ApercuReqInfoPage.scss";

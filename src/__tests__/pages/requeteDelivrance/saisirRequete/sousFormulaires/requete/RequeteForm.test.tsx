@@ -1,5 +1,5 @@
+import { REQUETE } from "@composant/formulaire/ConstantesNomsForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { REQUETE } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCPageModel";
 import {
   act,
   fireEvent,

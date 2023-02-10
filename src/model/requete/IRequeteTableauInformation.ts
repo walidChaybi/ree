@@ -1,5 +1,5 @@
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
-import { getValeurOuVide, valeurOuUndefined } from "@util/Utils";
+import { getValeurOuUndefined, getValeurOuVide } from "@util/Utils";
 import { ObjetRequete } from "./enum/ObjetRequete";
 import { Qualite } from "./enum/Qualite";
 import { SousTypeInformation } from "./enum/SousTypeInformation";
@@ -38,7 +38,7 @@ export function mappingUneRequeteTableauInformation(
   mappingSupplementaire: boolean
 ): IRequeteTableauInformation {
   return {
-    idRequete: valeurOuUndefined(requete?.id),
+    idRequete: getValeurOuUndefined(requete?.id),
     type: TypeRequete.INFORMATION.libelle,
     numero: getValeurOuVide(requete?.numero),
     sousType: SousTypeInformation.getEnumFor(requete?.sousType).libelle,
@@ -52,7 +52,7 @@ export function mappingUneRequeteTableauInformation(
     ),
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
     nomsTitulaires: getNomsTitulaires(requete?.titulaires),
-    idUtilisateur: valeurOuUndefined(requete?.idUtilisateur),
+    idUtilisateur: getValeurOuUndefined(requete?.idUtilisateur),
     attribueA: mapAttribueA(requete)
   } as IRequeteTableauInformation;
 }

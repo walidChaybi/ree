@@ -1,3 +1,9 @@
+import {
+  DATES_DEBUT_FIN_ANNEE,
+  REQUERANT,
+  REQUETE,
+  TITULAIRE
+} from "@composant/formulaire/ConstantesNomsForm";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
 import { MEP_YEAR } from "@util/DateUtils";
@@ -30,12 +36,6 @@ import TitulaireFiltre, {
 } from "../filtres/titulaire/TitulaireFiltre";
 import "./scss/RMCRequetePage.scss";
 import { getMessageSiVerificationRestrictionRmcRequeteEnErreur } from "./validation/VerificationRestrictionRmcRequete";
-
-// Nom des filtres
-export const REQUETE = "requete";
-export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
-export const TITULAIRE = "titulaire";
-export const REQUERANT = "requerant";
 
 // Valeurs par défaut des champs
 const DefaultValuesRMCRequete = {

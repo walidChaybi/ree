@@ -1,4 +1,17 @@
 import {
+  ADRESSE,
+  EVENEMENT,
+  LIEN_TITULAIRE,
+  MANDANT,
+  NATURE_ACTE,
+  PIECES_JOINTES,
+  REQUERANT,
+  REQUETE,
+  TITULAIRE1,
+  TITULAIRE2,
+  TYPE_REQUERANT
+} from "@composant/formulaire/ConstantesNomsForm";
+import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAutoDelivrance
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
@@ -48,8 +61,8 @@ import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import * as Yup from "yup";
+import { useDetailRequeteApiHook } from "../../../common/hook/requete/DetailRequeteHook";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
-import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
 } from "./boutons/SaisirRequeteBoutons";
@@ -73,23 +86,10 @@ import { useCreationRequeteDelivranceRDC } from "./hook/CreerRDCApiHook";
 import { mappingRequeteDelivranceVersFormulaireRDC } from "./hook/mappingRequeteDelivranceVersFormulaireRDC";
 import { useUpdateRequeteDelivranceRDC } from "./hook/UpdateRDCApiHook";
 import {
-  ADRESSE,
   CreationRequeteRDC,
-  EVENEMENT,
-  LIEN_TITULAIRE,
-  MANDANT,
-  PIECES_JOINTES,
-  REQUERANT,
-  REQUETE,
   SaisieRequeteRDC,
-  TITULAIRE1,
-  TITULAIRE2,
   UpdateRequeteRDC
 } from "./modelForm/ISaisirRDCPageModel";
-import {
-  NATURE_ACTE,
-  TYPE_REQUERANT
-} from "./modelForm/ISaisirRequetePageModel";
 import "./scss/SaisirRequetePage.scss";
 import {
   EvenementFormDefaultValues,

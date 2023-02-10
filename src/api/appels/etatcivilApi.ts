@@ -4,9 +4,11 @@ import { DeleteAlerteActeApiHookParameters } from "@hook/alertes/DeleteAlerteAct
 import { IDerniereDelivranceRcRcaPacsParams } from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
 import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { IRMCRequestActesInscriptions } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
+import {
+  ICriteresRMCAutoActeInscription,
+  IRMCRequestActesInscriptions
+} from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
-import { ICriteresRMCAuto } from "@pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
@@ -255,7 +257,7 @@ export async function postCorpsTexte(
 }
 
 export function rechercheMultiCriteresAutoActes(
-  criteres: ICriteresRMCAuto,
+  criteres: ICriteresRMCAutoActeInscription,
   range?: string
 ): Promise<any> {
   return api.fetch({
@@ -269,7 +271,7 @@ export function rechercheMultiCriteresAutoActes(
 }
 
 export function rechercheMultiCriteresAutoInscription(
-  criteres: ICriteresRMCAuto,
+  criteres: ICriteresRMCAutoActeInscription,
   range?: string
 ): Promise<any> {
   return api.fetch({

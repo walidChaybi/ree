@@ -1,3 +1,4 @@
+import { LIEN, NATURE_LIEN } from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
@@ -10,7 +11,6 @@ import {
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { LIEN, NATURE_LIEN } from "../../modelForm/ISaisirRequetePageModel";
 import "./scss/LienTitulaireForm.scss";
 
 // Valeurs par défaut des champs

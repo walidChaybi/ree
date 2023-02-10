@@ -1,5 +1,5 @@
-import { ICriteresRechercheActeInscription } from "@pages/rechercheMultiCriteres/acteInscription/hook/RMCActeInscriptionUtils";
-import { useRMCInscriptionApiHook } from "@pages/rechercheMultiCriteres/acteInscription/hook/RMCInscriptionApiHook";
+import { ICriteresRechercheActeInscription } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
+import { useRMCInscriptionApiHook } from "@hook/rmcActeInscription/RMCInscriptionApiHook";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_INSCRIPTION } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
@@ -18,8 +18,7 @@ const criteres: ICriteresRechercheActeInscription = {
     },
     datesDebutFinAnnee: {
       dateDebut: { jour: "", mois: "", annee: "" },
-      dateFin: { jour: "", mois: "", annee: "" },
-      annee: ""
+      dateFin: { jour: "", mois: "", annee: "" }
     },
     registreRepertoire: {
       repertoire: {
@@ -65,8 +64,7 @@ const criteresRechecheNonAutorise: ICriteresRechercheActeInscription = {
     },
     datesDebutFinAnnee: {
       dateDebut: { jour: "", mois: "", annee: "" },
-      dateFin: { jour: "", mois: "", annee: "" },
-      annee: ""
+      dateFin: { jour: "", mois: "", annee: "" }
     },
     registreRepertoire: {
       registre: {

@@ -1,9 +1,10 @@
-import { NB_HEURE, NB_MINUTE } from "@composant/formulaire/ConstantesNomsForm";
 import {
   ANNEE,
   JOUR,
-  MOIS
-} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+  MOIS,
+  NB_HEURE,
+  NB_MINUTE
+} from "@composant/formulaire/ConstantesNomsForm";
 import {
   estDateReceValide,
   IDateCompose,
@@ -20,7 +21,6 @@ import {
   MSG_DATE_MEP_MIN,
   MSG_MIN_YEAR
 } from "../FormulaireMessages";
-
 export function validateAnnee(
   value: number,
   anneeMin?: number,

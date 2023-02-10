@@ -1,3 +1,9 @@
+import {
+  NOM,
+  PRENOM,
+  RAISON_SOCIALE,
+  TYPE_MANDANT
+} from "@composant/formulaire/ConstantesNomsForm";
 import { TypeMandant } from "@model/requete/enum/TypeMandant";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
@@ -13,12 +19,6 @@ import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import InputFieldAvecBoutonMajuscule from "../../../../../common/widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
-import {
-  NOM,
-  PRENOM,
-  RAISON_SOCIALE,
-  TYPE_MANDANT
-} from "../../modelForm/ISaisirRequetePageModel";
 import "./scss/MandantForm.scss";
 
 // Valeurs par défaut des champs

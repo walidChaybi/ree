@@ -1,11 +1,12 @@
-import { LIEU_EVENEMENT } from "@composant/formulaire/ConstantesNomsForm";
+import {
+  DATE_EVENEMENT,
+  LIEU_EVENEMENT
+} from "@composant/formulaire/ConstantesNomsForm";
 import LieuEvenementForm from "@composant/formulaire/LieuEvenementForm";
 import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
-import { SaisirExtraitFormContext } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import DateComposeForm from "@widget/formulaire/champsDate/DateComposeForm";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
-import React, { useContext } from "react";
-import { DATE_EVENEMENT } from "../../../pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import React from "react";
 import "./scss/EvenementForm.scss";
 
 interface EvenementFormProps {
@@ -16,27 +17,30 @@ interface EvenementFormProps {
   afficheHeure: boolean;
   gestionEtrangerFrance: boolean;
   etrangerParDefaut: boolean;
+  saisieVerrouillee: boolean;
 }
 
 export const EvenementForm: React.FC<EvenementFormProps> = props => {
-  const { saisieVerrouillee } = useContext(SaisirExtraitFormContext);
-
   return (
     <div className="EvenementForm">
       <DateComposeForm
         nomDate={withNamespace(props.nom, DATE_EVENEMENT)}
         labelDate={props.labelDate}
         disabledJour={
-          Evenement.estTotalementRenseigne(props.evenement) && saisieVerrouillee
+          Evenement.estTotalementRenseigne(props.evenement) &&
+          props.saisieVerrouillee
         }
         disabledMois={
-          Evenement.estTotalementRenseigne(props.evenement) && saisieVerrouillee
+          Evenement.estTotalementRenseigne(props.evenement) &&
+          props.saisieVerrouillee
         }
         disabledAnnee={
-          Evenement.estTotalementRenseigne(props.evenement) && saisieVerrouillee
+          Evenement.estTotalementRenseigne(props.evenement) &&
+          props.saisieVerrouillee
         }
         disabledHeure={
-          Evenement.estHeureRenseignee(props.evenement) && saisieVerrouillee
+          Evenement.estHeureRenseignee(props.evenement) &&
+          props.saisieVerrouillee
         }
         afficheHeure={props.afficheHeure}
         showCroixSuppression={false}

@@ -1,3 +1,10 @@
+import {
+  CHOIX_COURRIER,
+  COURRIER,
+  TEXTE,
+  TEXTE_LIBRE
+} from "@composant/formulaire/ConstantesNomsForm";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -8,13 +15,6 @@ import {
   getStatutApresChoixDelivrance,
   getTypesCourrier
 } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
-import {
-  CHOIX_COURRIER,
-  COURRIER,
-  SaisieCourrier,
-  TEXTE,
-  TEXTE_LIBRE
-} from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 import request from "superagent";
 import requeteDelivrance, {
   requeteDelivranceInstitutionnel

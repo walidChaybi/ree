@@ -1,3 +1,10 @@
+import {
+  AUTRE_PROFESSIONNEL,
+  INSTITUTI0NNEL,
+  MANDATAIRE,
+  PARTICULIER,
+  TYPE_REQUERANT
+} from "@composant/formulaire/ConstantesNomsForm";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { Requerant } from "@model/requete/IRequerant";
 import { getLibelle } from "@util/Utils";
@@ -7,13 +14,6 @@ import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import {
-  AUTRE_PROFESSIONNEL,
-  INSTITUTI0NNEL,
-  MANDATAIRE,
-  PARTICULIER,
-  TYPE_REQUERANT
-} from "../../modelForm/ISaisirRequetePageModel";
 import AutreProfessionnelForm, {
   AutreProfessionnelFormDefaultValues,
   AutreProfessionnelFormValidationSchema

@@ -17,11 +17,11 @@ import {
   formatNom,
   formatNoms,
   formatPrenoms,
-  getValeurOuVide,
-  valeurOuUndefined
+  getValeurOuUndefined,
+  getValeurOuVide
 } from "@util/Utils";
 import React from "react";
-import { getCriteresTitulaire } from "../../common/mapping/RMCMappingUtil";
+import { getCriteresTitulaire } from "./mapping/RMCMappingUtil";
 
 export interface ICriteresRechercheActeInscription {
   valeurs: IRMCActeInscription;
@@ -48,40 +48,40 @@ export function mappingCriteres(
     ),
 
     // Filtre Registre & Réppertoire Civile
-    natureActe: valeurOuUndefined(
+    natureActe: getValeurOuUndefined(
       criteres.registreRepertoire?.registre?.natureActe
     ),
-    familleRegistre: valeurOuUndefined(
+    familleRegistre: getValeurOuUndefined(
       criteres.registreRepertoire?.registre?.familleRegistre
     ),
-    posteOuPocopa: valeurOuUndefined(
+    posteOuPocopa: getValeurOuUndefined(
       criteres.registreRepertoire?.registre?.pocopa?.value
     ),
-    numeroActe: valeurOuUndefined(
+    numeroActe: getValeurOuUndefined(
       criteres.registreRepertoire?.registre?.numeroActe
     ),
-    anneeRegistre: valeurOuUndefined(
+    anneeRegistre: getValeurOuUndefined(
       criteres.registreRepertoire?.registre?.anneeRegistre
     ),
-    numeroInscription: valeurOuUndefined(
+    numeroInscription: getValeurOuUndefined(
       criteres.registreRepertoire?.repertoire?.numeroInscription
     ),
-    typeRepertoire: valeurOuUndefined(
+    typeRepertoire: getValeurOuUndefined(
       criteres.registreRepertoire?.repertoire?.typeRepertoire
     ),
     natureRcRca: RMCRepertoire.getNatureRcRca(
       criteres.registreRepertoire?.repertoire
     ),
-    jourDateEvenement: valeurOuUndefined(
+    jourDateEvenement: getValeurOuUndefined(
       criteres.registreRepertoire?.evenement?.dateEvenement?.jour
     ),
-    moisDateEvenement: valeurOuUndefined(
+    moisDateEvenement: getValeurOuUndefined(
       criteres.registreRepertoire?.evenement?.dateEvenement?.mois
     ),
-    anneeDateEvenement: valeurOuUndefined(
+    anneeDateEvenement: getValeurOuUndefined(
       criteres.registreRepertoire?.evenement?.dateEvenement?.annee
     ),
-    paysEvenement: valeurOuUndefined(
+    paysEvenement: getValeurOuUndefined(
       criteres.registreRepertoire?.evenement?.paysEvenement
     )
   };

@@ -1,5 +1,5 @@
+import { REQUERANT } from "@composant/formulaire/ConstantesNomsForm";
 import { TypeRequerant } from "@model/requete/enum/TypeRequerant";
-import { REQUERANT } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 import RequerantForm, {
   RequerantFormDefaultValues,
   RequerantFormValidationSchema

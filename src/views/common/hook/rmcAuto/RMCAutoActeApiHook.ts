@@ -5,7 +5,7 @@ import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatR
 import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { mappingActes } from "../../common/mapping/RMCMappingUtil";
+import { mappingActes } from "../rmcActeInscription/mapping/RMCMappingUtil";
 import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
 export function useRMCAutoActeApiHook(

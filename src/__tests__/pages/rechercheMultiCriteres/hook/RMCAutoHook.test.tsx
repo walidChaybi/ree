@@ -1,7 +1,4 @@
-import {
-  IRMCAutoParams,
-  useRMCAutoHook
-} from "@hook/navigationApercuRequeteDelivrance/RMCAutoHook";
+import { IRMCAutoParams, useRMCAutoHook } from "@hook/rmcAuto/RMCAutoHook";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import {
   URL_MES_REQUETES_DELIVRANCE,

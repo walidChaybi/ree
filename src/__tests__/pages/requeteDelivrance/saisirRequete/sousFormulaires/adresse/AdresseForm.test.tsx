@@ -1,4 +1,4 @@
-import { ADRESSE } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCSCPageModel";
+import { ADRESSE } from "@composant/formulaire/ConstantesNomsForm";
 import {
   act,
   fireEvent,

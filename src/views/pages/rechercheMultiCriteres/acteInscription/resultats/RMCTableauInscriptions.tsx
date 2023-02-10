@@ -1,3 +1,4 @@
+import { getMessageZeroInscription } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
@@ -16,7 +17,6 @@ import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn
 import React, { useCallback, useEffect, useState } from "react";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { IDataFicheProps, IIndex } from "../../../fiche/FichePage";
-import { getMessageZeroInscription } from "../hook/RMCActeInscriptionUtils";
 import { goToLinkRMC, TypeRMC } from "./RMCTableauCommun";
 import { determinerColonnes } from "./RMCTableauInscriptionsParams";
 

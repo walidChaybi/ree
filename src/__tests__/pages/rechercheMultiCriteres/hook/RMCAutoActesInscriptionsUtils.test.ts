@@ -1,9 +1,10 @@
-import { Sexe } from "@model/etatcivil/enum/Sexe";
 import {
   determinerCriteresRMCAuto,
   redirectionRMCAuto,
   redirectionRMCAutoApercuTraitement
-} from "@pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
+} from "@hook/rmcAuto/RMCAutoActesInscriptionsUtils";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import {
   PATH_APERCU_REQ_TRAITEMENT,
   URL_MES_REQUETES_DELIVRANCE,
@@ -25,7 +26,7 @@ const requete = {
       sexe: Sexe.MASCULIN
     }
   ]
-};
+} as IRequeteTableauDelivrance;
 
 test("criteresRMCAutoMapper", () => {
   const res = determinerCriteresRMCAuto(requete);
@@ -44,12 +45,7 @@ test("criteresRMCAutoMapper", () => {
 });
 
 test("redirectionRMCAuto", () => {
-  const res = redirectionRMCAuto(
-    requete,
-    URL_REQUETES_DELIVRANCE_SERVICE,
-    [null],
-    [null]
-  );
+  const res = redirectionRMCAuto(requete, URL_REQUETES_DELIVRANCE_SERVICE);
   expect(res).toStrictEqual(
     "/rece/rece-ui/requetesservice/apercurequetepriseencharge/0"
   );
@@ -66,9 +62,7 @@ test("redirectionRMCAutoApercuTraitement", () => {
 test("redirectionRMCAutoModifierTraitement", () => {
   const res = redirectionRMCAuto(
     requete,
-    `${URL_REQUETES_DELIVRANCE_SERVICE}/${PATH_APERCU_REQ_TRAITEMENT}/0`,
-    [null],
-    [null]
+    `${URL_REQUETES_DELIVRANCE_SERVICE}/${PATH_APERCU_REQ_TRAITEMENT}/0`
   );
   expect(res).toStrictEqual(
     "/rece/rece-ui/requetesservice/apercurequetepriseencharge/0"

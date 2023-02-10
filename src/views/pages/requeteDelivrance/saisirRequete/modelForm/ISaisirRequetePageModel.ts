@@ -1,72 +1,51 @@
-// Nom des sous-formulaires
-
-// Commun
-export const NOM_NAISSANCE = "nomNaissance";
-export const NOM_USAGE = "nomUsage";
-export const NOM = "nom";
-export const PRENOM = "prenom";
-
-// Noms des champs IdentiteForm
-export const NOMS = "noms";
-export const PRENOMS = "prenoms";
-export const SEXE = "sexe";
-export const NAISSANCE = "naissance";
-export const NATIONALITE = "nationalite";
-export const PARENT1 = "parent1";
-export const PARENT2 = "parent2";
-
-// Noms des champs RequerentForm
-export const TYPE_REQUERANT = "typeRequerant";
-export const MANDATAIRE = "mandataire";
-export const INSTITUTI0NNEL = "institutionnel";
-export const PARTICULIER = "particulier";
-export const AUTRE_PROFESSIONNEL = "autreProfessionnel";
-
-// Noms des champs MandataireForm, InstitutionnelForm
-export const TYPE = "type";
-export const NATURE = "nature";
-export const RAISON_SOCIALE = "raisonSociale";
-export const NOM_INSTITUTION = "nomInstitution";
-
-// Noms des champs AdresseForm
-export const VOIE = "voie";
-export const LIEU_DIT = "lieuDit";
-export const COMPLEMENT_DESTINATAIRE = "complementDestinataire";
-export const COMPLEMENT_POINT_GEO = "complementPointGeo";
-export const CODE_POSTAL = "codePostal";
-export const COMMUNE = "commune";
-export const PAYS = "pays";
-export const ADRESSE_COURRIEL = "adresseCourriel";
-export const NUMERO_TELEPHONE = "numeroTelephone";
-
-// Noms des champs PrenomsForm
-export const PRENOM_1 = "prenom1";
-export const PRENOM_2 = "prenom2";
-export const PRENOM_3 = "prenom3";
-
-// Noms des champs EvenementForm
-export const DATE_EVENEMENT = "dateEvenement";
-export const VILLE_EVENEMENT = "villeEvenement";
-export const PAYS_EVENEMENT = "paysEvenement";
-
-// Noms des champs DateComposeForm
-export const JOUR = "jour";
-export const MOIS = "mois";
-export const ANNEE = "annee";
-
-// Noms des champs RequeteForm
-export const NATURE_ACTE = "natureActe";
-export const DOCUMENT_DEMANDE = "documentDemande";
-export const NB_EXEMPLAIRE = "nbExemplaire";
-export const MOTIF = "motif";
-export const COMPLEMENT_MOTIF = "complementMotif";
-
-// Noms des champs MandantForm
-export const TYPE_MANDANT = "typeMandant";
-
-// Noms des champs LienTitulaireForm
-export const LIEN = "lien";
-export const NATURE_LIEN = "natureLien";
+import {
+  ADRESSE_COURRIEL,
+  ANNEE,
+  AUTRE_PROFESSIONNEL,
+  CODE_POSTAL,
+  COMMUNE,
+  COMPLEMENT_DESTINATAIRE,
+  COMPLEMENT_MOTIF,
+  COMPLEMENT_POINT_GEO,
+  DATE_EVENEMENT,
+  DOCUMENT_DEMANDE,
+  INSTITUTI0NNEL,
+  JOUR,
+  LIEN,
+  LIEU_DIT,
+  MANDATAIRE,
+  MOIS,
+  MOTIF,
+  NAISSANCE,
+  NATIONALITE,
+  NATURE,
+  NATURE_ACTE,
+  NATURE_LIEN,
+  NB_EXEMPLAIRE,
+  NOM,
+  NOMS,
+  NOM_INSTITUTION,
+  NOM_NAISSANCE,
+  NOM_USAGE,
+  NUMERO_TELEPHONE,
+  PARENT1,
+  PARENT2,
+  PARTICULIER,
+  PAYS,
+  PAYS_EVENEMENT,
+  PRENOM,
+  PRENOMS,
+  PRENOM_1,
+  PRENOM_2,
+  PRENOM_3,
+  RAISON_SOCIALE,
+  SEXE,
+  TYPE,
+  TYPE_MANDANT,
+  TYPE_REQUERANT,
+  VILLE_EVENEMENT,
+  VOIE
+} from "@composant/formulaire/ConstantesNomsForm";
 
 export interface Requerant {
   [TYPE_REQUERANT]: string;

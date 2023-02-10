@@ -3,7 +3,7 @@ import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneReq
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import { IRMCAutoPersonneResultat } from "../../../../../model/rmc/personne/IRMCAutoPersonneResultat";
-import { mappingPersonnesTableau } from "../../common/mapping/RMCMappingUtil";
+import { mappingPersonnesTableau } from "../../../../common/hook/rmcActeInscription/mapping/RMCMappingUtil";
 import { IRequeteCreationTranscription } from "./../../../../../model/requete/IRequeteCreationTranscription";
 import { mapRequeteVersRMCAutoPersonneParams } from "./RMCAutoPersonneUtils";
 

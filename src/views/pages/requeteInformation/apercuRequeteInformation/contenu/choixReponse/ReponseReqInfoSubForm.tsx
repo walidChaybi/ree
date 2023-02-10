@@ -1,3 +1,4 @@
+import { REPONSE } from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
@@ -8,7 +9,7 @@ import { connect } from "formik";
 import React, { useEffect } from "react";
 import * as Yup from "yup";
 import "../scss/ReponseReqInfo.scss";
-import { REPONSE, ReponseReqInfoProps } from "./ReponseReqInfoForm";
+import { ReponseReqInfoProps } from "./ReponseReqInfoForm";
 
 export type ReponseReqInfoSubFormProps = FormikComponentProps &
   ReponseReqInfoProps;

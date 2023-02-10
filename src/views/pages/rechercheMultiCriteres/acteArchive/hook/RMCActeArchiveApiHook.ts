@@ -3,11 +3,11 @@ import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeAr
 import { getParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import { mappingActes } from "../../../../common/hook/rmcActeInscription/mapping/RMCMappingUtil";
 import {
   IRMCActeApiHookResultat,
   RESULTAT_NON_DEFINIT
 } from "../../common/hook/RMCActeEtActeArchiveHookUtil";
-import { mappingActes } from "../../common/mapping/RMCMappingUtil";
 import { mappingCriteres } from "./RMCActeArchiveUtils";
 
 export interface ICriteresRechercheActeArchive {

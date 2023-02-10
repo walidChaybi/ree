@@ -1,5 +1,5 @@
+import { LIEN_TITULAIRE } from "@composant/formulaire/ConstantesNomsForm";
 import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
-import { LIEN_TITULAIRE } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCPageModel";
 import LienTitulaireForm, {
   LienTitulaireFormDefaultValues,
   LienTitulaireFormValidationSchema

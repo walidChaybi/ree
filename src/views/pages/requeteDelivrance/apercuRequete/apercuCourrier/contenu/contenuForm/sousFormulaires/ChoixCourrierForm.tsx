@@ -1,3 +1,4 @@
+import { COURRIER, DELIVRANCE } from "@composant/formulaire/ConstantesNomsForm";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
@@ -11,7 +12,6 @@ import {
 import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import { COURRIER, DELIVRANCE } from "../../modelForm/ISaisiePageModel";
 import "./scss/ChoixCourrierForm.scss";
 
 interface ChoixCourrierFormProps {

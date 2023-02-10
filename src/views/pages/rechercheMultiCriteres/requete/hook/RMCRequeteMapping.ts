@@ -4,7 +4,7 @@ import {
   getDateDebutFromDateCompose,
   getDateFinFromDateCompose
 } from "@util/DateUtils";
-import { valeurOuUndefined } from "@util/Utils";
+import { getValeurOuUndefined } from "@util/Utils";
 
 /** Critères de recherche requete: mapping avant appel d'api */
 export function mappingCriteresRequete(
@@ -13,19 +13,27 @@ export function mappingCriteresRequete(
   let criteresMapper: IRMCRequestRequete;
   criteresMapper = {
     // Filtre Requete
-    numeroRequete: valeurOuUndefined(criteres.requete?.numeroRequete),
-    typeRequete: valeurOuUndefined(criteres.requete?.typeRequete),
-    sousTypeRequete: valeurOuUndefined(criteres.requete?.sousTypeRequete),
-    statutRequete: valeurOuUndefined(criteres.requete?.statutRequete),
-    numeroTeledossier: valeurOuUndefined(criteres.requete?.numeroTeledossier),
+    numeroRequete: getValeurOuUndefined(criteres.requete?.numeroRequete),
+    typeRequete: getValeurOuUndefined(criteres.requete?.typeRequete),
+    sousTypeRequete: getValeurOuUndefined(criteres.requete?.sousTypeRequete),
+    statutRequete: getValeurOuUndefined(criteres.requete?.statutRequete),
+    numeroTeledossier: getValeurOuUndefined(
+      criteres.requete?.numeroTeledossier
+    ),
 
     // Filtre Titulaire
-    nomTitulaire: valeurOuUndefined(criteres.titulaire?.nom),
-    prenomTitulaire: valeurOuUndefined(criteres.titulaire?.prenom),
-    jourNaissance: valeurOuUndefined(criteres.titulaire?.dateNaissance?.jour),
-    moisNaissance: valeurOuUndefined(criteres.titulaire?.dateNaissance?.mois),
-    anneeNaissance: valeurOuUndefined(criteres.titulaire?.dateNaissance?.annee),
-    paysNaissance: valeurOuUndefined(criteres.titulaire?.paysNaissance),
+    nomTitulaire: getValeurOuUndefined(criteres.titulaire?.nom),
+    prenomTitulaire: getValeurOuUndefined(criteres.titulaire?.prenom),
+    jourNaissance: getValeurOuUndefined(
+      criteres.titulaire?.dateNaissance?.jour
+    ),
+    moisNaissance: getValeurOuUndefined(
+      criteres.titulaire?.dateNaissance?.mois
+    ),
+    anneeNaissance: getValeurOuUndefined(
+      criteres.titulaire?.dateNaissance?.annee
+    ),
+    paysNaissance: getValeurOuUndefined(criteres.titulaire?.paysNaissance),
 
     // Filtre Date de création
     dateCreationDebut: getDateDebutFromDateCompose(
@@ -36,8 +44,8 @@ export function mappingCriteresRequete(
     ),
 
     // Filtre Requerant
-    nomRequerant: valeurOuUndefined(criteres.requerant?.nom),
-    raisonSociale: valeurOuUndefined(criteres.requerant?.raisonSociale)
+    nomRequerant: getValeurOuUndefined(criteres.requerant?.nom),
+    raisonSociale: getValeurOuUndefined(criteres.requerant?.raisonSociale)
   };
   return criteresMapper;
 }

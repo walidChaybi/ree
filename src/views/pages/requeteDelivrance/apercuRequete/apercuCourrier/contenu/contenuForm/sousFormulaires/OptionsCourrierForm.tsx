@@ -1,10 +1,14 @@
-import { SettingsBackupRestore } from "@mui/icons-material";
+import {
+  CONTENU,
+  LIBELLE_OPTION
+} from "@composant/formulaire/ConstantesNomsForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   OptionCourrier,
   OptionsCourrier
 } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { SettingsBackupRestore } from "@mui/icons-material";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
@@ -13,7 +17,6 @@ import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useOptionsCourriersApiHook } from "../../hook/OptionsCourriersHook";
-import { CONTENU, LIBELLE_OPTION } from "../../modelForm/ISaisiePageModel";
 import {
   classNameContenu,
   contenuDisabled,

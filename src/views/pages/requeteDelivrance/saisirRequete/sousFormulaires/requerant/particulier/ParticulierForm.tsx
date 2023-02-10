@@ -1,3 +1,8 @@
+import {
+  NOM_NAISSANCE,
+  NOM_USAGE,
+  PRENOM
+} from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import InputFieldAvecBoutonMajuscule from "@widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
@@ -12,11 +17,6 @@ import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
 import { CarateresAutorise } from "../../../../../../../ressources/Regex";
-import {
-  NOM_NAISSANCE,
-  NOM_USAGE,
-  PRENOM
-} from "../../../modelForm/ISaisirRequetePageModel";
 import "./../scss/RequerantForm.scss";
 
 // Valeurs par défaut des champs

@@ -1,4 +1,4 @@
-import { INomSecableForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/mapping/mappingActeVerFormulaireSaisirExtrait";
+import { INomSecableForm } from "@model/form/delivrance/ISaisieExtraitForm";
 import { estNonRenseigne, estRenseigne, getLibelle } from "@util/Utils";
 import * as Yup from "yup";
 import { NOM_PARTIE1, NOM_PARTIE2 } from "../ConstantesNomsForm";

@@ -1,4 +1,4 @@
-import { useRMCActeApiHook } from "@pages/rechercheMultiCriteres/acteInscription/hook/RMCActeApiHook";
+import { useRMCActeApiHook } from "@hook/rmcActeInscription/RMCActeApiHook";
 import { ICriteresRechercheActeInscription } from "@pages/rechercheMultiCriteres/acteInscription/hook/RMCActeInscriptionUtils";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_ACTE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";

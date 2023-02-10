@@ -1,4 +1,5 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";
@@ -8,7 +9,6 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { mappingRequeteDelivrance } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import {
   ISaisieExtraitForm,
   ITitulaireEvtForm,

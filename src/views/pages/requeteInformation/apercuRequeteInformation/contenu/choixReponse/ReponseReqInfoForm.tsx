@@ -1,4 +1,8 @@
 import {
+  PIECES_JOINTES,
+  REPONSE
+} from "@composant/formulaire/ConstantesNomsForm";
+import {
   TypePieceJointe,
   usePostPiecesJointesApi
 } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
@@ -44,9 +48,6 @@ export interface ReponseReqInfoProps {
 
 export type ReponseReqInfoFormProps = FormikComponentProps &
   ReponseReqInfoProps;
-
-export const REPONSE = "reponse";
-export const PIECES_JOINTES = "piecesJointes";
 
 const DefaultValuesReponseInfoForm = {
   [REPONSE]: DefaultValuesReponseInfoSubForm,

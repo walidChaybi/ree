@@ -1,4 +1,4 @@
-import { PARTICULIER } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import { PARTICULIER } from "@composant/formulaire/ConstantesNomsForm";
 import ParticulierForm, {
   ParticulierFormDefaultValues,
   ParticulierFormValidationSchema

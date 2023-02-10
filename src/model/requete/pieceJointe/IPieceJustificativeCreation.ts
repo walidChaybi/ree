@@ -46,7 +46,7 @@ export class PieceJustificativeCreation {
 
   public static setOrdre(piecesJustificatives: IPieceJustificativeCreation[]) {
     let cpt = 0;
-    piecesJustificatives
+    [...piecesJustificatives]
       .sort((pj1, pj2) => pj1.nom.localeCompare(pj2.nom))
       .forEach(pieceJustificative => {
         const ordre = this.getNumeroOrdre(pieceJustificative) + cpt;

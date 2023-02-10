@@ -1,3 +1,8 @@
+import {
+  PRENOM_1,
+  PRENOM_2,
+  PRENOM_3
+} from "@composant/formulaire/ConstantesNomsForm";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { DEUX, estRenseigne, getLibelle, UN, ZERO } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
@@ -16,12 +21,7 @@ import {
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../../../ressources/Regex";
-import {
-  PRENOM_1,
-  PRENOM_2,
-  PRENOM_3
-} from "../../../modelForm/ISaisirRequetePageModel";
+import { CarateresAutorise } from "../../../../../ressources/Regex";
 import "./scss/PrenomsForm.scss";
 
 const NB_MIN_PRENOMS = 1;

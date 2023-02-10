@@ -1,8 +1,18 @@
 import {
+  ADRESSE,
+  DOCUMENT,
+  PIECES_JOINTES,
+  REQUERANT,
+  TITULAIRES
+} from "@composant/formulaire/ConstantesNomsForm";
+import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAutoDelivrance
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
-import { CreationActionHookParams, useCreationAction } from "@hook/requete/CreationAction";
+import {
+  CreationActionHookParams,
+  useCreationAction
+} from "@hook/requete/CreationAction";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
@@ -38,9 +48,9 @@ import { FormikProps, FormikValues } from "formik";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import { useReponseSansDelivranceCS } from "../../requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/hook/ChoixReponseSansDelivranceCSHook";
+import { useReponseSansDelivranceCS } from "../../../common/hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
+import { useDetailRequeteApiHook } from "../../../common/hook/requete/DetailRequeteHook";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
-import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";
 import { ADonneesTitulaireRequeteAbsentes } from "../espaceDelivrance/EspaceDelivranceUtils";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
@@ -61,13 +71,8 @@ import { useCreationRequeteDelivranceRDCSC } from "./hook/CreerRDCSCApiHook";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "./hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import { useUpdateRequeteDelivranceRDCSC } from "./hook/UpdateRDCSCApiHook";
 import {
-  ADRESSE,
   CreationRequeteRDCSC,
-  DOCUMENT,
-  PIECES_JOINTES,
-  REQUERANT,
   SaisieRequeteRDCSC,
-  TITULAIRES,
   UpdateRequeteRDCSC
 } from "./modelForm/ISaisirRDCSCPageModel";
 import "./scss/SaisirRequetePage.scss";
@@ -279,7 +284,8 @@ export const SaisirRDCSCPage: React.FC = () => {
 
           if (SousTypeDelivrance.estRDCSC(requeteSauvegardee.sousType)) {
             pasDeTraitementAuto =
-              ADonneesTitulaireRequeteAbsentes(requeteSauvegardee) || modeModification;
+              ADonneesTitulaireRequeteAbsentes(requeteSauvegardee) ||
+              modeModification;
           }
           setParamsRMCAuto({
             requete:

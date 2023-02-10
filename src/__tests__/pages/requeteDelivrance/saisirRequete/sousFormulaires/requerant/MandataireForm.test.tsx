@@ -1,4 +1,4 @@
-import { MANDATAIRE } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import { MANDATAIRE } from "@composant/formulaire/ConstantesNomsForm";
 import MandataireForm, {
   MandataireFormDefaultValues,
   MandataireFormValidationSchema

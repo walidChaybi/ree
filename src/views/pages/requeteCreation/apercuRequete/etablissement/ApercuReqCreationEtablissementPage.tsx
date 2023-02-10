@@ -6,8 +6,8 @@ import {
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
+import { useDetailRequeteApiHook } from "../../../../common/hook/requete/DetailRequeteHook";
 import ConteneurRetractable from "../../../../common/widget/conteneurRetractable/ConteneurRetractable";
-import { useDetailRequeteApiHook } from "../../../requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { OngletPiecesJustificatives } from "../../commun/composants/OngletPiecesJustificatives";
 import Labels from "../../commun/Labels";
 import "../../commun/scss/ApercuReqCreationPage.scss";

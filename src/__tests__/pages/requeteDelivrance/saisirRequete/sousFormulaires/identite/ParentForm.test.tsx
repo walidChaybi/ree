@@ -1,9 +1,9 @@
+import { PARENT1 } from "@composant/formulaire/ConstantesNomsForm";
 import ParentForm, {
   ParentFormDefaultValues,
   ParentFormValidationSchema,
   ParentSubFormProps
 } from "@composant/formulaire/ParentForm";
-import { PARENT1 } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import {
   act,
   fireEvent,

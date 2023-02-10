@@ -1,3 +1,13 @@
+import {
+  ADRESSE,
+  CHOIX_COURRIER,
+  OPTION,
+  REQUERANT,
+  REQUERANT_LIGNE_1,
+  REQUERANT_LIGNE_2,
+  REQUETE,
+  TEXTE_LIBRE
+} from "@composant/formulaire/ConstantesNomsForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -9,16 +19,6 @@ import RequeteForm from "@widget/formulaire/requete/RequeteForm";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import React from "react";
-import {
-  ADRESSE,
-  CHOIX_COURRIER,
-  OPTION,
-  REQUERANT,
-  REQUERANT_LIGNE_1,
-  REQUERANT_LIGNE_2,
-  REQUETE,
-  TEXTE_LIBRE
-} from "../modelForm/ISaisiePageModel";
 import "./scss/CourrierForm.scss";
 import ChoixCourrierForm, {
   ChoixCourrierSubFormProps

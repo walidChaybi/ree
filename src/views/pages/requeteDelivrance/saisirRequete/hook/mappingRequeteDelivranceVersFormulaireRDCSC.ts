@@ -1,27 +1,5 @@
-import { ParentFormDefaultValues } from "@composant/formulaire/ParentForm";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { Qualite } from "@model/requete/enum/Qualite";
-import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
-import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
-import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
-import { IParent, Parent } from "@model/requete/IParents";
-import { Requerant } from "@model/requete/IRequerant";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import {
-  ITitulaireRequete,
-  TitulaireRequete
-} from "@model/requete/ITitulaireRequete";
-import { getValeurOuVide } from "@util/Utils";
-import { FileExtension, MimeType } from "file-type";
 import {
   ADRESSE,
-  DOCUMENT,
-  PIECES_JOINTES,
-  REQUERANT,
-  SaisieRequeteRDCSC,
-  TITULAIRES
-} from "../modelForm/ISaisirRDCSCPageModel";
-import {
   ADRESSE_COURRIEL,
   ANNEE,
   CODE_POSTAL,
@@ -29,6 +7,7 @@ import {
   COMPLEMENT_DESTINATAIRE,
   COMPLEMENT_POINT_GEO,
   DATE_EVENEMENT,
+  DOCUMENT,
   INSTITUTI0NNEL,
   JOUR,
   LIEU_DIT,
@@ -48,18 +27,37 @@ import {
   PARTICULIER,
   PAYS,
   PAYS_EVENEMENT,
+  PIECES_JOINTES,
   PRENOM,
   PRENOMS,
   PRENOM_1,
   PRENOM_2,
   PRENOM_3,
   RAISON_SOCIALE,
+  REQUERANT,
   SEXE,
+  TITULAIRES,
   TYPE,
   TYPE_REQUERANT,
   VILLE_EVENEMENT,
   VOIE
-} from "../modelForm/ISaisirRequetePageModel";
+} from "@composant/formulaire/ConstantesNomsForm";
+import { ParentFormDefaultValues } from "@composant/formulaire/ParentForm";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { Qualite } from "@model/requete/enum/Qualite";
+import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
+import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { IParent, Parent } from "@model/requete/IParents";
+import { Requerant } from "@model/requete/IRequerant";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import {
+  ITitulaireRequete,
+  TitulaireRequete
+} from "@model/requete/ITitulaireRequete";
+import { getValeurOuVide } from "@util/Utils";
+import { FileExtension, MimeType } from "file-type";
+import { SaisieRequeteRDCSC } from "../modelForm/ISaisirRDCSCPageModel";
 import { IdentiteFormDefaultValuesRDCSC } from "../sousFormulaires/identite/IdentiteForm";
 import { InstitutionnelFormDefaultValues } from "../sousFormulaires/requerant/institutionnel/InstitutionnelForm";
 import { MandataireFormDefaultValues } from "../sousFormulaires/requerant/mandataire/MandataireForm";

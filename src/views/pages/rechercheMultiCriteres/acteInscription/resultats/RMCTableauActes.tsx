@@ -1,3 +1,4 @@
+import { getMessageZeroActe } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { Alerte, IAlerte } from "@model/etatcivil/fiche/IAlerte";
@@ -14,7 +15,6 @@ import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn
 import React, { useCallback, useEffect, useState } from "react";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { IDataFicheProps, IIndex } from "../../../fiche/FichePage";
-import { getMessageZeroActe } from "../hook/RMCActeInscriptionUtils";
 import { determinerColonnes } from "./RMCTableauActesParams";
 import { goToLinkRMC, TypeRMC } from "./RMCTableauCommun";
 

@@ -1,3 +1,31 @@
+import {
+  ADRESSE,
+  ADRESSE_COURRIEL,
+  CHOIX_COURRIER,
+  CODE_POSTAL,
+  COMMUNE,
+  COMPLEMENT_DESTINATAIRE,
+  COMPLEMENT_MOTIF,
+  COMPLEMENT_POINT_GEO,
+  COURRIER,
+  DELIVRANCE,
+  DOCUMENT_DEMANDE,
+  LIEU_DIT,
+  MOTIF,
+  NATURE_ACTE,
+  NB_EXEMPLAIRE,
+  NUMERO_TELEPHONE,
+  OPTION,
+  PAYS,
+  REQUERANT,
+  REQUERANT_LIGNE_1,
+  REQUERANT_LIGNE_2,
+  REQUETE,
+  TEXTE,
+  TEXTE_LIBRE,
+  VOIE
+} from "@composant/formulaire/ConstantesNomsForm";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
@@ -26,36 +54,6 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { Options } from "@util/Type";
 import { getValeurOuVide } from "@util/Utils";
-import {
-  ADRESSE_COURRIEL,
-  CODE_POSTAL,
-  COMMUNE,
-  COMPLEMENT_DESTINATAIRE,
-  COMPLEMENT_MOTIF,
-  COMPLEMENT_POINT_GEO,
-  DOCUMENT_DEMANDE,
-  LIEU_DIT,
-  MOTIF,
-  NATURE_ACTE,
-  NB_EXEMPLAIRE,
-  NUMERO_TELEPHONE,
-  PAYS,
-  VOIE
-} from "../../../../saisirRequete/modelForm/ISaisirRequetePageModel";
-import {
-  ADRESSE,
-  CHOIX_COURRIER,
-  COURRIER,
-  DELIVRANCE,
-  OPTION,
-  REQUERANT,
-  REQUERANT_LIGNE_1,
-  REQUERANT_LIGNE_2,
-  REQUETE,
-  SaisieCourrier,
-  TEXTE,
-  TEXTE_LIBRE
-} from "../modelForm/ISaisiePageModel";
 import { OptionCourrierFormDefaultValues } from "./sousFormulaires/OptionsCourrierForm";
 
 const LIMIT_ORDRE_EDITION_STANTARD = 900;

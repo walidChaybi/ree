@@ -1,5 +1,5 @@
+import { MANDANT } from "@composant/formulaire/ConstantesNomsForm";
 import { TypeMandant } from "@model/requete/enum/TypeMandant";
-import { MANDANT } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCPageModel";
 import MandantForm, {
   MandantFormDefaultValues,
   MandantFormValidationSchema

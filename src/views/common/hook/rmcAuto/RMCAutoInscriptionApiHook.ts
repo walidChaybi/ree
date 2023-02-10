@@ -5,7 +5,7 @@ import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IRe
 import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { mappingInscriptions } from "../../acteInscription/hook/RMCActeInscriptionUtils";
+import { mappingInscriptions } from "../rmcActeInscription/RMCActeInscriptionUtils";
 import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
 export function useRMCAutoInscriptionApiHook(

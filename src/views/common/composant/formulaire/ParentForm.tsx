@@ -1,11 +1,8 @@
-import {
-  NOM_NAISSANCE,
-  PRENOMS
-} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import { PRENOMS } from "@composant/formulaire/ConstantesNomsForm";
 import PrenomsForm, {
   PrenomsFormDefaultValues,
   PrenomsFormValidationSchema
-} from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/identite/nomsPrenoms/PrenomsForm";
+} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
@@ -20,6 +17,7 @@ import { connect } from "formik";
 import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { CarateresAutorise } from "../../../../ressources/Regex";
+import { NOM_NAISSANCE } from "./ConstantesNomsForm";
 import "./scss/ParentForm.scss";
 
 // Valeurs par défaut des champs

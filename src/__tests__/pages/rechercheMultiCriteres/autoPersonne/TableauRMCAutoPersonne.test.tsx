@@ -1,7 +1,7 @@
+import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { useRMCAutoPersonneApiHook } from "@pages/rechercheMultiCriteres/autoPersonne/hook/RMCAutoPersonneApiHook";
 import { TableauRMCAutoPersonne } from "@pages/rechercheMultiCriteres/autoPersonne/TableauRMCAutoPersonne";
-import { mappingRequeteCreation } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { act } from "react-dom/test-utils";

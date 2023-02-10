@@ -1,9 +1,10 @@
-import { NB_HEURE, NB_MINUTE } from "@composant/formulaire/ConstantesNomsForm";
 import {
   ANNEE,
   JOUR,
-  MOIS
-} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+  MOIS,
+  NB_HEURE,
+  NB_MINUTE
+} from "@composant/formulaire/ConstantesNomsForm";
 import { getDateComposeFromDate } from "@util/DateUtils";
 import { executeEnDiffere } from "@util/Utils";
 import { connect, ErrorMessage, Field } from "formik";
@@ -23,7 +24,6 @@ import { FormikComponentProps, withNamespace } from "../utils/FormUtil";
 import { buildDatePickerValue, IDateComposeForm } from "./DateComposeFormUtil";
 import { validateAnnee } from "./DateComposeFormValidation";
 import "./scss/DateComposeForm.scss";
-
 // Valeurs par défaut des champs
 export const DateDefaultValues = {
   [JOUR]: "",

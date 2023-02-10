@@ -8,6 +8,17 @@ import { ExistenceContratMariage } from "@model/etatcivil/enum/ExistenceContratM
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import {
+  IContratMariageForm,
+  IDateCompleteForm,
+  IDonneesComplementairesPlurilingueForm,
+  IEvenementForm,
+  ILieuEvenementForm,
+  IParentNaissanceForm,
+  IPrenomsForm,
+  ISaisieExtraitForm,
+  ITitulaireEvtForm
+} from "@model/form/delivrance/ISaisieExtraitForm";
 import { getDateDebutFromDateCompose } from "@util/DateUtils";
 import {
   DEUX,
@@ -20,17 +31,6 @@ import {
   UN
 } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
-import {
-  IContratMariageForm,
-  IDateCompleteForm,
-  IDonneesComplementairesPlurilingueForm,
-  IEvenementForm,
-  ILieuEvenementForm,
-  IParentNaissanceForm,
-  IPrenomsForm,
-  ISaisieExtraitForm,
-  ITitulaireEvtForm
-} from "./mappingActeVerFormulaireSaisirExtrait";
 
 export function mappingFormulaireSaisirExtraitVersExtraitAEnvoyer(
   saisiExtrait: ISaisieExtraitForm,

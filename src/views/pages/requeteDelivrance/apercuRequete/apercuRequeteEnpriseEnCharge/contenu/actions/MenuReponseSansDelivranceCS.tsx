@@ -14,21 +14,21 @@ import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { IgnoreRequetePopin } from "../IgnoreRequetePopin";
-import { IChoixActionDelivranceProps } from "./ChoixAction";
-import { useReponseSansDelivranceCS } from "./hook/ChoixReponseSansDelivranceCSHook";
-import {
-  filtrerListeActionsParDocumentDemande,
-  INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE,
-  menuSansDelivranceActions
-} from "./MenuUtilsCS";
+import { useReponseSansDelivranceCS } from "../../../../../../common/hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
 import {
   createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
   createReponseSansDelivranceCSPourCompositionApiFrancais,
   createReponseSansDelivranceCSPourCompositionApiMariage,
   createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit,
   estSeulementActeMariage
-} from "./ReponseSansDelivranceCSFonctions";
+} from "../../../../../../common/hook/reponseSansDelivrance/ReponseSansDelivranceCSFonctions";
+import { IgnoreRequetePopin } from "../IgnoreRequetePopin";
+import { IChoixActionDelivranceProps } from "./ChoixAction";
+import {
+  filtrerListeActionsParDocumentDemande,
+  INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE,
+  menuSansDelivranceActions
+} from "./MenuUtilsCS";
 
 export const MenuReponseSansDelivranceCS: React.FC<
   IChoixActionDelivranceProps

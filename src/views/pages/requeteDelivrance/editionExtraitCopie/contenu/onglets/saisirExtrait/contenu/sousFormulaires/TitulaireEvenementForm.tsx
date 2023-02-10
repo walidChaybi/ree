@@ -28,7 +28,7 @@ import {
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useContext } from "react";
-import PrenomsForm from "../../../../../../saisirRequete/sousFormulaires/identite/nomsPrenoms/PrenomsForm";
+import PrenomsForm from "../../../../../../../../common/composant/formulaire/nomsPrenoms/PrenomsForm";
 import { SaisirExtraitFormContext } from "../../SaisirExtraitForm";
 import { EvenementNaissanceAgeDeForm } from "./EvenementNaissanceAgeDeForm";
 import { getLabels } from "./LabelsUtil";
@@ -135,6 +135,7 @@ const TitulaireEvenementForm: React.FC<
             afficheHeure={props.natureActe === NatureActe.NAISSANCE}
             gestionEtrangerFrance={props.gestionEtrangerFrance}
             etrangerParDefaut={props.etrangerParDefaut}
+            saisieVerrouillee={saisieVerrouillee}
           />
         )}
       </div>

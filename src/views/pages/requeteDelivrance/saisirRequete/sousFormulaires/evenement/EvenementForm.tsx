@@ -1,3 +1,8 @@
+import {
+  DATE_EVENEMENT,
+  PAYS_EVENEMENT,
+  VILLE_EVENEMENT
+} from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
 import DateComposeForm, {
   DateComposeFormProps,
@@ -16,11 +21,6 @@ import { connect } from "formik";
 import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { CarateresAutorise } from "../../../../../../ressources/Regex";
-import {
-  DATE_EVENEMENT,
-  PAYS_EVENEMENT,
-  VILLE_EVENEMENT
-} from "../../modelForm/ISaisirRequetePageModel";
 import "./scss/EvenementForm.scss";
 
 // Valeurs par défaut des champs

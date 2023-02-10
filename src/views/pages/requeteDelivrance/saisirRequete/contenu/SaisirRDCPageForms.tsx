@@ -1,3 +1,14 @@
+import {
+  ADRESSE,
+  EVENEMENT,
+  LIEN_TITULAIRE,
+  MANDANT,
+  PIECES_JOINTES,
+  REQUERANT,
+  REQUETE,
+  TITULAIRE1,
+  TITULAIRE2
+} from "@composant/formulaire/ConstantesNomsForm";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequete } from "@model/requete/IRequete";
 import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
@@ -11,17 +22,6 @@ import RequeteForm from "@widget/formulaire/requete/RequeteForm";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import React from "react";
-import {
-  ADRESSE,
-  EVENEMENT,
-  LIEN_TITULAIRE,
-  MANDANT,
-  PIECES_JOINTES,
-  REQUERANT,
-  REQUETE,
-  TITULAIRE1,
-  TITULAIRE2
-} from "../modelForm/ISaisirRDCPageModel";
 import EvenementForm, {
   EvenementSubFormProps
 } from "../sousFormulaires/evenement/EvenementForm";

@@ -8,7 +8,7 @@ import {
   NUMERO_TELEPHONE,
   PAYS,
   VOIE
-} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+} from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
 import { connect } from "formik";
 import React from "react";

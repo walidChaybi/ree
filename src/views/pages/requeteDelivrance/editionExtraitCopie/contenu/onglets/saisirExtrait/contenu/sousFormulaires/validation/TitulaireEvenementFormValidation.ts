@@ -10,6 +10,7 @@ import {
   PRENOMS,
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { PrenomsFormValidationSchema } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { DeclarationConjointeValidationSchema } from "@composant/formulaire/validation/DeclarationConjointeFormValidation";
 import {
   EvenementActeMariageValidationSchema,
@@ -17,6 +18,7 @@ import {
 } from "@composant/formulaire/validation/EvenementValidationSchema";
 import { NomSecableFotmValidation } from "@composant/formulaire/validation/NomSecableFormValidation";
 import { sexeObligatoireValidation } from "@composant/formulaire/validation/SexeObligatoireValidation";
+import { ITitulaireEvtForm } from "@model/form/delivrance/ISaisieExtraitForm";
 import { estNonRenseigne, estRenseigne, getLibelle } from "@util/Utils";
 import {
   CARATERES_AUTORISES_MESSAGE,
@@ -24,8 +26,6 @@ import {
 } from "@widget/formulaire/FormulaireMessages";
 import * as Yup from "yup";
 import { CarateresAutorise } from "../../../../../../../../../../ressources/Regex";
-import { PrenomsFormValidationSchema } from "../../../../../../../saisirRequete/sousFormulaires/identite/nomsPrenoms/PrenomsForm";
-import { ITitulaireEvtForm } from "../../../mapping/mappingActeVerFormulaireSaisirExtrait";
 import {
   ParentNaissSansDateAgeDeValidationSchema,
   ParentNaissSansSexeDateAgeDeValidationSchema,

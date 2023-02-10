@@ -4,6 +4,7 @@ import {
 } from "@model/etatcivil/acte/IAnalyseMarginale";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import {
@@ -16,7 +17,6 @@ import {
   ITitulaireRequete,
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
-import { SaisieCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 import { getValeurOuVide, triListeObjetsSurPropriete } from "@util/Utils";
 
 export interface OptionsJasper {

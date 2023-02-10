@@ -1,3 +1,6 @@
+import { useReponseSansDelivranceCS } from "@hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
+import { createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit } from "@hook/reponseSansDelivrance/ReponseSansDelivranceCSFonctions";
+import { useRMCAutoActeApiHook } from "@hook/rmcAuto/RMCAutoActeApiHook";
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { NOM_DOCUMENT_REFUS_PACS_NON_INSCRIT } from "@model/composition/IReponseSansDelivranceCSPACSNonInscritComposition";
 import { StatutFiche } from "@model/etatcivil/enum/StatutFiche";
@@ -8,14 +11,6 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { useRMCAutoActeApiHook } from "@pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActeApiHook";
-import {
-  redirectionRMCAuto,
-  redirectionRMCAutoApercuTraitement
-} from "@pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
-import { useRMCAutoInscriptionApiHook } from "@pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoInscriptionApiHook";
-import { useReponseSansDelivranceCS } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/hook/ChoixReponseSansDelivranceCSHook";
-import { createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ReponseSansDelivranceCSFonctions";
 import { IUrlData } from "@router/ReceUrls";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { getLibelle, mapPrenomsVersPrenomsOrdonnes } from "@util/Utils";
@@ -33,6 +28,11 @@ import {
   specificationPhraseRMCAutoVide
 } from "../generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 import { IResultGenerationUnDocument } from "../generation/generationUtils";
+import {
+  redirectionRMCAuto,
+  redirectionRMCAutoApercuTraitement
+} from "./RMCAutoActesInscriptionsUtils";
+import { useRMCAutoInscriptionApiHook } from "./RMCAutoInscriptionApiHook";
 
 const INFO_CS_RMC_AUTO_VIDE = getLibelle(
   "La recherche multi-critères sur les actes RC/RCA et PACS n'ayant donné aucun résultat, il vous est proposé de délivrer le certificat ci-dessous."
@@ -232,7 +232,7 @@ function getPacs(
           FicheUtil.getTypeFicheFromString(pacs.categorie) === TypeFiche.PACS
       )
     : [];
-} 
+}
 
 function toutLesTraitementAmontOntEteEffectues(
   params: IRMCAutoParams | undefined,

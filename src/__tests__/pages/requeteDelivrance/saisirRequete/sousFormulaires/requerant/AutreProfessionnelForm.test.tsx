@@ -1,4 +1,4 @@
-import { AUTRE_PROFESSIONNEL } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import { AUTRE_PROFESSIONNEL } from "@composant/formulaire/ConstantesNomsForm";
 import AutreProfessionnelForm, {
   AutreProfessionnelFormDefaultValues,
   AutreProfessionnelFormValidationSchema

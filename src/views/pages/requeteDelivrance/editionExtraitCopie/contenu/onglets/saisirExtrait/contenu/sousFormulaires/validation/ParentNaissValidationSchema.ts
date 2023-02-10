@@ -7,13 +7,13 @@ import { DateNaissanceOuAgeDeValidationSchema } from "@composant/formulaire/vali
 import { sexeObligatoireValidation } from "@composant/formulaire/validation/SexeObligatoireValidation";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IParentNaissanceForm } from "@model/form/delivrance/ISaisieExtraitForm";
 import {
   auMoinsUneProprieteEstRenseigne,
   estNonRenseigne,
   getLibelle
 } from "@util/Utils";
 import * as Yup from "yup";
-import { IParentNaissanceForm } from "../../../mapping/mappingActeVerFormulaireSaisirExtrait";
 
 export const ParentNaissValidationSchema = Yup.object({
   [DATE_NAISSANCE_OU_AGE_DE]: DateNaissanceOuAgeDeValidationSchema,

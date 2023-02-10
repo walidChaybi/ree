@@ -1,6 +1,6 @@
 import { getPocopas } from "@api/appels/etatcivilApi";
 import messageManager from "@util/messageManager";
-import { getLibelle, valeurOuUndefined } from "@util/Utils";
+import { getLibelle, getValeurOuUndefined } from "@util/Utils";
 import { useEffect, useState } from "react";
 
 export function useRecherchePocopa(
@@ -14,7 +14,7 @@ export function useRecherchePocopa(
     if (debutPocopa) {
       getPocopas(
         debutPocopa,
-        valeurOuUndefined(familleRegistre),
+        getValeurOuUndefined(familleRegistre),
         nombreResultatsMax
       )
         .then((result: any) => {

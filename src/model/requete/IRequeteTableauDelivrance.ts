@@ -3,8 +3,8 @@ import { storeRece } from "@util/storeRece";
 import {
   formatNom,
   formatPrenom,
-  getValeurOuVide,
-  valeurOuUndefined
+  getValeurOuUndefined,
+  getValeurOuVide
 } from "@util/Utils";
 import { NatureActe } from "../etatcivil/enum/NatureActe";
 import { DocumentDelivrance } from "./enum/DocumentDelivrance";
@@ -63,7 +63,7 @@ export function mappingUneRequeteTableauDelivrance(
     ? Requerant.mappingRequerant(requete?.requerant)
     : undefined;
   return {
-    idRequete: valeurOuUndefined(requete?.id),
+    idRequete: getValeurOuUndefined(requete?.id),
     numero: getValeurOuVide(requete?.numero),
     numeroTeledossier: getValeurOuVide(requete?.numeroTeledossier),
     idSagaDila: getValeurOuVide(requete?.idSagaDila),
@@ -91,9 +91,9 @@ export function mappingUneRequeteTableauDelivrance(
       mappingSupplementaire === true
         ? mapObservations(requete?.observations)
         : requete?.observations,
-    idUtilisateur: valeurOuUndefined(requete?.idUtilisateur),
-    idCorbeilleAgent: valeurOuUndefined(requete?.idCorbeilleAgent),
-    idEntiteRattachement: valeurOuUndefined(requete?.idEntiteRattachement),
+    idUtilisateur: getValeurOuUndefined(requete?.idUtilisateur),
+    idCorbeilleAgent: getValeurOuUndefined(requete?.idCorbeilleAgent),
+    idEntiteRattachement: getValeurOuUndefined(requete?.idEntiteRattachement),
     canal: TypeCanal.getEnumFor(requete.canal),
     documentsReponses: requete.documentsReponses,
     tagPriorisation: TagPriorisation.getEnumFor(requete.tagPriorisation).libelle

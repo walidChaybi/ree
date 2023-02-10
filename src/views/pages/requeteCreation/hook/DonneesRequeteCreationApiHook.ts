@@ -3,22 +3,12 @@ import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "@api/appels/requeteApi";
-import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TagPriorisation } from "@model/requete/enum/TagPriorisation";
-import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
-import { mapAttribueA } from "@model/requete/IRequeteTableauDelivrance";
 import {
-  ITitulaireRequeteTableau,
-  mapTitulaires
-} from "@model/requete/ITitulaireRequeteTableau";
-import { getFormatDateFromTimestamp } from "@util/DateUtils";
+  IRequeteTableauCreation,
+  mappingUneRequeteTableauCreation
+} from "@model/requete/IRequeteTableauCreation";
 import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
-import { getValeurOuVide, valeurOuUndefined } from "@util/Utils";
 import { useEffect, useState } from "react";
 
 export function useRequeteCreationApi(
@@ -71,52 +61,5 @@ function mappingRequetesTableauCreation(
   });
 }
 
-export function mappingUneRequeteTableauCreation(
-  requete: any,
-  mappingSupplementaire: boolean
-): IRequeteTableauCreation {
-  const titulaires = mapTitulaires(
-    filtrerUniquementTitulairesHorsFamille(requete?.titulaires),
-    mappingSupplementaire
-  );
-  return {
-    idRequete: valeurOuUndefined(requete?.id),
-    numeroFonctionnel: getValeurOuVide(requete?.numeroFonctionnel),
-    numeroNatali: getValeurOuVide(requete?.numeroNatali),
-    numeroDila: getValeurOuVide(requete?.numeroDila),
-    numeroAffichage: getValeurOuVide(requete?.numeroAffichage),
-    type: TypeRequete.getEnumFor("CREATION")?.libelle,
-    sousType: SousTypeCreation.getEnumFor(requete?.sousType).libelleCourt,
-    tagPriorisation: TagPriorisation.getEnumFor(requete?.tagPriorisation)
-      .libelle,
-    numeroAncien: requete?.numeroAncien,
-    titulaires,
-    nomCompletRequerant: requete?.nomCompletRequerant,
-    dateCreation: getFormatDateFromTimestamp(requete?.dateCreation),
-    dateDerniereAction: getFormatDateFromTimestamp(requete?.dateDerniereAction),
-    statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
-    idUtilisateur: valeurOuUndefined(requete?.idUtilisateur),
-    idEntiteRattachement: valeurOuUndefined(requete?.idEntite),
-    postulant: getPostulant(titulaires),
-    attribueA: mapAttribueA(requete),
-    attribueAChecked: false
-  };
-}
 
-function getPostulant(titulaires: ITitulaireRequeteTableau[]) {
-  return titulaires.length > 0
-    ? titulaires
-        .filter(el => el.qualite !== QualiteFamille.PARENT)
-        .map(el => `${el.nom} ${getValeurOuVide(el.prenoms[0])}`)
-        .reduce((accumulateur, valeurCourante) => {
-          return `${accumulateur}, ${valeurCourante}`;
-        })
-    : "";
-}
 
-function filtrerUniquementTitulairesHorsFamille(titulaires: any) {
-  return titulaires.filter(
-    (titulaire: any) =>
-      titulaire.typeObjetTitulaire !== TypeObjetTitulaire.FAMILLE
-  );
-}

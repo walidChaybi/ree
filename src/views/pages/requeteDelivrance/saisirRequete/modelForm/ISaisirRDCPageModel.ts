@@ -1,5 +1,15 @@
+import {
+  ADRESSE,
+  EVENEMENT,
+  LIEN_TITULAIRE,
+  MANDANT,
+  PIECES_JOINTES,
+  REQUERANT,
+  REQUETE,
+  TITULAIRE1,
+  TITULAIRE2
+} from "@composant/formulaire/ConstantesNomsForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { PieceJointe } from "@util/FileUtils";
 import {
   Adresse,
   Evenement,
@@ -8,18 +18,8 @@ import {
   Mandant,
   Requerant,
   Requete
-} from "./ISaisirRequetePageModel";
-
-// Nom des sous-formulaires
-export const REQUETE = "requete";
-export const EVENEMENT = "evenement";
-export const TITULAIRE1 = "titulaire1";
-export const TITULAIRE2 = "titulaire2";
-export const REQUERANT = "requerant";
-export const MANDANT = "mandant";
-export const LIEN_TITULAIRE = "lienTitulaire";
-export const ADRESSE = "adresse";
-export const PIECES_JOINTES = "piecesJointes";
+} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import { PieceJointe } from "@util/FileUtils";
 
 export interface CreationRequeteRDC {
   saisie: SaisieRequeteRDC;

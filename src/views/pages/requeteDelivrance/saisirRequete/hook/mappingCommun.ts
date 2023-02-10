@@ -1,8 +1,6 @@
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
-import { getValeurOuVide } from "@util/Utils";
 import { FileExtension, MimeType } from "file-type";
 
 export function getPrenoms(prenoms?: any): IPrenomOrdonnes[] {
@@ -19,29 +17,7 @@ export function getPrenoms(prenoms?: any): IPrenomOrdonnes[] {
   return prenomsInteresse;
 }
 
-export function getPieceJustificative(pj: any) {
-  const piece = getDocumentSwift(pj);
-  piece.typePieceJustificative = pj.type?.value;
-  return piece as IPieceJustificative;
-}
 
-export function getPieceComplementInformation(pci: any) {
-  const piece = getDocumentSwift(pci);
-  piece.provenance = "OEC";
-  return piece;
-}
-
-export function getDocumentSwift(document: any): any {
-  return {
-    nom: document.base64File.fileName,
-    contenu: document.base64File.base64String,
-    mimeType: document.base64File.mimeType,
-    taille: document.base64File.taille,
-    extension: document.base64File.extension,
-    referenceSwift: getValeurOuVide(document.base64File.identifiantSwift),
-    conteneurSwift: getValeurOuVide(document.base64File.conteneurSwift)
-  };
-}
 
 export function saisiePJ(requete: IRequeteDelivrance) {
   return requete.piecesJustificatives.map(PJ => {

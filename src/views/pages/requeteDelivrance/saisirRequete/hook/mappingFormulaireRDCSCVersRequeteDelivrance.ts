@@ -4,7 +4,14 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
+import {
+  IPieceJustificative,
+  mapPieceJustificative
+} from "@model/requete/pieceJointe/IPieceJustificative";
+import {
+  Adresse,
+  Identite
+} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
 import { getValeurOuVide, SNP } from "@util/Utils";
 import {
@@ -12,9 +19,8 @@ import {
   SaisieRequeteRDCSC,
   UpdateRequeteRDCSC
 } from "../modelForm/ISaisirRDCSCPageModel";
-import { Adresse, Identite } from "../modelForm/ISaisirRequetePageModel";
 import { limitesTitulaires } from "../SaisirRDCSCPage";
-import { getPieceJustificative, getPrenoms } from "./mappingCommun";
+import { getPrenoms } from "./mappingCommun";
 
 export function mappingFormulaireRDCSCVersRequeteDelivrance(
   requeteRDCSC: CreationRequeteRDCSC | UpdateRequeteRDCSC,
@@ -46,7 +52,7 @@ function getPiecesJustificativesAGarder(saisie: SaisieRequeteRDCSC) {
   const piecesJustificatives: IPieceJustificative[] = [];
   saisie?.piecesJointes
     ?.filter(pj => !pj.base64File.base64String)
-    .forEach(pj => piecesJustificatives.push(getPieceJustificative(pj)));
+    .forEach(pj => piecesJustificatives.push(mapPieceJustificative(pj)));
   return piecesJustificatives;
 }
 

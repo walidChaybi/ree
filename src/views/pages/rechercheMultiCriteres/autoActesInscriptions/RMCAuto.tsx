@@ -1,3 +1,6 @@
+import { ICriteresRechercheActeInscription } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
+import { useRMCInscriptionApiHook } from "@hook/rmcActeInscription/RMCInscriptionApiHook";
+import { useRMCAutoInscriptionApiHook } from "@hook/rmcAuto/RMCAutoInscriptionApiHook";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { TRequete } from "@model/requete/IRequete";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
@@ -14,16 +17,13 @@ import {
   NB_LIGNES_PAR_PAGE_INSCRIPTION
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useCallback, useEffect, useState } from "react";
+import { useRMCActeApiHook } from "../../../common/hook/rmcActeInscription/RMCActeApiHook";
+import { useRMCAutoActeApiHook } from "../../../common/hook/rmcAuto/RMCAutoActeApiHook";
 import { DataRMCAuto } from "../../requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
-import { useRMCActeApiHook } from "../acteInscription/hook/RMCActeApiHook";
-import { ICriteresRechercheActeInscription } from "../acteInscription/hook/RMCActeInscriptionUtils";
-import { useRMCInscriptionApiHook } from "../acteInscription/hook/RMCInscriptionApiHook";
 import { RMCActeInscriptionResultats } from "../acteInscription/resultats/RMCActeInscriptionResultats";
 import { goToLinkRMC } from "../acteInscription/resultats/RMCTableauCommun";
 import { getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur } from "../acteInscription/validation/VerificationRestrictionRmcActeInscription";
 import { BoutonNouvelleRMCActeInscription } from "./BoutonNouvelleRMCActeInscription";
-import { useRMCAutoActeApiHook } from "./hook/RMCAutoActeApiHook";
-import { useRMCAutoInscriptionApiHook } from "./hook/RMCAutoInscriptionApiHook";
 
 interface RMCAutoParams {
   requete: TRequete;

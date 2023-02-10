@@ -1,4 +1,4 @@
-import { TITULAIRES } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCSCPageModel";
+import { TITULAIRES } from "@composant/formulaire/ConstantesNomsForm";
 import IdentiteForm, {
   IdentiteFormDefaultValues,
   IdentiteFormValidationSchema,

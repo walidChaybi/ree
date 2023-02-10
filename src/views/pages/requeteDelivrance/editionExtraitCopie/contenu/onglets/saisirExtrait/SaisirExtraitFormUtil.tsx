@@ -17,6 +17,7 @@ import {
   TitulaireActe
 } from "@model/etatcivil/acte/ITitulaireActe";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { ISaisieExtraitForm } from "@model/form/delivrance/ISaisieExtraitForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_EXTRAIT_PLURILINGUE } from "@model/requete/enum/DocumentDelivranceConstante";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -40,7 +41,6 @@ import {
   TitulaireEvtActeMariageValidationSchema,
   TitulaireEvtActeNaissanceValidationSchema
 } from "./contenu/sousFormulaires/validation/TitulaireEvenementFormValidation";
-import { ISaisieExtraitForm } from "./mapping/mappingActeVerFormulaireSaisirExtrait";
 import "./scss/FormulaireSaisirExtrait.scss";
 
 // Schéma de validation en sortie de champs
@@ -149,6 +149,7 @@ export function getTitulairesEvenementsEtParentsForm(params: {
   evenement?: IEvenement;
   naissanceTitulaire1?: IEvenement;
   naissanceTitulaire2?: IEvenement;
+  saisieVerrouillee: boolean;
 }) {
   const {
     titulairesAMs,
@@ -160,12 +161,13 @@ export function getTitulairesEvenementsEtParentsForm(params: {
     donneesComplementairesPlurilingue,
     evenement,
     naissanceTitulaire1,
-    naissanceTitulaire2
+    naissanceTitulaire2,
+    saisieVerrouillee
   } = { ...params };
   return (
     <>
       {natureActe !== NatureActe.NAISSANCE &&
-        getEvenementForm(natureActe, evenement)}
+        getEvenementForm(natureActe, evenement, saisieVerrouillee)}
       {/* Premier titulaire avec accordéon */}
       {getTitulaire1EvenementsEtParentsForm(
         titulairesAMs[0],
@@ -277,7 +279,11 @@ function getDernierConjointForm() {
   );
 }
 
-function getEvenementForm(natureActe: NatureActe, evenement?: IEvenement) {
+function getEvenementForm(
+  natureActe: NatureActe,
+  evenement: IEvenement | undefined,
+  saisieVerrouillee: boolean
+) {
   return (
     <AccordionRece
       className={{ content: "AccordeonForm" }}
@@ -292,6 +298,7 @@ function getEvenementForm(natureActe: NatureActe, evenement?: IEvenement) {
         afficheHeure={false}
         gestionEtrangerFrance={false}
         etrangerParDefaut={true}
+        saisieVerrouillee={saisieVerrouillee}
       />
       {natureActe === NatureActe.MARIAGE && (
         <ContratMariageForm nom={withNamespace(EVENEMENT, CONTRAT_MARIAGE)} />

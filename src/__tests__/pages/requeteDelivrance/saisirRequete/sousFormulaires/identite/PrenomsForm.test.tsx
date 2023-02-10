@@ -1,8 +1,8 @@
-import { PRENOMS } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import { PRENOMS } from "@composant/formulaire/ConstantesNomsForm";
 import PrenomsForm, {
   PrenomsFormDefaultValues,
   PrenomsFormValidationSchema
-} from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/identite/nomsPrenoms/PrenomsForm";
+} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import {
   act,
   fireEvent,

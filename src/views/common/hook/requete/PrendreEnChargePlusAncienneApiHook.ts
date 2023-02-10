@@ -2,7 +2,7 @@ import { HTTP_NOT_FOUND } from "@api/ApiManager";
 import { getRequetePlusAncienne } from "@api/appels/requeteApi";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequeteTableau } from "@model/requete/IRequeteTableau";
-import { mappingUneRequeteTableauCreation } from "@pages/requeteCreation/hook/DonneesRequeteCreationApiHook";
+import { mappingUneRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 

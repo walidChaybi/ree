@@ -3,11 +3,11 @@ import { IUrlData, receUrl } from "@router/ReceUrls";
 import { tousRenseignes } from "@util/Utils";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { IRMCAutoParams, useRMCAutoHook } from "../rmcAuto/RMCAutoHook";
 import {
   INavigationApercuDelivrance,
   useNavigationApercuDelivrance
 } from "./NavigationApercuDelivranceHook";
-import { IRMCAutoParams, useRMCAutoHook } from "./RMCAutoHook";
 
 export interface INavigationApercuRMCAutoParams {
   requete: IRequeteTableauDelivrance;

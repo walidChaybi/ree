@@ -1,3 +1,10 @@
+import {
+  NATURE,
+  NOM,
+  NOM_INSTITUTION,
+  PRENOM,
+  TYPE
+} from "@composant/formulaire/ConstantesNomsForm";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
@@ -11,13 +18,6 @@ import {
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useState } from "react";
-import {
-  NATURE,
-  NOM,
-  NOM_INSTITUTION,
-  PRENOM,
-  TYPE
-} from "../../../modelForm/ISaisirRequetePageModel";
 import { getFormValidationCarAutorisesEtNAtureObligatoireShema } from "../../commun/communValidation";
 import "./../scss/RequerantForm.scss";
 

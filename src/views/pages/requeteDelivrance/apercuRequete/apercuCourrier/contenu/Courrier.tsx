@@ -1,5 +1,10 @@
 import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import {
+  ADRESSE,
+  CHOIX_COURRIER,
+  OPTION
+} from "@composant/formulaire/ConstantesNomsForm";
+import {
   ICreerCourrierECParams,
   useCreerCourrierEC
 } from "@hook/requete/creerCourrierECHook";
@@ -23,6 +28,7 @@ import { Formulaire } from "@widget/formulaire/Formulaire";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
+import { SaisieCourrier } from "../../../../../../model/form/delivrance/ISaisieCourrier";
 import {
   controleFormulaire,
   courrierExiste,
@@ -41,12 +47,6 @@ import {
 import { ValidationSchemaChoixCourrier } from "./contenuForm/sousFormulaires/ChoixCourrierForm";
 import { texteOptionCourrierModifie } from "./contenuForm/sousFormulaires/GestionOptionsCourrier";
 import { ValidationSchemaOptionCourrier } from "./contenuForm/sousFormulaires/OptionsCourrierForm";
-import {
-  ADRESSE,
-  CHOIX_COURRIER,
-  OPTION,
-  SaisieCourrier
-} from "./modelForm/ISaisiePageModel";
 import "./scss/Courrier.scss";
 
 interface ModificationCourrierProps {

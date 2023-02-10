@@ -1,3 +1,10 @@
+import {
+  NATURE,
+  NOM,
+  PRENOM,
+  RAISON_SOCIALE,
+  TYPE
+} from "@composant/formulaire/ConstantesNomsForm";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
@@ -9,13 +16,6 @@ import {
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useState } from "react";
-import {
-  NATURE,
-  NOM,
-  PRENOM,
-  RAISON_SOCIALE,
-  TYPE
-} from "../../../modelForm/ISaisirRequetePageModel";
 import { getBlockRaisonSocialeNomPrenom } from "../../commun/communForm";
 import { getFormValidationCarAutorisesEtNAtureObligatoireShema } from "../../commun/communValidation";
 import "./../scss/RequerantForm.scss";

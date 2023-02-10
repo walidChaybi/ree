@@ -1,13 +1,17 @@
+import {
+  ADRESSE,
+  DOCUMENT,
+  PIECES_JOINTES,
+  REQUERANT,
+  TITULAIRES
+} from "@composant/formulaire/ConstantesNomsForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import {
+  Adresse,
+  Identite,
+  Requerant
+} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import { PieceJointe } from "@util/FileUtils";
-import { Adresse, Identite, Requerant } from "./ISaisirRequetePageModel";
-
-// Nom des sous-formulaires
-export const DOCUMENT = "document";
-export const TITULAIRES = "titulaires";
-export const REQUERANT = "requerant";
-export const ADRESSE = "adresse";
-export const PIECES_JOINTES = "piecesJointes";
 
 export interface CreationRequeteRDCSC {
   id?: string;

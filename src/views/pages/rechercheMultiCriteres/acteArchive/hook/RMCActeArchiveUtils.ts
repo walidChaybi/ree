@@ -4,8 +4,8 @@ import {
   getDateDebutFromDateCompose,
   getDateFinFromDateCompose
 } from "@util/DateUtils";
-import { valeurOuUndefined } from "@util/Utils";
-import { getCriteresTitulaire } from "../../common/mapping/RMCMappingUtil";
+import { getValeurOuUndefined } from "@util/Utils";
+import { getCriteresTitulaire } from "../../../../common/hook/rmcActeInscription/mapping/RMCMappingUtil";
 
 /** Critères de recherche: mapping avant appel d'api */
 export function mappingCriteres(criteres: IRMCActeArchive): IRMCArchiveRequest {
@@ -22,31 +22,31 @@ export function mappingCriteres(criteres: IRMCActeArchive): IRMCArchiveRequest {
     ),
 
     // Filtre Registre Civile
-    natureActe: valeurOuUndefined(
+    natureActe: getValeurOuUndefined(
       criteres.registreArchive?.registre?.natureActe
     ),
-    familleRegistre: valeurOuUndefined(
+    familleRegistre: getValeurOuUndefined(
       criteres.registreArchive?.registre?.familleRegistre
     ),
-    posteOuPocopa: valeurOuUndefined(
+    posteOuPocopa: getValeurOuUndefined(
       criteres.registreArchive?.registre?.pocopa?.value
     ),
-    numeroActe: valeurOuUndefined(
+    numeroActe: getValeurOuUndefined(
       criteres.registreArchive?.registre?.numeroActe
     ),
-    anneeRegistre: valeurOuUndefined(
+    anneeRegistre: getValeurOuUndefined(
       criteres.registreArchive?.registre?.anneeRegistre
     ),
-    jourDateEvenement: valeurOuUndefined(
+    jourDateEvenement: getValeurOuUndefined(
       criteres.registreArchive?.evenement?.dateEvenement?.jour
     ),
-    moisDateEvenement: valeurOuUndefined(
+    moisDateEvenement: getValeurOuUndefined(
       criteres.registreArchive?.evenement?.dateEvenement?.mois
     ),
-    anneeDateEvenement: valeurOuUndefined(
+    anneeDateEvenement: getValeurOuUndefined(
       criteres.registreArchive?.evenement?.dateEvenement?.annee
     ),
-    paysEvenement: valeurOuUndefined(
+    paysEvenement: getValeurOuUndefined(
       criteres.registreArchive?.evenement?.paysEvenement
     )
   };

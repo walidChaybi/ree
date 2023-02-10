@@ -1,7 +1,7 @@
 import { mappingOfficier } from "@core/login/LoginHook";
+import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ResumeRequete } from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequete";
-import { mappingRequeteDelivrance } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getLastPathElem, getUrlWithParam } from "@util/route/routeUtil";

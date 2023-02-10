@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import {
   IRMCActeApiHookResultat,
   RESULTAT_NON_DEFINIT
-} from "../../common/hook/RMCActeEtActeArchiveHookUtil";
-import { mappingActes } from "../../common/mapping/RMCMappingUtil";
+} from "../../../pages/rechercheMultiCriteres/common/hook/RMCActeEtActeArchiveHookUtil";
+import { mappingActes } from "./mapping/RMCMappingUtil";
 import {
   ICriteresRechercheActeInscription,
   mappingCriteres,

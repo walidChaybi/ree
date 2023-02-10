@@ -1,3 +1,18 @@
+import {
+  ADRESSE,
+  CODE_POSTAL,
+  COMMUNE,
+  COMPLEMENT_DESTINATAIRE,
+  COMPLEMENT_POINT_GEO,
+  LIEU_DIT,
+  MOTIF,
+  NB_EXEMPLAIRE,
+  PAYS,
+  REQUETE,
+  TEXTE,
+  TEXTE_LIBRE,
+  VOIE
+} from "@composant/formulaire/ConstantesNomsForm";
 import { useSauvegarderCourrierCreerActionMajStatutRequete } from "@hook/requete/SauvegardeCourrierCreerActionMajStatut";
 import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
 import { Orientation } from "@model/composition/enum/Orientation";
@@ -6,6 +21,7 @@ import {
   ICourrierComposition
 } from "@model/composition/ICourrierComposition";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -15,24 +31,6 @@ import { OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ISauvegardeCourrier } from "@model/requete/ISauvegardeCourrier";
 import { getStatutApresChoixDelivrance } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
-import {
-  ADRESSE,
-  REQUETE,
-  SaisieCourrier,
-  TEXTE,
-  TEXTE_LIBRE
-} from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
-import {
-  CODE_POSTAL,
-  COMMUNE,
-  COMPLEMENT_DESTINATAIRE,
-  COMPLEMENT_POINT_GEO,
-  LIEU_DIT,
-  MOTIF,
-  NB_EXEMPLAIRE,
-  PAYS,
-  VOIE
-} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import { getValeurOuVide } from "@util/Utils";
 import { useEffect, useState } from "react";
 import { MimeType } from "../../../../ressources/MimeType";

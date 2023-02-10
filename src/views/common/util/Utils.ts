@@ -274,11 +274,6 @@ export function supprimeSautDeLigneEtEspaceInutiles(value?: string) {
   return res;
 }
 
-// Util lors de l'envoi d'une chaîne de caractères au back: convertion des chaîne vide en undefined
-export function valeurOuUndefined(valeur?: any) {
-  return valeur ? valeur : undefined;
-}
-
 export function changeLaPlaceDunElement(
   tab: any[],
   index: number,
@@ -438,7 +433,7 @@ export function getNombreOuUndefined(nombreStr?: string): number | undefined {
   return isNaN(nombre) ? undefined : nombre;
 }
 
-export function getValeurOuUndefined(valeur?: any): string | undefined {
+export function getValeurOuUndefined(valeur?: any): any | undefined {
   return valeur ? valeur : undefined;
 }
 

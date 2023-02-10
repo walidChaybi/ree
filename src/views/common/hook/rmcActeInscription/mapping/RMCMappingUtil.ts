@@ -11,10 +11,10 @@ import {
   formatNom,
   formatNoms,
   formatPrenoms,
+  getValeurOuUndefined,
   getValeurOuVide,
   jointAvec,
-  TROIS,
-  valeurOuUndefined
+  TROIS
 } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
@@ -22,12 +22,18 @@ export function getCriteresTitulaire(
   criteres: IRMCActeInscription | IRMCActeArchive
 ) {
   return {
-    nomTitulaire: valeurOuUndefined(criteres.titulaire?.nom),
-    prenomTitulaire: valeurOuUndefined(criteres.titulaire?.prenom),
-    jourNaissance: valeurOuUndefined(criteres.titulaire?.dateNaissance?.jour),
-    moisNaissance: valeurOuUndefined(criteres.titulaire?.dateNaissance?.mois),
-    anneeNaissance: valeurOuUndefined(criteres.titulaire?.dateNaissance?.annee),
-    paysNaissance: valeurOuUndefined(criteres.titulaire?.paysNaissance)
+    nomTitulaire: getValeurOuUndefined(criteres.titulaire?.nom),
+    prenomTitulaire: getValeurOuUndefined(criteres.titulaire?.prenom),
+    jourNaissance: getValeurOuUndefined(
+      criteres.titulaire?.dateNaissance?.jour
+    ),
+    moisNaissance: getValeurOuUndefined(
+      criteres.titulaire?.dateNaissance?.mois
+    ),
+    anneeNaissance: getValeurOuUndefined(
+      criteres.titulaire?.dateNaissance?.annee
+    ),
+    paysNaissance: getValeurOuUndefined(criteres.titulaire?.paysNaissance)
   };
 }
 

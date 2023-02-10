@@ -16,6 +16,7 @@ export const SECABLE = "secable";
 export const NOM_PARTIE1 = "nomPartie1";
 export const NOM_PARTIE2 = "nomPartie2";
 
+export const PRENOM = "prenom";
 export const PRENOMS = "prenoms";
 // Titulaire: Noms des champs PrenomsForm
 export const NOM_NAISSANCE = "nomNaissance";
@@ -74,3 +75,87 @@ export const NOM_APRES_MARIAGE_EPOUSE = "nomApresMariageEpouse";
 
 // Divers
 export const VILLE_EST_AFFICHEE = "villeEstAffichee";
+
+export const NOM_USAGE = "nomUsage";
+export const NOM = "nom";
+
+// Noms des champs IdentiteForm
+export const NOMS = "noms";
+export const NAISSANCE = "naissance";
+export const NATIONALITE = "nationalite";
+export const PARENT1 = "parent1";
+export const PARENT2 = "parent2";
+
+// Noms des champs RequerentForm
+export const TYPE_REQUERANT = "typeRequerant";
+export const MANDATAIRE = "mandataire";
+export const INSTITUTI0NNEL = "institutionnel";
+export const PARTICULIER = "particulier";
+export const AUTRE_PROFESSIONNEL = "autreProfessionnel";
+
+// Noms des champs MandataireForm, InstitutionnelForm
+export const NATURE = "nature";
+export const RAISON_SOCIALE = "raisonSociale";
+export const NOM_INSTITUTION = "nomInstitution";
+
+// Noms des champs AdresseForm
+export const VOIE = "voie";
+export const LIEU_DIT = "lieuDit";
+export const COMPLEMENT_DESTINATAIRE = "complementDestinataire";
+export const COMPLEMENT_POINT_GEO = "complementPointGeo";
+export const CODE_POSTAL = "codePostal";
+export const COMMUNE = "commune";
+export const ADRESSE_COURRIEL = "adresseCourriel";
+export const NUMERO_TELEPHONE = "numeroTelephone";
+
+// Noms des champs EvenementForm
+export const VILLE_EVENEMENT = "villeEvenement";
+export const PAYS_EVENEMENT = "paysEvenement";
+
+// Noms des champs RequeteForm
+export const NATURE_ACTE = "natureActe";
+export const DOCUMENT_DEMANDE = "documentDemande";
+export const NB_EXEMPLAIRE = "nbExemplaire";
+export const MOTIF = "motif";
+export const COMPLEMENT_MOTIF = "complementMotif";
+
+// Noms des champs MandantForm
+export const TYPE_MANDANT = "typeMandant";
+
+// Noms des champs LienTitulaireForm
+export const LIEN = "lien";
+export const NATURE_LIEN = "natureLien";
+
+export const DOCUMENT = "document";
+export const TITULAIRES = "titulaires";
+export const REQUERANT = "requerant";
+export const ADRESSE = "adresse";
+export const PIECES_JOINTES = "piecesJointes";
+
+export const REQUETE = "requete";
+export const TITULAIRE1 = "titulaire1";
+export const TITULAIRE2 = "titulaire2";
+export const MANDANT = "mandant";
+export const LIEN_TITULAIRE = "lienTitulaire";
+
+// Courrier
+export const CHOIX_COURRIER = "choixCourrier";
+export const OPTION = "option";
+export const TEXTE_LIBRE = "texteLibre";
+
+export const DELIVRANCE = "delivrance";
+export const COURRIER = "courrier";
+
+export const LIBELLE_OPTION = "libelleOption";
+export const CONTENU = "contenu";
+
+export const TYPE_MEMO = "typeMemo";
+export const MEMO = "memo";
+
+export const REQUERANT_LIGNE_1 = "requerantLigne1";
+export const REQUERANT_LIGNE_2 = "requerantLigne2";
+
+export const REPONSE = "reponse";
+
+export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
+export const TITULAIRE = "titulaire";

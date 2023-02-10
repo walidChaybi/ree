@@ -1,3 +1,5 @@
+import { ICriteresRechercheActeInscription } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
+import { useRMCInscriptionApiHook } from "@hook/rmcActeInscription/RMCInscriptionApiHook";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import messageManager, { TOASTCONTAINER_PRINCIPAL } from "@util/messageManager";
 import { stockageDonnees } from "@util/stockageDonnees";
@@ -11,9 +13,7 @@ import {
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ToastContainer } from "react-toastify";
-import { useRMCActeApiHook } from "./hook/RMCActeApiHook";
-import { ICriteresRechercheActeInscription } from "./hook/RMCActeInscriptionUtils";
-import { useRMCInscriptionApiHook } from "./hook/RMCInscriptionApiHook";
+import { useRMCActeApiHook } from "../../../common/hook/rmcActeInscription/RMCActeApiHook";
 import { RMCActeInscriptionResultats } from "./resultats/RMCActeInscriptionResultats";
 import { goToLinkRMC } from "./resultats/RMCTableauCommun";
 import { RMCActeInscriptionForm } from "./RMCActeInscriptionForm";

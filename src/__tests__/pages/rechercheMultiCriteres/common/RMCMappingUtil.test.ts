@@ -1,4 +1,4 @@
-import { mappingRequeteDelivranceToRMC } from "@pages/rechercheMultiCriteres/common/mapping/RMCMappingUtil";
+import { mappingRequeteDelivranceToRMC } from "@hook/rmcActeInscription/mapping/RMCMappingUtil";
 import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
 
 test("mappingIRMCActeArchive", () => {

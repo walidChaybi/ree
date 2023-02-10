@@ -1,8 +1,8 @@
+import { REQUETE } from "@composant/formulaire/ConstantesNomsForm";
 import RequeteFiltre, {
   RequeteDefaultValues,
   RequeteFiltreProps
 } from "@pages/rechercheMultiCriteres/filtres/requete/RequeteFiltre";
-import { REQUETE } from "@pages/rechercheMultiCriteres/requete/RMCRequeteForm";
 import {
   act,
   fireEvent,

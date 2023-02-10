@@ -1,3 +1,4 @@
+import { OPTION } from "@composant/formulaire/ConstantesNomsForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
 import OptionsCourrierForm, {
@@ -5,7 +6,6 @@ import OptionsCourrierForm, {
   OptionsCourrierSubFormProps,
   ValidationSchemaOptionCourrier
 } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/OptionsCourrierForm";
-import { OPTION } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 import {
   act,
   fireEvent,

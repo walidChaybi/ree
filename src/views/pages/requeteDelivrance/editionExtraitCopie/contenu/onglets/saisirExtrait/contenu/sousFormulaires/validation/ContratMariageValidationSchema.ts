@@ -1,7 +1,7 @@
 import { TEXTE } from "@composant/formulaire/ConstantesNomsForm";
+import { IContratMariageForm } from "@model/form/delivrance/ISaisieExtraitForm";
 import { estNonRenseigne, getLibelle } from "@util/Utils";
 import * as Yup from "yup";
-import { IContratMariageForm } from "../../../mapping/mappingActeVerFormulaireSaisirExtrait";
 
 export const ContratMariageValidationSchema = Yup.object().test(
   "contratDeMariage",

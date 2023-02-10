@@ -1,3 +1,10 @@
+import {
+  ADRESSE,
+  DOCUMENT,
+  PIECES_JOINTES,
+  REQUERANT,
+  TITULAIRES
+} from "@composant/formulaire/ConstantesNomsForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { TypeRequerant } from "@model/requete/enum/TypeRequerant";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -12,13 +19,6 @@ import PiecesJointesForm, {
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { FormikProps, FormikValues } from "formik";
 import React from "react";
-import {
-  ADRESSE,
-  DOCUMENT,
-  PIECES_JOINTES,
-  REQUERANT,
-  TITULAIRES
-} from "../modelForm/ISaisirRDCSCPageModel";
 import { limitesTitulaires } from "../SaisirRDCSCPage";
 import { IdentiteSubFormProps } from "../sousFormulaires/identite/IdentiteForm";
 import IdentitesForm from "../sousFormulaires/identite/IdentitesForm";

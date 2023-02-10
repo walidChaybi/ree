@@ -1,3 +1,31 @@
+import {
+  ADRESSE,
+  ANNEE,
+  COMPLEMENT_MOTIF,
+  DATE_EVENEMENT,
+  DOCUMENT_DEMANDE,
+  EVENEMENT,
+  JOUR,
+  LIEN,
+  LIEN_TITULAIRE,
+  MANDANT,
+  MOIS,
+  MOTIF,
+  NATURE_ACTE,
+  NATURE_LIEN,
+  NB_EXEMPLAIRE,
+  NOM,
+  PAYS_EVENEMENT,
+  PIECES_JOINTES,
+  PRENOM,
+  RAISON_SOCIALE,
+  REQUERANT,
+  REQUETE,
+  TITULAIRE1,
+  TITULAIRE2,
+  TYPE_MANDANT,
+  VILLE_EVENEMENT
+} from "@composant/formulaire/ConstantesNomsForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
@@ -13,42 +41,14 @@ import {
   ITitulaireRequete,
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
-import { getValeurOuVide } from "@util/Utils";
 import {
-  ADRESSE,
-  EVENEMENT,
-  LIEN_TITULAIRE,
-  MANDANT,
-  PIECES_JOINTES,
-  REQUERANT,
-  REQUETE,
-  SaisieRequeteRDC,
-  TITULAIRE1,
-  TITULAIRE2
-} from "../modelForm/ISaisirRDCPageModel";
-import {
-  ANNEE,
-  COMPLEMENT_MOTIF,
-  DATE_EVENEMENT,
-  DOCUMENT_DEMANDE,
   Evenement,
-  JOUR,
-  LIEN,
   LienTitulaire,
   Mandant,
-  MOIS,
-  MOTIF,
-  NATURE_ACTE,
-  NATURE_LIEN,
-  NB_EXEMPLAIRE,
-  NOM,
-  PAYS_EVENEMENT,
-  PRENOM,
-  RAISON_SOCIALE,
-  Requete,
-  TYPE_MANDANT,
-  VILLE_EVENEMENT
-} from "../modelForm/ISaisirRequetePageModel";
+  Requete
+} from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import { getValeurOuVide } from "@util/Utils";
+import { SaisieRequeteRDC } from "../modelForm/ISaisirRDCPageModel";
 import { IdentiteFormDefaultValues } from "../sousFormulaires/identite/IdentiteForm";
 import { saisiePJ } from "./mappingCommun";
 import {

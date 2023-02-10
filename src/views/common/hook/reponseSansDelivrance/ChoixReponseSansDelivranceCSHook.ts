@@ -9,7 +9,7 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { useEffect, useState } from "react";
-import { MimeType } from "../../../../../../../../ressources/MimeType";
+import { MimeType } from "../../../../ressources/MimeType";
 
 export function useReponseSansDelivranceCS(
   libelleAction: string,

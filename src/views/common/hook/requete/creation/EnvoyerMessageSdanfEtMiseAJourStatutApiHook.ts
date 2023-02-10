@@ -1,6 +1,6 @@
 import { postMessageRetourSDANFEtUpdateStatutRequete } from "@api/appels/requeteApi";
+import { mapEchangeRetourSDANF } from "@hook/requete/DetailRequeteHook";
 import { IEchange } from "@model/requete/IEchange";
-import { mapEchangeRetourSDANF } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 

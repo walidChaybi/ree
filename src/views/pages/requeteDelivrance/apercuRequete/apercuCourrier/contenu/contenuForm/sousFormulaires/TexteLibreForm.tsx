@@ -1,10 +1,10 @@
+import { TEXTE } from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
-import { TEXTE } from "../../modelForm/ISaisiePageModel";
 import "./scss/TexteLibreForm.scss";
 
 const TexteLibreForm: React.FC<SubFormProps> = props => {

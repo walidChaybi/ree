@@ -1,3 +1,9 @@
+import {
+  NATURE,
+  NOM,
+  PRENOM,
+  RAISON_SOCIALE
+} from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
@@ -10,12 +16,6 @@ import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
 import { CarateresAutorise } from "../../../../../../../ressources/Regex";
-import {
-  NATURE,
-  NOM,
-  PRENOM,
-  RAISON_SOCIALE
-} from "../../../modelForm/ISaisirRequetePageModel";
 import { getBlockRaisonSocialeNomPrenom } from "../../commun/communForm";
 import "./../scss/RequerantForm.scss";
 

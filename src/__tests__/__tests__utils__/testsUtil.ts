@@ -1,5 +1,5 @@
+import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { mappingRequeteDelivrance } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { urlImagePngVideBase64 } from "../../mock/data/ImagePng";
 
 function dataURLtoFile(dataurl: string, filename: string): File {

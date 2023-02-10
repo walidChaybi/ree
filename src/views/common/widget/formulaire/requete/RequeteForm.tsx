@@ -1,4 +1,11 @@
 import {
+  COMPLEMENT_MOTIF,
+  DOCUMENT_DEMANDE,
+  MOTIF,
+  NATURE_ACTE,
+  NB_EXEMPLAIRE
+} from "@composant/formulaire/ConstantesNomsForm";
+import {
   CodesExtraitCopie,
   DocumentDelivrance
 } from "@model/requete/enum/DocumentDelivrance";
@@ -8,13 +15,6 @@ import {
 } from "@model/requete/enum/DocumentDelivranceConstante";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import {
-  COMPLEMENT_MOTIF,
-  DOCUMENT_DEMANDE,
-  MOTIF,
-  NATURE_ACTE,
-  NB_EXEMPLAIRE
-} from "@pages/requeteDelivrance//saisirRequete/modelForm/ISaisirRequetePageModel";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { connect } from "formik";

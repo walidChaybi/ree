@@ -1,6 +1,6 @@
+import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { useRMCAutoPersonneApiHook } from "@pages/rechercheMultiCriteres/autoPersonne/hook/RMCAutoPersonneApiHook";
-import { mappingRequeteCreation } from "@pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";

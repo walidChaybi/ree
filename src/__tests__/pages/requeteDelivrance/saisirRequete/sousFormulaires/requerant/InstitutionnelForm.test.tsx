@@ -1,4 +1,4 @@
-import { INSTITUTI0NNEL } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
+import { INSTITUTI0NNEL } from "@composant/formulaire/ConstantesNomsForm";
 import InstitutionnelForm, {
   InstitutionnelFormDefaultValues,
   InstitutionnelFormValidationSchema

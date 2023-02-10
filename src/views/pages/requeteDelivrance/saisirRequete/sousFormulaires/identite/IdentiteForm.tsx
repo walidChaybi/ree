@@ -1,3 +1,12 @@
+import {
+  NAISSANCE,
+  NATIONALITE,
+  NOMS,
+  PARENT1,
+  PARENT2,
+  PRENOMS,
+  SEXE
+} from "@composant/formulaire/ConstantesNomsForm";
 import ParentForm, {
   ParentFormDefaultValues,
   ParentFormValidationSchema,
@@ -13,30 +22,21 @@ import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import {
-  NAISSANCE,
-  NATIONALITE,
-  NOMS,
-  PARENT1,
-  PARENT2,
-  PRENOMS,
-  SEXE
-} from "../../modelForm/ISaisirRequetePageModel";
+import NomsForm, {
+  NomsFormDefaultValues,
+  NomsFormProps,
+  NomsFormValidationSchema
+} from "../../../../../common/composant/formulaire/nomsPrenoms/NomsForm";
+import PrenomsForm, {
+  PrenomsFormDefaultValues,
+  PrenomsFormProps,
+  PrenomsFormValidationSchema
+} from "../../../../../common/composant/formulaire/nomsPrenoms/PrenomsForm";
 import EvenementForm, {
   EvenementFormDefaultValues,
   EvenementFormValidationSchema,
   EvenementSubFormProps
 } from "../evenement/EvenementForm";
-import NomsForm, {
-  NomsFormDefaultValues,
-  NomsFormProps,
-  NomsFormValidationSchema
-} from "./nomsPrenoms/NomsForm";
-import PrenomsForm, {
-  PrenomsFormDefaultValues,
-  PrenomsFormProps,
-  PrenomsFormValidationSchema
-} from "./nomsPrenoms/PrenomsForm";
 import "./scss/IdentiteForm.scss";
 
 // Valeurs par défaut des champs pour RDAPC et RDC

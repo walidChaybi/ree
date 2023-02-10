@@ -1,13 +1,13 @@
-import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { ChoixAction } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ChoixAction";
 import {
   createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
   createReponseSansDelivranceCSPourCompositionApiFrancais,
   createReponseSansDelivranceCSPourCompositionApiMariage,
   createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit
-} from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ReponseSansDelivranceCSFonctions";
+} from "@hook/reponseSansDelivrance/ReponseSansDelivranceCSFonctions";
+import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { ChoixAction } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ChoixAction";
 import {
   PATH_APERCU_REQ_TRAITEMENT,
   URL_MES_REQUETES_DELIVRANCE,

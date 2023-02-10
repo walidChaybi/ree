@@ -4,8 +4,10 @@ import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IEchange } from "@model/requete/IEchange";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
-import { IRMCRequestRequete } from "@model/rmc/requete/IRMCRequestRequete";
-import { ICriteresRMCAuto } from "@pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
+import {
+  ICriteresRMCAutoRequete,
+  IRMCRequestRequete
+} from "@model/rmc/requete/IRMCRequestRequete";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
 import { URL_MENTION } from "./etatcivilApi";
@@ -527,7 +529,7 @@ export function postIgnorerRequete(
 }
 
 export function rechercheMultiCriteresAutoRequetes(
-  criteres: ICriteresRMCAuto,
+  criteres: ICriteresRMCAutoRequete,
   range?: string
 ): Promise<any> {
   return api.fetch({

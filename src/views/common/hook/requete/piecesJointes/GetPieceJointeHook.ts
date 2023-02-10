@@ -22,10 +22,7 @@ export function useGetPieceJointeApi(
           setPieceJointe(result.body.data);
         })
         .catch(error => {
-          logError({
-            messageUtilisateur: "Impossible de récupérer le document",
-            error
-          });
+          gereErreur(error);
         });
     } else if (id && type === TypePieceJointe.PIECE_COMPLEMENT_INFORMATION) {
       getPieceComplementInformationById(id)
@@ -33,12 +30,18 @@ export function useGetPieceJointeApi(
           setPieceJointe(result.body.data);
         })
         .catch(error => {
-          logError({
-            messageUtilisateur: "Impossible de récupérer le document",
-            error
-          });
+          gereErreur(error);
         });
     }
   }, [type, id]);
   return PieceJointe;
 }
+
+/* istanbul ignore next */
+function gereErreur(error: any) {
+  logError({
+    messageUtilisateur: "Impossible de récupérer le document",
+    error
+  });
+}
+

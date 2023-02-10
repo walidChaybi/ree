@@ -32,7 +32,7 @@ import { useHistory, useParams } from "react-router-dom";
 import {
   IDetailRequeteParams,
   useAvecRejeuDetailRequeteApiHook
-} from "../detailRequete/hook/DetailRequeteHook";
+} from "../../../common/hook/requete/DetailRequeteHook";
 import { gestionnaireMentionsRetireesAuto } from "./contenu/onglets/mentions/GestionnaireMentionsRetireesAuto";
 import { VoletEdition } from "./contenu/onglets/VoletEdition";
 import { VoletVisualisation } from "./contenu/onglets/VoletVisualisation";

@@ -1,13 +1,13 @@
-import { getLibelle } from "@util/Utils";
-import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
-import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import {
   NATURE,
   NOM,
   PRENOM,
   TYPE
-} from "../../modelForm/ISaisirRequetePageModel";
+} from "@composant/formulaire/ConstantesNomsForm";
+import { getLibelle } from "@util/Utils";
+import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
+import * as Yup from "yup";
+import { CarateresAutorise } from "../../../../../../ressources/Regex";
 
 // Schéma de validation des champs
 export function getFormValidationCarAutorisesEtNAtureObligatoireShema(
