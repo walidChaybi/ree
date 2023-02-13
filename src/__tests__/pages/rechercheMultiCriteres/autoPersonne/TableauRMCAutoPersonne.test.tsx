@@ -51,21 +51,14 @@ test("Attendu: L'affichage du tableau de la RMC Personne s'affiche correctement.
     expect(screen.getAllByText("M")).toBeDefined();
     expect(screen.getAllByText("13/04/1980")).toBeDefined();
     expect(screen.getAllByText("Barcelone (Espagne)")).toBeDefined();
-    expect(screen.getAllByText("CURATELLE_SIMPLE")).toBeDefined();
-    expect(
-      screen.getByText("ADOPTION_SIMPLE_ETRANGER_EXEQUATUR")
-    ).toBeInTheDocument();
-    expect(screen.getAllByText("NAISSANCE")).toBeDefined();
+    expect(screen.getAllByText("Naissance")).toBeDefined();
     expect(screen.getByText("PACS - 2011 - 1234580")).toBeInTheDocument();
     expect(screen.getByText("PACS - 2021 - 1234581")).toBeInTheDocument();
     expect(screen.getByText("RC - 2020 - 10")).toBeInTheDocument();
     expect(screen.getByText("RC - 2020 - 11")).toBeInTheDocument();
     expect(screen.getByText("RCA - 2020 - 4010")).toBeInTheDocument();
     expect(screen.getByText("ACQ.X.1951.1.681ABC")).toBeInTheDocument();
-    expect(screen.getAllByText("ACTIF")).toBeDefined();
-    expect(screen.getAllByText("INACTIF")).toBeDefined();
-    expect(screen.getAllByText("ACTIF / INSCRIPTION")).toBeDefined();
-    expect(screen.getAllByText("INACTIF / INSCRIPTION")).toBeDefined();
-    expect(screen.getAllByText("VALIDE")).toBeDefined();
+    expect(screen.getAllByText("Inscription")).toBeDefined();
+    expect(screen.getAllByText("Validé")).toBeDefined();
   });
 });

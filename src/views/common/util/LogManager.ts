@@ -34,7 +34,7 @@ export function logError(logErrorMgs: LogErrorMsg) {
   }
   if (logErrorMgs.error?.status === HTTP_PAYLOAD_TOO_LARGE) {
     logErrorOnScreen(
-      `La requête ramène trop de résultats. Veuillez affiner vos critères.\n(${logErrorMgs.messageUtilisateur})`
+      `La recherche multi-critères ramène trop de résultats, veuillez affiner vos critères.\n(${logErrorMgs.messageUtilisateur})`
     );
   } else if (logErrorMgs.error?.status === HTTP_REQUEST_TIME_OUT) {
     logErrorOnScreen(

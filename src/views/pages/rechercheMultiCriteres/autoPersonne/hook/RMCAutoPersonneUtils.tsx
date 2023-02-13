@@ -2,6 +2,7 @@ import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { Requete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
 import { getValeurOuUndefined, UN } from "@util/Utils";
 import { NB_LIGNES_PAR_APPEL_PERSONNE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
@@ -23,12 +24,16 @@ function mapRequeteVersValeursIRMCAutoPersonneRequest(
     return {};
   }
 
-  let titulaire;
+  let titulaire: ITitulaireRequete | undefined;
   if (
     SousTypeCreation.estSousTypeTranscription(requete.sousType) ||
     SousTypeCreation.estRCADC(requete.sousType)
   ) {
-    titulaire = Requete.getTitulaireEnPosition(requete, UN);
+    titulaire = Requete.getTitulaireAvecTypeObjetEnPosition(
+      requete,
+      TypeObjetTitulaire.TITULAIRE_ACTE_TRANSCRIT_DRESSE,
+      UN
+    );
   } else if (SousTypeCreation.estRCEXROuRCEDXROuRCEDXC(requete.sousType)) {
     titulaire = Requete.getTitulaireAvecTypeObjet(
       requete,

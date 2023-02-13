@@ -1,4 +1,6 @@
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
+import { IRMCAutoPersonneResultat } from "@model/rmc/personne/IRMCAutoPersonneResultat";
+import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/OngletRMCPersonne";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useState } from "react";
 import {
@@ -6,10 +8,11 @@ import {
   typeFctRenommePieceJustificative
 } from "../../../commun/composants/OngletPiecesJustificatives";
 import { Action } from "./action/Action";
-import "./scss/VoletPieceJustificativesEtActions.scss";
-interface VoletPieceJusticativesEtActionsProps {
+import "./scss/OngletsApercuCreationEtablissement.scss";
+interface OngletsApercuCreationEtablissementProps {
   requete: IRequeteCreationEtablissement;
   onRenommePieceJustificative: typeFctRenommePieceJustificative;
+  resultatRMCAutoPersonne: IRMCAutoPersonneResultat[];
 }
 
 interface ItemListe {
@@ -18,8 +21,8 @@ interface ItemListe {
   component: JSX.Element;
 }
 
-export const VoletPieceJustificativesEtActions: React.FC<
-  VoletPieceJusticativesEtActionsProps
+export const OngletsApercuCreationEtablissement: React.FC<
+  OngletsApercuCreationEtablissementProps
 > = props => {
   const [ongletSelectionne, setOngletSelectionne] = useState(0);
 
@@ -44,6 +47,15 @@ export const VoletPieceJustificativesEtActions: React.FC<
         />
       ),
       index: 1
+    },
+    {
+      titre: "RMC",
+      component: (
+        <OngletRMCPersonne
+          rmcAutoPersonneResultat={props.resultatRMCAutoPersonne}
+        />
+      ),
+      index: 1
     }
   ];
 
@@ -52,7 +64,7 @@ export const VoletPieceJustificativesEtActions: React.FC<
   };
 
   return (
-    <div className="VoletPieceJusticativesEtActions">
+    <div className="OngletsApercuCreationEtablissement">
       <VoletAvecOnglet
         liste={liste}
         ongletSelectionne={ongletSelectionne}

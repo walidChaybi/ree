@@ -15,6 +15,7 @@ import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic
 } from "../../../mock/data/connectedUserAvecDroit";
+import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
 import { mapHabilitationsUtilisateur } from "../../../model/agent/IUtilisateur";
 import { getUrlWithParam } from "../../../views/common/util/route/routeUtil";
@@ -26,7 +27,10 @@ import {
   URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
 } from "../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
+const superagentMock = require("superagent-mock")(request, [
+  configEtatcivil[0],
+  configRequetes[0]
+]);
 
 beforeAll(() => {
   storeRece.utilisateurCourant = mappingOfficier(
@@ -115,7 +119,7 @@ test("Modifier le titre d'un fichier d'une pièce jointe Etablissement", async (
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
-  act(() => {
+  await act(async () => {
     render(
       <Router history={history}>
         <Route
@@ -137,7 +141,7 @@ test("Modifier le titre d'un fichier d'une pièce jointe Etablissement", async (
     expect(boutonModifierLibelle).toBeDefined();
   });
 
-  act(() => {
+  await act(async () => {
     fireEvent.click(boutonModifierLibelle);
   });
 
@@ -145,7 +149,7 @@ test("Modifier le titre d'un fichier d'une pièce jointe Etablissement", async (
     "input-creation-fichierPJ"
   ) as HTMLInputElement;
 
-  act(() => {
+  await act(async () => {
     fireEvent.change(inputModificationLibelle, {
       target: {
         value: "nouveauLibelle"
@@ -153,7 +157,7 @@ test("Modifier le titre d'un fichier d'une pièce jointe Etablissement", async (
     });
   });
 
-  act(() => {
+  await act(async () => {
     inputModificationLibelle.blur();
   });
 
@@ -169,7 +173,7 @@ test("Modifier le titre d'un fichier d'une pièce jointe Transcription", async (
       "d4f9e898-cf26-42cc-850b-007e9e475e7a"
     )
   );
-  act(() => {
+  await act(async () => {
     render(
       <Router history={history}>
         <Route
@@ -193,7 +197,7 @@ test("Modifier le titre d'un fichier d'une pièce jointe Transcription", async (
     expect(boutonModifierLibelle).toBeDefined();
   });
 
-  act(() => {
+  await act(async () => {
     fireEvent.click(boutonModifierLibelle);
   });
 
@@ -201,7 +205,7 @@ test("Modifier le titre d'un fichier d'une pièce jointe Transcription", async (
     "input-creation-nom"
   ) as HTMLInputElement;
 
-  act(() => {
+  await act(async () => {
     fireEvent.change(inputModificationLibelle, {
       target: {
         value: "nouveauLibelle"
@@ -209,7 +213,7 @@ test("Modifier le titre d'un fichier d'une pièce jointe Transcription", async (
     });
   });
 
-  act(() => {
+  await act(async () => {
     inputModificationLibelle.blur();
   });
 
@@ -225,7 +229,7 @@ test("Modifier le titre d'un fichier et revenir en arrière", async () => {
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
-  act(() => {
+  await act(async () => {
     render(
       <Router history={history}>
         <Route
@@ -247,7 +251,7 @@ test("Modifier le titre d'un fichier et revenir en arrière", async () => {
     expect(boutonModifierLibelle).toBeDefined();
   });
 
-  act(() => {
+  await act(async () => {
     fireEvent.click(boutonModifierLibelle);
   });
 
@@ -255,7 +259,7 @@ test("Modifier le titre d'un fichier et revenir en arrière", async () => {
     "input-creation-nouveauLibelle"
   ) as HTMLInputElement;
 
-  act(() => {
+  await act(async () => {
     fireEvent.change(inputModificationLibelle, {
       target: {
         value: "test libelle"
@@ -272,7 +276,7 @@ test("Modifier le titre d'un fichier et revenir en arrière", async () => {
     expect(screen.getAllByText("test libelle")[0]).toBeDefined();
   });
 
-  act(() => {
+  await act(async () => {
     fireEvent.click(
       screen.getAllByTitle("Annuler la modification du libellé")[0]
     );
@@ -290,7 +294,7 @@ test("Modifier le titre puis annuler", async () => {
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
-  act(() => {
+  await act(async () => {
     render(
       <Router history={history}>
         <Route
@@ -312,7 +316,7 @@ test("Modifier le titre puis annuler", async () => {
     expect(boutonModifierLibelle).toBeDefined();
   });
 
-  act(() => {
+  await act(async () => {
     fireEvent.click(boutonModifierLibelle);
   });
 
@@ -320,7 +324,7 @@ test("Modifier le titre puis annuler", async () => {
     "input-creation-fichierPJ"
   ) as HTMLInputElement;
 
-  act(() => {
+  await act(async () => {
     fireEvent.change(inputModificationLibelle, {
       target: {
         value: "test libelle"
@@ -345,7 +349,7 @@ test("Ouvrir deux pièces jointes côte à côte.", async () => {
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
-  act(() => {
+  await act(async () => {
     render(
       <Router history={history}>
         <Route
@@ -387,7 +391,7 @@ test("Ouvrir deux pièces jointes côte à côte.", async () => {
     expect(accordionBeta2.classList.contains("Mui-expanded")).toBeFalsy();
   });
 
-  act(() => {
+  await act(async () => {
     fireEvent.click(accordionAlpha1);
     fireEvent.click(accordionBeta1);
   });

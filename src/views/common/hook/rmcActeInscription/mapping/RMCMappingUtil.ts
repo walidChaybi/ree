@@ -1,6 +1,9 @@
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { StatutActe } from "@model/etatcivil/enum/StatutActe";
+import { StatutPacesUtil } from "@model/etatcivil/enum/StatutPacs";
 import { TypeActe } from "@model/etatcivil/enum/TypeActe";
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
+import { InscriptionRcUtil } from "@model/etatcivil/enum/TypeInscriptionRc";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
@@ -13,7 +16,7 @@ import {
   formatPrenoms,
   getValeurOuUndefined,
   getValeurOuVide,
-  jointAvec,
+  premiereLettreEnMajuscule,
   TROIS
 } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
@@ -126,15 +129,42 @@ function mapPersonne(data: any): IRMCAutoPersonneResultat {
 }
 
 function mapActeOuRepertoireLie(data: any): IRMCAutoPersonneResultat {
+  let statutOuType: string;
+  let nature: string;
+  switch (data.categorieRepertoire) {
+    case "RC":
+      nature = getValeurOuVide(data.nature);
+      statutOuType = InscriptionRcUtil.getLibelle(
+        getValeurOuVide(data.typeInscription)
+      );
+      break;
+    case "RCA":
+      nature = getValeurOuVide(data.nature);
+      statutOuType = InscriptionRcUtil.getLibelle(
+        getValeurOuVide(data.typeInscription)
+      );
+      break;
+    case "PACS":
+      nature = "";
+      statutOuType = StatutPacesUtil.getLibelle(getValeurOuVide(data.statut));
+      break;
+    case null: // Acte
+      nature = NatureActe.getEnumFor(getValeurOuVide(data.nature)).libelle;
+      statutOuType = StatutActe.getEnumFor(
+        getValeurOuVide(data.statut)
+      ).libelle;
+      break;
+    default:
+      nature = "";
+      statutOuType = "";
+  }
+
   return {
     idDocument: getValeurOuVide(data.id),
-    nature: getValeurOuVide(data.nature),
+    nature: premiereLettreEnMajuscule(nature),
     statut: getValeurOuVide(data.statut),
     reference: getValeurOuVide(data.reference),
     categorieRepertoire: getValeurOuVide(data.categorieRepertoire),
-    statutOuType: jointAvec(
-      [getValeurOuVide(data.statut), getValeurOuVide(data.typeInscription)],
-      " / "
-    )
+    statutOuType: statutOuType
   } as IRMCAutoPersonneResultat;
 }

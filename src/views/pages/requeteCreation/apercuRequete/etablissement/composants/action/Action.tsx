@@ -10,7 +10,7 @@ import { IRequeteCreationEtablissement } from "../../../../../../../model/requet
 import { BoutonPrendreEnChargeCreation } from "../BoutonPrendreEnChargeCreation";
 import { Item } from "../item/Item";
 import { ItemEchangesRetourSDANF } from "../item/ItemEchangesRetourSDANF";
-import "../scss/VoletPieceJustificativesEtActions.scss";
+import "../scss/OngletsApercuCreationEtablissement.scss";
 import { ListeActionsRetourSDANF } from "./ListeActions";
 interface OngletActionProps {
   echanges?: IEchange[];

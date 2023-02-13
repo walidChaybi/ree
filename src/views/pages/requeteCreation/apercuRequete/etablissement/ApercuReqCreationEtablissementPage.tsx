@@ -4,6 +4,7 @@ import {
   IRequeteCreationEtablissement,
   RequeteCreationEtablissement
 } from "@model/requete/IRequeteCreationEtablissement";
+import { useRMCAutoPersonneApiHook } from "@pages/rechercheMultiCriteres/autoPersonne/hook/RMCAutoPersonneApiHook";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import React, { useEffect, useState } from "react";
@@ -11,14 +12,15 @@ import { useHistory, useParams } from "react-router";
 import { OngletPiecesJustificatives } from "../../commun/composants/OngletPiecesJustificatives";
 import Labels from "../../commun/Labels";
 import "../../commun/scss/ApercuReqCreationPage.scss";
+import { OngletsApercuCreationEtablissement } from "./composants/OngletsApercuCreationEtablissement";
 import ResumeRequeteCreation from "./composants/ResumeRequeteCreation";
-import { VoletPieceJustificativesEtActions } from "./composants/VoletPieceJusticativesEtActions";
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "./mappingIRequeteCreationVersResumeRequeteCreationProps";
 
 export const ApercuReqCreationEtablissementPage: React.FC = () => {
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
   const history = useHistory();
+  const { resultatRMCAutoPersonne } = useRMCAutoPersonneApiHook(requete);
   const { detailRequeteState } = useDetailRequeteApiHook(
     idRequeteParam,
     history.location.pathname.includes(URL_RECHERCHE_REQUETE)
@@ -63,9 +65,10 @@ export const ApercuReqCreationEtablissementPage: React.FC = () => {
             />
           </ConteneurRetractable>
 
-          <VoletPieceJustificativesEtActions
+          <OngletsApercuCreationEtablissement
             requete={requete}
             onRenommePieceJustificative={onRenommePieceJustificative}
+            resultatRMCAutoPersonne={resultatRMCAutoPersonne}
           />
 
           <ConteneurRetractable

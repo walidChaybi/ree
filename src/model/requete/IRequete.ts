@@ -66,12 +66,6 @@ export const Requete = {
         })
       : undefined;
   },
-  getTitulaireEnPosition(
-    requete: IRequete,
-    position: number
-  ): ITitulaireRequete | undefined {
-    return requete?.titulaires?.filter(t => t.position === position).pop();
-  },
   getTitulaireAvecTypeObjet(
     requete: IRequeteCreationEtablissement,
     typeObjet: TypeObjetTitulaire
@@ -80,10 +74,19 @@ export const Requete = {
       ?.filter(t => t.typeObjetTitulaire === typeObjet)
       .pop();
   },
+  getTitulaireAvecTypeObjetEnPosition(
+    requete: IRequeteCreationEtablissement,
+    typeObjet: TypeObjetTitulaire,
+    position: number
+  ): ITitulaireRequete | undefined {
+    return requete?.titulaires?.filter(
+      t => t.position === position && t.typeObjetTitulaire === typeObjet
+    ).pop();
+  },
   getPieceJustificative(
     requete: IRequete | undefined,
     idPieceJustificative: string
-  ): IPieceJustificative | undefined{
+  ): IPieceJustificative | undefined {
     return PieceJustificative.getPieceJustificative(
       requete?.piecesJustificatives,
       idPieceJustificative

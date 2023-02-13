@@ -44,9 +44,7 @@ export const TableauRMCAutoPersonne: React.FC<
             columnHeaders={getColonnesTableau()}
             dataState={props.data}
             paramsTableau={{}}
-            onClickOnLine={function (value: string): void {
-              throw new Error("Function not implemented.");
-            }}
+            onClickOnLine={() => {}}
             nbLignesParPage={NB_LIGNES_PAR_PAGE_PERSONNE}
             nbLignesParAppel={NB_LIGNES_PAR_APPEL_PERSONNE}
             noRows={getMessageAucunResultat()}

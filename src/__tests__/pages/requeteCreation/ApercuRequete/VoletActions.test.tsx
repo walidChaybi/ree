@@ -1,5 +1,5 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
-import { VoletPieceJustificativesEtActions } from "@pages/requeteCreation/apercuRequete/etablissement/composants/VoletPieceJusticativesEtActions";
+import { OngletsApercuCreationEtablissement } from "@pages/requeteCreation/apercuRequete/etablissement/composants/OngletsApercuCreationEtablissement";
 import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import {
   act,
@@ -49,8 +49,16 @@ test("L'encart retour SDANF est present dans la page", async () => {
             exact={true}
             path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
-            <VoletPieceJustificativesEtActions
+            <OngletsApercuCreationEtablissement
               requete={mappingRequeteCreation(requeteCreationEtablissement)}
+              onRenommePieceJustificative={function (
+                idPieceJustificative: string,
+                nouveauLibelle: string,
+                idDocumentPJ?: string | undefined
+              ): void {
+                throw new Error("Function not implemented.");
+              }}
+              resultatRMCAutoPersonne={[]}
             />
           </Route>
         </Router>
@@ -86,10 +94,18 @@ test("Doit afficher le message avec le bon format titre - message - prenomNom", 
             exact={true}
             path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
-            <VoletPieceJustificativesEtActions
+            <OngletsApercuCreationEtablissement
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecMessages
               )}
+              onRenommePieceJustificative={function (
+                idPieceJustificative: string,
+                nouveauLibelle: string,
+                idDocumentPJ?: string | undefined
+              ): void {
+                throw new Error("Function not implemented.");
+              }}
+              resultatRMCAutoPersonne={[]}
             />
           </Route>
         </Router>
@@ -129,10 +145,18 @@ test("Doit afficher la liste des messages avec le bon nombre de messages", async
             exact={true}
             path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
-            <VoletPieceJustificativesEtActions
+            <OngletsApercuCreationEtablissement
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFSansLesDroits
               )}
+              onRenommePieceJustificative={function (
+                idPieceJustificative: string,
+                nouveauLibelle: string,
+                idDocumentPJ?: string | undefined
+              ): void {
+                throw new Error("Function not implemented.");
+              }}
+              resultatRMCAutoPersonne={[]}
             />
           </Route>
         </Router>
@@ -174,10 +198,18 @@ test("Doit desactiver les boutons quand la requete n'est pas en statut PRISE_EN_
             exact={true}
             path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
-            <VoletPieceJustificativesEtActions
+            <OngletsApercuCreationEtablissement
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecMauvaisStatus
               )}
+              onRenommePieceJustificative={function (
+                idPieceJustificative: string,
+                nouveauLibelle: string,
+                idDocumentPJ?: string | undefined
+              ): void {
+                throw new Error("Function not implemented.");
+              }}
+              resultatRMCAutoPersonne={[]}
             />
           </Route>
         </Router>
@@ -216,10 +248,18 @@ test("Doit desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete 
             exact={true}
             path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
-            <VoletPieceJustificativesEtActions
+            <OngletsApercuCreationEtablissement
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut
               )}
+              onRenommePieceJustificative={function (
+                idPieceJustificative: string,
+                nouveauLibelle: string,
+                idDocumentPJ?: string | undefined
+              ): void {
+                throw new Error("Function not implemented.");
+              }}
+              resultatRMCAutoPersonne={[]}
             />
           </Route>
         </Router>
@@ -259,10 +299,18 @@ test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requ
             exact={true}
             path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
-            <VoletPieceJustificativesEtActions
+            <OngletsApercuCreationEtablissement
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
               )}
+              onRenommePieceJustificative={function (
+                idPieceJustificative: string,
+                nouveauLibelle: string,
+                idDocumentPJ?: string | undefined
+              ): void {
+                throw new Error("Function not implemented.");
+              }}
+              resultatRMCAutoPersonne={[]}
             />
           </Route>
         </Router>
@@ -304,10 +352,18 @@ test("Doit ouvrir et changer le titre de la popin au click sur une action", asyn
             exact={true}
             path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
-            <VoletPieceJustificativesEtActions
+            <OngletsApercuCreationEtablissement
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
               )}
+              onRenommePieceJustificative={function (
+                idPieceJustificative: string,
+                nouveauLibelle: string,
+                idDocumentPJ?: string | undefined
+              ): void {
+                throw new Error("Function not implemented.");
+              }}
+              resultatRMCAutoPersonne={[]}
             />
           </Route>
         </Router>
@@ -384,10 +440,18 @@ test("Doit ouvrir la popin au click sur une action", async () => {
             exact={true}
             path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
-            <VoletPieceJustificativesEtActions
+            <OngletsApercuCreationEtablissement
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
               )}
+              onRenommePieceJustificative={function (
+                idPieceJustificative: string,
+                nouveauLibelle: string,
+                idDocumentPJ?: string | undefined
+              ): void {
+                throw new Error("Function not implemented.");
+              }}
+              resultatRMCAutoPersonne={[]}
             />
           </Route>
         </Router>
@@ -441,10 +505,18 @@ test("Doit afficher un message d'erreur quand la taille maximale est dépassée"
             exact={true}
             path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
           >
-            <VoletPieceJustificativesEtActions
+            <OngletsApercuCreationEtablissement
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
               )}
+              onRenommePieceJustificative={function (
+                idPieceJustificative: string,
+                nouveauLibelle: string,
+                idDocumentPJ?: string | undefined
+              ): void {
+                throw new Error("Function not implemented.");
+              }}
+              resultatRMCAutoPersonne={[]}
             />
           </Route>
         </Router>
