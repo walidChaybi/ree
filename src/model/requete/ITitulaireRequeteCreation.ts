@@ -1,13 +1,13 @@
 import { DateCoordonneesType } from "@model/requete/DateCoordonneesType";
+import { QualiteFamille } from "./enum/QualiteFamille";
 import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
+import { IDomiciliation } from "./IDomiciliation";
+import { IEnfantTitulaireActeTranscritDresse } from "./IEnfantTitulaireActeTranscritDresse";
 import { IEvenementUnion } from "./IEvenementUnion";
+import { INationalite } from "./INationalite";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 import { IRetenueSdanf } from "./IRetenueSdanf";
-import {
-  IDomiciliation,
-  INationalite,
-  ITitulaireRequete
-} from "./ITitulaireRequete";
+import { ITitulaireRequete } from "./ITitulaireRequete";
 
 export interface ITitulaireRequeteCreation extends ITitulaireRequete {
   villeEtrangereNaissance?: string;
@@ -21,7 +21,7 @@ export interface ITitulaireRequeteCreation extends ITitulaireRequete {
   nomActuel?: string;
   nombreEnfantMineur?: number;
   typeObjetTitulaire?: TypeObjetTitulaire;
-  qualite?: string;
+  qualite?: QualiteFamille;
   courriel?: string;
   telephone?: string;
   deces?: DateCoordonneesType;
@@ -33,4 +33,5 @@ export interface ITitulaireRequeteCreation extends ITitulaireRequete {
   domiciliationEnfant?: string;
   evenementUnions?: IEvenementUnion[];
   retenueSdanf?: IRetenueSdanf;
+  enfantTitulaireActeTranscritDresse?: IEnfantTitulaireActeTranscritDresse;
 }

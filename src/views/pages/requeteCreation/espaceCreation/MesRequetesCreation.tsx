@@ -95,23 +95,23 @@ export const MesRequetesCreation: React.FC<
     setOperationEnCours(true);
     const requeteSelect = data[idx];
 
-      if (autorisePrendreEnChargeReqTableauCreation(requeteSelect)) {
-        setParamsMiseAJour({
-          libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-          statutRequete: StatutRequete.PRISE_EN_CHARGE,
-          requete: requeteSelect,
-          urlCourante: URL_MES_REQUETES_CREATION,
-          typeRequete: TypeRequete.CREATION
-        });
-      } else {
-        setParamsUseApercuCreation(
-          idRequete,
-          setParamsCreation,
-          requeteSelect.sousType,
-          requeteSelect.statut,
-          requeteSelect.idUtilisateur
-        );
-      }
+    if (autorisePrendreEnChargeReqTableauCreation(requeteSelect)) {
+      setParamsMiseAJour({
+        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
+        statutRequete: StatutRequete.PRISE_EN_CHARGE,
+        requete: requeteSelect,
+        urlCourante: URL_MES_REQUETES_CREATION,
+        typeRequete: TypeRequete.CREATION
+      });
+    } else {
+      setParamsUseApercuCreation(
+        idRequete,
+        setParamsCreation,
+        requeteSelect.sousType,
+        requeteSelect.statut,
+        requeteSelect.idUtilisateur
+      );
+    }
   }
 
   return (

@@ -68,6 +68,8 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC =
               component: (
                 <OngletRMCPersonne
                   rmcAutoPersonneResultat={resultatRMCAutoPersonne}
+                  sousTypeRequete={requete.sousType}
+                  listeTitulaires={requete.titulaires}
                 />
               ),
               index: 1

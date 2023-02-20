@@ -79,9 +79,11 @@ export const Requete = {
     typeObjet: TypeObjetTitulaire,
     position: number
   ): ITitulaireRequete | undefined {
-    return requete?.titulaires?.filter(
-      t => t.position === position && t.typeObjetTitulaire === typeObjet
-    ).pop();
+    return requete?.titulaires
+      ?.filter(
+        t => t.position === position && t.typeObjetTitulaire === typeObjet
+      )
+      .pop();
   },
   getPieceJustificative(
     requete: IRequete | undefined,

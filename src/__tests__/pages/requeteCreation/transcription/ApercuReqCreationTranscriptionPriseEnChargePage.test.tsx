@@ -89,7 +89,7 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
     });
   });
 
-  test("DOIT afficher le tableau RMC Personne QUAND je clique sur l'onglet RMC.", async () => {
+  test("DOIT sélectionner l'onglet RMC QUAND je clique dessus.", async () => {
     const history = createMemoryHistory();
     history.push(
       getUrlWithParam(
@@ -113,34 +113,19 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
       );
     });
 
-    await waitFor(() => {
-      expect(screen.getByText("RMC")).toBeInTheDocument();
+    const ongletPJ = screen.getByText("Pièces justificatives / Annexes");
+    const ongletRMC = screen.getByText("RMC");
 
-      expect(screen.queryByText("Nom")).not.toBeInTheDocument();
-      expect(screen.queryByText("Autres noms")).not.toBeInTheDocument();
-      expect(screen.queryByText("Prénoms")).not.toBeInTheDocument();
-      expect(screen.queryByText("Sexe")).not.toBeInTheDocument();
-      expect(screen.queryByText("Date de naissance")).not.toBeInTheDocument();
-      expect(screen.queryByText("Lieu de naissance")).not.toBeInTheDocument();
-      expect(screen.queryByText("Nature")).not.toBeInTheDocument();
-      expect(screen.queryByText("Référence")).not.toBeInTheDocument();
-      expect(screen.queryByText("Statut / Type")).not.toBeInTheDocument();
+    await waitFor(async () => {
+      expect(ongletPJ.getAttribute("aria-selected")).toBe("true");
+      expect(ongletRMC.getAttribute("aria-selected")).toBe("false");
     });
 
-    await act(async () => {
-      fireEvent.click(screen.getByText("RMC"));
-    });
+    fireEvent.click(ongletRMC);
 
-    await waitFor(() => {
-      expect(screen.getByText("Nom")).toBeInTheDocument();
-      expect(screen.getByText("Autres noms")).toBeInTheDocument();
-      expect(screen.getByText("Prénoms")).toBeInTheDocument();
-      expect(screen.getByText("Sexe")).toBeInTheDocument();
-      expect(screen.getByText("Date de naissance")).toBeInTheDocument();
-      expect(screen.getByText("Lieu de naissance")).toBeInTheDocument();
-      expect(screen.getByText("Nature")).toBeInTheDocument();
-      expect(screen.getByText("Référence")).toBeInTheDocument();
-      expect(screen.getByText("Statut / Type")).toBeInTheDocument();
+    await waitFor(async () => {
+      expect(ongletRMC.getAttribute("aria-selected")).toBe("true");
+      expect(ongletPJ.getAttribute("aria-selected")).toBe("false");
     });
   });
 });

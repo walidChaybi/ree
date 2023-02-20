@@ -70,6 +70,8 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC =
               titre: "RMC",
               component: (
                 <OngletRMCPersonne
+                  sousTypeRequete={requete.sousType}
+                  listeTitulaires={requete.titulaires}
                   rmcAutoPersonneResultat={resultatRMCAutoPersonne}
                 />
               ),

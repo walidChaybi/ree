@@ -9,6 +9,7 @@ import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { ObjetRequete } from "@model/requete/enum/ObjetRequete";
 import { Provenance } from "@model/requete/enum/Provenance";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
@@ -342,10 +343,11 @@ function mapDocumentPJ(documents?: any): IDocumentPJ[] {
 export function mappingRequeteCreation(
   data: any
 ): IRequeteCreationEtablissement {
+  const requete = mappingRequete(data);
   return {
     // Si requête de sousType RCTC ou RCTD prévoir la mapping
     ...data,
-    ...mappingRequete(data),
+    ...requete,
 
     // Partie requête création
     sousType: SousTypeCreation.getEnumFor(data.sousType),
@@ -361,6 +363,14 @@ export function mappingRequeteCreation(
       ),
       echanges: mapEchangesRetourSDANF(data.provenanceNatali?.echanges)
     },
-    documentsPj: mapDocumentPJ(data.documentsPj)
+    documentsPj: mapDocumentPJ(data.documentsPj),
+    titulaires: mapTitulairesCreation(requete.titulaires)
   };
+}
+
+function mapTitulairesCreation(titulaires: any[]) {
+  return titulaires.map(titulaire => ({
+    ...titulaire,
+    qualite: QualiteFamille.getEnumFor(titulaire.qualite)
+  }));
 }

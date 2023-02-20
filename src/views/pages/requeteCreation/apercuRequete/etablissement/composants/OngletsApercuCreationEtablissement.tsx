@@ -53,6 +53,8 @@ export const OngletsApercuCreationEtablissement: React.FC<
       component: (
         <OngletRMCPersonne
           rmcAutoPersonneResultat={props.resultatRMCAutoPersonne}
+          sousTypeRequete={props.requete.sousType}
+          listeTitulaires={props.requete.titulaires}
         />
       ),
       index: 1

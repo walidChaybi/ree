@@ -258,7 +258,7 @@ export function rempliAGauche(nb: number | string, c: string, long: number) {
   return nb ? String(nb).padStart(long, c) : "";
 }
 
-export function rempliAGaucheAvecZero(nb: number | string, long = 2) {
+export function rempliAGaucheAvecZero(nb: number | string, long = DEUX) {
   return rempliAGauche(nb, "0", long);
 }
 
@@ -356,7 +356,9 @@ export function getLibelle(msg: string) {
 }
 
 export function shallowEgalTableau(tab1: Object[], tab2: Object[]) {
-  if (tab1.length !== tab2.length) return false;
+  if (tab1.length !== tab2.length) {
+    return false;
+  }
   let res = true;
   tab1.forEach((elTab1, index) => {
     if (!shallowEgal(elTab1, tab2[index])) {

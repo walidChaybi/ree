@@ -133,11 +133,6 @@ function mapActeOuRepertoireLie(data: any): IRMCAutoPersonneResultat {
   let nature: string;
   switch (data.categorieRepertoire) {
     case "RC":
-      nature = getValeurOuVide(data.nature);
-      statutOuType = InscriptionRcUtil.getLibelle(
-        getValeurOuVide(data.typeInscription)
-      );
-      break;
     case "RCA":
       nature = getValeurOuVide(data.nature);
       statutOuType = InscriptionRcUtil.getLibelle(

@@ -75,6 +75,8 @@ export class SousTypeCreation extends EnumWithComplete {
     return EnumWithComplete.getAllLibellesCourtAsOptions(SousTypeCreation);
   }
 
+  // Actes établis
+
   public static estRCEXR(sousType?: SousTypeCreation): boolean {
     return sousType === SousTypeCreation.RCEXR;
   }
@@ -87,6 +89,16 @@ export class SousTypeCreation extends EnumWithComplete {
     return sousType === SousTypeCreation.RCEDXC;
   }
 
+  public static estRCEXROuRCEDXROuRCEDXC(sousType?: SousTypeCreation): boolean {
+    return (
+      SousTypeCreation.estRCEXR(sousType) ||
+      SousTypeCreation.estRCEDXR(sousType) ||
+      SousTypeCreation.estRCEDXC(sousType)
+    );
+  }
+
+  // Actes transcrits
+
   public static estRCTD(sousType?: SousTypeCreation): boolean {
     return sousType === SousTypeCreation.RCTD;
   }
@@ -95,20 +107,9 @@ export class SousTypeCreation extends EnumWithComplete {
     return sousType === SousTypeCreation.RCTC;
   }
 
-  public static estRCADC(sousType?: SousTypeCreation): boolean {
-    return sousType === SousTypeCreation.RCADC;
-  }
-
   public static estRCTDOuRCTC(sousType?: SousTypeCreation): boolean {
     return (
       SousTypeCreation.estRCTD(sousType) || SousTypeCreation.estRCTC(sousType)
-    );
-  }
-
-  public static estRCEXROuRCTDOuRCTC(sousType?: SousTypeCreation): boolean {
-    return (
-      SousTypeCreation.estRCTDOuRCTC(sousType) ||
-      SousTypeCreation.estRCEXR(sousType)
     );
   }
 
@@ -116,11 +117,18 @@ export class SousTypeCreation extends EnumWithComplete {
     return SousTypeCreation.estRCTDOuRCTC(sousType);
   }
 
-  public static estRCEXROuRCEDXROuRCEDXC(sousType?: SousTypeCreation): boolean {
+  // Actes dressés
+
+  public static estRCADC(sousType?: SousTypeCreation): boolean {
+    return sousType === SousTypeCreation.RCADC;
+  }
+
+  // Mixtes
+
+  public static estRCEXROuRCTDOuRCTC(sousType?: SousTypeCreation): boolean {
     return (
-      SousTypeCreation.estRCEXR(sousType) ||
-      SousTypeCreation.estRCEDXR(sousType) ||
-      SousTypeCreation.estRCEDXC(sousType)
+      SousTypeCreation.estRCTDOuRCTC(sousType) ||
+      SousTypeCreation.estRCEXR(sousType)
     );
   }
 }
