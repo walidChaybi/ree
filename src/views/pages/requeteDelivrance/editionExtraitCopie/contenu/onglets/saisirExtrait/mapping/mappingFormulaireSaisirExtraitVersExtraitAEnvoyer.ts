@@ -45,12 +45,23 @@ export function mappingFormulaireSaisirExtraitVersExtraitAEnvoyer(
     acte,
     saisiExtrait.titulaireEvt1
   );
+  // Alimentation des titulaires d'origine pour la recherche des personnes
+  //  => Sert dans le cas de changement de nom et de sexe (la recherche des personnes s'effectue par le nom et le sexe)
+  const titulairesAM =
+    FicheActe.getTitulairesAMDansLOrdreAvecMajDonneesTitulaireActe(acte);
+  extraitSaisiAEnvoyer.titulaireOrigine1 = mapNomSexeDuTitulaireActeEtParents(
+    titulairesAM[0]
+  );
 
   if (FicheActe.estActeMariage(acte) && saisiExtrait.titulaireEvt2) {
     extraitSaisiAEnvoyer.titulaire2 = mapTitulaireNaissanceEtParents(
       acte,
       saisiExtrait.titulaireEvt2
     );
+    if (titulairesAM[1]) {
+      extraitSaisiAEnvoyer.titulaireOrigine2 =
+        mapNomSexeDuTitulaireActeEtParents(titulairesAM[1]);
+    }
   }
 
   if (FicheActe.estActeNaissance(acte)) {
@@ -397,4 +408,19 @@ function mapEvenement(
     heure: getNombreOuUndefined(evenementSaisi?.dateEvenement?.nbHeure),
     minute: getNombreOuUndefined(evenementSaisi?.dateEvenement?.nbMinute)
   };
+}
+
+function mapNomSexeDuTitulaireActeEtParents(
+  titulaireActe?: ITitulaireActe
+): ITitulaireActe {
+  return {
+    nom: titulaireActe?.nom,
+    sexe: titulaireActe?.sexe ? Sexe.getKey(titulaireActe.sexe) : Sexe.INCONNU,
+    filiations: titulaireActe?.filiations?.map(filiation => ({
+      nom: filiation.nom,
+      sexe: Sexe.getKey(filiation.sexe),
+      lienParente: filiation.lienParente,
+      ordre: filiation.ordre
+    }))
+  } as ITitulaireActe;
 }

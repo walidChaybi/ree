@@ -89,7 +89,7 @@ function mappingTitulairesMention(titulaires: any[]) {
       nom: titulaire.string,
       sexe: titulaire.sexe,
       nationalite: titulaire.nationalite,
-      prenoms: titulaire.prenoms.map
+      prenoms: titulaire.prenoms ? titulaire.prenoms : []
     };
   });
 }

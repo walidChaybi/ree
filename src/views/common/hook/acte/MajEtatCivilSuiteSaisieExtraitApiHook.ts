@@ -9,6 +9,8 @@ export interface IExtraitSaisiAEnvoyer {
   evenementActe: IEvenement;
   titulaire1: ITitulaireActe;
   titulaire2?: ITitulaireActe;
+  titulaireOrigine1: ITitulaireActe;
+  titulaireOrigine2?: ITitulaireActe;
   natureActe: string;
   idAnalyseMarginale: string;
   detailMariage: IDetailMariage;
