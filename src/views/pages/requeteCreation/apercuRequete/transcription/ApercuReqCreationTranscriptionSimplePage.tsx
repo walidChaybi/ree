@@ -14,11 +14,7 @@ import ResumeRequeteCreation from "../etablissement/composants/ResumeRequeteCrea
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "../etablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
 import { onRenommePieceJustificative } from "./ApercuReqCreationTranscriptionUtil";
 
-interface ApercuReqCreationTranscriptionSimplePageProps {}
-
-export const ApercuReqCreationTranscriptionSimplePage: React.FC<
-  ApercuReqCreationTranscriptionSimplePageProps
-> = props => {
+export const ApercuReqCreationTranscriptionSimplePage: React.FC = props => {
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const [ongletSelectionne, setOngletSelectionne] = useState(0);
   const [requete, setRequete] = useState<IRequeteCreationTranscription>();

@@ -24,7 +24,6 @@ export interface IRequeteTableauCreation extends IRequeteTableau {
   idEntiteRattachement?: string;
   attribueA?: string;
   tagPriorisation: TagPriorisation;
-  attribueAChecked?: boolean;
 }
 
 export function mappingUneRequeteTableauCreation(
@@ -54,8 +53,7 @@ export function mappingUneRequeteTableauCreation(
     idUtilisateur: getValeurOuUndefined(requete?.idUtilisateur),
     idEntiteRattachement: getValeurOuUndefined(requete?.idEntite),
     postulant: getPostulant(titulaires),
-    attribueA: mapAttribueA(requete),
-    attribueAChecked: false
+    attribueA: mapAttribueA(requete)
   };
 }
 function getPostulant(titulaires: ITitulaireRequeteTableau[]) {

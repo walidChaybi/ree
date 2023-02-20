@@ -4,13 +4,18 @@ import {
   DialogContent,
   DialogTitle
 } from "@mui/material";
-import { FilterOptionsState } from '@mui/material/useAutocomplete';
+import { FilterOptionsState } from "@mui/material/useAutocomplete";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import { ChampRecherche } from "@widget/formulaire/champRecherche/ChampRechercheField";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./scss/TransfertPopin.scss";
+
+const OPTION_VIDE: Option = {
+  value: "",
+  str: ""
+};
 
 interface TransfertPopinProps {
   open: boolean;
@@ -31,11 +36,12 @@ export const TransfertPopin: React.FC<TransfertPopinProps> = ({
   libelleAvantTexte,
   placeholder
 }) => {
-  const [optionChoisie, setOptionChoisie] = useState<Option>({
-    value: "",
-    str: ""
-  });
+  const [optionChoisie, setOptionChoisie] = useState<Option>(OPTION_VIDE);
   const [texte, setTexte] = useState<string>();
+
+  useEffect(() => {
+    open && setOptionChoisie(OPTION_VIDE);
+  }, [open]);
 
   const filterOptions = (
     optionsAutocomplete: Option[],

@@ -1,6 +1,6 @@
-import Checkbox from "@mui/material/Checkbox";
 import InfoIcon from "@mui/icons-material/Info";
 import WarningIcon from "@mui/icons-material/Warning";
+import Checkbox from "@mui/material/Checkbox";
 import React, { useEffect, useState } from "react";
 import "./scss/CheckboxColumn.scss";
 
@@ -49,7 +49,7 @@ export const CheckboxColumn: React.FC<CheckboxColumnProps> = ({
     hasWarningCallBack && setDisplayWarning(hasWarningCallBack(checked, data));
   }, [checked, data, hasWarningCallBack]);
 
-  const onClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     const isChecked: boolean = (event?.target as any)?.checked;
     setChecked(isChecked);

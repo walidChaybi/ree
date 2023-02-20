@@ -17,49 +17,46 @@ import ResumeRequeteCreation from "../etablissement/composants/ResumeRequeteCrea
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "../etablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
 import { onRenommePieceJustificative } from "./ApercuReqCreationTranscriptionUtil";
 
-interface ApercuReqCreationTranscriptionPriseEnChargeProps {}
-
-export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
-  ApercuReqCreationTranscriptionPriseEnChargeProps
-> = props => {
-  const { idRequeteParam } = useParams<IUuidRequeteParams>();
-  const [requete, setRequete] = useState<IRequeteCreationTranscription>();
-  const [ongletSelectionne, setOngletSelectionne] = useState(0);
-  const history = useHistory();
-  const { resultatRMCAutoPersonne } = useRMCAutoPersonneApiHook(requete);
-  const { detailRequeteState } = useDetailRequeteApiHook(
-    idRequeteParam,
-    history.location.pathname.includes(URL_RECHERCHE_REQUETE)
-  );
-
-  useEffect(() => {
-    if (detailRequeteState) {
-      setRequete(detailRequeteState as IRequeteCreationTranscription);
-    }
-  }, [detailRequeteState]);
-
-  function onRenommePieceJustificativeApercuPriseEnCharge(
-    idPieceJustificative: string,
-    nouveauLibelle: string
-  ) {
-    onRenommePieceJustificative(
-      idPieceJustificative,
-      nouveauLibelle,
-      requete,
-      setRequete
+export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC =
+  props => {
+    const { idRequeteParam } = useParams<IUuidRequeteParams>();
+    const [requete, setRequete] = useState<IRequeteCreationTranscription>();
+    const [ongletSelectionne, setOngletSelectionne] = useState(0);
+    const history = useHistory();
+    const { resultatRMCAutoPersonne } = useRMCAutoPersonneApiHook(requete);
+    const { detailRequeteState } = useDetailRequeteApiHook(
+      idRequeteParam,
+      history.location.pathname.includes(URL_RECHERCHE_REQUETE)
     );
-  }
 
-  const handleChange = (e: any, newValue: string) => {
-    setOngletSelectionne(parseInt(newValue));
-  };
+    useEffect(() => {
+      if (detailRequeteState) {
+        setRequete(detailRequeteState as IRequeteCreationTranscription);
+      }
+    }, [detailRequeteState]);
 
-  function getListeOnglets(): OngletProps[] {
-    return requete
-      ? [
-          {
-            titre: "Pièces justificatives / Annexes",
-            component: (
+    function onRenommePieceJustificativeApercuPriseEnCharge(
+      idPieceJustificative: string,
+      nouveauLibelle: string
+    ) {
+      onRenommePieceJustificative(
+        idPieceJustificative,
+        nouveauLibelle,
+        requete,
+        setRequete
+      );
+    }
+
+    const handleChange = (e: any, newValue: string) => {
+      setOngletSelectionne(parseInt(newValue));
+    };
+
+    function getListeOnglets(): OngletProps[] {
+      return requete
+        ? [
+            {
+              titre: "Pièces justificatives / Annexes",
+              component: (
               <OngletPiecesJustificatives
                 requete={requete}
                 onRenommePieceJustificative={
@@ -67,63 +64,63 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
                 }
               />
             ),
-            index: 0
-          },
-          {
-            titre: "RMC",
-            component: (
-              <OngletRMCPersonne
-                rmcAutoPersonneResultat={resultatRMCAutoPersonne}
+              index: 0
+            },
+            {
+              titre: "RMC",
+              component: (
+                <OngletRMCPersonne
+                  rmcAutoPersonneResultat={resultatRMCAutoPersonne}
+                />
+              ),
+              index: 1
+            },
+            {
+              titre: "Analyse du dossier",
+              component: <AnalyseDuDossier />,
+              index: 2
+            }
+          ]
+        : [];
+    }
+
+    return (
+      <div className="ApercuReqCreationTranscriptionPriseEnChargePage">
+        {requete && (
+          <>
+            <ConteneurRetractable
+              titre={Labels.resume.requete.description}
+              className="ResumeRequeteCreation"
+              initConteneurFerme={false}
+              estADroite={false}
+            >
+              <ResumeRequeteCreation
+                {...mappingIRequeteCreationVersResumeRequeteCreationProps(
+                  requete
+                )}
               />
-            ),
-            index: 1
-          },
-          {
-            titre: "Analyse du dossier",
-            component: <AnalyseDuDossier />,
-            index: 2
-          }
-        ]
-      : [];
-  }
+            </ConteneurRetractable>
 
-  return (
-    <div className="ApercuReqCreationTranscriptionPriseEnChargePage">
-      {requete && (
-        <>
-          <ConteneurRetractable
-            titre={Labels.resume.requete.description}
-            className="ResumeRequeteCreation"
-            initConteneurFerme={false}
-            estADroite={false}
-          >
-            <ResumeRequeteCreation
-              {...mappingIRequeteCreationVersResumeRequeteCreationProps(
-                requete
-              )}
+            <VoletAvecOnglet
+              liste={getListeOnglets()}
+              ongletSelectionne={ongletSelectionne}
+              handleChange={handleChange}
             />
-          </ConteneurRetractable>
 
-          <VoletAvecOnglet
-            liste={getListeOnglets()}
-            ongletSelectionne={ongletSelectionne}
-            handleChange={handleChange}
-          />
-
-          <ConteneurRetractable
-            titre="Pièces justificatives"
-            className="FocusPieceJustificative"
-            estADroite={true}
-          >
-            <OngletPiecesJustificatives
+            <ConteneurRetractable
+              titre="Pièces justificatives"
+              className="FocusPieceJustificative"
+              estADroite={true}
+            >
+              <OngletPiecesJustificatives
               requete={requete}
               onRenommePieceJustificative={
                 onRenommePieceJustificativeApercuPriseEnCharge
               }
             />
-          </ConteneurRetractable>
-        </>
-      )}
-    </div>
-  );
-};
+            </ConteneurRetractable>
+          </>
+        )}
+      </div>
+    );
+  };

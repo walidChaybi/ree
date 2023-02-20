@@ -240,10 +240,11 @@ function mapUtilisateurToOption(utilisateur: IUtilisateur): Option {
   };
 }
 
-function estDansEntiteFille(idEntite: string) {
+function estDansEntiteFille(idEntite: string): boolean {
   if (storeRece.utilisateurCourant?.entitesFilles) {
     return storeRece.utilisateurCourant.entitesFilles.some(
       el => el.idEntite === idEntite
     );
-  } else return false;
+  }
+  return false;
 }

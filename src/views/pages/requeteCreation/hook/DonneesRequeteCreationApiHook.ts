@@ -60,6 +60,3 @@ function mappingRequetesTableauCreation(
     return mappingUneRequeteTableauCreation(requete, mappingSupplementaire);
   });
 }
-
-
-

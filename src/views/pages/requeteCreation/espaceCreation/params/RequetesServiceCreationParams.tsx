@@ -1,40 +1,17 @@
-import {
-  CheckboxColumn,
-  IEtatCheckboxColonne
-} from "@pages/rechercheMultiCriteres/acteInscription/resultats/checkboxColumn/CheckboxColumn";
 import { CINQ, getLibelle } from "@util/Utils";
+import { getColonneCheckbox } from "@widget/tableau/TableauRece/colonneInput/checkbox/ColonneCheckbox";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
-import React from "react";
 import { colonnesTableauMesRequetesCreation } from "./MesRequetesCreationParams";
 
 export enum HeaderTableauRequetesServiceCreation {
-  AttribueA = "attribueA",
-  AttribueACheckbox = "attribueACheckbox"
+  AttribueA = "attribueA"
 }
 
-const getAttribueACheckbox = (
-  etat: IEtatCheckboxColonne,
-  value: any,
-  index: number
-) => {
-  const onClick = (idx: number, isChecked: boolean, data: any) => {
-    if (isChecked !== undefined) {
-      data.attribueAChecked = isChecked;
-    }
-  };
-
-  return (
-    <CheckboxColumn
-      index={index}
-      data={value}
-      onClickCheckboxCallBack={onClick}
-      etat={etat}
-    />
-  );
-};
-
 export const getColonnesTableauRequetesServiceCreation = (
-  etat: IEtatCheckboxColonne
+  idRequetesSelectionnees: string[],
+  setIdRequetesSelectionnees: React.Dispatch<React.SetStateAction<string[]>>,
+  getRequeteId: (data: any) => string,
+  allRequeteId: string[]
 ) => [
   ...colonnesTableauMesRequetesCreation.slice(0, CINQ),
   new TableauTypeColumn({
@@ -42,11 +19,12 @@ export const getColonnesTableauRequetesServiceCreation = (
     title: getLibelle("Attribuée à"),
     align: "center"
   }),
-  new TableauTypeColumn({
-    keys: [HeaderTableauRequetesServiceCreation.AttribueACheckbox],
-    title: "",
-    getElement: getAttribueACheckbox.bind(null, etat),
-    style: { width: "3.5%" }
-  }),
+  getColonneCheckbox(
+    idRequetesSelectionnees,
+    setIdRequetesSelectionnees,
+    getRequeteId,
+    true,
+    allRequeteId
+  ),
   ...colonnesTableauMesRequetesCreation.slice(CINQ)
 ];

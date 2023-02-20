@@ -20,7 +20,6 @@ import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
-import { IEtatCheckboxColonne } from "@pages/rechercheMultiCriteres/acteInscription/resultats/checkboxColumn/CheckboxColumn";
 import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
 import { autorisePrendreEnChargeReqTableauCreation } from "@util/RequetesUtils";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
@@ -32,7 +31,6 @@ import {
   NB_LIGNES_PAR_PAGE_DEFAUT
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import React, { useCallback, useEffect, useState } from "react";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
@@ -64,20 +62,16 @@ export const RequetesServiceCreation: React.FC<
   const [paramsCreation, setParamsCreation] = useState<
     NavigationApercuReqCreationParams | undefined
   >();
+  const [
+    idRequetesSelectionneesAttribueeA,
+    setIdRequetesSelectionneesAttribueeA
+  ] = useState<string[]>([]);
 
   const { dataState, paramsTableau } = useRequeteCreationApi(
     parametresLienRequete,
     TypeAppelRequete.REQUETE_CREATION_SERVICE,
     setEnChargement
   );
-
-  const [columnHeaders, setColumnHeaders] = useState<TableauTypeColumn[]>([]);
-
-  const [etat, setEtat] = useState<IEtatCheckboxColonne>({ coche: false });
-
-  useEffect(() => {
-    setColumnHeaders(getColonnesTableauRequetesServiceCreation(etat));
-  }, [etat]);
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
   useNavigationApercuCreation(paramsCreation);
@@ -110,7 +104,7 @@ export const RequetesServiceCreation: React.FC<
 
   const rafraichirTableau = () => {
     setParametresLienRequete({ ...parametresLienRequete });
-    setEtat({ coche: false });
+    setIdRequetesSelectionneesAttribueeA([]);
   };
 
   useEffect(() => {
@@ -163,7 +157,9 @@ export const RequetesServiceCreation: React.FC<
   };
 
   const filtrerRequetesChecked = (requetes: IRequeteTableauCreation[]) =>
-    requetes.filter(requete => requete.attribueAChecked);
+    requetes.filter(requete =>
+      idRequetesSelectionneesAttribueeA.includes(requete.idRequete)
+    );
 
   const onValidateAttribuerA = (
     requetes: IRequeteTableauCreation[],
@@ -204,6 +200,15 @@ export const RequetesServiceCreation: React.FC<
       [] as Options
     );
   };
+
+  const getRequeteId = (data: IRequeteTableauCreation) => data.idRequete;
+
+  const columnHeaders = getColonnesTableauRequetesServiceCreation(
+    idRequetesSelectionneesAttribueeA,
+    setIdRequetesSelectionneesAttribueeA,
+    getRequeteId,
+    dataState.map(data => data.idRequete)
+  );
 
   return (
     <>

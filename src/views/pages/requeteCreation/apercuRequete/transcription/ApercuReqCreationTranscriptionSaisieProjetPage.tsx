@@ -17,117 +17,114 @@ import "../../commun/scss/ApercuReqCreationPage.scss";
 import ResumeRequeteCreation from "../etablissement/composants/ResumeRequeteCreation";
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "../etablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
 
-interface ApercuReqCreationTranscriptionSaisieProjetPageProps {}
+export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC =
+  props => {
+    const { idRequeteParam } = useParams<IUuidRequeteParams>();
+    const [requete, setRequete] = useState<IRequeteCreationTranscription>();
+    const history = useHistory();
+    const [ongletSelectionnePartieGauche, setOngletSelectionnePartieGauche] =
+      useState(0);
+    const [ongletSelectionnePartieDroite, setOngletSelectionnePartieDroite] =
+      useState(0);
+    const { resultatRMCAutoPersonne } = useRMCAutoPersonneApiHook(requete);
+    const { detailRequeteState } = useDetailRequeteApiHook(
+      idRequeteParam,
+      history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+    );
 
-export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
-  ApercuReqCreationTranscriptionSaisieProjetPageProps
-> = props => {
-  const { idRequeteParam } = useParams<IUuidRequeteParams>();
-  const [requete, setRequete] = useState<IRequeteCreationTranscription>();
-  const history = useHistory();
-  const [ongletSelectionnePartieGauche, setOngletSelectionnePartieGauche] =
-    useState(0);
-  const [ongletSelectionnePartieDroite, setOngletSelectionnePartieDroite] =
-    useState(0);
-  const { resultatRMCAutoPersonne } = useRMCAutoPersonneApiHook(requete);
-  const { detailRequeteState } = useDetailRequeteApiHook(
-    idRequeteParam,
-    history.location.pathname.includes(URL_RECHERCHE_REQUETE)
-  );
+    useEffect(() => {}, [idRequeteParam]);
 
-  useEffect(() => {}, [idRequeteParam]);
+    useEffect(() => {
+      if (detailRequeteState) {
+        setRequete(detailRequeteState as IRequeteCreationTranscription);
+      }
+    }, [detailRequeteState]);
 
-  useEffect(() => {
-    if (detailRequeteState) {
-      setRequete(detailRequeteState as IRequeteCreationTranscription);
+    const handleChangeOngletPartieGauche = (e: any, newValue: string) => {
+      /* istanbul ignore next */
+      setOngletSelectionnePartieGauche(parseInt(newValue));
+    };
+
+    const handleChangeOngletPartieDroite = (e: any, newValue: string) => {
+      setOngletSelectionnePartieDroite(parseInt(newValue));
+    };
+
+    function getListeOngletsPartieGauche(): OngletProps[] {
+      return requete
+        ? [
+            {
+              titre: "Description de la requête",
+              component: (
+                <ResumeRequeteCreation
+                  {...mappingIRequeteCreationVersResumeRequeteCreationProps(
+                    requete
+                  )}
+                />
+              ),
+              index: 0
+            },
+            {
+              titre: "RMC",
+              component: (
+                <OngletRMCPersonne
+                  rmcAutoPersonneResultat={resultatRMCAutoPersonne}
+                />
+              ),
+              index: 1
+            },
+            {
+              titre: "Pièces Annexes",
+              component: <PiecesAnnexes />,
+              index: 2
+            },
+            {
+              titre: "Aperçu du projet",
+              component: <ApercuProjet />,
+              index: 3
+            }
+          ]
+        : [];
     }
-  }, [detailRequeteState]);
 
-  const handleChangeOngletPartieGauche = (e: any, newValue: string) => {
-    /* istanbul ignore next */
-    setOngletSelectionnePartieGauche(parseInt(newValue));
+    function getListeOngletsPartieDroite(): OngletProps[] {
+      return requete
+        ? [
+            {
+              titre: "Saisir le projet",
+              component: <SaisieProjet />,
+              index: 0
+            },
+            {
+              titre: "Gérer les mentions",
+              component: <GestionMentions />,
+              index: 1
+            },
+            {
+              titre: "Echanges",
+              component: <Echanges />,
+              index: 2
+            }
+          ]
+        : [];
+    }
+
+    return (
+      <div className="ApercuReqCreationTranscriptionSaisieProjetPage">
+        {requete && (
+          <>
+            <VoletAvecOnglet
+              liste={getListeOngletsPartieGauche()}
+              ongletSelectionne={ongletSelectionnePartieGauche}
+              handleChange={handleChangeOngletPartieGauche}
+            />
+
+            <VoletAvecOnglet
+              liste={getListeOngletsPartieDroite()}
+              ongletSelectionne={ongletSelectionnePartieDroite}
+              handleChange={handleChangeOngletPartieDroite}
+            />
+          </>
+        )}
+      </div>
+    );
   };
-
-  const handleChangeOngletPartieDroite = (e: any, newValue: string) => {
-    setOngletSelectionnePartieDroite(parseInt(newValue));
-  };
-
-  function getListeOngletsPartieGauche(): OngletProps[] {
-    return requete
-      ? [
-          {
-            titre: "Description de la requête",
-            component: (
-              <ResumeRequeteCreation
-                {...mappingIRequeteCreationVersResumeRequeteCreationProps(
-                  requete
-                )}
-              />
-            ),
-            index: 0
-          },
-          {
-            titre: "RMC",
-            component: (
-              <OngletRMCPersonne
-                rmcAutoPersonneResultat={resultatRMCAutoPersonne}
-              />
-            ),
-            index: 1
-          },
-          {
-            titre: "Pièces Annexes",
-            component: <PiecesAnnexes />,
-            index: 2
-          },
-          {
-            titre: "Aperçu du projet",
-            component: <ApercuProjet />,
-            index: 3
-          }
-        ]
-      : [];
-  }
-
-  function getListeOngletsPartieDroite(): OngletProps[] {
-    return requete
-      ? [
-          {
-            titre: "Saisir le projet",
-            component: <SaisieProjet />,
-            index: 0
-          },
-          {
-            titre: "Gérer les mentions",
-            component: <GestionMentions />,
-            index: 1
-          },
-          {
-            titre: "Echanges",
-            component: <Echanges />,
-            index: 2
-          }
-        ]
-      : [];
-  }
-
-  return (
-    <div className="ApercuReqCreationTranscriptionSaisieProjetPage">
-      {requete && (
-        <>
-          <VoletAvecOnglet
-            liste={getListeOngletsPartieGauche()}
-            ongletSelectionne={ongletSelectionnePartieGauche}
-            handleChange={handleChangeOngletPartieGauche}
-          />
-
-          <VoletAvecOnglet
-            liste={getListeOngletsPartieDroite()}
-            ongletSelectionne={ongletSelectionnePartieDroite}
-            handleChange={handleChangeOngletPartieDroite}
-          />
-        </>
-      )}
-    </div>
-  );
-};
