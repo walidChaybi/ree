@@ -71,7 +71,6 @@ export const MenuReponseSansDelivranceEC: React.FC<
     getOptionsMenuReponseSansDelivrance(refReponseSansDelivranceOptions0);
 
   const handleReponseSansDelivranceMenu = (indexMenu: number) => {
-    //TODO: Avec une seule popin, on pourrait faire estChoixIgnorerRequete() dans controleCoherence
     if (estChoixIgnorerRequete(indexMenu)) {
       setPopinIgnorerOuverte(true);
     } else {
@@ -133,7 +132,6 @@ export const MenuReponseSansDelivranceEC: React.FC<
         messages={messagesBloquant}
         boutons={boutonsPopin}
       />
-      {/* TODO: Fusionner les deux popin ? */}
       <IgnoreRequetePopin
         isOpen={popinIgnorerOuverte}
         onClosePopin={() => {

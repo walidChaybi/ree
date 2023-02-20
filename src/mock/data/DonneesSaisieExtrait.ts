@@ -72,18 +72,14 @@ export const acteExtraitSaisie = {
   modeCreation: "DRESSE",
   statut: "VALIDE",
   dateStatut: 1380362400000,
-  nature: {
-    _libelle: "Naissance"
-  },
+  nature: "NAISSANCE",
   numero: "101",
   numeroBisTer: "552",
   nomOec: "MENARD",
   prenomOec: "MARC",
   dateDerniereDelivrance: "2014-01-24T11:00:00.000Z",
   dateDerniereMaj: "2003-01-18T11:00:00.000Z",
-  visibiliteArchiviste: {
-    _libelle: "NON"
-  },
+  visibiliteArchiviste: "NON",
   evenement: {
     minute: null,
     heure: null,
@@ -105,9 +101,7 @@ export const acteExtraitSaisie = {
       autresNoms: null,
       autresPrenoms: null,
       ordre: 796,
-      sexe: {
-        _libelle: "Féminin"
-      },
+      sexe: "FEMININ",
       naissance: {
         minute: null,
         heure: null,
@@ -135,9 +129,7 @@ export const acteExtraitSaisie = {
           lienParente: "PARENT",
           ordre: 752,
           nom: "De La Vega",
-          sexe: {
-            _libelle: "Masculin"
-          },
+          sexe: "MASCULIN",
           naissance: {
             minute: null,
             heure: null,
@@ -166,9 +158,7 @@ export const acteExtraitSaisie = {
           lienParente: "PARENT",
           ordre: 752,
           nom: "De La Vega",
-          sexe: {
-            _libelle: "Féminin"
-          },
+          sexe: "FEMININ",
           naissance: {
             minute: null,
             heure: null,
@@ -194,9 +184,7 @@ export const acteExtraitSaisie = {
           prenoms: ["Madeleine"]
         }
       ],
-      typeDeclarationConjointe: {
-        _libelle: "aucune"
-      },
+      typeDeclarationConjointe: "AUCUNE",
       nomPartie1: null,
       nomPartie2: null,
       nomAvantMariage: null,
@@ -443,9 +431,7 @@ export const acteExtraitSaisie = {
       ]
     }
   ],
-  type: {
-    _libelle: "TEXTE"
-  }
+  type: "TEXTE"
 } as unknown as IFicheActe;
 
 export const requeteExtraitSaisie = {

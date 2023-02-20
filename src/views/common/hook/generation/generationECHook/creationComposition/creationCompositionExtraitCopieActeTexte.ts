@@ -1,7 +1,6 @@
 import { CopieActeTexteDecesComposition } from "@model/composition/extraitCopie/createur/CopieActeTexteDecesComposition";
 import { ExtraitCopieActeTexteMariageComposition } from "@model/composition/extraitCopie/createur/ExtraitCopieActeTexteMariageComposition";
 import { ExtraitCopieActeTexteNaissanceComposition } from "@model/composition/extraitCopie/createur/ExtraitCopieActeTexteNaissanceComposition";
-import { IExtraitCopieComposition } from "@model/composition/extraitCopie/IExtraitCopieComposition";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
@@ -26,7 +25,8 @@ export const creationCompositionExtraitCopieActeTexte = function (
           acte: acteComplet,
           requete,
           validation,
-          mentionsRetirees,choixDelivrance,
+          mentionsRetirees,
+          choixDelivrance,
           ctv
         }
       );
@@ -35,7 +35,8 @@ export const creationCompositionExtraitCopieActeTexte = function (
       acte: acteComplet,
       requete,
       validation,
-      mentionsRetirees,choixDelivrance,
+      mentionsRetirees,
+      choixDelivrance,
       ctv
     });
   } else if (acteComplet.nature === NatureActe.NAISSANCE) {
@@ -45,17 +46,11 @@ export const creationCompositionExtraitCopieActeTexte = function (
           acte: acteComplet,
           requete,
           validation,
-          mentionsRetirees,choixDelivrance,
+          mentionsRetirees,
+          choixDelivrance,
           ctv
         }
       );
-  } else {
-    /* istanbul ignore next */
-    // TODO
-    composition = {
-      nature_acte: "TODO",
-      type_document: "EXTRAIT"
-    } as IExtraitCopieComposition;
   }
 
   return composition;

@@ -108,13 +108,11 @@ test("renders du bloc Menu Transfert ouvert ", async () => {
   const menuTransfert = screen.getByText("Transférer");
   const choixService = screen.getByText(/À un service+/);
   const choixOEC = screen.getByText(/À un officier de l'état civil+/);
-  const choixAbandon = screen.getByText(/Abandon traitement+/);
 
   await waitFor(() => {
     expect(menuTransfert).toBeDefined();
     expect(choixService).toBeDefined();
     expect(choixOEC).toBeDefined();
-    expect(choixAbandon).toBeDefined();
   });
 });
 

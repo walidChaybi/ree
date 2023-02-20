@@ -7,13 +7,10 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import React from "react";
-import { MenuAutre } from "./MenuAutre";
 import { MenuDelivrerCS } from "./MenuDelivrerCS";
 import { MenuDelivrerEC } from "./MenuDelivrerEC";
 import { MenuReponseSansDelivranceCS } from "./MenuReponseSansDelivranceCS";
@@ -83,9 +80,6 @@ export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
               inscriptions={props.inscriptions}
             />
           </>
-        )}
-        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) && (
-          <MenuAutre requete={props.requete} />
         )}
         {checkSiMenuTransferer() && (
           <MenuTransfert

@@ -13,8 +13,8 @@ export const creationCompositionExtraitPlurilingue = function (
   sousTypeRequete: SousTypeDelivrance,
   mentionsRetirees: string[],
   ctv?: string
-): IExtraitPlurilingueComposition {
-  let composition;
+): IExtraitPlurilingueComposition | undefined {
+  let composition: IExtraitPlurilingueComposition | undefined;
 
   switch (acteComplet.nature) {
     case NatureActe.MARIAGE:
@@ -48,10 +48,6 @@ export const creationCompositionExtraitPlurilingue = function (
         );
       break;
     default:
-      composition = {
-        nature_acte: "TODO"
-      } as IExtraitPlurilingueComposition;
-      //TODO
       break;
   }
 

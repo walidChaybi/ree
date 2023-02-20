@@ -158,7 +158,6 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
             estTransfert={false}
             menuFermer={true}
             icone={true}
-            pasAbandon={true}
             idUtilisateurRequete={idUtilisateur}
             rafraichirParent={rafraichirParent}
           />

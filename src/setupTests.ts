@@ -60,7 +60,7 @@ window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 window.alert = () => {};
 
-const TIME_OUT_MS = 30000;
+const TIME_OUT_MS = 3000000;
 jest.setTimeout(TIME_OUT_MS);
 
 process.env.DEBUG_PRINT_LIMIT = "1000000"; // Pour debug

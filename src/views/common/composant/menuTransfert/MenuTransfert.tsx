@@ -13,8 +13,6 @@ import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_INFORMATION
 } from "@router/ReceUrls";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { Option } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -33,7 +31,6 @@ import { TransfertPopin } from "./TransfertPopin";
 
 const INDEX_ACTION_TRANSFERT_SERVICE = 0;
 const INDEX_ACTION_TRANSFERT_OFFICIER = 1;
-const INDEX_ACTION_TRANSFERT_ABANDON = 2;
 
 export interface IMenuTransfertProps {
   idRequete: string;
@@ -45,7 +42,6 @@ export interface IMenuTransfertProps {
   disabled?: boolean;
   estTransfert: boolean;
   icone?: boolean;
-  pasAbandon?: boolean;
   rafraichirParent?: () => void;
 }
 
@@ -69,22 +65,13 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
     }
   ];
 
-  useEffect(() => {
-    const opts = reponseSansDelivranceCSOptions;
-    if (
-      props.typeRequete === TypeRequete.DELIVRANCE &&
-      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) &&
-      !props.pasAbandon
-    ) {
-      opts.push({
-        value: INDEX_ACTION_TRANSFERT_ABANDON,
-        label: getLibelle("Abandon traitement"),
-        ref: refReponseTransfertOptions0
-      });
-    }
-    setOptions(opts);
+  useEffect(
+    () => {
+      setOptions(reponseSansDelivranceCSOptions);
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.typeRequete]);
+    [props.typeRequete]
+  );
 
   const handleTransfertMenu = async (indexMenu: number, e: any) => {
     if (e) {
@@ -97,9 +84,6 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
       case INDEX_ACTION_TRANSFERT_OFFICIER:
         setAgentPopinOpen(true);
         break;
-      /* TODO US 572
-          case INDEX_ACTION_TRANSFERT_ABANDON:
-            break;*/
     }
   };
 
