@@ -7,7 +7,7 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { autorisePrendreEnChargeDelivrance } from "@util/RequetesUtils";
-import { getUrlWithParam } from "@util/route/routeUtil";
+import { getUrlWithParam } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useState } from "react";

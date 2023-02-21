@@ -4,7 +4,7 @@ import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificati
 import { ResumeRequete } from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequete";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { getLastPathElem, getUrlWithParam } from "@util/route/routeUtil";
+import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";

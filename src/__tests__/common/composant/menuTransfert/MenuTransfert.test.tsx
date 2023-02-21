@@ -13,7 +13,7 @@ import {
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { getUrlWithParam } from "@util/route/routeUtil";
+import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";

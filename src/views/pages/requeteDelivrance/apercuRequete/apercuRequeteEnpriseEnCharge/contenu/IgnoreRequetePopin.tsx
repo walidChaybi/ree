@@ -6,7 +6,7 @@ import {
   DialogContentText,
   DialogTitle
 } from "@mui/material";
-import { getUrlPrecedente } from "@util/route/routeUtil";
+import { getUrlPrecedente } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";

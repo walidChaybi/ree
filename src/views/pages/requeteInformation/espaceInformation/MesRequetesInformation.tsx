@@ -7,7 +7,7 @@ import {
   useNavigationApercuInformation
 } from "@hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { receUrl } from "@router/ReceUrls";
+import { getUrlCourante } from "@util/route/UrlUtil";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
@@ -62,7 +62,7 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({
     idx: number
   ) {
     const requete = data[idx];
-    const urlCourante = receUrl.getUrlCourante(history);
+    const urlCourante = getUrlCourante(history);
     setOperationEnCours(true);
     setParamsNavReqInfo({
       requete,

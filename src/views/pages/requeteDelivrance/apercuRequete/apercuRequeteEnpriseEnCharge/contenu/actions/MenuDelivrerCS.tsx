@@ -6,6 +6,7 @@ import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatR
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { receUrl } from "@router/ReceUrls";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
+import { replaceUrl } from "@util/route/UrlUtil";
 import {
   estRenseigne,
   getLibelle,
@@ -135,7 +136,7 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
       const url = receUrl.getUrlApercuTraitementAPartirDe({
         url: history.location.pathname
       });
-      receUrl.replaceUrl(history, url);
+      replaceUrl(history, url);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultDeliverCertificatSituation, history]);

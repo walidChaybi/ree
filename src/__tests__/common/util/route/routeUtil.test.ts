@@ -9,7 +9,7 @@ import {
   getUrlWithParam,
   isLastPathElemIsId,
   isPathElemId
-} from "@util/route/routeUtil";
+} from "@util/route/UrlUtil";
 
 test("Attendu: getUrlWithParam fonctionne correctement", () => {
   expect(

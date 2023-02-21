@@ -5,7 +5,7 @@ import {
   URL_RECHERCHE_REQUETE,
   URL_REQUETES_DELIVRANCE_SERVICE
 } from "@router/ReceUrls";
-import { getUrlPrecedente } from "@util/route/routeUtil";
+import { getUrlPrecedente } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";

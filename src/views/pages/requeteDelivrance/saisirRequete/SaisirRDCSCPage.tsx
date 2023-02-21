@@ -35,10 +35,11 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
-import { PATH_MODIFIER_RDCSC, receUrl } from "@router/ReceUrls";
+import { PATH_MODIFIER_RDCSC } from "@router/ReceUrls";
 import { PieceJointe } from "@util/FileUtils";
 import messageManager from "@util/messageManager";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
+import { getUrlCourante } from "@util/route/UrlUtil";
 import { DEUX, getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import {
@@ -83,7 +84,6 @@ import {
   RequerantFormDefaultValues,
   RequerantFormValidationSchema
 } from "./sousFormulaires/requerant/RequerantForm";
-
 
 // Valeurs par défaut des champs
 const DefaultValuesSaisirRDCSC = {
@@ -559,7 +559,7 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   useEffect(() => {
     if (history) {
-      const url = receUrl.getUrlCourante(history);
+      const url = getUrlCourante(history);
       setModeModification(url.includes(PATH_MODIFIER_RDCSC));
     }
   }, [history]);

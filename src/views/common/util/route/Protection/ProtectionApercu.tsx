@@ -8,13 +8,13 @@ import {
   PATH_APERCU_REQ_TRAITEMENT,
   PATH_EDITION,
   PATH_MODIFIER_RDCSC,
-  PATH_SAISIR_RDCSC,
-  receUrl
+  PATH_SAISIR_RDCSC
 } from "@router/ReceUrls";
 import { getLibelle } from "@util/Utils";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { GestionnaireARetraiterDansSaga } from "../../migration/GestionnaireARetraiterDansSaga";
+import { getUrlCourante } from "../UrlUtil";
 import { Protection } from "./Protection";
 
 interface ProtectionApercuProps {
@@ -38,7 +38,7 @@ export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
     if (
       // @ts-ignore
       window.protectionOff ||
-      receUrl.getUrlCourante(history).includes(`${PATH_APERCU_REQ_DEL}/`) ||
+      getUrlCourante(history).includes(`${PATH_APERCU_REQ_DEL}/`) ||
       forcePass
     ) {
       setEstBonStatut(true);
@@ -82,23 +82,21 @@ function checkURLDelivrance(
 ) {
   switch (statut) {
     case StatutRequete.BROUILLON:
-      return receUrl.getUrlCourante(history).includes(PATH_SAISIR_RDCSC);
+      return getUrlCourante(history).includes(PATH_SAISIR_RDCSC);
     case StatutRequete.PRISE_EN_CHARGE:
       return (
-        receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_PRISE) ||
-        receUrl.getUrlCourante(history).includes(PATH_MODIFIER_RDCSC)
+        getUrlCourante(history).includes(PATH_APERCU_REQ_PRISE) ||
+        getUrlCourante(history).includes(PATH_MODIFIER_RDCSC)
       );
     case StatutRequete.TRANSFEREE:
     case StatutRequete.A_TRAITER:
-      return receUrl
-        .getUrlCourante(history)
-        .includes(`${PATH_APERCU_REQ_DEL}/`);
+      return getUrlCourante(history).includes(`${PATH_APERCU_REQ_DEL}/`);
     case StatutRequete.A_VALIDER:
     case StatutRequete.A_SIGNER:
     case StatutRequete.TRANSMISE_A_VALIDEUR:
       return (
-        receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_TRAITEMENT) ||
-        receUrl.getUrlCourante(history).includes(PATH_EDITION)
+        getUrlCourante(history).includes(PATH_APERCU_REQ_TRAITEMENT) ||
+        getUrlCourante(history).includes(PATH_EDITION)
       );
     default:
       if (
@@ -108,9 +106,7 @@ function checkURLDelivrance(
           sousType
         )
       ) {
-        return receUrl
-          .getUrlCourante(history)
-          .includes(PATH_APERCU_REQ_TRAITEMENT);
+        return getUrlCourante(history).includes(PATH_APERCU_REQ_TRAITEMENT);
       }
 
       return false;
@@ -118,5 +114,5 @@ function checkURLDelivrance(
 }
 
 function checkURLInformation(history: any) {
-  return receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_INFO);
+  return getUrlCourante(history).includes(PATH_APERCU_REQ_INFO);
 }

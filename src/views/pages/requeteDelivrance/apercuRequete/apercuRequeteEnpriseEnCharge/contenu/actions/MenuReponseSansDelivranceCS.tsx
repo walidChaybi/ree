@@ -9,6 +9,7 @@ import { IActionOption } from "@model/requete/IActionOption";
 import { receUrl } from "@router/ReceUrls";
 import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
+import { replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle, supprimerNullEtUndefinedDuTableau } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
@@ -53,7 +54,7 @@ export const MenuReponseSansDelivranceCS: React.FC<
       const url = receUrl.getUrlApercuTraitementAPartirDe({
         url: history.location.pathname
       });
-      receUrl.replaceUrl(history, url);
+      replaceUrl(history, url);
     }
     setOperationEnCours(false);
   }, [resultatReponseSansDelivranceCS, history]);

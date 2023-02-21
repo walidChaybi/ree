@@ -6,7 +6,7 @@ import {
   URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID
 } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { getUrlWithParam } from "@util/route/routeUtil";
+import { getUrlWithParam } from "@util/route/UrlUtil";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { createMemoryHistory } from "history";
 import React from "react";

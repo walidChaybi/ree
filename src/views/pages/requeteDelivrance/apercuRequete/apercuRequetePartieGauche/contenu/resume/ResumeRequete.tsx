@@ -11,12 +11,11 @@ import {
 } from "@model/requete/pieceJointe/IPieceJointe";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import {
-  receUrl,
   URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDCSC_ID,
   URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID
 } from "@router/ReceUrls";
 import { FenetreExterne } from "@util/FenetreExterne";
-import { getUrlWithParam } from "@util/route/routeUtil";
+import { getUrlWithParam, replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useState } from "react";
@@ -57,7 +56,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
     }
 
     if (url) {
-      receUrl.replaceUrl(history, getUrlWithParam(url, props.requete.id));
+      replaceUrl(history, getUrlWithParam(url, props.requete.id));
     }
   };
 

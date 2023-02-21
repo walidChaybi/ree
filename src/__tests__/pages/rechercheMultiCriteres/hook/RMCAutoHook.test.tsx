@@ -11,7 +11,7 @@ import {
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "@router/ReceUrls";
 import { act, render, waitFor } from "@testing-library/react";
-import { getUrlWithParam } from "@util/route/routeUtil";
+import { getUrlWithParam } from "@util/route/UrlUtil";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";

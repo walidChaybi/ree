@@ -8,9 +8,9 @@ import {
 } from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { receUrl } from "@router/ReceUrls";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import messageManager from "@util/messageManager";
+import { getUrlCourante } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useEffect, useState } from "react";
@@ -34,7 +34,7 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
           requete: requeteAleatoireResultat.requete,
           libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
           statutRequete: StatutRequete.PRISE_EN_CHARGE,
-          urlCourante: receUrl.getUrlCourante(history),
+          urlCourante: getUrlCourante(history),
           typeRequete: TypeRequete.DELIVRANCE
         });
       } else if (!requeteAleatoireResultat.requete) {

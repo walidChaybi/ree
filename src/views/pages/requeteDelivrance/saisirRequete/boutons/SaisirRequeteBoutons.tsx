@@ -1,6 +1,7 @@
 import { Droit } from "@model/agent/enum/Droit";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { receUrl } from "@router/ReceUrls";
+import { replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
@@ -20,7 +21,7 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
     const url = receUrl.getUrlApercuPriseEnChargeAPartirDe({
       url: history.location.pathname
     });
-    receUrl.replaceUrl(history, url);
+    replaceUrl(history, url);
   };
   const valider = () => props.formik.submitForm();
   const prendreEnCharge = () => {

@@ -9,10 +9,10 @@ import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
 import { AssignmentInd } from "@mui/icons-material";
 import { Menu, MenuItem } from "@mui/material";
 import {
-  receUrl,
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_INFORMATION
 } from "@router/ReceUrls";
+import { replaceUrl } from "@util/route/UrlUtil";
 import { Option } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -123,9 +123,9 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
       setOperationEnCours(false);
       if (props.estTransfert) {
         if (props.typeRequete === TypeRequete.DELIVRANCE) {
-          receUrl.replaceUrl(history, URL_MES_REQUETES_DELIVRANCE);
+          replaceUrl(history, URL_MES_REQUETES_DELIVRANCE);
         } else {
-          receUrl.replaceUrl(history, URL_MES_REQUETES_INFORMATION);
+          replaceUrl(history, URL_MES_REQUETES_INFORMATION);
         }
       } else if (props.rafraichirParent) {
         props.rafraichirParent();

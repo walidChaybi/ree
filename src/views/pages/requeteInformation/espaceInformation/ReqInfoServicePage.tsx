@@ -10,7 +10,7 @@ import {
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
-import { receUrl } from "@router/ReceUrls";
+import { getUrlCourante } from "@util/route/UrlUtil";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
@@ -71,7 +71,7 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     idx: number
   ) {
     const requete = data[idx];
-    const urlCourante = receUrl.getUrlCourante(history);
+    const urlCourante = getUrlCourante(history);
     setOperationEnCours(true);
     setParamsNavReqInfo({
       requete,

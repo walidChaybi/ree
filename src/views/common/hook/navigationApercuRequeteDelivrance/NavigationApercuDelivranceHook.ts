@@ -12,7 +12,7 @@ import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFl
 import messageManager from "@util/messageManager";
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
 import { autorisePrendreEnChargeReqTableauDelivrance } from "@util/RequetesUtils";
-import { getUrlPrecedente, getUrlWithParam } from "@util/route/routeUtil";
+import { getUrlPrecedente, getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
 import { useEffect, useState } from "react";

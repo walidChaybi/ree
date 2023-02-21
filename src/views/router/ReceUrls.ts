@@ -2,8 +2,7 @@ import {
   getUrlParamId,
   getUrlPrecedente,
   URL_SEPARATEUR
-} from "@util/route/routeUtil";
-import { gestionnaireNavigation } from "@widget/filAriane/FilAriane";
+} from "@util/route/UrlUtil";
 
 export interface IUrlData {
   url: string;
@@ -201,28 +200,11 @@ const getUrlApercuTraitementAPartirDe = (params: urlApercuParams) =>
     pathApercu: PATH_APERCU_REQ_TRAITEMENT
   });
 
-function replaceUrl(history: any, url: string, data?: any) {
-  gestionnaireNavigation.deleteLastUrl();
-  history.replace(url, data);
-}
-
-function goBack(history: any) {
-  gestionnaireNavigation.deleteLastUrl();
-  history.goBack();
-}
-
-function getUrlCourante(history: any): string {
-  return history.location.pathname; // history.location.pathname renvoie une url du type /rece/rece-ui/xxx
-}
-
 export const receUrl = {
   estUrlApercuRequete,
   estUrlApercuTraitementRequete,
   getUrlApercuTraitementAPartirDe,
   getUrlApercuPriseEnChargeAPartirDe,
   estUrlSaisirCourrier,
-  estUrlEdition,
-  replaceUrl,
-  goBack,
-  getUrlCourante
+  estUrlEdition
 };

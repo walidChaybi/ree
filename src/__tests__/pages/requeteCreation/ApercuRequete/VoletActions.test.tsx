@@ -8,7 +8,7 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { getUrlWithParam } from "@util/route/routeUtil";
+import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";

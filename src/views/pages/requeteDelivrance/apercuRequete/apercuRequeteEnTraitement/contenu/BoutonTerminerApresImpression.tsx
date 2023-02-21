@@ -8,8 +8,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { receUrl } from "@router/ReceUrls";
-import { getUrlPrecedente } from "@util/route/routeUtil";
+import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
@@ -42,7 +41,7 @@ export const BoutonTerminerApresImpression: React.FC<
 
   useEffect(() => {
     if (idAction) {
-      receUrl.replaceUrl(history, getUrlPrecedente(history.location.pathname));
+      replaceUrl(history, getUrlPrecedente(history.location.pathname));
     }
   }, [idAction, history]);
 

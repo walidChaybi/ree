@@ -7,7 +7,7 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import "@pages/requeteDelivrance/apercuRequete/apercuRequete/contenu/scss/BoutonPrendreEnCharge.scss";
-import { getUrlPrecedente } from "@util/route/routeUtil";
+import { getUrlPrecedente } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";

@@ -18,7 +18,7 @@ import {
   URL_RECHERCHE_REQUETE,
   URL_REQUETES_DELIVRANCE_SERVICE
 } from "@router/ReceUrls";
-import { getUrlPrecedente, getUrlWithParam } from "@util/route/routeUtil";
+import { getUrlPrecedente, getUrlWithParam } from "@util/route/UrlUtil";
 import { getValeurOuUndefined } from "@util/Utils";
 
 export function redirectionRMCAuto(

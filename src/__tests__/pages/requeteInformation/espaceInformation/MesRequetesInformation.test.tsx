@@ -11,7 +11,7 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { getUrlWithParam } from "@util/route/routeUtil";
+import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";

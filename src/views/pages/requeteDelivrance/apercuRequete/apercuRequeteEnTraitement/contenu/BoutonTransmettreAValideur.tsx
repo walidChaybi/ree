@@ -4,8 +4,7 @@ import {
   ITransmettreAValideurParams,
   useTransmettreAValideurApiHook
 } from "@hook/requete/TransmettreAValideur";
-import { receUrl } from "@router/ReceUrls";
-import { getUrlPrecedente } from "@util/route/routeUtil";
+import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { Option } from "@util/Type";
 import { getLibelle } from "@util/Utils";
@@ -45,7 +44,7 @@ export const BoutonTransmettreAValideur: React.FC<
 
   useEffect(() => {
     if (idAction) {
-      receUrl.replaceUrl(history, getUrlPrecedente(history.location.pathname));
+      replaceUrl(history, getUrlPrecedente(history.location.pathname));
     }
   }, [idAction, history]);
 

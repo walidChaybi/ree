@@ -5,10 +5,9 @@ import {
   PATH_APERCU_REQ_CREATION_ETABLISSEMENT,
   PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE,
   PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET,
-  PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE,
-  receUrl
+  PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE
 } from "@router/ReceUrls";
-import { getUrlWithParam } from "@util/route/routeUtil";
+import { getUrlCourante, getUrlWithParam } from "@util/route/UrlUtil";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -48,7 +47,7 @@ export function useNavigationApercuCreation(
 function redirectionEtablissement(history: any, idRequete: string) {
   history.push(
     getUrlWithParam(
-      `${receUrl.getUrlCourante(
+      `${getUrlCourante(
         history
       )}/${PATH_APERCU_REQ_CREATION_ETABLISSEMENT}/:idRequete`,
       idRequete
@@ -80,9 +79,6 @@ function redirectionTranscription(
   }
 
   history.push(
-    getUrlWithParam(
-      `${receUrl.getUrlCourante(history)}/${path}/:idRequete`,
-      idRequete
-    )
+    getUrlWithParam(`${getUrlCourante(history)}/${path}/:idRequete`, idRequete)
   );
 }

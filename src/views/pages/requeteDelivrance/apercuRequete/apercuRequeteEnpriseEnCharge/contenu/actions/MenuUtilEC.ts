@@ -26,9 +26,9 @@ import {
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { PATH_EDITION, receUrl } from "@router/ReceUrls";
+import { PATH_EDITION } from "@router/ReceUrls";
 import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
-import { getUrlPrecedente } from "@util/route/routeUtil";
+import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { IBoutonPopin } from "@widget/popin/ConfirmationPopin";
 import { History } from "history";
@@ -342,7 +342,7 @@ export const redirection = ({
   if (idRequete) {
     const url = `${prefix}/${PATH_EDITION}/${idRequete}/${idActe}`;
 
-    receUrl.replaceUrl(history, url, index);
+    replaceUrl(history, url, index);
   }
 };
 

@@ -5,7 +5,7 @@ import {
   URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
 } from "@router/ReceUrls";
 import { act, render, screen, waitFor } from "@testing-library/react";
-import { getUrlWithParam } from "@util/route/routeUtil";
+import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router";

@@ -16,8 +16,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
-import { receUrl } from "@router/ReceUrls";
-import { getUrlPrecedente } from "@util/route/routeUtil";
+import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { Option } from "@util/Type";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
@@ -69,7 +68,7 @@ export const BoutonsTerminerOuRelecture: React.FC<
 
   useEffect(() => {
     if (idActionRetour) {
-      receUrl.replaceUrl(history, getUrlPrecedente(history.location.pathname));
+      replaceUrl(history, getUrlPrecedente(history.location.pathname));
     }
   }, [idActionRetour, history]);
 

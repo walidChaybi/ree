@@ -13,7 +13,7 @@ import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDeli
 import {
   getUrlPrecedente,
   getUrlWithParam
-} from "../../../../../common/util/route/routeUtil";
+} from "../../../../../common/util/route/UrlUtil";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 
 interface BoutonModifierTraitementProps {

@@ -6,8 +6,8 @@ import {
   ICreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
-import { receUrl } from "@router/ReceUrls";
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
+import { goBack } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -33,7 +33,7 @@ export const BoutonARetraiterSaga: React.FC<BoutonARetraiterSagaProps> = ({
 
   useEffect(() => {
     if (idActionCreee) {
-      receUrl.goBack(history);
+      goBack(history);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idActionCreee]);

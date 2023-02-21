@@ -12,8 +12,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { receUrl } from "@router/ReceUrls";
-import { getUrlPrecedente } from "@util/route/routeUtil";
+import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
@@ -84,7 +83,7 @@ export const BoutonValiderTerminer: React.FC<
   // 3 - Navigation après le traitement
   useEffect(() => {
     if (majDateDerniereDelivrance || pasDeMajDateDerniereDelivrance) {
-      receUrl.replaceUrl(history, getUrlPrecedente(history.location.pathname));
+      replaceUrl(history, getUrlPrecedente(history.location.pathname));
     }
   }, [majDateDerniereDelivrance, pasDeMajDateDerniereDelivrance, history]);
 

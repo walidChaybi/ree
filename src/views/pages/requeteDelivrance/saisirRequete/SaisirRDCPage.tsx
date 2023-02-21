@@ -41,9 +41,10 @@ import {
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
-import { PATH_MODIFIER_RDC, receUrl } from "@router/ReceUrls";
+import { PATH_MODIFIER_RDC } from "@router/ReceUrls";
 import { PieceJointe } from "@util/FileUtils";
 import messageManager from "@util/messageManager";
+import { getUrlCourante } from "@util/route/UrlUtil";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -271,7 +272,7 @@ export const SaisirRDCPage: React.FC = () => {
 
   useEffect(() => {
     if (history) {
-      const url = receUrl.getUrlCourante(history);
+      const url = getUrlCourante(history);
       setModeModification(url.includes(PATH_MODIFIER_RDC));
     }
   }, [history]);

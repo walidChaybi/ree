@@ -5,7 +5,7 @@ import {
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID
 } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
-import { getUrlWithParam } from "@util/route/routeUtil";
+import { getUrlWithParam } from "@util/route/UrlUtil";
 import {
   buildPagesInfos,
   FilAriane,

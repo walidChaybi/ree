@@ -6,8 +6,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { receUrl } from "@router/ReceUrls";
-import { getUrlPrecedente } from "@util/route/routeUtil";
+import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
@@ -56,10 +55,7 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
         statutRequete: StatutRequete.TRAITE_DELIVRE_DEMAT,
         requete: mappingRequeteDelivranceToRequeteTableau(requete),
         callback: () => {
-          receUrl.replaceUrl(
-            history,
-            getUrlPrecedente(history.location.pathname)
-          );
+          replaceUrl(history, getUrlPrecedente(history.location.pathname));
         }
       });
     }

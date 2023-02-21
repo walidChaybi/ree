@@ -11,7 +11,7 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID } from "@router/ReceUrls";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import messageManager from "@util/messageManager";
-import { getUrlWithParam } from "@util/route/routeUtil";
+import { getUrlWithParam } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useCallback, useEffect, useState } from "react";

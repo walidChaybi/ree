@@ -1,3 +1,4 @@
+import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import {
@@ -7,6 +8,7 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
@@ -17,8 +19,6 @@ import {
 } from "../../../mock/data/connectedUserAvecDroit";
 import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-import { mapHabilitationsUtilisateur } from "../../../model/agent/IUtilisateur";
-import { getUrlWithParam } from "../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../views/common/util/storeRece";
 import { mappingOfficier } from "../../../views/core/login/LoginHook";
 import { ApercuReqCreationEtablissementPage } from "../../../views/pages/requeteCreation/apercuRequete/etablissement/ApercuReqCreationEtablissementPage";
