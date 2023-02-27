@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
 export interface OperationEnCoursProps {
   visible: boolean;
-  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
   onTimeoutEnd?: () => void;
   timeoutInMiliSec?: number;
 }

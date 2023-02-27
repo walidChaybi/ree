@@ -14,7 +14,7 @@ import "../scss/OngletsApercuCreationEtablissement.scss";
 import { ListeActionsRetourSDANF } from "./ListeActions";
 interface OngletActionProps {
   echanges?: IEchange[];
-  requete: IRequeteCreationEtablissement;
+  requete?: IRequeteCreationEtablissement;
 }
 
 export const Action: React.FC<OngletActionProps> = props => {
@@ -36,15 +36,15 @@ export const Action: React.FC<OngletActionProps> = props => {
         <ListeActionsRetourSDANF
           setEchanges={setEchanges}
           echanges={echanges}
-          statusRequete={props.requete.statutCourant}
-          idRequeteCorbeilleAgent={props.requete.idUtilisateur}
+          statusRequete={props.requete?.statutCourant}
+          idRequeteCorbeilleAgent={props.requete?.idUtilisateur}
           idRequeteParam={idRequeteParam}
         />
       </Item>
 
       <SuiviObservationsRequete
         idRequete={idRequeteParam}
-        observations={props.requete.observations}
+        observations={props.requete?.observations}
       />
 
       {estPresentBoutonPriseEnCharge && (

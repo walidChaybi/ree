@@ -29,7 +29,7 @@ import { IObservation } from "@model/requete/IObservation";
 import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
 import { Requerant } from "@model/requete/IRequerant";
 import { TRequete } from "@model/requete/IRequete";
-import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { IStatutCourant } from "@model/requete/IStatutCourant";
@@ -340,9 +340,7 @@ function mapDocumentPJ(documents?: any): IDocumentPJ[] {
   );
 }
 
-export function mappingRequeteCreation(
-  data: any
-): IRequeteCreationEtablissement {
+export function mappingRequeteCreation(data: any): IRequeteCreation {
   const requete = mappingRequete(data);
   return {
     // Si requête de sousType RCTC ou RCTD prévoir la mapping
@@ -366,7 +364,7 @@ export function mappingRequeteCreation(
     documentsPj: mapDocumentPJ(data.documentsPj),
     titulaires: mapTitulairesCreation(requete.titulaires)
   };
-}
+} 
 
 function mapTitulairesCreation(titulaires: any[]) {
   return titulaires.map(titulaire => ({

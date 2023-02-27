@@ -8,10 +8,13 @@ interface CompteurRequeteProps {
   reloadCompteur: boolean;
 }
 
+const STATUT_REQUETE_A_SIGNER = [StatutRequete.A_SIGNER.nom]; 
+
 export const CompteurRequete: React.FC<CompteurRequeteProps> = props => {
-  const { nombreRequetesState } = useCompteurRequeteHook(props.reloadCompteur, [
-    StatutRequete.A_SIGNER.nom
-  ]);
+  const { nombreRequetesState } = useCompteurRequeteHook(
+    props.reloadCompteur,
+    STATUT_REQUETE_A_SIGNER
+  );
 
   return (
     <span className={"compteur-requetes"}>

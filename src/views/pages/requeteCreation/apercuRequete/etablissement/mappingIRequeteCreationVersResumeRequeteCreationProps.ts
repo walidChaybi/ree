@@ -6,8 +6,7 @@ import { TypeEvenementUnion } from "@model/requete/enum/TypeEvenementUnion";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { IEvenementUnion } from "@model/requete/IEvenementUnion";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
-import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
-import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import {
   getDateStringFromDateCompose,
@@ -26,45 +25,45 @@ import { ItemUnionProps } from "./composants/item/ItemUnion";
 import { ResumeRequeteCreationProps } from "./composants/ResumeRequeteCreation";
 
 const mappingIRequeteCreationVersResumeRequeteCreationProps = (
-  requeteCreation: IRequeteCreationEtablissement | IRequeteCreationTranscription
+  requeteCreation?: IRequeteCreation
 ): ResumeRequeteCreationProps => {
   const requete: ItemRequeteProps = {
     numeros: {
-      rece: requeteCreation.numero,
-      sdanf: requeteCreation.provenanceNatali?.numeroDossierNational,
-      dila: requeteCreation.provenanceServicePublic?.referenceDila,
-      ancienSI: requeteCreation.numeroAncien,
+      rece: requeteCreation?.numero,
+      sdanf: requeteCreation?.provenanceNatali?.numeroDossierNational,
+      dila: requeteCreation?.provenanceServicePublic?.referenceDila,
+      ancienSI: requeteCreation?.numeroAncien,
       requeteLiee: undefined // Selon Alice, ne concerne que les requêtes information
     },
-    sousType: requeteCreation.sousType.libelle,
-    natureDANF: requeteCreation.nature,
-    tagPriorisation: requeteCreation.provenanceNatali?.tagPriorisation,
+    sousType: requeteCreation?.sousType.libelle,
+    natureDANF: requeteCreation?.nature,
+    tagPriorisation: requeteCreation?.provenanceNatali?.tagPriorisation,
     SDANF: {
-      statut: requeteCreation.provenanceNatali?.statutNatali,
-      mailAgent: requeteCreation.provenanceNatali?.agentSdanf?.courriel,
-      dateDepot: requeteCreation.provenanceNatali?.dateDepot
+      statut: requeteCreation?.provenanceNatali?.statutNatali,
+      mailAgent: requeteCreation?.provenanceNatali?.agentSdanf?.courriel,
+      dateDepot: requeteCreation?.provenanceNatali?.dateDepot
         ? getFormatDateFromTimestamp(
-            requeteCreation.provenanceNatali?.dateDepot
+            requeteCreation?.provenanceNatali?.dateDepot
           )
         : undefined,
-      datePriseEnCharge: requeteCreation.provenanceNatali
+      datePriseEnCharge: requeteCreation?.provenanceNatali
         ?.datePriseEnChargeSdanf
         ? getFormatDateFromTimestamp(
-            requeteCreation.provenanceNatali?.datePriseEnChargeSdanf
+            requeteCreation?.provenanceNatali?.datePriseEnChargeSdanf
           )
         : undefined,
-      decision: requeteCreation.provenanceNatali?.decisionSdanf
+      decision: requeteCreation?.provenanceNatali?.decisionSdanf
     },
     demandes: {
-      francisation: requeteCreation.demandeFrancisation,
-      identification: requeteCreation.demandeIdentification
+      francisation: requeteCreation?.demandeFrancisation,
+      identification: requeteCreation?.demandeIdentification
     },
-    dossierSignaleInfos: requeteCreation.dossierSignale
-      ? requeteCreation.commentaire
+    dossierSignaleInfos: requeteCreation?.dossierSignale
+      ? requeteCreation?.commentaire
       : undefined,
-    campagneInfos: requeteCreation.campagne,
+    campagneInfos: requeteCreation?.campagne,
     nomInstitution:
-      requeteCreation.requerant.qualiteRequerant.institutionnel?.nomInstitution
+      requeteCreation?.requerant.qualiteRequerant.institutionnel?.nomInstitution
   };
 
   const {
@@ -75,7 +74,7 @@ const mappingIRequeteCreationVersResumeRequeteCreationProps = (
     effetsCollectifs,
     enfantsMajeurs,
     frateries
-  } = triTitulaires(requeteCreation.titulaires);
+  } = triTitulaires(requeteCreation?.titulaires);
 
   const nbUnionsAnterieurs = unionsAnterieurs?.length;
 

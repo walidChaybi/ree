@@ -16,7 +16,7 @@ export interface ItemRequeteProps {
     ancienSI?: string;
     requeteLiee?: string;
   };
-  sousType: string;
+  sousType?: string;
   tagPriorisation?: TagPriorisation;
   natureDANF?: string;
   SDANF: {

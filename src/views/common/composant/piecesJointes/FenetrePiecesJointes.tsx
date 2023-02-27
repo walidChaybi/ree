@@ -8,7 +8,7 @@ import React from "react";
 interface FenetrePieceProps {
   idPiece: string;
   nom: string;
-  numRequete: string;
+  numRequete?: string;
   typePiece: TypePieceJointe;
   toggleFenetre: () => void;
 }

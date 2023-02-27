@@ -1,7 +1,19 @@
 @import "../../../../../scss/_colors.scss";
 
+.ApercuReqCreationEtablissementPage,
+.ApercuReqCreationTranscriptionSimplePage,
+.ApercuReqCreationTranscriptionPriseEnChargePage,
+.ApercuReqCreationTranscriptionSaisieProjetPage {
+  .OperationLocaleEnCoursEnSimple {
+    margin-top: 3rem;
+  }
+}
+
+
 .ApercuReqCreationEtablissementPage {
   display: flex;
+
+  
 }
 
 

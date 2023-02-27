@@ -57,13 +57,13 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC =
             {
               titre: "Pièces justificatives / Annexes",
               component: (
-              <OngletPiecesJustificatives
-                requete={requete}
-                onRenommePieceJustificative={
-                  onRenommePieceJustificativeApercuPriseEnCharge
-                }
-              />
-            ),
+                <OngletPiecesJustificatives
+                  requete={requete}
+                  onRenommePieceJustificative={
+                    onRenommePieceJustificativeApercuPriseEnCharge
+                  }
+                />
+              ),
               index: 0
             },
             {
@@ -115,11 +115,11 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC =
               estADroite={true}
             >
               <OngletPiecesJustificatives
-              requete={requete}
-              onRenommePieceJustificative={
-                onRenommePieceJustificativeApercuPriseEnCharge
-              }
-            />
+                requete={requete}
+                onRenommePieceJustificative={
+                  onRenommePieceJustificativeApercuPriseEnCharge
+                }
+              />
             </ConteneurRetractable>
           </>
         )}

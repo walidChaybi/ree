@@ -25,6 +25,30 @@ beforeAll(() => {
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
 });
 
+test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", async () => {
+  const { container } = render(
+    <Router history={history}>
+      <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}>
+        <ApercuRequetePage />
+      </Route>
+    </Router>
+  );
+
+  await waitFor(() => {
+    expect(
+      container.getElementsByClassName("OperationLocaleEnCoursSimple").length
+    ).toBe(1);
+  });
+
+  setTimeout(() => {
+    act(() => {
+      expect(
+        container.getElementsByClassName("OperationLocaleEnCoursSimple").length
+      ).toBe(0);
+    });
+  }, 3000);
+});
+
 test("renders ApercuRequetePage", async () => {
   await act(async () => {
     render(

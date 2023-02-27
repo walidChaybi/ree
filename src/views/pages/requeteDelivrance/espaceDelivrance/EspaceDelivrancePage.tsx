@@ -86,9 +86,10 @@ const getOnglets = (
 };
 
 const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
-  const [reloadCompteur, setReloadCompteur] = React.useState<boolean>(true);
+  const [toggleReloadCompteur, setToggleReloadCompteur] =
+    React.useState<boolean>(true);
   const miseAJourCompteur = () => {
-    setReloadCompteur(!reloadCompteur);
+    setToggleReloadCompteur(!toggleReloadCompteur);
   };
   const selectedTabState = selectedTab || 0;
 
@@ -124,7 +125,7 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
               {officier && officier.officierDataState && (
                 <>
                   {selectedTabState === 0 && (
-                    <CompteurRequete reloadCompteur={reloadCompteur} />
+                    <CompteurRequete reloadCompteur={toggleReloadCompteur} />
                   )}
                   <BoiteAOnglet
                     selectedTab={selectedTabState}

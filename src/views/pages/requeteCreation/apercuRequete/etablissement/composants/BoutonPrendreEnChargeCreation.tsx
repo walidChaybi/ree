@@ -15,7 +15,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router";
 
 interface BoutonPrendreEnChargeCreationProps {
-  requete: IRequeteCreationEtablissement;
+  requete?: IRequeteCreationEtablissement;
   disabled?: boolean;
   onClick?: () => void;
 }
@@ -45,6 +45,7 @@ export const BoutonPrendreEnChargeCreation: React.FC<
       }
     });
   };
+
   useCreationActionMiseAjourStatutEtRmcAuto(params);
 
   return (
@@ -66,8 +67,12 @@ export const BoutonPrendreEnChargeCreation: React.FC<
 };
 
 const mapRequeteCreation = (
-  requete: IRequeteCreationEtablissement
+  requete?: IRequeteCreationEtablissement
 ): IRequeteTableauCreation => {
+  if (requete) {
+    return { idRequete: requete.id } as IRequeteTableauCreation;
+  } else {
+    return {} as IRequeteTableauCreation;
+  }
   //TODO: Vrai mapping "mappingRequeteCreationToRequeteTableau()" à faire ici quand ce sera nécessaire
-  return { idRequete: requete.id } as IRequeteTableauCreation;
 };

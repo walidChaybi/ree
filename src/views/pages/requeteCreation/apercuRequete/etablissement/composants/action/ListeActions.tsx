@@ -11,7 +11,7 @@ import { ConfirmationPopinAvecMessage } from "@widget/popin/ConfirmationPopinAve
 import React, { useEffect, useState } from "react";
 interface ListeActionsRetourSDANFProps {
   statusRequete: any;
-  idRequeteCorbeilleAgent: string;
+  idRequeteCorbeilleAgent?: string;
   setEchanges: any;
   echanges?: IEchange[];
   idRequeteParam: string;

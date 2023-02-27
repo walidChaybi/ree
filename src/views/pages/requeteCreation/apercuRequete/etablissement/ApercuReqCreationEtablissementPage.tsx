@@ -6,6 +6,7 @@ import {
 } from "@model/requete/IRequeteCreationEtablissement";
 import { useRMCAutoPersonneApiHook } from "@pages/rechercheMultiCriteres/autoPersonne/hook/RMCAutoPersonneApiHook";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
+import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
@@ -50,7 +51,7 @@ export const ApercuReqCreationEtablissementPage: React.FC = () => {
 
   return (
     <div className="ApercuReqCreationEtablissementPage">
-      {requete && (
+      {requete ? (
         <>
           <ConteneurRetractable
             titre={Labels.resume.requete.description}
@@ -82,6 +83,8 @@ export const ApercuReqCreationEtablissementPage: React.FC = () => {
             />
           </ConteneurRetractable>
         </>
+      ) : (
+        <OperationLocaleEnCoursSimple />
       )}
     </div>
   );

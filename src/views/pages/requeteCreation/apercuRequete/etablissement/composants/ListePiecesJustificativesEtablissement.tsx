@@ -5,6 +5,7 @@ import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJu
 import { typeFctRenommePieceJustificative } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { estRenseigne } from "@util/Utils";
 import { AccordionVisionneuse } from "@widget/accordion/AccordionVisionneuse";
+import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import {
   ListeGlisserDeposer,
   ListeItem
@@ -12,7 +13,7 @@ import {
 import React, { useEffect, useState } from "react";
 
 interface ListePiecesJustificativesEtablissementProps {
-  requete: IRequeteCreationEtablissement;
+  requete?: IRequeteCreationEtablissement;
   autoriseOuvertureFenetreExt?: boolean;
   onRenommePieceJustificative: typeFctRenommePieceJustificative;
 }
@@ -60,7 +61,7 @@ export const ListePiecesJustificativesEtablissement: React.FC<
                   titre={piece.nouveauLibelleFichierPJ}
                   titreOrigine={piece.nom}
                   typePiece={TypePieceJointe.PIECE_JUSTIFICATIVE}
-                  numRequete={props.requete.numero}
+                  numRequete={props.requete?.numero}
                   setTitreActuel={(nouveauLibelle: string) => {
                     setNouveauLibellePieceJointe(
                       document.id,
@@ -96,7 +97,7 @@ export const ListePiecesJustificativesEtablissement: React.FC<
 
   return (
     <span className="PiecesJustificatives">
-      {props.requete?.documentsPj && documentPJTries && (
+      {props.requete?.documentsPj && documentPJTries ? (
         <ListeGlisserDeposer
           liste={mapDocumentsPjTriesVersListeItem()}
           deverrouille={true}
@@ -105,6 +106,8 @@ export const ListePiecesJustificativesEtablissement: React.FC<
           handleReorga={handleReorga}
           libellesSontTitres={true}
         />
+      ) : (
+        <OperationLocaleEnCoursSimple />
       )}
     </span>
   );

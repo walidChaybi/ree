@@ -54,6 +54,34 @@ beforeEach(async () => {
   history.push(URL_MES_REQUETES_DELIVRANCE);
 });
 
+test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", async () => {
+  history.push(
+    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+  );
+
+  const { container } = render(
+    <Router history={history}>
+      <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
+        <EditionExtraitCopiePage />
+      </Route>
+    </Router>
+  );
+
+  await waitFor(() => {
+    expect(
+      container.getElementsByClassName("OperationLocaleEnCoursSimple").length
+    ).toBe(1);
+  });
+
+  setTimeout(() => {
+    act(() => {
+      expect(
+        container.getElementsByClassName("OperationLocaleEnCoursSimple").length
+      ).toBe(0);
+    });
+  }, 3000);
+});
+
 test("Test affichage Edition Extrait", async () => {
   history.push(
     `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`

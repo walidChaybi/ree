@@ -22,14 +22,14 @@ export const OngletPiecesJustificatives: React.FC<
 > = ({ autoriseOuvertureFenetreExt = false, ...props }) => {
   return (
     <span className="PiecesJustificatives">
-      {SousTypeCreation.estSousTypeTranscription(props.requete.sousType) && (
+      {SousTypeCreation.estSousTypeTranscription(props.requete?.sousType) && (
         <ListePiecesJustificativesTranscription
           requete={props.requete}
           autoriseOuvertureFenetreExt={autoriseOuvertureFenetreExt}
           onRenommePieceJustificative={props.onRenommePieceJustificative}
         />
       )}
-      {!SousTypeCreation.estSousTypeTranscription(props.requete.sousType) && (
+      {!SousTypeCreation.estSousTypeTranscription(props.requete?.sousType) && (
         <ListePiecesJustificativesEtablissement
           requete={props.requete}
           autoriseOuvertureFenetreExt={autoriseOuvertureFenetreExt}

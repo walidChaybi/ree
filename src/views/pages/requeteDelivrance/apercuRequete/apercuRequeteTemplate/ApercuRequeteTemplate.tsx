@@ -5,6 +5,7 @@ import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
+import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { ApercuRequetePartieGauche } from "../apercuRequetePartieGauche/ApercuRequetePartieGauche";
@@ -51,7 +52,7 @@ export const ApercuRequeteTemplate: React.FC<TemplateProps> = props => {
   return (
     <div className="ApercuRequete">
       <title>{props.title}</title>
-      {requete && (
+      {requete ? (
         <ProtectionApercu
           statut={requete.statutCourant.statut}
           type={requete.type}
@@ -68,6 +69,8 @@ export const ApercuRequeteTemplate: React.FC<TemplateProps> = props => {
             <div className="side right">{props.children}</div>
           </div>
         </ProtectionApercu>
+      ) : (
+        <OperationLocaleEnCoursSimple />
       )}
     </div>
   );

@@ -10,7 +10,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
-import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import {
   IRequeteDelivrance,
   RequeteDelivrance
@@ -128,15 +128,20 @@ export const estRequeteCreationAuStatutATraiter = (
 };
 
 export const autorisePrendreEnChargeDepuisPageCreation = (
-  requete: IRequeteCreationEtablissement
-) => {
-  return (
-    estRequeteCreationAuStatutATraiter(
-      requete.type,
-      requete.sousType,
-      requete.statutCourant.statut
-    ) && appartientAMonServiceOuServicesMeresOuServicesFilles(requete.idEntite)
-  );
+  requete?: IRequeteCreation
+): boolean => {
+  if (requete) {
+    return (
+      estRequeteCreationAuStatutATraiter(
+        requete.type,
+        requete.sousType,
+        requete.statutCourant.statut
+      ) &&
+      appartientAMonServiceOuServicesMeresOuServicesFilles(requete.idEntite)
+    );
+  } else {
+    return false;
+  }
 };
 
 export const autorisePrendreEnChargeReqTableauCreation = (

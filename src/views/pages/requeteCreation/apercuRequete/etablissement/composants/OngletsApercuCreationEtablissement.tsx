@@ -42,7 +42,7 @@ export const OngletsApercuCreationEtablissement: React.FC<
       titre: "Actions",
       component: (
         <Action
-          echanges={props.requete.provenanceNatali?.echanges}
+          echanges={props.requete?.provenanceNatali?.echanges}
           requete={props.requete}
         />
       ),

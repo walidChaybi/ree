@@ -23,7 +23,7 @@ export interface AccordionVisionneuseProps {
   titre?: string;
   titreOrigine: string;
   typePiece: TypePieceJointe;
-  numRequete: string;
+  numRequete?: string;
   setTitreActuel: (nouveauTitre: string) => void;
   autoriseOuvertureFenetreExt?: boolean;
 }
