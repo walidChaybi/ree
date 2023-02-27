@@ -1,8 +1,13 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
+import {
+  IRMCAutoPersonneParams,
+  useRMCAutoPersonneApiAvecCacheHook
+} from "@hook/rmcAuto/RMCAutoPersonneApiHook";
+import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
-import { useRMCAutoPersonneApiHook } from "@pages/rechercheMultiCriteres/autoPersonne/hook/RMCAutoPersonneApiHook";
+import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { act, render, screen, waitFor } from "@testing-library/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import request from "superagent";
 import { requeteCreationTranscription } from "../../../../mock/data/requeteCreationTranscription";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
@@ -20,7 +25,24 @@ interface HookConsumerRMCAutoPersonneProps {
 const HookConsumerRMCAutoPersonne: React.FC<
   HookConsumerRMCAutoPersonneProps
 > = props => {
-  const { resultatRMCAutoPersonne } = useRMCAutoPersonneApiHook(props.requete);
+  const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
+    useState<IRMCAutoPersonneParams>();
+  const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(
+    rmcAutoPersonneParams
+  );
+
+  useEffect(() => {
+    if (props.requete) {
+      const titulaire = getPostulantNationaliteOuTitulaireActeTranscritDresse(
+        props.requete
+      );
+      if (titulaire) {
+        setRmcAutoPersonneParams(
+          mapTitulaireVersRMCAutoPersonneParams(titulaire)
+        );
+      }
+    }
+  }, [props.requete]);
 
   return (
     <>
@@ -41,7 +63,7 @@ const HookConsumerRMCAutoPersonne: React.FC<
   );
 };
 
-describe("Test du custom hook useRMCAutoPersonneApiHook", () => {
+describe("Test du custom hook useRMCAutoPersonneApiAvecCacheHook", () => {
   test("DOIT obtenir un resultat de la part du web service", async () => {
     const requete = mappingRequeteCreation(requeteCreationTranscription);
     await act(async () => {

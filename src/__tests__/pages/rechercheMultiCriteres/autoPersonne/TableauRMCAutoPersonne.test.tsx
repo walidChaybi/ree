@@ -1,9 +1,14 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
+import {
+  IRMCAutoPersonneParams,
+  useRMCAutoPersonneApiAvecCacheHook
+} from "@hook/rmcAuto/RMCAutoPersonneApiHook";
+import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
-import { useRMCAutoPersonneApiHook } from "@pages/rechercheMultiCriteres/autoPersonne/hook/RMCAutoPersonneApiHook";
 import { TableauRMCAutoPersonne } from "@pages/rechercheMultiCriteres/autoPersonne/TableauRMCAutoPersonne";
+import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { render, screen, waitFor } from "@testing-library/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
 import { requeteCreationTranscription } from "../../../../mock/data/requeteCreation";
@@ -22,8 +27,26 @@ interface HookConsumerTableauRMCAutoPersonneProps {
 const HookConsumerTableauRMCAutoPersonne: React.FC<
   HookConsumerTableauRMCAutoPersonneProps
 > = props => {
-  const { resultatRMCAutoPersonne } = useRMCAutoPersonneApiHook(props.requete);
-  return <TableauRMCAutoPersonne data={resultatRMCAutoPersonne} />;
+  const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
+    useState<IRMCAutoPersonneParams>();
+  const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(
+    rmcAutoPersonneParams
+  );
+
+  useEffect(() => {
+    if (props.requete) {
+      const titulaire = getPostulantNationaliteOuTitulaireActeTranscritDresse(
+        props.requete
+      );
+      if (titulaire) {
+        setRmcAutoPersonneParams(
+          mapTitulaireVersRMCAutoPersonneParams(titulaire)
+        );
+      }
+    }
+  }, [props.requete]);
+
+  return <TableauRMCAutoPersonne data={resultatRMCAutoPersonne ?? []} />;
 };
 
 test("Attendu: L'affichage du tableau de la RMC Personne s'affiche correctement.", async () => {

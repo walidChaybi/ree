@@ -1,10 +1,17 @@
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
+import {
+  IRMCAutoPersonneParams,
+  useRMCAutoPersonneApiAvecCacheHook
+} from "@hook/rmcAuto/RMCAutoPersonneApiHook";
+import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
-import { useRMCAutoPersonneApiHook } from "@pages/rechercheMultiCriteres/autoPersonne/hook/RMCAutoPersonneApiHook";
 import { AnalyseDuDossier } from "@pages/requeteCreation/commun/composants/AnalyseDuDossier";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/OngletRMCPersonne";
-import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils";
+import {
+  getPostulantNationaliteOuTitulaireActeTranscritDresse,
+  OngletProps
+} from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
@@ -21,9 +28,13 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC =
   props => {
     const { idRequeteParam } = useParams<IUuidRequeteParams>();
     const [requete, setRequete] = useState<IRequeteCreationTranscription>();
+    const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
+      useState<IRMCAutoPersonneParams>();
     const [ongletSelectionne, setOngletSelectionne] = useState(0);
     const history = useHistory();
-    const { resultatRMCAutoPersonne } = useRMCAutoPersonneApiHook(requete);
+    const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(
+      rmcAutoPersonneParams
+    );
     const { detailRequeteState } = useDetailRequeteApiHook(
       idRequeteParam,
       history.location.pathname.includes(URL_RECHERCHE_REQUETE)
@@ -34,6 +45,18 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC =
         setRequete(detailRequeteState as IRequeteCreationTranscription);
       }
     }, [detailRequeteState]);
+
+    useEffect(() => {
+      if (requete) {
+        const titulaire =
+          getPostulantNationaliteOuTitulaireActeTranscritDresse(requete);
+        if (titulaire) {
+          setRmcAutoPersonneParams(
+            mapTitulaireVersRMCAutoPersonneParams(titulaire)
+          );
+        }
+      }
+    }, [requete]);
 
     function onRenommePieceJustificativeApercuPriseEnCharge(
       idPieceJustificative: string,
@@ -50,6 +73,17 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC =
     const handleChange = (e: any, newValue: string) => {
       setOngletSelectionne(parseInt(newValue));
     };
+
+    function handleClickSelectionTitulaireRmcPersonne(idTitulaire: string) {
+      const titulaire = requete?.titulaires
+        ?.filter(titulaireCourant => titulaireCourant.id === idTitulaire)
+        .pop();
+      if (titulaire) {
+        setRmcAutoPersonneParams(
+          mapTitulaireVersRMCAutoPersonneParams(titulaire)
+        );
+      }
+    }
 
     function getListeOnglets(): OngletProps[] {
       return requete
@@ -72,7 +106,8 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC =
                 <OngletRMCPersonne
                   sousTypeRequete={requete.sousType}
                   listeTitulaires={requete.titulaires}
-                  rmcAutoPersonneResultat={resultatRMCAutoPersonne}
+                  rmcAutoPersonneResultat={resultatRMCAutoPersonne ?? []}
+                  handleClickMenuItem={handleClickSelectionTitulaireRmcPersonne}
                 />
               ),
               index: 1

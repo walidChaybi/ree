@@ -54,7 +54,10 @@ import {
   ReponseAppelRMCActe4DernierResultats,
   ReponseAppelRMCActe4PremiersResultats
 } from "../data/RMCActe";
-import { RMCAutoPersonneResponse } from "../data/RMCAutoPersonne";
+import {
+  RMCAutoPersonneResponseAlpha,
+  RMCAutoPersonneResponseBeta
+} from "../data/RMCAutoPersonne";
 import {
   ReponseAppelRMCInscription,
   ReponseAppelRMCInscription4DernierResultats,
@@ -374,7 +377,10 @@ export const configEtatcivil = [
       //////////////////
       // RMC Personne //
       if (match[1] === "/personne/rmcauto?range=0-25") {
-        return RMCAutoPersonneResponse;
+        if (params.nomTitulaire === "Dupont") {
+          return RMCAutoPersonneResponseBeta;
+        }
+        return RMCAutoPersonneResponseAlpha;
       }
 
       // Incriptions RC

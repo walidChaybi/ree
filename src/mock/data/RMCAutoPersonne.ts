@@ -1,4 +1,4 @@
-export const RMCAutoPersonneResponse = {
+export const RMCAutoPersonneResponseAlpha = {
   errors: [],
   url: "/rece-etatcivil-api/v1/acte/rmc",
   headers: {
@@ -93,6 +93,39 @@ export const RMCAutoPersonneResponse = {
           reference: "RC - 2020 - 10",
           categorieRepertoire: "RC",
           typeInscription: "INSCRIPTION"
+        }
+      ]
+    }
+  ]
+};
+
+export const RMCAutoPersonneResponseBeta = {
+  errors: [],
+  url: "/rece-etatcivil-api/v1/acte/rmc",
+  headers: {
+    "content-range": "0-100/0",
+    link: ""
+  },
+  data: [
+    {
+      idPersonne: "e7114c54-d00d-48ad-bbee-af2b01e2da7a",
+      nom: "DUPONT",
+      autresNoms: null,
+      prenoms: ["Michel"],
+      jourNaissance: "1",
+      moisNaissance: "1",
+      anneeNaissance: "1990",
+      villeNaissance: "Dunkerque",
+      paysNaissance: "France",
+      sexe: "MASCULIN",
+      actesRepertoiresLies: [
+        {
+          id: "89c9d030-26h7-41d3-bdde-8b4dcc0420da",
+          nature: null,
+          statut: "INACTIF",
+          reference: "PACS - 2011 - 1234590",
+          categorieRepertoire: "PACS",
+          typeInscription: null
         }
       ]
     }

@@ -1,10 +1,15 @@
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
+import {
+  IRMCAutoPersonneParams,
+  useRMCAutoPersonneApiAvecCacheHook
+} from "@hook/rmcAuto/RMCAutoPersonneApiHook";
+import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import {
   IRequeteCreationEtablissement,
   RequeteCreationEtablissement
 } from "@model/requete/IRequeteCreationEtablissement";
-import { useRMCAutoPersonneApiHook } from "@pages/rechercheMultiCriteres/autoPersonne/hook/RMCAutoPersonneApiHook";
+import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
@@ -20,8 +25,12 @@ import mappingIRequeteCreationVersResumeRequeteCreationProps from "./mappingIReq
 export const ApercuReqCreationEtablissementPage: React.FC = () => {
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
+  const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
+    useState<IRMCAutoPersonneParams>();
   const history = useHistory();
-  const { resultatRMCAutoPersonne } = useRMCAutoPersonneApiHook(requete);
+  const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(
+    rmcAutoPersonneParams
+  );
   const { detailRequeteState } = useDetailRequeteApiHook(
     idRequeteParam,
     history.location.pathname.includes(URL_RECHERCHE_REQUETE)
@@ -32,6 +41,18 @@ export const ApercuReqCreationEtablissementPage: React.FC = () => {
       setRequete(detailRequeteState as IRequeteCreationEtablissement);
     }
   }, [detailRequeteState]);
+
+  useEffect(() => {
+    if (requete) {
+      const titulaire =
+        getPostulantNationaliteOuTitulaireActeTranscritDresse(requete);
+      if (titulaire) {
+        setRmcAutoPersonneParams(
+          mapTitulaireVersRMCAutoPersonneParams(titulaire)
+        );
+      }
+    }
+  }, [requete]);
 
   function onRenommePieceJustificative(
     idPieceJustificative: string,
@@ -46,6 +67,17 @@ export const ApercuReqCreationEtablissementPage: React.FC = () => {
     if (pjARenommer) {
       pjARenommer.libelle = nouveauLibelle;
       setRequete({ ...requete } as IRequeteCreationEtablissement);
+    }
+  }
+
+  function handleClickSelectionTitulaireRmcPersonne(idTitulaire: string) {
+    const titulaire = requete?.titulaires
+      ?.filter(titulaireCourant => titulaireCourant.id === idTitulaire)
+      .pop();
+    if (titulaire) {
+      setRmcAutoPersonneParams(
+        mapTitulaireVersRMCAutoPersonneParams(titulaire)
+      );
     }
   }
 
@@ -69,7 +101,10 @@ export const ApercuReqCreationEtablissementPage: React.FC = () => {
           <OngletsApercuCreationEtablissement
             requete={requete}
             onRenommePieceJustificative={onRenommePieceJustificative}
-            resultatRMCAutoPersonne={resultatRMCAutoPersonne}
+            resultatRMCAutoPersonne={resultatRMCAutoPersonne ?? []}
+            handleClickSelectionTitulaireRmcPersonne={
+              handleClickSelectionTitulaireRmcPersonne
+            }
           />
 
           <ConteneurRetractable

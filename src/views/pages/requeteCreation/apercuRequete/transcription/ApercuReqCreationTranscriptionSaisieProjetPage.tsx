@@ -1,14 +1,21 @@
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
+import {
+  IRMCAutoPersonneParams,
+  useRMCAutoPersonneApiAvecCacheHook
+} from "@hook/rmcAuto/RMCAutoPersonneApiHook";
+import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
-import { useRMCAutoPersonneApiHook } from "@pages/rechercheMultiCriteres/autoPersonne/hook/RMCAutoPersonneApiHook";
 import { ApercuProjet } from "@pages/requeteCreation/commun/composants/ApercuProjet";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { GestionMentions } from "@pages/requeteCreation/commun/composants/GestionMentions";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/OngletRMCPersonne";
 import { PiecesAnnexes } from "@pages/requeteCreation/commun/composants/PiecesAnnexes";
 import { SaisieProjet } from "@pages/requeteCreation/commun/composants/SaisirProjet";
-import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils";
+import {
+  getPostulantNationaliteOuTitulaireActeTranscritDresse,
+  OngletProps
+} from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
@@ -21,12 +28,16 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC =
   props => {
     const { idRequeteParam } = useParams<IUuidRequeteParams>();
     const [requete, setRequete] = useState<IRequeteCreationTranscription>();
+    const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
+      useState<IRMCAutoPersonneParams>();
     const history = useHistory();
     const [ongletSelectionnePartieGauche, setOngletSelectionnePartieGauche] =
       useState(0);
     const [ongletSelectionnePartieDroite, setOngletSelectionnePartieDroite] =
       useState(0);
-    const { resultatRMCAutoPersonne } = useRMCAutoPersonneApiHook(requete);
+    const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(
+      rmcAutoPersonneParams
+    );
     const { detailRequeteState } = useDetailRequeteApiHook(
       idRequeteParam,
       history.location.pathname.includes(URL_RECHERCHE_REQUETE)
@@ -40,6 +51,18 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC =
       }
     }, [detailRequeteState]);
 
+    useEffect(() => {
+      if (requete) {
+        const titulaire =
+          getPostulantNationaliteOuTitulaireActeTranscritDresse(requete);
+        if (titulaire) {
+          setRmcAutoPersonneParams(
+            mapTitulaireVersRMCAutoPersonneParams(titulaire)
+          );
+        }
+      }
+    }, [requete]);
+
     const handleChangeOngletPartieGauche = (e: any, newValue: string) => {
       /* istanbul ignore next */
       setOngletSelectionnePartieGauche(parseInt(newValue));
@@ -48,6 +71,17 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC =
     const handleChangeOngletPartieDroite = (e: any, newValue: string) => {
       setOngletSelectionnePartieDroite(parseInt(newValue));
     };
+
+    function handleClickSelectionTitulaireRmcPersonne(idTitulaire: string) {
+      const titulaire = requete?.titulaires
+        ?.filter(titulaireCourant => titulaireCourant.id === idTitulaire)
+        .pop();
+      if (titulaire) {
+        setRmcAutoPersonneParams(
+          mapTitulaireVersRMCAutoPersonneParams(titulaire)
+        );
+      }
+    }
 
     function getListeOngletsPartieGauche(): OngletProps[] {
       return requete
@@ -67,9 +101,10 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC =
               titre: "RMC",
               component: (
                 <OngletRMCPersonne
-                  rmcAutoPersonneResultat={resultatRMCAutoPersonne}
+                  rmcAutoPersonneResultat={resultatRMCAutoPersonne ?? []}
                   sousTypeRequete={requete.sousType}
                   listeTitulaires={requete.titulaires}
+                  handleClickMenuItem={handleClickSelectionTitulaireRmcPersonne}
                 />
               ),
               index: 1

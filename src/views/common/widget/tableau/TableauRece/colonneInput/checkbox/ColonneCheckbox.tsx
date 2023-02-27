@@ -48,7 +48,7 @@ export const getColonneCheckbox = (
     );
 
   return new TableauTypeColumn({
-    keys: [],
+    keys: ["checkbox"],
     title,
     getElement: getElementCheckboxBody.bind(
       null,

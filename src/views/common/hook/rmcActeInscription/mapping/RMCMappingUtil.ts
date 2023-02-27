@@ -1,3 +1,4 @@
+import { IRMCAutoPersonneResultat } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { StatutActe } from "@model/etatcivil/enum/StatutActe";
 import { StatutPacesUtil } from "@model/etatcivil/enum/StatutPacs";
@@ -8,7 +9,6 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IRMCAutoPersonneResultat } from "@model/rmc/personne/IRMCAutoPersonneResultat";
 import { getDateStringFromDateCompose, IDateCompose } from "@util/DateUtils";
 import {
   formatNom,

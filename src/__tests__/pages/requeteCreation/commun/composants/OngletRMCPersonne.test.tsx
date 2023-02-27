@@ -1,9 +1,20 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
+import {
+  IRMCAutoPersonneParams,
+  useRMCAutoPersonneApiAvecCacheHook
+} from "@hook/rmcAuto/RMCAutoPersonneApiHook";
+import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
-import { useRMCAutoPersonneApiHook } from "@pages/rechercheMultiCriteres/autoPersonne/hook/RMCAutoPersonneApiHook";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/OngletRMCPersonne";
-import { act, render, screen, waitFor } from "@testing-library/react";
-import React from "react";
+import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
+import React, { useEffect, useState } from "react";
 import request from "superagent";
 import { requeteCreationTranscription } from "../../../../../mock/data/requeteCreation";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
@@ -21,12 +32,42 @@ interface HookConsumerTableauRMCAutoPersonneProps {
 const HookConsumerOngletRMCPersonne: React.FC<
   HookConsumerTableauRMCAutoPersonneProps
 > = props => {
-  const { resultatRMCAutoPersonne } = useRMCAutoPersonneApiHook(props.requete);
+  const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
+    useState<IRMCAutoPersonneParams>();
+  const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(
+    rmcAutoPersonneParams
+  );
+
+  useEffect(() => {
+    if (props.requete) {
+      const titulaire = getPostulantNationaliteOuTitulaireActeTranscritDresse(
+        props.requete
+      );
+      if (titulaire) {
+        setRmcAutoPersonneParams(
+          mapTitulaireVersRMCAutoPersonneParams(titulaire)
+        );
+      }
+    }
+  }, [props.requete]);
+
+  function handleClickSelectionTitulaireRmcPersonne(idTitulaire: string) {
+    const titulaire = props.requete.titulaires
+      ?.filter(titulaireCourant => titulaireCourant.id === idTitulaire)
+      .pop();
+    if (titulaire) {
+      setRmcAutoPersonneParams(
+        mapTitulaireVersRMCAutoPersonneParams(titulaire)
+      );
+    }
+  }
+
   return (
     <OngletRMCPersonne
-      rmcAutoPersonneResultat={resultatRMCAutoPersonne}
+      rmcAutoPersonneResultat={resultatRMCAutoPersonne ?? []}
       sousTypeRequete={props.requete.sousType}
       listeTitulaires={props.requete.titulaires}
+      handleClickMenuItem={handleClickSelectionTitulaireRmcPersonne}
     />
   );
 };
@@ -61,6 +102,32 @@ describe("Test l'affichage de l'onglet RMC Personne", () => {
       expect(
         screen.getByText("Lancer RMC sur une nouvelle personne")
       ).toBeInTheDocument();
+    });
+  });
+});
+
+describe("Test le fonctionnement de l'onglet RMC Personne", () => {
+  test("DOIT rafraichir les données du tableau QUAND on sélectionne une nouvelle personne depuis le bouton 'RMC Auto sur autre personne'", async () => {
+    await act(async () => {
+      render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
+    });
+
+    await waitFor(() => {
+      expect(screen.getAllByText("Philips")[0]).toBeInTheDocument();
+      expect(screen.getAllByText("Yann")[0]).toBeInTheDocument();
+    });
+
+    await act(async () => {
+      fireEvent.mouseOver(
+        screen.getByText("Lancer RMC sur une nouvelle personne")
+      );
+      fireEvent.click(
+        screen.getByText("Parent 1 - DUPONT Michel (M), 01/01/1990")
+      );
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText("DUPONT")).toBeInTheDocument();
     });
   });
 });

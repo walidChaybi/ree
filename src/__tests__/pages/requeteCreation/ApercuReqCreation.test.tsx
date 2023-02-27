@@ -55,7 +55,7 @@ test("renders VoletPiecesJustificatives Etablissement", async () => {
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
-  act(() => {
+  await act(async () => {
     render(
       <Router history={history}>
         <Route
@@ -87,7 +87,7 @@ test("renders VoletPiecesJustificatives Transcription", async () => {
       "d4f9e898-cf26-42cc-850b-007e9e475e7a"
     )
   );
-  act(() => {
+  await act(async () => {
     render(
       <Router history={history}>
         <Route

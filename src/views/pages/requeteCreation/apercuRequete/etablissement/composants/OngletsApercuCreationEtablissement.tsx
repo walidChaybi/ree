@@ -1,5 +1,5 @@
+import { IRMCAutoPersonneResultat } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
-import { IRMCAutoPersonneResultat } from "@model/rmc/personne/IRMCAutoPersonneResultat";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/OngletRMCPersonne";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useState } from "react";
@@ -13,6 +13,7 @@ interface OngletsApercuCreationEtablissementProps {
   requete: IRequeteCreationEtablissement;
   onRenommePieceJustificative: typeFctRenommePieceJustificative;
   resultatRMCAutoPersonne: IRMCAutoPersonneResultat[];
+  handleClickSelectionTitulaireRmcPersonne: (idTitulaire: string) => void;
 }
 
 interface ItemListe {
@@ -55,6 +56,7 @@ export const OngletsApercuCreationEtablissement: React.FC<
           rmcAutoPersonneResultat={props.resultatRMCAutoPersonne}
           sousTypeRequete={props.requete.sousType}
           listeTitulaires={props.requete.titulaires}
+          handleClickMenuItem={props.handleClickSelectionTitulaireRmcPersonne}
         />
       ),
       index: 1

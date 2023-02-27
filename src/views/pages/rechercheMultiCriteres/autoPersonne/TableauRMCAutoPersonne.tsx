@@ -1,4 +1,4 @@
-import { IRMCAutoPersonneResultat } from "@model/rmc/personne/IRMCAutoPersonneResultat";
+import { IRMCAutoPersonneResultat } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import {
   NB_LIGNES_PAR_APPEL_PERSONNE,
   NB_LIGNES_PAR_PAGE_PERSONNE
@@ -6,12 +6,11 @@ import {
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React from "react";
+import "./scss/TableauRMCAutoPersonne.scss";
 import {
   colonnesTableauRMCAutoPersonne,
   getMessageAucunResultat
 } from "./TableauRMCAutoPersonneUtils";
-
-import "./scss/TableauRMCAutoPersonne.scss";
 
 interface TableauRMCAutoPersonneProps {
   data: IRMCAutoPersonneResultat[];

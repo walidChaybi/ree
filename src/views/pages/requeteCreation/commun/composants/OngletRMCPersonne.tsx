@@ -1,9 +1,9 @@
+import { IRMCAutoPersonneResultat } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { IRMCAutoPersonneResultat } from "@model/rmc/personne/IRMCAutoPersonneResultat";
 import { TableauRMCAutoPersonne } from "@pages/rechercheMultiCriteres/autoPersonne/TableauRMCAutoPersonne";
 import { getDateStringFromDateCompose } from "@util/DateUtils";
 import {
@@ -19,6 +19,7 @@ import React from "react";
 interface OngletRMCPersonneProps {
   rmcAutoPersonneResultat: IRMCAutoPersonneResultat[];
   sousTypeRequete: SousTypeCreation;
+  handleClickMenuItem: (idTitulaire: string) => void;
   listeTitulaires?: ITitulaireRequeteCreation[];
 }
 
@@ -38,9 +39,7 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
       <BoutonMenu
         boutonLibelle={getLibelle("Lancer RMC sur une nouvelle personne")}
         listeItems={getListeItemsPersonnes()}
-        onClickMenuItem={function (key: string): void {
-          throw new Error("Function not implemented.");
-        }}
+        onClickMenuItem={e => props.handleClickMenuItem(e)}
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       />
     </>
