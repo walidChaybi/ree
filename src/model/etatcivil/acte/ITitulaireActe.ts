@@ -85,14 +85,7 @@ export const TitulaireActe = {
     return titulaire && titulaire.sexe ? titulaire.sexe : Sexe.INCONNU;
   },
   getLieuNaissance(titulaire?: ITitulaireActe): string {
-    return titulaire && titulaire.naissance
-      ? LieuxUtils.getLieu(
-          titulaire.naissance.ville,
-          titulaire.naissance.region,
-          titulaire.naissance.pays,
-          titulaire.naissance.arrondissement
-        )
-      : "";
+    return titulaire?.naissance?.lieuFormate ?? "";
   },
 
   getLieuDeRepriseOuLieuNaissance(

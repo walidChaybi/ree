@@ -36,7 +36,7 @@ function getDateLieuEvenement(evenement?: IEvenement): SectionContentProps[] {
     },
     {
       libelle: `Lieu de l'évènement`,
-      value: <span>{Evenement.getLieu(evenement)}</span>
+      value: <span>{Evenement.getLieuFormate(evenement)}</span>
     }
   ];
 }

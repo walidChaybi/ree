@@ -50,7 +50,8 @@ export const acte: any = {
     ville: "Kanpur",
     arrondissement: "",
     region: "Uttar Pradesh",
-    pays: "Inde"
+    pays: "Inde",
+    lieuFormate: "Kanpur, Uttar Pradesh (Inde)"
   },
   mentions: [
     {
@@ -296,7 +297,8 @@ export const acte: any = {
         arrondissement: null,
         region: "Grand Rome",
         pays: "Italie",
-        lieuReprise: null
+        lieuReprise: null,
+        lieuFormate: "Rome, Grand Rome (Italie)"
       },
       textes: {
         texteMention: "Divorce",
@@ -326,7 +328,8 @@ export const acte: any = {
         region: "Provence-Alpes-Côte d'Azur",
         ville: "Marseille",
         arrondissement: "10",
-        voie: ""
+        voie: "",
+        lieuFormate: "Marseille 10ème arrondissement (Provence-Alpes-Côte d'Azur)"
       },
       domicile: {
         pays: "DJIBOUTI",
@@ -370,7 +373,8 @@ export const acte: any = {
         region: "Saint-Pierre-et-Miquelon",
         ville: "Saint-Pierre",
         arrondissement: "",
-        voie: ""
+        voie: "",
+        lieuFormate: "Saint-Pierre (Saint-Pierre-et-Miquelon)"
       },
       domicile: {
         pays: "BELGIQUE",

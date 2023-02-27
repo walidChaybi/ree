@@ -15,6 +15,7 @@ const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
 
 export const URL_ACTE = "/acte";
 export const URL_TITULAIRE = "/titulaire";
+export const URL_RESUME = "/resume";
 export const URL_COUNT_TITULAIRE = "/count/titulaire";
 export const URL_ETAT_CIVIL = "/repertoirecivil";
 export const URL_ETAT_CIVIL_RMC = "/repertoirecivil/rmc";
@@ -79,7 +80,7 @@ export function getInformationsFicheActe(
 ): Promise<any> {
   let config: any = {
     method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${identifiant}`
+    uri: `${URL_ACTE}/${identifiant}${URL_RESUME}`
   };
   if (recupereImagesEtTexte) {
     config = {

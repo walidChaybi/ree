@@ -18,6 +18,7 @@ export interface IEvenement {
   region?: string;
   pays: string;
   lieuReprise?: string;
+  lieuFormate?: string;
 }
 
 export const Evenement = {
@@ -31,15 +32,8 @@ export const Evenement = {
       : "";
   },
 
-  getLieu(evenement?: IEvenement): string {
-    return evenement
-      ? LieuxUtils.getLieu(
-          evenement.ville,
-          evenement.region,
-          evenement.pays,
-          evenement.arrondissement
-        )
-      : "";
+  getLieuFormate(evenement?: IEvenement): string {
+    return evenement?.lieuFormate ?? "";
   },
 
   getLieuDeRepriseOuLieuEvenement(evenement?: IEvenement): string {
