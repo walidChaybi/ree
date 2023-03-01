@@ -96,6 +96,7 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC =
                   onRenommePieceJustificative={
                     onRenommePieceJustificativeApercuPriseEnCharge
                   }
+                  autoriseOuvertureFenetreExt={true}
                 />
               ),
               index: 0
