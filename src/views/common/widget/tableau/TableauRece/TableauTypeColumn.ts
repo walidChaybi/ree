@@ -2,7 +2,8 @@ type alignType = "left" | "center" | "right" | "justify" | "inherit";
 
 export interface ITableauTypeColumnParam {
   keys: string[];
-  title: string | JSX.Element;
+  title?: string;
+  getTitle?: (datas: any[]) => JSX.Element;
   align?: alignType;
   style?: React.CSSProperties;
   width?: string | number;
@@ -19,7 +20,8 @@ export interface ITableauTypeColumnParam {
 
 export class TableauTypeColumn {
   public keys: string[];
-  public title: string | JSX.Element;
+  public title?: string;
+  public getTitle?: (datas: any[]) => JSX.Element;
   public align?: alignType;
   public style?: React.CSSProperties;
   public getElement?: (
@@ -35,6 +37,7 @@ export class TableauTypeColumn {
   constructor(params: ITableauTypeColumnParam) {
     this.keys = params.keys;
     this.title = params.title;
+    this.getTitle = params.getTitle;
     this.align = params.align;
     this.style = params.style;
     this.getElement = params.getElement;

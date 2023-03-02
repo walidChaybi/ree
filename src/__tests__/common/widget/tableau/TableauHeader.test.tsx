@@ -53,6 +53,7 @@ test("renders click sur header tableau des requêtes de l'application", () => {
             title: "prioriteRequete"
           })
         ]}
+        dataBody={[]}
       ></TableauHeader>
     </table>
   );

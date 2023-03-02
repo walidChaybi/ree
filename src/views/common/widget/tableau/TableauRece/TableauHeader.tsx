@@ -10,16 +10,16 @@ export interface TableauReceProps {
   order?: SortOrder;
   orderBy?: string;
   columnHeaders: TableauTypeColumn[];
+  dataBody: any[];
 }
 
 export const TableauHeader: React.FC<TableauReceProps> = props => {
-  const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (
     event: React.MouseEvent<unknown>,
     property: string
   ) => {
-    if (onRequestSort) {
-      onRequestSort(event, property);
+    if (props.onRequestSort) {
+      props.onRequestSort(event, property);
     }
   };
 
@@ -30,9 +30,10 @@ export const TableauHeader: React.FC<TableauReceProps> = props => {
       <TableauHeaderCell
         key={column.keys[0]}
         column={column}
-        order={order}
-        orderBy={orderBy}
+        order={props.order}
+        orderBy={props.orderBy}
         sortHandler={createSortHandler}
+        dataBody={props.dataBody}
       />
     );
   }

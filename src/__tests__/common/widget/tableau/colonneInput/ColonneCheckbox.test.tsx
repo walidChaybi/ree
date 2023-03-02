@@ -21,8 +21,7 @@ const TableauReceWrapper: React.FC<{ contientHeader: boolean }> = props => {
           idSelectionnes,
           setIdSelectionnes,
           (data: any) => data.id,
-          props.contientHeader,
-          data.map(data => data.id)
+          props.contientHeader
         )
       ]}
       dataState={data}

@@ -4,20 +4,22 @@ import "../../scss/ColonneBoutons.scss";
 
 interface ICheckboxHeader {
   identifiantsSelectionnes: string[];
-  allIdentifiants: string[];
+  identifiantsDeLaPage: string[];
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const CheckboxHeader: React.FC<ICheckboxHeader> = props => {
-  const estCochee = (): boolean => {
-    return (
-      props.allIdentifiants.length === props.identifiantsSelectionnes.length
-    );
-  };
+  function estSelectionne(identifiantDeLaPage: string): boolean {
+    return props.identifiantsSelectionnes.includes(identifiantDeLaPage);
+  }
 
-  const estIndeterminee = (): boolean => {
-    return !estCochee() && props.identifiantsSelectionnes.length > 0;
-  };
+  function estCochee(): boolean {
+    return props.identifiantsDeLaPage.every(estSelectionne);
+  }
+
+  function estIndeterminee(): boolean {
+    return props.identifiantsDeLaPage.some(estSelectionne) && !estCochee();
+  }
 
   return (
     <Checkbox

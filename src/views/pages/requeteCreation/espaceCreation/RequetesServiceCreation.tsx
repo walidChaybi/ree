@@ -206,8 +206,7 @@ export const RequetesServiceCreation: React.FC<
   const columnHeaders = getColonnesTableauRequetesServiceCreation(
     idRequetesSelectionneesAttribueeA,
     setIdRequetesSelectionneesAttribueeA,
-    getRequeteId,
-    dataState.map(data => data.idRequete)
+    getRequeteId
   );
 
   return (
@@ -231,6 +230,7 @@ export const RequetesServiceCreation: React.FC<
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        onChangementDePage={() => setIdRequetesSelectionneesAttribueeA([])}
       />
 
       <TransfertPopin

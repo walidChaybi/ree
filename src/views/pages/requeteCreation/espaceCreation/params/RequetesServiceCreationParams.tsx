@@ -10,8 +10,7 @@ export enum HeaderTableauRequetesServiceCreation {
 export const getColonnesTableauRequetesServiceCreation = (
   idRequetesSelectionnees: string[],
   setIdRequetesSelectionnees: React.Dispatch<React.SetStateAction<string[]>>,
-  getRequeteId: (data: any) => string,
-  allRequeteId: string[]
+  getRequeteId: (data: any) => string
 ) => [
   ...colonnesTableauMesRequetesCreation.slice(0, CINQ),
   new TableauTypeColumn({
@@ -23,8 +22,7 @@ export const getColonnesTableauRequetesServiceCreation = (
     idRequetesSelectionnees,
     setIdRequetesSelectionnees,
     getRequeteId,
-    true,
-    allRequeteId
+    true
   ),
   ...colonnesTableauMesRequetesCreation.slice(CINQ)
 ];

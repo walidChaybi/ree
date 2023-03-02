@@ -47,6 +47,7 @@ export interface TableauReceProps {
   enChargement?: boolean;
   stickyHeader?: boolean;
   getRowClassName?: (data: any) => string;
+  onChangementDePage?: () => void;
 }
 
 export const TableauRece: React.FC<TableauReceProps> = props => {
@@ -132,6 +133,7 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
       props.goToLink(paramsTableau.previousDataLinkState);
     }
     setPageState(newPage);
+    props.onChangementDePage && props.onChangementDePage();
   };
 
   const reloadData = useCallback(
@@ -189,6 +191,7 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
             orderBy={props.sortOrderByState}
             onRequestSort={handleColumnSort}
             columnHeaders={props.columnHeaders}
+            dataBody={dataBody}
           />
           <TableauBody
             data={dataBody}

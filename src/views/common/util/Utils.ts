@@ -351,8 +351,8 @@ export function supprimeElement(tableau: any[], fct: any) {
   return nouveauTableau;
 }
 
-export function getLibelle(msg: string) {
-  return msg;
+export function getLibelle(msg?: string) {
+  return msg ?? "";
 }
 
 export function shallowEgalTableau(tab1: Object[], tab2: Object[]) {

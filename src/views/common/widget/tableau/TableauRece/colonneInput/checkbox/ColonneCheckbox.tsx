@@ -3,29 +3,34 @@ import { TableauTypeColumn } from "../../TableauTypeColumn";
 import { getElementCheckboxBody } from "./CheckboxBody";
 import { CheckboxHeader } from "./CheckboxHeader";
 
-export const getColonneCheckbox = (
+export function getColonneCheckbox(
   identifiantsSelectionnes: string[],
   setIdentifiantsSelectionnes: React.Dispatch<React.SetStateAction<string[]>>,
   getIdentifiant: (data: any) => string,
   contientHeader = false,
-  allIdentifiants?: string[],
-  filtreAffichageCell?: (data: any) => boolean
-): TableauTypeColumn => {
-  if (!filtreAffichageCell) {
-    filtreAffichageCell = (data: any) => true;
+  filtreAffichageCell = (data: any) => true
+): TableauTypeColumn {
+  function getIdentifiantsDeLaPageCourante(
+    datasDeLaPageCourante: any[]
+  ): string[] {
+    return datasDeLaPageCourante.map(data => getIdentifiant(data));
   }
 
-  const handleChangeCheckboxHeader = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    allIdentifiants &&
-      setIdentifiantsSelectionnes(event.target.checked ? allIdentifiants : []);
-  };
+  function handleChangeCheckboxHeader(
+    event: React.ChangeEvent<HTMLInputElement>,
+    datasDeLaPageCourante: any[]
+  ) {
+    setIdentifiantsSelectionnes(
+      event.target.checked
+        ? getIdentifiantsDeLaPageCourante(datasDeLaPageCourante)
+        : []
+    );
+  }
 
-  const handleChangeCheckboxBody = (
+  function handleChangeCheckboxBody(
     event: React.ChangeEvent<HTMLInputElement>,
     identifiant: string
-  ) => {
+  ) {
     let selection: string[] = [...identifiantsSelectionnes];
 
     if (event.target.checked) {
@@ -34,22 +39,25 @@ export const getColonneCheckbox = (
       selection = selection.filter(idCourant => idCourant !== identifiant);
     }
     setIdentifiantsSelectionnes(selection);
-  };
+  }
 
-  const title =
-    contientHeader && allIdentifiants && allIdentifiants.length > 0 ? (
+  function getTitle(datasDeLaPageCourante: any[]) {
+    return contientHeader && datasDeLaPageCourante.length > 0 ? (
       <CheckboxHeader
         identifiantsSelectionnes={identifiantsSelectionnes}
-        allIdentifiants={allIdentifiants}
-        handleChange={handleChangeCheckboxHeader}
+        identifiantsDeLaPage={getIdentifiantsDeLaPageCourante(
+          datasDeLaPageCourante
+        )}
+        handleChange={e => handleChangeCheckboxHeader(e, datasDeLaPageCourante)}
       />
     ) : (
-      ""
+      <></>
     );
+  }
 
   return new TableauTypeColumn({
     keys: ["checkbox"],
-    title,
+    getTitle,
     getElement: getElementCheckboxBody.bind(
       null,
       identifiantsSelectionnes,
@@ -59,4 +67,4 @@ export const getColonneCheckbox = (
     ),
     style: { width: "3rem" }
   });
-};
+}
