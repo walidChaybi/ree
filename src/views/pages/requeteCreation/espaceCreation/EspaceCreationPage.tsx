@@ -1,6 +1,5 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
 import { OfficierContext } from "@core/contexts/OfficierContext";
-import { IOfficier } from "@model/agent/IOfficier";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import {
   URL_MES_REQUETES_CREATION,
@@ -12,6 +11,7 @@ import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauP
 import React, { useState } from "react";
 import { BoutonAttribuerRequete } from "./BoutonAttribuerRequete";
 import BoutonPrendreEnChargePlusAncienneCreation from "./BoutonPrendreEnChargePlusAncienneCreation";
+import MenuSaisirRequeteCreation from "./contenu/MenuSaisirRequeteCreation";
 import { MesRequetesCreation } from "./MesRequetesCreation";
 import { statutsRequetesCreation } from "./params/EspaceCreationParams";
 import { RequetesServiceCreation } from "./RequetesServiceCreation";
@@ -29,7 +29,6 @@ const queryParametersPourRequetes = {
 
 const getBlocBoutons = (
   selectedTabState: number,
-  officier: IOfficier,
   setPopinAttribuerAOuvert: Function
 ) => {
   const ouvrirPopinAttribuerA = () => {
@@ -38,6 +37,7 @@ const getBlocBoutons = (
 
   return (
     <div className="BlocBoutons">
+      <MenuSaisirRequeteCreation indexTabPanel={selectedTabState} />
       {selectedTabState === 1 && (
         <BoutonAttribuerRequete onClick={ouvrirPopinAttribuerA} />
       )}
@@ -108,7 +108,6 @@ const EspaceCreationPage: React.FC<LocalProps> = ({ selectedTab }) => {
                     )}
                     elementEntreTitreEtContenu={getBlocBoutons(
                       selectedTabState,
-                      officier.officierDataState,
                       setPopinAttribuerAOuvert
                     )}
                     titre="Menu espace création"

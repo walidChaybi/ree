@@ -12,6 +12,7 @@ import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteC
 import { ApercuReqCreationTranscriptionSaisieProjetPage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSaisieProjetPage";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
+import { SaisirRCTCPage } from "@pages/requeteCreation/saisirRequete/SaisirRCTCPage";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
@@ -33,6 +34,7 @@ import {
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+  URL_MES_REQUETES_CREATION_SAISIR_RCTC,
   URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
   URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
@@ -62,6 +64,7 @@ import {
   URL_RECHERCHE_REQUETE_EDITION_ID,
   URL_REQUETES_CREATION_SERVICE,
   URL_REQUETES_CREATION_SERVICE_APERCU_REQUETE_ID,
+  URL_REQUETES_CREATION_SERVICE_SAISIR_RCTC,
   URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
   URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
   URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
@@ -79,7 +82,6 @@ import {
   URL_SAISIR_RDCSC_RMC,
   URL_SAISIR_RDC_RMC
 } from "./ReceUrls";
-
 
 const LIBELLE_APERCU_REQUETE_TRAITEMENT = "Aperçu requête (traitement)";
 const LIBELLE_APERCU_REQUETE = "Aperçu de requête";
@@ -420,6 +422,12 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle("Mes requêtes de création")
   },
   {
+    url: URL_MES_REQUETES_CREATION_SAISIR_RCTC,
+    component: SaisirRCTCPage,
+    droits: [Droit.CREER_ACTE_TRANSCRIT],
+    libelle: getLibelle(`Saisir une requête de transcription`)
+  },
+  {
     url: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
     component: ApercuReqCreationEtablissementPage,
     droitPerimetres: {
@@ -460,6 +468,12 @@ export const routesRece: IRoute[] = [
       Droit.CREER_ACTE_TRANSCRIT
     ],
     libelle: getLibelle("Les requêtes de création de mon service")
+  },
+  {
+    url: URL_REQUETES_CREATION_SERVICE_SAISIR_RCTC,
+    component: SaisirRCTCPage,
+    droits: [Droit.CREER_ACTE_TRANSCRIT],
+    libelle: getLibelle(`Saisir une requête de transcription`)
   },
   {
     url: URL_REQUETES_CREATION_SERVICE_APERCU_REQUETE_ID,

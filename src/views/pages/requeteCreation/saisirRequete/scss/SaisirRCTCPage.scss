@@ -1,0 +1,26 @@
+.SaisirRCTCPage {
+  margin: 1.5rem 8rem;
+
+  .FormulaireSaisirRCTC {
+    .BlockInput {
+      .RadioInput {
+        input {
+          width: auto;
+        }
+      }
+    }
+  }
+
+  .Date {
+    display: grid;
+    grid-template-columns: 43.4% auto;
+    .DateEvenement {
+      .DateComposeForm {
+        grid-template-columns: 53% 10% 9px 10% 9px 14% 2%;
+      }
+      .BlockErreur {
+        margin-left: 53%;
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+.ParentsForm, .IdentiteTitulaireForm {
+  .PrenomsForm{
+  display: flex;
+  }
+  .BlockInput {
+    display: flex;
+    width: 800px;
+    justify-content: flex-start;
+    input {
+      width: 60%;
+    }
+    label {
+      width: 40%;
+    }
+
+  }
+  .BlockErreur {
+    margin-left: 23%;
+  }
+}

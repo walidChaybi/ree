@@ -11,7 +11,7 @@ import { useHistory } from "react-router";
 import "./scss/SaisirRequeteBoutons.scss";
 
 export type SaisirRequeteBoutonsProps = {
-  setIsBrouillon: any;
+  setIsBrouillon?: any;
   modeModification?: boolean;
 } & FormikComponentProps;
 
@@ -23,13 +23,17 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
     });
     replaceUrl(history, url);
   };
-  const valider = () => props.formik.submitForm();
+
+  const valider = () => {
+    props.formik.submitForm();
+  }; 
+
   const prendreEnCharge = () => {
-    props.setIsBrouillon(false);
+    props.setIsBrouillon && props.setIsBrouillon(false);
     valider();
   };
   const sauvegarder = () => {
-    props.setIsBrouillon(true);
+    props.setIsBrouillon && props.setIsBrouillon(true);
     valider();
   };
 

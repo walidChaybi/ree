@@ -6,14 +6,16 @@ import { connect } from "formik";
 import React, { useEffect } from "react";
 import "../scss/PiecesJointesForm.scss";
 import { SousFormulaire } from "../SousFormulaire";
-import { SubFormProps } from "../utils/FormUtil";
+import { ISubForm, SubFormProps } from "../utils/FormUtil";
 import { PiecesJointes } from "./PiecesJointes";
 
-export interface PiecesJointesFormProps extends SubFormProps {
+export interface PiecesJointesFormProps {
   typeRequete?: TypeRequete;
 }
 
-const PiecesJointesForm: React.FC<PiecesJointesFormProps> = props => {
+export type PiecesJointesSubFormProps = SubFormProps & PiecesJointesFormProps;
+
+const PiecesJointesForm: React.FC<PiecesJointesSubFormProps> = props => {
   const [menuItemsState, setMenuItemsState] = React.useState<Options>([]);
 
   const piecesJointes: PieceJointe[] =
@@ -47,4 +49,4 @@ const PiecesJointesForm: React.FC<PiecesJointesFormProps> = props => {
   );
 };
 
-export default connect(PiecesJointesForm);
+export default connect<ISubForm & PiecesJointesFormProps>(PiecesJointesForm);

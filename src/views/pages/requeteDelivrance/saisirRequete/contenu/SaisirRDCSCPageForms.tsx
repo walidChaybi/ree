@@ -13,9 +13,7 @@ import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import AdresseForm from "@widget/formulaire/adresse/AdresseForm";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
-import PiecesJointesForm, {
-  PiecesJointesFormProps
-} from "@widget/formulaire/piecesJointes/PiecesJointesForm";
+import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { FormikProps, FormikValues } from "formik";
 import React from "react";
@@ -87,12 +85,14 @@ export function getAdresseForm(): JSX.Element {
 }
 
 export function getPiecesJointesForm(): JSX.Element {
-  const piecesJointesFormProps = {
-    nom: PIECES_JOINTES,
-    titre: getLibelle("Pièces justificatives"),
-    typeRequete: TypeRequete.DELIVRANCE
-  } as PiecesJointesFormProps;
-  return <PiecesJointesForm key={PIECES_JOINTES} {...piecesJointesFormProps} />;
+  return (
+    <PiecesJointesForm
+      key={PIECES_JOINTES}
+      nom={PIECES_JOINTES}
+      typeRequete={TypeRequete.DELIVRANCE}
+      titre={getLibelle("Pièces justificatives")}
+    />
+  );
 }
 
 export function getBoutonsPopin(

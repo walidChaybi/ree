@@ -1,0 +1,18 @@
+.ParentsForm {   
+    .EvenementMariageParentsForm, .EvenementReconnaissanceTitulaireForm {
+        margin-left: 2.4rem;
+    }
+    .EvenementReconnaissanceTitulaireForm {
+        margin-top: 2rem;
+    }
+    .RadioInput {
+        
+        input {
+            width: auto;
+        }
+    }
+
+    .conteneurBoutons {
+        margin-left: 2rem;
+    }
+}

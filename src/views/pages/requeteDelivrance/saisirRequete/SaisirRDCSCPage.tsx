@@ -529,7 +529,7 @@ export const SaisirRDCSCPage: React.FC = () => {
     }));
   };
 
-  const onAjoutTitulaire = (formik: FormikProps<FormikValues>) => {
+  const onAjoutTitulaire = (formik: FormikProps<FormikValues>) => {    
     onChangeTitulaires(
       [
         ...titulairesState.titulaires,

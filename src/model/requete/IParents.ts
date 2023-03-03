@@ -8,6 +8,7 @@ export interface IParent {
   position: number;
   nomNaissance: string;
   prenoms: IPrenomOrdonnes[];
+  nom?: string;
 }
 
 export const Parent = {

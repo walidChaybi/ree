@@ -41,7 +41,7 @@ const HookEvenementForm: React.FC = () => {
         <Field as="textarea" value={result} data-testid="result" />
       </Form>
     </Formik>
-  );
+  ); 
 };
 
 test("render composant Evenement Formulaire", async () => {

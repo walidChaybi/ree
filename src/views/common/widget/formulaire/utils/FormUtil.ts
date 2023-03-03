@@ -5,6 +5,10 @@ import { FormikProps, FormikValues } from "formik";
 export const NB_CARACT_MAX_SAISIE = "100";
 export const NB_CARACT_ADRESSE = "38";
 export const NB_CARACT_COMMUNE = "32";
+export const TRENTE_DEUX_CARACT_MAX = "32";
+export const CENT_CARACT_MAX = "100";
+export const DIX_CARACT_MAX = "10";
+export const TRENTE_HUIT_CARACT_MAX = "100";
 export const IGNORER_TABULATION = -1;
 
 export type FormikComponentProps = {

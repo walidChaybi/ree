@@ -48,6 +48,10 @@ export const AdresseFormDefaultValues = {
   [NUMERO_TELEPHONE]: ""
 };
 
+interface AdresseFormProps {
+  affichageSousFormulaire?: boolean;
+}
+
 // Schéma de validation des champs
 export const AdresseFormValidationSchema = Yup.object().shape({
   [VOIE]: Yup.string().matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
@@ -109,7 +113,10 @@ export const AdresseFormValidationSchemaRequired = Yup.object().shape({
   )
 });
 
-const AdresseForm: React.FC<SubFormProps> = props => {
+const AdresseForm: React.FC<SubFormProps & AdresseFormProps> = ({
+  affichageSousFormulaire = true,
+  ...props
+}) => {
   const voieWithNamespace = withNamespace(props.nom, VOIE);
   const lieuDitWithNamespace = withNamespace(props.nom, LIEU_DIT);
   const destinataireWithNamespace = withNamespace(
@@ -120,95 +127,103 @@ const AdresseForm: React.FC<SubFormProps> = props => {
   const communeWithNamespace = withNamespace(props.nom, COMMUNE);
   const paysWithNamespace = withNamespace(props.nom, PAYS);
 
-  return (
-    <>
-      <SousFormulaire titre={props.titre}>
-        <div className="AdresseForm">
+  function getAddresseForm(): JSX.Element {
+    return (
+      <div className="AdresseForm">
+        <InputField
+          name={destinataireWithNamespace}
+          label={getLibelle("Complément d’identification du destinataire")}
+          placeholder={getLibelle(
+            "Appartement, boite aux lettres, escalier, chez…"
+          )}
+          maxLength={NB_CARACT_ADRESSE}
+          onBlur={e =>
+            sortieChampEnMajuscule(e, props.formik, destinataireWithNamespace)
+          }
+        />
+        <InputField
+          name={pointGeoWithNamespace}
+          label={getLibelle(
+            "Complément d’identification du point géographique"
+          )}
+          placeholder={getLibelle("Entrée, bâtiment, immeuble, résidence…")}
+          maxLength={NB_CARACT_ADRESSE}
+          onBlur={e =>
+            sortieChampEnMajuscule(e, props.formik, pointGeoWithNamespace)
+          }
+        />
+        <InputField
+          name={voieWithNamespace}
+          label={getLibelle("Numéro, type et nom de la voie")}
+          placeholder={getLibelle("Numéro, type et nom de la voie")}
+          maxLength={NB_CARACT_ADRESSE}
+          onBlur={e =>
+            sortieChampEnMajuscule(e, props.formik, voieWithNamespace)
+          }
+        />
+        <InputField
+          name={lieuDitWithNamespace}
+          label={getLibelle(
+            "Lieu-dit, boite postale ou état/province (à l'étranger)"
+          )}
+          placeholder={getLibelle(
+            "Lieu-dit, boite postale ou état/province à l'étranger"
+          )}
+          maxLength={NB_CARACT_ADRESSE}
+          onBlur={e =>
+            sortieChampEnMajuscule(e, props.formik, lieuDitWithNamespace)
+          }
+        />
+        <div className="CodePostal">
           <InputField
-            name={destinataireWithNamespace}
-            label={getLibelle("Complément d’identification du destinataire")}
-            placeholder={getLibelle(
-              "Appartement, boite aux lettres, escalier, chez…"
-            )}
-            maxLength={NB_CARACT_ADRESSE}
-            onBlur={e =>
-              sortieChampEnMajuscule(e, props.formik, destinataireWithNamespace)
-            }
+            name={withNamespace(props.nom, CODE_POSTAL)}
+            label={getLibelle("Code postal")}
           />
-          <InputField
-            name={pointGeoWithNamespace}
-            label={getLibelle(
-              "Complément d’identification du point géographique"
-            )}
-            placeholder={getLibelle("Entrée, bâtiment, immeuble, résidence…")}
-            maxLength={NB_CARACT_ADRESSE}
-            onBlur={e =>
-              sortieChampEnMajuscule(e, props.formik, pointGeoWithNamespace)
-            }
-          />
-          <InputField
-            name={voieWithNamespace}
-            label={getLibelle("Numéro, type et nom de la voie")}
-            placeholder={getLibelle("Numéro, type et nom de la voie")}
-            maxLength={NB_CARACT_ADRESSE}
-            onBlur={e =>
-              sortieChampEnMajuscule(e, props.formik, voieWithNamespace)
-            }
-          />
-          <InputField
-            name={lieuDitWithNamespace}
-            label={getLibelle(
-              "Lieu-dit, boite postale ou état/province (à l'étranger)"
-            )}
-            placeholder={getLibelle(
-              "Lieu-dit, boite postale ou état/province à l'étranger"
-            )}
-            maxLength={NB_CARACT_ADRESSE}
-            onBlur={e =>
-              sortieChampEnMajuscule(e, props.formik, lieuDitWithNamespace)
-            }
-          />
-          <div className="CodePostal">
+        </div>
+        <InputField
+          name={communeWithNamespace}
+          label={getLibelle("Commune")}
+          maxLength={NB_CARACT_COMMUNE}
+          onBlur={e =>
+            sortieChampEnMajuscule(e, props.formik, communeWithNamespace)
+          }
+        />
+        <InputField
+          name={paysWithNamespace}
+          label={getLibelle("Pays")}
+          maxLength={NB_CARACT_ADRESSE}
+          onBlur={e =>
+            sortieChampEnMajuscule(e, props.formik, paysWithNamespace)
+          }
+        />
+        {!props.formulaireReduit && (
+          <>
             <InputField
-              name={withNamespace(props.nom, CODE_POSTAL)}
-              label={getLibelle("Code postal")}
+              name={withNamespace(props.nom, ADRESSE_COURRIEL)}
+              label={getLibelle("Adresse courriel du requérant")}
+              maxLength={NB_CARACT_MAX_SAISIE}
             />
-          </div>
-          <InputField
-            name={communeWithNamespace}
-            label={getLibelle("Commune")}
-            maxLength={NB_CARACT_COMMUNE}
-            onBlur={e =>
-              sortieChampEnMajuscule(e, props.formik, communeWithNamespace)
-            }
-          />
-          <InputField
-            name={paysWithNamespace}
-            label={getLibelle("Pays")}
-            maxLength={NB_CARACT_ADRESSE}
-            onBlur={e =>
-              sortieChampEnMajuscule(e, props.formik, paysWithNamespace)
-            }
-          />
-          {!props.formulaireReduit && (
-            <>
+            <div className="Telephone">
               <InputField
-                name={withNamespace(props.nom, ADRESSE_COURRIEL)}
-                label={getLibelle("Adresse courriel du requérant")}
+                name={withNamespace(props.nom, NUMERO_TELEPHONE)}
+                label={getLibelle("Numéro téléphone du requérant")}
+                placeholder={getLibelle("(Indicatif) numero")}
                 maxLength={NB_CARACT_MAX_SAISIE}
               />
-              <div className="Telephone">
-                <InputField
-                  name={withNamespace(props.nom, NUMERO_TELEPHONE)}
-                  label={getLibelle("Numéro téléphone du requérant")}
-                  placeholder={getLibelle("(Indicatif) numero")}
-                  maxLength={NB_CARACT_MAX_SAISIE}
-                />
-              </div>
-            </>
-          )}
-        </div>
-      </SousFormulaire>
+            </div>
+          </>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {affichageSousFormulaire ? (
+        <SousFormulaire titre={props.titre}>{getAddresseForm()}</SousFormulaire>
+      ) : (
+        getAddresseForm()
+      )}
     </>
   );
 };

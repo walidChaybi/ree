@@ -36,7 +36,8 @@ export type NomComposant =
   | "BoutonPrendreEnChargeAleatoirement"
   | "BoutonPrendreEnChargeAleatoirementInformation"
   | "BoutonPrendreEnChargePlusAncienneCreation"
-  | "BoutonSignerLeLot";
+  | "BoutonSignerLeLot"
+  | "MenuSaisirRequeteCreation";
 
 export type NomComposantOuFonction = NomComposant | NomFonction;
 
@@ -123,6 +124,11 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "MenuSaisirRequete",
+    tousLesDroits: [Droit.SAISIR_REQUETE],
+    comportementSiNonAutorise: { disabled: true }
+  },
+  {
+    nomComposant: "MenuSaisirRequeteCreation",
     tousLesDroits: [Droit.SAISIR_REQUETE],
     comportementSiNonAutorise: { disabled: true }
   },

@@ -1,0 +1,14 @@
+.NatureActeEtLienRequerant {
+  margin: 1.5rem 2.5rem;
+  .BlockInput {
+        display: flex;
+        width: 800px;
+        justify-content: space-between;
+        .SelectField {
+          width: 61%;
+        }    
+  }
+  .BlockErreur {
+    margin-left: 23%;
+  }
+}
