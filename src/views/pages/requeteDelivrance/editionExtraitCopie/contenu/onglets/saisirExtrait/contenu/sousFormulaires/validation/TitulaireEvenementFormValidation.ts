@@ -86,7 +86,7 @@ export const TitulaireEvtActeMariageValidationSchema = Yup.object(
       res = this.createError(paramsError);
     } else if (
       estRenseigne(titulaireEvtForm.parentAdoptantNaiss2?.nomNaissance) &&
-      estNonRenseigne(titulaireEvtForm.parentAdoptantNaiss1.nomNaissance)
+      estNonRenseigne(titulaireEvtForm.parentAdoptantNaiss1?.nomNaissance)
     ) {
       const paramsError = {
         path: `${error.path}.${PARENT_ADOPTANT_NAISS1}.${NOM_NAISSANCE}`,
