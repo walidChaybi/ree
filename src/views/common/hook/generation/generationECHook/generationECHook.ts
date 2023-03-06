@@ -2,6 +2,7 @@ import { Orientation } from "@model/composition/enum/Orientation";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -132,7 +133,7 @@ export function useGenerationEC(
         );
 
         const typeDocument = getTypeDocument(params.choixDelivrance);
-        const avecCtv = DocumentDelivrance.estExtraitCopieAsigner(typeDocument);
+        const avecCtv = DocumentDelivrance.estExtraitCopieAsigner(typeDocument) && SousTypeDelivrance.estSousTypeSignable(requete.sousType);
         const documentReponsePourStockage = {
           contenu,
           nom: getNomDocument(params.choixDelivrance),
