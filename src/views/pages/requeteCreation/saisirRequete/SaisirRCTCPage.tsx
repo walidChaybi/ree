@@ -2,9 +2,7 @@ import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
 } from "@pages/requeteDelivrance/saisirRequete/boutons/SaisirRequeteBoutons";
-import { getLibelle } from "@util/Utils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import React from "react";
 import * as Yup from "yup";
 import {
@@ -41,8 +39,7 @@ import {
 } from "./sousForm/identite/IdentiteTitulaireForm";
 import {
   ParentFormDefaultValues,
-  ParentFormValidationSchema,
-  ParentSubFormProps
+  ParentFormValidationSchema
 } from "./sousForm/parent/ParentsForm";
 import {
   RequerantFormDefaultValue,
@@ -78,13 +75,6 @@ const ValidationSchemaSaisirRCTC = Yup.object({
   }),
   [REQUERANT]: RequerantFormValidationSchema
 });
-
-export const creerParent = (numParent = 1) => {
-  return {
-    nom: withNamespace(PARENTS, `parent${numParent}`),
-    titre: getLibelle(`Parent ${numParent}`)
-  } as ParentSubFormProps;
-};
 
 export const SaisirRCTCPage: React.FC = () => {
   const onSubmitSaisirRequete = () => {};
