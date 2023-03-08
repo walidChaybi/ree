@@ -7,12 +7,14 @@
   }
 
   .BoutonSuivPrecItem {
+    margin-right: 0.6rem;
     padding: 0px;
     min-width: 0px;
     color: $button-application-color;
     background-color: transparent;
     font-size: 3rem;
     vertical-align: middle;
+    opacity: 0.7;
 
     &:disabled {
       background-color: transparent;
