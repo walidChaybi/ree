@@ -3,16 +3,11 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
+import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { TableauRMCAutoPersonne } from "@pages/rechercheMultiCriteres/autoPersonne/TableauRMCAutoPersonne";
 import { getDateStringFromDateCompose } from "@util/DateUtils";
-import {
-  enMajuscule,
-  getLibelle,
-  getPremierElemOuVide,
-  getValeurOuVide,
-  SNP
-} from "@util/Utils";
+import { enMajuscule, getLibelle, getValeurOuVide } from "@util/Utils";
 import { BoutonMenu, IBoutonMenuItem } from "@widget/boutonMenu/BoutonMenu";
 import React from "react";
 
@@ -108,16 +103,7 @@ function getLibelleQualiteTitulaire(
 }
 
 function getNom(titulaire: ITitulaireRequeteCreation): string {
-  const nom: string = enMajuscule(
-    titulaire.typeObjetTitulaire !==
-      TypeObjetTitulaire.TITULAIRE_ACTE_TRANSCRIT_DRESSE
-      ? titulaire.nomNaissance
-      : titulaire.nomNaissance === SNP
-      ? titulaire.nomDemandeFrancisation
-      : titulaire.nomNaissance
-  );
-  const prenom: string = getPremierElemOuVide(
-    titulaire.prenoms?.map(prenomOrdonne => prenomOrdonne.prenom)
-  );
-  return prenom !== "" ? `${nom} ${prenom}` : nom;
+  const nom: string = enMajuscule(titulaire.nomNaissance);
+  const prenom: string | undefined = TitulaireRequete.getPrenom1(titulaire);
+  return `${nom} ${prenom}`;
 }
