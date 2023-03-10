@@ -189,7 +189,7 @@ test("Test édition mentions Edition Extrait copie", async () => {
 
   await waitFor(() => {
     expect(screen.getByText("Deuxième mention changée")).toBeDefined();
-    expect(screen.getByPlaceholderText("Nature sélectionnée")).toBeDefined();
+    expect(screen.getByLabelText("Nature sélectionnée")).toBeDefined();
   });
 
   act(() => {
@@ -258,7 +258,7 @@ test("Ajout mention et réinitialisation", async () => {
   });
 
   act(() => {
-    fireEvent.change(screen.getByPlaceholderText("Nature ajoutée"), {
+    fireEvent.change(screen.getByLabelText("Nature ajoutée"), {
       target: {
         value: "b03c5992-d421-4aa1-a4cf-f97f22b267f9"
       }
@@ -270,7 +270,7 @@ test("Ajout mention et réinitialisation", async () => {
       (screen.getByTitle("Ajouter la mention") as HTMLButtonElement).disabled
     ).toBeFalsy();
     expect(
-      (screen.getByPlaceholderText("Nature ajoutée") as HTMLSelectElement).value
+      (screen.getByLabelText("Nature ajoutée") as HTMLSelectElement).value
     ).toBe("b03c5992-d421-4aa1-a4cf-f97f22b267f9");
   });
 
@@ -280,7 +280,7 @@ test("Ajout mention et réinitialisation", async () => {
 
   await waitFor(() => {
     expect(screen.getAllByText("Troisième mention ajoutée")).toBeDefined();
-    expect(screen.getByPlaceholderText("Nature sélectionnée")).toBeDefined();
+    expect(screen.getByLabelText("Nature sélectionnée")).toBeDefined();
     expect(
       (screen.getByText("Réinitialiser") as HTMLButtonElement).disabled
     ).toBeFalsy();
@@ -349,7 +349,7 @@ test("clic sur mention et sur checkbox et valider", async () => {
   });
 
   act(() => {
-    fireEvent.change(screen.getByPlaceholderText("Nature sélectionnée"), {
+    fireEvent.change(screen.getByLabelText("Nature sélectionnée"), {
       target: {
         value: "b03c5992-d421-4aa1-a4cf-f97f22b267f9"
       }

@@ -1,4 +1,8 @@
+import { Option } from "@util/Type";
+import { storeRece } from "./../../views/common/util/storeRece";
 import { TypeEntite } from "./enum/TypeEntite";
+
+const CODE_ENTITE_ETABLISSEMENT = "Etablissement";
 
 export interface IHierarchieEntite {
   entite?: IEntite;
@@ -14,3 +18,20 @@ export interface IEntite {
   utilisateur?: any;
   estDansSCEC?: boolean;
 }
+
+export const Entite = {
+  getEntite(codeEntite: string) {
+    return storeRece.listeEntite.find(entite => entite.code === codeEntite);
+  },
+  getEntiteEtablissement() {
+    return this.getEntite(CODE_ENTITE_ETABLISSEMENT);
+  },
+  mapCommeOptions(entites?: IEntite[]): Option[] {
+    return entites
+      ? entites.map(entite => ({
+          str: entite.libelleEntite,
+          value: entite.idEntite
+        }))
+      : [];
+  }
+};

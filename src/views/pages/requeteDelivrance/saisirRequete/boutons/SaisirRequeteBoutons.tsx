@@ -10,10 +10,14 @@ import React from "react";
 import { useHistory } from "react-router";
 import "./scss/SaisirRequeteBoutons.scss";
 
-export type SaisirRequeteBoutonsProps = {
+
+export interface ComponentProps {
   setIsBrouillon?: any;
   modeModification?: boolean;
-} & FormikComponentProps;
+  onTransferer: () => void;
+}
+
+export type SaisirRequeteBoutonsProps = ComponentProps & FormikComponentProps;
 
 const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
   const history = useHistory();
@@ -26,7 +30,7 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
 
   const valider = () => {
     props.formik.submitForm();
-  }; 
+  };
 
   const prendreEnCharge = () => {
     props.setIsBrouillon && props.setIsBrouillon(false);
@@ -70,9 +74,12 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
             {getLibelle("Sauvegarder")}
           </Bouton>
         )}
+        <Bouton onClick={props.onTransferer}>
+          {getLibelle("Transmettre au service compétent")}
+        </Bouton>
       </div>
     </>
   );
 };
 
-export default connect(SaisirRequeteBoutons);
+export default connect<ComponentProps>(SaisirRequeteBoutons);

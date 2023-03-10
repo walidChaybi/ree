@@ -69,7 +69,7 @@ export const customHeaderRenderer = ({
     </button>
 
     <SelectRece
-      label="Mois"
+      placeholder="Mois"
       ariaLabel="select month"
       value={months[getMonth(date)]}
       onChange={({ target: { value } }) => changeMonth(months.indexOf(value))}
@@ -78,7 +78,7 @@ export const customHeaderRenderer = ({
     />
 
     <SelectRece
-      label="Année"
+      placeholder="Année"
       ariaLabel="select year"
       value={getYear(date)}
       onChange={({ target: { value } }) => changeYear(Number(value))}

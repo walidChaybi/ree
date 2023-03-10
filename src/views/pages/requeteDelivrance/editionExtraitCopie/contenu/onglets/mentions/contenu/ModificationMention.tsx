@@ -32,10 +32,10 @@ export const ModificationMention: React.FC<ModificationMentionProps> = ({
           <SelectRece
             pasPremiereOptionVide={true}
             options={getOptionsMentions(estExtraitPlurilingue, natureActe)}
-            label="Nature sélectionnée"
+            placeholder="Nature sélectionnée"
             value={NatureMention.getUuidFromNature(mentionSelect?.nature)}
             onChange={handleChangeSelect}
-            aria-label="Nature sélectionnée"
+            ariaLabel="Nature sélectionnée"
             onBlur={handleOnBlur}
           />
         </span>

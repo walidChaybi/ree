@@ -9,6 +9,19 @@ import {
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router";
+import request from "superagent";
+import { configAgent } from "../../../../../mock/superagent-config/superagent-mock-agent";
+import { configRequetesCreation } from "../../../../../mock/superagent-config/superagent-mock-requetes-creation";
+import { entiteRatachementEtablissement } from "./../../../../../mock/data/entiteRatachementEtablissement";
+
+const superagentMock = require("superagent-mock")(request, [
+  configAgent[0],
+  configRequetesCreation[0]
+]);
+
+afterAll(() => {
+  superagentMock.unset();
+});
 
 const HookSaisirRCTCForm: React.FC = () => {
   return <SaisirRCTCPage />;
@@ -35,7 +48,9 @@ test("DOIT rendre la page de saisie du formulaire de création correctement", as
   });
 
   await act(async () => {
-    if (boutonAjouterParent) fireEvent.click(boutonAjouterParent);
+    if (boutonAjouterParent) {
+      fireEvent.click(boutonAjouterParent);
+    }
   });
 
   await waitFor(() => {
@@ -46,4 +61,57 @@ test("DOIT rendre la page de saisie du formulaire de création correctement", as
     expect(boutonAjouterParent).not.toBeInTheDocument();
     expect(boutonSupprimerParent).toBeDefined();
   });
+});
+
+test("DOIT afficher la popin de transfert vers les entités fille (triées) du département Etablissement QUAND l'utilisateur clique sur le bouton de transmission", async () => {
+  await act(async () => {
+    render(
+      <Router history={history}>
+        <HookSaisirRCTCForm />
+      </Router>
+    );
+  });
+
+  const boutonTransmettre = screen.queryByText(
+    "Transmettre au service compétent"
+  );
+
+  await waitFor(() => {
+    expect(boutonTransmettre).toBeDefined();
+    expect(screen.queryByText("Choisissez une entité")).not.toBeInTheDocument();
+  });
+
+  await act(async () => {
+    fireEvent.click(boutonTransmettre!);
+  });
+
+  await waitFor(() => {
+    expect(screen.queryByText("Choisissez une entité")).toBeInTheDocument();
+  });
+
+  const selectElement = screen.getByLabelText(
+    "Choix des entités"
+  ) as HTMLSelectElement;
+
+  await waitFor(() => {
+    expect(screen.queryByText("BTE Genève")).toBeInTheDocument();
+  });
+
+  const options: HTMLOptionsCollection = selectElement.options;
+  const entiteRatachementEtablissementTriees =
+    entiteRatachementEtablissement.data.sort((entite1: any, entite2: any) =>
+      entite1.libelleEntite.localeCompare(entite2.libelleEntite)
+    );
+
+  for (let i = 0; i < options.length; i++) {
+    const libelleOtion = options.item(i)?.text;
+    if (i === 0) {
+      // Première option vide (Placeholder)
+      expect(libelleOtion).toEqual("Entités");
+    } else {
+      expect(libelleOtion).toEqual(
+        entiteRatachementEtablissementTriees[i - 1].libelleEntite
+      );
+    }
+  }
 });

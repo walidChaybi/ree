@@ -31,9 +31,10 @@ export const AjoutMention: React.FC<AjoutMentionProps> = ({
           <label>{getLibelle("Nature mention")}</label>
           <SelectRece
             options={getOptionsMentions(estExtraitPlurilingue, natureActe)}
-            label="Nature ajoutée"
+            placeholder="Nature ajoutée"
             value={NatureMention.getUuidFromNature(mentionAjout?.nature)}
             onChange={handleAjoutSelect}
+            ariaLabel="Nature ajoutée"
           />
         </span>
         <span className="ConteneurBouton">

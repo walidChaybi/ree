@@ -2,8 +2,10 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
+import { IEntite } from "@model/agent/IEntiteRattachement";
 import "@testing-library/jest-dom/extend-expect";
 import { storeRece } from "@util/storeRece";
+import { entitesRattachementALL } from "./mock/data/entitesRattachementALL";
 
 export const localStorageFeatureFlagMock = (function () {
   let store: any = {
@@ -53,6 +55,8 @@ if (window.document) {
     }
   });
 }
+
+storeRece.listeEntite = entitesRattachementALL.data as any as IEntite[];
 
 window.URL.createObjectURL = jest.fn(() => "url_test");
 

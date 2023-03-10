@@ -1,4 +1,5 @@
 import mockConnectedUser from "../data/connectedUser.json";
+import { entiteRatachementEtablissement } from "../data/entiteRatachementEtablissement";
 import DONNEES_ENTITES from "../data/entitesRattachement.json";
 import DONNEES_ENTITES_PAGE2 from "../data/entitesRattachementPage2.json";
 import { MockHabilitation } from "../data/habilitationMock";
@@ -50,6 +51,14 @@ export const configAgent = [
 
       if (match[1].startsWith("/entiterattachement/all?range=1-100")) {
         return { ...DONNEES_ENTITES_PAGE2 };
+      }
+
+      if (
+        match[1].startsWith(
+          "/entiterattachement?idEntite=6737566d-0f25-45dc-8443-97b444e6753a"
+        )
+      ) {
+        return { ...entiteRatachementEtablissement };
       }
 
       if (

@@ -6,47 +6,57 @@ import {
   FormikProps,
   FormikValues
 } from "formik";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IconErrorMessage } from "../erreur/IconeErreurMessage";
 import { FormikComponentProps } from "../utils/FormUtil";
 import "./scss/SelectField.scss";
 
 interface SelectProps {
   componentName?: string;
-  label: string;
   options: Option[];
   disabled?: boolean;
   value?: any;
-  description?: string;
+  placeholder?: string;
   onChange?: (e: any, formik?: FormikProps<FormikValues>) => void;
   ariaLabel?: string;
   pasPremiereOptionVide?: boolean;
-  placeholder?: string;
   onBlur?: (e: any) => void;
 }
 
 export const SelectRece: React.FC<SelectProps> = props => {
+  const ref = useRef<HTMLSelectElement>(null);
+  const [value, setValue] = useState();
   const handleChange = (e: any) => {
+    setValue(e.target.value);
     if (props.onChange) {
       props.onChange(e);
+      if (ref.current) {
+        ref.current.value = e.target;
+        ref.current.style.color = "black";
+      }
     }
   };
+
+  useEffect(() => {
+    setValue(props.value || "");
+  }, [props.value]);
 
   return (
     <div className="SelectField">
       <select
-        value={props.value}
+        ref={ref}
+        value={value}
         onChange={handleChange}
         name={props.componentName}
         disabled={props.disabled}
         onBlur={props.onBlur}
         aria-label={props.ariaLabel}
         data-testid={props.componentName}
-        placeholder={props.placeholder ? props.placeholder : props.label}
+        style={props.placeholder ? { color: "gray" } : undefined}
       >
         {!props.pasPremiereOptionVide && (
-          <option defaultValue={""}>
-            {props.description ? props.description : ""}
+          <option value={""} disabled={true}>
+            {props.placeholder ? props.placeholder : ""}
           </option>
         )}
         {props.options.map((option, index) => (
@@ -90,7 +100,8 @@ const _SelectField: React.FC<SelectFieldProps> = ({
   formik,
   onChange,
   onBlur,
-  pasPremiereOptionVide
+  pasPremiereOptionVide,
+  placeholder
 }) => {
   return (
     <div className="InputField">
@@ -116,6 +127,7 @@ const _SelectField: React.FC<SelectFieldProps> = ({
             }
           }}
           pasPremiereOptionVide={pasPremiereOptionVide}
+          placeholder={placeholder}
         />
       </div>
       <div className="BlockErreur">

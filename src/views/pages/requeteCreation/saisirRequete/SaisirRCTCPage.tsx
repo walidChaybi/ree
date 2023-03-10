@@ -1,9 +1,9 @@
+import { ChoixEntitePopin } from "@composant/choixEntitesPopin/ChoixEntitesPopin";
+import { Entite } from "@model/agent/IEntiteRattachement";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import SaisirRequeteBoutons, {
-  SaisirRequeteBoutonsProps
-} from "@pages/requeteDelivrance/saisirRequete/boutons/SaisirRequeteBoutons";
+import SaisirRequeteBoutons from "@pages/requeteDelivrance/saisirRequete/boutons/SaisirRequeteBoutons";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import {
   getActeATranscrireEtLienRequerant,
@@ -77,10 +77,22 @@ const ValidationSchemaSaisirRCTC = Yup.object({
 });
 
 export const SaisirRCTCPage: React.FC = () => {
+  //States
+  //////////////////////////////////////////////////////////////////////////
+  const [choixEntitesPopinOuverte, setChoixEntitesPopinOuverte] =
+    useState(false);
+
+  // Evenements
+  //////////////////////////////////////////////////////////////////////////
   const onSubmitSaisirRequete = () => {};
 
-  const boutonsProps = {} as SaisirRequeteBoutonsProps;
+  function onEntiteChoisiePourTransfert(idEntiteChoisie?: string) {
+    setChoixEntitesPopinOuverte(false);
+    // TODO
+  }
 
+  // Formulaire
+  //////////////////////////////////////////////////////////////////////////
   const blocsForm: JSX.Element[] = [
     getActeATranscrireEtLienRequerant(),
     getTitulaireForm(),
@@ -88,6 +100,7 @@ export const SaisirRCTCPage: React.FC = () => {
     getRequerantForm(),
     getPiecesJointesForm()
   ];
+
   return (
     <div className="SaisirRCTCPage">
       <title>{TITRE_FORMULAIRE}</title>
@@ -99,7 +112,15 @@ export const SaisirRCTCPage: React.FC = () => {
         className="FormulaireSaisirRCTC"
       >
         <div>{blocsForm}</div>
-        <SaisirRequeteBoutons {...boutonsProps} />
+        <ChoixEntitePopin
+          ouverte={choixEntitesPopinOuverte}
+          idEntiteMere={Entite.getEntiteEtablissement()?.idEntite}
+          onEntiteChoisie={onEntiteChoisiePourTransfert}
+          onCancel={() => setChoixEntitesPopinOuverte(false)}
+        />
+        <SaisirRequeteBoutons
+          onTransferer={() => setChoixEntitesPopinOuverte(true)}
+        />
       </Formulaire>
     </div>
   );
