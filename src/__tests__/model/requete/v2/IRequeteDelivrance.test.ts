@@ -7,9 +7,13 @@ import {
 } from "@model/requete/IRequeteDelivrance";
 import { waitFor } from "@testing-library/react";
 import request from "superagent";
+import { actions } from "../../../../mock/data/Actions";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
+afterAll(() => {
+  superagentMock.unset();
+});
 test("Attendu: RequeteDelivrance.getDocumentsDeDelivrance fonctionne correctement", async () => {
   await DocumentDelivrance.init();
   let documentDelivrance: IDocumentReponse;
@@ -57,6 +61,36 @@ test("estAuStatutASigner", () => {
   expect(RequeteDelivrance.estAuStatutASigner(requete)).toBeFalsy();
 });
 
-afterAll(() => {
-  superagentMock.unset();
+test("RequeteDelivrance.estARevoir DOIT retourner VRAI QUAND une action à revoir est présente en dernier ou avant des actions 'a signer sinon FAUX'", () => {
+  expect(
+    RequeteDelivrance.estARevoir({ actions: [] } as any as IRequeteDelivrance)
+  ).toBeFalsy();
+
+  expect(
+    RequeteDelivrance.estARevoir({ actions } as IRequeteDelivrance)
+  ).toBeTruthy();
+
+  expect(
+    RequeteDelivrance.estARevoir({
+      actions: [...actions, { libelle: "À revoir", numeroOrdre: 7 }]
+    } as IRequeteDelivrance)
+  ).toBeTruthy();
+
+  expect(
+    RequeteDelivrance.estARevoir({
+      actions: [actions[0]]
+    } as IRequeteDelivrance)
+  ).toBeFalsy();
+
+  expect(
+    RequeteDelivrance.estARevoir({
+      actions: [actions[0], actions[1]]
+    } as IRequeteDelivrance)
+  ).toBeFalsy();
+
+  expect(
+    RequeteDelivrance.estARevoir({
+      actions: [...actions, { libelle: "Requête transmise", numeroOrdre: 7 }]
+    } as IRequeteDelivrance)
+  ).toBeFalsy();
 });

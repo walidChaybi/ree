@@ -1,6 +1,10 @@
 /* istanbul ignore file */
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
-import { enMajuscule, premiereLettreEnMajuscule } from "@util/Utils";
+import {
+  chainesEgalesIgnoreCasseEtAccent,
+  enMajuscule,
+  premiereLettreEnMajuscule
+} from "@util/Utils";
 
 export interface IAction {
   id: string;
@@ -11,6 +15,9 @@ export interface IAction {
   trigramme: string;
 }
 
+const A_SIGNER = "a signer";
+const A_REVOIR = "a revoir";
+
 export const Action = {
   getLibelle(action?: IAction): string {
     return action ? premiereLettreEnMajuscule(action.libelle) : "";
@@ -20,5 +27,26 @@ export const Action = {
   },
   getDateAction(action?: IAction): string {
     return action ? getFormatDateFromTimestamp(action.dateAction) : "";
+  },
+  estASigner(action?: IAction): boolean {
+    return chainesEgalesIgnoreCasseEtAccent(action?.libelle, A_SIGNER);
+  },
+  estARevoir(action?: IAction): boolean {
+    return chainesEgalesIgnoreCasseEtAccent(action?.libelle, A_REVOIR);
+  },
+  getActionAvantActionsASigner(actions?: IAction[]): IAction | undefined {
+    const actionsDansLOrdre: IAction[] = this.getActionsDansLOrdre(actions);
+    let actionCourante = actionsDansLOrdre.pop();
+    while (actionsDansLOrdre.length > 0 && Action.estASigner(actionCourante)) {
+      actionCourante = actionsDansLOrdre.pop();
+    }
+    return actionCourante;
+  },
+  getActionsDansLOrdre(actions?: IAction[]) {
+    return actions
+      ? [...actions].sort(
+          (action1, action2) => action1.numeroOrdre - action2.numeroOrdre
+        )
+      : [];
   }
 };

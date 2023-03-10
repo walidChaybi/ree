@@ -3,6 +3,7 @@ import { DocumentDelivrance } from "./enum/DocumentDelivrance";
 import { MotifDelivrance } from "./enum/MotifDelivrance";
 import { SousTypeDelivrance } from "./enum/SousTypeDelivrance";
 import { StatutRequete } from "./enum/StatutRequete";
+import { Action } from "./IActions";
 import { DocumentReponse, IDocumentReponse } from "./IDocumentReponse";
 import { IEvenementReqDelivrance } from "./IEvenementReqDelivrance";
 import { IMandant } from "./IMandant";
@@ -62,9 +63,14 @@ export const RequeteDelivrance = {
 
   getCourrier(requete: IRequeteDelivrance): IDocumentReponse | undefined {
     return requete.documentsReponses.find(el =>
-      DocumentDelivrance.estCourrierDelivranceEC(el.typeDocument
-      )
+      DocumentDelivrance.estCourrierDelivranceEC(el.typeDocument)
+    );
+  },
+
+  /** La requete possede une action "A Revoir" en dernier ou juste avant une action "A Signer" */
+  estARevoir(requete?: IRequeteDelivrance): boolean {
+    return Action.estARevoir(
+      Action.getActionAvantActionsASigner(requete?.actions)
     );
   }
-
 };

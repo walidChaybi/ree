@@ -111,6 +111,9 @@ export const getOngletsVisu = (
         component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
       });
       res.ongletSelectionne = res.liste.length - 1;
+    } else if(RequeteDelivrance.estARevoir(requete)){
+      // Affichage de l'onglet requête si elle était à revoir avant de passer à signer
+      res.ongletSelectionne = res.liste.length - 1;
     }
   }
 
