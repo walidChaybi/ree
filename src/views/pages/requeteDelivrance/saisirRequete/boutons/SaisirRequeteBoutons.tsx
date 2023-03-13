@@ -11,7 +11,6 @@ import React from "react";
 import { useHistory } from "react-router";
 import "./scss/SaisirRequeteBoutons.scss";
 
-
 export interface ComponentProps {
   setIsBrouillon?: any;
   modeModification?: boolean;
@@ -76,9 +75,11 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
             {getLibelle("Sauvegarder")}
           </Bouton>
         )}
-        <Bouton onClick={props.onTransferer}>
-          {getLibelle("Transmettre au service compétent")}
-        </Bouton>
+        {props.onTransferer && (
+          <Bouton onClick={props.onTransferer}>
+            {getLibelle("Transmettre au service compétent")}
+          </Bouton>
+        )}
       </div>
     </>
   );
