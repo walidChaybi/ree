@@ -30,17 +30,21 @@ export const EvenementParentsFormDefaultValues = {
   [LIEU_DE_NAISSANCE]: "INCONNU",
   [VILLE_NAISSANCE]: "",
   [ARRONDISSEMENT_NAISSANCE]: "",
+  [DEPARTEMENT_NAISSANCE]: "",
   [REGION_NAISSANCE]: "",
   [PAYS_NAISSANCE]: ""
 };
 
 export const EvenementParentsFormValidationSchema = Yup.object().shape({
-  [LIEU_DE_NAISSANCE]: Yup.boolean(),
   [VILLE_NAISSANCE]: Yup.string().matches(
     CarateresAutorise,
     CARATERES_AUTORISES_MESSAGE
   ),
   [REGION_NAISSANCE]: Yup.string().matches(
+    CarateresAutorise,
+    CARATERES_AUTORISES_MESSAGE
+  ),
+  [DEPARTEMENT_NAISSANCE]: Yup.string().matches(
     CarateresAutorise,
     CARATERES_AUTORISES_MESSAGE
   ),
@@ -51,13 +55,15 @@ export const EvenementParentsFormValidationSchema = Yup.object().shape({
 });
 const EvenementParentsForm: React.FC<SubFormProps> = props => {
   const villeWithNamespace = withNamespace(props.nom, VILLE_NAISSANCE);
+  const departementWithspace = withNamespace(props.nom, DEPARTEMENT_NAISSANCE);
 
-  const [nationalite, setNationalite] = useState<EtrangerFrance>(
+  const [naissance, setNaissance] = useState<EtrangerFrance>(
     EtrangerFrance.INCONNU
   );
 
-  function onChangeNationalite(e: React.ChangeEvent<HTMLInputElement>) {
-    setNationalite(EtrangerFrance.getEnumFor(e.target.value));
+  function onChangeLieuNaissance(e: React.ChangeEvent<HTMLInputElement>) {
+    setNaissance(EtrangerFrance.getEnumFor(e.target.value));
+    props.formik.handleChange(e);
   }
 
   function getFormulaireNaissanceParentEtranger(): JSX.Element {
@@ -98,7 +104,7 @@ const EvenementParentsForm: React.FC<SubFormProps> = props => {
             sortieChampPremiereLettreEnMajuscule(
               e,
               props.formik,
-              villeWithNamespace
+              departementWithspace
             )
           }
         />
@@ -131,10 +137,10 @@ const EvenementParentsForm: React.FC<SubFormProps> = props => {
           name={withNamespace(props.nom, LIEU_DE_NAISSANCE)}
           label={getLibelle("Lieu de naissance")}
           values={EtrangerFrance.getAllEnumsAsOptions()}
-          onChange={onChangeNationalite}
+          onChange={onChangeLieuNaissance}
         />
 
-        {rendreComposantEnFonctionDuLieuDeNaissance(nationalite)}
+        {rendreComposantEnFonctionDuLieuDeNaissance(naissance)}
       </div>
     </div>
   );

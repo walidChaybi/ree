@@ -54,13 +54,26 @@ export const IdentiteFormDefaultValues = {
 };
 
 // Schéma de validation des champs
-export const IdentiteFormValidationSchema = Yup.object().shape({
-  [NOMS]: NomsFormValidationSchema,
-  [PRENOMS]: PrenomsFormValidationSchema,
-  [SEXE]: Yup.string(),
-  [DATE_NAISSANCE]: DateValidationSchemaSansTestFormat,
-  [NAISSANCE]: EvenementEtrangerFormValidationSchema
-});
+export const IdentiteFormValidationSchema = Yup.object()
+  .shape({
+    [NOMS]: NomsFormValidationSchema,
+    [PRENOMS]: PrenomsFormValidationSchema,
+    [SEXE]: Yup.string(),
+    [DATE_NAISSANCE]: DateValidationSchemaSansTestFormat,
+    [NAISSANCE]: EvenementEtrangerFormValidationSchema
+  })
+  .test("titulaire.pasDePrenomConnu", function (value, error) {
+    const prenom1 = value[PRENOMS].prenom1 as string;
+    const pasDePrenomConnuCoche = value[PAS_DE_PRENOM_CONNU];
+
+    const paramsError = {
+      path: `${error.path}.prenoms.prenom1`,
+      message: getLibelle("La saisie d'un prénom est obligatoire")
+    };
+    return pasDePrenomConnuCoche === "false" && !prenom1
+      ? this.createError(paramsError)
+      : true;
+  });
 
 const IdentiteTitulaireForm: React.FC<SubFormProps> = props => {
   const [pasDePrenomConnu, setPasDePrenomConnu] = useState(false);
@@ -103,7 +116,7 @@ const IdentiteTitulaireForm: React.FC<SubFormProps> = props => {
     props.formik.handleChange(e);
   }
 
-  function handleOnBlurPrenom1(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleBlurPrenom1(e: React.ChangeEvent<HTMLInputElement>) {
     const lienRequerant = getLienRequerant();
 
     if (
@@ -142,7 +155,7 @@ const IdentiteTitulaireForm: React.FC<SubFormProps> = props => {
           {!pasDePrenomConnu && (
             <PrenomsForm
               nom={withNamespace(props.nom, PRENOMS)}
-              onBlurPrenom1={handleOnBlurPrenom1}
+              onBlurPrenom={handleBlurPrenom1}
             />
           )}
 

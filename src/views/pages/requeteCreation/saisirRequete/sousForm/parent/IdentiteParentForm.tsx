@@ -1,6 +1,4 @@
-import PrenomsForm, {
-  PrenomsFormProps
-} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IParent } from "@model/requete/IParents";
 import { getLibelle } from "@util/Utils";
@@ -55,11 +53,6 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
     props.nom,
     PAYS_ORIGINE_REGUGIE
   );
-
-  const prenomsFormProps = {
-    nom: withNamespace(props.nom, PRENOMS),
-    prenoms: props.parent ? props.parent.prenoms : undefined
-  } as PrenomsFormProps;
 
   const nationaliteFormProps = {
     nom: withNamespace(props.nom, NATIONALITES),
@@ -132,7 +125,9 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
             onChange={e => onChangePasDePrenomConnu(e)}
           />
 
-          {!pasDePrenomConnu && <PrenomsForm {...prenomsFormProps} />}
+          {!pasDePrenomConnu && (
+            <PrenomsForm nom={withNamespace(props.nom, PRENOMS)} />
+          )}
 
           <RadioField
             name={withNamespace(props.nom, SEXE)}

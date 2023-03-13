@@ -1,7 +1,9 @@
 import {
-  PrenomsFormDefaultValues,
-  PrenomsFormValidationSchema
-} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+  PRENOM_1,
+  PRENOM_2,
+  PRENOM_3
+} from "@composant/formulaire/ConstantesNomsForm";
+import { PrenomsFormValidationSchema } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { IParent } from "@model/requete/IParents";
 import { getLibelle } from "@util/Utils";
 import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
@@ -36,49 +38,77 @@ import {
   RECONNAISSANCE,
   SEXE
 } from "../../modelForm/ISaisirRCTCPageModel";
-import {
-  limitesParents,
-  ValeursRequeteCreationRCTCParDefaut
-} from "../../SaisirRCTCPage";
-import {
-  EvenementEtrangerFormDefaultValues,
-  EvenementEtrangerFormValidationSchema
-} from "../evenement/EvenementEtranger";
+import { limitesParents } from "../../SaisirRCTCPage";
 import EvenementMariageParentsForm from "../evenement/EvenementMariageParentsForm";
+import {
+  EvenementParentsFormDefaultValues,
+  EvenementParentsFormValidationSchema
+} from "../evenement/EvenementParentsForm";
 import EvenementReconnaissanceTitulaireForm from "../evenement/EvenementReconnaissanceTitulaireForm";
 import IdentiteParentForm from "./IdentiteParentForm";
 import "./scss/ParentsForm.scss";
+
+export const PrenomsParentsFormDefaultValues = {
+  [PRENOM_1]: "",
+  [PRENOM_2]: "",
+  [PRENOM_3]: ""
+};
 
 export const ParentFormDefaultValues = {
   [PAS_DE_NOM_CONNU]: "false",
   [NOM]: "",
   [PAS_DE_PRENOM_CONNU]: "false",
-  [PRENOMS]: PrenomsFormDefaultValues,
+  [PRENOMS]: PrenomsParentsFormDefaultValues,
   [SEXE]: "INCONNU",
   [DATE_NAISSANCE]: DateDefaultValues,
-  [NAISSANCE]: EvenementEtrangerFormDefaultValues,
+  [NAISSANCE]: EvenementParentsFormDefaultValues,
   [NATIONALITES]: NationalitesFormDefaultValues,
   [PAYS_STATUT_REGUGIE]: "",
   [PAYS_ORIGINE_REGUGIE]: ""
 };
 
 // Schéma de validation des champs
-export const ParentFormValidationSchema = Yup.object().shape({
-  [NOM]: Yup.string(),
-  [PRENOMS]: PrenomsFormValidationSchema,
-  [SEXE]: Yup.string(),
-  [DATE_NAISSANCE]: DateValidationSchemaSansTestFormat,
-  [NAISSANCE]: EvenementEtrangerFormValidationSchema,
-  [NATIONALITES]: NationalitesFormValidationSchema,
-  [PAYS_STATUT_REGUGIE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
-  ),
-  [PAYS_ORIGINE_REGUGIE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
-  )
-});
+export const ParentFormValidationSchema = Yup.object()
+  .shape({
+    [NOM]: Yup.string(),
+    [PRENOMS]: PrenomsFormValidationSchema,
+    [SEXE]: Yup.string(),
+    [DATE_NAISSANCE]: DateValidationSchemaSansTestFormat,
+    [NAISSANCE]: EvenementParentsFormValidationSchema,
+    [NATIONALITES]: NationalitesFormValidationSchema,
+    [PAYS_STATUT_REGUGIE]: Yup.string().matches(
+      CarateresAutorise,
+      CARATERES_AUTORISES_MESSAGE
+    ),
+    [PAYS_ORIGINE_REGUGIE]: Yup.string().matches(
+      CarateresAutorise,
+      CARATERES_AUTORISES_MESSAGE
+    )
+  })
+  .test("parent.pasDePrenomConnu", function (value, error) {
+    const prenom1 = value[PRENOMS].prenom1 as string;
+    const pasDePrenomConnuCoche = value[PAS_DE_PRENOM_CONNU];
+
+    const paramsError = {
+      path: `${error.path}.prenoms.prenom1`,
+      message: getLibelle("La saisie d'un prénom est obligatoire")
+    };
+    return pasDePrenomConnuCoche === "false" && !prenom1
+      ? this.createError(paramsError)
+      : true;
+  })
+  .test("pasDeNom", function (value, error) {
+    const nom = value[NOM] as string;
+    const pasDeNomConnuCoche = value[PAS_DE_NOM_CONNU];
+
+    const paramsError = {
+      path: `${error.path}.nom`,
+      message: getLibelle("La saisie d'un nom est obligatoire")
+    };
+    return pasDeNomConnuCoche === "false" && !nom
+      ? this.createError(paramsError)
+      : true;
+  });
 
 type BoutonParentProps = {
   label: string;
@@ -124,14 +154,15 @@ const ParentsForm: React.FC<
   );
 
   const onAjoutParent = (formik: FormikProps<FormikValues>) => {
+    const nomParent2 = withNamespace(PARENTS, "parent2");
+    formik.setFieldValue(nomParent2, ParentFormDefaultValues);
     setParents([...parents, {} as IParent]);
   };
 
   const onRetraitParent = (formik: FormikProps<FormikValues>) => {
     const nomParent2 = withNamespace(PARENTS, "parent2");
-    const defautParent2 = ValeursRequeteCreationRCTCParDefaut[PARENTS].parent2;
     setParents(parents.slice(0, -1));
-    formik.setFieldValue(nomParent2, defautParent2);
+    formik.setFieldValue(nomParent2, {});
   };
 
   return (

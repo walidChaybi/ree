@@ -10,7 +10,10 @@ import {
   NUMERO_TELEPHONE_NON_CONFORME
 } from "@widget/formulaire/FormulaireMessages";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
-import { sortieChampEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
+import {
+  sortieChampEnMajuscule,
+  sortieChampPremiereLettreEnMajuscule
+} from "@widget/formulaire/utils/ControlesUtil";
 import {
   CENT_CARACT_MAX,
   ISubForm,
@@ -34,7 +37,6 @@ import {
   NOM_USAGE,
   PRENOM
 } from "../../modelForm/ISaisirRCTCPageModel";
-import "./scss/RequerantForm.scss";
 
 export const RequerantFormDefaultValue = {
   [NOM]: "",
@@ -132,7 +134,11 @@ const RequerantForm: React.FC<SubFormProps> = props => {
               label={getLibelle("Nom d'usage")}
               maxLength={NB_CARACT_MAX_SAISIE}
               onBlur={e =>
-                sortieChampEnMajuscule(e, props.formik, nomWithNamespace)
+                sortieChampPremiereLettreEnMajuscule(
+                  e,
+                  props.formik,
+                  nomUsageWithNamespace
+                )
               }
             />
             <div className="BoutonsConteneur">{getBoutonSupprimer()}</div>
@@ -143,7 +149,11 @@ const RequerantForm: React.FC<SubFormProps> = props => {
           label={getLibelle("Prénom")}
           maxLength={TRENTE_HUIT_CARACT_MAX}
           onBlur={e =>
-            sortieChampEnMajuscule(e, props.formik, prenomWithNamespace)
+            sortieChampPremiereLettreEnMajuscule(
+              e,
+              props.formik,
+              prenomWithNamespace
+            )
           }
         />
 
@@ -157,25 +167,11 @@ const RequerantForm: React.FC<SubFormProps> = props => {
           name={courrielAutreContactWithNamespace}
           label={getLibelle("Autre adresse courriel")}
           maxLength={CENT_CARACT_MAX}
-          onBlur={e =>
-            sortieChampEnMajuscule(
-              e,
-              props.formik,
-              courrielAutreContactWithNamespace
-            )
-          }
         />
         <InputField
           name={telephoneAutreContactWithNamespace}
           label={getLibelle("Autre numéro de téléphone")}
           maxLength={CENT_CARACT_MAX}
-          onBlur={e =>
-            sortieChampEnMajuscule(
-              e,
-              props.formik,
-              telephoneAutreContactWithNamespace
-            )
-          }
         />
       </div>
     </SousFormulaire>

@@ -4,6 +4,7 @@ import { receUrl } from "@router/ReceUrls";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErreur";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
@@ -30,6 +31,7 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
 
   const valider = () => {
     props.formik.submitForm();
+    GestionnaireBlockErreur.scrollALaPremiereErreur();
   };
 
   const prendreEnCharge = () => {

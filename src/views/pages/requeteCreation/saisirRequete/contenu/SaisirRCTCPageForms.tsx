@@ -1,11 +1,8 @@
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { getLibelle } from "@util/Utils";
-import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
 import React from "react";
 import {
   NATURE_ACTE_LIEN_REQUERANT,
   PARENTS,
-  PIECES_JOINTES,
   REQUERANT,
   TITULAIRE
 } from "../modelForm/ISaisirRCTCPageModel";
@@ -44,17 +41,6 @@ export function getRequerantForm(): JSX.Element {
       nom={REQUERANT}
       key={REQUERANT}
       titre={getLibelle("Requérant")}
-    />
-  );
-}
-
-export function getPiecesJointesForm(): JSX.Element {
-  return (
-    <PiecesJointesForm
-      nom={PIECES_JOINTES}
-      typeRequete={TypeRequete.CREATION}
-      titre={getLibelle("Pièces justificatives")}
-      key={PIECES_JOINTES}
     />
   );
 }

@@ -80,7 +80,7 @@ export const PrenomsFormValidationSchema = Yup.object()
 interface IPrenomsFormProps {
   prenoms?: IPrenomOrdonnes[];
   prenom1Obligatoire?: boolean;
-  onBlurPrenom1?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlurPrenom?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export type PrenomsFormProps = IPrenomsFormProps & SubFormProps;
@@ -159,12 +159,16 @@ const PrenomsForm: React.FC<PrenomsFormProps> = props => {
           maxLength={NB_CARACT_MAX_SAISIE}
           disabled={estPrenomDisabled(ZERO)}
           onBlur={e => {
+            if (props.onBlurPrenom) {
+              props.onBlurPrenom(e);
+            }
             sortieChampPremiereLettreEnMajuscule(
               e,
               props.formik,
               prenomWithNamespace1
             );
-            props.onBlurPrenom1 && props.onBlurPrenom1(e);
+
+            props.formik.handleChange(e);
           }}
           validate={(value: string) => {
             return !value && props.prenom1Obligatoire === true

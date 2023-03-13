@@ -8,7 +8,6 @@ import * as Yup from "yup";
 import {
   getActeATranscrireEtLienRequerant,
   getParentsForm,
-  getPiecesJointesForm,
   getRequerantForm,
   getTitulaireForm
 } from "./contenu/SaisirRCTCPageForms";
@@ -57,7 +56,7 @@ export const ValeursRequeteCreationRCTCParDefaut = {
   [TITULAIRE]: IdentiteFormDefaultValues,
   [PARENTS]: {
     parent1: ParentFormDefaultValues,
-    parent2: ParentFormDefaultValues,
+    parent2: {},
     [MARIAGE]: EvenementMariageParentsFormDefaultValues,
     [RECONNAISSANCE]: EvenementReconnaissanceTitulaireFormDefaultValues
   },
@@ -97,8 +96,7 @@ export const SaisirRCTCPage: React.FC = () => {
     getActeATranscrireEtLienRequerant(),
     getTitulaireForm(),
     getParentsForm(),
-    getRequerantForm(),
-    getPiecesJointesForm()
+    getRequerantForm()
   ];
 
   return (
