@@ -2,7 +2,7 @@ import {
   NATIONALITE_1,
   NATIONALITE_2,
   NATIONALITE_3
-} from "@composant/formulaire/ConstantesNationalite";
+} from "@composant/formulaire/ConstantesNomsForm";
 import { DEUX, estRenseigne, getLibelle, UN } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";

@@ -1,16 +1,4 @@
 import { ChoixEntitePopin } from "@composant/choixEntitesPopin/ChoixEntitesPopin";
-import { Entite } from "@model/agent/IEntiteRattachement";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import SaisirRequeteBoutons from "@pages/requeteDelivrance/saisirRequete/boutons/SaisirRequeteBoutons";
-import { Formulaire } from "@widget/formulaire/Formulaire";
-import React, { useState } from "react";
-import * as Yup from "yup";
-import {
-  getActeATranscrireEtLienRequerant,
-  getParentsForm,
-  getRequerantForm,
-  getTitulaireForm
-} from "./contenu/SaisirRCTCPageForms";
 import {
   MARIAGE,
   NATURE_ACTE_LIEN_REQUERANT,
@@ -18,11 +6,32 @@ import {
   RECONNAISSANCE,
   REQUERANT,
   TITULAIRE
-} from "./modelForm/ISaisirRCTCPageModel";
+} from "@composant/formulaire/ConstantesNomsForm";
+import { Entite } from "@model/agent/IEntiteRattachement";
+import { ISaisieRequeteRCTC } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { receUrl } from "@router/ReceUrls";
+import { replaceUrl } from "@util/route/UrlUtil";
+import { Formulaire } from "@widget/formulaire/Formulaire";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import * as Yup from "yup";
+import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
+import {
+  ICreationRequeteCreationParams,
+  useCreationRequeteCreation
+} from "../../../common/hook/requete/CreationRequeteCreationApiHook";
+import {
+  getActeATranscrireEtLienRequerant,
+  getParentsForm,
+  getRequerantForm,
+  getTitulaireForm
+} from "./contenu/SaisirRCTCPageForms";
+import { mappingSaisieRequeteRCTCVersRequetesAEnvoyer } from "./mapping/mappingFormulaireSaisirRCTCVersRequeteTranscription";
 import "./scss/SaisirRCTCPage.scss";
 import {
-  NatureActeLienRequerantFormDefaultValues,
-  NatureActeLienRequerantFormValidationSchema
+  NatureActeEtLienRequerantFormDefaultValues,
+  NatureActeEtLienRequerantFormValidationSchema
 } from "./sousForm/acteATranscrireEtLienRequerant/NatureActeEtLienRequerant";
 import {
   EvenementMariageParentsFormDefaultValues,
@@ -52,7 +61,7 @@ export const enum limitesParents {
 
 const TITRE_FORMULAIRE = SousTypeCreation.RCTC.libelle;
 export const ValeursRequeteCreationRCTCParDefaut = {
-  [NATURE_ACTE_LIEN_REQUERANT]: NatureActeLienRequerantFormDefaultValues,
+  [NATURE_ACTE_LIEN_REQUERANT]: NatureActeEtLienRequerantFormDefaultValues,
   [TITULAIRE]: IdentiteFormDefaultValues,
   [PARENTS]: {
     parent1: ParentFormDefaultValues,
@@ -64,7 +73,7 @@ export const ValeursRequeteCreationRCTCParDefaut = {
 };
 
 const ValidationSchemaSaisirRCTC = Yup.object({
-  [NATURE_ACTE_LIEN_REQUERANT]: NatureActeLienRequerantFormValidationSchema,
+  [NATURE_ACTE_LIEN_REQUERANT]: NatureActeEtLienRequerantFormValidationSchema,
   [TITULAIRE]: IdentiteFormValidationSchema,
   [PARENTS]: Yup.object({
     parent1: ParentFormValidationSchema,
@@ -76,19 +85,30 @@ const ValidationSchemaSaisirRCTC = Yup.object({
 });
 
 export const SaisirRCTCPage: React.FC = () => {
+  const history = useHistory();
+
   //States
   //////////////////////////////////////////////////////////////////////////
+  const [creationRequeteRCTCParams, setCreationRequeteRCTCParams] =
+    useState<ICreationRequeteCreationParams>();
   const [choixEntitesPopinOuverte, setChoixEntitesPopinOuverte] =
     useState(false);
 
   // Evenements
   //////////////////////////////////////////////////////////////////////////
-  const onSubmitSaisirRequete = () => {};
-
   function onEntiteChoisiePourTransfert(idEntiteChoisie?: string) {
     setChoixEntitesPopinOuverte(false);
     // TODO
   }
+
+  function onSubmitSaisirRequete(values: ISaisieRequeteRCTC) {
+    const requete = mappingSaisieRequeteRCTCVersRequetesAEnvoyer(values);
+    setCreationRequeteRCTCParams({ requete });
+  }
+
+  // Hooks
+  //////////////////////////////////////////////////////////////////////////
+  const idRequeteCree = useCreationRequeteCreation(creationRequeteRCTCParams);
 
   // Formulaire
   //////////////////////////////////////////////////////////////////////////
@@ -98,6 +118,17 @@ export const SaisirRCTCPage: React.FC = () => {
     getParentsForm(),
     getRequerantForm()
   ];
+
+  useEffect(() => {
+    if (idRequeteCree) {
+      const url =
+        receUrl.getUrlApercuPriseEnChargeCreationTranscriptionAPartirDe({
+          url: history.location.pathname,
+          idRequete: idRequeteCree
+        });
+      replaceUrl(history, url);
+    }
+  }, [idRequeteCree, history]);
 
   return (
     <div className="SaisirRCTCPage">

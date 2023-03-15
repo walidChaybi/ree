@@ -36,7 +36,7 @@ import {
   NOM,
   NOM_USAGE,
   PRENOM
-} from "../../modelForm/ISaisirRCTCPageModel";
+} from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 
 export const RequerantFormDefaultValue = {
   [NOM]: "",

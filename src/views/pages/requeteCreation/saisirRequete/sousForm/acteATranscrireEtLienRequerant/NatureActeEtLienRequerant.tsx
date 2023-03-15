@@ -1,9 +1,9 @@
-import { NatureActeTranscrit } from "@model/requete/enum/NatureActeTranscrit";
-import { TypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerantCreation";
 import {
   LIEN_REQUERANT,
   NATURE_ACTE
-} from "@pages/requeteCreation/saisirRequete/modelForm/ISaisirRCTCPageModel";
+} from "@composant/formulaire/ConstantesNomsForm";
+import { NatureActeTranscrit } from "@model/requete/enum/NatureActeTranscrit";
+import { TypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerantCreation";
 import { getLibelle } from "@util/Utils";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import {
@@ -20,18 +20,20 @@ import React from "react";
 import * as Yup from "yup";
 import "./scss/NatureActeEtLienRequerant.scss";
 
-export const NatureActeLienRequerantFormDefaultValues = {
+export const NatureActeEtLienRequerantFormDefaultValues = {
   [NATURE_ACTE]: "",
   [LIEN_REQUERANT]: ""
 };
 
 // Schéma de validation des champs
-export const NatureActeLienRequerantFormValidationSchema = Yup.object().shape({
-  [NATURE_ACTE]: Yup.string().required(NATURE_ACTE_OBLIGATOIRE),
-  [LIEN_REQUERANT]: Yup.string().required(LIEN_REQUERANT_OBLIGATOIRE)
-});
+export const NatureActeEtLienRequerantFormValidationSchema = Yup.object().shape(
+  {
+    [NATURE_ACTE]: Yup.string().required(NATURE_ACTE_OBLIGATOIRE),
+    [LIEN_REQUERANT]: Yup.string().required(LIEN_REQUERANT_OBLIGATOIRE)
+  }
+);
 
-const NatureActeEtLienRequerant: React.FC<SubFormProps> = props => {
+const NatureActeEtLienRequerantForm: React.FC<SubFormProps> = props => {
   return (
     <>
       <div className="NatureActeEtLienRequerant">
@@ -50,4 +52,4 @@ const NatureActeEtLienRequerant: React.FC<SubFormProps> = props => {
   );
 };
 
-export default connect<ISubForm>(NatureActeEtLienRequerant);
+export default connect<ISubForm>(NatureActeEtLienRequerantForm);

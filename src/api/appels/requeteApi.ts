@@ -1,3 +1,4 @@
+import { ISaisieRequeteAEnvoyer } from "@hook/requete/CreationRequeteCreationApiHook";
 import { CLES } from "@model/parametres/clesParametres";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -29,6 +30,7 @@ export const URL_REQUETES_RMC = "/requetes/rmc";
 export const URL_REQUETES_RMC_AUTO = "/requetes/rmcauto";
 export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
+export const URL_REQUETES_CREATION = "/requetes/creations";
 export const URL_CHOIX_DELIVRANCE = "/choixdelivrance";
 export const URL_COURRIER = "/courrier";
 export const URL_DOCUMENT = "/document";
@@ -291,6 +293,14 @@ export async function updateChoixDelivrance(
     method: HttpMethod.PATCH,
     uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_CHOIX_DELIVRANCE}`,
     parameters: { choixDelivrance }
+  });
+}
+
+export async function creationRequeteCreation(requete: ISaisieRequeteAEnvoyer) {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_REQUETES_CREATION}`,
+    data: [requete]
   });
 }
 
@@ -707,4 +717,3 @@ export const patchMiseAJourLibellePJ = (
       nouveauLibelle
     }
   });
-  

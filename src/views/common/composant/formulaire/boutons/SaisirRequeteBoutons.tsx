@@ -1,5 +1,8 @@
 import { Droit } from "@model/agent/enum/Droit";
-import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
+import {
+  estOfficierHabiliterPourTousLesDroits,
+  officierHabiliterPourLeDroit
+} from "@model/agent/IOfficier";
 import { receUrl } from "@router/ReceUrls";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
@@ -14,7 +17,7 @@ import "./scss/SaisirRequeteBoutons.scss";
 export interface ComponentProps {
   setIsBrouillon?: any;
   modeModification?: boolean;
-  onTransferer: () => void;
+  onTransferer?: () => void;
 }
 
 export type SaisirRequeteBoutonsProps = ComponentProps & FormikComponentProps;
@@ -58,7 +61,11 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
               {getLibelle("Valider")}
             </Bouton>
           </div>
-        ) : officierHabiliterPourLeDroit(Droit.DELIVRER) ? (
+        ) : officierHabiliterPourLeDroit(Droit.DELIVRER) ||
+          estOfficierHabiliterPourTousLesDroits([
+            Droit.SAISIR_REQUETE,
+            Droit.CREER_ACTE_TRANSCRIT
+          ]) ? (
           <Bouton
             disabled={!props.formik.dirty}
             id="boutonPrendreEnCharge"

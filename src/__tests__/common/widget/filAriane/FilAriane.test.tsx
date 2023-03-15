@@ -23,7 +23,13 @@ test("renders composant FilAriane", () => {
   history.push(URL_MES_REQUETES_DELIVRANCE);
   render(
     <Router history={history}>
-      <FilAriane routes={routesRece} />
+      <FilAriane
+        routes={routesRece}
+        isDirty={false}
+        setIsDirty={function (isDirty: boolean): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
     </Router>
   );
   expect(screen.getByLabelText(fildarianeLabel)).toBeInTheDocument();

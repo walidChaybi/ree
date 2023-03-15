@@ -18,7 +18,7 @@ import {
   PAYS_NAISSANCE,
   REGION_NAISSANCE,
   VILLE_NAISSANCE
-} from "../../modelForm/ISaisirRCTCPageModel";
+} from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 import "./scss/EvenementForm.scss";
 
 export const EvenementEtrangerFormDefaultValues = {

@@ -1,4 +1,4 @@
-import { MARIAGE } from "@pages/requeteCreation/saisirRequete/modelForm/ISaisirRCTCPageModel";
+import { MARIAGE } from "@composant/formulaire/ConstantesNomsForm";
 import EvenementMariageParentsForm, {
   EvenementMariageParentsFormDefaultValues,
   EvenementMariageParentsFormValidationSchema

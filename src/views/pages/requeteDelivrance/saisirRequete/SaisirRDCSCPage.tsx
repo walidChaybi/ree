@@ -54,11 +54,9 @@ import { FormikProps, FormikValues } from "formik";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import * as Yup from "yup";
+import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { ADonneesTitulaireRequeteAbsentes } from "../espaceDelivrance/EspaceDelivranceUtils";
-import SaisirRequeteBoutons, {
-  SaisirRequeteBoutonsProps
-} from "./boutons/SaisirRequeteBoutons";
 import {
   createReponseSansDelivranceCS,
   getMessagesPopin
@@ -238,11 +236,6 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   const documentDemandeOptions =
     DocumentDelivrance.getAllCertificatSituationDemandeEtAttestationAsOptions();
-
-  const boutonsProps = {
-    setIsBrouillon,
-    modeModification
-  } as SaisirRequeteBoutonsProps;
 
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
 
@@ -529,7 +522,7 @@ export const SaisirRDCSCPage: React.FC = () => {
     }));
   };
 
-  const onAjoutTitulaire = (formik: FormikProps<FormikValues>) => {    
+  const onAjoutTitulaire = (formik: FormikProps<FormikValues>) => {
     onChangeTitulaires(
       [
         ...titulairesState.titulaires,
@@ -606,7 +599,10 @@ export const SaisirRDCSCPage: React.FC = () => {
             ]
           }
         </div>
-        <SaisirRequeteBoutons {...boutonsProps} />
+        <SaisirRequeteBoutons
+          setIsBrouillon={setIsBrouillon}
+          modeModification={modeModification}
+        />
       </Formulaire>
       <ConfirmationPopin
         isOpen={donneesNaissanceIncomplete}

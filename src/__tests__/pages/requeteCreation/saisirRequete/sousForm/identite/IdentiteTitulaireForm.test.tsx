@@ -1,12 +1,12 @@
 import {
-  PrenomsFormDefaultValues,
-  PrenomsFormValidationSchema
-} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
-import {
   NOMS,
   PAS_DE_PRENOM_CONNU,
   PRENOMS
-} from "@pages/requeteCreation/saisirRequete/modelForm/ISaisirRCTCPageModel";
+} from "@composant/formulaire/ConstantesNomsForm";
+import {
+  PrenomsFormDefaultValues,
+  PrenomsFormValidationSchema
+} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import IdentiteTitulaireForm from "@pages/requeteCreation/saisirRequete/sousForm/identite/IdentiteTitulaireForm";
 import {
   NomsFormDefaultValues,

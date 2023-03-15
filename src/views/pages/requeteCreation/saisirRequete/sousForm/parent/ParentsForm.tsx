@@ -1,7 +1,13 @@
 import {
+  NAISSANCE,
+  NATIONALITES,
+  NOM,
+  PARENTS,
+  PRENOMS,
   PRENOM_1,
   PRENOM_2,
-  PRENOM_3
+  PRENOM_3,
+  SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { PrenomsFormValidationSchema } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { IParent } from "@model/requete/IParents";
@@ -26,18 +32,12 @@ import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import {
   DATE_NAISSANCE,
   MARIAGE,
-  NAISSANCE,
-  NATIONALITES,
-  NOM,
-  PARENTS,
   PAS_DE_NOM_CONNU,
   PAS_DE_PRENOM_CONNU,
-  PAYS_ORIGINE_REGUGIE,
-  PAYS_STATUT_REGUGIE,
-  PRENOMS,
-  RECONNAISSANCE,
-  SEXE
-} from "../../modelForm/ISaisirRCTCPageModel";
+  PAYS_ORIGINE_REFUGIE,
+  PAYS_STATUT_REFUGIE,
+  RECONNAISSANCE
+} from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 import { limitesParents } from "../../SaisirRCTCPage";
 import EvenementMariageParentsForm from "../evenement/EvenementMariageParentsForm";
 import {
@@ -63,8 +63,8 @@ export const ParentFormDefaultValues = {
   [DATE_NAISSANCE]: DateDefaultValues,
   [NAISSANCE]: EvenementParentsFormDefaultValues,
   [NATIONALITES]: NationalitesFormDefaultValues,
-  [PAYS_STATUT_REGUGIE]: "",
-  [PAYS_ORIGINE_REGUGIE]: ""
+  [PAYS_STATUT_REFUGIE]: "",
+  [PAYS_ORIGINE_REFUGIE]: ""
 };
 
 // Schéma de validation des champs
@@ -76,11 +76,11 @@ export const ParentFormValidationSchema = Yup.object()
     [DATE_NAISSANCE]: DateValidationSchemaSansTestFormat,
     [NAISSANCE]: EvenementParentsFormValidationSchema,
     [NATIONALITES]: NationalitesFormValidationSchema,
-    [PAYS_STATUT_REGUGIE]: Yup.string().matches(
+    [PAYS_STATUT_REFUGIE]: Yup.string().matches(
       CarateresAutorise,
       CARATERES_AUTORISES_MESSAGE
     ),
-    [PAYS_ORIGINE_REGUGIE]: Yup.string().matches(
+    [PAYS_ORIGINE_REFUGIE]: Yup.string().matches(
       CarateresAutorise,
       CARATERES_AUTORISES_MESSAGE
     )
@@ -171,7 +171,7 @@ const ParentsForm: React.FC<
         {parents.map((parentForm, index) => (
           <IdentiteParentForm
             key={index}
-            nom={`${withNamespace(props.nom, "parent" + (index + 1))}`}
+            nom={withNamespace(props.nom, `parent${index + 1}`)}
             titre={`Parent ${index + 1}`}
           />
         ))}

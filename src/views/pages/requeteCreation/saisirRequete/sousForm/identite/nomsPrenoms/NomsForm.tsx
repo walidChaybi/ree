@@ -2,7 +2,7 @@ import {
   NOM_ACTE_ETRANGER,
   NOM_SOUHAITE_ACTE_FR,
   PAS_DE_NOM_ACTE_ETRANGER
-} from "@pages/requeteCreation/saisirRequete/modelForm/ISaisirRCTCPageModel";
+} from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
 import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";

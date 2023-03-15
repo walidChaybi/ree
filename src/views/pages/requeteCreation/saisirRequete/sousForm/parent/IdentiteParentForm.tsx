@@ -1,3 +1,10 @@
+import {
+  NAISSANCE,
+  NATIONALITES,
+  NOM,
+  PRENOMS,
+  SEXE
+} from "@composant/formulaire/ConstantesNomsForm";
 import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IParent } from "@model/requete/IParents";
@@ -22,16 +29,11 @@ import { connect } from "formik";
 import React, { useState } from "react";
 import {
   DATE_NAISSANCE,
-  NAISSANCE,
-  NATIONALITES,
-  NOM,
   PAS_DE_NOM_CONNU,
   PAS_DE_PRENOM_CONNU,
-  PAYS_ORIGINE_REGUGIE,
-  PAYS_STATUT_REGUGIE,
-  PRENOMS,
-  SEXE
-} from "../../modelForm/ISaisirRCTCPageModel";
+  PAYS_ORIGINE_REFUGIE,
+  PAYS_STATUT_REFUGIE
+} from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 import EvenementParentForm from "../evenement/EvenementParentsForm";
 import "./scss/ParentsForm.scss";
 interface ComponentFormProps {
@@ -46,12 +48,12 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
 
   const paysStatutRefugieWithNamespace = withNamespace(
     props.nom,
-    PAYS_STATUT_REGUGIE
+    PAYS_STATUT_REFUGIE
   );
 
   const paysOrigineRefugieWithNamespace = withNamespace(
     props.nom,
-    PAYS_ORIGINE_REGUGIE
+    PAYS_ORIGINE_REFUGIE
   );
 
   const nationaliteFormProps = {

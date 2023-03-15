@@ -1,19 +1,19 @@
-import { getLibelle } from "@util/Utils";
-import React from "react";
 import {
-  NATURE_ACTE_LIEN_REQUERANT,
   PARENTS,
   REQUERANT,
   TITULAIRE
-} from "../modelForm/ISaisirRCTCPageModel";
-import NatureActeEtLienRequerant from "../sousForm/acteATranscrireEtLienRequerant/NatureActeEtLienRequerant";
+} from "@composant/formulaire/ConstantesNomsForm";
+import { getLibelle } from "@util/Utils";
+import React from "react";
+import { NATURE_ACTE_LIEN_REQUERANT } from "../../../../common/composant/formulaire/ConstantesNomsForm";
+import NatureActeEtLienRequerantForm from "../sousForm/acteATranscrireEtLienRequerant/NatureActeEtLienRequerant";
 import IdentiteTitulaireForm from "../sousForm/identite/IdentiteTitulaireForm";
 import ParentsForm from "../sousForm/parent/ParentsForm";
 import RequerantForm from "../sousForm/requerant/RequerantForm";
 
 export function getActeATranscrireEtLienRequerant(): JSX.Element {
   return (
-    <NatureActeEtLienRequerant
+    <NatureActeEtLienRequerantForm
       key={NATURE_ACTE_LIEN_REQUERANT}
       nom={NATURE_ACTE_LIEN_REQUERANT}
       titre={getLibelle("Acte à transcrire")}

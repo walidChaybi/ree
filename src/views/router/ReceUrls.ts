@@ -203,11 +203,20 @@ const getUrlApercuTraitementAPartirDe = (params: urlApercuParams) =>
     pathApercu: PATH_APERCU_REQ_TRAITEMENT
   });
 
+const getUrlApercuPriseEnChargeCreationTranscriptionAPartirDe = (
+  params: urlApercuParams
+) =>
+  getUrlApercuAvecIdRequete({
+    ...params,
+    pathApercu: PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE
+  });
+
 export const receUrl = {
   estUrlApercuRequete,
   estUrlApercuTraitementRequete,
   getUrlApercuTraitementAPartirDe,
   getUrlApercuPriseEnChargeAPartirDe,
+  getUrlApercuPriseEnChargeCreationTranscriptionAPartirDe,
   estUrlSaisirCourrier,
   estUrlEdition
 };

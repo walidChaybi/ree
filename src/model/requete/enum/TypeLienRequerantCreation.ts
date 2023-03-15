@@ -5,7 +5,7 @@ import { Option, Options } from "@util/Type";
 export const TYPE_LIEN_REQUERANT_POUR_TITULAIRE = ["TITULAIRE"];
 
 export class TypeLienRequerantCreation extends EnumWithLibelle {
-  public static readonly TITULAIRE_ACTE = new TypeLienRequerantCreation(
+  public static readonly TITULAIRE = new TypeLienRequerantCreation(
     "Titulaire de l'acte"
   );
   public static readonly TITULAIRE_ACTE_MINEUR_EMANCIPE =
@@ -16,7 +16,7 @@ export class TypeLienRequerantCreation extends EnumWithLibelle {
   public static readonly EPOUX_EPOUSE = new TypeLienRequerantCreation(
     "Son épouse ou son époux"
   );
-  public static readonly FILLE_FILS = new TypeLienRequerantCreation(
+  public static readonly ENFANT = new TypeLienRequerantCreation(
     "Sa fille ou son fils"
   );
   public static readonly REPRESENTANT_LEGAL = new TypeLienRequerantCreation(
@@ -50,7 +50,7 @@ export class TypeLienRequerantCreation extends EnumWithLibelle {
   public static estTitulaireActe(
     typeLienRequerant: TypeLienRequerantCreation
   ): boolean {
-    return typeLienRequerant === TypeLienRequerantCreation.TITULAIRE_ACTE;
+    return typeLienRequerant === TypeLienRequerantCreation.TITULAIRE;
   }
 
   public static estTitulaireActeMineureEmancipe(

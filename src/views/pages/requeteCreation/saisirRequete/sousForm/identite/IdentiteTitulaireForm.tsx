@@ -1,3 +1,16 @@
+import {
+  DATE_NAISSANCE,
+  LIEN_REQUERANT,
+  NAISSANCE,
+  NATURE_ACTE_LIEN_REQUERANT,
+  NOM,
+  NOMS,
+  PAS_DE_PRENOM_CONNU,
+  PRENOM,
+  PRENOMS,
+  REQUERANT,
+  SEXE
+} from "@composant/formulaire/ConstantesNomsForm";
 import PrenomsForm, {
   PrenomsFormDefaultValues,
   PrenomsFormValidationSchema
@@ -21,19 +34,6 @@ import {
 import { connect } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
-import {
-  DATE_NAISSANCE,
-  LIEN_REQUERANT,
-  NAISSANCE,
-  NATURE_ACTE_LIEN_REQUERANT,
-  NOM,
-  NOMS,
-  PAS_DE_PRENOM_CONNU,
-  PRENOM,
-  PRENOMS,
-  REQUERANT,
-  SEXE
-} from "../../modelForm/ISaisirRCTCPageModel";
 import EvenementEtrangerForm, {
   EvenementEtrangerFormDefaultValues,
   EvenementEtrangerFormValidationSchema

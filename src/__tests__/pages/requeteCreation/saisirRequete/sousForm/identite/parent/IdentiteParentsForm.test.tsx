@@ -1,4 +1,3 @@
-import { PrenomsFormDefaultValues } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import {
   DATE_NAISSANCE,
   NAISSANCE,
@@ -6,11 +5,12 @@ import {
   NOM,
   PAS_DE_NOM_CONNU,
   PAS_DE_PRENOM_CONNU,
-  PAYS_ORIGINE_REGUGIE,
-  PAYS_STATUT_REGUGIE,
+  PAYS_ORIGINE_REFUGIE,
+  PAYS_STATUT_REFUGIE,
   PRENOMS,
   SEXE
-} from "@pages/requeteCreation/saisirRequete/modelForm/ISaisirRCTCPageModel";
+} from "@composant/formulaire/ConstantesNomsForm";
+import { PrenomsFormDefaultValues } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { EvenementEtrangerFormDefaultValues } from "@pages/requeteCreation/saisirRequete/sousForm/evenement/EvenementEtranger";
 import IdentiteParentForm, {
   ParentSubFormProps
@@ -59,8 +59,8 @@ const HookParentForm: React.FC = () => {
             [DATE_NAISSANCE]: DateDefaultValues,
             [NAISSANCE]: EvenementEtrangerFormDefaultValues,
             [NATIONALITES]: NationalitesFormDefaultValues,
-            [PAYS_STATUT_REGUGIE]: "",
-            [PAYS_ORIGINE_REGUGIE]: ""
+            [PAYS_STATUT_REFUGIE]: "",
+            [PAYS_ORIGINE_REFUGIE]: ""
           }
         }
       }}

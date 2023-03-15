@@ -17,6 +17,10 @@ export class QualiteFamille extends EnumWithLibelle {
     return EnumWithLibelle.getEnumFor(str, QualiteFamille);
   }
 
+  public static getKey(obj: QualiteFamille) {
+    return EnumWithLibelle.getKey(QualiteFamille, obj);
+  }
+
   public static estParent(qualiteFamille?: QualiteFamille): boolean {
     return qualiteFamille === QualiteFamille.PARENT;
   }

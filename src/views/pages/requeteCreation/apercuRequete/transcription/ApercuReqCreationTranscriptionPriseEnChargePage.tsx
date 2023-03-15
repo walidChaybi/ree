@@ -30,7 +30,7 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC =
     const [requete, setRequete] = useState<IRequeteCreationTranscription>();
     const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
       useState<IRMCAutoPersonneParams>();
-    const [ongletSelectionne, setOngletSelectionne] = useState(0);
+    const [ongletSelectionne, setOngletSelectionne] = useState(1);
     const history = useHistory();
     const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(
       rmcAutoPersonneParams

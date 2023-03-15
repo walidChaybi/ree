@@ -50,6 +50,37 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
     });
   });
 
+  test("DOIT afficher l'onglet RMC par defaut QUAND j'affiche la page", async () => {
+    const history = createMemoryHistory();
+    history.push(
+      getUrlWithParam(
+        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/:idRequete`,
+        "dd96cc3a-9865-4c83-b634-37fad2680f41"
+      )
+    );
+
+    await act(async () => {
+      render(
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={
+              URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID
+            }
+          >
+            <ApercuReqCreationTranscriptionPriseEnChargePage />
+          </Route>
+        </Router>
+      );
+    });
+
+    const ongletRMC = screen.getByText("RMC");
+
+    await waitFor(async () => {
+      expect(ongletRMC.getAttribute("aria-selected")).toBe("true");
+    });
+  });
+
   test("DOIT passer le tag aria-selected a true QUAND je click sur l'onglet Analyse du dossier", async () => {
     const history = createMemoryHistory();
     history.push(
@@ -74,22 +105,22 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
       );
     });
 
-    const ongletPJ = screen.getByText("Pièces justificatives / Annexes");
+    const ongletRMC = screen.getByText("RMC");
     const ongletAnalyseDuDossier = screen.getByText("Analyse du dossier");
 
     await waitFor(async () => {
-      expect(ongletPJ.getAttribute("aria-selected")).toBe("true");
+      expect(ongletRMC.getAttribute("aria-selected")).toBe("true");
     });
 
     fireEvent.click(ongletAnalyseDuDossier);
 
     await waitFor(async () => {
       expect(ongletAnalyseDuDossier.getAttribute("aria-selected")).toBe("true");
-      expect(ongletPJ.getAttribute("aria-selected")).toBe("false");
+      expect(ongletRMC.getAttribute("aria-selected")).toBe("false");
     });
   });
 
-  test("DOIT sélectionner l'onglet RMC QUAND je clique dessus.", async () => {
+  test("DOIT sélectionner l'onglet Pieces justificatives / annexes QUAND je clique dessus.", async () => {
     const history = createMemoryHistory();
     history.push(
       getUrlWithParam(
@@ -117,15 +148,15 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
     const ongletRMC = screen.getByText("RMC");
 
     await waitFor(async () => {
-      expect(ongletPJ.getAttribute("aria-selected")).toBe("true");
-      expect(ongletRMC.getAttribute("aria-selected")).toBe("false");
+      expect(ongletPJ.getAttribute("aria-selected")).toBe("false");
+      expect(ongletRMC.getAttribute("aria-selected")).toBe("true");
     });
 
-    fireEvent.click(ongletRMC);
+    fireEvent.click(ongletPJ);
 
     await waitFor(async () => {
-      expect(ongletRMC.getAttribute("aria-selected")).toBe("true");
-      expect(ongletPJ.getAttribute("aria-selected")).toBe("false");
+      expect(ongletRMC.getAttribute("aria-selected")).toBe("false");
+      expect(ongletPJ.getAttribute("aria-selected")).toBe("true");
     });
   });
 });

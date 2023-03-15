@@ -1,5 +1,8 @@
 import { requetesCreationAlimentationTableau } from "../data/requeteCreation";
-import { requeteCreationTranscription } from "../data/requeteCreationTranscription";
+import {
+  creationRequeteRCTCResultat,
+  requeteCreationTranscription
+} from "../data/requeteCreationTranscription";
 import { requetesServiceCreationTableauResultatQuery } from "../data/requetesServiceCreation";
 import { requeteTableauCreation } from "../data/requeteTableauCreation";
 
@@ -7,7 +10,6 @@ export const NORESULT = "NORESULT";
 
 export const configRequetesCreation = [
   {
-
     /**
      * regular expression of URL
      */
@@ -88,6 +90,15 @@ export const configRequetesCreation = [
         result.data[0].idUtilisateur = "7a091a3b-6835-4824-94fb-527d68926d56";
 
         return result;
+      }
+
+      ///////////////////////////////
+      // Requêtes de transcription //
+      ///////////////////////////////
+
+      // Création d'une requête de transcription RCTC
+      if (match[1] === "/requetes/creations" && context.method === "post") {
+        return { data: creationRequeteRCTCResultat };
       }
 
       const error = { msg: "url params non mockée", url };

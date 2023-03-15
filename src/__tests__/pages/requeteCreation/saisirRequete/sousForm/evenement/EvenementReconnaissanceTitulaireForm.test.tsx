@@ -1,4 +1,4 @@
-import { RECONNAISSANCE } from "@pages/requeteCreation/saisirRequete/modelForm/ISaisirRCTCPageModel";
+import { RECONNAISSANCE } from "@composant/formulaire/ConstantesNomsForm";
 import EvenementReconnaissanceTitulaireForm, {
   EvenementReconnaissanceTitulaireFormDefaultValues,
   EvenementReconnaissanceTitulaireFormValidationSchema,

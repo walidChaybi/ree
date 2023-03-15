@@ -18,6 +18,13 @@ export const NOM_PARTIE2 = "nomPartie2";
 
 export const PRENOM = "prenom";
 export const PRENOMS = "prenoms";
+
+export const PAS_DE_NOM_ACTE_ETRANGER = "pasDeNomActeEtranger";
+export const NOM_ACTE_ETRANGER = "nomActeEtranger";
+export const NOM_SOUHAITE_ACTE_FR = "nomSouhaiteActeFR";
+export const PAS_DE_NOM_CONNU = "pasDeNomConnu";
+export const PAS_DE_PRENOM_CONNU = "pasDePrenomConnu";
+
 // Titulaire: Noms des champs PrenomsForm
 export const NOM_NAISSANCE = "nomNaissance";
 export const PRENOM_1 = "prenom1";
@@ -47,6 +54,7 @@ export const PARENT_NAISS = "parentNaiss";
 export const PARENT_NAISS1 = "parentNaiss1";
 export const PARENT_NAISS2 = "parentNaiss2";
 export const PARENT = "parent";
+export const PARENTS = "parents";
 export const DATE_NAISSANCE_OU_AGE_DE = "dateNaissanceOuAgeDe";
 export const AGE = "age";
 
@@ -59,6 +67,33 @@ export const PARENT_ADOPTANT_NAISS2 = "parentAdoptantNaiss2";
 export const ARRONDISSEMENT = "arrondissement";
 export const LIEU_NAISSANCE = "lieuNaissance";
 export const ETRANGER_FRANCE = "EtrangerFrance";
+
+// Naissance
+export const DATE_NAISSANCE = "dateNaissance";
+export const VILLE_NAISSANCE = "villeNaissance";
+export const ARRONDISSEMENT_NAISSANCE = "arrondissementNaissance";
+export const REGION_NAISSANCE = "regionNaissance";
+export const PAYS_NAISSANCE = "paysNaissance";
+export const DEPARTEMENT_NAISSANCE = "departementNaissance";
+export const LIEU_DE_NAISSANCE = "lieuNaissance";
+
+// Mariage
+export const MARIAGE = "mariage";
+export const PARENTS_MARIES = "parentMarie";
+export const DATE_MARIAGE = "dateMariage";
+export const LIEU_DE_MARIAGE = "lieuDuMariage";
+export const VILLE_DE_MARIAGE = "villeDeMariage";
+export const PAYS_DU_MARIAGE = "paysDuMariage";
+
+// Reconnaissance
+export const RECONNAISSANCE = "reconnaissance";
+export const TITULAIRE_RECONNU = "titulaireReconnu";
+export const LIEU_ACTE_RECONNAISSANCE = "lieuActeReconnaissance";
+export const DATE_RECONNAISSANCE = "dateReconnaissance";
+export const VILLE_RECONNAISSANCE = "villeReconnaissance";
+export const REGION_ETAT_RECONNAISSANCE = "regionEtatReconnaissance";
+export const PAYS_RECONNAISSANCE = "paysReconnaissance";
+export const DEPARTEMENT_RECONNAISSANCE = "departementReconnaissance";
 
 // Evenement Mariage: contrat de mariage
 export const CONTRAT_MARIAGE = "contratMariage";
@@ -79,10 +114,14 @@ export const VILLE_EST_AFFICHEE = "villeEstAffichee";
 export const NOM_USAGE = "nomUsage";
 export const NOM = "nom";
 
+export const PAYS_STATUT_REFUGIE = "paysStatutRefugie";
+export const PAYS_ORIGINE_REFUGIE = "paysOrigineRefugie";
+
 // Noms des champs IdentiteForm
 export const NOMS = "noms";
 export const NAISSANCE = "naissance";
 export const NATIONALITE = "nationalite";
+export const NATIONALITES = "nationalites";
 export const PARENT1 = "parent1";
 export const PARENT2 = "parent2";
 
@@ -107,6 +146,8 @@ export const CODE_POSTAL = "codePostal";
 export const COMMUNE = "commune";
 export const ADRESSE_COURRIEL = "adresseCourriel";
 export const NUMERO_TELEPHONE = "numeroTelephone";
+export const AUTRE_ADRESSE_COURRIEL = "autreAdresseCourriel";
+export const AUTRE_NUMERO_TELEPHONE = "autreNumeroTelephone";
 
 // Noms des champs EvenementForm
 export const VILLE_EVENEMENT = "villeEvenement";
@@ -159,3 +200,13 @@ export const REPONSE = "reponse";
 
 export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
 export const TITULAIRE = "titulaire";
+
+// Acte transcription
+export const NATURE_ACTE_LIEN_REQUERANT = "acteATranscrireLienRequerant";
+export const LIEN_REQUERANT = "lienRequerant";
+
+// Nationalites
+export const NATIONALITE_1 = "nationalite1";
+export const NATIONALITE_2 = "nationalite2";
+export const NATIONALITE_3 = "nationalite3";
+export const INCONNUE = "INCONNUE";

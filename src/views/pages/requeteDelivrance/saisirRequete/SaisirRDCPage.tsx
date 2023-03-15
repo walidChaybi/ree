@@ -66,10 +66,8 @@ import {
   SaisieRequeteRDC,
   UpdateRequeteRDC
 } from "../../../../model/form/delivrance/ISaisirRDCPageForm";
+import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
-import SaisirRequeteBoutons, {
-  SaisirRequeteBoutonsProps
-} from "./boutons/SaisirRequeteBoutons";
 import {
   getMessagesPopin,
   verifierDonneesObligatoires
@@ -452,11 +450,6 @@ export const SaisirRDCPage: React.FC = () => {
     }
   };
 
-  const boutonsProps = {
-    setIsBrouillon,
-    modeModification
-  } as SaisirRequeteBoutonsProps;
-
   const blocsForm: JSX.Element[] = [
     getRequeteForm(onChangeNature),
     getEvenementForm(evenementVisible),
@@ -485,7 +478,10 @@ export const SaisirRDCPage: React.FC = () => {
         className="FormulaireSaisirRDC"
       >
         <div>{blocsForm}</div>
-        <SaisirRequeteBoutons {...boutonsProps} />
+        <SaisirRequeteBoutons
+          setIsBrouillon={setIsBrouillon}
+          modeModification={modeModification}
+        />
       </Formulaire>
       <ConfirmationPopin
         isOpen={donneesIncompletes}

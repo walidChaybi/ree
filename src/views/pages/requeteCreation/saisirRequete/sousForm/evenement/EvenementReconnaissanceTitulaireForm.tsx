@@ -27,7 +27,7 @@ import {
   REGION_ETAT_RECONNAISSANCE,
   TITULAIRE_RECONNU,
   VILLE_RECONNAISSANCE
-} from "../../modelForm/ISaisirRCTCPageModel";
+} from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 
 export const EvenementReconnaissanceTitulaireFormDefaultValues = {
   [TITULAIRE_RECONNU]: "NON",

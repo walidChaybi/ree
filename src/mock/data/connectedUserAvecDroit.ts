@@ -4961,6 +4961,46 @@ export const resultatRequeteUtilistateurLeBiannic = {
           listePays: null,
           listeIdTypeRegistre: ["b7c4278d-e9ff-4374-b0e9-11c3c81824b2"]
         }
+      },
+      {
+        idHabilitation: "f4e76b2f-3601-475c-8323-2cf073b44187",
+        typeDelegation: null,
+        roleDelegant: null,
+        villePosteConsulaire: null,
+        libelleEntiteDelegant: null,
+        dateDebut: 1634625595000,
+        dateFin: null,
+        profil: {
+          idProfil: "f1346ddd-1702-4e7d-bb1f-bd490a66bec4",
+          nom: {
+            idNomenclature: "1be73477-5bb1-429d-abba-974d129bff97",
+            categorie: "TYPE_PROFIL",
+            code: "DROIT_SAISIR_REQUETE",
+            libelle: "Droit saisier requête",
+            estActif: true
+          },
+          habilitation: null,
+          profilDroit: [
+            {
+              droit: {
+                idDroit: "f1346ea2-5958-41b6-a478-d536b4e2f4cd",
+                nom: "SAISIR_REQUETE",
+                profilDroit: null
+              },
+              profil: null
+            }
+          ],
+          droit: null
+        },
+        utilisateurs: null,
+        perimetre: {
+          id: "4c09fa58-b2df-4c0a-bccb-f2ac62fe7a3c",
+          nom: "MEAE",
+          description: "MEAE",
+          estActif: true,
+          listePays: null,
+          listeIdTypeRegistre: []
+        }
       }
     ],
     fonctionAgent: {

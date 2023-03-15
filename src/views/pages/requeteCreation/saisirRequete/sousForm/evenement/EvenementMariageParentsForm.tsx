@@ -26,7 +26,7 @@ import {
   PARENTS_MARIES,
   PAYS_DU_MARIAGE,
   VILLE_DE_MARIAGE
-} from "../../modelForm/ISaisirRCTCPageModel";
+} from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 import "./scss/EvenementMariageParentsForm.scss";
 
 export const EvenementMariageParentsFormDefaultValues = {

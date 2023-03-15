@@ -1,3 +1,4 @@
+import { ICreationRequeteCreationParams } from "@hook/requete/CreationRequeteCreationApiHook";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 
 export const requeteCreationTranscription = {
@@ -522,3 +523,230 @@ export const requeteCreationTranscription = {
   dossierOrigines: null,
   decret: null
 } as any as IRequeteCreationTranscription;
+
+export const creationRequeteTranscriptionParams: ICreationRequeteCreationParams =
+  {
+    requete: {
+      posteConsulaire: "",
+      canal: "COURRIER",
+      type: "CREATION",
+      sousType: "RCTC",
+      provenance: "COURRIER",
+      natureActeTranscrit: "NAISSANCE_MINEUR",
+      lienRequerant: { typeLienRequerant: "PERE_MERE" },
+      titulaires: [
+        {
+          prenoms: [{ prenom: "Prenom", numeroOrdre: 1 }],
+          sexe: "INCONNU",
+          nationalite: "INCONNUE",
+          typeObjetTitulaire: "TITULAIRE_ACTE_TRANSCRIT_DRESSE",
+          position: 1,
+          nomNaissance: "Nom acte etranger",
+          nomSouhaite: "Nom souhaite FR",
+          evenementUnions: []
+        },
+        {
+          prenoms: [{ prenom: "SPC", numeroOrdre: 1 }],
+          sexe: "INCONNU",
+          nationalite: "INCONNUE",
+          nomNaissance: "SNP",
+          typeObjetTitulaire: "FAMILLE",
+          qualite: "PARENT",
+          position: 1,
+          nationalites: [],
+          evenementUnions: []
+        }
+      ],
+      requerant: { adresse: {}, qualite: "PARTICULIER" }
+    }
+  };
+
+export const creationRequeteRCTCResultat = [
+  {
+    id: "3ed9aa4e-921b-489f-b8fe-531dd703c60c",
+    numeroFonctionnel: "8WY3I6",
+    dateCreation: 1678784544723,
+    canal: "COURRIER",
+    type: "CREATION",
+    actions: [
+      {
+        id: "efdeecd1-340c-46c5-8741-69d853bd07b5",
+        numeroOrdre: 2,
+        libelle: "Prise en charge",
+        dateAction: 1678784544723,
+        idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
+        nomUtilisateur: null,
+        prenomUtilisateur: null,
+        courrielUtilisateur: null
+      }
+    ],
+    titulaires: [
+      {
+        id: "efded836-e3a0-4969-8df1-dfca380fb95b",
+        position: 1,
+        nomNaissance: "Nom acte etranger",
+        nomUsage: null,
+        anneeNaissance: null,
+        moisNaissance: null,
+        jourNaissance: null,
+        villeNaissance: null,
+        codePostalNaissance: null,
+        arrondissementNaissance: null,
+        villeEtrangereNaissance: null,
+        regionNaissance: null,
+        paysNaissance: null,
+        sexe: "INCONNU",
+        nationalite: "INCONNUE",
+        prenoms: [
+          {
+            id: "efde9ae6-7c66-4584-bcc1-d50fc0be7702",
+            numeroOrdre: 1,
+            prenom: "Prenom",
+            estPrenomFrRetenuSdanf: null
+          }
+        ],
+        parentsTitulaire: null,
+        deces: null,
+        domiciliation: null,
+        evenementUnions: [],
+        typeObjetTitulaire: "TITULAIRE_ACTE_TRANSCRIT_DRESSE",
+        nomDemandeFrancisation: null,
+        nomDemandeIdentification: null,
+        nomSecable: null,
+        nomPremierePartie: null,
+        nomSecondePartie: null,
+        courriel: null,
+        telephone: null,
+        situationFamilliale: null,
+        nationalites: null,
+        prenomsDemande: null,
+        lienEtatCivil: null,
+        retenueSdanf: null,
+        paysStatutRefugie: null,
+        paysOrigine: null,
+        nomEtrangerUtilise: null,
+        nomSouhaite: null,
+        nomEtranger: null,
+        choixDeNom: null
+      },
+      {
+        id: "efde530f-5082-4ea8-8455-cd5ec055f516",
+        position: 1,
+        nomNaissance: "SNP",
+        nomUsage: null,
+        anneeNaissance: null,
+        moisNaissance: null,
+        jourNaissance: null,
+        villeNaissance: null,
+        codePostalNaissance: null,
+        arrondissementNaissance: null,
+        villeEtrangereNaissance: null,
+        regionNaissance: null,
+        paysNaissance: null,
+        sexe: "INCONNU",
+        nationalite: "INCONNUE",
+        prenoms: [
+          {
+            id: "efde9664-5133-4d99-8058-223b3bf8f34f",
+            numeroOrdre: 1,
+            prenom: "SPC",
+            estPrenomFrRetenuSdanf: null
+          }
+        ],
+        parentsTitulaire: null,
+        deces: null,
+        domiciliation: null,
+        evenementUnions: [],
+        typeObjetTitulaire: "FAMILLE",
+        nomDemandeFrancisation: null,
+        nomDemandeIdentification: null,
+        nomSecable: null,
+        nomPremierePartie: null,
+        nomSecondePartie: null,
+        courriel: null,
+        telephone: null,
+        situationFamilliale: null,
+        nationalites: [],
+        prenomsDemande: null,
+        lienEtatCivil: null,
+        retenueSdanf: null,
+        paysStatutRefugie: null,
+        paysOrigine: null,
+        qualite: "PARENT",
+        numeroDossierNational: null,
+        demandeEffetCollectif: null,
+        valideEffetCollectif: null,
+        residence: null,
+        domiciliationEnfant: null,
+        parent2Enfant: null,
+        enfantTitulaireActeTranscritDresse: null
+      }
+    ],
+    corbeilleAgent: {
+      id: "7a091a3b-6835-4824-94fb-527d68926d55",
+      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55"
+    },
+    corbeilleService: {
+      id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
+      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+    },
+    piecesJustificatives: [],
+    requerant: {
+      id: "efded426-2e1b-45fa-8a25-f349d1baa7fe",
+      dateCreation: 1678784544709,
+      nomFamille: null,
+      prenom: null,
+      courriel: null,
+      telephone: null,
+      adresse: {
+        id: "efde569d-10da-4641-80af-f281c6302056",
+        ligne2: null,
+        ligne3: null,
+        ligne4: null,
+        ligne5: null,
+        codePostal: null,
+        ville: null,
+        pays: null
+      },
+      qualite: "PARTICULIER",
+      detailQualiteRece: null,
+      detailQualiteParticulier: null,
+      detailQualiteMandataireHabilite: null,
+      detailQualiteInstitutionnel: null,
+      detailQualiteAutreProfessionnel: null,
+      lienRequerant: null,
+      courrielAutreContact: null,
+      telephoneAutreContact: null
+    },
+    mandant: null,
+    observations: null,
+    statut: {
+      id: "efded83d-680b-45b5-967a-5a1119c9a586",
+      statutRequete: "PRISE_EN_CHARGE",
+      dateEffet: 1678784544723,
+      raisonStatut: null
+    },
+    lienRequerant: {
+      id: "efded1ef-d313-4234-8f1d-e026de0d8d0a",
+      typeLienRequerant: "PERE_MERE",
+      nature: null
+    },
+    doublons: null,
+    origines: null,
+    numeroRequeteOrigine: null,
+    sousType: "RCTC",
+    numeroAncienSI: null,
+    dossierSignale: null,
+    commentaire: null,
+    demandeIdentification: null,
+    demandeFrancisation: null,
+    provenance: "COURRIER",
+    provenanceServicePublic: null,
+    provenanceNatali: null,
+    provenanceRece: null,
+    documentsPj: null,
+    natureActeTranscrit: "NAISSANCE_MINEUR",
+    posteConsulaire: "",
+    dateDelivranceCopie: null
+  }
+];

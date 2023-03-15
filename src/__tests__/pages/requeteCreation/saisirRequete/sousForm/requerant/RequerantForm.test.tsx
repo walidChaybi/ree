@@ -4,7 +4,7 @@ import {
   AUTRE_NUMERO_TELEPHONE,
   NOM,
   PRENOM
-} from "@pages/requeteCreation/saisirRequete/modelForm/ISaisirRCTCPageModel";
+} from "@composant/formulaire/ConstantesNomsForm";
 import RequerantForm from "@pages/requeteCreation/saisirRequete/sousForm/requerant/RequerantForm";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import {
