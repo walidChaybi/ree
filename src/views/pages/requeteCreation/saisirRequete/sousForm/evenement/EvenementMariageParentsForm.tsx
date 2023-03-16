@@ -22,7 +22,6 @@ import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import {
   DATE_MARIAGE,
   LIEU_DE_MARIAGE,
-  LIEU_DE_NAISSANCE,
   PARENTS_MARIES,
   PAYS_DU_MARIAGE,
   VILLE_DE_MARIAGE
@@ -32,7 +31,7 @@ import "./scss/EvenementMariageParentsForm.scss";
 export const EvenementMariageParentsFormDefaultValues = {
   [PARENTS_MARIES]: "NON",
   [DATE_MARIAGE]: DateDefaultValues,
-  [LIEU_DE_NAISSANCE]: "INCONNU",
+  [LIEU_DE_MARIAGE]: "INCONNU",
   [VILLE_DE_MARIAGE]: "",
   [PAYS_DU_MARIAGE]: ""
 };

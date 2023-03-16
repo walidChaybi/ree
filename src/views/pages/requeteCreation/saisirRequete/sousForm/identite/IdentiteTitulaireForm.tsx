@@ -5,9 +5,11 @@ import {
   NATURE_ACTE_LIEN_REQUERANT,
   NOM,
   NOMS,
+  NOM_ACTE_ETRANGER,
   PAS_DE_PRENOM_CONNU,
   PRENOM,
   PRENOMS,
+  PRENOM_1,
   REQUERANT,
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
@@ -87,10 +89,24 @@ const IdentiteTitulaireForm: React.FC<SubFormProps> = props => {
   function onChangePasDePrenomConnu(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
       setPasDePrenomConnu(true);
+      reinitialiserPrenoms();
+      props.formik.handleChange(e);
     } else {
       setPasDePrenomConnu(false);
+      props.formik.handleChange(e);
+      props.formik.setFieldValue(
+        withNamespace(props.nom, PAS_DE_PRENOM_CONNU),
+        "false"
+      );
     }
-    props.formik.handleChange(e);
+  }
+
+  function reinitialiserPrenoms() {
+    const pathPrenomsAReinitialiser = `${props.nom}.prenoms`;
+    props.formik.setFieldValue(
+      pathPrenomsAReinitialiser,
+      PrenomsFormDefaultValues
+    );
   }
 
   function getLienRequerant(): TypeLienRequerantCreation {
@@ -101,15 +117,18 @@ const IdentiteTitulaireForm: React.FC<SubFormProps> = props => {
     );
   }
 
-  function remplirChampsRequerant(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleNomActeEtranger(e: React.ChangeEvent<HTMLInputElement>) {
     const lienRequerant = getLienRequerant();
+    const nomTitulaireWithNameSpace = withNamespace(props.nom, NOMS);
 
     if (
       TypeLienRequerantCreation.estTitulaireActeOuTitulaireActeMineureEmancipe(
         lienRequerant
       )
     ) {
-      const nomTitulaire = props.formik.getFieldProps(e.target.ariaLabel).value;
+      const nomTitulaire = props.formik.getFieldProps(
+        withNamespace(nomTitulaireWithNameSpace, NOM_ACTE_ETRANGER)
+      ).value;
       props.formik.setFieldValue(withNamespace(REQUERANT, NOM), nomTitulaire);
     }
 
@@ -118,18 +137,19 @@ const IdentiteTitulaireForm: React.FC<SubFormProps> = props => {
 
   function handleBlurPrenom1(e: React.ChangeEvent<HTMLInputElement>) {
     const lienRequerant = getLienRequerant();
+    const prenomTitulaireWithNameSpace = withNamespace(props.nom, PRENOMS);
 
     if (
       TypeLienRequerantCreation.estTitulaireActeOuTitulaireActeMineureEmancipe(
         lienRequerant
       )
     ) {
-      const prenomTitulaire = props.formik.getFieldProps(
-        e.target.ariaLabel
+      const prenom1Titulaire = props.formik.getFieldProps(
+        withNamespace(prenomTitulaireWithNameSpace, PRENOM_1)
       ).value;
       props.formik.setFieldValue(
         withNamespace(REQUERANT, PRENOM),
-        prenomTitulaire
+        prenom1Titulaire
       );
     }
 
@@ -142,7 +162,7 @@ const IdentiteTitulaireForm: React.FC<SubFormProps> = props => {
         <div className="IdentiteTitulaireForm">
           <NomsFormTitulaire
             nom={withNamespace(props.nom, NOMS)}
-            onBlurNom={e => remplirChampsRequerant(e)}
+            onBlurNom={e => handleNomActeEtranger(e)}
           />
 
           <CheckboxField

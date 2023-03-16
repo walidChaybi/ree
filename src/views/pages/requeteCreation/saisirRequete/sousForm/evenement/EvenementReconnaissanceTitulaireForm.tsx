@@ -78,6 +78,10 @@ const EvenementReconnaissanceTitulaireForm: React.FC<
     props.nom,
     PAYS_RECONNAISSANCE
   );
+  const departementReconnaissanceWithNamespace = withNamespace(
+    props.nom,
+    DEPARTEMENT_RECONNAISSANCE
+  );
 
   const [lieuReconnaissance, setLieuReconnaissance] = useState<EtrangerFrance>(
     EtrangerFrance.INCONNU
@@ -112,7 +116,7 @@ const EvenementReconnaissanceTitulaireForm: React.FC<
     return (
       <>
         <InputField
-          name={withNamespace(props.nom, VILLE_RECONNAISSANCE)}
+          name={villeReconnaissanceWithNamespace}
           label={getLibelle("Ville de la reconnaissance")}
           onBlur={e =>
             sortieChampPremiereLettreEnMajuscule(
@@ -124,7 +128,7 @@ const EvenementReconnaissanceTitulaireForm: React.FC<
         />
 
         <InputField
-          name={withNamespace(props.nom, REGION_ETAT_RECONNAISSANCE)}
+          name={regionReconnaissanceWithNamespace}
           label={getLibelle("Région/état de la reconnaissance")}
           onBlur={e =>
             sortieChampPremiereLettreEnMajuscule(
@@ -136,7 +140,7 @@ const EvenementReconnaissanceTitulaireForm: React.FC<
         />
 
         <InputField
-          name={withNamespace(props.nom, PAYS_RECONNAISSANCE)}
+          name={paysReconnaissanceWithNamespace}
           label={getLibelle("Pays de la reconnaissance")}
           onBlur={e =>
             sortieChampPremiereLettreEnMajuscule(
@@ -166,13 +170,13 @@ const EvenementReconnaissanceTitulaireForm: React.FC<
         />
 
         <InputField
-          name={withNamespace(props.nom, DEPARTEMENT_RECONNAISSANCE)}
+          name={departementReconnaissanceWithNamespace}
           label={getLibelle("Département de la reconnaissance")}
           onBlur={e =>
             sortieChampPremiereLettreEnMajuscule(
               e,
               props.formik,
-              regionReconnaissanceWithNamespace
+              departementReconnaissanceWithNamespace
             )
           }
         />

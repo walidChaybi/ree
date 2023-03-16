@@ -19,6 +19,7 @@ import NationalitesForm, {
   NationalitesFormProps
 } from "@widget/formulaire/nationalites/Nationalites";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
+import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   ISubForm,
   NB_CARACT_MAX_SAISIE,
@@ -35,6 +36,7 @@ import {
   PAYS_STATUT_REFUGIE
 } from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 import EvenementParentForm from "../evenement/EvenementParentsForm";
+import { PrenomsParentsFormDefaultValues } from "./ParentsForm";
 import "./scss/ParentsForm.scss";
 interface ComponentFormProps {
   parent?: IParent;
@@ -56,6 +58,12 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
     PAYS_ORIGINE_REFUGIE
   );
 
+  const pasDeNomConnuWithNamespace = withNamespace(props.nom, PAS_DE_NOM_CONNU);
+  const pasDePrenomConnuWithNamespace = withNamespace(
+    props.nom,
+    PAS_DE_PRENOM_CONNU
+  );
+
   const nationaliteFormProps = {
     nom: withNamespace(props.nom, NATIONALITES),
     nationalites: undefined
@@ -71,35 +79,32 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
     if (e.target.checked) {
       setPasDePrenomConnu(true);
       reinitialiserPrenoms();
+      props.formik.handleChange(e);
     } else {
       setPasDePrenomConnu(false);
-      reinitialiserPrenoms();
+      props.formik.handleChange(e);
+      props.formik.setFieldValue(pasDePrenomConnuWithNamespace, "false");
     }
-    props.formik.handleChange(e);
   }
 
   function reinitialiserPrenoms() {
-    const prenomsParentsCourant = props.formik.getFieldProps(
-      withNamespace(props.nom, PRENOMS)
-    ).value;
-
-    const keysPrenoms = Object.keys(prenomsParentsCourant);
-    keysPrenoms.forEach(prenom => {
-      props.formik.setFieldValue(
-        withNamespace(withNamespace(props.nom, PRENOMS), prenom),
-        ""
-      );
-    });
+    const pathPrenomsAReinitialiser = `${props.nom}.prenoms`;
+    props.formik.setFieldValue(
+      pathPrenomsAReinitialiser,
+      PrenomsParentsFormDefaultValues
+    );
   }
 
   function onChangePasDeNomConnu(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
       setPasDeNomConnu(true);
-      props.formik.setFieldValue(withNamespace(props.nom, NOM), "");
+      props.formik.setFieldValue(pasDeNomConnuWithNamespace, "");
+      props.formik.handleChange(e);
     } else {
       setPasDeNomConnu(false);
+      props.formik.handleChange(e);
+      props.formik.setFieldValue(pasDeNomConnuWithNamespace, "false");
     }
-    props.formik.handleChange(e);
   }
 
   return (
@@ -107,7 +112,7 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
       <SousFormulaire titre={props.titre}>
         <div className="IdentiteParentsForm">
           <CheckboxField
-            name={withNamespace(props.nom, PAS_DE_NOM_CONNU)}
+            name={pasDeNomConnuWithNamespace}
             label={getLibelle("Le parent n'a pas de nom connu")}
             values={[{ str: "", value: PAS_DE_NOM_CONNU }]}
             onChange={onChangePasDeNomConnu}
@@ -124,7 +129,7 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
             name={withNamespace(props.nom, PAS_DE_PRENOM_CONNU)}
             label={getLibelle("Pas de prénom connu")}
             values={[{ str: "", value: PAS_DE_PRENOM_CONNU }]}
-            onChange={e => onChangePasDePrenomConnu(e)}
+            onChange={onChangePasDePrenomConnu}
           />
 
           {!pasDePrenomConnu && (
@@ -153,12 +158,26 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
             name={paysStatutRefugieWithNamespace}
             label={getLibelle("Pays du statut de réfugié")}
             maxLength={NB_CARACT_MAX_SAISIE}
+            onBlur={e =>
+              sortieChampPremiereLettreEnMajuscule(
+                e,
+                props.formik,
+                paysStatutRefugieWithNamespace
+              )
+            }
           />
 
           <InputField
             name={paysOrigineRefugieWithNamespace}
             label={getLibelle("Pays d'origine du réfugié")}
             maxLength={NB_CARACT_MAX_SAISIE}
+            onBlur={e =>
+              sortieChampPremiereLettreEnMajuscule(
+                e,
+                props.formik,
+                paysOrigineRefugieWithNamespace
+              )
+            }
           />
         </div>
       </SousFormulaire>

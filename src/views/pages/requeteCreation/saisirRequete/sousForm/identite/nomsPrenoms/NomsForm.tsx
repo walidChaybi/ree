@@ -75,10 +75,12 @@ const NomsFormTitulaire: React.FC<NomsFormProps> = props => {
     if (e.target.checked) {
       setPasDeNomActeEtranger(true);
       props.formik.setFieldValue(nomSurActeWithNamespace, "");
+      props.formik.handleChange(e);
     } else {
       setPasDeNomActeEtranger(false);
+      props.formik.handleChange(e);
+      props.formik.setFieldValue(pasDeNomActeEtrangerWithNameSpace, "false");
     }
-    props.formik.handleChange(e);
   }
 
   return (
