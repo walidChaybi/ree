@@ -54,6 +54,11 @@ export function mappingActes(data: any): IResultatRMCActe[] {
         mois: acte.moisNaissance,
         annee: acte.anneeNaissance
       }),
+      dateEvenement: getDateStringFromDateCompose({
+        jour: acte.jourEvenement,
+        mois: acte.moisEvenement,
+        annee: acte.anneeEvenement
+      }),
       paysNaissance: getValeurOuVide(acte.paysNaissance),
       nature: NatureActe.getEnumFor(acte.nature).libelle,
       registre: getValeurOuVide(acte.registre),

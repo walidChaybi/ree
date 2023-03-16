@@ -6,6 +6,7 @@ export interface IResultatRMCActe {
   autresNoms: string;
   prenoms: string;
   dateNaissance: string;
+  dateEvenement: string;
   paysNaissance: string;
   nature: string;
   registre: string;

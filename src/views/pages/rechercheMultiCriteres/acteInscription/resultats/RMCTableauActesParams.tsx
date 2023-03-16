@@ -15,6 +15,11 @@ const columnsTableauRmc = [
   ...commonHeadersTableauRMC,
   ...natureHeadersTableauRMC,
   new TableauTypeColumn({
+    keys: [HeaderTableauRMCActe.DateEvenement],
+    title: "Date d'événement",
+    className: "ColOverflow"
+  }),
+  new TableauTypeColumn({
     keys: [HeaderTableauRMCActe.Registre],
     title: "Réf. acte",
     className: "ColOverflow",

@@ -8,6 +8,7 @@ export enum HeaderTableauRMC {
 }
 
 export enum HeaderTableauRMCActe {
+  DateEvenement = "dateEvenement",
   Registre = "registre",
   Checkbox = "checkbox"
 }
