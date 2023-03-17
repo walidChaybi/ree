@@ -92,6 +92,9 @@ test("DOIT rendre la page de saisie du formulaire de création correctement", as
 
 test("DOIT afficher la popin de transfert vers les entités fille (triées) du département Etablissement QUAND l'utilisateur clique sur le bouton de transmission", async () => {
   storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
+  const history = createMemoryHistory();
+  history.push("/page1");
+  history.push("/page2");
   await act(async () => {
     render(
       <Router history={history}>
@@ -205,12 +208,7 @@ test("DOIT afficher la popin de transfert vers les entités fille (triées) du d
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toBe(
-      getUrlWithParam(
-        `/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/:idRequeteParam`,
-        "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-      )
-    );
+    expect(history.location.pathname).toBe("/page1");
   });
 });
 

@@ -9,7 +9,7 @@ import {
 import { ISaisieRequeteRCTC } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { receUrl } from "@router/ReceUrls";
-import { replaceUrl } from "@util/route/UrlUtil";
+import { goBack, replaceUrl } from "@util/route/UrlUtil";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { History } from "history";
 import React, { useEffect, useState } from "react";
@@ -153,10 +153,7 @@ export const SaisirRCTCPage: React.FC = () => {
           ouverte={transmissionPopinOuverte}
           onTransmissionEffectuee={(idRequeteCreerEtTransmise: string) => {
             fermePopin();
-            redirectionApercuPriseEnChargePage(
-              history,
-              idRequeteCreerEtTransmise
-            );
+            goBack(history);
           }}
           onCancel={fermePopin}
           onErrors={fermePopin}

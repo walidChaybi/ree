@@ -104,7 +104,7 @@ export const configRequetesCreation = [
       // Création d'une requête de transcription RCTC et transmission a une entité
       if (
         match[1] ===
-          "/requetes/creations?idEntiteRattachement=6737c8a6-9d23-4fd0-97ec-1ebe3d079373" &&
+          "/requetes/creationsTransmissionEntite?idEntiteRattachement=6737c8a6-9d23-4fd0-97ec-1ebe3d079373" &&
         context.method === "post"
       ) {
         return { data: creationRequeteRCTCResultat };

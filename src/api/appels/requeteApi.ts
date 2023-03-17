@@ -31,6 +31,8 @@ export const URL_REQUETES_RMC_AUTO = "/requetes/rmcauto";
 export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
 export const URL_REQUETES_CREATION = "/requetes/creations";
+export const URL_REQUETES_CREATION_TRANSMISSION_ENTITE =
+  "/requetes/creationsTransmissionEntite";
 export const URL_CHOIX_DELIVRANCE = "/choixdelivrance";
 export const URL_COURRIER = "/courrier";
 export const URL_DOCUMENT = "/document";
@@ -310,7 +312,7 @@ export async function creationRequeteCreationEtTransmissionEntite(
 ) {
   return api.fetch({
     method: HttpMethod.POST,
-    uri: `${URL_REQUETES_CREATION}?idEntiteRattachement=${idEntiteRattachement}`,
+    uri: `${URL_REQUETES_CREATION_TRANSMISSION_ENTITE}?idEntiteRattachement=${idEntiteRattachement}`,
     data: [requete]
   });
 }
