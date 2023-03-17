@@ -133,7 +133,7 @@ const NationalitesForm: React.FC<NationalitesFormProps> = props => {
         disabled={btnSupprimerInactif}
         onClick={() => supprimerNATIONALITE(champ)}
       >
-        {getLibelle("Annuler la saisie")}
+        {getLibelle("Annuler saisie")}
       </button>
     );
   }

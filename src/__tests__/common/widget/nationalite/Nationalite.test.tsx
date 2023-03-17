@@ -142,7 +142,7 @@ test("DOIT rendre le composant de Nationalité et permettre l'ajout et la suppre
     );
   });
 
-  const supprNationalite = screen.getByText(/annuler la saisie/i);
+  const supprNationalite = screen.getByText(/annuler saisie/i);
   await act(async () => {
     fireEvent.click(supprNationalite);
   });

@@ -91,7 +91,7 @@ test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async (
     });
   });
 
-  const ajoutPrenom = screen.getByText(/Ajouter un prénom/i);
+  const ajoutPrenom = screen.getByText(/Ajouter prénom/i);
   await act(async () => {
     fireEvent.blur(inputPrenom1);
     fireEvent.click(ajoutPrenom);
@@ -109,7 +109,7 @@ test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async (
     });
   });
 
-  const ajoutPrenom2 = screen.getByText(/Ajouter un prénom/i);
+  const ajoutPrenom2 = screen.getByText(/Ajouter prénom/i);
   await act(async () => {
     fireEvent.blur(inputPrenom2);
     fireEvent.click(ajoutPrenom2);
@@ -141,7 +141,7 @@ test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async (
     );
   });
 
-  const supprPrenom = screen.getByText(/annuler la saisie/i);
+  const supprPrenom = screen.getByText(/annuler saisie/i);
   await act(async () => {
     fireEvent.click(supprPrenom);
   });
