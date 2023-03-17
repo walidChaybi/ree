@@ -1,5 +1,3 @@
-$spacing: 0.5rem;
-
 .NomsForm{
   display: grid;
   grid-template-columns: 72% auto;
@@ -8,12 +6,6 @@ $spacing: 0.5rem;
     grid-template-columns: 90.25% auto;
   }
   .BoutonsConteneur {
-    margin-top: $spacing * -1;
-    padding-left: $spacing;
-    padding-right: $spacing;
-  
-    button {
-      margin: $spacing;
-    }
+    margin-top: -0.1rem;
   }
 }

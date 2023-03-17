@@ -85,12 +85,14 @@ interface IPrenomsFormProps {
 
 export type PrenomsFormProps = IPrenomsFormProps & SubFormProps;
 
+
 const PrenomsForm: React.FC<PrenomsFormProps> = props => {
   const prenomWithNamespace1 = withNamespace(props.nom, PRENOM_1);
   const prenomWithNamespace2 = withNamespace(props.nom, PRENOM_2);
   const prenomWithNamespace3 = withNamespace(props.nom, PRENOM_3);
 
   const [nbPrenom, setNbPrenom] = useState<number>(1);
+  const [nbPrenomInitialise, setNbPrenomInitialise] = useState<boolean>(false);
   const [btnAjouterInactif, setBtnAjouterInactif] = useState(false);
   const [btnSupprimerInactif, setBtnSupprimerInactif] = useState(true);
 
@@ -108,9 +110,12 @@ const PrenomsForm: React.FC<PrenomsFormProps> = props => {
   };
 
   useEffect(() => {
-    if (props.prenoms && props.prenoms.length > 1) {
+    if (!nbPrenomInitialise && props.prenoms && props.prenoms.length > 1) {
       setNbPrenom(props.prenoms.length);
+      setNbPrenomInitialise(true);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.prenoms]);
 
   useEffect(() => {
@@ -125,7 +130,7 @@ const PrenomsForm: React.FC<PrenomsFormProps> = props => {
         disabled={btnAjouterInactif}
         onClick={ajouterPrenom}
       >
-        {getLibelle("Ajouter un prénom")}
+        {getLibelle("Ajouter prénom")}
       </button>
     );
   }
@@ -139,7 +144,7 @@ const PrenomsForm: React.FC<PrenomsFormProps> = props => {
         disabled={btnSupprimerInactif}
         onClick={() => supprimerPrenom(champ)}
       >
-        {getLibelle("Annuler la saisie")}
+        {getLibelle("Annuler saisie")}
       </button>
     );
   }
