@@ -34,9 +34,13 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
   const [estDisabled, setEstDisabled] = useState(true);
   const { isDirty, setIsDirty } = useContext(RECEContext);
 
-  const aDroitSignerEtStatutSigner =
-    officierHabiliterPourLeDroit(Droit.SIGNER) &&
-    requete.statutCourant.statut === StatutRequete.A_SIGNER;
+  const aDroitSignerEtStatutSigner = possibleDeSigner(
+    requete.statutCourant.statut
+  );
+
+  const afficheBoutonTransmettreAValideur = possibleDeTransmettreAValideur(
+    requete.statutCourant.statut
+  );
 
   const mAppartient =
     requete.idUtilisateur === storeRece.utilisateurCourant?.idUtilisateur;
@@ -72,7 +76,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
 
   return (
     <>
-      {StatutRequete.estASignerOuAValider(requete.statutCourant.statut) && (
+      {afficheBoutonTransmettreAValideur && (
         <BoutonTransmettreAValideur idRequete={requete.id} />
       )}
       {afficherBoutonValiderTerminer(requete) && (
@@ -120,3 +124,16 @@ const afficherBoutonValiderTerminer = (requete: IRequeteDelivrance) =>
   (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
     SousTypeDelivrance.estRDCSDouRDCSC(requete.sousType));
 
+const possibleDeSigner = (statut: StatutRequete): boolean => {
+  return (
+    officierHabiliterPourLeDroit(Droit.SIGNER) &&
+    statut === StatutRequete.A_SIGNER
+  );
+};
+
+const possibleDeTransmettreAValideur = (statut: StatutRequete): boolean => {
+  return (
+    StatutRequete.estASignerOuAValider(statut) &&
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
+  );
+};
