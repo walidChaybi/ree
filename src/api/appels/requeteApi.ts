@@ -304,6 +304,17 @@ export async function creationRequeteCreation(requete: ISaisieRequeteAEnvoyer) {
   });
 }
 
+export async function creationRequeteCreationEtTransmissionEntite(
+  requete: ISaisieRequeteAEnvoyer,
+  idEntiteRattachement: string
+) {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_REQUETES_CREATION}?idEntiteRattachement=${idEntiteRattachement}`,
+    data: [requete]
+  });
+}
+
 export async function patchSauvegarderDocument(
   idRequete: string,
   requete: Object

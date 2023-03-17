@@ -14,7 +14,7 @@ const VisionneuseImage: React.FC<IVisionneuseImageProps> = props => {
   //  (ex: comparaison de document où il serait préférable d'utiliser une <img> plutôt qu'une <iframe>)
 
   return (
-    <div className="VisionneusePdf" style={{ overflow: "hidden" }}>
+    <div style={{ overflow: "hidden" }}>
       <iframe
         title={props.infoBulle}
         src={props.url}

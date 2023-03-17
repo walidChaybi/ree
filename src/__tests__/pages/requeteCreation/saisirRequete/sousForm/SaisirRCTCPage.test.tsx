@@ -17,10 +17,15 @@ import { Router } from "react-router";
 import request from "superagent";
 import {
   resultatHeaderUtilistateurLeBiannic,
-  resultatRequeteUtilistateurLeBiannic
+  resultatRequeteUtilistateurLeBiannic,
+  userDroitCreerActeTranscritPerimetreMEAE
 } from "../../../../../mock/data/connectedUserAvecDroit";
 import { configAgent } from "../../../../../mock/superagent-config/superagent-mock-agent";
 import { configRequetesCreation } from "../../../../../mock/superagent-config/superagent-mock-requetes-creation";
+import {
+  expectEstBoutonDisabled,
+  expectEstBoutonEnabled
+} from "../../../../__tests__utils__/expectUtils";
 import { entiteRatachementEtablissement } from "./../../../../../mock/data/entiteRatachementEtablissement";
 
 const superagentMock = require("superagent-mock")(request, [
@@ -86,20 +91,57 @@ test("DOIT rendre la page de saisie du formulaire de création correctement", as
 });
 
 test("DOIT afficher la popin de transfert vers les entités fille (triées) du département Etablissement QUAND l'utilisateur clique sur le bouton de transmission", async () => {
+  storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
   await act(async () => {
     render(
       <Router history={history}>
-        <HookSaisirRCTCForm />
+        <SaisirRCTCPage />
       </Router>
     );
   });
+
+  /////////////////////////Saisie des données///////////////////////////////
+  await act(async () => {
+    // Nature acte et lien requérant
+    fireEvent.change(
+      screen.getByTestId("acteATranscrireLienRequerant.natureActe"),
+      {
+        target: { value: "NAISSANCE_MINEUR" }
+      }
+    );
+    fireEvent.change(
+      screen.getByTestId("acteATranscrireLienRequerant.lienRequerant"),
+      {
+        target: { value: "PERE_MERE" }
+      }
+    );
+
+    // Titulaire
+    fireEvent.change(getInput("titulaire.noms.nomActeEtranger"), {
+      target: { value: "Nom acte etranger" }
+    });
+    fireEvent.change(getInput("titulaire.noms.nomSouhaiteActeFR"), {
+      target: { value: "Nom souhaite acte FR" }
+    });
+    fireEvent.change(getInput("titulaire.prenoms.prenom1"), {
+      target: { value: "Prenom Un" }
+    });
+
+    // Parent 1
+    fireEvent.click(getInput("parents.parent1.pasdenomconnu.pasdenomconnu"));
+    fireEvent.click(
+      getInput("parents.parent1.pasdeprenomconnu.pasdeprenomconnu")
+    );
+  });
+
+  /////////////////////////////////////////////////////////////////////////
 
   const boutonTransmettre = screen.queryByText(
     "Transmettre au service compétent"
   );
 
   await waitFor(() => {
-    expect(boutonTransmettre).toBeDefined();
+    expect(boutonTransmettre).toBeInTheDocument();
     expect(screen.queryByText("Choisissez une entité")).not.toBeInTheDocument();
   });
 
@@ -125,6 +167,7 @@ test("DOIT afficher la popin de transfert vers les entités fille (triées) du d
       entite1.libelleEntite.localeCompare(entite2.libelleEntite)
     );
 
+  // Vérification de la liste des entités
   for (let i = 0; i < options.length; i++) {
     const libelleOtion = options.item(i)?.text;
     if (i === 0) {
@@ -136,6 +179,39 @@ test("DOIT afficher la popin de transfert vers les entités fille (triées) du d
       );
     }
   }
+
+  await waitFor(() => {
+    expectEstBoutonDisabled("Valider");
+  });
+
+  // Choix d'une entité
+  await waitFor(() => {
+    act(() => {
+      fireEvent.change(selectElement, {
+        target: {
+          value: "6737c8a6-9d23-4fd0-97ec-1ebe3d079373"
+        }
+      });
+    });
+  });
+
+  let boutonValider: HTMLButtonElement;
+  await waitFor(() => {
+    boutonValider = expectEstBoutonEnabled("Valider");
+  });
+
+  act(() => {
+    fireEvent.click(boutonValider);
+  });
+
+  await waitFor(() => {
+    expect(history.location.pathname).toBe(
+      getUrlWithParam(
+        `/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/:idRequeteParam`,
+        "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+      )
+    );
+  });
 });
 
 test("DOIT activer le bouton 'Prendre en charge' QUAND je modifie au moins un champ du formulaire", async () => {

@@ -27,6 +27,14 @@ export function expectEstBoutonDisabled(ariaLabel: string) {
   return widget;
 }
 
+export function expectEstBoutonEnabled(ariaLabel: string) {
+  const widget = screen.getByLabelText(ariaLabel) as HTMLButtonElement;
+  expect(widget.disabled).toBeFalsy();
+
+  return widget;
+}
+
+
 export function expectEstPresentAvecValeurEtDisabled(
   ariaLabel: string,
   valeur: string

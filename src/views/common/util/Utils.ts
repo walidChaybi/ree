@@ -382,6 +382,9 @@ export function estRenseigne(valeur: any): boolean {
   if (valeur instanceof Array) {
     return valeur.length > 0;
   }
+  if (valeur instanceof Object) {
+    return Object.keys(valeur).length !== 0;
+  }
   if (typeof valeur === "string") {
     valeurTrimee = valeur.trim();
   }

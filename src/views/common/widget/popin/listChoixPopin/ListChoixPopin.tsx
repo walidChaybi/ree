@@ -6,10 +6,10 @@ import {
 } from "@mui/material";
 import { Option } from "@util/Type";
 import { estNonRenseigne } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { SelectRece } from "@widget/formulaire/champsSaisie/SelectField";
 import React, { useState } from "react";
 import { getLibelle } from "./../../../util/Utils";
-import { Bouton } from "./../../boutonAntiDoubleSubmit/Bouton";
 
 interface IListChoixPopinProps {
   titre: string;
@@ -17,7 +17,7 @@ interface IListChoixPopinProps {
   ariaLabel: string;
   ouverte: boolean;
   options: Option[];
-  onValidation: (choix?: Option) => void;
+  onValidation: (id?: string) => void;
   onCancel: () => void;
 }
 
@@ -50,9 +50,9 @@ export const ListChoixPopin: React.FunctionComponent<
           />
         </DialogContent>
         <DialogActions>
-          <button type="button" onClick={props.onCancel}>
+          <Bouton type="button" onClick={props.onCancel}>
             {getLibelle("Annuler")}
-          </button>
+          </Bouton>
           <Bouton
             onClick={() => props.onValidation(optionSelectionnee)}
             disabled={estNonRenseigne(optionSelectionnee)}

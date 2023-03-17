@@ -1,4 +1,4 @@
-import { creationRequeteCreation } from "@api/appels/requeteApi";
+import { creationRequeteCreation, creationRequeteCreationEtTransmissionEntite } from "@api/appels/requeteApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import { mappingRequeteCreation } from "./DetailRequeteHook";
@@ -19,6 +19,7 @@ export type ISaisieRequeteAEnvoyer = ISaisieRequeteRCTCAEnvoyer;
 
 export interface ICreationRequeteCreationParams {
   requete?: ISaisieRequeteAEnvoyer;
+  idEntiteRattachement?: string;
 }
 
 export function useCreationRequeteCreation(
@@ -44,3 +45,31 @@ export function useCreationRequeteCreation(
 
   return resultat;
 }
+
+export function useCreationRequeteCreationEtTransmissionEntite(
+  params?: ICreationRequeteCreationParams
+): string | undefined {
+  const [idRequeteCree, setIdRequeteCree] = useState<string>();
+
+  useEffect(() => {
+    if (params?.requete && params.idEntiteRattachement) {
+      creationRequeteCreationEtTransmissionEntite(
+        params.requete,
+        params.idEntiteRattachement
+      )
+        .then((result: any) => {
+          setIdRequeteCree(result.body.data[0].id);
+        })
+        .catch((err: any) => {
+          logError({
+            messageUtilisateur:
+              "Une erreur est survenue lors de la transmission de la requête",
+            error: err
+          });
+        });
+    }
+  }, [params]);
+
+  return idRequeteCree;
+}
+

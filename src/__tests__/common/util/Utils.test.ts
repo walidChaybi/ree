@@ -504,6 +504,8 @@ test("Attendu: estRenseigne fonctionne correctement", () => {
   expect(estRenseigne(123)).toBeTruthy();
   expect(estRenseigne([1])).toBeTruthy();
   expect(estRenseigne(["a"])).toBeTruthy();
+  expect(estRenseigne({ a: "a" })).toBeTruthy();
+  expect(estRenseigne({})).toBeFalsy();
 });
 
 test("Attendu: getNombreCommeSuffix fonctionne correctement", () => {

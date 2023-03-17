@@ -7,6 +7,7 @@ type BoutonProps = React.DetailedHTMLProps<
 >;
 
 const TIME_OUT_MS = 1000;
+const ARIA_LABEL = "aria-label";
 
 export const Bouton: React.FC<BoutonProps> = props => {
   const boutonRef = useRef<HTMLButtonElement>(null);
@@ -20,13 +21,18 @@ export const Bouton: React.FC<BoutonProps> = props => {
       props.onClick(event);
     }
   }
+  const ariaLabel = props[ARIA_LABEL]
+    ? props[ARIA_LABEL]
+    : typeof props.children === "string"
+    ? props.children
+    : "bouton";
 
   const boutonProps: BoutonProps = {
     ...props,
     onClick: onClickEmpecheDoubleSubmit,
-    type: props.type || "button"
+    type: props.type || "button",
+    [ARIA_LABEL]: ariaLabel
   };
-
   return (
     <button ref={boutonRef} {...boutonProps}>
       {props.children}

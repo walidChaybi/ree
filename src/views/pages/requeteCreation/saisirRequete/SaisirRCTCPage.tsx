@@ -1,4 +1,3 @@
-import { ChoixEntitePopin } from "@composant/choixEntitesPopin/ChoixEntitesPopin";
 import {
   MARIAGE,
   NATURE_ACTE_LIEN_REQUERANT,
@@ -7,12 +6,12 @@ import {
   REQUERANT,
   TITULAIRE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { Entite } from "@model/agent/IEntiteRattachement";
 import { ISaisieRequeteRCTC } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { receUrl } from "@router/ReceUrls";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { Formulaire } from "@widget/formulaire/Formulaire";
+import { History } from "history";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
@@ -53,6 +52,7 @@ import {
   RequerantFormDefaultValue,
   RequerantFormValidationSchema
 } from "./sousForm/requerant/RequerantForm";
+import TransmissionPopin from "./sousForm/transmissionPopin/TransmissionPopin";
 
 export const enum limitesParents {
   MIN = 1,
@@ -89,26 +89,34 @@ export const SaisirRCTCPage: React.FC = () => {
 
   //States
   //////////////////////////////////////////////////////////////////////////
+  const [transmissionPopinOuverte, setTransmissionPopinOuverte] =
+    useState(false);
   const [creationRequeteRCTCParams, setCreationRequeteRCTCParams] =
     useState<ICreationRequeteCreationParams>();
-  const [choixEntitesPopinOuverte, setChoixEntitesPopinOuverte] =
-    useState(false);
 
-  // Evenements
+  // Hooks
   //////////////////////////////////////////////////////////////////////////
-  function onEntiteChoisiePourTransfert(idEntiteChoisie?: string) {
-    setChoixEntitesPopinOuverte(false);
-    // TODO
-  }
+  const idRequeteCree = useCreationRequeteCreation(creationRequeteRCTCParams);
 
+  // Effects
+  //////////////////////////////////////////////////////////////////////////
+  useEffect(() => {
+    if (idRequeteCree) {
+      redirectionApercuPriseEnChargePage(history, idRequeteCree);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idRequeteCree]);
+
+  // Evenements & fonctions
+  //////////////////////////////////////////////////////////////////////////
   function onSubmitSaisirRequete(values: ISaisieRequeteRCTC) {
     const requete = mappingSaisieRequeteRCTCVersRequetesAEnvoyer(values);
     setCreationRequeteRCTCParams({ requete });
   }
 
-  // Hooks
-  //////////////////////////////////////////////////////////////////////////
-  const idRequeteCree = useCreationRequeteCreation(creationRequeteRCTCParams);
+  function fermePopin() {
+    setTransmissionPopinOuverte(false);
+  }
 
   // Formulaire
   //////////////////////////////////////////////////////////////////////////
@@ -141,16 +149,34 @@ export const SaisirRCTCPage: React.FC = () => {
         className="FormulaireSaisirRCTC"
       >
         <div>{blocsForm}</div>
-        <ChoixEntitePopin
-          ouverte={choixEntitesPopinOuverte}
-          idEntiteMere={Entite.getEntiteEtablissement()?.idEntite}
-          onEntiteChoisie={onEntiteChoisiePourTransfert}
-          onCancel={() => setChoixEntitesPopinOuverte(false)}
+        <TransmissionPopin
+          ouverte={transmissionPopinOuverte}
+          onTransmissionEffectuee={(idRequeteCreerEtTransmise: string) => {
+            fermePopin();
+            redirectionApercuPriseEnChargePage(
+              history,
+              idRequeteCreerEtTransmise
+            );
+          }}
+          onCancel={fermePopin}
+          onErrors={fermePopin}
         />
+
         <SaisirRequeteBoutons
-          onTransferer={() => setChoixEntitesPopinOuverte(true)}
+          onTransferer={() => setTransmissionPopinOuverte(true)}
         />
       </Formulaire>
     </div>
   );
 };
+
+function redirectionApercuPriseEnChargePage(
+  history: History<unknown>,
+  idRequeteCree: string
+) {
+  const url = receUrl.getUrlApercuPriseEnChargeCreationTranscriptionAPartirDe({
+    url: history.location.pathname,
+    idRequete: idRequeteCree
+  });
+  replaceUrl(history, url);
+}

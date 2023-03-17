@@ -215,7 +215,10 @@ export const userDroitCreerActeTranscritPerimetreMEAE: IOfficier = {
           libelle: "libelle",
           estActif: true
         },
-        droits: [{ idDroit: "d12345", nom: Droit.CREER_ACTE_TRANSCRIT }]
+        droits: [
+          { idDroit: "d12345", nom: Droit.CREER_ACTE_TRANSCRIT },
+          { idDroit: "d6789", nom: Droit.SAISIR_REQUETE }
+        ]
       },
       perimetre: {
         idPerimetre: "peri12345",

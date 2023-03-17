@@ -66,6 +66,7 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
             Droit.SAISIR_REQUETE,
             Droit.CREER_ACTE_TRANSCRIT
           ]) ? (
+            <>
           <Bouton
             disabled={!props.formik.dirty}
             id="boutonPrendreEnCharge"
@@ -73,6 +74,15 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
           >
             {getLibelle("Prendre en charge")}
           </Bouton>
+          {props.onTransferer && (
+            <Bouton
+              onClick={props.onTransferer}
+              disabled={!props.formik.dirty}
+            >
+              {getLibelle("Transmettre au service compétent")}
+            </Bouton>
+          )}
+          </>
         ) : (
           <Bouton
             disabled={!props.formik.dirty}
@@ -82,11 +92,7 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
             {getLibelle("Sauvegarder")}
           </Bouton>
         )}
-        {props.onTransferer && (
-          <Bouton onClick={props.onTransferer}>
-            {getLibelle("Transmettre au service compétent")}
-          </Bouton>
-        )}
+        
       </div>
     </>
   );

@@ -60,7 +60,7 @@ export const SelectRece: React.FC<SelectProps> = props => {
           </option>
         )}
         {props.options.map((option, index) => (
-          <option key={index} value={option.value}>
+          <option key={index} value={option.value} style={{ color: "black" }}>
             {option.str}
           </option>
         ))}

@@ -9,7 +9,7 @@ export interface IVisionneusePdfProps {
 export const VisionneusePdf: React.FC<IVisionneusePdfProps> = props => {
   const url = props.zoomPageFit ? props.url + "#zoom=page-fit" : props.url;
   return (
-    <div className="VisionneusePdf" style={{ overflow: "hidden" }}>
+    <div style={{ overflow: "hidden" }}>
       <iframe
         title={props.infoBulle}
         src={url}
