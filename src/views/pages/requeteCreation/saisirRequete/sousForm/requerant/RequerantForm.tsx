@@ -10,10 +10,7 @@ import {
   NUMERO_TELEPHONE_NON_CONFORME
 } from "@widget/formulaire/FormulaireMessages";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
-import {
-  sortieChampEnMajuscule,
-  sortieChampPremiereLettreEnMajuscule
-} from "@widget/formulaire/utils/ControlesUtil";
+import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   CENT_CARACT_MAX,
   ISubForm,
@@ -120,7 +117,11 @@ const RequerantForm: React.FC<SubFormProps> = props => {
             label={getLibelle("Nom")}
             maxLength={TRENTE_HUIT_CARACT_MAX}
             onBlur={e =>
-              sortieChampEnMajuscule(e, props.formik, nomWithNamespace)
+              sortieChampPremiereLettreEnMajuscule(
+                e,
+                props.formik,
+                nomWithNamespace
+              )
             }
           />
           {!nomUsagePresent && (

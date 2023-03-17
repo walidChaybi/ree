@@ -5,7 +5,9 @@ import {
   PRENOMS,
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
-import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import PrenomsForm, {
+  PrenomsFormDefaultValues
+} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IParent } from "@model/requete/IParents";
 import { getLibelle } from "@util/Utils";
@@ -36,7 +38,6 @@ import {
   PAYS_STATUT_REFUGIE
 } from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 import EvenementParentForm from "../evenement/EvenementParentsForm";
-import { PrenomsParentsFormDefaultValues } from "./ParentsForm";
 import "./scss/ParentsForm.scss";
 interface ComponentFormProps {
   parent?: IParent;
@@ -91,14 +92,14 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
     const pathPrenomsAReinitialiser = `${props.nom}.prenoms`;
     props.formik.setFieldValue(
       pathPrenomsAReinitialiser,
-      PrenomsParentsFormDefaultValues
+      PrenomsFormDefaultValues
     );
   }
 
   function onChangePasDeNomConnu(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
       setPasDeNomConnu(true);
-      props.formik.setFieldValue(pasDeNomConnuWithNamespace, "");
+      props.formik.setFieldValue(withNamespace(props.nom, NOM), "");
       props.formik.handleChange(e);
     } else {
       setPasDeNomConnu(false);

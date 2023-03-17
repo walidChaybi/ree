@@ -4,12 +4,12 @@ import {
   NOM,
   PARENTS,
   PRENOMS,
-  PRENOM_1,
-  PRENOM_2,
-  PRENOM_3,
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { PrenomsFormValidationSchema } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import {
+  PrenomsFormDefaultValues,
+  PrenomsFormValidationSchema
+} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { IParent } from "@model/requete/IParents";
 import { getLibelle } from "@util/Utils";
 import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
@@ -48,17 +48,11 @@ import EvenementReconnaissanceTitulaireForm from "../evenement/EvenementReconnai
 import IdentiteParentForm from "./IdentiteParentForm";
 import "./scss/ParentsForm.scss";
 
-export const PrenomsParentsFormDefaultValues = {
-  [PRENOM_1]: "",
-  [PRENOM_2]: "",
-  [PRENOM_3]: ""
-};
-
 export const ParentFormDefaultValues = {
   [PAS_DE_NOM_CONNU]: "false",
   [NOM]: "",
   [PAS_DE_PRENOM_CONNU]: "false",
-  [PRENOMS]: PrenomsParentsFormDefaultValues,
+  [PRENOMS]: { ...PrenomsFormDefaultValues },
   [SEXE]: "INCONNU",
   [DATE_NAISSANCE]: DateDefaultValues,
   [NAISSANCE]: EvenementParentsFormDefaultValues,
@@ -155,7 +149,10 @@ const ParentsForm: React.FC<
 
   const onAjoutParent = (formik: FormikProps<FormikValues>) => {
     const nomParent2 = withNamespace(PARENTS, "parent2");
-    formik.setFieldValue(nomParent2, ParentFormDefaultValues);
+    formik.setFieldValue(nomParent2, {
+      ...ParentFormDefaultValues,
+      [PRENOMS]: { ...PrenomsFormDefaultValues }
+    });
     setParents([...parents, {} as IParent]);
   };
 
