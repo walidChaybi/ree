@@ -159,7 +159,7 @@ test("Attendu: L'affichage de l'attribution des requêtes de service s'effectue 
 
   const getColonnesOfficierEtCheckbox = (requete: HTMLElement) => ({
     colonneOfficier: requete.childNodes.item(5) as HTMLElement,
-    colonneCheckbox: requete.childNodes.item(6).firstChild
+    colonneCheckbox: requete.childNodes.item(6).firstChild?.firstChild
       ?.firstChild as HTMLElement
   });
 

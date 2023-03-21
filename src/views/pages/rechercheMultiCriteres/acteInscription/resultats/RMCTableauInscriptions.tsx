@@ -12,13 +12,13 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { getLibelle, getValeurOuVide, supprimeElement } from "@util/Utils";
+import { IColonneInputParams } from "@widget/tableau/TableauRece/colonneInput/InputParams";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React, { useCallback, useEffect, useState } from "react";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { IDataFicheProps, IIndex } from "../../../fiche/FichePage";
 import { goToLinkRMC, TypeRMC } from "./RMCTableauCommun";
-import { determinerColonnes } from "./RMCTableauInscriptionsParams";
+import { getColonnesTableauInscriptions } from "./RMCTableauInscriptionsParams";
 
 interface IFenetreFicheInscription {
   idInscription: string;
@@ -163,10 +163,11 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   }, [dataRMCInscription, dataTableauRMCInscription]);
 
   // Gestion du clic sur une colonne de type checkbox.
-  const [selected, setSelected] = useState<Map<number, string>>(new Map([]));
-  const [columnHeaders, setColumnHeaders] = useState<TableauTypeColumn[]>([]);
+  const [idInscriptionSelectionnees, setIdInscriptionSelectionnees] = useState<
+    string[]
+  >([]);
 
-  const isCheckboxDisabled = useCallback(
+  const handleCheckboxInscriptionEstDesactive = useCallback(
     (data: IResultatRMCInscription): boolean => {
       if (dataRequete?.type === TypeRequete.DELIVRANCE) {
         const requeteDelivrance = dataRequete as IRequeteDelivrance;
@@ -189,38 +190,27 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
     [dataRequete]
   );
 
-  const onClickCheckbox = useCallback(
-    (
-      index: number,
-      isChecked: boolean,
-      data: IResultatRMCInscription
-    ): void => {
-      const newSelected = new Map(selected);
-      if (isChecked) {
-        newSelected.set(index, data?.idInscription);
-      } else {
-        newSelected.delete(index);
-      }
-      setSelected(newSelected);
-      onClickCheckboxCallBack && onClickCheckboxCallBack(isChecked, data);
-    },
-    [selected, onClickCheckboxCallBack]
-  );
-
   useEffect(() => {
-    const colonnes = determinerColonnes(
-      typeRMC,
-      isCheckboxDisabled,
-      onClickCheckbox,
-      dataRequete?.type
-    );
-    setColumnHeaders(colonnes);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [typeRMC, isCheckboxDisabled, onClickCheckbox]);
-
-  useEffect(() => {
-    setSelected(new Map([]));
+    setIdInscriptionSelectionnees([]);
   }, [resetTableauInscription]);
+
+  const colonneCheckboxInscriptionsParams: IColonneInputParams = {
+    identifiantsSelectionnes: idInscriptionSelectionnees,
+    setIdentifiantsSelectionnes: setIdInscriptionSelectionnees,
+    getIdentifiant: (data: IResultatRMCInscription) =>
+      `${data.idInscription}-${data.nom}-${data.prenoms}-${data.dateNaissance}-${data.paysNaissance}-${data.statutInscription}`,
+    handleEstDesactive: handleCheckboxInscriptionEstDesactive,
+    messageEstDesactive: getLibelle(
+      "Ce résultat ne correspond pas au document demandé par le requérant"
+    ),
+    handleClickInput: onClickCheckboxCallBack
+  };
+
+  const columnHeaders = getColonnesTableauInscriptions(
+    typeRMC,
+    colonneCheckboxInscriptionsParams,
+    dataRequete?.type
+  );
 
   return (
     <>
@@ -239,7 +229,9 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
 
       {typeRMC === "Auto" && dataRequete?.type === TypeRequete.DELIVRANCE && (
         <div className="ElementsCoches">
-          {getLibelle(`${selected.size} élément(s) coché(s)`)}
+          {getLibelle(
+            `${idInscriptionSelectionnees.length} élément(s) coché(s)`
+          )}
         </div>
       )}
 

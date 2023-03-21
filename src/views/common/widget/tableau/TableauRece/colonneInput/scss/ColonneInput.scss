@@ -1,0 +1,16 @@
+@import "../../../../../../../scss/colors";
+
+.colonne-input-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 5px;
+
+  .WarningIcon {
+    color: $alertes;
+  }
+
+  .InfoIcon {
+    color: $info-icon-color;
+  }
+}

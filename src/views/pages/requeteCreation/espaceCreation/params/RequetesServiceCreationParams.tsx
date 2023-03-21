@@ -1,5 +1,6 @@
 import { CINQ, getLibelle } from "@util/Utils";
 import { getColonneCheckbox } from "@widget/tableau/TableauRece/colonneInput/checkbox/ColonneCheckbox";
+import { IColonneInputParams } from "@widget/tableau/TableauRece/colonneInput/InputParams";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { colonnesTableauMesRequetesCreation } from "./MesRequetesCreationParams";
 
@@ -8,9 +9,7 @@ export enum HeaderTableauRequetesServiceCreation {
 }
 
 export const getColonnesTableauRequetesServiceCreation = (
-  idRequetesSelectionnees: string[],
-  setIdRequetesSelectionnees: React.Dispatch<React.SetStateAction<string[]>>,
-  getRequeteId: (data: any) => string
+  colonneCheckboxParamsAttribueA: IColonneInputParams
 ) => [
   ...colonnesTableauMesRequetesCreation.slice(0, CINQ),
   new TableauTypeColumn({
@@ -18,11 +17,6 @@ export const getColonnesTableauRequetesServiceCreation = (
     title: getLibelle("Attribuée à"),
     align: "center"
   }),
-  getColonneCheckbox(
-    idRequetesSelectionnees,
-    setIdRequetesSelectionnees,
-    getRequeteId,
-    true
-  ),
+  getColonneCheckbox(colonneCheckboxParamsAttribueA),
   ...colonnesTableauMesRequetesCreation.slice(CINQ)
 ];

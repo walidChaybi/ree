@@ -1,10 +1,10 @@
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { HeaderTableauRMCInscription } from "@model/rmc/acteInscription/HeaderTableauRMCActeInscription";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { getLibelle } from "@util/Utils";
+import { getColonneCheckbox } from "@widget/tableau/TableauRece/colonneInput/checkbox/ColonneCheckbox";
+import { IColonneInputParams } from "@widget/tableau/TableauRece/colonneInput/InputParams";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React from "react";
-import { CheckboxColumn } from "./checkboxColumn/CheckboxColumn";
 import {
   commonHeadersTableauRMC,
   natureHeadersTableauRMC,
@@ -34,52 +34,19 @@ const columnsTableauRmc = [
 
 export const NB_INSCRIPTION_PAR_PAGE = 5;
 
-export function determinerColonnes(
+export function getColonnesTableauInscriptions(
   typeRMC: TypeRMC,
-  isDisabled: (data: IResultatRMCInscription) => boolean,
-  onClickCheckbox: (
-    index: number,
-    isChecked: boolean,
-    data: IResultatRMCInscription
-  ) => void,
+  colonneCheckboxParamsInscriptions: IColonneInputParams,
   typeRequete?: TypeRequete
 ) {
   // Les checkbox s'affichent que pour la RMC Auto d'une requête de délivrance
   if (typeRMC === "Auto" && typeRequete === TypeRequete.DELIVRANCE) {
     return [
       ...columnsTableauRmc,
-      new TableauTypeColumn({
-        keys: [HeaderTableauRMCInscription.Checkbox],
-        title: "",
-        getElement: getCheckBoxElement.bind(null, isDisabled, onClickCheckbox),
-        style: { width: "50px" }
-      })
+      getColonneCheckbox(colonneCheckboxParamsInscriptions)
     ];
   }
   return columnsTableauRmc;
-}
-
-function getCheckBoxElement(
-  isDisabledCallBack: (data: IResultatRMCInscription) => boolean,
-  onClickCheckboxCallBack: (
-    index: number,
-    isChecked: boolean,
-    data: IResultatRMCInscription
-  ) => void,
-  data: any,
-  index: number
-): JSX.Element {
-  return (
-    <CheckboxColumn
-      index={index}
-      data={data}
-      disabledMessage={getLibelle(
-        "Ce résultat ne correspond pas au document demandé par le requérant"
-      )}
-      isDisabledCallBack={isDisabledCallBack}
-      onClickCheckboxCallBack={onClickCheckboxCallBack}
-    />
-  );
 }
 
 function getCellNumeroRef(data: IResultatRMCInscription): JSX.Element {

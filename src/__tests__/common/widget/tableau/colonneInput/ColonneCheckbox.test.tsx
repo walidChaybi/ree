@@ -17,12 +17,12 @@ const TableauReceWrapper: React.FC<{ contientHeader: boolean }> = props => {
     <TableauRece
       idKey="id"
       columnHeaders={[
-        getColonneCheckbox(
-          idSelectionnes,
-          setIdSelectionnes,
-          (data: any) => data.id,
-          props.contientHeader
-        )
+        getColonneCheckbox({
+          identifiantsSelectionnes: idSelectionnes,
+          setIdentifiantsSelectionnes: setIdSelectionnes,
+          getIdentifiant: (data: any) => data.id,
+          contientHeader: props.contientHeader
+        })
       ]}
       dataState={data}
       paramsTableau={{}}

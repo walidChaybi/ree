@@ -112,16 +112,18 @@ test("renders Resultat Inscription Recherche Multi Critères => Sans résultat",
 });
 
 test("renders Resultat Inscription Recherche Multi Critères Auto => Avec résultat", async () => {
-  render(
-    <RMCTableauInscriptions
-      typeRMC="Auto"
-      dataRequete={requeteDelivrance}
-      dataRMCInscription={DataRMCInscriptionAvecResultat}
-      dataTableauRMCInscription={DataTableauInscription}
-      nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
-      nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
-    />
-  );
+  await act(async () => {
+    render(
+      <RMCTableauInscriptions
+        typeRMC="Auto"
+        dataRequete={requeteDelivrance}
+        dataRMCInscription={DataRMCInscriptionAvecResultat}
+        dataTableauRMCInscription={DataTableauInscription}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
+      />
+    );
+  });
 
   const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
 
@@ -129,12 +131,8 @@ test("renders Resultat Inscription Recherche Multi Critères Auto => Avec résul
     expect(checkboxColumns).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.click(checkboxColumns[0], {
-      target: {
-        checked: true
-      }
-    });
+  await act(async () => {
+    fireEvent.click(checkboxColumns[0]);
   });
 
   await waitFor(() => {
@@ -142,12 +140,8 @@ test("renders Resultat Inscription Recherche Multi Critères Auto => Avec résul
     expect(elementsCoches).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.click(checkboxColumns[0], {
-      target: {
-        checked: false
-      }
-    });
+  await act(async () => {
+    fireEvent.click(checkboxColumns[0]);
   });
 
   await waitFor(() => {

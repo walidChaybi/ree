@@ -92,7 +92,7 @@ function getRowRender(
           align={column?.align ? column?.align : "center"}
           key={`row-${idx}-${column.keys[0]}`}
         >
-          {column.getElement(row, idx)}
+          {column.getElement(row)}
         </TableCell>
       );
     } else {

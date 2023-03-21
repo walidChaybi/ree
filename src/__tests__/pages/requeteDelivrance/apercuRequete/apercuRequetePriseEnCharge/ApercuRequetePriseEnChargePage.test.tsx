@@ -136,11 +136,12 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
     expect(listeAction2).toBeDefined();
     expect(listeObservation1).toBeDefined();
     expect(listeObservation2).toBeDefined();
+    expect(checkboxColumns).toBeDefined();
   });
 
   // Tableau Acte
   await act(async () => {
-    fireEvent.click(checkboxColumns[0], { target: { checked: true } });
+    fireEvent.click(checkboxColumns[0]);
   });
 
   await waitFor(() => {
@@ -149,7 +150,7 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
   });
 
   await act(async () => {
-    fireEvent.click(checkboxColumns[0], { target: { checked: false } });
+    fireEvent.click(checkboxColumns[0]);
   });
 
   await waitFor(() => {
@@ -159,7 +160,7 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
 
   // Tableau inscription
   await act(async () => {
-    fireEvent.click(checkboxColumns[10], { target: { checked: true } });
+    fireEvent.click(checkboxColumns[9]);
   });
 
   await waitFor(() => {
@@ -168,7 +169,7 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
   });
 
   await act(async () => {
-    fireEvent.click(checkboxColumns[10], { target: { checked: false } });
+    fireEvent.click(checkboxColumns[9]);
   });
 
   await waitFor(() => {
@@ -197,7 +198,7 @@ test("redirection requete RDD", async () => {
 
   // Tableau Acte
   await act(async () => {
-    fireEvent.click(checkboxColumns[0], { target: { checked: true } });
+    fireEvent.click(checkboxColumns[0]);
   });
 
   await act(async () => {
@@ -250,7 +251,7 @@ test("redirection requete RDC", async () => {
 
   // Tableau Acte
   await act(async () => {
-    fireEvent.click(checkboxColumns[0], { target: { checked: true } });
+    fireEvent.click(checkboxColumns[0]);
   });
 
   await act(async () => {

@@ -201,13 +201,12 @@ export const RequetesServiceCreation: React.FC<
     );
   };
 
-  const getRequeteId = (data: IRequeteTableauCreation) => data.idRequete;
-
-  const columnHeaders = getColonnesTableauRequetesServiceCreation(
-    idRequetesSelectionneesAttribueeA,
-    setIdRequetesSelectionneesAttribueeA,
-    getRequeteId
-  );
+  const columnHeaders = getColonnesTableauRequetesServiceCreation({
+    identifiantsSelectionnes: idRequetesSelectionneesAttribueeA,
+    setIdentifiantsSelectionnes: setIdRequetesSelectionneesAttribueeA,
+    getIdentifiant: (data: IRequeteTableauCreation) => data.idRequete,
+    contientHeader: true
+  });
 
   return (
     <>

@@ -127,7 +127,7 @@ test("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes acte",
     expect(accordionAlertes).toBeDefined();
     expect(accordionAlertes.classList.contains("Mui-expanded")).toBeFalsy();
 
-    fireEvent.click(checkboxColumns[0], { target: { checked: true } });
+    fireEvent.click(checkboxColumns[0]);
   });
 
   await waitFor(() => {

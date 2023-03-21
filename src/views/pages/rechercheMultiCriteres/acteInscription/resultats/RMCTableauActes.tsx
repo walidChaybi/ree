@@ -8,14 +8,14 @@ import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
-import { getValeurOuVide, supprimeElement } from "@util/Utils";
+import { getLibelle, getValeurOuVide, supprimeElement } from "@util/Utils";
 import { CompteurElementsCoches } from "@widget/compteurElementsCoches/CompteurElementsCoches";
+import { IColonneInputParams } from "@widget/tableau/TableauRece/colonneInput/InputParams";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React, { useCallback, useEffect, useState } from "react";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { IDataFicheProps, IIndex } from "../../../fiche/FichePage";
-import { determinerColonnes } from "./RMCTableauActesParams";
+import { getColonnesTableauActes } from "./RMCTableauActesParams";
 import { goToLinkRMC, TypeRMC } from "./RMCTableauCommun";
 
 interface IFenetreFicheActe {
@@ -152,10 +152,9 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   }, [dataRMCActe, dataTableauRMCActe]);
 
   // Gestion du clic sur une colonne de type checkbox
-  const [selected, setSelected] = useState<Map<number, string>>(new Map([]));
-  const [columnHeaders, setColumnHeaders] = useState<TableauTypeColumn[]>([]);
+  const [idActeSelectionnes, setIdActeSelectionnes] = useState<string[]>([]);
 
-  const hasWarning = useCallback(
+  const handleCheckboxActeAfficheAvertissement = useCallback(
     (isChecked: boolean, data: any): boolean => {
       if (isChecked) {
         const alertes = dataAlertes?.filter((alerte: IAlerte) => {
@@ -171,42 +170,34 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
     [dataAlertes]
   );
 
-  const isCheckboxDisabled = useCallback(
+  const handleCheckboxActeEstDesactive = useCallback(
     (data: IResultatRMCActe): boolean => {
       return estProjetActe(dataRequete, data);
     },
     [dataRequete]
   );
 
-  const onClickCheckbox = useCallback(
-    (index: number, isChecked: boolean, data: IResultatRMCActe): void => {
-      const newSelected = new Map(selected);
-      if (isChecked) {
-        newSelected.set(index, data?.idActe);
-      } else {
-        newSelected.delete(index);
-      }
-      setSelected(newSelected);
-      onClickCheckboxCallBack && onClickCheckboxCallBack(isChecked, data);
-    },
-    [selected, onClickCheckboxCallBack]
-  );
-
   useEffect(() => {
-    const colonnes = determinerColonnes(
-      typeRMC,
-      hasWarning,
-      isCheckboxDisabled,
-      onClickCheckbox,
-      dataRequete?.type
-    );
-    setColumnHeaders(colonnes);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [typeRMC, hasWarning, isCheckboxDisabled, onClickCheckbox]);
-
-  useEffect(() => {
-    setSelected(new Map([]));
+    setIdActeSelectionnes([]);
   }, [resetTableauActe]);
+
+  const colonneCheckboxActesParams: IColonneInputParams = {
+    identifiantsSelectionnes: idActeSelectionnes,
+    setIdentifiantsSelectionnes: setIdActeSelectionnes,
+    getIdentifiant: (data: IResultatRMCActe) => data.idActe,
+    handleClickInput: onClickCheckboxCallBack,
+    handleEstDesactive: handleCheckboxActeEstDesactive,
+    messageEstDesactive: getLibelle(
+      "Pas de délivrance pour un projet d'acte non finalisé"
+    ),
+    handleAfficheAvertissement: handleCheckboxActeAfficheAvertissement
+  };
+
+  const columnHeaders = getColonnesTableauActes(
+    typeRMC,
+    colonneCheckboxActesParams,
+    dataRequete?.type
+  );
 
   return (
     <>
@@ -223,7 +214,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
         noRows={zeroActe}
       />
       {typeRMC === "Auto" && dataRequete?.type === TypeRequete.DELIVRANCE && (
-        <CompteurElementsCoches nombreElements={selected.size} />
+        <CompteurElementsCoches nombreElements={idActeSelectionnes.length} />
       )}
 
       {etatFenetres && etatFenetres.length > 0 && (

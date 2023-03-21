@@ -1,42 +1,29 @@
 import { Checkbox } from "@mui/material";
 import React from "react";
-import "../../scss/ColonneBoutons.scss";
+import { InputBodyConteneurContext } from "../InputBodyConteneur";
 
-interface ICheckboxBody {
-  identifiant: string;
-  identifiantsSelectionnes: string[];
-  handleChange: (
-    event: React.ChangeEvent<HTMLInputElement>,
-    id: string
-  ) => void;
+interface CheckboxBodyProps {
+  taille?: "small" | "medium";
 }
 
-const CheckboxBody: React.FC<ICheckboxBody> = props => {
+export const CheckboxBody: React.FC<CheckboxBodyProps> = props => {
+  const inputBodyConteneurContext = React.useContext(InputBodyConteneurContext);
+
   return (
     <Checkbox
       className="checkbox-body"
-      checked={props.identifiantsSelectionnes.includes(props.identifiant)}
+      checked={inputBodyConteneurContext.estCochee}
+      disabled={inputBodyConteneurContext.estDesactive}
       onClick={event => event.stopPropagation()}
-      onChange={event => props.handleChange(event, props.identifiant)}
+      onChange={event =>
+        inputBodyConteneurContext.handleChildChange(
+          event,
+          inputBodyConteneurContext.data
+        )
+      }
       inputProps={{ "aria-label": "checkbox-body" }}
+      size={props.taille}
+      style={{ padding: 0 }}
     />
   );
-};
-
-export const getElementCheckboxBody = (
-  identifiantsSelectionnes: string[],
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>, id: string) => void,
-  getIdentifiant: (data: any) => string,
-  filtreCellCheckbox: (data: any) => boolean,
-  data: any
-): JSX.Element => {
-  const element: JSX.Element = (
-    <CheckboxBody
-      identifiant={getIdentifiant(data)}
-      identifiantsSelectionnes={identifiantsSelectionnes}
-      handleChange={handleChange}
-    />
-  );
-
-  return filtreCellCheckbox(data) ? element : <></>;
 };

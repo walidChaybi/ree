@@ -7,12 +7,7 @@ export interface ITableauTypeColumnParam {
   align?: alignType;
   style?: React.CSSProperties;
   width?: string | number;
-  getElement?: (
-    value: any,
-    index: number,
-    isDisabled?: Function,
-    onClick?: Function
-  ) => JSX.Element;
+  getElement?: (value: any) => JSX.Element;
   className?: string;
   dataIsArray?: boolean;
   sortable?: boolean;
@@ -24,12 +19,7 @@ export class TableauTypeColumn {
   public getTitle?: (datas: any[]) => JSX.Element;
   public align?: alignType;
   public style?: React.CSSProperties;
-  public getElement?: (
-    value: any,
-    index: number,
-    isDisabled?: Function,
-    onClick?: Function
-  ) => JSX.Element;
+  public getElement?: (value: any) => JSX.Element;
   public className?: string;
   public dataIsArray?: boolean;
   public sortable?: boolean;

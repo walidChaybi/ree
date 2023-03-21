@@ -32,6 +32,10 @@ globalAny.open = () => {
 };
 globalAny.close = jest.fn();
 
+afterAll(() => {
+  superagentMock.unset();
+});
+
 test("renders Resultat Acte Recherche Multi Critères => Avec résultat", () => {
   const { getAllByText } = render(
     <RMCTableauActes
@@ -157,16 +161,18 @@ test("renders Resultat Acte Recherche Multi Critères => Sans résultat", () => 
 });
 
 test("renders Resultat Acte Recherche Multi Critères Auto => Avec résultat", async () => {
-  render(
-    <RMCTableauActes
-      typeRMC="Auto"
-      dataRequete={requeteDelivrance}
-      dataRMCActe={DataRMCActeAvecResultat}
-      dataTableauRMCActe={DataTableauActe}
-      nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
-      nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
-    />
-  );
+  await act(async () => {
+    render(
+      <RMCTableauActes
+        typeRMC="Auto"
+        dataRequete={requeteDelivrance}
+        dataRMCActe={DataRMCActeAvecResultat}
+        dataTableauRMCActe={DataTableauActe}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
+      />
+    );
+  });
 
   const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
 
@@ -174,12 +180,8 @@ test("renders Resultat Acte Recherche Multi Critères Auto => Avec résultat", a
     expect(checkboxColumns).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.click(checkboxColumns[0], {
-      target: {
-        checked: true
-      }
-    });
+  await act(async () => {
+    fireEvent.click(checkboxColumns[0]);
   });
 
   await waitFor(() => {
@@ -187,20 +189,12 @@ test("renders Resultat Acte Recherche Multi Critères Auto => Avec résultat", a
     expect(elementsCoches).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.click(checkboxColumns[0], {
-      target: {
-        checked: false
-      }
-    });
+  await act(async () => {
+    fireEvent.click(checkboxColumns[0]);
   });
 
   await waitFor(() => {
     const elementsCoches = screen.getAllByText("0 élément(s) coché(s)");
     expect(elementsCoches).toBeDefined();
   });
-});
-
-afterAll(() => {
-  superagentMock.unset();
 });
