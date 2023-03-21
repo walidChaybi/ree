@@ -34,6 +34,7 @@ import {
   NOM_USAGE,
   PRENOM
 } from "../../../../../common/composant/formulaire/ConstantesNomsForm";
+import "./RequerantForm.scss";
 
 export const RequerantFormDefaultValue = {
   [NOM]: "",
@@ -128,6 +129,7 @@ const RequerantForm: React.FC<SubFormProps> = props => {
             <div className="BoutonsConteneur">{getBoutonAjouter()}</div>
           )}
         </div>
+
         {nomUsagePresent && (
           <div className="nomUsage">
             <InputField

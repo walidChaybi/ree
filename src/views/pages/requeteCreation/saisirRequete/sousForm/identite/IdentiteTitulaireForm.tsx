@@ -44,7 +44,6 @@ import NomsFormTitulaire, {
   NomsFormDefaultValues,
   NomsFormValidationSchema
 } from "./nomsPrenoms/NomsForm";
-import "./scss/IdentiteTitulaireForm.scss";
 
 export const IdentiteFormDefaultValues = {
   [NOMS]: NomsFormDefaultValues,

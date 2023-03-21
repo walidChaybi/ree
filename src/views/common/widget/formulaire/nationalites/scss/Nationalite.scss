@@ -1,7 +1,14 @@
 .NationalitesForm { 
-    display: flex;
-
+    display: grid;
+    grid-template-columns: 65% auto;
+  
+    .BlockInput {
+      grid-template-columns: 38.3% auto !important;
+    }
+    .BlockErreur {
+      margin-left: 38.3% !important;
+    }
     .BoutonsConteneur {
-        margin-top: -0.5rem;
+      margin-top: -0.1rem;
     }
 }
