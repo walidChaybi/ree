@@ -13,6 +13,10 @@ const requete = {
   sousType: getLibelle("Sous-type")
 };
 
+const requeteTranscription = {
+  description: getLibelle(`Requête n°`)
+};
+
 const infos = {
   specifiques: getLibelle(`${INFOS} spécifiques`)
 };
@@ -42,6 +46,7 @@ const nationalite = {
 
 export const resume = {
   requete,
+  requeteTranscription,
   infos,
   identification: getLibelle("Identification"),
   francisation: getLibelle("Francisation"),
@@ -68,5 +73,7 @@ const Labels = {
   resume,
   PJ
 };
+
+
 
 export default Labels;

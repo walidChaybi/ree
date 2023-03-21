@@ -8,6 +8,7 @@ import {
   estDateVide,
   formatAHeure,
   formatAHeureExtrait,
+  formatDateStringIso,
   formatJour,
   formatMois,
   getDateComposeFromDate,
@@ -17,7 +18,6 @@ import {
   getDateFromTimestamp,
   getDateString,
   getDateStringFromDateCompose,
-  getDateStringIso,
   getDernierJourDuMois,
   getIsoStringFromDateCompose,
   getJourOu1er,
@@ -49,7 +49,7 @@ test("getDateString", () => {
 test("converti les dates ISO8601", () => {
   const date = "1986-08-23";
 
-  const result = getDateStringIso(date);
+  const result = formatDateStringIso(date);
   expect(result).toBe("23/08/1986");
 });
 

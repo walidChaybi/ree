@@ -24,6 +24,14 @@ export const Parent = {
         ])
       : "";
   },
+  getTableauDePrenoms(parent?: IParent): string[] {
+    const prenoms: string[] = [];
+    parent?.prenoms?.forEach((prenom: IPrenomOrdonnes) => {
+      prenoms.push(prenom.prenom);
+    });
+
+    return prenoms;
+  },
   getPrenom(numero: number, parent?: IParent): string {
     let res = "";
     if (parent?.prenoms) {

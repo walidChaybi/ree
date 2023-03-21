@@ -127,7 +127,7 @@ export function getDernierJourDuMois(
   return dernierjourDuMois;
 }
 
-export function getDateStringIso(date: string): string {
+export function formatDateStringIso(date: string): string {
   return date ? getDateString(new Date(date)) : "";
 }
 

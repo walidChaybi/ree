@@ -13,7 +13,10 @@ import { IRequeteDelivrance } from "./IRequeteDelivrance";
 import { IRequeteInformation } from "./IRequeteInformation";
 import { IRequeteMiseAjour } from "./IRequeteMiseAjour";
 import { IStatutCourant } from "./IStatutCourant";
-import { IPieceJustificative, PieceJustificative } from "./pieceJointe/IPieceJustificative";
+import {
+  IPieceJustificative,
+  PieceJustificative
+} from "./pieceJointe/IPieceJustificative";
 
 export type TRequete =
   | IRequeteDelivrance

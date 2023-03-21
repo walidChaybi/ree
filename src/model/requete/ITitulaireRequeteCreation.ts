@@ -1,3 +1,4 @@
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { DateCoordonneesType } from "@model/requete/DateCoordonneesType";
 import { QualiteFamille } from "./enum/QualiteFamille";
 import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
@@ -34,4 +35,44 @@ export interface ITitulaireRequeteCreation extends ITitulaireRequete {
   evenementUnions?: IEvenementUnion[];
   retenueSdanf?: IRetenueSdanf;
   enfantTitulaireActeTranscritDresse?: IEnfantTitulaireActeTranscritDresse;
+  nomSouhaite?: string;
 }
+
+const RECONNAISSANCE = "RECONNAISSANCE";
+const MARIAGE = "MARIAGE";
+
+export const TitulaireRequeteCreation = {
+  getSexe(titulaire?: ITitulaireRequeteCreation): string {
+    return titulaire && titulaire.sexe
+      ? Sexe.getEnumFor(titulaire.sexe).libelle
+      : "";
+  },
+  getEvenementUnionTypeReconnaissance(
+    titulaire?: ITitulaireRequeteCreation
+  ): IEvenementUnion | undefined {
+    const evenementUnions = titulaire?.evenementUnions;
+
+    return evenementUnions
+      ? evenementUnions?.find(
+          evenementUnion => evenementUnion.type === RECONNAISSANCE
+        )
+      : undefined;
+  },
+  getEvenementUnionTypeMariage(
+    titulaire?: ITitulaireRequeteCreation
+  ): IEvenementUnion | undefined {
+    const evenementUnions = titulaire?.evenementUnions;
+
+    return evenementUnions
+      ? evenementUnions?.find(evenementUnion => evenementUnion.type === MARIAGE)
+      : undefined;
+  },
+  getTableauDeNationalites(titulaire?: ITitulaireRequete): string[] {
+    const nationalites: string[] = [];
+    titulaire?.nationalites?.forEach((nationalite: INationalite) => {
+      nationalites.push(nationalite.nationalite);
+    });
+
+    return nationalites;
+  }
+};

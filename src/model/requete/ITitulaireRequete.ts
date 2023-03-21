@@ -10,6 +10,7 @@ import {
 } from "@util/Utils";
 import { Nationalite } from "../etatcivil/enum/Nationalite";
 import { Sexe } from "../etatcivil/enum/Sexe";
+import { INationalite } from "./INationalite";
 import { IParent } from "./IParents";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 
@@ -24,11 +25,17 @@ export interface ITitulaireRequete {
   anneeNaissance?: number;
   villeNaissance?: string;
   paysNaissance?: string;
+  // TODO : utiliser la class Sexe
   sexe: string;
   nationalite: Nationalite;
   parentsTitulaire?: IParent[];
   codePostalNaissance?: string;
   situationFamiliale?: string;
+  lieuNaissanceFormate?: string;
+  dateNaissanceFormatee?: string;
+  paysStatutRefugie?: string;
+  paysOrigine?: string;
+  nationalites?: INationalite[];
 }
 
 export const TitulaireRequete = {
@@ -62,6 +69,14 @@ export const TitulaireRequete = {
     }${this.getPrenom2(titulaire)}${
       this.getPrenom3(titulaire) ? " " : ""
     }${this.getPrenom3(titulaire)}`;
+  },
+  getTableauDePrenoms(titulaire?: ITitulaireRequete): string[] {
+    const prenoms: string[] = [];
+    titulaire?.prenoms?.forEach((prenom: IPrenomOrdonnes) => {
+      prenoms.push(prenom.prenom);
+    });
+
+    return prenoms;
   },
   getDateNaissance(titulaire?: ITitulaireRequete): string {
     return titulaire && titulaire.anneeNaissance

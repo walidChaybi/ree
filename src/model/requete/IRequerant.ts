@@ -30,6 +30,8 @@ export interface IRequerant {
   adresse?: IAdresseRequerant;
   qualiteRequerant: IQualiteRequerant;
   lienRequerant?: ILienRequerant;
+  courrielAutreContact?: string;
+  telephoneAutreContact?: string;
 }
 
 export const Requerant = {
@@ -38,6 +40,15 @@ export const Requerant = {
   },
   getPrenom(requerant?: IRequerant): string {
     return requerant && requerant.prenom ? formatPrenom(requerant.prenom) : "";
+  },
+  getNomPrenom(requerant?: IRequerant): string | undefined {
+    let nomPrenom = "";
+    if (requerant) {
+      nomPrenom = requerant.nomFamille + " ";
+      nomPrenom += requerant.prenom ? requerant.prenom : "";
+      nomPrenom += "\n";
+    }
+    return nomPrenom;
   },
   estTitulaireX({
     requerant,
@@ -173,7 +184,9 @@ export const Requerant = {
       lienRequerant: requerant.lienRequerant
         ? getLienRequerant(requerant.lienRequerant)
         : undefined,
-      qualiteRequerant: getQualiteRequerant(requerant)
+      qualiteRequerant: getQualiteRequerant(requerant),
+      telephoneAutreContact: requerant.telephoneAutreContact,
+      courrielAutreContact: requerant.courrielAutreContact
     };
   }
 };

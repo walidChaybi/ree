@@ -34,6 +34,7 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { IStatutCourant } from "@model/requete/IStatutCourant";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
+import { NatureActeTranscription } from "@model/requete/NatureActeTranscription";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import {
   IPieceJustificativeCreation,
@@ -206,7 +207,6 @@ function getTitulaires(titulaires: any): ITitulaireRequete[] {
   });
   return titulairesRequetes;
 }
-
 function getStatutCourant(statut: any): IStatutCourant {
   return {
     statut: StatutRequete.getEnumFor(statut.statutRequete),
@@ -349,6 +349,7 @@ export function mappingRequeteCreation(data: any): IRequeteCreation {
 
     // Partie requête création
     sousType: SousTypeCreation.getEnumFor(data.sousType),
+    numeroDossierMetier: data.numeroDossierMetier,
     numeroAncien: data.numeroAncienSI,
     piecesJustificatives: mapPiecesJustificativesCreation(
       data.piecesJustificatives
@@ -362,11 +363,14 @@ export function mappingRequeteCreation(data: any): IRequeteCreation {
       echanges: mapEchangesRetourSDANF(data.provenanceNatali?.echanges)
     },
     documentsPj: mapDocumentPJ(data.documentsPj),
-    titulaires: mapTitulairesCreation(requete.titulaires)
+    titulaires: mapTitulairesCreation(requete.titulaires),
+    natureActeTranscrit: NatureActeTranscription.getEnumFor(
+      data.natureActeTranscrit
+    )
   };
 } 
 
-function mapTitulairesCreation(titulaires: any[]) {
+export function mapTitulairesCreation(titulaires: any[]) {
   return titulaires.map(titulaire => ({
     ...titulaire,
     qualite: QualiteFamille.getEnumFor(titulaire.qualite)

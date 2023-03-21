@@ -8,4 +8,19 @@ export interface IEvenementUnion {
   region?: string;
   pays?: string;
   situationActuelle?: boolean;
+  dateFormatee?: string;
+  lieuFormate?: string;
 }
+
+export const EvenementUnion = {
+  getDateEtLieuFormate(evenementUnion?: IEvenementUnion): string | undefined {
+    let dateLieuFormate;
+
+    dateLieuFormate = evenementUnion?.dateFormatee || "";
+    dateLieuFormate +=
+      evenementUnion?.dateFormatee && evenementUnion?.lieuFormate ? ", " : "";
+    dateLieuFormate += evenementUnion?.lieuFormate || "";
+
+    return dateLieuFormate;
+  }
+};

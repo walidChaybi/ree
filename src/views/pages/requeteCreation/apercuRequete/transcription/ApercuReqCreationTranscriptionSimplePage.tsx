@@ -12,7 +12,7 @@ import Labels from "../../commun/Labels";
 import "../../commun/scss/ApercuReqCreationPage.scss";
 import ResumeRequeteCreation from "../etablissement/composants/ResumeRequeteCreation";
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "../etablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
-import { onRenommePieceJustificative } from "./ApercuReqCreationTranscriptionUtil";
+import { onRenommePieceJustificative } from "./ApercuReqCreationTranscriptionUtils";
 
 export const ApercuReqCreationTranscriptionSimplePage: React.FC = props => {
   const { idRequeteParam } = useParams<IUuidRequeteParams>();

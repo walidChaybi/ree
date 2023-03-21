@@ -6,6 +6,7 @@ import { IProvenanceNatali } from "./IProvenanceNatali";
 import { IProvenanceServicePublic } from "./IProvenanceServicePublic";
 import { IRequete } from "./IRequete";
 import { ITitulaireRequeteCreation } from "./ITitulaireRequeteCreation";
+import { NatureActeTranscription } from "./NatureActeTranscription";
 import { IPieceJustificativeCreation } from "./pieceJointe/IPieceJustificativeCreation";
 
 export interface IRequeteCreationEtablissement extends IRequete {
@@ -24,10 +25,14 @@ export interface IRequeteCreationEtablissement extends IRequete {
   demandeIdentification?: boolean;
   demandeFrancisation?: boolean;
   provenance?: Provenance;
+  numeroFonctionnel?: string;
   numeroAncien?: string;
   mandant?: IMandant;
   nature?: string;
   campagne?: string;
+  numeroDossierMetier?: string;
+  natureActeTranscrit?: NatureActeTranscription;
+  numeroTeledossier?: string;
 }
 
 export const RequeteCreationEtablissement = {

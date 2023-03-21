@@ -4,7 +4,7 @@ import {
 } from "@model/etatcivil/enum/AlerteInscription";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
-import { getDateStringIso } from "@util/DateUtils";
+import { formatDateStringIso } from "@util/DateUtils";
 import { IDataFicheProps } from "../FichePage";
 import { getFicheTitle } from "../FicheUtils";
 import { fournisseurDonneesBandeauFactory } from "./fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
@@ -40,8 +40,8 @@ export function setDataBandeau(
       statutsFiche: dataBandeau.statutsFiche,
       personnes: fournisseurDonneesBandeau.getSimplePersonnes(),
       alertes: setAlertes(dataBandeau.alertes),
-      dateDerniereMaj: getDateStringIso(dataBandeau.dateDerniereMaj),
-      dateDerniereDelivrance: getDateStringIso(
+      dateDerniereMaj: formatDateStringIso(dataBandeau.dateDerniereMaj),
+      dateDerniereDelivrance: formatDateStringIso(
         dataBandeau.dateDerniereDelivrance
       )
     };

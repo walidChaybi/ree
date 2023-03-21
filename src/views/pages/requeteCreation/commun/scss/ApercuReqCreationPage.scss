@@ -1,4 +1,6 @@
 @import "../../../../../scss/_colors.scss";
+$spacing: 0.35rem;
+$height: calc($spacing * 2.5);
 
 .ApercuReqCreationEtablissementPage,
 .ApercuReqCreationTranscriptionSimplePage,
@@ -8,6 +10,62 @@
     margin-top: 3rem;
   }
 }
+
+.ApercuReqCreationTranscriptionSimplePage,
+.ApercuReqCreationTranscriptionPriseEnChargePage,
+.ApercuReqCreationTranscriptionSaisieProjetPage {
+  .LigneAccordion {
+    display: flex;
+    min-width: 350px;
+    // max-width: 50%;
+    padding-top: calc($spacing / 1.5);
+    padding-bottom: calc($spacing / 1.5);
+  }
+  .labelAccordion {
+    color: $application-color;
+    margin-right: 1rem;
+    white-space: nowrap;
+    min-width: 130px;
+    display: flex;
+  }
+  .texteAccordion {
+    text-align: left;
+  }
+  .accordionTexteDouble {
+    display: flex;
+  }
+
+  .contenuAccordion {
+    display: flex;
+    .contenuBlocAccordion {
+      width: 50%; 
+
+      .LigneAccordion {
+        max-width: 100%;
+        .texteAccordion {
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;      
+        }
+      }
+      }
+
+      .contenuAccordionUnSeulElement {
+        flex-basis: 100%;  
+      }
+  }  
+
+  .adressRequerant {
+    .LigneAccordion {
+      white-space: pre;
+    }
+  }
+
+  .adresseCourrielRequerant {
+    display: flex;
+  }
+}
+
 
 
 .ApercuReqCreationEtablissementPage {
