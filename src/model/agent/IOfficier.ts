@@ -1,3 +1,4 @@
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { storeRece } from "@util/storeRece";
 import { getValeurOuVide } from "@util/Utils";
 import { Provenance } from "../requete/enum/Provenance";
@@ -149,7 +150,6 @@ export function officierALeDroitSurLePerimetre(
 ) {
   return officierALeDroitSurUnDesPerimetres(droit, [refPerimetre]);
 }
-
 export const officierALeDroitSurUnDesPerimetres = (
   droit: Droit,
   refPerimetres: Perimetre[]
@@ -213,4 +213,36 @@ function collectIdEntiteMere(entite: IEntite, idEntites: string[]) {
     idEntites.push(h.entiteMere.idEntite);
     collectIdEntiteMere(h.entiteMere, idEntites);
   });
+}
+
+export function aDroitConsulterRequeteDelivrance(): boolean {
+  return utilisateurADroit(Droit.DELIVRER, storeRece.utilisateurCourant);
+}
+
+export function aDroitConsulterApercuRequeteInformation(): boolean {
+  return utilisateurADroit(Droit.INFORMER_USAGER, storeRece.utilisateurCourant);
+}
+
+export function aDroitConsulterRequeteCreation(
+  sousTypeRequete: string
+): boolean {
+  let aDroit = false;
+
+  const sousTypeCreation =
+    SousTypeCreation.getEnumFromLibelleCourt(sousTypeRequete);
+
+  if (SousTypeCreation.estRCEXR(sousTypeCreation)) {
+    aDroit = utilisateurALeDroitSurUnDesPerimetres(
+      Droit.CREER_ACTE_ETABLI,
+      [Perimetre.MEAE, Perimetre.ETAX],
+      storeRece.utilisateurCourant
+    );
+  } else if (SousTypeCreation.estRCTDOuRCTC(sousTypeCreation)) {
+    return utilisateurADroit(
+      Droit.CREER_ACTE_TRANSCRIT,
+      storeRece.utilisateurCourant
+    );
+  }
+
+  return aDroit;
 }

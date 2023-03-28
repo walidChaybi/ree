@@ -80,9 +80,9 @@ export function getParents(
   titulaires?: ITitulaireRequeteCreation[]
 ): ITitulaireRequeteCreation[] | undefined {
   return titulaires?.filter(
-    titulaires =>
-      titulaires.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
-      titulaires.qualite === QualiteFamille.PARENT
+    titulaire =>
+      titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
+      titulaire.qualite === QualiteFamille.PARENT
   );
 }
 
@@ -90,8 +90,8 @@ export function getTitulaires(
   titulaires?: ITitulaireRequeteCreation[]
 ): ITitulaireRequeteCreation[] | undefined {
   return titulaires?.filter(
-    titulaires =>
-      titulaires.typeObjetTitulaire ===
+    titulaire =>
+      titulaire.typeObjetTitulaire ===
       TypeObjetTitulaire.TITULAIRE_ACTE_TRANSCRIT_DRESSE
   );
 }

@@ -15,6 +15,7 @@ interface ListeActionsRetourSDANFProps {
   setEchanges: any;
   echanges?: IEchange[];
   idRequeteParam: string;
+  modeConsultation?: boolean;
 }
 
 export const estSuperieurA500Caracteres = (texte: string) => {
@@ -46,7 +47,9 @@ export const ListeActionsRetourSDANF: React.FC<
   const [buttonValidateDisabled, setButtonValidateDisabled] = useState(true);
   const [messageSDANF, setMessageSDANF] = useState("");
   const [messageErreur, setMessageErreur] = useState("");
-  const [disabledActions, setDisabledActions] = useState(false);
+  const [disabledActions, setDisabledActions] = useState(
+    estPasStatutPriseEnChargeOuMAppartientPasOuModeConsultation()
+  );
 
   const ACTE_IRRECEVABLE = 0;
   const ELEMENT_MANQUANT = 1;
@@ -68,16 +71,6 @@ export const ListeActionsRetourSDANF: React.FC<
   ];
 
   useEffect(() => {
-    if (
-      props.statusRequete.statut !== StatutRequete.PRISE_EN_CHARGE ||
-      props.idRequeteCorbeilleAgent !==
-        storeRece.utilisateurCourant?.idUtilisateur
-    ) {
-      setDisabledActions(true);
-    }
-  }, [props.statusRequete.statut, props.idRequeteCorbeilleAgent]);
-
-  useEffect(() => {
     if (messageSDANF === "") setButtonValidateDisabled(true);
     else setButtonValidateDisabled(false);
   }, [messageSDANF]);
@@ -92,6 +85,17 @@ export const ListeActionsRetourSDANF: React.FC<
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messageRetourSDANFAPI]);
+
+  function estPasStatutPriseEnChargeOuMAppartientPasOuModeConsultation():
+    | boolean
+    | undefined {
+    return (
+      props.statusRequete.statut !== StatutRequete.PRISE_EN_CHARGE ||
+      props.idRequeteCorbeilleAgent !==
+        storeRece.utilisateurCourant?.idUtilisateur ||
+      props.modeConsultation
+    );
+  }
 
   const handleChangeText = (e: any) => {
     if (estSuperieurA500Caracteres(e.target.value)) {

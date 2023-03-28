@@ -74,10 +74,10 @@ export function mapHabilitationsUtilisateur(
 
 export const utilisateurADroit = (
   droit: Droit,
-  utilisateur: IUtilisateur | IOfficier
+  utilisateur?: IUtilisateur | IOfficier
 ) => {
   let droitTrouve: IDroit | undefined;
-  utilisateur.habilitations?.forEach(
+  utilisateur?.habilitations?.forEach(
     h =>
       (droitTrouve =
         droitTrouve || h.profil?.droits?.find(d => d.nom === droit))

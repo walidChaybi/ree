@@ -5,6 +5,7 @@ import {
 } from "../data/requeteCreationTranscription";
 import { requetesServiceCreationTableauResultatQuery } from "../data/requetesServiceCreation";
 import { requeteTableauCreation } from "../data/requeteTableauCreation";
+import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 
 export const NORESULT = "NORESULT";
 
@@ -108,6 +109,20 @@ export const configRequetesCreation = [
         context.method === "post"
       ) {
         return { data: creationRequeteRCTCResultat };
+      }
+
+      ///////////////////////////////
+      // RMC Auto Requete //
+      ///////////////////////////////
+      if (match[1] === "/requetes/rmcauto?range=0-105") {
+        return {
+          headers: {
+            "content-range":
+              "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
+          },
+          data: ReponseAppelRMCRequete.data
+        };
       }
 
       const error = { msg: "url params non mockée", url };

@@ -329,6 +329,7 @@ export const configRequetes = [
           };
         }
       }
+
       // Détail requête Délivrance
       if (match[1] === "/requetes/7b448d64-add5-4dbd-8041-b7081ea7bc86") {
         return { data: requeteSansDocument };

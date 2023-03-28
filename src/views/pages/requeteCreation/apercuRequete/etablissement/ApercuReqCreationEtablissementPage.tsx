@@ -22,7 +22,12 @@ import { OngletsApercuCreationEtablissement } from "./composants/OngletsApercuCr
 import ResumeRequeteCreation from "./composants/ResumeRequeteCreation";
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "./mappingIRequeteCreationVersResumeRequeteCreationProps";
 
-export const ApercuReqCreationEtablissementPage: React.FC = () => {
+interface ApeApercuReqCreationEtablissementPageProps {
+  idRequeteAAfficher?: string;
+}
+export const ApercuReqCreationEtablissementPage: React.FC<
+  ApeApercuReqCreationEtablissementPageProps
+> = props => {
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
   const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
@@ -32,7 +37,7 @@ export const ApercuReqCreationEtablissementPage: React.FC = () => {
     rmcAutoPersonneParams
   );
   const { detailRequeteState } = useDetailRequeteApiHook(
-    idRequeteParam,
+    props.idRequeteAAfficher ?? idRequeteParam,
     history.location.pathname.includes(URL_RECHERCHE_REQUETE)
   );
 
@@ -100,6 +105,7 @@ export const ApercuReqCreationEtablissementPage: React.FC = () => {
 
           <OngletsApercuCreationEtablissement
             requete={requete}
+            modeConsultation={props.idRequeteAAfficher !== undefined}
             onRenommePieceJustificative={onRenommePieceJustificative}
             resultatRMCAutoPersonne={resultatRMCAutoPersonne ?? []}
             handleClickSelectionTitulaireRmcPersonne={

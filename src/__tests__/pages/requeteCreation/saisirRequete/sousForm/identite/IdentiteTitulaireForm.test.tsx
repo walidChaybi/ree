@@ -12,13 +12,7 @@ import {
   NomsFormDefaultValues,
   NomsFormValidationSchema
 } from "@pages/requeteCreation/saisirRequete/sousForm/identite/nomsPrenoms/NomsForm";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
@@ -61,7 +55,7 @@ const HookTitulaireForm: React.FC = () => {
 };
 
 test("DOIT rendre le composant d'identite du titulaire correctement", async () => {
-  await act(async () => {
+  await waitFor(async () => {
     render(<HookTitulaireForm />);
   });
 
@@ -69,7 +63,7 @@ test("DOIT rendre le composant d'identite du titulaire correctement", async () =
     "titulaire.noms.pasdenomacteetranger.pasdenomacteetranger"
   );
 
-  await act(async () => {
+  await waitFor(async () => {
     fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
   });
 
@@ -81,11 +75,11 @@ test("DOIT rendre le composant d'identite du titulaire correctement", async () =
     expect(inputNomActeEtranger).toBeDisabled();
   });
 
-  await act(async () => {
+  await waitFor(async () => {
     fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
   });
 
-  await act(async () => {
+  await waitFor(async () => {
     fireEvent.blur(inputNomActeEtranger, {
       target: {
         value: "mockNom"
@@ -97,17 +91,21 @@ test("DOIT rendre le composant d'identite du titulaire correctement", async () =
     "titulaire.noms.nomSouhaiteActeFR"
   );
 
-  await act(async () => {
+  await waitFor(async () => {
     fireEvent.blur(boutonsCheckboxTitulaireNomActeFrancais, {
       target: {
         value: "mockNomActeFrancais"
       }
     });
   });
+
+  await waitFor(async () => {
+    fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
+  });
 });
 
 test("DOIT cacher le sous formulaire des prénoms quand la checkbox 'pas de prénom connu' est coché", async () => {
-  await act(async () => {
+  await waitFor(async () => {
     render(<HookTitulaireForm />);
   });
 
@@ -129,11 +127,15 @@ test("DOIT cacher le sous formulaire des prénoms quand la checkbox 'pas de pré
     "titulaire.pasdeprenomconnu.pasdeprenomconnu"
   );
 
-  await act(async () => {
+  await waitFor(async () => {
     fireEvent.click(boutonsCheckboxPasDePrenomConnu);
   });
 
   await waitFor(() => {
     expect(screen.queryByText("Prénom 1")).not.toBeInTheDocument();
+  });
+
+  await waitFor(async () => {
+    fireEvent.click(boutonsCheckboxPasDePrenomConnu);
   });
 });

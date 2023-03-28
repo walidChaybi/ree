@@ -29,6 +29,7 @@ export const titreDetail = "Détails de requête";
 
 interface ResumeRequeteProps {
   requete: IRequeteDelivrance;
+  disabledActions?: boolean;
 }
 
 const width = 1100;
@@ -63,7 +64,8 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
   const afficherBoutonModifierRequete =
     mAppartient(props.requete.idUtilisateur) &&
     SousTypeDelivrance.estRDCouRDCSC(props.requete.sousType) &&
-    StatutRequete.estPriseEnCharge(props.requete.statutCourant.statut);
+    StatutRequete.estPriseEnCharge(props.requete.statutCourant.statut) &&
+    !props.disabledActions;
 
   return (
     <>

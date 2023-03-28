@@ -1,16 +1,32 @@
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
+import {
+  aDroitConsulterApercuRequeteInformation,
+  aDroitConsulterRequeteDelivrance
+} from "@model/agent/IOfficier";
+import {
+  IUtilisateur,
+  utilisateurADroit,
+  utilisateurALeDroitSurUnDesPerimetres
+} from "@model/agent/IUtilisateur";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
+import { ApercuReqCreationEtablissementPage } from "@pages/requeteCreation/apercuRequete/etablissement/ApercuReqCreationEtablissementPage";
+import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
+import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
+import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import { FenetreExterne } from "@util/FenetreExterne";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
+import { storeRece } from "@util/storeRece";
 import {
   NB_LIGNES_PAR_APPEL_REQUETE_ASSOCIEES,
   NB_LIGNES_PAR_PAGE_REQUETE_ASSOCIEES
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useEffect, useState } from "react";
-import { DetailRequetePage } from "../../../requeteDelivrance/detailRequete/DetailRequetePage";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { BoutonNouvelleRMCRequete } from "../contenu/BoutonNouvelleRMCRequete";
 import { getMessageZeroRequete } from "../hook/RMCAutoRequetesUtils";
@@ -30,9 +46,11 @@ export interface RMCTableauRequetesAssocieesProps {
   resetTableauRequete: boolean;
 }
 
-interface IInfoRequeteSelectionnee {
+export interface IInfoRequeteSelectionnee {
   idRequete: string;
   numeroFonctionnel?: string;
+  type: string;
+  sousType: string;
 }
 
 export const RMCTableauRequetesAssociees: React.FC<
@@ -77,10 +95,16 @@ export const RMCTableauRequetesAssociees: React.FC<
     idx: number
   ) => {
     const requeteCliquee = data[idx];
-    if (requeteCliquee.type === TypeRequete.DELIVRANCE.libelle) {
+    const utilisateurPeutOuvrirLaRequete = utilisateurADroitOuvrirRequete(
+      requeteCliquee.type,
+      requeteCliquee.sousType
+    );
+    if (utilisateurPeutOuvrirLaRequete) {
       setRequeteSelectionnee({
         idRequete: requeteCliquee.idRequete,
-        numeroFonctionnel: requeteCliquee.numero
+        numeroFonctionnel: requeteCliquee.numero,
+        type: requeteCliquee.type,
+        sousType: requeteCliquee.sousType
       });
     }
   };
@@ -112,11 +136,109 @@ export const RMCTableauRequetesAssociees: React.FC<
           height={height}
           width={width}
         >
-          <DetailRequetePage
-            idRequeteAAfficher={requeteSelectionnee.idRequete}
-          />
+          {getApercuRequeteSimple(requeteSelectionnee)}
         </FenetreExterne>
       )}
     </>
   );
+};
+
+export const utilisateurADroitOuvrirRequete = (
+  typeRequete: string,
+  sousTypeRequete: string
+) => {
+  let aLeDroit = false;
+  if (storeRece.utilisateurCourant) {
+    switch (typeRequete) {
+      case TypeRequete.DELIVRANCE.libelle:
+        aLeDroit = aDroitConsulterRequeteDelivrance();
+        break;
+      case TypeRequete.CREATION.libelle:
+        aLeDroit = aDroitConsulterRequeteCreation(
+          storeRece.utilisateurCourant,
+          sousTypeRequete
+        );
+        break;
+      case TypeRequete.INFORMATION.libelle:
+        aLeDroit = aDroitConsulterApercuRequeteInformation();
+        break;
+      default:
+        break;
+    }
+  }
+  return aLeDroit;
+};
+
+
+
+export const aDroitConsulterRequeteCreation = (
+  utilisateur: IUtilisateur,
+  sousTypeRequete: string
+): boolean => {
+  let aDroit = false;
+
+  const sousTypeCreation =
+    SousTypeCreation.getEnumFromLibelleCourt(sousTypeRequete);
+
+  if (SousTypeCreation.estRCEXR(sousTypeCreation)) {
+    aDroit = utilisateurALeDroitSurUnDesPerimetres(
+      Droit.CREER_ACTE_ETABLI,
+      [Perimetre.MEAE, Perimetre.ETAX],
+      utilisateur
+    );
+  } else if (SousTypeCreation.estRCTDOuRCTC(sousTypeCreation)) {
+    return utilisateurADroit(Droit.CREER_ACTE_TRANSCRIT, utilisateur);
+  }
+
+  return aDroit;
+};
+
+export const getApercuRequeteSimple = (
+  requeteSelectionnee: IInfoRequeteSelectionnee
+): JSX.Element => {
+  let apercuRequete: JSX.Element = <></>;
+  switch (requeteSelectionnee.type) {
+    case TypeRequete.DELIVRANCE.libelle:
+      apercuRequete = (
+        <ApercuRequetePage
+          idRequeteAAfficher={requeteSelectionnee?.idRequete}
+        />
+      );
+      break;
+    case TypeRequete.CREATION.libelle:
+      apercuRequete =
+        getApercuRequeteEtablissementOuTranscription(requeteSelectionnee);
+      break;
+    case TypeRequete.INFORMATION.libelle:
+      apercuRequete = <ApercuReqInfoPage />;
+      break;
+    default:
+      break;
+  }
+
+  return apercuRequete;
+};
+
+export const getApercuRequeteEtablissementOuTranscription = (
+  requeteSelectionnee: IInfoRequeteSelectionnee
+): JSX.Element => {
+  let apercuSimpleCreation: JSX.Element = <></>;
+  const sousTypeCreation = SousTypeCreation.getEnumFromLibelleCourt(
+    requeteSelectionnee.sousType
+  );
+  if (SousTypeCreation.estRCEXR(sousTypeCreation)) {
+    apercuSimpleCreation = (
+      <ApercuReqCreationEtablissementPage
+        idRequeteAAfficher={requeteSelectionnee.idRequete}
+      />
+    );
+  } else if (SousTypeCreation.estRCTDOuRCTC(sousTypeCreation)) {
+    apercuSimpleCreation = (
+      <ApercuReqCreationTranscriptionSimplePage
+        idRequeteAAfficher={requeteSelectionnee.idRequete}
+      />
+    );
+  }
+
+  return apercuSimpleCreation;
 };

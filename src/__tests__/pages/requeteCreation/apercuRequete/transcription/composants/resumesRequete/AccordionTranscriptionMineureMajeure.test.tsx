@@ -1,8 +1,10 @@
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IStatutCourant } from "@model/requete/IStatutCourant";
 import { NatureActeTranscription } from "@model/requete/NatureActeTranscription";
+import { ResumeRequeteCreationTranscriptionNaissanceMineureMajeure } from "@pages/requeteCreation/apercuRequete/transcription/composants/ResumeReqCreationTranscriptionNaissanceMineureMajeure";
 import { AccordionTranscriptionMineureMajeure } from "@pages/requeteCreation/apercuRequete/transcription/composants/resumesRequete/AccordionTranscriptionMineureMajeure";
 import { act, render, screen } from "@testing-library/react";
 import { formatDateStringIso } from "@util/DateUtils";
@@ -20,6 +22,15 @@ const provenanceRequete = Provenance.getEnumFor("SERVICE_PUBLIC");
 const numeroFonctionnel = "numeroFonctionnel";
 
 describe("Test du composant accordion mineure majeure", () => {
+  test("DOIT rendre le composant ResumeRequeteCreationTranscriptionNaissanceMineureMajeure", async () => {
+    await act(async () => {
+      render(
+        <ResumeRequeteCreationTranscriptionNaissanceMineureMajeure
+          requete={{} as IRequeteCreation}
+        />
+      );
+    });
+  });
   test("DOIT rendre l'accordion fermé à l'arrivée sur la page", async () => {
     await act(async () => {
       render(

@@ -1,6 +1,8 @@
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
@@ -10,19 +12,28 @@ import { useHistory, useParams } from "react-router";
 import { OngletPiecesJustificatives } from "../../commun/composants/OngletPiecesJustificatives";
 import Labels from "../../commun/Labels";
 import "../../commun/scss/ApercuReqCreationPage.scss";
-import ResumeRequeteCreation from "../etablissement/composants/ResumeRequeteCreation";
-import mappingIRequeteCreationVersResumeRequeteCreationProps from "../etablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
-import { onRenommePieceJustificative } from "./ApercuReqCreationTranscriptionUtils";
+import {
+  getComposantResumeRequeteEnFonctionNatureActe,
+  onRenommePieceJustificative
+} from "./ApercuReqCreationTranscriptionUtils";
 
-export const ApercuReqCreationTranscriptionSimplePage: React.FC = props => {
+interface ApercuReqCreationTranscriptionSimplePageProps {
+  idRequeteAAfficher?: string;
+}
+
+export const ApercuReqCreationTranscriptionSimplePage: React.FC<
+  ApercuReqCreationTranscriptionSimplePageProps
+> = props => {
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const [ongletSelectionne, setOngletSelectionne] = useState(0);
   const [requete, setRequete] = useState<IRequeteCreationTranscription>();
   const history = useHistory();
   const { detailRequeteState } = useDetailRequeteApiHook(
-    idRequeteParam,
+    props.idRequeteAAfficher ?? idRequeteParam,
     history.location.pathname.includes(URL_RECHERCHE_REQUETE)
   );
+
+  const estModeConsultation = props.idRequeteAAfficher !== undefined;
 
   useEffect(() => {
     if (detailRequeteState) {
@@ -77,11 +88,11 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC = props => {
             initConteneurFerme={false}
             estADroite={false}
           >
-            <ResumeRequeteCreation
-              {...mappingIRequeteCreationVersResumeRequeteCreationProps(
-                requete
-              )}
-            />
+            {getComposantResumeRequeteEnFonctionNatureActe(requete)}
+
+            {!estModeConsultation && (
+              <RMCRequetesAssocieesResultats requete={requete as IRequete} />
+            )}
           </ConteneurRetractable>
 
           <VoletAvecOnglet

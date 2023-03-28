@@ -15,6 +15,7 @@ import { ListeActionsRetourSDANF } from "./ListeActions";
 interface OngletActionProps {
   echanges?: IEchange[];
   requete?: IRequeteCreationEtablissement;
+  modeConsultation?: boolean;
 }
 
 export const Action: React.FC<OngletActionProps> = props => {
@@ -39,6 +40,7 @@ export const Action: React.FC<OngletActionProps> = props => {
           statusRequete={props.requete?.statutCourant}
           idRequeteCorbeilleAgent={props.requete?.idUtilisateur}
           idRequeteParam={idRequeteParam}
+          modeConsultation={props.modeConsultation}
         />
       </Item>
 

@@ -27,19 +27,38 @@ const superagentMock = require("superagent-mock")(request, [
   configRequetesInformation[0],
   configRequetes[0]
 ]);
+
 afterAll(() => {
   superagentMock.unset();
 });
 
+const history = createMemoryHistory();
+
 describe("Test de la page Aperçu requête transcription en prise en charge", () => {
-  test("DOIT rendre le composant ApercuReqCreationTranscriptionPriseEnChargePage correctement", async () => {
-    const history = createMemoryHistory();
+  beforeEach(async () => {
     history.push(
       getUrlWithParam(
         `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/:idRequete`,
         "dd96cc3a-9865-4c83-b634-37fad2680f41"
       )
     );
+
+    await act(async () => {
+      render(
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={
+              URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID
+            }
+          >
+            <ApercuReqCreationTranscriptionPriseEnChargePage />
+          </Route>
+        </Router>
+      );
+    });
+  });
+  test("DOIT rendre le composant ApercuReqCreationTranscriptionPriseEnChargePage correctement", async () => {
     await act(async () => {
       const { container } = render(
         <Router history={history}>
@@ -55,29 +74,6 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
   });
 
   test("DOIT afficher l'onglet RMC par defaut QUAND j'affiche la page", async () => {
-    const history = createMemoryHistory();
-    history.push(
-      getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/:idRequete`,
-        "dd96cc3a-9865-4c83-b634-37fad2680f41"
-      )
-    );
-
-    await act(async () => {
-      render(
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID
-            }
-          >
-            <ApercuReqCreationTranscriptionPriseEnChargePage />
-          </Route>
-        </Router>
-      );
-    });
-
     const ongletRMC = screen.getByText("RMC");
 
     await waitFor(async () => {
@@ -86,29 +82,6 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
   });
 
   test("DOIT passer le tag aria-selected a true QUAND je click sur l'onglet Analyse du dossier", async () => {
-    const history = createMemoryHistory();
-    history.push(
-      getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/:idRequete`,
-        "dd96cc3a-9865-4c83-b634-37fad2680f41"
-      )
-    );
-
-    await act(async () => {
-      render(
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID
-            }
-          >
-            <ApercuReqCreationTranscriptionPriseEnChargePage />
-          </Route>
-        </Router>
-      );
-    });
-
     const ongletRMC = screen.getByText("RMC");
     const ongletAnalyseDuDossier = screen.getByText("Analyse du dossier");
 
@@ -125,7 +98,25 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
   });
 
   test("DOIT sélectionner l'onglet Pieces justificatives / annexes QUAND je clique dessus.", async () => {
-    const history = createMemoryHistory();
+    const ongletPJ = screen.getByText("Pièces justificatives / Annexes");
+    const ongletRMC = screen.getByText("RMC");
+
+    await waitFor(async () => {
+      expect(ongletPJ.getAttribute("aria-selected")).toBe("false");
+      expect(ongletRMC.getAttribute("aria-selected")).toBe("true");
+    });
+
+    fireEvent.click(ongletPJ);
+
+    await waitFor(async () => {
+      expect(ongletRMC.getAttribute("aria-selected")).toBe("false");
+      expect(ongletPJ.getAttribute("aria-selected")).toBe("true");
+    });
+  });
+});
+
+describe("Test du rendu du composant RMCRequeteAssociees", () => {
+  test("DOIT afficher le composant RMCRequeteAssociees QUAND l'ID de la requête est présent dans l'URL", async () => {
     history.push(
       getUrlWithParam(
         `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/:idRequete`,
@@ -148,19 +139,25 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
       );
     });
 
-    const ongletPJ = screen.getByText("Pièces justificatives / Annexes");
-    const ongletRMC = screen.getByText("RMC");
-
-    await waitFor(async () => {
-      expect(ongletPJ.getAttribute("aria-selected")).toBe("false");
-      expect(ongletRMC.getAttribute("aria-selected")).toBe("true");
+    await waitFor(() => {
+      expect(
+        screen.getByText("Autres requêtes associées au titulaire")
+      ).toBeDefined();
+    });
+  });
+  test("NE DOIT PAS afficher le composant RMCRequeteAssociees QUAND l'ID de la requête est est founi en props", async () => {
+    await act(async () => {
+      render(
+        <Router history={history}>
+          <ApercuReqCreationTranscriptionPriseEnChargePage idRequeteAAfficher="dd96cc3a-9865-4c83-b634-37fad2680f41" />
+        </Router>
+      );
     });
 
-    fireEvent.click(ongletPJ);
-
-    await waitFor(async () => {
-      expect(ongletRMC.getAttribute("aria-selected")).toBe("false");
-      expect(ongletPJ.getAttribute("aria-selected")).toBe("true");
+    await waitFor(() => {
+      expect(
+        screen.queryByText("Autres requêtes associées au titulaire")
+      ).not.toBeInTheDocument();
     });
   });
 });

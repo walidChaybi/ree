@@ -17,11 +17,15 @@ interface ApercuRequetePartieGaucheProps {
 export const ApercuRequetePartieGauche: React.FC<
   ApercuRequetePartieGaucheProps
 > = props => {
+
+  const afficherResultatRequeteAssocieesResultats =
+    props.requete?.statutCourant.statut === StatutRequete.PRISE_EN_CHARGE &&
+    !props.disabled;
+
   return (
     <div className="side left">
-      <ResumeRequete requete={props.requete} />
-      {props.requete?.statutCourant.statut ===
-        StatutRequete.PRISE_EN_CHARGE && (
+      <ResumeRequete requete={props.requete} disabledActions={props.disabled} />
+      {afficherResultatRequeteAssocieesResultats && (
         <RMCRequetesAssocieesResultats requete={props.requete} />
       )}
       <SuiviObservationsRequete

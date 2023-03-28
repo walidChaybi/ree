@@ -23,13 +23,11 @@ const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
   configRequetesCreation[0]
 ]);
-afterAll(() => {
-  superagentMock.unset();
-});
+
+const history = createMemoryHistory();
 
 describe("Test de la page Aperçu requête transcription en saisie de projet", () => {
-  test("DOIT rendre le composant ApercuReqCreationTranscriptionSaisieProjetPage correctement", async () => {
-    const history = createMemoryHistory();
+  beforeEach(async () => {
     history.push(
       getUrlWithParam(
         `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/:idRequete`,
@@ -37,6 +35,22 @@ describe("Test de la page Aperçu requête transcription en saisie de projet", (
       )
     );
 
+    await act(async () => {
+      render(
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={
+              URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
+            }
+          >
+            <ApercuReqCreationTranscriptionSaisieProjetPage />
+          </Route>
+        </Router>
+      );
+    });
+  });
+  test("DOIT rendre le composant ApercuReqCreationTranscriptionSaisieProjetPage correctement", async () => {
     await act(async () => {
       const { container } = render(
         <Router history={history}>
@@ -59,29 +73,6 @@ describe("Test de la page Aperçu requête transcription en saisie de projet", (
   });
 
   test("DOIT passer le tag aria-selected a true QUAND je click sur l'onglet Echanges", async () => {
-    const history = createMemoryHistory();
-    history.push(
-      getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/:idRequete`,
-        "dd96cc3a-9865-4c83-b634-37fad2680f41"
-      )
-    );
-
-    await act(async () => {
-      render(
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
-            }
-          >
-            <ApercuReqCreationTranscriptionSaisieProjetPage />
-          </Route>
-        </Router>
-      );
-    });
-
     const ongletSaisieLeProjet = screen.getByText("Saisir le projet");
     const ongletEchanges = screen.getByText("Echanges");
 
@@ -98,29 +89,6 @@ describe("Test de la page Aperçu requête transcription en saisie de projet", (
   });
 
   test("DOIT passer le tag aria-selected a true QUAND je click sur l'onglet Aperçu du projet", async () => {
-    const history = createMemoryHistory();
-    history.push(
-      getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/:idRequete`,
-        "dd96cc3a-9865-4c83-b634-37fad2680f41"
-      )
-    );
-
-    await act(async () => {
-      render(
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
-            }
-          >
-            <ApercuReqCreationTranscriptionSaisieProjetPage />
-          </Route>
-        </Router>
-      );
-    });
-
     const ongletDescriptionRequete = screen.getByText(
       "Description de la requête"
     );
@@ -141,4 +109,55 @@ describe("Test de la page Aperçu requête transcription en saisie de projet", (
       );
     });
   });
+});
+
+describe("Test de la précense du composant RMCRequeteAssociees", () => {
+  test("DOIT afficher le composant RMCRequeteAssociees QUAND l'ID de la requête est présent dans l'URL", async () => {
+    history.push(
+      getUrlWithParam(
+        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/:idRequete`,
+        "dd96cc3a-9865-4c83-b634-37fad2680f41"
+      )
+    );
+
+    await act(async () => {
+      render(
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={
+              URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
+            }
+          >
+            <ApercuReqCreationTranscriptionSaisieProjetPage />
+          </Route>
+        </Router>
+      );
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Autres requêtes associées au titulaire")
+      ).toBeDefined();
+    });
+  });
+  test("NE DOIT PAS afficher le composant RMCRequeteAssociees QUAND l'ID de la requête est est founi en props", async () => {
+    await act(async () => {
+      render(
+        <Router history={history}>
+          <ApercuReqCreationTranscriptionSaisieProjetPage idRequeteAAfficher="dd96cc3a-9865-4c83-b634-37fad2680f41" />
+        </Router>
+      );
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText("Autres requêtes associées au titulaire")
+      ).not.toBeInTheDocument();
+    });
+  });
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });

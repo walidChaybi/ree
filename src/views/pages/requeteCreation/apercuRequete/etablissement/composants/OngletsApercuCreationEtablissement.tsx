@@ -11,6 +11,7 @@ import { Action } from "./action/Action";
 import "./scss/OngletsApercuCreationEtablissement.scss";
 interface OngletsApercuCreationEtablissementProps {
   requete: IRequeteCreationEtablissement;
+  modeConsultation?: boolean;
   onRenommePieceJustificative: typeFctRenommePieceJustificative;
   resultatRMCAutoPersonne: IRMCAutoPersonneResultat[];
   handleClickSelectionTitulaireRmcPersonne: (idTitulaire: string) => void;
@@ -45,6 +46,7 @@ export const OngletsApercuCreationEtablissement: React.FC<
         <Action
           echanges={props.requete?.provenanceNatali?.echanges}
           requete={props.requete}
+          modeConsultation={props.modeConsultation}
         />
       ),
       index: 1
