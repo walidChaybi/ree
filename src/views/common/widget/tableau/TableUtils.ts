@@ -72,14 +72,16 @@ export function processDataStorting<Key extends keyof any>(
 }
 
 export function getPaginatedData<T>(
-  data: T[],
+  data: T[] | undefined, // Dans les cas de "timeout de connexion arobas" data est "undefined"
   currentPage: number,
   rowsPerPage: number,
   numberOfPagesPerRequetes: number
 ): T[] {
-  return data.slice(
-    (currentPage % numberOfPagesPerRequetes) * rowsPerPage,
-    (currentPage % numberOfPagesPerRequetes) * rowsPerPage + rowsPerPage
+  return (
+    data?.slice(
+      (currentPage % numberOfPagesPerRequetes) * rowsPerPage,
+      (currentPage % numberOfPagesPerRequetes) * rowsPerPage + rowsPerPage
+    ) || []
   );
 }
 
