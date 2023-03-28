@@ -41,7 +41,7 @@ export function mappingSaisieRequeteRCTCVersRequetesAEnvoyer(
   saisie: ISaisieRequeteRCTC
 ): ISaisieRequeteRCTCAEnvoyer {
   return {
-    posteConsulaire: "", // TODO: Quand le champ en question sera ajoute dans le formulaire.
+    villeRegistre: "", // TODO: Quand le champ en question sera ajoute dans le formulaire.
     canal: TypeCanal.COURRIER.nom,
     type: TypeRequete.CREATION.nom,
     sousType: SousTypeCreation.RCTC.nom,

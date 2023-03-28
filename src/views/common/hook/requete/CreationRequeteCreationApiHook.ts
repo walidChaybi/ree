@@ -7,7 +7,7 @@ export interface ISaisieRequeteRCTCAEnvoyer {
   canal: string;
   lienRequerant: any;
   natureActeTranscrit: string;
-  posteConsulaire?: string;
+  villeRegistre?: string;
   provenance: string;
   requerant: any;
   sousType: string;
