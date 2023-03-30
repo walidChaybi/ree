@@ -3,7 +3,8 @@ import { peupleTypePieceJustificative } from "@api/nomenclature/NomenclatureRequ
 import { EnumNomemclature } from "@util/enum/EnumNomenclature";
 import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
-import { Options } from "@util/Type";
+import { OptionAvecOrdre, Options } from "@util/Type";
+import { TypeRedactionActe } from "../../etatcivil/enum/TypeRedactionActe";
 import { TypeRequete } from "./TypeRequete";
 
 export const CODE_TRANSCRIPTION_ACTE = "TRANSCRIPTION_ACTE";
@@ -16,13 +17,23 @@ export class TypePieceJustificative extends EnumNomemclature {
     code: string,
     libelle: string,
     categorie: string,
-    private readonly _typeRequete: string
+    private readonly _typeRequete: string,
+    private readonly _ordre: number,
+    private readonly _typeRedactionActe?: string
   ) {
     super(code, libelle, categorie);
   }
 
   get typeRequete() {
     return this._typeRequete;
+  }
+
+  get typeRedactionActe() {
+    return this._typeRedactionActe;
+  }
+
+  get ordre() {
+    return this._ordre;
   }
 
   public static async init() {
@@ -42,7 +53,7 @@ export class TypePieceJustificative extends EnumNomemclature {
     return EnumWithLibelle.contientEnums(TypePieceJustificative);
   }
 
-  public static getEnumFor(uuid: string) {
+  public static getEnumFor(uuid: string): TypePieceJustificative {
     return EnumWithLibelle.getEnumFor(uuid, TypePieceJustificative);
   }
 
@@ -55,13 +66,22 @@ export class TypePieceJustificative extends EnumNomemclature {
   }
 
   public static getAllEnumsByTypeRequeteAsOptions(
-    typeRequete?: TypeRequete
+    typeRequete: TypeRequete,
+    typeRedactionActe?: TypeRedactionActe
   ): Options {
-    const options = TypePieceJustificative.getAllEnumsAsOptions();
-    return options.filter(
-      opt =>
-        TypePieceJustificative.getEnumFor(opt.value).typeRequete ===
-        TypeRequete.DELIVRANCE.nom
-    );
+    const options =
+      TypePieceJustificative.getAllEnumsAsOptions() as OptionAvecOrdre[];
+    return options
+      .filter(opt => {
+        const typePieceJustificative = TypePieceJustificative.getEnumFor(
+          opt.value
+        );
+        opt.ordre = typePieceJustificative.ordre;
+        return (
+          typePieceJustificative?.typeRequete === typeRequete?.nom &&
+          typePieceJustificative?.typeRedactionActe === typeRedactionActe
+        );
+      })
+      .sort((opt1, opt2) => opt1.ordre - opt2.ordre);
   }
 }

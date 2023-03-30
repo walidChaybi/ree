@@ -1,3 +1,4 @@
+import { TypeRedactionActe } from "@model/etatcivil/enum/TypeRedactionActe";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { PieceJointe } from "@util/FileUtils";
@@ -10,7 +11,8 @@ import { ISubForm, SubFormProps } from "../utils/FormUtil";
 import { PiecesJointes } from "./PiecesJointes";
 
 export interface PiecesJointesFormProps {
-  typeRequete?: TypeRequete;
+  typeRequete: TypeRequete;
+  typeRedactionActe?: TypeRedactionActe;
 }
 
 export type PiecesJointesSubFormProps = SubFormProps & PiecesJointesFormProps;
@@ -28,7 +30,8 @@ const PiecesJointesForm: React.FC<PiecesJointesSubFormProps> = props => {
   const getPiecesJustificatives = async () => {
     const piecesJustificatives =
       TypePieceJustificative.getAllEnumsByTypeRequeteAsOptions(
-        props.typeRequete
+        props.typeRequete,
+        props.typeRedactionActe
       );
     setMenuItemsState(piecesJustificatives);
   };

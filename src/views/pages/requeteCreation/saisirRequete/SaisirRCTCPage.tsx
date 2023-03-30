@@ -2,16 +2,20 @@ import {
   MARIAGE,
   NATURE_ACTE_LIEN_REQUERANT,
   PARENTS,
+  PIECES_JOINTES,
   RECONNAISSANCE,
   REQUERANT,
   TITULAIRE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { ISaisieRequeteRCTC } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { receUrl } from "@router/ReceUrls";
-import { goBack, replaceUrl } from "@util/route/UrlUtil";
+import { getPiecesJointesNonVides, PieceJointe } from "@util/FileUtils";
+import { replaceUrl } from "@util/route/UrlUtil";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import { History } from "history";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
@@ -23,6 +27,7 @@ import {
 import {
   getActeATranscrireEtLienRequerant,
   getParentsForm,
+  getPiecesJointesForm,
   getRequerantForm,
   getTitulaireForm
 } from "./contenu/SaisirRCTCPageForms";
@@ -89,27 +94,64 @@ export const SaisirRCTCPage: React.FC = () => {
 
   //States
   //////////////////////////////////////////////////////////////////////////
+  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [transmissionPopinOuverte, setTransmissionPopinOuverte] =
     useState(false);
   const [creationRequeteRCTCParams, setCreationRequeteRCTCParams] =
     useState<ICreationRequeteCreationParams>();
+  const [piecesjointesAMettreAJour, setPiecesjointesAMettreAJour] =
+    useState<PieceJointe[]>();
+  const [saisieRequeteRCTC, setSaisieRequeteRCTC] =
+    useState<ISaisieRequeteRCTC>();
+  const [idRequeteCreerEtTransmise, setIdRequeteCreerEtTransmise] =
+    useState<string>();
 
   // Hooks
   //////////////////////////////////////////////////////////////////////////
-  const idRequeteCree = useCreationRequeteCreation(creationRequeteRCTCParams);
+  const idRequeteCreee = useCreationRequeteCreation(creationRequeteRCTCParams);
+
+  const postPiecesJointesApiResultat = usePostPiecesJointesApi(
+    TypePieceJointe.PIECE_JUSTIFICATIVE,
+    idRequeteCreee || idRequeteCreerEtTransmise,
+    piecesjointesAMettreAJour
+  );
 
   // Effects
   //////////////////////////////////////////////////////////////////////////
   useEffect(() => {
-    if (idRequeteCree) {
-      redirectionApercuPriseEnChargePage(history, idRequeteCree);
+    if (uneRequeteAEteCreeeOuTransmise() && saisieRequeteRCTC) {
+      // On ne prend que les pjs dont le contenu est renseigné,
+      //   en effet si le contenu est vide c'est qu'il a été écrasé par la requête lors de la sauvegarde (la requête ramène ses pièces jointes mais sans le contenu)
+      const pjAMettreAjour = getPiecesJointesNonVides(
+        saisieRequeteRCTC?.[PIECES_JOINTES]
+      );
+      if (pjAMettreAjour && pjAMettreAjour.length > 0) {
+        setPiecesjointesAMettreAJour(pjAMettreAjour);
+      } else {
+        finEtRedirection();
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idRequeteCree]);
+  }, [idRequeteCreee, saisieRequeteRCTC, idRequeteCreerEtTransmise]);
+
+  useEffect(() => {
+    // Une fois les pièces jointes mises à jour, la maj du bon statut de la requête puis la redirection sont effectuées
+    if (postPiecesJointesApiResultat && !postPiecesJointesApiResultat.erreur) {
+      finEtRedirection();
+    } else if (postPiecesJointesApiResultat?.erreur) {
+      setOperationEnCours(false);
+      // Permet de gérer le cas où un plantage arrive sur la maj des PJs alors que la requête a été enregistrée
+      // TODO lorsque le mode update sera activé (cf. SaisirRDCPage) => setOperationEnCours(false);
+      // TODO lorsque le mode update sera activé (cf. SaisirRDCPage) => setIdRequete(creationRequeteDelivranceRDCResultat?.requete.id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [postPiecesJointesApiResultat]);
 
   // Evenements & fonctions
   //////////////////////////////////////////////////////////////////////////
   function onSubmitSaisirRequete(values: ISaisieRequeteRCTC) {
+    setOperationEnCours(true);
+    setSaisieRequeteRCTC(values);
     const requete = mappingSaisieRequeteRCTCVersRequetesAEnvoyer(values);
     setCreationRequeteRCTCParams({ requete });
   }
@@ -124,22 +166,17 @@ export const SaisirRCTCPage: React.FC = () => {
     getActeATranscrireEtLienRequerant(),
     getTitulaireForm(),
     getParentsForm(),
-    getRequerantForm()
+    getRequerantForm(),
+    getPiecesJointesForm()
   ];
-
-  useEffect(() => {
-    if (idRequeteCree) {
-      const url =
-        receUrl.getUrlApercuPriseEnChargeCreationTranscriptionAPartirDe({
-          url: history.location.pathname,
-          idRequete: idRequeteCree
-        });
-      replaceUrl(history, url);
-    }
-  }, [idRequeteCree, history]);
 
   return (
     <div className="SaisirRCTCPage">
+      <OperationEnCours
+        visible={operationEnCours}
+        onTimeoutEnd={() => setOperationEnCours(false)}
+        onClick={() => setOperationEnCours(false)}
+      />
       <title>{TITRE_FORMULAIRE}</title>
       <Formulaire
         titre={TITRE_FORMULAIRE}
@@ -151,12 +188,19 @@ export const SaisirRCTCPage: React.FC = () => {
         <div>{blocsForm}</div>
         <TransmissionPopin
           ouverte={transmissionPopinOuverte}
-          onTransmissionEffectuee={(idRequeteCreerEtTransmise: string) => {
+          onTransmissionEffectuee={(
+            idRequeteApresCreationEtTransmission: string,
+            formikValues
+          ) => {
             fermePopin();
-            goBack(history);
+            setSaisieRequeteRCTC(formikValues as ISaisieRequeteRCTC);
+            setIdRequeteCreerEtTransmise(idRequeteApresCreationEtTransmission);
           }}
           onCancel={fermePopin}
           onErrors={fermePopin}
+          onTransmissionEnCours={() => {
+            setOperationEnCours(true);
+          }}
         />
 
         <SaisirRequeteBoutons
@@ -165,15 +209,27 @@ export const SaisirRCTCPage: React.FC = () => {
       </Formulaire>
     </div>
   );
+
+  // Fonctions utilitaires
+  /////////////////////////////////////////////////////////////////////////
+  function uneRequeteAEteCreeeOuTransmise() {
+    return idRequeteCreee || idRequeteCreerEtTransmise;
+  }
+
+  function finEtRedirection() {
+    setOperationEnCours(false);
+    if (idRequeteCreee) {
+      const url =
+        receUrl.getUrlApercuPriseEnChargeCreationTranscriptionAPartirDe({
+          url: history.location.pathname,
+          idRequete: idRequeteCreee
+        });
+      replaceUrl(history, url);
+    } else if (idRequeteCreerEtTransmise) {
+      history.goBack();
+    }
+  }
 };
 
-function redirectionApercuPriseEnChargePage(
-  history: History<unknown>,
-  idRequeteCree: string
-) {
-  const url = receUrl.getUrlApercuPriseEnChargeCreationTranscriptionAPartirDe({
-    url: history.location.pathname,
-    idRequete: idRequeteCree
-  });
-  replaceUrl(history, url);
-}
+
+

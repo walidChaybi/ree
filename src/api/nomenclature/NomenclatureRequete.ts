@@ -25,7 +25,9 @@ export async function peupleTypePieceJustificative() {
             data.code,
             premiereLettreEnMajuscule(data.libelle),
             data.categorie,
-            data.typeRequete
+            data.typeRequete,
+            Number(data.ordre) || 0,
+            data.typeRedactionActe || undefined
           )
         );
       }

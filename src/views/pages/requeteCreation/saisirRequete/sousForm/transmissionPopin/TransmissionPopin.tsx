@@ -8,7 +8,7 @@ import { ISaisieRequeteRCTC } from "@model/form/creation/transcription/ISaisirRe
 import { estRenseigne, executeEnDiffere } from "@util/Utils";
 import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErreur";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
-import { connect } from "formik";
+import { connect, FormikValues } from "formik";
 import React, { useEffect, useState } from "react";
 import { mappingSaisieRequeteRCTCVersRequetesAEnvoyer } from "./../../mapping/mappingFormulaireSaisirRCTCVersRequeteTranscription";
 
@@ -16,8 +16,10 @@ interface TransmissionPopinProps {
   ouverte: boolean;
   onCancel: () => void;
   onTransmissionEffectuee: (
-    idRequeteCreeApresTransmissionEntite: string
+    idRequeteCreeApresTransmissionEntite: string,
+    formikValues: FormikValues
   ) => void;
+  onTransmissionEnCours?: () => void;
   onErrors: (formik: any) => void;
 }
 
@@ -43,7 +45,10 @@ export const TransmissionPopin: React.FC<
   useEffect(() => {
     idRequeteCreeApresTransmissionEntite &&
       props.onTransmissionEffectuee &&
-      props.onTransmissionEffectuee(idRequeteCreeApresTransmissionEntite);
+      props.onTransmissionEffectuee(
+        idRequeteCreeApresTransmissionEntite,
+        props.formik.values
+      );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idRequeteCreeApresTransmissionEntite]);
 
@@ -60,6 +65,7 @@ export const TransmissionPopin: React.FC<
           executeEnDiffere(GestionnaireBlockErreur.scrollALaPremiereErreur);
         });
       } else {
+        props.onTransmissionEnCours && props.onTransmissionEnCours();
         const requete = mappingSaisieRequeteRCTCVersRequetesAEnvoyer(
           props.formik.values as ISaisieRequeteRCTC
         );

@@ -27,6 +27,7 @@ export interface UploadFileFieldProps {
 }
 
 const UploadFileField: React.FC<UploadFileFieldProps> = (props) => {
+  const [menu, setMenu] = React.useState<null | HTMLElement>(null);
   const [fileState, setFileState] = useState<Base64File>();
   const [menuItemState, setMenuItemState] = useState<Option>();
 
@@ -51,7 +52,6 @@ const UploadFileField: React.FC<UploadFileFieldProps> = (props) => {
       messageManager.showErrorAndClose((error as Error).message);
     }
   };
-  const [menu, setMenu] = React.useState<null | HTMLElement>(null);
   const handleCloseMenu = () => {
     setMenu(null);
   };

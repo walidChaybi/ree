@@ -36,12 +36,6 @@ export interface IRequeteCreationEtablissement extends IRequete {
 }
 
 export const RequeteCreationEtablissement = {
-  getDocumentPJ(
-    requete: IRequeteCreationEtablissement,
-    idDocumentPJ: string
-  ): IDocumentPJ | undefined {
-    return DocumentPJ.getDocumentPJ(requete.documentsPj, idDocumentPJ);
-  },
   getPieceJustificative(
     requete: IRequeteCreationEtablissement | undefined,
     idDocumentPJ: string | undefined,

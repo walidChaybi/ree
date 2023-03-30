@@ -48,7 +48,6 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
-import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { IParent, Parent } from "@model/requete/IParents";
 import { Requerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -57,11 +56,11 @@ import {
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
 import { getValeurOuVide } from "@util/Utils";
-import { FileExtension, MimeType } from "file-type";
 import { IdentiteFormDefaultValuesRDCSC } from "../sousFormulaires/identite/IdentiteForm";
 import { InstitutionnelFormDefaultValues } from "../sousFormulaires/requerant/institutionnel/InstitutionnelForm";
 import { MandataireFormDefaultValues } from "../sousFormulaires/requerant/mandataire/MandataireForm";
 import { ParticulierFormDefaultValues } from "../sousFormulaires/requerant/particulier/ParticulierForm";
+import { saisiePJ } from "./mappingCommun";
 
 export function mappingRequeteDelivranceVersFormulaireRDCSC(
   requete: IRequeteDelivrance
@@ -251,24 +250,4 @@ export const saisieAdresse = (requete: IRequeteDelivrance) => {
   };
 };
 
-const saisiePJ = (requete: IRequeteDelivrance) => {
-  return requete.piecesJustificatives.map(PJ => {
-    return {
-      base64File: {
-        fileName: PJ.nom || "",
-        base64String: PJ.contenu,
-        taille: PJ.taille,
-        conteneurSwift: PJ.conteneurSwift,
-        identifiantSwift: PJ.referenceSwift,
-        mimeType: PJ.mimeType as MimeType,
-        extension: PJ.extension as FileExtension
-      },
-      type: {
-        value: TypePieceJustificative.getKeyForLibelle(
-          PJ.typePieceJustificative.libelle
-        ),
-        str: PJ.typePieceJustificative.libelle
-      }
-    };
-  });
-};
+

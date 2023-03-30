@@ -42,7 +42,7 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { PATH_MODIFIER_RDC } from "@router/ReceUrls";
-import { PieceJointe } from "@util/FileUtils";
+import { getPiecesJointesNonVides, PieceJointe } from "@util/FileUtils";
 import messageManager from "@util/messageManager";
 import { getUrlCourante } from "@util/route/UrlUtil";
 import { Options } from "@util/Type";
@@ -234,7 +234,9 @@ export const SaisirRDCPage: React.FC = () => {
         creationRequeteDelivranceRDCResultat ??
         updateRequeteDelivranceRDCResultat;
       // Une fois la requête créée ou mise à jour, la mise à jour des pièces jointes peut se faire
-      const pjAMettreAjour = getPiecesJointesAMettreAJour(
+      // On ne prend que les pjs dont le contenu est renseigné,
+      //   en effet si le contenu est vide c'est qu'il a été écrasé par la requête lors de la sauvegarde (la requête ramène ses pièces jointes mais sans le contenu)
+      const pjAMettreAjour = getPiecesJointesNonVides(
         saisieRequeteRDC?.[PIECES_JOINTES]
       );
       if (pjAMettreAjour && pjAMettreAjour.length > 0) {
@@ -264,6 +266,7 @@ export const SaisirRDCPage: React.FC = () => {
       }
     } else if (postPiecesJointesApiResultat?.erreur) {
       setOperationEnCours(false);
+      setIdRequete(creationRequeteDelivranceRDCResultat?.requete.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postPiecesJointesApiResultat]);
@@ -398,16 +401,6 @@ export const SaisirRDCPage: React.FC = () => {
       setOptionsLienTitulaire(TypeLienMandant.getAllEnumsAsOptions());
     }
   };
-
-  function getPiecesJointesAMettreAJour(
-    formulairePiecesJointes?: PieceJointe[]
-  ) {
-    // On ne prend que les pjs dont le contenu est renseigné,
-    //   en effet si le contenu est vide c'est qu'il a été écrasé par la requête lors de la sauvegarde (la requête ramène ses pièces jointes mais sans le contenu)
-    return formulairePiecesJointes?.filter(
-      formulairePj => formulairePj.base64File.base64String
-    );
-  }
 
   const onSubmitSaisirRequete = (values: SaisieRequeteRDC) => {
     setSaisieRequeteRDC(values);

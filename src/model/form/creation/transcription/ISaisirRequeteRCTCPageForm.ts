@@ -44,6 +44,7 @@ import {
   PAYS_ORIGINE_REFUGIE,
   PAYS_RECONNAISSANCE,
   PAYS_STATUT_REFUGIE,
+  PIECES_JOINTES,
   PRENOM,
   PRENOMS,
   PRENOM_1,
@@ -61,6 +62,7 @@ import {
   VILLE_RECONNAISSANCE,
   VOIE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { PieceJointe } from "@util/FileUtils";
 
 export interface ISaisieRequeteRCTC {
   [NATURE_ACTE_LIEN_REQUERANT]: INatureActeEtLienRequerantForm;
@@ -72,6 +74,7 @@ export interface ISaisieRequeteRCTC {
     [RECONNAISSANCE]: IEvenementReconnaissanceTitulaireForm;
   };
   [REQUERANT]: IRequerantForm;
+  [PIECES_JOINTES]?: PieceJointe[];
 }
 
 interface INatureActeEtLienRequerantForm {
