@@ -375,19 +375,22 @@ export const routesRece: IRoute[] = [
     component: EspaceInformationPage,
     props: { selectedTab: 0 },
     auMoinsUnDesDroits: [Droit.INFORMER_USAGER],
-    libelle: getLibelle("Mes requêtes d'information")
+    libelle: getLibelle("Mes requêtes d'information"),
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
   },
   {
     url: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
     component: ApercuReqInfoPage,
     auMoinsUnDesDroits: [Droit.INFORMER_USAGER],
-    libelle: getLibelle("Aperçu de la requête")
+    libelle: getLibelle("Aperçu de la requête"),
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
   },
   {
     url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_INFORMATION_ID,
     component: ApercuReqInfoPage,
     auMoinsUnDesDroits: [Droit.INFORMER_USAGER],
-    libelle: getLibelle("Aperçu de la requête")
+    libelle: getLibelle("Aperçu de la requête"),
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
   },
 
   ////////////////////////////////////////////////////////
@@ -398,14 +401,16 @@ export const routesRece: IRoute[] = [
     component: EspaceInformationPage,
     props: { selectedTab: 1 },
     auMoinsUnDesDroits: [Droit.INFORMER_USAGER],
-    libelle: getLibelle("Les requêtes d'information de mon service")
+    libelle: getLibelle("Les requêtes d'information de mon service"),
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
   },
   // Aperçu requête ... depuis le tableau Requêtes d'Information de mon SERVICE
   {
     url: URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
     component: ApercuReqInfoPage,
     auMoinsUnDesDroits: [Droit.ATTRIBUER],
-    libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE),
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
   },
   ////////////////////////////////////////////////////////
   ///////////// MES REQUETES DE CRÉATION /////////////////
