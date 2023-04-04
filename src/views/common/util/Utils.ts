@@ -3,6 +3,7 @@ import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 
 export const SPC = "SPC";
 export const SANS_PRENOM_CONNU = "Sans prénom connu";
+export const SANS_NOM_CONNU = "Sans nom connu";
 export const SNP = "SNP";
 export const SANS_NOM_PATRONYMIQUE = "Sans nom patronymique";
 export const ABSENCE_VALIDEE = "ABSENCE_VALIDEE";

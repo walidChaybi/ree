@@ -34,7 +34,7 @@ import {
   MARIAGE,
   PAS_DE_NOM_CONNU,
   PAS_DE_PRENOM_CONNU,
-  PAYS_ORIGINE_REFUGIE,
+  PAYS_ORIGINE,
   PAYS_STATUT_REFUGIE,
   RECONNAISSANCE
 } from "../../../../../common/composant/formulaire/ConstantesNomsForm";
@@ -58,7 +58,7 @@ export const ParentFormDefaultValues = {
   [NAISSANCE]: EvenementParentsFormDefaultValues,
   [NATIONALITES]: NationalitesFormDefaultValues,
   [PAYS_STATUT_REFUGIE]: "",
-  [PAYS_ORIGINE_REFUGIE]: ""
+  [PAYS_ORIGINE]: ""
 };
 
 // Schéma de validation des champs
@@ -74,7 +74,7 @@ export const ParentFormValidationSchema = Yup.object()
       CarateresAutorise,
       CARATERES_AUTORISES_MESSAGE
     ),
-    [PAYS_ORIGINE_REFUGIE]: Yup.string().matches(
+    [PAYS_ORIGINE]: Yup.string().matches(
       CarateresAutorise,
       CARATERES_AUTORISES_MESSAGE
     )

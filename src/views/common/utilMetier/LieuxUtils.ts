@@ -489,4 +489,8 @@ export class LieuxUtils {
           etrangerParDefaut
         );
   }
+
+  public static estRenseigneEtPaysEtranger(pays?: string): boolean {
+    return estRenseigne(pays) && !LieuxUtils.estPaysFrance(pays);
+  }
 }

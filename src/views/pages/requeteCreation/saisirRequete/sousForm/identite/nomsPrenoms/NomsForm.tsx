@@ -92,13 +92,17 @@ const NomsFormTitulaire: React.FC<NomsFormProps> = props => {
           values={[{ str: "", value: PAS_DE_NOM_ACTE_ETRANGER }]}
           onChange={onChangePasDeNomSurActeEtranger}
         />
-        <InputField
-          name={nomSurActeWithNamespace}
-          label={getLibelle("Nom sur l'acte étranger")}
-          maxLength={CENT_CARACT_MAX}
-          disabled={pasDeNomActeEtranger}
-          onBlur={props.onBlurNom}
-        />
+
+        {!pasDeNomActeEtranger && (
+          <InputField
+            name={nomSurActeWithNamespace}
+            label={getLibelle("Nom sur l'acte étranger")}
+            maxLength={CENT_CARACT_MAX}
+            disabled={pasDeNomActeEtranger}
+            onBlur={props.onBlurNom}
+          />
+        )}
+
         <InputField
           name={nomSouhaiteWithNamespace}
           label={getLibelle("Nom souhaité sur l'acte français")}

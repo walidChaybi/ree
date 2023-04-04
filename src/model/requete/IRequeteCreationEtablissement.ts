@@ -32,7 +32,6 @@ export interface IRequeteCreationEtablissement extends IRequete {
   campagne?: string;
   numeroDossierMetier?: string;
   natureActeTranscrit?: NatureActeTranscription;
-  numeroTeledossier?: string;
 }
 
 export const RequeteCreationEtablissement = {

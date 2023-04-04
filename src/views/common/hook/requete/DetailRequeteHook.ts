@@ -343,7 +343,6 @@ function mapDocumentPJ(documents?: any): IDocumentPJ[] {
 export function mappingRequeteCreation(data: any): IRequeteCreation {
   const requete = mappingRequete(data);
   return {
-    // Si requête de sousType RCTC ou RCTD prévoir la mapping
     ...data,
     ...requete,
 
@@ -362,7 +361,9 @@ export function mappingRequeteCreation(data: any): IRequeteCreation {
       ),
       echanges: mapEchangesRetourSDANF(data.provenanceNatali?.echanges)
     },
+    provenanceServicePublic: data.provenanceServicePublic,
     documentsPj: mapDocumentPJ(data.documentsPj),
+    provenance: Provenance.getEnumFor(data.provenance),
     titulaires: mapTitulairesCreation(requete.titulaires),
     natureActeTranscrit: NatureActeTranscription.getEnumFor(
       data.natureActeTranscrit

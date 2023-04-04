@@ -53,8 +53,9 @@ describe("Test du composant accordion requerant", () => {
       );
     });
 
-    const titreAccordion = screen.getByText("Requérant");
-    const lienTitulaire = screen.getByLabelText("Lien avec le titulaire");
+    const titreAccordion = screen.getAllByText("Requérant")[0];
+    const requerantLabel: HTMLElement =
+      screen.getAllByLabelText("Requérant")[0];
     const coordonnees = screen.getByLabelText("Coordonnées");
     const adresseCourriel = screen.getByLabelText("Adresse courriel");
     const tel = screen.getByLabelText("Tél");
@@ -71,7 +72,7 @@ Maroc`;
 
     await waitFor(() => {
       expect(titreAccordion).toBeDefined();
-      expect(lienTitulaire).toHaveAttribute("title", "Père/mère");
+      expect(requerantLabel).toHaveAttribute("title", "Père/mère");
       expect(coordonnees).toHaveAttribute("title", coordonneesFormate);
       expect(adresseCourriel).toHaveAttribute("title", "adresseCourriel");
       expect(tel).toHaveAttribute("title", "numeroTelephone");

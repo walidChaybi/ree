@@ -1,5 +1,4 @@
 import { EvenementUnion } from "@model/requete/IEvenementUnion";
-import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import {
   ITitulaireRequeteCreation,
   TitulaireRequeteCreation
@@ -8,10 +7,6 @@ import { resume } from "@pages/requeteCreation/commun/Labels";
 import { DEUX, estRenseigne, getLibelle, UN } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
-import {
-  formatDateLieuResumeRequete,
-  formatPrenoms
-} from "../../ApercuReqCreationTranscriptionUtils";
 import { LigneAccordion } from "./LigneAccordion";
 
 export interface AccordionTranscriptionParentsProps {
@@ -66,14 +61,14 @@ export const AccordionTranscriptionParents: React.FC<
                 className={`contenuBlocAccordion  ${estPresentUnParent}`}
               >
                 <LigneAccordion
-                  texte={parent.nomNaissance}
+                  texte={TitulaireRequeteCreation.getNomNaissanceOuSNP(
+                    parent.nomNaissance
+                  )}
                   ariaLabel={getLibelle("Nom naissance")}
                 />
 
                 <LigneAccordion
-                  texte={formatPrenoms(
-                    TitulaireRequete.getTableauDePrenoms(parent)
-                  )}
+                  texte={TitulaireRequeteCreation.getPrenomsOuSPC(parent)}
                   ariaLabel={getLibelle("Prénoms")}
                 />
 
@@ -83,11 +78,13 @@ export const AccordionTranscriptionParents: React.FC<
                 />
 
                 <LigneAccordion
-                  texte={formatDateLieuResumeRequete(
-                    parent.dateNaissanceFormatee,
-                    parent.lieuNaissanceFormate
-                  )}
-                  ariaLabel={getLibelle("Date et lieu de naissance")}
+                  texte={parent.dateNaissanceFormatee}
+                  ariaLabel={getLibelle("Date de naissance")}
+                />
+
+                <LigneAccordion
+                  texte={parent.lieuNaissanceFormate}
+                  ariaLabel={getLibelle("Lieu de naissance")}
                 />
 
                 <LigneAccordion

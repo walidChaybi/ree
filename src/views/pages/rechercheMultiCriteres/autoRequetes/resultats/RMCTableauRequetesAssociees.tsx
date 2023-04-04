@@ -1,14 +1,8 @@
-import { Droit } from "@model/agent/enum/Droit";
-import { Perimetre } from "@model/agent/enum/Perimetre";
 import {
   aDroitConsulterApercuRequeteInformation,
+  aDroitConsulterRequeteCreation,
   aDroitConsulterRequeteDelivrance
 } from "@model/agent/IOfficier";
-import {
-  IUtilisateur,
-  utilisateurADroit,
-  utilisateurALeDroitSurUnDesPerimetres
-} from "@model/agent/IUtilisateur";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
@@ -154,10 +148,7 @@ export const utilisateurADroitOuvrirRequete = (
         aLeDroit = aDroitConsulterRequeteDelivrance();
         break;
       case TypeRequete.CREATION.libelle:
-        aLeDroit = aDroitConsulterRequeteCreation(
-          storeRece.utilisateurCourant,
-          sousTypeRequete
-        );
+        aLeDroit = aDroitConsulterRequeteCreation(sousTypeRequete);
         break;
       case TypeRequete.INFORMATION.libelle:
         aLeDroit = aDroitConsulterApercuRequeteInformation();
@@ -167,30 +158,6 @@ export const utilisateurADroitOuvrirRequete = (
     }
   }
   return aLeDroit;
-};
-
-
-
-export const aDroitConsulterRequeteCreation = (
-  utilisateur: IUtilisateur,
-  sousTypeRequete: string
-): boolean => {
-  let aDroit = false;
-
-  const sousTypeCreation =
-    SousTypeCreation.getEnumFromLibelleCourt(sousTypeRequete);
-
-  if (SousTypeCreation.estRCEXR(sousTypeCreation)) {
-    aDroit = utilisateurALeDroitSurUnDesPerimetres(
-      Droit.CREER_ACTE_ETABLI,
-      [Perimetre.MEAE, Perimetre.ETAX],
-      utilisateur
-    );
-  } else if (SousTypeCreation.estRCTDOuRCTC(sousTypeCreation)) {
-    return utilisateurADroit(Droit.CREER_ACTE_TRANSCRIT, utilisateur);
-  }
-
-  return aDroit;
 };
 
 export const getApercuRequeteSimple = (

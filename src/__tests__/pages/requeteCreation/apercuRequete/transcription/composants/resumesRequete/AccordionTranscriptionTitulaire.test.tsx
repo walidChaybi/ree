@@ -29,8 +29,7 @@ const titulaires = [
     ],
     sexe: "MASCULIN",
     dateNaissanceFormatee: "12/12/2022",
-    lieuNaissanceFormate:
-      "Lucerne (Suisse) 12/12/2022, Lucerne (Suisse) (Suisse) (Suisse)"
+    lieuNaissanceFormate: "Lucerne (Suisse) Lucerne (Suisse) (Suisse) (Suisse)"
   },
   {
     nomNaissance: "Mangin",
@@ -98,9 +97,8 @@ describe("Test du composant accordion titulaires correctement", () => {
     );
     const prenoms = screen.getByLabelText("Prénoms");
     const sexe = screen.getByLabelText("Sexe");
-    const dateLieuNaissance = screen.getByLabelText(
-      "Date et lieu de naissance"
-    );
+    const dateNaissance = screen.getByLabelText("Date de naissance");
+    const lieuNaissance = screen.getByLabelText("Lieu de naissance");
     const dateLieuReconnaissance = screen.getByLabelText("Reconnaissance");
 
     await waitFor(() => {
@@ -111,9 +109,11 @@ describe("Test du composant accordion titulaires correctement", () => {
       );
       expect(prenoms).toHaveAttribute("title", "Tyler, Jacques");
       expect(sexe).toHaveAttribute("title", "Masculin");
-      expect(dateLieuNaissance).toHaveAttribute(
+      expect(dateNaissance).toHaveAttribute("title", "12/12/2022");
+
+      expect(lieuNaissance).toHaveAttribute(
         "title",
-        "12/12/2022, Lucerne (Suisse) 12/12/2022, Lucerne (Suisse) (Suisse) (Suisse)"
+        "Lucerne (Suisse) Lucerne (Suisse) (Suisse) (Suisse)"
       );
       expect(dateLieuReconnaissance).toHaveAttribute(
         "title",

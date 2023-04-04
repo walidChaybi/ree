@@ -1,5 +1,6 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { DateCoordonneesType } from "@model/requete/DateCoordonneesType";
+import { SANS_NOM_CONNU, SANS_PRENOM_CONNU, SNP, SPC } from "@util/Utils";
 import { QualiteFamille } from "./enum/QualiteFamille";
 import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 import { IDomiciliation } from "./IDomiciliation";
@@ -8,7 +9,7 @@ import { IEvenementUnion } from "./IEvenementUnion";
 import { INationalite } from "./INationalite";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 import { IRetenueSdanf } from "./IRetenueSdanf";
-import { ITitulaireRequete } from "./ITitulaireRequete";
+import { ITitulaireRequete, TitulaireRequete } from "./ITitulaireRequete";
 
 export interface ITitulaireRequeteCreation extends ITitulaireRequete {
   villeEtrangereNaissance?: string;
@@ -74,5 +75,55 @@ export const TitulaireRequeteCreation = {
     });
 
     return nationalites;
+  },
+  getParentsTries(
+    titulaires?: ITitulaireRequeteCreation[]
+  ): ITitulaireRequeteCreation[] | undefined {
+    return titulaires
+      ?.filter(
+        titulaire =>
+          titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
+          titulaire.qualite === QualiteFamille.PARENT
+      )
+      .sort((a, b) => a.position - b.position);
+  },
+  getTitulairesTries(
+    titulaires?: ITitulaireRequeteCreation[]
+  ): ITitulaireRequeteCreation[] | undefined {
+    return titulaires
+      ?.filter(
+        titulaire =>
+          titulaire.typeObjetTitulaire ===
+          TypeObjetTitulaire.TITULAIRE_ACTE_TRANSCRIT_DRESSE
+      )
+      .sort((a, b) => a.position - b.position);
+  },
+  getNomNaissanceOuSNP(nomNaissance: string): string {
+    let nomNaissanceFormate;
+    if (nomNaissance) {
+      if (nomNaissance === SNP) {
+        nomNaissanceFormate = SANS_NOM_CONNU;
+      } else {
+        nomNaissanceFormate = nomNaissance;
+      }
+    } else {
+      nomNaissanceFormate = "";
+    }
+    return nomNaissanceFormate;
+  },
+  getPrenomsOuSPC(titulaire: ITitulaireRequeteCreation): string {
+    const prenoms = TitulaireRequete.getTableauDePrenoms(titulaire);
+    let lignePrenomsFormates;
+    if (prenoms) {
+      if (prenoms?.[0] === SPC) {
+        lignePrenomsFormates = SANS_PRENOM_CONNU;
+      } else {
+        lignePrenomsFormates = prenoms.join(", ");
+      }
+    } else {
+      lignePrenomsFormates = "";
+    }
+
+    return lignePrenomsFormates;
   }
 };

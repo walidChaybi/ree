@@ -27,6 +27,7 @@ import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import {
   userDroitCreerActeEtabliPerimetreMEAE,
+  userDroitCreerActeTranscritPerimetreMEAE,
   userDroitDelivrer,
   userDroitInformerUsager
 } from "../../../../../mock/data/connectedUserAvecDroit";
@@ -179,44 +180,7 @@ describe("RMCRequetesAssocieesResultats", () => {
   });
 
   test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête de création Transcription", async () => {
-    const utilisateurAvecDroitTranscrit = {
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
-      prenom: "Ashley",
-      nom: "Young",
-      trigramme: "FOO",
-      entite: { estDansSCEC: true },
-      habilitations: [
-        {
-          idHabilitation: "idHabilitation",
-          profil: {
-            idProfil: "idProfil",
-            nom: {
-              idNomenclature: "string",
-              categorie: "string",
-              code: "string",
-              libelle: "string",
-              estActif: true
-            } as INomenclatureAgentApi,
-            droits: [
-              {
-                idDroit: "idDroit",
-                nom: "CREER_ACTE_TRANSCRIT"
-              } as IDroit
-            ]
-          },
-          perimetre: {
-            idPerimetre: "idPerimetre",
-            description: "descPérimètre",
-            estActif: true,
-            listePays: ["paysPérimètre"],
-            nom: "MEAE",
-            listeIdTypeRegistre: ["idlisteIdTypeRegistre"]
-          } as IPerimetre
-        }
-      ]
-    } as IOfficier;
-
-    storeRece.utilisateurCourant = utilisateurAvecDroitTranscrit;
+    storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
     const libelleCourtTranscription = "Acte Transcrit (c)";
     const aDroitConsulter = aDroitConsulterRequeteCreation(
       libelleCourtTranscription
@@ -370,7 +334,7 @@ describe("RMCRequetesAssocieesResultats", () => {
     });
   });
 
-  test("DOIT retourner le bon composant d'aperçu simple d'une requête de création", async () => {
+  test("DOIT retourner le bon composant d'aperçu simple d'une requête de création d'établissement", async () => {
     const requeteSelectionnee = {
       idRequete: "7b448d64-add5-4dbd-8041-b7081ea7bc86",
       numeroFonctionnel: "numero",
@@ -389,6 +353,31 @@ describe("RMCRequetesAssocieesResultats", () => {
       expect(
         container.getElementsByClassName("ApercuReqCreationEtablissementPage")
           .length
+      ).toBe(1);
+    });
+  });
+
+  test("DOIT retourner le bon composant d'aperçu simple d'une requête de création de transcription", async () => {
+    storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
+    const requeteSelectionnee = {
+      idRequete: "7b448d64-add5-4dbd-8041-b7081ea7bc86",
+      numeroFonctionnel: "numero",
+      type: TypeRequete.CREATION.libelle,
+      sousType: "Acte Transcrit (d)"
+    } as IInfoRequeteSelectionnee;
+
+    await act(async () => {
+      const history = createMemoryHistory();
+      const { container } = render(
+        <Router history={history}>
+          {getApercuRequeteSimple(requeteSelectionnee)}
+        </Router>
+      );
+
+      expect(
+        container.getElementsByClassName(
+          "ApercuReqCreationTranscriptionSimplePage"
+        ).length
       ).toBe(1);
     });
   });

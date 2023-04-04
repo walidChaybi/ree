@@ -41,7 +41,7 @@ import {
   PAYS,
   PAYS_DU_MARIAGE,
   PAYS_NAISSANCE,
-  PAYS_ORIGINE_REFUGIE,
+  PAYS_ORIGINE,
   PAYS_RECONNAISSANCE,
   PAYS_STATUT_REFUGIE,
   PIECES_JOINTES,
@@ -126,7 +126,7 @@ export interface IParentForm {
   [NAISSANCE]: IEvenementEtrangerForm;
   [NATIONALITES]: INationalitesForm;
   [PAYS_STATUT_REFUGIE]: string;
-  [PAYS_ORIGINE_REFUGIE]: string;
+  [PAYS_ORIGINE]: string;
 }
 
 export interface INationalitesForm {

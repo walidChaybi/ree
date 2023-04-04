@@ -49,12 +49,11 @@ export const AccordionTranscriptionRequerant: React.FC<
     lignesFormates += `${adresseRequerant?.codePostal ?? ""} ${
       adresseRequerant?.ville ?? ""
     } \n`;
-    lignesFormates += `${
-      LieuxUtils.estPaysFrance(adresseRequerant?.pays)
-        ? ""
-        : adresseRequerant?.pays
-    }`;
 
+    if (LieuxUtils.estRenseigneEtPaysEtranger(adresseRequerant?.pays)) {
+      lignesFormates += `${adresseRequerant?.pays}`;
+    }
+    
     return lignesFormates;
   }
 
@@ -71,9 +70,9 @@ export const AccordionTranscriptionRequerant: React.FC<
         expanded={false}
       >
         <LigneAccordion
-          label={getLibelle("Lien avec le titulaire")}
+          label={getLibelle("Requérant")}
           texte={props.requerant?.lienRequerant?.lien.libelle}
-          ariaLabel={getLibelle("Lien avec le titulaire")}
+          ariaLabel={getLibelle("Requérant")}
         />
 
         <div className="adressRequerant">

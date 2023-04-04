@@ -493,6 +493,7 @@ export const requeteCreationTranscription = {
   numeroRequeteOrigine: null,
   sousType: "RCEXR",
   numeroAncienSI: "numeroAncienSI",
+  natureActeTranscrit: "NAISSANCE_MINEUR",
   dossierSignale: true,
   commentaire: "commentaire",
   demandeIdentification: null,

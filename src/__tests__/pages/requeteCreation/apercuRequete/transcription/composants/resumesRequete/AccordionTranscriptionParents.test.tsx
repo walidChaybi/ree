@@ -103,9 +103,9 @@ describe("Test du composant accordion parents correctement", () => {
     const nomNaissance = screen.getAllByLabelText("Nom naissance")[0];
     const prenoms = screen.getByLabelText("Prénoms");
     const sexe = screen.getByLabelText("Sexe");
-    const dateLieuNaissance = screen.getByLabelText(
-      "Date et lieu de naissance"
-    );
+    const dateNaissance = screen.getByLabelText("Date de naissance");
+
+    const lieuNaissance = screen.getByLabelText("Lieu de naissance");
     const paysStatutRefugie = screen.getByLabelText("Pays statut réfugié");
     const paysOrigine = screen.getByLabelText("Pays d'origine");
     const dateMariage = screen.getByLabelText("Date de mariage");
@@ -115,10 +115,9 @@ describe("Test du composant accordion parents correctement", () => {
       expect(nomNaissance).toHaveAttribute("title", "nomNaissance");
       expect(prenoms).toHaveAttribute("title", "Tititusse, Tititusse2");
       expect(sexe).toHaveAttribute("title", "Masculin");
-      expect(dateLieuNaissance).toHaveAttribute(
-        "title",
-        "12/12/2022, Lucerne (Suisse)"
-      );
+      expect(dateNaissance).toHaveAttribute("title", "12/12/2022");
+
+      expect(lieuNaissance).toHaveAttribute("title", "Lucerne (Suisse)");
       expect(paysStatutRefugie).toHaveAttribute(
         "title",
         "paysStatutRefugie paysStatutRefugie"

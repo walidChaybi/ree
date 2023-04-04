@@ -1,12 +1,8 @@
-import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
-import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { Requete } from "@model/requete/IRequete";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeTranscription } from "@model/requete/NatureActeTranscription";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
-import { SANS_PRENOM_CONNU, SPC } from "@util/Utils";
 import React from "react";
 import { ResumeRequeteCreationTranscriptionNaissanceMineureMajeure } from "./composants/ResumeReqCreationTranscriptionNaissanceMineureMajeure";
 
@@ -45,53 +41,5 @@ function getComposantResumeRequeteEnfantMineureMajeure(
     <ResumeRequeteCreationTranscriptionNaissanceMineureMajeure
       requete={requete}
     />
-  );
-}
-
-export function formatPrenoms(prenoms: string[]): string {
-  let lignePrenomsFormates;
-  if (prenoms) {
-    if (prenoms?.[0] === SPC) {
-      lignePrenomsFormates = SANS_PRENOM_CONNU;
-    } else {
-      lignePrenomsFormates = prenoms.join(", ");
-    }
-  } else {
-    lignePrenomsFormates = "";
-  }
-
-  return lignePrenomsFormates;
-}
-
-export function formatDateLieuResumeRequete(
-  date?: string,
-  lieu?: string
-): string | undefined {
-  let dateLieu;
-
-  dateLieu = date || "";
-  dateLieu += lieu && date ? ", " : "";
-  dateLieu += lieu || "";
-
-  return dateLieu;
-}
-
-export function getParents(
-  titulaires?: ITitulaireRequeteCreation[]
-): ITitulaireRequeteCreation[] | undefined {
-  return titulaires?.filter(
-    titulaire =>
-      titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
-      titulaire.qualite === QualiteFamille.PARENT
-  );
-}
-
-export function getTitulaires(
-  titulaires?: ITitulaireRequeteCreation[]
-): ITitulaireRequeteCreation[] | undefined {
-  return titulaires?.filter(
-    titulaire =>
-      titulaire.typeObjetTitulaire ===
-      TypeObjetTitulaire.TITULAIRE_ACTE_TRANSCRIT_DRESSE
   );
 }

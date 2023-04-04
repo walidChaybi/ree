@@ -1,5 +1,4 @@
 import { EvenementUnion } from "@model/requete/IEvenementUnion";
-import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import {
   ITitulaireRequeteCreation,
   TitulaireRequeteCreation
@@ -8,10 +7,6 @@ import { resume } from "@pages/requeteCreation/commun/Labels";
 import { DEUX, getLibelle, UN } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
-import {
-  formatDateLieuResumeRequete,
-  formatPrenoms
-} from "../../ApercuReqCreationTranscriptionUtils";
 import { LigneAccordion } from "./LigneAccordion";
 
 export interface AccordionTranscriptionTitulaireProps {
@@ -80,9 +75,7 @@ export const AccordionTranscriptionTitulaire: React.FC<
                 />
 
                 <LigneAccordion
-                  texte={formatPrenoms(
-                    TitulaireRequete.getTableauDePrenoms(titulaire)
-                  )}
+                  texte={TitulaireRequeteCreation.getPrenomsOuSPC(titulaire)}
                   ariaLabel={getLibelle("Prénoms")}
                 />
 
@@ -92,11 +85,13 @@ export const AccordionTranscriptionTitulaire: React.FC<
                 />
 
                 <LigneAccordion
-                  texte={formatDateLieuResumeRequete(
-                    titulaire.dateNaissanceFormatee,
-                    titulaire.lieuNaissanceFormate
-                  )}
-                  ariaLabel={getLibelle("Date et lieu de naissance")}
+                  texte={titulaire.dateNaissanceFormatee}
+                  ariaLabel={getLibelle("Date de naissance")}
+                />
+
+                <LigneAccordion
+                  texte={titulaire.lieuNaissanceFormate}
+                  ariaLabel={getLibelle("Lieu de naissance")}
                 />
 
                 <LigneAccordion

@@ -113,7 +113,7 @@ function mapTitulaire(
     jourNaissance: getValeurOuUndefined(saisieTitulaire.dateNaissance.jour),
     moisNaissance: getValeurOuUndefined(saisieTitulaire.dateNaissance.mois),
     anneeNaissance: getValeurOuUndefined(saisieTitulaire.dateNaissance.annee),
-    villeEtrangereNaissance: getValeurOuUndefined(
+    villeNaissance: getValeurOuUndefined(
       saisieTitulaire.naissance.villeNaissance
     ),
     regionNaissance: getValeurOuUndefined(
@@ -171,7 +171,9 @@ function mapParent(
     paysNaissance: getPaysEvenement(
       getValeurOuUndefined(saisieParent.naissance.lieuNaissance),
       getValeurOuUndefined(saisieParent.naissance.paysNaissance)
-    )
+    ),
+    paysStatutRefugie: saisieParent.paysStatutRefugie,
+    paysOrigine: saisieParent.paysOrigine
   };
 }
 

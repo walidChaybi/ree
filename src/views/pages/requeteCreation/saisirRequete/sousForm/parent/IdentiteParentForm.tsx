@@ -34,7 +34,7 @@ import {
   DATE_NAISSANCE,
   PAS_DE_NOM_CONNU,
   PAS_DE_PRENOM_CONNU,
-  PAYS_ORIGINE_REFUGIE,
+  PAYS_ORIGINE,
   PAYS_STATUT_REFUGIE
 } from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 import EvenementParentForm from "../evenement/EvenementParentsForm";
@@ -56,7 +56,7 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
 
   const paysOrigineRefugieWithNamespace = withNamespace(
     props.nom,
-    PAYS_ORIGINE_REFUGIE
+    PAYS_ORIGINE
   );
 
   const pasDeNomConnuWithNamespace = withNamespace(props.nom, PAS_DE_NOM_CONNU);
@@ -119,12 +119,14 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
             onChange={onChangePasDeNomConnu}
           />
 
-          <InputField
-            name={withNamespace(props.nom, NOM)}
-            label={getLibelle("Nom")}
-            maxLength={NB_CARACT_MAX_SAISIE}
-            disabled={pasDeNomConnu}
-          />
+          {!pasDeNomConnu && (
+            <InputField
+              name={withNamespace(props.nom, NOM)}
+              label={getLibelle("Nom")}
+              maxLength={NB_CARACT_MAX_SAISIE}
+              disabled={pasDeNomConnu}
+            />
+          )}
 
           <CheckboxField
             name={withNamespace(props.nom, PAS_DE_PRENOM_CONNU)}

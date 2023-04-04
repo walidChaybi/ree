@@ -115,7 +115,7 @@ export const NOM_USAGE = "nomUsage";
 export const NOM = "nom";
 
 export const PAYS_STATUT_REFUGIE = "paysStatutRefugie";
-export const PAYS_ORIGINE_REFUGIE = "paysOrigineRefugie";
+export const PAYS_ORIGINE = "paysOrigine";
 
 // Noms des champs IdentiteForm
 export const NOMS = "noms";

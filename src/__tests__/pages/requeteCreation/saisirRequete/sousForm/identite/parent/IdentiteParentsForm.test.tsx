@@ -5,7 +5,7 @@ import {
   NOM,
   PAS_DE_NOM_CONNU,
   PAS_DE_PRENOM_CONNU,
-  PAYS_ORIGINE_REFUGIE,
+  PAYS_ORIGINE,
   PAYS_STATUT_REFUGIE,
   PRENOMS,
   SEXE
@@ -54,7 +54,7 @@ const HookParentForm: React.FC = () => {
             [NAISSANCE]: EvenementEtrangerFormDefaultValues,
             [NATIONALITES]: NationalitesFormDefaultValues,
             [PAYS_STATUT_REFUGIE]: "",
-            [PAYS_ORIGINE_REFUGIE]: ""
+            [PAYS_ORIGINE]: ""
           }
         }
       }}
@@ -75,6 +75,10 @@ test("DOIT rendre le composant d'identite du parent correctement", async () => {
     render(<HookParentForm />);
   });
 
+  const inputNomActeEtranger = screen.getByRole("textbox", {
+    name: /parents.parent1.nom/i
+  });
+
   const boutonsCheckboxParentsPasDeNomConnu = screen.getByLabelText(
     "parents.parent1.pasdenomconnu.pasdenomconnu"
   );
@@ -83,12 +87,16 @@ test("DOIT rendre le composant d'identite du parent correctement", async () => {
     fireEvent.click(boutonsCheckboxParentsPasDeNomConnu);
   });
 
-  const inputNomActeEtranger = screen.getByRole("textbox", {
-    name: /parents.parent1.nom/i
+  await waitFor(() => {
+    expect(inputNomActeEtranger).not.toBeInTheDocument();
+  });
+
+  await waitFor(async () => {
+    fireEvent.click(boutonsCheckboxParentsPasDeNomConnu);
   });
 
   await waitFor(() => {
-    expect(inputNomActeEtranger).toBeDisabled();
+    expect(inputNomActeEtranger).toBeDefined();
   });
 
   const inputPrenom1 = screen.queryByText("Prénom 1");

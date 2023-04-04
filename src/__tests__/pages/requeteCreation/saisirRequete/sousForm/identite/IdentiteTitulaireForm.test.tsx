@@ -55,7 +55,7 @@ const HookTitulaireForm: React.FC = () => {
 };
 
 test("DOIT rendre le composant d'identite du titulaire correctement", async () => {
-  await waitFor(async () => {
+  await waitFor(() => {
     render(<HookTitulaireForm />);
   });
 
@@ -63,23 +63,27 @@ test("DOIT rendre le composant d'identite du titulaire correctement", async () =
     "titulaire.noms.pasdenomacteetranger.pasdenomacteetranger"
   );
 
-  await waitFor(async () => {
-    fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
-  });
-
   const inputNomActeEtranger = screen.getByRole("textbox", {
     name: /titulaire.noms.nomActeEtranger/i
   });
 
   await waitFor(() => {
-    expect(inputNomActeEtranger).toBeDisabled();
-  });
-
-  await waitFor(async () => {
     fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
   });
 
-  await waitFor(async () => {
+  await waitFor(() => {
+    expect(inputNomActeEtranger).not.toBeInTheDocument();
+  });
+
+  await waitFor(() => {
+    fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
+  });
+
+  await waitFor(() => {
+    expect(inputNomActeEtranger).toBeDefined();
+  });
+
+  await waitFor(() => {
     fireEvent.blur(inputNomActeEtranger, {
       target: {
         value: "mockNom"
@@ -91,7 +95,7 @@ test("DOIT rendre le composant d'identite du titulaire correctement", async () =
     "titulaire.noms.nomSouhaiteActeFR"
   );
 
-  await waitFor(async () => {
+  await waitFor(() => {
     fireEvent.blur(boutonsCheckboxTitulaireNomActeFrancais, {
       target: {
         value: "mockNomActeFrancais"
@@ -99,7 +103,7 @@ test("DOIT rendre le composant d'identite du titulaire correctement", async () =
     });
   });
 
-  await waitFor(async () => {
+  await waitFor(() => {
     fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
   });
 });

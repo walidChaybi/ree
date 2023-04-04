@@ -16,8 +16,7 @@ $height: calc($spacing * 2.5);
 .ApercuReqCreationTranscriptionSaisieProjetPage {
   .LigneAccordion {
     display: flex;
-    min-width: 350px;
-    // max-width: 50%;
+    min-width: 50%;
     padding-top: calc($spacing / 1.5);
     padding-bottom: calc($spacing / 1.5);
   }
@@ -63,6 +62,7 @@ $height: calc($spacing * 2.5);
 
   .adresseCourrielRequerant {
     display: flex;
+    flex-wrap: wrap;
   }
 }
 
@@ -117,5 +117,19 @@ $height: calc($spacing * 2.5);
     .ContenuVolet {
       padding: 5px 0px;
     }
+  }
+}
+
+.ApercuReqCreationTranscriptionPriseEnChargePage {
+
+  .ResumeRequeteCreation.component.is-open {
+    flex-grow: 1;
+  }
+  .VoletAvecOnglet {
+    flex-grow: 2;
+  }
+
+  .FocusPieceJustificative.component.is-open {
+    flex-grow: 2;
   }
 }

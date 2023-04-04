@@ -5,13 +5,12 @@ import {
   NOM,
   PAS_DE_NOM_CONNU,
   PAS_DE_PRENOM_CONNU,
-  PAYS_ORIGINE_REFUGIE,
+  PAYS_ORIGINE,
   PAYS_STATUT_REFUGIE,
   PRENOMS,
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { PrenomsFormDefaultValues } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
-import { IParent } from "@model/requete/IParents";
 import { EvenementEtrangerFormDefaultValues } from "@pages/requeteCreation/saisirRequete/sousForm/evenement/EvenementEtranger";
 import { ParentSubFormProps } from "@pages/requeteCreation/saisirRequete/sousForm/parent/IdentiteParentForm";
 import ParentsForm, {
@@ -28,7 +27,6 @@ const PARENTS = "parents";
 
 const HookParentsForm: React.FC = () => {
   const [result, setResult] = useState("");
-  const [parents, setParents] = useState<IParent[]>([{} as IParent]);
 
   const ParentsFormProps = {
     nom: "parents.parent1"
@@ -56,7 +54,7 @@ const HookParentsForm: React.FC = () => {
             [NAISSANCE]: EvenementEtrangerFormDefaultValues,
             [NATIONALITES]: NationalitesFormDefaultValues,
             [PAYS_STATUT_REFUGIE]: "",
-            [PAYS_ORIGINE_REFUGIE]: ""
+            [PAYS_ORIGINE]: ""
           }
         }
       }}
