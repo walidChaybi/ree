@@ -177,7 +177,11 @@ export const getApercuRequeteSimple = (
         getApercuRequeteEtablissementOuTranscription(requeteSelectionnee);
       break;
     case TypeRequete.INFORMATION.libelle:
-      apercuRequete = <ApercuReqInfoPage />;
+      apercuRequete = (
+        <ApercuReqInfoPage
+          idRequeteAAfficher={requeteSelectionnee?.idRequete}
+        />
+      );
       break;
     default:
       break;

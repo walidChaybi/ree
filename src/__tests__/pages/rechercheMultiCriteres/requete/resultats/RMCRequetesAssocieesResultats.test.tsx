@@ -35,10 +35,12 @@ import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
 import { requeteInformation } from "../../../../../mock/data/requeteInformation";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 import { configRequetesCreation } from "../../../../../mock/superagent-config/superagent-mock-requetes-creation";
+import { configRequetesInformation } from "../../../../../mock/superagent-config/superagent-mock-requetes-information";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],
-  configRequetesCreation[0]
+  configRequetesCreation[0],
+  configRequetesInformation[0]
 ]);
 
 describe("RMCRequetesAssocieesResultats", () => {
@@ -384,7 +386,7 @@ describe("RMCRequetesAssocieesResultats", () => {
 
   test("DOIT retourner le bon composant d'aperçu simple d'une requête d'information'", async () => {
     const requeteSelectionnee = {
-      idRequete: "7b448d64-add5-4dbd-8041-b7081ea7bc86",
+      idRequete: "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856",
       numeroFonctionnel: "numero",
       type: TypeRequete.INFORMATION.libelle,
       sousType: "Information"

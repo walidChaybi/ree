@@ -41,6 +41,8 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
   const [paramsMAJReqInfo, setParamsMAJReqInfo] =
     useState<ICreationActionMiseAjourStatutHookParams>();
 
+  const estModeConsultation = props.idRequeteAAfficher !== undefined;
+
   useCreationActionMiseAjourStatut(paramsMAJReqInfo);
 
   const history = useHistory();
@@ -111,7 +113,7 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
                 observations={requete.observations}
                 idRequete={requete.id}
               ></SuiviObservationsRequete>
-              {!affichageBoutonPrendreEnCharge && (
+              {!estModeConsultation && !affichageBoutonPrendreEnCharge && (
                 <RMCRequetesAssocieesResultats requete={requete} />
               )}
               <SuiviActionsRequete
@@ -119,7 +121,7 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
               ></SuiviActionsRequete>
             </div>
             <div className="side right">
-              {!affichageBoutonPrendreEnCharge && (
+              {!estModeConsultation && !affichageBoutonPrendreEnCharge && (
                 <RMCAuto requete={detailRequeteState} />
               )}
               <ReponseReqInfo
