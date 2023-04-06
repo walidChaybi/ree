@@ -3,10 +3,6 @@ import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificati
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
-import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 beforeAll(() => {
   TypePieceJustificative.init();
@@ -47,6 +43,4 @@ test("renders Lien Pièces Jointes fonctionne correctement", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

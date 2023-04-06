@@ -1,30 +1,23 @@
 import {
-  CHOIX_COURRIER,
-  COURRIER,
-  TEXTE,
-  TEXTE_LIBRE
+    CHOIX_COURRIER,
+    COURRIER,
+    TEXTE,
+    TEXTE_LIBRE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrier";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { OptionCourrier } from "@model/requete/IOptionCourrier";
 import {
-  controleFormulaire,
-  getDefaultValuesCourrier,
-  getTypesCourrier
+    controleFormulaire,
+    getDefaultValuesCourrier,
+    getTypesCourrier
 } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
-import request from "superagent";
 import requeteDelivrance, {
-  requeteDelivranceInstitutionnel
+    requeteDelivranceInstitutionnel
 } from "../../../../../../mock/data/requeteDelivrance";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
 
 test("getDefaultValues", () => {
   expect(getDefaultValuesCourrier(requeteDelivrance)).toStrictEqual({
@@ -222,6 +215,4 @@ test("getStatutEnTraitement", () => {
   ).toBe(StatutRequete.A_VALIDER);
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

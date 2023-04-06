@@ -1,27 +1,18 @@
 import { REQUETE } from "@composant/formulaire/ConstantesNomsForm";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import RequeteForm, {
-  RequeteFormDefaultValues,
-  RequeteFormValidationSchema
+    RequeteFormDefaultValues,
+    RequeteFormValidationSchema
 } from "@widget/formulaire/requete/RequeteForm";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import request from "superagent";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
-
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
 
 const HookRequeteForm: React.FC = () => {
   const [result, setResult] = useState("");
@@ -117,6 +108,4 @@ test("render component Requete Formulaire", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

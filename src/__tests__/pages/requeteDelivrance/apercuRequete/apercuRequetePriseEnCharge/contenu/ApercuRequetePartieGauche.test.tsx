@@ -1,23 +1,19 @@
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ApercuRequetePartieGauche } from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/ApercuRequetePartieGauche";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
 import {
-  configRequetes,
-  NORESULT
+    NORESULT
 } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 beforeEach(() => {
   TypePieceJustificative.init();
@@ -92,6 +88,4 @@ test("render ApercuRequetePartieGauche", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

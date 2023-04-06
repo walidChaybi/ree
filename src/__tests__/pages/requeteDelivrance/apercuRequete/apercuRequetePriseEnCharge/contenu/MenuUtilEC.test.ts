@@ -1,30 +1,26 @@
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import {
-  A_NE_PAS_DELIVRER,
-  DESCRIPTION_SAGA,
-  TypeAlerte
+    A_NE_PAS_DELIVRER,
+    DESCRIPTION_SAGA,
+    TypeAlerte
 } from "@model/etatcivil/enum/TypeAlerte";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
-  acteAvecAlerteDeTypeANePasDelivrer,
-  aGenreIdentique,
-  aGenreIndetermine,
-  aNombreTitulairesIncoherent,
-  choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero,
-  ErreurResult,
-  estChoixExtraitAvecOuSansFiliation,
-  estChoixExtraitPlurilingue,
-  estChoixIgnorerRequete,
-  IndexAction,
-  nombreActesSelectionnesDifferentDeUn
+    acteAvecAlerteDeTypeANePasDelivrer,
+    aGenreIdentique,
+    aGenreIndetermine,
+    aNombreTitulairesIncoherent,
+    choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero,
+    ErreurResult,
+    estChoixExtraitAvecOuSansFiliation,
+    estChoixExtraitPlurilingue,
+    estChoixIgnorerRequete,
+    IndexAction,
+    nombreActesSelectionnesDifferentDeUn
 } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuUtilEC";
 import { act } from "@testing-library/react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const testsCasMultiples = <T>({
   casOK,
@@ -247,6 +243,3 @@ test("acteAvecAlerteDeTypeANePasDelivrer OK", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});

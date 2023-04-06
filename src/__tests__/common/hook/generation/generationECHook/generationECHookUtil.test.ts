@@ -1,23 +1,16 @@
 import {
-  getTypeDocument,
-  getValidationExtraitPlurilingue
+    getTypeDocument,
+    getValidationExtraitPlurilingue
 } from "@hook/generation/generationECHook/generationECHookUtil";
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
-import request from "superagent";
 import {
-  ficheActeAvecDeuxTitulaireIndetermine,
-  ficheActeMariageAvecNomContientDesormais
+    ficheActeAvecDeuxTitulaireIndetermine,
+    ficheActeMariageAvecNomContientDesormais
 } from "../../../../../mock/data/ficheActe";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
 
 test("Attendu: getTypeDocument fonctionne correctement", () => {
   expect(
@@ -59,6 +52,4 @@ test("Attendu: getValidationExtraitPlurilingue fonctionne correctement", () => {
   ).toBe(Validation.N);
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

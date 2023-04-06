@@ -1,23 +1,16 @@
 import { ApercuReqCreationEtablissementPage } from "@pages/requeteCreation/apercuRequete/etablissement/ApercuReqCreationEtablissementPage";
 import {
-  PATH_APERCU_REQ_CREATION_ETABLISSEMENT,
-  URL_MES_REQUETES_CREATION
+    PATH_APERCU_REQ_CREATION_ETABLISSEMENT,
+    URL_MES_REQUETES_CREATION
 } from "@router/ReceUrls";
 import { act, render, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router";
-import request from "superagent";
-import { configRequetesCreation } from "../../../../../mock/superagent-config/superagent-mock-requetes-creation";
 
-const superagentMock = require("superagent-mock")(
-  request,
-  configRequetesCreation
-);
-afterAll(() => {
-  superagentMock.unset();
-});
+
+
 
 describe("Test de la page Aperçu requête etablissement", () => {
   test("DOIT rendre le composant ApercuReqCreationEtablissementPage correctement", async () => {

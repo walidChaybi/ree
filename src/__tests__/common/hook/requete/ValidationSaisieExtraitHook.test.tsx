@@ -1,31 +1,16 @@
 import {
-  ISauvegardeValidationSaisieExtraitParams,
-  useSauvegardeValidationSaisieExtrait
+    ISauvegardeValidationSaisieExtraitParams,
+    useSauvegardeValidationSaisieExtrait
 } from "@hook/requete/ValidationSaisieExtraitHook";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
-import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { configTeleverification } from "../../../../mock/superagent-config/superagent-mock-televerification";
 import {
-  acteExtraitSaisie,
-  extraitSaisiAEnvoyer,
-  requeteExtraitSaisie
+    acteExtraitSaisie,
+    extraitSaisiAEnvoyer,
+    requeteExtraitSaisie
 } from "../../.././../mock/data/DonneesSaisieExtrait";
 
-const superagentMock = require("superagent-mock")(request, [
-  configRequetes[0],
-  configEtatcivil[0],
-  configComposition[0],
-  configTeleverification[0]
-]);
 
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
 
 const callBack = jest.fn();
 
@@ -50,6 +35,4 @@ test("Attendu: useSauvegardeValidationSaisieExtrait fonctionne correctement", as
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

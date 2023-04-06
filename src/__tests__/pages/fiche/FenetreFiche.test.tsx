@@ -2,10 +2,6 @@ import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { FenetreFiche } from "@pages/fiche/FenetreFiche";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const globalAny: any = global;
 globalAny.open = () => {
@@ -46,6 +42,4 @@ test("renders Lien fiche fonctionne correctement", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

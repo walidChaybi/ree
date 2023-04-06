@@ -15,22 +15,10 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router";
-import request from "superagent";
-import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { configRequetesCreation } from "../../../../../mock/superagent-config/superagent-mock-requetes-creation";
-import { configRequetesInformation } from "../../../../../mock/superagent-config/superagent-mock-requetes-information";
 
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configRequetesCreation[0],
-  configRequetesInformation[0],
-  configRequetes[0]
-]);
 
-afterAll(() => {
-  superagentMock.unset();
-});
+
+
 
 const history = createMemoryHistory();
 

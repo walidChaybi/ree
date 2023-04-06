@@ -1,6 +1,6 @@
 import {
-  SauvegarderMentionsParam,
-  useSauvegarderMentions
+    SauvegarderMentionsParam,
+    useSauvegarderMentions
 } from "@hook/acte/mentions/SauvegarderMentionsHook";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
@@ -8,20 +8,10 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
 import { documentReponseExtraitAvecFiliation } from "../../../../mock/data/DocumentReponse";
 import { requeteDelivranceRDC } from "../../../../mock/data/requeteDelivrance";
-import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { configTeleverification } from "../../../../mock/superagent-config/superagent-mock-televerification";
 
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configRequetes[0],
-  configComposition[0],
-  configTeleverification[0]
-]);
+
 
 const mentionApi = {
   textes: {
@@ -72,6 +62,4 @@ test("Attendu: useSauvegarderMentions fonctionne correctement", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

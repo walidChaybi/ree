@@ -1,4 +1,3 @@
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { MenuDelivrerEC } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerEC";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "@router/ReceUrls";
 import {
@@ -12,28 +11,13 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import {
   idRequeteRDC,
   requeteRDC
 } from "../../../../../../mock/data/requeteDelivrance";
 import { DataRMCInscriptionAvecUnRCA } from "../../../../../../mock/data/RMCInscription";
-import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
-const superagentMockRequete = require("superagent-mock")(
-  request,
-  configRequetes
-);
-const superagentMockEtatCivil = require("superagent-mock")(
-  request,
-  configEtatcivil
-);
 
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
 
 test("renders du bloc Menu Delivrer pour une requête de délivrance de sous-type RDD", async () => {
   const history = createMemoryHistory();
@@ -86,8 +70,3 @@ test("renders du bloc Menu Delivrer pour une requête de délivrance de sous-typ
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-  superagentMockRequete.unset();
-  superagentMockEtatCivil.unset();
-});

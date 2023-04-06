@@ -2,33 +2,24 @@ import { creationCompositionExtraitPlurilingue } from "@hook/generation/generati
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
-import request from "superagent";
 import {
-  ficheActeAvecAnneeNaissanceTitulaireAbsente,
-  ficheActeAvecTitulaireIndetermine,
-  ficheActeAvecUnParentTitulaireInconnu,
-  ficheActeAvecUnParentTitulaireIndetermine,
-  ficheActeNaissanceAvecParentsDeMemeSexe,
-  ficheActeNaissanceAvecTitulaireInconnu
+    ficheActeAvecAnneeNaissanceTitulaireAbsente,
+    ficheActeAvecTitulaireIndetermine,
+    ficheActeAvecUnParentTitulaireInconnu,
+    ficheActeAvecUnParentTitulaireIndetermine,
+    ficheActeNaissanceAvecParentsDeMemeSexe,
+    ficheActeNaissanceAvecTitulaireInconnu
 } from "../../../../../../mock/data/ficheActe";
 import { mentionsPlurilinguesMariageAvec6 } from "../../../../../../mock/data/mentions";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, [configRequetes[0]]);
 
 const validation = "O";
 const mentionsRetirees: string[] = [];
 
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
 
-afterAll(() => {
-  superagentMock.unset();
-});
+
+
 
 describe("Composition extrait plurilingue de Naissance", () => {
   test("Doit mettre le document en erreur si le titulaire est de sexe inconnu", () => {

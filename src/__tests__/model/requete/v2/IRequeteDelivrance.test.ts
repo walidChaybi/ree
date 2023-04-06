@@ -2,20 +2,13 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import {
-  IRequeteDelivrance,
-  RequeteDelivrance
+    IRequeteDelivrance,
+    RequeteDelivrance
 } from "@model/requete/IRequeteDelivrance";
 import { waitFor } from "@testing-library/react";
-import request from "superagent";
 import { actions } from "../../../../mock/data/Actions";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
-afterAll(() => {
-  superagentMock.unset();
-});
 test("Attendu: RequeteDelivrance.getDocumentsDeDelivrance fonctionne correctement", async () => {
-  await DocumentDelivrance.init();
   let documentDelivrance: IDocumentReponse;
   let requete: IRequeteDelivrance;
 

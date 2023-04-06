@@ -1,22 +1,18 @@
 import { IRMCAutoParams, useRMCAutoHook } from "@hook/rmcAuto/RMCAutoHook";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import {
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-  URL_RECHERCHE_REQUETE,
-  URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_REQUETES_DELIVRANCE_SERVICE,
-  URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+    URL_MES_REQUETES_DELIVRANCE,
+    URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+    URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+    URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+    URL_RECHERCHE_REQUETE,
+    URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+    URL_REQUETES_DELIVRANCE_SERVICE,
+    URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "@router/ReceUrls";
 import { act, render, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import React from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const paramsRequete: IRMCAutoParams = {
   requete: {
@@ -138,6 +134,4 @@ test('Test useRMCAutoHook : redirection à partir de "Apercu Requêtes Traitemen
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

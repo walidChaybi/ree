@@ -7,16 +7,10 @@ import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFl
 import { storeRece } from "@util/storeRece";
 import React from "react";
 import { act } from "react-dom/test-utils";
-import request from "superagent";
 import { userDroitConsulterPerimetreTUNIS } from "../../../mock/data/connectedUserAvecDroit";
 import { idFicheActe1 } from "../../../mock/data/ficheActe";
-import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configRequetes[0]
-]);
+
 
 const fct = jest.fn();
 
@@ -146,9 +140,7 @@ test("Attendu: le bouton 'demander la délivrance' n'est pas affiché lorsque l'
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+
 
 afterEach(() => {
   storeRece.utilisateurCourant = undefined;

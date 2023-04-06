@@ -9,14 +9,9 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import { userDroitCreerActeTranscritPerimetreMEAE } from "../../../mock/data/connectedUserAvecDroit";
-import { configRequetesCreation } from "../../../mock/superagent-config/superagent-mock-requetes-creation";
 
-const superagentMock = require("superagent-mock")(
-  request,
-  configRequetesCreation
-);
+
 const history = createMemoryHistory();
 history.push(URL_MES_REQUETES_CREATION);
 
@@ -70,6 +65,4 @@ test("DOIT passer dans la fonction onClickOnLine QUAND je click sur une requête
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

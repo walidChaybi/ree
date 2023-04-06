@@ -1,14 +1,6 @@
 import { specificationTitre } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationTitre";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { waitFor } from "@testing-library/react";
-import request from "superagent";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
 
 test("Attendu: specificationTitre.getTitre la demande est CERTIFICAT_SITUATION_PACS", async () => {
   const titre = specificationTitre.getTitre(
@@ -49,6 +41,4 @@ DÉTENU PAR LE SERVICE CENTRAL D'ÉTAT CIVIL`
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

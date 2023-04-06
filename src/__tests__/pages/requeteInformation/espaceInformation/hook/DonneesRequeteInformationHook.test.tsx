@@ -1,6 +1,6 @@
 import {
-  IQueryParametersPourRequetes,
-  TypeAppelRequete
+    IQueryParametersPourRequetes,
+    TypeAppelRequete
 } from "@api/appels/requeteApi";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { StatutsRequetesInformation } from "@pages/requeteInformation/espaceInformation/EspaceReqInfoParams";
@@ -9,13 +9,8 @@ import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauP
 import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
-import request from "superagent";
-import { configRequetesInformation } from "../../../../../mock/superagent-config/superagent-mock-requetes-information";
 
-const superagentMock = require("superagent-mock")(
-  request,
-  configRequetesInformation
-);
+
 
 const queryParam: IQueryParametersPourRequetes = {
   statuts: StatutsRequetesInformation,
@@ -68,6 +63,4 @@ test("monter un composant de test pour vérifier que tout va bien", async () => 
   }
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

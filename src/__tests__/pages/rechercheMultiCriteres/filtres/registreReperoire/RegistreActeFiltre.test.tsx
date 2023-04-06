@@ -1,21 +1,17 @@
 import RegistreActeFiltre, {
-  RegistreActeDefaultValues,
-  RegistreActeFiltreProps
+    RegistreActeDefaultValues,
+    RegistreActeFiltreProps
 } from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreActeFiltre";
 import { REGISTRE } from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const HookRegistreActeFiltre: React.FC = () => {
   const [result, setResult] = useState("");
@@ -129,6 +125,4 @@ function expectToBeDefined(elements: HTMLElement[]) {
   elements.forEach(el => expect(el).toBeDefined());
 }
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

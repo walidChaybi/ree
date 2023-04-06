@@ -2,10 +2,6 @@ import { useInformationsActeApiHook } from "@hook/acte/ActeApiHook";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 import { act } from "react-dom/test-utils";
-import request from "superagent";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const hookParams = {
   idActe: "923a10fb-0b15-452d-83c0-d24c76d1d19d"
@@ -36,6 +32,4 @@ test("l'appel au WS fonctionne correctement pour une fiche acte", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

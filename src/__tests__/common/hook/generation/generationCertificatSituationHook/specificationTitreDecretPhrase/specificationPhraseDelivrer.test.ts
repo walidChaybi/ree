@@ -1,28 +1,19 @@
 import { specificationPhraseDelivrer } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
 import { INbInscriptionsInfos } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import request from "superagent";
 import {
-  FicheRcDecisionNotaire,
-  FicheRcModification
+    FicheRcDecisionNotaire,
+    FicheRcModification
 } from "../../../../../../mock/data/ficheRC";
 import {
-  FicheRcaDecisionAvecInstructionProcureur,
-  FicheRcaDecisionJuridictionEtrangere
+    FicheRcaDecisionAvecInstructionProcureur,
+    FicheRcaDecisionJuridictionEtrangere
 } from "../../../../../../mock/data/ficheRCA";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
 import {
-  annulationJuridictionMap,
-  pacsModificationNotaireMap
+    annulationJuridictionMap,
+    pacsModificationNotaireMap
 } from "../../../../../../mock/data/PACS";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-const superagentMock = require("superagent-mock")(request, configRequetes);
-
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
-
 const nbInscriptionsInfos = {} as INbInscriptionsInfos;
 
 test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_PACS et il n'y a pas de PACS", async () => {
@@ -141,6 +132,4 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
   );
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

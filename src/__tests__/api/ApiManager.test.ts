@@ -1,9 +1,5 @@
 import { ApiManager, HttpMethod } from "@api/ApiManager";
-import request from "superagent";
 import { isNullOrUndefined } from "util";
-import { configFakeUrl } from "../../mock/superagent-config/superagent-mock-fake-url";
-
-const superagentMock = require("superagent-mock")(request, configFakeUrl);
 
 test("instanciation d'une api définie dans le fichier api.json", () => {
   const api = ApiManager.getInstance("rece-requete-api", "v2");
@@ -108,8 +104,4 @@ test("fetch d'une requête http POST", () => {
     .catch(error => {
       expect(error).toBe("ERRRRRRRRROR");
     });
-});
-
-afterAll(() => {
-  superagentMock.unset();
 });

@@ -1,55 +1,45 @@
 import {
-  createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
-  createReponseSansDelivranceCSPourCompositionApiFrancais,
-  createReponseSansDelivranceCSPourCompositionApiMariage,
-  createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit
+    createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
+    createReponseSansDelivranceCSPourCompositionApiFrancais,
+    createReponseSansDelivranceCSPourCompositionApiMariage,
+    createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit
 } from "@hook/reponseSansDelivrance/ReponseSansDelivranceCSFonctions";
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { ChoixAction } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ChoixAction";
 import {
-  PATH_APERCU_REQ_TRAITEMENT,
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+    PATH_APERCU_REQ_TRAITEMENT,
+    URL_MES_REQUETES_DELIVRANCE,
+    URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "@router/ReceUrls";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import {
-  reponseSansDelivranceCSDemandeIncomplete,
-  reponseSansDelivranceCSFrancais,
-  reponseSansDelivranceCSMariage,
-  reponseSansDelivranceCSPACSNonInscrit
+    reponseSansDelivranceCSDemandeIncomplete,
+    reponseSansDelivranceCSFrancais,
+    reponseSansDelivranceCSMariage,
+    reponseSansDelivranceCSPACSNonInscrit
 } from "../../../../../../mock/data/Composition";
 import requeteDelivrance, {
-  idRequeteRDCSC,
-  idRequeteRDCSCCertificatSituationRCA,
-  requeteDelivranceInstitutionnel,
-  requeteRDCSC,
-  requeteRDCSCCertificatSituationRCA
+    idRequeteRDCSC,
+    idRequeteRDCSCCertificatSituationRCA,
+    requeteDelivranceInstitutionnel,
+    requeteRDCSC,
+    requeteRDCSCCertificatSituationRCA
 } from "../../../../../../mock/data/requeteDelivrance";
-import { configComposition } from "../../../../../../mock/superagent-config/superagent-mock-composition";
-import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configParamsBaseRequete } from "../../../../../../mock/superagent-config/superagent-mock-params";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 import { acteMariage } from "../../../../fiche/data/ficheActe";
 
-const superagentMock = require("superagent-mock")(request, [
-  configRequetes[0],
-  configComposition[0],
-  configEtatcivil[0],
-  configParamsBaseRequete[0]
-]);
+
 
 const RDCSC = () => {
   const history = createMemoryHistory();
@@ -293,6 +283,4 @@ describe("Menu réponse sans délivrance", () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

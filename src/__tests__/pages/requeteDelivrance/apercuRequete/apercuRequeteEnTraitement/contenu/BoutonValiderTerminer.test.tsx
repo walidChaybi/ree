@@ -10,16 +10,10 @@ import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../../../mock/data/connectedUserAvecDroit";
 import { idRequeteRDCSC } from "../../../../../../mock/data/requeteDelivrance";
-import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configRequetes[0]
-]);
+
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
@@ -80,6 +74,4 @@ test("est à A_VALIDER et provient de COURRIER", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

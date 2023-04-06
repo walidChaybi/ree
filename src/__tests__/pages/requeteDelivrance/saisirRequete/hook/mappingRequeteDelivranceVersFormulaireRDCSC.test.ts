@@ -7,7 +7,7 @@ import requeteDelivrance, {
 test("test du mapping Particulier", () => {
   const res = mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
   expect(res).toStrictEqual({
-    document: "",
+    document: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
     titulaires,
     requerant: {
       typeRequerant: "PARTICULIER",
@@ -49,7 +49,7 @@ test("test du mapping Particulier", () => {
           mimeType: "",
           extension: undefined
         },
-        type: { value: "", str: "Carte professionnelle" }
+        type: { value: "00c885c9-2918-46fe-b743-798b1b90e5dd", str: "Carte professionnelle" }
       }
     ]
   });
@@ -60,7 +60,7 @@ test("test du mapping Institutionnel", () => {
     requeteDelivranceInstitutionnel
   );
   expect(res).toStrictEqual({
-    document: "",
+    document: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
     titulaires,
     requerant: {
       typeRequerant: "INSTITUTIONNEL",

@@ -3,22 +3,12 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
-  CODE_EXTRAIT_AVEC_FILIATION,
-  CODE_EXTRAIT_SANS_FILIATION
+    CODE_EXTRAIT_AVEC_FILIATION,
+    CODE_EXTRAIT_SANS_FILIATION
 } from "@model/requete/enum/DocumentDelivranceConstante";
-import request from "superagent";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, [
-  configRequetes[0],
-  configEtatcivil[0]
-]);
 
-beforeAll(() => {
-  NatureMention.init();
-  DocumentDelivrance.init();
-});
+
 
 test("test getTexte", () => {
   const mention = {
@@ -147,6 +137,4 @@ test("Attendu: ilExisteUneMentionInterdite fonctionne correctement", () => {
   ).toBeTruthy();
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

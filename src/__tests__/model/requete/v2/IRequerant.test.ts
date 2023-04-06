@@ -3,11 +3,7 @@ import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
 import { Requerant } from "@model/requete/IRequerant";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
-import request from "superagent";
 import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-const superagentMock = require("superagent-mock")(request, configRequetes);
-
 test("Attendu: Requerant.setRequerant mandataire", async () => {
   const qualiteMandataire = {
     qualite: Qualite.MANDATAIRE_HABILITE,
@@ -22,7 +18,7 @@ test("Attendu: Requerant.setRequerant mandataire", async () => {
     mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
 
   const attendu = {
-    document: "",
+    document: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
     titulaires: {
       titulaire1: {
         noms: {
@@ -146,7 +142,7 @@ test("Attendu: Requerant.setRequerant mandataire", async () => {
           extension: undefined
         },
         type: {
-          value: "",
+          value: "00c885c9-2918-46fe-b743-798b1b90e5dd",
           str: "Carte professionnelle"
         }
       }
@@ -170,7 +166,7 @@ test("Attendu: Requerant.setRequerant institutionnel", async () => {
     mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
 
   const attendu = {
-    document: "",
+    document: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
     titulaires: {
       titulaire1: {
         noms: {
@@ -294,7 +290,7 @@ test("Attendu: Requerant.setRequerant institutionnel", async () => {
           extension: undefined
         },
         type: {
-          value: "",
+          value: "00c885c9-2918-46fe-b743-798b1b90e5dd",
           str: "Carte professionnelle"
         }
       }
@@ -316,7 +312,7 @@ test("Attendu: Requerant.setRequerant interessé", async () => {
     mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
 
   const attendu = {
-    document: "",
+    document: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
     titulaires: {
       titulaire1: {
         noms: {
@@ -440,7 +436,7 @@ test("Attendu: Requerant.setRequerant interessé", async () => {
           extension: undefined
         },
         type: {
-          value: "",
+          value: "00c885c9-2918-46fe-b743-798b1b90e5dd",
           str: "Carte professionnelle"
         }
       }
@@ -567,6 +563,4 @@ test("Attendu: Requerant.organiserRequerant institutionnel sans nomInstitution",
   expect(requerant).toEqual(identiteAttendue);
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

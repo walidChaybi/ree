@@ -1,29 +1,16 @@
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import {
-  createEvent,
-  fireEvent,
-  render,
-  waitFor
+    createEvent,
+    fireEvent,
+    render,
+    waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { PopinSignature } from "@widget/signature/PopinSignature";
 import React from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { configTeleverification } from "../../../../mock/superagent-config/superagent-mock-televerification";
 import { acte } from "../../../pages/fiche/data/ficheActe";
 
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configRequetes[0],
-  configTeleverification[0]
-]);
 
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
 
 test("renders PopinSignature, signature event is received and success displayed", async () => {
   const { getByText } = render(
@@ -191,6 +178,4 @@ test("renders PopinSignature, code erroné", async () => {
   storeRece.logErrorOff = false;
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

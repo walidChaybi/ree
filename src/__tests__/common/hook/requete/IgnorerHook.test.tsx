@@ -1,10 +1,6 @@
 import { IgnorerParams, useIgnorerApi } from "@hook/requete/IgnorerHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-const superagentMock = require("superagent-mock")(request, configRequetes);
-
 const params: IgnorerParams = {
   texteObservation: "libelleAction",
   idRequete: "12345"
@@ -25,6 +21,4 @@ test("Attendu: useIgnorerApi fonctionne correctement", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

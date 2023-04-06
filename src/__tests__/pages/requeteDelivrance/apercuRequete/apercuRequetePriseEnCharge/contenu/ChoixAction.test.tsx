@@ -5,14 +5,10 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import {
-  idRequeteRDCSC,
-  requeteRDCSC
+    idRequeteRDCSC,
+    requeteRDCSC
 } from "../../../../../../mock/data/requeteDelivrance";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 test("renders du bloc choix des actions", async () => {
   const history = createMemoryHistory();
@@ -39,6 +35,4 @@ test("renders du bloc choix des actions", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

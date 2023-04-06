@@ -4,19 +4,15 @@ import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { NatureRca } from "@model/etatcivil/enum/NatureRca";
 import { TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
 import { storeRece } from "@util/storeRece";
-import request from "superagent";
 import {
-  FicheRcDecisionNotaire,
-  FicheRcDecisionNotaireTypeRequete,
-  FicheRcDecisionNotaireTypeRequete2,
-  FicheRcRadiation,
-  FicheRcRenouvellementTypeJugement,
-  FicheRcRenouvellementTypeOrdonnance
+    FicheRcDecisionNotaire,
+    FicheRcDecisionNotaireTypeRequete,
+    FicheRcDecisionNotaireTypeRequete2,
+    FicheRcRadiation,
+    FicheRcRenouvellementTypeJugement,
+    FicheRcRenouvellementTypeOrdonnance
 } from "../../../../../../mock/data/ficheRC";
 import { decrets } from "../../../../../../mock/data/NomenclatureEtatCivilDecrets";
-import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 beforeAll(() => {
   storeRece.decrets = decrets;
@@ -202,6 +198,4 @@ mariés à Nanning, zhuang du Guangxi (Chine, Pays du soleil levant) le 12 juin 
   );
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

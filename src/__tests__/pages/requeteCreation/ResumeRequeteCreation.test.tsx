@@ -4,11 +4,7 @@ import mappingIRequeteCreationVersResumeRequeteCreationProps from "@pages/requet
 import { INFOS, resume as Labels } from "@pages/requeteCreation/commun/Labels";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
 import { requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitulaireEtUnEnfantMajeur } from "../../../mock/data/requeteCreation";
-import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-const superagentMock = require("superagent-mock")(request, configRequetes);
-
 const renduResumeRequeteCreation = async () => {
   await act(async () => {
     render(
@@ -84,6 +80,4 @@ test("Attendu: les onglets informations spécifiques / requérant / informations
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

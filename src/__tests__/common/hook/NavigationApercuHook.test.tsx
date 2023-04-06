@@ -7,11 +7,7 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 import { act, render, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import React from "react";
-import request from "superagent";
 import { userDroitCOMEDEC } from "../../../mock/data/connectedUserAvecDroit";
-import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const requete1: IRequeteTableauDelivrance = {
   idRequete: "0",
@@ -186,6 +182,4 @@ test("test A valider", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

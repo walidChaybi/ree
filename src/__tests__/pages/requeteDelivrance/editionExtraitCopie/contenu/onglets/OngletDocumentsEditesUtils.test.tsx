@@ -1,36 +1,25 @@
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
-import { NatureMention } from "@model/etatcivil/enum/NatureMention";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import {
-  genererListeAjoutComplementaire,
-  getTypeDocument,
-  ItemListe
+    genererListeAjoutComplementaire,
+    getTypeDocument,
+    ItemListe
 } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/OngletsDocumentsEditesUtils";
 import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import {
-  PATH_EDITION,
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_EDITION_ID
+    PATH_EDITION,
+    URL_MES_REQUETES_DELIVRANCE,
+    URL_MES_REQUETES_DELIVRANCE_EDITION_ID
 } from "@router/ReceUrls";
 import { act, render, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
-import request from "superagent";
 import { userDroitCOMEDEC } from "../../../../../../mock/data/connectedUserAvecDroit";
-import { configComposition } from "../../../../../../mock/superagent-config/superagent-mock-composition";
-import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 import { acteDeces } from "../../../../fiche/data/ficheActe";
 
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configRequetes[0],
-  configComposition[0]
-]);
+
 
 const documentResponse = [
   {
@@ -76,9 +65,6 @@ const globalAny: any = global;
 globalAny.URL.createObjectURL = jest.fn();
 
 beforeEach(async () => {
-  DocumentDelivrance.init();
-  NatureMention.init();
-  TypeMention.init();
   storeRece.utilisateurCourant = userDroitCOMEDEC;
 
   history = createMemoryHistory();

@@ -15,7 +15,7 @@ export const configOutiltech = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function (match, params, headers, context) {
+    fixtures: function (match: any, params: any, headers: any, context: any) {
       if (match[1] === "/log") {
         return { headers: mockConnectedUser, data: null };
       }
@@ -31,7 +31,7 @@ export const configOutiltech = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function (match, data) {
+    post: function (match: any, data: any) {
       return {
         status: 200
       };

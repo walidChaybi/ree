@@ -1,11 +1,7 @@
 import { MandataireRc } from "@model/etatcivil/enum/MandataireRc";
 import { getPanelsRc } from "@pages/fiche/hook/constructionComposants/rcrca/FicheRcUtils";
 import { waitFor } from "@testing-library/react";
-import request from "superagent";
 import mockRC from "../../../../../mock/data/RC.json";
-import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 test("ficheUtils rc works", async () => {
   const panels = getPanelsRc(mockRC.data);
@@ -23,6 +19,4 @@ test("peupleMandataireRc", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

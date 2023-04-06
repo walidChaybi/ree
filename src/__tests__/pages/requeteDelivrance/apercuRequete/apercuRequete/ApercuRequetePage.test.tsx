@@ -6,11 +6,8 @@ import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
-import request from "superagent";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
 const globalAny: any = global;
 globalAny.URL.createObjectURL = jest.fn();
 const history = createMemoryHistory();
@@ -94,6 +91,4 @@ test("renders ApercuRequetePage", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

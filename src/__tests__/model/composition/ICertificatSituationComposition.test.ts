@@ -8,14 +8,9 @@ import { IRequerant } from "@model/requete/IRequerant";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { waitFor } from "@testing-library/react";
-import request from "superagent";
 import { certificatSituation } from "../../../mock/data/Composition";
-import { configParamsBaseRequete } from "../../../mock/superagent-config/superagent-mock-params";
 
-const superagentMock = require("superagent-mock")(
-  request,
-  configParamsBaseRequete
-);
+
 
 test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionne correctement", async () => {
   await ParametreBaseRequete.init();
@@ -76,6 +71,4 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

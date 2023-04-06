@@ -2,28 +2,22 @@ import { OPTION } from "@composant/formulaire/ConstantesNomsForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
 import OptionsCourrierForm, {
-  OptionCourrierFormDefaultValues,
-  OptionsCourrierSubFormProps,
-  ValidationSchemaOptionCourrier
+    OptionCourrierFormDefaultValues,
+    OptionsCourrierSubFormProps,
+    ValidationSchemaOptionCourrier
 } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/OptionsCourrierForm";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import React, { useState } from "react";
-import request from "superagent";
 import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
 
 const HookOptionsCourrierForm: React.FC = () => {
   const [optionsChoisies, setOptionsChoisies] = useState<OptionsCourrier>([]);
@@ -230,6 +224,4 @@ test("renders OptionsCourrierForm sélectionner une option, clique sur le bouton
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

@@ -24,7 +24,6 @@ import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
-import request from "superagent";
 import {
   userDroitCreerActeEtabliPerimetreMEAE,
   userDroitCreerActeTranscritPerimetreMEAE,
@@ -33,15 +32,7 @@ import {
 } from "../../../../../mock/data/connectedUserAvecDroit";
 import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
 import { requeteInformation } from "../../../../../mock/data/requeteInformation";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { configRequetesCreation } from "../../../../../mock/superagent-config/superagent-mock-requetes-creation";
-import { configRequetesInformation } from "../../../../../mock/superagent-config/superagent-mock-requetes-information";
 
-const superagentMock = require("superagent-mock")(request, [
-  configRequetes[0],
-  configRequetesCreation[0],
-  configRequetesInformation[0]
-]);
 
 describe("RMCRequetesAssocieesResultats", () => {
   test("DOIT rendre le titre du tableau des requêtes associées aux titulaires d'une requêtes de délivrance", async () => {
@@ -405,6 +396,4 @@ describe("RMCRequetesAssocieesResultats", () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

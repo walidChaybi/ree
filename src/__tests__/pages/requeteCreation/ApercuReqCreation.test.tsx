@@ -2,35 +2,29 @@ import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
-import request from "superagent";
 import {
-  resultatHeaderUtilistateurLeBiannic,
-  resultatRequeteUtilistateurLeBiannic
+    resultatHeaderUtilistateurLeBiannic,
+    resultatRequeteUtilistateurLeBiannic
 } from "../../../mock/data/connectedUserAvecDroit";
-import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
 import { storeRece } from "../../../views/common/util/storeRece";
 import { mappingOfficier } from "../../../views/core/login/LoginHook";
 import { ApercuReqCreationEtablissementPage } from "../../../views/pages/requeteCreation/apercuRequete/etablissement/ApercuReqCreationEtablissementPage";
 import {
-  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
-  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
+    URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+    URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
 } from "../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configRequetes[0]
-]);
+
 
 beforeAll(() => {
   storeRece.utilisateurCourant = mappingOfficier(
@@ -404,6 +398,4 @@ test("Ouvrir deux pièces jointes côte à côte.", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

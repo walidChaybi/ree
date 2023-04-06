@@ -7,7 +7,12 @@ import {
   ReponseMesRequetesInformation,
   ReponseRequetesInfoService
 } from "../data/EspaceInformation";
+import { NOMENCLATURE_OPTION_COURRIER } from "../data/NomenclatureOptionCourrier";
 import { NOMENCLATURE_REPONSE } from "../data/NomenclatureReponse";
+import {
+  ReponseAppelNomenclatureDocummentDelivrance,
+  ReponseAppelNomenclatureTypePiecesJustificative
+} from "../data/nomenclatures";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 
 export const NORESULT = "NORESULT";
@@ -28,7 +33,7 @@ export const configRequetesInformation = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function (match, params, headers, context) {
+    fixtures: function (match: any, params: any, headers: any, context: any) {
       // Mes requetes d'information (espace information)
       if (
         match[1] ===
@@ -94,6 +99,19 @@ export const configRequetesInformation = [
         return { data: NOMENCLATURE_REPONSE };
       }
 
+      // Nomenclatures requetes
+      if (match[1] === "/nomenclature/DOCUMENT_DELIVRANCE") {
+        return { data: ReponseAppelNomenclatureDocummentDelivrance.data };
+      }
+
+      if (match[1] === "/nomenclature/TYPE_PIECE_JUSTIFICATIVE") {
+        return { data: ReponseAppelNomenclatureTypePiecesJustificative.data };
+      }
+
+      if (match[1] === "/nomenclature/optioncourrier") {
+        return { data: NOMENCLATURE_OPTION_COURRIER };
+      }
+
       // Sauvegarde réponse
       if (
         match[1] ===
@@ -143,10 +161,6 @@ export const configRequetesInformation = [
           data: ReponseAppelRMCRequete.data
         };
       }
-
-      const error = { msg: "url params non mockée", url: match[1] };
-      const message = `Erreur mock api requ info: ${JSON.stringify(error)}`;
-      console.error(message);
     },
 
     /**
@@ -155,7 +169,7 @@ export const configRequetesInformation = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function (match, data) {
+    get: function (match: any, data: any) {
       return {
         body: data,
         header: data ? data.headers : null
@@ -168,7 +182,7 @@ export const configRequetesInformation = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function (match, data) {
+    post: function (match: any, data: any) {
       return {
         body: data,
         header: data.headers
@@ -181,14 +195,14 @@ export const configRequetesInformation = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    patch: function (match, data) {
+    patch: function (match: any, data: any) {
       return {
         body: data,
         header: data.headers
       };
     },
 
-    delete: function (match, data) {
+    delete: function (match: any, data: any) {
       return {
         body: data,
         header: data.headers

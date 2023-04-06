@@ -1,20 +1,15 @@
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import {
-  PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE,
-  URL_MES_REQUETES_CREATION,
-  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
+    PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE,
+    URL_MES_REQUETES_CREATION,
+    URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
 } from "@router/ReceUrls";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router";
-import request from "superagent";
-import { configRequetesCreation } from "../../../../../mock/superagent-config/superagent-mock-requetes-creation";
-const superagentMock = require("superagent-mock")(
-  request,
-  configRequetesCreation
-);
+
 
 const history = createMemoryHistory();
 
@@ -135,6 +130,3 @@ describe("Test du rendu du composant RMCRequeteAssociees", () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});

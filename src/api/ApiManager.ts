@@ -3,10 +3,7 @@ import { getCsrfHeader } from "@util/CsrfUtil";
 import { Generateur } from "@util/generateur/Generateur";
 import { GestionnaireCache, ReceCache } from "@util/GestionnaireCache";
 import messageManager from "@util/messageManager";
-import request, * as superagent from "superagent";
-import { configAgent } from "../mock/superagent-config/superagent-mock-agent";
-import { configEtatcivil } from "../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
+import * as superagent from "superagent";
 
 export const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
 const EXPIRATION_CACHE_SECONDS = 43200; // Expiration du cache au bout de 12h (43200 secondes)
@@ -21,13 +18,7 @@ export const HTTP_REQUEST_TIME_OUT = 408;
 
 const ERROR_OFFLINE_TIMEOUT = 5000;
 
-if (process.env.REACT_APP_MOCK) {
-  require("superagent-mock")(request, [
-    configRequetes[0],
-    configAgent[0],
-    configEtatcivil[0]
-  ]);
-}
+
 
 type ApisAutorisees =
   | "rece-requete-api"

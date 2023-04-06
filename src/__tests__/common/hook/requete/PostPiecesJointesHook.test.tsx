@@ -2,11 +2,7 @@ import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJ
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
 import { piecesJointesMock } from "../../../../mock/data/piecesJointes";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-const superagentMock = require("superagent-mock")(request, configRequetes);
-
 const HookConsumerUsePostPiecesJointesApi: React.FC = () => {
   const resultatPostPiecesJointesApi = usePostPiecesJointesApi(
     TypePieceJointe.PIECE_COMPLEMENT_INFORMATION,
@@ -28,6 +24,4 @@ test("Attendu: usePostPiecesJointesApi fonctionne correctement", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

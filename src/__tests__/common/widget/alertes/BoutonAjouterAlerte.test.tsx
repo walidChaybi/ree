@@ -1,23 +1,19 @@
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { BoutonAjouterAlerte } from "@widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
 import {
-  COMPLEMENT_DESCRIPTION,
-  ID_TYPE_ALERTE
+    COMPLEMENT_DESCRIPTION,
+    ID_TYPE_ALERTE
 } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import React from "react";
-import request from "superagent";
 import { userDroitCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 beforeEach(async () => {
   storeRece.utilisateurCourant = userDroitCOMEDEC;
@@ -139,6 +135,4 @@ test("render BoutonAjouterAlerte avec ajout alerte possible : test soumission fo
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

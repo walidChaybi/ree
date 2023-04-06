@@ -3,9 +3,33 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import { IEntite } from "@model/agent/IEntiteRattachement";
+import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import "@testing-library/jest-dom/extend-expect";
 import { storeRece } from "@util/storeRece";
+import request from "superagent";
 import { entitesRattachementALL } from "./mock/data/entitesRattachementALL";
+import { configAgent } from "./mock/superagent-config/superagent-mock-agent";
+import { configComposition } from "./mock/superagent-config/superagent-mock-composition";
+import { configEtatcivil } from "./mock/superagent-config/superagent-mock-etatcivil";
+import { configMail } from "./mock/superagent-config/superagent-mock-mail";
+import { configOutiltech } from "./mock/superagent-config/superagent-mock-outiltech";
+import { configParamsBaseRequete } from "./mock/superagent-config/superagent-mock-params";
+import { configRequetes } from "./mock/superagent-config/superagent-mock-requetes";
+import { configTeleverification } from "./mock/superagent-config/superagent-mock-televerification";
+const superagentMock = require("superagent-mock")(request, [
+  configRequetes[0],
+  configEtatcivil[0],
+  configParamsBaseRequete[0],
+  configMail[0],
+  configAgent[0],
+  configComposition[0],
+  configOutiltech[0],
+  configTeleverification[0]
+]);
 
 export const localStorageFeatureFlagMock = (function () {
   let store: any = {
@@ -31,6 +55,18 @@ export const localStorageFeatureFlagMock = (function () {
     }
   };
 })();
+
+beforeAll(async () => {
+  await DocumentDelivrance.init();
+  await NatureMention.init();
+  await TypeMention.init();
+  await TypePieceJustificative.init();
+  await ParametreBaseRequete.init();
+});
+
+afterAll(() => {
+  superagentMock.unset();
+});
 
 beforeEach(() => {
   Object.defineProperty(window, "localStorage", {

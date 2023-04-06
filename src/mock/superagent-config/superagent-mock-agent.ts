@@ -3,8 +3,8 @@ import { entiteRatachementEtablissement } from "../data/entiteRatachementEtablis
 import DONNEES_ENTITES from "../data/entitesRattachement.json";
 import DONNEES_ENTITES_PAGE2 from "../data/entitesRattachementPage2.json";
 import { MockHabilitation } from "../data/habilitationMock";
-import INFOS_UTILISATEURS from "../data/infosUtilisateurs";
-import DONNEES_UTILISATEURS from "../data/utilisateurs";
+import INFOS_UTILISATEURS from "../data/infosUtilisateurs.json";
+import DONNEES_UTILISATEURS from "../data/utilisateurs.json";
 import DONNEES_UTILISATEURS_PAGE2 from "../data/utilisateursPage2.json";
 
 export const configAgent = [
@@ -22,7 +22,7 @@ export const configAgent = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function (match, params, headers, context) {
+    fixtures: function (match: any, params: any, headers: any, context: any) {
       if (match[1] === "/utilisateurs/login") {
         return { headers: mockConnectedUser, data: MockHabilitation };
       }
@@ -54,18 +54,18 @@ export const configAgent = [
       }
 
       if (
+        match[1] ===
+        "/utilisateurs/infos?ids=204b8563-c7f8-4748-9daa-f26558985895&ids=204b8563-c7f8-4748-9daa-f26558985894"
+      ) {
+        return { data: INFOS_UTILISATEURS.data };
+      }
+
+      if (
         match[1].startsWith(
           "/entiterattachement?idEntite=6737566d-0f25-45dc-8443-97b444e6753a"
         )
       ) {
         return { ...entiteRatachementEtablissement };
-      }
-
-      if (
-        match[1] ===
-        "/utilisateurs/infos?ids=204b8563-c7f8-4748-9daa-f26558985895&ids=204b8563-c7f8-4748-9daa-f26558985894"
-      ) {
-        return { data: INFOS_UTILISATEURS.data };
       }
 
       const error = { msg: "url api agent non mockée", url: match[1] };
@@ -79,7 +79,7 @@ export const configAgent = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function (match, data) {
+    get: function (match: any, data: any) {
       return {
         body: data,
         header: data ? data.headers : null
@@ -92,7 +92,7 @@ export const configAgent = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function (match, data) {
+    post: function (match: any, data: any) {
       return {
         status: 201
       };

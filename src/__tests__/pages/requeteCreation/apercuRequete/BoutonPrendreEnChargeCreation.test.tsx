@@ -5,18 +5,10 @@ import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import { userDroitCreerActeEtabliPerimetreMEAE } from "../../../../mock/data/connectedUserAvecDroit";
 import { requeteCreationATraiter } from "../../../../mock/data/requeteCreation";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configParamsBaseRequete } from "../../../../mock/superagent-config/superagent-mock-params";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, [
-  configRequetes[0],
-  configEtatcivil[0],
-  configParamsBaseRequete[0]
-]);
+
 
 test("Est Requete Creation au statut à traiter et appartient à mon service / services mères / service filles", async () => {
   storeRece.utilisateurCourant = userDroitCreerActeEtabliPerimetreMEAE;
@@ -44,6 +36,4 @@ test("Est Requete Creation au statut à traiter et appartient à mon service / s
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

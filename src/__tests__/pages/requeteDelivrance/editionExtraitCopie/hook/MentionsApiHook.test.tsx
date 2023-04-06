@@ -1,10 +1,6 @@
 import { useMentionsApiHook } from "@hook/acte/mentions/MentionsApiHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
-
 const HookConsumer: React.FC = () => {
   const mentions = useMentionsApiHook("19c0d767-64e5-4376-aa1f-6d781a2a235a");
 
@@ -31,6 +27,4 @@ test("Attendu: useMentionsApiHook fonctionne correctement", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

@@ -2,10 +2,6 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useCompteurRequeteHook } from "@pages/requeteDelivrance/espaceDelivrance/hook/CompteurRequeteHook";
 import { act, render, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const HookConsummer: React.FC = () => {
   const { nombreRequetesState } = useCompteurRequeteHook(false, [
@@ -25,6 +21,4 @@ test("l'appel au WS du compteur de requêtes à signer fonctionne correctement",
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

@@ -2,10 +2,6 @@ import { TransfertParams, useTransfertApi } from "@hook/requete/TransfertHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-const superagentMock = require("superagent-mock")(request, configRequetes);
-
 const params: TransfertParams = {
   libelleAction: "libelleAction",
   statutRequete: StatutRequete.TRANSFEREE,
@@ -30,6 +26,4 @@ test("Attendu: usePostCreationActionEtMiseAjourStatutApi fonctionne correctement
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

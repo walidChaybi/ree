@@ -1,8 +1,4 @@
 import { postLog } from "@api/appels/outiltechApi";
-import request from "superagent";
-import { configOutiltech } from "../../../mock/superagent-config/superagent-mock-outiltech";
-
-const superagentMock = require("superagent-mock")(request, configOutiltech);
 
 test("outiltech api postLog", () => {
   postLog([
@@ -17,6 +13,4 @@ test("outiltech api postLog", () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

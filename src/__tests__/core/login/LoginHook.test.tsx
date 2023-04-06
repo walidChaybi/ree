@@ -2,10 +2,6 @@ import { setProfilsOfficier, useLoginApi } from "@core/login/LoginHook";
 import { act } from "@testing-library/react";
 import React from "react";
 import ReactDOM from "react-dom";
-import request from "superagent";
-import { configAgent } from "../../../mock/superagent-config/superagent-mock-agent";
-
-const superagentMock = require("superagent-mock")(request, configAgent);
 
 let container: Element | null;
 
@@ -45,6 +41,4 @@ test("setProfilsOfficier", () => {
   expect(setProfilsOfficier("BEUH\\NOIX")).toStrictEqual(["BEUH\\NOIX"]);
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

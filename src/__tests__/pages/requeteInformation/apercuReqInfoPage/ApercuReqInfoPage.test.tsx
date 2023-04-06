@@ -16,23 +16,12 @@ import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
-import request from "superagent";
 import { userDroitConsulterPerimetreMEAE } from "../../../../mock/data/connectedUserAvecDroit";
 import { ReponseAppelDetailRequeteInformationSansCorbeilleAgent } from "../../../../mock/data/DetailRequeteInformation";
 import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
 import { NOMENCLATURE_REPONSE } from "../../../../mock/data/NomenclatureReponse";
-import {
-  configEtatcivil,
-  NORESULT
-} from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configMail } from "../../../../mock/superagent-config/superagent-mock-mail";
+import { NORESULT } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetesInformation } from "../../../../mock/superagent-config/superagent-mock-requetes-information";
-
-const superagentMock = require("superagent-mock")(request, [
-  configRequetesInformation[0],
-  configEtatcivil[0],
-  configMail[0]
-]);
 
 let history: any;
 const globalAny: any = global;
@@ -52,9 +41,7 @@ beforeEach(() => {
   configRequetesInformation[0].compteurRequeteInformation = 0;
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+
 
 afterEach(() => {
   storeRece.utilisateurCourant = undefined;

@@ -1,22 +1,18 @@
 import { MANDATAIRE } from "@composant/formulaire/ConstantesNomsForm";
 import MandataireForm, {
-  MandataireFormDefaultValues,
-  MandataireFormValidationSchema
+    MandataireFormDefaultValues,
+    MandataireFormValidationSchema
 } from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/requerant/mandataire/MandataireForm";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import request from "superagent";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const HookMandataireForm: React.FC = () => {
   const [result, setResult] = useState("");

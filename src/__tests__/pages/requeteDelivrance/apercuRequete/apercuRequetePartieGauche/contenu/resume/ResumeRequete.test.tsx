@@ -10,22 +10,18 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { Route, Router } from "react-router-dom";
-import request from "superagent";
 import {
-  resultatHeaderUtilistateurLaurenceBourdeau,
-  resultatRequeteUtilistateurLaurenceBourdeau
+    resultatHeaderUtilistateurLaurenceBourdeau,
+    resultatRequeteUtilistateurLaurenceBourdeau
 } from "../../../../../../../mock/data/connectedUserAvecDroit";
 import { ReponseAppelDetailRequeteCreation } from "../../../../../../../mock/data/DetailRequeteCreation";
 import {
-  ReponseAppelDetailRequeteDelivrance,
-  ReponseAppelDetailRequeteDelivranceRDC,
-  ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ,
-  ReponseAppelDetailRequeteDelivranceUnTitulaire
+    ReponseAppelDetailRequeteDelivrance,
+    ReponseAppelDetailRequeteDelivranceRDC,
+    ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ,
+    ReponseAppelDetailRequeteDelivranceUnTitulaire
 } from "../../../../../../../mock/data/DetailRequeteDelivrance";
 import { idRequeteRDCPourModification } from "../../../../../../../mock/data/requeteDelivrance";
-import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const globalAny: any = global;
 globalAny.URL.createObjectURL = jest.fn();
@@ -369,6 +365,4 @@ test("renders Page requete avec droit de modification de la requête", async () 
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

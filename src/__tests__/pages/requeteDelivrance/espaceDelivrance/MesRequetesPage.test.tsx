@@ -1,19 +1,16 @@
 import { MesRequetesPage } from "@pages/requeteDelivrance/espaceDelivrance/MesRequetesPage";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
 const history = createMemoryHistory();
 history.push(URL_MES_REQUETES_DELIVRANCE);
 const miseAJourCompteur = jest.fn();
@@ -73,6 +70,4 @@ test("renders Page requete with all elements", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

@@ -19,17 +19,12 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import {
   idRequeteRDCSC,
   requeteRDCSC
 } from "../../../../mock/data/requeteDelivrance";
 import { requeteInformation } from "../../../../mock/data/requeteInformation";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
-const superagentMock3 = require("superagent-mock")(request, configEtatcivil);
 
 const history = createMemoryHistory();
 
@@ -369,7 +364,3 @@ test("renders du bloc Menu Transfert fermer ", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-  superagentMock3.unset();
-});

@@ -1,15 +1,6 @@
 import { specificationPhraseRMCAutoVide } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import request from "superagent";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
-
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
 
 test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper ne retourne rien car il y a des actes et des inscritptions", async () => {
   // const dataRMCAutoActe: IResultatRMCActe[] = DataRMCActeAvecResultat;
@@ -89,6 +80,4 @@ test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper retourne une phra
   );
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

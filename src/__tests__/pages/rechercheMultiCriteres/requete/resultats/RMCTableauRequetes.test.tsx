@@ -1,26 +1,22 @@
 import { RMCTableauRequetes } from "@pages/rechercheMultiCriteres/requete/resultats/RMCTableauRequetes";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { getLastPathElem } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import { userDroitConsulterPerimetreMEAE } from "../../../../../mock/data/connectedUserAvecDroit";
 import {
-  DataRMCRequeteAvecResultat,
-  DataTableauRequete
+    DataRMCRequeteAvecResultat,
+    DataTableauRequete
 } from "../../../../../mock/data/RMCRequete";
-import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const history = createMemoryHistory();
 history.push(URL_RECHERCHE_REQUETE);
@@ -203,6 +199,4 @@ test("Changement de page", async () => {
   expect(getByTestId("54ddf213-d9b7-4747-8e92-68c220f66de3")).toBeDefined();
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

@@ -11,11 +11,8 @@ import {
 import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import officier from "../../../mock/data/connectedUser.json";
-import { configFakeUrl } from "../../../mock/superagent-config/superagent-mock-fake-url";
-
-const superagentMock = require("superagent-mock")(request, configFakeUrl);
+import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
 
 let history: MemoryHistory;
 let handleClickButton: jest.Mock;
@@ -42,7 +39,7 @@ beforeEach(async () => {
 });
 
 test("renders click BoutonDeconnexion (nbRequetes = 0)", async () => {
-  configFakeUrl[0].nbRequetes = 0;
+  configRequetes[0].nbRequetes = 0;
   fireEvent.click(boutonElement);
   await waitFor(() => {
     expect(handleClickButton).toHaveBeenCalledTimes(1);
@@ -61,7 +58,7 @@ test("renders click BoutonDeconnexion (nbRequetes = 0)", async () => {
 });
 
 test("renders click BoutonDeconnexion (nbRequetes = 1) produit une popin de confirmation et lorsque 'Oui' est cliqué la déconnexion est effective", async () => {
-  configFakeUrl[0].nbRequetes = 1;
+  configRequetes[0].nbRequetes = 1;
   fireEvent.click(boutonElement);
 
   await waitFor(() => {
@@ -94,7 +91,7 @@ test("renders click BoutonDeconnexion (nbRequetes = 1) produit une popin de conf
 });
 
 test("renders click BoutonDeconnexion (nbRequetes = 1) produit une popin de confirmation et lorsque 'Non' est cliqué la déconnexion n'est pas faite", async () => {
-  configFakeUrl[0].nbRequetes = 1;
+  configRequetes[0].nbRequetes = 1;
   fireEvent.click(boutonElement);
   await waitFor(() => {
     expect(handleClickButton).toHaveBeenCalledTimes(1);
@@ -120,6 +117,4 @@ test("renders click BoutonDeconnexion (nbRequetes = 1) produit une popin de conf
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

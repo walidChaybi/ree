@@ -1,38 +1,27 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import React from "react";
-import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../../../../mock/data/connectedUserAvecDroit";
 import { requeteAvecDocs } from "../../../../../../../mock/data/DetailRequeteDelivrance";
 import { ficheActeDeces2 } from "../../../../../../../mock/data/ficheActe";
-import { configComposition } from "../../../../../../../mock/superagent-config/superagent-mock-composition";
-import { configEtatcivil } from "../../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { configTeleverification } from "../../../../../../../mock/superagent-config/superagent-mock-televerification";
 import {
-  expectEstAbsent,
-  expectEstPresentAvecValeur,
-  expectEstPresentAvecValeurEtDisabled
+    expectEstAbsent,
+    expectEstPresentAvecValeur,
+    expectEstPresentAvecValeurEtDisabled
 } from "../../../../../../__tests__utils__/expectUtils";
 
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configRequetes[0],
-  configComposition[0],
-  configTeleverification[0]
-]);
+
 
 const acteDeces = mapActe(ficheActeDeces2.data);
 const requete = {
@@ -41,12 +30,9 @@ const requete = {
 
 beforeAll(async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
-  await DocumentDelivrance.init();
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+
 
 test("Attendu: le formulaire SaisirExtraitForm pour un acte de décès s'affiche correctement", async () => {
   render(<SaisirExtraitForm acte={acteDeces} requete={requete} />);

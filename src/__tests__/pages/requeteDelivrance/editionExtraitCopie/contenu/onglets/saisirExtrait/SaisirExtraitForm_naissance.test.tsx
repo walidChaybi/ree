@@ -6,59 +6,48 @@ import { IFiliation } from "@model/etatcivil/acte/IFiliation";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import {
-  ISaisieExtraitForm,
-  ITitulaireEvtForm,
-  saisieParentPaysInconnu,
-  saisiePaysInconnuTitulaire
+    ISaisieExtraitForm,
+    ITitulaireEvtForm,
+    saisieParentPaysInconnu,
+    saisiePaysInconnuTitulaire
 } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/mapping/mappingActeVerFormulaireSaisirExtrait";
 import { mapTitulaireNaissanceEtParents } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/mapping/mappingFormulaireSaisirExtraitVersExtraitAEnvoyer";
 import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import React from "react";
-import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../../../../mock/data/connectedUserAvecDroit";
 import {
-  requeteAvecDocs,
-  requeteAvecDocsPlurilingue
+    requeteAvecDocs,
+    requeteAvecDocsPlurilingue
 } from "../../../../../../../mock/data/DetailRequeteDelivrance";
 import {
-  ficheActe1,
-  ficheActe1_avecTitulaireAyantDeuxParents,
-  ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe
+    ficheActe1,
+    ficheActe1_avecTitulaireAyantDeuxParents,
+    ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe
 } from "../../../../../../../mock/data/ficheActe";
-import { configComposition } from "../../../../../../../mock/superagent-config/superagent-mock-composition";
-import { configEtatcivil } from "../../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { configTeleverification } from "../../../../../../../mock/superagent-config/superagent-mock-televerification";
 import {
-  changeInput,
-  expectEstAbsent,
-  expectEstBoutonDisabled,
-  expectEstPresentAvecValeur,
-  expectEstPresentAvecValeurEtDisabled,
-  expectEstPresentAvecValeurVide,
-  expectEstPresentEtNonChecked,
-  expectEstSelectPresentAvecValeur,
-  expectSelectEstAbsent
+    changeInput,
+    expectEstAbsent,
+    expectEstBoutonDisabled,
+    expectEstPresentAvecValeur,
+    expectEstPresentAvecValeurEtDisabled,
+    expectEstPresentAvecValeurVide,
+    expectEstPresentEtNonChecked,
+    expectEstSelectPresentAvecValeur,
+    expectSelectEstAbsent
 } from "../../../../../../__tests__utils__/expectUtils";
 
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configRequetes[0],
-  configComposition[0],
-  configTeleverification[0]
-]);
+
 
 const acte = mapActe(ficheActe1.data);
 const requete = {
@@ -67,12 +56,9 @@ const requete = {
 
 beforeAll(async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
-  await DocumentDelivrance.init();
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+
 
 test("Attendu: le formulaire SaisirExtraitForm pour un acte de naissance s'affiche correctement", async () => {
   render(<SaisirExtraitForm acte={acte} requete={requete} />);

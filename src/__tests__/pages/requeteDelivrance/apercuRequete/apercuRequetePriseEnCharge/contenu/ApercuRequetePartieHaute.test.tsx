@@ -7,16 +7,12 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
-import request from "superagent";
 import {
-  detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel,
-  detailRequeteDelivranceAvecRequerantQualiteInstitutionnel,
-  detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece,
-  ReponseAppelDetailRequeteDelivrance
+    detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel,
+    detailRequeteDelivranceAvecRequerantQualiteInstitutionnel,
+    detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece,
+    ReponseAppelDetailRequeteDelivrance
 } from "../../../../../../mock/data/DetailRequeteDelivrance";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 beforeEach(() => {
   TypePieceJustificative.init();
@@ -178,6 +174,4 @@ describe("ResumeRequetePartieHaute", () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

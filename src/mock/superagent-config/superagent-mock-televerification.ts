@@ -1,10 +1,9 @@
-export const configFakeUrl = [
+export const configTeleverification = [
   {
-    nbRequetes: 0,
     /**
      * regular expression of URL
      */
-    pattern: "http://localhost/rece/rece-requete-api/v2(.*)",
+    pattern: "http://localhost/rece/rece-televerification-api/v1(.*)",
 
     /**
      * returns the data
@@ -14,27 +13,33 @@ export const configFakeUrl = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function (match, params, headers, context) {
-      //
+    fixtures: function (match: any, params: any, headers: any, context: any) {
+      if (match[1] === "/televerifications/ctv") {
+        return { data: "111111-222222" };
+      }
+
       if (
-        match[1] === "/requetes?parametre1=titi&parametre2=3&parametre3=tutu"
+        match[1] ===
+          "/televerifications/ctv/111111-222222/bbac2335-562c-4b14-96aa-4386814c02a2" ||
+        match[1] ===
+          "/televerifications/ctv/111111-222222/9bfa282d-1e66-4538-b242-b9de4f683777" ||
+        match[1] ===
+          "/televerifications/ctv/111111-222222/9bfa282d-1e66-4538-b242-b9de4f683777"
       ) {
         return true;
       }
 
-      if (match[1] === "/requetes/count?statuts=A_SIGNER") {
-        return { data: this.nbRequetes };
-      }
-
-      if (match[1] === "/fakes") {
+      if (match[1] === "/televerifications/generer") {
         return true;
       }
 
       const error = {
-        msg: "url api fake requete non mockée",
+        msg: "url api télévérification non mockée",
         url: match[1]
       };
-      const message = `Erreur mock api fake: ${JSON.stringify(error)}`;
+      const message = `Erreur mock api télévérification: ${JSON.stringify(
+        error
+      )}`;
       console.error(message);
     },
 
@@ -44,7 +49,7 @@ export const configFakeUrl = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function (match, data, test1, test2, test3) {
+    get: function (match: any, data: any) {
       return {
         body: data,
         header: data.headers
@@ -57,21 +62,10 @@ export const configFakeUrl = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function (match, data) {
+    post: function (match: any, data: any) {
       return {
-        status: 201
-      };
-    },
-
-    /**
-     * returns the result of the DELETE request
-     *
-     * @param match array Result of the resolution of the regular expression
-     * @param data  mixed Data returns by `fixtures` attribute
-     */
-    delete: function (match, data) {
-      return {
-        status: 201
+        body: data,
+        header: data.headers
       };
     },
 
@@ -81,21 +75,16 @@ export const configFakeUrl = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    patch: function (match, data) {
+    patch: function (match: any, data: any) {
       return {
-        status: 201
+        body: data,
+        header: data.headers
       };
     },
-
-    /**
-     * returns the result of the PUT request
-     *
-     * @param match array Result of the resolution of the regular expression
-     * @param data  mixed Data returns by `fixtures` attribute
-     */
-    put: function (match, data) {
+    delete: function (match: any, data: any) {
       return {
-        status: 201
+        body: data,
+        header: data.headers
       };
     }
   }

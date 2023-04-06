@@ -1,28 +1,23 @@
 import { OfficierContext } from "@core/contexts/OfficierContext";
 import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
 import {
-  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-  URL_MES_REQUETES_INFORMATION
+    URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+    URL_MES_REQUETES_INFORMATION
 } from "@router/ReceUrls";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import officier from "../../../../mock/data/connectedUser.json";
-import { configRequetesInformation } from "../../../../mock/superagent-config/superagent-mock-requetes-information";
 
-const superagentMock = require("superagent-mock")(
-  request,
-  configRequetesInformation
-);
+
 
 let history: any;
 beforeEach(() => {
@@ -106,6 +101,4 @@ test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", a
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

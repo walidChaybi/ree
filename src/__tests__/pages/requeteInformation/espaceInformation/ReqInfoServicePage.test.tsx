@@ -12,13 +12,8 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { Router } from "react-router-dom";
-import request from "superagent";
-import { configRequetesInformation } from "../../../../mock/superagent-config/superagent-mock-requetes-information";
 
-const superagentMock = require("superagent-mock")(
-  request,
-  configRequetesInformation
-);
+
 
 const history = createMemoryHistory();
 
@@ -95,6 +90,4 @@ test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", a
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

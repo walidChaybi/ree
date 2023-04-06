@@ -7,14 +7,8 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { Router } from "react-router-dom";
-import request from "superagent";
-import { configAgent } from "../../../../mock/superagent-config/superagent-mock-agent";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, [
-  configRequetes[0],
-  configAgent[0]
-]);
+
 let history: any;
 const setParamsRMCAuto = jest.fn();
 
@@ -148,6 +142,4 @@ test("Test Attribuée à", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

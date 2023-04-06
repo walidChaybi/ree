@@ -1,13 +1,9 @@
 import {
-  FenetreDocumentReponse,
-  onClose
+    FenetreDocumentReponse,
+    onClose
 } from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/document/FenetreDocumentReponse";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const globalAny: any = global;
 globalAny.open = () => {
@@ -44,6 +40,4 @@ test("onClose", () => {
   expect(toggleFenetre).toHaveBeenCalledTimes(1);
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

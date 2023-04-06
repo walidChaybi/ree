@@ -1,45 +1,29 @@
-import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
-import { NatureMention } from "@model/etatcivil/enum/NatureMention";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import {
-  PATH_EDITION,
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_EDITION_ID
+    PATH_EDITION,
+    URL_MES_REQUETES_DELIVRANCE,
+    URL_MES_REQUETES_DELIVRANCE_EDITION_ID
 } from "@router/ReceUrls";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
-import request from "superagent";
 import { userDroitCOMEDEC } from "../../../../../../mock/data/connectedUserAvecDroit";
-import { configComposition } from "../../../../../../mock/superagent-config/superagent-mock-composition";
-import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { configTeleverification } from "../../../../../../mock/superagent-config/superagent-mock-televerification";
 
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configRequetes[0],
-  configComposition[0],
-  configTeleverification[0]
-]);
+
 
 let history: MemoryHistory;
 const globalAny: any = global;
 globalAny.URL.createObjectURL = jest.fn();
 
 beforeEach(async () => {
-  DocumentDelivrance.init();
-  NatureMention.init();
-  TypeMention.init();
   storeRece.utilisateurCourant = userDroitCOMEDEC;
 
   history = createMemoryHistory();
@@ -219,6 +203,4 @@ describe("Test onglets documents édites", () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

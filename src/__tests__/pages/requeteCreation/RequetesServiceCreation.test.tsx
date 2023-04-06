@@ -27,17 +27,12 @@ import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauP
 import { createMemoryHistory } from "history";
 import React, { useState } from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic
 } from "../../../mock/data/connectedUserAvecDroit";
-import { configRequetesCreation } from "../../../mock/superagent-config/superagent-mock-requetes-creation";
 
-const superagentMock = require("superagent-mock")(
-  request,
-  configRequetesCreation
-);
+
 
 beforeAll(() => {
   storeRece.utilisateurCourant = mappingOfficier(
@@ -76,9 +71,7 @@ beforeAll(() => {
   ] as IUtilisateur[];
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+
 
 const history = createMemoryHistory();
 
@@ -232,6 +225,4 @@ test("DOIT rendre possible le click sur une requête", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

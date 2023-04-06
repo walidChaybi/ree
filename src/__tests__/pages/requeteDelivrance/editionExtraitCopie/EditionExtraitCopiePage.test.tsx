@@ -1,6 +1,3 @@
-import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
-import { NatureMention } from "@model/etatcivil/enum/NatureMention";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import {
   PATH_EDITION,
@@ -19,7 +16,6 @@ import { storeRece } from "@util/storeRece";
 import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
-import request from "superagent";
 import {
   userDroitCOMEDEC,
   userDroitnonCOMEDEC
@@ -27,27 +23,13 @@ import {
 import { requeteAvecCopieIntegraleActeImage } from "../../../../mock/data/DetailRequeteDelivrance";
 import { idFicheActeMariage } from "../../../../mock/data/ficheActe";
 import { imagePngVideBase64 } from "../../../../mock/data/ImagePng";
-import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { configTeleverification } from "../../../../mock/superagent-config/superagent-mock-televerification";
 import { MimeType } from "../../../../ressources/MimeType";
-
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configRequetes[0],
-  configComposition[0],
-  configTeleverification[0]
-]);
 
 let history: MemoryHistory;
 const globalAny: any = global;
 globalAny.URL.createObjectURL = jest.fn();
 
 beforeEach(async () => {
-  DocumentDelivrance.init();
-  NatureMention.init();
-  TypeMention.init();
   storeRece.utilisateurCourant = userDroitCOMEDEC;
 
   history = createMemoryHistory();
@@ -614,9 +596,6 @@ test("Test ajout nationalité auto", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
 
 test("Test création extrait plurilingue", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;

@@ -1,11 +1,7 @@
 import { SuiviActionsRequete } from "@composant/suivis/SuiviActionsRequete";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
 import DONNEES_REQUETE from "../../../../mock/data/requete";
-import { configAgent } from "../../../../mock/superagent-config/superagent-mock-agent";
-
-const superagentMock = require("superagent-mock")(request, configAgent);
 
 test("renders suivi des actions requete", async () => {
   render(<SuiviActionsRequete actions={DONNEES_REQUETE.actions} />);
@@ -24,6 +20,4 @@ test("renders suivi des actions requete", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

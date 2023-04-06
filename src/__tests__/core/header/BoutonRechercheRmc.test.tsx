@@ -5,11 +5,8 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import officier from "../../../mock/data/connectedUser.json";
 import { configFakeUrl } from "../../../mock/superagent-config/superagent-mock-fake-url";
-
-const superagentMock = require("superagent-mock")(request, configFakeUrl);
 
 let history: MemoryHistory;
 let boutonElement: HTMLElement;
@@ -45,6 +42,4 @@ test("renders click bouton rmc", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

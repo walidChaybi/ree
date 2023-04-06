@@ -1,22 +1,18 @@
 import { MenuReponseSansDelivranceEC } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuReponseSansDelivranceEC";
 import {
-  PATH_EDITION,
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+    PATH_EDITION,
+    URL_MES_REQUETES_DELIVRANCE,
+    URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "@router/ReceUrls";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import {
-  idRequeteRDC,
-  requeteRDC
+    idRequeteRDC,
+    requeteRDC
 } from "../../../../../../mock/data/requeteDelivrance";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const history = createMemoryHistory();
 
@@ -85,6 +81,4 @@ test("Réponse ignorer", async () => {
   expect(valider.disabled).toBeTruthy();
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

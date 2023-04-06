@@ -19,6 +19,7 @@ import {
   ficheActe1,
   ficheActe2,
   ficheActeAvecGenreIndetermine,
+  ficheActeAvecImage,
   ficheActeAvecTitulaireMultiple,
   ficheActeDeces2,
   ficheActeEC,
@@ -63,8 +64,7 @@ import {
   ReponseAppelRMCInscription4DernierResultats,
   ReponseAppelRMCInscription4PremiersResultats
 } from "../data/RMCInscription";
-import { ficheActeAvecImage } from "./../data/ficheActe";
-import { getTitulairesActeAPI } from "./../data/Titulaire.ts";
+import { getTitulairesActeAPI } from "../data/Titulaire";
 
 export const NORESULT = "NORESULT";
 
@@ -83,7 +83,7 @@ export const configEtatcivil = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function (match, params, headers, context) {
+    fixtures: function (match: any, params: any, headers: any, context: any) {
       if (
         match[1] === "/repertoirecivil/rc/7566e16c-2b0e-11eb-adc1-0242ac120002"
       ) {
@@ -155,7 +155,9 @@ export const configEtatcivil = [
           "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc/resume?isConsultation=true"
       ) {
         return { data: acte1 };
-      } else if (match[1] === "/acte/6e89c1c1-16c4-4e40-9b72-7b567270b26f/resume") {
+      } else if (
+        match[1] === "/acte/6e89c1c1-16c4-4e40-9b72-7b567270b26f/resume"
+      ) {
         return { data: acteExtraitSaisie };
       } else if (
         match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume" ||
@@ -175,25 +177,45 @@ export const configEtatcivil = [
           "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9/resume?isConsultation=true"
       ) {
         return { data: acte4 };
-      } else if (match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/resume") {
+      } else if (
+        match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/resume"
+      ) {
         return { data: acte5 };
-      } else if (match[1] === "/acte/b41079a5-9e8f-478a-b04c-c4c2ac671123/resume") {
+      } else if (
+        match[1] === "/acte/b41079a5-9e8f-478a-b04c-c4c2ac671123/resume"
+      ) {
         return { data: ficheActeEC.data };
-      } else if (match[1] === "/acte/b45079a5-9e8f-488a-b07c-c4c2az613121/resume") {
+      } else if (
+        match[1] === "/acte/b45079a5-9e8f-488a-b07c-c4c2az613121/resume"
+      ) {
         return { data: ficheActeAvecTitulaireMultiple.data };
-      } else if (match[1] === "/acte/b45079a5-9e8f-478a-b07c-c4c2az671123/resume") {
+      } else if (
+        match[1] === "/acte/b45079a5-9e8f-478a-b07c-c4c2az671123/resume"
+      ) {
         return { data: ficheActeAvecGenreIndetermine.data };
-      } else if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/resume") {
+      } else if (
+        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/resume"
+      ) {
         return { data: ficheActeMariage.data };
-      } else if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac671348/resume") {
+      } else if (
+        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac671348/resume"
+      ) {
         return { data: acteMariage };
-      } else if (match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/resume") {
+      } else if (
+        match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/resume"
+      ) {
         return { data: acteNaissance };
-      } else if (match[1] === "/acte/923a10fb-0b15-452d-83c0-d24c76d1d19d/resume") {
+      } else if (
+        match[1] === "/acte/923a10fb-0b15-452d-83c0-d24c76d1d19d/resume"
+      ) {
         return { data: ActeAnalyseMarginales };
-      } else if (match[1] === "/acte/0bce8edd-0183-495b-939d-0b3cf6918792/resume") {
+      } else if (
+        match[1] === "/acte/0bce8edd-0183-495b-939d-0b3cf6918792/resume"
+      ) {
         return { data: ficheActeMariage2.data };
-      } else if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134c/resume") {
+      } else if (
+        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134c/resume"
+      ) {
         return { data: ficheActeDeces2.data };
       }
 
@@ -285,14 +307,16 @@ export const configEtatcivil = [
 
       if (
         match[1] === `/acte/${idFicheActeMariage}/resume` ||
-        match[1] === `/acte/${idFicheActeMariage}/resume?recupereImagesEtTexte=true`
+        match[1] ===
+          `/acte/${idFicheActeMariage}/resume?recupereImagesEtTexte=true`
       ) {
         return ficheActeMariage;
       }
 
       if (
         match[1] === `/acte/${idFicheActeMariage}/resume` ||
-        match[1] === `/acte/${idFicheActeMariage}/resume?recupereImagesEtTexte=true` ||
+        match[1] ===
+          `/acte/${idFicheActeMariage}/resume?recupereImagesEtTexte=true` ||
         match[1] ===
           "/acte/0bce8edd-0183-495b-939d-0b3cf6918792/resume?recupereImagesEtTexte=true"
       ) {
@@ -621,7 +645,7 @@ export const configEtatcivil = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function (match, data) {
+    get: function (match: any, data: any) {
       return {
         body: data,
         header: data.headers
@@ -634,7 +658,7 @@ export const configEtatcivil = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function (match, data) {
+    post: function (match: any, data: any) {
       return {
         body: data,
         header: data.headers
@@ -647,13 +671,13 @@ export const configEtatcivil = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    patch: function (match, data) {
+    patch: function (match: any, data: any) {
       return {
         body: data,
         header: data.headers
       };
     },
-    delete: function (match, data) {
+    delete: function (match: any, data: any) {
       return {
         body: data,
         header: data.headers

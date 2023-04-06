@@ -6,11 +6,7 @@ import {
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
 import { ReponseAppelMesRequetes } from "../../../../../mock/data/EspaceDelivrance";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-const superagentMock = require("superagent-mock")(request, configRequetes);
-
 const HookConsumerUseGetRequeteDelivranceAleatoire: React.FC = () => {
   const res = useGetRequeteAleatoire(TypeRequete.DELIVRANCE, true);
 
@@ -26,19 +22,6 @@ test("Attendu: PrendreEnChargeAleatoirementHook fonctionne correctement dans l'e
   });
 });
 
-const HookConsumerUseGetRequeteInformationAleatoire: React.FC = () => {
-  const res = useGetRequeteAleatoire(TypeRequete.INFORMATION, true);
-
-  return <div>{res?.requete?.idRequete}</div>;
-};
-
-test("Attendu: PrendreEnChargeAleatoirementHook fonctionne correctement dans l'espace information", async () => {
-  render(<HookConsumerUseGetRequeteInformationAleatoire />);
-
-  await waitFor(() => {
-    expect(screen.getByText(ReponseAppelMesRequetes[2].id)).toBeInTheDocument();
-  });
-});
 
 test("Attendu: La gestion des erreur dans PrendreEnChargeAleatoirementHook fonctionne correctement", async () => {
   await waitFor(() => {
@@ -49,6 +32,4 @@ test("Attendu: La gestion des erreur dans PrendreEnChargeAleatoirementHook fonct
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

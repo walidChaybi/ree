@@ -3,10 +3,6 @@ import { ICriteresRechercheActeInscription } from "@pages/rechercheMultiCriteres
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_ACTE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const criteres: ICriteresRechercheActeInscription = {
   valeurs: {
@@ -92,6 +88,4 @@ test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères Ac
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

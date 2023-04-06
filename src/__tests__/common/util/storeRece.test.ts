@@ -1,15 +1,9 @@
 import { IOfficier } from "@model/agent/IOfficier";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { storeRece } from "@util/storeRece";
-import request from "superagent";
 import officier from "../../../mock/data/connectedUser.json";
-import { configAgent } from "../../../mock/superagent-config/superagent-mock-agent";
 
-const superagentMock = require("superagent-mock")(request, configAgent);
 
-afterAll(() => {
-  superagentMock.unset();
-});
 
 test("store rece works ", async () => {
   expect(storeRece.utilisateurCourant).toBeUndefined();

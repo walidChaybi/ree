@@ -16,7 +16,6 @@ import {
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../../../mock/data/connectedUserAvecDroit";
 import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
 import {
@@ -28,11 +27,8 @@ import {
   DataTableauInscription
 } from "../../../../../../mock/data/RMCInscription";
 import {
-  configEtatcivil,
   NORESULT
 } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const history = createMemoryHistory();
 
@@ -260,6 +256,4 @@ test("render ApercuRequetePriseEnChargePartieDroite : relance RMC Auto ", async 
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

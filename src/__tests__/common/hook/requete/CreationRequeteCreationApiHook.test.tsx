@@ -1,18 +1,11 @@
 import { useCreationRequeteCreation } from "@hook/requete/CreationRequeteCreationApiHook";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
 import { creationRequeteTranscriptionParams } from "../../../../mock/data/requeteCreationTranscription";
-import { configRequetesCreation } from "../../../../mock/superagent-config/superagent-mock-requetes-creation";
 
-const superagentMock = require("superagent-mock")(
-  request,
-  configRequetesCreation
-);
 
-afterAll(() => {
-  superagentMock.unset();
-});
+
+
 
 const HookConsumer: React.FC = () => {
   const idRequeteCree = useCreationRequeteCreation(

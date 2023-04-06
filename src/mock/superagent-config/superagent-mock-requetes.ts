@@ -52,12 +52,17 @@ import {
   UpdateRDC,
   UpdateRDCSC
 } from "../data/SaisirRequeteDelivrance";
+import { configFakeUrl } from "./superagent-mock-fake-url";
+import { configRequetesCreation } from "./superagent-mock-requetes-creation";
+import { configRequetesGeneInscription } from "./superagent-mock-requetes-gene-inscription";
+import { configRequetesInformation } from "./superagent-mock-requetes-information";
 
 export const NORESULT = "NORESULT";
 let compteur = 0;
 
 export const configRequetes = [
   {
+    nbRequetes: 20,
     /**
      * regular expression of URL
      */
@@ -71,7 +76,7 @@ export const configRequetes = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function (match, params, headers, context) {
+    fixtures: function (match: any, params: any, headers: any, context: any) {
       // Récupération des paramètres de la base requête
       if (match[1] === "/parametres" && context.method === "post") {
         return { data: parametresBaseRequete };
@@ -245,20 +250,6 @@ export const configRequetes = [
         return { data: NOMENCLATURE_OPTION_COURRIER };
       }
 
-      // Mes requêtes création
-      if (
-        match[1] ===
-        "/requetes/creation/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER%2CEN_TRAITEMENT&tri=dateCreation&sens=ASC&range=0-105"
-      ) {
-        return {
-          headers: {
-            "content-range": "0-100/0",
-            link: ""
-          },
-          data: reponseMesRequeteCreation
-        };
-      }
-
       // Mes requêtes création Etablissement
       if (match[1] === "/requetes/3ed9aa4e-921b-489f-b8fe-531dd703c60c") {
         return {
@@ -272,6 +263,7 @@ export const configRequetes = [
         };
       }
 
+      // Transfert requête
       if (
         match[1] ===
           "/requetes/action/transfert?idRequete=54ddf213-d9b7-4747-8e92-68c220f66de3&idEntite=12345&idUtilisateur=&statutRequete=A_TRAITER&libelleAction=Attribu%C3%A9e%20%C3%A0%20str2&attribuer=true" ||
@@ -281,6 +273,19 @@ export const configRequetes = [
         match[1] === "/requetes/action/transfertValideur"
       ) {
         return { data: "12345" };
+      }
+
+      if (
+        (match[1] === "/requetes/action/transfert" ||
+          match[1] ===
+            "/requetes/action/transfert?idRequete=12345&idEntite=12345&idUtilisateur=12345&statutRequete=TRANSFEREE&libelleAction=libelleAction&attribuer=false" ||
+          match[1] ===
+            "/requetes/action/transfert?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&idEntite=123&idUtilisateur=1234&statutRequete=TRANSFEREE&libelleAction=Transf%C3%A9r%C3%A9e%20%C3%A0%20str1%20&attribuer=false" ||
+          match[1] ===
+            "/requetes/action/transfert?idRequete=bbd05aed-8ea9-45ba-a7d7-b8d55ad1085c&idEntite=1234&idUtilisateur=12345&statutRequete=TRANSFEREE&libelleAction=Transf%C3%A9r%C3%A9e%20%C3%A0%20str3%20&attribuer=false") &&
+        context.method === "post"
+      ) {
+        return { data: "123456789" };
       }
 
       if (
@@ -322,7 +327,8 @@ export const configRequetes = [
         else {
           return {
             headers: {
-              "content-range": "0-15/" + ReponseAppelRMCRequete.data.length,
+              "content-range":
+                "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
               link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
             },
             data: ReponseAppelRMCRequete.data
@@ -408,7 +414,7 @@ export const configRequetes = [
 
       // Compteurs requêtes A_SIGNER
       if (match[1] === "/requetes/count?statuts=A_SIGNER") {
-        return { data: 20 };
+        return { data: this.nbRequetes };
       }
 
       // Utilisé dans UtilisateurAssigneRequeteHook.test
@@ -645,11 +651,6 @@ export const configRequetes = [
         return { data: documentReponseExtraitAvecFiliation };
       }
 
-      // Stockage d'un document (POST)
-      if (match[1] === "/documentsreponses" && context.method === "post") {
-        return { data: idDocumentsReponse };
-      }
-
       // Maj d'un document (PATCH)
       if (match[1] === "/documentsreponses" && context.method === "patch") {
         return { data: "idRequete" };
@@ -691,16 +692,6 @@ export const configRequetes = [
         context.method === "delete"
       ) {
         return { data: true };
-      }
-
-      // Transfert requête
-      if (
-        (match[1] === "/requetes/action/transfert" ||
-          match[1] ===
-            "/requetes/action/transfert?idRequete=12345&idEntite=12345&idUtilisateur=12345&statutRequete=TRANSFEREE&libelleAction=libelleAction&attribuer=false") &&
-        context.method === "post"
-      ) {
-        return { data: "123456789" };
       }
 
       // Ignorer requête
@@ -794,11 +785,7 @@ export const configRequetes = [
           data: ReponseAppelMesRequetes[1]
         };
       }
-      if (match[1] === "/requetes/requetealeatoire?type=INFORMATION") {
-        return {
-          data: ReponseAppelMesRequetes[2]
-        };
-      }
+
       if (match[1] === "/requetes/requetealeatoire?type=CREATION") {
         return {
           data: reponseMesRequeteCreation
@@ -829,6 +816,19 @@ export const configRequetes = [
         return { data: ["9bfa282d-1e66-4538-b242-b9de4f683777"] };
       }
 
+      let otherData = recupereLesDonneesEnTestantLesAutresConfigs(
+        { match, params, headers, context },
+        [
+          configRequetesInformation,
+          configRequetesGeneInscription,
+          configRequetesCreation,
+          configFakeUrl
+        ]
+      );
+      if (otherData) {
+        return otherData;
+      }
+
       const error = {
         msg: "url api requete non mockée",
         url: match[1],
@@ -844,7 +844,7 @@ export const configRequetes = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function (match, data) {
+    get: function (match: any, data: any) {
       return {
         body: data,
         header: data ? data.headers : null
@@ -857,7 +857,7 @@ export const configRequetes = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function (match, data) {
+    post: function (match: any, data: any) {
       return {
         body: data,
         header: data.headers
@@ -870,18 +870,55 @@ export const configRequetes = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    patch: function (match, data) {
+    patch: function (match: any, data: any) {
       return {
         body: data,
         header: data.headers
       };
     },
 
-    delete: function (match, data) {
+    delete: function (match: any, data: any) {
       return {
         body: data,
         header: data.headers
       };
+    },
+
+    /**
+     * returns the result of the PUT request
+     *
+     * @param match array Result of the resolution of the regular expression
+     * @param data  mixed Data returns by `fixtures` attribute
+     */
+    put: function (match: any, data: any) {
+      return {
+        status: 201
+      };
     }
   }
 ];
+
+function recupereLesDonneesEnTestantLesAutresConfigs<
+  T extends {
+    fixtures: (match: any, params: any, headers: any, context: any) => any;
+  }[]
+>(
+  args: { match: any; params: any; headers: any; context: any },
+  configs: T[]
+): any {
+  const config = configs.shift();
+  let data;
+  if (config) {
+    data = config[0].fixtures(
+      args.match,
+      args.params,
+      args.headers,
+      args.context
+    );
+
+    if (!data) {
+      data = recupereLesDonneesEnTestantLesAutresConfigs(args, configs);
+    }
+  }
+  return data;
+}

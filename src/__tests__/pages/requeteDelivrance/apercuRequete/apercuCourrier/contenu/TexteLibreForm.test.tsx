@@ -1,26 +1,17 @@
 import { TEXTE, TEXTE_LIBRE } from "@composant/formulaire/ConstantesNomsForm";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { ValidationSchemaChoixCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/ChoixCourrierForm";
 import TexteLibreForm from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/TexteLibreForm";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import React from "react";
-import request from "superagent";
 import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
-
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
 
 const HookTexteLibreForm: React.FC = () => {
   const texteLibreFormProps = {
@@ -74,6 +65,4 @@ test("renders OptionsCourrierForm", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

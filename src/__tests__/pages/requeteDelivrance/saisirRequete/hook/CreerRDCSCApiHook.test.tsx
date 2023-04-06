@@ -2,16 +2,12 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useCreationRequeteDelivranceRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/CreerRDCSCApiHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 import {
-  RequeteRDCSCInstitutionnel,
-  RequeteRDCSCInteresse,
-  RequeteRDCSCMandataire,
-  RequeteRDCSCParticulier
+    RequeteRDCSCInstitutionnel,
+    RequeteRDCSCInteresse,
+    RequeteRDCSCMandataire,
+    RequeteRDCSCParticulier
 } from "../data/DataRDCSC";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const HookConsummerInteresse: React.FC = () => {
   const resultat = useCreationRequeteDelivranceRDCSC(RequeteRDCSCInteresse);
@@ -72,6 +68,4 @@ async function waitForResultat(futurStatut: StatutRequete, refus: boolean) {
   });
 }
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

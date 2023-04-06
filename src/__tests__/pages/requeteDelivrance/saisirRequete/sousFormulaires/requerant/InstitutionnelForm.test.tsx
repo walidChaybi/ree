@@ -1,22 +1,18 @@
 import { INSTITUTI0NNEL } from "@composant/formulaire/ConstantesNomsForm";
 import InstitutionnelForm, {
-  InstitutionnelFormDefaultValues,
-  InstitutionnelFormValidationSchema
+    InstitutionnelFormDefaultValues,
+    InstitutionnelFormValidationSchema
 } from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/requerant/institutionnel/InstitutionnelForm";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import request from "superagent";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const HookInstitutionnelForm: React.FC = () => {
   const [result, setResult] = useState("");

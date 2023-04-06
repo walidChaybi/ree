@@ -1,10 +1,6 @@
 import { VisionneuseActe } from "@composant/visionneuseActe/VisionneuseActe";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 describe("Display pdf Iframe", () => {
   test("Affichage par défaut", async () => {

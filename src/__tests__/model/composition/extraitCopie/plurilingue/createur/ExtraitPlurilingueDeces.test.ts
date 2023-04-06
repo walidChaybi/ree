@@ -1,25 +1,14 @@
 import { creationCompositionExtraitPlurilingue } from "@hook/generation/generationECHook/creationComposition/creationCompositionExtraitPlurilingue";
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
-import request from "superagent";
 import { ficheActeDeces } from "../../../../../../mock/data/ficheActe";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, [configRequetes[0]]);
-
-const validation = "O";
 const mentionsRetirees: string[] = [];
 
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
 
-afterAll(() => {
-  superagentMock.unset();
-});
+
 
 describe("Composition extrait plurilingue de Décès", () => {
   test("Doit composer l'extrait avec les bonne données", () => {

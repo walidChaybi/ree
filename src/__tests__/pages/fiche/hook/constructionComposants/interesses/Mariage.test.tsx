@@ -1,14 +1,8 @@
 import { Mariage } from "@pages/fiche/hook/constructionComposants/interesses/Mariage";
 import { render } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configParamsBaseRequete } from "../../../../../../mock/superagent-config/superagent-mock-params";
 
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configParamsBaseRequete[0]
-]);
+
 
 test("renders mariage : non marié à l'étranger mais avec un pays qui n'est pas la France", () => {
   const { getByText } = render(
@@ -127,6 +121,4 @@ test("renders mariage : il n'y a pas le jour et le mois de la date", () => {
   expect(getByText("En")).toBeDefined();
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

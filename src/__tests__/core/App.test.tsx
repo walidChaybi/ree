@@ -1,14 +1,8 @@
 import { GestionnaireCacheApi } from "@api/appels/cache/GestionnaireCacheApi";
 import { storeRece } from "@util/storeRece";
-import request from "superagent";
 import { decrets } from "../../mock/data/NomenclatureEtatCivilDecrets";
-import { configAgent } from "../../mock/superagent-config/superagent-mock-agent";
-import { configEtatcivil } from "../../mock/superagent-config/superagent-mock-etatcivil";
 
-const superagentMock = require("superagent-mock")(request, [
-  configAgent[0],
-  configEtatcivil[0]
-]);
+
 
 test("set entites cache", async () => {
   await GestionnaireCacheApi.chargerToutesLesEntites();
@@ -25,6 +19,4 @@ test("Attendu: Le chargement des décrets en cache fonctionne correctement", asy
   expect(storeRece.decrets).toEqual(decrets);
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

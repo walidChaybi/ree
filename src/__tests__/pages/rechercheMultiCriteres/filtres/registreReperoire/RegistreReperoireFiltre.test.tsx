@@ -1,22 +1,18 @@
 import { REGISTRE_REPERTOIRE } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
 import RegistreRepertoireFiltre, {
-  RegistreRepertoireDefaultValues,
-  RegistreRepertoireFiltreProps
+    RegistreRepertoireDefaultValues,
+    RegistreRepertoireFiltreProps
 } from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { getLibelle } from "@util/Utils";
 import { Form, Formik } from "formik";
 import React from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const HookRegistreRepertoireFiltre: React.FC = () => {
   const registreRepertoireFiltreFiltreProps = {
@@ -144,6 +140,4 @@ function fireEventChange(component: any, value: any) {
   });
 }
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

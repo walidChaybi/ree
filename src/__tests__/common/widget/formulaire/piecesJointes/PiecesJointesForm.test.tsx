@@ -1,20 +1,16 @@
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { getLibelle } from "@util/Utils";
 import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
 import { Form, Formik } from "formik";
 import React from "react";
-import request from "superagent";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 import { inputPngFiles } from "../../../../__tests__utils__/testsUtil";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 test("Attendu (composant PiecesJointesForm):  Une une pièce jointe est ajoutée à l'écran puis supprimée", async () => {
   const PIECES_JOINTES = "piecesJointes";
@@ -62,6 +58,4 @@ test("Attendu (composant PiecesJointesForm):  Une une pièce jointe est ajoutée
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

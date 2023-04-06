@@ -1,33 +1,24 @@
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
 import { URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC } from "@router/ReceUrls";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { getLastPathElem } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
-import request from "superagent";
 import {
-  userDroitConsulterArchive,
-  userDroitnonCOMEDEC
+    userDroitConsulterArchive,
+    userDroitnonCOMEDEC
 } from "../../../../mock/data/connectedUserAvecDroit";
-import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configComposition[0],
-  configRequetes[0]
-]);
+
 
 let history: any;
 
@@ -38,7 +29,6 @@ beforeAll(() => {
 beforeEach(async () => {
   history = createMemoryHistory();
   history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC);
-  await DocumentDelivrance.init();
 });
 
 test("renders formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", async () => {
@@ -571,6 +561,4 @@ test(`Clic sur "supprimer un titulaire" => bloc titulaire2 & bouton "supprimer u
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

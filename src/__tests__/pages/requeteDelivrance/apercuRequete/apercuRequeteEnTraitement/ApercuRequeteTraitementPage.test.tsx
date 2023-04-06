@@ -1,6 +1,4 @@
 import { IUtilisateur } from "@model/agent/IUtilisateur";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import {
   URL_MES_REQUETES_DELIVRANCE,
@@ -19,12 +17,8 @@ import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
-import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../../mock/data/connectedUserAvecDroit";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const globalAny: any = global;
 globalAny.URL.createObjectURL = jest.fn();
@@ -36,8 +30,7 @@ let history: any;
 beforeEach(() => {
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS as IUtilisateur[];
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-  DocumentDelivrance.init();
-  TypePieceJustificative.init();
+
   gestionnaireFeatureFlag.estActif = function () {
     return true;
   };
@@ -46,7 +39,6 @@ beforeEach(() => {
 
 afterAll(() => {
   gestionnaireFeatureFlag.estActif = sauvFonctionEstActive;
-  superagentMock.unset();
 });
 
 test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", async () => {
@@ -327,4 +319,3 @@ test("reprendre traitement", async () => {
     fireEvent.click(screen.getByText("Reprendre le traitement"));
   });
 });
-

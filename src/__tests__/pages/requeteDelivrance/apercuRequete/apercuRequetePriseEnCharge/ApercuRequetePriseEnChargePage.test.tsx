@@ -1,41 +1,31 @@
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { MOTIF_IGNORE } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/IgnoreRequetePopin";
 import {
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+    URL_MES_REQUETES_DELIVRANCE,
+    URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "@router/ReceUrls";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
-import request from "superagent";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
 import {
-  DataRMCActeAvecResultat,
-  DataTableauActe
+    DataRMCActeAvecResultat,
+    DataTableauActe
 } from "../../../../../mock/data/RMCActe";
 import {
-  DataRMCInscriptionAvecResultat,
-  DataTableauInscription
+    DataRMCInscriptionAvecResultat,
+    DataTableauInscription
 } from "../../../../../mock/data/RMCInscription";
-import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
-import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-const superagentMock = require("superagent-mock")(request, [
-  configRequetes[0],
-  configEtatcivil[0],
-  configComposition[0]
-]);
+
 
 const globalAny: any = global;
 globalAny.URL.createObjectURL = jest.fn();
@@ -47,8 +37,6 @@ globalAny.close = jest.fn();
 let history: any;
 
 beforeAll(() => {
-  DocumentDelivrance.init();
-  TypePieceJustificative.init();
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
 
   history = createMemoryHistory();
@@ -345,6 +333,4 @@ test("ignorer requete", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

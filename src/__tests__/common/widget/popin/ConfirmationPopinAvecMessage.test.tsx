@@ -1,17 +1,13 @@
 import {
-  estSuperieurA500Caracteres,
-  getPrenomEtNom
+    estSuperieurA500Caracteres,
+    getPrenomEtNom
 } from "@pages/requeteCreation/apercuRequete/etablissement/composants/action/ListeActions";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { ConfirmationPopinAvecMessage } from "@widget/popin/ConfirmationPopinAvecMessage";
 import React, { useEffect, useState } from "react";
-import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
 import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-const superagentMock = require("superagent-mock")(request, configRequetes);
-
 beforeAll(() => {
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
 });
@@ -264,6 +260,4 @@ describe("Popin avec confirmation et message", () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

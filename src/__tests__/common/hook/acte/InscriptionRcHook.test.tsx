@@ -1,10 +1,6 @@
 import { useGetInscriptionsRCApiHook } from "@hook/acte/InscriptionsRcHook";
 import { act, render, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
-
 const idPersonne = "0bce8edd-0183-497b-139d-0a3cf6918792";
 
 const HookConsumer: React.FC = () => {
@@ -22,6 +18,4 @@ test("Attendu: useGetInscriptionsRCApiHook fonctionne correctement", async () =>
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

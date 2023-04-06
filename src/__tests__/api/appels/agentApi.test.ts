@@ -4,10 +4,6 @@ import {
   getToutesLesEntiteRattachement,
   getUtilisateurs
 } from "@api/appels/agentApi";
-import request from "superagent";
-import { configAgent } from "../../../mock/superagent-config/superagent-mock-agent";
-
-const superagentMock = require("superagent-mock")(request, configAgent);
 
 test("getLogin utilisateur", () => {
   getLogin().then((result: any) => {
@@ -34,6 +30,4 @@ test("getToutesLesEntiteRattachement", () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

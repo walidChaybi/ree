@@ -6,11 +6,7 @@ import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import officier from "../../../mock/data/connectedUser.json";
-import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-const superagentMock = require("superagent-mock")(request, configRequetes);
-
 test("renders BoutonDeconnexion", async () => {
   const history = createMemoryHistory();
   history.push(URL_ACCUEIL);
@@ -149,6 +145,4 @@ test("renders Body 403", () => {
   expect(titre).toBeDefined();
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

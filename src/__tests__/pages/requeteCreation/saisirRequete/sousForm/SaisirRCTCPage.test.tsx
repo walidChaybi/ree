@@ -3,35 +3,29 @@ import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { SaisirRCTCPage } from "@pages/requeteCreation/saisirRequete/SaisirRCTCPage";
 import { PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE } from "@router/ReceUrls";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router";
-import request from "superagent";
 import {
-  resultatHeaderUtilistateurLeBiannic,
-  resultatRequeteUtilistateurLeBiannic,
-  userDroitCreerActeTranscritPerimetreMEAE
+    resultatHeaderUtilistateurLeBiannic,
+    resultatRequeteUtilistateurLeBiannic,
+    userDroitCreerActeTranscritPerimetreMEAE
 } from "../../../../../mock/data/connectedUserAvecDroit";
-import { configAgent } from "../../../../../mock/superagent-config/superagent-mock-agent";
-import { configRequetesCreation } from "../../../../../mock/superagent-config/superagent-mock-requetes-creation";
 import {
-  expectEstBoutonDisabled,
-  expectEstBoutonEnabled
+    expectEstBoutonDisabled,
+    expectEstBoutonEnabled
 } from "../../../../__tests__utils__/expectUtils";
 import { entiteRatachementEtablissement } from "./../../../../../mock/data/entiteRatachementEtablissement";
 
-const superagentMock = require("superagent-mock")(request, [
-  configAgent[0],
-  configRequetesCreation[0]
-]);
+
 
 beforeAll(() => {
   storeRece.utilisateurCourant = mappingOfficier(
@@ -43,9 +37,7 @@ beforeAll(() => {
   );
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+
 
 const HookSaisirRCTCForm: React.FC = () => {
   return <SaisirRCTCPage />;

@@ -1,17 +1,13 @@
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { AccordionVisionneuse } from "@widget/accordion/AccordionVisionneuse";
 import React from "react";
-import request from "superagent";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const globalAny: any = global;
 globalAny.open = () => {
@@ -167,6 +163,4 @@ test("Ouvre puis ferme une fenêtre externe.", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

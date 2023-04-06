@@ -1,29 +1,19 @@
 import {
-  IGenerationECParams,
-  useGenerationEC
+    IGenerationECParams,
+    useGenerationEC
 } from "@hook/generation/generationECHook/generationECHook";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
 import { ReponseAppelDetailRequeteDelivrance } from "../../../../../mock/data/DetailRequeteDelivrance";
 import {
-  idFicheActe1,
-  idFicheActeMariage
+    idFicheActe1,
+    idFicheActeMariage
 } from "../../../../../mock/data/ficheActe";
-import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
-import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { configTeleverification } from "../../../../../mock/superagent-config/superagent-mock-televerification";
 import { getRequeteWithChoixDelivrance } from "../../../../__tests__utils__/testsUtil";
 
-const superagentMock = require("superagent-mock")(request, [
-  configRequetes[0],
-  configEtatcivil[0],
-  configComposition[0],
-  configTeleverification[0]
-]);
+
 
 const ecMariageSansFiliationparams: IGenerationECParams = {
   idActe: idFicheActeMariage,
@@ -143,6 +133,4 @@ test("Attendu: une copie intégrale mariage est générée via useGenerationEC",
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

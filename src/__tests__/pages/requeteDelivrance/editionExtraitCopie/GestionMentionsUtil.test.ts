@@ -1,43 +1,34 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
 import {
-  IMentionAffichage,
-  mappingVersMentionAffichage,
-  mappingVersMentionsApi,
-  modificationEffectue
+    IMentionAffichage,
+    mappingVersMentionAffichage,
+    mappingVersMentionsApi,
+    modificationEffectue
 } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
-  aucuneMentionsAffichageNationalite,
-  handleCheckBox,
-  handleReorga,
-  miseAjourEnFonctionNature,
-  texteEnFonctionOpposableAuTiers,
-  texteNonModifieNatureChangePasDeTexteDelivrance,
-  validerMentions
+    aucuneMentionsAffichageNationalite,
+    handleCheckBox,
+    handleReorga,
+    miseAjourEnFonctionNature,
+    texteEnFonctionOpposableAuTiers,
+    texteNonModifieNatureChangePasDeTexteDelivrance,
+    validerMentions
 } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import { waitFor } from "@testing-library/react";
-import request from "superagent";
 import {
-  documentReponseCopieIntegrale,
-  documentReponseExtraitAvecFiliation
+    documentReponseCopieIntegrale,
+    documentReponseExtraitAvecFiliation
 } from "../../../../mock/data/DocumentReponse";
 import { ficheActe2, ficheActeMariage } from "../../../../mock/data/ficheActe";
 import { mentionsAffichage, mentionsApi } from "../../../../mock/data/mentions";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { acte } from "../../fiche/data/ficheActe";
 
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configRequetes[0]
-]);
+
 
 beforeAll(async () => {
-  NatureMention.init();
-  DocumentDelivrance.init();
-
   await waitFor(() => {
     expect(DocumentDelivrance.length).toBeGreaterThan(0);
   });
@@ -330,6 +321,4 @@ test("Attendu: validerMentions fonctionne correctement", () => {
   window.confirm = sauvegardeFonctionConfirm;
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

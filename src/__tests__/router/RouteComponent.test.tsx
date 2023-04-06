@@ -7,10 +7,7 @@ import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import mockConnectedUser from "../../mock/data/connectedUser.json";
-import { configRequetes } from "../../mock/superagent-config/superagent-mock-requetes";
-const superagentMock = require("superagent-mock")(request, configRequetes);
 const u: any = mockConnectedUser;
 storeRece.utilisateurCourant = u as IOfficier;
 
@@ -71,6 +68,4 @@ test("L'utilisateur esasye d'accéder à la page 'Page qui n'existe pas', il est
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

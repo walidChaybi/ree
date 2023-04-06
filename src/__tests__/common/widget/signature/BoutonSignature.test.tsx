@@ -1,5 +1,4 @@
 import { Orientation } from "@model/composition/enum/Orientation";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { validerMentionsPlusieursDocuments } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
@@ -7,20 +6,8 @@ import { createEvent, fireEvent, screen, waitFor } from "@testing-library/dom";
 import { act, render } from "@testing-library/react";
 import { BoutonSignature } from "@widget/signature/BoutonSignature";
 import React from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { configTeleverification } from "../../../../mock/superagent-config/superagent-mock-televerification";
 import { acte } from "../../../pages/fiche/data/ficheActe";
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configRequetes[0],
-  configTeleverification[0]
-]);
 
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
 
 const requete: IRequeteTableauDelivrance = {
   idRequete: "id1",
@@ -167,6 +154,4 @@ test("renders titre bouton signature 2", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

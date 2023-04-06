@@ -7,23 +7,16 @@ import {
   specificationPhraseRMCAutoVide
 } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
 import { idDocumentsReponse } from "../../../../../mock/data/DocumentReponse";
 import { imagePngVideBase64 } from "../../../../../mock/data/ImagePng";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../mock/data/nomenclatures";
 import { idRequeteRDCSC } from "../../../../../mock/data/requeteDelivrance";
-import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, [
-  configRequetes[0],
-  configComposition[0]
-]);
+
 
 const titulaire = {
   nom: "nom",
@@ -69,10 +62,6 @@ const HookConsummer: React.FC = () => {
   );
 };
 
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
-
 test("Attendu: la génération d'un certificat de situation pour une recherche RMC auto vide et une demande PACS et titulaire Masculin fonctionne correctement", async () => {
   render(<HookConsummer></HookConsummer>);
   const resulatIdDoc = screen.getByTestId("resulatIdDoc");
@@ -88,6 +77,4 @@ test("Attendu: la génération d'un certificat de situation pour une recherche R
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

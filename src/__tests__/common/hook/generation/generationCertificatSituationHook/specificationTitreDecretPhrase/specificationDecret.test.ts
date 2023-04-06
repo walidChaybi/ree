@@ -1,16 +1,11 @@
 import { specificationDecret } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationDecret";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import request from "superagent";
 import { decrets } from "../../../../../../mock/data/NomenclatureEtatCivilDecrets";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
-import {} from "../../../../../../mock/superagent-config/superagent-mock-params";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
+import { } from "../../../../../../mock/superagent-config/superagent-mock-params";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
 beforeAll(() => {
-  DocumentDelivrance.init();
   storeRece.decrets = decrets;
 });
 
@@ -65,6 +60,4 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
     ]);
   });
 });
-afterAll(() => {
-  superagentMock.unset();
-});
+

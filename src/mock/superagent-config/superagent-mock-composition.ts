@@ -15,7 +15,7 @@ export const configComposition = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function (match, params, headers, context) {
+    fixtures: function (match: any, params: any, headers: any, context: any) {
       if (
         match[1] === "/composition/CERTIFICAT_SITUATION/1" ||
         match[1] === "/composition/CERTIFICAT_INSCRIPTION_RCA/1" ||
@@ -47,7 +47,7 @@ export const configComposition = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function (match, data) {
+    get: function (match: any, data: any) {
       return {
         body: data,
         header: data.headers
@@ -60,7 +60,7 @@ export const configComposition = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function (match, data) {
+    post: function (match: any, data: any) {
       return {
         body: data,
         header: data.headers

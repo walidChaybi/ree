@@ -1,33 +1,29 @@
 import { mappingOfficier } from "@core/login/LoginHook";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
 import {
-  URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
-  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC
+    URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
+    URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC
 } from "@router/ReceUrls";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
-import request from "superagent";
 import {
-  resultatHeaderUtilistateurLaurenceBourdeau,
-  resultatRequeteUtilistateurLaurenceBourdeau,
-  userDroitnonCOMEDEC
+    resultatHeaderUtilistateurLaurenceBourdeau,
+    resultatRequeteUtilistateurLaurenceBourdeau,
+    userDroitnonCOMEDEC
 } from "../../../../mock/data/connectedUserAvecDroit";
 import { idRequeteRDCPourModification } from "../../../../mock/data/requeteDelivrance";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
 const history = createMemoryHistory();
 
 const saisieRDC = () => {
@@ -65,10 +61,6 @@ const changeInput = (
       value
     }
   });
-
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
 
 beforeEach(() => {
   contextes.saisieRDC();
@@ -432,6 +424,4 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

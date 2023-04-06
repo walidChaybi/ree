@@ -1,30 +1,22 @@
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Courrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/Courrier";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import React from "react";
-import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../../mock/data/connectedUserAvecDroit";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
 import { requeteDelivranceRDC } from "../../../../../mock/data/requeteDelivrance";
-import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, [
-  configRequetes[0],
-  configComposition[0]
-]);
+
 
 beforeAll(() => {
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-  DocumentDelivrance.init();
 });
 
 test("renders courrier", async () => {
@@ -91,6 +83,4 @@ test("créer courrier", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

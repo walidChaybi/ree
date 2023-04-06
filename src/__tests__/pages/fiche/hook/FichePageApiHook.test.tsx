@@ -3,10 +3,6 @@ import { useFichePageApiHook } from "@pages/fiche/hook/FichePageApiHook";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 import { act } from "react-dom/test-utils";
-import request from "superagent";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const HookConsummerRc: React.FC = () => {
   const { dataFicheState } = useFichePageApiHook(
@@ -119,6 +115,4 @@ test("l'appel au WS fonctionne correctement pour une fiche acte", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

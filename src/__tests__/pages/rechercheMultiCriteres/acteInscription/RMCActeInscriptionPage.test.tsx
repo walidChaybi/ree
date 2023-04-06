@@ -1,22 +1,18 @@
 import { titreForm } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import * as TableauPaginationConstantes from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
-import request from "superagent";
 import { userDroitConsulterPerimetreMEAE } from "../../../../mock/data/connectedUserAvecDroit";
 import { idFicheActe1 } from "../../../../mock/data/ficheActe";
 import { idFichePacs } from "../../../../mock/data/fichePacs";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const globalAny: any = global;
 globalAny.URL.createObjectURL = jest.fn();
@@ -325,6 +321,4 @@ test("La pagination (avec changement de plage) entre les fiches acte s'effectue 
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

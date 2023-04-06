@@ -1,31 +1,22 @@
 import { CHOIX_COURRIER } from "@composant/formulaire/ConstantesNomsForm";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
-  getDefaultValuesCourrier,
-  getTypesCourrier
+    getDefaultValuesCourrier,
+    getTypesCourrier
 } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import ChoixCourrierForm, {
-  ChoixCourrierSubFormProps,
-  ValidationSchemaChoixCourrier
+    ChoixCourrierSubFormProps,
+    ValidationSchemaChoixCourrier
 } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/ChoixCourrierForm";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import React from "react";
-import request from "superagent";
 import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
-import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
-
-beforeAll(() => {
-  DocumentDelivrance.init();
-});
 
 const HookChoixCourrierForm: React.FC = () => {
   const typesCourrier = getTypesCourrier(requeteDelivrance);
@@ -84,6 +75,4 @@ test("renders ChoixCourrierForm", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

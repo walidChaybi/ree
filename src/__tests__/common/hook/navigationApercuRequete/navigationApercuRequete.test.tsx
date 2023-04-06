@@ -9,10 +9,7 @@ import { render } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
 const history = createMemoryHistory();
 
 beforeEach(() => {
@@ -132,6 +129,4 @@ describe("Doit rediriger sur la bonne route en fonction du statut et du sousType
 });
 
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

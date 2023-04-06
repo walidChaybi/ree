@@ -1,29 +1,23 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import {
-  IRMCAutoPersonneParams,
-  useRMCAutoPersonneApiAvecCacheHook
+    IRMCAutoPersonneParams,
+    useRMCAutoPersonneApiAvecCacheHook
 } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/OngletRMCPersonne";
 import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
-import request from "superagent";
 import { requeteCreationTranscription } from "../../../../../mock/data/requeteCreation";
-import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
-afterAll(() => {
-  superagentMock.unset();
-});
 
 interface HookConsumerTableauRMCAutoPersonneProps {
   requete: IRequeteCreationTranscription;

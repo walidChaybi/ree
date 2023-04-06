@@ -7,14 +7,9 @@ import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { IRequerant } from "@model/requete/IRequerant";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { waitFor } from "@testing-library/react";
-import request from "superagent";
 import { certificatRCA } from "../../../mock/data/Composition";
-import { configParamsBaseRequete } from "../../../mock/superagent-config/superagent-mock-params";
 
-const superagentMock = require("superagent-mock")(
-  request,
-  configParamsBaseRequete
-);
+
 
 test("Attendu: CertificatRCAComposition.creerCertificatRCA fonctionne correctement", async () => {
   await ParametreBaseRequete.init();
@@ -69,6 +64,4 @@ test("Attendu: CertificatRCAComposition.creerCertificatRCA fonctionne correcteme
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

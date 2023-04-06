@@ -1,14 +1,10 @@
 import {
-  IMiseAJourMentionsParams,
-  useMiseAJourMentionsApiHook
+    IMiseAJourMentionsParams,
+    useMiseAJourMentionsApiHook
 } from "@hook/acte/mentions/MiseAJourMentionsApiHook";
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
-
 const params: IMiseAJourMentionsParams = {
   idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235b",
   mentions: [{} as IMention]
@@ -27,6 +23,4 @@ test("Attendu: useMiseAJourMentionsApiHook fonctionne correctement", async () =>
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

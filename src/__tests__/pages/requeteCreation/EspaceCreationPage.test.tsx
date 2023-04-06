@@ -4,27 +4,22 @@ import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import { URL_ACCUEIL } from "@router/ReceUrls";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import request from "superagent";
 import {
-  resultatHeaderUtilistateurLeBiannic,
-  resultatRequeteUtilistateurLeBiannic
+    resultatHeaderUtilistateurLeBiannic,
+    resultatRequeteUtilistateurLeBiannic
 } from "../../../mock/data/connectedUserAvecDroit";
-import { configRequetesCreation } from "../../../mock/superagent-config/superagent-mock-requetes-creation";
 
-const superagentMock = require("superagent-mock")(
-  request,
-  configRequetesCreation
-);
+
 
 beforeAll(() => {
   storeRece.utilisateurCourant = mappingOfficier(
@@ -36,9 +31,7 @@ beforeAll(() => {
   );
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+
 
 test("renders creationPage", async () => {
   const history = createMemoryHistory();

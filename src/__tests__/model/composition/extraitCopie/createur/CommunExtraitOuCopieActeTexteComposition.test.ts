@@ -8,20 +8,7 @@ import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseReque
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
-import request from "superagent";
-import { configParamsBaseRequete } from "../../../../../mock/superagent-config/superagent-mock-params";
-const superagentMock = require("superagent-mock")(
-  request,
-  configParamsBaseRequete
-);
 
-beforeAll(async () => {
-  await ParametreBaseRequete.init();
-});
-
-afterAll(() => {
-  superagentMock.unset();
-});
 
 test("Attendu: creerFormuleSignatureDelivrance fonctionne correctement", () => {
   const composition = {} as IExtraitCopieComposition;

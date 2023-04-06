@@ -1,19 +1,15 @@
 import {
-  RMCArchivePage,
-  titreForm
+    RMCArchivePage,
+    titreForm
 } from "@pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 test("renders formulaire Recherche Multi Critères archives", async () => {
   await act(async () => {
@@ -89,6 +85,4 @@ test("Bouton Rechercher du Formulaire Recherche Multi Critères archives", async
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

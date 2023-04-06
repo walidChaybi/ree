@@ -1,14 +1,10 @@
 import {
-  FenetrePiecesJointes,
-  onClose
+    FenetrePiecesJointes,
+    onClose
 } from "@composant/piecesJointes/FenetrePiecesJointes";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
-import request from "superagent";
-import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const globalAny: any = global;
 globalAny.URL.createObjectURL = jest.fn();
@@ -47,6 +43,4 @@ test("onClose", () => {
   expect(toggleFenetre).toHaveBeenCalledTimes(1);
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
+

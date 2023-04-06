@@ -1,7 +1,4 @@
-import { idDocumentsReponse } from "../data/DocumentReponse";
-import { ReponseAppelNomenclatureDocummentDelivrance } from "../data/nomenclatures";
-
-export const configRequetesGeneInscription = [
+export const configFakeUrl = [
   {
     /**
      * regular expression of URL
@@ -16,20 +13,17 @@ export const configRequetesGeneInscription = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function (match, params, headers, context) {
-      // Stockage d'un document (POST)
-      if (match[1] === "/documentsreponses" && context.method === "post") {
-        return { data: [idDocumentsReponse[0]] };
+    fixtures: function (match: any, params: any, headers: any, context: any) {
+      //
+      if (
+        match[1] === "/requetes?parametre1=titi&parametre2=3&parametre3=tutu"
+      ) {
+        return true;
       }
 
-      // Nomenclatures requetes
-      if (match[1] === "/nomenclature/DOCUMENT_DELIVRANCE") {
-        return { data: ReponseAppelNomenclatureDocummentDelivrance.data };
+      if (match[1] === "/fakes") {
+        return true;
       }
-
-      const error = { msg: "url api requete non mockée", url: match[1] };
-      const message = `Erreur mock inscirption: ${JSON.stringify(error)}`;
-      console.error(message);
     },
 
     /**
@@ -38,10 +32,10 @@ export const configRequetesGeneInscription = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function (match, data) {
+    get: function (match: any, data: any) {
       return {
         body: data,
-        header: data ? data.headers : null
+        header: data.headers
       };
     },
 
@@ -51,10 +45,21 @@ export const configRequetesGeneInscription = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function (match, data) {
+    post: function (match: any, data: any) {
       return {
-        body: data,
-        header: data.headers
+        status: 201
+      };
+    },
+
+    /**
+     * returns the result of the DELETE request
+     *
+     * @param match array Result of the resolution of the regular expression
+     * @param data  mixed Data returns by `fixtures` attribute
+     */
+    delete: function (match: any, data: any) {
+      return {
+        status: 201
       };
     },
 
@@ -64,10 +69,21 @@ export const configRequetesGeneInscription = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    patch: function (match, data) {
+    patch: function (match: any, data: any) {
       return {
-        body: data,
-        header: data.headers
+        status: 201
+      };
+    },
+
+    /**
+     * returns the result of the PUT request
+     *
+     * @param match array Result of the resolution of the regular expression
+     * @param data  mixed Data returns by `fixtures` attribute
+     */
+    put: function (match: any, data: any) {
+      return {
+        status: 201
       };
     }
   }

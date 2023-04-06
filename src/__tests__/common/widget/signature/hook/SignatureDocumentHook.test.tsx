@@ -1,5 +1,7 @@
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import {
+  act,
   createEvent,
   fireEvent,
   render,
@@ -9,14 +11,6 @@ import {
 import { useSignatureDocumentHook } from "@widget/signature/hook/SignatureDocumentHook";
 import { DocumentsByRequete } from "@widget/signature/hook/SignatureDocumentHookUtil";
 import React from "react";
-import request from "superagent";
-import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-
-const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
-  configRequetes[0]
-]);
 
 const documentsByRequete: DocumentsByRequete = {
   id1: {
@@ -33,7 +27,10 @@ const documentsByRequete: DocumentsByRequete = {
     ],
     documentsToSave: [],
     sousTypeRequete: SousTypeDelivrance.RDC,
-    idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235b"
+    acte: {
+      id: "19c0d767-64e5-4376-aa1f-6d781a2a235b",
+      titulaires: [{ nom: "" }, { nom: "" }]
+    } as any as IFicheActe
   },
   id2: {
     documentsToSign: [
@@ -49,7 +46,10 @@ const documentsByRequete: DocumentsByRequete = {
     ],
     documentsToSave: [],
     sousTypeRequete: SousTypeDelivrance.RDC,
-    idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235b"
+    acte: {
+      id: "19c0d767-64e5-4376-aa1f-6d781a2a235b",
+      titulaires: [{ nom: "" }, { nom: "" }]
+    } as any as IFicheActe
   }
 };
 
@@ -68,29 +68,28 @@ const HookConsummer: React.FC = () => {
 };
 
 test("Signature document hook", async () => {
-  render(<HookConsummer />);
-
-  fireEvent(
-    window,
-    //@ts-ignore
-    createEvent(
-      "signWebextResponse",
+  act(() => {
+    render(<HookConsummer />);
+  });
+  setTimeout(() => {
+    fireEvent(
       window,
-      {
-        detail: {
-          direction: "to-call-app",
-          erreurs: []
-        }
-      },
-      { EventType: "CustomEvent" }
-    )
-  );
+      //@ts-ignore
+      createEvent(
+        "signWebextResponse",
+        window,
+        {
+          detail: {
+            direction: "to-call-app",
+            erreurs: []
+          }
+        },
+        { EventType: "CustomEvent" }
+      )
+    );
+  }, 200);
 
   await waitFor(() => {
     expect(screen.getAllByText("length1")).toBeDefined();
   });
-});
-
-afterAll(() => {
-  superagentMock.unset();
 });
