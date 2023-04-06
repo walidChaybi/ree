@@ -75,3 +75,7 @@ export const CHAMP_OBLIGATOIRE = getLibelle("Ce champ est obligatoire");
 export const LIEN_REQUERANT_OBLIGATOIRE = getLibelle(
   "Le lien requérant est obligatoire"
 );
+
+export const REGISTRE_OBLIGATOIRE = getLibelle(
+  "La ville du registre est obligatoire"
+);

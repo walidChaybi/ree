@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { mappingRequeteCreation } from "./DetailRequeteHook";
 
 export interface ISaisieRequeteRCTCAEnvoyer {
-  canal: string;
-  lienRequerant: any;
   natureActeTranscrit: string;
-  villeRegistre?: string;
+  villeRegistre: string;
+  lienRequerant: any;
+  canal: string;
   provenance: string;
   requerant: any;
   sousType: string;

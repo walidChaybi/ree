@@ -525,41 +525,42 @@ export const requeteCreationTranscription = {
   decret: null
 } as any as IRequeteCreationTranscription;
 
-export const creationRequeteTranscriptionParams: ICreationRequeteCreationParams = {
-  requete: {
-    villeRegistre: "",
-    canal: "COURRIER",
-    type: "CREATION",
-    sousType: "RCTC",
-    provenance: "COURRIER",
-    natureActeTranscrit: "NAISSANCE_MINEUR",
-    lienRequerant: { typeLienRequerant: "PERE_MERE" },
-    titulaires: [
-      {
-        prenoms: [{ prenom: "Prenom", numeroOrdre: 1 }],
-        sexe: "INCONNU",
-        nationalite: "INCONNUE",
-        typeObjetTitulaire: "TITULAIRE_ACTE_TRANSCRIT_DRESSE",
-        position: 1,
-        nomNaissance: "Nom acte etranger",
-        nomSouhaite: "Nom souhaite FR",
-        evenementUnions: []
-      },
-      {
-        prenoms: [{ prenom: "SPC", numeroOrdre: 1 }],
-        sexe: "INCONNU",
-        nationalite: "INCONNUE",
-        nomNaissance: "SNP",
-        typeObjetTitulaire: "FAMILLE",
-        qualite: "PARENT",
-        position: 1,
-        nationalites: [],
-        evenementUnions: []
-      }
-    ],
-    requerant: { adresse: {}, qualite: "PARTICULIER" }
-  }
-};
+export const creationRequeteTranscriptionParams: ICreationRequeteCreationParams =
+  {
+    requete: {
+      villeRegistre: "Dakar",
+      canal: "COURRIER",
+      type: "CREATION",
+      sousType: "RCTC",
+      provenance: "COURRIER",
+      natureActeTranscrit: "NAISSANCE_MINEUR",
+      lienRequerant: { typeLienRequerant: "PERE_MERE" },
+      titulaires: [
+        {
+          prenoms: [{ prenom: "Prenom", numeroOrdre: 1 }],
+          sexe: "INCONNU",
+          nationalite: "INCONNUE",
+          typeObjetTitulaire: "TITULAIRE_ACTE_TRANSCRIT_DRESSE",
+          position: 1,
+          nomNaissance: "Nom acte etranger",
+          nomSouhaite: "Nom souhaite FR",
+          evenementUnions: []
+        },
+        {
+          prenoms: [{ prenom: "SPC", numeroOrdre: 1 }],
+          sexe: "INCONNU",
+          nationalite: "INCONNUE",
+          nomNaissance: "SNP",
+          typeObjetTitulaire: "FAMILLE",
+          qualite: "PARENT",
+          position: 1,
+          nationalites: [],
+          evenementUnions: []
+        }
+      ],
+      requerant: { adresse: {}, qualite: "PARTICULIER" }
+    }
+  };
 
 export const creationRequeteRCTCResultat = [
   {

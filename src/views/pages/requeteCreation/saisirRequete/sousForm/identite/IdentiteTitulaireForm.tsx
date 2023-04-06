@@ -2,7 +2,6 @@ import {
   DATE_NAISSANCE,
   LIEN_REQUERANT,
   NAISSANCE,
-  NATURE_ACTE_LIEN_REQUERANT,
   NOM,
   NOMS,
   NOM_ACTE_ETRANGER,
@@ -11,6 +10,7 @@ import {
   PRENOMS,
   PRENOM_1,
   REQUERANT,
+  REQUETE,
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
 import PrenomsForm, {
@@ -110,9 +110,7 @@ const IdentiteTitulaireForm: React.FC<SubFormProps> = props => {
 
   function getLienRequerant(): TypeLienRequerantCreation {
     return TypeLienRequerantCreation.getEnumFor(
-      props.formik.getFieldProps(
-        withNamespace(NATURE_ACTE_LIEN_REQUERANT, LIEN_REQUERANT)
-      ).value
+      props.formik.getFieldProps(withNamespace(REQUETE, LIEN_REQUERANT)).value
     );
   }
 

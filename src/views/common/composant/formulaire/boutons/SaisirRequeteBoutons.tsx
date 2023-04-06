@@ -32,8 +32,9 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
   };
 
   const valider = () => {
-    props.formik.submitForm();
-    GestionnaireBlockErreur.scrollALaPremiereErreur();
+    props.formik.submitForm().then(() => {
+      GestionnaireBlockErreur.scrollALaPremiereErreur();
+    });
   };
 
   const prendreEnCharge = () => {

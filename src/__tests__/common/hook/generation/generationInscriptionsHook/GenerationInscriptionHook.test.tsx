@@ -8,9 +8,9 @@ import { idDocumentsReponse2 } from "../../../../../mock/data/DocumentReponse";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../mock/data/nomenclatures";
 import { idRequeteRDCSC } from "../../../../../mock/data/requeteDelivrance";
 import {
-    DataRMCInscriptionAvecUnPACS,
-    DataRMCInscriptionAvecUnRC,
-    DataRMCInscriptionAvecUnRCA
+  DataRMCInscriptionAvecUnPACS,
+  DataRMCInscriptionAvecUnRC,
+  DataRMCInscriptionAvecUnRCA
 } from "../../../../../mock/data/RMCInscription";
 
 

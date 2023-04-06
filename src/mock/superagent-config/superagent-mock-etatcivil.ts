@@ -630,6 +630,10 @@ export const configEtatcivil = [
         return { data: getTitulairesActeAPI.data };
       }
 
+      if (match[1] === "/acte/mespocopas") {
+        return { data: ["ALGER", "RABAT", "TRIPOLI", "TUNIS"] };
+      }
+
       const error = {
         msg: "url api etat civil non mockée",
         url: match[1],

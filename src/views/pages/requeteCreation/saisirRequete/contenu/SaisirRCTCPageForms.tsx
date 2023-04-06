@@ -2,6 +2,7 @@ import {
   PARENTS,
   PIECES_JOINTES,
   REQUERANT,
+  REQUETE,
   TITULAIRE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { TypeRedactionActe } from "@model/etatcivil/enum/TypeRedactionActe";
@@ -9,17 +10,16 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { getLibelle } from "@util/Utils";
 import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
 import React from "react";
-import { NATURE_ACTE_LIEN_REQUERANT } from "../../../../common/composant/formulaire/ConstantesNomsForm";
-import NatureActeEtLienRequerantForm from "../sousForm/acteATranscrireEtLienRequerant/NatureActeEtLienRequerant";
 import IdentiteTitulaireForm from "../sousForm/identite/IdentiteTitulaireForm";
 import ParentsForm from "../sousForm/parent/ParentsForm";
 import RequerantForm from "../sousForm/requerant/RequerantForm";
+import RequeteForm from "../sousForm/requete/RequeteForm";
 
-export function getActeATranscrireEtLienRequerant(): JSX.Element {
+export function getRequeteForm(): JSX.Element {
   return (
-    <NatureActeEtLienRequerantForm
-      key={NATURE_ACTE_LIEN_REQUERANT}
-      nom={NATURE_ACTE_LIEN_REQUERANT}
+    <RequeteForm
+      key={REQUETE}
+      nom={REQUETE}
       titre={getLibelle("Acte à transcrire")}
     />
   );

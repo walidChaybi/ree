@@ -26,7 +26,6 @@ import {
   NATIONALITE_2,
   NATIONALITE_3,
   NATURE_ACTE,
-  NATURE_ACTE_LIEN_REQUERANT,
   NOM,
   NOMS,
   NOM_ACTE_ETRANGER,
@@ -53,7 +52,9 @@ import {
   RECONNAISSANCE,
   REGION_ETAT_RECONNAISSANCE,
   REGION_NAISSANCE,
+  REGISTRE,
   REQUERANT,
+  REQUETE,
   SEXE,
   TITULAIRE,
   TITULAIRE_RECONNU,
@@ -65,7 +66,7 @@ import {
 import { PieceJointe } from "@util/FileUtils";
 
 export interface ISaisieRequeteRCTC {
-  [NATURE_ACTE_LIEN_REQUERANT]: INatureActeEtLienRequerantForm;
+  [REQUETE]: IRequeteForm;
   [TITULAIRE]: IIdentiteTitulaireForm;
   [PARENTS]: {
     parent1: IParentForm;
@@ -77,9 +78,10 @@ export interface ISaisieRequeteRCTC {
   [PIECES_JOINTES]?: PieceJointe[];
 }
 
-interface INatureActeEtLienRequerantForm {
+interface IRequeteForm {
   [NATURE_ACTE]: string;
   [LIEN_REQUERANT]: string;
+  [REGISTRE]: string;
 }
 
 export interface IIdentiteTitulaireForm {

@@ -41,17 +41,13 @@ export function mappingSaisieRequeteRCTCVersRequetesAEnvoyer(
   saisie: ISaisieRequeteRCTC
 ): ISaisieRequeteRCTCAEnvoyer {
   return {
-    villeRegistre: "", // TODO: Quand le champ en question sera ajoute dans le formulaire.
+    villeRegistre: saisie.requete.registre, 
     canal: TypeCanal.COURRIER.nom,
     type: TypeRequete.CREATION.nom,
     sousType: SousTypeCreation.RCTC.nom,
     provenance: Provenance.COURRIER.nom,
-    natureActeTranscrit: getValeurOuUndefined(
-      saisie.acteATranscrireLienRequerant.natureActe
-    ),
-    lienRequerant: mapLienRequerant(
-      saisie.acteATranscrireLienRequerant.lienRequerant
-    ),
+    natureActeTranscrit: getValeurOuUndefined(saisie.requete.natureActe),
+    lienRequerant: mapLienRequerant(saisie.requete.lienRequerant),
     titulaires: mapTitulairesRCTC(
       saisie.titulaire,
       saisie.parents.parent1,

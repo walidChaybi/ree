@@ -60,8 +60,7 @@ export const URL_REPONSE_REQ_INFO = "/reponse";
 export const URL_NB_REQ_INFO = "/requetes/information/count";
 export const URL_ECHANGE = "/echange";
 export const URL_ECHANGE_STATUT = "/requetes/action/retourSdanf";
-export const URL_DOCUMENT_COMPLEMENTAIRE =
-  "/documentsreponses/documentComplementaire";
+export const URL_DOCUMENT_COMPLEMENTAIRE = "/documentsreponses/documentComplementaire";
 
 const URL_REPONSES = "/reponses";
 

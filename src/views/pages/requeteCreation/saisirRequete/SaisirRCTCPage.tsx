@@ -1,10 +1,10 @@
 import {
   MARIAGE,
-  NATURE_ACTE_LIEN_REQUERANT,
   PARENTS,
   PIECES_JOINTES,
   RECONNAISSANCE,
   REQUERANT,
+  REQUETE,
   TITULAIRE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
@@ -25,18 +25,14 @@ import {
   useCreationRequeteCreation
 } from "../../../common/hook/requete/CreationRequeteCreationApiHook";
 import {
-  getActeATranscrireEtLienRequerant,
   getParentsForm,
   getPiecesJointesForm,
   getRequerantForm,
+  getRequeteForm,
   getTitulaireForm
 } from "./contenu/SaisirRCTCPageForms";
 import { mappingSaisieRequeteRCTCVersRequetesAEnvoyer } from "./mapping/mappingFormulaireSaisirRCTCVersRequeteTranscription";
 import "./scss/SaisirRCTCPage.scss";
-import {
-  NatureActeEtLienRequerantFormDefaultValues,
-  NatureActeEtLienRequerantFormValidationSchema
-} from "./sousForm/acteATranscrireEtLienRequerant/NatureActeEtLienRequerant";
 import {
   EvenementMariageParentsFormDefaultValues,
   EvenementMariageParentsFormValidationSchema
@@ -57,6 +53,10 @@ import {
   RequerantFormDefaultValue,
   RequerantFormValidationSchema
 } from "./sousForm/requerant/RequerantForm";
+import {
+  RequeteFormDefaultValues,
+  RequeteFormValidationSchema
+} from "./sousForm/requete/RequeteForm";
 import TransmissionPopin from "./sousForm/transmissionPopin/TransmissionPopin";
 
 export const enum limitesParents {
@@ -66,7 +66,7 @@ export const enum limitesParents {
 
 const TITRE_FORMULAIRE = SousTypeCreation.RCTC.libelle;
 export const ValeursRequeteCreationRCTCParDefaut = {
-  [NATURE_ACTE_LIEN_REQUERANT]: NatureActeEtLienRequerantFormDefaultValues,
+  [REQUETE]: RequeteFormDefaultValues,
   [TITULAIRE]: IdentiteFormDefaultValues,
   [PARENTS]: {
     parent1: ParentFormDefaultValues,
@@ -78,7 +78,7 @@ export const ValeursRequeteCreationRCTCParDefaut = {
 };
 
 const ValidationSchemaSaisirRCTC = Yup.object({
-  [NATURE_ACTE_LIEN_REQUERANT]: NatureActeEtLienRequerantFormValidationSchema,
+  [REQUETE]: RequeteFormValidationSchema,
   [TITULAIRE]: IdentiteFormValidationSchema,
   [PARENTS]: Yup.object({
     parent1: ParentFormValidationSchema,
@@ -163,7 +163,7 @@ export const SaisirRCTCPage: React.FC = () => {
   // Formulaire
   //////////////////////////////////////////////////////////////////////////
   const blocsForm: JSX.Element[] = [
-    getActeATranscrireEtLienRequerant(),
+    getRequeteForm(),
     getTitulaireForm(),
     getParentsForm(),
     getRequerantForm(),

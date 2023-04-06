@@ -41,6 +41,7 @@ export const URL_SAISIE_EXTRAIT = "/saisieExtrait";
 export const URL_PERSONNE = "/personne";
 export const URL_RC = "/rc";
 export const URL_PERSONNE_RMC_AUTO = "/personne/rmcauto";
+export const URL_POCOPAS = "/mespocopas";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -348,4 +349,12 @@ export function majEtatCivilSuiteSaisieExtrait(
     uri: `${URL_ACTE}/${idActe}${URL_SAISIE_EXTRAIT}`,
     data: extraitSaisiAEnvoyer
   });
+}
+
+export function getPocopasAgent(): Promise<any> {
+  const config: any = {
+    method: HttpMethod.GET,
+    uri: `${URL_ACTE}${URL_POCOPAS}`
+  };
+  return api.fetch(config);
 }

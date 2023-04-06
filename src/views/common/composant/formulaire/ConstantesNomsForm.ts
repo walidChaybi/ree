@@ -204,6 +204,7 @@ export const TITULAIRE = "titulaire";
 // Acte transcription
 export const NATURE_ACTE_LIEN_REQUERANT = "acteATranscrireLienRequerant";
 export const LIEN_REQUERANT = "lienRequerant";
+export const REGISTRE = "registre";
 
 // Nationalites
 export const NATIONALITE_1 = "nationalite1";
