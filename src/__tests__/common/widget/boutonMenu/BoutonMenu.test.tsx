@@ -8,7 +8,9 @@ import {
 import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import React, { useState } from "react";
 
-const StateConsumerBoutonMenu: React.FC = () => {
+const StateConsumerBoutonMenu: React.FC<{
+  openOnMouseClick?: boolean;
+}> = props => {
   const [value, setValue] = useState<number>(0);
 
   return (
@@ -22,6 +24,7 @@ const StateConsumerBoutonMenu: React.FC = () => {
           { key: "3", libelle: "Trois" }
         ]}
         onClickMenuItem={() => setValue(value + 1)}
+        openOnMouseClick={props.openOnMouseClick}
       />
     </>
   );
@@ -72,6 +75,44 @@ describe("Test le fonctionnement du composant BoutonMenu", () => {
     await waitFor(() => {
       expect(menu).not.toBeVisible();
       expect(choixUn).not.toBeVisible();
+    });
+  });
+
+  test("DOIT afficher / cacher la liste des items QUAND l'utilisateur clique sur le bouton (et non le survole).", async () => {
+    await act(async () => {
+      render(<StateConsumerBoutonMenu openOnMouseClick={true} />);
+    });
+
+    const bouton: HTMLElement = screen.getByText("Click me");
+    const menu: HTMLElement = screen.getByRole("presentation", {
+      hidden: true
+    });
+    const choixUn: HTMLElement = screen.getByText("Un");
+
+    await waitFor(() => {
+      expect(bouton).toBeDefined();
+      expect(menu).toBeDefined();
+      expect(menu).not.toBeVisible();
+      expect(choixUn).toBeDefined();
+      expect(choixUn).not.toBeVisible();
+    });
+
+    await act(async () => {
+      fireEvent.mouseOver(bouton);
+    });
+
+    await waitFor(() => {
+      expect(menu).not.toBeVisible();
+      expect(choixUn).not.toBeVisible();
+    });
+
+    await act(async () => {
+      fireEvent.click(bouton);
+    });
+
+    await waitFor(() => {
+      expect(menu).toBeVisible();
+      expect(choixUn).toBeVisible();
     });
   });
 

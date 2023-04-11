@@ -5,7 +5,7 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { getColonneCheckbox } from "@widget/tableau/TableauRece/colonneInput/checkbox/ColonneCheckbox";
+import { getColonneCasesACocher } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useState } from "react";
 
@@ -17,7 +17,7 @@ const TableauReceWrapper: React.FC<{ contientHeader: boolean }> = props => {
     <TableauRece
       idKey="id"
       columnHeaders={[
-        getColonneCheckbox({
+        getColonneCasesACocher({
           identifiantsSelectionnes: idSelectionnes,
           setIdentifiantsSelectionnes: setIdSelectionnes,
           getIdentifiant: (data: any) => data.id,
@@ -50,8 +50,8 @@ describe("Test de la fonction getColonneCheckbox().", () => {
     await waitFor(() => {
       for (const checkbox of checkboxs) {
         classList = checkbox.parentElement?.classList as DOMTokenList;
-        expect(classList.contains("checkbox-body")).toBeTruthy();
-        expect(classList.contains("checkbox-header")).toBeFalsy();
+        expect(classList.contains("case-a-cocher")).toBeTruthy();
+        expect(classList.contains("entete-case-a-cocher")).toBeFalsy();
       }
     });
   });
@@ -65,12 +65,12 @@ describe("Test de la fonction getColonneCheckbox().", () => {
     let classList: DOMTokenList;
     await waitFor(() => {
       classList = checkboxs[0].parentElement?.classList as DOMTokenList;
-      expect(classList.contains("checkbox-body")).toBeFalsy();
-      expect(classList.contains("checkbox-header")).toBeTruthy();
+      expect(classList.contains("case-a-cocher")).toBeFalsy();
+      expect(classList.contains("entete-case-a-cocher")).toBeTruthy();
       for (const checkbox of checkboxs.slice(1)) {
         classList = checkbox.parentElement?.classList as DOMTokenList;
-        expect(classList.contains("checkbox-body")).toBeTruthy();
-        expect(classList.contains("checkbox-header")).toBeFalsy();
+        expect(classList.contains("case-a-cocher")).toBeTruthy();
+        expect(classList.contains("entete-case-a-cocher")).toBeFalsy();
       }
     });
   });

@@ -26,6 +26,7 @@ import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils"
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
@@ -201,12 +202,19 @@ export const RequetesServiceCreation: React.FC<
     );
   };
 
-  const columnHeaders = getColonnesTableauRequetesServiceCreation({
+  const colonneCaseACocherAttribueAParams: IColonneCaseACocherParams<
+    IRequeteTableauCreation,
+    string
+  > = {
     identifiantsSelectionnes: idRequetesSelectionneesAttribueeA,
     setIdentifiantsSelectionnes: setIdRequetesSelectionneesAttribueeA,
     getIdentifiant: (data: IRequeteTableauCreation) => data.idRequete,
     contientHeader: true
-  });
+  };
+
+  const columnHeaders = getColonnesTableauRequetesServiceCreation(
+    colonneCaseACocherAttribueAParams
+  );
 
   return (
     <>

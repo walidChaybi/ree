@@ -74,32 +74,46 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
 
   /* Gestion du clic sur une colonne de type checkbox dans le tableau des actes */
   const onClickCheckboxActe = useCallback(
-    (isChecked: boolean, data: IResultatRMCActe): void => {
+    (
+      event: React.ChangeEvent<HTMLInputElement>,
+      data: IResultatRMCActe
+    ): void => {
       let nouveauxActesSelectionnes = [...actesSelectionnes];
-      if (isChecked) {
+      const estCoche: boolean = event?.target.checked;
+      if (estCoche) {
         nouveauxActesSelectionnes.push(data);
-        setAddActe({ idActe: data.idActe, isChecked: true });
       } else {
-        setAddActe({ idActe: data.idActe, isChecked: false });
         nouveauxActesSelectionnes = decocheElementDuTableauActe(
           actesSelectionnes,
           data.idActe
         );
       }
+      setAddActe({ idActe: data.idActe, isChecked: estCoche });
       setActesSelectionnees(nouveauxActesSelectionnes);
-      setNbrTitulairesActeHookParameters({ idActe: data?.idActe, isChecked });
-      setTitulairesActeHookParameters({ idActe: data?.idActe, isChecked });
-      setAlertesActeHookParameters({ idActe: data?.idActe, isChecked });
+      setNbrTitulairesActeHookParameters({
+        idActe: data?.idActe,
+        isChecked: estCoche
+      });
+      setTitulairesActeHookParameters({
+        idActe: data?.idActe,
+        isChecked: estCoche
+      });
+      setAlertesActeHookParameters({
+        idActe: data?.idActe,
+        isChecked: estCoche
+      });
     },
     [actesSelectionnes]
   );
 
   /* Gestion du clic sur une colonne de type checkbox dans le tableau des inscriptions */
   const onClickCheckboxInscription = useCallback(
-    (isChecked: boolean, data: IResultatRMCInscription): void => {
+    (
+      event: React.ChangeEvent<HTMLInputElement>,
+      data: IResultatRMCInscription
+    ): void => {
       let nouvellesInscriptionsSelectionnees = [...inscriptionsSelectionnees];
-
-      if (isChecked) {
+      if (event?.target.checked) {
         nouvellesInscriptionsSelectionnees.push(data);
       } else {
         nouvellesInscriptionsSelectionnees = decocheElementDuTableauInscription(

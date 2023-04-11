@@ -26,4 +26,8 @@ export class NatureActeRequete extends EnumWithLibelle {
   public static estNaissance(natureActe?: NatureActeRequete): boolean {
     return natureActe === NatureActeRequete.NAISSANCE;
   }
+
+  public static estMariage(natureActe?: NatureActeRequete): boolean {
+    return natureActe === NatureActeRequete.MARIAGE;
+  }
 }

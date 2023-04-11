@@ -26,6 +26,7 @@ import { IEchange } from "@model/requete/IEchange";
 import { IEvenementReqDelivrance } from "@model/requete/IEvenementReqDelivrance";
 import { IMandant } from "@model/requete/IMandant";
 import { IObservation } from "@model/requete/IObservation";
+import { IPersonneSauvegardee } from "@model/requete/IPersonneSauvegardee";
 import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
 import { Requerant } from "@model/requete/IRequerant";
 import { TRequete } from "@model/requete/IRequete";
@@ -43,7 +44,9 @@ import {
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { logError } from "@util/LogManager";
 import { storeRece } from "@util/storeRece";
+import { getValeurOuUndefined } from "@util/Utils";
 import { useEffect, useState } from "react";
+import { RolePersonneSauvegardee } from "./../../../../model/requete/enum/RolePersonneSauvegardee";
 
 export interface IDetailRequeteParams {
   idRequete?: string;
@@ -342,6 +345,10 @@ function mapDocumentPJ(documents?: any): IDocumentPJ[] {
 
 export function mappingRequeteCreation(data: any): IRequeteCreation {
   const requete = mappingRequete(data);
+  const natureActeTranscrit = NatureActeTranscription.getEnumFor(
+    data.natureActeTranscrit
+  );
+
   return {
     ...data,
     ...requete,
@@ -365,15 +372,34 @@ export function mappingRequeteCreation(data: any): IRequeteCreation {
     documentsPj: mapDocumentPJ(data.documentsPj),
     provenance: Provenance.getEnumFor(data.provenance),
     titulaires: mapTitulairesCreation(requete.titulaires),
-    natureActeTranscrit: NatureActeTranscription.getEnumFor(
-      data.natureActeTranscrit
+    natureActeTranscrit,
+    personnesSauvegardees: mapPersonnesSauvegardees(
+      getValeurOuUndefined(data.personnesSauvegardees),
+      NatureActeTranscription.estMariage(natureActeTranscrit)
     )
   };
-} 
+}
 
 export function mapTitulairesCreation(titulaires: any[]) {
   return titulaires.map(titulaire => ({
     ...titulaire,
     qualite: QualiteFamille.getEnumFor(titulaire.qualite)
   }));
+}
+
+function mapPersonnesSauvegardees(
+  data?: any[],
+  estRequeteMariage = false
+): IPersonneSauvegardee[] {
+  const personnesSauvegardees: IPersonneSauvegardee[] = [];
+  data?.forEach(dataCourant =>
+    personnesSauvegardees.push({
+      idPersonne: dataCourant.idPersonne,
+      role: RolePersonneSauvegardee.getEnumForEnFonctionNatureActeRequete(
+        dataCourant.role,
+        estRequeteMariage
+      )
+    })
+  );
+  return personnesSauvegardees;
 }

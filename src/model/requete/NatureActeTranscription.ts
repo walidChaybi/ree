@@ -55,4 +55,22 @@ export class NatureActeTranscription extends EnumWithLibelle {
       this.estNaissanceMajeure(natureActe)
     );
   }
+
+  public static estMariageAvecCCAM(
+    natureActe?: NatureActeTranscription
+  ): boolean {
+    return natureActe === NatureActeTranscription.MARIAGE_AVEC_CCAM;
+  }
+
+  public static estMariageSansCCAM(
+    natureActe?: NatureActeTranscription
+  ): boolean {
+    return natureActe === NatureActeTranscription.MARIAGE_SANS_CCAM;
+  }
+
+  public static estMariage(natureActe?: NatureActeTranscription): boolean {
+    return (
+      this.estMariageAvecCCAM(natureActe) || this.estMariageSansCCAM(natureActe)
+    );
+  }
 }

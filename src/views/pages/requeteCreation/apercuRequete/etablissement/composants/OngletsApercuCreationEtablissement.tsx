@@ -1,6 +1,8 @@
-import { IRMCAutoPersonneResultat } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
+import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
-import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/OngletRMCPersonne";
+import { useDataTableauPersonneSauvegardeeHook } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/IDataTableauPersonneSauvegardee";
+import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useState } from "react";
 import {
@@ -13,7 +15,7 @@ interface OngletsApercuCreationEtablissementProps {
   requete: IRequeteCreationEtablissement;
   modeConsultation?: boolean;
   onRenommePieceJustificative: typeFctRenommePieceJustificative;
-  resultatRMCAutoPersonne: IRMCAutoPersonneResultat[];
+  resultatRMCPersonne: IRMCPersonneResultat[];
   handleClickSelectionTitulaireRmcPersonne: (idTitulaire: string) => void;
 }
 
@@ -27,6 +29,12 @@ export const OngletsApercuCreationEtablissement: React.FC<
   OngletsApercuCreationEtablissementProps
 > = props => {
   const [ongletSelectionne, setOngletSelectionne] = useState(0);
+  const {
+    dataPersonnesSauvegardees: dataPersonnesSelectionnees,
+    setDataPersonnesSauvegardees: setDataPersonnesSelectionnees
+  } = useDataTableauPersonneSauvegardeeHook(
+    props.requete.personnesSauvegardees
+  );
 
   const liste: ItemListe[] = [
     {
@@ -55,10 +63,15 @@ export const OngletsApercuCreationEtablissement: React.FC<
       titre: "RMC",
       component: (
         <OngletRMCPersonne
-          rmcAutoPersonneResultat={props.resultatRMCAutoPersonne}
+          resultatRMCPersonne={props.resultatRMCPersonne}
           sousTypeRequete={props.requete.sousType}
           listeTitulaires={props.requete.titulaires}
           handleClickMenuItem={props.handleClickSelectionTitulaireRmcPersonne}
+          natureActeRequete={NatureActeRequete.getEnumFor(
+            props.requete.nature ?? ""
+          )}
+          dataPersonnesSelectionnees={dataPersonnesSelectionnees}
+          setDataPersonnesSelectionnees={setDataPersonnesSelectionnees}
         />
       ),
       index: 1

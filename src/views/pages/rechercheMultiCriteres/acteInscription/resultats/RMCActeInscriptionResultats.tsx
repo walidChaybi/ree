@@ -5,6 +5,7 @@ import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IRe
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
+import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import React from "react";
 import "../scss/RMCActeInscriptionResultats.scss";
 import { RMCTableauActes } from "./RMCTableauActes";
@@ -23,11 +24,11 @@ export interface RMCActeInscriptionResultatsProps {
   setRangeInscription?: (range: string) => void;
   resetRMC?: boolean;
   onClickCheckboxTableauActes?: (
-    isChecked: boolean,
+    event: TChangeEventSurHTMLInputElement,
     data: IResultatRMCActe
   ) => void;
   onClickCheckboxTableauInscriptions?: (
-    isChecked: boolean,
+    event: TChangeEventSurHTMLInputElement,
     data: IResultatRMCInscription
   ) => void;
   nbLignesParPageActe: number;

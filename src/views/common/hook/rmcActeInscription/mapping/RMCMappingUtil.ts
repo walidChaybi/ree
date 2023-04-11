@@ -1,25 +1,18 @@
-import { IRMCAutoPersonneResultat } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { StatutActe } from "@model/etatcivil/enum/StatutActe";
-import { StatutPacesUtil } from "@model/etatcivil/enum/StatutPacs";
 import { TypeActe } from "@model/etatcivil/enum/TypeActe";
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
-import { InscriptionRcUtil } from "@model/etatcivil/enum/TypeInscriptionRc";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { getDateStringFromDateCompose, IDateCompose } from "@util/DateUtils";
+import { getDateStringFromDateCompose } from "@util/DateUtils";
 import {
   formatNom,
   formatNoms,
   formatPrenoms,
   getValeurOuUndefined,
-  getValeurOuVide,
-  premiereLettreEnMajuscule,
-  TROIS
+  getValeurOuVide
 } from "@util/Utils";
-import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export function getCriteresTitulaire(
   criteres: IRMCActeInscription | IRMCActeArchive
@@ -97,74 +90,3 @@ export const mappingRequeteDelivranceToRMC = (
     }
   };
 };
-
-export function mappingPersonnesTableau(
-  data: any[]
-): IRMCAutoPersonneResultat[] {
-  const tableauMapper: IRMCAutoPersonneResultat[] = [];
-  data.forEach((personne: any) => {
-    const personneMapper: IRMCAutoPersonneResultat = mapPersonne(personne);
-    const actesLiesMapper: IRMCAutoPersonneResultat[] =
-      personne.actesRepertoiresLies.map((arl: any) =>
-        mapActeOuRepertoireLie(arl)
-      );
-    tableauMapper.push(...[personneMapper, ...actesLiesMapper]);
-  });
-  return tableauMapper;
-}
-
-function mapPersonne(data: any): IRMCAutoPersonneResultat {
-  return {
-    idPersonne: getValeurOuVide(data.idPersonne),
-    nom: getValeurOuVide(data.nom),
-    autresNoms: formatNoms(getValeurOuVide(data.autresNoms)),
-    prenoms: formatPrenoms(getValeurOuVide(data.prenoms).slice(0, TROIS)),
-    sexe: getValeurOuVide(data.sexe).charAt(0),
-    dateNaissance: getDateStringFromDateCompose({
-      annee: getValeurOuVide(data.anneeNaissance),
-      mois: getValeurOuVide(data.moisNaissance),
-      jour: getValeurOuVide(data.jourNaissance)
-    } as IDateCompose),
-    lieuNaissance: LieuxUtils.getLieu(
-      data.villeNaissance,
-      undefined,
-      data.paysNaissance
-    )
-  } as IRMCAutoPersonneResultat;
-}
-
-function mapActeOuRepertoireLie(data: any): IRMCAutoPersonneResultat {
-  let statutOuType: string;
-  let nature: string;
-  switch (data.categorieRepertoire) {
-    case "RC":
-    case "RCA":
-      nature = getValeurOuVide(data.nature);
-      statutOuType = InscriptionRcUtil.getLibelle(
-        getValeurOuVide(data.typeInscription)
-      );
-      break;
-    case "PACS":
-      nature = "";
-      statutOuType = StatutPacesUtil.getLibelle(getValeurOuVide(data.statut));
-      break;
-    case null: // Acte
-      nature = NatureActe.getEnumFor(getValeurOuVide(data.nature)).libelle;
-      statutOuType = StatutActe.getEnumFor(
-        getValeurOuVide(data.statut)
-      ).libelle;
-      break;
-    default:
-      nature = "";
-      statutOuType = "";
-  }
-
-  return {
-    idDocument: getValeurOuVide(data.id),
-    nature: premiereLettreEnMajuscule(nature),
-    statut: getValeurOuVide(data.statut),
-    reference: getValeurOuVide(data.reference),
-    categorieRepertoire: getValeurOuVide(data.categorieRepertoire),
-    statutOuType: statutOuType
-  } as IRMCAutoPersonneResultat;
-}

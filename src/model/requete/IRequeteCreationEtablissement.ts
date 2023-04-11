@@ -2,6 +2,7 @@ import { Provenance } from "./enum/Provenance";
 import { SousTypeCreation } from "./enum/SousTypeCreation";
 import { DocumentPJ, IDocumentPJ } from "./IDocumentPj";
 import { IMandant } from "./IMandant";
+import { IPersonneSauvegardee } from "./IPersonneSauvegardee";
 import { IProvenanceNatali } from "./IProvenanceNatali";
 import { IProvenanceServicePublic } from "./IProvenanceServicePublic";
 import { IRequete } from "./IRequete";
@@ -32,6 +33,7 @@ export interface IRequeteCreationEtablissement extends IRequete {
   campagne?: string;
   numeroDossierMetier?: string;
   natureActeTranscrit?: NatureActeTranscription;
+  personnesSauvegardees: IPersonneSauvegardee[];
 }
 
 export const RequeteCreationEtablissement = {

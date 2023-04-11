@@ -644,3 +644,7 @@ export function getNombreCommeSuffix(str: string): number | undefined {
 export function estDeType(obj: any, type: string): boolean {
   return typeof obj === type;
 }
+
+// La propriété initialiement obligatoire d'une interface devient optionnelle.
+// >> PropsPartielles<IInterface, "prop1" | "prop2">
+export type PropsPartielles<T, K extends keyof T> = Omit<T, K> & Partial<T>;

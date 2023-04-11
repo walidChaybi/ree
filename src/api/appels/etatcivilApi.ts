@@ -42,6 +42,7 @@ export const URL_PERSONNE = "/personne";
 export const URL_RC = "/rc";
 export const URL_PERSONNE_RMC_AUTO = "/personne/rmcauto";
 export const URL_POCOPAS = "/mespocopas";
+export const URL_LISTE_PERSONNE = "/personne/listePersonne";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -169,6 +170,14 @@ export function rechercheMultiCriteresPersonne(
     parameters: {
       range
     }
+  });
+}
+
+export function getPersonnesSauvegardees(idPersonnes: string[]): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_LISTE_PERSONNE}`,
+    parameters: { ids: idPersonnes }
   });
 }
 

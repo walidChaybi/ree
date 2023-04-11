@@ -252,7 +252,7 @@ export const requeteCreationTranscription = {
     {
       id: "3ed91fbd-d9c4-491a-adb3-b673f794b8cd",
       position: 2,
-      nomNaissance: "nomNaissance",
+      nomNaissance: "Philips",
       nomUsage: "nomUsage",
       anneeNaissance: 2000,
       moisNaissance: 2,
@@ -269,7 +269,7 @@ export const requeteCreationTranscription = {
         {
           id: "3ed95add-6e3d-4e48-b278-1f25b570659e",
           numeroOrdre: 1,
-          prenom: "prenom",
+          prenom: "Yann",
           estPrenomFrRetenuSdanf: null
         }
       ],
@@ -498,6 +498,16 @@ export const requeteCreationTranscription = {
   commentaire: "commentaire",
   demandeIdentification: null,
   demandeFrancisation: true,
+  personnesSauvegardees: [
+    {
+      idPersonne: "e7114c54-d00d-48ad-bbee-af2b01e2da7a",
+      role: "TITULAIRE_1"
+    },
+    {
+      idPersonne: "e7114c54-d00d-48ad-bbee-af2b01e2da7c",
+      role: "PARENT_1_TITULAIRE_1"
+    }
+  ],
   provenance: "COURRIER",
   provenanceServicePublic: null,
   provenanceNatali: {

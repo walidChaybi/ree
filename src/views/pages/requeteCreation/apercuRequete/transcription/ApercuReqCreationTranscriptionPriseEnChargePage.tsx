@@ -5,12 +5,14 @@ import {
 } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { AnalyseDuDossier } from "@pages/requeteCreation/commun/composants/AnalyseDuDossier";
-import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/OngletRMCPersonne";
+import { useDataTableauPersonneSauvegardeeHook } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/IDataTableauPersonneSauvegardee";
+import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import Labels from "@pages/requeteCreation/commun/Labels";
 import {
   getPostulantNationaliteOuTitulaireActeTranscritDresse,
@@ -35,22 +37,30 @@ interface ApercuReqCreationTranscriptionPriseEnChargePageProps {
 export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
   ApercuReqCreationTranscriptionPriseEnChargePageProps
 > = props => {
+  // Params & history
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
+  const history = useHistory();
+
+  // States
   const [requete, setRequete] = useState<IRequeteCreation>();
+  const [ongletSelectionne, setOngletSelectionne] = useState(1);
   const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
     useState<IRMCAutoPersonneParams>();
-  const [ongletSelectionne, setOngletSelectionne] = useState(1);
 
-  const estModeConsultation = props.idRequeteAAfficher !== undefined;
-
-  const history = useHistory();
-  const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(
-    rmcAutoPersonneParams
-  );
+  // Hooks
   const { detailRequeteState } = useDetailRequeteApiHook(
     props.idRequeteAAfficher ?? idRequeteParam,
     history.location.pathname.includes(URL_RECHERCHE_REQUETE)
   );
+  const {
+    dataPersonnesSauvegardees: dataPersonnesSelectionnees,
+    setDataPersonnesSauvegardees: setDataPersonnesSelectionnees
+  } = useDataTableauPersonneSauvegardeeHook(requete?.personnesSauvegardees);
+  const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(
+    rmcAutoPersonneParams
+  );
+
+  const estModeConsultation = props.idRequeteAAfficher !== undefined;
 
   useEffect(() => {
     if (detailRequeteState) {
@@ -119,8 +129,13 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
               <OngletRMCPersonne
                 sousTypeRequete={requete.sousType}
                 listeTitulaires={requete.titulaires}
-                rmcAutoPersonneResultat={resultatRMCAutoPersonne ?? []}
+                resultatRMCPersonne={resultatRMCAutoPersonne ?? []}
                 handleClickMenuItem={handleClickSelectionTitulaireRmcPersonne}
+                natureActeRequete={NatureActeRequete.getEnumFor(
+                  requete.nature ?? ""
+                )}
+                dataPersonnesSelectionnees={dataPersonnesSelectionnees}
+                setDataPersonnesSelectionnees={setDataPersonnesSelectionnees}
               />
             ),
             index: 1

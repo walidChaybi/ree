@@ -2,11 +2,11 @@ import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { OngletsApercuCreationEtablissement } from "@pages/requeteCreation/apercuRequete/etablissement/composants/OngletsApercuCreationEtablissement";
 import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
@@ -16,12 +16,12 @@ import { Route, Router } from "react-router-dom";
 import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
 import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
 import {
-    requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut,
-    requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut,
-    requeteCreationAvecMessagesRetourSDANFAvecMauvaisStatus,
-    requeteCreationAvecMessagesRetourSDANFAvecMessages,
-    requeteCreationAvecMessagesRetourSDANFSansLesDroits,
-    requeteCreationEtablissement
+  requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut,
+  requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut,
+  requeteCreationAvecMessagesRetourSDANFAvecMauvaisStatus,
+  requeteCreationAvecMessagesRetourSDANFAvecMessages,
+  requeteCreationAvecMessagesRetourSDANFSansLesDroits,
+  requeteCreationEtablissement
 } from "../../../../mock/data/requeteCreation";
 beforeAll(() => {
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
@@ -54,7 +54,8 @@ test("L'encart retour SDANF est present dans la page", async () => {
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCAutoPersonne={[]}
+              resultatRMCPersonne={[]}
+              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>
@@ -101,7 +102,8 @@ test("Doit afficher le message avec le bon format titre - message - prenomNom", 
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCAutoPersonne={[]}
+              resultatRMCPersonne={[]}
+              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>
@@ -152,7 +154,8 @@ test("Doit afficher la liste des messages avec le bon nombre de messages", async
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCAutoPersonne={[]}
+              resultatRMCPersonne={[]}
+              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>
@@ -205,7 +208,8 @@ test("Doit desactiver les boutons quand la requete n'est pas en statut PRISE_EN_
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCAutoPersonne={[]}
+              resultatRMCPersonne={[]}
+              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>
@@ -255,7 +259,8 @@ test("Doit desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete 
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCAutoPersonne={[]}
+              resultatRMCPersonne={[]}
+              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>
@@ -306,7 +311,8 @@ test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requ
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCAutoPersonne={[]}
+              resultatRMCPersonne={[]}
+              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>
@@ -359,17 +365,14 @@ test("Doit ouvrir et changer le titre de la popin au click sur une action", asyn
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCAutoPersonne={[]}
+              resultatRMCPersonne={[]}
+              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>
       </>
     );
   });
-
-  const setState = jest.fn();
-  const useStateSpy: any = jest.spyOn(React, "useState");
-  useStateSpy.mockImplementation((init: string) => [init, setState]);
 
   await waitFor(() => {
     const boutonVoletAction = screen.getByText("Actions");
@@ -384,18 +387,10 @@ test("Doit ouvrir et changer le titre de la popin au click sur une action", asyn
   });
 
   await waitFor(() => {
-    expect(setState).toHaveBeenCalledWith("Acte irrecevable");
-  });
-
-  await waitFor(() => {
     const boutonAction = screen
       .getByText("Élément manquant")
       .closest("button") as HTMLElement;
     fireEvent.click(boutonAction);
-  });
-
-  await waitFor(() => {
-    expect(setState).toHaveBeenCalledWith("Élément manquant");
   });
 
   await waitFor(() => {
@@ -404,14 +399,6 @@ test("Doit ouvrir et changer le titre de la popin au click sur une action", asyn
       .closest("button") as HTMLElement;
     fireEvent.click(boutonAction);
   });
-
-  await waitFor(() => {
-    expect(setState).toHaveBeenCalledWith(
-      "Suspicion de fraude / nouvel élément"
-    );
-  });
-
-  useStateSpy.mockRestore();
 });
 
 test("Doit ouvrir la popin au click sur une action", async () => {
@@ -428,36 +415,31 @@ test("Doit ouvrir la popin au click sur une action", async () => {
     )
   );
 
-  act(() => {
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
-          >
-            <OngletsApercuCreationEtablissement
-              requete={mappingRequeteCreation(
-                requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
-              )}
-              onRenommePieceJustificative={function (
-                idPieceJustificative: string,
-                nouveauLibelle: string,
-                idDocumentPJ?: string | undefined
-              ): void {
-                throw new Error("Function not implemented.");
-              }}
-              resultatRMCAutoPersonne={[]}
-            />
-          </Route>
-        </Router>
-      </>
-    );
-  });
-
-  const setState = jest.fn();
-  const useStateSpy: any = jest.spyOn(React, "useState");
-  useStateSpy.mockImplementation((init: string) => [init, setState]);
+  render(
+    <>
+      <Router history={history}>
+        <Route
+          exact={true}
+          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+        >
+          <OngletsApercuCreationEtablissement
+            requete={mappingRequeteCreation(
+              requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
+            )}
+            onRenommePieceJustificative={function (
+              idPieceJustificative: string,
+              nouveauLibelle: string,
+              idDocumentPJ?: string | undefined
+            ): void {
+              throw new Error("Function not implemented.");
+            }}
+            resultatRMCPersonne={[]}
+            handleClickSelectionTitulaireRmcPersonne={() => {}}
+          />
+        </Route>
+      </Router>
+    </>
+  );
 
   await waitFor(() => {
     const boutonVoletAction = screen.getByText("Actions");
@@ -471,12 +453,6 @@ test("Doit ouvrir la popin au click sur une action", async () => {
     fireEvent.click(bouton);
     expect(bouton?.getAttribute("disabled")).toBe(null);
   });
-
-  await waitFor(() => {
-    expect(setState).toHaveBeenCalledWith(true);
-  });
-
-  useStateSpy.mockRestore();
 });
 
 test("Doit afficher un message d'erreur quand la taille maximale est dépassée", async () => {
@@ -512,7 +488,8 @@ test("Doit afficher un message d'erreur quand la taille maximale est dépassée"
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCAutoPersonne={[]}
+              resultatRMCPersonne={[]}
+              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>

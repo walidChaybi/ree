@@ -1,25 +1,27 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import {
-    IRMCAutoPersonneParams,
-    useRMCAutoPersonneApiAvecCacheHook
+  IRMCAutoPersonneParams,
+  useRMCAutoPersonneApiAvecCacheHook
 } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
-import { TableauRMCAutoPersonne } from "@pages/rechercheMultiCriteres/autoPersonne/TableauRMCAutoPersonne";
+import { TableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonne";
+import { mapDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
 import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { render, screen, waitFor } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
 import { act } from "react-dom/test-utils";
-import { requeteCreationTranscription } from "../../../../mock/data/requeteCreation";
+import { requeteCreationTranscription } from "../../../../mock/data/requeteCreationTranscription";
 
 
 
-interface HookConsumerTableauRMCAutoPersonneProps {
+interface HookConsumerTableauRMCPersonneProps {
   requete: IRequeteCreationTranscription;
 }
 
-const HookConsumerTableauRMCAutoPersonne: React.FC<
-  HookConsumerTableauRMCAutoPersonneProps
+const HookConsumerTableauRMCPersonne: React.FC<
+  HookConsumerTableauRMCPersonneProps
 > = props => {
   const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
     useState<IRMCAutoPersonneParams>();
@@ -40,13 +42,25 @@ const HookConsumerTableauRMCAutoPersonne: React.FC<
     }
   }, [props.requete]);
 
-  return <TableauRMCAutoPersonne data={resultatRMCAutoPersonne ?? []} />;
+  return (
+    <TableauRMCPersonne
+      dataTableauRMCPersonne={
+        resultatRMCAutoPersonne
+          ? mapDataTableauRMCPersonne(resultatRMCAutoPersonne)
+          : []
+      }
+      identifiantsPersonnesSelectionnees={[]}
+      getIdentifiantPersonne={() => ""}
+      onClickBoutonAjouterPersonne={() => {}}
+      natureActeRequete={NatureActeRequete.NAISSANCE}
+    />
+  );
 };
 
 test("Attendu: L'affichage du tableau de la RMC Personne s'affiche correctement.", async () => {
   const requete = mappingRequeteCreation(requeteCreationTranscription);
   await act(async () => {
-    render(<HookConsumerTableauRMCAutoPersonne requete={requete} />);
+    render(<HookConsumerTableauRMCPersonne requete={requete} />);
   });
 
   await waitFor(() => {
@@ -62,20 +76,11 @@ test("Attendu: L'affichage du tableau de la RMC Personne s'affiche correctement.
     expect(screen.getByText("Statut / Type")).toBeInTheDocument();
 
     // Données tableau
-    expect(screen.getAllByText("Philips")).toBeDefined();
-    expect(screen.getByText("PHILIPS")).toBeInTheDocument();
-    expect(screen.getAllByText("Yann")).toBeDefined();
+    expect(screen.getByText("DUPONT")).toBeInTheDocument();
+    expect(screen.getByText("Paul")).toBeInTheDocument();
     expect(screen.getAllByText("M")).toBeDefined();
-    expect(screen.getAllByText("13/04/1980")).toBeDefined();
-    expect(screen.getAllByText("Barcelone (Espagne)")).toBeDefined();
-    expect(screen.getAllByText("Naissance")).toBeDefined();
-    expect(screen.getByText("PACS - 2011 - 1234580")).toBeInTheDocument();
-    expect(screen.getByText("PACS - 2021 - 1234581")).toBeInTheDocument();
-    expect(screen.getByText("RC - 2020 - 10")).toBeInTheDocument();
-    expect(screen.getByText("RC - 2020 - 11")).toBeInTheDocument();
-    expect(screen.getByText("RCA - 2020 - 4010")).toBeInTheDocument();
-    expect(screen.getByText("ACQ.X.1951.1.681ABC")).toBeInTheDocument();
-    expect(screen.getAllByText("Inscription")).toBeDefined();
-    expect(screen.getAllByText("Validé")).toBeDefined();
+    expect(screen.getAllByText("04/03/1963")).toBeDefined();
+    expect(screen.getAllByText("Dunkerque")).toBeDefined();
+    expect(screen.getByText("PACS - 2011 - 1234590")).toBeInTheDocument();
   });
 });

@@ -10,7 +10,9 @@ import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatR
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { getLibelle, getValeurOuVide, supprimeElement } from "@util/Utils";
 import { CompteurElementsCoches } from "@widget/compteurElementsCoches/CompteurElementsCoches";
-import { IColonneInputParams } from "@widget/tableau/TableauRece/colonneInput/InputParams";
+import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
+import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
+import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useEffect, useState } from "react";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
@@ -33,7 +35,7 @@ export interface RMCResultatActeProps {
   setRangeActe?: (range: string) => void;
   resetTableauActe?: boolean;
   onClickCheckboxCallBack?: (
-    isChecked: boolean,
+    event: TChangeEventSurHTMLInputElement,
     data: IResultatRMCActe
   ) => void;
   nbLignesParPage: number;
@@ -154,7 +156,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   // Gestion du clic sur une colonne de type checkbox
   const [idActeSelectionnes, setIdActeSelectionnes] = useState<string[]>([]);
 
-  const handleCheckboxActeAfficheAvertissement = useCallback(
+  const handleCaseACocherActeAfficheAvertissement = useCallback(
     (isChecked: boolean, data: any): boolean => {
       if (isChecked) {
         const alertes = dataAlertes?.filter((alerte: IAlerte) => {
@@ -170,7 +172,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
     [dataAlertes]
   );
 
-  const handleCheckboxActeEstDesactive = useCallback(
+  const handleCaseACocherActeEstDesactive = useCallback(
     (data: IResultatRMCActe): boolean => {
       return estProjetActe(dataRequete, data);
     },
@@ -181,21 +183,32 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
     setIdActeSelectionnes([]);
   }, [resetTableauActe]);
 
-  const colonneCheckboxActesParams: IColonneInputParams = {
+  const colonneCaseACocherActesParams: IColonneCaseACocherParams<
+    IResultatRMCActe,
+    string
+  > = {
     identifiantsSelectionnes: idActeSelectionnes,
     setIdentifiantsSelectionnes: setIdActeSelectionnes,
-    getIdentifiant: (data: IResultatRMCActe) => data.idActe,
-    handleClickInput: onClickCheckboxCallBack,
-    handleEstDesactive: handleCheckboxActeEstDesactive,
-    messageEstDesactive: getLibelle(
+    getIdentifiant: (data: IResultatRMCActe) => data.idActe
+  };
+
+  const conteneurCaseACocherProps: IConteneurElementPropsPartielles<
+    IResultatRMCActe,
+    string,
+    TChangeEventSurHTMLInputElement
+  > = {
+    handleInteractionUtilisateur: onClickCheckboxCallBack,
+    handleEstDesactive: handleCaseACocherActeEstDesactive,
+    handleAfficheAvertissement: handleCaseACocherActeAfficheAvertissement,
+    messageInfoBulleEstDesactive: getLibelle(
       "Pas de délivrance pour un projet d'acte non finalisé"
-    ),
-    handleAfficheAvertissement: handleCheckboxActeAfficheAvertissement
+    )
   };
 
   const columnHeaders = getColonnesTableauActes(
     typeRMC,
-    colonneCheckboxActesParams,
+    colonneCaseACocherActesParams,
+    conteneurCaseACocherProps,
     dataRequete?.type
   );
 

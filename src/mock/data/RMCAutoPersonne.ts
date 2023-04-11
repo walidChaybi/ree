@@ -75,24 +75,24 @@ export const RMCAutoPersonneResponseAlpha = {
       ]
     },
     {
-      idPersonne: "e7114c54-d00d-48ad-bbee-af2b01e2da7d",
-      nom: "Philips",
+      idPersonne: "e7114c54-d00d-48ad-bbee-af2b01e2da7c",
+      nom: "Coscas",
       autresNoms: null,
-      prenoms: ["Yann"],
-      jourNaissance: "13",
-      moisNaissance: "4",
-      anneeNaissance: "1980",
-      villeNaissance: "Barcelone",
-      paysNaissance: "Espagne",
-      sexe: "MASCULIN",
+      prenoms: ["Mathilde", "Murielle"],
+      jourNaissance: "1",
+      moisNaissance: "1",
+      anneeNaissance: "1990",
+      villeNaissance: "Dunkerque",
+      paysNaissance: "France",
+      sexe: "FEMININ",
       actesRepertoiresLies: [
         {
-          id: "76b62678-8b06-4442-ad5b-b9207627a6ea",
-          nature: "CURATELLE_SIMPLE",
+          id: "89c9d030-26h7-41d3-bdde-8b4dcc0420da",
+          nature: null,
           statut: "INACTIF",
-          reference: "RC - 2020 - 10",
-          categorieRepertoire: "RC",
-          typeInscription: "INSCRIPTION"
+          reference: "PACS - 2011 - 1234590",
+          categorieRepertoire: "PACS",
+          typeInscription: null
         }
       ]
     }
@@ -108,13 +108,13 @@ export const RMCAutoPersonneResponseBeta = {
   },
   data: [
     {
-      idPersonne: "e7114c54-d00d-48ad-bbee-af2b01e2da7a",
+      idPersonne: "e7114c54-d00d-48ad-bbee-af2b01e2da7d",
       nom: "DUPONT",
       autresNoms: null,
-      prenoms: ["Michel"],
-      jourNaissance: "1",
-      moisNaissance: "1",
-      anneeNaissance: "1990",
+      prenoms: ["Paul"],
+      jourNaissance: "4",
+      moisNaissance: "3",
+      anneeNaissance: "1963",
       villeNaissance: "Dunkerque",
       paysNaissance: "France",
       sexe: "MASCULIN",

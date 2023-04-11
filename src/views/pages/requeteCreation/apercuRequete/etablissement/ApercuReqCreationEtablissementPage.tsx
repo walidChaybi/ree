@@ -25,108 +25,112 @@ import mappingIRequeteCreationVersResumeRequeteCreationProps from "./mappingIReq
 interface ApeApercuReqCreationEtablissementPageProps {
   idRequeteAAfficher?: string;
 }
-export const ApercuReqCreationEtablissementPage: React.FC<
-  ApeApercuReqCreationEtablissementPageProps
-> = props => {
-  const { idRequeteParam } = useParams<IUuidRequeteParams>();
-  const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
-  const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
-    useState<IRMCAutoPersonneParams>();
-  const history = useHistory();
-  const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(
-    rmcAutoPersonneParams
-  );
-  const { detailRequeteState } = useDetailRequeteApiHook(
-    props.idRequeteAAfficher ?? idRequeteParam,
-    history.location.pathname.includes(URL_RECHERCHE_REQUETE)
-  );
+export const ApercuReqCreationEtablissementPage: React.FC<ApeApercuReqCreationEtablissementPageProps> =
+  props => {
+    // Params & History
+    const { idRequeteParam } = useParams<IUuidRequeteParams>();
+    const history = useHistory();
 
-  useEffect(() => {
-    if (detailRequeteState) {
-      setRequete(detailRequeteState as IRequeteCreationEtablissement);
+    // States
+    const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
+    const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
+      useState<IRMCAutoPersonneParams>();
+
+    // Hooks
+    const { detailRequeteState } = useDetailRequeteApiHook(
+      props.idRequeteAAfficher ?? idRequeteParam,
+      history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+    );
+    const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(
+      rmcAutoPersonneParams
+    );
+
+    useEffect(() => {
+      if (detailRequeteState) {
+        setRequete(detailRequeteState as IRequeteCreationEtablissement);
+      }
+    }, [detailRequeteState]);
+
+    useEffect(() => {
+      if (requete) {
+        const titulaire =
+          getPostulantNationaliteOuTitulaireActeTranscritDresse(requete);
+        if (titulaire) {
+          setRmcAutoPersonneParams(
+            mapTitulaireVersRMCAutoPersonneParams(titulaire)
+          );
+        }
+      }
+    }, [requete]);
+
+    function onRenommePieceJustificative(
+      idPieceJustificative: string,
+      nouveauLibelle: string,
+      idDocumentPJ?: string
+    ) {
+      const pjARenommer = RequeteCreationEtablissement.getPieceJustificative(
+        requete,
+        idDocumentPJ,
+        idPieceJustificative
+      );
+      if (pjARenommer) {
+        pjARenommer.libelle = nouveauLibelle;
+        setRequete({ ...requete } as IRequeteCreationEtablissement);
+      }
     }
-  }, [detailRequeteState]);
 
-  useEffect(() => {
-    if (requete) {
-      const titulaire =
-        getPostulantNationaliteOuTitulaireActeTranscritDresse(requete);
+    function handleClickSelectionTitulaireRmcPersonne(idTitulaire: string) {
+      const titulaire = requete?.titulaires
+        ?.filter(titulaireCourant => titulaireCourant.id === idTitulaire)
+        .pop();
       if (titulaire) {
         setRmcAutoPersonneParams(
           mapTitulaireVersRMCAutoPersonneParams(titulaire)
         );
       }
     }
-  }, [requete]);
 
-  function onRenommePieceJustificative(
-    idPieceJustificative: string,
-    nouveauLibelle: string,
-    idDocumentPJ?: string
-  ) {
-    const pjARenommer = RequeteCreationEtablissement.getPieceJustificative(
-      requete,
-      idDocumentPJ,
-      idPieceJustificative
-    );
-    if (pjARenommer) {
-      pjARenommer.libelle = nouveauLibelle;
-      setRequete({ ...requete } as IRequeteCreationEtablissement);
-    }
-  }
+    return (
+      <div className="ApercuReqCreationEtablissementPage">
+        {requete ? (
+          <>
+            <ConteneurRetractable
+              titre={Labels.resume.requete.description}
+              className="ResumeRequeteCreation"
+              initConteneurFerme={false}
+              estADroite={false}
+            >
+              <ResumeRequeteCreation
+                {...mappingIRequeteCreationVersResumeRequeteCreationProps(
+                  requete
+                )}
+              />
+            </ConteneurRetractable>
 
-  function handleClickSelectionTitulaireRmcPersonne(idTitulaire: string) {
-    const titulaire = requete?.titulaires
-      ?.filter(titulaireCourant => titulaireCourant.id === idTitulaire)
-      .pop();
-    if (titulaire) {
-      setRmcAutoPersonneParams(
-        mapTitulaireVersRMCAutoPersonneParams(titulaire)
-      );
-    }
-  }
-
-  return (
-    <div className="ApercuReqCreationEtablissementPage">
-      {requete ? (
-        <>
-          <ConteneurRetractable
-            titre={Labels.resume.requete.description}
-            className="ResumeRequeteCreation"
-            initConteneurFerme={false}
-            estADroite={false}
-          >
-            <ResumeRequeteCreation
-              {...mappingIRequeteCreationVersResumeRequeteCreationProps(
-                requete
-              )}
-            />
-          </ConteneurRetractable>
-
-          <OngletsApercuCreationEtablissement
-            requete={requete}
-            modeConsultation={props.idRequeteAAfficher !== undefined}
-            onRenommePieceJustificative={onRenommePieceJustificative}
-            resultatRMCAutoPersonne={resultatRMCAutoPersonne ?? []}
-            handleClickSelectionTitulaireRmcPersonne={
-              handleClickSelectionTitulaireRmcPersonne
-            }
-          />
-
-          <ConteneurRetractable
-            titre="Pièces justificatives"
-            className="FocusPieceJustificative"
-            estADroite={true}
-          >
-            <OngletPiecesJustificatives
+            <OngletsApercuCreationEtablissement
               requete={requete}
+              modeConsultation={props.idRequeteAAfficher !== undefined}
               onRenommePieceJustificative={onRenommePieceJustificative}
+              resultatRMCPersonne={resultatRMCAutoPersonne ?? []}
+              handleClickSelectionTitulaireRmcPersonne={
+                handleClickSelectionTitulaireRmcPersonne
+              }
             />
-          </ConteneurRetractable>
-        </>
-      ) : (
-        <OperationLocaleEnCoursSimple />
-      )}
-    </div>
-  );
-};
+
+            <ConteneurRetractable
+              titre="Pièces justificatives"
+              className="FocusPieceJustificative"
+              estADroite={true}
+            >
+              <OngletPiecesJustificatives
+                requete={requete}
+                onRenommePieceJustificative={onRenommePieceJustificative}
+              />
+            </ConteneurRetractable>
+          </>
+        ) : (
+          <OperationLocaleEnCoursSimple />
+        )}
+      </div>
+    );
+  };;

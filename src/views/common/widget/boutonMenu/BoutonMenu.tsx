@@ -2,7 +2,6 @@ import { PopoverOrigin } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import React from "react";
-
 import "./scss/BoutonMenu.scss";
 
 const DUREE_OUVERTURE_POPIN = 100;
@@ -12,14 +11,16 @@ export interface IBoutonMenuItem {
   libelle: string;
 }
 
-interface IBoutonMenuProps {
+export interface IBoutonMenuProps {
   boutonLibelle: string;
   listeItems: IBoutonMenuItem[];
-  onClickMenuItem: (key: string) => void;
+  onClickMenuItem: (key: string, event?: React.SyntheticEvent) => void;
+  titreBouton?: string;
   className?: string;
   disabled?: boolean;
   anchorOrigin?: PopoverOrigin;
   transformOrigin?: PopoverOrigin;
+  openOnMouseClick?: boolean;
 }
 
 export const BoutonMenu: React.FC<IBoutonMenuProps> = props => {
@@ -37,7 +38,12 @@ export const BoutonMenu: React.FC<IBoutonMenuProps> = props => {
     <div className={`bouton-menu ${props.className}`}>
       {props.listeItems.length > 0 && (
         <>
-          <button onMouseEnter={handleOpenMenu} disabled={props.disabled}>
+          <button
+            title={props.titreBouton}
+            onMouseEnter={!props.openOnMouseClick ? handleOpenMenu : undefined}
+            onClick={props.openOnMouseClick ? handleOpenMenu : undefined}
+            disabled={props.disabled}
+          >
             {props.boutonLibelle}
           </button>
           <Menu
@@ -55,7 +61,7 @@ export const BoutonMenu: React.FC<IBoutonMenuProps> = props => {
           >
             {props.listeItems.map((item: IBoutonMenuItem) => (
               <MenuItem
-                onClick={() => props.onClickMenuItem(item.key)}
+                onClick={event => props.onClickMenuItem(item.key, event)}
                 key={item.key}
               >
                 {item.libelle}

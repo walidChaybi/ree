@@ -12,7 +12,7 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { getLibelle, getValeurOuVide, supprimeElement } from "@util/Utils";
-import { IColonneInputParams } from "@widget/tableau/TableauRece/colonneInput/InputParams";
+import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useEffect, useState } from "react";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
@@ -34,7 +34,7 @@ export interface RMCResultatInscriptionProps {
   setRangeInscription?: (range: string) => void;
   resetTableauInscription?: boolean;
   onClickCheckboxCallBack?: (
-    isChecked: boolean,
+    event: TChangeEventSurHTMLInputElement,
     data: IResultatRMCInscription
   ) => void;
   nbLignesParPage: number;
@@ -93,14 +93,14 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   const [datasFichesCourantes, setDatasFichesCourante] =
     useState<IDataFicheProps[]>();
 
-  const closeFenetre = (idInscription: string, idx: number) => {
+  function closeFenetre(idInscription: string, idx: number): void {
     const nouvelEtatFenetres = supprimeElement(
       etatFenetres,
       (etatFenetre: IFenetreFicheInscription) =>
         etatFenetre.idInscription === idInscription
     );
     setEtatFenetres(nouvelEtatFenetres);
-  };
+  }
 
   const onClickOnLine = (idInscription: string, data: any, index: number) => {
     if (officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.MEAE)) {
@@ -167,7 +167,7 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
     string[]
   >([]);
 
-  const handleCheckboxInscriptionEstDesactive = useCallback(
+  const handleCaseACocherInscriptionEstDesactive = useCallback(
     (data: IResultatRMCInscription): boolean => {
       if (dataRequete?.type === TypeRequete.DELIVRANCE) {
         const requeteDelivrance = dataRequete as IRequeteDelivrance;
@@ -194,21 +194,21 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
     setIdInscriptionSelectionnees([]);
   }, [resetTableauInscription]);
 
-  const colonneCheckboxInscriptionsParams: IColonneInputParams = {
-    identifiantsSelectionnes: idInscriptionSelectionnees,
-    setIdentifiantsSelectionnes: setIdInscriptionSelectionnees,
-    getIdentifiant: (data: IResultatRMCInscription) =>
-      `${data.idInscription}-${data.nom}-${data.prenoms}-${data.dateNaissance}-${data.paysNaissance}-${data.statutInscription}`,
-    handleEstDesactive: handleCheckboxInscriptionEstDesactive,
-    messageEstDesactive: getLibelle(
-      "Ce résultat ne correspond pas au document demandé par le requérant"
-    ),
-    handleClickInput: onClickCheckboxCallBack
-  };
-
   const columnHeaders = getColonnesTableauInscriptions(
     typeRMC,
-    colonneCheckboxInscriptionsParams,
+    {
+      identifiantsSelectionnes: idInscriptionSelectionnees,
+      setIdentifiantsSelectionnes: setIdInscriptionSelectionnees,
+      getIdentifiant: (data: IResultatRMCInscription) =>
+        `${data.idInscription}-${data.nom}-${data.prenoms}-${data.dateNaissance}-${data.paysNaissance}-${data.statutInscription}`
+    },
+    {
+      handleInteractionUtilisateur: onClickCheckboxCallBack,
+      handleEstDesactive: handleCaseACocherInscriptionEstDesactive,
+      messageInfoBulleEstDesactive: getLibelle(
+        "Ce résultat ne correspond pas au document demandé par le requérant"
+      )
+    },
     dataRequete?.type
   );
 

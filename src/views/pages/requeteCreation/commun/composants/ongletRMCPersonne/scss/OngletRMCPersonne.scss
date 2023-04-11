@@ -1,0 +1,18 @@
+.sousTitre {
+  margin: 0.5rem 0rem;
+  color: black;
+  text-align: left;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.conteneur-colonne-element {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.colonne-bouton-menu button:first-child {
+  margin: 0rem;
+  padding: 0.1rem 0.5rem;
+  min-width: 1rem;
+}

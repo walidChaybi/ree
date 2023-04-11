@@ -1,40 +1,48 @@
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { HeaderTableauRMCActe } from "@model/rmc/acteInscription/HeaderTableauRMCActeInscription";
-import { getColonneCheckbox } from "@widget/tableau/TableauRece/colonneInput/checkbox/ColonneCheckbox";
-import { IColonneInputParams } from "@widget/tableau/TableauRece/colonneInput/InputParams";
-import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
+import { HeaderTableauRMCActe } from "@model/rmc/headerTableau/HeaderTableauRMCActe";
 import {
-  commonHeadersTableauRMC,
-  natureHeadersTableauRMC,
-  TypeRMC
-} from "./RMCTableauCommun";
+  getColonneCasesACocher,
+  IColonneCaseACocherParams
+} from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
+import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
+import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
+import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
+import { commonHeadersTableauRMC, TypeRMC } from "./RMCTableauCommun";
 
 const columnsTableauRmc = [
   ...commonHeadersTableauRMC,
-  ...natureHeadersTableauRMC,
   new TableauTypeColumn({
-    keys: [HeaderTableauRMCActe.DateEvenement],
-    title: "Date d'événement",
+    keys: [HeaderTableauRMCActe.DATE_EVENEMENT.nom],
+    title: HeaderTableauRMCActe.DATE_EVENEMENT.libelle,
     className: "ColOverflow"
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRMCActe.Registre],
-    title: "Réf. acte",
+    keys: [HeaderTableauRMCActe.REGISTRE.nom],
+    title: HeaderTableauRMCActe.REGISTRE.libelle,
     className: "ColOverflow",
     style: { width: "200px" }
   })
 ];
 
-export function getColonnesTableauActes(
+export function getColonnesTableauActes<TData, TIdentifiant>(
   typeRMC: TypeRMC,
-  colonneCheckboxParamsActes: IColonneInputParams,
+  colonneCaseACocherParamsActes: IColonneCaseACocherParams<TData, TIdentifiant>,
+  conteneurCaseACocherPropsPartielle: IConteneurElementPropsPartielles<
+    TData,
+    TIdentifiant,
+    TChangeEventSurHTMLInputElement
+  >,
   typeRequete?: TypeRequete
 ) {
   // Les checkbox s'affichent que pour la RMC Auto d'une requête de délivrance
   if (typeRMC === "Auto" && typeRequete === TypeRequete.DELIVRANCE) {
     return [
       ...columnsTableauRmc,
-      getColonneCheckbox(colonneCheckboxParamsActes)
+      getColonneCasesACocher(
+        colonneCaseACocherParamsActes,
+        undefined,
+        conteneurCaseACocherPropsPartielle
+      )
     ];
   }
   return columnsTableauRmc;

@@ -1,37 +1,34 @@
-import { HeaderTableauRMC } from "@model/rmc/acteInscription/HeaderTableauRMCActeInscription";
+import { HeaderTableauRMC } from "@model/rmc/headerTableau/HeaderTableauRMC";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 
 export type TypeRMC = "Classique" | "Auto";
 
 export const commonHeadersTableauRMC = [
   new TableauTypeColumn({
-    keys: [HeaderTableauRMC.Nom],
-    title: "Nom"
+    keys: [HeaderTableauRMC.NOM.nom],
+    title: HeaderTableauRMC.NOM.libelle
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRMC.AutresNoms],
-    title: "Autres noms",
+    keys: [HeaderTableauRMC.AUTRES_NOMS.nom],
+    title: HeaderTableauRMC.AUTRES_NOMS.libelle,
     className: "ColOverflow"
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRMC.Prenoms],
-    title: "Prénoms",
+    keys: [HeaderTableauRMC.PRENOMS.nom],
+    title: HeaderTableauRMC.PRENOMS.libelle,
     className: "ColOverflow"
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRMC.DateNaissance],
-    title: "Date de naissance"
+    keys: [HeaderTableauRMC.DATE_NAISSANCE.nom],
+    title: HeaderTableauRMC.DATE_NAISSANCE.libelle
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRMC.PaysNaissance],
-    title: "Pays de naissance"
-  })
-];
-
-export const natureHeadersTableauRMC = [
+    keys: [HeaderTableauRMC.PAYS_NAISSANCE.nom],
+    title: HeaderTableauRMC.PAYS_NAISSANCE.libelle
+  }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRMC.Nature],
-    title: "Nature",
+    keys: [HeaderTableauRMC.NATURE.nom],
+    title: HeaderTableauRMC.NATURE.libelle,
     className: "ColOverflow"
   })
 ];

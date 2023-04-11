@@ -1,49 +1,60 @@
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { HeaderTableauRMCInscription } from "@model/rmc/acteInscription/HeaderTableauRMCActeInscription";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { getColonneCheckbox } from "@widget/tableau/TableauRece/colonneInput/checkbox/ColonneCheckbox";
-import { IColonneInputParams } from "@widget/tableau/TableauRece/colonneInput/InputParams";
+import { HeaderTableauRMCInscription } from "@model/rmc/headerTableau/HeaderTableauRMCInscription";
+import {
+  getColonneCasesACocher,
+  IColonneCaseACocherParams
+} from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
+import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
+import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React from "react";
-import {
-  commonHeadersTableauRMC,
-  natureHeadersTableauRMC,
-  TypeRMC
-} from "./RMCTableauCommun";
+import { commonHeadersTableauRMC, TypeRMC } from "./RMCTableauCommun";
 
 const columnsTableauRmc = [
   ...commonHeadersTableauRMC,
-  ...natureHeadersTableauRMC,
   new TableauTypeColumn({
-    keys: [HeaderTableauRMCInscription.NumeroRef],
-    title: "N° Réf.",
+    keys: [HeaderTableauRMCInscription.NUMERO_REF.nom],
+    title: HeaderTableauRMCInscription.NUMERO_REF.libelle,
     getElement: getCellNumeroRef,
     align: "left",
     style: { width: "150px" }
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRMCInscription.Type],
-    title: "Type"
+    keys: [HeaderTableauRMCInscription.TYPE.nom],
+    title: HeaderTableauRMCInscription.TYPE.libelle
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRMCInscription.Statut],
-    title: "Statut fiche",
+    keys: [HeaderTableauRMCInscription.STATUT.nom],
+    title: HeaderTableauRMCInscription.STATUT.libelle,
     style: { width: "50px" }
   })
 ];
 
 export const NB_INSCRIPTION_PAR_PAGE = 5;
 
-export function getColonnesTableauInscriptions(
+export function getColonnesTableauInscriptions<TData, TIdentifiant>(
   typeRMC: TypeRMC,
-  colonneCheckboxParamsInscriptions: IColonneInputParams,
+  colonneCaseACocherInscriptionsParams: IColonneCaseACocherParams<
+    TData,
+    TIdentifiant
+  >,
+  conteneurCaseACocherProps: IConteneurElementPropsPartielles<
+    TData,
+    TIdentifiant,
+    TChangeEventSurHTMLInputElement
+  >,
   typeRequete?: TypeRequete
 ) {
   // Les checkbox s'affichent que pour la RMC Auto d'une requête de délivrance
   if (typeRMC === "Auto" && typeRequete === TypeRequete.DELIVRANCE) {
     return [
       ...columnsTableauRmc,
-      getColonneCheckbox(colonneCheckboxParamsInscriptions)
+      getColonneCasesACocher(
+        colonneCaseACocherInscriptionsParams,
+        undefined,
+        conteneurCaseACocherProps
+      )
     ];
   }
   return columnsTableauRmc;

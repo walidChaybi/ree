@@ -11,6 +11,7 @@ import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IRe
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import messageManager from "@util/messageManager";
 import { stockageDonnees } from "@util/stockageDonnees";
+import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
   NB_LIGNES_PAR_APPEL_DEFAUT,
@@ -35,11 +36,11 @@ export interface RMCAutoProps {
   dataHistory?: DataRMCAuto;
   dataAlertes?: IAlerte[];
   onClickCheckboxTableauActes?: (
-    isChecked: boolean,
+    event: TChangeEventSurHTMLInputElement,
     data: IResultatRMCActe
   ) => void;
   onClickCheckboxTableauInscriptions?: (
-    isChecked: boolean,
+    event: TChangeEventSurHTMLInputElement,
     data: IResultatRMCInscription
   ) => void;
   reset?: () => void;

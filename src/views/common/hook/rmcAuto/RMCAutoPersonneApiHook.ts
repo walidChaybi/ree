@@ -1,6 +1,9 @@
 import { rechercheMultiCriteresPersonne } from "@api/appels/etatcivilApi";
-import { mappingPersonnesTableau } from "@hook/rmcActeInscription/mapping/RMCMappingUtil";
-import { concatValeursRMCAutoPersonneRequest } from "@hook/rmcAuto/RMCAutoPersonneUtils";
+import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
+import {
+  concatValeursRMCAutoPersonneRequest,
+  mappingRMCPersonneResultat
+} from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
 import { useCacheLocalPage } from "@util/cacheLocalPageHook/CacheLocalPageHook";
 import { logError } from "@util/LogManager";
@@ -11,28 +14,12 @@ export interface IRMCAutoPersonneParams {
   range?: string;
 }
 
-export interface IRMCAutoPersonneResultat {
-  idPersonne: string;
-  nom: string;
-  autresNoms: string;
-  prenoms: string;
-  dateNaissance: string;
-  lieuNaissance: string;
-  sexe: string;
-  idDocument: string;
-  nature: string;
-  statut: string;
-  reference: string;
-  categorieRepertoire: string;
-  statutOuType: string;
-}
-
 export function useRMCAutoPersonneApiAvecCacheHook(
   params?: IRMCAutoPersonneParams
-): IRMCAutoPersonneResultat[] | undefined {
+): IRMCPersonneResultat[] | undefined {
   const { cacheLocalPage } = useCacheLocalPage<
     IRMCAutoPersonneRequest,
-    IRMCAutoPersonneResultat[]
+    IRMCPersonneResultat[]
   >(concatValeursRMCAutoPersonneRequest);
 
   useEffect(() => {
@@ -41,10 +28,10 @@ export function useRMCAutoPersonneApiAvecCacheHook(
       if (!resultatEnCache) {
         rechercheMultiCriteresPersonne(params.valeurs, params?.range)
           .then((result: any) => {
-            const resultatavecMapping = mappingPersonnesTableau(
+            const resultatAvecMapping = mappingRMCPersonneResultat(
               result?.body?.data
             );
-            cacheLocalPage.set(params.valeurs, resultatavecMapping);
+            cacheLocalPage.set(params.valeurs, resultatAvecMapping);
           })
           .catch((error: any) => {
             /* istanbul ignore next */

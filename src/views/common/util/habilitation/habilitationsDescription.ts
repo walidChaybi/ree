@@ -4,7 +4,6 @@ import { Droit } from "@model/agent/enum/Droit";
 
 export interface IHabiliationDescription {
   nomComposant: NomComposantOuFonction;
-  estFonction?: boolean;
   unDesDroits?: Droit[];
   tousLesDroits?: Droit[];
   uniquementLeDroit?: Droit;

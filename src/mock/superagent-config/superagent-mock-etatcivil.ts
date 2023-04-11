@@ -37,6 +37,11 @@ import {
   idFicheRca
 } from "../data/ficheRCA";
 import { imagePngVideBase64 } from "../data/ImagePng";
+import {
+  listeDeuxPersonnes,
+  listePersonneAlpha,
+  listePersonneBeta
+} from "../data/listePersonnes";
 import { mentions, mentionsPlurilingues } from "../data/mentions";
 import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import {
@@ -398,10 +403,13 @@ export const configEtatcivil = [
         return ReponseAppelRMCActe4DernierResultats;
       }
 
-      //////////////////
-      // RMC Personne //
+      ///////////////
+      // Personnes //
+      ///////////////
+
+      // RMC
       if (match[1] === "/personne/rmcauto?range=0-25") {
-        if (params.nomTitulaire === "Dupont") {
+        if (params.nomTitulaire === "dupont") {
           return RMCAutoPersonneResponseBeta;
         }
         return RMCAutoPersonneResponseAlpha;
@@ -410,6 +418,32 @@ export const configEtatcivil = [
       // Incriptions RC
       if (match[1] === "/personne/0bce8edd-0183-497b-139d-0a3cf6918792/rc") {
         return inscriptionsRc;
+      }
+
+      // Liste de personnes
+      if (match[1] === "/personne/listePersonne") {
+        return [];
+      }
+
+      if (
+        match[1] ===
+        "/personne/listePersonne?ids=e7114c54-d00d-48ad-bbee-af2b01e2da7a"
+      ) {
+        return listePersonneAlpha;
+      }
+
+      if (
+        match[1] ===
+        "/personne/listePersonne?ids=e7114c54-d00d-48ad-bbee-af2b01e2da7c"
+      ) {
+        return listePersonneBeta;
+      }
+
+      if (
+        match[1] ===
+        "/personne/listePersonne?ids=e7114c54-d00d-48ad-bbee-af2b01e2da7a&ids=e7114c54-d00d-48ad-bbee-af2b01e2da7c"
+      ) {
+        return listeDeuxPersonnes;
       }
 
       ////////////////////////////////////////////////////////////////////////
