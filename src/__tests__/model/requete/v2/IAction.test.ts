@@ -1,5 +1,5 @@
+import { actions } from "@mock/data/Actions";
 import { Action } from "@model/requete/IActions";
-import { actions } from "../../../../mock/data/Actions";
 
 test("Action.getActionAvantActionsASigner DOIT retourner l'action avant les actions 'a signer' ou la dernière action si pas d'action 'a signer'", () => {
   expect(Action.getActionAvantActionsASigner([])).toBe(undefined);

@@ -178,7 +178,8 @@
       "@router/(.+)$": "<rootDir>/src/views/router/$1",
       "@api/(.+)$": "<rootDir>/src/api/$1",
       "@model/(.+)$": "<rootDir>/src/model/$1",
-      "@scss/(.+)$": "<rootDir>/src/scss/$1"
+      "@scss/(.+)$": "<rootDir>/src/scss/$1",
+      "@mock/(.+)$": "<rootDir>/src/mock/$1"
     },
     "moduleFileExtensions": [
       "web.js",

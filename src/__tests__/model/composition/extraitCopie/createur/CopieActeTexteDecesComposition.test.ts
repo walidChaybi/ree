@@ -1,10 +1,10 @@
+import { ficheActeDeces } from "@mock/data/ficheActe";
 import { CopieActeTexteDecesComposition } from "@model/composition/extraitCopie/createur/CopieActeTexteDecesComposition";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { ficheActeDeces } from "../../../../../mock/data/ficheActe";
 
 test("Attendu: copie fonctionne correctement", () => {
   const acte = ficheActeDeces.data;

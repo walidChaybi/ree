@@ -5,7 +5,7 @@ import {
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IEchange } from "@model/requete/IEchange";
 import { storeRece } from "@util/storeRece";
-import { getLibelle } from "@util/Utils";
+import { estSuperieurA500Caracteres, getLibelle } from "@util/Utils";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopinAvecMessage } from "@widget/popin/ConfirmationPopinAvecMessage";
 import React, { useEffect, useState } from "react";
@@ -18,14 +18,7 @@ interface ListeActionsRetourSDANFProps {
   modeConsultation?: boolean;
 }
 
-export const estSuperieurA500Caracteres = (texte: string) => {
-  const maxTexte = 500;
-  if (texte.length > maxTexte) {
-    return true;
-  } else {
-    return false;
-  }
-};
+
 
 export const getPrenomEtNom = () => {
   let nomPrenom;

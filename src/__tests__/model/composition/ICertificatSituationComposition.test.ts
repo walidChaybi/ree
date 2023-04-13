@@ -1,16 +1,14 @@
+import { certificatSituation } from "@mock/data/Composition";
 import { CertificatSituationComposition } from "@model/composition/ICertificatSituationComposition";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
-import { Qualite } from "@model/requete/enum/Qualite";
-import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { IRequerant } from "@model/requete/IRequerant";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
+import { Qualite } from "@model/requete/enum/Qualite";
+import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { waitFor } from "@testing-library/react";
-import { certificatSituation } from "../../../mock/data/Composition";
-
-
 
 test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionne correctement", async () => {
   await ParametreBaseRequete.init();
@@ -70,5 +68,3 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
     expect(resultat).toEqual(attendu);
   });
 });
-
-

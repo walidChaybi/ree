@@ -1,14 +1,11 @@
 import { creationCompositionExtraitPlurilingue } from "@hook/generation/generationECHook/creationComposition/creationCompositionExtraitPlurilingue";
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { ficheActeDeces } from "@mock/data/ficheActe";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
-import { ficheActeDeces } from "../../../../../../mock/data/ficheActe";
 
 const mentionsRetirees: string[] = [];
-
-
-
 
 describe("Composition extrait plurilingue de Décès", () => {
   test("Doit composer l'extrait avec les bonne données", () => {

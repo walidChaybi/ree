@@ -1,4 +1,4 @@
-import { ficheActeNaissance } from "../../../../../../mock/data/ficheActe";
+import { ficheActeNaissance } from "@mock/data/ficheActe";
 
 test("Attendu: creerExtraitPlurilingue fonctionne correctement pour NAISSANCE", () => {
   const acte = ficheActeNaissance.data;

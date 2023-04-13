@@ -1,14 +1,3 @@
-import {
-  acte,
-  acte1,
-  acte2,
-  acte3,
-  acte4,
-  acte5,
-  acteMariage,
-  acteNaissance,
-  acteNationalite
-} from "../../__tests__/pages/fiche/data/ficheActe";
 import { ActeAnalyseMarginales } from "../data/ActeAnalyseMarginales";
 import {
   ReponseAppelAddAlerteActe,
@@ -29,6 +18,17 @@ import {
   idFicheActe2,
   idFicheActeMariage
 } from "../data/ficheActe";
+import {
+  acte,
+  acte1,
+  acte2,
+  acte3,
+  acte4,
+  acte5,
+  acteMariage,
+  acteNaissance,
+  acteNationalite
+} from "../data/ficheEtBandeau/ficheActe";
 import { fichePacs, idFichePacs } from "../data/fichePacs";
 import { inscriptionsRc } from "../data/ficheRC";
 import {

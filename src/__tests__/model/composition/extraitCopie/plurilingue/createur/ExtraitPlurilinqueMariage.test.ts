@@ -1,28 +1,24 @@
 import { creationCompositionExtraitPlurilingue } from "@hook/generation/generationECHook/creationComposition/creationCompositionExtraitPlurilingue";
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import {
+  ficheActeAvecDeuxTitulaireIndetermine,
+  ficheActeAvecImage,
+  ficheActeAvecUnNomTitulaireSNP,
+  ficheActeAvecUnTitulaireIndetermine,
+  ficheActeMariage,
+  ficheActeMariageAvecNomContientDesormais
+} from "@mock/data/ficheActe";
+import {
+  mentionsPlurilinguesMariageAvec6,
+  mentionsPlurilinguesMariageNombre10
+} from "@mock/data/mentions";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
-import {
-    ficheActeAvecDeuxTitulaireIndetermine,
-    ficheActeAvecImage,
-    ficheActeAvecUnNomTitulaireSNP,
-    ficheActeAvecUnTitulaireIndetermine,
-    ficheActeMariage,
-    ficheActeMariageAvecNomContientDesormais
-} from "../../../../../../mock/data/ficheActe";
-import {
-    mentionsPlurilinguesMariageAvec6,
-    mentionsPlurilinguesMariageNombre10
-} from "../../../../../../mock/data/mentions";
 
 const validation = "O";
 const mentionsRetirees: string[] = [];
-
-
-
-
 
 describe("Composition extrait plurilingue de Mariage", () => {
   test("Doit retourner les bonnes informations pour les 2 titulaires", () => {

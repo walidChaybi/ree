@@ -1,11 +1,11 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { ficheActeNaissance } from "@mock/data/ficheActe";
 import { ExtraitCopieActeTexteNaissanceComposition } from "@model/composition/extraitCopie/createur/ExtraitCopieActeTexteNaissanceComposition";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { ficheActeNaissance } from "../../../../../mock/data/ficheActe";
 
 test("Attendu: getCorpsTexte fonctionne correctement", () => {
   const acte = mapActe(ficheActeNaissance.data);

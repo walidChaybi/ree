@@ -4,8 +4,10 @@ import { filesOfProject } from "tsarch";
 import "tsarch/dist/jest";
 
 describe("architecture", () => {
+
+  
   test("'common' NE DOIT PAS dépendre de 'pages'", async () => {
-    const rule = filesOfProject()
+    const rule = filesOfProject("tsconfig-ts-arch.json")
       .inFolder("views/common")
       .shouldNot()
       .dependOnFiles()
@@ -15,7 +17,7 @@ describe("architecture", () => {
   });
 
   test("'api' NE DOIT PAS dépendre de 'pages'", async () => {
-    const rule = filesOfProject()
+    const rule = filesOfProject("tsconfig-ts-arch.json")
       .inFolder("api")
       .shouldNot()
       .dependOnFiles()
@@ -25,7 +27,7 @@ describe("architecture", () => {
   });
 
   test("'model' NE DOIT PAS dépendre de 'pages'", async () => {
-    const rule = filesOfProject()
+    const rule = filesOfProject("tsconfig-ts-arch.json")
       .inFolder("model")
       .matchingPattern("src/model")
       .shouldNot()
@@ -36,7 +38,7 @@ describe("architecture", () => {
   });
 
   test("'model' NE DOIT PAS dépendre de 'api/appels'", async () => {
-    const rule = filesOfProject()
+    const rule = filesOfProject("tsconfig-ts-arch.json")
       .inFolder("model")
       .matchingPattern("src/model")
       .shouldNot()
@@ -47,7 +49,7 @@ describe("architecture", () => {
   });
 
   test("'model' NE DOIT PAS dépendre de 'hook'", async () => {
-    const rule = filesOfProject()
+    const rule = filesOfProject("tsconfig-ts-arch.json")
       .inFolder("model")
       .matchingPattern("src/model")
       .shouldNot()
@@ -58,7 +60,7 @@ describe("architecture", () => {
   });
 
   test("'model' NE DOIT PAS dépendre de 'widget'", async () => {
-    const rule = filesOfProject()
+    const rule = filesOfProject("tsconfig-ts-arch.json")
       .inFolder("model")
       .matchingPattern("src/model")
       .shouldNot()

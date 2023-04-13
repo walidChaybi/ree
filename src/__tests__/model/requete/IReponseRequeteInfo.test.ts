@@ -1,10 +1,10 @@
-import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
-import { ObjetRequete } from "@model/requete/enum/ObjetRequete";
+import { NOMENCLATURE_REPONSE } from "@mock/data/NomenclatureReponse";
 import {
   IReponseRequeteInfo,
   ReponseRequeteInfo
 } from "@model/requete/IReponseRequeteInfo";
-import { NOMENCLATURE_REPONSE } from "../../../mock/data/NomenclatureReponse";
+import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
+import { ObjetRequete } from "@model/requete/enum/ObjetRequete";
 
 test("Attendu: ReponseRequeteInfo.getLibelleNomenclatureReponseRequeteInfoFromId fonctionne correctement", () => {
   expect(

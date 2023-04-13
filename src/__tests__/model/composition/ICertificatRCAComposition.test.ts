@@ -1,15 +1,13 @@
 import { IElementsJasperCertificatRCA } from "@hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRCA";
+import { certificatRCA } from "@mock/data/Composition";
 import { CertificatRCAComposition } from "@model/composition/ICertificatRCAComposition";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
-import { Qualite } from "@model/requete/enum/Qualite";
-import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { IRequerant } from "@model/requete/IRequerant";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
+import { Qualite } from "@model/requete/enum/Qualite";
+import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { waitFor } from "@testing-library/react";
-import { certificatRCA } from "../../../mock/data/Composition";
-
-
 
 test("Attendu: CertificatRCAComposition.creerCertificatRCA fonctionne correctement", async () => {
   await ParametreBaseRequete.init();
@@ -63,5 +61,3 @@ test("Attendu: CertificatRCAComposition.creerCertificatRCA fonctionne correcteme
     expect(resultat).toEqual(attendu);
   });
 });
-
-

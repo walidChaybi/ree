@@ -648,3 +648,12 @@ export function estDeType(obj: any, type: string): boolean {
 // La propriété initialiement obligatoire d'une interface devient optionnelle.
 // >> PropsPartielles<IInterface, "prop1" | "prop2">
 export type PropsPartielles<T, K extends keyof T> = Omit<T, K> & Partial<T>;
+
+export const estSuperieurA500Caracteres = (texte: string) => {
+  const maxTexte = 500;
+  if (texte.length > maxTexte) {
+    return true;
+  } else {
+    return false;
+  }
+};

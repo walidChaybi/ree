@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react",
+    "paths": {
+      "@composant/*": ["./src/views/common/composant/*"],
+      "@hook/*": ["./src/views/common/hook/*"],
+      "@util/*": ["./src/views/common/util/*"],
+      "@utilMetier/*": ["./src/views/common/utilMetier/*"],
+      "@widget/*": ["./src/views/common/widget/*"],
+      "@core/*": ["./src/views/core/*"],
+      "@pages/*": ["./src/views/pages/*"],
+      "@router/*": ["./src/views/router/*"],
+      "@api/*": ["./src/api/*"],
+      "@model/*": ["./src/model/*"],
+      "@scss/*": ["./src/scss/*"],
+      "@mock/*": ["./src/mock/*"]
+    },
+  },
+  "include": ["src"],
+  "exclude": ["src/__tests__"]
+}
+
