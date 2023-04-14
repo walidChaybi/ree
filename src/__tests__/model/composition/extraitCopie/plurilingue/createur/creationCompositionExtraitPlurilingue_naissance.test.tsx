@@ -28,7 +28,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.filigrane_incomplet).toEqual(true);
+    expect(compositionCorps?.filigrane_incomplet).toEqual(true);
   });
 
   test("Doit mettre le document en erreur si un des parents est de sexe inconnu", () => {
@@ -41,7 +41,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.filigrane_incomplet).toEqual(true);
+    expect(compositionCorps?.filigrane_incomplet).toEqual(true);
   });
 
   test("Doit mettre le document en erreur si l'annee de naissance du titulaire est manquante", () => {
@@ -54,7 +54,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.filigrane_incomplet).toEqual(true);
+    expect(compositionCorps?.filigrane_incomplet).toEqual(true);
   });
 
   test("Doit mettre le document en erreur si le titulaire de l'acte est de genre indeterminé", () => {
@@ -67,7 +67,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.filigrane_erreur).toEqual(true);
+    expect(compositionCorps?.filigrane_erreur).toEqual(true);
   });
 
   test("Doit mettre le document en erreur si les parents du titulaires sont de même sexe", () => {
@@ -80,7 +80,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.filigrane_erreur).toEqual(true);
+    expect(compositionCorps?.filigrane_erreur).toEqual(true);
   });
 
   test("Doit mettre le document en erreur si les parents du titulaires est de sexe indetermine", () => {
@@ -93,7 +93,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.filigrane_erreur).toEqual(true);
+    expect(compositionCorps?.filigrane_erreur).toEqual(true);
   });
 
   test("Doit composer l'etrait avec les bonne données", () => {
@@ -118,16 +118,16 @@ describe("Composition extrait plurilingue de Naissance", () => {
     const nomPere = "";
     const prenomPere = "";
 
-    if (compositionCorps.titulaire_1) {
-      expect(compositionCorps.titulaire_1.nom).toBe(nom);
-      expect(compositionCorps.titulaire_1.prenoms).toBe(prenoms);
-      expect(compositionCorps.titulaire_1?.lieu_naissance).toBe(lieuNaissance);
-      expect(compositionCorps.titulaire_1.date_naissance?.jour).toBe(
+    if (compositionCorps?.titulaire_1) {
+      expect(compositionCorps?.titulaire_1.nom).toBe(nom);
+      expect(compositionCorps?.titulaire_1.prenoms).toBe(prenoms);
+      expect(compositionCorps?.titulaire_1?.lieu_naissance).toBe(lieuNaissance);
+      expect(compositionCorps?.titulaire_1.date_naissance?.jour).toBe(
         date_naissance.jour
       );
-      expect(compositionCorps.titulaire_1.nom_pere).toBe(nomPere);
+      expect(compositionCorps?.titulaire_1.nom_pere).toBe(nomPere);
 
-      expect(compositionCorps.titulaire_1?.prenoms_pere).toBe(prenomPere);
+      expect(compositionCorps?.titulaire_1?.prenoms_pere).toBe(prenomPere);
     }
   });
 
@@ -144,7 +144,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
 
     const mentierAfficherUn = "Sc 31-01-92 Nantes Jenmi";
 
-    expect(compositionCorps.autres_enonciations_acte.enonciations[0]).toBe(
+    expect(compositionCorps?.autres_enonciations_acte.enonciations[0]).toBe(
       mentierAfficherUn
     );
   });
@@ -163,7 +163,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
 
     const mentionAfficherUn = "Sc 31-12-98 Nantes Jenmi";
 
-    expect(compositionCorps.autres_enonciations_acte.enonciations[0]).toBe(
+    expect(compositionCorps?.autres_enonciations_acte.enonciations[0]).toBe(
       mentionAfficherUn
     );
   });
@@ -178,8 +178,8 @@ describe("Composition extrait plurilingue de Naissance", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.titulaire_1?.nom_pere).toBe("");
-    expect(compositionCorps.titulaire_1?.prenoms_pere).toBe("");
+    expect(compositionCorps?.titulaire_1?.nom_pere).toBe("");
+    expect(compositionCorps?.titulaire_1?.prenoms_pere).toBe("");
   });
 
   test("Doit formater les prénoms correctement", () => {
@@ -192,6 +192,6 @@ describe("Composition extrait plurilingue de Naissance", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.titulaire_1?.prenoms_pere).toBe("Jean, Louis");
+    expect(compositionCorps?.titulaire_1?.prenoms_pere).toBe("Jean, Louis");
   });
 });

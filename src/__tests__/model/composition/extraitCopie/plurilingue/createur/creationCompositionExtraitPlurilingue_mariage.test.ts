@@ -51,7 +51,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
     };
     const lieuNaissanceT2 = "Barcelone, Catalogne (Espagne)";
 
-    if (compositionCorps.titulaire_1) {
+    if (compositionCorps?.titulaire_1) {
       expect(compositionCorps.titulaire_1.nom_apres_mariage).toBe(
         nomApresMariageAttenduT1
       );
@@ -67,17 +67,17 @@ describe("Composition extrait plurilingue de Mariage", () => {
       );
     }
 
-    expect(compositionCorps.titulaire_2?.nom_apres_mariage).toBe(
+    expect(compositionCorps?.titulaire_2?.nom_apres_mariage).toBe(
       nomApresMariageAttenduT2
     );
-    expect(compositionCorps.titulaire_2?.nom_avant_mariage).toBe(
+    expect(compositionCorps?.titulaire_2?.nom_avant_mariage).toBe(
       nomAvantMariageAttenduT2
     );
-    expect(compositionCorps.titulaire_2?.prenoms).toBe(prenomsT2);
-    expect(compositionCorps.titulaire_2?.date_naissance?.jour).toBe(
+    expect(compositionCorps?.titulaire_2?.prenoms).toBe(prenomsT2);
+    expect(compositionCorps?.titulaire_2?.date_naissance?.jour).toBe(
       dateNaissanceT2.jour
     );
-    expect(compositionCorps.titulaire_2?.lieu_naissance).toBe(lieuNaissanceT2);
+    expect(compositionCorps?.titulaire_2?.lieu_naissance).toBe(lieuNaissanceT2);
   });
 
   test("Ne doit pas éditer les mentions supérieur à 9", () => {
@@ -91,7 +91,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.autres_enonciations_acte.nombre_enonciations).toBe(
+    expect(compositionCorps?.autres_enonciations_acte.nombre_enonciations).toBe(
       9
     );
   });
@@ -109,7 +109,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
 
     const mentierAfficherUn = "Sc 31-01-92 Nantes Jenmi";
 
-    expect(compositionCorps.autres_enonciations_acte.enonciations[0]).toBe(
+    expect(compositionCorps?.autres_enonciations_acte.enonciations[0]).toBe(
       mentierAfficherUn
     );
   });
@@ -123,8 +123,8 @@ describe("Composition extrait plurilingue de Mariage", () => {
       SousTypeDelivrance.RDC,
       mentionsRetirees
     );
-    expect(compositionCorps.titulaire_1?.nom_avant_mariage).toBe("");
-    expect(compositionCorps.titulaire_2?.prenoms).toBe("");
+    expect(compositionCorps?.titulaire_1?.nom_avant_mariage).toBe("");
+    expect(compositionCorps?.titulaire_2?.prenoms).toBe("");
   });
 
   test("Doit retourner le premier nom présent dans l'analyse marginale que celui-ci contient né ou née", () => {
@@ -137,8 +137,8 @@ describe("Composition extrait plurilingue de Mariage", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.lieu_acte).toBe("Barcelone, Catalogne (Espagne)");
-    expect(compositionCorps.titulaire_1?.nom_avant_mariage).toBe("Michou");
+    expect(compositionCorps?.lieu_acte).toBe("Barcelone, Catalogne (Espagne)");
+    expect(compositionCorps?.titulaire_1?.nom_avant_mariage).toBe("Michou");
   });
 
   test("Doit retourner le dernier nom présent dans l'analyse marginale que celui-ci contient désormais", () => {
@@ -151,7 +151,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.titulaire_2?.nom_avant_mariage).toBe("PRODESKA");
+    expect(compositionCorps?.titulaire_2?.nom_avant_mariage).toBe("PRODESKA");
   });
 
   test("Ne doit pas afficher les même titulaires dans le document quand les 2 titulaire sont de sexe indeterminé suivant l'ordre", () => {
@@ -165,7 +165,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.filigrane_erreur).toEqual(true);
+    expect(compositionCorps?.filigrane_erreur).toEqual(true);
   });
 
   test("Doit prendre le lieu de reprise en priorité", () => {
@@ -178,8 +178,8 @@ describe("Composition extrait plurilingue de Mariage", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.lieu_acte).toEqual("Lieu de reprise evenement");
-    expect(compositionCorps.titulaire_2?.lieu_naissance).toBe(
+    expect(compositionCorps?.lieu_acte).toEqual("Lieu de reprise evenement");
+    expect(compositionCorps?.titulaire_2?.lieu_naissance).toBe(
       "Lieu de reprise"
     );
   });
@@ -194,8 +194,8 @@ describe("Composition extrait plurilingue de Mariage", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.lieu_acte).toEqual("Lieu de reprise Nantes");
-    expect(compositionCorps.titulaire_1?.lieu_naissance).toBe("Paris");
+    expect(compositionCorps?.lieu_acte).toEqual("Lieu de reprise Nantes");
+    expect(compositionCorps?.titulaire_1?.lieu_naissance).toBe("Paris");
   });
 
   test("Doit formater la date de naissance correctement si la ville est Paris ou pas renseigner et Jérusalem", () => {
@@ -208,7 +208,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.titulaire_1?.lieu_naissance).toBe("Paris");
+    expect(compositionCorps?.titulaire_1?.lieu_naissance).toBe("Paris");
   });
 
   test("Doit formater la date de naissance des correctement quand le pays est étranger", () => {
@@ -221,7 +221,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.titulaire_2?.lieu_naissance).toBe(
+    expect(compositionCorps?.titulaire_2?.lieu_naissance).toBe(
       "Barcelone, Catalogne (Espagne)"
     );
   });
@@ -410,6 +410,6 @@ describe("Composition extrait plurilingue de Mariage", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps.titulaire_1?.lieu_naissance).toBe("Paris");
+    expect(compositionCorps?.titulaire_1?.lieu_naissance).toBe("Paris");
   });
 });

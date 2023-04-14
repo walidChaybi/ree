@@ -36,28 +36,28 @@ describe("Composition extrait plurilingue de Décès", () => {
     const nomPere = "Sacken";
     const prenomsPere = "Carmela, Linzy";
 
-    if (compositionCorps.titulaire_1) {
-      expect(compositionCorps.titulaire_1.nom).toBe(nom);
-      expect(compositionCorps.titulaire_1.prenoms).toBe(prenoms);
-      expect(compositionCorps.titulaire_1.sexe).toBe(sexe);
-      expect(compositionCorps.titulaire_1?.lieu_naissance).toBe(lieuNaissance);
-      expect(compositionCorps.titulaire_1.date_naissance?.jour).toBe(
+    if (compositionCorps?.titulaire_1) {
+      expect(compositionCorps?.titulaire_1.nom).toBe(nom);
+      expect(compositionCorps?.titulaire_1.prenoms).toBe(prenoms);
+      expect(compositionCorps?.titulaire_1.sexe).toBe(sexe);
+      expect(compositionCorps?.titulaire_1?.lieu_naissance).toBe(lieuNaissance);
+      expect(compositionCorps?.titulaire_1.date_naissance?.jour).toBe(
         date_naissance.jour
       );
-      expect(compositionCorps.titulaire_1.nom_mere).toBe("");
-      expect(compositionCorps.titulaire_1.prenoms_mere).toBe("");
-      expect(compositionCorps.titulaire_1.nom_pere).toBe(nomPere);
-      expect(compositionCorps.titulaire_1.prenoms_pere).toBe(prenomsPere);
-      expect(compositionCorps.titulaire_1.nom_dernier_conjoint).toBe(
+      expect(compositionCorps?.titulaire_1.nom_mere).toBe("");
+      expect(compositionCorps?.titulaire_1.prenoms_mere).toBe("");
+      expect(compositionCorps?.titulaire_1.nom_pere).toBe(nomPere);
+      expect(compositionCorps?.titulaire_1.prenoms_pere).toBe(prenomsPere);
+      expect(compositionCorps?.titulaire_1.nom_dernier_conjoint).toBe(
         "De fontaine"
       );
-      expect(compositionCorps.titulaire_1.prenoms_dernier_conjoint).toBe(
+      expect(compositionCorps?.titulaire_1.prenoms_dernier_conjoint).toBe(
         "Ratus"
       );
-      expect(compositionCorps.titulaire_1.date_deces?.annee).toBe(
+      expect(compositionCorps?.titulaire_1.date_deces?.annee).toBe(
         date_deces.annee
       );
-      expect(compositionCorps.titulaire_1.lieu_deces).toBe(
+      expect(compositionCorps?.titulaire_1.lieu_deces).toBe(
         "Lille, Loire-Atlantique (France)"
       );
     }
@@ -150,28 +150,28 @@ describe("Composition extrait plurilingue de Décès", () => {
     const nomPere = "Sacken";
     const prenomsPere = "Carmela, Linzy";
 
-    if (compositionCorps.titulaire_1) {
-      expect(compositionCorps.titulaire_1.nom).toBe(nom);
-      expect(compositionCorps.titulaire_1.prenoms).toBe(prenoms);
-      expect(compositionCorps.titulaire_1.sexe).toBe(sexe);
-      expect(compositionCorps.titulaire_1?.lieu_naissance).toBe(lieuNaissance);
-      expect(compositionCorps.titulaire_1.date_naissance?.jour).toBe(
+    if (compositionCorps?.titulaire_1) {
+      expect(compositionCorps?.titulaire_1.nom).toBe(nom);
+      expect(compositionCorps?.titulaire_1.prenoms).toBe(prenoms);
+      expect(compositionCorps?.titulaire_1.sexe).toBe(sexe);
+      expect(compositionCorps?.titulaire_1?.lieu_naissance).toBe(lieuNaissance);
+      expect(compositionCorps?.titulaire_1.date_naissance?.jour).toBe(
         date_naissance.jour
       );
-      expect(compositionCorps.titulaire_1.nom_mere).toBe("");
-      expect(compositionCorps.titulaire_1.prenoms_mere).toBe("");
-      expect(compositionCorps.titulaire_1.nom_pere).toBe(nomPere);
-      expect(compositionCorps.titulaire_1.prenoms_pere).toBe(prenomsPere);
-      expect(compositionCorps.titulaire_1.nom_dernier_conjoint).toBe(
+      expect(compositionCorps?.titulaire_1.nom_mere).toBe("");
+      expect(compositionCorps?.titulaire_1.prenoms_mere).toBe("");
+      expect(compositionCorps?.titulaire_1.nom_pere).toBe(nomPere);
+      expect(compositionCorps?.titulaire_1.prenoms_pere).toBe(prenomsPere);
+      expect(compositionCorps?.titulaire_1.nom_dernier_conjoint).toBe(
         "De fontaine"
       );
-      expect(compositionCorps.titulaire_1.prenoms_dernier_conjoint).toBe(
+      expect(compositionCorps?.titulaire_1.prenoms_dernier_conjoint).toBe(
         "Ratus"
       );
-      expect(compositionCorps.titulaire_1.date_deces?.annee).toBe(
+      expect(compositionCorps?.titulaire_1.date_deces?.annee).toBe(
         date_deces.annee
       );
-      expect(compositionCorps.titulaire_1.lieu_deces).toBe(
+      expect(compositionCorps?.titulaire_1.lieu_deces).toBe(
         "Lille, Loire-Atlantique (France)"
       );
     }
@@ -264,28 +264,28 @@ describe("Composition extrait plurilingue de Décès", () => {
     const nomPere = "Sacken";
     const prenomsPere = "Carmela, Linzy";
 
-    if (compositionCorps.titulaire_1) {
-      expect(compositionCorps.titulaire_1.nom).toBe(nom);
-      expect(compositionCorps.titulaire_1.prenoms).toBe(prenoms);
-      expect(compositionCorps.titulaire_1.sexe).toBe(sexe);
-      expect(compositionCorps.titulaire_1?.lieu_naissance).toBe(lieuNaissance);
-      expect(compositionCorps.titulaire_1.date_naissance?.jour).toBe(
+    if (compositionCorps?.titulaire_1) {
+      expect(compositionCorps?.titulaire_1.nom).toBe(nom);
+      expect(compositionCorps?.titulaire_1.prenoms).toBe(prenoms);
+      expect(compositionCorps?.titulaire_1.sexe).toBe(sexe);
+      expect(compositionCorps?.titulaire_1?.lieu_naissance).toBe(lieuNaissance);
+      expect(compositionCorps?.titulaire_1.date_naissance?.jour).toBe(
         date_naissance.jour
       );
-      expect(compositionCorps.titulaire_1.nom_mere).toBe("");
-      expect(compositionCorps.titulaire_1.prenoms_mere).toBe("");
-      expect(compositionCorps.titulaire_1.nom_pere).toBe(nomPere);
-      expect(compositionCorps.titulaire_1.prenoms_pere).toBe(prenomsPere);
-      expect(compositionCorps.titulaire_1.nom_dernier_conjoint).toBe(
+      expect(compositionCorps?.titulaire_1.nom_mere).toBe("");
+      expect(compositionCorps?.titulaire_1.prenoms_mere).toBe("");
+      expect(compositionCorps?.titulaire_1.nom_pere).toBe(nomPere);
+      expect(compositionCorps?.titulaire_1.prenoms_pere).toBe(prenomsPere);
+      expect(compositionCorps?.titulaire_1.nom_dernier_conjoint).toBe(
         "De fontaine"
       );
-      expect(compositionCorps.titulaire_1.prenoms_dernier_conjoint).toBe(
+      expect(compositionCorps?.titulaire_1.prenoms_dernier_conjoint).toBe(
         "Ratus"
       );
-      expect(compositionCorps.titulaire_1.date_deces?.annee).toBe(
+      expect(compositionCorps?.titulaire_1.date_deces?.annee).toBe(
         date_deces.annee
       );
-      expect(compositionCorps.titulaire_1.lieu_deces).toBe(
+      expect(compositionCorps?.titulaire_1.lieu_deces).toBe(
         "Lille, Loire-Atlantique (France)"
       );
     }
