@@ -4,7 +4,7 @@ import { MandataireRc } from "@model/etatcivil/enum/MandataireRc";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 
 export const ficheInscriptionRepertoireCivil = {
-  nature: new NatureRc("CURATELLE_AMENAGEE"),
+  nature: new NatureRc("la", "Protection des majeurs", "CURATELLE_AMENAGEE"),
   mandataires: [
     new MandataireRc(
       "Mandataire judiciaire à la protection des majeurs association"
@@ -53,25 +53,26 @@ export const ficheInscriptionRepertoireCivil = {
   ]
 };
 
-export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes = {
-  nature: new NatureRc("CURATELLE_AMENAGEE"),
-  mandataires: [
-    "Mandataire judiciaire à la protection des majeurs association",
-    "Préposé d'établissement"
-  ],
-  typeInscription: "RENOUVELLEMENT",
-  inscriptionsImpactees: [],
-  inscriptionsLiees: [],
-  dateInscription: new Date(1518652800000),
-  duree: {
-    nombreDuree: 2,
-    uniteDuree: "années",
-    dateFinDeMesure: 1581724800000
-  }
-};
+export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes =
+  {
+    nature: new NatureRc("la", "Protection des majeurs", "CURATELLE_AMENAGEE"),
+    mandataires: [
+      "Mandataire judiciaire à la protection des majeurs association",
+      "Préposé d'établissement"
+    ],
+    typeInscription: "RENOUVELLEMENT",
+    inscriptionsImpactees: [],
+    inscriptionsLiees: [],
+    dateInscription: new Date(1518652800000),
+    duree: {
+      nombreDuree: 2,
+      uniteDuree: "années",
+      dateFinDeMesure: 1581724800000
+    }
+  };
 
 export const ficheInscriptionRepertoireCivilSansUniteDureeInscription = {
-  nature: new NatureRc("CURATELLE_AMENAGEE"),
+  nature: new NatureRc("la", "Protection des majeurs", "CURATELLE_AMENAGEE"),
   mandataires: [
     "Mandataire judiciaire à la protection des majeurs association",
     "Préposé d'établissement"
