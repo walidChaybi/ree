@@ -1,5 +1,5 @@
+import { CreationRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { CreationRequeteRDCSC } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 
 export const RequeteRDCSCInteresse = {
   futurStatut: StatutRequete.PRISE_EN_CHARGE,

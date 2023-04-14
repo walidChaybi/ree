@@ -19,7 +19,7 @@ import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import NationalitesForm, {
   NationalitesFormProps
-} from "@widget/formulaire/nationalites/Nationalites";
+} from "@widget/formulaire/nationalites/NationalitesForm";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {

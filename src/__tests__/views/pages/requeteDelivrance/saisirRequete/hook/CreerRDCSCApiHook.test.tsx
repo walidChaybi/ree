@@ -1,13 +1,13 @@
+import {
+  RequeteRDCSCInstitutionnel,
+  RequeteRDCSCInteresse,
+  RequeteRDCSCMandataire,
+  RequeteRDCSCParticulier
+} from "@mock/data/DataRDCSC";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useCreationRequeteDelivranceRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/CreerRDCSCApiHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import {
-    RequeteRDCSCInstitutionnel,
-    RequeteRDCSCInteresse,
-    RequeteRDCSCMandataire,
-    RequeteRDCSCParticulier
-} from "../data/DataRDCSC";
 
 const HookConsummerInteresse: React.FC = () => {
   const resultat = useCreationRequeteDelivranceRDCSC(RequeteRDCSCInteresse);
@@ -67,5 +67,3 @@ async function waitForResultat(futurStatut: StatutRequete, refus: boolean) {
     ).toBeDefined();
   });
 }
-
-

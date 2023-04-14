@@ -3,12 +3,12 @@ import { useCreationRequeteDelivranceRDC } from "@pages/requeteDelivrance/saisir
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import {
-    RequeteRDCAutreProfessionnnel,
-    RequeteRDCInstitutionnel,
-    RequeteRDCMandataire,
-    RequeteRDCParticulier,
-    RequeteRDCTitulaire
-} from "../data/DataRDC";
+  RequeteRDCAutreProfessionnnel,
+  RequeteRDCInstitutionnel,
+  RequeteRDCMandataire,
+  RequeteRDCParticulier,
+  RequeteRDCTitulaire
+} from "../../../../../../mock/data/DataRDC";
 
 const HookConsummerTitulaire: React.FC = () => {
   const resultat = useCreationRequeteDelivranceRDC(RequeteRDCTitulaire);

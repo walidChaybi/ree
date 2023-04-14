@@ -15,7 +15,7 @@ import { GestionMentions } from "@pages/requeteCreation/commun/composants/Gestio
 import { useDataTableauPersonneSauvegardeeHook } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/IDataTableauPersonneSauvegardee";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { PiecesAnnexes } from "@pages/requeteCreation/commun/composants/PiecesAnnexes";
-import { SaisieProjet } from "@pages/requeteCreation/commun/composants/SaisirProjet";
+import { SaisieProjet } from "@pages/requeteCreation/commun/composants/SaisieProjet";
 import {
   getPostulantNationaliteOuTitulaireActeTranscritDresse,
   OngletProps

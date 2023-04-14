@@ -18,7 +18,7 @@ import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessag
 import {
   NationalitesFormDefaultValues,
   NationalitesFormValidationSchema
-} from "@widget/formulaire/nationalites/Nationalites";
+} from "@widget/formulaire/nationalites/NationalitesForm";
 import {
   FormikComponentProps,
   INomForm,

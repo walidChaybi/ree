@@ -1,4 +1,5 @@
 import { userDroitCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import { acteDeces } from "@mock/data/ficheEtBandeau/ficheActe";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import {
@@ -17,7 +18,6 @@ import { storeRece } from "@util/storeRece";
 import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
-import { acteDeces } from "../../../../../../../mock/data/ficheEtBandeau/ficheActe";
 
 const documentResponse = [
   {

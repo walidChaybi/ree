@@ -1,14 +1,14 @@
+import {
+  RequeteRDCSCInstitutionnel,
+  RequeteRDCSCInteresse,
+  RequeteRDCSCMandataire,
+  RequeteRDCSCParticulier
+} from "@mock/data/DataRDCSC";
+import { UpdateRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useUpdateRequeteDelivranceRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/UpdateRDCSCApiHook";
-import { UpdateRequeteRDCSC } from "@pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import {
-    RequeteRDCSCInstitutionnel,
-    RequeteRDCSCInteresse,
-    RequeteRDCSCMandataire,
-    RequeteRDCSCParticulier
-} from "../data/DataRDCSC";
 
 const saisieInteresse = {
   ...RequeteRDCSCInteresse,
@@ -87,5 +87,3 @@ async function waitForResultat(futurStatut: StatutRequete, refus: boolean) {
     ).toBeDefined();
   });
 }
-
-
