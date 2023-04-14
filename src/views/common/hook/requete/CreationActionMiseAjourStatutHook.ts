@@ -3,6 +3,7 @@ import {
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { storeRece } from "@util/storeRece";
@@ -12,7 +13,10 @@ import { useHistory } from "react-router-dom";
 export interface ICreationActionMiseAjourStatutHookParams {
   statutRequete: StatutRequete;
   libelleAction: string;
-  requete?: IRequeteTableauInformation | IRequeteTableauDelivrance;
+  requete?:
+    | IRequeteTableauInformation
+    | IRequeteTableauDelivrance
+    | IRequeteTableauCreation;
   pasDeTraitementAuto?: boolean;
   callback?: () => void;
 }

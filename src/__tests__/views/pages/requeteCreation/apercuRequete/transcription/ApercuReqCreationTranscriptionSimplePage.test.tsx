@@ -1,15 +1,22 @@
+import { userDroitCreerActeTranscritPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import {
-    PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE,
-    URL_MES_REQUETES_CREATION,
-    URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
+  PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE,
+  URL_MES_REQUETES_CREATION,
+  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
 } from "@router/ReceUrls";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
+import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router";
-
 
 const history = createMemoryHistory();
 
@@ -128,5 +135,40 @@ describe("Test du rendu du composant RMCRequeteAssociees", () => {
       ).not.toBeInTheDocument();
     });
   });
-});
 
+  test("NE DOIT PAS afficher le bouton prendre en charge QUAND la requête n'est pas au statut 'PRENDRE EN CHARGE' ou 'TRANSFEREE'", async () => {
+    await act(async () => {
+      render(
+        <Router history={history}>
+          <ApercuReqCreationTranscriptionSimplePage idRequeteAAfficher="dd96cc3a-9865-4c83-b634-37fad2680f41" />
+        </Router>
+      );
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByText("Prendre en charge")).not.toBeInTheDocument();
+    });
+  });
+
+  test("DOIT afficher le bouton prendre en charge QUAND la requête est au statut 'A_TRAITER'", async () => {
+    storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
+
+    await act(async () => {
+      render(
+        <Router history={history}>
+          <ApercuReqCreationTranscriptionSimplePage idRequeteAAfficher="de96cc3n-9865-4c83-b634-37fad2680f41" />
+        </Router>
+      );
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByText("Prendre en charge")).toBeInTheDocument();
+    });
+
+    const boutonPrendreEncharge = screen.getByText("Prendre en charge");
+
+    await act(async () => {
+      fireEvent.click(boutonPrendreEncharge);
+    });
+  });
+});

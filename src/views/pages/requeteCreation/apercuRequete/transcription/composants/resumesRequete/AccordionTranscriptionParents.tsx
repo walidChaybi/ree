@@ -61,9 +61,7 @@ export const AccordionTranscriptionParents: React.FC<
                 className={`contenuBlocAccordion  ${estPresentUnParent}`}
               >
                 <LigneAccordion
-                  texte={TitulaireRequeteCreation.getNomNaissanceOuSNP(
-                    parent.nomNaissance
-                  )}
+                  texte={TitulaireRequeteCreation.getNomNaissanceOuSNP(parent)}
                   ariaLabel={getLibelle("Nom naissance")}
                 />
 

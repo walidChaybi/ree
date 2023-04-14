@@ -98,13 +98,13 @@ export const TitulaireRequeteCreation = {
       )
       .sort((a, b) => a.position - b.position);
   },
-  getNomNaissanceOuSNP(nomNaissance: string): string {
+  getNomNaissanceOuSNP(titulaire?: ITitulaireRequeteCreation): string {
     let nomNaissanceFormate;
-    if (nomNaissance) {
-      if (nomNaissance === SNP) {
+    if (titulaire?.nomNaissance) {
+      if (titulaire?.nomNaissance === SNP) {
         nomNaissanceFormate = SANS_NOM_CONNU;
       } else {
-        nomNaissanceFormate = nomNaissance;
+        nomNaissanceFormate = titulaire?.nomNaissance;
       }
     } else {
       nomNaissanceFormate = "";

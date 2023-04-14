@@ -535,42 +535,61 @@ export const requeteCreationTranscription = {
   decret: null
 } as any as IRequeteCreationTranscription;
 
-export const creationRequeteTranscriptionParams: ICreationRequeteCreationParams =
-  {
-    requete: {
-      villeRegistre: "Dakar",
-      canal: "COURRIER",
-      type: "CREATION",
-      sousType: "RCTC",
-      provenance: "COURRIER",
-      natureActeTranscrit: "NAISSANCE_MINEUR",
-      lienRequerant: { typeLienRequerant: "PERE_MERE" },
-      titulaires: [
-        {
-          prenoms: [{ prenom: "Prenom", numeroOrdre: 1 }],
-          sexe: "INCONNU",
-          nationalite: "INCONNUE",
-          typeObjetTitulaire: "TITULAIRE_ACTE_TRANSCRIT_DRESSE",
-          position: 1,
-          nomNaissance: "Nom acte etranger",
-          nomSouhaite: "Nom souhaite FR",
-          evenementUnions: []
-        },
-        {
-          prenoms: [{ prenom: "SPC", numeroOrdre: 1 }],
-          sexe: "INCONNU",
-          nationalite: "INCONNUE",
-          nomNaissance: "SNP",
-          typeObjetTitulaire: "FAMILLE",
-          qualite: "PARENT",
-          position: 1,
-          nationalites: [],
-          evenementUnions: []
-        }
-      ],
-      requerant: { adresse: {}, qualite: "PARTICULIER" }
-    }
-  };
+export const requeteCreationTranscriptionStatutATraiter = {
+  ...requeteCreationTranscription,
+  statut: {
+    id: "3ed97a35-c9b0-4ae4-b2dc-75eb84e4e82d",
+    statutRequete: "A_TRAITER",
+    dateEffet: 1656404736683,
+    raisonStatut: null
+  },
+  sousType: "RCTC",
+  piecesJustificatives: [],
+  corbeilleAgent: {
+    id: "bbdba5f5-0b65-40d1-a44c-fbbab948b3b6",
+    idUtilisateur: "idUtilisateurConnectedUser"
+  },
+  corbeilleService: {
+    id: "8035fb6c-df33-11eb-ba80-0242ac130004",
+    idEntiteRattachement: "6737e047-16cc-4731-9a2e-d2e228f7d75f"
+  }
+} as any as IRequeteCreationTranscription;
+
+export const creationRequeteTranscriptionParams: ICreationRequeteCreationParams = {
+  requete: {
+    villeRegistre: "",
+    canal: "COURRIER",
+    type: "CREATION",
+    sousType: "RCTC",
+    provenance: "COURRIER",
+    natureActeTranscrit: "NAISSANCE_MINEUR",
+    lienRequerant: { typeLienRequerant: "PERE_MERE" },
+    titulaires: [
+      {
+        prenoms: [{ prenom: "Prenom", numeroOrdre: 1 }],
+        sexe: "INCONNU",
+        nationalite: "INCONNUE",
+        typeObjetTitulaire: "TITULAIRE_ACTE_TRANSCRIT_DRESSE",
+        position: 1,
+        nomNaissance: "Nom acte etranger",
+        nomSouhaite: "Nom souhaite FR",
+        evenementUnions: []
+      },
+      {
+        prenoms: [{ prenom: "SPC", numeroOrdre: 1 }],
+        sexe: "INCONNU",
+        nationalite: "INCONNUE",
+        nomNaissance: "SNP",
+        typeObjetTitulaire: "FAMILLE",
+        qualite: "PARENT",
+        position: 1,
+        nationalites: [],
+        evenementUnions: []
+      }
+    ],
+    requerant: { adresse: {}, qualite: "PARTICULIER" }
+  }
+};
 
 export const creationRequeteRCTCResultat = [
   {

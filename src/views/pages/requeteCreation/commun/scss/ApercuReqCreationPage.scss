@@ -79,6 +79,12 @@ $height: calc($spacing * 2.5);
  {
   display: flex;
 
+  .boutons {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+  }
+
   .VoletAvecOnglet {
     margin-top: 0.8rem;
     flex: 1;

@@ -6,7 +6,8 @@ import {
 import { requetesCreationAlimentationTableau } from "../data/requeteCreation";
 import {
   creationRequeteRCTCResultat,
-  requeteCreationTranscription
+  requeteCreationTranscription,
+  requeteCreationTranscriptionStatutATraiter
 } from "../data/requeteCreationTranscription";
 import { requetesServiceCreationTableauResultatQuery } from "../data/requetesServiceCreation";
 import { requeteTableauCreation } from "../data/requeteTableauCreation";
@@ -45,6 +46,28 @@ export const configRequetesCreation = [
         };
       }
 
+      if (url === "/requetes/de96cc3n-9865-4c83-b634-37fad2680f41") {
+        return {
+          data: requeteCreationTranscriptionStatutATraiter
+        };
+      }
+
+      if (
+        url ===
+        "/requetes/de96cc3n-9865-4c83-b634-37fad2680f41?isConsultation=true"
+      ) {
+        return {
+          data: requeteCreationTranscriptionStatutATraiter
+        };
+      }
+
+      // Création d'une action et maj statut de la requête
+      if (
+        url ===
+        "/requetes/action/majStatut?idRequete=3ed9aa4e-921b-489f-b8fe-531dd703c60c&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE"
+      ) {
+        return { data: "123456789" };
+      }
       if (
         url ===
         "/requetes/creation/54ddf213-d9b7-4747-8e92-68c220f66de3/statut?statut=PRISE_EN_CHARGE"
