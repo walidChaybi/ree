@@ -8,7 +8,7 @@ import {
 } from "@testing-library/react";
 import NationalitesForm, {
   NationalitesFormDefaultValues
-} from "@widget/formulaire/nationalites/Nationalites";
+} from "@widget/formulaire/nationalites/NationalitesForm";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";

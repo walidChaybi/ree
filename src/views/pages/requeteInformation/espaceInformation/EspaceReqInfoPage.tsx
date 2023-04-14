@@ -6,7 +6,7 @@ import {
 } from "@router/ReceUrls";
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import { getLibelle } from "@util/Utils";
-import { BoiteAOnglet, IOngletProps } from "@widget/onglets/BoiteAOnglets";
+import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import { BoutonPrendreEnChargeAleatoirementInformation } from "./BoutonPrendreEnChargeAleatoirementInformation";
@@ -64,7 +64,7 @@ const EspaceInformationPage: React.FC<LocalProps> = ({ selectedTab }) => {
               {officier && officier.officierDataState && (
                 <>
                   {selectedTabState === 0}
-                  <BoiteAOnglet
+                  <BoiteAOnglets
                     selectedTab={selectedTabState}
                     onglets={getOnglets()}
                     elementEntreTitreEtContenu={

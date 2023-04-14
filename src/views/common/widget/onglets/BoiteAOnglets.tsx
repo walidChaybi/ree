@@ -70,7 +70,7 @@ export function a11yProps(index: any) {
   };
 }
 
-export const BoiteAOnglet: React.FC<IBoiteAOngletsProps> = props => {
+export const BoiteAOnglets: React.FC<IBoiteAOngletsProps> = props => {
   const history = useHistory();
   const [selectedTabState, setSelectedTabState] = React.useState<number>(
     props.selectedTab

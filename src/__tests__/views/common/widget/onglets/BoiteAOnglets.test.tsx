@@ -6,7 +6,7 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { BoiteAOnglet } from "@widget/onglets/BoiteAOnglets";
+import { BoiteAOnglets } from "@widget/onglets/BoiteAOnglets";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
@@ -31,7 +31,7 @@ test("renders BoiteAOnglet", async () => {
   await act(async () => {
     render(
       <Router history={history}>
-        <BoiteAOnglet selectedTab={0} onglets={mock} />
+        <BoiteAOnglets selectedTab={0} onglets={mock} />
       </Router>
     );
   });

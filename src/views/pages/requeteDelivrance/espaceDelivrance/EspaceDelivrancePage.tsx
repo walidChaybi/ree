@@ -14,7 +14,7 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import { getLibelle } from "@util/Utils";
-import { BoiteAOnglet, IOngletProps } from "@widget/onglets/BoiteAOnglets";
+import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import React, { useCallback, useState } from "react";
 import BoutonPrendreEnChargeAleatoirement from "./contenu/BoutonPrendreEnChargeAleatoirement";
 import { CompteurRequete } from "./contenu/CompteurRequete";
@@ -127,7 +127,7 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
                   {selectedTabState === 0 && (
                     <CompteurRequete reloadCompteur={toggleReloadCompteur} />
                   )}
-                  <BoiteAOnglet
+                  <BoiteAOnglets
                     selectedTab={selectedTabState}
                     onglets={getOnglets(
                       miseAJourCompteur,

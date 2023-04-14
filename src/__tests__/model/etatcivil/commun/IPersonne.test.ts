@@ -1,6 +1,6 @@
 import { Personne } from "@model/etatcivil/commun/IPersonne";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { personneMock } from "../../../../../../mock/data/ficheEtBandeau/divers/PersonneMock";
+import { personneMock } from "../../../../mock/data/ficheEtBandeau/divers/PersonneMock";
 test("render composant SectionPart", async () => {
   expect(Personne.getNom(personneMock)).toBe("Faulkner");
   expect(Personne.getAutresNoms(personneMock)).toBe("Elisa (Pseudonyme)");

@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-export default [
+export const utilisateurs = [
   {
     idArobas: "5ef4b1da1e3ee4adf9615ec7",
     nom: "Lolita",
