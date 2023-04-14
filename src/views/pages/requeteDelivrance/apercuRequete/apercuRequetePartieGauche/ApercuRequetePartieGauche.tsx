@@ -1,5 +1,5 @@
 import { SuiviActionsRequete } from "@composant/suivis/SuiviActionsRequete";
-import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationRequete";
+import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";

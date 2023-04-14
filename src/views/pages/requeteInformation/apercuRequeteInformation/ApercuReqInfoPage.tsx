@@ -1,6 +1,6 @@
 import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuRequete";
 import { SuiviActionsRequete } from "@composant/suivis/SuiviActionsRequete";
-import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationRequete";
+import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut

@@ -1,6 +1,6 @@
-import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationRequete";
-import { observations0, observations1 } from "@mock/data/Observations";
+import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
 import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import { observations0, observations1 } from "@mock/data/Observations";
 import DONNEES_REQUETE from "@mock/data/requete";
 import {
   act,

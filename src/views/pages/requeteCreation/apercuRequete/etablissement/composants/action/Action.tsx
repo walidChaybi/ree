@@ -1,4 +1,4 @@
-import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationRequete";
+import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
 import { RECEContext } from "@core/body/RECEContext";
 import { autorisePrendreEnChargeDepuisPageCreation } from "@util/RequetesUtils";
 import { getLibelle } from "@util/Utils";

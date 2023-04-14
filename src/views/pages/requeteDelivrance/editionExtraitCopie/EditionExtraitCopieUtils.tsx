@@ -1,5 +1,5 @@
 import { SuiviActionsRequete } from "@composant/suivis/SuiviActionsRequete";
-import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationRequete";
+import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
 import { IActeApiHookResultat } from "@hook/acte/ActeApiHook";
 import { IGetImagesDeLActeParams } from "@hook/acte/GetImagesDeLActeApiHook";
 import { IGenerationECParams } from "@hook/generation/generationECHook/generationECHook";
