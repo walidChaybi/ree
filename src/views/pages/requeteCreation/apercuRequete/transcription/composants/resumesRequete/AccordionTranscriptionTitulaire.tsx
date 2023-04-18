@@ -18,10 +18,11 @@ export function formatNomSouhaite(nomSouhaite?: string): string | undefined {
 }
 
 export function formatNomsEtNomSouhaite(
-  nomNaissance?: string,
-  nomSouhaite?: string
+  titulaire?: ITitulaireRequeteCreation
 ): string {
-  return `${nomNaissance} ${formatNomSouhaite(nomSouhaite)}`;
+  return `${TitulaireRequeteCreation.getNomNaissanceOuSNP(
+    titulaire
+  )} ${formatNomSouhaite(titulaire?.nomSouhaite)}`;
 }
 
 export const AccordionTranscriptionTitulaire: React.FC<
@@ -67,10 +68,7 @@ export const AccordionTranscriptionTitulaire: React.FC<
                 className={`contenuBlocAccordion  ${classeNameUnSeulTitulaire}`}
               >
                 <LigneAccordion
-                  texte={formatNomsEtNomSouhaite(
-                    titulaire.nomNaissance,
-                    titulaire.nomSouhaite
-                  )}
+                  texte={formatNomsEtNomSouhaite(titulaire)}
                   ariaLabel={getLibelle("Nom naissance et nom souhaité")}
                 />
 

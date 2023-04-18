@@ -1,4 +1,5 @@
 import { mapTitulairesCreation } from "@hook/requete/DetailRequeteHook";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import {
   AccordionTranscriptionTitulaire,
   formatNomsEtNomSouhaite
@@ -123,13 +124,13 @@ describe("Test du composant accordion titulaires correctement", () => {
   });
 
   test("DOIT formater correctement les noms et nom souhaité", async () => {
+
+    const titulaire = {
+      nomNaissance: "Rachid",
+      nomSouhaite: "Rachida"
+    } as any as ITitulaireRequeteCreation;
     await act(async () => {
-      const nomNaissance = "Rachid";
-      const nomSouhaite = "Rachida";
-      const nomsEtNomSouhaite = formatNomsEtNomSouhaite(
-        nomNaissance,
-        nomSouhaite
-      );
+      const nomsEtNomSouhaite = formatNomsEtNomSouhaite(titulaire);
 
       await waitFor(() => {
         expect(nomsEtNomSouhaite).toBe("Rachid (souhaité : Rachida)");

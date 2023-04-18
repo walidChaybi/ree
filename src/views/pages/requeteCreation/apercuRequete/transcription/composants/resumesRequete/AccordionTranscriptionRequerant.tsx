@@ -46,14 +46,18 @@ export const AccordionTranscriptionRequerant: React.FC<
       lignesFormates += `${adresseRequerant?.ligne5} \n`;
     }
 
-    lignesFormates += `${adresseRequerant?.codePostal ?? ""} ${
-      adresseRequerant?.ville ?? ""
-    } \n`;
-
+    if (adresseRequerant?.codePostal) {
+      lignesFormates += `${adresseRequerant.codePostal} `;
+      if (adresseRequerant?.ville) {
+        lignesFormates += `${adresseRequerant.ville}\n`;
+      } else {
+        lignesFormates += "\n";
+      }
+    }
     if (LieuxUtils.estRenseigneEtPaysEtranger(adresseRequerant?.pays)) {
       lignesFormates += `${adresseRequerant?.pays}`;
     }
-    
+
     return lignesFormates;
   }
 

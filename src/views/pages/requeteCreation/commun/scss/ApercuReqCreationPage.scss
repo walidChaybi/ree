@@ -20,9 +20,10 @@ $height: calc($spacing * 2.5);
     padding-top: calc($spacing / 1.5);
     padding-bottom: calc($spacing / 1.5);
   }
+
+
   .labelAccordion {
     color: $application-color;
-    margin-right: 1rem;
     white-space: nowrap;
     min-width: 130px;
     display: flex;
@@ -63,6 +64,14 @@ $height: calc($spacing * 2.5);
   .adresseCourrielRequerant {
     display: flex;
     flex-wrap: wrap;
+  }
+
+  .AccordionTranscriptionRequerant {
+    .adresseCourrielRequerant > div:nth-of-type(2) {
+      .labelAccordion {
+        min-width: 70px !important;
+      }
+     }
   }
 }
 

@@ -67,7 +67,7 @@ ligne2
 ligne3 
 ligne4 
 ligne5 
-44000 Alger 
+44000 Alger
 Maroc`;
 
     await waitFor(() => {
