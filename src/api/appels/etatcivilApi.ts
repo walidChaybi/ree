@@ -206,7 +206,7 @@ export function getTexteActe(identifiant: string): Promise<any> {
   });
 }
 
-export function getPocopas(
+export function getPocopasParFamille(
   debutPocopa: string,
   familleRegistre: string,
   nombreResultatsMax: number
@@ -218,6 +218,24 @@ export function getPocopas(
       debutPocopa,
       familleRegistre,
       nombreResultatsMax
+    }
+  });
+}
+
+export function getPocopasOuvertsOuFermerParFamille(
+  debutPocopa: string,
+  familleRegistre: string,
+  nombreResultatsMax: number,
+  estOuvert?: boolean
+): Promise<any> {
+  return api.fetchCache({
+    method: HttpMethod.GET,
+    uri: URL_POCOPAS_DEBUTENT_PAR,
+    parameters: {
+      debutPocopa,
+      familleRegistre,
+      nombreResultatsMax,
+      estOuvert
     }
   });
 }

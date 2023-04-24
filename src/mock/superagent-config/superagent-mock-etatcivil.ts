@@ -472,6 +472,24 @@ export const configEtatcivil = [
         return { data: ReponseAppelNomenclatureTypeMention.data };
       }
 
+if (
+  match[1] ===
+  "/acte/pocopas/debutentPar?debutPocopa=t&familleRegistre=CSL&nombreResultatsMax=15&estOuvert=true"
+) {
+  return {
+    data: [
+      "TORONTO",
+      "TOURANE",
+      "TOURNAI",
+      "TOKYO",
+      "TULEAR",
+      "TUNIS",
+      "TURIN",
+      "TURIN ET GENES"
+    ]
+  };
+}
+
       if (
         match[1] ===
         "/acte/pocopas/debutentPar?debutPocopa=t&nombreResultatsMax=15"

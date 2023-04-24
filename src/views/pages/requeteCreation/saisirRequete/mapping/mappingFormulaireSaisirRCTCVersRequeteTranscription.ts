@@ -41,7 +41,7 @@ export function mappingSaisieRequeteRCTCVersRequetesAEnvoyer(
   saisie: ISaisieRequeteRCTC
 ): ISaisieRequeteRCTCAEnvoyer {
   return {
-    villeRegistre: saisie.requete.registre, 
+    villeRegistre: saisie.requete.registre.value,
     canal: TypeCanal.COURRIER.nom,
     type: TypeRequete.CREATION.nom,
     sousType: SousTypeCreation.RCTC.nom,

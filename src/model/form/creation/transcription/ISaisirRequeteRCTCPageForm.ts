@@ -64,6 +64,7 @@ import {
   VOIE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { PieceJointe } from "@util/FileUtils";
+import { Option } from "@util/Type";
 
 export interface ISaisieRequeteRCTC {
   [REQUETE]: IRequeteForm;
@@ -81,7 +82,7 @@ export interface ISaisieRequeteRCTC {
 interface IRequeteForm {
   [NATURE_ACTE]: string;
   [LIEN_REQUERANT]: string;
-  [REGISTRE]: string;
+  [REGISTRE]: Option;
 }
 
 export interface IIdentiteTitulaireForm {

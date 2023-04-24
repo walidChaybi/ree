@@ -1,16 +1,8 @@
+import RecherchePocopas from "@composant/recherchePocopas/RecherchePocopas";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
-import { Option, Options } from "@util/Type";
-import {
-  enMajuscule,
-  getLibelle,
-  premiereLettreEnMajusculeLeResteEnMinuscule
-} from "@util/Utils";
+import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
-import {
-  ChampRechercheField,
-  ChampRechercheFieldProps
-} from "@widget/formulaire/champRecherche/ChampRechercheField";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import {
@@ -28,9 +20,8 @@ import {
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React, { useCallback } from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
-import { useRecherchePocopa } from "./hook/RecherchePocopaApiHook";
 
 // Noms des champs
 export const NATURE_ACTE = "natureActe";
@@ -63,8 +54,9 @@ export const RegistreActeValidationSchema = Yup.object({
 export type RegistreActeFiltreProps = ComponentFiltreProps &
   FormikComponentProps;
 
-const nombreResultatsMax = 15;
+const NOMBRE_RESULTAT_MAX = 15;
 const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
+  const [familleRegistre, setFamilleRegistre] = useState("");
   // Namespace des composants formik
   const pocopaWithNamespace = withNamespace(props.nomFiltre, POCOPA);
   const numeroActeWithNamespace = withNamespace(props.nomFiltre, NUMERO_ACTE);
@@ -73,24 +65,6 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
     FAMILLE_REGISTRE
   );
   const natureActeWithNamespace = withNamespace(props.nomFiltre, NATURE_ACTE);
-
-  // State: Gestion Autocomplete
-  const [valeurChampAutocomplete, setValeurChampAutocomplete] =
-    React.useState<string>("");
-
-  // State: dernier pocopas sélectionné
-  const [lastPocopaSelected, setLastPocopaSelected] = React.useState<
-    string | undefined
-  >(undefined);
-
-  const familleRegistre = props.formik.getFieldProps(
-    familleRegistreWithNamespace
-  ).value;
-  const pocopas = useRecherchePocopa(
-    valeurChampAutocomplete,
-    familleRegistre,
-    nombreResultatsMax
-  );
 
   // Evennement
   function numeroChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -102,55 +76,14 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
     props.formik.handleBlur(e);
   };
 
-  function onChampRechercheInput(value: string | null) {
-    setValeurChampAutocomplete(value ? value : "");
-  }
-
-  function onChampRechercheChange(option?: Option) {
-    setLastPocopaSelected(option ? option.str : undefined);
-  }
-
   function anneeChange(e: React.ChangeEvent<HTMLInputElement>) {
     traiteCarAutorises(e.target, digitSeulement);
   }
 
-  /**
-   * Ajoute le dernier pocopa sélectionné à la liste de pocopas ramenée par l'api
-   * Permet de résoudre un warning lorsque l'utilisateur commence à taper une lettre après une première sélection.
-   *   Pour reproduire le warning:
-   *    -choisir un pocopa ("TUNIS" par exemple)
-   *    -sélectionner le pocopa choisi (cliquer dans le champs de recherche)
-   *    -taper une lettre ne se trouvant pas dans la liste à la place ("x" par exemple)
-   *   Exemple de warning:
-   *   Material-UI: The value provided to Autocomplete is invalid.
-   *   None of the options match with `{"key":"TUNIS","value":"TUNIS"}`.
-   *   You can use the `getOptionSelected` prop to customize the equality test.
-   */
-  const getPocopasAsOptions = useCallback(() => {
-    let pocopasAsOptions = [] as Options;
-    if (pocopas) {
-      pocopasAsOptions = pocopas.map(
-        p =>
-          ({
-            value: enMajuscule(p),
-            str: p
-          } as Option)
-      );
-    }
-
-    if (lastPocopaSelected && pocopas?.indexOf(lastPocopaSelected) === -1) {
-      pocopasAsOptions.push({
-        value: enMajuscule(lastPocopaSelected),
-        str: premiereLettreEnMajusculeLeResteEnMinuscule(lastPocopaSelected)
-      });
-    }
-    return pocopasAsOptions;
-  }, [pocopas, lastPocopaSelected]);
-
   const onFamilleRegistreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Réinitialisation du POCOPA si la famille change
+    setFamilleRegistre(e.target.value);
     props.formik.setFieldValue(pocopaWithNamespace, null);
-    setLastPocopaSelected(undefined);
     props.formik.handleChange(e);
   };
 
@@ -180,16 +113,12 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
           disabled={props.filtreInactif}
         />
 
-        <ChampRechercheField
-          {...({
-            name: pocopaWithNamespace,
-            label: "Poste Commune Pays",
-            onChange: onChampRechercheChange,
-            onInput: onChampRechercheInput,
-            options: getPocopasAsOptions(),
-            disabled: props.filtreInactif,
-            disabledPortal: true
-          } as ChampRechercheFieldProps)}
+        <RecherchePocopas
+          nom={pocopaWithNamespace}
+          label={"Poste Commune Pays"}
+          nombreResultatsMax={NOMBRE_RESULTAT_MAX}
+          familleRegistre={familleRegistre}
+          estOuvert={undefined}
         />
 
         <InputField

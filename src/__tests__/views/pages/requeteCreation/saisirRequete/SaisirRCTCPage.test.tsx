@@ -101,9 +101,6 @@ test("DOIT afficher la popin de transfert vers les entités fille (triées) du d
       target: { value: "PERE_MERE" }
     });
 
-    fireEvent.change(screen.getByTestId("requete.registre"), {
-      target: { value: "RABAT" }
-    });
     // Titulaire
     fireEvent.change(getInput("titulaire.noms.nomActeEtranger"), {
       target: { value: "Nom acte etranger" }
@@ -120,6 +117,18 @@ test("DOIT afficher la popin de transfert vers les entités fille (triées) du d
     fireEvent.click(
       getInput("parents.parent1.pasdeprenomconnu.pasdeprenomconnu")
     );
+  });
+
+  await act(async () => {
+    fireEvent.change(screen.getByLabelText("requete.registre"), {
+      target: { value: "t" }
+    });
+  });
+
+  const libelleToronto = screen.getByText("TORONTO");
+
+  await act(async () => {
+    fireEvent.click(libelleToronto);
   });
 
   /////////////////////////////////////////////////////////////////////////
@@ -173,13 +182,11 @@ test("DOIT afficher la popin de transfert vers les entités fille (triées) du d
   });
 
   // Choix d'une entité
-  await waitFor(() => {
-    act(() => {
-      fireEvent.change(selectElement, {
-        target: {
-          value: "6737c8a6-9d23-4fd0-97ec-1ebe3d079373"
-        }
-      });
+  act(() => {
+    fireEvent.change(selectElement, {
+      target: {
+        value: "6737c8a6-9d23-4fd0-97ec-1ebe3d079373"
+      }
     });
   });
 
@@ -188,7 +195,7 @@ test("DOIT afficher la popin de transfert vers les entités fille (triées) du d
     boutonValider = expectEstBoutonEnabled("Valider");
   });
 
-  act(() => {
+  await act(async () => {
     fireEvent.click(boutonValider);
   });
 
@@ -235,15 +242,26 @@ test("DOIT rediriger vers l'apercu requête en prise en charge QUAND je clique s
   const boutonPrendreEnCharge = screen.getByText(/Prendre en charge/i);
 
   // Nature acte et lien requérant
-  fireEvent.change(screen.getByTestId("requete.natureActe"), {
-    target: { value: "NAISSANCE_MINEUR" }
-  });
-  fireEvent.change(screen.getByTestId("requete.lienRequerant"), {
-    target: { value: "PERE_MERE" }
-  });
-  fireEvent.change(screen.getByTestId("requete.registre"), {
-    target: { value: "RABAT" }
-  });
+ await act(async () => {
+   fireEvent.change(screen.getByTestId("requete.natureActe"), {
+     target: { value: "NAISSANCE_MINEUR" }
+   });
+   fireEvent.change(screen.getByTestId("requete.lienRequerant"), {
+     target: { value: "PERE_MERE" }
+   });
+   fireEvent.change(screen.getByLabelText("requete.registre"), {
+     target: { value: "t" }
+   });
+ });
+
+ const libelleToronto = screen.getByText("TORONTO");
+
+ await act(async () => {
+   fireEvent.click(libelleToronto);
+ });
+
+
+
 
   // Titulaire
   fireEvent.change(getInput("titulaire.noms.nomActeEtranger"), {

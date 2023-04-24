@@ -3,9 +3,10 @@ import { FilterOptionsState } from "@mui/material/useAutocomplete";
 import makeStyles from "@mui/styles/makeStyles";
 import { Option } from "@util/Type";
 import { getLibelle } from "@util/Utils";
-import { connect, Field } from "formik";
+import { connect, ErrorMessage, Field } from "formik";
 import React from "react";
 import { IconeCroix } from "../../icones/IconeCroix";
+import { IconErrorMessage } from "../erreur/IconeErreurMessage";
 import { FormikComponentProps } from "../utils/FormUtil";
 import "./scss/ChampRecherche.scss";
 
@@ -17,7 +18,7 @@ interface ChampRechercheProps {
   onInput?: (value: string | null) => void;
   onChange?: (option?: Option) => void;
   value?: any;
-  onClickClear: (e: any) => void;
+  onClickClear?: (e: any) => void;
   filterOptions?: (
     options: Option[],
     state: FilterOptionsState<Option>
@@ -52,7 +53,7 @@ export const ChampRecherche: React.FC<ChampRechercheProps> = props => {
           ? props.noOptionsText
           : getLibelle("Aucun résultats")
       }
-      getOptionLabel={(option: Option) => option.str}
+      getOptionLabel={(option: Option) => option.str || ""}
       isOptionEqualToValue={(option, val) => {
         return option.value === val.value;
       }}
@@ -159,9 +160,14 @@ const _ChampRechercheField: React.FC<ChampRechercheFieldProps> = ({
           value={formik.getFieldProps(name).value}
           disabledPortal={disabledPortal}
         />
+        <div className="BlockErreur">
+          <ErrorMessage component={IconErrorMessage} name={name} />
+        </div>
       </div>
     </div>
   );
 };
 
-export const ChampRechercheField = connect(_ChampRechercheField);
+export const ChampRechercheField = connect<
+  ChampRechercheProps & ComponentProps
+>(_ChampRechercheField);
