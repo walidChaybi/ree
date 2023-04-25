@@ -16,7 +16,10 @@ import {
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { officierALeDroitSurUnDesPerimetres } from "@model/agent/IOfficier";
+import {
+  officierALeDroitSurUnDesPerimetres,
+  officierHabiliterPourLeDroit
+} from "@model/agent/IOfficier";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -159,10 +162,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   ) {
     return (
       SousTypeCreation.estRCTDOuRCTC(sousType) &&
-      officierALeDroitSurUnDesPerimetres(Droit.CREER_ACTE_TRANSCRIT, [
-        Perimetre.MEAE,
-        Perimetre.ETAX
-      ])
+      officierHabiliterPourLeDroit(Droit.CREER_ACTE_TRANSCRIT)
     );
   }
 
