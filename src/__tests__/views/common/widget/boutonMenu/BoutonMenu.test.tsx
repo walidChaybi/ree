@@ -116,7 +116,37 @@ describe("Test le fonctionnement du composant BoutonMenu", () => {
     });
   });
 
-  test("DOIT déclencher la fonction QUAND on click sur un item du menu.", async () => {
+  test("DOIT fermer le menu QUAND on clique sur un item du menu.", async () => {
+    render(<StateConsumerBoutonMenu />);
+
+    const bouton: HTMLElement = screen.getByText("Click me");
+    const menu: HTMLElement = screen.getByRole("presentation", {
+      hidden: true
+    });
+    const choixUn: HTMLElement = screen.getByText("Un");
+
+    await waitFor(() => {
+      expect(bouton).toBeDefined();
+      expect(menu).toBeDefined();
+      expect(choixUn).toBeDefined();
+      expect(menu).not.toBeVisible();
+    });
+
+    fireEvent.mouseOver(bouton);
+
+    await waitFor(() => {
+      expect(menu).toBeVisible();
+    });
+
+    fireEvent.click(choixUn);
+
+    await waitFor(() => {
+      expect(menu).not.toBeVisible();
+      expect(screen.queryByText("Nombre de clics: 1")).toBeInTheDocument();
+    });
+  });
+
+  test("DOIT déclencher la fonction QUAND on clique sur un item du menu.", async () => {
     await act(async () => {
       render(<StateConsumerBoutonMenu />);
     });

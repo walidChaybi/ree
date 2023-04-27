@@ -44,7 +44,13 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
     data: IDataTableauRMCPersonne,
     cle?: string | undefined
   ): void {
-    if (cle) {
+    if (
+      cle &&
+      !identifiantEstDejaSelectionne(
+        props.dataPersonnesSelectionnees,
+        data.idPersonne
+      )
+    ) {
       const role: RolePersonneSauvegardee | undefined =
         RolePersonneSauvegardee.getEnumFor(
           RolePersonneSauvegardee.getKeyForNom(cle)
@@ -120,3 +126,12 @@ function triDataTableauPersonneSelectionneeSurNomPrenom(
   }
   return compareNom || comparePrenoms;
 } 
+
+function identifiantEstDejaSelectionne(
+  dataPersonnesSelectionnees: IDataTableauPersonneSelectionnee[],
+  idPersonne: string
+): boolean {
+  return dataPersonnesSelectionnees.some(
+    personneSelectionnee => personneSelectionnee.idPersonne === idPersonne
+  );
+}
