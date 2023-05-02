@@ -32,3 +32,18 @@ export function getRequeteWithChoixDelivrance(
     choixDelivrance
   };
 }
+
+export function mockFenetreFicheTestFunctions() {
+  const globalAny: any = global;
+  globalAny.URL.createObjectURL = jest.fn();
+  globalAny.scroll = jest.fn();
+  globalAny.open = () => {
+    return {
+      ...window,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn()
+    };
+  };
+  globalAny.close = jest.fn();
+}

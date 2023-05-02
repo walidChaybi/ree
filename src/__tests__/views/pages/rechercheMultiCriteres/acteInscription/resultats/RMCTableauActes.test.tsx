@@ -1,5 +1,5 @@
-import { DataRMCActeAvecResultat, DataTableauActe } from "@mock/data/RMCActe";
 import requeteDelivrance from "@mock/data/requeteDelivrance";
+import { DataRMCActeAvecResultat, DataTableauActe } from "@mock/data/RMCActe";
 import { RMCTableauActes } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauActes";
 import {
   act,
@@ -13,17 +13,11 @@ import {
   NB_LIGNES_PAR_PAGE_ACTE
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
+import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 
-const globalAny: any = global;
-globalAny.open = () => {
-  return {
-    ...window,
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn()
-  };
-};
-globalAny.close = jest.fn();
+beforeAll(async () => {
+  mockFenetreFicheTestFunctions();
+});
 
 test("renders Resultat Acte Recherche Multi Critères => Avec résultat", () => {
   const { getAllByText } = render(

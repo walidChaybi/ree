@@ -8,9 +8,11 @@ import {
   waitFor
 } from "@testing-library/react";
 import React from "react";
+import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
-const globalAny: any = global;
-globalAny.scroll = jest.fn();
+beforeAll(async () => {
+  mockFenetreFicheTestFunctions();
+});
 
 test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
   await act(async () => {

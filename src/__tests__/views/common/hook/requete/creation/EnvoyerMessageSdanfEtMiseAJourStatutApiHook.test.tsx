@@ -8,12 +8,14 @@ import { IEchange } from "@model/requete/IEchange";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import { MemoryHistory, createMemoryHistory } from "history";
+import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
-
+import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 let history: MemoryHistory;
-const globalAny: any = global;
-globalAny.URL.createObjectURL = jest.fn();
+
+beforeAll(async () => {
+  mockFenetreFicheTestFunctions();
+});
 
 const message: IEchange = {
   emetteur: "SCEC",

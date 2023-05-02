@@ -1,4 +1,5 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";
 
 export interface IRMCPersonneResultat {
@@ -22,6 +23,6 @@ export interface IActesOuInscriptionsRMCPersonne {
   nature: string;
   statut: string;
   reference: string;
-  categorieRepertoire: string;
+  categorieRepertoire?: TypeFiche;
   statutOuType: string;
 }

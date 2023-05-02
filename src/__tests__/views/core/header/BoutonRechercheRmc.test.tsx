@@ -4,17 +4,17 @@ import officier from "@mock/data/connectedUser.json";
 import { configFakeUrl } from "@mock/superagent-config/superagent-mock-fake-url";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { MemoryHistory, createMemoryHistory } from "history";
+import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
+import { mockFenetreFicheTestFunctions } from "../../../__tests__utils__/testsUtil";
 
 let history: MemoryHistory;
 let boutonElement: HTMLElement;
-const globalAny: any = global;
-globalAny.open = () => {
-  return { ...window, addEventListener: jest.fn() };
-};
-globalAny.close = jest.fn();
+
+beforeAll(async () => {
+  mockFenetreFicheTestFunctions();
+});
 
 beforeEach(async () => {
   history = createMemoryHistory();

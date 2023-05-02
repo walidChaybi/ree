@@ -13,13 +13,16 @@ import {
   waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import { MemoryHistory, createMemoryHistory } from "history";
+import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
+import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 
 let history: MemoryHistory;
-const globalAny: any = global;
-globalAny.URL.createObjectURL = jest.fn();
+
+beforeAll(async () => {
+  mockFenetreFicheTestFunctions();
+});
 
 beforeEach(async () => {
   storeRece.utilisateurCourant = userDroitCOMEDEC;

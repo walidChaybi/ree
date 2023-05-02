@@ -3,17 +3,15 @@ import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificati
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import React from "react";
+import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
   TypePieceJustificative.init();
 });
 
-const globalAny: any = global;
-globalAny.URL.createObjectURL = jest.fn();
-globalAny.open = () => {
-  return { ...window, addEventListener: jest.fn() };
-};
-globalAny.close = jest.fn();
+beforeAll(async () => {
+  mockFenetreFicheTestFunctions();
+});
 
 test("renders Lien Pièces Jointes fonctionne correctement", async () => {
   const { getByText } = render(

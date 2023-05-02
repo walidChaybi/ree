@@ -7,6 +7,7 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IFenetreFicheActe } from "@pages/rechercheMultiCriteres/common/IFenetreFicheActeInscription";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { getLibelle, getValeurOuVide, supprimeElement } from "@util/Utils";
 import { CompteurElementsCoches } from "@widget/compteurElementsCoches/CompteurElementsCoches";
@@ -16,16 +17,9 @@ import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/col
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useEffect, useState } from "react";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
-import { IDataFicheProps, IIndex } from "../../../fiche/FichePage";
+import { IDataFicheProps } from "../../../fiche/FichePage";
 import { getColonnesTableauActes } from "./RMCTableauActesParams";
 import { goToLinkRMC, TypeRMC } from "./RMCTableauCommun";
-
-interface IFenetreFicheActe {
-  idActe: string;
-  datasFiches: IDataFicheProps[];
-  index: IIndex;
-  numeroRequete?: TRequete["numero"];
-}
 export interface RMCResultatActeProps {
   typeRMC: TypeRMC;
   dataRequete?: TRequete;

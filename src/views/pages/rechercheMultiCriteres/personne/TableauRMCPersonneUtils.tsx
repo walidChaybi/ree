@@ -206,7 +206,7 @@ export function mapPersonneDataTableauRMCPersonne(
     nature: "",
     statut: "",
     reference: "",
-    categorieRepertoire: "",
+    categorieRepertoire: undefined,
     statutOuType: ""
   };
 }

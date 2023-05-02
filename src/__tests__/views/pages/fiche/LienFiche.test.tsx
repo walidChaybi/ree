@@ -2,12 +2,11 @@ import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { LienFiche } from "@pages/fiche/LienFiche";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import React from "react";
+import { mockFenetreFicheTestFunctions } from "../../../__tests__utils__/testsUtil";
 
-const globalAny: any = global;
-globalAny.open = () => {
-  return { ...window, addEventListener: jest.fn() };
-};
-globalAny.close = jest.fn();
+beforeAll(async () => {
+  mockFenetreFicheTestFunctions();
+});
 
 test("renders Lien fiche fonctionne correctement", async () => {
   const { getByText } = render(
