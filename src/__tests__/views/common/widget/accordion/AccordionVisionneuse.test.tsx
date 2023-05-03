@@ -1,19 +1,18 @@
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { AccordionVisionneuse } from "@widget/accordion/AccordionVisionneuse";
 import React from "react";
+import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
-const globalAny: any = global;
-globalAny.open = () => {
-  return { ...window, addEventListener: jest.fn() };
-};
-globalAny.close = jest.fn();
+beforeAll(async () => {
+  mockFenetreFicheTestFunctions();
+});
 
 test("render composant AccordionVisionneuse", async () => {
   act(() => {

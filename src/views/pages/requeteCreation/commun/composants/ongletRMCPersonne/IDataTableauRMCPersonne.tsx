@@ -1,3 +1,5 @@
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+
 export interface IDataTableauRMCPersonne {
   idPersonne: string;
   nom: string;
@@ -10,7 +12,7 @@ export interface IDataTableauRMCPersonne {
   nature: string;
   statut: string;
   reference: string;
-  categorieRepertoire: string;
+  categorieRepertoire?: TypeFiche;
   statutOuType: string;
 }
 
@@ -24,9 +26,6 @@ export const DataTableauRMCPersonne = {
   },
 
   estActe(data: IDataTableauRMCPersonne): boolean {
-    return (
-      !DataTableauRMCPersonne.estPersonne(data) &&
-      data.categorieRepertoire === ""
-    );
+    return data.categorieRepertoire === TypeFiche.ACTE;
   }
 };

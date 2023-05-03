@@ -56,7 +56,8 @@ export const BoutonMenu: React.FC<IBoutonMenuProps> = props => {
             anchorOrigin={props.anchorOrigin}
             transformOrigin={props.transformOrigin}
             MenuListProps={{
-              onMouseLeave: handleCloseMenu
+              onMouseLeave: handleCloseMenu,
+              onClick: handleCloseMenu
             }}
           >
             {props.listeItems.map((item: IBoutonMenuItem) => (

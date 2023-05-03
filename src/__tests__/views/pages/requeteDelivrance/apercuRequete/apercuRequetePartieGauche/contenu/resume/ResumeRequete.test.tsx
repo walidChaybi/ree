@@ -1,9 +1,8 @@
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import {
-  ReponseAppelDetailRequeteDelivrance,
   detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel,
   detailRequeteDelivranceAvecRequerantQualiteInstitutionnel,
-  detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece
+  detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece, ReponseAppelDetailRequeteDelivrance
 } from "@mock/data/DetailRequeteDelivrance";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ResumeRequete } from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequete";
@@ -13,8 +12,13 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
+import { mockFenetreFicheTestFunctions } from "../../../../../../../__tests__utils__/testsUtil";
 
-beforeEach(() => {
+beforeAll(async () => {
+  mockFenetreFicheTestFunctions();
+});
+
+beforeAll(() => {
   TypePieceJustificative.init();
 });
 

@@ -1,16 +1,14 @@
 import {
-    FenetreDocumentReponse,
-    onClose
+  FenetreDocumentReponse,
+  onClose
 } from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/document/FenetreDocumentReponse";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
+import { mockFenetreFicheTestFunctions } from "../../../../../../../__tests__utils__/testsUtil";
 
-const globalAny: any = global;
-globalAny.open = () => {
-  return { ...window, addEventListener: jest.fn() };
-};
-globalAny.close = jest.fn();
-globalAny.URL.createObjectURL = jest.fn();
+beforeAll(async () => {
+  mockFenetreFicheTestFunctions();
+});
 
 test("renders Fenetre Document réponse fonctionne correctement", async () => {
   const toggle = jest.fn();

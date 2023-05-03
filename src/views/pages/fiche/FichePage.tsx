@@ -10,6 +10,7 @@ import { officierDroitConsulterSurLeTypeRegistreOuDroitMEAE } from "@model/agent
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { FenetreExterneUtil } from "@util/FenetreExterne";
+import { UN } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { IAjouterAlerteFormValue } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { OperationLocaleEnCours } from "@widget/attente/OperationLocaleEnCours";
@@ -258,13 +259,14 @@ export const FichePage: React.FC<FichePageProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatSuppressionAlerte]);
 
-  const acte = dataFicheState?.data
-    ? (dataFicheState.data as IFicheActe)
-    : undefined;
+  const acte = dataFicheState.data as IFicheActe;
+
+  const elementAAfficherisReady =
+    bandeauFiche && panelsFiche && dataFicheState && dataFicheCourante;
 
   return (
     <div className="FichePage">
-      {bandeauFiche && panelsFiche && dataFicheState && dataFicheCourante ? (
+      {elementAAfficherisReady ? (
         <>
           <BandeauFiche
             dataBandeau={bandeauFiche}
@@ -274,13 +276,15 @@ export const FichePage: React.FC<FichePageProps> = ({
             )}
           />
 
-          <div className="barreNavigationSuivPrec">
-            <BarreNavigationSuivPrec
-              index={indexCourant}
-              max={nbLignesTotales}
-              setIndex={setIndexFiche}
-            />
-          </div>
+          {datasFiches.length > UN ? (
+            <div className="barreNavigationSuivPrec">
+              <BarreNavigationSuivPrec
+                index={indexCourant}
+                max={nbLignesTotales}
+                setIndex={setIndexFiche}
+              />
+            </div>
+          ) : undefined}
           {dataFicheCourante.categorie === TypeFiche.ACTE && (
             <>
               <BandeauAlertesActe

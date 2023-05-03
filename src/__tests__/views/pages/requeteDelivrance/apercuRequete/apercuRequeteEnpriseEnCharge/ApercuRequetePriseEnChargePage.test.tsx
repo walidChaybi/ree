@@ -22,13 +22,11 @@ import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
+import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 
-const globalAny: any = global;
-globalAny.URL.createObjectURL = jest.fn();
-globalAny.open = () => {
-  return { ...window, addEventListener: jest.fn() };
-};
-globalAny.close = jest.fn();
+beforeAll(async () => {
+  mockFenetreFicheTestFunctions();
+});
 
 let history: any;
 

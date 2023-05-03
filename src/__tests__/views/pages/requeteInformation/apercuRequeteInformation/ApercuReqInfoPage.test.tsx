@@ -1,7 +1,7 @@
+import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
 import { ReponseAppelDetailRequeteInformationSansCorbeilleAgent } from "@mock/data/DetailRequeteInformation";
 import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { NOMENCLATURE_REPONSE } from "@mock/data/NomenclatureReponse";
-import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
 import { NORESULT } from "@mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetesInformation } from "@mock/superagent-config/superagent-mock-requetes-information";
 import { IOfficier } from "@model/agent/IOfficier";
@@ -22,14 +22,13 @@ import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
+import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
 let history: any;
-const globalAny: any = global;
-globalAny.open = () => {
-  return { ...window, addEventListener: jest.fn() };
-};
-globalAny.close = jest.fn();
-URL.createObjectURL = jest.fn();
+
+beforeAll(async () => {
+  mockFenetreFicheTestFunctions();
+});
 
 beforeEach(() => {
   history = createMemoryHistory();

@@ -1,6 +1,8 @@
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";
-import { getLibelle } from "@util/Utils";
+import { FenetreFiche } from "@pages/fiche/FenetreFiche";
+import { getLibelle, supprimeElement, UN, ZERO } from "@util/Utils";
 import { ICelluleBoutonMenuProps } from "@widget/tableau/TableauRece/colonneElements/boutonMenu/CelluleBoutonMenu";
 import { IColonneBoutonMenuParams } from "@widget/tableau/TableauRece/colonneElements/boutonMenu/ColonneBoutonMenu";
 import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
@@ -11,11 +13,15 @@ import {
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
-import React from "react";
+import React, { useState } from "react";
 import {
   DataTableauRMCPersonne,
   IDataTableauRMCPersonne
 } from "../../requeteCreation/commun/composants/ongletRMCPersonne/IDataTableauRMCPersonne";
+import {
+  IFenetreFicheActe,
+  IFenetreFicheActeInscription
+} from "../common/IFenetreFicheActeInscription";
 import "./scss/TableauRMCPersonne.scss";
 import {
   getColonnesTableauRMCAutoPersonne,
@@ -35,6 +41,10 @@ interface TableauRMCPersonneProps {
 }
 
 export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
+  const [etatFenetres, setEtatFenetres] = useState<
+    IFenetreFicheActeInscription[]
+  >([]);
+
   function getLigneClassName(data: IDataTableauRMCPersonne): string {
     return DataTableauRMCPersonne.estPersonne(data)
       ? "lignePersonne"
@@ -87,15 +97,44 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
     boutonMenuAjouterPersonneProps
   );
 
+  const onClickOnLine = (
+    idActeInscription: string,
+    data: any,
+    index: number
+  ) => {
+    if (idActeInscription) {
+      const nouvelEtatFenetre: IFenetreFicheActeInscription = {
+        index: { value: index },
+        idActeInscription,
+        datasFiches: [
+          {
+            identifiant: idActeInscription,
+            categorie: data[index].categorieRepertoire || TypeFiche.ACTE
+          }
+        ]
+      };
+      setEtatFenetres([...etatFenetres, nouvelEtatFenetre]);
+    }
+  };
+
+  const closeFenetre = (idActeOuInscription: string, idx: number) => {
+    const nouvelEtatFenetres = supprimeElement(
+      etatFenetres,
+      (etatFenetre: IFenetreFicheActe) =>
+        etatFenetre.idActe === idActeOuInscription
+    );
+    setEtatFenetres(nouvelEtatFenetres);
+  };
+
   return (
     <div className="resultatsRMCPersonne">
       {
         <TableauRece
-          idKey="idPersonneOuActeInscriptionLie"
+          idKey={"idActeOuInscription"}
           columnHeaders={columnHeaders}
           dataState={props.dataTableauRMCPersonne}
           paramsTableau={{}}
-          onClickOnLine={() => {}}
+          onClickOnLine={onClickOnLine}
           nbLignesParPage={NB_LIGNES_PAR_PAGE_PERSONNE}
           nbLignesParAppel={NB_LIGNES_PAR_APPEL_PERSONNE}
           noRows={getLigneTableauVide(
@@ -105,6 +144,29 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
           stickyHeader={true}
         />
       }
+      {etatFenetres && etatFenetres.length > ZERO && (
+        <>
+          {etatFenetres.map(
+            (fenetreFicheActe: IFenetreFicheActeInscription) => {
+              return (
+                fenetreFicheActe && (
+                  <FenetreFiche
+                    estConsultation={true}
+                    key={`fiche${fenetreFicheActe.idActeInscription}+${fenetreFicheActe.index}`}
+                    identifiant={fenetreFicheActe.idActeInscription}
+                    categorie={fenetreFicheActe.datasFiches[ZERO].categorie}
+                    datasFiches={fenetreFicheActe.datasFiches}
+                    onClose={closeFenetre}
+                    index={fenetreFicheActe.index}
+                    nbLignesTotales={UN}
+                    nbLignesParAppel={UN}
+                  />
+                )
+              );
+            }
+          )}
+        </>
+      )}
     </div>
   );
 };
