@@ -1,5 +1,6 @@
 import { Provenance } from "./enum/Provenance";
 import { SousTypeCreation } from "./enum/SousTypeCreation";
+import { TypeLienRequerantCreation } from "./enum/TypeLienRequerantCreation";
 import { DocumentPJ, IDocumentPJ } from "./IDocumentPj";
 import { IMandant } from "./IMandant";
 import { IPersonneSauvegardee } from "./IPersonneSauvegardee";
@@ -9,6 +10,10 @@ import { IRequete } from "./IRequete";
 import { ITitulaireRequeteCreation } from "./ITitulaireRequeteCreation";
 import { NatureActeTranscription } from "./NatureActeTranscription";
 import { IPieceJustificativeCreation } from "./pieceJointe/IPieceJustificativeCreation";
+
+interface LienRequerant {
+  typeLienRequerant: TypeLienRequerantCreation;
+}
 
 export interface IRequeteCreationEtablissement extends IRequete {
   titulaires?: ITitulaireRequeteCreation[];
@@ -25,6 +30,7 @@ export interface IRequeteCreationEtablissement extends IRequete {
   commentaire?: string;
   demandeIdentification?: boolean;
   demandeFrancisation?: boolean;
+  lienRequerant: LienRequerant;
   provenance?: Provenance;
   numeroFonctionnel?: string;
   numeroAncien?: string;
@@ -32,8 +38,9 @@ export interface IRequeteCreationEtablissement extends IRequete {
   nature?: string;
   campagne?: string;
   numeroDossierMetier?: string;
-  natureActeTranscrit?: NatureActeTranscription;
+  natureActeTranscrit: NatureActeTranscription;
   personnesSauvegardees: IPersonneSauvegardee[];
+  villeRegistre: string;
 }
 
 export const RequeteCreationEtablissement = {

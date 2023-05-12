@@ -31,6 +31,7 @@ export const PATH_SAISIR_RCTC = "saisirrequetetranscription";
 export const PATH_SAISIR_RDLFC = "saisirlivretfamille";
 export const PATH_MODIFIER_RDC = "modifierextraitcopie";
 export const PATH_MODIFIER_RDCSC = "modifiercertificatsituation";
+export const PATH_MODIFIER_RCTC = "modifiercreation";
 
 ///////////// URLs    //////////////
 export const GO_BACK = "goBack";
@@ -139,6 +140,10 @@ export const URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID = 
 export const URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID = `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/${ID}`;
 export const URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID = `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/${ID}`;
 
+
+// Modification requête ... depuis Aperçu requête de DELIVRANCE
+export const URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID = `${URL_MES_REQUETES_CREATION}/${PATH_MODIFIER_RCTC}/${ID}`;
+
 ////////////////////////////////////////////////////////
 ///////// REQUETES DE CRÉATION DE MON SERVICE //////////
 ////////////////////////////////////////////////////////
@@ -191,12 +196,6 @@ const getUrlApercuAvecIdRequete = ({
   ].join(URL_SEPARATEUR);
 };
 
-const getUrlApercuPriseEnChargeAPartirDe = (params: urlApercuParams) =>
-  getUrlApercuAvecIdRequete({
-    ...params,
-    pathApercu: PATH_APERCU_REQ_PRISE
-  });
-
 const getUrlApercuTraitementAPartirDe = (params: urlApercuParams) =>
   getUrlApercuAvecIdRequete({
     ...params,
@@ -215,7 +214,6 @@ export const receUrl = {
   estUrlApercuRequete,
   estUrlApercuTraitementRequete,
   getUrlApercuTraitementAPartirDe,
-  getUrlApercuPriseEnChargeAPartirDe,
   getUrlApercuPriseEnChargeCreationTranscriptionAPartirDe,
   estUrlSaisirCourrier,
   estUrlEdition

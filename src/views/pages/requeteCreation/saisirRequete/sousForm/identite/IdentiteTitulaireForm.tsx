@@ -19,7 +19,7 @@ import PrenomsForm, {
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { TypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerantCreation";
-import { getLibelle } from "@util/Utils";
+import { getLibelle, SPC } from "@util/Utils";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues
@@ -34,7 +34,7 @@ import {
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import EvenementEtrangerForm, {
   EvenementEtrangerFormDefaultValues,
@@ -75,15 +75,30 @@ export const IdentiteFormValidationSchema = Yup.object()
       ? this.createError(paramsError)
       : true;
   });
+  
 
 const IdentiteTitulaireForm: React.FC<SubFormProps> = props => {
   const [pasDePrenomConnu, setPasDePrenomConnu] = useState(false);
+
+  const prenom1WithNamespace = withNamespace(
+    props.nom,
+    withNamespace(PRENOMS, PRENOM_1)
+  );
 
   const dateEvenementComposeFormProps = {
     labelDate: getLibelle(`Date de naissance`),
     nomDate: withNamespace(props.nom, DATE_NAISSANCE),
     anneeMax: new Date().getFullYear()
   } as DateComposeFormProps;
+
+  const pasDePrenomConnuForm =
+    props.formik.getFieldProps(prenom1WithNamespace).value;
+
+  useEffect(() => {
+    if (pasDePrenomConnuForm === SPC) {
+      setPasDePrenomConnu(true);
+    }
+  }, [pasDePrenomConnuForm]);
 
   function onChangePasDePrenomConnu(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {

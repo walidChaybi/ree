@@ -31,7 +31,7 @@ export class NatureActeTranscription extends EnumWithLibelle {
       : undefined;
   }
 
-  public static getKey(obj: NatureActeTranscription) {
+  public static getKey(obj?: NatureActeTranscription) {
     return EnumWithLibelle.getKey(NatureActeTranscription, obj);
   }
 

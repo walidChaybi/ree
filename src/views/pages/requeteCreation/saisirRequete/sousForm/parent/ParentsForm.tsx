@@ -10,7 +10,7 @@ import {
   PrenomsFormDefaultValues,
   PrenomsFormValidationSchema
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
-import { IParent } from "@model/requete/IParents";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { getLibelle } from "@util/Utils";
 import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
@@ -111,7 +111,7 @@ type BoutonParentProps = {
 } & JSX.IntrinsicElements["button"];
 
 interface ComponentParentsFormProps {
-  parents?: IParent[];
+  parents?: ITitulaireRequeteCreation[];
 }
 
 export type ParentSubFormProps = SubFormProps & ComponentParentsFormProps;
@@ -119,7 +119,9 @@ export type ParentSubFormProps = SubFormProps & ComponentParentsFormProps;
 const ParentsForm: React.FC<
   ParentSubFormProps & FormikComponentProps
 > = props => {
-  const [parents, setParents] = useState<IParent[]>([{} as IParent]);
+  const [parents, setParents] = useState<ITitulaireRequeteCreation[]>([
+    {} as ITitulaireRequeteCreation
+  ]);
 
   useEffect(() => {
     if (props.parents) {
@@ -153,7 +155,7 @@ const ParentsForm: React.FC<
       ...ParentFormDefaultValues,
       [PRENOMS]: { ...PrenomsFormDefaultValues }
     });
-    setParents([...parents, {} as IParent]);
+    setParents([...parents, {} as ITitulaireRequeteCreation]);
   };
 
   const onRetraitParent = (formik: FormikProps<FormikValues>) => {
@@ -165,8 +167,9 @@ const ParentsForm: React.FC<
   return (
     <>
       <div className="ParentsForm">
-        {parents.map((parentForm, index) => (
+        {parents.map((parent, index) => (
           <IdentiteParentForm
+            parent={parent}
             key={index}
             nom={withNamespace(props.nom, `parent${index + 1}`)}
             titre={`Parent ${index + 1}`}

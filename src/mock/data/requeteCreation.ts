@@ -730,6 +730,7 @@ export const requeteCreationEtablissement = {
     id: "3ed9ea0d-9e13-4249-a82c-3ec2e600175a",
     dateCreation: 1,
     nomFamille: "nomFamille",
+    nomUsage: "nomUsage",
     prenom: "prenom",
     courriel: "courriel",
     telephone: "telephone",
@@ -741,7 +742,8 @@ export const requeteCreationEtablissement = {
       ligne5: "ligne5",
       codePostal: "codePostal",
       ville: "ville",
-      pays: "pays"
+      pays: "pays",
+      courriel: "courriel"
     },
     qualite: "PARTICULIER",
     detailQualiteRece: null,
@@ -749,6 +751,8 @@ export const requeteCreationEtablissement = {
     detailQualiteMandataireHabilite: null,
     detailQualiteInstitutionnel: null,
     detailQualiteAutreProfessionnel: null,
+    courrielAutreContact: "courrielAutreContact@gmail.com",
+    telephoneAutreContact: "0212456512",
     lienRequerant: {
       id: "3ed961da-d02e-4a6d-8855-a01d6b719488",
       typeLienRequerant: "TITULAIRE",
@@ -884,6 +888,7 @@ export const requeteCreationTranscription = {
       id: "3ed9efe4-c196-4888-8ffe-938f37a5f73f",
       position: 1,
       nomNaissance: "nomNaissance",
+      nomSouhaite: "nomSouhaite",
       nomUsage: "nomUsage",
       anneeNaissance: 2000,
       moisNaissance: 2,

@@ -2,6 +2,7 @@ import {
   ADRESSE,
   ADRESSE_COURRIEL,
   ANNEE,
+  ARRONDISSEMENT_NAISSANCE,
   AUTRE_ADRESSE_COURRIEL,
   AUTRE_NUMERO_TELEPHONE,
   CODE_POSTAL,
@@ -11,6 +12,7 @@ import {
   DATE_MARIAGE,
   DATE_NAISSANCE,
   DATE_RECONNAISSANCE,
+  DEPARTEMENT_NAISSANCE,
   DEPARTEMENT_RECONNAISSANCE,
   JOUR,
   LIEN_REQUERANT,
@@ -79,7 +81,7 @@ export interface ISaisieRequeteRCTC {
   [PIECES_JOINTES]?: PieceJointe[];
 }
 
-interface IRequeteForm {
+export interface IRequeteForm {
   [NATURE_ACTE]: string;
   [LIEN_REQUERANT]: string;
   [REGISTRE]: Option;
@@ -87,15 +89,20 @@ interface IRequeteForm {
 
 export interface IIdentiteTitulaireForm {
   [NOMS]: INomsForm;
-  [PAS_DE_PRENOM_CONNU]: string[];
+  [PAS_DE_PRENOM_CONNU]: string | string[];
   [PRENOMS]: IPrenomsForm;
   [SEXE]: string;
   [DATE_NAISSANCE]: IDateForm;
-  [NAISSANCE]: IEvenementEtrangerForm;
+  [NAISSANCE]: IEvenementNaissanceCommunForm;
 }
 
+export type IEvenementNaissanceCommunForm = Omit<
+  IEvenementNaissanceForm,
+  "lieuNaissance" | "departementNaissance"
+>;
+
 export interface INomsForm {
-  [PAS_DE_NOM_ACTE_ETRANGER]: string[];
+  [PAS_DE_NOM_ACTE_ETRANGER]: string | string[];
   [NOM_ACTE_ETRANGER]: string;
   [NOM_SOUHAITE_ACTE_FR]: string;
 }
@@ -106,27 +113,30 @@ interface IPrenomsForm {
   [PRENOM_3]: string;
 }
 
-interface IDateForm {
-  [JOUR]: number;
-  [MOIS]: number;
-  [ANNEE]: number;
+export interface IDateForm {
+  [JOUR]: string;
+  [MOIS]: string;
+  [ANNEE]: string;
 }
 
-interface IEvenementEtrangerForm {
-  [LIEU_DE_NAISSANCE]: boolean;
+// TODO Renommer IEvenementNaissanceForm
+export interface IEvenementNaissanceForm {
   [VILLE_NAISSANCE]: string;
   [REGION_NAISSANCE]: string;
   [PAYS_NAISSANCE]: string;
+  [ARRONDISSEMENT_NAISSANCE]: string;
+  [LIEU_DE_NAISSANCE]: string;
+  [DEPARTEMENT_NAISSANCE]: string;
 }
 
 export interface IParentForm {
   [NOM]: string;
   [PRENOMS]: IPrenomsForm;
-  [PAS_DE_NOM_CONNU]: string[];
-  [PAS_DE_PRENOM_CONNU]: string[];
+  [PAS_DE_NOM_CONNU]: string | string[];
+  [PAS_DE_PRENOM_CONNU]: string | string[];
   [SEXE]: string;
   [DATE_NAISSANCE]: IDateForm;
-  [NAISSANCE]: IEvenementEtrangerForm;
+  [NAISSANCE]: IEvenementNaissanceForm;
   [NATIONALITES]: INationalitesForm;
   [PAYS_STATUT_REFUGIE]: string;
   [PAYS_ORIGINE]: string;

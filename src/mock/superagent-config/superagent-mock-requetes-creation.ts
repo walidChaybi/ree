@@ -95,6 +95,14 @@ export const configRequetesCreation = [
         };
       }
 
+      if (url === "/requetes/creation/3ed9efe4-c196-4888-8ffe-938f37a5f73f") {
+        return {
+          data: {
+            id: "3ed9efe4-c196-4888-8ffe-938f37a5f73f"
+          }
+        };
+      }
+
       ////////////////////////////
       // Requêtes de mon service
       ////////////////////////////

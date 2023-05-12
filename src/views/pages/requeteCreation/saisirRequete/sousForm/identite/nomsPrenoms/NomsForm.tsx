@@ -14,7 +14,7 @@ import {
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { CarateresAutorise } from "../../../../../../../ressources/Regex";
 import "./scss/NomsForm.scss";
@@ -68,6 +68,16 @@ const NomsFormTitulaire: React.FC<NomsFormProps> = props => {
     props.nom,
     NOM_SOUHAITE_ACTE_FR
   );
+
+  const pasDeNomActeEtrangerForm = props.formik.getFieldProps(
+    pasDeNomActeEtrangerWithNameSpace
+  ).value[0];
+
+  useEffect(() => {
+    if (pasDeNomActeEtrangerForm === "pasDeNomActeEtranger") {
+      setPasDeNomActeEtranger(true);
+    }
+  }, [pasDeNomActeEtrangerForm]);
 
   function onChangePasDeNomSurActeEtranger(
     e: React.ChangeEvent<HTMLInputElement>

@@ -16,7 +16,7 @@ import {
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import {
@@ -49,14 +49,38 @@ export const EvenementMariageParentsFormValidationSchema = Yup.object().shape({
   )
 });
 
+const OUI = "OUI";
+
 const EvenementMariageParentsForm: React.FC<SubFormProps> = props => {
+  // Variable Formik
   const villeMariageWithNamespace = withNamespace(props.nom, VILLE_DE_MARIAGE);
   const paysMariageWithNamespace = withNamespace(props.nom, PAYS_DU_MARIAGE);
+  const lieuMariageWithNamespace = withNamespace(props.nom, LIEU_DE_MARIAGE);
+  const lieuMariageForm = props.formik.getFieldProps(
+    lieuMariageWithNamespace
+  ).value;
 
-  const [parentsMaries, setParentsMaries] = useState(false);
+  const boutonRadioParentMariesForm = props.formik.getFieldProps(
+    withNamespace(props.nom, PARENTS_MARIES)
+  ).value;
+
+  // State
+  const [parentsMaries, setParentsMaries] = useState<boolean>(false);
   const [lieuMariage, setLieuMariage] = useState<EtrangerFrance>(
     EtrangerFrance.INCONNU
   );
+
+  useEffect(() => {
+    if (lieuMariageForm !== EtrangerFrance.getEnumFor("INCONNU")) {
+      setLieuMariage(EtrangerFrance.getEnumFor(lieuMariageForm));
+    }
+  }, [lieuMariageForm]);
+
+  useEffect(() => {
+    if (boutonRadioParentMariesForm && boutonRadioParentMariesForm === OUI) {
+      setParentsMaries(true);
+    }
+  }, [boutonRadioParentMariesForm]);
 
   const dateEvenementMariageComposeFormProps = {
     labelDate: getLibelle(`Date du mariage`),
@@ -65,10 +89,10 @@ const EvenementMariageParentsForm: React.FC<SubFormProps> = props => {
   } as DateComposeFormProps;
 
   function rendreComposantEnFonctionDuLieuDuMariage(
-    nationaliteSelectionne: EtrangerFrance
+    lieuMariageSelectionne: EtrangerFrance
   ): JSX.Element {
     let composantLieuNaissance: JSX.Element = <></>;
-    switch (nationaliteSelectionne) {
+    switch (lieuMariageSelectionne) {
       case EtrangerFrance.ETRANGER:
         composantLieuNaissance = getFormulaireMariageParentEtranger();
         break;

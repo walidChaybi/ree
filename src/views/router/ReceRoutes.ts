@@ -34,6 +34,7 @@ import {
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+  URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID,
   URL_MES_REQUETES_CREATION_SAISIR_RCTC,
   URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
@@ -458,6 +459,17 @@ export const routesRece: IRoute[] = [
     component: ApercuReqCreationTranscriptionSaisieProjetPage,
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: getLibelle(LIBELLE_APERCU_SAISIE_PROJET)
+  },
+  {
+    url: URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID,
+    component: SaisirRCTCPage,
+    droits: [Droit.SAISIR_REQUETE],
+    auMoinsUnDesDroits: [
+      Droit.CREER_ACTE_DRESSE,
+      Droit.CREER_ACTE_ETABLI,
+      Droit.CREER_ACTE_TRANSCRIT
+    ],
+    libelle: getLibelle("Modifier une requête de transcription")
   },
   ////////////////////////////////////////////////////////
   ///////// REQUETES DE CRÉATION DE MON SERVICE //////////

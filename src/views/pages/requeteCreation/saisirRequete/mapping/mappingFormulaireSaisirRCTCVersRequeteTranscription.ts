@@ -1,4 +1,7 @@
-import { INCONNUE } from "@composant/formulaire/ConstantesNomsForm";
+import {
+  DEPARTEMENT_NAISSANCE,
+  INCONNUE
+} from "@composant/formulaire/ConstantesNomsForm";
 import { ISaisieRequeteRCTCAEnvoyer } from "@hook/requete/CreationRequeteCreationApiHook";
 import {
   IAdresseForm,
@@ -73,7 +76,7 @@ function mapTitulairesRCTC(
     ),
     mapParent(saisieParent1, UN, saisieEvenementMariage)
   ];
-  if (auMoinsUneProprieteEstRenseigne(saisieParent2)) {
+  if (saisieParent2 && auMoinsUneProprieteEstRenseigne(saisieParent2)) {
     titulaires.push(mapParent(saisieParent2, DEUX, saisieEvenementMariage));
   }
   return titulaires;
@@ -82,7 +85,9 @@ function mapTitulairesRCTC(
 function mapRequerantRCTC(saisieRequerant: IRequerantForm): any {
   return {
     nomFamille: getValeurOuUndefined(saisieRequerant.nom),
-    nomUsage: getValeurOuUndefined(saisieRequerant.nomUsage),
+    detailQualiteParticulier: {
+      nomUsage: getValeurOuUndefined(saisieRequerant.nomUsage)
+    },
     prenom: getValeurOuUndefined(saisieRequerant.prenom),
     adresse: mapAdresseRequerant(saisieRequerant.adresse),
     qualite: Qualite.PARTICULIER.nom,
@@ -113,7 +118,13 @@ function mapTitulaire(
       saisieTitulaire.naissance.villeNaissance
     ),
     regionNaissance: getValeurOuUndefined(
-      saisieTitulaire.naissance.regionNaissance
+      saisieTitulaire.naissance.regionNaissance ||
+        (DEPARTEMENT_NAISSANCE in saisieTitulaire.naissance
+          ? saisieTitulaire.naissance.departementNaissance
+          : undefined)
+    ),
+    arrondissementNaissance: getValeurOuUndefined(
+      saisieTitulaire.naissance.arrondissementNaissance
     ),
     nationalite: INCONNUE
   };
@@ -242,7 +253,8 @@ function mapReconnaissanceTitulaireActe(
             saisieEvenementReconnaissance.villeReconnaissance
           ),
           region: getValeurOuUndefined(
-            saisieEvenementReconnaissance.regionEtatReconnaissance
+            saisieEvenementReconnaissance.regionEtatReconnaissance ||
+              saisieEvenementReconnaissance.departementReconnaissance
           ),
           pays: getPaysEvenement(
             getValeurOuUndefined(

@@ -7,6 +7,7 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { TypeRedactionActe } from "@model/etatcivil/enum/TypeRedactionActe";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { getLibelle } from "@util/Utils";
 import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
 import React from "react";
@@ -35,8 +36,10 @@ export function getTitulaireForm(): JSX.Element {
   );
 }
 
-export function getParentsForm(): JSX.Element {
-  return <ParentsForm key={PARENTS} nom={PARENTS} />;
+export function getParentsForm(
+  parents?: ITitulaireRequeteCreation[]
+): JSX.Element {
+  return <ParentsForm key={PARENTS} nom={PARENTS} parents={parents} />;
 }
 
 export function getRequerantForm(): JSX.Element {

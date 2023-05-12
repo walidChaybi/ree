@@ -3,8 +3,6 @@ import {
   estOfficierHabiliterPourTousLesDroits,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
-import { receUrl } from "@router/ReceUrls";
-import { replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErreur";
@@ -24,11 +22,9 @@ export type SaisirRequeteBoutonsProps = ComponentProps & FormikComponentProps;
 
 const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
   const history = useHistory();
+
   const annuler = () => {
-    const url = receUrl.getUrlApercuPriseEnChargeAPartirDe({
-      url: history.location.pathname
-    });
-    replaceUrl(history, url);
+    history.goBack();
   };
 
   const valider = () => {
@@ -67,22 +63,22 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
             Droit.SAISIR_REQUETE,
             Droit.CREER_ACTE_TRANSCRIT
           ]) ? (
-            <>
-          <Bouton
-            disabled={!props.formik.dirty}
-            id="boutonPrendreEnCharge"
-            onClick={prendreEnCharge}
-          >
-            {getLibelle("Prendre en charge")}
-          </Bouton>
-          {props.onTransferer && (
+          <>
             <Bouton
-              onClick={props.onTransferer}
               disabled={!props.formik.dirty}
+              id="boutonPrendreEnCharge"
+              onClick={prendreEnCharge}
             >
-              {getLibelle("Transmettre au service compétent")}
+              {getLibelle("Prendre en charge")}
             </Bouton>
-          )}
+            {props.onTransferer && (
+              <Bouton
+                onClick={props.onTransferer}
+                disabled={!props.formik.dirty}
+              >
+                {getLibelle("Transmettre au service compétent")}
+              </Bouton>
+            )}
           </>
         ) : (
           <Bouton
@@ -93,7 +89,6 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
             {getLibelle("Sauvegarder")}
           </Bouton>
         )}
-        
       </div>
     </>
   );

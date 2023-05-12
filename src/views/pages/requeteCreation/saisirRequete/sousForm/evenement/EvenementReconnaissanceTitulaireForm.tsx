@@ -16,7 +16,7 @@ import {
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import {
@@ -39,8 +39,8 @@ export const EvenementReconnaissanceTitulaireFormDefaultValues = {
   [PAYS_RECONNAISSANCE]: ""
 };
 
-export const EvenementReconnaissanceTitulaireFormValidationSchema = Yup.object().shape(
-  {
+export const EvenementReconnaissanceTitulaireFormValidationSchema =
+  Yup.object().shape({
     [TITULAIRE_RECONNU]: Yup.string(),
     [DATE_RECONNAISSANCE]: DateValidationSchemaSansTestFormat,
     [VILLE_RECONNAISSANCE]: Yup.string().matches(
@@ -59,13 +59,17 @@ export const EvenementReconnaissanceTitulaireFormValidationSchema = Yup.object()
       CarateresAutorise,
       CARATERES_AUTORISES_MESSAGE
     )
-  }
-);
+  });
+const OUI = "OUI";
 
 export type EvenementReconnaissanceTitulaireSubFormProps = SubFormProps;
 const EvenementReconnaissanceTitulaireForm: React.FC<
   EvenementReconnaissanceTitulaireSubFormProps
 > = props => {
+  const lieuReconnaissanceWithNamespace = withNamespace(
+    props.nom,
+    LIEU_ACTE_RECONNAISSANCE
+  );
   const villeReconnaissanceWithNamespace = withNamespace(
     props.nom,
     VILLE_RECONNAISSANCE
@@ -83,10 +87,33 @@ const EvenementReconnaissanceTitulaireForm: React.FC<
     DEPARTEMENT_RECONNAISSANCE
   );
 
+  const boutonRadioTitulaireReconnuForm = props.formik.getFieldProps(
+    withNamespace(props.nom, TITULAIRE_RECONNU)
+  ).value;
+
+  const lieuReconnaissanceForm = props.formik.getFieldProps(
+    lieuReconnaissanceWithNamespace
+  ).value;
+
   const [lieuReconnaissance, setLieuReconnaissance] = useState<EtrangerFrance>(
     EtrangerFrance.INCONNU
   );
   const [titulaireReconnu, setTitulaireReconnu] = useState(false);
+
+  useEffect(() => {
+    if (lieuReconnaissanceForm !== EtrangerFrance.getEnumFor("INCONNU")) {
+      setLieuReconnaissance(EtrangerFrance.getEnumFor(lieuReconnaissanceForm));
+    }
+  }, [lieuReconnaissanceForm]);
+
+  useEffect(() => {
+    if (
+      boutonRadioTitulaireReconnuForm &&
+      boutonRadioTitulaireReconnuForm === OUI
+    ) {
+      setTitulaireReconnu(true);
+    }
+  }, [boutonRadioTitulaireReconnuForm]);
 
   const dateEvenementReconnaissanceComposeFormProps = {
     labelDate: getLibelle(`Date de reconnaissance`),

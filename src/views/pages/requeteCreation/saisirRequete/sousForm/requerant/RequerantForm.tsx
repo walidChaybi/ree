@@ -20,7 +20,7 @@ import {
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import {
   CarateresAutorise,
@@ -61,6 +61,10 @@ export const RequerantFormValidationSchema = Yup.object().shape({
 
 const RequerantForm: React.FC<SubFormProps> = props => {
   const [nomUsagePresent, setNomUsagePresent] = useState<boolean>(false);
+  const nomUsageWithNamespace = withNamespace(props.nom, NOM_USAGE);
+
+  const nomUsageForm = props.formik.getFieldProps(nomUsageWithNamespace).value;
+
   const adresseFormProps = {
     nom: withNamespace(props.nom, ADRESSE),
     titre: getLibelle("Requérant")
@@ -76,7 +80,12 @@ const RequerantForm: React.FC<SubFormProps> = props => {
     AUTRE_NUMERO_TELEPHONE
   );
   const IGNORER_TABULATION = -1;
-  const nomUsageWithNamespace = withNamespace(props.nom, NOM_USAGE);
+
+  useEffect(() => {
+    if (nomUsageForm && !nomUsagePresent) {
+      setNomUsagePresent(true);
+    }
+  }, [nomUsageForm, nomUsagePresent]);
 
   const toggleNomUsage = () => {
     props.formik.setFieldValue(nomUsageWithNamespace, "");

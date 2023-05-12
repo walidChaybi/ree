@@ -125,5 +125,18 @@ export const TitulaireRequeteCreation = {
     }
 
     return lignePrenomsFormates;
+  },
+  getTitulaireByPosition({
+    titulaires,
+    position
+  }: {
+    titulaires?: ITitulaireRequeteCreation[];
+    position: number;
+  }): ITitulaireRequeteCreation | undefined {
+    return titulaires
+      ? titulaires.find(titulaire => {
+          return titulaire.position === position;
+        })
+      : undefined;
   }
 };

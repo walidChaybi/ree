@@ -15,7 +15,7 @@ import {
   URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID
 } from "@router/ReceUrls";
 import { FenetreExterne } from "@util/FenetreExterne";
-import { getUrlWithParam, replaceUrl } from "@util/route/UrlUtil";
+import { getUrlWithParam } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useState } from "react";
@@ -57,7 +57,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
     }
 
     if (url) {
-      replaceUrl(history, getUrlWithParam(url, props.requete.id));
+      history.push(getUrlWithParam(url, props.requete.id));
     }
   };
 

@@ -28,6 +28,7 @@ export interface IRequerant {
   courriel?: string;
   telephone?: string;
   adresse?: IAdresseRequerant;
+  nomUsage?: string;
   qualiteRequerant: IQualiteRequerant;
   lienRequerant?: ILienRequerant;
   courrielAutreContact?: string;
@@ -177,6 +178,7 @@ export const Requerant = {
       id: requerant.id,
       dateCreation: requerant.dateCreation,
       nomFamille: getValeurOuVide(requerant.nomFamille),
+      nomUsage: getValeurOuVide(requerant.detailQualiteParticulier?.nomUsage),
       prenom: getValeurOuVide(requerant.prenom),
       courriel: requerant.courriel,
       telephone: requerant.telephone,

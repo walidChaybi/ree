@@ -1,11 +1,15 @@
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import {
   IRMCAutoPersonneParams,
   useRMCAutoPersonneApiAvecCacheHook
 } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
+import { mAppartient } from "@model/agent/IOfficier";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
@@ -18,7 +22,13 @@ import {
   getPostulantNationaliteOuTitulaireActeTranscritDresse,
   OngletProps
 } from "@pages/requeteCreation/commun/requeteCreationUtils";
-import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
+import {
+  URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID,
+  URL_RECHERCHE_REQUETE
+} from "@router/ReceUrls";
+import { getUrlWithParam } from "@util/route/UrlUtil";
+import { getLibelle } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
@@ -149,6 +159,18 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
       : [];
   }
 
+  const afficherBoutonModifierRequete =
+    SousTypeCreation.estRCTC(requete?.sousType) &&
+    mAppartient(requete?.idUtilisateur);
+
+  function onModificationRequete() {
+    if (requete) {
+      history.push(
+        getUrlWithParam(URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID, requete.id)
+      );
+    }
+  }
+
   return (
     <div className="ApercuReqCreationTranscriptionPriseEnChargePage">
       <>
@@ -161,6 +183,17 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
           estADroite={false}
         >
           {getComposantResumeRequeteEnFonctionNatureActe(requete)}
+
+          {afficherBoutonModifierRequete && (
+            <Bouton
+              type="button"
+              onClick={onModificationRequete}
+              aria-label="Modifier"
+            >
+              <FontAwesomeIcon icon={faEdit} className="iconModifierRequete" />
+              {getLibelle("Modifier la requête")}
+            </Bouton>
+          )}
 
           {!estModeConsultation && (
             <RMCRequetesAssocieesResultats requete={requete as IRequete} />

@@ -12,7 +12,7 @@ import {
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import {
@@ -57,9 +57,24 @@ const EvenementParentsForm: React.FC<SubFormProps> = props => {
   const villeWithNamespace = withNamespace(props.nom, VILLE_NAISSANCE);
   const departementWithspace = withNamespace(props.nom, DEPARTEMENT_NAISSANCE);
 
+  const lieuNaissanceWithNamespace = withNamespace(
+    props.nom,
+    LIEU_DE_NAISSANCE
+  );
+
+  const lieuNaissanceForm = props.formik.getFieldProps(
+    lieuNaissanceWithNamespace
+  ).value;
+
   const [naissance, setNaissance] = useState<EtrangerFrance>(
     EtrangerFrance.INCONNU
   );
+
+  useEffect(() => {
+    if (lieuNaissanceForm !== EtrangerFrance.getEnumFor("INCONNU")) {
+      setNaissance(EtrangerFrance.getEnumFor(lieuNaissanceForm));
+    }
+  }, [lieuNaissanceForm]);
 
   function onChangeLieuNaissance(e: React.ChangeEvent<HTMLInputElement>) {
     setNaissance(EtrangerFrance.getEnumFor(e.target.value));

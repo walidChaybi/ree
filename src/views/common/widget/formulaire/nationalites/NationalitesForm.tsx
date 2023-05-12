@@ -91,8 +91,23 @@ const NationalitesForm: React.FC<NationalitesFormProps> = props => {
   const NationaliteWithNamespace3 = withNamespace(props.nom, NATIONALITE_3);
 
   const [nbNATIONALITE, setNbNATIONALITE] = useState<number>(1);
+  const [nbNationaliteInitialise, setNbNationaliteInitialise] =
+    useState<boolean>(false);
   const [btnAjouterInactif, setBtnAjouterInactif] = useState(false);
   const [btnSupprimerInactif, setBtnSupprimerInactif] = useState(true);
+
+  useEffect(() => {
+    if (
+      !nbNationaliteInitialise &&
+      props.nationalites &&
+      props.nationalites.length > 1
+    ) {
+      setNbNATIONALITE(props.nationalites.length);
+      setNbNationaliteInitialise(true);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.nationalites]);
 
   const ajouterNATIONALITE = () => {
     if (nbNATIONALITE + 1 <= NB_MAX_NATIONALITES) {

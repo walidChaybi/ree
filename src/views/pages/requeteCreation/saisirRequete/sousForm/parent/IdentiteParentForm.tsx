@@ -9,8 +9,8 @@ import PrenomsForm, {
   PrenomsFormDefaultValues
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { IParent } from "@model/requete/IParents";
-import { getLibelle } from "@util/Utils";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { getLibelle, SNP, SPC } from "@util/Utils";
 import DateComposeForm, {
   DateComposeFormProps
 } from "@widget/formulaire/champsDate/DateComposeForm";
@@ -29,7 +29,7 @@ import {
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DATE_NAISSANCE,
   PAS_DE_NOM_CONNU,
@@ -39,11 +39,11 @@ import {
 } from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 import EvenementParentForm from "../evenement/EvenementParentsForm";
 import "./scss/ParentsForm.scss";
-interface ComponentFormProps {
-  parent?: IParent;
+interface IdentiteParentFormtFormProps {
+  parent?: ITitulaireRequeteCreation;
 }
 
-export type ParentSubFormProps = SubFormProps & ComponentFormProps;
+export type ParentSubFormProps = SubFormProps & IdentiteParentFormtFormProps;
 
 const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
   const [pasDePrenomConnu, setPasDePrenomConnu] = useState(false);
@@ -67,7 +67,7 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
 
   const nationaliteFormProps = {
     nom: withNamespace(props.nom, NATIONALITES),
-    nationalites: undefined
+    nationalites: props.parent?.nationalites || undefined
   } as NationalitesFormProps;
 
   const dateEvenementComposeFormProps = {
@@ -75,6 +75,16 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
     nomDate: withNamespace(props.nom, DATE_NAISSANCE),
     anneeMax: new Date().getFullYear()
   } as DateComposeFormProps;
+
+  useEffect(() => {
+    if (props.parent?.nomNaissance === SNP) {
+      setPasDeNomConnu(true);
+    }
+
+    if (props.parent?.prenoms?.[0].prenom === SPC) {
+      setPasDePrenomConnu(true);
+    }
+  }, [props.parent?.nomNaissance, props.parent?.prenoms]);
 
   function onChangePasDePrenomConnu(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
@@ -188,4 +198,6 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
   );
 };
 
-export default connect<ComponentFormProps & ISubForm>(IdentiteParentForm);
+export default connect<IdentiteParentFormtFormProps & ISubForm>(
+  IdentiteParentForm
+);

@@ -30,7 +30,8 @@ export const URL_REQUETES_RMC = "/requetes/rmc";
 export const URL_REQUETES_RMC_AUTO = "/requetes/rmcauto";
 export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
-export const URL_REQUETES_CREATION = "/requetes/creations";
+export const URL_REQUETES_CREATIONS = "/requetes/creations";
+export const URL_REQUETES_CREATION = "/requetes/creation";
 export const URL_REQUETES_CREATION_TRANSMISSION_ENTITE =
   "/requetes/creationsTransmissionEntite";
 export const URL_CHOIX_DELIVRANCE = "/choixdelivrance";
@@ -60,7 +61,8 @@ export const URL_REPONSE_REQ_INFO = "/reponse";
 export const URL_NB_REQ_INFO = "/requetes/information/count";
 export const URL_ECHANGE = "/echange";
 export const URL_ECHANGE_STATUT = "/requetes/action/retourSdanf";
-export const URL_DOCUMENT_COMPLEMENTAIRE = "/documentsreponses/documentComplementaire";
+export const URL_DOCUMENT_COMPLEMENTAIRE =
+  "/documentsreponses/documentComplementaire";
 
 const URL_REPONSES = "/reponses";
 
@@ -300,8 +302,19 @@ export async function updateChoixDelivrance(
 export async function creationRequeteCreation(requete: ISaisieRequeteAEnvoyer) {
   return api.fetch({
     method: HttpMethod.POST,
-    uri: `${URL_REQUETES_CREATION}`,
+    uri: `${URL_REQUETES_CREATIONS}`,
     data: [requete]
+  });
+}
+
+export async function updateRequeteCreation(
+  idRequete: string,
+  requete: ISaisieRequeteAEnvoyer
+) {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_REQUETES_CREATION}/${idRequete}`,
+    data: requete
   });
 }
 

@@ -6,7 +6,13 @@ import {
   PRENOM
 } from "@composant/formulaire/ConstantesNomsForm";
 import RequerantForm from "@pages/requeteCreation/saisirRequete/sousForm/requerant/RequerantForm";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
@@ -113,5 +119,17 @@ test("DOIT rendre le composant formulaire du requerant correctement", async () =
         value: "mockNumeroRequerant"
       }
     });
+  });
+});
+
+test("DOIT ajouter l'input nomUsage au click sur le bouton ajouter", async () => {
+  render(<HookParentsForm />);
+  const boutonAjouter = screen.getByText("Ajouter un nom d'usage");
+
+  fireEvent.click(boutonAjouter);
+
+  const inputNomUsage = screen.getByLabelText("Nom d'usage");
+  await waitFor(() => {
+    expect(inputNomUsage).toBeDefined();
   });
 });
