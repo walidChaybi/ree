@@ -5,6 +5,9 @@ import {
 } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
+import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
@@ -140,8 +143,12 @@ test("Ouverture d'un acte", async () => {
 
   fireEvent.click(ligne);
 
-    await waitFor(() => {
-      const vue = screen.getByText("Visualisation du RC");
+  await waitFor(() => {
+    const vue = screen.queryByText("Visualisation du RC");
+    if (officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.MEAE)) {
       expect(vue).toBeDefined();
-    });
+    } else {
+      expect(vue).toBeNull();
+    }
+  });
 });

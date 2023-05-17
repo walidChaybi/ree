@@ -222,6 +222,7 @@ export function mapActesOuInscriptionsLiesDataTableauRMCPersonne(
     prenoms: "",
     dateNaissance: "",
     lieuNaissance: "",
+    categorieRepertoire: aoiLies.categorieRepertoire,
     sexe: "",
     role: ""
   }));

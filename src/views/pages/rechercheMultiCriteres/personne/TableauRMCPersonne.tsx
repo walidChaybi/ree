@@ -1,3 +1,6 @@
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
+import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";
@@ -99,10 +102,24 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
 
   const onClickOnLine = (
     idActeInscription: string,
-    data: any,
+    data: IDataTableauRMCPersonne[],
     index: number
   ) => {
-    if (idActeInscription) {
+    const estActeDuPerimetreAgent = () => {
+      return (
+        idActeInscription &&
+        data[index].nature &&
+        !data[index].categorieRepertoire
+      );
+    };
+    const estInscriptionDuPerimetreMEAE = () => {
+      return (
+        idActeInscription &&
+        officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.MEAE)
+      );
+    };
+
+    if (estActeDuPerimetreAgent() || estInscriptionDuPerimetreMEAE()) {
       const nouvelEtatFenetre: IFenetreFicheActeInscription = {
         index: { value: index },
         idActeInscription,
