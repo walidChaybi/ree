@@ -1,7 +1,7 @@
 import { PRENOMS } from "@composant/formulaire/ConstantesNomsForm";
 import PrenomsForm, {
-  PrenomsFormDefaultValues,
-  PrenomsFormValidationSchema
+  creerValidationSchemaPrenom,
+  genererDefaultValuesPrenoms
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import {
   act,
@@ -28,9 +28,9 @@ const HookPrenomsForm: React.FC = () => {
   return (
     <Formik
       initialValues={{
-        [PRENOMS]: { ...PrenomsFormDefaultValues }
+        [PRENOMS]: { ...genererDefaultValuesPrenoms() }
       }}
-      validationSchema={PrenomsFormValidationSchema}
+      validationSchema={creerValidationSchemaPrenom()}
       onSubmit={handleClickButton}
     >
       <Form>
@@ -69,7 +69,7 @@ test("render composant Prenoms Formulaire", async () => {
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"prenoms":{"prenom1":"MockPrenom1","prenom2":"","prenom3":""}}'
+      '{"prenoms":{"prenom1":"mockPrenom1","prenom2":"","prenom3":"","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":""}}'
     );
   });
 });
@@ -137,7 +137,7 @@ test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async (
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"prenoms":{"prenom1":"MockPrenom1","prenom2":"Mockprenom2","prenom3":"Mockprenom3"}}'
+      '{"prenoms":{"prenom1":"mockPrenom1","prenom2":"mockprenom2","prenom3":"mockprenom3","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":""}}'
     );
   });
 
@@ -152,7 +152,7 @@ test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async (
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"prenoms":{"prenom1":"MockPrenom1","prenom2":"Mockprenom2","prenom3":""}}'
+      '{"prenoms":{"prenom1":"mockPrenom1","prenom2":"mockprenom2","prenom3":"","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":""}}'
     );
   });
 });

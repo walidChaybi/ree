@@ -1,5 +1,6 @@
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { act, fireEvent, waitFor } from "@testing-library/react";
 import { urlImagePngVideBase64 } from "../../mock/data/ImagePng";
 
 function dataURLtoFile(dataurl: string, filename: string): File {
@@ -46,4 +47,28 @@ export function mockFenetreFicheTestFunctions() {
     };
   };
   globalAny.close = jest.fn();
+}
+
+export async function renseigneChampsRecherche(
+  screen: any,
+  nomChamp: string,
+  valeurChamp: string
+) {
+  const autocomplete = screen.getByTestId("autocomplete");
+  const champRecherche = screen.getByLabelText(nomChamp) as HTMLInputElement;
+  autocomplete.focus();
+
+  await act(async () => {
+    fireEvent.change(champRecherche, {
+      target: { value: valeurChamp }
+    });
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText(valeurChamp)).toBeInTheDocument();
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText(valeurChamp));
+  });
 }

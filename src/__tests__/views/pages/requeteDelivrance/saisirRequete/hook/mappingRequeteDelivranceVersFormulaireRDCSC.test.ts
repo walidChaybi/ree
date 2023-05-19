@@ -62,6 +62,7 @@ test("test du mapping Institutionnel", () => {
   const res = mappingRequeteDelivranceVersFormulaireRDCSC(
     requeteDelivranceInstitutionnel
   );
+
   expect(res).toStrictEqual({
     document: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
     titulaires,
@@ -117,7 +118,20 @@ const titulaires = {
       nomNaissance: "Prodesk",
       nomUsage: ""
     },
-    prenoms: { prenom1: "Elodie", prenom2: "", prenom3: "" },
+    prenoms: {
+      prenom1: "Elodie",
+      prenom10: "",
+      prenom11: "",
+      prenom12: "",
+      prenom2: "",
+      prenom3: "",
+      prenom4: "",
+      prenom5: "",
+      prenom6: "",
+      prenom7: "",
+      prenom8: "",
+      prenom9: ""
+    },
     sexe: "FEMININ",
     naissance: {
       dateEvenement: {
@@ -137,7 +151,20 @@ const titulaires = {
       nomNaissance: "",
       nomUsage: ""
     },
-    prenoms: { prenom1: "", prenom2: "", prenom3: "" },
+    prenoms: {
+      prenom1: "",
+      prenom10: "",
+      prenom11: "",
+      prenom12: "",
+      prenom2: "",
+      prenom3: "",
+      prenom4: "",
+      prenom5: "",
+      prenom6: "",
+      prenom7: "",
+      prenom8: "",
+      prenom9: ""
+    },
     sexe: "INCONNU",
     naissance: {
       dateEvenement: {

@@ -222,7 +222,11 @@ export const SaisirRCTCPage: React.FC = () => {
   //////////////////////////////////////////////////////////////////////////
   const blocsForm: JSX.Element[] = [
     getRequeteForm(),
-    getTitulaireForm(),
+    getTitulaireForm(
+      TitulaireRequeteCreation.getTitulairesTries(
+        detailRequeteState?.titulaires
+      )?.[0]
+    ),
     getParentsForm(
       TitulaireRequeteCreation.getParentsTries(detailRequeteState?.titulaires)
     ),

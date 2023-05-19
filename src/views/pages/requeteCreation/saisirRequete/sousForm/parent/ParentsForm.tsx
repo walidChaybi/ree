@@ -7,11 +7,11 @@ import {
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
 import {
-  PrenomsFormDefaultValues,
-  PrenomsFormValidationSchema
+  creerValidationSchemaPrenom,
+  genererDefaultValuesPrenoms
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { getLibelle } from "@util/Utils";
+import { DOUZE, getLibelle } from "@util/Utils";
 import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
@@ -52,7 +52,7 @@ export const ParentFormDefaultValues = {
   [PAS_DE_NOM_CONNU]: "false",
   [NOM]: "",
   [PAS_DE_PRENOM_CONNU]: "false",
-  [PRENOMS]: { ...PrenomsFormDefaultValues },
+  [PRENOMS]: genererDefaultValuesPrenoms(),
   [SEXE]: "INCONNU",
   [DATE_NAISSANCE]: DateDefaultValues,
   [NAISSANCE]: EvenementParentsFormDefaultValues,
@@ -65,7 +65,7 @@ export const ParentFormDefaultValues = {
 export const ParentFormValidationSchema = Yup.object()
   .shape({
     [NOM]: Yup.string(),
-    [PRENOMS]: PrenomsFormValidationSchema,
+    [PRENOMS]: creerValidationSchemaPrenom(),
     [SEXE]: Yup.string(),
     [DATE_NAISSANCE]: DateValidationSchemaSansTestFormat,
     [NAISSANCE]: EvenementParentsFormValidationSchema,
@@ -153,7 +153,7 @@ const ParentsForm: React.FC<
     const nomParent2 = withNamespace(PARENTS, "parent2");
     formik.setFieldValue(nomParent2, {
       ...ParentFormDefaultValues,
-      [PRENOMS]: { ...PrenomsFormDefaultValues }
+      [PRENOMS]: { ...genererDefaultValuesPrenoms() }
     });
     setParents([...parents, {} as ITitulaireRequeteCreation]);
   };
@@ -173,6 +173,7 @@ const ParentsForm: React.FC<
             key={index}
             nom={withNamespace(props.nom, `parent${index + 1}`)}
             titre={`Parent ${index + 1}`}
+            maxPrenoms={DOUZE}
           />
         ))}
 

@@ -86,10 +86,11 @@ const TitulaireEvenementForm: React.FC<
 
         <PrenomsForm
           nom={withNamespace(props.nom, PRENOMS)}
-          prenoms={prenoms}
+          nbPrenoms={prenoms.length}
           disabled={estRenseigne(props.titulaire.prenoms) && saisieVerrouillee}
           prenom1Obligatoire={true}
         />
+
         <RadioField
           name={withNamespace(props.nom, SEXE)}
           label={getLibelle("Sexe")}

@@ -7,6 +7,7 @@ import {
   changeLaPlaceDunElement,
   checkDirty,
   compareNombre,
+  creerPlageDeNombres,
   enMajuscule,
   estRenseigne,
   estTableauNonVide,
@@ -521,4 +522,10 @@ test("Attendu: getNombreCommeSuffix fonctionne correctement", () => {
   expect(getNombreCommeSuffix("ab1c_1")).toBe(1);
   expect(getNombreCommeSuffix("ab1c 1")).toBe(1);
   expect(getNombreCommeSuffix("ab1 c1")).toBe(1);
+});
+
+test("DOIT retourner un tableau de la longueur de 5 quand le nombre passer en paramètre est 5", () => {
+  const NUMBER = 5;
+
+  expect(creerPlageDeNombres(NUMBER)).toHaveLength(5);
 });

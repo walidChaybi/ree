@@ -20,7 +20,7 @@ import {
 import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
 import { getValeurOuVide, SNP } from "@util/Utils";
 import { limitesTitulaires } from "../SaisirRDCSCPage";
-import { getPrenoms } from "./mappingCommun";
+import { getPrenomsTableauStringVersPrenomsOrdonnes } from "./mappingCommun";
 
 export function mappingFormulaireRDCSCVersRequeteDelivrance(
   requeteRDCSC: CreationRequeteRDCSC | UpdateRequeteRDCSC,
@@ -64,7 +64,7 @@ function getTitulaireRequete(titulaire: Identite, position = 1) {
           ? titulaire.noms.nomNaissance
           : SNP,
         nomUsage: titulaire.noms?.nomUsage,
-        prenoms: getPrenoms(titulaire.prenoms),
+        prenoms: getPrenomsTableauStringVersPrenomsOrdonnes(titulaire.prenoms),
         jourNaissance: parseInt(titulaire.naissance.dateEvenement.jour, 10),
         moisNaissance: parseInt(titulaire.naissance.dateEvenement.mois, 10),
         anneeNaissance: parseInt(titulaire.naissance.dateEvenement.annee, 10),

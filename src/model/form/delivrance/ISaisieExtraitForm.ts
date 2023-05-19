@@ -45,6 +45,7 @@ import {
   VILLE,
   VILLE_EST_AFFICHEE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { Prenoms } from "./ISaisirRequetePageForm";
 
 export interface ISaisieExtraitForm {
   [EVENEMENT]?: IEvenementForm;
@@ -74,7 +75,7 @@ export interface ITitulaireEvtForm {
   [NOM_NAISSANCE]: string;
   [NOM_SECABLE]: INomSecableForm;
   [DECLARATION_CONJOINTE]: IDeclarationConjointeForm;
-  [PRENOMS]: IPrenomsForm;
+  [PRENOMS]: Prenoms;
   [SEXE]?: string;
   [EVENEMENT]: IEvenementForm;
   [ADOPTE_PAR]?: string[];
@@ -127,7 +128,7 @@ export interface ILieuEvenementForm {
 
 export interface IParentNaissanceForm {
   [NOM_NAISSANCE]: string;
-  [PRENOMS]: IPrenomsForm;
+  [PRENOMS]: Prenoms;
   [SEXE]?: string;
   [DATE_NAISSANCE_OU_AGE_DE]: IDateNaissanceAgeDe;
   [LIEU_NAISSANCE]: ILieuEvenementForm;

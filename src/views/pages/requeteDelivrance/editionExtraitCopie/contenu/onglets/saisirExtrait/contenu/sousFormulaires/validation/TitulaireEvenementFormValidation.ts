@@ -10,7 +10,7 @@ import {
   PRENOMS,
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { PrenomsFormValidationSchema } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import { creerValidationSchemaPrenom } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { DeclarationConjointeValidationSchema } from "@composant/formulaire/validation/DeclarationConjointeFormValidation";
 import {
   EvenementActeMariageValidationSchema,
@@ -36,7 +36,7 @@ const validationComplete = {
   [NOM_NAISSANCE]: Yup.string()
     .required(CHAMP_OBLIGATOIRE)
     .matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
-  [PRENOMS]: PrenomsFormValidationSchema,
+  [PRENOMS]: creerValidationSchemaPrenom(),
   [SEXE]: Yup.string().required(),
   [EVENEMENT]: EvenementValidationSchema,
   [PARENT_NAISS1]: ParentNaissValidationSchema,

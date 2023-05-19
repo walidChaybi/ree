@@ -465,8 +465,8 @@ export const SaisirRDCPage: React.FC = () => {
       <title>{titreForm}</title>
       <Formulaire
         titre={titreForm}
-        formDefaultValues={requete ?? DefaultValuesRDCRequete}
-        formValidationSchema={ValidationSchemaRDCRequete}
+        formDefaultValues={requete ?? { ...DefaultValuesRDCRequete }}
+        formValidationSchema={ValidationSchemaRDCRequete.clone()}
         onSubmit={onSubmitSaisirRequete}
         className="FormulaireSaisirRDC"
       >

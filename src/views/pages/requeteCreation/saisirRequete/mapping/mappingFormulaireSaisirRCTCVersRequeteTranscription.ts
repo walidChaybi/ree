@@ -6,10 +6,11 @@ import { ISaisieRequeteRCTCAEnvoyer } from "@hook/requete/CreationRequeteCreatio
 import {
   IAdresseForm,
   INationalitesForm,
+  IPrenomsForm,
   IRequerantForm,
   ISaisieRequeteRCTC
 } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
-import { IPrenomsForm } from "@model/form/delivrance/ISaisieExtraitForm";
+import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
@@ -114,7 +115,7 @@ function mapTitulaire(
     jourNaissance: getValeurOuUndefined(saisieTitulaire.dateNaissance.jour),
     moisNaissance: getValeurOuUndefined(saisieTitulaire.dateNaissance.mois),
     anneeNaissance: getValeurOuUndefined(saisieTitulaire.dateNaissance.annee),
-    villeNaissance: getValeurOuUndefined(
+    villeEtrangereNaissance: getValeurOuUndefined(
       saisieTitulaire.naissance.villeNaissance
     ),
     regionNaissance: getValeurOuUndefined(
@@ -178,9 +179,7 @@ function mapParent(
     paysNaissance: getPaysEvenement(
       getValeurOuUndefined(saisieParent.naissance.lieuNaissance),
       getValeurOuUndefined(saisieParent.naissance.paysNaissance)
-    ),
-    paysStatutRefugie: saisieParent.paysStatutRefugie,
-    paysOrigine: saisieParent.paysOrigine
+    )
   };
 }
 
@@ -195,14 +194,20 @@ function mapPrenoms(
           numeroOrdre: UN
         }
       ]
-    : mapPrenomsVersPrenomsOrdonnes(
-        getTableauAPartirElementsNonVides(
-          saisiePrenoms.prenom1,
-          saisiePrenoms.prenom2,
-          saisiePrenoms.prenom3
-        )
-      );
+    : mapPrenomsVersPrenomsOrdonnes(retirePrenomVide(saisiePrenoms));
 }
+
+export function retirePrenomVide(prenomsSaisie?: Prenoms) {
+  const prenoms = [];
+  for (const prenom in prenomsSaisie) {
+    if (prenomsSaisie[prenom] !== "") {
+      prenoms.push(prenomsSaisie[prenom]);
+    }
+  }
+
+  return prenoms;
+}
+
 
 function mapNationalites(saisieNationalites: INationalitesForm): any[] {
   return getTableauAPartirElementsNonVides(

@@ -12,11 +12,7 @@ export const RequeteRDCSCInteresse = {
           nomNaissance: "",
           nomUsage: ""
         },
-        prenoms: {
-          prenom1: "",
-          prenom2: "",
-          prenom3: ""
-        },
+
         sexe: "INCONNU",
         naissance: {
           dateEvenement: {
@@ -87,11 +83,6 @@ export const RequeteRDCSCMandataire = {
         noms: {
           nomNaissance: "",
           nomUsage: ""
-        },
-        prenoms: {
-          prenom1: "",
-          prenom2: "",
-          prenom3: ""
         },
         sexe: "INCONNU",
         naissance: {
@@ -164,11 +155,6 @@ export const RequeteRDCSCInstitutionnel = {
           nomNaissance: "",
           nomUsage: ""
         },
-        prenoms: {
-          prenom1: "",
-          prenom2: "",
-          prenom3: ""
-        },
         sexe: "INCONNU",
         naissance: {
           dateEvenement: {
@@ -239,11 +225,6 @@ export const RequeteRDCSCParticulier = {
         noms: {
           nomNaissance: "",
           nomUsage: ""
-        },
-        prenoms: {
-          prenom1: "",
-          prenom2: "",
-          prenom3: ""
         },
         sexe: "INCONNU",
         naissance: {

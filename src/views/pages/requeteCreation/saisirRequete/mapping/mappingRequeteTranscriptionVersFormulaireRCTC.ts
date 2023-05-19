@@ -50,7 +50,6 @@ import {
   PIECES_JOINTES,
   PRENOM,
   PRENOMS,
-  PRENOM_1,
   RECONNAISSANCE,
   REGION_ETAT_RECONNAISSANCE,
   REGION_NAISSANCE,
@@ -89,6 +88,7 @@ import {
 } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeTranscription } from "@model/requete/NatureActeTranscription";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
+import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import {
   DEUX,
   estRenseigne,
@@ -201,9 +201,7 @@ export function saisieTitulaire(
           titulaire.prenoms?.[0].prenom
         ),
         // TODO Prenoms a rajouter quand la MR 855 sera sur develop
-        [PRENOMS]: {
-          [PRENOM_1]: getValeurOuVide(titulaire.prenoms?.[0].prenom)
-        },
+        [PRENOMS]: getPrenomsOrdonneVersPrenomsDefaultValues(titulaire.prenoms),
         [DATE_NAISSANCE]: getDateNaissance(titulaire),
         [NAISSANCE]: getInformationsLieuNaissance(titulaire)
       } as IIdentiteTitulaireForm)
@@ -275,9 +273,7 @@ export function saisieParent(parent?: ITitulaireRequeteCreation): IParentForm {
         ),
         [NOM]: parent.nomNaissance,
         [PAS_DE_PRENOM_CONNU]: pasDePrenomOuFalse(parent.prenoms?.[0].prenom),
-        [PRENOMS]: {
-          [PRENOM_1]: getValeurOuVide(parent.prenoms?.[0].prenom)
-        },
+        [PRENOMS]: getPrenomsOrdonneVersPrenomsDefaultValues(parent.prenoms),
         [SEXE]: getValeurOuVide(parent.sexe),
         [DATE_NAISSANCE]: getDateNaissance(parent),
         [NAISSANCE]: {

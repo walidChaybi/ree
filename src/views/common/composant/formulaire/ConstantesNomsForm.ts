@@ -30,6 +30,13 @@ export const NOM_NAISSANCE = "nomNaissance";
 export const PRENOM_1 = "prenom1";
 export const PRENOM_2 = "prenom2";
 export const PRENOM_3 = "prenom3";
+export const PRENOM_4 = "prenom4";
+export const PRENOM_5 = "prenom5";
+export const PRENOM_6 = "prenom6";
+export const PRENOM_7 = "prenom7";
+export const PRENOM_8 = "prenom8";
+export const PRENOM_9 = "prenom9";
+export const PRENOM_10 = "prenom10";
 export const SEXE = "sexe";
 
 // Titulaire: Date evt
@@ -202,7 +209,6 @@ export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
 export const TITULAIRE = "titulaire";
 
 // Acte transcription
-export const NATURE_ACTE_LIEN_REQUERANT = "acteATranscrireLienRequerant";
 export const LIEN_REQUERANT = "lienRequerant";
 export const REGISTRE = "registre";
 

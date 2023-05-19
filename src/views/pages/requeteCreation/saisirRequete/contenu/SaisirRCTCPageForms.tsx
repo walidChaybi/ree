@@ -26,12 +26,15 @@ export function getRequeteForm(): JSX.Element {
   );
 }
 
-export function getTitulaireForm(): JSX.Element {
+export function getTitulaireForm(
+  titulaire?: ITitulaireRequeteCreation
+): JSX.Element {
   return (
     <IdentiteTitulaireForm
       nom={TITULAIRE}
       key={TITULAIRE}
       titre={getLibelle("Titulaire 1")}
+      titulaire={titulaire}
     />
   );
 }

@@ -7,6 +7,10 @@ import {
   PRENOMS,
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
+import PrenomsForm, {
+  creerValidationSchemaPrenom,
+  genererDefaultValuesPrenoms
+} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import ParentForm, {
   ParentFormDefaultValues,
   ParentFormValidationSchema,
@@ -27,11 +31,6 @@ import NomsForm, {
   NomsFormProps,
   NomsFormValidationSchema
 } from "../../../../../common/composant/formulaire/nomsPrenoms/NomsForm";
-import PrenomsForm, {
-  PrenomsFormDefaultValues,
-  PrenomsFormProps,
-  PrenomsFormValidationSchema
-} from "../../../../../common/composant/formulaire/nomsPrenoms/PrenomsForm";
 import EvenementForm, {
   EvenementFormDefaultValues,
   EvenementFormValidationSchema,
@@ -42,7 +41,7 @@ import "./scss/IdentiteForm.scss";
 // Valeurs par défaut des champs pour RDAPC et RDC
 export const IdentiteFormDefaultValues = {
   [NOMS]: NomsFormDefaultValues,
-  [PRENOMS]: PrenomsFormDefaultValues,
+  [PRENOMS]: genererDefaultValuesPrenoms(),
   [SEXE]: "INCONNU",
   [NAISSANCE]: EvenementFormDefaultValues,
   [NATIONALITE]: "INCONNUE",
@@ -59,7 +58,17 @@ export const IdentiteFormDefaultValuesRDCSC = {
 // Schéma de validation des champs
 export const IdentiteFormValidationSchema = Yup.object().shape({
   [NOMS]: NomsFormValidationSchema,
-  [PRENOMS]: PrenomsFormValidationSchema,
+  [PRENOMS]: creerValidationSchemaPrenom(),
+  [SEXE]: Yup.string(),
+  [NAISSANCE]: EvenementFormValidationSchema,
+  [NATIONALITE]: Yup.string(),
+  [PARENT1]: ParentFormValidationSchema,
+  [PARENT2]: ParentFormValidationSchema
+});
+
+export const IdentiteFormValidationSchemaRDCSC = Yup.object().shape({
+  [NOMS]: NomsFormValidationSchema,
+  [PRENOMS]: creerValidationSchemaPrenom(),
   [SEXE]: Yup.string(),
   [NAISSANCE]: EvenementFormValidationSchema,
   [NATIONALITE]: Yup.string(),
@@ -81,11 +90,6 @@ const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
     nom: withNamespace(props.nom, NOMS),
     titulaire: props.titulaire
   } as NomsFormProps;
-
-  const prenomsFormProps = {
-    nom: withNamespace(props.nom, PRENOMS),
-    prenoms: props.titulaire ? props.titulaire?.prenoms : undefined
-  } as PrenomsFormProps;
 
   const naissanceFormProps = {
     nom: withNamespace(props.nom, NAISSANCE),
@@ -129,7 +133,10 @@ const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
       <SousFormulaire titre={props.titre}>
         <div className="IdentiteForm">
           <NomsForm {...nomsFormProps} />
-          <PrenomsForm {...prenomsFormProps} />
+          <PrenomsForm
+            nom={withNamespace(props.nom, PRENOMS)}
+            nbPrenoms={props.titulaire?.prenoms?.length}
+          />
           <RadioField
             name={withNamespace(props.nom, SEXE)}
             label={getLibelle("Sexe")}

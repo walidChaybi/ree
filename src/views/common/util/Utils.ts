@@ -657,3 +657,6 @@ export const estSuperieurA500Caracteres = (texte: string) => {
     return false;
   }
 };
+export function creerPlageDeNombres(nb: number): number[] {
+  return Array.from({ length: nb }, (v, index) => index);
+}

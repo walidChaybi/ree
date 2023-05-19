@@ -4,8 +4,8 @@ import {
   PRENOMS
 } from "@composant/formulaire/ConstantesNomsForm";
 import {
-  PrenomsFormDefaultValues,
-  PrenomsFormValidationSchema
+  creerValidationSchemaPrenom,
+  genererDefaultValuesPrenoms
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import IdentiteTitulaireForm from "@pages/requeteCreation/saisirRequete/sousForm/identite/IdentiteTitulaireForm";
 import {
@@ -29,7 +29,7 @@ const HookTitulaireForm: React.FC = () => {
   const ValidationSchema = Yup.object().shape({
     [TITULAIRE]: Yup.object({
       [NOMS]: NomsFormValidationSchema,
-      [PRENOMS]: PrenomsFormValidationSchema
+      [PRENOMS]: creerValidationSchemaPrenom()
     })
   });
 
@@ -39,7 +39,7 @@ const HookTitulaireForm: React.FC = () => {
         [TITULAIRE]: {
           [NOMS]: NomsFormDefaultValues,
           [PAS_DE_PRENOM_CONNU]: "false",
-          [PRENOMS]: PrenomsFormDefaultValues
+          [PRENOMS]: genererDefaultValuesPrenoms()
         }
       }}
       validationSchema={ValidationSchema}

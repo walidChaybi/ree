@@ -24,7 +24,7 @@ import {
   CreationRequeteRDC,
   SaisieRequeteRDC
 } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
-import { getPrenoms } from "./mappingCommun";
+import { getPrenomsTableauStringVersPrenomsOrdonnes } from "./mappingCommun";
 
 export function mappingFormulaireRDCVersRequeteDelivrance(
   requeteRDC: CreationRequeteRDC
@@ -105,7 +105,7 @@ function getTitulaire(titulaire: Identite, position: number) {
       ? titulaire.noms.nomNaissance
       : SNP,
     nomUsage: titulaire.noms?.nomUsage,
-    prenoms: getPrenoms(titulaire.prenoms),
+    prenoms: getPrenomsTableauStringVersPrenomsOrdonnes(titulaire.prenoms),
     jourNaissance: titulaire.naissance.dateEvenement.jour,
     moisNaissance: titulaire.naissance.dateEvenement.mois,
     anneeNaissance: titulaire.naissance.dateEvenement.annee,
@@ -128,14 +128,18 @@ function getFiliation(titulaire: Identite) {
       nomNaissance: titulaire.parent1.nomNaissance
         ? titulaire.parent1.nomNaissance
         : SNP,
-      prenoms: getPrenoms(titulaire.parent1.prenoms)
+      prenoms: getPrenomsTableauStringVersPrenomsOrdonnes(
+        titulaire.parent1.prenoms
+      )
     });
     parents.push({
       position: 2,
       nomNaissance: titulaire.parent2.nomNaissance
         ? titulaire.parent2.nomNaissance
         : SNP,
-      prenoms: getPrenoms(titulaire.parent2.prenoms)
+      prenoms: getPrenomsTableauStringVersPrenomsOrdonnes(
+        titulaire.parent2.prenoms
+      )
     });
     return parents;
   }

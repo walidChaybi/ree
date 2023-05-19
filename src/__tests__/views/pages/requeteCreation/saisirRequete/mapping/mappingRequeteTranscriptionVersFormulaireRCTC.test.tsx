@@ -255,7 +255,18 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
       sexe: "MASCULIN",
       pasDePrenomConnu: "false",
       prenoms: {
-        prenom1: "prenom"
+        prenom1: "prenom",
+        prenom2: "",
+        prenom3: "",
+        prenom4: "",
+        prenom5: "",
+        prenom6: "",
+        prenom7: "",
+        prenom8: "",
+        prenom9: "",
+        prenom10: "",
+        prenom11: "",
+        prenom12: ""
       },
       dateNaissance: {
         jour: 1,
@@ -284,7 +295,18 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
       sexe: "MASCULIN",
       pasDePrenomConnu: "false",
       prenoms: {
-        prenom1: "Michel"
+        prenom1: "Michel",
+        prenom2: "",
+        prenom3: "",
+        prenom4: "",
+        prenom5: "",
+        prenom6: "",
+        prenom7: "",
+        prenom8: "",
+        prenom9: "",
+        prenom10: "",
+        prenom11: "",
+        prenom12: ""
       },
       dateNaissance: {
         jour: 1,

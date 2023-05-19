@@ -1,4 +1,4 @@
-import { PrenomsFormValidationSchema } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import { creerValidationSchemaPrenom } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import {
   act,
   fireEvent,
@@ -31,7 +31,7 @@ const HookNationaliteForm: React.FC = () => {
       initialValues={{
         [NATIONALITES]: { ...NationalitesFormDefaultValues }
       }}
-      validationSchema={PrenomsFormValidationSchema}
+      validationSchema={creerValidationSchemaPrenom()}
       onSubmit={handleClickButton}
     >
       <Form>

@@ -74,7 +74,7 @@ test("render composant Parent Formulaire", async () => {
   await waitFor(() => {
     expect(titreParent1).toBeDefined();
     expect(result.innerHTML).toBe(
-      '{"parent1":{"nomNaissance":"MOCKNOM","prenoms":{"prenom1":"","prenom2":"","prenom3":""}}}'
+      '{"parent1":{"nomNaissance":"MOCKNOM","prenoms":{"prenom1":"","prenom2":"","prenom3":"","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":""}}}'
     );
   });
 });

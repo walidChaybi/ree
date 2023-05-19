@@ -141,7 +141,7 @@ export const RequeteRDCTitulaire = {
       numeroTelephone: "0505050505"
     }
   }
-} as CreationRequeteRDC;
+} as any as CreationRequeteRDC;
 
 export const RequeteRDCMandataire = {
   futurStatut: StatutRequete.PRISE_EN_CHARGE,
@@ -283,7 +283,7 @@ export const RequeteRDCMandataire = {
       numeroTelephone: "0505050505"
     }
   }
-} as CreationRequeteRDC;
+} as any as CreationRequeteRDC;
 
 export const RequeteRDCInstitutionnel = {
   futurStatut: StatutRequete.A_TRAITER,
@@ -413,7 +413,7 @@ export const RequeteRDCInstitutionnel = {
       numeroTelephone: "0505050505"
     }
   }
-} as CreationRequeteRDC;
+} as any as CreationRequeteRDC;
 
 export const RequeteRDCParticulier = {
   futurStatut: StatutRequete.BROUILLON,
@@ -541,7 +541,7 @@ export const RequeteRDCParticulier = {
       numeroTelephone: "0505050505"
     }
   }
-} as CreationRequeteRDC;
+} as any as CreationRequeteRDC;
 
 export const RequeteRDCAutreProfessionnnel = {
   futurStatut: StatutRequete.PRISE_EN_CHARGE,
@@ -670,4 +670,4 @@ export const RequeteRDCAutreProfessionnnel = {
       numeroTelephone: "0505050505"
     }
   }
-} as CreationRequeteRDC;
+} as any as CreationRequeteRDC;

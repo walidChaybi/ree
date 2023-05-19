@@ -15,17 +15,16 @@ import {
   IEvenementForm,
   ILieuEvenementForm,
   IParentNaissanceForm,
-  IPrenomsForm,
   ISaisieExtraitForm,
   ITitulaireEvtForm
 } from "@model/form/delivrance/ISaisieExtraitForm";
+import { retirePrenomVide } from "@pages/requeteCreation/saisirRequete/mapping/mappingFormulaireSaisirRCTCVersRequeteTranscription";
 import { getDateDebutFromDateCompose } from "@util/DateUtils";
 import {
   DEUX,
   estNonRenseigne,
   estRenseigne,
   getNombreOuUndefined,
-  getTableauAPartirElementsNonVides,
   getValeurOuUndefined,
   getValeurOuVide,
   UN
@@ -292,7 +291,7 @@ function mapParent(
 
   const parent = {
     nom: parentSaisi?.nomNaissance,
-    prenoms: mapPrenoms(parentSaisi?.prenoms),
+    prenoms: retirePrenomVide(parentSaisi?.prenoms),
     sexe: mapSexe(parentSaisi?.sexe),
     age: getNombreOuUndefined(parentSaisi?.dateNaissanceOuAgeDe?.age),
     naissance: mapEvenement(
@@ -327,20 +326,12 @@ function mapTitulaire(titulaireSaisi: ITitulaireEvtForm) {
     dateDeclarationConjointe: getDateDebutFromDateCompose(
       titulaireSaisi.declarationConjointe?.date
     ),
-    prenoms: mapPrenoms(titulaireSaisi.prenoms),
+    prenoms: retirePrenomVide(titulaireSaisi.prenoms),
     sexe: mapSexe(titulaireSaisi.sexe),
     age: getValeurOuUndefined(
       titulaireSaisi.evenement?.dateNaissanceOuAgeDe?.age
     )
   } as any as ITitulaireActe;
-}
-
-function mapPrenoms(prenomSaisis?: IPrenomsForm) {
-  return getTableauAPartirElementsNonVides(
-    prenomSaisis?.prenom1,
-    prenomSaisis?.prenom2,
-    prenomSaisis?.prenom3
-  );
 }
 
 function mapEvenement(

@@ -75,7 +75,7 @@ import { useUpdateRequeteDelivranceRDCSC } from "./hook/UpdateRDCSCApiHook";
 import "./scss/SaisirRequetePage.scss";
 import {
   IdentiteFormDefaultValuesRDCSC,
-  IdentiteFormValidationSchema,
+  IdentiteFormValidationSchemaRDCSC,
   IdentiteSubFormProps
 } from "./sousFormulaires/identite/IdentiteForm";
 import {
@@ -98,7 +98,7 @@ const DefaultValuesSaisirRDCSC = {
 // Schéma de validation en sortie de champs
 const ValidationSchemaSaisirRDCSC = Yup.object({
   [DOCUMENT]: Yup.string().required(DOCUMENT_OBLIGATOIRE),
-  [TITULAIRES]: IdentiteFormValidationSchema,
+  [TITULAIRES]: IdentiteFormValidationSchemaRDCSC,
   [REQUERANT]: RequerantFormValidationSchema,
   [ADRESSE]: AdresseFormValidationSchema
 });
@@ -570,7 +570,9 @@ export const SaisirRDCSCPage: React.FC = () => {
       <title>{titreForm}</title>
       <Formulaire
         titre={titreForm}
-        formDefaultValues={saisieRequeteRDCSC || DefaultValuesSaisirRDCSC}
+        formDefaultValues={
+          saisieRequeteRDCSC || { ...DefaultValuesSaisirRDCSC }
+        }
         formValidationSchema={ValidationSchemaSaisirRDCSC}
         onSubmit={onSubmitSaisirRDCSC}
         className="FormulaireSaisirRDCSC"

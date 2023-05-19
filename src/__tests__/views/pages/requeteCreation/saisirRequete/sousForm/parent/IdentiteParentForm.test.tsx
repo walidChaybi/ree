@@ -10,7 +10,7 @@ import {
   PRENOMS,
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { PrenomsFormDefaultValues } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import { genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { EvenementEtrangerFormDefaultValues } from "@pages/requeteCreation/saisirRequete/sousForm/evenement/EvenementEtranger";
 import IdentiteParentForm, {
   ParentSubFormProps
@@ -22,7 +22,6 @@ import { NationalitesFormDefaultValues } from "@widget/formulaire/nationalites/N
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
-
 
 const PARENTS = "parents";
 
@@ -49,7 +48,7 @@ const HookParentForm: React.FC = () => {
             [PAS_DE_NOM_CONNU]: "false",
             [NOM]: "",
             [PAS_DE_PRENOM_CONNU]: "false",
-            [PRENOMS]: PrenomsFormDefaultValues,
+            [PRENOMS]: genererDefaultValuesPrenoms(),
             [SEXE]: "INCONNU",
             [DATE_NAISSANCE]: DateDefaultValues,
             [NAISSANCE]: EvenementEtrangerFormDefaultValues,

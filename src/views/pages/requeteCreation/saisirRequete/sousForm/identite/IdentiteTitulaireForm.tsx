@@ -14,11 +14,12 @@ import {
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
 import PrenomsForm, {
-  PrenomsFormDefaultValues,
-  PrenomsFormValidationSchema
+  creerValidationSchemaPrenom,
+  genererDefaultValuesPrenoms
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { TypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerantCreation";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { getLibelle, SPC } from "@util/Utils";
 import DateComposeForm, {
   DateComposeFormProps,
@@ -48,7 +49,7 @@ import NomsFormTitulaire, {
 export const IdentiteFormDefaultValues = {
   [NOMS]: NomsFormDefaultValues,
   [PAS_DE_PRENOM_CONNU]: "false",
-  [PRENOMS]: PrenomsFormDefaultValues,
+  [PRENOMS]: genererDefaultValuesPrenoms(),
   [SEXE]: "INCONNU",
   [DATE_NAISSANCE]: DateDefaultValues,
   [NAISSANCE]: EvenementEtrangerFormDefaultValues
@@ -58,7 +59,7 @@ export const IdentiteFormDefaultValues = {
 export const IdentiteFormValidationSchema = Yup.object()
   .shape({
     [NOMS]: NomsFormValidationSchema,
-    [PRENOMS]: PrenomsFormValidationSchema,
+    [PRENOMS]: creerValidationSchemaPrenom(),
     [SEXE]: Yup.string(),
     [DATE_NAISSANCE]: DateValidationSchemaSansTestFormat,
     [NAISSANCE]: EvenementEtrangerFormValidationSchema
@@ -75,9 +76,14 @@ export const IdentiteFormValidationSchema = Yup.object()
       ? this.createError(paramsError)
       : true;
   });
-  
 
-const IdentiteTitulaireForm: React.FC<SubFormProps> = props => {
+interface ComponentFormProps {
+  titulaire?: ITitulaireRequeteCreation;
+}
+
+const IdentiteTitulaireForm: React.FC<
+  SubFormProps & ComponentFormProps
+> = props => {
   const [pasDePrenomConnu, setPasDePrenomConnu] = useState(false);
 
   const prenom1WithNamespace = withNamespace(
@@ -119,7 +125,7 @@ const IdentiteTitulaireForm: React.FC<SubFormProps> = props => {
     const pathPrenomsAReinitialiser = `${props.nom}.prenoms`;
     props.formik.setFieldValue(
       pathPrenomsAReinitialiser,
-      PrenomsFormDefaultValues
+      genererDefaultValuesPrenoms()
     );
   }
 
@@ -147,24 +153,27 @@ const IdentiteTitulaireForm: React.FC<SubFormProps> = props => {
     props.formik.handleChange(e);
   }
 
-  function handleBlurPrenom1(e: React.ChangeEvent<HTMLInputElement>) {
-    const lienRequerant = getLienRequerant();
-    const prenomTitulaireWithNameSpace = withNamespace(props.nom, PRENOMS);
+  function handleBlurPrenom1(
+    indexPrenomAPartirDeUn: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) {
+    if (indexPrenomAPartirDeUn === 1) {
+      const lienRequerant = getLienRequerant();
 
-    if (
-      TypeLienRequerantCreation.estTitulaireActeOuTitulaireActeMineureEmancipe(
-        lienRequerant
-      )
-    ) {
-      const prenom1Titulaire = props.formik.getFieldProps(
-        withNamespace(prenomTitulaireWithNameSpace, PRENOM_1)
-      ).value;
-      props.formik.setFieldValue(
-        withNamespace(REQUERANT, PRENOM),
-        prenom1Titulaire
-      );
+      if (
+        TypeLienRequerantCreation.estTitulaireActeOuTitulaireActeMineureEmancipe(
+          lienRequerant
+        )
+      ) {
+        const prenom1Titulaire = props.formik.getFieldProps(
+          withNamespace(withNamespace(props.nom, PRENOMS), PRENOM_1)
+        ).value;
+        props.formik.setFieldValue(
+          withNamespace(REQUERANT, PRENOM),
+          prenom1Titulaire
+        );
+      }
     }
-
     props.formik.handleChange(e);
   }
 
@@ -187,7 +196,8 @@ const IdentiteTitulaireForm: React.FC<SubFormProps> = props => {
           {!pasDePrenomConnu && (
             <PrenomsForm
               nom={withNamespace(props.nom, PRENOMS)}
-              onBlurPrenom={handleBlurPrenom1}
+              nbPrenoms={props.titulaire?.prenoms?.length}
+              onPrenomBlur={handleBlurPrenom1}
             />
           )}
 
@@ -212,4 +222,4 @@ const IdentiteTitulaireForm: React.FC<SubFormProps> = props => {
   );
 };
 
-export default connect<ISubForm>(IdentiteTitulaireForm);
+export default connect<ISubForm & ComponentFormProps>(IdentiteTitulaireForm);

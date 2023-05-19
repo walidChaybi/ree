@@ -10,7 +10,7 @@ import {
   PRENOMS,
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { PrenomsFormDefaultValues } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import { genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { EvenementEtrangerFormDefaultValues } from "@pages/requeteCreation/saisirRequete/sousForm/evenement/EvenementEtranger";
 import { ParentSubFormProps } from "@pages/requeteCreation/saisirRequete/sousForm/parent/IdentiteParentForm";
 import ParentsForm, {
@@ -48,7 +48,7 @@ const HookParentsForm: React.FC = () => {
             [PAS_DE_NOM_CONNU]: "false",
             [NOM]: "",
             [PAS_DE_PRENOM_CONNU]: "false",
-            [PRENOMS]: PrenomsFormDefaultValues,
+            [PRENOMS]: genererDefaultValuesPrenoms(),
             [SEXE]: "INCONNU",
             [DATE_NAISSANCE]: DateDefaultValues,
             [NAISSANCE]: EvenementEtrangerFormDefaultValues,

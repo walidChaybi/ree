@@ -99,7 +99,7 @@ test("render composant Identite Formulaire", async () => {
   await waitFor(() => {
     expect(ajouterFiliation).toBeDefined();
     expect(result.innerHTML).toBe(
-      '{"titulaires":{"titulaire1":{"noms":{"nomNaissance":"mockNomNaissance","nomUsage":"mockNomUsage"},"prenoms":{"prenom1":"","prenom2":"","prenom3":""},"sexe":"MASCULIN","naissance":{"dateEvenement":{"jour":"","mois":"","annee":""},"villeEvenement":"","paysEvenement":""},"nationalite":"FRANCAISE","parent1":{"nomNaissance":"","prenoms":{"prenom1":"","prenom2":"","prenom3":""}},"parent2":{"nomNaissance":"","prenoms":{"prenom1":"","prenom2":"","prenom3":""}}}}}'
+      '{"titulaires":{"titulaire1":{"noms":{"nomNaissance":"mockNomNaissance","nomUsage":"mockNomUsage"},"prenoms":{"prenom1":"","prenom2":"","prenom3":"","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":""},"sexe":"MASCULIN","naissance":{"dateEvenement":{"jour":"","mois":"","annee":""},"villeEvenement":"","paysEvenement":""},"nationalite":"FRANCAISE","parent1":{"nomNaissance":"","prenoms":{"prenom1":"","prenom2":"","prenom3":"","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":""}},"parent2":{"nomNaissance":"","prenoms":{"prenom1":"","prenom2":"","prenom3":"","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":""}}}}}'
     );
   });
 

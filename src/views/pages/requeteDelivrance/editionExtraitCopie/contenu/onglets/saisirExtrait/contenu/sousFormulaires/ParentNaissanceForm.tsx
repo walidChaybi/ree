@@ -44,7 +44,7 @@ export const ParentNaissanceForm: React.FC<
       <PrenomsForm
         nom={withNamespace(props.nom, PRENOMS)}
         disabled={estRenseigne(props.parent.prenoms) && saisieVerrouillee}
-        prenoms={prenoms}
+        nbPrenoms={prenoms.length}
       />
       {!props.sansSexe && (
         <RadioField

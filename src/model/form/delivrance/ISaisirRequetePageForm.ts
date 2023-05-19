@@ -35,9 +35,6 @@ import {
   PAYS_EVENEMENT,
   PRENOM,
   PRENOMS,
-  PRENOM_1,
-  PRENOM_2,
-  PRENOM_3,
   RAISON_SOCIALE,
   SEXE,
   TYPE,
@@ -54,6 +51,7 @@ export interface Requerant {
   [PARTICULIER]: Particulier;
   [AUTRE_PROFESSIONNEL]: AutreProfessionnel;
 }
+
 
 export interface Mandataire {
   [TYPE]: string;
@@ -112,9 +110,7 @@ export interface Noms {
 }
 
 export interface Prenoms {
-  [PRENOM_1]: string;
-  [PRENOM_2]: string;
-  [PRENOM_3]: string;
+  [key: string]: string;
 }
 
 export interface Evenement {

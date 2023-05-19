@@ -6,7 +6,7 @@ import {
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
 import PrenomsForm, {
-  PrenomsFormDefaultValues
+  genererDefaultValuesPrenoms
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
@@ -39,11 +39,12 @@ import {
 } from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 import EvenementParentForm from "../evenement/EvenementParentsForm";
 import "./scss/ParentsForm.scss";
-interface IdentiteParentFormtFormProps {
+interface ComponentFormProps {
   parent?: ITitulaireRequeteCreation;
+  maxPrenoms: number;
 }
 
-export type ParentSubFormProps = SubFormProps & IdentiteParentFormtFormProps;
+export type ParentSubFormProps = SubFormProps & ComponentFormProps;
 
 const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
   const [pasDePrenomConnu, setPasDePrenomConnu] = useState(false);
@@ -102,7 +103,7 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
     const pathPrenomsAReinitialiser = `${props.nom}.prenoms`;
     props.formik.setFieldValue(
       pathPrenomsAReinitialiser,
-      PrenomsFormDefaultValues
+      genererDefaultValuesPrenoms()
     );
   }
 
@@ -146,7 +147,10 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
           />
 
           {!pasDePrenomConnu && (
-            <PrenomsForm nom={withNamespace(props.nom, PRENOMS)} />
+            <PrenomsForm
+              nom={withNamespace(props.nom, PRENOMS)}
+              nbPrenoms={props.parent?.prenoms?.length}
+            />
           )}
 
           <RadioField
@@ -198,6 +202,6 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
   );
 };
 
-export default connect<IdentiteParentFormtFormProps & ISubForm>(
+export default connect<ComponentFormProps & ISubForm>(
   IdentiteParentForm
 );

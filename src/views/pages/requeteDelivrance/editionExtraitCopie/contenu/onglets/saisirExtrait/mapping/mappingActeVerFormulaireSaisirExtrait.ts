@@ -31,9 +31,6 @@ import {
   PARENT_NAISS,
   PAYS,
   PRENOMS,
-  PRENOM_1,
-  PRENOM_2,
-  PRENOM_3,
   REGION_DEPARTEMENT,
   SECABLE,
   SEXE,
@@ -66,19 +63,16 @@ import {
   ISaisieExtraitForm,
   ITitulaireEvtForm
 } from "@model/form/delivrance/ISaisieExtraitForm";
+import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { getDateComposeFromDate, IDateCompose } from "@util/DateUtils";
 import {
   ABSENCE_VALIDEE,
-  DEUX,
+  DOUZE,
   getValeurOuVide,
   numberToString,
-  rempliAGaucheAvecZero,
-  UN,
-  ZERO
+  rempliAGaucheAvecZero
 } from "@util/Utils";
 import { FRANCE, LieuxUtils } from "@utilMetier/LieuxUtils";
-
-
 
 export function mappingActeVerFormulaireSaisirExtrait(
   acte: IFicheActe,
@@ -306,12 +300,15 @@ export function saisiePaysInconnuTitulaire(
   );
 }
 
-function saisiePrenomForm(prenoms?: string[]) {
-  return {
-    [PRENOM_1]: prenoms ? getValeurOuVide(prenoms[ZERO]) : "",
-    [PRENOM_2]: prenoms ? getValeurOuVide(prenoms[UN]) : "",
-    [PRENOM_3]: prenoms ? getValeurOuVide(prenoms[DEUX]) : ""
-  };
+function saisiePrenomForm(prenoms?: string[]): Prenoms {
+  const prenomsObj: Prenoms = {};
+  if (prenoms) {
+    for (let i = 0; i < DOUZE; i++) {
+      const prenomKey = `prenom${i + 1}`;
+      prenomsObj[prenomKey] = getValeurOuVide(prenoms[i]);
+    }
+  }
+  return prenomsObj;
 }
 
 function saisieNomSecable(titulaire?: ITitulaireActe) {

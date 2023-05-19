@@ -50,12 +50,12 @@ import {
 import { getValeurOuVide } from "@util/Utils";
 import { SaisieRequeteRDC } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
 import { IdentiteFormDefaultValues } from "../sousFormulaires/identite/IdentiteForm";
-import { saisiePJ } from "./mappingCommun";
 import {
   saisieAdresse,
+  saisiePJ,
   saisieRequerant,
   saisieTitulaire
-} from "./mappingRequeteDelivranceVersFormulaireRDCSC";
+} from "./mappingCommun";
 
 export function mappingRequeteDelivranceVersFormulaireRDC(
   requete: IRequeteDelivrance
@@ -75,7 +75,8 @@ export function mappingRequeteDelivranceVersFormulaireRDC(
     [MANDANT]: saisieMandant(requete.mandant),
     [LIEN_TITULAIRE]: saisieLienTitulaire(requete.requerant, requete.mandant),
     [ADRESSE]: saisieAdresse(requete)
-  } as SaisieRequeteRDC;
+  } as any as SaisieRequeteRDC;
+  // TODO Erreur AUTRE_PROFESSIONNEL sans le any
 
   if (piecesJustificatives.length !== 0) {
     saisie[PIECES_JOINTES] = saisiePJ(requete);

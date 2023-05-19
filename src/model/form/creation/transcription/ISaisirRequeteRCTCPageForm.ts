@@ -48,9 +48,6 @@ import {
   PIECES_JOINTES,
   PRENOM,
   PRENOMS,
-  PRENOM_1,
-  PRENOM_2,
-  PRENOM_3,
   RECONNAISSANCE,
   REGION_ETAT_RECONNAISSANCE,
   REGION_NAISSANCE,
@@ -106,11 +103,8 @@ export interface INomsForm {
   [NOM_ACTE_ETRANGER]: string;
   [NOM_SOUHAITE_ACTE_FR]: string;
 }
-
-interface IPrenomsForm {
-  [PRENOM_1]: string;
-  [PRENOM_2]: string;
-  [PRENOM_3]: string;
+export interface IPrenomsForm {
+  [key: string]: string;
 }
 
 export interface IDateForm {
