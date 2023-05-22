@@ -16,7 +16,7 @@ import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/aut
 import { ApercuProjet } from "@pages/requeteCreation/commun/composants/ApercuProjet";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { GestionMentions } from "@pages/requeteCreation/commun/composants/GestionMentions";
-import { useDataTableauPersonneSauvegardeeHook } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/IDataTableauPersonneSauvegardee";
+import { useDataTableauPersonneSauvegardeeHook } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/DataTableauPersonneSauvegardeeHook";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { PiecesAnnexes } from "@pages/requeteCreation/commun/composants/PiecesAnnexes";
 import { SaisieProjet } from "@pages/requeteCreation/commun/composants/SaisieProjet";
@@ -56,6 +56,8 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
     useState(0);
   const [ongletSelectionnePartieDroite, setOngletSelectionnePartieDroite] =
     useState(0);
+  const [tableauRMCPersonneEnChargement, setTableauRMCPersonneEnChargement] =
+    useState<boolean>(true);
 
   // Hooks
   const { detailRequeteState } = useDetailRequeteApiHook(
@@ -83,6 +85,12 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
   }, [detailRequeteState]);
 
   useEffect(() => {
+    if (resultatRMCAutoPersonne) {
+      setTableauRMCPersonneEnChargement(false);
+    }
+  }, [resultatRMCAutoPersonne]);
+
+  useEffect(() => {
     if (requete) {
       const titulaire =
         getPostulantNationaliteOuTitulaireActeTranscritDresse(requete);
@@ -94,6 +102,18 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
     }
   }, [requete]);
 
+  function handleClickSelectionTitulaireRmcPersonne(idTitulaire: string) {
+    const titulaire = requete?.titulaires
+      ?.filter(titulaireCourant => titulaireCourant.id === idTitulaire)
+      .pop();
+    if (titulaire) {
+      setTableauRMCPersonneEnChargement(true);
+      setRmcAutoPersonneParams(
+        mapTitulaireVersRMCAutoPersonneParams(titulaire)
+      );
+    }
+  }
+
   const handleChangeOngletPartieGauche = (e: any, newValue: string) => {
     /* istanbul ignore next */
     setOngletSelectionnePartieGauche(parseInt(newValue));
@@ -102,17 +122,6 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
   const handleChangeOngletPartieDroite = (e: any, newValue: string) => {
     setOngletSelectionnePartieDroite(parseInt(newValue));
   };
-
-  function handleClickSelectionTitulaireRmcPersonne(idTitulaire: string) {
-    const titulaire = requete?.titulaires
-      ?.filter(titulaireCourant => titulaireCourant.id === idTitulaire)
-      .pop();
-    if (titulaire) {
-      setRmcAutoPersonneParams(
-        mapTitulaireVersRMCAutoPersonneParams(titulaire)
-      );
-    }
-  }
 
   const getComposantsPartieGauche = () => {
     return (
@@ -156,8 +165,12 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
                 natureActeRequete={NatureActeRequete.getEnumFor(
                   requete.nature ?? ""
                 )}
-                dataPersonnesSelectionnees={dataPersonnesSelectionnees}
+                dataPersonnesSelectionnees={dataPersonnesSelectionnees || []}
                 setDataPersonnesSelectionnees={setDataPersonnesSelectionnees}
+                tableauRMCPersonneEnChargement={tableauRMCPersonneEnChargement}
+                tableauPersonnesSelectionnesEnChargement={
+                  !dataPersonnesSelectionnees
+                }
               />
             ),
             index: 1

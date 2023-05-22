@@ -18,7 +18,7 @@ import {
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React from "react";
-import { IDataTableauPersonneSelectionnee } from "./IDataTableauPersonneSauvegardee";
+import { IDataTableauPersonneSelectionnee } from "./DataTableauPersonneSauvegardeeHook";
 
 interface ITableauPersonnesSelectionneesProps {
   getIdentifiantPersonne: (data: IDataTableauPersonneSelectionnee) => string;
@@ -28,6 +28,7 @@ interface ITableauPersonnesSelectionneesProps {
     data: IDataTableauPersonneSelectionnee,
     cle?: string | undefined
   ) => void;
+  enChargement: boolean;
 }
 
 export const TableauPersonnesSelectionnees: React.FC<
@@ -83,6 +84,7 @@ export const TableauPersonnesSelectionnees: React.FC<
         )}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_PERSONNE}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_PERSONNE}
+        enChargement={props.enChargement}
       />
     </div>
   );

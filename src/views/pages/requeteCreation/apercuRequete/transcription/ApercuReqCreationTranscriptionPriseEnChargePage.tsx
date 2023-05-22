@@ -15,7 +15,7 @@ import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { AnalyseDuDossier } from "@pages/requeteCreation/commun/composants/AnalyseDuDossier";
-import { useDataTableauPersonneSauvegardeeHook } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/IDataTableauPersonneSauvegardee";
+import { useDataTableauPersonneSauvegardeeHook } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/DataTableauPersonneSauvegardeeHook";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import Labels from "@pages/requeteCreation/commun/Labels";
 import {
@@ -56,6 +56,8 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
   const [ongletSelectionne, setOngletSelectionne] = useState(1);
   const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
     useState<IRMCAutoPersonneParams>();
+  const [tableauRMCPersonneEnChargement, setTableauRMCPersonneEnChargement] =
+    useState<boolean>(true);
 
   // Hooks
   const { detailRequeteState } = useDetailRequeteApiHook(
@@ -69,6 +71,12 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
   const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(
     rmcAutoPersonneParams
   );
+
+  useEffect(() => {
+    if (resultatRMCAutoPersonne) {
+      setTableauRMCPersonneEnChargement(false);
+    }
+  }, [resultatRMCAutoPersonne]);
 
   const estModeConsultation = props.idRequeteAAfficher !== undefined;
 
@@ -111,6 +119,7 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
       ?.filter(titulaireCourant => titulaireCourant.id === idTitulaire)
       .pop();
     if (titulaire) {
+      setTableauRMCPersonneEnChargement(true);
       setRmcAutoPersonneParams(
         mapTitulaireVersRMCAutoPersonneParams(titulaire)
       );
@@ -144,8 +153,12 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
                 natureActeRequete={NatureActeRequete.getEnumFor(
                   requete.nature ?? ""
                 )}
-                dataPersonnesSelectionnees={dataPersonnesSelectionnees}
+                dataPersonnesSelectionnees={dataPersonnesSelectionnees || []}
                 setDataPersonnesSelectionnees={setDataPersonnesSelectionnees}
+                tableauRMCPersonneEnChargement={tableauRMCPersonneEnChargement}
+                tableauPersonnesSelectionnesEnChargement={
+                  !dataPersonnesSelectionnees
+                }
               />
             ),
             index: 1

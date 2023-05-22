@@ -5,9 +5,9 @@ import {
 } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
-import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import { IDataTableauPersonneSelectionnee } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/IDataTableauPersonneSauvegardee";
+import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { IDataTableauPersonneSelectionnee } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/DataTableauPersonneSauvegardeeHook";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import {

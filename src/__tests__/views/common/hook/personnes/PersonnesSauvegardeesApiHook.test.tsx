@@ -39,7 +39,7 @@ const HookConsumerPersonnesSauvegardees: React.FC<
 
   return (
     <>
-      {resultatPersonnesSauvegardees.length && (
+      {resultatPersonnesSauvegardees?.length && (
         <>
           <div data-testid="test-personne-sauvegardee-alpha">
             <span>{resultatPersonnesSauvegardees[0].idPersonne}</span>

@@ -41,6 +41,7 @@ interface TableauRMCPersonneProps {
     cle?: string
   ) => void;
   natureActeRequete: NatureActeRequete;
+  enChargement?: boolean;
 }
 
 export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
@@ -159,6 +160,7 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
           )}
           getRowClassName={getLigneClassName}
           stickyHeader={true}
+          enChargement={props.enChargement}
         />
       }
       {etatFenetres && etatFenetres.length > ZERO && (

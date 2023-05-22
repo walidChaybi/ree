@@ -35,7 +35,8 @@ export const ApercuReqCreationEtablissementPage: React.FC<ApeApercuReqCreationEt
     const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
     const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
       useState<IRMCAutoPersonneParams>();
-
+    const [tableauRMCPersonneEnChargement, setTableauRMCPersonneEnChargement] =
+      useState<boolean>(true);
     // Hooks
     const { detailRequeteState } = useDetailRequeteApiHook(
       props.idRequeteAAfficher ?? idRequeteParam,
@@ -63,6 +64,12 @@ export const ApercuReqCreationEtablissementPage: React.FC<ApeApercuReqCreationEt
       }
     }, [requete]);
 
+    useEffect(() => {
+      if (resultatRMCAutoPersonne) {
+        setTableauRMCPersonneEnChargement(false);
+      }
+    }, [resultatRMCAutoPersonne]);
+
     function onRenommePieceJustificative(
       idPieceJustificative: string,
       nouveauLibelle: string,
@@ -84,6 +91,7 @@ export const ApercuReqCreationEtablissementPage: React.FC<ApeApercuReqCreationEt
         ?.filter(titulaireCourant => titulaireCourant.id === idTitulaire)
         .pop();
       if (titulaire) {
+        setTableauRMCPersonneEnChargement(true);
         setRmcAutoPersonneParams(
           mapTitulaireVersRMCAutoPersonneParams(titulaire)
         );
@@ -115,6 +123,7 @@ export const ApercuReqCreationEtablissementPage: React.FC<ApeApercuReqCreationEt
               handleClickSelectionTitulaireRmcPersonne={
                 handleClickSelectionTitulaireRmcPersonne
               }
+              tableauRMCPersonneEnChargement={tableauRMCPersonneEnChargement}
             />
 
             <ConteneurRetractable

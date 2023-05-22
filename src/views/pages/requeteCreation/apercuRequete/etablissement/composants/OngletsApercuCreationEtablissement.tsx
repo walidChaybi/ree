@@ -1,7 +1,7 @@
 import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
-import { useDataTableauPersonneSauvegardeeHook } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/IDataTableauPersonneSauvegardee";
+import { useDataTableauPersonneSauvegardeeHook } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/DataTableauPersonneSauvegardeeHook";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useState } from "react";
@@ -17,6 +17,7 @@ interface OngletsApercuCreationEtablissementProps {
   onRenommePieceJustificative: typeFctRenommePieceJustificative;
   resultatRMCPersonne: IRMCPersonneResultat[];
   handleClickSelectionTitulaireRmcPersonne: (idTitulaire: string) => void;
+  tableauRMCPersonneEnChargement: boolean;
 }
 
 interface ItemListe {
@@ -70,8 +71,10 @@ export const OngletsApercuCreationEtablissement: React.FC<
           natureActeRequete={NatureActeRequete.getEnumFor(
             props.requete.nature ?? ""
           )}
-          dataPersonnesSelectionnees={dataPersonnesSelectionnees}
+          dataPersonnesSelectionnees={dataPersonnesSelectionnees || []}
           setDataPersonnesSelectionnees={setDataPersonnesSelectionnees}
+          tableauRMCPersonneEnChargement={props.tableauRMCPersonneEnChargement}
+          tableauPersonnesSelectionnesEnChargement={!dataPersonnesSelectionnees}
         />
       ),
       index: 1

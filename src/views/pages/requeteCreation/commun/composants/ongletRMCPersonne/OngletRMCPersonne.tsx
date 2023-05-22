@@ -16,7 +16,7 @@ import {
   TMouseEventSurSVGSVGElement
 } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import React from "react";
-import { IDataTableauPersonneSelectionnee } from "./IDataTableauPersonneSauvegardee";
+import { IDataTableauPersonneSelectionnee } from "./DataTableauPersonneSauvegardeeHook";
 import "./scss/OngletRMCPersonne.scss";
 import { TableauPersonnesSelectionnees } from "./TableauPersonnesSauvegardees";
 
@@ -27,9 +27,11 @@ interface OngletRMCPersonneProps {
   listeTitulaires?: ITitulaireRequeteCreation[];
   dataPersonnesSelectionnees: IDataTableauPersonneSelectionnee[];
   setDataPersonnesSelectionnees: React.Dispatch<
-    React.SetStateAction<IDataTableauPersonneSelectionnee[]>
+    React.SetStateAction<IDataTableauPersonneSelectionnee[] | undefined>
   >;
   handleClickMenuItem: (idTitulaire: string) => void;
+  tableauRMCPersonneEnChargement: boolean;
+  tableauPersonnesSelectionnesEnChargement: boolean;
 }
 
 export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
@@ -96,6 +98,7 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
         getIdentifiantPersonne={getIdentifiantPersonne}
         natureActeRequete={props.natureActeRequete}
         onClickBoutonAjouterPersonne={onClickBoutonAjouterPersonne}
+        enChargement={props.tableauRMCPersonneEnChargement}
       />
       <BoutonMenu
         boutonLibelle={getLibelle("Rechercher sur une personne de la requête")}
@@ -107,6 +110,7 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
         dataPersonnesSelectionnees={props.dataPersonnesSelectionnees}
         getIdentifiantPersonne={getIdentifiantPersonne}
         onClickBoutonRetirerPersonne={onClickBoutonRetirerPersonne}
+        enChargement={props.tableauPersonnesSelectionnesEnChargement}
       />
     </>
   );
