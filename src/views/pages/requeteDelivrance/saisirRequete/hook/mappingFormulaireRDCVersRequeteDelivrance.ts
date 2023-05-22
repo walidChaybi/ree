@@ -13,6 +13,7 @@ import {
   IPieceJustificative,
   mapPieceJustificative
 } from "@model/requete/pieceJointe/IPieceJustificative";
+import { estDateVide } from "@util/DateUtils";
 import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
 import {
   auMoinsUneProprieteEstRenseigne,
@@ -91,8 +92,20 @@ function getTitulairesRequete(saisie: SaisieRequeteRDC) {
   const titulaire2 = saisie.titulaire2;
   const natureActe = NatureActeRequete.getEnumFor(saisie.requete.natureActe);
 
+  function titulaire2estVide(personne: Identite) {
+    return (
+      !personne.noms.nomNaissance &&
+      !personne.prenoms.prenom1 &&
+      estDateVide(personne.naissance.dateEvenement)
+    );
+  }
+
   newTitulaires.push(getTitulaire(titulaire1, 1));
-  if (NatureActeRequete.MARIAGE === natureActe) {
+
+  if (
+    NatureActeRequete.MARIAGE === natureActe &&
+    !titulaire2estVide(titulaire2)
+  ) {
     newTitulaires.push(getTitulaire(titulaire2, DEUX));
   }
   return newTitulaires;
