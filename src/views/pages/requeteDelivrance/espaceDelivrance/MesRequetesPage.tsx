@@ -27,6 +27,7 @@ import {
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import React, { useCallback, useEffect, useState } from "react";
+import { validerMentionsPlusieursDocuments } from "../editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import {
   dateStatutColumnHeaders,
   requeteColumnHeaders
@@ -203,7 +204,10 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
         nbLignesParPage={NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}
       >
-        <BoutonSignerLeLot libelle={getLibelle("Signer le lot")} />
+        <BoutonSignerLeLot
+          libelle={getLibelle("Signer le lot")}
+          validerMentionsPlusieursDocuments={validerMentionsPlusieursDocuments}
+        />
       </TableauRece>
 
       <BoutonRetour />

@@ -24,7 +24,7 @@ export const PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE =
   "apercurequetetranscriptionenpriseencharge";
 export const PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET =
   "apercurequetetranscriptionensaisieprojet";
-export const PATH_EDITION = "edition";
+export const PATH_EDITION = "Edition";
 export const PATH_SAISIR_RDCSC = "saisircertificatsituation";
 export const PATH_SAISIR_RDC = "saisirextraitcopie";
 export const PATH_SAISIR_RCTC = "saisirrequetetranscription";

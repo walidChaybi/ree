@@ -196,7 +196,7 @@ test("redirection requete RDD", async () => {
   });
 
   expect(history.location.pathname).toBe(
-    "/rece/rece-ui/mesrequetes/edition/a4cefb71-8457-4f6b-937e-34b49335d666/b41079a5-9e8d-478c-b04c-c4c2ac67134f"
+    "/rece/rece-ui/mesrequetes/Edition/a4cefb71-8457-4f6b-937e-34b49335d666/b41079a5-9e8d-478c-b04c-c4c2ac67134f"
   );
 });
 
@@ -249,7 +249,7 @@ test("redirection requete RDC", async () => {
   });
 
   expect(history2.location.pathname).toBe(
-    "/rece/rece-ui/mesrequetes/edition/a4cefb71-8457-4f6b-937e-34b49335d666/b41079a5-9e8d-478c-b04c-c4c2ac67134f"
+    "/rece/rece-ui/mesrequetes/Edition/a4cefb71-8457-4f6b-937e-34b49335d666/b41079a5-9e8d-478c-b04c-c4c2ac67134f"
   );
 });
 

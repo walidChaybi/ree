@@ -142,12 +142,11 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
         props.handleReload();
       }
 
-      if (allRequestSigned) {
+      if (allRequestSigned && pageState > 0) {
         // Si toutes les requêtes de la page étaient à signer et qu'elles ont été signées alors on revient sur la page d'avant
         let newPageState = pageState;
         if (
-          (newPageState > 0 &&
-            paramsTableau.nextDataLinkState === undefined &&
+          (paramsTableau.nextDataLinkState === undefined &&
             newPageState - 1 * props.nbLignesParPage >=
               props.dataState.length) ||
           (newPageState * props.nbLignesParPage >=
