@@ -7,13 +7,13 @@ import { Options } from "@util/Type";
 
 export class SousTypeDelivrance extends EnumWithComplete {
   public static readonly RDD = new SousTypeDelivrance(
-    "RDD",
-    "Délivrance Extrait/Copie dématérialisée",
-    "Délivrance E/C (d)"
+      "RDD",
+      "Délivrance Extrait/Copie dématérialisée",
+      "Délivrance E/C (d)"
   );
   public static readonly RDC = new SousTypeDelivrance(
-    "RDC",
-    "Délivrance Extrait/Copie courrier",
+      "RDC",
+      "Délivrance Extrait/Copie courrier",
     "Délivrance E/C (c)"
   );
   public static readonly RDCSD = new SousTypeDelivrance(
@@ -82,12 +82,6 @@ export class SousTypeDelivrance extends EnumWithComplete {
     return SousTypeDelivrance.estRDDP(sousType);
   }
 
-  public static estRDDouRDC(sousType?: SousTypeDelivrance): boolean {
-    return (
-      SousTypeDelivrance.estRDD(sousType) || SousTypeDelivrance.estRDC(sousType)
-    );
-  }
-
   public static estRDDouRDDP(sousType?: SousTypeDelivrance): boolean {
     return (
       SousTypeDelivrance.estRDD(sousType) ||
@@ -132,6 +126,6 @@ export class SousTypeDelivrance extends EnumWithComplete {
   ) => SousTypeDelivrance.estRDDouRDDP(type);
 
   public static estSousTypeSignable(type: SousTypeDelivrance): boolean {
-    return SousTypeDelivrance.estRDDouRDC(type);
+    return SousTypeDelivrance.estRDD(type);
   }
 }
