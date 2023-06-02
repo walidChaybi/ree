@@ -23,7 +23,7 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IAction } from "@model/requete/IActions";
 import { DocumentPJ, IDocumentPJ } from "@model/requete/IDocumentPj";
 import { IEchange } from "@model/requete/IEchange";
-import { IEvenementReqDelivrance } from "@model/requete/IEvenementReqDelivrance";
+import { IEvenementRequete } from "@model/requete/IEvenementRequete";
 import { IMandant } from "@model/requete/IMandant";
 import { IObservation } from "@model/requete/IObservation";
 import { IPersonneSauvegardee } from "@model/requete/IPersonneSauvegardee";
@@ -138,6 +138,7 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
     canal: TypeCanal.getEnumFor(data.canal),
     type: TypeRequete.getEnumFor(data.type),
     statutCourant: getStatutCourant(data.statut),
+    evenement: data?.evenement ? getEvenement(data.evenement) : undefined,
     titulaires: getTitulaires(data.titulaires),
     requerant: Requerant.mappingRequerant(data.requerant),
     mandant: data.mandant ? getMandant(data.mandant) : undefined,
@@ -155,7 +156,6 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
     documentDemande: DocumentDelivrance.getEnumForUUID(data?.documentDemande),
     nbExemplaireImpression: data?.nombreExemplairesDemandes,
     provenanceRequete: getProvenance(data),
-    evenement: data?.evenement ? getEvenement(data.evenement) : undefined,
     motif: MotifDelivrance.getEnumFor(data?.motif),
     complementMotif: data?.complementMotif,
     choixDelivrance: ChoixDelivrance.getEnumFor(data?.choixDelivrance),
@@ -239,7 +239,7 @@ function getProvenance(data: any): IProvenanceRequete {
   };
 }
 
-function getEvenement(evenement: any): IEvenementReqDelivrance {
+function getEvenement(evenement: any): IEvenementRequete {
   return {
     id: evenement.id,
     natureActe: NatureActeRequete.getEnumFor(evenement.natureActe),

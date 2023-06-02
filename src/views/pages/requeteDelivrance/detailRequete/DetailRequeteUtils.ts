@@ -4,7 +4,7 @@ import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
 import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { EvenementReqDelivrance } from "@model/requete/IEvenementReqDelivrance";
+import { EvenementRequete } from "@model/requete/IEvenementRequete";
 import { IMandant, Mandant } from "@model/requete/IMandant";
 import { IParent, Parent } from "@model/requete/IParents";
 import { IRequerant, Requerant } from "@model/requete/IRequerant";
@@ -463,14 +463,14 @@ function getRequeteDelivranceInfo(
   ajouterContentPartAuPartUneValeur(
     infosRequete,
     getLibelle("Date de l'évènement"),
-    EvenementReqDelivrance.getDate(requete.evenement)
+    EvenementRequete.getDate(requete.evenement)
   );
   ajouterContentPartAuPartMultiValeurs(
     infosRequete,
     getLibelle("Lieu de l'évènement"),
     [
-      EvenementReqDelivrance.getVille(requete.evenement),
-      EvenementReqDelivrance.getPays(requete.evenement)
+      EvenementRequete.getVille(requete.evenement),
+      EvenementRequete.getPays(requete.evenement)
     ]
   );
   ajouterContentPartAuPartUneValeur(

@@ -3,7 +3,7 @@ import { getDateStringFromDateCompose } from "@util/DateUtils";
 import { getValeurOuVide, numberToString } from "@util/Utils";
 import { NatureActeRequete } from "./enum/NatureActeRequete";
 
-export interface IEvenementReqDelivrance {
+export interface IEvenementRequete {
   id?: string;
   natureActe: NatureActeRequete;
   jour?: number;
@@ -13,8 +13,8 @@ export interface IEvenementReqDelivrance {
   pays?: string;
 }
 
-export const EvenementReqDelivrance = {
-  getDate(event?: IEvenementReqDelivrance): string {
+export const EvenementRequete = {
+  getDate(event?: IEvenementRequete): string {
     return event && event.annee
       ? getDateStringFromDateCompose({
           jour: numberToString(event.jour),
@@ -23,10 +23,10 @@ export const EvenementReqDelivrance = {
         })
       : "";
   },
-  getVille(event?: IEvenementReqDelivrance): string {
+  getVille(event?: IEvenementRequete): string {
     return getValeurOuVide(event?.ville);
   },
-  getPays(event?: IEvenementReqDelivrance): string {
+  getPays(event?: IEvenementRequete): string {
     return getValeurOuVide(event?.pays);
   }
 };

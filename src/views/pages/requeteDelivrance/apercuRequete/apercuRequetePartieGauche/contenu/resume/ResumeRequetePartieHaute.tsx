@@ -7,9 +7,9 @@ import { TypeMandant } from "@model/requete/enum/TypeMandant";
 import { IAdresseRequerant } from "@model/requete/IAdresseRequerant";
 import { IdentiteType } from "@model/requete/IdentiteType";
 import {
-  EvenementReqDelivrance,
-  IEvenementReqDelivrance
-} from "@model/requete/IEvenementReqDelivrance";
+  EvenementRequete,
+  IEvenementRequete
+} from "@model/requete/IEvenementRequete";
 import { ILienRequerant } from "@model/requete/ILienRequerant";
 import { IMandant } from "@model/requete/IMandant";
 import { IParent } from "@model/requete/IParents";
@@ -115,7 +115,7 @@ export const ResumeRequetePartieHaute: React.FC<
         }
       >
         <ItemLibelle
-          texte={EvenementReqDelivrance.getDate(props.requete.evenement)}
+          texte={EvenementRequete.getDate(props.requete.evenement)}
         />
         <ItemLibelle texte={getLieuEvenement(props.requete.evenement)} />
       </ItemMultiLignes>
@@ -309,12 +309,10 @@ const getLieuNaissanceTitulaire = (
     TitulaireRequete.getPays(titulaire)
   );
 
-const getLieuEvenement = (
-  evenement?: IEvenementReqDelivrance
-): string | undefined =>
+const getLieuEvenement = (evenement?: IEvenementRequete): string | undefined =>
   formatLigneLieu(
-    EvenementReqDelivrance.getVille(evenement),
-    EvenementReqDelivrance.getPays(evenement)
+    EvenementRequete.getVille(evenement),
+    EvenementRequete.getPays(evenement)
   );
 
 const getQualiteTypeRequerant = (

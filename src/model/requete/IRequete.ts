@@ -6,6 +6,7 @@ import { TypeCanal } from "./enum/TypeCanal";
 import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 import { TypeRequete } from "./enum/TypeRequete";
 import { IAction } from "./IActions";
+import { IEvenementRequete } from "./IEvenementRequete";
 import { IObservation } from "./IObservation";
 import { IRequerant } from "./IRequerant";
 import { IRequeteCreationEtablissement } from "./IRequeteCreationEtablissement";
@@ -31,6 +32,7 @@ export interface IRequete {
   type: TypeRequete;
   canal: TypeCanal;
   statutCourant: IStatutCourant;
+  evenement?: IEvenementRequete;
   titulaires?: ITitulaireRequete[];
   requerant: IRequerant;
   idUtilisateur: string;

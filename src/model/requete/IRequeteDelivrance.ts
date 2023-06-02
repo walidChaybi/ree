@@ -5,7 +5,6 @@ import { SousTypeDelivrance } from "./enum/SousTypeDelivrance";
 import { StatutRequete } from "./enum/StatutRequete";
 import { Action } from "./IActions";
 import { DocumentReponse, IDocumentReponse } from "./IDocumentReponse";
-import { IEvenementReqDelivrance } from "./IEvenementReqDelivrance";
 import { IMandant } from "./IMandant";
 import { IProvenanceRequete } from "./IProvenanceRequete";
 import { IRequete } from "./IRequete";
@@ -16,7 +15,6 @@ export interface IRequeteDelivrance extends IRequete {
   documentDemande: DocumentDelivrance;
   nbExemplaireImpression?: number;
   provenanceRequete: IProvenanceRequete;
-  evenement?: IEvenementReqDelivrance;
   motif?: MotifDelivrance;
   complementMotif?: string;
   documentsReponses: IDocumentReponse[];

@@ -39,7 +39,7 @@ import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
 import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
 import { TypeMandant } from "@model/requete/enum/TypeMandant";
-import { IEvenementReqDelivrance } from "@model/requete/IEvenementReqDelivrance";
+import { IEvenementRequete } from "@model/requete/IEvenementRequete";
 import { IMandant } from "@model/requete/IMandant";
 import { IRequerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -104,7 +104,7 @@ const saisieRequete = (requete?: IRequeteDelivrance): Requete => {
   };
 };
 
-const saisieEvenement = (evenement?: IEvenementReqDelivrance): Evenement => {
+const saisieEvenement = (evenement?: IEvenementRequete): Evenement => {
   return {
     [DATE_EVENEMENT]: {
       [JOUR]: getValeurOuVide(evenement?.jour),
