@@ -47,17 +47,19 @@ test("renders VoletPiecesJustificatives Etablissement", async () => {
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
-        >
-          <ApercuReqCreationEtablissementPage />
-        </Route>
-      </Router>
-    );
+  render(
+    <Router history={history}>
+      <Route
+        exact={true}
+        path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+      >
+        <ApercuReqCreationEtablissementPage />
+      </Route>
+    </Router>
+  );
+
+  await waitFor(() => {
+    fireEvent.click(screen.getByText("Pièces justificatives"));
   });
 
   await waitFor(() => {
@@ -79,20 +81,16 @@ test("renders VoletPiecesJustificatives Transcription", async () => {
       "d4f9e898-cf26-42cc-850b-007e9e475e7a"
     )
   );
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={
-            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
-          }
-        >
-          <ApercuReqCreationTranscriptionSimplePage />
-        </Route>
-      </Router>
-    );
-  });
+  render(
+    <Router history={history}>
+      <Route
+        exact={true}
+        path={URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID}
+      >
+        <ApercuReqCreationTranscriptionSimplePage />
+      </Route>
+    </Router>
+  );
 
   await waitFor(() => {
     expect(screen.getAllByText("Acte à transcrire")[0]).toBeDefined();
@@ -111,47 +109,33 @@ test("Modifier le titre d'un fichier d'une pièce jointe Etablissement", async (
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
-        >
-          <ApercuReqCreationEtablissementPage />
-        </Route>
-      </Router>
-    );
-  });
-
-  let boutonModifierLibelle: any;
+  render(
+    <Router history={history}>
+      <Route
+        exact={true}
+        path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+      >
+        <ApercuReqCreationEtablissementPage />
+      </Route>
+    </Router>
+  );
 
   await waitFor(() => {
-    boutonModifierLibelle = screen.getAllByTitle(
-      "Modifier le libellé"
-    )[3] as HTMLButtonElement;
-    expect(boutonModifierLibelle).toBeDefined();
+    expect(screen.getAllByTitle("Modifier le libellé")[3]).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(boutonModifierLibelle);
-  });
+  fireEvent.click(screen.getAllByTitle("Modifier le libellé")[3]);
 
   const inputModificationLibelle = screen.getByLabelText(
     "input-creation-fichierPJ"
-  ) as HTMLInputElement;
+  );
 
-  await act(async () => {
-    fireEvent.change(inputModificationLibelle, {
-      target: {
-        value: "nouveauLibelle"
-      }
-    });
+  fireEvent.change(inputModificationLibelle, {
+    target: {
+      value: "nouveauLibelle"
+    }
   });
-
-  await act(async () => {
-    inputModificationLibelle.blur();
-  });
+  inputModificationLibelle.blur();
 
   await waitFor(() => {
     expect(screen.getAllByText("nouveauLibelle")[0]).toBeDefined();
@@ -165,49 +149,31 @@ test("Modifier le titre d'un fichier d'une pièce jointe Transcription", async (
       "d4f9e898-cf26-42cc-850b-007e9e475e7a"
     )
   );
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={
-            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
-          }
-        >
-          <ApercuReqCreationTranscriptionSimplePage />
-        </Route>
-      </Router>
-    );
-  });
-
-  let boutonModifierLibelle: any;
+  render(
+    <Router history={history}>
+      <Route
+        exact={true}
+        path={URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID}
+      >
+        <ApercuReqCreationTranscriptionSimplePage />
+      </Route>
+    </Router>
+  );
 
   await waitFor(() => {
-    boutonModifierLibelle = screen.getAllByTitle(
-      "Modifier le libellé"
-    )[0] as HTMLButtonElement;
-    expect(boutonModifierLibelle).toBeDefined();
+    expect(screen.getAllByTitle("Modifier le libellé")[0]).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(boutonModifierLibelle);
-  });
+  fireEvent.click(screen.getAllByTitle("Modifier le libellé")[0]);
 
-  const inputModificationLibelle = screen.getByLabelText(
-    "input-creation-nom"
-  ) as HTMLInputElement;
+  const inputModificationLibelle = screen.getByLabelText("input-creation-nom");
 
-  await act(async () => {
-    fireEvent.change(inputModificationLibelle, {
-      target: {
-        value: "nouveauLibelle"
-      }
-    });
+  fireEvent.change(inputModificationLibelle, {
+    target: {
+      value: "nouveauLibelle"
+    }
   });
-
-  await act(async () => {
-    inputModificationLibelle.blur();
-  });
+  inputModificationLibelle.blur();
 
   await waitFor(() => {
     expect(screen.getAllByText("nouveauLibelle")[0]).toBeDefined();
@@ -221,58 +187,45 @@ test("Modifier le titre d'un fichier et revenir en arrière", async () => {
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
-        >
-          <ApercuReqCreationEtablissementPage />
-        </Route>
-      </Router>
-    );
-  });
-
-  let boutonModifierLibelle: any;
+  render(
+    <Router history={history}>
+      <Route
+        exact={true}
+        path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+      >
+        <ApercuReqCreationEtablissementPage />
+      </Route>
+    </Router>
+  );
 
   await waitFor(() => {
-    boutonModifierLibelle = screen.getAllByTitle(
-      "Modifier le libellé"
-    )[3] as HTMLButtonElement;
-    expect(boutonModifierLibelle).toBeDefined();
+    expect(screen.getAllByTitle("Modifier le libellé")[3]).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(boutonModifierLibelle);
-  });
+  fireEvent.click(screen.getAllByTitle("Modifier le libellé")[3]);
 
   const inputModificationLibelle = screen.getByLabelText(
-    "input-creation-nouveauLibelle"
+    "input-creation-fichierPJ"
   ) as HTMLInputElement;
 
-  await act(async () => {
-    fireEvent.change(inputModificationLibelle, {
-      target: {
-        value: "test libelle"
-      }
-    });
-    fireEvent.keyDown(inputModificationLibelle, {
-      key: "Enter",
-      code: "Enter",
-      charCode: 13
-    });
+  fireEvent.change(inputModificationLibelle, {
+    target: {
+      value: "test libelle"
+    }
+  });
+  fireEvent.keyDown(inputModificationLibelle, {
+    key: "Enter",
+    code: "Enter",
+    charCode: 13
   });
 
   await waitFor(() => {
     expect(screen.getAllByText("test libelle")[0]).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(
-      screen.getAllByTitle("Annuler la modification du libellé")[0]
-    );
-  });
+  fireEvent.click(
+    screen.getAllByTitle("Annuler la modification du libellé")[0]
+  );
 
   await waitFor(() => {
     expect(screen.getAllByText("Titre de séjour postulant")[0]).toBeDefined();
@@ -286,47 +239,36 @@ test("Modifier le titre puis annuler", async () => {
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
-        >
-          <ApercuReqCreationEtablissementPage />
-        </Route>
-      </Router>
-    );
-  });
-
-  let boutonModifierLibelle: any;
+  render(
+    <Router history={history}>
+      <Route
+        exact={true}
+        path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+      >
+        <ApercuReqCreationEtablissementPage />
+      </Route>
+    </Router>
+  );
 
   await waitFor(() => {
-    boutonModifierLibelle = screen.getAllByTitle(
-      "Modifier le libellé"
-    )[3] as HTMLButtonElement;
-    expect(boutonModifierLibelle).toBeDefined();
+    expect(screen.getAllByTitle("Modifier le libellé")[3]).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(boutonModifierLibelle);
-  });
+  fireEvent.click(screen.getAllByTitle("Modifier le libellé")[3]);
 
   const inputModificationLibelle = screen.getByLabelText(
     "input-creation-fichierPJ"
-  ) as HTMLInputElement;
+  );
 
-  await act(async () => {
-    fireEvent.change(inputModificationLibelle, {
-      target: {
-        value: "test libelle"
-      }
-    });
-    fireEvent.keyDown(inputModificationLibelle, {
-      key: "Escape",
-      code: "Escape",
-      charCode: 27
-    });
+  fireEvent.change(inputModificationLibelle, {
+    target: {
+      value: "test libelle"
+    }
+  });
+  fireEvent.keyDown(inputModificationLibelle, {
+    key: "Escape",
+    code: "Escape",
+    charCode: 27
   });
 
   await waitFor(() => {
@@ -341,17 +283,19 @@ test("Ouvrir deux pièces jointes côte à côte.", async () => {
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
-        >
-          <ApercuReqCreationEtablissementPage />
-        </Route>
-      </Router>
-    );
+  render(
+    <Router history={history}>
+      <Route
+        exact={true}
+        path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+      >
+        <ApercuReqCreationEtablissementPage />
+      </Route>
+    </Router>
+  );
+
+  await waitFor(() => {
+    fireEvent.click(screen.getByText("Pièces justificatives"));
   });
 
   let accordionAlpha1: HTMLDivElement;

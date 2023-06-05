@@ -1,3 +1,4 @@
+import { deepCopie } from "../../__tests__/__tests__utils__/testsUtil";
 import {
   detailRequeteDelivranceAvecTitulaireMultiple,
   detailRequeteDelivranceCopieArchive,
@@ -253,7 +254,7 @@ export const configRequetes = [
       // Mes requêtes création Etablissement
       if (match[1] === "/requetes/3ed9aa4e-921b-489f-b8fe-531dd703c60c") {
         return {
-          data: requeteCreationEtablissement
+          data: deepCopie(requeteCreationEtablissement)
         };
       }
       // Mes requêtes création Transcription

@@ -35,14 +35,10 @@ const ConteneurRetractable: React.FC<TitreProps> = ({
       >
         <span className={conteneurFerme ? "vertical" : ""}>{props.titre}</span>
         <div className="icon">
-          {props.estADroite === conteneurFerme ? (
-            <ArrowBackIos />
-          ) : (
-            <ArrowForwardIos />
-          )}
+          {props.estADroite ? <ArrowBackIos /> : <ArrowForwardIos />}
         </div>
       </div>
-      <div className="body">{props.children}</div>
+      <div className="body">{!conteneurFerme ? props.children : null}</div>
     </div>
   );
 };

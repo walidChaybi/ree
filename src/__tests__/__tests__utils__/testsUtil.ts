@@ -72,3 +72,7 @@ export async function renseigneChampsRecherche(
     fireEvent.click(screen.getByText(valeurChamp));
   });
 }
+
+export function deepCopie(objet: any) {
+  return JSON.parse(JSON.stringify(objet));
+}
