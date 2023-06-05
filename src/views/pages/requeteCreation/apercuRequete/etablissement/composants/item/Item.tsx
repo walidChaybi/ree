@@ -30,7 +30,7 @@ export const Item: React.FC<ItemProps> = ({
     <AccordionRece
       key={titreNumerote}
       expanded={etendu}
-      titre={titreNumerote}
+      titre={props.titre.includes("Parent") ? props.titre : titreNumerote}
       className={{
         container: "accordionContainer",
         content: "accordionContent",

@@ -1,7 +1,9 @@
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import {
   estRenseigne,
-  formatMajusculesMinusculesMotCompose
+  formatMajusculesMinusculesMotCompose,
+  getLibelle
 } from "@util/Utils";
 import React from "react";
 import { DateCoordonneesType } from "../../../../../../../model/requete/DateCoordonneesType";
@@ -32,8 +34,21 @@ const ItemParent: React.FC<ItemParentProps & ItemProps> = ({
   parent2Enfant = false,
   ...props
 }) => {
+  const estPereOuMere = (parent?: IdentiteType) => {
+    switch (Sexe.getEnumFromLibelle(parent?.genre?.libelle)) {
+      case Sexe.MASCULIN:
+        return getLibelle(`Père (Parent ${props.numeroItem})`);
+      case Sexe.FEMININ:
+        return getLibelle(`Mère (Parent ${props.numeroItem})`);
+      default:
+        return props.titre;
+    }
+  };
+
+  const titreParent = estPereOuMere(props.identite);
+
   return (
-    <Item className={{ title: "bg-clair" }} {...props}>
+    <Item className={{ title: "bg-clair" }} {...props} titre={titreParent}>
       <ItemLigne
         label={Labels.resume.requete.liee}
         texte={`N° ${props.numeros.requeteLiee}`}
