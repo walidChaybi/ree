@@ -2,7 +2,7 @@ import { Orientation } from "@model/composition/enum/Orientation";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -27,12 +27,11 @@ import {
 import { IResultGenerationUnDocument } from "../generationUtils";
 import {
   creationEC,
+  creationECSansCTV,
+  estDocumentAvecCTV,
   estPresentActeEtChoixDelivrance,
   estPresentIdActeEtChoixDelivrance,
-  getNomDocument,
-  getStatutRequete,
-  getTypeDocument,
-  toutesLesDonneesSontPresentes
+  getNomDocument, toutesLesDonneesSontPresentes
 } from "./generationECHookUtil";
 import { useRecupererCTV } from "./televerification/recupererCtvApiHook";
 import {
@@ -55,21 +54,27 @@ export interface IGenerationECResultat {
   erreur?: any;
 }
 
-// prettier-ignore
 export function useGenerationEC(
   params?: IGenerationECParams
 ): IGenerationECResultat | undefined {
   const [resultat, setResultat] = useState<IGenerationECResultat>();
 
-  const [extraitCopieApiHookParams, setExtraitCopieApiHookParams] = useState<IExtraitCopieApiHookParams>();
-  const [sauvegarderDocumentParams, setSauvegarderDocumentParams] = useState<ISauvegarderDocumentsParams>();
-  const [stockerDocumentCreerActionMajStatutRequeteParams, setStockerDocumentCreerActionMajStatutRequeteParams] 
-                                                                    = useState<IStockerDocumentCreerActionMajStatutRequeteParams>();
-  const [acteApiHookParams, setActeApiHookParams] = useState<IActeApiHookParams>();
+  const [extraitCopieApiHookParams, setExtraitCopieApiHookParams] =
+    useState<IExtraitCopieApiHookParams>();
+  const [sauvegarderDocumentParams, setSauvegarderDocumentParams] =
+    useState<ISauvegarderDocumentsParams>();
+  const [
+    stockerDocumentCreerActionMajStatutRequeteParams,
+    setStockerDocumentCreerActionMajStatutRequeteParams
+  ] = useState<IStockerDocumentCreerActionMajStatutRequeteParams>();
+  const [acteApiHookParams, setActeApiHookParams] =
+    useState<IActeApiHookParams>();
   const [acteDejaPresent, setActeDejaPresent] = useState<IFicheActe>();
   const [validation, setValidation] = useState<Validation>();
-  const [recupererCtvApiHookParam, setRecupererCtvApiHookParam] = useState<{}>();
-  const [stockeCtvApiHookParam, setStockeCtvApiHookParam] = useState<IStockeCTVParams>();
+  const [recupererCtvApiHookParam, setRecupererCtvApiHookParam] =
+    useState<{}>();
+  const [stockeCtvApiHookParam, setStockeCtvApiHookParam] =
+    useState<IStockeCTVParams>();
 
   useEffect(() => {
     if (estPresentIdActeEtChoixDelivrance(params)) {
@@ -93,27 +98,29 @@ export function useGenerationEC(
 
   useEffect(() => {
     if (acteApiHookResultat) {
-      setRecupererCtvApiHookParam({});
+      if (estDocumentAvecCTV(DocumentDelivrance.getTypeDocument(params?.choixDelivrance), params?.requete.sousType)) {
+        setRecupererCtvApiHookParam({});
+      } else {
+        creationECSansCTV(acteApiHookResultat?.acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [acteApiHookResultat]);
 
   useEffect(() => {
     if (acteDejaPresent) {
-      setRecupererCtvApiHookParam({});
+      if (estDocumentAvecCTV(DocumentDelivrance.getTypeDocument(params?.choixDelivrance), params?.requete.sousType)) {
+        setRecupererCtvApiHookParam({});
+      } else {
+        creationECSansCTV(acteApiHookResultat?.acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [acteDejaPresent]);
 
   // 2- Création du bon EC composition suivant le choix de délivrance
   useEffect(() => {
-    creationEC(
-      acteApiHookResultat?.acte || acteDejaPresent,
-      params,
-      setValidation,
-      setExtraitCopieApiHookParams,
-      recupererCtvResultat?.ctv
-    );
+    creationEC(acteApiHookResultat?.acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams, recupererCtvResultat?.ctv);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recupererCtvResultat]);
 
@@ -127,13 +134,10 @@ export function useGenerationEC(
   const creationDocumentReponseOuResultat = useCallback(
     (requete: IRequeteDelivrance, contenu: string, nbPages: number) => {
       if (requete.choixDelivrance && params?.choixDelivrance) {
-        const statutRequete = getStatutRequete(
-          requete.choixDelivrance,
-          requete.sousType
-        );
+        const typeDocument = DocumentDelivrance.getTypeDocument(params.choixDelivrance);
+        const avecCtv = estDocumentAvecCTV(typeDocument, requete.sousType);
+        const futurStatutRequete = avecCtv ? StatutRequete.A_SIGNER : StatutRequete.A_VALIDER;
 
-        const typeDocument = getTypeDocument(params.choixDelivrance);
-        const avecCtv = DocumentDelivrance.estExtraitCopieAsigner(typeDocument) && SousTypeDelivrance.estSousTypeSignable(requete.sousType);
         const documentReponsePourStockage = {
           contenu,
           nom: getNomDocument(params.choixDelivrance),
@@ -157,8 +161,8 @@ export function useGenerationEC(
         } else {
           setStockerDocumentCreerActionMajStatutRequeteParams({
             documentReponsePourStockage,
-            libelleAction: statutRequete.libelle,
-            statutRequete,
+            libelleAction: futurStatutRequete.libelle,
+            statutRequete: futurStatutRequete,
             requeteId: requete.id
           });
         }
@@ -207,11 +211,10 @@ export function useGenerationEC(
         uuidDocumentReponse,
         uuidDocumentReponseSansAction,
         extraitCopieApiHookResultat
-      ) &&
-      recupererCtvResultat
+      )
     ) {
       setStockeCtvApiHookParam({
-        ctv: recupererCtvResultat?.ctv,
+        ctv: recupererCtvResultat?.ctv ?? "",
         //@ts-ignore
         idDocument: uuidDocumentReponse
           ? uuidDocumentReponse
@@ -251,3 +254,5 @@ export function useGenerationEC(
 
   return resultat;
 }
+
+

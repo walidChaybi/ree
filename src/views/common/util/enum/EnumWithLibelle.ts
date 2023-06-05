@@ -30,8 +30,8 @@ export class EnumWithLibelle {
     }
   }
 
-  public static getEnumFor(str: string, clazz: any) {
-    str = str != null ? str : "";
+  public static getEnumFor(str: string | undefined, clazz: any) {
+    str = str ?? "";
     return str && clazz[str] ? clazz[str] : str;
   }
 

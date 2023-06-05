@@ -213,7 +213,7 @@ export const configRequetes = [
         match[1] ===
           "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/document?libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
         match[1] ===
-          "/requetes/delivrance/7b448d64-add5-4dbd-8041-b7081ea7bc86/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
+          "/requetes/delivrance/7b448d64-add5-4dbd-8041-b7081ea7bc86/document?libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
         match[1] ===
           "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd/document?libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER" ||
         match[1] ===
@@ -225,15 +225,15 @@ export const configRequetes = [
         match[1] ===
           "/requetes/delivrance/9bfa282d-1e66-4538-b242-b9de4f683f0f/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
         match[1] ===
-          "/requetes/delivrance/0ad85c1f-57cf-45cc-ab66-6a17f31247df/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
+          "/requetes/delivrance/0ad85c1f-57cf-45cc-ab66-6a17f31247df/document?libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
         match[1] ===
-          "/requetes/delivrance/9bfa282d-1e66-4538-b242-b9de4f683f77/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
+          "/requetes/delivrance/9bfa282d-1e66-4538-b242-b9de4f683f77/document?libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
         match[1] ===
           "/requetes/delivrance/9bfa282d-1e66-4538-b272-b9de4g683aaf/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
         // match[1] ===
         //   "/requetes/delivrance/9bfa282d-1e66-4038-b272-b9de48683a1f/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
         match[1] ===
-          "/requetes/delivrance/f0ea8f29-ddcd-494b-86e4-0a58f6990c96/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER"
+          "/requetes/delivrance/f0ea8f29-ddcd-494b-86e4-0a58f6990c96/document?libelleAction=%C3%80%20valider&statutRequete=A_VALIDER"
       ) {
         return { data: ["bbac2335-562c-4b14-96aa-4386814c02a2"] };
       }
@@ -765,7 +765,9 @@ export const configRequetes = [
           match[1] ===
             "/requetes/action/majStatut?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
           match[1] ===
-            "/requetes/action/majStatut?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce63999&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE") &&
+            "/requetes/action/majStatut?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce63999&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
+          match[1] ===
+            "/requetes/action/majStatut?idRequete=9bfa282d-1e66-4538-b242-b9de4f683f0f&libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER") &&
         context.method === "post"
       ) {
         return { data: "123456789" };

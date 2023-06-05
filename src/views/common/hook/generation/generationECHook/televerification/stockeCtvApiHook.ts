@@ -18,17 +18,21 @@ export function useStockeCTV(
 
   useEffect(() => {
     if (params) {
-      saveCodeCtv(params.ctv, params.idDocument)
-        .then(result => {
-          setRes({ resultat: true });
-        })
-        .catch(error => {
-          /* istanbul ignore next */
-          logError({
-            messageUtilisateur: "Impossible de stocker le code Ctv",
-            error
+      if (params.ctv) {
+        saveCodeCtv(params.ctv, params.idDocument)
+          .then(result => {
+            setRes({ resultat: true });
+          })
+          .catch(error => {
+            /* istanbul ignore next */
+            logError({
+              messageUtilisateur: "Impossible de stocker le code Ctv",
+              error
+            });
           });
-        });
+      } else {
+        setRes({ resultat: true });
+      }
     }
   }, [params]);
 

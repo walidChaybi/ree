@@ -348,7 +348,7 @@ test("clic sur mention et sur checkbox et valider", async () => {
   await waitFor(() => {
     expect(screen.getAllByText("Deuxième mention changée")).toBeDefined();
     expect(
-      (screen.getByText("Terminer") as HTMLButtonElement).disabled
+      (screen.getByText("Valider et terminer") as HTMLButtonElement).disabled
     ).toBeFalsy();
   });
 
@@ -368,12 +368,12 @@ test("clic sur mention et sur checkbox et valider", async () => {
 
   await waitFor(() => {
     expect(
-      (screen.getByText("Terminer") as HTMLButtonElement).disabled
+      (screen.getByText("Valider et terminer") as HTMLButtonElement).disabled
     ).toBeFalsy();
   });
 
   act(() => {
-    fireEvent.click(screen.getByText("Terminer"));
+    fireEvent.click(screen.getByText("Valider et terminer"));
   });
 
   await waitFor(() => {

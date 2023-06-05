@@ -1779,7 +1779,7 @@ export const requeteAvecDocs = {
   observations: [],
   statut: {
     id: "9bfa4727-6826-448c-b16f-d44e56b733aa",
-    statutRequete: "A_SIGNER",
+    statutRequete: "A_VALIDER",
     dateEffet: 1646039622830,
     raisonStatut: null
   },
@@ -1794,7 +1794,7 @@ export const requeteAvecDocs = {
   motif: "CERTIFICAT_NATIONALITE_FRANCAISE",
   complementMotif: null,
   dateDelivranceDemat: null,
-  provenance: "COURRIER",
+  provenance: "COMEDEC",
   statutReponse: null,
   documentDemande: "28580709-06dd-4df2-bf6e-70a9482940a1",
   documentComplementaire: null,

@@ -31,3 +31,4 @@ export interface IExtraitCopieComposition
   erreur?: string;
   mentions?: string;
 }
+

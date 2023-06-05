@@ -13,15 +13,7 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import {
-  CODE_COPIE_INTEGRALE,
-  CODE_COPIE_NON_SIGNEE,
-  CODE_EXTRAIT_AVEC_FILIATION,
-  CODE_EXTRAIT_PLURILINGUE,
-  CODE_EXTRAIT_SANS_FILIATION
-} from "@model/requete/enum/DocumentDelivranceConstante";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { tousRenseignes } from "@util/Utils";
@@ -32,12 +24,8 @@ import { creationCompositionExtraitCopieActeTexte } from "./creationComposition/
 import { creationCompositionExtraitPlurilingue } from "./creationComposition/creationCompositionExtraitPlurilingue";
 import { IGenerationECParams } from "./generationECHook";
 
-export function nonNull(
-  acte?: IFicheActe,
-  params?: IGenerationECParams,
-  ctv?: string
-) {
-  return params && acte && ctv;
+export function nonNull(acte?: IFicheActe, params?: IGenerationECParams) {
+  return params && acte;
 }
 
 export function estDemandeExtraitAvecOuSansFiliationOuCopieActeTexte(
@@ -65,39 +53,6 @@ export function estDemandeCopieActeImage(
   );
 }
 
-export function getTypeDocument(choixDelivrance: ChoixDelivrance) {
-  let uuidTypeDocument = "";
-  switch (choixDelivrance) {
-    case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
-      uuidTypeDocument = DocumentDelivrance.getKeyForCode(
-        CODE_EXTRAIT_SANS_FILIATION
-      );
-      break;
-    case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
-      uuidTypeDocument = DocumentDelivrance.getKeyForCode(
-        CODE_EXTRAIT_AVEC_FILIATION
-      );
-      break;
-    case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
-      uuidTypeDocument = DocumentDelivrance.getKeyForCode(
-        CODE_EXTRAIT_PLURILINGUE
-      );
-      break;
-    case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
-      uuidTypeDocument = DocumentDelivrance.getKeyForCode(CODE_COPIE_INTEGRALE);
-      break;
-    case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
-      uuidTypeDocument = DocumentDelivrance.getKeyForCode(
-        CODE_COPIE_NON_SIGNEE
-      );
-      break;
-    // FIXME A Complèter
-    default:
-      break;
-  }
-  return uuidTypeDocument;
-}
-
 export function getNomDocument(choixDelivrance: ChoixDelivrance) {
   let nomDocument = "";
   switch (choixDelivrance) {
@@ -121,16 +76,6 @@ export function getNomDocument(choixDelivrance: ChoixDelivrance) {
       break;
   }
   return nomDocument;
-}
-
-export function getStatutRequete(
-  choixDelivrance: ChoixDelivrance,
-  sousType: SousTypeDelivrance
-) {
-  return ChoixDelivrance.estCopieArchive(choixDelivrance) ||
-    SousTypeDelivrance.estPlanete(sousType)
-    ? StatutRequete.A_VALIDER
-    : StatutRequete.A_SIGNER;
 }
 
 export function creationComposition(
@@ -170,7 +115,7 @@ export function creationComposition(
       Validation.O,
       ctv
     );
-  } 
+  }
   return composition;
 }
 
@@ -280,7 +225,7 @@ export function creationEC(
   setExtraitCopieApiHookParams: any,
   ctv?: string
 ) {
-  if (nonNull(acte, params, ctv)) {
+  if (nonNull(acte, params)) {
     // Verification des données pour la génération d'extrait mariage/naissance
     // En cas de validation en erreur alors un extrait en erreur sera généré
     const validationControle = getValidationEC(
@@ -316,6 +261,15 @@ export function creationEC(
   }
 }
 
+export function creationECSansCTV(
+  acte: IFicheActe | undefined,
+  params: IGenerationECParams | undefined,
+  setValidation: any,
+  setExtraitCopieApiHookParams: any
+) {
+  creationEC(acte, params, setValidation, setExtraitCopieApiHookParams, "");
+}
+
 export function toutesLesDonneesSontPresentes(
   uuidDocumentReponse: string | undefined,
   uuidDocumentReponseSansAction: string | undefined,
@@ -338,4 +292,14 @@ export function estPresentActeEtChoixDelivrance(
   params?: IGenerationECParams
 ): boolean {
   return tousRenseignes(params?.acte, params?.choixDelivrance);
+}
+
+export function estDocumentAvecCTV(
+  typeDocument?: string,
+  sousTypeDelivrance?: SousTypeDelivrance
+) {
+  return (
+    DocumentDelivrance.estExtraitCopieAsigner(typeDocument) &&
+    SousTypeDelivrance.estSousTypeSignable(sousTypeDelivrance)
+  );
 }

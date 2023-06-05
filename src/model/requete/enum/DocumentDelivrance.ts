@@ -141,7 +141,7 @@ export class DocumentDelivrance extends EnumNomemclature {
     return EnumWithLibelle.contientEnums(DocumentDelivrance);
   }
 
-  public static getEnumForUUID(key: string): DocumentDelivrance {
+  public static getEnumForUUID(key?: string): DocumentDelivrance {
     return EnumWithLibelle.getEnumFor(key, DocumentDelivrance);
   }
 
@@ -318,7 +318,15 @@ export class DocumentDelivrance extends EnumNomemclature {
     return CodesExtraitCopieASigner.includes(code);
   }
 
-  public static estExtraitCopieAsigner(uuidTypeDocument: string): boolean {
+  public static estExtraitCopieAsignerAPartirChoixDelivrance(
+    choixDelivrance?: ChoixDelivrance
+  ): boolean {
+    const uuidTypeDocument =
+      DocumentDelivrance.getTypeDocument(choixDelivrance);
+    return DocumentDelivrance.estExtraitCopieAsigner(uuidTypeDocument);
+  }
+
+  public static estExtraitCopieAsigner(uuidTypeDocument?: string): boolean {
     const documentDelivrance =
       DocumentDelivrance.getEnumForUUID(uuidTypeDocument);
     return DocumentDelivrance.estExtraitCopieAsignerViaCode(
@@ -427,5 +435,39 @@ export class DocumentDelivrance extends EnumNomemclature {
     document: DocumentDelivrance
   ): boolean {
     return CodesRC.includes(document.code);
+  }
+
+  public static getTypeDocument(choixDelivrance?: ChoixDelivrance) {
+    let uuidTypeDocument = "";
+    switch (choixDelivrance) {
+      case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
+        uuidTypeDocument = DocumentDelivrance.getKeyForCode(
+          CODE_EXTRAIT_SANS_FILIATION
+        );
+        break;
+      case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
+        uuidTypeDocument = DocumentDelivrance.getKeyForCode(
+          CODE_EXTRAIT_AVEC_FILIATION
+        );
+        break;
+      case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
+        uuidTypeDocument = DocumentDelivrance.getKeyForCode(
+          CODE_EXTRAIT_PLURILINGUE
+        );
+        break;
+      case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
+        uuidTypeDocument =
+          DocumentDelivrance.getKeyForCode(CODE_COPIE_INTEGRALE);
+        break;
+      case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
+        uuidTypeDocument = DocumentDelivrance.getKeyForCode(
+          CODE_COPIE_NON_SIGNEE
+        );
+        break;
+      // FIXME A Complèter
+      default:
+        break;
+    }
+    return uuidTypeDocument;
   }
 }

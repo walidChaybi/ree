@@ -7,6 +7,7 @@ import {
   extraitSaisiAEnvoyer,
   requeteExtraitSaisie
 } from "@mock/data/DonneesSaisieExtrait";
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 
@@ -17,7 +18,8 @@ const params: ISauvegardeValidationSaisieExtraitParams = {
   extraitSaisiAEnvoyer,
   acte: acteExtraitSaisie,
   requete: requeteExtraitSaisie,
-  problemePlurilingue: false
+  problemePlurilingue: false,
+  valeursCourrierParDefaut: {} as SaisieCourrier
 };
 
 const HookConsumer: React.FC = () => {
