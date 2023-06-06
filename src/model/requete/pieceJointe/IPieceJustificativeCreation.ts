@@ -12,9 +12,14 @@ export interface IPieceJustificativeCreation extends IPieceJustificative {
   ordreNatali: number;
   libelle: string;
   estPieceAnnexe: boolean;
-  idActe: string;
-  documentPj: IDocumentPJ;
+  idRc?: string;
+  idRca?: string;
+  idPacs?: string;
+  idActe?: string;
+  idPersonne?: string;
+  documentPj?: IDocumentPJ;
   nouveauLibelleFichierPJ: string;
+  natureActeInscription?: string;
 }
 
 export class PieceJustificativeCreation {
@@ -63,5 +68,31 @@ export class PieceJustificativeCreation {
         (pj1, pj2) => pj1.ordreNatali - pj2.ordreNatali
       ) || []
     );
+  }
+
+  public static getIdActeInscription(
+    pieceJustificative: IPieceJustificativeCreation
+  ): string {
+    return (
+      pieceJustificative.idRc ||
+      pieceJustificative.idRca ||
+      pieceJustificative.idPacs ||
+      pieceJustificative.idActe ||
+      ""
+    );
+  }
+
+  public static getTypeActeInscription(
+    pieceJustificative: IPieceJustificativeCreation
+  ): string | undefined {
+    return pieceJustificative.idRc
+      ? "INSCRIPTION_RC"
+      : pieceJustificative.idRca
+      ? "INSCRIPTION_RCA"
+      : pieceJustificative.idPacs
+      ? "PACS"
+      : pieceJustificative.idActe
+      ? "ACTE"
+      : undefined;
   }
 }

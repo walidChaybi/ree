@@ -70,6 +70,7 @@ import {
   ReponseAppelRMCInscription4PremiersResultats
 } from "../data/RMCInscription";
 import { getTitulairesActeAPI } from "../data/Titulaire";
+import { actesInscriptionsSauvegardes } from "./../data/actesInscriptionsSauvegardes";
 
 export const NORESULT = "NORESULT";
 
@@ -420,7 +421,16 @@ export const configEtatcivil = [
         return inscriptionsRc;
       }
 
-      // Liste de personnes
+      /////////////////
+      // Projet acte //
+      /////////////////
+
+      // Actes / inscriptions sauvegardes
+      if (match[1] === "/projetacte/actesinscriptionssauvegardes") {
+        return { data: actesInscriptionsSauvegardes };
+      }
+
+      // Personnes sauvegardees
       if (match[1] === "/personne/listePersonne") {
         return [];
       }
@@ -472,23 +482,23 @@ export const configEtatcivil = [
         return { data: ReponseAppelNomenclatureTypeMention.data };
       }
 
-if (
-  match[1] ===
-  "/acte/pocopas/debutentPar?debutPocopa=t&familleRegistre=CSL&nombreResultatsMax=15&estOuvert=true"
-) {
-  return {
-    data: [
-      "TORONTO",
-      "TOURANE",
-      "TOURNAI",
-      "TOKYO",
-      "TULEAR",
-      "TUNIS",
-      "TURIN",
-      "TURIN ET GENES"
-    ]
-  };
-}
+      if (
+        match[1] ===
+        "/acte/pocopas/debutentPar?debutPocopa=t&familleRegistre=CSL&nombreResultatsMax=15&estOuvert=true"
+      ) {
+        return {
+          data: [
+            "TORONTO",
+            "TOURANE",
+            "TOURNAI",
+            "TOKYO",
+            "TULEAR",
+            "TUNIS",
+            "TURIN",
+            "TURIN ET GENES"
+          ]
+        };
+      }
 
       if (
         match[1] ===

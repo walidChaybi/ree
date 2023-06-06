@@ -1,36 +1,40 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
+import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { HeaderTableauRMCPersonne } from "@model/rmc/headerTableau/HeaderTableauRMCPersonne";
 import ReportIcon from "@mui/icons-material/Report";
 import { getDateStringFromDateCompose } from "@util/DateUtils";
 import {
   CINQ,
+  TROIS,
   enMajuscule,
   formatNoms,
   formatPrenoms,
-  getValeurOuVide,
-  TROIS
+  getValeurOuVide
 } from "@util/Utils";
-import { ICelluleBoutonMenuProps } from "@widget/tableau/TableauRece/colonneElements/boutonMenu/CelluleBoutonMenu";
-import {
-  getColonneBoutonMenu,
-  IColonneBoutonMenuParams
-} from "@widget/tableau/TableauRece/colonneElements/boutonMenu/ColonneBoutonMenu";
+import { EnumWithComplete } from "@util/enum/EnumWithComplete";
+import { IBoutonMenuItem } from "@widget/boutonMenu/BoutonMenu";
+import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
 import { TMouseEventSurHTMLButtonElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
-import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
+import { ICelluleBoutonMenuProps } from "@widget/tableau/TableauRece/colonneElements/boutonMenu/CelluleBoutonMenu";
+import {
+  IColonneBoutonMenuParams,
+  getColonneBoutonMenu
+} from "@widget/tableau/TableauRece/colonneElements/boutonMenu/ColonneBoutonMenu";
 import React from "react";
 import {
-  IActesOuInscriptionsRMCPersonne,
+  IActeInscriptionRMCPersonne,
   IPersonneRMCPersonne,
   IRMCPersonneResultat
 } from "../../../common/hook/rmcAuto/IRMCPersonneResultat";
-import { IDataTableauRMCPersonne } from "../../requeteCreation/commun/composants/ongletRMCPersonne/IDataTableauRMCPersonne";
 import { commonHeadersTableauRMC } from "../acteInscription/resultats/RMCTableauCommun";
+import { IDataTableauRMCPersonne } from "./IDataTableauRMCPersonne";
 
 export function getColonnesTableauRMCAutoPersonne<TData, TIdentifiant>(
   colonneBoutonAjouterPersonneParams: IColonneBoutonMenuParams<
@@ -44,12 +48,9 @@ export function getColonnesTableauRMCAutoPersonne<TData, TIdentifiant>(
   >,
   boutonMenuAjouterPersonneProps: ICelluleBoutonMenuProps
 ): TableauTypeColumn[] {
-  colonneBoutonAjouterPersonneParams.style = {
-    width: "3rem"
-  };
   return [
     ...getColonnesTableauPersonnes().slice(0, -1),
-    ...getColonnesTableauDocuments(),
+    ...getColonnesTableauDocuments().slice(0, -1),
     getColonneBoutonMenu(
       colonneBoutonAjouterPersonneParams,
       boutonMenuAjouterPersonneProps,
@@ -89,6 +90,11 @@ export function getColonnesTableauDocuments(): TableauTypeColumn[] {
     new TableauTypeColumn({
       keys: [HeaderTableauRMCPersonne.STATUT_OU_TYPE.nom],
       title: HeaderTableauRMCPersonne.STATUT_OU_TYPE.libelle,
+      className: "ColOverflow"
+    }),
+    new TableauTypeColumn({
+      keys: [HeaderTableauRMCPersonne.TYPE_PJ.nom],
+      title: HeaderTableauRMCPersonne.TYPE_PJ.libelle,
       className: "ColOverflow"
     })
   ];
@@ -183,8 +189,8 @@ export function mapDataTableauRMCPersonne(
   resultatRMCPersonne.forEach(resultatPersonne => {
     data.push(mapPersonneDataTableauRMCPersonne(resultatPersonne.personne));
     data.push(
-      ...mapActesOuInscriptionsLiesDataTableauRMCPersonne(
-        resultatPersonne.actesOuInscriptionsLies
+      ...mapActesInscriptionsDataTableauRMCPersonne(
+        resultatPersonne.actesInscriptions
       )
     );
   });
@@ -195,35 +201,61 @@ export function mapPersonneDataTableauRMCPersonne(
   personne: IPersonneRMCPersonne
 ): IDataTableauRMCPersonne {
   return {
-    idPersonne: personne.idPersonne,
+    idPersonneOuActeInscription: personne.idPersonne,
+    estDataPersonne: true,
     nom: personne.nom,
-    autresNoms: formatNoms(personne.autresNoms),
-    prenoms: formatPrenoms(personne.prenoms.slice(0, TROIS)),
     dateNaissance: personne.dateNaissance,
     lieuNaissance: personne.lieuNaissance,
-    sexe: personne.sexe.libelle.charAt(0),
-    idActeOuInscription: "",
+    ...formatDataTableauPersonne(personne),
     nature: "",
     statut: "",
     reference: "",
-    categorieRepertoire: undefined,
     statutOuType: ""
   };
 }
 
-export function mapActesOuInscriptionsLiesDataTableauRMCPersonne(
-  actesOuInscriptionsLies: IActesOuInscriptionsRMCPersonne[]
+export function formatDataTableauPersonne(personne: IPersonneRMCPersonne) {
+  return {
+    autresNoms: formatNoms(personne.autresNoms),
+    prenoms: formatPrenoms(personne.prenoms.slice(0, TROIS)),
+    sexe: personne.sexe.libelle.charAt(0)
+  };
+}
+
+export function mapActesInscriptionsDataTableauRMCPersonne(
+  actesInscriptions: IActeInscriptionRMCPersonne[]
 ): IDataTableauRMCPersonne[] {
-  return actesOuInscriptionsLies.map(aoiLies => ({
-    ...aoiLies,
-    idPersonne: "",
+  return actesInscriptions.map(acteInscription => ({
+    idPersonneOuActeInscription: acteInscription.idActeInscription,
+    estDataPersonne: false,
+    nature: acteInscription.nature,
+    statut: acteInscription.statut,
+    reference: acteInscription.reference,
+    typeFiche: acteInscription.typeFiche,
+    statutOuType: acteInscription.statutOuType,
     nom: "",
     autresNoms: "",
     prenoms: "",
     dateNaissance: "",
     lieuNaissance: "",
-    categorieRepertoire: aoiLies.categorieRepertoire,
     sexe: "",
     role: ""
   }));
+}
+
+export function getIdentifiantPersonneOuActeInscription(
+  data: IDataTableauRMCPersonne
+): string {
+  return data.idPersonneOuActeInscription;
+}
+
+export function getRolesPersonneEnFonctionNatureActeRequeteAsListeBoutonMenuItem(
+  natureActeRequete: NatureActeRequete
+): IBoutonMenuItem[] {
+  return EnumWithComplete.getListeBoutonMenuItemFromListeKeys(
+    RolePersonneSauvegardee.filtreRolesPersonnesSauvegardeesEnFonctionNatureActeRequete(
+      natureActeRequete
+    ).map(value => value.nom),
+    RolePersonneSauvegardee
+  );
 }

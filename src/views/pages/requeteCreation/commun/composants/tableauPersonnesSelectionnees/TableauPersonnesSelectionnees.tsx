@@ -4,24 +4,23 @@ import {
   getLigneTableauVide
 } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
 import { getLibelle } from "@util/Utils";
-import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
-import { ICelluleFontAwesomeIconeProps } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/CelluleFontAwesomeIcone";
-import {
-  getColonneFontAwesomeIcone,
-  IColonneFontAwesomeIcone
-} from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/ColonneFontAwesomeIcone";
-import { TMouseEventSurSVGSVGElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import {
   NB_LIGNES_PAR_APPEL_PERSONNE,
   NB_LIGNES_PAR_PAGE_PERSONNE
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
+import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
+import { TMouseEventSurSVGSVGElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
+import { ICelluleFontAwesomeIconeProps } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/CelluleFontAwesomeIcone";
+import {
+  IColonneFontAwesomeIcone,
+  getColonneFontAwesomeIcone
+} from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/ColonneFontAwesomeIcone";
 import React from "react";
-import { IDataTableauPersonneSelectionnee } from "./DataTableauPersonneSauvegardeeHook";
+import { IDataTableauPersonneSelectionnee } from "./IDataTableauPersonneSelectionne";
 
 interface ITableauPersonnesSelectionneesProps {
-  getIdentifiantPersonne: (data: IDataTableauPersonneSelectionnee) => string;
   dataPersonnesSelectionnees: IDataTableauPersonneSelectionnee[];
   onClickBoutonRetirerPersonne: (
     event: TMouseEventSurSVGSVGElement,
@@ -38,7 +37,7 @@ export const TableauPersonnesSelectionnees: React.FC<
     IDataTableauPersonneSelectionnee,
     string
   > = {
-    getIdentifiant: props.getIdentifiantPersonne,
+    getIdentifiant: data => data.idPersonne,
     style: {
       width: "3rem"
     }

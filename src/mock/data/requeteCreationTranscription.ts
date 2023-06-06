@@ -18,122 +18,6 @@ export const requeteCreationTranscription = {
   ],
   titulaires: [
     {
-      id: "3ed9efe4-c196-4888-8ffe-938f37a5f73f",
-      position: 3,
-      nomNaissance: "nomNaissance",
-      nomUsage: "nomUsage",
-      anneeNaissance: 2000,
-      moisNaissance: 2,
-      jourNaissance: 1,
-      villeNaissance: "villeNaissance",
-      codePostalNaissance: "codePostalNaissance",
-      arrondissementNaissance: "arrondissementNaissance",
-      villeEtrangereNaissance: "villeEtrangereNaissance",
-      regionNaissance: "regionNaissance",
-      paysNaissance: "paysNaissance",
-      sexe: "MASCULIN",
-      nationalite: "FRANCAISE",
-      prenoms: [
-        {
-          id: "3ed9b068-0bd6-4238-a1a0-eebf314f0f2b",
-          numeroOrdre: 1,
-          prenom: "prenom",
-          estPrenomFrRetenuSdanf: null
-        }
-      ],
-      parentsTitulaire: [
-        {
-          id: "3ed998db-c315-4c4a-91d7-91a4d96d15ca",
-          position: 1,
-          nomNaissance: "nomNaissance",
-          prenoms: [
-            {
-              id: "3ed94f2b-5cfe-4f49-ab33-1d3e4be2fc8e",
-              numeroOrdre: 1,
-              prenom: "prenom",
-              estPrenomFrRetenuSdanf: null
-            }
-          ]
-        }
-      ],
-      deces: {
-        id: "3ed93fb2-693e-4e2b-af82-5977e02962b2",
-        jour: 1,
-        mois: 2,
-        annee: 2000,
-        ville: "ville",
-        arrondissement: "arrondissement",
-        region: "region",
-        pays: "pays"
-      },
-      domiciliation: {
-        id: "3ed9df35-de02-4930-a4e0-6bbd1163aac1",
-        ligne2: "ligne2",
-        ligne3: "ligne3",
-        ligne4: "ligne4",
-        ligne5: "ligne5",
-        codePostal: "codePostal",
-        ville: "ville",
-        villeEtrangere: "villeEtrangere",
-        arrondissement: "arrondissement",
-        region: "region",
-        pays: "pays"
-      },
-      evenementUnions: [],
-      typeObjetTitulaire: "TITULAIRE_ACTE_TRANSCRIT_DRESSE",
-      nomDemandeFrancisation: "nomDemandeFrancisation",
-      nomDemandeIdentification: "nomDemandeIdentification",
-      nomSecable: true,
-      nomPremierePartie: "nomPremierePartie",
-      nomSecondePartie: "nomSecondePartie",
-      courriel: "courriel",
-      telephone: "telephone",
-      situationFamilliale: "CELIBATAIRE",
-      nationalites: [
-        {
-          id: "3ed9cf6f-137c-4193-87ea-901373a5e75e",
-          nationalite: "nationalite"
-        }
-      ],
-      prenomsDemande: [
-        {
-          id: "3ed90039-998d-4597-a4f7-a11423a68a46",
-          numeroOrdre: 1,
-          prenom: "prenom",
-          estPrenomFrRetenuSdanf: null
-        }
-      ],
-      lienEtatCivil: [],
-      retenueSdanf: {
-        id: "3ed91e46-24ce-46ae-b366-665bfddae946",
-        nomNaissance: "nomNaissance",
-        nomUsage: "nomUsage",
-        nomActuel: "nomActuel",
-        nomDemandeFrancisation: null,
-        nomDemandeIdentification: null,
-        jourNaissance: 1,
-        moisNaissance: 2,
-        anneeNaissance: 2000,
-        codePostalNaissance: "codePostalNaissance",
-        villeNaissance: "villeNaissance",
-        villeEtrangereNaissance: "villeEtrangereNaissance",
-        arrondissementNaissance: "arrondissementNaissance",
-        regionNaissance: "regionNaissance",
-        paysNaissance: "paysNaissance",
-        prenomsRetenu: [
-          {
-            id: "3ed9afff-6da3-489b-bc06-be897bdfe279",
-            numeroOrdre: 1,
-            prenom: "prenom",
-            estPrenomFrRetenuSdanf: null
-          }
-        ]
-      },
-      nomEtrangerUtilise: true,
-      nomEtranger: "nomEtranger",
-      choixDeNom: "NOM_PERE"
-    },
-    {
       id: "3ed943e2-daa0-45c0-befd-b5f6b69c31d8",
       position: 1,
       nomNaissance: "dupont",
@@ -196,7 +80,7 @@ export const requeteCreationTranscription = {
         pays: "pays"
       },
       evenementUnions: [],
-      typeObjetTitulaire: "POSTULANT_NATIONALITE",
+      typeObjetTitulaire: "TITULAIRE_ACTE_TRANSCRIT_DRESSE",
       nomDemandeFrancisation: "nomDemandeFrancisation",
       nomDemandeIdentification: "nomDemandeIdentification",
       nomSecable: true,
@@ -444,6 +328,46 @@ export const requeteCreationTranscription = {
         categorie: "PIECE_IDENTITE",
         piecesJustificatives: null
       }
+    },
+    {
+      id: "29a284f4-5af0-4d3a-852c-8d2af38e0811",
+      nom: "acteNaissance",
+      mimeType: "application/pdf",
+      extension: null,
+      taille: 0,
+      referenceSwift: "acteNaissance.pdf",
+      conteneurSwift: "pieces_justificatives",
+      contenu: null,
+      typePieceJustificative: "6c95641f-59fe-4155-a6ba-8b42433c04ec",
+      typeObjetPj: "CREATION",
+      idFichierNatali: null,
+      ordreNatali: 1,
+      estPieceAnnexe: true,
+      idPersonne: "e7114c50-d00d-48ad-bbee-af2b01e2da8e",
+      idActe: "c8cbe885-fbd7-4d35-af99-10c827b0238b",
+      idRc: null,
+      idRca: null,
+      idPacs: null
+    },
+    {
+      id: "f574212d-4a7a-499e-a190-396d49bf1948",
+      nom: "inscriptionRc",
+      mimeType: "application/pdf",
+      extension: null,
+      taille: 0,
+      referenceSwift: "inscription.pdf",
+      conteneurSwift: "pieces_justificatives",
+      contenu: null,
+      typePieceJustificative: "93e4f39b-0fc5-47f4-8434-2d362f897987",
+      typeObjetPj: "CREATION",
+      idFichierNatali: null,
+      ordreNatali: 1,
+      estPieceAnnexe: true,
+      idPersonne: "74a7e873-a06f-4a3c-9abc-8d50b59343ba",
+      idActe: null,
+      idRc: "747cd416-fcf5-4490-b540-59a89b7f5123",
+      idRca: null,
+      idPacs: null
     }
   ],
   requerant: {
@@ -491,7 +415,7 @@ export const requeteCreationTranscription = {
   doublons: [],
   origines: null,
   numeroRequeteOrigine: null,
-  sousType: "RCEXR",
+  sousType: "RCTC",
   numeroAncienSI: "numeroAncienSI",
   natureActeTranscrit: "NAISSANCE_MINEUR",
   dossierSignale: true,

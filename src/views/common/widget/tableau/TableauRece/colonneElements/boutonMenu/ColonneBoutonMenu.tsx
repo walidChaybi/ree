@@ -24,7 +24,7 @@ export function getColonneBoutonMenu<
   TEvenement extends TMouseEventSurHTMLButtonElement
 >(
   colonneBoutonMenuParams: IColonneBoutonMenuParams<TData, TIdentifiant>,
-  boutonMenuProps: ICelluleBoutonMenuProps,
+  boutonMenuProps?: ICelluleBoutonMenuProps,
   conteneurPropsPartielles?: IConteneurElementPropsPartielles<
     TData,
     TIdentifiant,
@@ -36,7 +36,7 @@ export function getColonneBoutonMenu<
     IConteneurElementPropsPartielles<TData, TIdentifiant, TEvenement>,
     (data: TData) => TIdentifiant,
     (data: TData) => boolean,
-    React.ReactElement<ICelluleBoutonMenuProps>,
+    (data: TData) => React.ReactElement<ICelluleBoutonMenuProps>,
     [TData],
     JSX.Element
   >(
@@ -44,10 +44,14 @@ export function getColonneBoutonMenu<
     { ...conteneurPropsPartielles },
     colonneBoutonMenuParams.getIdentifiant,
     colonneBoutonMenuParams.filtreAffichageElement ?? ((data: TData) => true),
-    <CelluleBoutonMenu<TData, TIdentifiant>
-      {...boutonMenuProps}
-      className="colonne-bouton-menu"
-    />
+    colonneBoutonMenuParams.getElement ??
+      ((data: TData) => (
+        <CelluleBoutonMenu<TData, TIdentifiant>
+          boutonLibelle=""
+          listeItems={[]}
+          {...boutonMenuProps}
+        />
+      ))
   );
 
   return new TableauTypeColumn({

@@ -27,6 +27,7 @@ export const BoutonMenu: React.FC<IBoutonMenuProps> = props => {
   const [menu, setMenu] = React.useState<null | HTMLElement>(null);
 
   const handleOpenMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     setMenu(e.currentTarget);
   };
 

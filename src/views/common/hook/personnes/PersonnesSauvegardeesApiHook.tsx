@@ -16,26 +16,22 @@ export function usePersonnesSauvegardeesApiHook(
   const [resultat, setResultat] = useState<IPersonneSauvegardeeDto[]>();
 
   useEffect(() => {
-    if (params) {
-      if (params.idPersonnes.length > 0) {
-        getPersonnesSauvegardees(params.idPersonnes)
-          .then((result: any) => {
-            setResultat(
-              result.body.map((data: any) =>
-                PersonneSauvegardeeDto.mapping(data)
-              )
-            );
-          })
-          .catch((error: any) => {
-            logError({
-              messageUtilisateur:
-                "Impossible de récupérer les données des personnes sauvegardées.",
-              error
-            });
+    if (params && params.idPersonnes.length > 0) {
+      getPersonnesSauvegardees(params.idPersonnes)
+        .then((result: any) => {
+          setResultat(
+            result.body.map((data: any) => PersonneSauvegardeeDto.mapping(data))
+          );
+        })
+        .catch((error: any) => {
+          logError({
+            messageUtilisateur:
+              "Impossible de récupérer les données des personnes sauvegardées.",
+            error
           });
-      } else {
-        setResultat([]);
-      }
+        });
+    } else {
+      setResultat([]);
     }
   }, [params]);
 

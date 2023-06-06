@@ -1,22 +1,17 @@
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
-import {
-  IRMCAutoPersonneParams,
-  useRMCAutoPersonneApiAvecCacheHook
-} from "@hook/rmcAuto/RMCAutoPersonneApiHook";
-import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import {
   IRequeteCreationEtablissement,
   RequeteCreationEtablissement
 } from "@model/requete/IRequeteCreationEtablissement";
-import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
-import Labels from "@pages/requeteCreation/commun/Labels";
-import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
+import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
+import Labels from "../../commun/Labels";
+import { OngletPiecesJustificatives } from "../../commun/composants/OngletPiecesJustificatives";
 import "../../commun/scss/ApercuReqCreationPage.scss";
 import { OngletsApercuCreationEtablissement } from "./composants/OngletsApercuCreationEtablissement";
 import ResumeRequeteCreation from "./composants/ResumeRequeteCreation";
@@ -25,6 +20,7 @@ import mappingIRequeteCreationVersResumeRequeteCreationProps from "./mappingIReq
 interface ApeApercuReqCreationEtablissementPageProps {
   idRequeteAAfficher?: string;
 }
+
 export const ApercuReqCreationEtablissementPage: React.FC<
   ApeApercuReqCreationEtablissementPageProps
 > = props => {
@@ -34,42 +30,27 @@ export const ApercuReqCreationEtablissementPage: React.FC<
 
   // States
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
-  const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
-    useState<IRMCAutoPersonneParams>();
-  const [tableauRMCPersonneEnChargement, setTableauRMCPersonneEnChargement] =
-    useState<boolean>(true);
+
   // Hooks
   const { detailRequeteState } = useDetailRequeteApiHook(
     props.idRequeteAAfficher ?? idRequeteParam,
     history.location.pathname.includes(URL_RECHERCHE_REQUETE)
   );
-  const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(
-    rmcAutoPersonneParams
-  );
+  const {
+    dataPersonnesSelectionnees,
+    setDataPersonnesSelectionnees,
+    dataActesInscriptionsSelectionnes,
+    setDataActesInscriptionsSelectionnes,
+    setRmcAutoPersonneParams,
+    resultatRMCAutoPersonne,
+    rmcAutoPersonneEnChargement
+  } = useDataTableauxOngletRMCPersonne(requete);
 
   useEffect(() => {
     if (detailRequeteState) {
       setRequete(detailRequeteState as IRequeteCreationEtablissement);
     }
   }, [detailRequeteState]);
-
-  useEffect(() => {
-    if (requete) {
-      const titulaire =
-        getPostulantNationaliteOuTitulaireActeTranscritDresse(requete);
-      if (titulaire) {
-        setRmcAutoPersonneParams(
-          mapTitulaireVersRMCAutoPersonneParams(titulaire)
-        );
-      }
-    }
-  }, [requete]);
-
-  useEffect(() => {
-    if (resultatRMCAutoPersonne) {
-      setTableauRMCPersonneEnChargement(false);
-    }
-  }, [resultatRMCAutoPersonne]);
 
   function onRenommePieceJustificative(
     idPieceJustificative: string,
@@ -84,18 +65,6 @@ export const ApercuReqCreationEtablissementPage: React.FC<
     if (pjARenommer) {
       pjARenommer.libelle = nouveauLibelle;
       setRequete({ ...requete } as IRequeteCreationEtablissement);
-    }
-  }
-
-  function handleClickSelectionTitulaireRmcPersonne(idTitulaire: string) {
-    const titulaire = requete?.titulaires
-      ?.filter(titulaireCourant => titulaireCourant.id === idTitulaire)
-      .pop();
-    if (titulaire) {
-      setTableauRMCPersonneEnChargement(true);
-      setRmcAutoPersonneParams(
-        mapTitulaireVersRMCAutoPersonneParams(titulaire)
-      );
     }
   }
 
@@ -121,10 +90,16 @@ export const ApercuReqCreationEtablissementPage: React.FC<
             modeConsultation={props.idRequeteAAfficher !== undefined}
             onRenommePieceJustificative={onRenommePieceJustificative}
             resultatRMCPersonne={resultatRMCAutoPersonne ?? []}
-            handleClickSelectionTitulaireRmcPersonne={
-              handleClickSelectionTitulaireRmcPersonne
+            dataPersonnesSelectionnees={dataPersonnesSelectionnees}
+            setDataPersonnesSelectionnees={setDataPersonnesSelectionnees}
+            dataActesInscriptionsSelectionnes={
+              dataActesInscriptionsSelectionnes
             }
-            tableauRMCPersonneEnChargement={tableauRMCPersonneEnChargement}
+            setDataActesInscriptionsSelectionnes={
+              setDataActesInscriptionsSelectionnes
+            }
+            tableauRMCPersonneEnChargement={rmcAutoPersonneEnChargement}
+            setRmcAutoPersonneParams={setRmcAutoPersonneParams}
           />
 
           <ConteneurRetractable

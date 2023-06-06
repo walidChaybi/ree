@@ -16,10 +16,6 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router";
 
-
-
-
-
 const history = createMemoryHistory();
 
 describe("Test de la page Aperçu requête transcription en prise en charge", () => {

@@ -1,0 +1,148 @@
+import { useActesInscriptionsSauvegardesApiHook } from "@hook/acte/ActesInscriptionsSauvegardesApiHook";
+import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
+import { ZERO, getValeurOuUndefined } from "@util/Utils";
+import messageManager from "@util/messageManager";
+import React, { useEffect, useState } from "react";
+import {
+  ActeInscriptionSauvegardeDto,
+  IActeInscriptionSauvegardeDto
+} from "../../../../../../../dto/etatcivil/acte/actesInscriptionsSauvegardes/IActeInscriptionSauvegardeDto";
+import { IDataTableauActeInscriptionSelectionne } from "../IDataTableauActeInscriptionSelectionne";
+
+interface IDataTableauActesInscriptionsSelectionnesHook {
+  dataActesInscriptionsSelectionnes?: IDataTableauActeInscriptionSelectionne[];
+  setDataActesInscriptionsSelectionnes: React.Dispatch<
+    React.SetStateAction<IDataTableauActeInscriptionSelectionne[] | undefined>
+  >;
+}
+
+export function useDataTableauActesInscriptionsSelectionnesHook(
+  piecesJustificatives?: IPieceJustificativeCreation[]
+): IDataTableauActesInscriptionsSelectionnesHook {
+  const [
+    piecesJustificativesActesInscriptions,
+    setPiecesJustificativesActesInscriptions
+  ] = useState<IPieceJustificativeCreation[]>([]);
+  const [
+    dataActesInscriptionsSelectionnes,
+    setDataActesInscriptionsSelectionnes
+  ] = useState<IDataTableauActeInscriptionSelectionne[]>();
+  const [
+    actesInscriptionsSauvegardesParams,
+    setActesInscriptionsSauvegardesParams
+  ] = useState<IActeInscriptionSauvegardeDto[]>();
+  const resultatActesInscriptionsSauvegardes =
+    useActesInscriptionsSauvegardesApiHook(actesInscriptionsSauvegardesParams);
+
+  useEffect(() => {
+    const pieces = piecesJustificatives?.filter(piece =>
+      estActeInscriptionSauvegarde(piece)
+    );
+    if (pieces?.length) {
+      setPiecesJustificativesActesInscriptions(pieces);
+    }
+  }, [piecesJustificatives]);
+
+  useEffect(() => {
+    if (piecesJustificativesActesInscriptions.length) {
+      setActesInscriptionsSauvegardesParams(
+        ActeInscriptionSauvegardeDto.mapParamsGetActesInscriptionsSauvegardes(
+          piecesJustificativesActesInscriptions
+        )
+      );
+    }
+  }, [piecesJustificativesActesInscriptions]);
+
+  useEffect(() => {
+    if (resultatActesInscriptionsSauvegardes) {
+      if (actesInscriptionsSauvegardesParams) {
+        const data: IDataTableauActeInscriptionSelectionne[] = [
+          ...resultatActesInscriptionsSauvegardes.map(resultatCourant =>
+            mapDataTableauActeInscriptionSelectionne(
+              resultatCourant,
+              piecesJustificativesActesInscriptions
+            )
+          )
+        ];
+        setDataActesInscriptionsSelectionnes(data);
+
+        if (
+          auMoinsUnParametreActeInscriptionSauvegardeManque(
+            actesInscriptionsSauvegardesParams,
+            resultatActesInscriptionsSauvegardes
+          )
+        ) {
+          messageManager.showWarningAndClose(
+            "Au moins une des lignes du tableau des actes et des inscriptions sauvegardés pour le projet n'a pu être retrouvée suite à une modification de l'élément correspondant."
+          );
+        }
+      } else {
+        setDataActesInscriptionsSelectionnes([]);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultatActesInscriptionsSauvegardes]);
+
+  return {
+    dataActesInscriptionsSelectionnes,
+    setDataActesInscriptionsSelectionnes
+  };
+}
+
+function mapDataTableauActeInscriptionSelectionne(
+  data: IActeInscriptionSauvegardeDto,
+  piecesActesInscriptionsSauvegardees: IPieceJustificativeCreation[]
+): IDataTableauActeInscriptionSelectionne {
+  return {
+    idActeInscription: getValeurOuUndefined(data.idActeOuInscription),
+    nature: getValeurOuUndefined(data.nature),
+    reference: getValeurOuUndefined(data.reference),
+    typePJ: piecesActesInscriptionsSauvegardees.find(
+      piece =>
+        getIdActeInscriptionFromPieceJustificativeCreation(piece) ===
+        data.idActeOuInscription
+    )?.typePieceJustificative.libelle,
+    nom: getValeurOuUndefined(data.personne.nom),
+    autresNoms: getValeurOuUndefined(data.personne.autresNoms),
+    prenoms: getValeurOuUndefined(data.personne.prenoms),
+    dateNaissance: getValeurOuUndefined(data.personne.dateNaissance),
+    lieuNaissance: getValeurOuUndefined(data.personne.lieuNaissance),
+    sexe: getValeurOuUndefined(data.personne.sexe).libelle.charAt(0)
+  };
+}
+
+function estActeInscriptionSauvegarde(
+  pieceJustificative: IPieceJustificativeCreation
+): boolean | undefined {
+  return (
+    Boolean(pieceJustificative.idPersonne) &&
+    Boolean(
+      pieceJustificative.idRc ||
+        pieceJustificative.idRca ||
+        pieceJustificative.idPacs ||
+        pieceJustificative.idActe
+    )
+  );
+}
+
+function getIdActeInscriptionFromPieceJustificativeCreation(
+  piece: IPieceJustificativeCreation
+): string | undefined {
+  return piece.idActe ?? piece.idRc ?? piece.idRca ?? piece.idPacs;
+}
+
+function auMoinsUnParametreActeInscriptionSauvegardeManque(
+  params: IActeInscriptionSauvegardeDto[],
+  resultats: IActeInscriptionSauvegardeDto[]
+): boolean {
+  return (
+    params?.length > ZERO &&
+    !params?.some(acteInscriptionParam =>
+      resultats.some(
+        resultat =>
+          resultat.idActeOuInscription ===
+          acteInscriptionParam.idActeOuInscription
+      )
+    )
+  );
+}

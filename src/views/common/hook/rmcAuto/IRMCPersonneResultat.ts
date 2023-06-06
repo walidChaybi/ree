@@ -1,10 +1,9 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";
 
 export interface IRMCPersonneResultat {
   personne: IPersonneRMCPersonne;
-  actesOuInscriptionsLies: IActesOuInscriptionsRMCPersonne[];
+  actesInscriptions: IActeInscriptionRMCPersonne[];
 }
 
 export interface IPersonneRMCPersonne {
@@ -15,14 +14,13 @@ export interface IPersonneRMCPersonne {
   dateNaissance: string;
   lieuNaissance: string;
   sexe: Sexe;
-  role?: RolePersonneSauvegardee;
 }
 
-export interface IActesOuInscriptionsRMCPersonne {
-  idActeOuInscription: string;
+export interface IActeInscriptionRMCPersonne {
+  idActeInscription: string;
   nature: string;
   statut: string;
   reference: string;
-  categorieRepertoire?: TypeFiche;
+  typeFiche: TypeFiche;
   statutOuType: string;
 }

@@ -1,24 +1,32 @@
 import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
+import { IRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
+import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { TypeActeInscriptionSauvegarde } from "@model/requete/enum/TypeActeInscriptionSauvegarde";
+import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
 import { TableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonne";
-import {
-  getLibelleMenuItemPersonne,
-  mapDataTableauRMCPersonne
-} from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
-import { IDataTableauRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/IDataTableauRMCPersonne";
+import { mapDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
 import { getLibelle } from "@util/Utils";
-import { BoutonMenu, IBoutonMenuItem } from "@widget/boutonMenu/BoutonMenu";
+import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import {
   TMouseEventSurHTMLButtonElement,
   TMouseEventSurSVGSVGElement
 } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import React from "react";
-import { IDataTableauPersonneSelectionnee } from "./DataTableauPersonneSauvegardeeHook";
+import { IDataTableauActeInscriptionSelectionne } from "../tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
+import { TableauActesInscriptionsSelectionnes } from "../tableauActesInscriptionsSelectionnes/TableauActesInscriptionsSelectionnes";
+import { IDataTableauPersonneSelectionnee } from "../tableauPersonnesSelectionnees/IDataTableauPersonneSelectionne";
+import { TableauPersonnesSelectionnees } from "../tableauPersonnesSelectionnees/TableauPersonnesSelectionnees";
+import {
+  getTitulairesAsListeBoutonMenuItem,
+  mapDataTableauRMCPersonneVersDataTableauActeInscriptionSelectionne,
+  mapDataTableauRMCPersonneVersDataTableauPersonneSelectionnee,
+  triDataTableauPersonneSelectionneeSurNomPrenom
+} from "./OngletRMCPersonneUtils";
 import "./scss/OngletRMCPersonne.scss";
-import { TableauPersonnesSelectionnees } from "./TableauPersonnesSauvegardees";
 
 interface OngletRMCPersonneProps {
   sousTypeRequete: SousTypeCreation;
@@ -29,30 +37,31 @@ interface OngletRMCPersonneProps {
   setDataPersonnesSelectionnees: React.Dispatch<
     React.SetStateAction<IDataTableauPersonneSelectionnee[] | undefined>
   >;
-  handleClickMenuItem: (idTitulaire: string) => void;
+  dataActesInscriptionsSelectionnes: IDataTableauActeInscriptionSelectionne[];
+  setDataActesInscriptionsSelectionnes: React.Dispatch<
+    React.SetStateAction<IDataTableauActeInscriptionSelectionne[] | undefined>
+  >;
   tableauRMCPersonneEnChargement: boolean;
-  tableauPersonnesSelectionnesEnChargement: boolean;
+  tableauPersonnesSelectionneesEnChargement: boolean;
+  tableauActesInscriptionsSelectionnesEnChargement: boolean;
+  setRmcAutoPersonneParams: React.Dispatch<
+    React.SetStateAction<IRMCAutoPersonneParams | undefined>
+  >;
 }
 
 export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
-  function getIdentifiantPersonne(
-    data: IDataTableauPersonneSelectionnee | IDataTableauRMCPersonne
-  ): string {
-    return data.idPersonne;
-  }
-
-  function onClickBoutonAjouterPersonne(
+  function onClickBoutonAjouterPersonneOuActeInscription(
     event: TMouseEventSurHTMLButtonElement,
-    data: IDataTableauRMCPersonne,
+    ligneTableau: IDataTableauRMCPersonne,
     cle?: string | undefined
   ): void {
-    if (
-      cle &&
-      !identifiantEstDejaSelectionne(
-        props.dataPersonnesSelectionnees,
-        data.idPersonne
-      )
-    ) {
+    const estDejaSelectionne = identifiantEstDejaSelectionne(
+      ligneTableau.idPersonneOuActeInscription,
+      ligneTableau.estDataPersonne,
+      props.dataActesInscriptionsSelectionnes,
+      props.dataPersonnesSelectionnees
+    );
+    if (cle && !estDejaSelectionne && ligneTableau.estDataPersonne) {
       const role: RolePersonneSauvegardee | undefined =
         RolePersonneSauvegardee.getEnumFor(
           RolePersonneSauvegardee.getKeyForNom(cle)
@@ -60,30 +69,64 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
       props.setDataPersonnesSelectionnees(
         [
           ...props.dataPersonnesSelectionnees,
-          { ...data, role: role.libelle }
+          {
+            ...mapDataTableauRMCPersonneVersDataTableauPersonneSelectionnee(
+              ligneTableau
+            ),
+            role: role.libelle
+          }
         ].sort(triDataTableauPersonneSelectionneeSurNomPrenom)
       );
+    } else if (cle && !estDejaSelectionne && !ligneTableau.estDataPersonne) {
+      const typePJ: TypeActeInscriptionSauvegarde | undefined =
+        TypeActeInscriptionSauvegarde.getEnumFor(
+          TypeActeInscriptionSauvegarde.getKeyForNom(cle)
+        );
+      props.setDataActesInscriptionsSelectionnes([
+        ...props.dataActesInscriptionsSelectionnes,
+        {
+          ...mapDataTableauRMCPersonneVersDataTableauActeInscriptionSelectionne(
+            ligneTableau,
+            props.resultatRMCPersonne
+          ),
+          typePJ: typePJ.libelle
+        }
+      ]);
     }
   }
 
   function onClickBoutonRetirerPersonne(
     event: TMouseEventSurSVGSVGElement,
-    data: IDataTableauPersonneSelectionnee
+    ligneTableau: IDataTableauPersonneSelectionnee
   ): void {
     props.setDataPersonnesSelectionnees(
       props.dataPersonnesSelectionnees.filter(
-        personne => personne.idPersonne !== getIdentifiantPersonne(data)
+        personne => personne.idPersonne !== ligneTableau.idPersonne
       )
     );
   }
 
-  function getListeItemsPersonnes(): IBoutonMenuItem[] {
-    return props.listeTitulaires
-      ? props.listeTitulaires.map(titulaire => ({
-          key: titulaire.id,
-          libelle: getLibelleMenuItemPersonne(titulaire, props.sousTypeRequete)
-        }))
-      : [];
+  function onClickBoutonRetirerActeInscription(
+    event: TMouseEventSurSVGSVGElement,
+    ligneTableau: IDataTableauActeInscriptionSelectionne
+  ): void {
+    props.setDataActesInscriptionsSelectionnes(
+      props.dataActesInscriptionsSelectionnes.filter(
+        acteInscription =>
+          acteInscription.idActeInscription !== ligneTableau.idActeInscription
+      )
+    );
+  }
+
+  function handleClickMenuItemRMCPersonneRequete(idTitulaire: string) {
+    const titulaire = props.listeTitulaires
+      ?.filter(titulaireCourant => titulaireCourant.id === idTitulaire)
+      .pop();
+    if (titulaire) {
+      props.setRmcAutoPersonneParams(
+        mapTitulaireVersRMCAutoPersonneParams(titulaire)
+      );
+    }
   }
 
   return (
@@ -95,47 +138,53 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
         identifiantsPersonnesSelectionnees={props.dataPersonnesSelectionnees.map(
           personne => personne.idPersonne
         )}
-        getIdentifiantPersonne={getIdentifiantPersonne}
+        identifiantsActesInscriptionsSelectionnes={props.dataActesInscriptionsSelectionnes.map(
+          acteInscription => acteInscription.idActeInscription
+        )}
         natureActeRequete={props.natureActeRequete}
-        onClickBoutonAjouterPersonne={onClickBoutonAjouterPersonne}
         enChargement={props.tableauRMCPersonneEnChargement}
+        onClickBoutonAjouterPersonneOuActeInscription={
+          onClickBoutonAjouterPersonneOuActeInscription
+        }
       />
       <BoutonMenu
         boutonLibelle={getLibelle("Rechercher sur une personne de la requête")}
-        listeItems={getListeItemsPersonnes()}
-        onClickMenuItem={e => props.handleClickMenuItem(e)}
+        listeItems={getTitulairesAsListeBoutonMenuItem(
+          props.sousTypeRequete,
+          props.listeTitulaires
+        )}
+        onClickMenuItem={e => handleClickMenuItemRMCPersonneRequete(e)}
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       />
       <TableauPersonnesSelectionnees
         dataPersonnesSelectionnees={props.dataPersonnesSelectionnees}
-        getIdentifiantPersonne={getIdentifiantPersonne}
         onClickBoutonRetirerPersonne={onClickBoutonRetirerPersonne}
-        enChargement={props.tableauPersonnesSelectionnesEnChargement}
+        enChargement={props.tableauPersonnesSelectionneesEnChargement}
+      />
+      <TableauActesInscriptionsSelectionnes
+        dataActesInscriptionsSelectionnes={
+          props.dataActesInscriptionsSelectionnes
+        }
+        onClickBoutonRetirerActeInscription={
+          onClickBoutonRetirerActeInscription
+        }
+        enChargement={props.tableauPersonnesSelectionneesEnChargement}
       />
     </>
   );
 };
 
-function triDataTableauPersonneSelectionneeSurNomPrenom(
-  personne1: IDataTableauPersonneSelectionnee,
-  personne2: IDataTableauPersonneSelectionnee
-): number {
-  let compareNom = 0;
-  let comparePrenoms = 0;
-  if (personne1.nom && personne2.nom) {
-    compareNom = personne1.nom.localeCompare(personne2.nom);
-  }
-  if (personne1.prenoms && personne2.prenoms) {
-    comparePrenoms = personne1.prenoms.localeCompare(personne2.prenoms);
-  }
-  return compareNom || comparePrenoms;
-} 
-
 function identifiantEstDejaSelectionne(
-  dataPersonnesSelectionnees: IDataTableauPersonneSelectionnee[],
-  idPersonne: string
+  identifiant: string,
+  estDataPersonne: boolean,
+  dataActesInscriptionsSelectionnes: IDataTableauActeInscriptionSelectionne[],
+  dataPersonnesSelectionnees: IDataTableauPersonneSelectionnee[]
 ): boolean {
-  return dataPersonnesSelectionnees.some(
-    personneSelectionnee => personneSelectionnee.idPersonne === idPersonne
-  );
+  return estDataPersonne
+    ? dataPersonnesSelectionnees.some(
+        personne => personne.idPersonne === identifiant
+      )
+    : dataActesInscriptionsSelectionnes.some(
+        acteInscription => acteInscription.idActeInscription === identifiant
+      );
 }

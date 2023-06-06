@@ -11,6 +11,7 @@ export interface IBaseColonneElementsParams<TData, TIdentifiant> {
   >;
   getIdentifiant: (data: TData) => TIdentifiant;
   filtreAffichageElement?: (data: TData) => boolean;
+  getElement?: (data: TData) => JSX.Element;
   contientHeader?: boolean;
   style?: React.CSSProperties;
 }

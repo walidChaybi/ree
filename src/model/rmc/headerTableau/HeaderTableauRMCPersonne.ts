@@ -15,4 +15,8 @@ export class HeaderTableauRMCPersonne extends EnumWithComplete {
     "Statut / Type"
   );
   public static readonly ROLE = new HeaderTableauRMCPersonne("role", "Rôle");
+  public static readonly TYPE_PJ = new HeaderTableauRMCPersonne(
+    "typePJ",
+    "Type PJ"
+  );
 }

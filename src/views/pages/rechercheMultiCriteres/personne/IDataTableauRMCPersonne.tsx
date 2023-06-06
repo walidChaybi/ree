@@ -1,18 +1,18 @@
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 
 export interface IDataTableauRMCPersonne {
-  idPersonne: string;
+  idPersonneOuActeInscription: string;
+  estDataPersonne: boolean;
   nom: string;
   autresNoms: string;
   prenoms: string;
   dateNaissance: string;
   lieuNaissance: string;
   sexe: string;
-  idActeOuInscription: string;
   nature: string;
   statut: string;
   reference: string;
-  categorieRepertoire?: TypeFiche;
+  typeFiche?: TypeFiche;
   statutOuType: string;
 }
 
@@ -21,11 +21,11 @@ export const DataTableauRMCPersonne = {
     return data.statut === "ANNULE" || data.statut === "INACTIF";
   },
 
-  estPersonne(data: IDataTableauRMCPersonne): boolean {
-    return data.idPersonne !== "";
-  },
-
   estActe(data: IDataTableauRMCPersonne): boolean {
-    return data.categorieRepertoire === TypeFiche.ACTE;
+    let estActe = false;
+    if (data.typeFiche) {
+      estActe = FicheUtil.isActe(data.typeFiche);
+    }
+    return estActe;
   }
 };

@@ -5,15 +5,15 @@ import {
 } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
+import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
 import { TableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonne";
 import { mapDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
-import { IDataTableauRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/IDataTableauRMCPersonne";
 import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
@@ -58,9 +58,9 @@ const HookConsumerTableauRMCPersonne: React.FC<
           : []
       }
       identifiantsPersonnesSelectionnees={[]}
-      getIdentifiantPersonne={() => ""}
-      onClickBoutonAjouterPersonne={() => {}}
+      identifiantsActesInscriptionsSelectionnes={[]}
       natureActeRequete={NatureActeRequete.NAISSANCE}
+      onClickBoutonAjouterPersonneOuActeInscription={() => {}}
     />
   );
 };
@@ -95,27 +95,27 @@ test("Attendu: L'affichage du tableau de la RMC Personne s'affiche correctement.
 
 const tableauRMCMock: IDataTableauRMCPersonne[] = [
   {
-    idPersonne: "74a741ad-bca0-412b-9017-6c79e3f54e70",
+    idPersonneOuActeInscription: "74a741ad-bca0-412b-9017-6c79e3f54e70",
+    estDataPersonne: true,
     nom: "Prodesk",
     autresNoms: "",
     prenoms: "Elodie",
     dateNaissance: "25/06/1990",
     lieuNaissance: "Barcelone (Espagne)",
     sexe: "F",
-    idActeOuInscription: "",
     nature: "",
     statut: "",
     reference: "",
     statutOuType: ""
   },
   {
-    idActeOuInscription: "7566e16c-2b0e-11eb-adc1-0242ac120002",
+    idPersonneOuActeInscription: "7566e16c-2b0e-11eb-adc1-0242ac120002",
+    estDataPersonne: false,
     nature: "tutelle aménagée",
     statut: "ACTIF",
     reference: "RC - 2020 - 14",
-    categorieRepertoire: TypeFiche.RC,
+    typeFiche: TypeFiche.RC,
     statutOuType: "Inscription",
-    idPersonne: "",
     nom: "",
     autresNoms: "",
     prenoms: "",
@@ -130,9 +130,9 @@ test("Ouverture d'un acte", async () => {
     <TableauRMCPersonne
       dataTableauRMCPersonne={tableauRMCMock}
       identifiantsPersonnesSelectionnees={[]}
-      getIdentifiantPersonne={data => data.idPersonne}
-      onClickBoutonAjouterPersonne={() => {}}
       natureActeRequete={NatureActeRequete.NAISSANCE}
+      identifiantsActesInscriptionsSelectionnes={[]}
+      onClickBoutonAjouterPersonneOuActeInscription={() => {}}
     />
   );
 

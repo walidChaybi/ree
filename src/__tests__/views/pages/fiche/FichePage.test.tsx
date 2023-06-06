@@ -83,8 +83,6 @@ test("Attendu: le bouton 'demander la délivrance' est affiché et au clique eff
     );
   });
 
-  //screen.debug();
-
   const boutonDemanderDelivrance = screen.getByLabelText(
     "Demander la délivrance"
   ) as HTMLButtonElement;

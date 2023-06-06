@@ -120,7 +120,7 @@ export function getConteneurAvecElement<
   >,
   getIdentifiant: (data: TData) => TIdentifiant,
   filtreAffichageElement: (data: TData) => boolean,
-  element: JSX.Element,
+  getElement: (data: TData) => JSX.Element,
   data: TData
 ): JSX.Element {
   return (
@@ -129,7 +129,7 @@ export function getConteneurAvecElement<
       identifiantCourant={getIdentifiant(data)}
       data={data}
     >
-      {filtreAffichageElement(data) ? element : <></>}
+      {filtreAffichageElement(data) ? getElement(data) : <></>}
     </ConteneurElement>
   );
 }

@@ -1,5 +1,6 @@
 /* istanbul ignore file */
 import { Options } from "../Type";
+import { IBoutonMenuItem } from "./../../widget/boutonMenu/BoutonMenu";
 import { EnumWithLibelle } from "./EnumWithLibelle";
 
 export class EnumWithComplete extends EnumWithLibelle {
@@ -75,5 +76,34 @@ export class EnumWithComplete extends EnumWithLibelle {
       }
     }
     return undefined;
+  }
+
+  public static getAllLibellesAsListeBoutonMenuItem(
+    clazz: any
+  ): IBoutonMenuItem[] {
+    return this.getListeBoutonMenuItemFromListeKeys(Object.keys(clazz), clazz)
+  }
+
+  public static getListeBoutonMenuItemFromListeKeys(keys: string[], clazz: any): IBoutonMenuItem[] {
+    const listeItems: IBoutonMenuItem[] = [];
+    for (const key of keys) {
+      const item = this.getBoutonMenuItemFromKey(key, clazz);
+      if (item) {
+        listeItems.push(item);
+      }
+    }
+    return listeItems;
+  }
+
+  public static getBoutonMenuItemFromKey(
+    key: string,
+    clazz: any
+  ): IBoutonMenuItem | undefined {
+    if (clazz.hasOwnProperty(key)) {
+      return {
+        key: key,
+        libelle: clazz[key].libelle
+      };
+    }
   }
 }

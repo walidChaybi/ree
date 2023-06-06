@@ -5,39 +5,29 @@ import {
 import { IPersonneSauvegardee } from "@model/requete/IPersonneSauvegardee";
 import { getValeurOuUndefined } from "@util/Utils";
 import React, { useEffect, useState } from "react";
-import { IPersonneSauvegardeeDto } from "../../../../../../dto/etatcivil/personne/personnesSauvegardees/IPersonneSauvegardeeDto";
+import { IPersonneSauvegardeeDto } from "../../../../../../../dto/etatcivil/personne/personnesSauvegardees/IPersonneSauvegardeeDto";
+import { IDataTableauPersonneSelectionnee } from "../IDataTableauPersonneSelectionne";
 
-export interface IDataTableauPersonneSelectionnee {
-  idPersonne: string;
-  nom?: string;
-  autresNoms?: string;
-  prenoms?: string;
-  dateNaissance?: string;
-  lieuNaissance?: string;
-  sexe?: string;
-  role?: string;
-}
-
-interface IDataTableauPersonneSelectionneeHook {
-  dataPersonnesSauvegardees?: IDataTableauPersonneSelectionnee[];
-  setDataPersonnesSauvegardees: React.Dispatch<
+interface IDataTableauPersonnesSelectionneesHook {
+  dataPersonnesSelectionnees?: IDataTableauPersonneSelectionnee[];
+  setDataPersonnesSelectionnees: React.Dispatch<
     React.SetStateAction<IDataTableauPersonneSelectionnee[] | undefined>
   >;
 }
 
-export function useDataTableauPersonneSauvegardeeHook(
+export function useDataTableauPersonnesSelectionneesHook(
   personnesSauvegardees?: IPersonneSauvegardee[]
-): IDataTableauPersonneSelectionneeHook {
-  const [dataPersonnesSauvegardees, setDataPersonnesSauvegardees] =
+): IDataTableauPersonnesSelectionneesHook {
+  const [dataPersonnesSelectionnees, setDataPersonnesSelectionnees] =
     useState<IDataTableauPersonneSelectionnee[]>();
   const [personnesSauvegardeesParams, setPersonneSauvegardeeParams] =
     useState<IPersonnesSauvegardeesParams>();
   const resultatPersonnesSauvegardees = usePersonnesSauvegardeesApiHook(
     personnesSauvegardeesParams
   );
-
+  
   useEffect(() => {
-    if (personnesSauvegardees) {
+    if (personnesSauvegardees?.length) {
       setPersonneSauvegardeeParams({
         idPersonnes: personnesSauvegardees.map(personne => personne.idPersonne)
       });
@@ -45,23 +35,24 @@ export function useDataTableauPersonneSauvegardeeHook(
   }, [personnesSauvegardees]);
 
   useEffect(() => {
-    if (resultatPersonnesSauvegardees && personnesSauvegardees) {
-      const data = [...resultatPersonnesSauvegardees];
-      setDataPersonnesSauvegardees(
-        data.map(dataCourant => ({
-          ...mapDataTableauPersonneSelectionnee(dataCourant),
-          role: personnesSauvegardees.find(
-            personne => personne.idPersonne === dataCourant.idPersonne
-          )?.role.libelle
-        }))
+    if (resultatPersonnesSauvegardees) {
+      setDataPersonnesSelectionnees(
+        personnesSauvegardees
+          ? [...resultatPersonnesSauvegardees].map(dataCourant => ({
+              ...mapDataTableauPersonneSelectionnee(dataCourant),
+              role: personnesSauvegardees.find(
+                personne => personne.idPersonne === dataCourant.idPersonne
+              )?.role.libelle
+            }))
+          : []
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatPersonnesSauvegardees]);
 
   return {
-    dataPersonnesSauvegardees,
-    setDataPersonnesSauvegardees
+    dataPersonnesSelectionnees,
+    setDataPersonnesSelectionnees,
   };
 }
 

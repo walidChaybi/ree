@@ -49,19 +49,19 @@ export class RolePersonneSauvegardee extends EnumWithComplete {
     return EnumWithComplete.getKeyForNom(RolePersonneSauvegardee, nom);
   }
 
-  public static getRolesTranscriptionUnTitulaire(): RolePersonneSauvegardee[] {
-    return [this.TITULAIRE, this.PARENT_1, this.PARENT_2];
-  }
-
-  public static getRolesTranscriptionDeuxTitulaires(): RolePersonneSauvegardee[] {
-    return [
-      this.TITULAIRE_1,
-      this.TITULAIRE_2,
-      this.PARENT_1_TITULAIRE_1,
-      this.PARENT_2_TITULAIRE_1,
-      this.PARENT_1_TITULAIRE_2,
-      this.PARENT_2_TITULAIRE_2
-    ];
+  public static filtreRolesPersonnesSauvegardeesEnFonctionNatureActeRequete(
+    natureActeRequete: NatureActeRequete
+  ): RolePersonneSauvegardee[] {
+    return NatureActeRequete.estMariage(natureActeRequete)
+      ? [
+          this.TITULAIRE_1,
+          this.TITULAIRE_2,
+          this.PARENT_1_TITULAIRE_1,
+          this.PARENT_2_TITULAIRE_1,
+          this.PARENT_1_TITULAIRE_2,
+          this.PARENT_2_TITULAIRE_2
+        ]
+      : [this.TITULAIRE, this.PARENT_1, this.PARENT_2];
   }
 
   public static getEnumForEnFonctionNatureActeRequete(
@@ -74,18 +74,6 @@ export class RolePersonneSauvegardee extends EnumWithComplete {
         : str.slice(0, NEUF);
     }
     return this.getEnumFor(str);
-  }
-
-  public static getRolesPersonnesSauvegardeesEnFonctionNatureActeRequete(
-    natureActeRequete: NatureActeRequete
-  ): RolePersonneSauvegardee[] {
-    const roles: RolePersonneSauvegardee[] = [];
-    if (NatureActeRequete.estMariage(natureActeRequete)) {
-      roles.push(...this.getRolesTranscriptionDeuxTitulaires());
-    } else {
-      roles.push(...this.getRolesTranscriptionUnTitulaire());
-    }
-    return roles;
   }
 
   public static estParent(str: string): boolean {

@@ -1,33 +1,25 @@
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
-import {
-  IRMCAutoPersonneParams,
-  useRMCAutoPersonneApiAvecCacheHook
-} from "@hook/rmcAuto/RMCAutoPersonneApiHook";
-import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { mAppartient } from "@model/agent/IOfficier";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
-import { AnalyseDuDossier } from "@pages/requeteCreation/commun/composants/AnalyseDuDossier";
-import { useDataTableauPersonneSauvegardeeHook } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/DataTableauPersonneSauvegardeeHook";
-import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import Labels from "@pages/requeteCreation/commun/Labels";
-import {
-  getPostulantNationaliteOuTitulaireActeTranscritDresse,
-  OngletProps
-} from "@pages/requeteCreation/commun/requeteCreationUtils";
+import { AnalyseDuDossier } from "@pages/requeteCreation/commun/composants/AnalyseDuDossier";
+import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
+import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
+import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import {
   URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID,
   URL_RECHERCHE_REQUETE
 } from "@router/ReceUrls";
-import { getUrlWithParam } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
+import { getUrlWithParam } from "@util/route/UrlUtil";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
@@ -54,10 +46,6 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
   // States
   const [requete, setRequete] = useState<IRequeteCreation>();
   const [ongletSelectionne, setOngletSelectionne] = useState(1);
-  const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
-    useState<IRMCAutoPersonneParams>();
-  const [tableauRMCPersonneEnChargement, setTableauRMCPersonneEnChargement] =
-    useState<boolean>(true);
 
   // Hooks
   const { detailRequeteState } = useDetailRequeteApiHook(
@@ -65,18 +53,14 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
     history.location.pathname.includes(URL_RECHERCHE_REQUETE)
   );
   const {
-    dataPersonnesSauvegardees: dataPersonnesSelectionnees,
-    setDataPersonnesSauvegardees: setDataPersonnesSelectionnees
-  } = useDataTableauPersonneSauvegardeeHook(requete?.personnesSauvegardees);
-  const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(
-    rmcAutoPersonneParams
-  );
-
-  useEffect(() => {
-    if (resultatRMCAutoPersonne) {
-      setTableauRMCPersonneEnChargement(false);
-    }
-  }, [resultatRMCAutoPersonne]);
+    dataPersonnesSelectionnees,
+    setDataPersonnesSelectionnees,
+    dataActesInscriptionsSelectionnes,
+    setDataActesInscriptionsSelectionnes,
+    setRmcAutoPersonneParams,
+    resultatRMCAutoPersonne,
+    rmcAutoPersonneEnChargement
+  } = useDataTableauxOngletRMCPersonne(requete);
 
   const estModeConsultation = props.idRequeteAAfficher !== undefined;
 
@@ -85,18 +69,6 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
       setRequete(detailRequeteState as IRequeteCreationTranscription);
     }
   }, [detailRequeteState]);
-
-  useEffect(() => {
-    if (requete) {
-      const titulaire =
-        getPostulantNationaliteOuTitulaireActeTranscritDresse(requete);
-      if (titulaire) {
-        setRmcAutoPersonneParams(
-          mapTitulaireVersRMCAutoPersonneParams(titulaire)
-        );
-      }
-    }
-  }, [requete]);
 
   function onRenommePieceJustificativeApercuPriseEnCharge(
     idPieceJustificative: string,
@@ -113,18 +85,6 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
   const handleChange = (e: any, newValue: string) => {
     setOngletSelectionne(parseInt(newValue));
   };
-
-  function handleClickSelectionTitulaireRmcPersonne(idTitulaire: string) {
-    const titulaire = requete?.titulaires
-      ?.filter(titulaireCourant => titulaireCourant.id === idTitulaire)
-      .pop();
-    if (titulaire) {
-      setTableauRMCPersonneEnChargement(true);
-      setRmcAutoPersonneParams(
-        mapTitulaireVersRMCAutoPersonneParams(titulaire)
-      );
-    }
-  }
 
   function getListeOnglets(): OngletProps[] {
     return requete
@@ -149,16 +109,25 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
                 sousTypeRequete={requete.sousType}
                 listeTitulaires={requete.titulaires}
                 resultatRMCPersonne={resultatRMCAutoPersonne ?? []}
-                handleClickMenuItem={handleClickSelectionTitulaireRmcPersonne}
                 natureActeRequete={NatureActeRequete.getEnumFor(
                   requete.nature ?? ""
                 )}
                 dataPersonnesSelectionnees={dataPersonnesSelectionnees || []}
                 setDataPersonnesSelectionnees={setDataPersonnesSelectionnees}
-                tableauRMCPersonneEnChargement={tableauRMCPersonneEnChargement}
-                tableauPersonnesSelectionnesEnChargement={
+                tableauRMCPersonneEnChargement={rmcAutoPersonneEnChargement}
+                tableauPersonnesSelectionneesEnChargement={
                   !dataPersonnesSelectionnees
                 }
+                tableauActesInscriptionsSelectionnesEnChargement={
+                  !dataActesInscriptionsSelectionnes
+                }
+                dataActesInscriptionsSelectionnes={
+                  dataActesInscriptionsSelectionnes || []
+                }
+                setDataActesInscriptionsSelectionnes={
+                  setDataActesInscriptionsSelectionnes
+                }
+                setRmcAutoPersonneParams={setRmcAutoPersonneParams}
               />
             ),
             index: 1

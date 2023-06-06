@@ -19,16 +19,19 @@ export const CelluleBoutonMenu = <TData, TIdentifiant>(
     >
   >(ConteneurElementContext);
 
+  const onClickMenuItem = (key: string, event?: React.SyntheticEvent) => {
+    event?.stopPropagation();
+    conteneurContext.handleInteractionUtilisateur(
+      event as TMouseEventSurHTMLButtonElement,
+      conteneurContext.data,
+      key
+    );
+  };
+
   return (
     <BoutonMenu
       {...props}
-      onClickMenuItem={(key, event) =>
-        conteneurContext.handleInteractionUtilisateur(
-          event as TMouseEventSurHTMLButtonElement,
-          conteneurContext.data,
-          key
-        )
-      }
+      onClickMenuItem={onClickMenuItem}
       disabled={conteneurContext.estDesactive}
     />
   );

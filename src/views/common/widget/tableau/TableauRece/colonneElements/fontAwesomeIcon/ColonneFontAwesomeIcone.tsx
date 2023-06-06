@@ -36,7 +36,7 @@ export function getColonneFontAwesomeIcone<
     IConteneurElementPropsPartielles<TData, TIdentifiant, TEvenement>,
     (data: TData) => TIdentifiant,
     (data: TData) => boolean,
-    React.ReactElement<ICelluleFontAwesomeIconeProps>,
+    (data: TData) => React.ReactElement<ICelluleFontAwesomeIconeProps>,
     [TData],
     JSX.Element
   >(
@@ -44,7 +44,10 @@ export function getColonneFontAwesomeIcone<
     { ...conteneurPropsPartielles },
     colonneParams.getIdentifiant,
     colonneParams.filtreAffichageElement ?? ((data: TData) => true),
-    <CelluleFontAwesomeIcone<TData, TIdentifiant> {...iconProps} />
+    colonneParams.getElement ??
+      ((data: TData) => (
+        <CelluleFontAwesomeIcone<TData, TIdentifiant> {...iconProps} />
+      ))
   );
 
   return new TableauTypeColumn({

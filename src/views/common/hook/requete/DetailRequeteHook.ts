@@ -165,17 +165,24 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
   };
 }
 
-function mapPiecesJustificatives(pieces?: any): IPieceJustificative[] {
-  const piecesJustificatives: IPieceJustificative[] = [];
-  pieces?.forEach((pj: any) => {
-    const piece = pj as IPieceJustificative;
-    piece.typePieceJustificative = TypePieceJustificative?.getEnumFor(
-      pj.typePieceJustificative
-    ); // pj.typePieceJustificative est un UUID car il vient du back
-    piecesJustificatives.push(piece);
-  });
+function mapUnePieceJustificative(piece?: any): IPieceJustificative {
+  return {
+    id: getValeurOuUndefined(piece.id),
+    nom: getValeurOuUndefined(piece.nom),
+    mimeType: getValeurOuUndefined(piece.mimeType),
+    extension: getValeurOuUndefined(piece.extension),
+    taille: getValeurOuUndefined(piece.taille),
+    referenceSwift: getValeurOuUndefined(piece.referenceSwift),
+    conteneurSwift: getValeurOuUndefined(piece.conteneurSwift),
+    contenu: getValeurOuUndefined(piece.contenu),
+    typePieceJustificative: TypePieceJustificative?.getEnumFor(
+      piece.typePieceJustificative
+    ) // pj.typePieceJustificative est un UUID car il vient du back,
+  };
+}
 
-  return piecesJustificatives;
+function mapPiecesJustificatives(pieces?: any): IPieceJustificative[] {
+  return pieces?.map((pj: any) => mapUnePieceJustificative(pj));
 }
 
 function getActions(actions: any): IAction[] {
@@ -293,17 +300,31 @@ export function mappingRequeteInformation(data: any): IRequeteInformation {
   };
 }
 
+function mapUnePieceJustificativeCreation(
+  piece?: any
+): IPieceJustificativeCreation {
+  return {
+    ...mapUnePieceJustificative(piece),
+    idFichierNatali: getValeurOuUndefined(piece.idFichierNatali),
+    ordreNatali: getValeurOuUndefined(piece.ordreNatali),
+    libelle: getValeurOuUndefined(piece.libelle),
+    estPieceAnnexe: getValeurOuUndefined(piece.estPieceAnnexe),
+    idRc: getValeurOuUndefined(piece.idRC),
+    idRca: getValeurOuUndefined(piece.idRCA),
+    idPacs: getValeurOuUndefined(piece.idPACS),
+    idActe: getValeurOuUndefined(piece.idActe),
+    idPersonne: getValeurOuUndefined(piece.idPersonne),
+    documentPj: mapUnDocumentPJ(getValeurOuUndefined(piece.documentPj)),
+    nouveauLibelleFichierPJ: getValeurOuUndefined(piece.nouveauLibelleFichierPJ)
+  };
+}
+
 function mapPiecesJustificativesCreation(
   pieces?: any
 ): IPieceJustificativeCreation[] {
-  const piecesJustificatives: IPieceJustificativeCreation[] = [];
-  pieces?.forEach((pj: any) => {
-    const piece = pj as IPieceJustificativeCreation;
-    piece.typePieceJustificative = TypePieceJustificative.getEnumFor(
-      pj.typePieceJustificative
-    ); // pj.typePieceJustificative est un UUID car il vient du back
-    piecesJustificatives.push(piece);
-  });
+  const piecesJustificatives: IPieceJustificativeCreation[] = pieces?.map(
+    (pj: any) => mapUnePieceJustificativeCreation(pj)
+  );
 
   PieceJustificativeCreation.setOrdre(piecesJustificatives);
 
@@ -329,16 +350,22 @@ export function mapEchangeRetourSDANF(echangeServeur?: any): IEchange {
   };
 }
 
-function mapDocumentPJ(documents?: any): IDocumentPJ[] {
-  return DocumentPJ.trie(
-    documents?.map(
-      (document: any): IDocumentPJ => ({
+function mapUnDocumentPJ(document?: any): IDocumentPJ | undefined {
+  return document
+    ? {
         ...document,
         categorie: CategorieDocument.creationCategorieDocument(
           document.categorie,
           document.libelle
         )
-      })
+      }
+    : undefined;
+}
+
+function mapDocumentPJ(documents?: any): IDocumentPJ[] {
+  return DocumentPJ.trie(
+    documents?.map(
+      (document: any): IDocumentPJ => mapUnDocumentPJ(document) as IDocumentPJ
     )
   );
 }
@@ -369,7 +396,7 @@ export function mappingRequeteCreation(data: any): IRequeteCreation {
       echanges: mapEchangesRetourSDANF(data.provenanceNatali?.echanges)
     },
     provenanceServicePublic: data.provenanceServicePublic,
-    documentsPj: mapDocumentPJ(data.documentsPj),
+    documentsPj: mapDocumentPJ(getValeurOuUndefined(data.documentsPj)),
     provenance: Provenance.getEnumFor(data.provenance),
     titulaires: mapTitulairesCreation(requete.titulaires),
     natureActeTranscrit,

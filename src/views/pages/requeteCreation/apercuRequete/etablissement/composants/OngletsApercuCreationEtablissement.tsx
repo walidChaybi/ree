@@ -1,8 +1,10 @@
 import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { IRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
-import { useDataTableauPersonneSauvegardeeHook } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/DataTableauPersonneSauvegardeeHook";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
+import { IDataTableauActeInscriptionSelectionne } from "@pages/requeteCreation/commun/composants/tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
+import { IDataTableauPersonneSelectionnee } from "@pages/requeteCreation/commun/composants/tableauPersonnesSelectionnees/IDataTableauPersonneSelectionne";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useState } from "react";
 import {
@@ -11,13 +13,24 @@ import {
 } from "../../../commun/composants/OngletPiecesJustificatives";
 import { Action } from "./action/Action";
 import "./scss/OngletsApercuCreationEtablissement.scss";
+
 interface OngletsApercuCreationEtablissementProps {
   requete: IRequeteCreationEtablissement;
   modeConsultation?: boolean;
   onRenommePieceJustificative: typeFctRenommePieceJustificative;
   resultatRMCPersonne: IRMCPersonneResultat[];
-  handleClickSelectionTitulaireRmcPersonne: (idTitulaire: string) => void;
   tableauRMCPersonneEnChargement: boolean;
+  dataPersonnesSelectionnees?: IDataTableauPersonneSelectionnee[];
+  setDataPersonnesSelectionnees: React.Dispatch<
+    React.SetStateAction<IDataTableauPersonneSelectionnee[] | undefined>
+  >;
+  dataActesInscriptionsSelectionnes?: IDataTableauActeInscriptionSelectionne[];
+  setDataActesInscriptionsSelectionnes: React.Dispatch<
+    React.SetStateAction<IDataTableauActeInscriptionSelectionne[] | undefined>
+  >;
+  setRmcAutoPersonneParams: React.Dispatch<
+    React.SetStateAction<IRMCAutoPersonneParams | undefined>
+  >;
 }
 
 interface ItemListe {
@@ -30,12 +43,6 @@ export const OngletsApercuCreationEtablissement: React.FC<
   OngletsApercuCreationEtablissementProps
 > = props => {
   const [ongletSelectionne, setOngletSelectionne] = useState(0);
-  const {
-    dataPersonnesSauvegardees: dataPersonnesSelectionnees,
-    setDataPersonnesSauvegardees: setDataPersonnesSelectionnees
-  } = useDataTableauPersonneSauvegardeeHook(
-    props.requete.personnesSauvegardees
-  );
 
   const liste: ItemListe[] = [
     {
@@ -67,14 +74,25 @@ export const OngletsApercuCreationEtablissement: React.FC<
           resultatRMCPersonne={props.resultatRMCPersonne}
           sousTypeRequete={props.requete.sousType}
           listeTitulaires={props.requete.titulaires}
-          handleClickMenuItem={props.handleClickSelectionTitulaireRmcPersonne}
           natureActeRequete={NatureActeRequete.getEnumFor(
             props.requete.nature ?? ""
           )}
-          dataPersonnesSelectionnees={dataPersonnesSelectionnees || []}
-          setDataPersonnesSelectionnees={setDataPersonnesSelectionnees}
+          dataPersonnesSelectionnees={props.dataPersonnesSelectionnees || []}
+          setDataPersonnesSelectionnees={props.setDataPersonnesSelectionnees}
           tableauRMCPersonneEnChargement={props.tableauRMCPersonneEnChargement}
-          tableauPersonnesSelectionnesEnChargement={!dataPersonnesSelectionnees}
+          tableauPersonnesSelectionneesEnChargement={
+            !props.dataPersonnesSelectionnees
+          }
+          tableauActesInscriptionsSelectionnesEnChargement={
+            !props.dataActesInscriptionsSelectionnes
+          }
+          dataActesInscriptionsSelectionnes={
+            props.dataActesInscriptionsSelectionnes || []
+          }
+          setDataActesInscriptionsSelectionnes={
+            props.setDataActesInscriptionsSelectionnes
+          }
+          setRmcAutoPersonneParams={props.setRmcAutoPersonneParams}
         />
       ),
       index: 1

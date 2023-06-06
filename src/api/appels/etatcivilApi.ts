@@ -9,6 +9,7 @@ import {
   IRMCRequestActesInscriptions
 } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
+import { IActeInscriptionSauvegardeDto } from "../../dto/etatcivil/acte/actesInscriptionsSauvegardes/IActeInscriptionSauvegardeDto";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
@@ -43,6 +44,8 @@ export const URL_RC = "/rc";
 export const URL_PERSONNE_RMC_AUTO = "/personne/rmcauto";
 export const URL_POCOPAS = "/mespocopas";
 export const URL_LISTE_PERSONNE = "/personne/listePersonne";
+export const URL_LISTE_ACTES_INSCRIPTIONS =
+  "/projetacte/actesinscriptionssauvegardes";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -57,6 +60,16 @@ export function getInformationsFiche(
   } else {
     return getInformationsFicheRepertoire(typeFiche, identifiant);
   }
+}
+
+export function getActesInscriptionsSauvegardes(
+  actesInscriptionsSauvegardes: IActeInscriptionSauvegardeDto[]
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_LISTE_ACTES_INSCRIPTIONS}`,
+    data: actesInscriptionsSauvegardes
+  });
 }
 
 /**

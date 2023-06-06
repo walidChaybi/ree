@@ -1,12 +1,15 @@
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";
+import { TypeActeInscriptionSauvegarde } from "@model/requete/enum/TypeActeInscriptionSauvegarde";
 import { FenetreFiche } from "@pages/fiche/FenetreFiche";
+import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { getLibelle, supprimeElement, UN, ZERO } from "@util/Utils";
-import { ICelluleBoutonMenuProps } from "@widget/tableau/TableauRece/colonneElements/boutonMenu/CelluleBoutonMenu";
+import {
+  CelluleBoutonMenu,
+  ICelluleBoutonMenuProps
+} from "@widget/tableau/TableauRece/colonneElements/boutonMenu/CelluleBoutonMenu";
 import { IColonneBoutonMenuParams } from "@widget/tableau/TableauRece/colonneElements/boutonMenu/ColonneBoutonMenu";
 import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
 import { TMouseEventSurHTMLButtonElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
@@ -18,24 +21,26 @@ import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React, { useState } from "react";
 import {
-  DataTableauRMCPersonne,
-  IDataTableauRMCPersonne
-} from "../../requeteCreation/commun/composants/ongletRMCPersonne/IDataTableauRMCPersonne";
-import {
   IFenetreFicheActe,
   IFenetreFicheActeInscription
 } from "../common/IFenetreFicheActeInscription";
+import {
+  DataTableauRMCPersonne,
+  IDataTableauRMCPersonne
+} from "./IDataTableauRMCPersonne";
 import "./scss/TableauRMCPersonne.scss";
 import {
   getColonnesTableauRMCAutoPersonne,
-  getLigneTableauVide
+  getIdentifiantPersonneOuActeInscription,
+  getLigneTableauVide,
+  getRolesPersonneEnFonctionNatureActeRequeteAsListeBoutonMenuItem
 } from "./TableauRMCPersonneUtils";
 
 interface TableauRMCPersonneProps {
   dataTableauRMCPersonne: IDataTableauRMCPersonne[];
   identifiantsPersonnesSelectionnees: string[];
-  getIdentifiantPersonne: (data: IDataTableauRMCPersonne) => string;
-  onClickBoutonAjouterPersonne: (
+  identifiantsActesInscriptionsSelectionnes: string[];
+  onClickBoutonAjouterPersonneOuActeInscription: (
     event: TMouseEventSurHTMLButtonElement,
     data: IDataTableauRMCPersonne,
     cle?: string
@@ -49,54 +54,72 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
     IFenetreFicheActeInscription[]
   >([]);
 
-  function getLigneClassName(data: IDataTableauRMCPersonne): string {
-    return DataTableauRMCPersonne.estPersonne(data)
-      ? "lignePersonne"
-      : DataTableauRMCPersonne.estStatutAnnuleOuInactif(data)
-      ? "ligneAnnuleInactif"
-      : DataTableauRMCPersonne.estActe(data)
-      ? "ligneActe"
-      : "ligneRcRcaPacs";
+  function getBoutonMenuElement(data: IDataTableauRMCPersonne): JSX.Element {
+    return (
+      <CelluleBoutonMenu<IDataTableauRMCPersonne, string>
+        {...(data.estDataPersonne
+          ? boutonMenuAjouterPersonneProps
+          : boutonMenuAjouterActeInscriptionProps)}
+        className="colonne-bouton-menu"
+      />
+    );
   }
 
-  const colonneBoutonAjouterPersonneParams: IColonneBoutonMenuParams<
+  const colonneBoutonAjouterPersonneOuActeInscriptionParams: IColonneBoutonMenuParams<
     IDataTableauRMCPersonne,
     string
   > = {
-    getIdentifiant: props.getIdentifiantPersonne,
-    filtreAffichageElement: (data: IDataTableauRMCPersonne) =>
-      data.idPersonne !== ""
+    getIdentifiant: getIdentifiantPersonneOuActeInscription,
+    style: { width: "3rem" },
+    getElement: getBoutonMenuElement
   };
+
+  function handleEstDesactiveBoutonAjouterPersonneOuActeInscription(
+    data: IDataTableauRMCPersonne
+  ): boolean {
+    const identifiants: string[] = [
+      ...(data.estDataPersonne
+        ? props.identifiantsPersonnesSelectionnees
+        : props.identifiantsActesInscriptionsSelectionnes)
+    ];
+    return identifiants.includes(getIdentifiantPersonneOuActeInscription(data));
+  }
 
   const conteneurBoutonAjouterPersonneProps: IConteneurElementPropsPartielles<
     IDataTableauRMCPersonne,
     string,
     TMouseEventSurHTMLButtonElement
   > = {
-    handleInteractionUtilisateur: props.onClickBoutonAjouterPersonne,
-    handleEstDesactive: (data: IDataTableauRMCPersonne) =>
-      props.identifiantsPersonnesSelectionnees.includes(
-        props.getIdentifiantPersonne(data)
-      )
+    handleInteractionUtilisateur:
+      props.onClickBoutonAjouterPersonneOuActeInscription,
+    handleEstDesactive: handleEstDesactiveBoutonAjouterPersonneOuActeInscription
   };
 
   const boutonMenuAjouterPersonneProps: ICelluleBoutonMenuProps = {
     boutonLibelle: getLibelle("+"),
     listeItems:
-      RolePersonneSauvegardee.getRolesPersonnesSauvegardeesEnFonctionNatureActeRequete(
+      getRolesPersonneEnFonctionNatureActeRequeteAsListeBoutonMenuItem(
         props.natureActeRequete
-      ).map(roleCourant => ({
-        key: roleCourant.nom,
-        libelle: roleCourant.libelle
-      })),
+      ),
     titreBouton: getLibelle("Ajouter cette personne au projet"),
     anchorOrigin: { vertical: "top", horizontal: "left" },
     transformOrigin: { vertical: "top", horizontal: "right" },
     openOnMouseClick: true
   };
 
+  const boutonMenuAjouterActeInscriptionProps: ICelluleBoutonMenuProps = {
+    boutonLibelle: getLibelle("+"),
+    listeItems: EnumWithComplete.getAllLibellesAsListeBoutonMenuItem(
+      TypeActeInscriptionSauvegarde
+    ),
+    titreBouton: getLibelle("Ajouter cet acte ou inscription au projet"),
+    anchorOrigin: { vertical: "top", horizontal: "left" },
+    transformOrigin: { vertical: "top", horizontal: "right" },
+    openOnMouseClick: true
+  };
+
   const columnHeaders: TableauTypeColumn[] = getColonnesTableauRMCAutoPersonne(
-    colonneBoutonAjouterPersonneParams,
+    colonneBoutonAjouterPersonneOuActeInscriptionParams,
     conteneurBoutonAjouterPersonneProps,
     boutonMenuAjouterPersonneProps
   );
@@ -106,28 +129,21 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
     data: IDataTableauRMCPersonne[],
     index: number
   ) => {
-    const estActeDuPerimetreAgent = () => {
-      return (
-        idActeInscription &&
-        data[index].nature &&
-        !data[index].categorieRepertoire
-      );
-    };
-    const estInscriptionDuPerimetreMEAE = () => {
-      return (
-        idActeInscription &&
-        officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.MEAE)
-      );
-    };
-
-    if (estActeDuPerimetreAgent() || estInscriptionDuPerimetreMEAE()) {
+    const dataLigne = data[index];
+    if (
+      dataLigne.typeFiche &&
+      !dataLigne.estDataPersonne &&
+      idActeInscription &&
+      (DataTableauRMCPersonne.estActe(dataLigne) ||
+        officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.MEAE))
+    ) {
       const nouvelEtatFenetre: IFenetreFicheActeInscription = {
         index: { value: index },
         idActeInscription,
         datasFiches: [
           {
             identifiant: idActeInscription,
-            categorie: data[index].categorieRepertoire || TypeFiche.ACTE
+            categorie: dataLigne.typeFiche
           }
         ]
       };
@@ -135,11 +151,11 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
     }
   };
 
-  const closeFenetre = (idActeOuInscription: string, idx: number) => {
+  const closeFenetre = (idActeInscription: string, idx: number) => {
     const nouvelEtatFenetres = supprimeElement(
       etatFenetres,
       (etatFenetre: IFenetreFicheActe) =>
-        etatFenetre.idActe === idActeOuInscription
+        etatFenetre.idActe === idActeInscription
     );
     setEtatFenetres(nouvelEtatFenetres);
   };
@@ -148,7 +164,7 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
     <div className="resultatsRMCPersonne">
       {
         <TableauRece
-          idKey={"idActeOuInscription"}
+          idKey={"idPersonneOuActeInscription"}
           columnHeaders={columnHeaders}
           dataState={props.dataTableauRMCPersonne}
           paramsTableau={{}}
@@ -189,3 +205,13 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
     </div>
   );
 };
+
+function getLigneClassName(data: IDataTableauRMCPersonne): string {
+  return data.estDataPersonne
+    ? "lignePersonne"
+    : DataTableauRMCPersonne.estStatutAnnuleOuInactif(data)
+    ? "ligneAnnuleInactif"
+    : DataTableauRMCPersonne.estActe(data)
+    ? "ligneActe"
+    : "ligneRcRcaPacs";
+}

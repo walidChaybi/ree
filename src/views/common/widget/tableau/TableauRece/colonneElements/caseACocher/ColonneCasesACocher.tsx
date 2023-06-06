@@ -98,7 +98,7 @@ export function getColonneCasesACocher<
     IConteneurElementPropsPartielles<TData, TIdentifiant, TEvenement>,
     (data: TData) => TIdentifiant,
     (data: TData) => boolean,
-    React.ReactElement<ICelluleCaseACocherProps>,
+    (data: TData) => React.ReactElement<ICelluleCaseACocherProps>,
     [TData],
     JSX.Element
   >(
@@ -110,7 +110,10 @@ export function getColonneCasesACocher<
     },
     colonneCaseACocherParams.getIdentifiant,
     colonneCaseACocherParams.filtreAffichageElement ?? ((data: TData) => true),
-    <CelluleCaseACocher<TData, TIdentifiant> {...caseACocherProps} />
+    colonneCaseACocherParams.getElement ??
+      ((data: TData) => (
+        <CelluleCaseACocher<TData, TIdentifiant> {...caseACocherProps} />
+      ))
   );
 
   colonneCaseACocherParams.style = {
