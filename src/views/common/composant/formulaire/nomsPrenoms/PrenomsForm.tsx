@@ -61,14 +61,15 @@ export type PrenomFormProps = IPrenomsFormProps & SubFormProps;
 
 const PrenomsForm: React.FC<PrenomFormProps> = props => {
   const [nbPrenoms, setNbPrenoms] = useState(1);
-  const [nbPrenomInitialise, setNbPrenomInitialise] = useState<boolean>(false);
+  const [nbPrenomInitialise, setNbPrenomInitialise] = useState(false);
+  const [nbPrenomEnregistre, setNbPrenomEnregistre] = useState(0);
 
   useEffect(() => {
     if (!nbPrenomInitialise && props.nbPrenoms) {
       setNbPrenoms(props.nbPrenoms);
+      setNbPrenomEnregistre(props.nbPrenoms);
       setNbPrenomInitialise(true);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.nbPrenoms]);
 
@@ -79,8 +80,10 @@ const PrenomsForm: React.FC<PrenomFormProps> = props => {
   };
 
   const handleAnnulerSaisie = (champ: string) => {
-    setNbPrenoms(nbPrenoms - 1);
-    props.formik.setFieldValue(champ, "");
+    if (nbPrenoms > nbPrenomEnregistre || !props.disabled) {
+      setNbPrenoms(nbPrenoms - 1);
+      props.formik.setFieldValue(champ, "");
+    }
   };
 
   function construireNomChamp(index: number) {
@@ -103,32 +106,30 @@ const PrenomsForm: React.FC<PrenomFormProps> = props => {
               props.onPrenomBlur &&
               props.onPrenomBlur(Number(`${index + 1}`), e)
             }
-            disabled={props.disabled}
+            disabled={index + 1 > nbPrenomEnregistre ? false : props.disabled}
             validate={(value: string) => {
               return !value && props.prenom1Obligatoire === true
                 ? CHAMP_OBLIGATOIRE
                 : undefined;
             }}
           />
-          {!props.disabled && (
-            <div className="BoutonsConteneur">
-              {index === nbPrenoms - 1 && nbPrenoms < MAX_PRENOMS && (
-                <button type="button" onClick={handleAjouterPrenom}>
-                  {getLibelle("Ajouter prénom")}
-                </button>
-              )}
-              {index === nbPrenoms - 1 && nbPrenoms > 1 && (
-                <button
-                  type="button"
-                  tabIndex={IGNORER_TABULATION}
-                  className="BoutonDanger"
-                  onClick={() => handleAnnulerSaisie(construireNomChamp(index))}
-                >
-                  {getLibelle("Annuler saisie")}
-                </button>
-              )}
-            </div>
-          )}
+          <div className="BoutonsConteneur">
+            {index === nbPrenoms - 1 && nbPrenoms < MAX_PRENOMS && (
+              <button type="button" onClick={handleAjouterPrenom}>
+                {getLibelle("Ajouter prénom")}
+              </button>
+            )}
+            {index === nbPrenoms - 1 && nbPrenoms > 1 && (
+              <button
+                type="button"
+                tabIndex={IGNORER_TABULATION}
+                className="BoutonDanger"
+                onClick={() => handleAnnulerSaisie(construireNomChamp(index))}
+              >
+                {getLibelle("Annuler saisie")}
+              </button>
+            )}
+          </div>
         </div>
       ))}
     </>
