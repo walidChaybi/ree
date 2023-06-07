@@ -13,7 +13,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "paths": {
       "@composant/*": ["./src/views/common/composant/*"],
       "@hook/*": ["./src/views/common/hook/*"],
