@@ -8,6 +8,7 @@ import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
 } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
+import { useRechercheReqNataliApiHook } from "@hook/requete/creation/RechercheReqNataliHookApi";
 import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
@@ -34,9 +35,13 @@ import {
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import React, { useCallback, useEffect, useState } from "react";
+import { useRequeteCreationApi } from "../../../common/hook/requete/creation/DonneesRequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
+import {
+  InputRechercheReqNatali,
+  RechercheNataliValuesForm
+} from "../commun/composants/inputRechercheReqNatali/InputRechercheReqNatali";
 import { setParamsUseApercuCreation } from "../commun/requeteCreationUtils";
-import { useRequeteCreationApi } from "../hook/DonneesRequeteCreationApiHook";
 import { statutsRequetesCreation } from "./params/EspaceCreationParams";
 import { getColonnesTableauRequetesServiceCreation } from "./params/RequetesServiceCreationParams";
 
@@ -50,6 +55,7 @@ export const RequetesServiceCreation: React.FC<
   RequetesServiceCreationProps
 > = props => {
   // STATEs
+  const [numeroReqNatali, setNumeroReqNatali] = useState<string>();
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
   const [paramsMiseAJour, setParamsMiseAJour] = useState<
@@ -73,6 +79,15 @@ export const RequetesServiceCreation: React.FC<
     TypeAppelRequete.REQUETE_CREATION_SERVICE,
     setEnChargement
   );
+
+  function onSubmitRechercheReqNatali(values: RechercheNataliValuesForm) {
+    if (values.numeroRequete) {
+      setNumeroReqNatali(values.numeroRequete);
+    }
+  }
+
+  const { dataRechercheReqNatali } =
+    useRechercheReqNataliApiHook(numeroReqNatali);
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
   useNavigationApercuCreation(paramsCreation);
@@ -223,13 +238,14 @@ export const RequetesServiceCreation: React.FC<
         onTimeoutEnd={finOpEnCours}
         onClick={finOpEnCours}
       />
+      <InputRechercheReqNatali onSubmit={onSubmitRechercheReqNatali} />
       <TableauRece
         idKey={"idRequete"}
         sortOrderByState={parametresLienRequete.tri}
         sortOrderState={parametresLienRequete.sens}
         onClickOnLine={onClickOnLineTableau}
         columnHeaders={columnHeaders}
-        dataState={dataState}
+        dataState={numeroReqNatali ? dataRechercheReqNatali : dataState}
         paramsTableau={paramsTableau}
         goToLink={changementDePage}
         handleChangeSort={handleChangeSortTableau}

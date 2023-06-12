@@ -63,6 +63,8 @@ export const URL_ECHANGE = "/echange";
 export const URL_ECHANGE_STATUT = "/requetes/action/retourSdanf";
 export const URL_DOCUMENT_COMPLEMENTAIRE =
   "/documentsreponses/documentComplementaire";
+export const URL_RECHERCHE_REQ_NATALI =
+  "/requetes/creation/natali/numeroDossierNational";
 
 const URL_REPONSES = "/reponses";
 
@@ -742,3 +744,10 @@ export const patchMiseAJourLibellePJ = (
       nouveauLibelle
     }
   });
+
+export const getReqNataliById = (id: string): Promise<any> => {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_RECHERCHE_REQ_NATALI}/${id}`
+  });
+};

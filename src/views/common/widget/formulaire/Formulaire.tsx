@@ -26,7 +26,8 @@ export const Formulaire: React.FC<FomulaireProps> = ({
     formDefaultValues,
     formValidationSchema,
     disabled,
-    children
+    children,
+    className
   );
   return (
     <div className={className ? `${className} Formulaire` : "Formulaire"}>
@@ -39,7 +40,8 @@ function getForm(
   formDefaultValues: any,
   formValidationSchema: any,
   disabled = false,
-  children: any
+  children: any,
+  className?: string
 ) {
   return (
     <Formik
@@ -51,7 +53,7 @@ function getForm(
       enableReinitialize={true}
       disabled={disabled}
     >
-      <Form>{children}</Form>
+      <Form className={className}>{children}</Form>
     </Formik>
   );
 }

@@ -9,7 +9,10 @@ import {
   requeteCreationTranscription,
   requeteCreationTranscriptionStatutATraiter
 } from "../data/requeteCreationTranscription";
-import { requetesServiceCreationTableauResultatQuery } from "../data/requetesServiceCreation";
+import {
+  requeteServiceCreationRechercheNatali,
+  requetesServiceCreationTableauResultatQuery
+} from "../data/requetesServiceCreation";
 import { requeteTableauCreation } from "../data/requeteTableauCreation";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 
@@ -114,6 +117,16 @@ export const configRequetesCreation = [
           "/requetes/creation/requetesService?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER%2CEN_TRAITEMENT&tri=statut&sens=ASC&range=0-105"
       ) {
         return requetesServiceCreationTableauResultatQuery;
+      }
+
+      /////////////////////////////////
+      // Recherche requete Natali //
+      /////////////////////////////////
+
+      if (
+        url === "/requetes/creation/natali/numeroDossierNational/2022X 200178"
+      ) {
+        return requeteServiceCreationRechercheNatali;
       }
 
       /////////////////////////////////

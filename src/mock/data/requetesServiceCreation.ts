@@ -77,3 +77,54 @@ export const requetesServiceCreationTableauResultatQuery = {
     }
   ]
 };
+
+export const requeteServiceCreationRechercheNatali = {
+  errors: [],
+  data: [
+    {
+      id: "2d49b4da-74ec-49b7-9be5-0345b66140e3",
+      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
+      idEntiteRattachement: "6737dca8-2f96-4086-8288-fd1a136a61df",
+      numeroAffichage: "DGEWAA / 2022X 200178",
+      numeroFonctionnel: "DGEWAA",
+      numeroNatali: "2022X 200178",
+      numeroDila: null,
+      numeroAncien: "",
+      tagPriorisation: "SDANF",
+      sousType: "RCEXR",
+      dateCreation: 1667931452000,
+      dateDerniereAction: 1670494808000,
+      statut: "PROJET_VALIDE",
+      nomCompletRequerant: "",
+      titulaires: [
+        {
+          nom: "DADA",
+          prenoms: ["Alioune"],
+          jourNaissance: 10,
+          moisNaissance: 11,
+          anneeNaissance: 1992,
+          sexe: "MASCULIN",
+          villeNaissance: "dakar",
+          paysNaissance: "SENEGAL",
+          qualite: "FRATRIE",
+          nationalite: "ETRANGERE",
+          typeObjetTitulaire: "FAMILLE"
+        },
+        {
+          nom: "CHAZEY SUR AIN",
+          prenoms: ["Alain"],
+          jourNaissance: 5,
+          moisNaissance: 1,
+          anneeNaissance: 1991,
+          sexe: "MASCULIN",
+          villeNaissance: "dakar",
+          paysNaissance: "SENEGAL",
+          qualite: null,
+          nationalite: "ETRANGERE",
+          typeObjetTitulaire: "POSTULANT_NATIONALITE"
+        }
+      ]
+    }
+  ]
+};
+

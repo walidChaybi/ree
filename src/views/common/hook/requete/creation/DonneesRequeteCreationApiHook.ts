@@ -52,7 +52,7 @@ export function useRequeteCreationApi(
   };
 }
 
-function mappingRequetesTableauCreation(
+export function mappingRequetesTableauCreation(
   resultatsRecherche: any,
   mappingSupplementaire: boolean
 ): IRequeteTableauCreation[] {

@@ -25,9 +25,9 @@ import {
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import React, { useCallback, useEffect, useState } from "react";
+import { useRequeteCreationApi } from "../../../common/hook/requete/creation/DonneesRequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { setParamsUseApercuCreation } from "../commun/requeteCreationUtils";
-import { useRequeteCreationApi } from "../hook/DonneesRequeteCreationApiHook";
 import { statutsRequetesCreation } from "./params/EspaceCreationParams";
 import { colonnesTableauMesRequetesCreation } from "./params/MesRequetesCreationParams";
 

@@ -5,6 +5,9 @@ import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic
 } from "@mock/data/connectedUserAvecDroit";
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
+import { TypeEntite } from "@model/agent/enum/TypeEntite";
 import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IEntite } from "@model/agent/IEntiteRattachement";
 import { IPerimetre } from "@model/agent/IPerimetre";
@@ -12,12 +15,9 @@ import {
   IUtilisateur,
   mapHabilitationsUtilisateur
 } from "@model/agent/IUtilisateur";
-import { Droit } from "@model/agent/enum/Droit";
-import { Perimetre } from "@model/agent/enum/Perimetre";
-import { TypeEntite } from "@model/agent/enum/TypeEntite";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
-import { RequetesServiceCreation } from "@pages/requeteCreation/espaceCreation/RequetesServiceCreation";
 import { statutsRequetesCreation } from "@pages/requeteCreation/espaceCreation/params/EspaceCreationParams";
+import { RequetesServiceCreation } from "@pages/requeteCreation/espaceCreation/RequetesServiceCreation";
 import { URL_REQUETES_CREATION_SERVICE } from "@router/ReceUrls";
 import {
   act,
@@ -218,5 +218,21 @@ test("DOIT rendre possible le click sur une requête", async () => {
   await waitFor(() => {
     requete = screen.getByText("N7MMP8 / B-2-8GRZFCS3P");
     fireEvent.click(requete);
+  });
+});
+
+test("DOIT pouvoir rechercher une requete via son numero NATALi", async () => {
+  render(<HookConsummer />);
+
+  const input = screen.getByPlaceholderText("Rechercher une requête Natali");
+  const boutonRechercher = screen.getByTestId("loupeButton");
+
+  fireEvent.change(input, { target: { value: "2022X 200178" } });
+  fireEvent.click(boutonRechercher);
+
+  await waitFor(() => {
+    expect(screen.queryByText("N7MMP8 / B-2-8GRZFCS3P")).toBeNull();
+    expect(screen.queryByText("YRQFLU /")).toBeNull();
+    expect(screen.getByText("DGEWAA / 2022X 200178")).toBeDefined();
   });
 });
