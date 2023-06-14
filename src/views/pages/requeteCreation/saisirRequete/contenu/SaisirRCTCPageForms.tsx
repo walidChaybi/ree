@@ -6,8 +6,8 @@ import {
   TITULAIRE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { TypeRedactionActe } from "@model/etatcivil/enum/TypeRedactionActe";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { getLibelle } from "@util/Utils";
 import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
 import React from "react";
@@ -15,6 +15,8 @@ import IdentiteTitulaireForm from "../sousForm/identite/IdentiteTitulaireForm";
 import ParentsForm from "../sousForm/parent/ParentsForm";
 import RequerantForm from "../sousForm/requerant/RequerantForm";
 import RequeteForm from "../sousForm/requete/RequeteForm";
+
+const MAX_PIECES_JOINTES = 34;
 
 export function getRequeteForm(): JSX.Element {
   return (
@@ -63,6 +65,7 @@ export function getPiecesJointesForm(): JSX.Element {
       typeRequete={TypeRequete.CREATION}
       typeRedactionActe={TypeRedactionActe.TRANSCRIT}
       titre={getLibelle("Pièces justificatives")}
+      maxPiecesJointes={MAX_PIECES_JOINTES}
     />
   );
 }

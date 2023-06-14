@@ -5,14 +5,15 @@ import { PieceJointe } from "@util/FileUtils";
 import { Options } from "@util/Type";
 import { connect } from "formik";
 import React, { useEffect } from "react";
-import "../scss/PiecesJointesForm.scss";
 import { SousFormulaire } from "../SousFormulaire";
+import "../scss/PiecesJointesForm.scss";
 import { ISubForm, SubFormProps } from "../utils/FormUtil";
 import { PiecesJointes } from "./PiecesJointes";
 
 export interface PiecesJointesFormProps {
   typeRequete: TypeRequete;
   typeRedactionActe?: TypeRedactionActe;
+  maxPiecesJointes?: number;
 }
 
 export type PiecesJointesSubFormProps = SubFormProps & PiecesJointesFormProps;
@@ -47,6 +48,7 @@ const PiecesJointesForm: React.FC<PiecesJointesSubFormProps> = props => {
         menuItem={menuItemsState}
         piecesJointes={piecesJointes}
         setPiecesJointes={setPiecesJointes}
+        maxPiecesJointes={props.maxPiecesJointes}
       />
     </SousFormulaire>
   );

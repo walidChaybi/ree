@@ -144,11 +144,17 @@ function getTexteOption(option: OptionCourrier) {
     : option.texteOptionCourrier;
 }
 
-const TEXTE_VARIABLE_RDD = `Le document d’état civil joint est délivré sur support électronique conformément à l’ordonnance n° 2019-724 du 10 juillet 2019 – chapitre III, article 10 ; il est signé par un officier de l’état civil au moyen d’un procédé de signature électronique sécurisée et <style isBold="true">n’a pas de durée de validité,</style> sauf disposition spécifique (ex : dossier de mariage ou de PACS). <style isBold="true">Il peut être utilisé pour plusieurs démarches différentes.</style> 
+const TEXTE_VARIABLE_RDD = `Le document d’état civil joint est délivré sur support électronique conformément à l’ordonnance n° 2019-724 du 10 juillet 2019 \
+– chapitre III, article 10 ; il est signé par un officier de l’état civil au moyen d’un procédé de signature électronique sécurisée et \
+<style isBold="true">n’a pas de durée de validité,</style> sauf disposition spécifique (ex : dossier de mariage ou de PACS). \
+<style isBold="true">Il peut être utilisé pour plusieurs démarches différentes.</style> 
 
-<style isBold="true">Vous pouvez imprimer ce document pour le remettre à un tiers qui a l’obligation de l’accepter. Le destinataire de l’acte aura la possibilité, pendant 6 mois, de vérifier la fiabilité des informations indiquées sur le document au moyen d’un télé-service de vérification.</style>
+<style isBold="true">Vous pouvez imprimer ce document pour le remettre à un tiers qui a l’obligation de l’accepter. Le destinataire de l’acte aura la possibilité, \
+pendant 6 mois, de vérifier la fiabilité des informations indiquées sur le document au moyen d’un télé-service de vérification.</style>
 
-Ce télé-service est accessible sur le site ci-contre : https://pastel.diplomatie.gouv.fr/rece-televerification-ui/accueil et requiert la saisie d’un code de télé-vérification (CTV) inscrit au bas et à droite de l’acte qui vous a été délivré. <style isBold="true">Vous êtes tenu d’indiquer au destinataire de l’acte, l’adresse du télé-service et de vérifier que le CTV est lisible après impression.</style>
+Ce télé-service est accessible sur le site ci-contre : https://pastel.diplomatie.gouv.fr/rece-televerification-ui/accueil et \
+requiert la saisie d’un code de télé-vérification (CTV) inscrit au bas et à droite de l’acte qui vous a été délivré. \
+<style isBold="true">Vous êtes tenu d’indiquer au destinataire de l’acte, l’adresse du télé-service et de vérifier que le CTV est lisible après impression.</style>
 
 Si vous souhaitez que l’acte que vous avez demandé vous soit transmis par voie postale sur support papier, il vous appartient d’en faire la demande via l’adresse suivante : 
 https://psl.service-public.fr/mademarche/demarche_impr/demarche

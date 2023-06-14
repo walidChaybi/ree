@@ -5,9 +5,9 @@ import {
   ExtensionDocumentTypeMime,
   PieceJointe
 } from "@util/FileUtils";
-import messageManager from "@util/messageManager";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
+import messageManager from "@util/messageManager";
 import React from "react";
 import { IconePoubelle } from "../../icones/IconePoubelle";
 import {
@@ -30,6 +30,7 @@ interface PiecesJointesProps {
   menuItem?: Options;
   piecesJointes: PieceJointe[];
   setPiecesJointes: (nouvellePiecejointe: PieceJointe[]) => void;
+  maxPiecesJointes?: number;
   libelleBouton?: string;
   disabled?: boolean;
 }
@@ -81,7 +82,10 @@ export const PiecesJointes: React.FC<PiecesJointesProps> = props => {
           maxSizeKB={FILE_MAX_SIZE_KB}
           onFileChange={onFileChange}
           verificationAvantDOuvriLeMenu={() => {
-            return verificationAvantDOuvriLeMenu(props.piecesJointes);
+            return verificationAvantDOuvriLeMenu(
+              props.piecesJointes,
+              props.maxPiecesJointes
+            );
           }}
         />
       </div>
@@ -174,9 +178,12 @@ function getColonneNomPJ(pj: PieceJointe): JSX.Element {
   );
 }
 
-export function verificationAvantDOuvriLeMenu(piecesJointes: PieceJointe[]) {
+export function verificationAvantDOuvriLeMenu(
+  piecesJointes: PieceJointe[],
+  maxPiecesJointes = MAX_PIECES_JOINTES
+) {
   let ouvrirLeMenu = true;
-  if (piecesJointes.length >= MAX_PIECES_JOINTES) {
+  if (piecesJointes.length >= maxPiecesJointes) {
     messageManager.showErrorAndClose(
       getLibelle("Le nombre maximal de pièces jointes est atteint")
     );
