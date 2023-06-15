@@ -80,20 +80,14 @@ $height: calc($spacing * 2.5);
 .ApercuReqCreationEtablissementPage {
   display: flex;
   height: 88vh;
-  .ResumeRequeteCreation {
-    overflow-y: scroll;
-    overflow-x: hidden;
-    scrollbar-width: none;
-  }
+
   .FocusPieceJustificative {
-    overflow-y: scroll;
-    overflow-x: hidden;
-    scrollbar-width: none;
-  }
-  .OngletsApercuCreationEtablissement {
-    overflow-y: scroll;
-    overflow-x: hidden;
-    scrollbar-width: none;
+    .body {
+      height: 88vh;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      scrollbar-width: none;
+    }
   }
 }
 
@@ -150,10 +144,16 @@ $height: calc($spacing * 2.5);
 }
 
 .ApercuReqCreationTranscriptionPriseEnChargePage {
+  display: flex;
   height: 88vh;
 
-  .ResumeRequeteCreation {
-    height: 88vh;
+  .MuiTabPanel-root {
+    padding: 0.2rem 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
+  }
+  .ResumeRequeteCreation.body {
     overflow-y: scroll;
     overflow-x: hidden;
     scrollbar-width: none;
@@ -164,16 +164,17 @@ $height: calc($spacing * 2.5);
   }
   .VoletAvecOnglet {
     flex-grow: 2;
-    height: 88vh;
     overflow-y: scroll;
     overflow-x: hidden;
     scrollbar-width: none;
   }
   .FocusPieceJustificative {
-    height: 88vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    scrollbar-width: none;
+    .body {
+      height: 88vh;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      scrollbar-width: none;
+    }
   }
   .FocusPieceJustificative.component.is-open {
     flex-grow: 2;

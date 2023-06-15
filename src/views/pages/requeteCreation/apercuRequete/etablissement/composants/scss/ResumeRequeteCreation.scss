@@ -4,8 +4,11 @@ $spacing: 0.35rem;
 $height: calc($spacing * 2.5);
 
 .ResumeRequeteCreation {
-  overflow: scroll;
-
+  .body {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
+  }
   .ligne {
     display: flex;
     padding-top: calc($spacing / 1.5);

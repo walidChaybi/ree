@@ -2,6 +2,7 @@ import { ErrorOutline } from "@mui/icons-material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Tab } from "@mui/material";
 import React from "react";
+import "./VoletAvecOnglet.scss";
 
 export interface IOnglet {
   titre: string;

@@ -14,7 +14,6 @@ import {
   waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import React from "react";
 import {
   expectEstAbsent,
   expectEstPresentAvecValeur,
@@ -25,6 +24,7 @@ import {
   expectEstTexteAbsent,
   expectEstTextePresent
 } from "../../../../../../../__tests__utils__/expectUtils";
+import React from "react";
 
 const acteMariage = mapActe(ficheActeMariage2.data);
 const requete = {
