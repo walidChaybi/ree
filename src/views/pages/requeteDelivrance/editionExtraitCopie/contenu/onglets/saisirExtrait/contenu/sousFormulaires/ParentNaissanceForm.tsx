@@ -11,7 +11,7 @@ import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Filiation, IFiliation } from "@model/etatcivil/acte/IFiliation";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
-import { estRenseigne, getLibelle } from "@util/Utils";
+import { UN, estRenseigne, getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
@@ -29,10 +29,20 @@ interface ParentNaissanceFormProps {
 export const ParentNaissanceForm: React.FC<
   ParentNaissanceFormProps
 > = props => {
-  const { saisieVerrouillee } = useContext(SaisirExtraitFormContext);
+  const { saisieVerrouillee, mapPrenomAffiche } = useContext(
+    SaisirExtraitFormContext
+  );
   const prenoms: IPrenomOrdonnes[] = Filiation.mapPrenomsVersPrenomsOrdonnes(
     props.parent
   );
+
+  const handleNbPrenomAffiche = (prenomAjoute: boolean) => {
+    const nbPrenomAffiche = mapPrenomAffiche.get(props.nom);
+    if (nbPrenomAffiche != null) {
+      const incrementationPrenom = prenomAjoute ? UN : -UN;
+      mapPrenomAffiche.set(props.nom, nbPrenomAffiche + incrementationPrenom);
+    }
+  };
 
   return (
     <div className="ParentNaissanceForm">
@@ -45,6 +55,12 @@ export const ParentNaissanceForm: React.FC<
         nom={withNamespace(props.nom, PRENOMS)}
         disabled={estRenseigne(props.parent.prenoms) && saisieVerrouillee}
         nbPrenoms={prenoms.length}
+        nbPrenomsAffiche={getNbPrenomsAffiche(
+          prenoms.length,
+          mapPrenomAffiche,
+          props.nom
+        )}
+        onNbPrenomChange={handleNbPrenomAffiche}
       />
       {!props.sansSexe && (
         <RadioField
@@ -79,3 +95,16 @@ export const ParentNaissanceForm: React.FC<
     </div>
   );
 };
+
+function getNbPrenomsAffiche(
+  nbPrenoms: number,
+  mapPrenomAffiche: Map<string, number>,
+  nom: string
+): number {
+  let nbPrenomAffiche = mapPrenomAffiche.get(nom);
+  if (nbPrenomAffiche == null) {
+    nbPrenomAffiche = Math.max(nbPrenoms, 1);
+    mapPrenomAffiche.set(nom, nbPrenomAffiche);
+  }
+  return nbPrenomAffiche > nbPrenoms ? nbPrenomAffiche : nbPrenoms;
+}

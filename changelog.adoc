@@ -1,1 +1,2 @@
-\* Limite de pièce jointe des requêtes RCT passe de 3 à 34
+* Limite de pièce jointe des requêtes RCT passe de 3 à 34
+* Conserver les prenoms des parents saisies sur l'extrait de naissance quand la case à cocher Adopté par est modifié

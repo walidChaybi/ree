@@ -1,9 +1,9 @@
-import { creerPlageDeNombres, getLibelle } from "@util/Utils";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { ZERO, creerPlageDeNombres, getLibelle } from "@util/Utils";
 import {
   CARATERES_AUTORISES_MESSAGE,
   CHAMP_OBLIGATOIRE
 } from "@widget/formulaire/FormulaireMessages";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
   IGNORER_TABULATION,
   INomForm,
@@ -20,7 +20,9 @@ import "./scss/PrenomsForm.scss";
 const MAX_PRENOMS = 12;
 interface IPrenomsFormProps {
   nbPrenoms?: number;
+  nbPrenomsAffiche?: number;
   prenom1Obligatoire?: boolean;
+  onNbPrenomChange?: (prenomAjoute: boolean) => void;
   onPrenomChange?: () => void;
   onPrenomBlur?: (
     indexPrenomAPartirDeUn: number,
@@ -65,8 +67,15 @@ const PrenomsForm: React.FC<PrenomFormProps> = props => {
   const [nbPrenomEnregistre, setNbPrenomEnregistre] = useState(0);
 
   useEffect(() => {
-    if (!nbPrenomInitialise && props.nbPrenoms) {
-      setNbPrenoms(props.nbPrenoms);
+    if (!nbPrenomInitialise && props.nbPrenoms != null) {
+      if (
+        props.nbPrenomsAffiche != null &&
+        props.nbPrenomsAffiche > props.nbPrenoms
+      ) {
+        setNbPrenoms(props.nbPrenomsAffiche);
+      } else if (props.nbPrenoms > ZERO) {
+        setNbPrenoms(props.nbPrenoms);
+      }
       setNbPrenomEnregistre(props.nbPrenoms);
       setNbPrenomInitialise(true);
     }
@@ -76,6 +85,9 @@ const PrenomsForm: React.FC<PrenomFormProps> = props => {
   const handleAjouterPrenom = () => {
     if (nbPrenoms < MAX_PRENOMS) {
       setNbPrenoms(nbPrenoms + 1);
+      if (props.onNbPrenomChange) {
+        props.onNbPrenomChange(true);
+      }
     }
   };
 
@@ -83,6 +95,9 @@ const PrenomsForm: React.FC<PrenomFormProps> = props => {
     if (nbPrenoms > nbPrenomEnregistre || !props.disabled) {
       setNbPrenoms(nbPrenoms - 1);
       props.formik.setFieldValue(champ, "");
+      if (props.onNbPrenomChange) {
+        props.onNbPrenomChange(false);
+      }
     }
   };
 

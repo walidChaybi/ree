@@ -1,10 +1,10 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
-import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import { requeteAvecDocs } from "@mock/data/DetailRequeteDelivrance";
-import { ficheActeMariage2 } from "@mock/data/ficheActe";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import { ficheActeMariage, ficheActeMariage2 } from "@mock/data/ficheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import {
   act,
@@ -356,5 +356,27 @@ test("Attendu: le déverrouillage des champs fonctionne correctement.", async ()
 
     expect(parentNomNaissance.disabled).toBeTruthy();
     expect(parentPrenom.disabled).toBeTruthy();
+  });
+});
+
+test("DOIT conserver les prenoms saisies QUAND le bouton 'Adopté par' est coché ou décoché", async () => {
+  render(
+    <SaisirExtraitForm
+      acte={mapActe(ficheActeMariage.data)}
+      requete={requete}
+    />
+  );
+  const adoptionTitulaire = screen.getByLabelText("titulaireEvt1.adoptePar");
+  const ajouterPrenomParent1 = screen.getAllByText(
+    "Ajouter prénom"
+  )[1] as HTMLAnchorElement;
+  const prenom3 = "titulaireEvt1.parentNaiss1.prenoms.prenom3";
+  await waitFor(() => {
+    expect(screen.queryByLabelText(prenom3)).not.toBeInTheDocument();
+  });
+  fireEvent.click(ajouterPrenomParent1);
+  fireEvent.click(adoptionTitulaire);
+  await waitFor(() => {
+      expect(screen.queryByLabelText(prenom3)).toBeInTheDocument();
   });
 });
