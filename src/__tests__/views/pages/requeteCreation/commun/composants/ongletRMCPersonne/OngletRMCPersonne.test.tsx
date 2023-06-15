@@ -228,40 +228,39 @@ describe("Test le fonctionnement de l'ajout / suppression des personnes au proje
     });
   });
 
-  test("DOIT verrouiller / déverrouiller le bouton d'ajout d'une personne QUAND on ajoute / retire cette personne du projet.", async () => {
+  test("DOIT rendre invisible / visible le bouton d'ajout d'une personne QUAND on ajoute / retire cette personne du projet.", async () => {
     await act(async () => {
       render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
     });
 
-    const boutonAjouter = screen.getAllByText("+")[0];
+    let boutonsAjouter = screen.getAllByText("+");
     const boutonItemParent = screen.getAllByText("Parent 2")[0];
 
     await waitFor(() => {
-      expect(boutonAjouter).toBeDefined();
+      expect(boutonsAjouter).toHaveLength(2);
+      expect(boutonsAjouter[0]).toBeInTheDocument();
       expect(boutonItemParent).toBeDefined();
-      expect(boutonAjouter).not.toHaveAttribute("disabled");
     });
 
-    await act(async () => {
-      fireEvent.click(boutonAjouter);
-      fireEvent.click(boutonItemParent);
-    });
+    fireEvent.click(boutonsAjouter[0]);
+    fireEvent.click(boutonItemParent);
 
     const boutonRetirer = screen.getAllByTitle(
       "Retirer cette personne du projet"
     )[1];
+
+    boutonsAjouter = screen.getAllByText("+");
     await waitFor(() => {
-      expect(boutonAjouter).toHaveAttribute("disabled");
+      expect(boutonsAjouter).toHaveLength(1);
       expect(boutonRetirer).toBeDefined();
       expect(estDansTableauPersonnesSauvegardees("Parent 2")).toBeTruthy();
     });
 
-    await act(async () => {
-      fireEvent.click(boutonRetirer);
-    });
+    fireEvent.click(boutonRetirer);
 
+    boutonsAjouter = screen.getAllByText("+");
     await waitFor(() => {
-      expect(boutonAjouter).not.toHaveAttribute("disabled");
+      expect(boutonsAjouter).toHaveLength(2);
       expect(estDansTableauPersonnesSauvegardees("Parent 2")).toBeFalsy();
     });
   });
@@ -397,21 +396,19 @@ describe("Test le fonctionnement de l'ajout / suppression des actes ou isncripti
     );
 
     await waitFor(() => {
-      expect(boutonAjouter).toBeDefined();
+      expect(boutonAjouter).toBeInTheDocument();
       expect(boutonItemActeInscription).toBeDefined();
       expect(boutonAjouter).not.toHaveAttribute("disabled");
     });
 
-    await act(async () => {
-      fireEvent.click(boutonAjouter);
-      fireEvent.click(boutonItemActeInscription);
-    });
+    fireEvent.click(boutonAjouter);
+    fireEvent.click(boutonItemActeInscription);
 
     const boutonRetirer = screen.getAllByTitle(
       "Retirer cet acte ou inscription du projet"
     )[2];
     await waitFor(() => {
-      expect(boutonAjouter).toHaveAttribute("disabled");
+      expect(boutonAjouter).not.toBeInTheDocument();
       expect(boutonRetirer).toBeDefined();
       expect(
         estDansTableauActesInscriptionsSauvegardes(
@@ -420,12 +417,9 @@ describe("Test le fonctionnement de l'ajout / suppression des actes ou isncripti
       ).toBeTruthy();
     });
 
-    await act(async () => {
-      fireEvent.click(boutonRetirer);
-    });
+    fireEvent.click(boutonRetirer);
 
     await waitFor(() => {
-      expect(boutonAjouter).not.toHaveAttribute("disabled");
       expect(
         estDansTableauActesInscriptionsSauvegardes(
           "Autres pièces justificatives"

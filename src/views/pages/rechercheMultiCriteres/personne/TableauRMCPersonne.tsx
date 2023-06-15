@@ -65,16 +65,7 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
     );
   }
 
-  const colonneBoutonAjouterPersonneOuActeInscriptionParams: IColonneBoutonMenuParams<
-    IDataTableauRMCPersonne,
-    string
-  > = {
-    getIdentifiant: getIdentifiantPersonneOuActeInscription,
-    style: { width: "3rem" },
-    getElement: getBoutonMenuElement
-  };
-
-  function handleEstDesactiveBoutonAjouterPersonneOuActeInscription(
+  function afficheBoutonAjouterPersonneOuActeInscription(
     data: IDataTableauRMCPersonne
   ): boolean {
     const identifiants: string[] = [
@@ -82,8 +73,20 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
         ? props.identifiantsPersonnesSelectionnees
         : props.identifiantsActesInscriptionsSelectionnes)
     ];
-    return identifiants.includes(getIdentifiantPersonneOuActeInscription(data));
+    return !identifiants.includes(
+      getIdentifiantPersonneOuActeInscription(data)
+    );
   }
+
+  const colonneBoutonAjouterPersonneOuActeInscriptionParams: IColonneBoutonMenuParams<
+    IDataTableauRMCPersonne,
+    string
+  > = {
+    filtreAffichageElement: afficheBoutonAjouterPersonneOuActeInscription,
+    getIdentifiant: getIdentifiantPersonneOuActeInscription,
+    style: { width: "3rem" },
+    getElement: getBoutonMenuElement
+  };
 
   const conteneurBoutonAjouterPersonneProps: IConteneurElementPropsPartielles<
     IDataTableauRMCPersonne,
@@ -91,8 +94,7 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
     TMouseEventSurHTMLButtonElement
   > = {
     handleInteractionUtilisateur:
-      props.onClickBoutonAjouterPersonneOuActeInscription,
-    handleEstDesactive: handleEstDesactiveBoutonAjouterPersonneOuActeInscription
+      props.onClickBoutonAjouterPersonneOuActeInscription
   };
 
   const boutonMenuAjouterPersonneProps: ICelluleBoutonMenuProps = {
