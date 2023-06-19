@@ -1,6 +1,5 @@
 import { InscriptionsLiees } from "@pages/fiche/hook/constructionComposants/inscriptionRepertoireCivil/InscriptionsLiees";
 import { render } from "@testing-library/react";
-import React from "react";
 
 test("Inscription liees: all rc link are displayed and separated bay coma", () => {
   const { getAllByText, getByText } = render(

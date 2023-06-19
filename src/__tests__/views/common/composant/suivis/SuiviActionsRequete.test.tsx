@@ -1,7 +1,6 @@
 import { SuiviActionsRequete } from "@composant/suivis/SuiviActionsRequete";
 import DONNEES_REQUETE from "@mock/data/requete";
 import { render, screen, waitFor } from "@testing-library/react";
-import React from "react";
 
 test("renders suivi des actions requete", async () => {
   render(<SuiviActionsRequete actions={DONNEES_REQUETE.actions} />);

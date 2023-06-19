@@ -9,7 +9,6 @@ import {
   waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import React from "react";
 
 beforeAll(() => {
   storeRece.utilisateurCourant = userDroitCOMEDEC;
@@ -20,7 +19,6 @@ test("render texte du bouton d'ajout d'alerte", async () => {
     <AlertesActes
       detailRequete={requeteDelivrance}
       ajoutAlerte={jest.fn()}
-      ajoutAlertePossible={true}
       addActe={{
         isChecked: true,
         idActe: "b41079a5-9e8d-478c-b04c-c4c2ac67134f"

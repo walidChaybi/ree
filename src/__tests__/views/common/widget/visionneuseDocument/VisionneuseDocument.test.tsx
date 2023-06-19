@@ -1,7 +1,6 @@
 import { imagePngVideBase64, urlImagePngVideBase64 } from "@mock/data/ImagePng";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
-import React from "react";
 
 // @ts-ignore
 global.URL.createObjectURL = jest.fn(() => urlImagePngVideBase64);

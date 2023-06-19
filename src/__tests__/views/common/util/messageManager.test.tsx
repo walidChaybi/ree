@@ -1,6 +1,5 @@
 import { render, waitFor } from "@testing-library/react";
 import messageManager from "@util/messageManager";
-import React from "react";
 import { ToastContainer } from "react-toastify";
 
 test("renders all types of error popin", async () => {
@@ -19,7 +18,7 @@ test("renders all types of error popin", async () => {
     </div>
   );
 
-  messageManager.showErrorAndClose("ErrorAndClose", 1000);
+  messageManager.showErrorAndClose("ErrorAndClose", "1000");
   messageManager.showErrors(["error1", "error2"]);
   messageManager.showError("SimpleError");
 
@@ -54,7 +53,7 @@ test("renders all types of success popin", async () => {
     </div>
   );
 
-  messageManager.showSuccessAndClose("SuccessAndClose", 1000);
+  messageManager.showSuccessAndClose("SuccessAndClose", "1000");
   messageManager.showSuccesses(["success1", "success2"]);
   messageManager.showSuccess("SimpleSuccess");
 
@@ -89,7 +88,7 @@ test("renders all types of information popin", async () => {
     </div>
   );
 
-  messageManager.showInfoAndClose("InfoAndClose", 1000);
+  messageManager.showInfoAndClose("InfoAndClose", "1000");
   messageManager.showInfos(["Info1", "Info2"]);
   messageManager.showInfo("SimpleInfo");
 
@@ -124,7 +123,7 @@ test("renders all types of warning popin", async () => {
     </div>
   );
 
-  messageManager.showWarningAndClose("WarningAndClose", 1000);
+  messageManager.showWarningAndClose("WarningAndClose", "1000");
   messageManager.showWarnings(["Warning1", "Warning2"]);
   messageManager.showWarning("SimpleWarning");
 

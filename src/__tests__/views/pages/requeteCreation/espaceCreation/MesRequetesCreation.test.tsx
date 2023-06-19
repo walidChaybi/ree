@@ -7,7 +7,6 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { act } from "react-dom/test-utils";
 import { Router } from "react-router-dom";
 

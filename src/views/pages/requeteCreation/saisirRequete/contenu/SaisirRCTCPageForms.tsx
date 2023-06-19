@@ -10,7 +10,6 @@ import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreat
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { getLibelle } from "@util/Utils";
 import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
-import React from "react";
 import IdentiteTitulaireForm from "../sousForm/identite/IdentiteTitulaireForm";
 import ParentsForm from "../sousForm/parent/ParentsForm";
 import RequerantForm from "../sousForm/requerant/RequerantForm";

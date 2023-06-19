@@ -4,7 +4,6 @@ import { URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { act } from "react-dom/test-utils";
 import { Router } from "react-router-dom";
 

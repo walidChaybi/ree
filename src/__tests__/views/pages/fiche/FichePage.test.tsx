@@ -7,7 +7,6 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { storeRece } from "@util/storeRece";
-import React from "react";
 import { act } from "react-dom/test-utils";
 
 const fct = jest.fn();

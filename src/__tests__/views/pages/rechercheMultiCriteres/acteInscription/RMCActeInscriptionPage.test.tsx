@@ -12,7 +12,6 @@ import {
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import * as TableauPaginationConstantes from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import React from "react";
 import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {
@@ -21,7 +20,9 @@ beforeAll(async () => {
 
 test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
   await act(async () => {
-    render(<RMCActeInscriptionPage />);
+    render(
+      <RMCActeInscriptionPage noAutoScroll={false} dansFenetreExterne={false} />
+    );
   });
   await waitFor(() => {
     expect(screen.getAllByText(titreForm)).toHaveLength(2);
@@ -30,7 +31,9 @@ test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async
 
 test("Bouton réinitialisation des champs", async () => {
   await act(async () => {
-    render(<RMCActeInscriptionPage />);
+    render(
+      <RMCActeInscriptionPage noAutoScroll={false} dansFenetreExterne={false} />
+    );
   });
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
@@ -75,7 +78,9 @@ test("Bouton réinitialisation des champs", async () => {
 
 test("Bouton Rechercher du Formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
   await act(async () => {
-    render(<RMCActeInscriptionPage />);
+    render(
+      <RMCActeInscriptionPage noAutoScroll={false} dansFenetreExterne={false} />
+    );
   });
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
@@ -136,7 +141,9 @@ test("La pagination (avec changement de plage) entre les fiches rc/rca/pacs s'ef
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
 
   await act(async () => {
-    render(<RMCActeInscriptionPage />);
+    render(
+      <RMCActeInscriptionPage noAutoScroll={false} dansFenetreExterne={false} />
+    );
   });
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
@@ -230,7 +237,9 @@ test("La pagination (avec changement de plage) entre les fiches acte s'effectue 
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
 
   await act(async () => {
-    render(<RMCActeInscriptionPage />);
+    render(
+      <RMCActeInscriptionPage noAutoScroll={false} dansFenetreExterne={false} />
+    );
   });
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;

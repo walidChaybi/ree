@@ -4,7 +4,6 @@ import {
   FIREFOX,
   SeulementNavigateur
 } from "@util/detectionNavigateur/DetectionNavigateur";
-import React from "react";
 
 test("Attendu: la détection du browser FIREFOX s'effectue correctement", async () => {
   const navigator = { userAgent: "Firefox xxxx" };

@@ -1,9 +1,9 @@
-import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
 } from "@mock/data/RMCInscription";
+import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
+import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { RMCTableauInscriptions } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauInscriptions";
 import {
   act,
@@ -17,7 +17,6 @@ import {
   NB_LIGNES_PAR_APPEL_INSCRIPTION,
   NB_LIGNES_PAR_PAGE_INSCRIPTION
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import React from "react";
 import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {

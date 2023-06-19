@@ -1,10 +1,10 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
-import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import {
   requeteAvecDocs,
   requeteAvecDocsPlurilingue
 } from "@mock/data/DetailRequeteDelivrance";
+import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import {
   ficheActe1,
   ficheActe1_avecTitulaireAyantDeuxParents,
@@ -16,8 +16,9 @@ import { IFiliation } from "@model/etatcivil/acte/IFiliation";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import {
   ISaisieExtraitForm,
   ITitulaireEvtForm,
@@ -25,7 +26,6 @@ import {
   saisiePaysInconnuTitulaire
 } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/mapping/mappingActeVerFormulaireSaisirExtrait";
 import { mapTitulaireNaissanceEtParents } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/mapping/mappingFormulaireSaisirExtraitVersExtraitAEnvoyer";
-import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import {
   act,
   fireEvent,
@@ -34,7 +34,6 @@ import {
   waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import React from "react";
 import {
   changeInput,
   expectEstAbsent,

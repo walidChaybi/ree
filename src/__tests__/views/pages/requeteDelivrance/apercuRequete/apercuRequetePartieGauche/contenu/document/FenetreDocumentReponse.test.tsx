@@ -3,7 +3,6 @@ import {
   onClose
 } from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/document/FenetreDocumentReponse";
 import { render, waitFor } from "@testing-library/react";
-import React from "react";
 import { mockFenetreFicheTestFunctions } from "../../../../../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {

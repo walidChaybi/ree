@@ -16,7 +16,6 @@ import {
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Router } from "react-router-dom";
 
 beforeAll(() => {

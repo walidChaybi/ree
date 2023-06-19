@@ -1,4 +1,3 @@
-import React from "react";
 import { SectionContentProps } from "./SectionContent";
 import { SectionPanelProps } from "./SectionPanel";
 import { SectionPanelAreaProps } from "./SectionPanelArea";

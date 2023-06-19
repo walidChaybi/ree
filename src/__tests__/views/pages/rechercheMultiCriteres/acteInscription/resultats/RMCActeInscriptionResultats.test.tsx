@@ -11,7 +11,6 @@ import {
   NB_LIGNES_PAR_PAGE_ACTE,
   NB_LIGNES_PAR_PAGE_INSCRIPTION
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import React from "react";
 
 test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
   const { container } = render(

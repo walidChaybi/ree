@@ -6,7 +6,6 @@ import {
 } from "@model/rmc/requete/IRMCRequestRequete";
 import ReportIcon from "@mui/icons-material/Report";
 import { getLibelle, getValeurOuUndefined } from "@util/Utils";
-import React from "react";
 
 export function determinerCriteresRMCAuto(
   requete: TRequete

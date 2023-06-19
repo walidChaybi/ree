@@ -6,7 +6,6 @@ import { getLibelle, triListeObjetsSurPropriete } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPartProps } from "@widget/section/SectionPart";
-import React from "react";
 import { Mariage } from "./Mariage";
 
 export function getInteresse(rcrca: IFicheRcRca): SectionPartProps[] {

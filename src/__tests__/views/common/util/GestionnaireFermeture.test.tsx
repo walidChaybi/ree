@@ -7,7 +7,6 @@ import {
   traiteAppelRequeteASigner
 } from "@util/GestionnaireFermeture";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Router } from "react-router-dom";
 
 const xhrMockObj = {
@@ -46,5 +45,5 @@ test("renders GestionnaireFermeture", async () => {
   });
 
   const event = new CustomEvent("beforeunload");
-  window.top.dispatchEvent(event);
+  window?.top?.dispatchEvent(event);
 });

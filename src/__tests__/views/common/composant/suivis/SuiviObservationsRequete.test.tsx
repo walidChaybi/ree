@@ -10,7 +10,6 @@ import {
   waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import React from "react";
 
 beforeAll(() => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;

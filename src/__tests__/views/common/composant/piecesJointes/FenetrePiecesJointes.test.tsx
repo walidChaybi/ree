@@ -4,7 +4,6 @@ import {
 } from "@composant/piecesJointes/FenetrePiecesJointes";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { render, waitFor } from "@testing-library/react";
-import React from "react";
 import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {

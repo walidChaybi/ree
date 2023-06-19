@@ -7,16 +7,17 @@ import {
 import { render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import {
-  buildPagesInfos,
   FilAriane,
+  buildPagesInfos,
   fildarianeLabel,
   gestionnaireNavigation,
   getPathElements,
   getUrlFromNPathElements
 } from "@widget/filAriane/FilAriane";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Router } from "react-router-dom";
+
+const setIsDirty = (isDirty = false) => {};
 
 test("renders composant FilAriane", () => {
   const history = createMemoryHistory();
@@ -40,7 +41,7 @@ test("renders de 2 éléments du FilAriane", async () => {
   history.push(URL_MES_REQUETES_DELIVRANCE);
   render(
     <Router history={history}>
-      <FilAriane routes={routesRece} />
+      <FilAriane routes={routesRece} isDirty={false} setIsDirty={setIsDirty} />
     </Router>
   );
   await waitFor(() => {
@@ -62,7 +63,7 @@ test("renders d'un uudi en dernier élément du FilAriane", () => {
 
   render(
     <Router history={history}>
-      <FilAriane routes={routesRece} />
+      <FilAriane routes={routesRece} isDirty={false} setIsDirty={setIsDirty} />
     </Router>
   );
   const uuidElement = screen.getByText(/Aperçu de requête/i);
@@ -77,7 +78,12 @@ test("renders de 2 éléments du FilAriane et mise à jour context", () => {
   }
   render(
     <Router history={history}>
-      <FilAriane routes={routesRece} setRetourState={setRetourContext} />
+      <FilAriane
+        routes={routesRece}
+        setRetourState={setRetourContext}
+        isDirty={false}
+        setIsDirty={setIsDirty}
+      />
     </Router>
   );
 });
@@ -95,7 +101,12 @@ test("renders d'un uudi en dernier élément du FilAriane et maj context", () =>
   }
   render(
     <Router history={history}>
-      <FilAriane routes={routesRece} setRetourState={setRetourContext} />
+      <FilAriane
+        routes={routesRece}
+        setRetourState={setRetourContext}
+        isDirty={false}
+        setIsDirty={setIsDirty}
+      />
     </Router>
   );
 });

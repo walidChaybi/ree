@@ -2,7 +2,6 @@ import { act, render, screen } from "@testing-library/react";
 import ReceDatePicker, {
   onDateValueChange
 } from "@widget/formulaire/datePicker/ReceDatePicker";
-import React from "react";
 
 test("render composant ReceDatePicker", async () => {
   await act(async () => {

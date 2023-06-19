@@ -1,10 +1,10 @@
+import { requeteAvecCopieIntegraleActeImage } from "@mock/data/DetailRequeteDelivrance";
+import { imagePngVideBase64 } from "@mock/data/ImagePng";
 import {
   userDroitCOMEDEC,
   userDroitnonCOMEDEC
 } from "@mock/data/connectedUserAvecDroit";
-import { requeteAvecCopieIntegraleActeImage } from "@mock/data/DetailRequeteDelivrance";
 import { idFicheActeMariage } from "@mock/data/ficheActe";
-import { imagePngVideBase64 } from "@mock/data/ImagePng";
 import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import {
   PATH_EDITION,
@@ -20,8 +20,7 @@ import {
   waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory, MemoryHistory } from "history";
-import React from "react";
+import { MemoryHistory, createMemoryHistory } from "history";
 import { Route, Router } from "react-router-dom";
 import { MimeType } from "../../../../../ressources/MimeType";
 import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";

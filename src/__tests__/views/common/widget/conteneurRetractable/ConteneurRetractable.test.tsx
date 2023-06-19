@@ -6,7 +6,6 @@ import {
   waitFor
 } from "@testing-library/react";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
-import React from "react";
 
 const renderConteneurRetractable = async () => {
   const Wrapper = () => {

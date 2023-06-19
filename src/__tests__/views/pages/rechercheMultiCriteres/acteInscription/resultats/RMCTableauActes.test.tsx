@@ -1,5 +1,5 @@
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { DataRMCActeAvecResultat, DataTableauActe } from "@mock/data/RMCActe";
+import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { RMCTableauActes } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauActes";
 import {
   act,
@@ -12,7 +12,6 @@ import {
   NB_LIGNES_PAR_APPEL_ACTE,
   NB_LIGNES_PAR_PAGE_ACTE
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import React from "react";
 import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {

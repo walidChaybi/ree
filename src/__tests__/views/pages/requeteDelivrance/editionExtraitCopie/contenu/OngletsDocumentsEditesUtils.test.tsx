@@ -16,7 +16,6 @@ import {
 import { act, render, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory, MemoryHistory } from "history";
-import React from "react";
 import { Route, Router } from "react-router-dom";
 import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 

@@ -1,6 +1,5 @@
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { FormPinCode } from "@widget/signature/FormPinCode";
-import React from "react";
 
 test("renders form popin, setPinCode function called on validation", async () => {
   const handleClickButton = jest.fn();

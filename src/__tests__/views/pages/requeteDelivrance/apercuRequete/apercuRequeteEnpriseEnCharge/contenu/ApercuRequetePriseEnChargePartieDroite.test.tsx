@@ -22,7 +22,6 @@ import {
   ID_TYPE_ALERTE
 } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Router } from "react-router-dom";
 
 const history = createMemoryHistory();

@@ -9,7 +9,6 @@ import {
 import { getLibelle } from "@util/Utils";
 import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
 import { Form, Formik } from "formik";
-import React from "react";
 import { inputPngFiles } from "../../../../../__tests__utils__/testsUtil";
 
 test("Attendu (composant PiecesJointesForm):  Une une pièce jointe est ajoutée à l'écran puis supprimée", async () => {

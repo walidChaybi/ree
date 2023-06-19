@@ -3,15 +3,22 @@ import { URL_ACCUEIL } from "@router/ReceUrls";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { Categorie } from "@widget/filAriane/Categorie";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Router } from "react-router-dom";
+
+const setIsDirty = (isDirty = false) => {};
 
 test("renders not last Categorie", async () => {
   const history = createMemoryHistory();
   history.push(URL_REQUETES);
   const { getByText } = render(
     <Router history={history}>
-      <Categorie url={URL_ACCUEIL} message={"accueil.test"} last={false} />
+      <Categorie
+        url={URL_ACCUEIL}
+        message={"accueil.test"}
+        last={false}
+        isDirty={false}
+        setIsDirty={setIsDirty}
+      />
     </Router>
   );
   await waitFor(() => {
@@ -27,7 +34,13 @@ test("renders not last Categorie and click", async () => {
   history.push(URL_REQUETES);
   const { getByText } = render(
     <Router history={history}>
-      <Categorie url={URL_ACCUEIL} message={"accueil.test"} last={false} />
+      <Categorie
+        url={URL_ACCUEIL}
+        message={"accueil.test"}
+        last={false}
+        isDirty={false}
+        setIsDirty={setIsDirty}
+      />
     </Router>
   );
   await waitFor(() => {
@@ -43,7 +56,13 @@ test("renders last Categorie", async () => {
   history.push(URL_REQUETES);
   const { getByText } = render(
     <Router history={history}>
-      <Categorie url={URL_ACCUEIL} message={"accueilString"} last={true} />
+      <Categorie
+        url={URL_ACCUEIL}
+        message={"accueilString"}
+        last={true}
+        isDirty={false}
+        setIsDirty={setIsDirty}
+      />
     </Router>
   );
   await waitFor(() => {
@@ -59,7 +78,13 @@ test("renders not last Categorie go to accueil", async () => {
   history.push("test2");
   const { getAllByText } = render(
     <Router history={history}>
-      <Categorie url={URL_ACCUEIL} message={"Accueil"} last={false} />
+      <Categorie
+        url={URL_ACCUEIL}
+        message={"Accueil"}
+        last={false}
+        isDirty={false}
+        setIsDirty={setIsDirty}
+      />
     </Router>
   );
   await waitFor(() => {

@@ -11,7 +11,6 @@ import {
   waitFor
 } from "@testing-library/react";
 import { MemoryHistory, createMemoryHistory } from "history";
-import React from "react";
 import { Router } from "react-router-dom";
 
 let history: MemoryHistory;

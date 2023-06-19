@@ -6,7 +6,6 @@ import {
 import { render, screen } from "@testing-library/react";
 import { BoutonRetour, getLibelleEtUrl } from "@widget/navigation/BoutonRetour";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Router } from "react-router-dom";
 
 let history: any;

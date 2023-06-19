@@ -1,6 +1,5 @@
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { act, render } from "@testing-library/react";
-import React from "react";
 
 test("Doit rendre le composant Echanges de la page création saisie de projet correctement", async () => {
   await act(async () => {

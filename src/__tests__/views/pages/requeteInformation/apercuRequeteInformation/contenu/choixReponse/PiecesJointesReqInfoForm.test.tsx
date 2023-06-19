@@ -9,7 +9,6 @@ import {
 } from "@testing-library/react";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Form, Formik } from "formik";
-import React from "react";
 
 test("renders PiecesJointesReqInfoForm, bouton activé", async () => {
   const props = {

@@ -1,6 +1,5 @@
 import { render, waitFor } from "@testing-library/react";
 import { SectionPanelArea } from "@widget/section/SectionPanelArea";
-import React from "react";
 
 test("render composant SectionPanelArea", async () => {
   const { getByText } = render(

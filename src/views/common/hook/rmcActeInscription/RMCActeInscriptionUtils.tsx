@@ -20,7 +20,6 @@ import {
   getValeurOuUndefined,
   getValeurOuVide
 } from "@util/Utils";
-import React from "react";
 import { getCriteresTitulaire } from "./mapping/RMCMappingUtil";
 
 export interface ICriteresRechercheActeInscription {

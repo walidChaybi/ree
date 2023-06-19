@@ -13,8 +13,7 @@ import {
   waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory, MemoryHistory } from "history";
-import React from "react";
+import { MemoryHistory, createMemoryHistory } from "history";
 import { Route, Router } from "react-router-dom";
 import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 

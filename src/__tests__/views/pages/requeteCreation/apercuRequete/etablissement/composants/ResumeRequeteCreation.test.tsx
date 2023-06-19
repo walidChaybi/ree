@@ -4,7 +4,6 @@ import ResumeRequeteCreation from "@pages/requeteCreation/apercuRequete/etabliss
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "@pages/requeteCreation/apercuRequete/etablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
 import { INFOS, resume as Labels } from "@pages/requeteCreation/commun/Labels";
 import { act, render, screen, waitFor } from "@testing-library/react";
-import React from "react";
 const renduResumeRequeteCreation = async () => {
   await act(async () => {
     render(

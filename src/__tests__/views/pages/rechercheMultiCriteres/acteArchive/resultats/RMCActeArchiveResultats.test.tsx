@@ -1,7 +1,6 @@
 import { DataRMCActeAvecResultat, DataTableauActe } from "@mock/data/RMCActe";
 import { RMCActeArchiveResultats } from "@pages/rechercheMultiCriteres/acteArchive/resultats/RMCActeArchiveResultats";
 import { render, screen } from "@testing-library/react";
-import React from "react";
 
 test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
   const { container } = render(

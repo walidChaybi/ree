@@ -8,7 +8,6 @@ import { ResumeRequeteCreationTranscriptionNaissanceMineureMajeure } from "@page
 import { AccordionTranscriptionMineureMajeure } from "@pages/requeteCreation/apercuRequete/transcription/composants/resumesRequete/AccordionTranscriptionMineureMajeure";
 import { act, render, screen } from "@testing-library/react";
 import { formatDateStringIso } from "@util/DateUtils";
-import React from "react";
 
 const dateCreation = formatDateStringIso("1999-02-21");
 const numeroTeledossier = "B-2-8GRZFCS3P";

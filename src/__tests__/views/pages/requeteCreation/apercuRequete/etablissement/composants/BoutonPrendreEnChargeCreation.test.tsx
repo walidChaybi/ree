@@ -5,7 +5,6 @@ import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID } from "@rout
 import { act, fireEvent, render, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Router } from "react-router-dom";
 
 test("Est Requete Creation au statut à traiter et appartient à mon service / services mères / service filles", async () => {

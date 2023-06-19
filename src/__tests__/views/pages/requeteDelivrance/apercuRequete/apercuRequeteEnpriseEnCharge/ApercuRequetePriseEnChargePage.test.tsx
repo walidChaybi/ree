@@ -20,7 +20,6 @@ import {
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Route, Router } from "react-router-dom";
 import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 

@@ -1,5 +1,5 @@
-import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
+import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import {
@@ -17,7 +17,6 @@ import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFl
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Route, Router } from "react-router-dom";
 import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 

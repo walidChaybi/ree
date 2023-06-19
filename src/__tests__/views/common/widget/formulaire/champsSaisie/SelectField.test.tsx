@@ -8,7 +8,6 @@ import {
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { Formik } from "formik";
-import React from "react";
 
 // Pour un test du composant dans un formulaire voir RegistreActeFiltre.test.tsx
 test("Attendu: composant SelectField fonctionne correctement", async () => {

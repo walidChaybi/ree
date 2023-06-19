@@ -15,7 +15,6 @@ import {
 import { getLastPathElem } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Router } from "react-router-dom";
 
 const history = createMemoryHistory();

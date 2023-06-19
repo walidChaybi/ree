@@ -1,6 +1,5 @@
 import { VisionneuseActe } from "@composant/visionneuseActe/VisionneuseActe";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import React from "react";
 
 describe("Display pdf Iframe", () => {
   test("Affichage par défaut", async () => {
@@ -27,7 +26,7 @@ describe("Display pdf Iframe", () => {
       const linkElement = screen.getByTitle("Visionneuse PDF");
       expect(linkElement).toBeInTheDocument();
     });
-    expect(document.querySelector("iframe").getAttribute("src")).toBe(
+    expect(document.querySelector("iframe")?.getAttribute("src")).toBe(
       "url_test#zoom=page-fit"
     );
     expect(screen.queryByRole("progressbar")).toBeNull();
@@ -46,7 +45,7 @@ describe("Display pdf Iframe", () => {
       const linkElement = screen.getByTitle("Visionneuse PDF");
       expect(linkElement).toBeInTheDocument();
     });
-    expect(document.querySelector("iframe").getAttribute("src")).toBe(
+    expect(document.querySelector("iframe")?.getAttribute("src")).toBe(
       "url_test#zoom=page-fit"
     );
     expect(screen.queryByRole("progressbar")).toBeNull();
@@ -59,7 +58,7 @@ describe("Display pdf Iframe", () => {
     await waitFor(() => {
       expect(screen.queryByRole("progressbar")).toBeNull();
     });
-    expect(document.querySelector("iframe").getAttribute("src")).toBe(
+    expect(document.querySelector("iframe")?.getAttribute("src")).toBe(
       "url_test_click#zoom=page-fit"
     );
   });

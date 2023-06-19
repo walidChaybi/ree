@@ -1,14 +1,13 @@
 import { MesRequetesPage } from "@pages/requeteDelivrance/espaceDelivrance/MesRequetesPage";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Router } from "react-router-dom";
 
 const history = createMemoryHistory();

@@ -2,7 +2,6 @@ import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { render, screen, waitFor } from "@testing-library/react";
-import React from "react";
 
 const REQUETE = mappingRequeteCreation(requeteCreationTranscription);
 

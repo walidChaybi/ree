@@ -1,10 +1,10 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
-import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import { requeteAvecDocs } from "@mock/data/DetailRequeteDelivrance";
+import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import { ficheActeDeces2 } from "@mock/data/ficheActe";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import {
   act,
@@ -14,7 +14,6 @@ import {
   waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import React from "react";
 import {
   expectEstAbsent,
   expectEstPresentAvecValeur,

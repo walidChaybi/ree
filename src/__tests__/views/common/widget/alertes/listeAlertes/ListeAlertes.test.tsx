@@ -12,7 +12,6 @@ import {
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { ListeAlertes } from "@widget/alertes/listeAlertes/ListeAlertes";
-import React from "react";
 
 storeRece.utilisateurCourant = userDroitCOMEDEC;
 

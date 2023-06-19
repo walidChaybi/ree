@@ -7,7 +7,6 @@ import {
   waitFor
 } from "@testing-library/react";
 import { AccordionVisionneuse } from "@widget/accordion/AccordionVisionneuse";
-import React from "react";
 import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {

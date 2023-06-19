@@ -10,6 +10,7 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import "@testing-library/jest-dom/extend-expect";
 import { storeRece } from "@util/storeRece";
+import React from "react";
 import request from "superagent";
 import { entitesRattachementALL } from "./mock/data/entitesRattachementALL";
 import { configAgent } from "./mock/superagent-config/superagent-mock-agent";
@@ -20,6 +21,10 @@ import { configOutiltech } from "./mock/superagent-config/superagent-mock-outilt
 import { configParamsBaseRequete } from "./mock/superagent-config/superagent-mock-params";
 import { configRequetes } from "./mock/superagent-config/superagent-mock-requetes";
 import { configTeleverification } from "./mock/superagent-config/superagent-mock-televerification";
+
+// Permet d'éviter de devoir importer React inutilement dans les tests
+global.React = React;
+
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],
   configEtatcivil[0],

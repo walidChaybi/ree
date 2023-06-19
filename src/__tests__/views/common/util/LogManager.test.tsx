@@ -3,7 +3,6 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { logError } from "@util/LogManager";
 import { storeRece } from "@util/storeRece";
-import React from "react";
 import { ToastContainer } from "react-toastify";
 
 beforeEach(() => {

@@ -12,7 +12,6 @@ import {
   TableauSimple,
   TableauSimpleProps
 } from "@widget/tableau/TableauSimple/TableauSimple";
-import React from "react";
 import { texteOptionCourrierModifie } from "./GestionOptionsCourrier";
 import "./scss/OptionsCourrierForm.scss";
 

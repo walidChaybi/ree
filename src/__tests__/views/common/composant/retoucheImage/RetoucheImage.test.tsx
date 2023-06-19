@@ -6,7 +6,6 @@ import {
   waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import React from "react";
 import { act } from "react-test-renderer";
 import { MimeType } from "../../../../../ressources/MimeType";
 

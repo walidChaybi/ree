@@ -5,7 +5,6 @@ import {
   formatNomsEtNomSouhaite
 } from "@pages/requeteCreation/apercuRequete/transcription/composants/resumesRequete/AccordionTranscriptionTitulaire";
 import { act, render, screen, waitFor } from "@testing-library/react";
-import React from "react";
 
 const titulaires = [
   {

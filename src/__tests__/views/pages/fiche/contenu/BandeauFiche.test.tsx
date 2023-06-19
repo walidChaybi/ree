@@ -3,7 +3,6 @@ import { BandeauFiche } from "@pages/fiche/contenu/BandeauFiche";
 import { BandeauFicheActeNumero } from "@pages/fiche/contenu/BandeauFicheActeNumero";
 import { BandeauFicheRcRcaPacsNumero } from "@pages/fiche/contenu/BandeauFicheRcRcaPacsNumero";
 import { render } from "@testing-library/react";
-import React from "react";
 import { bandeauActe } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
 import DATA_FICHE from "../../../../../mock/data/ficheEtBandeau/ficheRC";
 

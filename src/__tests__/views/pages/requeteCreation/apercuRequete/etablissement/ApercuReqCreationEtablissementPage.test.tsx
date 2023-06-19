@@ -1,12 +1,11 @@
 import { ApercuReqCreationEtablissementPage } from "@pages/requeteCreation/apercuRequete/etablissement/ApercuReqCreationEtablissementPage";
 import {
-    PATH_APERCU_REQ_CREATION_ETABLISSEMENT,
-    URL_MES_REQUETES_CREATION
+  PATH_APERCU_REQ_CREATION_ETABLISSEMENT,
+  URL_MES_REQUETES_CREATION
 } from "@router/ReceUrls";
 import { act, render, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Router } from "react-router";
 
 

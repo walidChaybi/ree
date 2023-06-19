@@ -6,7 +6,6 @@ import { RMCRequeteResultats } from "@pages/rechercheMultiCriteres/requete/resul
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { render, screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Router } from "react-router-dom";
 
 test("renders Fielset Recherche Multi Critères Requêtes", () => {

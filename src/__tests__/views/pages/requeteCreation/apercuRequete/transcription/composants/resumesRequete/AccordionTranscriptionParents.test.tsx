@@ -1,7 +1,6 @@
 import { mapTitulairesCreation } from "@hook/requete/DetailRequeteHook";
 import { AccordionTranscriptionParents } from "@pages/requeteCreation/apercuRequete/transcription/composants/resumesRequete/AccordionTranscriptionParents";
 import { act, render, screen, waitFor } from "@testing-library/react";
-import React from "react";
 
 const parents = [
   {

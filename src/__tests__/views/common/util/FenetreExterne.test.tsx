@@ -1,6 +1,5 @@
 import { render, waitFor } from "@testing-library/react";
 import { FenetreExterne } from "@util/FenetreExterne";
-import React from "react";
 import { mockFenetreFicheTestFunctions } from "../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {

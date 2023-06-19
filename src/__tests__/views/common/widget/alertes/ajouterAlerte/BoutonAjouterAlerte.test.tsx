@@ -13,7 +13,6 @@ import {
   COMPLEMENT_DESCRIPTION,
   ID_TYPE_ALERTE
 } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
-import React from "react";
 
 beforeEach(async () => {
   storeRece.utilisateurCourant = userDroitCOMEDEC;

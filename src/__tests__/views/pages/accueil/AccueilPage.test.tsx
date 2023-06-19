@@ -1,10 +1,9 @@
 import {
-    OfficierContext,
-    officierContextMock
+  OfficierContext,
+  officierContextMock
 } from "@core/contexts/OfficierContext";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { act, render, screen, waitFor } from "@testing-library/react";
-import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 let container: Element | null;
 

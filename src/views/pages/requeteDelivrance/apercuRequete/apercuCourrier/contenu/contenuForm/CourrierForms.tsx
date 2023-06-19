@@ -8,17 +8,16 @@ import {
   REQUETE,
   TEXTE_LIBRE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
+import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import AdresseForm from "@widget/formulaire/adresse/AdresseForm";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import RequeteForm from "@widget/formulaire/requete/RequeteForm";
-import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
-import React from "react";
 import "./scss/CourrierForm.scss";
 import ChoixCourrierForm, {
   ChoixCourrierSubFormProps

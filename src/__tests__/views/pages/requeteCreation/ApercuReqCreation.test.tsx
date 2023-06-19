@@ -20,8 +20,7 @@ import {
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory, MemoryHistory } from "history";
-import React from "react";
+import { MemoryHistory, createMemoryHistory } from "history";
 import { Route, Router } from "react-router-dom";
 
 beforeAll(() => {

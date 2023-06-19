@@ -1,6 +1,5 @@
 import { Header } from "@core/header/Header";
 import { fireEvent, render, screen } from "@testing-library/react";
-import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
 test("renders header", () => {

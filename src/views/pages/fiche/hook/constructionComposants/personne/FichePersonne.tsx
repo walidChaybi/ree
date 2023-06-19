@@ -9,7 +9,6 @@ import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
 import { SectionPartProps } from "@widget/section/SectionPart";
 import { SectionPartContentProps } from "@widget/section/SectionPartContent";
-import React from "react";
 import { LienFiche } from "../../../LienFiche";
 import { IParamsAffichage } from "../acte/FicheActeUtils";
 

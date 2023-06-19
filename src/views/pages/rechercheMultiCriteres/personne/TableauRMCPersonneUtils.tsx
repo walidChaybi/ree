@@ -27,7 +27,6 @@ import {
   IColonneBoutonMenuParams,
   getColonneBoutonMenu
 } from "@widget/tableau/TableauRece/colonneElements/boutonMenu/ColonneBoutonMenu";
-import React from "react";
 import {
   IActeInscriptionRMCPersonne,
   IPersonneRMCPersonne,

@@ -9,17 +9,17 @@ import { requeteInformation } from "@mock/data/requeteInformation";
 import { IDroit } from "@model/agent/Habilitation";
 import { INomenclatureAgentApi } from "@model/agent/INomenclatureAgentApi";
 import {
+  IOfficier,
   aDroitConsulterApercuRequeteInformation,
   aDroitConsulterRequeteCreation,
-  aDroitConsulterRequeteDelivrance,
-  IOfficier
+  aDroitConsulterRequeteDelivrance
 } from "@model/agent/IOfficier";
 import { IPerimetre } from "@model/agent/IPerimetre";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import {
-  getApercuRequeteSimple,
   IInfoRequeteSelectionnee,
+  getApercuRequeteSimple,
   utilisateurADroitOuvrirRequete
 } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCTableauRequetesAssociees";
 import {
@@ -30,7 +30,6 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Route, Router } from "react-router-dom";
 
 describe("RMCRequetesAssocieesResultats", () => {

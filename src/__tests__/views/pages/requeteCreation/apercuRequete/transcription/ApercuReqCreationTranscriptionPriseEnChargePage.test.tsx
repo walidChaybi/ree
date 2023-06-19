@@ -13,7 +13,6 @@ import {
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Route, Router } from "react-router";
 
 const history = createMemoryHistory();

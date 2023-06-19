@@ -1,6 +1,5 @@
 import { render, waitFor } from "@testing-library/react";
 import { SectionPart } from "@widget/section/SectionPart";
-import React from "react";
 
 test("render composant SectionPart", async () => {
   const { getByText } = render(

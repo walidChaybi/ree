@@ -1,8 +1,5 @@
 import { Mariage } from "@pages/fiche/hook/constructionComposants/interesses/Mariage";
 import { render } from "@testing-library/react";
-import React from "react";
-
-
 
 test("renders mariage : non marié à l'étranger mais avec un pays qui n'est pas la France", () => {
   const { getByText } = render(

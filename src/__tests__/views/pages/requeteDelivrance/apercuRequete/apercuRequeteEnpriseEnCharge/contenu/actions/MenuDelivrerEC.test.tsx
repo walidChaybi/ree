@@ -11,7 +11,6 @@ import {
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Router } from "react-router-dom";
 
 test("renders du bloc Menu Delivrer pour une requête de délivrance de sous-type RDD", async () => {

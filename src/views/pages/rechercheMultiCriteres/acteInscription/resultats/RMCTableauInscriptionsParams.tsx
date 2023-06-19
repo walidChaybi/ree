@@ -8,7 +8,6 @@ import {
 import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
 import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
-import React from "react";
 import { commonHeadersTableauRMC, TypeRMC } from "./RMCTableauCommun";
 
 const columnsTableauRmc = [

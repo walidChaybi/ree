@@ -7,7 +7,6 @@ import {
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { PopinSignature } from "@widget/signature/PopinSignature";
-import React from "react";
 import { acte } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
 
 

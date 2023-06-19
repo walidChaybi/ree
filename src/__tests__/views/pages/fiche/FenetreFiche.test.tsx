@@ -1,7 +1,6 @@
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { FenetreFiche } from "@pages/fiche/FenetreFiche";
 import { render, screen, waitFor } from "@testing-library/react";
-import React from "react";
 import { mockFenetreFicheTestFunctions } from "../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {

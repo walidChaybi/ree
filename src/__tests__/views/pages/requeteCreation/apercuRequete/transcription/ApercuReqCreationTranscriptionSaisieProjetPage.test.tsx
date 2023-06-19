@@ -1,19 +1,18 @@
 import { ApercuReqCreationTranscriptionSaisieProjetPage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSaisieProjetPage";
 import {
-    PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET,
-    URL_MES_REQUETES_CREATION,
-    URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
+  PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET,
+  URL_MES_REQUETES_CREATION,
+  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
 } from "@router/ReceUrls";
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
-import React from "react";
 import { Route, Router } from "react-router";
 
 

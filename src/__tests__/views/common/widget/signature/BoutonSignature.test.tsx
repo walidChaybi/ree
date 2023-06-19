@@ -1,13 +1,11 @@
 import { Orientation } from "@model/composition/enum/Orientation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { validerMentionsPlusieursDocuments } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import { createEvent, fireEvent, screen, waitFor } from "@testing-library/dom";
 import { act, render } from "@testing-library/react";
 import { BoutonSignature } from "@widget/signature/BoutonSignature";
-import React from "react";
 import { acte } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
-
 
 const requete: IRequeteTableauDelivrance = {
   idRequete: "id1",
@@ -153,5 +151,3 @@ test("renders titre bouton signature 2", async () => {
     expect(screen.getByText(/Valider/i)).toBeDefined();
   });
 });
-
-

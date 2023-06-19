@@ -2,7 +2,6 @@ import { LienPieceJointe } from "@composant/piecesJointes/LienPieceJointe";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { fireEvent, render, waitFor } from "@testing-library/react";
-import React from "react";
 import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
