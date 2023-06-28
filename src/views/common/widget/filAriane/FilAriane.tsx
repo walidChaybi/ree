@@ -1,3 +1,4 @@
+import { useBlockNavigation } from "@core/body/useBlockNavigation";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { URL_ACCUEIL, URL_CONTEXT_APP } from "@router/ReceUrls";
@@ -53,20 +54,17 @@ export const gestionnaireNavigation = new GestionnaireNavigation();
 /******** Fil d'ariane *******/
 interface FilArianeProps {
   routes: IRoute[];
-  isDirty: boolean;
-  setIsDirty: (isDirty: boolean) => void;
 }
 
 export const fildarianeLabel = getLibelle("Navigation par fil d'ariane");
 
-export const FilAriane: React.FC<FilArianeProps> = ({
-  routes,
-  isDirty,
-  setIsDirty
-}) => {
+export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
   const history = useHistory();
 
   const locationPathName = history.location.pathname;
+
+  useBlockNavigation();
+
   gestionnaireNavigation.addUrl(locationPathName);
   const pagesInfos = buildPagesInfos(
     history.location.pathname,
@@ -86,8 +84,6 @@ export const FilAriane: React.FC<FilArianeProps> = ({
             message={routeAccueil ? routeAccueil.libelle : "Accueil"}
             last={pagesInfos.length === 0}
             key={URL_ACCUEIL}
-            isDirty={isDirty}
-            setIsDirty={setIsDirty}
           />
 
           {pagesInfos.map((pageInfo: IPageInfo, index: number) => {
@@ -97,8 +93,6 @@ export const FilAriane: React.FC<FilArianeProps> = ({
                 message={pageInfo.libelle}
                 last={pageInfo.derniere}
                 key={pageInfo.url}
-                isDirty={isDirty}
-                setIsDirty={setIsDirty}
               />
             );
           })}

@@ -1,23 +1,29 @@
+import { RECEContext } from "@core/body/RECEContext";
 import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
 import { IRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeActeInscriptionSauvegarde } from "@model/requete/enum/TypeActeInscriptionSauvegarde";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
 import { TableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonne";
 import { mapDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
 import { getLibelle } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import {
   TMouseEventSurHTMLButtonElement,
   TMouseEventSurSVGSVGElement
 } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IDataTableauActeInscriptionSelectionne } from "../tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
 import { TableauActesInscriptionsSelectionnes } from "../tableauActesInscriptionsSelectionnes/TableauActesInscriptionsSelectionnes";
+import {
+  ISauvegardeRMCApiHookParams,
+  useSauvegardeRMCApiHook
+} from "../tableauPersonnesSelectionnees/hook/useSauvegardeRMCApiHook";
 import { IDataTableauPersonneSelectionnee } from "../tableauPersonnesSelectionnees/IDataTableauPersonneSelectionne";
 import { TableauPersonnesSelectionnees } from "../tableauPersonnesSelectionnees/TableauPersonnesSelectionnees";
 import {
@@ -33,11 +39,11 @@ interface OngletRMCPersonneProps {
   natureActeRequete: NatureActeRequete;
   resultatRMCPersonne: IRMCPersonneResultat[];
   listeTitulaires?: ITitulaireRequeteCreation[];
-  dataPersonnesSelectionnees: IDataTableauPersonneSelectionnee[];
+  dataPersonnesSelectionnees?: IDataTableauPersonneSelectionnee[];
   setDataPersonnesSelectionnees: React.Dispatch<
     React.SetStateAction<IDataTableauPersonneSelectionnee[] | undefined>
   >;
-  dataActesInscriptionsSelectionnes: IDataTableauActeInscriptionSelectionne[];
+  dataActesInscriptionsSelectionnes?: IDataTableauActeInscriptionSelectionne[];
   setDataActesInscriptionsSelectionnes: React.Dispatch<
     React.SetStateAction<IDataTableauActeInscriptionSelectionne[] | undefined>
   >;
@@ -47,9 +53,19 @@ interface OngletRMCPersonneProps {
   setRmcAutoPersonneParams: React.Dispatch<
     React.SetStateAction<IRMCAutoPersonneParams | undefined>
   >;
+  onSavePersonneEtActeInscription?: () => void;
+  idRequeteParam?: string;
 }
 
 export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
+  const { isDirty, setIsDirty } = useContext(RECEContext);
+  const [sauvegardeRMCApiHookParams, setSauvegardeRMCApiHookParams] =
+    useState<ISauvegardeRMCApiHookParams>();
+
+  const sauvegardeRMCApiHookResultat = useSauvegardeRMCApiHook(
+    sauvegardeRMCApiHookParams
+  );
+
   function onClickBoutonAjouterPersonneOuActeInscription(
     event: TMouseEventSurHTMLButtonElement,
     ligneTableau: IDataTableauRMCPersonne,
@@ -61,7 +77,12 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
       props.dataActesInscriptionsSelectionnes,
       props.dataPersonnesSelectionnees
     );
-    if (cle && !estDejaSelectionne && ligneTableau.estDataPersonne) {
+    if (
+      cle &&
+      !estDejaSelectionne &&
+      ligneTableau.estDataPersonne &&
+      props.dataPersonnesSelectionnees
+    ) {
       const role: RolePersonneSauvegardee | undefined =
         RolePersonneSauvegardee.getEnumFor(
           RolePersonneSauvegardee.getKeyForNom(cle)
@@ -77,13 +98,14 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
           }
         ].sort(triDataTableauPersonneSelectionneeSurNomPrenom)
       );
+      !isDirty && setIsDirty(true);
     } else if (cle && !estDejaSelectionne && !ligneTableau.estDataPersonne) {
       const typePJ: TypeActeInscriptionSauvegarde | undefined =
         TypeActeInscriptionSauvegarde.getEnumFor(
           TypeActeInscriptionSauvegarde.getKeyForNom(cle)
         );
       props.setDataActesInscriptionsSelectionnes([
-        ...props.dataActesInscriptionsSelectionnes,
+        ...(props.dataActesInscriptionsSelectionnes ?? []),
         {
           ...mapDataTableauRMCPersonneVersDataTableauActeInscriptionSelectionne(
             ligneTableau,
@@ -92,6 +114,7 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
           typePJ: typePJ.libelle
         }
       ]);
+      !isDirty && setIsDirty(true);
     }
   }
 
@@ -100,10 +123,11 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
     ligneTableau: IDataTableauPersonneSelectionnee
   ): void {
     props.setDataPersonnesSelectionnees(
-      props.dataPersonnesSelectionnees.filter(
+      props.dataPersonnesSelectionnees?.filter(
         personne => personne.idPersonne !== ligneTableau.idPersonne
       )
     );
+    !isDirty && setIsDirty(true);
   }
 
   function onClickBoutonRetirerActeInscription(
@@ -111,11 +135,12 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
     ligneTableau: IDataTableauActeInscriptionSelectionne
   ): void {
     props.setDataActesInscriptionsSelectionnes(
-      props.dataActesInscriptionsSelectionnes.filter(
+      props.dataActesInscriptionsSelectionnes?.filter(
         acteInscription =>
           acteInscription.idActeInscription !== ligneTableau.idActeInscription
       )
     );
+    !isDirty && setIsDirty(true);
   }
 
   function handleClickMenuItemRMCPersonneRequete(idTitulaire: string) {
@@ -129,18 +154,41 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
     }
   }
 
+  function sauvegardePersonneEtActeSelectionne() {
+    setSauvegardeRMCApiHookParams({
+      dataPersonnesSelectionnees: props.dataPersonnesSelectionnees || [],
+      dataActesInscriptionsSelectionnes:
+        props.dataActesInscriptionsSelectionnes || [],
+      idRequete: props.idRequeteParam || ""
+    });
+  }
+
+  useEffect(() => {
+    if (
+      sauvegardeRMCApiHookResultat?.estValide &&
+      props.onSavePersonneEtActeInscription
+    ) {
+      props.onSavePersonneEtActeInscription();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sauvegardeRMCApiHookResultat]);
+
   return (
     <>
       <TableauRMCPersonne
         dataTableauRMCPersonne={mapDataTableauRMCPersonne(
           props.resultatRMCPersonne
         )}
-        identifiantsPersonnesSelectionnees={props.dataPersonnesSelectionnees.map(
-          personne => personne.idPersonne
-        )}
-        identifiantsActesInscriptionsSelectionnes={props.dataActesInscriptionsSelectionnes.map(
-          acteInscription => acteInscription.idActeInscription
-        )}
+        identifiantsPersonnesSelectionnees={
+          props.dataPersonnesSelectionnees?.map(
+            personne => personne.idPersonne
+          ) || []
+        }
+        identifiantsActesInscriptionsSelectionnes={
+          props.dataActesInscriptionsSelectionnes?.map(
+            acteInscription => acteInscription.idActeInscription
+          ) || []
+        }
         natureActeRequete={props.natureActeRequete}
         enChargement={props.tableauRMCPersonneEnChargement}
         onClickBoutonAjouterPersonneOuActeInscription={
@@ -157,19 +205,23 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       />
       <TableauPersonnesSelectionnees
-        dataPersonnesSelectionnees={props.dataPersonnesSelectionnees}
+        dataPersonnesSelectionnees={props.dataPersonnesSelectionnees || []}
         onClickBoutonRetirerPersonne={onClickBoutonRetirerPersonne}
         enChargement={props.tableauPersonnesSelectionneesEnChargement}
       />
       <TableauActesInscriptionsSelectionnes
         dataActesInscriptionsSelectionnes={
-          props.dataActesInscriptionsSelectionnes
+          props.dataActesInscriptionsSelectionnes || []
         }
         onClickBoutonRetirerActeInscription={
           onClickBoutonRetirerActeInscription
         }
         enChargement={props.tableauPersonnesSelectionneesEnChargement}
       />
+
+      <Bouton disabled={!isDirty} onClick={sauvegardePersonneEtActeSelectionne}>
+        {getLibelle("Sauvegarder")}
+      </Bouton>
     </>
   );
 };
@@ -177,8 +229,8 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
 function identifiantEstDejaSelectionne(
   identifiant: string,
   estDataPersonne: boolean,
-  dataActesInscriptionsSelectionnes: IDataTableauActeInscriptionSelectionne[],
-  dataPersonnesSelectionnees: IDataTableauPersonneSelectionnee[]
+  dataActesInscriptionsSelectionnes: IDataTableauActeInscriptionSelectionne[] = [],
+  dataPersonnesSelectionnees: IDataTableauPersonneSelectionnee[] = []
 ): boolean {
   return estDataPersonne
     ? dataPersonnesSelectionnees.some(

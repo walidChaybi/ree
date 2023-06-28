@@ -1,9 +1,10 @@
 import { HTTP_STATUS_OK } from "@api/ApiManager";
 import { URL_REQUETES_COUNT } from "@api/appels/requeteApi";
+import { RECEContext } from "@core/body/RECEContext";
 import { OfficierContextProps } from "@core/contexts/OfficierContext";
 import { IOfficier } from "@model/agent/IOfficier";
 import { executeEnDiffere, getLibelle } from "@util/Utils";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import apiResources from "../../../ressources/api.json";
 import { getCsrfHeader } from "./CsrfUtil";
@@ -22,22 +23,21 @@ export const GestionnaireFermeture: React.FC<
   GestionnaireFermetureProps
 > = props => {
   const history = useHistory();
+  const { isDirty } = useContext(RECEContext);
+
   useEffect(() => {
     const handleBackBeforUnload = (event: any) => {
-      let resTraitement: any = true;
-      if (props.fctAAppeler) {
+      let resTraitement: any = false;
+      if (props.fctAAppeler && !isDirty) {
         const res = props.fctAAppeler(props.paramsFctAAppler);
-
         if (props.fctTraitementResultat) {
           resTraitement = props.fctTraitementResultat(res);
         }
       }
 
       if (resTraitement) {
-        // Cancel the default event
         event.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
-        // Older browsers supported custom message
-        event.returnValue = "Are you sur to close this window";
+
         if (props.urlRedirection) {
           executeEnDiffere(function () {
             if (props.urlRedirection) {
@@ -45,8 +45,6 @@ export const GestionnaireFermeture: React.FC<
             }
           }, TIME_OUT_MS);
         }
-      } else {
-        delete event["returnValue"]; // the absence of a returnValue property on the event will guarantee the browser unload happens
       }
     };
     if (window.top) {
@@ -60,7 +58,7 @@ export const GestionnaireFermeture: React.FC<
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isDirty]);
 
   return null;
 };

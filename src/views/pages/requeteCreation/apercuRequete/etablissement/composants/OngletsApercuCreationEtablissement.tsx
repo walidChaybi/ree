@@ -1,7 +1,7 @@
 import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
 import { IRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
-import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { IDataTableauActeInscriptionSelectionne } from "@pages/requeteCreation/commun/composants/tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
 import { IDataTableauPersonneSelectionnee } from "@pages/requeteCreation/commun/composants/tableauPersonnesSelectionnees/IDataTableauPersonneSelectionne";

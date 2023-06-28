@@ -1,8 +1,14 @@
 import { HTTP_FORBIDDEN, HTTP_UNAUTHORIZED } from "@api/ApiManager";
 import { routesRece } from "@router/ReceRoutes";
+import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { RouterComponent } from "@router/RouteComponent";
 import { useReinitialisationComposant } from "@util/form/useReinitialisation";
 import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
+import {
+  appelRequetesASigner,
+  GestionnaireFermeture,
+  traiteAppelRequeteASigner
+} from "@util/GestionnaireFermeture";
 import { logError } from "@util/LogManager";
 import { getLibelle } from "@util/Utils";
 import { FilAriane } from "@widget/filAriane/FilAriane";
@@ -46,11 +52,14 @@ export const Body: React.FC = () => {
                     rechargementPage: reinitialisation
                   }}
                 >
-                  <FilAriane
-                    routes={routesRece}
-                    isDirty={isDirty}
-                    setIsDirty={setIsDirty}
-                  />
+                  <GestionnaireFermeture
+                    paramsFctAAppler={officier}
+                    fctAAppeler={appelRequetesASigner}
+                    fctTraitementResultat={traiteAppelRequeteASigner}
+                    urlRedirection={URL_MES_REQUETES_DELIVRANCE}
+                  ></GestionnaireFermeture>
+
+                  <FilAriane routes={routesRece} />
                   <RouterComponent key={cleReinitialisation} />
                 </RECEContext.Provider>
               )

@@ -1,4 +1,5 @@
 export interface IDataTableauActeInscriptionSelectionne {
+  idPersonne: string;
   idActeInscription: string;
   typePJ?: string;
   nom?: string;

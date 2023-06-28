@@ -40,6 +40,7 @@ export function mapDataTableauRMCPersonneVersDataTableauActeInscriptionSelection
   )?.personne as IPersonneRMCPersonne;
 
   return {
+    idPersonne: personne.idPersonne,
     idActeInscription: data.idPersonneOuActeInscription,
     nature: data.nature,
     reference: data.reference,

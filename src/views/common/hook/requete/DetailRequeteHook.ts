@@ -422,10 +422,7 @@ function mapPersonnesSauvegardees(
   data?.forEach(dataCourant =>
     personnesSauvegardees.push({
       idPersonne: dataCourant.idPersonne,
-      role: RolePersonneSauvegardee.getEnumForEnFonctionNatureActeRequete(
-        dataCourant.role,
-        estRequeteMariage
-      )
+      role: RolePersonneSauvegardee.getEnumFor(dataCourant.role)
     })
   );
   return personnesSauvegardees;

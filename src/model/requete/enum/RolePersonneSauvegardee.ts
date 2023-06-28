@@ -45,6 +45,10 @@ export class RolePersonneSauvegardee extends EnumWithComplete {
     return EnumWithComplete.getEnumFor(str, RolePersonneSauvegardee);
   }
 
+  public static getKeyForLibelle(str: string): string {
+    return EnumWithComplete.getKeyForLibelle(RolePersonneSauvegardee, str);
+  }
+
   public static getKeyForNom(nom: string): string {
     return EnumWithComplete.getKeyForNom(RolePersonneSauvegardee, nom);
   }
@@ -61,7 +65,7 @@ export class RolePersonneSauvegardee extends EnumWithComplete {
           this.PARENT_1_TITULAIRE_2,
           this.PARENT_2_TITULAIRE_2
         ]
-      : [this.TITULAIRE, this.PARENT_1, this.PARENT_2];
+      : [this.TITULAIRE_1, this.PARENT_1, this.PARENT_2];
   }
 
   public static getEnumForEnFonctionNatureActeRequete(

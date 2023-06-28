@@ -210,11 +210,16 @@ const getUrlApercuPriseEnChargeCreationTranscriptionAPartirDe = (
     pathApercu: PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE
   });
 
+const urlMesRequetesDelivrance = (url: string): boolean => {
+  return url === URL_MES_REQUETES_DELIVRANCE;
+};
+
 export const receUrl = {
   estUrlApercuRequete,
   estUrlApercuTraitementRequete,
   getUrlApercuTraitementAPartirDe,
   getUrlApercuPriseEnChargeCreationTranscriptionAPartirDe,
   estUrlSaisirCourrier,
-  estUrlEdition
+  estUrlEdition,
+  urlMesRequetesDelivrance
 };

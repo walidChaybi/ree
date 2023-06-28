@@ -660,3 +660,21 @@ export const estSuperieurA500Caracteres = (texte: string) => {
 export function creerPlageDeNombres(nb: number): number[] {
   return Array.from({ length: nb }, (v, index) => index);
 }
+
+export function sontTableauxIdentiques(arr1: any[], arr2: any) {
+  let bool = true;
+  if (arr1 === arr2) {
+    bool = true;
+  } else if (arr1 == null || arr2 == null) {
+    bool = false;
+  } else if (arr1.length !== arr2.length) {
+    bool = false;
+  }
+  for (let i = 0; i < arr1.length; ++i) {
+    if (arr1[i] !== arr2[i]) {
+      bool = false;
+      break;
+    }
+  }
+  return bool;
+}

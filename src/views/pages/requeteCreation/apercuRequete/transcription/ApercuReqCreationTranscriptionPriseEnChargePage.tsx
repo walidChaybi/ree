@@ -1,29 +1,33 @@
+import { RECEContext } from "@core/body/RECEContext";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
+import {
+  IDetailRequeteParams,
+  useAvecRejeuDetailRequeteApiHook
+} from "@hook/requete/DetailRequeteHook";
 import { mAppartient } from "@model/agent/IOfficier";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
-import Labels from "@pages/requeteCreation/commun/Labels";
 import { AnalyseDuDossier } from "@pages/requeteCreation/commun/composants/AnalyseDuDossier";
-import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
+import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
+import Labels from "@pages/requeteCreation/commun/Labels";
 import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import {
   URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID,
   URL_RECHERCHE_REQUETE
 } from "@router/ReceUrls";
-import { getLibelle } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
+import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { OngletPiecesJustificatives } from "../../commun/composants/OngletPiecesJustificatives";
 import "../../commun/scss/ApercuReqCreationPage.scss";
@@ -46,12 +50,27 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
   // States
   const [requete, setRequete] = useState<IRequeteCreation>();
   const [ongletSelectionne, setOngletSelectionne] = useState(1);
+  const [detailRequeteParams, setDetailRequeteParams] =
+    useState<IDetailRequeteParams>();
+  const { setIsDirty } = useContext(RECEContext);
 
   // Hooks
-  const { detailRequeteState } = useDetailRequeteApiHook(
-    props.idRequeteAAfficher ?? idRequeteParam,
-    history.location.pathname.includes(URL_RECHERCHE_REQUETE)
-  );
+  const { detailRequeteState } =
+    useAvecRejeuDetailRequeteApiHook(detailRequeteParams);
+
+  useEffect(() => {
+    rechargerLaRequete();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function rechargerLaRequete() {
+    setDetailRequeteParams({
+      idRequete: props.idRequeteAAfficher ?? idRequeteParam,
+      estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+    });
+    setIsDirty(false);
+  }
+
   const {
     dataPersonnesSelectionnees,
     setDataPersonnesSelectionnees,
@@ -112,7 +131,7 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
                 natureActeRequete={NatureActeRequete.getEnumFor(
                   requete.nature ?? ""
                 )}
-                dataPersonnesSelectionnees={dataPersonnesSelectionnees || []}
+                dataPersonnesSelectionnees={dataPersonnesSelectionnees}
                 setDataPersonnesSelectionnees={setDataPersonnesSelectionnees}
                 tableauRMCPersonneEnChargement={rmcAutoPersonneEnChargement}
                 tableauPersonnesSelectionneesEnChargement={
@@ -122,12 +141,14 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
                   !dataActesInscriptionsSelectionnes
                 }
                 dataActesInscriptionsSelectionnes={
-                  dataActesInscriptionsSelectionnes || []
+                  dataActesInscriptionsSelectionnes
                 }
                 setDataActesInscriptionsSelectionnes={
                   setDataActesInscriptionsSelectionnes
                 }
                 setRmcAutoPersonneParams={setRmcAutoPersonneParams}
+                onSavePersonneEtActeInscription={rechargerLaRequete}
+                idRequeteParam={idRequeteParam}
               />
             ),
             index: 1

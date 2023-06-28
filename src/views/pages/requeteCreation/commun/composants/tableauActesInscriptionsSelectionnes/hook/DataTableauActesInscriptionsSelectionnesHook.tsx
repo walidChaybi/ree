@@ -1,7 +1,7 @@
 import { useActesInscriptionsSauvegardesApiHook } from "@hook/acte/ActesInscriptionsSauvegardesApiHook";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
-import { ZERO, getValeurOuUndefined } from "@util/Utils";
 import messageManager from "@util/messageManager";
+import { getValeurOuUndefined, ZERO } from "@util/Utils";
 import React, { useEffect, useState } from "react";
 import {
   ActeInscriptionSauvegardeDto,
@@ -94,6 +94,7 @@ function mapDataTableauActeInscriptionSelectionne(
   piecesActesInscriptionsSauvegardees: IPieceJustificativeCreation[]
 ): IDataTableauActeInscriptionSelectionne {
   return {
+    idPersonne: getValeurOuUndefined(data.personne.idPersonne),
     idActeInscription: getValeurOuUndefined(data.idActeOuInscription),
     nature: getValeurOuUndefined(data.nature),
     reference: getValeurOuUndefined(data.reference),

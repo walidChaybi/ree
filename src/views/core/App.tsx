@@ -3,7 +3,6 @@
 import { GestionnaireCacheApi } from "@api/appels/cache/GestionnaireCacheApi";
 import { GestionnaireNomenclature } from "@api/nomenclature/GestionnaireNomenclature";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import "@scss/_colors.scss";
 import "@scss/_library.scss";
 import {
@@ -12,11 +11,6 @@ import {
   SeulementNavigateur
 } from "@util/detectionNavigateur/DetectionNavigateur";
 import { ErrorManager } from "@util/ErrorManager";
-import {
-  appelRequetesASigner,
-  GestionnaireFermeture,
-  traiteAppelRequeteASigner
-} from "@util/GestionnaireFermeture";
 import { logError } from "@util/LogManager";
 import { TOASTCONTAINER_PRINCIPAL } from "@util/messageManager";
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
@@ -63,7 +57,7 @@ const App: React.FC = () => {
         GestionnaireCacheApi.chargerTousLesUtilisateurs(),
         GestionnaireCacheApi.chargerToutesLesEntites(),
         GestionnaireCacheApi.chargerTousLesDecrets()
-      ]).then((values) => {
+      ]).then(values => {
         setOperationEnCours(false);
       });
     }
@@ -87,21 +81,12 @@ const App: React.FC = () => {
             <div className="App">
               <OfficierContext.Provider value={login}>
                 <OfficierContext.Consumer>
-                  {(officier) => {
+                  {officier => {
                     storeRece.utilisateurCourant = officier?.officierDataState;
                     return null;
                   }}
                 </OfficierContext.Consumer>
-                <OfficierContext.Consumer>
-                  {(officier) => (
-                    <GestionnaireFermeture
-                      paramsFctAAppler={officier}
-                      fctAAppeler={appelRequetesASigner}
-                      fctTraitementResultat={traiteAppelRequeteASigner}
-                      urlRedirection={URL_MES_REQUETES_DELIVRANCE}
-                    ></GestionnaireFermeture>
-                  )}
-                </OfficierContext.Consumer>
+
                 <Header />
                 {!operationEnCours && <Body />}
                 <ToastContainer
