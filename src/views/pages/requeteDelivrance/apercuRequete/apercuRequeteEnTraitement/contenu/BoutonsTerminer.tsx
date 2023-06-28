@@ -2,8 +2,6 @@ import { RECEContext } from "@core/body/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
@@ -36,10 +34,9 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
   const [estDisabled, setEstDisabled] = useState(true);
   const { isDirty, setIsDirty } = useContext(RECEContext);
 
-  const aDroitSignerEtStatutSigner = possibleDeSigner(
+  const aDroitSignerEtStatutSigner = estPossibleDeSigner(
     requete.statutCourant.statut,
-    requete.sousType,
-    requete.choixDelivrance
+    requete.sousType
   );
 
   const afficheBoutonTransmettreAValideur = possibleDeTransmettreAValideur(
@@ -128,17 +125,13 @@ const afficherBoutonValiderTerminer = (requete: IRequeteDelivrance) =>
   (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
     SousTypeDelivrance.estRDCSDouRDCSC(requete.sousType));
 
-const possibleDeSigner = (
+const estPossibleDeSigner = (
   statut: StatutRequete,
-  sousTypeDelivrance: SousTypeDelivrance,
-  choixDelivrance?: ChoixDelivrance
+  sousTypeDelivrance: SousTypeDelivrance
 ): boolean => {
   return (
     officierHabiliterPourLeDroit(Droit.SIGNER) &&
-    statut === StatutRequete.A_SIGNER &&
-    DocumentDelivrance.estExtraitCopieAsignerAPartirChoixDelivrance(
-      choixDelivrance
-    ) &&
+    StatutRequete.estASigner(statut) &&
     SousTypeDelivrance.estSousTypeSignable(sousTypeDelivrance)
   );
 };

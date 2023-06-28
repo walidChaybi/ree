@@ -318,14 +318,6 @@ export class DocumentDelivrance extends EnumNomemclature {
     return CodesExtraitCopieASigner.includes(code);
   }
 
-  public static estExtraitCopieAsignerAPartirChoixDelivrance(
-    choixDelivrance?: ChoixDelivrance
-  ): boolean {
-    const uuidTypeDocument =
-      DocumentDelivrance.getTypeDocument(choixDelivrance);
-    return DocumentDelivrance.estExtraitCopieAsigner(uuidTypeDocument);
-  }
-
   public static estExtraitCopieAsigner(uuidTypeDocument?: string): boolean {
     const documentDelivrance =
       DocumentDelivrance.getEnumForUUID(uuidTypeDocument);
