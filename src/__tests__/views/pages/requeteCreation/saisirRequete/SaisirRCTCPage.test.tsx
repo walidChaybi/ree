@@ -45,37 +45,37 @@ const history = createMemoryHistory();
 const getInput = (label: string): HTMLInputElement =>
   screen.getByLabelText(label) as HTMLInputElement;
 
-test("DOIT rendre la page de saisie du formulaire de création correctement", async () => {
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <HookSaisirRCTCForm />
-      </Router>
-    );
-  });
-
-  // const boutonAjouterParent = screen.getByText("Ajouter un parent");
-  const boutonAjouterParent = screen.queryByText("Ajouter un parent");
-
-  const boutonSupprimerParent = screen.queryByText("Supprimer un parent");
+test("DOIT ajouter un parent QUAND on clique sur le bouton 'Ajouter un parent'", async () => {
+  render(
+    <Router history={history}>
+      <HookSaisirRCTCForm />
+    </Router>
+  );
 
   await waitFor(() => {
-    expect(boutonAjouterParent).toBeInTheDocument();
+    expect(screen.queryByText("Parent 2")).not.toBeInTheDocument();
   });
 
-  await act(async () => {
-    if (boutonAjouterParent) {
-      fireEvent.click(boutonAjouterParent);
-    }
-  });
+  fireEvent.click(screen.getByText("Ajouter un parent"));
 
   await waitFor(() => {
+    expect(screen.getByText("Retirer un parent")).toBeInTheDocument();
     expect(screen.getByText("Parent 2")).toBeInTheDocument();
   });
+});
+
+test("DOIT retirer un parent QUAND on clique sur le bouton 'Retirer un parent'", async () => {
+  render(
+    <Router history={history}>
+      <HookSaisirRCTCForm />
+    </Router>
+  );
+
+  fireEvent.click(screen.getByText("Ajouter un parent"));
+  fireEvent.click(screen.getByText("Retirer un parent"));
 
   await waitFor(() => {
-    expect(boutonAjouterParent).not.toBeInTheDocument();
-    expect(boutonSupprimerParent).toBeDefined();
+    expect(screen.queryByText("Parent 2")).not.toBeInTheDocument();
   });
 });
 

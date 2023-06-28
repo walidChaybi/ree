@@ -1,5 +1,6 @@
 import {
   DATE_NAISSANCE,
+  IDENTIFIANT,
   LIEN_REQUERANT,
   NAISSANCE,
   NOM,
@@ -18,9 +19,10 @@ import PrenomsForm, {
   genererDefaultValuesPrenoms
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { TypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerantCreation";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { getLibelle, SPC } from "@util/Utils";
+import { TypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerantCreation";
+import { SPC, getLibelle } from "@util/Utils";
+import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues
@@ -28,7 +30,6 @@ import DateComposeForm, {
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
-import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import {
   ISubForm,
   SubFormProps,
@@ -47,6 +48,7 @@ import NomsFormTitulaire, {
 } from "./nomsPrenoms/NomsForm";
 
 export const IdentiteFormDefaultValues = {
+  [IDENTIFIANT]: "",
   [NOMS]: NomsFormDefaultValues,
   [PAS_DE_PRENOM_CONNU]: "false",
   [PRENOMS]: genererDefaultValuesPrenoms(),

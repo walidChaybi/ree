@@ -1,4 +1,5 @@
 export interface IEvenementUnion {
+  id: string;
   type: string;
   jour?: number;
   mois?: number;

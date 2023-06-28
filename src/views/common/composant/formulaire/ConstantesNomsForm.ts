@@ -1,4 +1,5 @@
 // Commun
+export const IDENTIFIANT = "identifiant";
 export const DATE = "date";
 export const JOUR = "jour";
 export const MOIS = "mois";

@@ -107,6 +107,7 @@ function mapTitulaire(
   saisieTitulaire: IIdentiteTitulaireForm | IParentForm
 ): any {
   return {
+    id: saisieTitulaire.identifiant,
     prenoms: mapPrenoms(
       saisieTitulaire.prenoms,
       saisieTitulaire.pasDePrenomConnu.includes(PAS_DE_PRENOM_CONNU)
@@ -115,7 +116,7 @@ function mapTitulaire(
     jourNaissance: getValeurOuUndefined(saisieTitulaire.dateNaissance.jour),
     moisNaissance: getValeurOuUndefined(saisieTitulaire.dateNaissance.mois),
     anneeNaissance: getValeurOuUndefined(saisieTitulaire.dateNaissance.annee),
-    villeEtrangereNaissance: getValeurOuUndefined(
+    villeNaissance: getValeurOuUndefined(
       saisieTitulaire.naissance.villeNaissance
     ),
     regionNaissance: getValeurOuUndefined(
@@ -179,7 +180,9 @@ function mapParent(
     paysNaissance: getPaysEvenement(
       getValeurOuUndefined(saisieParent.naissance.lieuNaissance),
       getValeurOuUndefined(saisieParent.naissance.paysNaissance)
-    )
+    ),
+    paysStatutRefugie: getValeurOuUndefined(saisieParent.paysStatutRefugie),
+    paysOrigine: getValeurOuUndefined(saisieParent.paysOrigine)
   };
 }
 
@@ -208,7 +211,6 @@ export function retirePrenomVide(prenomsSaisie?: Prenoms) {
   return prenoms;
 }
 
-
 function mapNationalites(saisieNationalites: INationalitesForm): any[] {
   return getTableauAPartirElementsNonVides(
     saisieNationalites.nationalite1,
@@ -224,6 +226,7 @@ function mapMariageParents(
     ? []
     : [
         {
+          id: getValeurOuUndefined(saisieEvenementMariage.identifiant),
           type: NatureActe.getKey(NatureActe.MARIAGE),
           jour: getValeurOuUndefined(saisieEvenementMariage.dateMariage.jour),
           mois: getValeurOuUndefined(saisieEvenementMariage.dateMariage.mois),
@@ -244,6 +247,7 @@ function mapReconnaissanceTitulaireActe(
     ? []
     : [
         {
+          id: getValeurOuUndefined(saisieEvenementReconnaissance.identifiant),
           type: NatureActe.getKey(NatureActe.RECONNAISSANCE),
           jour: getValeurOuUndefined(
             saisieEvenementReconnaissance.dateReconnaissance.jour

@@ -14,6 +14,7 @@ import {
   DATE_RECONNAISSANCE,
   DEPARTEMENT_NAISSANCE,
   DEPARTEMENT_RECONNAISSANCE,
+  IDENTIFIANT,
   JOUR,
   LIEN_REQUERANT,
   LIEU_ACTE_RECONNAISSANCE,
@@ -188,6 +189,7 @@ export function saisieTitulaire(
 ): IIdentiteTitulaireForm {
   return titulaire
     ? ({
+        [IDENTIFIANT]: getValeurOuVide(titulaire.id),
         [NOMS]: {
           [PAS_DE_NOM_ACTE_ETRANGER]: pasDeNomOuFalse(
             titulaire.nomNaissance,
@@ -212,6 +214,7 @@ export function saisieEvenementMariage(
   evenementMariage?: IEvenementUnion
 ): IEvenementMariageParentsForm {
   return {
+    [IDENTIFIANT]: getValeurOuVide(evenementMariage?.id),
     [PARENTS_MARIES]: estCheckboxCochee(evenementMariage?.annee),
     [DATE_MARIAGE]: getDateEvenement(evenementMariage),
     [LIEU_DE_MARIAGE]: getLieuEvenement(evenementMariage?.pays),
@@ -224,6 +227,7 @@ export function saisieEvenementReconnaissance(
   evenementReconnaissance?: IEvenementUnion
 ): IEvenementReconnaissanceTitulaireForm {
   return {
+    [IDENTIFIANT]: getValeurOuVide(evenementReconnaissance?.id),
     [TITULAIRE_RECONNU]: estCheckboxCochee(evenementReconnaissance?.annee),
     [DATE_RECONNAISSANCE]: getDateEvenement(evenementReconnaissance),
     [LIEU_ACTE_RECONNAISSANCE]: getLieuEvenement(evenementReconnaissance?.pays),
@@ -267,6 +271,7 @@ export function getDateNaissance(
 export function saisieParent(parent?: ITitulaireRequeteCreation): IParentForm {
   return parent
     ? ({
+        [IDENTIFIANT]: parent.id,
         [PAS_DE_NOM_CONNU]: pasDeNomOuFalse(
           parent.nomNaissance,
           "pasDeNomConnu"

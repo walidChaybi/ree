@@ -1,4 +1,5 @@
 import {
+  IDENTIFIANT,
   NAISSANCE,
   NATIONALITES,
   NOM,
@@ -12,9 +13,9 @@ import {
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { DOUZE, getLibelle } from "@util/Utils";
+import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
-import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import {
   NationalitesFormDefaultValues,
   NationalitesFormValidationSchema
@@ -25,8 +26,8 @@ import {
   SubFormProps,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
-import { connect, FormikProps, FormikValues } from "formik";
-import React, { useEffect, useState } from "react";
+import { FormikProps, FormikValues, connect } from "formik";
+import React, { useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
 import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import {
@@ -49,6 +50,7 @@ import IdentiteParentForm from "./IdentiteParentForm";
 import "./scss/ParentsForm.scss";
 
 export const ParentFormDefaultValues = {
+  [IDENTIFIANT]: "",
   [PAS_DE_NOM_CONNU]: "false",
   [NOM]: "",
   [PAS_DE_PRENOM_CONNU]: "false",
@@ -104,12 +106,6 @@ export const ParentFormValidationSchema = Yup.object()
       : true;
   });
 
-type BoutonParentProps = {
-  label: string;
-  visible?: boolean;
-  onClick: () => void;
-} & JSX.IntrinsicElements["button"];
-
 interface ComponentParentsFormProps {
   parents?: ITitulaireRequeteCreation[];
 }
@@ -129,25 +125,34 @@ const ParentsForm: React.FC<
     }
   }, [props.parents]);
 
-  const BoutonParent = ({
-    label,
-    visible = true,
-    className,
-    onClick
-  }: BoutonParentProps) => (
-    <>
-      {visible && (
+  const boutonAjouterParent = useMemo(() => {
+    const libelle = getLibelle("Ajouter un parent");
+    return parents.length < limitesParents.MAX ? 
         <button
-          aria-label={getLibelle(label)}
+          aria-label={libelle}
           type="button"
-          className={className}
-          onClick={onClick}
+          onClick={() => onAjoutParent(props.formik)}
         >
-          {getLibelle(label)}
+          {libelle}
         </button>
-      )}
-    </>
-  );
+     : <></>;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [parents.length]);
+
+  const boutonSupprimerParent = useMemo(() => {
+    const libelle = getLibelle("Retirer un parent");
+    return parents.length > limitesParents.MIN ? (
+      <button
+          className="BoutonDanger"
+          aria-label={libelle}
+          type="button"
+          onClick={() => onRetraitParent(props.formik)}
+        >
+          {libelle}
+        </button>
+    ) : <></>;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [parents.length]);
 
   const onAjoutParent = (formik: FormikProps<FormikValues>) => {
     const nomParent2 = withNamespace(PARENTS, "parent2");
@@ -176,19 +181,9 @@ const ParentsForm: React.FC<
             maxPrenoms={DOUZE}
           />
         ))}
-
         <div className="conteneurBoutons">
-          <BoutonParent
-            label={getLibelle("Ajouter un parent")}
-            onClick={() => onAjoutParent(props.formik)}
-            visible={parents.length < limitesParents.MAX}
-          />
-          <BoutonParent
-            label={getLibelle("Retirer un parent")}
-            className="BoutonDanger"
-            onClick={() => onRetraitParent(props.formik)}
-            visible={parents.length > limitesParents.MIN}
-          />
+          {boutonAjouterParent}
+          {boutonSupprimerParent}
         </div>
         <EvenementMariageParentsForm nom={withNamespace(props.nom, MARIAGE)} />
         <EvenementReconnaissanceTitulaireForm

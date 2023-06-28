@@ -14,6 +14,7 @@ import {
   DATE_RECONNAISSANCE,
   DEPARTEMENT_NAISSANCE,
   DEPARTEMENT_RECONNAISSANCE,
+  IDENTIFIANT,
   JOUR,
   LIEN_REQUERANT,
   LIEU_ACTE_RECONNAISSANCE,
@@ -85,6 +86,7 @@ export interface IRequeteForm {
 }
 
 export interface IIdentiteTitulaireForm {
+  [IDENTIFIANT]: string;
   [NOMS]: INomsForm;
   [PAS_DE_PRENOM_CONNU]: string | string[];
   [PRENOMS]: IPrenomsForm;
@@ -124,6 +126,7 @@ export interface IEvenementNaissanceForm {
 }
 
 export interface IParentForm {
+  [IDENTIFIANT]: string;
   [NOM]: string;
   [PRENOMS]: IPrenomsForm;
   [PAS_DE_NOM_CONNU]: string | string[];
@@ -143,6 +146,7 @@ export interface INationalitesForm {
 }
 
 export interface IEvenementMariageParentsForm {
+  [IDENTIFIANT]: string;
   [PARENTS_MARIES]: string;
   [DATE_MARIAGE]: IDateForm;
   [LIEU_DE_MARIAGE]: string;
@@ -151,6 +155,7 @@ export interface IEvenementMariageParentsForm {
 }
 
 export interface IEvenementReconnaissanceTitulaireForm {
+  [IDENTIFIANT]: string;
   [TITULAIRE_RECONNU]: string;
   [DATE_RECONNAISSANCE]: IDateForm;
   [LIEU_ACTE_RECONNAISSANCE]: string;

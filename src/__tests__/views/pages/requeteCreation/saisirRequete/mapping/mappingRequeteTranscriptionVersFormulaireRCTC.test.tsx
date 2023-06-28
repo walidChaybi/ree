@@ -148,6 +148,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
 
   test("DOIT retourner l'objet Formik de saisie de mariage correctement", async () => {
     const evenement = {
+      id: "4b016bb8-171d-4a69-9c38-563cdf808b4d",
       jour: 1,
       mois: 2,
       annee: 2000,
@@ -156,6 +157,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     } as IEvenementUnion;
 
     const evenementAttendu = {
+      identifiant: "4b016bb8-171d-4a69-9c38-563cdf808b4d",
       parentMarie: "OUI",
       dateMariage: {
         jour: 1,
@@ -172,6 +174,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
 
   test("DOIT retourner l'objet Formik de saisie d'évenement de reconnaissance correctement", async () => {
     const evenementReconnaissance = {
+      id: "cdd2b0e6-3f6e-4c67-8026-f8dd0628d4bd",
       jour: 1,
       mois: 2,
       annee: 2001,
@@ -181,6 +184,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     } as IEvenementUnion;
 
     const evenementAttendu = {
+      identifiant: "cdd2b0e6-3f6e-4c67-8026-f8dd0628d4bd",
       titulaireReconnu: "OUI",
       dateReconnaissance: {
         jour: 1,
@@ -247,6 +251,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
 
   test("DOIT retourner l'objet Formik de saisie du titulaire correctement ou les DefaultValues", async () => {
     const saisieTitulaireAttendu = {
+      identifiant: "3ed9efe4-c196-4888-8ffe-938f37a5f73f",
       noms: {
         pasDeNomActeEtranger: "false",
         nomActeEtranger: "nomNaissance",
@@ -290,6 +295,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
 
   test("DOIT retourner l'objet Formik de saisie des parents correctement ou les DefaultValues", async () => {
     const saisieParentAttendu = {
+      identifiant: "3ed9efe4-c196-4888-8ffe-938f37a5f73a",
       pasDeNomConnu: "false",
       nom: "Dupont",
       sexe: "MASCULIN",
