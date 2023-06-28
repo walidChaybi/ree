@@ -7,7 +7,7 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { getDateComposeFromDate } from "@util/DateUtils";
 import { executeEnDiffere } from "@util/Utils";
-import { connect, ErrorMessage, Field } from "formik";
+import { ErrorMessage, Field, connect } from "formik";
 import React, { useState } from "react";
 import { IconeCroix } from "../../icones/IconeCroix";
 import ReceDatePicker from "../datePicker/ReceDatePicker";
@@ -21,7 +21,7 @@ import {
   traiteZeroAGauche
 } from "../utils/ControlesUtil";
 import { FormikComponentProps, withNamespace } from "../utils/FormUtil";
-import { buildDatePickerValue, IDateComposeForm } from "./DateComposeFormUtil";
+import { IDateComposeForm, buildDatePickerValue } from "./DateComposeFormUtil";
 import { validateAnnee } from "./DateComposeFormValidation";
 import "./scss/DateComposeForm.scss";
 // Valeurs par défaut des champs
@@ -38,7 +38,7 @@ export enum ChampDateModifie {
   TOUS
 }
 interface ComponentProps {
-  labelDate: string;
+  labelDate?: string;
   nomDate: string;
   showDatePicker?: boolean;
   showCroixSuppression?: boolean; // Par défaut la crois de suppression est affichée
@@ -51,6 +51,7 @@ interface ComponentProps {
   anneeMin?: number;
   anneeMax?: number;
   anneeObligatoire?: boolean;
+  afficheDate?: boolean;
   afficheHeure?: boolean;
 }
 
@@ -130,8 +131,9 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
   // Par défaut la crois de suppression est affichée
   const showCroixSuppression = estCroixSuppressionAffichee(props);
 
-  const disabledHeure =
-    props.disabledHeure == null ? props.disabled : props.disabledHeure;
+  const afficherDate = props.afficheDate != null ? props.afficheDate : true;
+
+  const desactiveHeure = estDesactive(props.disabled, props.disabledHeure);
 
   return (
     <>
@@ -142,70 +144,74 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
             : "DateComposeForm") + " DateComposeForm-common"
         }
       >
-        <label>{props.labelDate}</label>
-        <Field
-          component="input"
-          name={withNamespace(props.nomDate, JOUR)}
-          maxLength="2"
-          onInput={jourChange}
-          onBlur={(e: any) => traiteZeroAGauche(e, props.formik)}
-          disabled={props.disabled || props.disabledJour}
-          aria-label={`${props.nomDate}.jour`}
-          placeholder="JJ"
-        />
-        <div className="Sep">/</div>
-        <Field
-          component="input"
-          name={withNamespace(props.nomDate, MOIS)}
-          maxLength="2"
-          onInput={moisChange}
-          onBlur={(e: any) => traiteZeroAGauche(e, props.formik)}
-          disabled={props.disabled || props.disabledMois}
-          aria-label={`${props.nomDate}.mois`}
-          placeholder="MM"
-        />
+        {props.labelDate && <label>{props.labelDate}</label>}
+        {afficherDate && (
+          <>
+            <Field
+              component="input"
+              name={withNamespace(props.nomDate, JOUR)}
+              maxLength="2"
+              onInput={jourChange}
+              onBlur={(e: any) => traiteZeroAGauche(e, props.formik)}
+              disabled={estDesactive(props.disabled, props.disabledJour)}
+              aria-label={`${props.nomDate}.jour`}
+              placeholder="JJ"
+            />
+            <div className="Sep">/</div>
+            <Field
+              component="input"
+              name={withNamespace(props.nomDate, MOIS)}
+              maxLength="2"
+              onInput={moisChange}
+              onBlur={(e: any) => traiteZeroAGauche(e, props.formik)}
+              disabled={estDesactive(props.disabled, props.disabledMois)}
+              aria-label={`${props.nomDate}.mois`}
+              placeholder="MM"
+            />
 
-        <div className="Sep">/</div>
-        <Field
-          component="input"
-          name={withNamespace(props.nomDate, ANNEE)}
-          maxLength="4"
-          onInput={anneeChange}
-          disabled={props.disabled || props.disabledAnnee}
-          aria-label={`${props.nomDate}.annee`}
-          validate={(value: any) =>
-            validateAnnee(
-              value,
-              props.anneeMin,
-              props.anneeMax,
-              props.anneeObligatoire
-            )
-          }
-          placeholder="AAAA"
-        />
-        {showCroixSuppression && !props.disabled && (
-          <IconeCroix onClick={videChamps} title="Vider les champs" />
-        )}
-        {props.showDatePicker && (
-          <ReceDatePicker
-            dateValue={buildDatePickerValue(dateSaisie)}
-            disabled={props.disabled}
-            onChange={date => {
-              onDatePickerValueChange(props, date, setDateSaisie);
-            }}
-            dateMini={dateMini}
-            dateMaxi={dateMaxi}
-          />
+            <div className="Sep">/</div>
+            <Field
+              component="input"
+              name={withNamespace(props.nomDate, ANNEE)}
+              maxLength="4"
+              onInput={anneeChange}
+              disabled={estDesactive(props.disabled, props.disabledAnnee)}
+              aria-label={`${props.nomDate}.annee`}
+              validate={(value: any) =>
+                validateAnnee(
+                  value,
+                  props.anneeMin,
+                  props.anneeMax,
+                  props.anneeObligatoire
+                )
+              }
+              placeholder="AAAA"
+            />
+            {!estDesactive(props.disabled, !showCroixSuppression) && (
+              <IconeCroix onClick={videChamps} title="Vider les champs" />
+            )}
+            {props.showDatePicker && (
+              <ReceDatePicker
+                dateValue={buildDatePickerValue(dateSaisie)}
+                disabled={props.disabled}
+                onChange={date => {
+                  onDatePickerValueChange(props, date, setDateSaisie);
+                }}
+                dateMini={dateMini}
+                dateMaxi={dateMaxi}
+              />
+            )}
+          </>
         )}
         {props.afficheHeure && (
           <>
-            <div className="Sep">à</div>
+            {afficherDate && <div className="Sep">à</div>}
             <Field
               component="input"
               name={withNamespace(props.nomDate, NB_HEURE)}
               maxLength="2"
               onInput={heureChange}
-              disabled={disabledHeure}
+              disabled={desactiveHeure}
               aria-label={withNamespace(props.nomDate, NB_HEURE)}
               placeholder="hh"
             />
@@ -215,7 +221,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
               name={withNamespace(props.nomDate, NB_MINUTE)}
               maxLength="2"
               onInput={minuteChange}
-              disabled={disabledHeure}
+              disabled={desactiveHeure}
               aria-label={withNamespace(props.nomDate, NB_MINUTE)}
               placeholder="mm"
             />
@@ -279,6 +285,13 @@ function getBornesDates(props: React.PropsWithChildren<DateComposeFormProps>) {
     ? new Date(`${props.anneeMax}-12-31`)
     : undefined;
   return { dateMini, dateMaxi };
+}
+
+function estDesactive(
+  estDesactivationGlobale = false,
+  estChampDesactive = false
+) {
+  return estDesactivationGlobale || estChampDesactive;
 }
 
 export default connect<ComponentProps>(DateComposeForm);

@@ -4,6 +4,9 @@ export const DATE = "date";
 export const JOUR = "jour";
 export const MOIS = "mois";
 export const ANNEE = "annee";
+export const PERIODE = "periode";
+export const DEBUT = "debut";
+export const FIN = "fin";
 
 // Titulaire
 export const TITULAIRE_EVT_1 = "titulaireEvt1";

@@ -32,3 +32,53 @@
     min-width: auto !important;
   }
 }
+
+.BlockPeriode > div {
+  display: grid;
+  grid-template-columns: 50% 50%;
+
+  .DateComposeForm-common {
+    margin-bottom: 0.5rem;
+  }
+
+  .DateComposeForm {
+    grid-template-columns: 25.5% 21px 25% 21px 38% 2%;
+  }
+  
+  .DateComposeFormWithDatePicker {
+    grid-template-columns: 25.5% 9px 25.5% 9px 38% 2% 7%;
+  }
+
+  .TextePeriode {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 2rem;
+    margin-right: 1rem;
+  }
+
+  .BlockInput {
+    display: flex;
+    justify-content: flex-end;
+
+    label {
+      flex-grow: 1;
+      text-align: left;
+    }
+
+    .SelectField {
+      flex-basis: 30%;
+      margin-right: 1rem;
+    }
+
+    select {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+    }
+  }
+
+  .BlockErreur {
+    text-align: left;
+  }
+
+}
