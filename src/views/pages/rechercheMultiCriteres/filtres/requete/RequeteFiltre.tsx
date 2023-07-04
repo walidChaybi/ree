@@ -82,7 +82,7 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
 
   const gestionTypeRequeteOptions = (type: string) => {
     if (type) {
-      return setSousTypeRequeteOptions(
+      setSousTypeRequeteOptions(
         SousTypeRequeteUtil.getOptionsAPartirTypeRequete(
           TypeRequete.getEnumFor(type)
         )

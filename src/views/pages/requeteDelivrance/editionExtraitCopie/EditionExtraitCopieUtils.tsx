@@ -6,6 +6,11 @@ import { IGenerationECParams } from "@hook/generation/generationECHook/generatio
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeActe } from "@model/etatcivil/enum/TypeActe";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import {
+  IRequeteDelivrance,
+  RequeteDelivrance
+} from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
@@ -17,18 +22,13 @@ import {
 } from "@model/requete/enum/DocumentDelivranceConstante";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
-import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import {
-  IRequeteDelivrance,
-  RequeteDelivrance
-} from "@model/requete/IRequeteDelivrance";
 import {
   DEUX,
-  estTableauNonVide,
-  getLibelle,
   TROIS,
   UN,
-  ZERO
+  ZERO,
+  estTableauNonVide,
+  getLibelle
 } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
@@ -40,11 +40,11 @@ import { BoutonModifierTraitement } from "../apercuRequete/apercuRequeteEnTraite
 import { BoutonsTerminerOuRelecture } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonsTerminerOuRelecture";
 import { ResumeRequetePartieHaute } from "../apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequetePartieHaute";
 import { ResumeRequeteType } from "../apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequeteType";
+import { VisionneuseActeEdition } from "./contenu/onglets/VisionneuseActeEdition";
+import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
 import { GestionMentions } from "./contenu/onglets/mentions/GestionMentions";
 import { ModifierCorpsExtrait } from "./contenu/onglets/modifierCorpsExtrait/ModifierCorpsExtrait";
 import { SaisirExtraitForm } from "./contenu/onglets/saisirExtrait/SaisirExtraitForm";
-import { VisionneuseActeEdition } from "./contenu/onglets/VisionneuseActeEdition";
-import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
 
 const DOCUMENT_EDITE = "Document édité";
 const REQUETE = "Requête";
@@ -111,7 +111,7 @@ export const getOngletsVisu = (
         component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
       });
       res.ongletSelectionne = res.liste.length - 1;
-    } else if(RequeteDelivrance.estARevoir(requete)){
+    } else if (RequeteDelivrance.estARevoir(requete)) {
       // Affichage de l'onglet requête si elle était à revoir avant de passer à signer
       res.ongletSelectionne = res.liste.length - 1;
     }
@@ -302,8 +302,6 @@ const ongletSaisirExtrait = (
   };
 };
 
-
-
 export function choisirDocumentEdite(
   indexDocEditeDemande: DocumentEC | undefined,
   setIndexDocEdite: React.Dispatch<React.SetStateAction<DocumentEC>>,
@@ -416,10 +414,7 @@ export function getBoutonsEdition(
 export function filtrerDocumentComplementaireASupprimer(
   documents: IDocumentReponse[]
 ) {
-  let documentResponseASupprimer;
-  documentResponseASupprimer = documents.find(document => {
+  return documents.find(document => {
     return document.ordre === DocumentEC.Complementaire;
   });
-
-  return documentResponseASupprimer;
 }

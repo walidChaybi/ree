@@ -1,5 +1,6 @@
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import {
   Adresse,
@@ -64,7 +65,7 @@ export const RequeteRDDCourrier17 = {
       jourNaissance: 25,
       villeNaissance: "Nantes",
       paysNaissance: "France",
-      sexe: "FEMININ",
+      sexe: Sexe.FEMININ,
       nationalite: Nationalite.FRANCAISE,
       prenoms: [
         {

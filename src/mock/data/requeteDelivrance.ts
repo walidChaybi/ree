@@ -1,4 +1,9 @@
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IProvenancePlanete } from "@model/requete/IProvenancePlanete";
+import { IProvenanceRece } from "@model/requete/IProvenanceRece";
+import { IRequerant } from "@model/requete/IRequerant";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
@@ -12,10 +17,6 @@ import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IProvenancePlanete } from "@model/requete/IProvenancePlanete";
-import { IProvenanceRece } from "@model/requete/IProvenanceRece";
-import { IRequerant } from "@model/requete/IRequerant";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { documentReponseCourrier117 } from "./DocumentReponse";
 import { TYPE_PIECE_JUSTIFICATIVE } from "./NomenclatureTypePieceJustificative";
 
@@ -114,7 +115,7 @@ const requeteDelivrance: IRequeteDelivrance = {
         }
       ],
 
-      sexe: "FEMININ",
+      sexe: Sexe.FEMININ,
       villeNaissance: "Barcelone"
     },
     {
@@ -135,7 +136,7 @@ const requeteDelivrance: IRequeteDelivrance = {
         }
       ],
 
-      sexe: "MASCULIN",
+      sexe: Sexe.MASCULIN,
       villeNaissance: "Barcelone"
     }
   ],
@@ -238,7 +239,7 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
         }
       ],
 
-      sexe: "FEMININ",
+      sexe: Sexe.FEMININ,
       villeNaissance: "Barcelone"
     },
     {
@@ -259,7 +260,7 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
         }
       ],
 
-      sexe: "MASCULIN",
+      sexe: Sexe.MASCULIN,
       villeNaissance: "Barcelone"
     }
   ],
@@ -314,7 +315,7 @@ export const requeteRDCSC = {
       jourNaissance: 14,
       villeNaissance: "Sydney",
       paysNaissance: "Australie",
-      sexe: "MASCULIN",
+      sexe: Sexe.MASCULIN,
       nationalite: "FRANCAISE",
       prenoms: [
         {
@@ -460,7 +461,7 @@ export const requeteDelivranceRDC: IRequeteDelivrance = {
         }
       ],
 
-      sexe: "FEMININ",
+      sexe: Sexe.FEMININ,
       villeNaissance: "Barcelone"
     },
     {
@@ -481,7 +482,7 @@ export const requeteDelivranceRDC: IRequeteDelivrance = {
         }
       ],
 
-      sexe: "MASCULIN",
+      sexe: Sexe.MASCULIN,
       villeNaissance: "Barcelone"
     }
   ],

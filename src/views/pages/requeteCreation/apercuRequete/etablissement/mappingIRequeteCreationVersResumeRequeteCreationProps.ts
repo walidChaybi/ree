@@ -1,18 +1,18 @@
-import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IEvenementUnion } from "@model/requete/IEvenementUnion";
+import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { Residence } from "@model/requete/enum/Residence";
 import { SituationFamiliale } from "@model/requete/enum/SituationFamiliale";
 import { TypeEvenementUnion } from "@model/requete/enum/TypeEvenementUnion";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
-import { IEvenementUnion } from "@model/requete/IEvenementUnion";
-import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
-import { IRequeteCreation } from "@model/requete/IRequeteCreation";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import {
   getDateStringFromDateCompose,
   getFormatDateFromTimestamp
 } from "@util/DateUtils";
 import { DateCoordonneesType } from "../../../../../model/requete/DateCoordonneesType";
+import { ResumeRequeteCreationProps } from "./composants/ResumeRequeteCreation";
 import { ItemEffetCollectifProps } from "./composants/item/ItemEffetCollectif";
 import {
   ItemEnfantMajeurProps,
@@ -20,9 +20,8 @@ import {
 } from "./composants/item/ItemEnfantMajeur";
 import { ItemParentProps } from "./composants/item/ItemParent";
 import { ItemRequeteProps } from "./composants/item/ItemRequete";
-import { ItemTitulaireProps } from "./composants/item/itemTitulaire/ItemTitulaire";
 import { ItemUnionProps } from "./composants/item/ItemUnion";
-import { ResumeRequeteCreationProps } from "./composants/ResumeRequeteCreation";
+import { ItemTitulaireProps } from "./composants/item/itemTitulaire/ItemTitulaire";
 
 const mappingIRequeteCreationVersResumeRequeteCreationProps = (
   requeteCreation?: IRequeteCreation
@@ -125,7 +124,7 @@ const mappingITitulaireRequeteCreationVersItemTitulaireProps = (
         naissance: formatagePrenoms(titulaire.prenoms),
         francisation: formatagePrenoms(titulaire.prenomsDemande)
       },
-      genre: Sexe.getEnumFor(titulaire.sexe)
+      genre: titulaire.sexe
     },
     naissance: {
       date: mappingDateNaissance(titulaire),
@@ -184,7 +183,7 @@ const mappingITitulaireRequeteCreationVersItemParentProps = (
       prenoms: {
         naissance: formatagePrenoms(parent.prenoms)
       },
-      genre: Sexe.getEnumFor(parent.sexe)
+      genre: parent.sexe
     },
     naissance: {
       date: mappingDateNaissance(parent),
@@ -232,7 +231,7 @@ const mappingITitulaireRequeteCreationVersItemUnionProps = (
       prenoms: {
         naissance: formatagePrenoms(union.prenoms)
       },
-      genre: Sexe.getEnumFor(union.sexe)
+      genre: union.sexe
     },
     naissance: {
       date: mappingDateNaissance(union),
@@ -314,7 +313,7 @@ const mappingITitulaireRequeteCreationVersItemEffetCollectifProps = (
         naissance: formatagePrenoms(effetCollectif.prenoms),
         francisation: formatagePrenoms(effetCollectif.prenomsDemande)
       },
-      genre: Sexe.getEnumFor(effetCollectif.sexe)
+      genre: effetCollectif.sexe
     },
     naissance: {
       date: mappingDateNaissance(effetCollectif),
@@ -352,7 +351,7 @@ const mappingITitulaireRequeteCreationVersItemEnfantMajeurProps = (
       prenoms: {
         naissance: formatagePrenoms(enfantMajeur.prenoms)
       },
-      genre: Sexe.getEnumFor(enfantMajeur.sexe)
+      genre: enfantMajeur.sexe
     },
     naissance: {
       date: mappingDateNaissance(enfantMajeur),
@@ -382,7 +381,7 @@ const mappingITitulaireRequeteCreationVersItemFraterieProps = (
       prenoms: {
         naissance: formatagePrenoms(fraterie.prenoms)
       },
-      genre: Sexe.getEnumFor(fraterie.sexe)
+      genre: fraterie.sexe
     },
     naissance: {
       date: mappingDateNaissance(fraterie),

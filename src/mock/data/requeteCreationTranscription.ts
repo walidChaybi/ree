@@ -1,4 +1,5 @@
 import { ICreationRequeteCreationParams } from "@hook/requete/CreationRequeteCreationApiHook";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 
 export const requeteCreationTranscription = {
@@ -31,7 +32,7 @@ export const requeteCreationTranscription = {
       villeEtrangereNaissance: "villeEtrangereNaissance",
       regionNaissance: "regionNaissance",
       paysNaissance: "paysNaissance",
-      sexe: "MASCULIN",
+      sexe: Sexe.MASCULIN,
       nationalite: "FRANCAISE",
       prenoms: [
         {
@@ -147,7 +148,7 @@ export const requeteCreationTranscription = {
       villeEtrangereNaissance: "villeEtrangereNaissance",
       regionNaissance: "regionNaissance",
       paysNaissance: "paysNaissance",
-      sexe: "MASCULIN",
+      sexe: Sexe.MASCULIN,
       nationalite: "FRANCAISE",
       prenoms: [
         {

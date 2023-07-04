@@ -36,6 +36,7 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { ParentFormDefaultValues } from "@composant/formulaire/ParentForm";
 import { genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { IParent } from "@model/requete/IParents";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
@@ -118,7 +119,7 @@ export const saisieTitulaire = (titulaire?: ITitulaireRequete) => {
           [NOM_USAGE]: getValeurOuVide(titulaire.nomUsage)
         },
         [PRENOMS]: getPrenomsOrdonneVersPrenomsDefaultValues(titulaire.prenoms),
-        [SEXE]: getValeurOuVide(titulaire.sexe),
+        [SEXE]: Sexe.getKey(getValeurOuVide(titulaire.sexe)),
         [NAISSANCE]: {
           [DATE_EVENEMENT]: {
             [JOUR]: getValeurOuVide(titulaire.jourNaissance),

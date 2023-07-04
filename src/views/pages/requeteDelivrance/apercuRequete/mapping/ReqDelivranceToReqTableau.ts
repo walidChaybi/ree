@@ -1,4 +1,3 @@
-import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -42,16 +41,17 @@ const getTitulaires = (
     }
     titulaire.paysNaissance = t.paysNaissance;
     titulaire.villeNaissance = t.villeNaissance;
-    titulaire.sexe = Sexe.getEnumFor(t.sexe);
+    titulaire.sexe = t.sexe;
     titulaire.prenoms = t.prenoms ? getPrenoms(t.prenoms) : [];
     return titulaire;
   });
 };
 
 const getPrenoms = (prenoms: IPrenomOrdonnes[]): string[] => {
-  return prenoms
-    .sort((a, b) => (a.numeroOrdre > b.numeroOrdre ? 1 : -1))
-    .map((p: IPrenomOrdonnes) => {
-      return p.prenom;
-    });
+  prenoms.sort((a: IPrenomOrdonnes, b: IPrenomOrdonnes) =>
+    a.numeroOrdre > b.numeroOrdre ? 1 : -1
+  );
+  return prenoms.map((p: IPrenomOrdonnes) => {
+    return p.prenom;
+  });
 };

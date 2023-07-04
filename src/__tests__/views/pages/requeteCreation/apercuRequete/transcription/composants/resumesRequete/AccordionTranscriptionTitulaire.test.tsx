@@ -1,4 +1,5 @@
 import { mapTitulairesCreation } from "@hook/requete/DetailRequeteHook";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import {
   AccordionTranscriptionTitulaire,
@@ -27,7 +28,7 @@ const titulaires = [
         lieuFormate: "Nantes (Gorges)"
       }
     ],
-    sexe: "MASCULIN",
+    sexe: Sexe.MASCULIN,
     dateNaissanceFormatee: "12/12/2022",
     lieuNaissanceFormate: "Lucerne (Suisse) Lucerne (Suisse) (Suisse) (Suisse)"
   },
