@@ -1,5 +1,4 @@
 import { DEUX } from "@util/Utils";
-import { MimeType } from "file-type/core";
 import { Orientation } from "../composition/enum/Orientation";
 import { IMention } from "../etatcivil/acte/mention/IMention";
 import { ChoixDelivrance } from "./enum/ChoixDelivrance";
@@ -13,7 +12,7 @@ export interface IDocumentReponse {
   id: string;
   nom: string;
   typeDocument: string; // UUID nomenclature
-  mimeType: MimeType;
+  mimeType: string;
   taille: number;
   contenu: string; // Base64
   nbPages: number;
@@ -200,4 +199,3 @@ export function documentDejaCreer(
       ) === DocumentDelivrance.getEnumForUUID(el.typeDocument)
   );
 }
-

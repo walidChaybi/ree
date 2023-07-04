@@ -2,7 +2,6 @@ import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointe
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { FenetreExterne } from "@util/FenetreExterne";
 import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAvecTitre";
-import { MimeType } from "file-type/core";
 import React from "react";
 
 interface FenetrePieceProps {
@@ -35,7 +34,7 @@ export const FenetrePiecesJointes: React.FC<FenetrePieceProps> = props => {
               : "Pièces Justificatives"
           }
           contenuBase64={contenuPiece.contenu}
-          typeMime={contenuPiece.mimeType as MimeType}
+          typeMime={contenuPiece.mimeType}
         />
       )}
     </FenetreExterne>

@@ -50,7 +50,6 @@ import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { getValeurOuVide } from "@util/Utils";
-import { FileExtension, MimeType } from "file-type";
 import { InstitutionnelFormDefaultValues } from "../sousFormulaires/requerant/institutionnel/InstitutionnelForm";
 import { MandataireFormDefaultValues } from "../sousFormulaires/requerant/mandataire/MandataireForm";
 import { ParticulierFormDefaultValues } from "../sousFormulaires/requerant/particulier/ParticulierForm";
@@ -98,8 +97,8 @@ export function saisiePJ(requete: IRequeteDelivrance) {
         taille: PJ.taille,
         conteneurSwift: PJ.conteneurSwift,
         identifiantSwift: PJ.referenceSwift,
-        mimeType: PJ.mimeType as MimeType,
-        extension: PJ.extension as FileExtension
+        mimeType: PJ.mimeType,
+        extension: PJ.extension
       },
       type: {
         cle: TypePieceJustificative.getKeyForLibelle(

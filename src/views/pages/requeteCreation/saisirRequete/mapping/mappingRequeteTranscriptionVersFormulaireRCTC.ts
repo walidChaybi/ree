@@ -103,7 +103,6 @@ import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { AdresseFormDefaultValues } from "@widget/formulaire/adresse/AdresseForm";
 import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
 import { NationalitesFormDefaultValues } from "@widget/formulaire/nationalites/NationalitesForm";
-import { FileExtension, MimeType } from "file-type";
 import { IdentiteFormDefaultValues } from "../sousForm/identite/IdentiteTitulaireForm";
 import { ParentFormDefaultValues } from "../sousForm/parent/ParentsForm";
 import { RequerantFormDefaultValue } from "../sousForm/requerant/RequerantForm";
@@ -363,8 +362,8 @@ export function saisiePJ(piecesJustificatives?: IPieceJustificativeCreation[]) {
         taille: PJ.taille,
         conteneurSwift: PJ.conteneurSwift,
         identifiantSwift: PJ.referenceSwift,
-        mimeType: PJ.mimeType as MimeType,
-        extension: PJ.extension as FileExtension
+        mimeType: PJ.mimeType,
+        extension: PJ.extension
       },
       type: {
         value: TypePieceJustificative.getKeyForLibelle(

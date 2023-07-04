@@ -1,4 +1,3 @@
-import { MimeType } from "file-type";
 import { ProvenancePiece } from "../enum/ProvenancePiece";
 import { mapDocumentSwift } from "./IPieceJustificative";
 
@@ -8,7 +7,7 @@ export interface IPieceComplementInformation {
   nom?: string;
   cheminSwift?: string;
   contenu?: string;
-  mimeType: string | MimeType;
+  mimeType: string;
 }
 
 export function mapPieceComplementInformation(pci: any) {

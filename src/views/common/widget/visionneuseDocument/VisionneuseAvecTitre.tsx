@@ -1,4 +1,3 @@
-import { MimeType } from "file-type";
 import React from "react";
 import { Fieldset } from "../fieldset/Fieldset";
 import { VisionneuseDocument } from "./VisionneuseDocument";
@@ -6,7 +5,7 @@ import { VisionneuseDocument } from "./VisionneuseDocument";
 interface IVisionneuseDocumentProps {
   titre: string;
   contenuBase64?: string;
-  typeMime: MimeType;
+  typeMime: string;
   children?: JSX.Element;
 }
 

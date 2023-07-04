@@ -4,7 +4,6 @@ import {
   bloblToBlobUrl,
   estTypeMimePdf
 } from "@util/FileUtils";
-import { MimeType } from "file-type";
 import React, { useEffect, useState } from "react";
 import VisionneuseImage from "./VisionneuseImage";
 import { VisionneusePdf } from "./VisionneusePdf";
@@ -18,7 +17,7 @@ export interface IVisionneuseDocumentProps {
   infoBulle: string;
   contenuBase64?: string; // Base64
   contenuBlob?: Blob; //Blob
-  typeMime: MimeType;
+  typeMime: string;
 }
 
 export const VisionneuseDocument: React.FC<
@@ -57,7 +56,7 @@ export const VisionneuseDocument: React.FC<
     </div>
   );
 
-  function getVisionneuse(typeMime: MimeType, urlAvecDonneesBase64: string) {
+  function getVisionneuse(typeMime: string, urlAvecDonneesBase64: string) {
     return estTypeMimePdf(typeMime) ? (
       <VisionneusePdf url={urlAvecDonneesBase64} infoBulle={props.infoBulle} />
     ) : (

@@ -1,11 +1,10 @@
 import { getValeurOuVide } from "@util/Utils";
-import { MimeType } from "file-type";
 import { TypePieceJustificative } from "../enum/TypePieceJustificative";
 
 export interface IPieceJustificative {
   id: string;
   nom: string;
-  mimeType: string | MimeType;
+  mimeType: string;
   extension?: string;
   taille: number;
   referenceSwift?: string;
