@@ -266,50 +266,43 @@ test("ignorer requete", async () => {
       dataTableauRMCAutoInscription: { DataTableauInscription }
     }
   );
-  await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
-          >
-            <ApercuRequetePriseEnChargePage />
-          </Route>
-        </Router>
-      </>
-    );
-  });
-  const title = screen.getByText(/Documents à délivrer/i);
-  const doc1 = screen.getByText(/^Courrier$/);
-  const doc2 = screen.getByText(/Certificat d'inscription au RCA/i);
+  render(
+    <>
+      <Router history={history}>
+        <Route
+          exact={true}
+          path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
+        >
+          <ApercuRequetePriseEnChargePage />
+        </Route>
+      </Router>
+    </>
+  );
 
   await waitFor(() => {
-    expect(title).toBeDefined();
-    expect(doc1).toBeDefined();
-    expect(doc2).toBeDefined();
+    expect(screen.getByText(/Documents à délivrer/i)).toBeDefined();
+    expect(screen.getByText(/Certificat d'inscription au RCA/i)).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(doc2);
-  });
+  fireEvent.click(screen.getByText(/Certificat d'inscription au RCA/i));
 
   const bontonIgnore = screen.getByText(/Ignorer+/);
-
-  await act(async () => {
-    fireEvent.click(bontonIgnore);
+  await waitFor(() => {
+    expect(bontonIgnore).toBeInTheDocument();
   });
+
+  fireEvent.click(bontonIgnore);
 
   const select = screen.getByTestId(MOTIF_IGNORE) as HTMLSelectElement;
 
   await act(async () => {
     expect(select).toBeDefined();
+  });
 
-    fireEvent.change(select, {
-      target: {
-        value: "Adresse incomplète"
-      }
-    });
+  fireEvent.change(select, {
+    target: {
+      value: "Adresse incomplète"
+    }
   });
 
   const valider = screen.getByText("Valider");
@@ -317,9 +310,7 @@ test("ignorer requete", async () => {
     expect(valider).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(valider);
-  });
+  fireEvent.click(valider);
 
   await waitFor(() => {
     expect(history.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);

@@ -21,11 +21,11 @@ import { sexeObligatoireValidation } from "@composant/formulaire/validation/Sexe
 import { ITitulaireEvtForm } from "@model/form/delivrance/ISaisieExtraitForm";
 import { estNonRenseigne, estRenseigne, getLibelle } from "@util/Utils";
 import {
-  CARATERES_AUTORISES_MESSAGE,
+  CARACTERES_AUTORISES_MESSAGE,
   CHAMP_OBLIGATOIRE
 } from "@widget/formulaire/FormulaireMessages";
 import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../../../../../../ressources/Regex";
+import { CaracteresAutorises } from "../../../../../../../../../../ressources/Regex";
 import {
   ParentNaissSansDateAgeDeValidationSchema,
   ParentNaissSansSexeDateAgeDeValidationSchema,
@@ -35,7 +35,7 @@ import {
 const validationComplete = {
   [NOM_NAISSANCE]: Yup.string()
     .required(CHAMP_OBLIGATOIRE)
-    .matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
+    .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
   [PRENOMS]: creerValidationSchemaPrenom(),
   [SEXE]: Yup.string().required(),
   [EVENEMENT]: EvenementValidationSchema,

@@ -8,11 +8,6 @@ export interface IFenetreFicheActeInscription {
   numeroRequete?: TRequete["numero"];
 }
 
-export interface IFenetreFicheInscription
-  extends Omit<IFenetreFicheActeInscription, "idActeInscription"> {
-  idInscription: string;
-}
-
 export interface IFenetreFicheActe
   extends Omit<IFenetreFicheActeInscription, "idActeInscription"> {
   idActe: string;

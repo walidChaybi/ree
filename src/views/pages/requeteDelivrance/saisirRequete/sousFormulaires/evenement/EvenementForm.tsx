@@ -4,13 +4,13 @@ import {
   VILLE_EVENEMENT
 } from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
+import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues
 } from "@widget/formulaire/champsDate/DateComposeForm";
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   NB_CARACT_MAX_SAISIE,
@@ -20,7 +20,7 @@ import {
 import { connect } from "formik";
 import React, { useEffect } from "react";
 import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
+import { CaracteresAutorises } from "../../../../../../ressources/Regex";
 import "./scss/EvenementForm.scss";
 
 // Valeurs par défaut des champs
@@ -34,12 +34,12 @@ export const EvenementFormDefaultValues = {
 export const EvenementFormValidationSchema = Yup.object().shape({
   [DATE_EVENEMENT]: DateValidationSchemaSansTestFormat,
   [VILLE_EVENEMENT]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [PAYS_EVENEMENT]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   )
 });
 

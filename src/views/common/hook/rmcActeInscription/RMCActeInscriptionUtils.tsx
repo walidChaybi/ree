@@ -54,7 +54,7 @@ export function mappingCriteres(
       criteres.registreRepertoire?.registre?.familleRegistre
     ),
     posteOuPocopa: getValeurOuUndefined(
-      criteres.registreRepertoire?.registre?.pocopa?.value
+      criteres.registreRepertoire?.registre?.pocopa?.cle
     ),
     numeroActe: getValeurOuUndefined(
       criteres.registreRepertoire?.registre?.numeroActe

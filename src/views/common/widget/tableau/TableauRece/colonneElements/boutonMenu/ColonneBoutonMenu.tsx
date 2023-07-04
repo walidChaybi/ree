@@ -48,7 +48,7 @@ export function getColonneBoutonMenu<
       ((data: TData) => (
         <CelluleBoutonMenu<TData, TIdentifiant>
           boutonLibelle=""
-          listeItems={[]}
+          options={[]}
           {...boutonMenuProps}
         />
       ))

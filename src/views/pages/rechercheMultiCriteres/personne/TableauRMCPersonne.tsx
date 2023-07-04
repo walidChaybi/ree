@@ -1,10 +1,11 @@
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
+import { TypeRedactionActe } from "@model/etatcivil/enum/TypeRedactionActe";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import { TypeActeInscriptionSauvegarde } from "@model/requete/enum/TypeActeInscriptionSauvegarde";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { FenetreFiche } from "@pages/fiche/FenetreFiche";
-import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { getLibelle, supprimeElement, UN, ZERO } from "@util/Utils";
 import {
   CelluleBoutonMenu,
@@ -20,10 +21,7 @@ import {
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React, { useState } from "react";
-import {
-  IFenetreFicheActe,
-  IFenetreFicheActeInscription
-} from "../common/IFenetreFicheActeInscription";
+import { IFenetreFicheActeInscription } from "../common/IFenetreFicheActeInscription";
 import {
   DataTableauRMCPersonne,
   IDataTableauRMCPersonne
@@ -33,10 +31,11 @@ import {
   getColonnesTableauRMCAutoPersonne,
   getIdentifiantPersonneOuActeInscription,
   getLigneTableauVide,
-  getRolesPersonneEnFonctionNatureActeRequeteAsListeBoutonMenuItem
+  getRolesPersonneAsOptionsEnFonctionNatureActeRequete
 } from "./TableauRMCPersonneUtils";
 
 interface TableauRMCPersonneProps {
+  typeRedactionActe: TypeRedactionActe;
   dataTableauRMCPersonne: IDataTableauRMCPersonne[];
   identifiantsPersonnesSelectionnees: string[];
   identifiantsActesInscriptionsSelectionnes: string[];
@@ -68,14 +67,18 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
   function afficheBoutonAjouterPersonneOuActeInscription(
     data: IDataTableauRMCPersonne
   ): boolean {
-    const identifiants: string[] = [
-      ...(data.estDataPersonne
-        ? props.identifiantsPersonnesSelectionnees
-        : props.identifiantsActesInscriptionsSelectionnes)
-    ];
-    return !identifiants.includes(
-      getIdentifiantPersonneOuActeInscription(data)
-    );
+    let afficheBouton: boolean = false;
+    if (props.typeRedactionActe === TypeRedactionActe.TRANSCRIT) {
+      const identifiants: string[] = [
+        ...(data.estDataPersonne
+          ? props.identifiantsPersonnesSelectionnees
+          : props.identifiantsActesInscriptionsSelectionnes)
+      ];
+      afficheBouton = !identifiants.includes(
+        getIdentifiantPersonneOuActeInscription(data)
+      );
+    }
+    return afficheBouton;
   }
 
   const colonneBoutonAjouterPersonneOuActeInscriptionParams: IColonneBoutonMenuParams<
@@ -88,7 +91,7 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
     getElement: getBoutonMenuElement
   };
 
-  const conteneurBoutonAjouterPersonneProps: IConteneurElementPropsPartielles<
+  const conteneurBoutonAjouterPersonneOuActeInscriptionProps: IConteneurElementPropsPartielles<
     IDataTableauRMCPersonne,
     string,
     TMouseEventSurHTMLButtonElement
@@ -99,10 +102,9 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
 
   const boutonMenuAjouterPersonneProps: ICelluleBoutonMenuProps = {
     boutonLibelle: getLibelle("+"),
-    listeItems:
-      getRolesPersonneEnFonctionNatureActeRequeteAsListeBoutonMenuItem(
-        props.natureActeRequete
-      ),
+    options: getRolesPersonneAsOptionsEnFonctionNatureActeRequete(
+      props.natureActeRequete
+    ),
     titreBouton: getLibelle("Ajouter cette personne au projet"),
     anchorOrigin: { vertical: "top", horizontal: "left" },
     transformOrigin: { vertical: "top", horizontal: "right" },
@@ -111,8 +113,9 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
 
   const boutonMenuAjouterActeInscriptionProps: ICelluleBoutonMenuProps = {
     boutonLibelle: getLibelle("+"),
-    listeItems: EnumWithComplete.getAllLibellesAsListeBoutonMenuItem(
-      TypeActeInscriptionSauvegarde
+    options: TypePieceJustificative.getAllEnumsByTypeRequeteAsOptions(
+      TypeRequete.CREATION,
+      props.typeRedactionActe
     ),
     titreBouton: getLibelle("Ajouter cet acte ou inscription au projet"),
     anchorOrigin: { vertical: "top", horizontal: "left" },
@@ -122,8 +125,7 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
 
   const columnHeaders: TableauTypeColumn[] = getColonnesTableauRMCAutoPersonne(
     colonneBoutonAjouterPersonneOuActeInscriptionParams,
-    conteneurBoutonAjouterPersonneProps,
-    boutonMenuAjouterPersonneProps
+    conteneurBoutonAjouterPersonneOuActeInscriptionProps
   );
 
   const onClickOnLine = (
@@ -156,8 +158,8 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
   const closeFenetre = (idActeInscription: string, idx: number) => {
     const nouvelEtatFenetres = supprimeElement(
       etatFenetres,
-      (etatFenetre: IFenetreFicheActe) =>
-        etatFenetre.idActe === idActeInscription
+      (etatFenetre: IFenetreFicheActeInscription) =>
+        etatFenetre.idActeInscription === idActeInscription
     );
     setEtatFenetres(nouvelEtatFenetres);
   };
@@ -189,7 +191,7 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
                 fenetreFicheActe && (
                   <FenetreFiche
                     estConsultation={true}
-                    key={`fiche${fenetreFicheActe.idActeInscription}+${fenetreFicheActe.index}`}
+                    key={`fiche${fenetreFicheActe.idActeInscription}+${fenetreFicheActe.index.value}`}
                     identifiant={fenetreFicheActe.idActeInscription}
                     categorie={fenetreFicheActe.datasFiches[ZERO].categorie}
                     datasFiches={fenetreFicheActe.datasFiches}

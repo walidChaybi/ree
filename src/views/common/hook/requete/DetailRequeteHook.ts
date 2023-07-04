@@ -419,11 +419,17 @@ function mapPersonnesSauvegardees(
   estRequeteMariage = false
 ): IPersonneSauvegardee[] {
   const personnesSauvegardees: IPersonneSauvegardee[] = [];
-  data?.forEach(dataCourant =>
-    personnesSauvegardees.push({
-      idPersonne: dataCourant.idPersonne,
-      role: RolePersonneSauvegardee.getEnumFor(dataCourant.role)
-    })
-  );
+  data?.forEach(dataCourant =>{
+    const role =  RolePersonneSauvegardee.getEnumForEnFonctionNatureActeRequete(
+      dataCourant.role,
+      estRequeteMariage
+    );
+    if (role) {
+      personnesSauvegardees.push({
+        idPersonne: dataCourant.idPersonne,
+        role
+      })
+    }
+  });
   return personnesSauvegardees;
 }

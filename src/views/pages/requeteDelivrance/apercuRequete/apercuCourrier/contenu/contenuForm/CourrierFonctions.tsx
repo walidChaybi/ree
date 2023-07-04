@@ -26,6 +26,10 @@ import {
   VOIE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { OptionsCourrier } from "@model/requete/IOptionCourrier";
+import { Requerant } from "@model/requete/IRequerant";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
@@ -46,10 +50,6 @@ import {
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { OptionsCourrier } from "@model/requete/IOptionCourrier";
-import { Requerant } from "@model/requete/IRequerant";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { Options } from "@util/Type";
 import { getValeurOuVide } from "@util/Utils";
@@ -145,7 +145,7 @@ export const getDefaultValuesCourrier = (
       [DELIVRANCE]: getValeurOuVide(requete.choixDelivrance?.libelle),
       [COURRIER]: documentReponse?.typeDocument
         ? documentReponse?.typeDocument
-        : getTypesCourrier(requete)[0].value
+        : getTypesCourrier(requete)[0].cle
     },
     [REQUERANT]: {
       [REQUERANT_LIGNE_1]: identiteRequerant.premiereLigne,

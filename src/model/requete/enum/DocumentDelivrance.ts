@@ -1,11 +1,12 @@
+import { Options } from "@util/Type";
 /* istanbul ignore file */
 import { peupleDocumentDelivrance } from "@api/nomenclature/NomenclatureRequete";
+import { Option } from "@util/Type";
+import { getValeurOuVide } from "@util/Utils";
 import { EnumNomemclature } from "@util/enum/EnumNomenclature";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { Options } from "@util/Type";
-import { getValeurOuVide } from "@util/Utils";
 import { TypeRepertoire } from "../../etatcivil/enum/TypeRepertoire";
 import { ChoixDelivrance } from "./ChoixDelivrance";
 import {
@@ -163,7 +164,7 @@ export class DocumentDelivrance extends EnumNomemclature {
     const options = DocumentDelivrance.getAllEnumsAsOptions();
 
     return options.filter(opt =>
-      DocumentDelivrance.getEnumForUUID(opt.value).code.startsWith(
+      DocumentDelivrance.getEnumForUUID(opt.cle).code.startsWith(
         CERTIFICAT_SITUATION_PREFIX
       )
     );
@@ -333,7 +334,7 @@ export class DocumentDelivrance extends EnumNomemclature {
       : false;
   }
 
-  public static getCodesAsOptions(codes: string[]) {
+  public static getCodesAsOptions(codes: string[]): Options {
     const res = [];
     for (const document of codes) {
       res.push(this.getOptionFromCode(document));
@@ -347,11 +348,11 @@ export class DocumentDelivrance extends EnumNomemclature {
     return DocumentDelivrance.getEnumForUUID(documentDemandeUUID);
   }
 
-  public static getOptionFromCode(code: string) {
+  public static getOptionFromCode(code: string): Option {
     const key = this.getKeyForCode(code);
     return {
-      value: this.getKeyForCode(code),
-      str: this.getEnumForUUID(key).libelle
+      cle: this.getKeyForCode(code),
+      libelle: this.getEnumForUUID(key).libelle
     };
   }
 
@@ -368,7 +369,7 @@ export class DocumentDelivrance extends EnumNomemclature {
     const options = DocumentDelivrance.getAllEnumsAsOptions();
     return options.filter(
       opt =>
-        DocumentDelivrance.getEnumForUUID(opt.value)
+        DocumentDelivrance.getEnumForUUID(opt.cle)
           .categorieDocumentDelivrance === "Certificat de situation demandé"
     );
   }
@@ -377,10 +378,10 @@ export class DocumentDelivrance extends EnumNomemclature {
     const options = DocumentDelivrance.getAllEnumsAsOptions();
     return options.filter(
       opt =>
-        DocumentDelivrance.getEnumForUUID(opt.value)
+        DocumentDelivrance.getEnumForUUID(opt.cle)
           .categorieDocumentDelivrance === "Certificat de situation demandé" ||
         (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) &&
-          DocumentDelivrance.getEnumForUUID(opt.value)
+          DocumentDelivrance.getEnumForUUID(opt.cle)
             .categorieDocumentDelivrance === "Attestation")
     );
   }

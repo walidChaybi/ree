@@ -216,7 +216,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     const saisieRequeteAttendu = {
       lienRequerant: "TITULAIRE",
       natureActe: "NAISSANCE_MINEUR",
-      registre: { value: "registre", str: "registre" }
+      registre: { cle: "registre", libelle: "registre" }
     };
 
     expect(saisieRequete(requete)).toEqual(saisieRequeteAttendu);

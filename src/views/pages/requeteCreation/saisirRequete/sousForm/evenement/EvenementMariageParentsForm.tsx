@@ -1,6 +1,7 @@
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { OuiNon } from "@model/etatcivil/enum/OuiNon";
 import { getLibelle } from "@util/Utils";
+import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues
@@ -8,7 +9,6 @@ import DateComposeForm, {
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
-import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   INomForm,
@@ -18,7 +18,7 @@ import {
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
+import { CaracteresAutorises } from "../../../../../../ressources/Regex";
 import {
   DATE_MARIAGE,
   LIEU_DE_MARIAGE,
@@ -40,12 +40,12 @@ export const EvenementMariageParentsFormValidationSchema = Yup.object().shape({
   [PARENTS_MARIES]: Yup.string(),
   [DATE_MARIAGE]: DateValidationSchemaSansTestFormat,
   [VILLE_DE_MARIAGE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [PAYS_DU_MARIAGE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   )
 });
 

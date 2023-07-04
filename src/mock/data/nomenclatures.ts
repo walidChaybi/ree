@@ -674,7 +674,8 @@ export const ReponseAppelNomenclatureTypePiecesJustificative = {
       usageRECE: true,
       categorieDocumentDelivrance: null,
       correspondanceDila: null,
-      typeRequete: "CREATION"
+      typeRequete: "CREATION",
+      typeRedactionActe: "TRANSCRIT"
     },
     {
       id: "6c95641f-59fe-4155-a6ba-8b42433c04ec",
@@ -686,7 +687,8 @@ export const ReponseAppelNomenclatureTypePiecesJustificative = {
       usageRECE: true,
       categorieDocumentDelivrance: null,
       correspondanceDila: null,
-      typeRequete: "CREATION"
+      typeRequete: "CREATION",
+      typeRedactionActe: "TRANSCRIT"
     },
     {
       id: "93e4f39b-0fc5-47f4-8434-2d362f897987",
@@ -698,7 +700,8 @@ export const ReponseAppelNomenclatureTypePiecesJustificative = {
       usageRECE: true,
       categorieDocumentDelivrance: null,
       correspondanceDila: null,
-      typeRequete: "CREATION"
+      typeRequete: "CREATION",
+      typeRedactionActe: "TRANSCRIT"
     },
     {
       id: "f14f8f0d-a146-48c3-a04e-285b9a2a4451",
@@ -710,7 +713,8 @@ export const ReponseAppelNomenclatureTypePiecesJustificative = {
       usageRECE: true,
       categorieDocumentDelivrance: null,
       correspondanceDila: null,
-      typeRequete: "CREATION"
+      typeRequete: "CREATION",
+      typeRedactionActe: "TRANSCRIT"
     }
   ],
   errors: []

@@ -8,7 +8,6 @@ import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
 } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
-import { useRechercheReqNataliApiHook } from "@hook/requete/creation/RechercheReqNataliHookApi";
 import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
@@ -17,23 +16,24 @@ import {
   TransfertParLotParams,
   useTransfertsApi
 } from "@hook/requete/TransfertHook";
+import { useRechercheReqNataliApiHook } from "@hook/requete/creation/RechercheReqNataliHookApi";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
 import { autorisePrendreEnChargeReqTableauCreation } from "@util/RequetesUtils";
-import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
+import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import { SortOrder } from "@widget/tableau/TableUtils";
+import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import React, { useCallback, useEffect, useState } from "react";
 import { useRequeteCreationApi } from "../../../common/hook/requete/creation/DonneesRequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
@@ -188,8 +188,8 @@ export const RequetesServiceCreation: React.FC<
       statutRequete: requetesChecked.map(requete =>
         StatutRequete.getEnumFromLibelle(requete?.statut)
       ),
-      idUtilisateur: agent?.value,
-      libelleAction: `Attribuée à  ${agent?.str}`,
+      idUtilisateur: agent?.cle,
+      libelleAction: `Attribuée à  ${agent?.libelle}`,
       estTransfert: false
     } as TransfertParLotParams);
   };
@@ -207,8 +207,8 @@ export const RequetesServiceCreation: React.FC<
         ).filter(
           option =>
             !listeUtilisateurs
-              .map(utilisateur => utilisateur.value)
-              .includes(option.value)
+              .map(utilisateur => utilisateur.cle)
+              .includes(option.cle)
         );
 
         return listeUtilisateurs.concat(options);

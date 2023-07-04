@@ -111,7 +111,7 @@ const TitulaireEvenementForm: React.FC<
             <CheckboxField
               name={withNamespace(props.nom, ADOPTE_PAR)}
               label={getLibelle("Adopté par")}
-              values={[{ str: "", value: "true" }]}
+              values={[{ libelle: "", cle: "true" }]}
               disabled={
                 estRenseigne(
                   TitulaireActe.getParentAdoptant1(props.titulaire)?.nom

@@ -13,8 +13,9 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { storeRece } from "@util/storeRece";
+import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
-import { BoutonMenu, IBoutonMenuItem } from "@widget/boutonMenu/BoutonMenu";
+import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import React from "react";
 import { useHistory } from "react-router-dom";
 interface MenuSaisirRequeteProps {
@@ -70,14 +71,14 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
     }
   };
 
-  const listeRequeteCourrier = getListeDesRequetesCourrier();
+  const listeRequeteCourrier = getListeDesRequetesCourrierAsOptions();
 
   return (
     <BoutonMenu
       className="MenuSaisirRequete"
       boutonLibelle={getLibelle("Saisir requête courrier")}
-      listeItems={listeRequeteCourrier}
-      onClickMenuItem={clickMenuItem}
+      options={listeRequeteCourrier}
+      onClickOption={clickMenuItem}
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "right"
@@ -90,33 +91,31 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
   );
 };
 
-function mapSousTypeDelivranceVersBoutonMenuItem(
-  sousTypeDelivrance: SousTypeDelivrance
-): IBoutonMenuItem {
+function mapSousTypeDelivrance(sousTypeDelivrance: SousTypeDelivrance): Option {
   return {
-    key: sousTypeDelivrance.nom,
+    cle: sousTypeDelivrance.nom,
     libelle: sousTypeDelivrance.libelle
   };
 }
 
-function getListeDesRequetesCourrier(): IBoutonMenuItem[] {
-  let listeRequeteCourrier: IBoutonMenuItem[] = [];
+function getListeDesRequetesCourrierAsOptions(): Options {
+  let listeRequeteCourrier: Options = [];
 
   if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)) {
     listeRequeteCourrier = listeRequeteCourrier.concat(
-      mapSousTypeDelivranceVersBoutonMenuItem(SousTypeDelivrance.RDC)
+      mapSousTypeDelivrance(SousTypeDelivrance.RDC)
     );
   }
 
   if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS)) {
     listeRequeteCourrier = listeRequeteCourrier.concat(
-      mapSousTypeDelivranceVersBoutonMenuItem(SousTypeDelivrance.RDCSC)
+      mapSousTypeDelivrance(SousTypeDelivrance.RDCSC)
     );
   }
 
   if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)) {
     listeRequeteCourrier = listeRequeteCourrier.concat(
-      mapSousTypeDelivranceVersBoutonMenuItem(SousTypeDelivrance.RDLFC)
+      mapSousTypeDelivrance(SousTypeDelivrance.RDLFC)
     );
   }
 

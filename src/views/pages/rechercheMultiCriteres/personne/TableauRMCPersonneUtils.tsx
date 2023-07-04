@@ -9,6 +9,7 @@ import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { HeaderTableauRMCPersonne } from "@model/rmc/headerTableau/HeaderTableauRMCPersonne";
 import ReportIcon from "@mui/icons-material/Report";
 import { getDateStringFromDateCompose } from "@util/DateUtils";
+import { Options } from "@util/Type";
 import {
   CINQ,
   TROIS,
@@ -17,12 +18,9 @@ import {
   formatPrenoms,
   getValeurOuVide
 } from "@util/Utils";
-import { EnumWithComplete } from "@util/enum/EnumWithComplete";
-import { IBoutonMenuItem } from "@widget/boutonMenu/BoutonMenu";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
 import { TMouseEventSurHTMLButtonElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
-import { ICelluleBoutonMenuProps } from "@widget/tableau/TableauRece/colonneElements/boutonMenu/CelluleBoutonMenu";
 import {
   IColonneBoutonMenuParams,
   getColonneBoutonMenu
@@ -36,24 +34,23 @@ import { commonHeadersTableauRMC } from "../acteInscription/resultats/RMCTableau
 import { IDataTableauRMCPersonne } from "./IDataTableauRMCPersonne";
 
 export function getColonnesTableauRMCAutoPersonne<TData, TIdentifiant>(
-  colonneBoutonAjouterPersonneParams: IColonneBoutonMenuParams<
+  colonneBoutonAjouterPersonneOuActeInscriptionParams: IColonneBoutonMenuParams<
     TData,
     TIdentifiant
   >,
-  conteneurBoutonAjouterPersonneProps: IConteneurElementPropsPartielles<
+  conteneurBoutonAjouterPersonneOuActeInscriptionProps: IConteneurElementPropsPartielles<
     TData,
     TIdentifiant,
     TMouseEventSurHTMLButtonElement
-  >,
-  boutonMenuAjouterPersonneProps: ICelluleBoutonMenuProps
+  >
 ): TableauTypeColumn[] {
   return [
     ...getColonnesTableauPersonnes().slice(0, -1),
     ...getColonnesTableauDocuments().slice(0, -1),
     getColonneBoutonMenu(
-      colonneBoutonAjouterPersonneParams,
-      boutonMenuAjouterPersonneProps,
-      conteneurBoutonAjouterPersonneProps
+      colonneBoutonAjouterPersonneOuActeInscriptionParams,
+      undefined,
+      conteneurBoutonAjouterPersonneOuActeInscriptionProps
     )
   ];
 }
@@ -248,13 +245,10 @@ export function getIdentifiantPersonneOuActeInscription(
   return data.idPersonneOuActeInscription;
 }
 
-export function getRolesPersonneEnFonctionNatureActeRequeteAsListeBoutonMenuItem(
+export function getRolesPersonneAsOptionsEnFonctionNatureActeRequete(
   natureActeRequete: NatureActeRequete
-): IBoutonMenuItem[] {
-  return EnumWithComplete.getListeBoutonMenuItemFromListeKeys(
-    RolePersonneSauvegardee.filtreRolesPersonnesSauvegardeesEnFonctionNatureActeRequete(
-      natureActeRequete
-    ).map(value => value.nom),
-    RolePersonneSauvegardee
-  );
+): Options {
+  return RolePersonneSauvegardee.filtreRolesPersonnesSauvegardeesEnFonctionNatureActeRequete(
+    natureActeRequete
+  ).map(role => RolePersonneSauvegardee.getLibelleAsOption(role.libelle));
 }

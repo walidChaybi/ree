@@ -4,9 +4,9 @@ import {
   PAS_DE_NOM_ACTE_ETRANGER
 } from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
+import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import {
   CENT_CARACT_MAX,
   INomForm,
@@ -16,7 +16,7 @@ import {
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../../../ressources/Regex";
+import { CaracteresAutorises } from "../../../../../../../ressources/Regex";
 import "./scss/NomsForm.scss";
 
 // Valeurs par défaut des champs
@@ -30,12 +30,12 @@ export const NomsFormDefaultValues = {
 export const NomsFormValidationSchema = Yup.object()
   .shape({
     [NOM_ACTE_ETRANGER]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
+      CaracteresAutorises,
+      CARACTERES_AUTORISES_MESSAGE
     ),
     [NOM_SOUHAITE_ACTE_FR]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
+      CaracteresAutorises,
+      CARACTERES_AUTORISES_MESSAGE
     )
   })
   .test("titulaire.pasDeNomActeEtranger", function (value, error) {
@@ -99,7 +99,7 @@ const NomsFormTitulaire: React.FC<NomsFormProps> = props => {
         <CheckboxField
           name={pasDeNomActeEtrangerWithNameSpace}
           label={getLibelle("Le titulaire n'a pas de nom sur l'acte étranger")}
-          values={[{ str: "", value: PAS_DE_NOM_ACTE_ETRANGER }]}
+          values={[{ libelle: "", cle: PAS_DE_NOM_ACTE_ETRANGER }]}
           onChange={onChangePasDeNomSurActeEtranger}
         />
 

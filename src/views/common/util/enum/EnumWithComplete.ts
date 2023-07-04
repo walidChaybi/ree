@@ -1,6 +1,5 @@
 /* istanbul ignore file */
-import { Options } from "../Type";
-import { IBoutonMenuItem } from "./../../widget/boutonMenu/BoutonMenu";
+import { Option, Options } from "../Type";
 import { EnumWithLibelle } from "./EnumWithLibelle";
 
 export class EnumWithComplete extends EnumWithLibelle {
@@ -25,12 +24,14 @@ export class EnumWithComplete extends EnumWithLibelle {
     for (const key in clazz) {
       if (clazz.hasOwnProperty(key)) {
         options.push({
-          value: key,
-          str: clazz[key]._nom
+          cle: key,
+          libelle: clazz[key]._nom
         });
       }
     }
-    return options.sort((o1: any, o2: any) => o1.str.localeCompare(o2.str));
+    return options.sort((o1: Option, o2: Option) =>
+      o1.libelle.localeCompare(o2.libelle)
+    );
   }
 
   public static getAllLibellesCourtAsOptions(clazz: any): Options {
@@ -38,12 +39,14 @@ export class EnumWithComplete extends EnumWithLibelle {
     for (const key in clazz) {
       if (clazz.hasOwnProperty(key)) {
         options.push({
-          value: key,
-          str: clazz[key]._libelleCourt
+          cle: key,
+          libelle: clazz[key]._libelleCourt
         });
       }
     }
-    return options.sort((o1: any, o2: any) => o1.str.localeCompare(o2.str));
+    return options.sort((o1: Option, o2: Option) =>
+      o1.libelle.localeCompare(o2.libelle)
+    );
   }
 
   public static getKeyForNom(clazz: any, nom: string) {
@@ -78,30 +81,39 @@ export class EnumWithComplete extends EnumWithLibelle {
     return undefined;
   }
 
-  public static getAllLibellesAsListeBoutonMenuItem(
-    clazz: any
-  ): IBoutonMenuItem[] {
-    return this.getListeBoutonMenuItemFromListeKeys(Object.keys(clazz), clazz)
+  public static getAllLibellesAsOptions(clazz: any): Options {
+    return this.getLibelleAsOptionFromListeKeys(Object.keys(clazz), clazz);
   }
 
-  public static getListeBoutonMenuItemFromListeKeys(keys: string[], clazz: any): IBoutonMenuItem[] {
-    const listeItems: IBoutonMenuItem[] = [];
+  public static getLibelleAsOption(clazz: any, libelle: string): Option {
+    const enumeration = this.getEnumFromLibelle(clazz, libelle);
+    return {
+      cle: enumeration.nom,
+      libelle: enumeration.libelle
+    };
+  }
+
+  public static getLibelleAsOptionFromListeKeys(
+    keys: string[],
+    clazz: any
+  ): Options {
+    const options: Options = [];
     for (const key of keys) {
-      const item = this.getBoutonMenuItemFromKey(key, clazz);
-      if (item) {
-        listeItems.push(item);
+      const option = this.getLibelleAsOptionFromKey(key, clazz);
+      if (option) {
+        options.push(option);
       }
     }
-    return listeItems;
+    return options;
   }
 
-  public static getBoutonMenuItemFromKey(
+  public static getLibelleAsOptionFromKey(
     key: string,
     clazz: any
-  ): IBoutonMenuItem | undefined {
+  ): Option | void {
     if (clazz.hasOwnProperty(key)) {
       return {
-        key: key,
+        cle: key,
         libelle: clazz[key].libelle
       };
     }

@@ -73,7 +73,7 @@ export const customHeaderRenderer = ({
       ariaLabel="select month"
       value={months[getMonth(date)]}
       onChange={({ target: { value } }) => changeMonth(months.indexOf(value))}
-      options={months.map(month => ({ value: month, str: month }))}
+      options={months.map(month => ({ cle: month, libelle: month }))}
       pasPremiereOptionVide={true}
     />
 
@@ -82,7 +82,7 @@ export const customHeaderRenderer = ({
       ariaLabel="select year"
       value={getYear(date)}
       onChange={({ target: { value } }) => changeYear(Number(value))}
-      options={years.map(year => ({ value: year, str: year }))}
+      options={years.map(year => ({ cle: year, libelle: year }))}
     />
 
     <button

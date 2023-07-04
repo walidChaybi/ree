@@ -114,14 +114,14 @@ const UploadFileField: React.FC<UploadFileFieldProps> = (props) => {
           >
             {props.menuItems.map(menuItem => (
               <MenuItem
-                key={menuItem.value}
+                key={menuItem.cle}
                 onClick={(e: any) => {
                   setMenuItemState(menuItem);
                   setMenu(null);
                   refLabelButton.current?.click();
                 }}
               >
-                {menuItem.str}
+                {menuItem.libelle}
               </MenuItem>
             ))}
           </Menu>

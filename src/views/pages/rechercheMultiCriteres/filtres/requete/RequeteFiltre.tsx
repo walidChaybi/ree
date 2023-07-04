@@ -5,9 +5,9 @@ import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
 import { Options } from "@util/Type";
 import { estRenseigne, getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
+import { CARACTERES_ALPHANUMERIQUE } from "@widget/formulaire/FormulaireMessages";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
-import { CARACTERES_ALPHANUMERIQUE } from "@widget/formulaire/FormulaireMessages";
 import { traiteEspace } from "@widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
@@ -17,7 +17,7 @@ import {
 import { connect, getIn } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { CarateresAlphanumerique } from "../../../../../ressources/Regex";
+import { CaracteresAlphanumeriques } from "../../../../../ressources/Regex";
 
 // Noms des champs
 export const NUMERO_REQUETE = "numeroRequete";
@@ -38,7 +38,7 @@ export const RequeteDefaultValues = {
 // Schéma de validation des champs
 export const RequeteValidationSchema = Yup.object({
   [NUMERO_REQUETE]: Yup.string().matches(
-    CarateresAlphanumerique,
+    CaracteresAlphanumeriques,
     CARACTERES_ALPHANUMERIQUE
   ),
   [NUMERO_TELEDOSSIER]: Yup.string(),

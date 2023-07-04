@@ -52,16 +52,16 @@ const RecherchePocopas: React.FC<RecherchePocopasSubForm> = props => {
       pocopasAsOptions = pocopas.map(
         p =>
           ({
-            value: enMajuscule(p),
-            str: p
+            cle: enMajuscule(p),
+            libelle: p
           } as Option)
       );
     }
 
     if (lastPocopaSelected && pocopas?.indexOf(lastPocopaSelected) === -1) {
       pocopasAsOptions.push({
-        value: enMajuscule(lastPocopaSelected),
-        str: premiereLettreEnMajusculeLeResteEnMinuscule(lastPocopaSelected)
+        cle: enMajuscule(lastPocopaSelected),
+        libelle: premiereLettreEnMajusculeLeResteEnMinuscule(lastPocopaSelected)
       });
     }
 
@@ -69,7 +69,7 @@ const RecherchePocopas: React.FC<RecherchePocopasSubForm> = props => {
   }, [pocopas, lastPocopaSelected]);
 
   function onChampRechercheChange(option?: Option) {
-    setLastPocopaSelected(option ? option.str : undefined);
+    setLastPocopaSelected(option ? option.libelle : undefined);
   }
 
   function onChampRechercheInput(value: string | null) {

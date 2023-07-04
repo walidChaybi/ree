@@ -1,10 +1,10 @@
 import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
   ASTERISQUE_MESSAGE,
-  CARATERES_AUTORISES_MESSAGE
+  CARACTERES_AUTORISES_MESSAGE
 } from "@widget/formulaire/FormulaireMessages";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { traiteEspace } from "@widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
@@ -16,7 +16,7 @@ import React from "react";
 import * as Yup from "yup";
 import {
   AsterisqueRecherche,
-  CarateresAutoriseRecherche
+  CaracteresAutorisesRecherche
 } from "../../../../../ressources/Regex";
 import "../scss/FiltreRMC.scss";
 
@@ -33,10 +33,10 @@ export const RequerantDefaultValues = {
 // Schéma de validation des champs
 export const RequerantValidationSchema = Yup.object({
   [NOM]: Yup.string()
-    .matches(CarateresAutoriseRecherche, CARATERES_AUTORISES_MESSAGE)
+    .matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE)
     .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE),
   [RAISON_SOCIALE]: Yup.string()
-    .matches(CarateresAutoriseRecherche, CARATERES_AUTORISES_MESSAGE)
+    .matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE)
     .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE)
 });
 

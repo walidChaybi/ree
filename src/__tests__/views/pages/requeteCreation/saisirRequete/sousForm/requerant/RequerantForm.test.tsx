@@ -14,20 +14,20 @@ import {
   waitFor
 } from "@testing-library/react";
 import {
+  ADRESSE_MAIL_NON_CONFORME,
+  CARACTERES_AUTORISES_MESSAGE,
+  NUMERO_TELEPHONE_NON_CONFORME
+} from "@widget/formulaire/FormulaireMessages";
+import {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
 } from "@widget/formulaire/adresse/AdresseForm";
-import {
-  ADRESSE_MAIL_NON_CONFORME,
-  CARATERES_AUTORISES_MESSAGE,
-  NUMERO_TELEPHONE_NON_CONFORME
-} from "@widget/formulaire/FormulaireMessages";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
 import {
-  CarateresAutorise,
+  CaracteresAutorises,
   NumeroTelephone
 } from "../../../../../../../ressources/Regex";
 
@@ -45,10 +45,13 @@ const HookParentsForm: React.FC = () => {
   };
 
   const ValidationSchema = Yup.object().shape({
-    [NOM]: Yup.string().matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
+    [NOM]: Yup.string().matches(
+      CaracteresAutorises,
+      CARACTERES_AUTORISES_MESSAGE
+    ),
     [PRENOM]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
+      CaracteresAutorises,
+      CARACTERES_AUTORISES_MESSAGE
     ),
     [AUTRE_ADRESSE_COURRIEL]: Yup.string().email(ADRESSE_MAIL_NON_CONFORME),
     [AUTRE_NUMERO_TELEPHONE]: Yup.string().matches(

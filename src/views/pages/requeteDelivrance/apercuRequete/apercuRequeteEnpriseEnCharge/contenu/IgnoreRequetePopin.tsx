@@ -6,17 +6,18 @@ import {
   DialogContentText,
   DialogTitle
 } from "@mui/material";
-import { getUrlPrecedente } from "@util/route/UrlUtil";
+import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
+import { getUrlPrecedente } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import {
   ALERTE_AUTRE,
   ALERTE_OBLIGATOIRE,
   COMPLEMENT_DESCRIPTION_LIMITE_TAILLE
 } from "@widget/formulaire/FormulaireMessages";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import FormBoutons, { FormBoutonsProps } from "@widget/popin/FormBoutons";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -93,10 +94,10 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
     onClosePopin();
   };
 
-  const motif = [
-    { str: REQUETE_DEJA_TRAITEE, value: REQUETE_DEJA_TRAITEE },
-    { str: ADRESSE_INCOMPLETE, value: ADRESSE_INCOMPLETE },
-    { str: AUTRE, value: AUTRE }
+  const motif: Options = [
+    { libelle: REQUETE_DEJA_TRAITEE, cle: REQUETE_DEJA_TRAITEE },
+    { libelle: ADRESSE_INCOMPLETE, cle: ADRESSE_INCOMPLETE },
+    { libelle: AUTRE, cle: AUTRE }
   ];
 
   const idAction = useIgnorerApi(param);

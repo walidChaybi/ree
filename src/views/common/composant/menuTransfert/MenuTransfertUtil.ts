@@ -1,18 +1,18 @@
 import { TransfertUnitaireParams } from "@hook/requete/TransfertHook";
-import { Droit } from "@model/agent/enum/Droit";
 import {
   IUtilisateur,
   utilisateurADroit,
   utilisateurALeDroitSurUnDesPerimetres
 } from "@model/agent/IUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
+import { IActionOption } from "@model/requete/IActionOption";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IActionOption } from "@model/requete/IActionOption";
 import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
-import { storeRece } from "@util/storeRece";
 import { Option, Options } from "@util/Type";
+import { storeRece } from "@util/storeRece";
 import { Perimetre } from "./../../../../model/agent/enum/Perimetre";
 import { IMenuTransfertProps } from "./MenuTransfert";
 
@@ -29,13 +29,13 @@ export function onValidateService(
   if (entite) {
     setParam({
       idRequete: props.idRequete,
-      idEntite: entite.value,
+      idEntite: entite.cle,
       idUtilisateur: "",
       statutRequete: props.estTransfert
         ? StatutRequete.TRANSFEREE
         : StatutRequete.A_TRAITER,
       libelleAction: `${props.estTransfert ? "Transférée" : "Attribuée"} à ${
-        entite.str
+        entite.libelle
       }`,
       estTransfert: props.estTransfert
     });
@@ -65,14 +65,14 @@ export function onValidateAgent(
     setParam({
       idRequete: props.idRequete,
       idEntite: storeRece.listeUtilisateurs.find(
-        utilisateur => utilisateur.idUtilisateur === agent.value
+        utilisateur => utilisateur.idUtilisateur === agent.cle
       )?.entite?.idEntite,
-      idUtilisateur: agent.value,
+      idUtilisateur: agent.cle,
       statutRequete: props.estTransfert
         ? StatutRequete.TRANSFEREE
         : StatutRequete.A_TRAITER,
       libelleAction: `${props.estTransfert ? "Transférée" : "Attribuée"} à ${
-        agent.str
+        agent.libelle
       }`,
       estTransfert: props.estTransfert
     });
@@ -82,12 +82,12 @@ export function onValidateAgent(
 
 export function listeEntiteToOptions(): Options {
   return [
-    { value: "", str: "" },
+    { cle: "", libelle: "" },
     ...storeRece.listeEntite
       .filter(entite => entite.estDansSCEC)
       .sort((a, b) => a.libelleEntite.localeCompare(b.libelleEntite))
       .map(entite => {
-        return { value: entite.idEntite, str: entite.libelleEntite };
+        return { cle: entite.idEntite, libelle: entite.libelleEntite };
       })
   ];
 }
@@ -99,7 +99,7 @@ export function listeUtilisateursToOptionsBis(
   estTransfert: boolean
 ): Options {
   return [
-    { value: "", str: "" },
+    { cle: "", libelle: "" },
     ...storeRece.listeUtilisateurs
       .filter(utilisateur =>
         filterUtilisateur(
@@ -225,7 +225,7 @@ export function filtrerValideur(
 
 export function listeValideurToOptions(idUtilisateurRequete?: string): Options {
   return [
-    { value: "", str: "" },
+    { cle: "", libelle: "" },
     ...storeRece.listeUtilisateurs
       .filter(utilisateur => filtrerValideur(utilisateur, idUtilisateurRequete))
       .sort((a, b) => a.nom.localeCompare(b.nom))
@@ -235,8 +235,8 @@ export function listeValideurToOptions(idUtilisateurRequete?: string): Options {
 
 function mapUtilisateurToOption(utilisateur: IUtilisateur): Option {
   return {
-    value: utilisateur.idUtilisateur,
-    str: `${utilisateur.nom} ${utilisateur.prenom}`
+    cle: utilisateur.idUtilisateur,
+    libelle: `${utilisateur.nom} ${utilisateur.prenom}`
   };
 }
 

@@ -1,6 +1,7 @@
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { OuiNon } from "@model/etatcivil/enum/OuiNon";
 import { getLibelle } from "@util/Utils";
+import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues
@@ -8,7 +9,6 @@ import DateComposeForm, {
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
-import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   INomForm,
@@ -18,7 +18,7 @@ import {
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
+import { CaracteresAutorises } from "../../../../../../ressources/Regex";
 import {
   DATE_RECONNAISSANCE,
   DEPARTEMENT_RECONNAISSANCE,
@@ -44,20 +44,20 @@ export const EvenementReconnaissanceTitulaireFormValidationSchema =
     [TITULAIRE_RECONNU]: Yup.string(),
     [DATE_RECONNAISSANCE]: DateValidationSchemaSansTestFormat,
     [VILLE_RECONNAISSANCE]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
+      CaracteresAutorises,
+      CARACTERES_AUTORISES_MESSAGE
     ),
     [REGION_ETAT_RECONNAISSANCE]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
+      CaracteresAutorises,
+      CARACTERES_AUTORISES_MESSAGE
     ),
     [DEPARTEMENT_RECONNAISSANCE]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
+      CaracteresAutorises,
+      CARACTERES_AUTORISES_MESSAGE
     ),
     [PAYS_RECONNAISSANCE]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
+      CaracteresAutorises,
+      CARACTERES_AUTORISES_MESSAGE
     )
   });
 const OUI = "OUI";

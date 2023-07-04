@@ -1,10 +1,10 @@
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { getLibelle } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
-import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   INomForm,
@@ -14,7 +14,7 @@ import {
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
+import { CaracteresAutorises } from "../../../../../../ressources/Regex";
 import {
   ARRONDISSEMENT_NAISSANCE,
   DEPARTEMENT_NAISSANCE,
@@ -37,20 +37,20 @@ export const EvenementParentsFormDefaultValues = {
 
 export const EvenementParentsFormValidationSchema = Yup.object().shape({
   [VILLE_NAISSANCE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [REGION_NAISSANCE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [DEPARTEMENT_NAISSANCE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [PAYS_NAISSANCE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   )
 });
 const EvenementParentsForm: React.FC<SubFormProps> = props => {

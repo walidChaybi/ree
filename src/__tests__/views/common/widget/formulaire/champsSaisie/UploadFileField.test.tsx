@@ -7,6 +7,7 @@ import {
   waitFor
 } from "@testing-library/react";
 import { ExtensionDocumentTypeMime } from "@util/FileUtils";
+import { Options } from "@util/Type";
 import UploadFileField from "@widget/formulaire/champsSaisie/UploadFileField";
 import { inputPngFiles } from "../../../../../__tests__utils__/testsUtil";
 
@@ -26,9 +27,9 @@ afterEach(cleanup);
 
 test("Attendu: le composant UploadFileField déclanche la fonction onFileChange lorsqu'un fichier est choisi", async () => {
   const onFileChange = jest.fn();
-  const menuItems = [
-    { value: "k1", str: "str1" },
-    { value: "k2", str: "str2" }
+  const menuItems: Options = [
+    { cle: "k1", libelle: "str1" },
+    { cle: "k2", libelle: "str2" }
   ];
 
   render(
@@ -61,9 +62,9 @@ test("Attendu: le composant UploadFileField déclanche la fonction onFileChange 
 
 test("Attendu: le composant UploadFileField ne déclanche pas la fonction onFileChange lorsqu'un fichier du mauvais type est choisi", async () => {
   const onFileChange = jest.fn();
-  const menuItems = [
-    { value: "k1", str: "str1" },
-    { value: "k2", str: "str2" }
+  const menuItems: Options = [
+    { cle: "k1", libelle: "str1" },
+    { cle: "k2", libelle: "str2" }
   ];
 
   render(
@@ -96,9 +97,9 @@ test("Attendu: le composant UploadFileField ne déclanche pas la fonction onFile
 
 test("Attendu: le composant UploadFileField affiche un menu lorsq'un click sur le bouton principal est effectué", async () => {
   const onFileChange = jest.fn();
-  const menuItems = [
-    { value: "k1", str: "str1" },
-    { value: "k2", str: "str2" }
+  const menuItems: Options = [
+    { cle: "k1", libelle: "str1" },
+    { cle: "k2", libelle: "str2" }
   ];
 
   render(

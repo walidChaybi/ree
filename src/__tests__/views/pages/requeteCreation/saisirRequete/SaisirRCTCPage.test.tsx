@@ -20,10 +20,7 @@ import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router";
-import {
-  expectEstBoutonDisabled,
-  expectEstBoutonEnabled
-} from "../../../../__tests__utils__/expectUtils";
+import { expectEstBoutonDisabled } from "../../../../__tests__utils__/expectUtils";
 import { renseigneChampsRecherche } from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
@@ -84,44 +81,40 @@ test("DOIT afficher la popin de transfert vers les entités fille (triées) du d
   const history = createMemoryHistory();
   history.push("/page1");
   history.push("/page2");
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <SaisirRCTCPage />
-      </Router>
-    );
-  });
+  render(
+    <Router history={history}>
+      <SaisirRCTCPage />
+    </Router>
+  );
 
   /////////////////////////Saisie des données///////////////////////////////
-  await act(async () => {
-    // Nature acte et lien requérant
-    fireEvent.change(screen.getByTestId("requete.natureActe"), {
-      target: { value: "NAISSANCE_MINEUR" }
-    });
-    fireEvent.change(screen.getByTestId("requete.lienRequerant"), {
-      target: { value: "PERE_MERE" }
-    });
-
-    // Saisie de "TUNIS" pour le registre (pocopa)
-    await renseigneChampsRecherche(screen, "requete.registre", "TUNIS");
-
-    // Titulaire
-    fireEvent.change(getInput("titulaire.noms.nomActeEtranger"), {
-      target: { value: "Nom acte etranger" }
-    });
-    fireEvent.change(getInput("titulaire.noms.nomSouhaiteActeFR"), {
-      target: { value: "Nom souhaite acte FR" }
-    });
-    fireEvent.change(getInput("titulaire.prenoms.prenom1"), {
-      target: { value: "Prenom Un" }
-    });
-
-    // Parent 1
-    fireEvent.click(getInput("parents.parent1.pasdenomconnu.pasdenomconnu"));
-    fireEvent.click(
-      getInput("parents.parent1.pasdeprenomconnu.pasdeprenomconnu")
-    );
+  // Nature acte et lien requérant
+  fireEvent.change(screen.getByTestId("requete.natureActe"), {
+    target: { value: "NAISSANCE_MINEUR" }
   });
+  fireEvent.change(screen.getByTestId("requete.lienRequerant"), {
+    target: { value: "PERE_MERE" }
+  });
+
+  // Saisie de "TUNIS" pour le registre (pocopa)
+  await renseigneChampsRecherche(screen, "requete.registre", "TUNIS");
+
+  // Titulaire
+  fireEvent.change(getInput("titulaire.noms.nomActeEtranger"), {
+    target: { value: "Nom acte etranger" }
+  });
+  fireEvent.change(getInput("titulaire.noms.nomSouhaiteActeFR"), {
+    target: { value: "Nom souhaite acte FR" }
+  });
+  fireEvent.change(getInput("titulaire.prenoms.prenom1"), {
+    target: { value: "Prenom Un" }
+  });
+
+  // Parent 1
+  fireEvent.click(getInput("parents.parent1.pasdenomconnu.pasdenomconnu"));
+  fireEvent.click(
+    getInput("parents.parent1.pasdeprenomconnu.pasdeprenomconnu")
+  );
 
   /////////////////////////////////////////////////////////////////////////
 
@@ -134,9 +127,7 @@ test("DOIT afficher la popin de transfert vers les entités fille (triées) du d
     expect(screen.queryByText("Choisissez une entité")).not.toBeInTheDocument();
   });
 
-  await act(async () => {
-    fireEvent.click(boutonTransmettre!);
-  });
+  fireEvent.click(boutonTransmettre!);
 
   await waitFor(() => {
     expect(screen.queryByText("Choisissez une entité")).toBeInTheDocument();
@@ -174,24 +165,18 @@ test("DOIT afficher la popin de transfert vers les entités fille (triées) du d
   });
 
   // Choix d'une entité
-  await waitFor(() => {
-    act(() => {
-      fireEvent.change(selectElement, {
-        target: {
-          value: "6737c8a6-9d23-4fd0-97ec-1ebe3d079373"
-        }
-      });
-    });
+  fireEvent.change(selectElement, {
+    target: {
+      value: "6737c8a6-9d23-4fd0-97ec-1ebe3d079373"
+    }
   });
 
-  let boutonValider: HTMLButtonElement;
+  const boutonValider = screen.getByLabelText("Valider") as HTMLButtonElement;
   await waitFor(() => {
-    boutonValider = expectEstBoutonEnabled("Valider");
+    expect(boutonValider.disabled).toBeFalsy();
   });
 
-  act(() => {
-    fireEvent.click(boutonValider);
-  });
+  fireEvent.click(boutonValider);
 
   await waitFor(() => {
     expect(history.location.pathname).toBe("/page1");

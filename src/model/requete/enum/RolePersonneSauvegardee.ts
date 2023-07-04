@@ -1,19 +1,21 @@
 /* istanbul ignore file */
+import { Option } from "@util/Type";
 import { EnumWithComplete } from "@util/enum/EnumWithComplete";
+import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { HUIT, NEUF } from "./../../../views/common/util/Utils";
 import { NatureActeRequete } from "./NatureActeRequete";
 
 export class RolePersonneSauvegardee extends EnumWithComplete {
   public static readonly TITULAIRE = new RolePersonneSauvegardee(
-    "TITULAIRE",
+    "TITULAIRE_1",
     "Titulaire"
   );
   public static readonly PARENT_1 = new RolePersonneSauvegardee(
-    "PARENT_1",
+    "PARENT_1_TITULAIRE_1",
     "Parent 1"
   );
   public static readonly PARENT_2 = new RolePersonneSauvegardee(
-    "PARENT_2",
+    "PARENT_2_TITULAIRE_1",
     "Parent 2"
   );
   public static readonly TITULAIRE_1 = new RolePersonneSauvegardee(
@@ -41,16 +43,14 @@ export class RolePersonneSauvegardee extends EnumWithComplete {
     "Parent 2 titulaire 2"
   );
 
-  public static getEnumFor(str: string): RolePersonneSauvegardee {
+  public static getEnumFor(str: string): RolePersonneSauvegardee | undefined {
     return EnumWithComplete.getEnumFor(str, RolePersonneSauvegardee);
   }
 
-  public static getKeyForLibelle(str: string): string {
-    return EnumWithComplete.getKeyForLibelle(RolePersonneSauvegardee, str);
-  }
-
-  public static getKeyForNom(nom: string): string {
-    return EnumWithComplete.getKeyForNom(RolePersonneSauvegardee, nom);
+  public static getEnumFromLibelle(
+    libelle?: string
+  ): RolePersonneSauvegardee | undefined {
+    return EnumWithLibelle.getEnumFromLibelle(RolePersonneSauvegardee, libelle);
   }
 
   public static filtreRolesPersonnesSauvegardeesEnFonctionNatureActeRequete(
@@ -65,13 +65,20 @@ export class RolePersonneSauvegardee extends EnumWithComplete {
           this.PARENT_1_TITULAIRE_2,
           this.PARENT_2_TITULAIRE_2
         ]
-      : [this.TITULAIRE_1, this.PARENT_1, this.PARENT_2];
+      : [this.TITULAIRE, this.PARENT_1, this.PARENT_2];
+  }
+
+  public static getLibelleAsOption(libelle: string): Option {
+    return EnumWithComplete.getLibelleAsOption(
+      RolePersonneSauvegardee,
+      libelle
+    );
   }
 
   public static getEnumForEnFonctionNatureActeRequete(
     str: string,
     estRequeteMariage = false
-  ): RolePersonneSauvegardee {
+  ): RolePersonneSauvegardee | undefined {
     if (!estRequeteMariage) {
       str = RolePersonneSauvegardee.estParent(str)
         ? str.slice(0, HUIT)

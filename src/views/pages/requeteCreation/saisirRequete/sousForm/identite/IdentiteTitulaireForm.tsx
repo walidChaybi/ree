@@ -191,7 +191,7 @@ const IdentiteTitulaireForm: React.FC<
           <CheckboxField
             name={withNamespace(props.nom, PAS_DE_PRENOM_CONNU)}
             label={getLibelle("Pas de prénom connu")}
-            values={[{ str: "", value: PAS_DE_PRENOM_CONNU }]}
+            values={[{ libelle: "", cle: PAS_DE_PRENOM_CONNU }]}
             onChange={e => onChangePasDePrenomConnu(e)}
           />
 

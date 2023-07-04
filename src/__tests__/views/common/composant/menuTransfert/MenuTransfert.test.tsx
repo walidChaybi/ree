@@ -181,50 +181,54 @@ test("check autocomplete service", async () => {
       estDansSCEC: true
     }
   ];
+  const menuTransfert = screen.getByText("Transférer");
   await waitFor(() => {
-    const menuTransfert = screen.getByText("Transférer");
-    fireEvent.click(menuTransfert);
+    expect(menuTransfert).toBeInTheDocument();
   });
+  fireEvent.click(menuTransfert);
 
+  const choixService = screen.getByText(/À un service+/);
   await waitFor(() => {
-    const choixService = screen.getByText(/À un service+/);
-    fireEvent.click(choixService);
+    expect(choixService).toBeInTheDocument();
   });
+  fireEvent.click(choixService);
 
   const autocomplete = screen.getByTestId("autocomplete");
   const inputChampRecherche = screen.getByLabelText(
     "TransfertPopin"
   ) as HTMLInputElement;
   autocomplete.focus();
-  act(() => {
-    fireEvent.change(inputChampRecherche, {
-      target: {
-        value: "s"
-      }
-    });
+  fireEvent.change(inputChampRecherche, {
+    target: {
+      value: "s"
+    }
   });
   const str1 = screen.getByText("str1");
-  expect(str1).toBeInTheDocument();
-  expect(screen.getByText("str2")).toBeInTheDocument();
 
   await waitFor(() => {
-    fireEvent.click(str1);
+    expect(str1).toBeInTheDocument();
+    expect(screen.getByText("str2")).toBeInTheDocument();
   });
+  fireEvent.click(str1);
 
   const valider = screen.getByText("Valider") as HTMLButtonElement;
 
-  expect(inputChampRecherche.value).toStrictEqual("str1");
-  expect(valider.disabled).toBeFalsy();
+  await waitFor(() => {
+    expect(inputChampRecherche.value).toStrictEqual("str1");
+    expect(valider.disabled).toBeFalsy();
+  });
 
   const reset = screen.getByTitle("Vider le champ");
 
-  expect(reset).toBeDefined();
-
-  act(() => {
-    fireEvent.click(reset);
+  await waitFor(() => {
+    expect(reset).toBeDefined();
   });
 
-  expect(valider.disabled).toBeTruthy();
+  fireEvent.click(reset);
+
+  await waitFor(() => {
+    expect(valider.disabled).toBeTruthy();
+  });
 });
 
 test("check autocomplete agent", async () => {

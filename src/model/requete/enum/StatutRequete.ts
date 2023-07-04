@@ -1,9 +1,9 @@
 /* istanbul ignore file */
+import { Option, Options } from "@util/Type";
 import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { Option, Options } from "@util/Type";
 import { TypeRequete } from "./TypeRequete";
 
 export class StatutRequete extends EnumWithComplete {
@@ -249,10 +249,15 @@ export class StatutRequete extends EnumWithComplete {
     typeRequete: TypeRequete
   ): Option[] {
     return StatutRequete.StatutsParTypeRequete[TypeRequete.getKey(typeRequete)]
-      .map(statut => ({
-        value: StatutRequete.getKey(statut),
-        str: statut.libelle
-      }))
-      .sort((option1, option2) => option1.str.localeCompare(option2.str));
+      .map(
+        statut =>
+          ({
+            cle: StatutRequete.getKey(statut),
+            libelle: statut.libelle
+          } as Option)
+      )
+      .sort((option1, option2) =>
+        option1.libelle.localeCompare(option2.libelle)
+      );
   }
 }

@@ -6,7 +6,7 @@ import {
 } from "../ConteneurElementContext";
 import { TMouseEventSurHTMLButtonElement } from "../IColonneElementsParams";
 
-export type ICelluleBoutonMenuProps = Omit<IBoutonMenuProps, "onClickMenuItem">;
+export type ICelluleBoutonMenuProps = Omit<IBoutonMenuProps, "onClickOption">;
 
 export const CelluleBoutonMenu = <TData, TIdentifiant>(
   props: ICelluleBoutonMenuProps
@@ -31,7 +31,7 @@ export const CelluleBoutonMenu = <TData, TIdentifiant>(
   return (
     <BoutonMenu
       {...props}
-      onClickMenuItem={onClickMenuItem}
+      onClickOption={onClickMenuItem}
       disabled={conteneurContext.estDesactive}
     />
   );

@@ -16,13 +16,13 @@ import { Qualite } from "@model/requete/enum/Qualite";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import {
-  auMoinsUneProprieteEstRenseigne,
   DEUX,
+  SPC,
+  UN,
+  auMoinsUneProprieteEstRenseigne,
   getTableauAPartirElementsNonVides,
   getValeurOuUndefined,
-  mapPrenomsVersPrenomsOrdonnes,
-  SPC,
-  UN
+  mapPrenomsVersPrenomsOrdonnes
 } from "@util/Utils";
 import {
   PAS_DE_NOM_ACTE_ETRANGER,
@@ -45,7 +45,7 @@ export function mappingSaisieRequeteRCTCVersRequetesAEnvoyer(
   saisie: ISaisieRequeteRCTC
 ): ISaisieRequeteRCTCAEnvoyer {
   return {
-    villeRegistre: saisie.requete.registre.value,
+    villeRegistre: saisie.requete.registre.cle,
     canal: TypeCanal.COURRIER.nom,
     type: TypeRequete.CREATION.nom,
     sousType: SousTypeCreation.RCTC.nom,

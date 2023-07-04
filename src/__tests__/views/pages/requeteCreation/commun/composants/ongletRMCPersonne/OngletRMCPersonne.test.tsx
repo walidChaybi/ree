@@ -144,23 +144,19 @@ describe("Test l'affichage de l'onglet RMC Personne", () => {
   });
 
   test("DOIT rafraichir les données du tableau QUAND on sélectionne une nouvelle personne depuis le bouton 'RMC Auto sur autre personne'", async () => {
-    await act(async () => {
-      render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
-    });
+    render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
 
     await waitFor(() => {
       expect(screen.getByText("DUPONT")).toBeInTheDocument();
       expect(screen.getByText("Paul")).toBeInTheDocument();
     });
 
-    await act(async () => {
-      fireEvent.mouseOver(
-        screen.getByText("Rechercher sur une personne de la requête")
-      );
-      fireEvent.click(
-        screen.getByText("Parent 2 - PHILIPS Yann (M), 01/02/2000")
-      );
-    });
+    fireEvent.mouseOver(
+      screen.getByText("Rechercher sur une personne de la requête")
+    );
+    fireEvent.click(
+      screen.getByText("Parent 2 - PHILIPS Yann (M), 01/02/2000")
+    );
 
     await waitFor(() => {
       expect(screen.queryByText("DUPONT")).not.toBeInTheDocument();
@@ -191,39 +187,34 @@ describe("Test le fonctionnement de l'ajout / suppression des personnes au proje
       render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
     });
 
-    const listeBoutonAjouter = screen.getAllByText("+");
-    const boutonAjouterAlpha = listeBoutonAjouter[0];
-    const boutonItemTitulaireAlpha = screen.getAllByText("Parent 2")[0];
+    const boutonAjouter = screen.getAllByText("+")[0];
+    const boutonItemTitulaire = screen.getAllByText("Parent 2")[0];
 
     await waitFor(() => {
-      expect(boutonAjouterAlpha).toBeDefined();
-      expect(boutonItemTitulaireAlpha).toBeDefined();
+      expect(boutonAjouter).toBeDefined();
+      expect(boutonItemTitulaire).toBeDefined();
       expect(estDansTableauPersonnesSauvegardees("Parent 2")).toBeFalsy();
     });
 
-    await act(async () => {
-      fireEvent.click(boutonAjouterAlpha);
-      fireEvent.click(boutonItemTitulaireAlpha);
-    });
+    fireEvent.click(boutonAjouter);
+    fireEvent.click(boutonItemTitulaire);
 
     await waitFor(() => {
       expect(estDansTableauPersonnesSauvegardees("Parent 2")).toBeTruthy();
     });
 
-    const boutonRetirerAlpha = screen.getAllByTitle(
+    const boutonRetirer = screen.getAllByTitle(
       "Retirer cette personne du projet"
     )[1];
 
     await waitFor(() => {
-      expect(boutonRetirerAlpha).toBeInTheDocument();
+      expect(boutonRetirer).toBeInTheDocument();
     });
 
-    await act(async () => {
-      fireEvent.click(boutonRetirerAlpha);
-    });
+    fireEvent.click(boutonRetirer);
 
     await waitFor(() => {
-      expect(boutonRetirerAlpha).not.toBeInTheDocument();
+      expect(boutonRetirer).not.toBeInTheDocument();
       expect(estDansTableauPersonnesSauvegardees("Parent 2")).toBeFalsy();
     });
   });
@@ -233,34 +224,32 @@ describe("Test le fonctionnement de l'ajout / suppression des personnes au proje
       render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
     });
 
-    let boutonsAjouter = screen.getAllByText("+");
-    const boutonItemParent = screen.getAllByText("Parent 2")[0];
+    let boutonAjouter = screen.getByTitle("Ajouter cette personne au projet");
+    const boutonItemParent = screen.getByText("Parent 2");
 
     await waitFor(() => {
-      expect(boutonsAjouter).toHaveLength(2);
-      expect(boutonsAjouter[0]).toBeInTheDocument();
-      expect(boutonItemParent).toBeDefined();
+      expect(boutonAjouter).toBeInTheDocument();
+      expect(boutonItemParent).toBeInTheDocument();
     });
 
-    fireEvent.click(boutonsAjouter[0]);
+    fireEvent.click(boutonAjouter);
     fireEvent.click(boutonItemParent);
 
     const boutonRetirer = screen.getAllByTitle(
       "Retirer cette personne du projet"
     )[1];
 
-    boutonsAjouter = screen.getAllByText("+");
     await waitFor(() => {
-      expect(boutonsAjouter).toHaveLength(1);
-      expect(boutonRetirer).toBeDefined();
+      expect(boutonAjouter).not.toBeInTheDocument();
+      expect(boutonRetirer).toBeInTheDocument();
       expect(estDansTableauPersonnesSauvegardees("Parent 2")).toBeTruthy();
     });
 
     fireEvent.click(boutonRetirer);
 
-    boutonsAjouter = screen.getAllByText("+");
+    boutonAjouter = screen.getByTitle("Ajouter cette personne au projet");
     await waitFor(() => {
-      expect(boutonsAjouter).toHaveLength(2);
+      expect(boutonAjouter).toBeInTheDocument();
       expect(estDansTableauPersonnesSauvegardees("Parent 2")).toBeFalsy();
     });
   });
@@ -383,7 +372,7 @@ describe("Test le fonctionnement de l'ajout / suppression des actes ou isncripti
     });
   });
 
-  test("DOIT verrouiller / déverrouiller le bouton d'ajout d'un acte ou inscription QUAND on ajoute / retire cet acte ou inscription du projet.", async () => {
+  test("DOIT afficher / masquer le bouton d'ajout d'un acte ou inscription QUAND on ajoute / retire cet acte ou inscription du projet.", async () => {
     await act(async () => {
       render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
     });
@@ -398,7 +387,6 @@ describe("Test le fonctionnement de l'ajout / suppression des actes ou isncripti
     await waitFor(() => {
       expect(boutonAjouter).toBeInTheDocument();
       expect(boutonItemActeInscription).toBeDefined();
-      expect(boutonAjouter).not.toHaveAttribute("disabled");
     });
 
     fireEvent.click(boutonAjouter);
@@ -409,7 +397,7 @@ describe("Test le fonctionnement de l'ajout / suppression des actes ou isncripti
     )[2];
     await waitFor(() => {
       expect(boutonAjouter).not.toBeInTheDocument();
-      expect(boutonRetirer).toBeDefined();
+      expect(boutonRetirer).toBeInTheDocument();
       expect(
         estDansTableauActesInscriptionsSauvegardes(
           "Autres pièces justificatives"

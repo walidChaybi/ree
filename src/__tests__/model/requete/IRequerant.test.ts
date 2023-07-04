@@ -196,8 +196,8 @@ test("Attendu: Requerant.setRequerant mandataire", async () => {
           extension: undefined
         },
         type: {
-          value: "00c885c9-2918-46fe-b743-798b1b90e5dd",
-          str: "Carte professionnelle"
+          cle: "00c885c9-2918-46fe-b743-798b1b90e5dd",
+          libelle: "Carte professionnelle"
         }
       }
     ]
@@ -398,8 +398,8 @@ test("Attendu: Requerant.setRequerant institutionnel", async () => {
           extension: undefined
         },
         type: {
-          value: "00c885c9-2918-46fe-b743-798b1b90e5dd",
-          str: "Carte professionnelle"
+          cle: "00c885c9-2918-46fe-b743-798b1b90e5dd",
+          libelle: "Carte professionnelle"
         }
       }
     ]
@@ -419,79 +419,41 @@ test("Attendu: Requerant.setRequerant interessé", async () => {
   const saisieRequeteRdcsc =
     mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
 
-    const attendu = {
-      document: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
-      titulaires: {
-        titulaire1: {
-          noms: {
-            nomNaissance: "Prodesk",
-            nomUsage: ""
-          },
-          prenoms: {
-            prenom1: "Elodie",
-            prenom2: "",
-            prenom3: "",
-            prenom4: "",
-            prenom5: "",
-            prenom6: "",
-            prenom7: "",
-            prenom8: "",
-            prenom9: "",
-            prenom10: "",
-            prenom11: "",
-            prenom12: ""
-          },
-          sexe: "FEMININ",
-          naissance: {
-            dateEvenement: {
-              jour: 25,
-              mois: 6,
-              annee: 1990
-            },
-            villeEvenement: "Barcelone",
-            paysEvenement: "Espagne"
-          },
-          nationalite: "ETRANGERE",
-          parent1: {
-            nomNaissance: "",
-            prenoms: {
-              prenom1: "",
-              prenom2: "",
-              prenom3: "",
-              prenom4: "",
-              prenom5: "",
-              prenom6: "",
-              prenom7: "",
-              prenom8: "",
-              prenom9: "",
-              prenom10: "",
-              prenom11: "",
-              prenom12: ""
-            }
-          },
-          parent2: {
-            nomNaissance: "",
-            prenoms: {
-              prenom1: "",
-              prenom2: "",
-              prenom3: "",
-              prenom4: "",
-              prenom5: "",
-              prenom6: "",
-              prenom7: "",
-              prenom8: "",
-              prenom9: "",
-              prenom10: "",
-              prenom11: "",
-              prenom12: ""
-            }
-          }
+  const attendu = {
+    document: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
+    titulaires: {
+      titulaire1: {
+        noms: {
+          nomNaissance: "Prodesk",
+          nomUsage: ""
         },
-        titulaire2: {
-          noms: {
-            nomNaissance: "",
-            nomUsage: ""
+        prenoms: {
+          prenom1: "Elodie",
+          prenom2: "",
+          prenom3: "",
+          prenom4: "",
+          prenom5: "",
+          prenom6: "",
+          prenom7: "",
+          prenom8: "",
+          prenom9: "",
+          prenom10: "",
+          prenom11: "",
+          prenom12: ""
+        },
+        sexe: "FEMININ",
+        naissance: {
+          dateEvenement: {
+            jour: 25,
+            mois: 6,
+            annee: 1990
           },
+          villeEvenement: "Barcelone",
+          paysEvenement: "Espagne"
+        },
+        nationalite: "ETRANGERE",
+        parent1: {
+          nomNaissance: "",
           prenoms: {
             prenom1: "",
             prenom2: "",
@@ -505,105 +467,143 @@ test("Attendu: Requerant.setRequerant interessé", async () => {
             prenom10: "",
             prenom11: "",
             prenom12: ""
-          },
-          sexe: "INCONNU",
-          naissance: {
-            dateEvenement: {
-              jour: "",
-              mois: "",
-              annee: ""
-            },
-            villeEvenement: "",
-            paysEvenement: ""
-          },
-          nationalite: "ETRANGERE",
-          parent1: {
-            nomNaissance: "",
-            prenoms: {
-              prenom1: "",
-              prenom2: "",
-              prenom3: "",
-              prenom4: "",
-              prenom5: "",
-              prenom6: "",
-              prenom7: "",
-              prenom8: "",
-              prenom9: "",
-              prenom10: "",
-              prenom11: "",
-              prenom12: ""
-            }
-          },
-          parent2: {
-            nomNaissance: "",
-            prenoms: {
-              prenom1: "",
-              prenom2: "",
-              prenom3: "",
-              prenom4: "",
-              prenom5: "",
-              prenom6: "",
-              prenom7: "",
-              prenom8: "",
-              prenom9: "",
-              prenom10: "",
-              prenom11: "",
-              prenom12: ""
-            }
+          }
+        },
+        parent2: {
+          nomNaissance: "",
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: "",
+            prenom4: "",
+            prenom5: "",
+            prenom6: "",
+            prenom7: "",
+            prenom8: "",
+            prenom9: "",
+            prenom10: "",
+            prenom11: "",
+            prenom12: ""
           }
         }
       },
-      requerant: {
-        typeRequerant: "PARTICULIER",
-        mandataire: {
-          type: "",
-          nature: "",
-          raisonSociale: "",
-          nom: "",
-          prenom: ""
+      titulaire2: {
+        noms: {
+          nomNaissance: "",
+          nomUsage: ""
         },
-        institutionnel: {
-          type: "",
-          nature: "",
-          nomInstitution: "",
-          nom: "",
-          prenom: ""
+        prenoms: {
+          prenom1: "",
+          prenom2: "",
+          prenom3: "",
+          prenom4: "",
+          prenom5: "",
+          prenom6: "",
+          prenom7: "",
+          prenom8: "",
+          prenom9: "",
+          prenom10: "",
+          prenom11: "",
+          prenom12: ""
         },
-        particulier: {
-          nomNaissance: "RUIZ",
-          nomUsage: "",
-          prenom: "Paul"
-        }
-      },
-      adresse: {
-        voie: "61 avenue Foch",
-        lieuDit: "lieu dit la martinière",
-        complementDestinataire: "Appartement 258",
-        complementPointGeo: "Batiment Z",
-        codePostal: "310 GL24",
-        commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
-        pays: "France",
-        adresseCourriel: "ldubois@wanadoo.fr",
-        numeroTelephone: ""
-      },
-      piecesJointes: [
-        {
-          base64File: {
-            fileName: "Jérome",
-            base64String: "",
-            taille: 0,
-            conteneurSwift: undefined,
-            identifiantSwift: undefined,
-            mimeType: "",
-            extension: undefined
+        sexe: "INCONNU",
+        naissance: {
+          dateEvenement: {
+            jour: "",
+            mois: "",
+            annee: ""
           },
-          type: {
-            value: "00c885c9-2918-46fe-b743-798b1b90e5dd",
-            str: "Carte professionnelle"
+          villeEvenement: "",
+          paysEvenement: ""
+        },
+        nationalite: "ETRANGERE",
+        parent1: {
+          nomNaissance: "",
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: "",
+            prenom4: "",
+            prenom5: "",
+            prenom6: "",
+            prenom7: "",
+            prenom8: "",
+            prenom9: "",
+            prenom10: "",
+            prenom11: "",
+            prenom12: ""
+          }
+        },
+        parent2: {
+          nomNaissance: "",
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: "",
+            prenom4: "",
+            prenom5: "",
+            prenom6: "",
+            prenom7: "",
+            prenom8: "",
+            prenom9: "",
+            prenom10: "",
+            prenom11: "",
+            prenom12: ""
           }
         }
-      ]
-    };
+      }
+    },
+    requerant: {
+      typeRequerant: "PARTICULIER",
+      mandataire: {
+        type: "",
+        nature: "",
+        raisonSociale: "",
+        nom: "",
+        prenom: ""
+      },
+      institutionnel: {
+        type: "",
+        nature: "",
+        nomInstitution: "",
+        nom: "",
+        prenom: ""
+      },
+      particulier: {
+        nomNaissance: "RUIZ",
+        nomUsage: "",
+        prenom: "Paul"
+      }
+    },
+    adresse: {
+      voie: "61 avenue Foch",
+      lieuDit: "lieu dit la martinière",
+      complementDestinataire: "Appartement 258",
+      complementPointGeo: "Batiment Z",
+      codePostal: "310 GL24",
+      commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
+      pays: "France",
+      adresseCourriel: "ldubois@wanadoo.fr",
+      numeroTelephone: ""
+    },
+    piecesJointes: [
+      {
+        base64File: {
+          fileName: "Jérome",
+          base64String: "",
+          taille: 0,
+          conteneurSwift: undefined,
+          identifiantSwift: undefined,
+          mimeType: "",
+          extension: undefined
+        },
+        type: {
+          cle: "00c885c9-2918-46fe-b743-798b1b90e5dd",
+          libelle: "Carte professionnelle"
+        }
+      }
+    ]
+  };
 
   expect(saisieRequeteRdcsc).toEqual(attendu);
 });

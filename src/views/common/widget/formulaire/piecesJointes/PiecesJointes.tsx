@@ -152,7 +152,7 @@ function getTableauPiecesJointes(
 }
 
 function getColonneTypePJ(pj: PieceJointe): string | JSX.Element {
-  return pj.type ? pj.type.str : "";
+  return pj.type ? pj.type.libelle : "";
 }
 
 function getColonneSuppressionPJ(

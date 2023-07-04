@@ -3,9 +3,9 @@ import {
   NATIONALITE_2,
   NATIONALITE_3
 } from "@composant/formulaire/ConstantesNomsForm";
-import { DEUX, estRenseigne, getLibelle, UN } from "@util/Utils";
+import { DEUX, UN, estRenseigne, getLibelle } from "@util/Utils";
+import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   IGNORER_TABULATION,
@@ -16,7 +16,7 @@ import {
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../ressources/Regex";
+import { CaracteresAutorises } from "../../../../../ressources/Regex";
 import "./scss/Nationalite.scss";
 
 const NB_MIN_NATIONALITES = 1;
@@ -33,17 +33,17 @@ export const NationalitesFormDefaultValues = {
 export const NationalitesFormValidationSchema = Yup.object()
   .shape({
     [NATIONALITE_1]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
+      CaracteresAutorises,
+      CARACTERES_AUTORISES_MESSAGE
     ),
 
     [NATIONALITE_2]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
+      CaracteresAutorises,
+      CARACTERES_AUTORISES_MESSAGE
     ),
     [NATIONALITE_3]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
+      CaracteresAutorises,
+      CARACTERES_AUTORISES_MESSAGE
     )
   })
   .test("NATIONALITEObligatoire1", function (value, error) {

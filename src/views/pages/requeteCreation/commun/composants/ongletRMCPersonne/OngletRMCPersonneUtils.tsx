@@ -2,14 +2,14 @@ import {
   IPersonneRMCPersonne,
   IRMCPersonneResultat
 } from "@hook/rmcAuto/IRMCPersonneResultat";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
 import {
   formatDataTableauPersonne,
   getLibelleMenuItemPersonne
 } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
-import { IBoutonMenuItem } from "@widget/boutonMenu/BoutonMenu";
+import { Options } from "@util/Type";
 import { IDataTableauActeInscriptionSelectionne } from "../tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
 import { IDataTableauPersonneSelectionnee } from "../tableauPersonnesSelectionnees/IDataTableauPersonneSelectionne";
 
@@ -66,13 +66,13 @@ export function triDataTableauPersonneSelectionneeSurNomPrenom(
   return compareNom || comparePrenoms;
 }
 
-export function getTitulairesAsListeBoutonMenuItem(
+export function getTitulairesAsOptions(
   sousTypeRequete: SousTypeCreation,
   titulaires?: ITitulaireRequeteCreation[]
-): IBoutonMenuItem[] {
+): Options {
   return titulaires
     ? titulaires.map(titulaire => ({
-        key: titulaire.id,
+        cle: titulaire.id,
         libelle: getLibelleMenuItemPersonne(titulaire, sousTypeRequete)
       }))
     : [];

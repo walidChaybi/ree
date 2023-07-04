@@ -16,12 +16,14 @@ import { IFiliation } from "@model/etatcivil/acte/IFiliation";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import {
+  ISaisieExtraitForm,
+  ITitulaireEvtForm
+} from "@model/form/delivrance/ISaisieExtraitForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import {
-  ISaisieExtraitForm,
-  ITitulaireEvtForm,
   saisieParentPaysInconnu,
   saisiePaysInconnuTitulaire
 } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/mapping/mappingActeVerFormulaireSaisirExtrait";

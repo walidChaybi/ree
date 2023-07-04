@@ -1,8 +1,8 @@
 import { LIEN, NATURE_LIEN } from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
+import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
-import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import {
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
@@ -64,7 +64,7 @@ const LienTitulaireForm: React.FC<SubFormProps> = props => {
 
   useEffect(() => {
     const seulementTitulaire =
-      props.options?.length === 1 && props.options[0].value === "TITULAIRE";
+      props.options?.length === 1 && props.options[0].cle === "TITULAIRE";
     if (seulementTitulaire) {
       props.formik.setFieldValue(
         withNamespace(props.nom, LIEN),

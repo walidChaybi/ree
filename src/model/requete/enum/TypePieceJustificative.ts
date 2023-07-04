@@ -1,9 +1,9 @@
 /* istanbul ignore file */
 import { peupleTypePieceJustificative } from "@api/nomenclature/NomenclatureRequete";
+import { OptionAvecOrdre, Options } from "@util/Type";
 import { EnumNomemclature } from "@util/enum/EnumNomenclature";
 import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
-import { OptionAvecOrdre, Options } from "@util/Type";
 import { TypeRedactionActe } from "../../etatcivil/enum/TypeRedactionActe";
 import { TypeRequete } from "./TypeRequete";
 
@@ -74,7 +74,7 @@ export class TypePieceJustificative extends EnumNomemclature {
     return options
       .filter(opt => {
         const typePieceJustificative = TypePieceJustificative.getEnumFor(
-          opt.value
+          opt.cle
         );
         opt.ordre = typePieceJustificative.ordre;
         return (

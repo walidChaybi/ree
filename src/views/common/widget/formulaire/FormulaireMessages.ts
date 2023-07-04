@@ -2,7 +2,7 @@ import { MIN_YEAR } from "@util/DateUtils";
 import { getLibelle } from "@util/Utils";
 
 // Messages d'erreurs
-export const CARATERES_AUTORISES_MESSAGE =
+export const CARACTERES_AUTORISES_MESSAGE =
   "Les caractères autorisés : les lettres, les chiffres, l'espace, le tiret, le point et l'apostrophe";
 
 export const ASTERISQUE_MESSAGE =

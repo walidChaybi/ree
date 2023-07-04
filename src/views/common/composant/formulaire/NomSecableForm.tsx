@@ -67,7 +67,7 @@ const NomSecableForm: React.FC<NomSecableFormProps> = props => {
       <CheckboxField
         name={withNamespace(props.nomComposant, SECABLE)}
         label={getLibelle("Nom sécable")}
-        values={[{ str: "", value: "true" }]}
+        values={[{ libelle: "", cle: "true" }]}
         disabled={disabled}
         onChange={onCaseACocherNomSecableChange}
       />

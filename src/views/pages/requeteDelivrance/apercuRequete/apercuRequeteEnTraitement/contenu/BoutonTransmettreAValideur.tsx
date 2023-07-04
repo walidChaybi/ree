@@ -33,7 +33,7 @@ export const BoutonTransmettreAValideur: React.FC<
             texte ? texteObservation : ""
           }`,
           requeteId: props.idRequete,
-          idUtilisateur: optionUtilisateur.value
+          idUtilisateur: optionUtilisateur.cle
         });
       }
     },

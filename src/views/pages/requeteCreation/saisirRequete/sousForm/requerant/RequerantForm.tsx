@@ -1,15 +1,15 @@
 import { getLibelle } from "@util/Utils";
+import {
+  ADRESSE_MAIL_NON_CONFORME,
+  CARACTERES_AUTORISES_MESSAGE,
+  NUMERO_TELEPHONE_NON_CONFORME
+} from "@widget/formulaire/FormulaireMessages";
+import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import AdresseForm, {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
 } from "@widget/formulaire/adresse/AdresseForm";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import {
-  ADRESSE_MAIL_NON_CONFORME,
-  CARATERES_AUTORISES_MESSAGE,
-  NUMERO_TELEPHONE_NON_CONFORME
-} from "@widget/formulaire/FormulaireMessages";
-import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   CENT_CARACT_MAX,
@@ -23,7 +23,7 @@ import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import {
-  CarateresAutorise,
+  CaracteresAutorises,
   NumeroTelephone
 } from "../../../../../../ressources/Regex";
 import {
@@ -46,10 +46,13 @@ export const RequerantFormDefaultValue = {
 };
 
 export const RequerantFormValidationSchema = Yup.object().shape({
-  [NOM]: Yup.string().matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
+  [NOM]: Yup.string().matches(
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
+  ),
   [PRENOM]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [AUTRE_ADRESSE_COURRIEL]: Yup.string().email(ADRESSE_MAIL_NON_CONFORME),
   [AUTRE_NUMERO_TELEPHONE]: Yup.string().matches(

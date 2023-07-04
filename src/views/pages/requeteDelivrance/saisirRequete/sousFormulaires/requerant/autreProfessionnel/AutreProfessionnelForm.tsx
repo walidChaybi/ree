@@ -5,8 +5,8 @@ import {
   RAISON_SOCIALE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
+import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import {
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
@@ -15,7 +15,7 @@ import {
 import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../../../ressources/Regex";
+import { CaracteresAutorises } from "../../../../../../../ressources/Regex";
 import { getBlockRaisonSocialeNomPrenom } from "../../commun/communForm";
 import "./../scss/RequerantForm.scss";
 
@@ -30,15 +30,21 @@ export const AutreProfessionnelFormDefaultValues = {
 // Schéma de validation des champs
 export const AutreProfessionnelFormValidationSchema = Yup.object().shape({
   [NATURE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [RAISON_SOCIALE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
-  [NOM]: Yup.string().matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
-  [PRENOM]: Yup.string().matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE)
+  [NOM]: Yup.string().matches(
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
+  ),
+  [PRENOM]: Yup.string().matches(
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
+  )
 });
 
 const AutreProfessionnelForm: React.FC<SubFormProps> = props => {

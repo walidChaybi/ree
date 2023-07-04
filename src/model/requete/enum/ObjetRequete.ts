@@ -63,7 +63,7 @@ export class ObjetRequete extends EnumWithComplete {
 
   public static getAllEnumsAsOptionsSaufCompletion(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(ObjetRequete).filter(
-      opt => opt.value !== ObjetRequete.COMPLETION_REQUETE_EN_COURS.nom
+      opt => opt.cle !== ObjetRequete.COMPLETION_REQUETE_EN_COURS.nom
     );
   }
 }

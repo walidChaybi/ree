@@ -2,8 +2,8 @@ import { postSauvegardePersonneEtActeSelectionne } from "@api/appels/requeteApi"
 import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { logError } from "@util/LogManager";
-import messageManager from "@util/messageManager";
 import { getValeurOuUndefined } from "@util/Utils";
+import messageManager from "@util/messageManager";
 import { useEffect, useState } from "react";
 import { IDataTableauActeInscriptionSelectionne } from "../../tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
 import { IDataTableauPersonneSelectionnee } from "../IDataTableauPersonneSelectionne";
@@ -19,16 +19,16 @@ enum NatureActeEtinscription {
 
 // Pour mapping: DTO envoyé au serveur lors du POST
 interface ISauvegardePersonneEtActeSelectionneDto {
-  personneSauvegardeeDtos?: IDetailsPersonnesSauvegardeesEtPiecesJustificatifsDto[];
-  piecesJustificatifsSauvegardeeDtos?: IPiecesJustificatifSauvegardeeDto[];
+  personneSauvegardeeDtos?: IDetailsPersonnesSauvegardeesDto[];
+  piecesJustificatifsSauvegardeeDtos?: IPiecesJustificativesSauvegardeesDto[];
 }
 
-interface IDetailsPersonnesSauvegardeesEtPiecesJustificatifsDto {
+interface IDetailsPersonnesSauvegardeesDto {
   idPersonne: string;
   role: string;
 }
 
-interface IPiecesJustificatifSauvegardeeDto {
+interface IPiecesJustificativesSauvegardeesDto {
   idPersonne: string;
   nom: string;
   prenom: string;
@@ -85,17 +85,21 @@ export function useSauvegardeRMCApiHook(
 function mapPersonneEtActeSelectionne(
   params: ISauvegardeRMCApiHookParams
 ): ISauvegardePersonneEtActeSelectionneDto {
-  const personnes = params.dataPersonnesSelectionnees.map((personne, index) => {
-    return {
-      idPersonne: personne.idPersonne,
-      role: personne.role
-        ? RolePersonneSauvegardee.getKeyForLibelle(personne.role)
-        : ""
-    };
-  });
+  const personnes = params.dataPersonnesSelectionnees.reduce<
+    IDetailsPersonnesSauvegardeesDto[]
+  >((res, personne) => {
+    const role = RolePersonneSauvegardee.getEnumFromLibelle(personne.role);
+    if (role) {
+      res.push({
+        idPersonne: personne.idPersonne,
+        role: role.nom
+      });
+    }
+    return res;
+  }, []);
 
   const acteEtInscription = params.dataActesInscriptionsSelectionnes.map(
-    (acteOuInscription, index): IPiecesJustificatifSauvegardeeDto => {
+    (acteOuInscription, index): IPiecesJustificativesSauvegardeesDto => {
       return {
         idPersonne: acteOuInscription.idPersonne,
         nom: getValeurOuUndefined(acteOuInscription.nom),

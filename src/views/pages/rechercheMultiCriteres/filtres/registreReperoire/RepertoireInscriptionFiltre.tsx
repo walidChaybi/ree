@@ -4,23 +4,23 @@ import { TypeRepertoire } from "@model/etatcivil/enum/TypeRepertoire";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import {
-  CARATERES_AUTORISES_MESSAGE,
+  CARACTERES_AUTORISES_MESSAGE,
   NUMERO_INSCRIPTION_MESSAGE
 } from "@widget/formulaire/FormulaireMessages";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { traiteEspace } from "@widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
-import { connect, FormikValues, getIn } from "formik";
+import { FormikValues, connect, getIn } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import {
-  CarateresAutorise,
+  CaracteresAutorises,
   NumeroInscription
 } from "../../../../../ressources/Regex";
 
@@ -40,7 +40,7 @@ export const RepertoireInscriptionDefaultValues = {
 export const RepertoireInscriptionValidationSchema = Yup.object({
   [NUMERO_INSCRIPTION]: Yup.string()
     .matches(NumeroInscription, NUMERO_INSCRIPTION_MESSAGE)
-    .matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
+    .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
   [TYPE_REPERTOIRE]: Yup.string(),
   [NATURE_INSCRIPTION]: Yup.string()
 });
@@ -126,7 +126,7 @@ const RepertoireInscriptionFiltre: React.FC<
           label={getLibelle("Type de répertoire")}
           options={TypeRepertoire.getAllEnumsAsOptions().filter(el => {
             return props.filtreTypeRepertoire
-              ? el.value === props.filtreTypeRepertoire.libelle
+              ? el.cle === props.filtreTypeRepertoire.libelle
               : true;
           })}
           onChange={e => {

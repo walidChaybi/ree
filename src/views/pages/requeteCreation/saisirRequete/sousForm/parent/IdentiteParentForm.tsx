@@ -10,7 +10,8 @@ import PrenomsForm, {
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { getLibelle, SNP, SPC } from "@util/Utils";
+import { SNP, SPC, getLibelle } from "@util/Utils";
+import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import DateComposeForm, {
   DateComposeFormProps
 } from "@widget/formulaire/champsDate/DateComposeForm";
@@ -20,7 +21,6 @@ import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import NationalitesForm, {
   NationalitesFormProps
 } from "@widget/formulaire/nationalites/NationalitesForm";
-import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   ISubForm,
@@ -126,7 +126,7 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
           <CheckboxField
             name={pasDeNomConnuWithNamespace}
             label={getLibelle("Le parent n'a pas de nom connu")}
-            values={[{ str: "", value: PAS_DE_NOM_CONNU }]}
+            values={[{ libelle: "", cle: PAS_DE_NOM_CONNU }]}
             onChange={onChangePasDeNomConnu}
           />
 
@@ -142,7 +142,7 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
           <CheckboxField
             name={withNamespace(props.nom, PAS_DE_PRENOM_CONNU)}
             label={getLibelle("Pas de prénom connu")}
-            values={[{ str: "", value: PAS_DE_PRENOM_CONNU }]}
+            values={[{ libelle: "", cle: PAS_DE_PRENOM_CONNU }]}
             onChange={onChangePasDePrenomConnu}
           />
 

@@ -13,8 +13,8 @@ import React, { useEffect, useState } from "react";
 import "./scss/TransfertPopin.scss";
 
 const OPTION_VIDE: Option = {
-  value: "",
-  str: ""
+  cle: "",
+  libelle: ""
 };
 
 interface TransfertPopinProps {
@@ -44,11 +44,11 @@ export const TransfertPopin: React.FC<TransfertPopinProps> = ({
   }, [open]);
 
   const filterOptions = (
-    optionsAutocomplete: Option[],
+    optionsAutocomplete: Options,
     state: FilterOptionsState<Option>
   ) => {
     return optionsAutocomplete.filter(option => {
-      return option.str
+      return option.libelle
         .toLowerCase()
         .startsWith(state.inputValue.toLowerCase());
     });
@@ -74,12 +74,12 @@ export const TransfertPopin: React.FC<TransfertPopinProps> = ({
               componentName="TransfertPopin"
               options={options}
               onClickClear={() => {
-                setOptionChoisie({ value: "", str: "" });
+                setOptionChoisie({ cle: "", libelle: "" });
               }}
               value={optionChoisie}
               filterOptions={filterOptions}
               onChange={newValue => {
-                if (newValue && newValue.str) {
+                if (newValue && newValue.libelle) {
                   setOptionChoisie(newValue);
                 }
               }}
@@ -127,7 +127,7 @@ function estDesactive(
 ): boolean {
   return (
     (zoneTextePresente &&
-      (!texte || (selectPresent && optionChoisie.value === ""))) ||
-    (!zoneTextePresente && optionChoisie.value === "")
+      (!texte || (selectPresent && optionChoisie.cle === ""))) ||
+    (!zoneTextePresente && optionChoisie.cle === "")
   );
 }

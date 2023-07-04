@@ -2,16 +2,16 @@ import SwapHoriz from "@mui/icons-material/SwapHoriz";
 import IconButton from "@mui/material/IconButton";
 import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
+import {
+  ASTERISQUE_MESSAGE,
+  CARACTERES_AUTORISES_MESSAGE
+} from "@widget/formulaire/FormulaireMessages";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues
 } from "@widget/formulaire/champsDate/DateComposeForm";
 import { DateValidationSchema } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import {
-  ASTERISQUE_MESSAGE,
-  CARATERES_AUTORISES_MESSAGE
-} from "@widget/formulaire/FormulaireMessages";
 import { traiteEspace } from "@widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
@@ -23,7 +23,7 @@ import React from "react";
 import * as Yup from "yup";
 import {
   AsterisqueRecherche,
-  CarateresAutoriseRecherche
+  CaracteresAutorisesRecherche
 } from "../../../../../ressources/Regex";
 import "../scss/FiltreRMC.scss";
 
@@ -45,14 +45,14 @@ export const TitulaireDefaultValues = {
 export const TitulaireValidationSchema = Yup.object()
   .shape({
     [NOM]: Yup.string()
-      .matches(CarateresAutoriseRecherche, CARATERES_AUTORISES_MESSAGE)
+      .matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE)
       .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE),
     [PRENOM]: Yup.string()
-      .matches(CarateresAutoriseRecherche, CARATERES_AUTORISES_MESSAGE)
+      .matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE)
       .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE),
     [DATE_NAISSANCE]: DateValidationSchema,
     [PAYS_NAISSANCE]: Yup.string()
-      .matches(CarateresAutoriseRecherche, CARATERES_AUTORISES_MESSAGE)
+      .matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE)
       .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE)
   })
   .test("prenomInvalide", function (value, error) {

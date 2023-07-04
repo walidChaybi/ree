@@ -1,5 +1,5 @@
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
-import { Option } from "@util/Type";
+import { Option, Options } from "@util/Type";
 import { premiereLettreEnMajuscule } from "@util/Utils";
 
 export class TypeDeclarationConjointe extends EnumWithLibelle {
@@ -37,14 +37,14 @@ export class TypeDeclarationConjointe extends EnumWithLibelle {
   public static getAllEnumsAsOptions(
     type?: TypeDeclarationConjointe
   ): Option[] {
-    let options;
+    let options: Options;
     if (type === TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE) {
       options = [
         {
-          value: TypeDeclarationConjointe.getKey(
+          cle: TypeDeclarationConjointe.getKey(
             TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE
           ),
-          str: premiereLettreEnMajuscule(
+          libelle: premiereLettreEnMajuscule(
             TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE.libelle
           )
         }

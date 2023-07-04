@@ -1,20 +1,16 @@
 import { PopoverOrigin } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { Option, Options } from "@util/Type";
 import React from "react";
 import "./scss/BoutonMenu.scss";
 
 const DUREE_OUVERTURE_POPIN = 100;
 
-export interface IBoutonMenuItem {
-  key: string;
-  libelle: string;
-}
-
 export interface IBoutonMenuProps {
   boutonLibelle: string;
-  listeItems: IBoutonMenuItem[];
-  onClickMenuItem: (key: string, event?: React.SyntheticEvent) => void;
+  options: Options;
+  onClickOption: (key: string, event?: React.SyntheticEvent) => void;
   titreBouton?: string;
   className?: string;
   disabled?: boolean;
@@ -31,13 +27,18 @@ export const BoutonMenu: React.FC<IBoutonMenuProps> = props => {
     setMenu(e.currentTarget);
   };
 
-  const handleCloseMenu = () => {
+  const handleCloseMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setMenu(null);
+  };
+
+  const handleCloseMenuFromMenuList = () => {
     setMenu(null);
   };
 
   return (
     <div className={`bouton-menu ${props.className}`}>
-      {props.listeItems.length > 0 && (
+      {props.options.length > 0 && (
         <>
           <button
             title={props.titreBouton}
@@ -57,16 +58,16 @@ export const BoutonMenu: React.FC<IBoutonMenuProps> = props => {
             anchorOrigin={props.anchorOrigin}
             transformOrigin={props.transformOrigin}
             MenuListProps={{
-              onMouseLeave: handleCloseMenu,
-              onClick: handleCloseMenu
+              onMouseLeave: handleCloseMenuFromMenuList,
+              onClick: handleCloseMenuFromMenuList
             }}
           >
-            {props.listeItems.map((item: IBoutonMenuItem) => (
+            {props.options.map((option: Option) => (
               <MenuItem
-                onClick={event => props.onClickMenuItem(item.key, event)}
-                key={item.key}
+                onClick={event => props.onClickOption(option.cle, event)}
+                key={option.cle}
               >
-                {item.libelle}
+                {option.libelle}
               </MenuItem>
             ))}
           </Menu>

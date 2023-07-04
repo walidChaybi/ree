@@ -47,22 +47,22 @@ export const RadioField: React.FC<RadioFieldProps> = ({
         <label htmlFor={name}>{label}</label>
         <div id={name} aria-label={name} className="RadioInput">
           {values.map((option: Option) => {
-            const nameValue = `${name}.${option.value}`
+            const nomValeur = `${name}.${option.cle}`
               .trim()
               .toLocaleLowerCase();
             return (
-              <span key={nameValue}>
+              <span key={nomValeur}>
                 <Field
                   type={type}
-                  id={nameValue}
-                  value={option.value}
+                  id={nomValeur}
+                  value={option.cle}
                   name={name}
-                  aria-label={nameValue}
+                  aria-label={nomValeur}
                   disabled={disabled}
                   title={title}
                   {...otherProps}
                 />
-                <label htmlFor={nameValue}>{option.str}</label>
+                <label htmlFor={nomValeur}>{option.libelle}</label>
               </span>
             );
           })}

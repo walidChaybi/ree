@@ -1,6 +1,6 @@
 import { getLibelle } from "@util/Utils";
+import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   INomForm,
@@ -11,7 +11,7 @@ import {
 import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
+import { CaracteresAutorises } from "../../../../../../ressources/Regex";
 import {
   ARRONDISSEMENT_NAISSANCE,
   LIEU_DE_NAISSANCE,
@@ -31,16 +31,16 @@ export const EvenementEtrangerFormDefaultValues = {
 export const EvenementEtrangerFormValidationSchema = Yup.object().shape({
   [LIEU_DE_NAISSANCE]: Yup.boolean(),
   [VILLE_NAISSANCE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [REGION_NAISSANCE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [PAYS_NAISSANCE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   )
 });
 

@@ -14,17 +14,17 @@ import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
 import {
-  CarateresAutorise,
+  CaracteresAutorises,
   NumeroTelephone
 } from "../../../../../ressources/Regex";
-import { InputField } from "../champsSaisie/InputField";
 import {
   ADRESSE_MAIL_NON_CONFORME,
-  CARATERES_AUTORISES_MESSAGE,
+  CARACTERES_AUTORISES_MESSAGE,
   CHAMP_OBLIGATOIRE,
   NUMERO_TELEPHONE_NON_CONFORME
 } from "../FormulaireMessages";
 import { SousFormulaire } from "../SousFormulaire";
+import { InputField } from "../champsSaisie/InputField";
 import { sortieChampEnMajuscule } from "../utils/ControlesUtil";
 import {
   NB_CARACT_ADRESSE,
@@ -54,28 +54,34 @@ interface AdresseFormProps {
 
 // Schéma de validation des champs
 export const AdresseFormValidationSchema = Yup.object().shape({
-  [VOIE]: Yup.string().matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
+  [VOIE]: Yup.string().matches(
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
+  ),
   [LIEU_DIT]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [COMPLEMENT_DESTINATAIRE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [COMPLEMENT_POINT_GEO]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [CODE_POSTAL]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [COMMUNE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
-  [PAYS]: Yup.string().matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
+  [PAYS]: Yup.string().matches(
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
+  ),
   [ADRESSE_COURRIEL]: Yup.string().email(ADRESSE_MAIL_NON_CONFORME),
   [NUMERO_TELEPHONE]: Yup.string().matches(
     NumeroTelephone,
@@ -85,27 +91,30 @@ export const AdresseFormValidationSchema = Yup.object().shape({
 
 export const AdresseFormValidationSchemaRequired = Yup.object().shape({
   [VOIE]: Yup.string()
-    .matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE)
+    .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
     .required(CHAMP_OBLIGATOIRE),
   [LIEU_DIT]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [COMPLEMENT_DESTINATAIRE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [COMPLEMENT_POINT_GEO]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [CODE_POSTAL]: Yup.string()
-    .matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE)
+    .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
     .required(CHAMP_OBLIGATOIRE),
   [COMMUNE]: Yup.string()
-    .matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE)
+    .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
     .required(CHAMP_OBLIGATOIRE),
-  [PAYS]: Yup.string().matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
+  [PAYS]: Yup.string().matches(
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
+  ),
   [ADRESSE_COURRIEL]: Yup.string().email(ADRESSE_MAIL_NON_CONFORME),
   [NUMERO_TELEPHONE]: Yup.string().matches(
     NumeroTelephone,

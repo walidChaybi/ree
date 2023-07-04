@@ -40,9 +40,7 @@ const HookRegistreActeFiltre: React.FC = () => {
 };
 
 test("render composant RegistreActeFiltre", async () => {
-  await act(async () => {
-    render(<HookRegistreActeFiltre />);
-  });
+  render(<HookRegistreActeFiltre />);
 
   const natureActe = screen.getByTestId(
     "registre.natureActe"
@@ -88,35 +86,28 @@ test("render composant RegistreActeFiltre", async () => {
   await waitFor(() => {
     expect(screen.getByText("TORONTO")).toBeInTheDocument();
   });
-  act(() => {
-    fireEvent.keyDown(pocopa, { key: "ArrowDown" });
-    fireEvent.keyDown(pocopa, { key: "Enter" });
+  fireEvent.keyDown(pocopa, { key: "ArrowDown" });
+  fireEvent.keyDown(pocopa, { key: "Enter" });
+
+  fireEvent.change(natureActe, {
+    target: {
+      value: "MARIAGE"
+    }
   });
 
-  act(() => {
-    fireEvent.change(natureActe, {
-      target: {
-        value: "MARIAGE"
-      }
-    });
-
-    fireEvent.change(numeroActe, {
-      target: {
-        value: "123456"
-      }
-    });
+  fireEvent.change(numeroActe, {
+    target: {
+      value: "123456"
+    }
   });
 
-  const submit = screen.getByText(/Submit/i);
-  await act(async () => {
-    fireEvent.click(submit);
-  });
+  fireEvent.click(screen.getByText(/Submit/i));
 
   const result = screen.getByTestId("result");
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"registre":{"natureActe":"MARIAGE","familleRegistre":"ACQ","anneeRegistre":"","pocopa":{"value":"TORONTO","str":"TORONTO"},"numeroActe":"123456"}}'
+      '{"registre":{"natureActe":"MARIAGE","familleRegistre":"ACQ","anneeRegistre":"","pocopa":{"cle":"TORONTO","libelle":"TORONTO"},"numeroActe":"123456"}}'
     );
   });
 });

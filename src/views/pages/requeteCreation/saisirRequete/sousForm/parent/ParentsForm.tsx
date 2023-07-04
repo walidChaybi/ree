@@ -13,7 +13,7 @@ import {
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { DOUZE, getLibelle } from "@util/Utils";
-import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
+import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import {
@@ -29,7 +29,7 @@ import {
 import { FormikProps, FormikValues, connect } from "formik";
 import React, { useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
+import { CaracteresAutorises } from "../../../../../../ressources/Regex";
 import {
   DATE_NAISSANCE,
   MARIAGE,
@@ -73,12 +73,12 @@ export const ParentFormValidationSchema = Yup.object()
     [NAISSANCE]: EvenementParentsFormValidationSchema,
     [NATIONALITES]: NationalitesFormValidationSchema,
     [PAYS_STATUT_REFUGIE]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
+      CaracteresAutorises,
+      CARACTERES_AUTORISES_MESSAGE
     ),
     [PAYS_ORIGINE]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
+      CaracteresAutorises,
+      CARACTERES_AUTORISES_MESSAGE
     )
   })
   .test("parent.pasDePrenomConnu", function (value, error) {

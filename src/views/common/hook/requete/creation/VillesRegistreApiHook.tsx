@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 export function formatPocopasVersOptions(pocopas: string[]): Option[] {
   return pocopas.map(pocopa => {
     return {
-      value: pocopa,
-      str: formatMajusculesMinusculesMotCompose(pocopa)
+      cle: pocopa,
+      libelle: formatMajusculesMinusculesMotCompose(pocopa)
     } as Option;
   });
 }

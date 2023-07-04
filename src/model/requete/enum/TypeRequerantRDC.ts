@@ -38,7 +38,7 @@ export class TypeRequerantRDC extends EnumWithLibelle {
 
   public static getListEnumsAsOptions(keys: string[]): Options {
     return this.getAllEnumsAsOptions().filter((el: Option) => {
-      return keys.includes(el.value) ? el : undefined;
+      return keys.includes(el.cle) ? el : undefined;
     });
   }
 }

@@ -37,11 +37,7 @@ import {
   idFicheRca
 } from "../data/ficheRCA";
 import { imagePngVideBase64 } from "../data/ImagePng";
-import {
-  listeDeuxPersonnes,
-  listePersonneAlpha,
-  listePersonneBeta
-} from "../data/listePersonnes";
+import { listeDeuxPersonnes } from "../data/listePersonnes";
 import { mentions, mentionsPlurilingues } from "../data/mentions";
 import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import {
@@ -428,25 +424,6 @@ export const configEtatcivil = [
       // Actes / inscriptions sauvegardes
       if (match[1] === "/projetacte/actesinscriptionssauvegardes") {
         return { data: actesInscriptionsSauvegardes };
-      }
-
-      // Personnes sauvegardees
-      if (match[1] === "/personne/listePersonne") {
-        return [];
-      }
-
-      if (
-        match[1] ===
-        "/personne/listePersonne?ids=e7114c54-d00d-48ad-bbee-af2b01e2da7a"
-      ) {
-        return listePersonneAlpha;
-      }
-
-      if (
-        match[1] ===
-        "/personne/listePersonne?ids=e7114c54-d00d-48ad-bbee-af2b01e2da7c"
-      ) {
-        return listePersonneBeta;
       }
 
       if (

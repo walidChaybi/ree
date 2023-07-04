@@ -4,8 +4,8 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { getLibelle } from "@util/Utils";
+import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import InputFieldAvecBoutonMajuscule from "@widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
-import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import {
   IGNORER_TABULATION,
   NB_CARACT_MAX_SAISIE,
@@ -15,7 +15,7 @@ import {
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../ressources/Regex";
+import { CaracteresAutorises } from "../../../../../ressources/Regex";
 import "./scss/NomsForm.scss";
 
 // Valeurs par défaut des champs
@@ -27,12 +27,12 @@ export const NomsFormDefaultValues = {
 // Schéma de validation des champs
 export const NomsFormValidationSchema = Yup.object().shape({
   [NOM_NAISSANCE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   ),
   [NOM_USAGE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
+    CaracteresAutorises,
+    CARACTERES_AUTORISES_MESSAGE
   )
 });
 

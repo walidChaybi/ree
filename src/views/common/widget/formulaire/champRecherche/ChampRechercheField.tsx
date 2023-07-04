@@ -1,9 +1,9 @@
 import { Autocomplete } from "@mui/material";
 import { FilterOptionsState } from "@mui/material/useAutocomplete";
 import makeStyles from "@mui/styles/makeStyles";
-import { Option } from "@util/Type";
+import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
-import { connect, ErrorMessage, Field } from "formik";
+import { ErrorMessage, Field, connect } from "formik";
 import React from "react";
 import { IconeCroix } from "../../icones/IconeCroix";
 import { IconErrorMessage } from "../erreur/IconeErreurMessage";
@@ -20,9 +20,9 @@ interface ChampRechercheProps {
   value?: any;
   onClickClear?: (e: any) => void;
   filterOptions?: (
-    options: Option[],
+    options: Options,
     state: FilterOptionsState<Option>
-  ) => Option[];
+  ) => Options;
   disabledPortal?: boolean;
 }
 
@@ -53,9 +53,9 @@ export const ChampRecherche: React.FC<ChampRechercheProps> = props => {
           ? props.noOptionsText
           : getLibelle("Aucun résultats")
       }
-      getOptionLabel={(option: Option) => option.str || ""}
+      getOptionLabel={(option: Option) => option.libelle || ""}
       isOptionEqualToValue={(option, val) => {
-        return option.value === val.value;
+        return option.cle === val.cle;
       }}
       options={props.options}
       value={props.value}
@@ -91,8 +91,8 @@ export const ChampRecherche: React.FC<ChampRechercheProps> = props => {
       )}
       renderOption={(renderProps, option: Option, { inputValue, selected }) => {
         return (
-          <li {...renderProps} key={option.value}>
-            {option.str}
+          <li {...renderProps} key={option.cle}>
+            {option.libelle}
           </li>
         );
       }}

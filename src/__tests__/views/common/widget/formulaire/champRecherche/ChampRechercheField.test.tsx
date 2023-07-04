@@ -1,4 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
+import { Options } from "@util/Type";
 import { ChampRecherche } from "@widget/formulaire/champRecherche/ChampRechercheField";
 
 // Pour un test du composant dans un formulaire voir RegistreActeFiltre.test.tsx
@@ -6,9 +7,9 @@ test("Attendu: composant ChampRecherche fonctionne correctement", async () => {
   const onChange = jest.fn();
   const onInput = jest.fn();
   const onClickClear = jest.fn();
-  const options = [
-    { value: "k1", str: "str1" },
-    { value: "k2", str: "str2" }
+  const options: Options = [
+    { cle: "k1", libelle: "str1" },
+    { cle: "k2", libelle: "str2" }
   ];
   render(
     <ChampRecherche

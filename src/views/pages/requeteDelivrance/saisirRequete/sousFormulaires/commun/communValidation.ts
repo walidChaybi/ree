@@ -5,9 +5,9 @@ import {
   TYPE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
-import { CARATERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
+import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
+import { CaracteresAutorises } from "../../../../../../ressources/Regex";
 
 // Schéma de validation des champs
 export function getFormValidationCarAutorisesEtNAtureObligatoireShema(
@@ -17,20 +17,20 @@ export function getFormValidationCarAutorisesEtNAtureObligatoireShema(
     .shape({
       [TYPE]: Yup.string(),
       [NATURE]: Yup.string().matches(
-        CarateresAutorise,
-        CARATERES_AUTORISES_MESSAGE
+        CaracteresAutorises,
+        CARACTERES_AUTORISES_MESSAGE
       ),
       [autreKey]: Yup.string().matches(
-        CarateresAutorise,
-        CARATERES_AUTORISES_MESSAGE
+        CaracteresAutorises,
+        CARACTERES_AUTORISES_MESSAGE
       ),
       [NOM]: Yup.string().matches(
-        CarateresAutorise,
-        CARATERES_AUTORISES_MESSAGE
+        CaracteresAutorises,
+        CARACTERES_AUTORISES_MESSAGE
       ),
       [PRENOM]: Yup.string().matches(
-        CarateresAutorise,
-        CARATERES_AUTORISES_MESSAGE
+        CaracteresAutorises,
+        CARACTERES_AUTORISES_MESSAGE
       )
     })
     .test("natureObligatoire", function (value, error) {

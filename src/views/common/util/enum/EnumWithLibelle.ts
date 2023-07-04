@@ -2,7 +2,7 @@ import {
   changeLaPlaceDunElement,
   premiereLettreEnMajuscule
 } from "@util/Utils";
-import { Options } from "../Type";
+import { Option, Options } from "../Type";
 
 const AUTRE = "autre";
 /* istanbul ignore file */
@@ -48,8 +48,8 @@ export class EnumWithLibelle {
         const libelle = premiereLettreEnMajuscule(`${clazz[key]._libelle}`);
         if (!exclusions.find(exclusion => exclusion === clazz[key])) {
           options.push({
-            value: key,
-            str: inclureCodeDansLibelle ? `(${key}) ${libelle}` : libelle
+            cle: key,
+            libelle: inclureCodeDansLibelle ? `(${key}) ${libelle}` : libelle
           });
         }
       }
@@ -57,15 +57,17 @@ export class EnumWithLibelle {
 
     if (tri) {
       options.sort(
-        (o1: any, o2: any) =>
-          o1.str.localeCompare(o2.str, undefined, { ignorePunctuation: true }) //ignorer les guillemets pour le tri
+        (o1: Option, o2: Option) =>
+          o1.libelle.localeCompare(o2.libelle, undefined, {
+            ignorePunctuation: true
+          }) //ignorer les guillemets pour le tri
       );
     }
 
     // Placement du libellé "Autre" à la fin
     if (libelleAutreALaFin) {
       const indexLibelleAutre = options.findIndex(
-        option => option.str.toLocaleLowerCase() === AUTRE
+        option => option.libelle.toLocaleLowerCase() === AUTRE
       );
 
       changeLaPlaceDunElement(options, indexLibelleAutre, options.length - 1);

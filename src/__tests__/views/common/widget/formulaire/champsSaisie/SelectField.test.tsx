@@ -5,6 +5,7 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { Options } from "@util/Type";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { Formik } from "formik";
@@ -12,9 +13,9 @@ import { Formik } from "formik";
 // Pour un test du composant dans un formulaire voir RegistreActeFiltre.test.tsx
 test("Attendu: composant SelectField fonctionne correctement", async () => {
   const onChange = jest.fn();
-  const options = [
-    { value: "k1", str: "str1" },
-    { value: "k2", str: "str2" }
+  const options: Options = [
+    { cle: "k1", libelle: "str1" },
+    { cle: "k2", libelle: "str2" }
   ];
   const formik = {} as FormikComponentProps;
   render(

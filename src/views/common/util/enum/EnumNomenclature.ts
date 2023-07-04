@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { Options } from "../Type";
+import { Option, Options } from "../Type";
 import { EnumWithLibelle } from "./EnumWithLibelle";
 
 export class EnumNomemclature extends EnumWithLibelle {
@@ -24,12 +24,14 @@ export class EnumNomemclature extends EnumWithLibelle {
     for (const key in clazz) {
       if (clazz.hasOwnProperty(key)) {
         options.push({
-          value: key,
-          str: clazz[key]._code
+          cle: key,
+          libelle: clazz[key]._code
         });
       }
     }
-    return options.sort((o1: any, o2: any) => o1.str.localeCompare(o2.str));
+    return options.sort((o1: Option, o2: Option) =>
+      o1.libelle.localeCompare(o2.libelle)
+    );
   }
 
   public static getKeyForCode(clazz: any, code: string) {

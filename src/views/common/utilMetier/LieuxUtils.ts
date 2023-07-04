@@ -1,15 +1,15 @@
 import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
-import { Option } from "@util/Type";
+import { Option, Options } from "@util/Type";
 import {
+  NEUF,
+  SEIZE,
+  VINGT,
   chainesEgalesIgnoreCasseEtAccent,
   estRenseigne,
   formatLigne,
   getValeurOuVide,
-  NEUF,
-  SEIZE,
-  supprimerZerosAGauche,
-  VINGT
+  supprimerZerosAGauche
 } from "@util/Utils";
 
 export const FRANCE = "FRANCE";
@@ -309,9 +309,11 @@ export class LieuxUtils {
     return numeros;
   }
 
-  public static getOptionsArrondissement(ville?: string): Option[] {
+  public static getOptionsArrondissement(ville?: string): Options {
     const villeNumeros: string[] = LieuxUtils.getNumerosArrondissement(ville);
-    return villeNumeros.map(numero => ({ value: numero, str: numero }));
+    return villeNumeros.map(
+      numero => ({ cle: numero, libelle: numero } as Option)
+    );
   }
 
   /**

@@ -18,12 +18,12 @@ const StateConsumerBoutonMenu: React.FC<{
       <p>Nombre de clics: {value}</p>
       <BoutonMenu
         boutonLibelle={"Click me"}
-        listeItems={[
-          { key: "1", libelle: "Un" },
-          { key: "2", libelle: "Deux" },
-          { key: "3", libelle: "Trois" }
+        options={[
+          { cle: "1", libelle: "Un" },
+          { cle: "2", libelle: "Deux" },
+          { cle: "3", libelle: "Trois" }
         ]}
-        onClickMenuItem={() => setValue(value + 1)}
+        onClickOption={() => setValue(value + 1)}
         openOnMouseClick={props.openOnMouseClick}
       />
     </>

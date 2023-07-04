@@ -2,11 +2,12 @@ import { RECEContext } from "@core/body/RECEContext";
 import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
 import { IRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
+import { getTypeRedactionActeParSousTypeCreation } from "@model/etatcivil/enum/TypeRedactionActe";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { TypeActeInscriptionSauvegarde } from "@model/requete/enum/TypeActeInscriptionSauvegarde";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
 import { TableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonne";
 import { mapDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
@@ -20,14 +21,14 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { IDataTableauActeInscriptionSelectionne } from "../tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
 import { TableauActesInscriptionsSelectionnes } from "../tableauActesInscriptionsSelectionnes/TableauActesInscriptionsSelectionnes";
+import { IDataTableauPersonneSelectionnee } from "../tableauPersonnesSelectionnees/IDataTableauPersonneSelectionne";
+import { TableauPersonnesSelectionnees } from "../tableauPersonnesSelectionnees/TableauPersonnesSelectionnees";
 import {
   ISauvegardeRMCApiHookParams,
   useSauvegardeRMCApiHook
 } from "../tableauPersonnesSelectionnees/hook/useSauvegardeRMCApiHook";
-import { IDataTableauPersonneSelectionnee } from "../tableauPersonnesSelectionnees/IDataTableauPersonneSelectionne";
-import { TableauPersonnesSelectionnees } from "../tableauPersonnesSelectionnees/TableauPersonnesSelectionnees";
 import {
-  getTitulairesAsListeBoutonMenuItem,
+  getTitulairesAsOptions,
   mapDataTableauRMCPersonneVersDataTableauActeInscriptionSelectionne,
   mapDataTableauRMCPersonneVersDataTableauPersonneSelectionnee,
   triDataTableauPersonneSelectionneeSurNomPrenom
@@ -69,7 +70,7 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
   function onClickBoutonAjouterPersonneOuActeInscription(
     event: TMouseEventSurHTMLButtonElement,
     ligneTableau: IDataTableauRMCPersonne,
-    cle?: string | undefined
+    cle?: string
   ): void {
     const estDejaSelectionne = identifiantEstDejaSelectionne(
       ligneTableau.idPersonneOuActeInscription,
@@ -77,43 +78,30 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
       props.dataActesInscriptionsSelectionnes,
       props.dataPersonnesSelectionnees
     );
-    if (
-      cle &&
-      !estDejaSelectionne &&
-      ligneTableau.estDataPersonne &&
-      props.dataPersonnesSelectionnees
-    ) {
-      const role: RolePersonneSauvegardee | undefined =
-        RolePersonneSauvegardee.getEnumFor(
-          RolePersonneSauvegardee.getKeyForNom(cle)
-        );
-      props.setDataPersonnesSelectionnees(
-        [
-          ...props.dataPersonnesSelectionnees,
-          {
-            ...mapDataTableauRMCPersonneVersDataTableauPersonneSelectionnee(
-              ligneTableau
-            ),
-            role: role.libelle
-          }
-        ].sort(triDataTableauPersonneSelectionneeSurNomPrenom)
-      );
-      !isDirty && setIsDirty(true);
-    } else if (cle && !estDejaSelectionne && !ligneTableau.estDataPersonne) {
-      const typePJ: TypeActeInscriptionSauvegarde | undefined =
-        TypeActeInscriptionSauvegarde.getEnumFor(
-          TypeActeInscriptionSauvegarde.getKeyForNom(cle)
-        );
-      props.setDataActesInscriptionsSelectionnes([
-        ...(props.dataActesInscriptionsSelectionnes ?? []),
-        {
-          ...mapDataTableauRMCPersonneVersDataTableauActeInscriptionSelectionne(
+
+    if (cle && !estDejaSelectionne) {
+      if (ligneTableau.estDataPersonne) {
+        const role =
+          RolePersonneSauvegardee.getEnumForEnFonctionNatureActeRequete(
+            cle,
+            NatureActeRequete.estMariage(props.natureActeRequete)
+          );
+        role &&
+          ajouterPersonne(
+            role,
             ligneTableau,
-            props.resultatRMCPersonne
-          ),
-          typePJ: typePJ.libelle
-        }
-      ]);
+            props.dataPersonnesSelectionnees,
+            props.setDataPersonnesSelectionnees
+          );
+      } else {
+        ajouterActeInscription(
+          cle,
+          ligneTableau,
+          props.dataActesInscriptionsSelectionnes,
+          props.setDataActesInscriptionsSelectionnes,
+          props.resultatRMCPersonne
+        );
+      }
       !isDirty && setIsDirty(true);
     }
   }
@@ -176,6 +164,9 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
   return (
     <>
       <TableauRMCPersonne
+        typeRedactionActe={getTypeRedactionActeParSousTypeCreation(
+          props.sousTypeRequete
+        )}
         dataTableauRMCPersonne={mapDataTableauRMCPersonne(
           props.resultatRMCPersonne
         )}
@@ -197,31 +188,38 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
       />
       <BoutonMenu
         boutonLibelle={getLibelle("Rechercher sur une personne de la requête")}
-        listeItems={getTitulairesAsListeBoutonMenuItem(
+        options={getTitulairesAsOptions(
           props.sousTypeRequete,
           props.listeTitulaires
         )}
-        onClickMenuItem={e => handleClickMenuItemRMCPersonneRequete(e)}
+        onClickOption={e => handleClickMenuItemRMCPersonneRequete(e)}
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       />
-      <TableauPersonnesSelectionnees
-        dataPersonnesSelectionnees={props.dataPersonnesSelectionnees || []}
-        onClickBoutonRetirerPersonne={onClickBoutonRetirerPersonne}
-        enChargement={props.tableauPersonnesSelectionneesEnChargement}
-      />
-      <TableauActesInscriptionsSelectionnes
-        dataActesInscriptionsSelectionnes={
-          props.dataActesInscriptionsSelectionnes || []
-        }
-        onClickBoutonRetirerActeInscription={
-          onClickBoutonRetirerActeInscription
-        }
-        enChargement={props.tableauPersonnesSelectionneesEnChargement}
-      />
 
-      <Bouton disabled={!isDirty} onClick={sauvegardePersonneEtActeSelectionne}>
-        {getLibelle("Sauvegarder")}
-      </Bouton>
+      {SousTypeCreation.estSousTypeTranscription(props.sousTypeRequete) && (
+        <>
+          <TableauPersonnesSelectionnees
+            dataPersonnesSelectionnees={props.dataPersonnesSelectionnees ?? []}
+            onClickBoutonRetirerPersonne={onClickBoutonRetirerPersonne}
+            enChargement={props.tableauPersonnesSelectionneesEnChargement}
+          />
+          <TableauActesInscriptionsSelectionnes
+            dataActesInscriptionsSelectionnes={
+              props.dataActesInscriptionsSelectionnes || []
+            }
+            onClickBoutonRetirerActeInscription={
+              onClickBoutonRetirerActeInscription
+            }
+            enChargement={props.tableauPersonnesSelectionneesEnChargement}
+          />
+          <Bouton
+            disabled={!isDirty}
+            onClick={sauvegardePersonneEtActeSelectionne}
+          >
+            {getLibelle("Sauvegarder")}
+          </Bouton>
+        </>
+      )}
     </>
   );
 };
@@ -239,4 +237,49 @@ function identifiantEstDejaSelectionne(
     : dataActesInscriptionsSelectionnes.some(
         acteInscription => acteInscription.idActeInscription === identifiant
       );
+}
+
+function ajouterPersonne(
+  role: RolePersonneSauvegardee,
+  ligneTableau: IDataTableauRMCPersonne,
+  dataPersonnesSelectionnees: IDataTableauPersonneSelectionnee[] | undefined,
+  setDataPersonnesSelectionnees: React.Dispatch<
+    React.SetStateAction<IDataTableauPersonneSelectionnee[] | undefined>
+  >
+) {
+  setDataPersonnesSelectionnees(
+    [
+      ...(dataPersonnesSelectionnees || []),
+      {
+        ...mapDataTableauRMCPersonneVersDataTableauPersonneSelectionnee(
+          ligneTableau
+        ),
+        role: role.libelle
+      }
+    ].sort(triDataTableauPersonneSelectionneeSurNomPrenom)
+  );
+}
+
+function ajouterActeInscription(
+  cle: string,
+  ligneTableau: IDataTableauRMCPersonne,
+  dataActesInscriptionsSelectionnes:
+    | IDataTableauActeInscriptionSelectionne[]
+    | undefined,
+  setDataActesInscriptionsSelectionnes: React.Dispatch<
+    React.SetStateAction<IDataTableauActeInscriptionSelectionne[] | undefined>
+  >,
+  resultatRMCPersonne: IRMCPersonneResultat[]
+) {
+  const typePJ: TypePieceJustificative = TypePieceJustificative.getEnumFor(cle);
+  setDataActesInscriptionsSelectionnes([
+    ...(dataActesInscriptionsSelectionnes || []),
+    {
+      ...mapDataTableauRMCPersonneVersDataTableauActeInscriptionSelectionne(
+        ligneTableau,
+        resultatRMCPersonne
+      ),
+      typePJ: typePJ.libelle
+    }
+  ]);
 }

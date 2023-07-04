@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 import { peupleNatureMention } from "@api/nomenclature/NomenclatureEtatcivil";
+import { Options } from "@util/Type";
 import { EnumNomemclature } from "@util/enum/EnumNomenclature";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
-import { Options } from "@util/Type";
 import { DocumentDelivrance } from "../../requete/enum/DocumentDelivrance";
 import {
   CODE_EXTRAIT_AVEC_FILIATION,
@@ -213,8 +213,8 @@ export class NatureMention extends EnumNomemclature {
     const options: Options = [];
     natureMention.forEach(nature => {
       options.push({
-        value: NatureMention.getUuidFromNature(nature),
-        str: nature.libelle
+        cle: NatureMention.getUuidFromNature(nature),
+        libelle: nature.libelle
       });
     });
     return options;

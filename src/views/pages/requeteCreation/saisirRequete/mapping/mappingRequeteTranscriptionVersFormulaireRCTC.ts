@@ -78,7 +78,6 @@ import {
   IRequeteForm,
   ISaisieRequeteRCTC
 } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
-import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { IEvenementUnion } from "@model/requete/IEvenementUnion";
 import { INationalite } from "@model/requete/INationalite";
 import { IRequerant } from "@model/requete/IRequerant";
@@ -88,16 +87,17 @@ import {
   TitulaireRequeteCreation
 } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeTranscription } from "@model/requete/NatureActeTranscription";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import {
   DEUX,
-  estRenseigne,
-  getValeurOuVide,
   SNP,
   SPC,
   UN,
-  ZERO
+  ZERO,
+  estRenseigne,
+  getValeurOuVide
 } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { AdresseFormDefaultValues } from "@widget/formulaire/adresse/AdresseForm";
@@ -147,7 +147,7 @@ export function saisieRequete(requete: IRequeteCreation): IRequeteForm {
       NatureActeTranscription.getKey(requete.natureActeTranscrit)
     ),
     [LIEN_REQUERANT]: getValeurOuVide(requete.lienRequerant.typeLienRequerant),
-    [REGISTRE]: { value: requete.villeRegistre, str: requete.villeRegistre }
+    [REGISTRE]: { cle: requete.villeRegistre, libelle: requete.villeRegistre }
   };
 }
 

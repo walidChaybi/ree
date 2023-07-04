@@ -29,8 +29,8 @@ export const Entite = {
   mapCommeOptions(entites?: IEntite[]): Option[] {
     return entites
       ? entites.map(entite => ({
-          str: entite.libelleEntite,
-          value: entite.idEntite
+          libelle: entite.libelleEntite,
+          cle: entite.idEntite
         }))
       : [];
   }

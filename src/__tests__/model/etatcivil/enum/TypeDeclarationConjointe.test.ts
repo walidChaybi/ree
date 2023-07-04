@@ -8,8 +8,8 @@ test("Attendu: getAllEnumsAsOptions de TypeDeclarationConjointe fonctionne corre
     )
   ).toEqual([
     {
-      value: "ABSENCE_DECLARATION_VALIDEE",
-      str: premiereLettreEnMajuscule(
+      cle: "ABSENCE_DECLARATION_VALIDEE",
+      libelle: premiereLettreEnMajuscule(
         TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE.libelle
       )
     }
@@ -21,31 +21,33 @@ test("Attendu: getAllEnumsAsOptions de TypeDeclarationConjointe fonctionne corre
     )
   ).toEqual([
     {
-      value: "INDETERMINE",
-      str: premiereLettreEnMajuscule(
+      cle: "INDETERMINE",
+      libelle: premiereLettreEnMajuscule(
         TypeDeclarationConjointe.INDETERMINE.libelle
       )
     },
     {
-      value: "CHANGEMENT_NOM",
-      str: premiereLettreEnMajuscule(
+      cle: "CHANGEMENT_NOM",
+      libelle: premiereLettreEnMajuscule(
         TypeDeclarationConjointe.CHANGEMENT_NOM.libelle
       )
     },
 
     {
-      value: "CHOIX_NOM",
-      str: premiereLettreEnMajuscule(TypeDeclarationConjointe.CHOIX_NOM.libelle)
+      cle: "CHOIX_NOM",
+      libelle: premiereLettreEnMajuscule(
+        TypeDeclarationConjointe.CHOIX_NOM.libelle
+      )
     },
     {
-      value: "ADJONCTION_NOM",
-      str: premiereLettreEnMajuscule(
+      cle: "ADJONCTION_NOM",
+      libelle: premiereLettreEnMajuscule(
         TypeDeclarationConjointe.ADJONCTION_NOM.libelle
       )
     },
     {
-      value: "ABSENCE_DECLARATION",
-      str: premiereLettreEnMajuscule(
+      cle: "ABSENCE_DECLARATION",
+      libelle: premiereLettreEnMajuscule(
         TypeDeclarationConjointe.ABSENCE_DECLARATION.libelle
       )
     }
@@ -57,25 +59,27 @@ test("Attendu: getAllEnumsAsOptions de TypeDeclarationConjointe fonctionne corre
     )
   ).toEqual([
     {
-      value: "INDETERMINE",
-      str: premiereLettreEnMajuscule(
+      cle: "INDETERMINE",
+      libelle: premiereLettreEnMajuscule(
         TypeDeclarationConjointe.INDETERMINE.libelle
       )
     },
     {
-      value: "CHANGEMENT_NOM",
-      str: premiereLettreEnMajuscule(
+      cle: "CHANGEMENT_NOM",
+      libelle: premiereLettreEnMajuscule(
         TypeDeclarationConjointe.CHANGEMENT_NOM.libelle
       )
     },
 
     {
-      value: "CHOIX_NOM",
-      str: premiereLettreEnMajuscule(TypeDeclarationConjointe.CHOIX_NOM.libelle)
+      cle: "CHOIX_NOM",
+      libelle: premiereLettreEnMajuscule(
+        TypeDeclarationConjointe.CHOIX_NOM.libelle
+      )
     },
     {
-      value: "ADJONCTION_NOM",
-      str: premiereLettreEnMajuscule(
+      cle: "ADJONCTION_NOM",
+      libelle: premiereLettreEnMajuscule(
         TypeDeclarationConjointe.ADJONCTION_NOM.libelle
       )
     }
@@ -83,37 +87,39 @@ test("Attendu: getAllEnumsAsOptions de TypeDeclarationConjointe fonctionne corre
 
   expect(TypeDeclarationConjointe.getAllEnumsAsOptions()).toEqual([
     {
-      value: "INDETERMINE",
-      str: premiereLettreEnMajuscule(
+      cle: "INDETERMINE",
+      libelle: premiereLettreEnMajuscule(
         TypeDeclarationConjointe.INDETERMINE.libelle
       )
     },
     {
-      value: "CHANGEMENT_NOM",
-      str: premiereLettreEnMajuscule(
+      cle: "CHANGEMENT_NOM",
+      libelle: premiereLettreEnMajuscule(
         TypeDeclarationConjointe.CHANGEMENT_NOM.libelle
       )
     },
 
     {
-      value: "CHOIX_NOM",
-      str: premiereLettreEnMajuscule(TypeDeclarationConjointe.CHOIX_NOM.libelle)
+      cle: "CHOIX_NOM",
+      libelle: premiereLettreEnMajuscule(
+        TypeDeclarationConjointe.CHOIX_NOM.libelle
+      )
     },
     {
-      value: "ADJONCTION_NOM",
-      str: premiereLettreEnMajuscule(
+      cle: "ADJONCTION_NOM",
+      libelle: premiereLettreEnMajuscule(
         TypeDeclarationConjointe.ADJONCTION_NOM.libelle
       )
     },
     {
-      value: "ABSENCE_DECLARATION",
-      str: premiereLettreEnMajuscule(
+      cle: "ABSENCE_DECLARATION",
+      libelle: premiereLettreEnMajuscule(
         TypeDeclarationConjointe.ABSENCE_DECLARATION.libelle
       )
     },
     {
-      value: "ABSENCE_DECLARATION_VALIDEE",
-      str: premiereLettreEnMajuscule(
+      cle: "ABSENCE_DECLARATION_VALIDEE",
+      libelle: premiereLettreEnMajuscule(
         TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE.libelle
       )
     }

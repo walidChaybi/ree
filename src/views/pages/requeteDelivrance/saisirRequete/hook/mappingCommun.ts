@@ -34,13 +34,9 @@ import {
   VILLE_EVENEMENT,
   VOIE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { ParentFormDefaultValues } from "@composant/formulaire/ParentForm";
+import { genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
-import { Qualite } from "@model/requete/enum/Qualite";
-import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
-import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
-import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { IParent } from "@model/requete/IParents";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { Requerant } from "@model/requete/IRequerant";
@@ -49,6 +45,10 @@ import {
   ITitulaireRequete,
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
+import { Qualite } from "@model/requete/enum/Qualite";
+import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
+import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { getValeurOuVide } from "@util/Utils";
 import { FileExtension, MimeType } from "file-type";
 import { InstitutionnelFormDefaultValues } from "../sousFormulaires/requerant/institutionnel/InstitutionnelForm";
@@ -102,10 +102,10 @@ export function saisiePJ(requete: IRequeteDelivrance) {
         extension: PJ.extension as FileExtension
       },
       type: {
-        value: TypePieceJustificative.getKeyForLibelle(
+        cle: TypePieceJustificative.getKeyForLibelle(
           PJ.typePieceJustificative.libelle
         ),
-        str: PJ.typePieceJustificative.libelle
+        libelle: PJ.typePieceJustificative.libelle
       }
     };
   });

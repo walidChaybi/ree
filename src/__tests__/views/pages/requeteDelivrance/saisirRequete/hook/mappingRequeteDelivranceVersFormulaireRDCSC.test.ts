@@ -50,8 +50,8 @@ test("test du mapping Particulier", () => {
           extension: undefined
         },
         type: {
-          value: "00c885c9-2918-46fe-b743-798b1b90e5dd",
-          str: "Carte professionnelle"
+          cle: "00c885c9-2918-46fe-b743-798b1b90e5dd",
+          libelle: "Carte professionnelle"
         }
       }
     ]
@@ -106,7 +106,7 @@ test("test du mapping Institutionnel", () => {
           mimeType: "",
           extension: undefined
         },
-        type: { value: "", str: undefined }
+        type: { cle: "", libelle: undefined }
       }
     ]
   });

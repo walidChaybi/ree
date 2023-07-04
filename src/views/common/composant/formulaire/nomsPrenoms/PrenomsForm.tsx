@@ -1,6 +1,6 @@
 import { ZERO, creerPlageDeNombres, getLibelle } from "@util/Utils";
 import {
-  CARATERES_AUTORISES_MESSAGE,
+  CARACTERES_AUTORISES_MESSAGE,
   CHAMP_OBLIGATOIRE
 } from "@widget/formulaire/FormulaireMessages";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
@@ -14,7 +14,7 @@ import {
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../ressources/Regex";
+import { CaracteresAutorises } from "../../../../../ressources/Regex";
 import "./scss/PrenomsForm.scss";
 
 const MAX_PRENOMS = 12;
@@ -43,7 +43,7 @@ export function creerValidationSchemaPrenom() {
   for (let i = 1; i <= MAX_PRENOMS; i++) {
     schemaValidation[`prenom${i}`] = Yup.string()
       .nullable()
-      .matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE);
+      .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE);
     if (i !== MAX_PRENOMS) {
       schemaValidation[`prenom${i}`] = schemaValidation[`prenom${i}`].when(
         `prenom${i + 1}`,

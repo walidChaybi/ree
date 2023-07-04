@@ -1,5 +1,5 @@
-import { ObjetRequete } from "@model/requete/enum/ObjetRequete";
 import { IReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
+import { ObjetRequete } from "@model/requete/enum/ObjetRequete";
 import { MenuItem } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import { Option } from "@util/Type";
@@ -14,9 +14,9 @@ interface MenuToutesLesReponsesProps {
   disabled: boolean;
 }
 
-export const MenuToutesLesReponses: React.FC<MenuToutesLesReponsesProps> = (
-  props
-) => {
+export const MenuToutesLesReponses: React.FC<
+  MenuToutesLesReponsesProps
+> = props => {
   const [menuToutesLesReponses, setMenuToutesLesReponses] =
     React.useState<null | HTMLElement>(null);
 
@@ -39,7 +39,7 @@ export const MenuToutesLesReponses: React.FC<MenuToutesLesReponsesProps> = (
         <div>
           <button
             disabled={props.disabled}
-            onClick={(e) => handleClickBoutonReponse(e)}
+            onClick={e => handleClickBoutonReponse(e)}
           >
             {getLibelle("Toutes les réponses disponibles")}
           </button>
@@ -62,21 +62,21 @@ export const MenuToutesLesReponses: React.FC<MenuToutesLesReponsesProps> = (
           >
             {ObjetRequete.getAllEnumsAsOptionsSaufCompletion().map(
               (obj: Option) => {
-                let reponsesFiltees: IReponseRequeteInfo[] = [];
+                let reponsesFiltrees: IReponseRequeteInfo[] = [];
                 if (props.listeReponse) {
-                  reponsesFiltees = props.listeReponse.filter(
-                    (rep) => rep.objet === obj.value
+                  reponsesFiltrees = props.listeReponse.filter(
+                    rep => rep.objet === obj.cle
                   );
                 }
                 return (
                   <NestedMenuItem
                     className="BoutonSousMenu"
-                    label={obj.str}
+                    label={obj.libelle}
                     parentMenuOpen={Boolean(menuToutesLesReponses)}
-                    key={obj.value}
+                    key={obj.cle}
                     openDirection="left"
                   >
-                    {reponsesFiltees.map((reponse: IReponseRequeteInfo) => {
+                    {reponsesFiltrees.map((reponse: IReponseRequeteInfo) => {
                       return (
                         <MenuItem
                           className="SousMenu"

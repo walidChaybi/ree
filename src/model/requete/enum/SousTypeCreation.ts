@@ -89,12 +89,38 @@ export class SousTypeCreation extends EnumWithComplete {
     return sousType === SousTypeCreation.RCEDXC;
   }
 
+  public static estRCEYC(sousType?: SousTypeCreation): boolean {
+    return sousType === SousTypeCreation.RCEYC;
+  }
+
+  public static estRCETJC(sousType?: SousTypeCreation): boolean {
+    return sousType === SousTypeCreation.RCETJC;
+  }
+
+  public static estRCEOPC(sousType?: SousTypeCreation): boolean {
+    return sousType === SousTypeCreation.RCEOPC;
+  }
+
+  public static estRCEARC(sousType?: SousTypeCreation): boolean {
+    return sousType === SousTypeCreation.RCEARC;
+  }
+
   public static estRCEXROuRCEDXROuRCEDXC(sousType?: SousTypeCreation): boolean {
     return (
       SousTypeCreation.estRCEXR(sousType) ||
       SousTypeCreation.estRCEDXR(sousType) ||
       SousTypeCreation.estRCEDXC(sousType)
     );
+  }
+
+  public static estSousTypeEtablissement(sousType?: SousTypeCreation): boolean {
+    return (
+      SousTypeCreation.estRCEXROuRCEDXROuRCEDXC(sousType) ||
+      SousTypeCreation.estRCEYC(sousType) ||
+      SousTypeCreation.estRCETJC(sousType) ||
+      SousTypeCreation.estRCEOPC(sousType) ||
+      SousTypeCreation.estRCEARC(sousType)
+    )
   }
 
   // Actes transcrits

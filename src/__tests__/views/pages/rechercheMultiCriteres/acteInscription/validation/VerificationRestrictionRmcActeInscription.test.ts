@@ -89,7 +89,7 @@ test("Attendu: getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnEr
   const rmcSaisiePocopa: IRMCActeInscription = {
     registreRepertoire: {
       registre: {
-        pocopa: { value: SOMETHING, str: SOMETHING }
+        pocopa: { cle: SOMETHING, libelle: SOMETHING }
       }
     },
     titulaire: {
@@ -238,7 +238,7 @@ test("Attendu: seulementPocopaSaisi retourne vraie lorsque le critère est saisi
   const rmcSaisiePocopa: IRMCActeInscription = {
     registreRepertoire: {
       registre: {
-        pocopa: { value: SOMETHING, str: SOMETHING }
+        pocopa: { cle: SOMETHING, libelle: SOMETHING }
       }
     },
     titulaire: {
@@ -434,8 +434,8 @@ test("Attendu: familleRegistreCSLouACQSaisieSansPocopa fonctionnne correctement"
   rmcSaisieFamilleRegistre.registreRepertoire!.registre!.familleRegistre =
     "CSL";
   rmcSaisieFamilleRegistre.registreRepertoire!.registre!.pocopa = {
-    value: SOMETHING,
-    str: SOMETHING
+    cle: SOMETHING,
+    libelle: SOMETHING
   };
   expect(
     familleRegistreCSLouACQSaisieSansPocopa(rmcSaisieFamilleRegistre)
@@ -452,8 +452,8 @@ test("Attendu: familleRegistreCSLouACQSaisieSansPocopa fonctionnne correctement"
   rmcSaisieFamilleRegistre.registreRepertoire!.registre!.familleRegistre =
     "ACQ";
   rmcSaisieFamilleRegistre.registreRepertoire!.registre!.pocopa = {
-    value: SOMETHING,
-    str: SOMETHING
+    cle: SOMETHING,
+    libelle: SOMETHING
   };
   expect(
     familleRegistreCSLouACQSaisieSansPocopa(rmcSaisieFamilleRegistre)
@@ -582,8 +582,8 @@ test("Attendu: numeroActeSaisiSansFamilleRegistreEtPocopa fonctionnne correcteme
 
   rmcSaisieNumeroActe.registreRepertoire!.registre!.familleRegistre = "";
   rmcSaisieNumeroActe.registreRepertoire!.registre!.pocopa = {
-    value: SOMETHING,
-    str: SOMETHING
+    cle: SOMETHING,
+    libelle: SOMETHING
   };
   expect(
     numeroActeSaisiSansFamilleRegistreEtPocopa(rmcSaisieNumeroActe)
@@ -591,8 +591,8 @@ test("Attendu: numeroActeSaisiSansFamilleRegistreEtPocopa fonctionnne correcteme
 
   rmcSaisieNumeroActe.registreRepertoire!.registre!.familleRegistre = SOMETHING;
   rmcSaisieNumeroActe.registreRepertoire!.registre!.pocopa = {
-    value: SOMETHING,
-    str: SOMETHING
+    cle: SOMETHING,
+    libelle: SOMETHING
   };
   expect(
     numeroActeSaisiSansFamilleRegistreEtPocopa(rmcSaisieNumeroActe)
