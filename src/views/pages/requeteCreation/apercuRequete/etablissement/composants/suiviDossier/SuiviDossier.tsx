@@ -1,33 +1,25 @@
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
-import { RECEContext } from "@core/body/RECEContext";
-import { autorisePrendreEnChargeDepuisPageCreation } from "@util/RequetesUtils";
 import { getLibelle } from "@util/Utils";
-import React, { useContext } from "react";
+import React from "react";
 import { useParams } from "react-router";
 import { IUuidRequeteParams } from "../../../../../../../model/params/IUuidRequeteParams";
 import { IEchange } from "../../../../../../../model/requete/IEchange";
 import { IRequeteCreationEtablissement } from "../../../../../../../model/requete/IRequeteCreationEtablissement";
-import { BoutonPrendreEnChargeCreation } from "../BoutonPrendreEnChargeCreation";
 import { Item } from "../item/Item";
 import { ItemEchangesRetourSDANF } from "../item/ItemEchangesRetourSDANF";
 import "../scss/OngletsApercuCreationEtablissement.scss";
 import { ListeActionsRetourSDANF } from "./ListeActions";
-interface OngletActionProps {
+interface ISuiviDossierProps {
   echanges?: IEchange[];
   requete?: IRequeteCreationEtablissement;
   modeConsultation?: boolean;
 }
 
-export const Action: React.FC<OngletActionProps> = props => {
-  const { rechargementPage } = useContext(RECEContext);
-
+export const SuiviDossier: React.FC<ISuiviDossierProps> = props => {
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const [echanges, setEchanges] = React.useState<IEchange[] | undefined>(
     props.echanges
   );
-
-  const estPresentBoutonPriseEnCharge =
-    autorisePrendreEnChargeDepuisPageCreation(props.requete);
 
   return (
     <>
@@ -48,13 +40,6 @@ export const Action: React.FC<OngletActionProps> = props => {
         idRequete={idRequeteParam}
         observations={props.requete?.observations}
       />
-
-      {estPresentBoutonPriseEnCharge && (
-        <BoutonPrendreEnChargeCreation
-          requete={props.requete}
-          onClick={rechargementPage}
-        />
-      )}
     </>
   );
 };

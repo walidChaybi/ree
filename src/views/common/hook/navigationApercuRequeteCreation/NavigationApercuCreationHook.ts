@@ -2,7 +2,8 @@ import { mAppartient } from "@model/agent/IOfficier";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import {
-  PATH_APERCU_REQ_CREATION_ETABLISSEMENT,
+  PATH_APERCU_REQ_ETABLISSEMENT_PRISE_EN_CHARGE,
+  PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,
   PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE,
   PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET,
   PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE
@@ -27,8 +28,13 @@ export function useNavigationApercuCreation(
   useEffect(() => {
     if (props) {
       if (SousTypeCreation.estRCEXR(props.sousType)) {
-        redirectionEtablissement(history, props.idRequete);
-      } else {
+        redirectionEtablissement(
+          history,
+          props.idRequete,
+          props.statut,
+          props.idUtilisateur
+        );
+      } else if (SousTypeCreation.estSousTypeTranscription(props.sousType)) {
         redirectionTranscription(
           history,
           props.idRequete,
@@ -44,14 +50,24 @@ export function useNavigationApercuCreation(
   }, [props, history]);
 }
 
-function redirectionEtablissement(history: any, idRequete: string) {
+function redirectionEtablissement(
+  history: any,
+  idRequete: string,
+  statut?: StatutRequete,
+  idUtilisateur?: string
+) {
+  let path: string;
+  if (
+    mAppartient(idUtilisateur) &&
+    (StatutRequete.estATraiter(statut) ||
+      StatutRequete.estPriseEnCharge(statut))
+  ) {
+    path = PATH_APERCU_REQ_ETABLISSEMENT_PRISE_EN_CHARGE;
+  } else {
+    path = PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE;
+  }
   history.push(
-    getUrlWithParam(
-      `${getUrlCourante(
-        history
-      )}/${PATH_APERCU_REQ_CREATION_ETABLISSEMENT}/:idRequete`,
-      idRequete
-    )
+    getUrlWithParam(`${getUrlCourante(history)}/${path}/:idRequete`, idRequete)
   );
 }
 

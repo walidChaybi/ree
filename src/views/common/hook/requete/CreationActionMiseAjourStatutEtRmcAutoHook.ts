@@ -2,11 +2,11 @@ import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
 } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { useCallback, useEffect, useState } from "react";
 import {
   INavigationApercuRMCAutoParams,
@@ -62,25 +62,21 @@ export function useCreationActionMiseAjourStatutEtRmcAuto(
       const sousType = SousTypeCreation.getEnumFromLibelleCourt(
         params?.requete?.sousType
       );
-      const statut = StatutRequete.getEnumFromLibelle(
-        params?.requete?.sousType
-      );
-      switch (params.typeRequete) {
-        case TypeRequete.CREATION:
-          setParamsCreation({
-            idRequete: params.requete.idRequete,
-            sousType,
-            statut,
-            handleTraitementTermine: params.handleTraitementTermine
-          });
-          break;
-        default:
-          setParamsRMCAutoDelivrance({
-            requete: params.requete as IRequeteTableauDelivrance,
-            urlCourante: params.urlCourante,
-            pasDeTraitementAuto: params.pasDeTraitementAuto
-          });
-          break;
+      const statut = StatutRequete.getEnumFromLibelle(params?.requete?.statut);
+      if (params.typeRequete === TypeRequete.CREATION) {
+        setParamsCreation({
+          idRequete: params.requete.idRequete,
+          sousType,
+          statut,
+          idUtilisateur: params.requete.idUtilisateur,
+          handleTraitementTermine: params.handleTraitementTermine
+        });
+      } else {
+        setParamsRMCAutoDelivrance({
+          requete: params.requete as IRequeteTableauDelivrance,
+          urlCourante: params.urlCourante,
+          pasDeTraitementAuto: params.pasDeTraitementAuto
+        });
       }
     }
   }, [params]);

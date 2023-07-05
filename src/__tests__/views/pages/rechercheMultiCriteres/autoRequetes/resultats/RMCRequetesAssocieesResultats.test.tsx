@@ -342,8 +342,9 @@ describe("RMCRequetesAssocieesResultats", () => {
       );
 
       expect(
-        container.getElementsByClassName("ApercuReqCreationEtablissementPage")
-          .length
+        container.getElementsByClassName(
+          "ApercuReqCreationEtablissementSimplePage"
+        ).length
       ).toBe(1);
     });
   });

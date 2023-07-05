@@ -7,33 +7,35 @@ import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { RMCArchivePage } from "@pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
-import { ApercuReqCreationEtablissementPage } from "@pages/requeteCreation/apercuRequete/etablissement/ApercuReqCreationEtablissementPage";
+import { ApercuReqCreationEtablissementPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/etablissement/ApercuReqCreationEtablissementPriseEnCharge";
+import { ApercuReqCreationEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/ApercuReqCreationEtablissementSimplePage";
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
 import { ApercuReqCreationTranscriptionSaisieProjetPage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSaisieProjetPage";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import { SaisirRCTCPage } from "@pages/requeteCreation/saisirRequete/SaisirRCTCPage";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
-import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
+import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
 import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
+import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { droitsSaufConsulterArchives } from "@util/habilitation/habilitationsDescription";
 import { IRoute } from "@util/route/IRoute";
-import { getLibelle } from "@util/Utils";
 import {
   URL_ACCUEIL,
   URL_CONTEXT_APP,
   URL_DECONNEXION,
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
   URL_MES_REQUETES_CREATION,
-  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
   URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID,
   URL_MES_REQUETES_CREATION_SAISIR_RCTC,
   URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
@@ -54,7 +56,8 @@ import {
   URL_RECHERCHE_ACTE,
   URL_RECHERCHE_ACTE_INSCRIPTION,
   URL_RECHERCHE_REQUETE,
-  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_APERCU_SIMPLE_ID,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_PRISE_EN_CHARGE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_APERCU_SIMPLE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_EN_TRAITEMENT_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID,
@@ -64,7 +67,8 @@ import {
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_RECHERCHE_REQUETE_EDITION_ID,
   URL_REQUETES_CREATION_SERVICE,
-  URL_REQUETES_CREATION_SERVICE_APERCU_REQUETE_ID,
+  URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
+  URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
   URL_REQUETES_CREATION_SERVICE_SAISIR_RCTC,
   URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
   URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
@@ -341,15 +345,23 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle("Édition")
   },
   {
-    url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID,
-    component: ApercuReqCreationEtablissementPage,
+    url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_APERCU_SIMPLE_ID,
+    component: ApercuReqCreationEtablissementSimplePage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
       perimetres: [Perimetre.ETAX, Perimetre.MEAE]
     },
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
-
+  {
+    url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_PRISE_EN_CHARGE_ID,
+    component: ApercuReqCreationEtablissementPriseEnChargePage,
+    droitPerimetres: {
+      droit: Droit.CREER_ACTE_ETABLI,
+      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+    },
+    libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
+  },
   {
     url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_APERCU_SIMPLE_ID,
     component: ApercuReqCreationTranscriptionSimplePage,
@@ -434,13 +446,22 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle(`Saisir une requête de transcription`)
   },
   {
-    url: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
-    component: ApercuReqCreationEtablissementPage,
+    url: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+    component: ApercuReqCreationEtablissementSimplePage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
       perimetres: [Perimetre.ETAX, Perimetre.MEAE]
     },
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
+  {
+    url: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
+    component: ApercuReqCreationEtablissementPriseEnChargePage,
+    droitPerimetres: {
+      droit: Droit.CREER_ACTE_ETABLI,
+      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+    },
+    libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
   },
   {
     url: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
@@ -493,13 +514,22 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle(`Saisir une requête de transcription`)
   },
   {
-    url: URL_REQUETES_CREATION_SERVICE_APERCU_REQUETE_ID,
-    component: ApercuReqCreationEtablissementPage,
+    url: URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+    component: ApercuReqCreationEtablissementSimplePage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
       perimetres: [Perimetre.ETAX, Perimetre.MEAE]
     },
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
+  {
+    url: URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
+    component: ApercuReqCreationEtablissementPriseEnChargePage,
+    droitPerimetres: {
+      droit: Droit.CREER_ACTE_ETABLI,
+      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+    },
+    libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
   },
   {
     url: URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,

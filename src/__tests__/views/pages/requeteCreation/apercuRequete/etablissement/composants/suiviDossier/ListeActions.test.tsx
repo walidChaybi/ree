@@ -1,5 +1,5 @@
 import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
-import { getPrenomEtNom } from "@pages/requeteCreation/apercuRequete/etablissement/composants/action/ListeActions";
+import { getPrenomEtNom } from "@pages/requeteCreation/apercuRequete/etablissement/composants/suiviDossier/ListeActions";
 import { waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 

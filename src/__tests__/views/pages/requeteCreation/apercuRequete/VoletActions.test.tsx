@@ -9,8 +9,8 @@ import {
   requeteCreationAvecMessagesRetourSDANFSansLesDroits,
   requeteCreationEtablissement
 } from "@mock/data/requeteCreation";
-import { OngletsApercuCreationEtablissement } from "@pages/requeteCreation/apercuRequete/etablissement/composants/OngletsApercuCreationEtablissement";
-import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID } from "@router/ReceUrls";
+import { OngletsApercuCreationEtablissementSimple } from "@pages/requeteCreation/apercuRequete/etablissement/composants/OngletsApercuCreationEtablissementSimple";
+import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID } from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -32,7 +32,7 @@ test("L'encart retour SDANF est present dans la page", async () => {
 
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
         "a4cefb71-8457-4f6b-937e-34b49335d404"
       )
     );
@@ -42,9 +42,11 @@ test("L'encart retour SDANF est present dans la page", async () => {
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+            path={
+              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
+            }
           >
-            <OngletsApercuCreationEtablissement
+            <OngletsApercuCreationEtablissementSimple
               requete={mappingRequeteCreation(requeteCreationEtablissement)}
               onRenommePieceJustificative={function (
                 idPieceJustificative: string,
@@ -53,8 +55,6 @@ test("L'encart retour SDANF est present dans la page", async () => {
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCPersonne={[]}
-              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>
@@ -63,7 +63,7 @@ test("L'encart retour SDANF est present dans la page", async () => {
   });
 
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Actions");
+    const boutonVoletAction = screen.getByText("Suivi dossier");
     fireEvent.click(boutonVoletAction);
   });
 
@@ -78,7 +78,7 @@ test("Doit afficher le message avec le bon format titre - message - prenomNom", 
 
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
         "3ed9aa4e-921b-429f-b8fe-531dd103c68s"
       )
     );
@@ -88,9 +88,11 @@ test("Doit afficher le message avec le bon format titre - message - prenomNom", 
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+            path={
+              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
+            }
           >
-            <OngletsApercuCreationEtablissement
+            <OngletsApercuCreationEtablissementSimple
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecMessages
               )}
@@ -101,8 +103,6 @@ test("Doit afficher le message avec le bon format titre - message - prenomNom", 
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCPersonne={[]}
-              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>
@@ -111,7 +111,7 @@ test("Doit afficher le message avec le bon format titre - message - prenomNom", 
   });
 
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Actions");
+    const boutonVoletAction = screen.getByText("Suivi dossier");
     fireEvent.click(boutonVoletAction);
   });
 
@@ -130,7 +130,7 @@ test("Doit afficher la liste des messages avec le bon nombre de messages", async
 
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
         "a4cefb71-8457-4f6b-937e-34b49335d404"
       )
     );
@@ -140,9 +140,11 @@ test("Doit afficher la liste des messages avec le bon nombre de messages", async
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+            path={
+              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
+            }
           >
-            <OngletsApercuCreationEtablissement
+            <OngletsApercuCreationEtablissementSimple
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFSansLesDroits
               )}
@@ -153,8 +155,6 @@ test("Doit afficher la liste des messages avec le bon nombre de messages", async
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCPersonne={[]}
-              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>
@@ -163,7 +163,7 @@ test("Doit afficher la liste des messages avec le bon nombre de messages", async
   });
 
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Actions");
+    const boutonVoletAction = screen.getByText("Suivi dossier");
     fireEvent.click(boutonVoletAction);
   });
 
@@ -184,7 +184,7 @@ test("Doit desactiver les boutons quand la requete n'est pas en statut PRISE_EN_
 
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
         "3ed97a35-c9b0-4ae4-b2dc-75eb84e4085c"
       )
     );
@@ -194,9 +194,11 @@ test("Doit desactiver les boutons quand la requete n'est pas en statut PRISE_EN_
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+            path={
+              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
+            }
           >
-            <OngletsApercuCreationEtablissement
+            <OngletsApercuCreationEtablissementSimple
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecMauvaisStatus
               )}
@@ -207,8 +209,6 @@ test("Doit desactiver les boutons quand la requete n'est pas en statut PRISE_EN_
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCPersonne={[]}
-              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>
@@ -217,7 +217,7 @@ test("Doit desactiver les boutons quand la requete n'est pas en statut PRISE_EN_
   });
 
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Actions");
+    const boutonVoletAction = screen.getByText("Suivi dossier");
     fireEvent.click(boutonVoletAction);
   });
 
@@ -235,7 +235,7 @@ test("Doit desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete 
 
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
         "3ed9aa4e-921b-489f-b8fe-531dd703c68f"
       )
     );
@@ -245,9 +245,11 @@ test("Doit desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete 
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+            path={
+              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
+            }
           >
-            <OngletsApercuCreationEtablissement
+            <OngletsApercuCreationEtablissementSimple
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut
               )}
@@ -258,8 +260,6 @@ test("Doit desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete 
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCPersonne={[]}
-              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>
@@ -268,7 +268,7 @@ test("Doit desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete 
   });
 
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Actions");
+    const boutonVoletAction = screen.getByText("Suivi dossier");
     fireEvent.click(boutonVoletAction);
   });
 
@@ -287,7 +287,7 @@ test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requ
 
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
       "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
     )
   );
@@ -297,9 +297,11 @@ test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requ
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+            path={
+              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
+            }
           >
-            <OngletsApercuCreationEtablissement
+            <OngletsApercuCreationEtablissementSimple
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
               )}
@@ -310,8 +312,6 @@ test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requ
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCPersonne={[]}
-              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>
@@ -320,7 +320,7 @@ test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requ
   });
 
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Actions");
+    const boutonVoletAction = screen.getByText("Suivi dossier");
     fireEvent.click(boutonVoletAction);
   });
 
@@ -341,7 +341,7 @@ test("Doit ouvrir et changer le titre de la popin au click sur une action", asyn
 
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
         "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
       )
     );
@@ -351,9 +351,11 @@ test("Doit ouvrir et changer le titre de la popin au click sur une action", asyn
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+            path={
+              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
+            }
           >
-            <OngletsApercuCreationEtablissement
+            <OngletsApercuCreationEtablissementSimple
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
               )}
@@ -364,8 +366,6 @@ test("Doit ouvrir et changer le titre de la popin au click sur une action", asyn
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCPersonne={[]}
-              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>
@@ -374,7 +374,7 @@ test("Doit ouvrir et changer le titre de la popin au click sur une action", asyn
   });
 
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Actions");
+    const boutonVoletAction = screen.getByText("Suivi dossier");
     fireEvent.click(boutonVoletAction);
   });
 
@@ -409,7 +409,7 @@ test("Doit ouvrir la popin au click sur une action", async () => {
 
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
       "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
     )
   );
@@ -419,9 +419,11 @@ test("Doit ouvrir la popin au click sur une action", async () => {
       <Router history={history}>
         <Route
           exact={true}
-          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+          path={
+            URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
+          }
         >
-          <OngletsApercuCreationEtablissement
+          <OngletsApercuCreationEtablissementSimple
             requete={mappingRequeteCreation(
               requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
             )}
@@ -432,8 +434,6 @@ test("Doit ouvrir la popin au click sur une action", async () => {
             ): void {
               throw new Error("Function not implemented.");
             }}
-            resultatRMCPersonne={[]}
-            handleClickSelectionTitulaireRmcPersonne={() => {}}
           />
         </Route>
       </Router>
@@ -441,7 +441,7 @@ test("Doit ouvrir la popin au click sur une action", async () => {
   );
 
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Actions");
+    const boutonVoletAction = screen.getByText("Suivi dossier");
     fireEvent.click(boutonVoletAction);
   });
 
@@ -463,7 +463,7 @@ test("Doit afficher un message d'erreur quand la taille maximale est dépassée"
 
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
       "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
     )
   );
@@ -474,9 +474,11 @@ test("Doit afficher un message d'erreur quand la taille maximale est dépassée"
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID}
+            path={
+              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
+            }
           >
-            <OngletsApercuCreationEtablissement
+            <OngletsApercuCreationEtablissementSimple
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
               )}
@@ -487,8 +489,6 @@ test("Doit afficher un message d'erreur quand la taille maximale est dépassée"
               ): void {
                 throw new Error("Function not implemented.");
               }}
-              resultatRMCPersonne={[]}
-              handleClickSelectionTitulaireRmcPersonne={() => {}}
             />
           </Route>
         </Router>
@@ -497,7 +497,7 @@ test("Doit afficher un message d'erreur quand la taille maximale est dépassée"
   });
 
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Actions");
+    const boutonVoletAction = screen.getByText("Suivi dossier");
     fireEvent.click(boutonVoletAction);
   });
 

@@ -8,7 +8,7 @@ import {
 } from "@hook/requete/PrendreEnChargePlusAncienneApiHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID } from "@router/ReceUrls";
+import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID } from "@router/ReceUrls";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import messageManager from "@util/messageManager";
 import { getUrlWithParam } from "@util/route/UrlUtil";
@@ -61,7 +61,7 @@ export const BoutonPrendreEnChargePlusAncienneCreation: React.FC<
     if (requetePlusAncienneResultat) {
       history.push(
         getUrlWithParam(
-          URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_ID,
+          URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
           requetePlusAncienneResultat.requete.idRequete
         )
       );

@@ -1,28 +1,25 @@
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
-import {
-  IRequeteCreationEtablissement,
-  RequeteCreationEtablissement
-} from "@model/requete/IRequeteCreationEtablissement";
+import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
-import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import Labels from "../../commun/Labels";
-import { OngletPiecesJustificatives } from "../../commun/composants/OngletPiecesJustificatives";
 import "../../commun/scss/ApercuReqCreationPage.scss";
-import { OngletsApercuCreationEtablissement } from "./composants/OngletsApercuCreationEtablissement";
-import ResumeRequeteCreation from "./composants/ResumeRequeteCreation";
-import mappingIRequeteCreationVersResumeRequeteCreationProps from "./mappingIRequeteCreationVersResumeRequeteCreationProps";
+import {
+  getConteneurPieceJustificative,
+  getConteneurResumeRequete,
+  onRenommePieceJustificativeEtablissement
+} from "./ApercuReqCreationEtablissementUtils";
+import { OngletsApercuCreationEtablissementPriseEnCharge } from "./composants/OngletsApercuCreationEtablissementPriseEnCharge";
 
-interface ApeApercuReqCreationEtablissementPageProps {
+interface ApercuReqCreationEtablissementPriseEnChargePageProps {
   idRequeteAAfficher?: string;
 }
 
-export const ApercuReqCreationEtablissementPage: React.FC<
-  ApeApercuReqCreationEtablissementPageProps
+export const ApercuReqCreationEtablissementPriseEnChargePage: React.FC<
+  ApercuReqCreationEtablissementPriseEnChargePageProps
 > = props => {
   // Params & History
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
@@ -36,6 +33,7 @@ export const ApercuReqCreationEtablissementPage: React.FC<
     props.idRequeteAAfficher ?? idRequeteParam,
     history.location.pathname.includes(URL_RECHERCHE_REQUETE)
   );
+
   const {
     dataPersonnesSelectionnees,
     setDataPersonnesSelectionnees,
@@ -52,43 +50,32 @@ export const ApercuReqCreationEtablissementPage: React.FC<
     }
   }, [detailRequeteState]);
 
-  function onRenommePieceJustificative(
+  function onRenommePieceJustificativePriseEnCharge(
     idPieceJustificative: string,
     nouveauLibelle: string,
     idDocumentPJ?: string
   ) {
-    const pjARenommer = RequeteCreationEtablissement.getPieceJustificative(
+    onRenommePieceJustificativeEtablissement(
       requete,
-      idDocumentPJ,
-      idPieceJustificative
+      setRequete,
+      idPieceJustificative,
+      nouveauLibelle,
+      idDocumentPJ
     );
-    if (pjARenommer) {
-      pjARenommer.libelle = nouveauLibelle;
-      setRequete({ ...requete } as IRequeteCreationEtablissement);
-    }
   }
 
   return (
-    <div className="ApercuReqCreationEtablissementPage">
+    <div className="ApercuReqCreationEtablissementPriseEnChargePage">
       {requete ? (
         <>
-          <ConteneurRetractable
-            titre={Labels.resume.requete.description}
-            className="ResumeRequeteCreation"
-            initConteneurFerme={false}
-            estADroite={false}
-          >
-            <ResumeRequeteCreation
-              {...mappingIRequeteCreationVersResumeRequeteCreationProps(
-                requete
-              )}
-            />
-          </ConteneurRetractable>
+          {getConteneurResumeRequete(requete)}
 
-          <OngletsApercuCreationEtablissement
+          <OngletsApercuCreationEtablissementPriseEnCharge
             requete={requete}
             modeConsultation={props.idRequeteAAfficher !== undefined}
-            onRenommePieceJustificative={onRenommePieceJustificative}
+            onRenommePieceJustificative={
+              onRenommePieceJustificativePriseEnCharge
+            }
             resultatRMCPersonne={resultatRMCAutoPersonne ?? []}
             dataPersonnesSelectionnees={dataPersonnesSelectionnees}
             setDataPersonnesSelectionnees={setDataPersonnesSelectionnees}
@@ -102,16 +89,10 @@ export const ApercuReqCreationEtablissementPage: React.FC<
             setRmcAutoPersonneParams={setRmcAutoPersonneParams}
           />
 
-          <ConteneurRetractable
-            titre="Pièces justificatives"
-            className="FocusPieceJustificative"
-            estADroite={true}
-          >
-            <OngletPiecesJustificatives
-              requete={requete}
-              onRenommePieceJustificative={onRenommePieceJustificative}
-            />
-          </ConteneurRetractable>
+          {getConteneurPieceJustificative(
+            requete,
+            onRenommePieceJustificativePriseEnCharge
+          )}
         </>
       ) : (
         <OperationLocaleEnCoursSimple />
