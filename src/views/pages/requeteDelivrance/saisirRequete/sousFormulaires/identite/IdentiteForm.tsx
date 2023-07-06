@@ -7,21 +7,21 @@ import {
   PRENOMS,
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
-import PrenomsForm, {
-  creerValidationSchemaPrenom,
-  genererDefaultValuesPrenoms
-} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import ParentForm, {
   ParentFormDefaultValues,
   ParentFormValidationSchema,
   ParentSubFormProps
 } from "@composant/formulaire/ParentForm";
+import PrenomsForm, {
+  creerValidationSchemaPrenom,
+  genererDefaultValuesPrenoms
+} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { getLibelle } from "@util/Utils";
-import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
+import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
@@ -85,6 +85,12 @@ export type IdentiteSubFormProps = SubFormProps & IdentiteFormProps;
 
 const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
   const [afficherParents, setAfficherParents] = useState(false);
+
+  useEffect(() => {
+    if (props.titulaire?.parentsTitulaire) {
+      setAfficherParents(true);
+    }
+  }, [props.titulaire?.parentsTitulaire]);
 
   const nomsFormProps = {
     nom: withNamespace(props.nom, NOMS),
