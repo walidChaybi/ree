@@ -25,7 +25,8 @@ export interface ITitulaireRequete {
   anneeNaissance?: number;
   villeNaissance?: string;
   paysNaissance?: string;
-  sexe: Sexe;
+  // TODO : utiliser la class Sexe
+  sexe: string;
   nationalite: Nationalite;
   parentsTitulaire?: IParent[];
   codePostalNaissance?: string;
@@ -87,7 +88,9 @@ export const TitulaireRequete = {
       : "";
   },
   getSexe(titulaire?: ITitulaireRequete): string {
-    return titulaire?.sexe.libelle ?? "";
+    return titulaire && titulaire.sexe
+      ? Sexe.getEnumFor(titulaire.sexe).libelle
+      : "";
   },
   getVille(titulaire?: ITitulaireRequete): string {
     return getValeurOuVide(titulaire?.villeNaissance);

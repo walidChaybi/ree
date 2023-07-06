@@ -125,7 +125,7 @@ export function getLibelleMenuItemPersonne(
 
   // Sexe
   if (!Sexe.estIndetermineOuInconnu(titulaire.sexe)) {
-    libelle = libelle.concat(` (${titulaire.sexe.libelle.charAt(0)})`);
+    libelle = libelle.concat(` (${titulaire.sexe.charAt(0).toUpperCase()})`);
   }
 
   // Date de naissance

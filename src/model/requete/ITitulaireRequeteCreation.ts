@@ -1,5 +1,8 @@
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { DateCoordonneesType } from "@model/requete/DateCoordonneesType";
 import { SANS_NOM_CONNU, SANS_PRENOM_CONNU, SNP, SPC } from "@util/Utils";
+import { QualiteFamille } from "./enum/QualiteFamille";
+import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 import { IDomiciliation } from "./IDomiciliation";
 import { IEnfantTitulaireActeTranscritDresse } from "./IEnfantTitulaireActeTranscritDresse";
 import { IEvenementUnion } from "./IEvenementUnion";
@@ -7,8 +10,6 @@ import { INationalite } from "./INationalite";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 import { IRetenueSdanf } from "./IRetenueSdanf";
 import { ITitulaireRequete, TitulaireRequete } from "./ITitulaireRequete";
-import { QualiteFamille } from "./enum/QualiteFamille";
-import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 
 export interface ITitulaireRequeteCreation extends ITitulaireRequete {
   villeEtrangereNaissance?: string;
@@ -43,7 +44,9 @@ const MARIAGE = "MARIAGE";
 
 export const TitulaireRequeteCreation = {
   getSexe(titulaire?: ITitulaireRequeteCreation): string {
-    return titulaire?.sexe.libelle ?? "";
+    return titulaire && titulaire.sexe
+      ? Sexe.getEnumFor(titulaire.sexe).libelle
+      : "";
   },
   getEvenementUnionTypeReconnaissance(
     titulaire?: ITitulaireRequeteCreation

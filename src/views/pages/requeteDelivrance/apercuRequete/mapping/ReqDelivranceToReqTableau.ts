@@ -1,3 +1,4 @@
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -41,7 +42,7 @@ const getTitulaires = (
     }
     titulaire.paysNaissance = t.paysNaissance;
     titulaire.villeNaissance = t.villeNaissance;
-    titulaire.sexe = t.sexe;
+    titulaire.sexe = Sexe.getEnumFor(t.sexe);
     titulaire.prenoms = t.prenoms ? getPrenoms(t.prenoms) : [];
     return titulaire;
   });

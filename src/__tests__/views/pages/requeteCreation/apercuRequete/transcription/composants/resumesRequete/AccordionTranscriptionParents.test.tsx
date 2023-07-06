@@ -1,5 +1,4 @@
 import { mapTitulairesCreation } from "@hook/requete/DetailRequeteHook";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { AccordionTranscriptionParents } from "@pages/requeteCreation/apercuRequete/transcription/composants/resumesRequete/AccordionTranscriptionParents";
 import { act, render, screen, waitFor } from "@testing-library/react";
 
@@ -16,7 +15,7 @@ const parents = [
         prenom: "Tititusse2"
       }
     ],
-    sexe: Sexe.MASCULIN,
+    sexe: "MASCULIN",
     dateNaissanceFormatee: "12/12/2022",
     lieuNaissanceFormate: "Lucerne (Suisse)",
     nationalites: ["nationalite1"],
@@ -42,7 +41,7 @@ const parents = [
         prenom: "Mario"
       }
     ],
-    sexe: Sexe.MASCULIN,
+    sexe: "MASCULIN",
     dateNaissanceFormatee: "12/12/2023",
     lieuNaissanceFormate: "Lucerne (Suisse)",
     nationalites: ["nationalite1"],
