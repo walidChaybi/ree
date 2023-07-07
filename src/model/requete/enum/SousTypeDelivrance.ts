@@ -121,9 +121,11 @@ export class SousTypeDelivrance extends EnumWithComplete {
     );
   }
 
-  public static estSousTypeCreationCourrierAutomatique = (
+  public static estSousTypeCreationCourrierAutomatique(
     type: SousTypeDelivrance
-  ) => SousTypeDelivrance.estRDDouRDDP(type);
+  ): boolean {
+    return SousTypeDelivrance.estRDDouRDDP(type);
+  }
 
   public static estSousTypeSignable(type?: SousTypeDelivrance): boolean {
     return SousTypeDelivrance.estRDD(type);
