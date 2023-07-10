@@ -1,5 +1,6 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
+import { requeteCreationEtablissement } from "@mock/data/requeteCreation";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
@@ -163,6 +164,25 @@ describe("Test l'affichage de l'onglet RMC Personne", () => {
       expect(screen.queryByText("Paul")).not.toBeInTheDocument();
     });
   });
+
+  test("DOIT ne pas afficher le tableau des personnes selectionnées et les boutons ajouter personne QUAND on se trouve en étblissement", async () => {
+    const requeteEtablissement = mappingRequeteCreation(
+      requeteCreationEtablissement
+    );
+    render(<HookConsumerOngletRMCPersonne requete={requeteEtablissement} />);
+
+    await waitFor(() => {
+      expect(
+        screen.queryByTitle("Ajouter cette personne au projet")
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByText("Personnes sélectionnées pour le projet")
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByText("Actes et inscriptions sélectionnés pour le projet")
+      ).toBeInTheDocument();
+    });
+  });
 });
 
 describe("Test le fonctionnement de l'ajout / suppression des personnes au projet.", () => {
@@ -272,24 +292,20 @@ describe("Test le fonctionnement de l'ajout / suppression des personnes au proje
       expect(estDansTableauPersonnesSauvegardees("Parent 2")).toBeFalsy();
     });
 
-    await act(async () => {
-      fireEvent.click(boutonAjouter);
-      fireEvent.click(boutonItemTitulaire);
-    });
+    fireEvent.click(boutonAjouter);
+    fireEvent.click(boutonItemTitulaire);
 
     await waitFor(() => {
       expect(estDansTableauPersonnesSauvegardees("DUPONT")).toBeTruthy();
       expect(estDansTableauPersonnesSauvegardees("Parent 2")).toBeTruthy();
     });
 
-    await act(async () => {
-      fireEvent.mouseOver(
-        screen.getByText("Rechercher sur une personne de la requête")
-      );
-      fireEvent.click(
-        screen.getByText("Parent 2 - PHILIPS Yann (M), 01/02/2000")
-      );
-    });
+    fireEvent.mouseOver(
+      screen.getByText("Rechercher sur une personne de la requête")
+    );
+    fireEvent.click(
+      screen.getByText("Parent 2 - PHILIPS Yann (M), 01/02/2000")
+    );
 
     await waitFor(() => {
       expect(estDansTableauPersonnesSauvegardees("DUPONT")).toBeTruthy();
@@ -337,10 +353,8 @@ describe("Test le fonctionnement de l'ajout / suppression des actes ou isncripti
       ).toBeFalsy();
     });
 
-    await act(async () => {
-      fireEvent.click(boutonAjouter);
-      fireEvent.click(boutonItemTitulaire);
-    });
+    fireEvent.click(boutonAjouter);
+    fireEvent.click(boutonItemTitulaire);
 
     await waitFor(() => {
       expect(
@@ -358,9 +372,7 @@ describe("Test le fonctionnement de l'ajout / suppression des actes ou isncripti
       expect(boutonRetirerAlpha).toBeInTheDocument();
     });
 
-    await act(async () => {
-      fireEvent.click(boutonRetirerAlpha);
-    });
+    fireEvent.click(boutonRetirerAlpha);
 
     await waitFor(() => {
       expect(boutonRetirerAlpha).not.toBeInTheDocument();
@@ -444,10 +456,8 @@ describe("Test le fonctionnement de l'ajout / suppression des actes ou isncripti
       ).toBeFalsy();
     });
 
-    await act(async () => {
-      fireEvent.click(boutonAjouter);
-      fireEvent.click(boutonItemActeInscription);
-    });
+    fireEvent.click(boutonAjouter);
+    fireEvent.click(boutonItemActeInscription);
 
     await waitFor(() => {
       expect(
@@ -460,14 +470,12 @@ describe("Test le fonctionnement de l'ajout / suppression des actes ou isncripti
       ).toBeTruthy();
     });
 
-    await act(async () => {
-      fireEvent.mouseOver(
-        screen.getByText("Rechercher sur une personne de la requête")
-      );
-      fireEvent.click(
-        screen.getByText("Parent 2 - PHILIPS Yann (M), 01/02/2000")
-      );
-    });
+    fireEvent.mouseOver(
+      screen.getByText("Rechercher sur une personne de la requête")
+    );
+    fireEvent.click(
+      screen.getByText("Parent 2 - PHILIPS Yann (M), 01/02/2000")
+    );
 
     await waitFor(() => {
       expect(

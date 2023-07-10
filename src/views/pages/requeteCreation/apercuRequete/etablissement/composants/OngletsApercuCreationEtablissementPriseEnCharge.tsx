@@ -4,7 +4,6 @@ import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEt
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { IDataTableauActeInscriptionSelectionne } from "@pages/requeteCreation/commun/composants/tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
-import { IDataTableauPersonneSelectionnee } from "@pages/requeteCreation/commun/composants/tableauPersonnesSelectionnees/IDataTableauPersonneSelectionne";
 import { DEUX, getLibelle } from "@util/Utils";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useState } from "react";
@@ -23,10 +22,6 @@ interface OngletsApercuCreationEtablissementPriseEnChargeProps {
   onRenommePieceJustificative: typeFctRenommePieceJustificative;
   resultatRMCPersonne: IRMCPersonneResultat[];
   tableauRMCPersonneEnChargement: boolean;
-  dataPersonnesSelectionnees?: IDataTableauPersonneSelectionnee[];
-  setDataPersonnesSelectionnees: React.Dispatch<
-    React.SetStateAction<IDataTableauPersonneSelectionnee[] | undefined>
-  >;
   dataActesInscriptionsSelectionnes?: IDataTableauActeInscriptionSelectionne[];
   setDataActesInscriptionsSelectionnes: React.Dispatch<
     React.SetStateAction<IDataTableauActeInscriptionSelectionne[] | undefined>
@@ -69,12 +64,7 @@ export const OngletsApercuCreationEtablissementPriseEnCharge: React.FC<
           natureActeRequete={NatureActeRequete.getEnumFor(
             props.requete.nature ?? ""
           )}
-          dataPersonnesSelectionnees={props.dataPersonnesSelectionnees || []}
-          setDataPersonnesSelectionnees={props.setDataPersonnesSelectionnees}
           tableauRMCPersonneEnChargement={props.tableauRMCPersonneEnChargement}
-          tableauPersonnesSelectionneesEnChargement={
-            !props.dataPersonnesSelectionnees
-          }
           tableauActesInscriptionsSelectionnesEnChargement={
             !props.dataActesInscriptionsSelectionnes
           }

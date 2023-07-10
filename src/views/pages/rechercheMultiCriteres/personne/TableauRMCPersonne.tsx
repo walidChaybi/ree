@@ -67,14 +67,22 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
   function afficheBoutonAjouterPersonneOuActeInscription(
     data: IDataTableauRMCPersonne
   ): boolean {
-    let afficheBouton: boolean = false;
+    let afficheBouton = false;
+    let identifiants: string[] = [];
     if (props.typeRedactionActe === TypeRedactionActe.TRANSCRIT) {
-      const identifiants: string[] = [
+      identifiants = [
         ...(data.estDataPersonne
           ? props.identifiantsPersonnesSelectionnees
           : props.identifiantsActesInscriptionsSelectionnes)
       ];
       afficheBouton = !identifiants.includes(
+        getIdentifiantPersonneOuActeInscription(data)
+      );
+    } else if (
+      props.typeRedactionActe === TypeRedactionActe.ETABLI &&
+      !data.estDataPersonne
+    ) {
+      afficheBouton = !props.identifiantsActesInscriptionsSelectionnes.includes(
         getIdentifiantPersonneOuActeInscription(data)
       );
     }

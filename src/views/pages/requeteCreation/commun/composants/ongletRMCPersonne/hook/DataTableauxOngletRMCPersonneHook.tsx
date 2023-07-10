@@ -7,10 +7,10 @@ import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPers
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { useEffect, useState } from "react";
-import { useDataTableauActesInscriptionsSelectionnesHook } from "../../tableauActesInscriptionsSelectionnes/hook/DataTableauActesInscriptionsSelectionnesHook";
 import { IDataTableauActeInscriptionSelectionne } from "../../tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
-import { useDataTableauPersonnesSelectionneesHook } from "../../tableauPersonnesSelectionnees/hook/DataTableauPersonnesSelectionneesHook";
+import { useDataTableauActesInscriptionsSelectionnesHook } from "../../tableauActesInscriptionsSelectionnes/hook/DataTableauActesInscriptionsSelectionnesHook";
 import { IDataTableauPersonneSelectionnee } from "../../tableauPersonnesSelectionnees/IDataTableauPersonneSelectionne";
+import { useDataTableauPersonnesSelectionneesHook } from "../../tableauPersonnesSelectionnees/hook/DataTableauPersonnesSelectionneesHook";
 
 interface IDataTableauxOngletRMCPersonne {
   dataPersonnesSelectionnees?: IDataTableauPersonneSelectionnee[];
@@ -60,7 +60,10 @@ export function useDataTableauxOngletRMCPersonne(
 
   // Personnes selectionnees
   const { dataPersonnesSelectionnees, setDataPersonnesSelectionnees } =
-    useDataTableauPersonnesSelectionneesHook(requete?.personnesSauvegardees);
+    useDataTableauPersonnesSelectionneesHook(
+      requete?.personnesSauvegardees,
+      requete?.sousType
+    );
 
   // Actes ou inscriptions selectionnes
   const {

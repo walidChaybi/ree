@@ -3,6 +3,7 @@ import {
   usePersonnesSauvegardeesApiHook
 } from "@hook/personnes/PersonnesSauvegardeesApiHook";
 import { IPersonneSauvegardee } from "@model/requete/IPersonneSauvegardee";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { getValeurOuUndefined } from "@util/Utils";
 import React, { useEffect, useState } from "react";
 import { IPersonneSauvegardeeDto } from "../../../../../../../dto/etatcivil/personne/personnesSauvegardees/IPersonneSauvegardeeDto";
@@ -16,7 +17,8 @@ interface IDataTableauPersonnesSelectionneesHook {
 }
 
 export function useDataTableauPersonnesSelectionneesHook(
-  personnesSauvegardees?: IPersonneSauvegardee[]
+  personnesSauvegardees?: IPersonneSauvegardee[],
+  sousTypeRequete?: SousTypeCreation
 ): IDataTableauPersonnesSelectionneesHook {
   const [dataPersonnesSelectionnees, setDataPersonnesSelectionnees] =
     useState<IDataTableauPersonneSelectionnee[]>();
@@ -25,7 +27,7 @@ export function useDataTableauPersonnesSelectionneesHook(
   const resultatPersonnesSauvegardees = usePersonnesSauvegardeesApiHook(
     personnesSauvegardeesParams
   );
-  
+
   useEffect(() => {
     if (personnesSauvegardees?.length) {
       setPersonneSauvegardeeParams({
@@ -35,7 +37,10 @@ export function useDataTableauPersonnesSelectionneesHook(
   }, [personnesSauvegardees]);
 
   useEffect(() => {
-    if (resultatPersonnesSauvegardees) {
+    if (
+      resultatPersonnesSauvegardees &&
+      !SousTypeCreation.estSousTypeEtablissement(sousTypeRequete)
+    ) {
       setDataPersonnesSelectionnees(
         personnesSauvegardees
           ? [...resultatPersonnesSauvegardees].map(dataCourant => ({
@@ -52,7 +57,7 @@ export function useDataTableauPersonnesSelectionneesHook(
 
   return {
     dataPersonnesSelectionnees,
-    setDataPersonnesSelectionnees,
+    setDataPersonnesSelectionnees
   };
 }
 

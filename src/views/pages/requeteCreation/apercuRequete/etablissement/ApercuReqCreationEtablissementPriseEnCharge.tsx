@@ -35,8 +35,6 @@ export const ApercuReqCreationEtablissementPriseEnChargePage: React.FC<
   );
 
   const {
-    dataPersonnesSelectionnees,
-    setDataPersonnesSelectionnees,
     dataActesInscriptionsSelectionnes,
     setDataActesInscriptionsSelectionnes,
     setRmcAutoPersonneParams,
@@ -77,8 +75,6 @@ export const ApercuReqCreationEtablissementPriseEnChargePage: React.FC<
               onRenommePieceJustificativePriseEnCharge
             }
             resultatRMCPersonne={resultatRMCAutoPersonne ?? []}
-            dataPersonnesSelectionnees={dataPersonnesSelectionnees}
-            setDataPersonnesSelectionnees={setDataPersonnesSelectionnees}
             dataActesInscriptionsSelectionnes={
               dataActesInscriptionsSelectionnes
             }

@@ -44,13 +44,11 @@ export function useDataTableauActesInscriptionsSelectionnesHook(
   }, [piecesJustificatives]);
 
   useEffect(() => {
-    if (piecesJustificativesActesInscriptions.length) {
-      setActesInscriptionsSauvegardesParams(
-        ActeInscriptionSauvegardeDto.mapParamsGetActesInscriptionsSauvegardes(
-          piecesJustificativesActesInscriptions
-        )
-      );
-    }
+    setActesInscriptionsSauvegardesParams(
+      ActeInscriptionSauvegardeDto.mapParamsGetActesInscriptionsSauvegardes(
+        piecesJustificativesActesInscriptions
+      )
+    );
   }, [piecesJustificativesActesInscriptions]);
 
   useEffect(() => {

@@ -41,7 +41,7 @@ interface OngletRMCPersonneProps {
   resultatRMCPersonne: IRMCPersonneResultat[];
   listeTitulaires?: ITitulaireRequeteCreation[];
   dataPersonnesSelectionnees?: IDataTableauPersonneSelectionnee[];
-  setDataPersonnesSelectionnees: React.Dispatch<
+  setDataPersonnesSelectionnees?: React.Dispatch<
     React.SetStateAction<IDataTableauPersonneSelectionnee[] | undefined>
   >;
   dataActesInscriptionsSelectionnes?: IDataTableauActeInscriptionSelectionne[];
@@ -49,7 +49,7 @@ interface OngletRMCPersonneProps {
     React.SetStateAction<IDataTableauActeInscriptionSelectionne[] | undefined>
   >;
   tableauRMCPersonneEnChargement: boolean;
-  tableauPersonnesSelectionneesEnChargement: boolean;
+  tableauPersonnesSelectionneesEnChargement?: boolean;
   tableauActesInscriptionsSelectionnesEnChargement: boolean;
   setRmcAutoPersonneParams: React.Dispatch<
     React.SetStateAction<IRMCAutoPersonneParams | undefined>
@@ -110,12 +110,14 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
     event: TMouseEventSurSVGSVGElement,
     ligneTableau: IDataTableauPersonneSelectionnee
   ): void {
-    props.setDataPersonnesSelectionnees(
-      props.dataPersonnesSelectionnees?.filter(
-        personne => personne.idPersonne !== ligneTableau.idPersonne
-      )
-    );
-    !isDirty && setIsDirty(true);
+    if (props.setDataPersonnesSelectionnees) {
+      props.setDataPersonnesSelectionnees(
+        props.dataPersonnesSelectionnees?.filter(
+          personne => personne.idPersonne !== ligneTableau.idPersonne
+        )
+      );
+      !isDirty && setIsDirty(true);
+    }
   }
 
   function onClickBoutonRetirerActeInscription(
@@ -196,30 +198,27 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       />
 
-      {SousTypeCreation.estSousTypeTranscription(props.sousTypeRequete) && (
-        <>
-          <TableauPersonnesSelectionnees
-            dataPersonnesSelectionnees={props.dataPersonnesSelectionnees ?? []}
-            onClickBoutonRetirerPersonne={onClickBoutonRetirerPersonne}
-            enChargement={props.tableauPersonnesSelectionneesEnChargement}
-          />
-          <TableauActesInscriptionsSelectionnes
-            dataActesInscriptionsSelectionnes={
-              props.dataActesInscriptionsSelectionnes || []
-            }
-            onClickBoutonRetirerActeInscription={
-              onClickBoutonRetirerActeInscription
-            }
-            enChargement={props.tableauPersonnesSelectionneesEnChargement}
-          />
-          <Bouton
-            disabled={!isDirty}
-            onClick={sauvegardePersonneEtActeSelectionne}
-          >
-            {getLibelle("Sauvegarder")}
-          </Bouton>
-        </>
+      {!SousTypeCreation.estSousTypeEtablissement(props.sousTypeRequete) && (
+        <TableauPersonnesSelectionnees
+          dataPersonnesSelectionnees={props.dataPersonnesSelectionnees ?? []}
+          onClickBoutonRetirerPersonne={onClickBoutonRetirerPersonne}
+          enChargement={
+            props.tableauPersonnesSelectionneesEnChargement ?? false
+          }
+        />
       )}
+      <TableauActesInscriptionsSelectionnes
+        dataActesInscriptionsSelectionnes={
+          props.dataActesInscriptionsSelectionnes || []
+        }
+        onClickBoutonRetirerActeInscription={
+          onClickBoutonRetirerActeInscription
+        }
+        enChargement={props.tableauActesInscriptionsSelectionnesEnChargement}
+      />
+      <Bouton disabled={!isDirty} onClick={sauvegardePersonneEtActeSelectionne}>
+        {getLibelle("Sauvegarder")}
+      </Bouton>
     </>
   );
 };
@@ -243,21 +242,23 @@ function ajouterPersonne(
   role: RolePersonneSauvegardee,
   ligneTableau: IDataTableauRMCPersonne,
   dataPersonnesSelectionnees: IDataTableauPersonneSelectionnee[] | undefined,
-  setDataPersonnesSelectionnees: React.Dispatch<
+  setDataPersonnesSelectionnees?: React.Dispatch<
     React.SetStateAction<IDataTableauPersonneSelectionnee[] | undefined>
   >
 ) {
-  setDataPersonnesSelectionnees(
-    [
-      ...(dataPersonnesSelectionnees || []),
-      {
-        ...mapDataTableauRMCPersonneVersDataTableauPersonneSelectionnee(
-          ligneTableau
-        ),
-        role: role.libelle
-      }
-    ].sort(triDataTableauPersonneSelectionneeSurNomPrenom)
-  );
+  if (setDataPersonnesSelectionnees) {
+    setDataPersonnesSelectionnees(
+      [
+        ...(dataPersonnesSelectionnees || []),
+        {
+          ...mapDataTableauRMCPersonneVersDataTableauPersonneSelectionnee(
+            ligneTableau
+          ),
+          role: role.libelle
+        }
+      ].sort(triDataTableauPersonneSelectionneeSurNomPrenom)
+    );
+  }
 }
 
 function ajouterActeInscription(
