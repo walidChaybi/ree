@@ -97,7 +97,6 @@ test("renders ApercuRequeteTraitementPage", async () => {
     );
   });
 
-  const title = screen.getByText(/Aperçu de la requête en traitement/i);
   const bandeau = screen.getByText(
     "Requête à signer le 14/07/2020 par Ashley YOUNG"
   );
@@ -116,7 +115,7 @@ test("renders ApercuRequeteTraitementPage", async () => {
   );
 
   await waitFor(() => {
-    expect(title).toBeDefined();
+    expect(document.title).toBe("Aperçu de la requête en traitement");
     expect(bandeau).toBeDefined();
     expect(actions).toBeDefined();
     expect(listeAction1).toBeDefined();

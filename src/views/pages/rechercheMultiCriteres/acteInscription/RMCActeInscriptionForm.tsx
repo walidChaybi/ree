@@ -1,3 +1,4 @@
+import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { MIN_YEAR } from "@util/DateUtils";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { Formulaire } from "@widget/formulaire/Formulaire";
@@ -63,19 +64,18 @@ export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = ({
     return stockageDonnees.recupererCriteresRMCActeInspt();
   };
 
+  useTitreDeLaFenetre(titreForm);
+
   return (
-    <>
-      <title>{titreForm}</title>
-      <Formulaire
-        titre={titreForm}
-        formDefaultValues={DefaultValuesRMCActeInscription}
-        formValidationSchema={ValidationSchemaRMCActeInscription}
-        onSubmit={onSubmitRMCActeInscription}
-      >
-        <div className="DeuxColonnes FormulaireRMCAI">{blocsForm}</div>
-        <RMCBoutons rappelCriteres={rappelCriteres} />
-      </Formulaire>
-    </>
+    <Formulaire
+      titre={titreForm}
+      formDefaultValues={DefaultValuesRMCActeInscription}
+      formValidationSchema={ValidationSchemaRMCActeInscription}
+      onSubmit={onSubmitRMCActeInscription}
+    >
+      <div className="DeuxColonnes FormulaireRMCAI">{blocsForm}</div>
+      <RMCBoutons rappelCriteres={rappelCriteres} />
+    </Formulaire>
   );
 };
 

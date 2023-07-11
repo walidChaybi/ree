@@ -1,4 +1,5 @@
 import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuRequete";
+import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -49,9 +50,10 @@ export const ApercuRequeteTemplate: React.FC<TemplateProps> = props => {
     }
   }, [requete, props]);
 
+  useTitreDeLaFenetre(props.title);
+
   return (
     <div className="ApercuRequete">
-      <title>{props.title}</title>
       {requete ? (
         <ProtectionApercu
           statut={requete.statutCourant.statut}

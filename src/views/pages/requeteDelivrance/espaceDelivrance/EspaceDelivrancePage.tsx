@@ -1,11 +1,12 @@
 import { OfficierContext } from "@core/contexts/OfficierContext";
+import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAutoDelivrance
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import { IOfficier } from "@model/agent/IOfficier";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_REQUETES_DELIVRANCE_SERVICE
@@ -13,14 +14,13 @@ import {
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
-import { getLibelle } from "@util/Utils";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import React, { useCallback, useState } from "react";
+import { MesRequetesPage } from "./MesRequetesPage";
+import { RequetesServicePage } from "./RequetesServicePage";
 import BoutonPrendreEnChargeAleatoirement from "./contenu/BoutonPrendreEnChargeAleatoirement";
 import { CompteurRequete } from "./contenu/CompteurRequete";
 import MenuSaisirRequete from "./contenu/MenuSaisirRequete";
-import { MesRequetesPage } from "./MesRequetesPage";
-import { RequetesServicePage } from "./RequetesServicePage";
 import "./scss/EspaceDelivrancePage.scss";
 
 interface LocalProps {
@@ -115,39 +115,38 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
     []
   );
 
+  useTitreDeLaFenetre("Délivrance");
+
   return (
-    <>
-      <title>{getLibelle("Délivrance")}</title>
-      <div>
-        <OfficierContext.Consumer>
-          {officier => (
-            <>
-              {officier && officier.officierDataState && (
-                <>
-                  {selectedTabState === 0 && (
-                    <CompteurRequete reloadCompteur={toggleReloadCompteur} />
+    <div>
+      <OfficierContext.Consumer>
+        {officier => (
+          <>
+            {officier && officier.officierDataState && (
+              <>
+                {selectedTabState === 0 && (
+                  <CompteurRequete reloadCompteur={toggleReloadCompteur} />
+                )}
+                <BoiteAOnglets
+                  selectedTab={selectedTabState}
+                  onglets={getOnglets(
+                    miseAJourCompteur,
+                    recuperationParamsRMCAuto
                   )}
-                  <BoiteAOnglets
-                    selectedTab={selectedTabState}
-                    onglets={getOnglets(
-                      miseAJourCompteur,
-                      recuperationParamsRMCAuto
-                    )}
-                    elementEntreTitreEtContenu={getElementEntreDeux(
-                      selectedTabState,
-                      officier.officierDataState
-                    )}
-                    titre="Menu espace délivrance"
-                    classOnglet="ongletPageEspace"
-                    classOngletPrincipale="headerOngletPageEspace"
-                  />
-                </>
-              )}
-            </>
-          )}
-        </OfficierContext.Consumer>
-      </div>
-    </>
+                  elementEntreTitreEtContenu={getElementEntreDeux(
+                    selectedTabState,
+                    officier.officierDataState
+                  )}
+                  titre="Menu espace délivrance"
+                  classOnglet="ongletPageEspace"
+                  classOngletPrincipale="headerOngletPageEspace"
+                />
+              </>
+            )}
+          </>
+        )}
+      </OfficierContext.Consumer>
+    </div>
   );
 };
 

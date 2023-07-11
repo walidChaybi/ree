@@ -1,20 +1,20 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
 import { OfficierContext } from "@core/contexts/OfficierContext";
+import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import {
   URL_MES_REQUETES_CREATION,
   URL_REQUETES_CREATION_SERVICE
 } from "@router/ReceUrls";
-import { getLibelle } from "@util/Utils";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useState } from "react";
 import { BoutonAttribuerRequete } from "./BoutonAttribuerRequete";
 import BoutonPrendreEnChargePlusAncienneCreation from "./BoutonPrendreEnChargePlusAncienneCreation";
-import MenuSaisirRequeteCreation from "./contenu/MenuSaisirRequeteCreation";
 import { MesRequetesCreation } from "./MesRequetesCreation";
-import { statutsRequetesCreation } from "./params/EspaceCreationParams";
 import { RequetesServiceCreation } from "./RequetesServiceCreation";
+import MenuSaisirRequeteCreation from "./contenu/MenuSaisirRequeteCreation";
+import { statutsRequetesCreation } from "./params/EspaceCreationParams";
 
 interface LocalProps {
   selectedTab?: number;
@@ -91,36 +91,35 @@ const EspaceCreationPage: React.FC<LocalProps> = ({ selectedTab }) => {
   const [popinAttribuerAOuvert, setPopinAttribuerAOuvert] =
     useState<boolean>(false);
 
+  useTitreDeLaFenetre("Espace création");
+
   return (
-    <>
-      <title>{getLibelle("Espace création")}</title>
-      <div>
-        <OfficierContext.Consumer>
-          {officier => (
-            <>
-              {officier && officier.officierDataState && (
-                <>
-                  <BoiteAOnglets
-                    selectedTab={selectedTabState}
-                    onglets={getOnglets(
-                      popinAttribuerAOuvert,
-                      setPopinAttribuerAOuvert
-                    )}
-                    elementEntreTitreEtContenu={getBlocBoutons(
-                      selectedTabState,
-                      setPopinAttribuerAOuvert
-                    )}
-                    titre="Menu espace création"
-                    classOnglet="ongletPageEspace"
-                    classOngletPrincipale="headerOngletPageEspace"
-                  />
-                </>
-              )}
-            </>
-          )}
-        </OfficierContext.Consumer>
-      </div>
-    </>
+    <div>
+      <OfficierContext.Consumer>
+        {officier => (
+          <>
+            {officier && officier.officierDataState && (
+              <>
+                <BoiteAOnglets
+                  selectedTab={selectedTabState}
+                  onglets={getOnglets(
+                    popinAttribuerAOuvert,
+                    setPopinAttribuerAOuvert
+                  )}
+                  elementEntreTitreEtContenu={getBlocBoutons(
+                    selectedTabState,
+                    setPopinAttribuerAOuvert
+                  )}
+                  titre="Menu espace création"
+                  classOnglet="ongletPageEspace"
+                  classOngletPrincipale="headerOngletPageEspace"
+                />
+              </>
+            )}
+          </>
+        )}
+      </OfficierContext.Consumer>
+    </div>
   );
 };
 

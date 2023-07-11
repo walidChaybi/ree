@@ -1,19 +1,19 @@
 import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuRequete";
 import { SuiviActionsRequete } from "@composant/suivis/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
+import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
 import { appartientAMonServiceOuServicesMeresOuServicesFilles } from "@model/agent/IOfficier";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Requete, TRequete } from "@model/requete/IRequete";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
-import { getLibelle } from "@util/Utils";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import {
@@ -96,9 +96,10 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
     }
   }, [detailRequeteParams, detailRequeteState]);
 
+  useTitreDeLaFenetre("Aperçu requête d'information");
+
   return (
     <div className="ApercuRequete">
-      <title>{getLibelle("Aperçu requête d'information")}</title>
       {requete && (
         <ProtectionApercu
           statut={requete.statutCourant.statut}

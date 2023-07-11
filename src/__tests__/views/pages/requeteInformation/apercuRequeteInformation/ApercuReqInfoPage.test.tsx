@@ -65,7 +65,6 @@ test("renders ApercuReqInfoPage", async () => {
     );
   });
 
-  const title = screen.getByText(/Aperçu requête d'information/i);
   const bandeau = screen.getByText(
     /Requête transférée à Benoît TANGUY - Le : 20\/10\/2021/i
   );
@@ -80,7 +79,7 @@ test("renders ApercuReqInfoPage", async () => {
   const boutonEnvoyer = screen.getByText(/Envoyer la réponse/i);
 
   await waitFor(() => {
-    expect(title).toBeDefined();
+    expect(document.title).toBe("Aperçu requête d'information");
     expect(bandeau).toBeDefined();
     expect(resume).toBeDefined();
     expect(choixReponse).toBeDefined();
@@ -226,6 +225,8 @@ test("bouton annuler", async () => {
 });
 
 test("clique requete liée", async () => {
+  const nouvelleFenetreSpy = jest.spyOn(window, "open");
+
   history.push(
     getUrlWithParam(
       URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
@@ -256,8 +257,10 @@ test("clique requete liée", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Aperçu requête : N°LRU1A5")).toBeDefined();
+    expect(nouvelleFenetreSpy).toHaveBeenCalled();
   });
+
+  nouvelleFenetreSpy.mockRestore();
 });
 
 test("bouton saisie libre", async () => {

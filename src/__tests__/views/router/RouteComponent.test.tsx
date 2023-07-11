@@ -23,7 +23,7 @@ test("L'utilisateur est redirigé vers la page d'accueil car il n'a pa le droit 
     );
   });
   await waitFor(() => {
-    expect(screen.getByText(/Accueil/)).toBeInTheDocument();
+    expect(document.title).toBe("Accueil");
   });
 });
 

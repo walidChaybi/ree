@@ -4,6 +4,7 @@ import {
   OPTION
 } from "@composant/formulaire/ConstantesNomsForm";
 import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
+import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   ICreerCourrierECParams,
   useCreerCourrierEC
@@ -90,7 +91,9 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
     return optionsChoisies.every((opt: OptionCourrier) => {
       if (opt.presenceVariables || opt.optionLibre) {
         return texteOptionCourrierModifie(opt);
-      } else return true;
+      } else {
+        return true;
+      }
     });
   }, [optionsChoisies]);
 
@@ -159,6 +162,8 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
 
   useCreerCourrierEC(courrierEcParams);
 
+  useTitreDeLaFenetre(titre);
+
   return (
     <>
       <OperationEnCours
@@ -166,7 +171,6 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
         onTimeoutEnd={finOperationEnCours}
         onClick={finOperationEnCours}
       />
-      <title>{titre}</title>
       <Formulaire
         key={cleReinitialisation}
         titre={titre}

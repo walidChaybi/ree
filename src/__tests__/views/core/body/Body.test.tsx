@@ -56,8 +56,9 @@ test("renders Body", async () => {
   });
 
   await waitFor(() => {
-    const titre = screen.getAllByText(/Accueil/i);
-    expect(titre).toHaveLength(2);
+    const titre = "Accueil";
+    expect(document.title).toBe(titre);
+    expect(screen.getByText(titre)).toBeInTheDocument();
 
     const boutonElement = screen.getAllByText("Délivrance");
     expect(boutonElement).toHaveLength(1);

@@ -2,6 +2,7 @@ import {
   OfficierContext,
   OfficierContextProps
 } from "@core/contexts/OfficierContext";
+import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import {
   faChartBar,
@@ -12,9 +13,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { IOfficier } from "@model/agent/IOfficier";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { getLibelle } from "@util/Utils";
 import React, { useEffect, useState } from "react";
 import logoRece from "../../../img/logo-rece.svg";
 import "../accueil/scss/AccueilPage.scss";
@@ -53,10 +54,10 @@ export const AccueilPage: React.FC = () => {
     }
   }, [nbReqTraiteReponduAPI]);
 
+  useTitreDeLaFenetre("Accueil");
+
   return (
     <div className="AccueilPage">
-      <title>{getLibelle("Accueil")}</title>
-
       <img src={logoRece} alt={getLibelle("Logo RECE")} />
       <OfficierContext.Consumer>
         {officier => (

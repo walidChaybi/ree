@@ -1,5 +1,5 @@
 import { DetailRequetePage } from "@pages/requeteDelivrance/detailRequete/DetailRequetePage";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 
 test("renders Page requete with all elements", async () => {
@@ -9,7 +9,7 @@ test("renders Page requete with all elements", async () => {
     );
   });
   await waitFor(() => {
-    expect(screen.getAllByText("Détails requête")).toHaveLength(1);
+    expect(document.title).toBe("Détails requête");
   });
 });
 

@@ -5,6 +5,7 @@ import {
   REQUERANT,
   TITULAIRES
 } from "@composant/formulaire/ConstantesNomsForm";
+import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAutoDelivrance
@@ -28,26 +29,26 @@ import {
   UpdateRequeteRDCSC
 } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_ATTESTATION_PACS } from "@model/requete/enum/DocumentDelivranceConstante";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { PATH_MODIFIER_RDCSC } from "@router/ReceUrls";
 import { PieceJointe } from "@util/FileUtils";
+import { DEUX, getLibelle } from "@util/Utils";
 import messageManager from "@util/messageManager";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import { getUrlCourante } from "@util/route/UrlUtil";
-import { DEUX, getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { Formulaire } from "@widget/formulaire/Formulaire";
+import { DOCUMENT_OBLIGATOIRE } from "@widget/formulaire/FormulaireMessages";
 import {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
 } from "@widget/formulaire/adresse/AdresseForm";
-import { Formulaire } from "@widget/formulaire/Formulaire";
-import { DOCUMENT_OBLIGATOIRE } from "@widget/formulaire/FormulaireMessages";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { FormikProps, FormikValues } from "formik";
@@ -70,8 +71,8 @@ import {
   getTitulairesForm
 } from "./contenu/SaisirRDCSCPageForms";
 import { useCreationRequeteDelivranceRDCSC } from "./hook/CreerRDCSCApiHook";
-import { mappingRequeteDelivranceVersFormulaireRDCSC } from "./hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import { useUpdateRequeteDelivranceRDCSC } from "./hook/UpdateRDCSCApiHook";
+import { mappingRequeteDelivranceVersFormulaireRDCSC } from "./hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import "./scss/SaisirRequetePage.scss";
 import {
   IdentiteFormDefaultValuesRDCSC,
@@ -550,6 +551,8 @@ export const SaisirRDCSCPage: React.FC = () => {
     }
   };
 
+  useTitreDeLaFenetre(titreForm);
+
   useEffect(() => {
     if (history) {
       const url = getUrlCourante(history);
@@ -567,7 +570,6 @@ export const SaisirRDCSCPage: React.FC = () => {
         onTimeoutEnd={() => setOperationEnCours(false)}
         onClick={() => setOperationEnCours(false)}
       />
-      <title>{titreForm}</title>
       <Formulaire
         titre={titreForm}
         formDefaultValues={

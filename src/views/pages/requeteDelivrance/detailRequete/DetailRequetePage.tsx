@@ -1,6 +1,6 @@
+import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { getLibelle } from "@util/Utils";
 import { SectionPanel } from "@widget/section/SectionPanel";
 import React, { useEffect, useState } from "react";
 import { getPanelsDetailRequete } from "./DetailRequeteUtils";
@@ -31,10 +31,10 @@ export const DetailRequetePage: React.FC<DetailRequetePageProps> = props => {
 
   const panels = getPanelsDetailRequete(requete);
 
+  useTitreDeLaFenetre(titreDetail);
+
   return (
     <div className="DetailRequetePage">
-      <title>{getLibelle(titreDetail)}</title>
-
       {panels.length > 1 && (
         <div className="PanelsDetailRequete">
           <SectionPanel

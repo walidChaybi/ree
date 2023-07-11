@@ -77,7 +77,8 @@ test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie",
   const titre = SousTypeDelivrance.getEnumFor("RDC").libelle;
 
   await waitFor(() => {
-    expect(screen.getAllByText(titre)).toHaveLength(2);
+    expect(document.title).toBe(titre);
+    expect(screen.getByText(titre)).toBeInTheDocument();
   });
 });
 

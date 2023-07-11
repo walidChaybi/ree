@@ -1,11 +1,11 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
 import { OfficierContext } from "@core/contexts/OfficierContext";
+import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   URL_MES_REQUETES_INFORMATION,
   URL_REQUETES_INFORMATION_SERVICE
 } from "@router/ReceUrls";
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
-import { getLibelle } from "@util/Utils";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
@@ -54,37 +54,37 @@ const getOnglets = (): IOngletProps[] => {
 
 const EspaceInformationPage: React.FC<LocalProps> = ({ selectedTab }) => {
   const selectedTabState = selectedTab || 0;
+
+  useTitreDeLaFenetre("Espace information");
+
   return (
-    <>
-      <title>{getLibelle("Espace information")}</title>
-      <div>
-        <OfficierContext.Consumer>
-          {officier => (
-            <>
-              {officier && officier.officierDataState && (
-                <>
-                  {selectedTabState === 0}
-                  <BoiteAOnglets
-                    selectedTab={selectedTabState}
-                    onglets={getOnglets()}
-                    elementEntreTitreEtContenu={
-                      <div className="EspaceInformationPage">
-                        <div className="BoutonPrendreEnChargeAleatoirementRequeteInformation">
-                          <BoutonPrendreEnChargeAleatoirementInformation />
-                        </div>
+    <div>
+      <OfficierContext.Consumer>
+        {officier => (
+          <>
+            {officier && officier.officierDataState && (
+              <>
+                {selectedTabState === 0}
+                <BoiteAOnglets
+                  selectedTab={selectedTabState}
+                  onglets={getOnglets()}
+                  elementEntreTitreEtContenu={
+                    <div className="EspaceInformationPage">
+                      <div className="BoutonPrendreEnChargeAleatoirementRequeteInformation">
+                        <BoutonPrendreEnChargeAleatoirementInformation />
                       </div>
-                    }
-                    titre="Menu espace requête d'information"
-                    classOnglet="ongletPageEspace"
-                    classOngletPrincipale="headerOngletPageEspace"
-                  />
-                </>
-              )}
-            </>
-          )}
-        </OfficierContext.Consumer>
-      </div>
-    </>
+                    </div>
+                  }
+                  titre="Menu espace requête d'information"
+                  classOnglet="ongletPageEspace"
+                  classOngletPrincipale="headerOngletPageEspace"
+                />
+              </>
+            )}
+          </>
+        )}
+      </OfficierContext.Consumer>
+    </div>
   );
 };
 

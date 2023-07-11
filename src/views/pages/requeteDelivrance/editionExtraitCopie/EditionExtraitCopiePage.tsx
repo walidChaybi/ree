@@ -1,5 +1,6 @@
 import { RetoucheImage } from "@composant/retoucheImage/RetoucheImage";
 import { RECEContext } from "@core/body/RECEContext";
+import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   IActeApiHookParams,
   useInformationsActeApiHook
@@ -15,17 +16,17 @@ import {
 import { useSupprimerDocumentComplementaireApi } from "@hook/requete/SupprimerDocumentComplementaireHook";
 import { Mention } from "@model/etatcivil/acte/mention/IMention";
 import { IUuidEditionParams } from "@model/params/IUuidEditionParams";
-import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { ACTE_NON_TROUVE } from "@model/requete/enum/DocumentDelivranceConstante";
-import { Validation } from "@model/requete/enum/Validation";
 import {
   DocumentReponse,
   IDocumentReponse
 } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { ACTE_NON_TROUVE } from "@model/requete/enum/DocumentDelivranceConstante";
+import { Validation } from "@model/requete/enum/Validation";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
-import { checkDirty, getLibelle } from "@util/Utils";
+import { checkDirty } from "@util/Utils";
 import { gestionnaireMentionsRetireesAuto } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
@@ -36,15 +37,15 @@ import {
   IDetailRequeteParams,
   useAvecRejeuDetailRequeteApiHook
 } from "../../../common/hook/requete/DetailRequeteHook";
-import { VoletEdition } from "./contenu/onglets/VoletEdition";
-import { VoletVisualisation } from "./contenu/onglets/VoletVisualisation";
-import { OngletsDocumentsEdites } from "./contenu/OngletsDocumentsEdites";
 import {
   choisirDocumentEdite,
   filtrerDocumentComplementaireASupprimer,
   getBoutonsEdition,
   retoucheImage
 } from "./EditionExtraitCopieUtils";
+import { OngletsDocumentsEdites } from "./contenu/OngletsDocumentsEdites";
+import { VoletEdition } from "./contenu/onglets/VoletEdition";
+import { VoletVisualisation } from "./contenu/onglets/VoletVisualisation";
 import "./scss/EditionExtraitCopie.scss";
 
 export const EditionExtraitCopiePageContext = React.createContext({
@@ -295,6 +296,8 @@ export const EditionExtraitCopiePage: React.FC = () => {
     }
   }, [resultatGetImagesDeLActe]);
 
+  useTitreDeLaFenetre("Édition extrait copie");
+
   return (
     <>
       <OperationEnCours
@@ -310,7 +313,6 @@ export const EditionExtraitCopiePage: React.FC = () => {
         value={{ operationEnCours, setOperationEnCours, rafraichirRequete }}
       >
         <div className="EditionExtraitCopie">
-          <title>{getLibelle("Édition extrait copie")}</title>
           {requete ? (
             <>
               <OngletsDocumentsEdites

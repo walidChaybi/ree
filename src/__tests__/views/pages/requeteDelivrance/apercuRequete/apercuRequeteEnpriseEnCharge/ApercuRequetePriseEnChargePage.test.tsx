@@ -90,7 +90,6 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
     );
   });
 
-  const title = screen.getByText(/Aperçu de la requête en prise en charge/i);
   const bandeau = screen.getByText(
     "Requête prise en charge par : Ashley YOUNG - Le : 14/07/2020"
   );
@@ -110,7 +109,7 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
   const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
 
   await waitFor(() => {
-    expect(title).toBeDefined();
+    expect(document.title).toBe("Aperçu de la requête en prise en charge");
     expect(bandeau).toBeDefined();
     expect(actions).toBeDefined();
     expect(listeAction1).toBeDefined();

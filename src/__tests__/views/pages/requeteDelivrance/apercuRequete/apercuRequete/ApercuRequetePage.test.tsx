@@ -64,7 +64,6 @@ test("renders ApercuRequetePage", async () => {
     );
   });
 
-  const title = screen.getByText(/Aperçu de la requête/i);
   const bandeau = screen.getByText(
     /Requête à traiter, attribuée à Ashley YOUNG - Le : 14\/07\/2020/i
   );
@@ -83,7 +82,7 @@ test("renders ApercuRequetePage", async () => {
   );
 
   await waitFor(() => {
-    expect(title).toBeDefined();
+    expect(document.title).toBe("Aperçu de la requête");
     expect(bandeau).toBeDefined();
     expect(actions).toBeDefined();
     expect(listeAction1).toBeDefined();

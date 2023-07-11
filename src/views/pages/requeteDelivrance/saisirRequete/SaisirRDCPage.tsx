@@ -11,6 +11,7 @@ import {
   TITULAIRE2,
   TYPE_REQUERANT
 } from "@composant/formulaire/ConstantesNomsForm";
+import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAutoDelivrance
@@ -26,33 +27,33 @@ import {
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
 import {
-  TypeLienRequerant,
-  TYPE_LIEN_REQUERANT_POUR_TITULAIRE
+  TYPE_LIEN_REQUERANT_POUR_TITULAIRE,
+  TypeLienRequerant
 } from "@model/requete/enum/TypeLienRequerant";
 import {
   TypeRequerantRDC,
   UN_TITULAIRE
 } from "@model/requete/enum/TypeRequerantRDC";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { PATH_MODIFIER_RDC } from "@router/ReceUrls";
-import { getPiecesJointesNonVides, PieceJointe } from "@util/FileUtils";
-import messageManager from "@util/messageManager";
-import { getUrlCourante } from "@util/route/UrlUtil";
+import { PieceJointe, getPiecesJointesNonVides } from "@util/FileUtils";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
+import messageManager from "@util/messageManager";
+import { getUrlCourante } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { Formulaire } from "@widget/formulaire/Formulaire";
 import {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
 } from "@widget/formulaire/adresse/AdresseForm";
-import { Formulaire } from "@widget/formulaire/Formulaire";
 import {
   RequeteFormDefaultValues,
   RequeteFormValidationSchema
@@ -85,8 +86,8 @@ import {
   getTitulaire2Form
 } from "./contenu/SaisirRDCPageForms";
 import { useCreationRequeteDelivranceRDC } from "./hook/CreerRDCApiHook";
-import { mappingRequeteDelivranceVersFormulaireRDC } from "./hook/mappingRequeteDelivranceVersFormulaireRDC";
 import { useUpdateRequeteDelivranceRDC } from "./hook/UpdateRDCApiHook";
+import { mappingRequeteDelivranceVersFormulaireRDC } from "./hook/mappingRequeteDelivranceVersFormulaireRDC";
 import "./scss/SaisirRequetePage.scss";
 import {
   EvenementFormDefaultValues,
@@ -455,6 +456,8 @@ export const SaisirRDCPage: React.FC = () => {
     getPiecesJointesForm()
   ];
 
+  useTitreDeLaFenetre(titreForm);
+
   return (
     <>
       <OperationEnCours
@@ -462,7 +465,6 @@ export const SaisirRDCPage: React.FC = () => {
         onTimeoutEnd={() => setOperationEnCours(false)}
         onClick={() => setOperationEnCours(false)}
       />
-      <title>{titreForm}</title>
       <Formulaire
         titre={titreForm}
         formDefaultValues={requete ?? { ...DefaultValuesRDCRequete }}

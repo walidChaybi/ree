@@ -1,22 +1,22 @@
 import {
-    RMCArchivePage,
-    titreForm
+  RMCArchivePage,
+  titreForm
 } from "@pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
-import React from "react";
 
 test("renders formulaire Recherche Multi Critères archives", async () => {
   await act(async () => {
     render(<RMCArchivePage />);
   });
   await waitFor(() => {
-    expect(screen.getAllByText(titreForm)).toHaveLength(2);
+    expect(document.title).toBe(titreForm);
+    expect(screen.getByText(titreForm)).toBeInTheDocument();
   });
 });
 

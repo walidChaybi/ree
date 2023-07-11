@@ -7,17 +7,21 @@ import {
   REQUETE,
   TITULAIRE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
+import {
+  IUpdateRequeteCreationParams,
+  useUpdateRequeteCreation
+} from "@hook/requete/UpdateRequeteCreationApiHook";
 import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
-import { IUpdateRequeteCreationParams, useUpdateRequeteCreation } from "@hook/requete/UpdateRequeteCreationApiHook";
 import { ISaisieRequeteRCTC } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { PATH_MODIFIER_RCTC, receUrl } from "@router/ReceUrls";
-import { getPiecesJointesNonVides, PieceJointe } from "@util/FileUtils";
+import { PieceJointe, getPiecesJointesNonVides } from "@util/FileUtils";
 import { getUrlCourante, replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Formulaire } from "@widget/formulaire/Formulaire";
@@ -234,6 +238,8 @@ export const SaisirRCTCPage: React.FC = () => {
     getPiecesJointesForm()
   ];
 
+  useTitreDeLaFenetre(TITRE_FORMULAIRE);
+
   return (
     <div className="SaisirRCTCPage">
       <OperationEnCours
@@ -241,7 +247,6 @@ export const SaisirRCTCPage: React.FC = () => {
         onTimeoutEnd={() => setOperationEnCours(false)}
         onClick={() => setOperationEnCours(false)}
       />
-      <title>{TITRE_FORMULAIRE}</title>
       <Formulaire
         titre={TITRE_FORMULAIRE}
         formDefaultValues={requeteForm ?? ValeursRequeteCreationRCTCParDefaut}

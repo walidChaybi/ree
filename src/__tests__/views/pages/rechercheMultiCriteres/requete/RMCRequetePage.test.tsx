@@ -18,7 +18,8 @@ test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async
     render(<RMCRequetePage />);
   });
   await waitFor(() => {
-    expect(screen.getAllByText(titreForm)).toHaveLength(2);
+    expect(document.title).toBe(titreForm);
+    expect(screen.getByText(titreForm)).toBeInTheDocument();
   });
 });
 

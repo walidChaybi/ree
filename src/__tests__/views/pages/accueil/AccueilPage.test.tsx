@@ -33,8 +33,7 @@ test("renders page d'accueil", async () => {
   });
 
   await waitFor(() => {
-    const titleElements = screen.getByText("Accueil");
-    expect(titleElements).toBeInTheDocument();
+    expect(document.title).toBe("Accueil");
     const textElements = screen.getByText(/Bienvenue*/i);
     expect(textElements).toBeInTheDocument();
     const badge = screen.getByText("2");

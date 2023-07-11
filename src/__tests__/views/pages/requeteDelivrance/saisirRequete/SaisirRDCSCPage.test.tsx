@@ -37,7 +37,8 @@ test("renders formulaire de saisie d'une Requête de Délivrance Certificat de S
 
   const titre = SousTypeDelivrance.getEnumFor("RDCSC").libelle;
   await waitFor(() => {
-    expect(screen.getAllByText(titre)).toHaveLength(2);
+    expect(document.title).toBe(titre);
+    expect(screen.getByText(titre)).toBeInTheDocument();
   });
 });
 

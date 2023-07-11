@@ -1,3 +1,4 @@
+import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { Formulaire } from "@widget/formulaire/Formulaire";
@@ -121,9 +122,10 @@ export const RMCArchivePage: React.FC = () => {
     rappelCriteres
   } as RMCBoutonsProps;
 
+  useTitreDeLaFenetre(titreForm);
+
   return (
     <>
-      <title>{titreForm}</title>
       <Formulaire
         titre={titreForm}
         formDefaultValues={DefaultValuesRMCActeArchive}

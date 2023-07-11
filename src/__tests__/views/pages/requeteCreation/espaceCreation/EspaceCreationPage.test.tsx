@@ -48,14 +48,14 @@ test("renders creationPage", async () => {
     );
   });
 
-  const title = screen.getByText(/Espace création/i);
+  const title = "Espace création";
   const mesRequetes = screen.getByText(/Mes requêtes de création/i);
   const requetesService = screen.getByText(
     /Les requêtes de création de mon service/i
   );
 
   await waitFor(() => {
-    expect(title).toBeDefined();
+    expect(document.title).toBe(title);
     expect(mesRequetes).toBeDefined();
   });
 
@@ -66,7 +66,7 @@ test("renders creationPage", async () => {
   const attribueA = screen.getByText(/Attribuée à/i);
 
   await waitFor(() => {
-    expect(title).toBeDefined();
+    expect(document.title).toBe(title);
     expect(mesRequetes).toBeDefined();
     expect(requetesService).toBeDefined();
     expect(attribueA).toBeDefined();

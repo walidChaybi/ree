@@ -42,7 +42,7 @@ test("renders delivrancePage", async () => {
     );
   });
 
-  const title = screen.getByText("Délivrance");
+  const title = "Délivrance";
   const mesRequetes = screen.getByText(/Mes requêtes de délivrance/i);
   const compteur = screen.getByText(/Total de requêtes à signer/i);
   const requetesService = screen.getByText(
@@ -50,7 +50,7 @@ test("renders delivrancePage", async () => {
   );
 
   await waitFor(() => {
-    expect(title).toBeDefined();
+    expect(document.title).toBe(title);
     expect(mesRequetes).toBeDefined();
     expect(requetesService).toBeDefined();
     expect(compteur).toBeDefined();
@@ -63,7 +63,7 @@ test("renders delivrancePage", async () => {
   const attribueA = screen.getByText(/Attribuée à/i);
 
   await waitFor(() => {
-    expect(title).toBeDefined();
+    expect(document.title).toBe(title);
     expect(mesRequetes).toBeDefined();
     expect(requetesService).toBeDefined();
     expect(attribueA).toBeDefined();

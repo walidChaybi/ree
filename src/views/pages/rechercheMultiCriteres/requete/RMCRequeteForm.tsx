@@ -4,6 +4,7 @@ import {
   REQUETE,
   TITULAIRE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
 import { MEP_YEAR } from "@util/DateUtils";
@@ -100,19 +101,18 @@ export const RMCRequeteForm: React.FC<RMCRequeteFormProps> = ({
     return stockageDonnees.recupererCriteresRMCReq();
   };
 
+  useTitreDeLaFenetre(titreForm);
+
   return (
-    <>
-      <title>{titreForm}</title>
-      <Formulaire
-        titre={titreForm}
-        formDefaultValues={DefaultValuesRMCRequete}
-        formValidationSchema={ValidationSchemaRMCRequete}
-        onSubmit={onSubmitRMCRequete}
-      >
-        <div className="DeuxColonnes FormulaireRMCRequete">{blocsForm}</div>
-        <RMCBoutons rappelCriteres={rappelCriteres} />
-      </Formulaire>
-    </>
+    <Formulaire
+      titre={titreForm}
+      formDefaultValues={DefaultValuesRMCRequete}
+      formValidationSchema={ValidationSchemaRMCRequete}
+      onSubmit={onSubmitRMCRequete}
+    >
+      <div className="DeuxColonnes FormulaireRMCRequete">{blocsForm}</div>
+      <RMCBoutons rappelCriteres={rappelCriteres} />
+    </Formulaire>
   );
 };
 
