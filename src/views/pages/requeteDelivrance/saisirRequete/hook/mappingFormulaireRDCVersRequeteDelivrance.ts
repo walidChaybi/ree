@@ -2,25 +2,26 @@ import {
   Adresse,
   Identite
 } from "@model/form/delivrance/ISaisirRequetePageForm";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import {
   IPieceJustificative,
   mapPieceJustificative
 } from "@model/requete/pieceJointe/IPieceJustificative";
 import { estDateVide } from "@util/DateUtils";
-import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
 import {
-  auMoinsUneProprieteEstRenseigne,
   DEUX,
-  getValeurOuVide,
-  SNP
+  SNP,
+  UN,
+  auMoinsUneProprieteEstRenseigne,
+  getValeurOuVide
 } from "@util/Utils";
+import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
 import {
   CreationRequeteRDC,
   SaisieRequeteRDC
@@ -131,13 +132,10 @@ function getTitulaire(titulaire: Identite, position: number) {
 }
 
 function getFiliation(titulaire: Identite) {
-  if (
-    auMoinsUneProprieteEstRenseigne(titulaire.parent1) &&
-    auMoinsUneProprieteEstRenseigne(titulaire.parent2)
-  ) {
-    const parents = [];
+  const parents = [];
+  if (auMoinsUneProprieteEstRenseigne(titulaire.parent1)) {
     parents.push({
-      position: 1,
+      position: UN,
       nomNaissance: titulaire.parent1.nomNaissance
         ? titulaire.parent1.nomNaissance
         : SNP,
@@ -145,8 +143,10 @@ function getFiliation(titulaire: Identite) {
         titulaire.parent1.prenoms
       )
     });
+  }
+  if (auMoinsUneProprieteEstRenseigne(titulaire.parent2)) {
     parents.push({
-      position: 2,
+      position: DEUX,
       nomNaissance: titulaire.parent2.nomNaissance
         ? titulaire.parent2.nomNaissance
         : SNP,
@@ -154,9 +154,8 @@ function getFiliation(titulaire: Identite) {
         titulaire.parent2.prenoms
       )
     });
-    return parents;
   }
-  return null;
+  return parents;
 }
 
 function getMandant(saisie: SaisieRequeteRDC) {

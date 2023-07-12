@@ -87,10 +87,10 @@ const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
   const [afficherParents, setAfficherParents] = useState(false);
 
   useEffect(() => {
-    if (props.titulaire?.parentsTitulaire) {
+    if (props.titulaire?.parentsTitulaire?.length) {
       setAfficherParents(true);
     }
-  }, [props.titulaire?.parentsTitulaire]);
+  }, [props.titulaire?.parentsTitulaire?.length]);
 
   const nomsFormProps = {
     nom: withNamespace(props.nom, NOMS),
@@ -114,7 +114,7 @@ const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
     reset: afficherParents
   } as ParentSubFormProps;
 
-  const ajouterFiliation = () => {
+  const toggleAffichageChampsParents = () => {
     setAfficherParents(!afficherParents);
     // Permet de re-initilaiser les champs PARENT1 et PARENT2
     props.formik.setFieldValue(
@@ -155,7 +155,7 @@ const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
             values={Nationalite.getAllEnumsAsOptions()}
           />
           {!afficherParents && props.filiation && (
-            <button type="button" onClick={ajouterFiliation}>
+            <button type="button" onClick={toggleAffichageChampsParents}>
               {getLibelle("Ajouter une filiation")}
             </button>
           )}
@@ -163,7 +163,7 @@ const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
             <button
               type="button"
               className="BoutonDanger"
-              onClick={ajouterFiliation}
+              onClick={toggleAffichageChampsParents}
             >
               {getLibelle("Supprimer une filiation")}
             </button>
