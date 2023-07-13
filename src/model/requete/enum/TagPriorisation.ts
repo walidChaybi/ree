@@ -1,4 +1,5 @@
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
+import { Options } from "@util/Type";
 
 export class TagPriorisation extends EnumWithLibelle {
   public static readonly SCEC = new TagPriorisation("SCEC");
@@ -7,5 +8,9 @@ export class TagPriorisation extends EnumWithLibelle {
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, TagPriorisation);
+  }
+
+  public static getAllEnumsAsOptions(): Options {
+    return EnumWithLibelle.getAllLibellesAsOptions(TagPriorisation);
   }
 }

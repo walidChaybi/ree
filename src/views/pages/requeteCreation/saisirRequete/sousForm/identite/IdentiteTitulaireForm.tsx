@@ -19,10 +19,9 @@ import PrenomsForm, {
   genererDefaultValuesPrenoms
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { TypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerantCreation";
-import { SPC, getLibelle } from "@util/Utils";
-import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { getLibelle, SPC } from "@util/Utils";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues
@@ -30,6 +29,7 @@ import DateComposeForm, {
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
+import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import {
   ISubForm,
   SubFormProps,
@@ -185,7 +185,9 @@ const IdentiteTitulaireForm: React.FC<
         <div className="IdentiteTitulaireForm">
           <NomsFormTitulaire
             nom={withNamespace(props.nom, NOMS)}
-            onBlurNom={e => handleNomActeEtranger(e)}
+            onBlurNom={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleNomActeEtranger(e)
+            }
           />
 
           <CheckboxField

@@ -85,9 +85,9 @@ export const configRequetesCreation = [
       ////////////////////////////
       if (
         url ===
-          "/requetes/creation/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER%2CEN_TRAITEMENT&tri=numeroAffichage&sens=ASC&range=0-105" ||
+          "/requetes/creation/mesrequetes?statuts=A_SIGNER%2CA_TRAITER%2CEN_TRAITEMENT%2CPRISE_EN_CHARGE%2CPROJET_VALIDE%2CRETOUR_SDANF%2CRETOUR_SDANF%2CTRAITE%2CTRAITE_A_TRANSMETTRE%2CTRAITE_TRANSMIS&tri=dateCreation&sens=ASC&range=0-105" ||
         url ===
-          "/requetes/creation/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER%2CEN_TRAITEMENT&tri=dateCreation&sens=ASC&range=0-105"
+          "/requetes/creation/mesrequetes?statuts=A_SIGNER%2CA_TRAITER%2CEN_TRAITEMENT%2CPRISE_EN_CHARGE%2CPROJET_VALIDE%2CRETOUR_SDANF%2CRETOUR_SDANF%2CTRAITE%2CTRAITE_A_TRANSMETTRE%2CTRAITE_TRANSMIS&tri=dateCreation&sens=ASC&range=0-105"
       ) {
         return {
           headers: {
@@ -112,9 +112,9 @@ export const configRequetesCreation = [
 
       if (
         url ===
-          "/requetes/creation/requetesService?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER%2CEN_TRAITEMENT&tri=dateCreation&sens=ASC&range=0-105" ||
+          "/requetes/creation/requetesService?tri=dateCreation&sens=ASC&range=0-105" ||
         url ===
-          "/requetes/creation/requetesService?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER%2CEN_TRAITEMENT&tri=statut&sens=ASC&range=0-105"
+          "/requetes/creation/requetesService?tri=statut&sens=ASC&range=0-105"
       ) {
         return requetesServiceCreationTableauResultatQuery;
       }

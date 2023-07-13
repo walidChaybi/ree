@@ -83,10 +83,12 @@ export const ChampRecherche: React.FC<ChampRechercheProps> = props => {
             {...params.inputProps}
             aria-label={props.componentName}
           />
-          <IconeCroix
-            onClick={props.onClickClear}
-            title={getLibelle("Vider le champ")}
-          />
+          {!props.disabled && (
+            <IconeCroix
+              onClick={props.onClickClear}
+              title={getLibelle("Vider le champ")}
+            />
+          )}
         </div>
       )}
       renderOption={(renderProps, option: Option, { inputValue, selected }) => {

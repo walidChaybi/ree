@@ -4,19 +4,19 @@ import { TypeRepertoire } from "@model/etatcivil/enum/TypeRepertoire";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import {
   CARACTERES_AUTORISES_MESSAGE,
   NUMERO_INSCRIPTION_MESSAGE
 } from "@widget/formulaire/FormulaireMessages";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { traiteEspace } from "@widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
-import { FormikValues, connect, getIn } from "formik";
+import { connect, FormikValues, getIn } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import {
@@ -129,7 +129,7 @@ const RepertoireInscriptionFiltre: React.FC<
               ? el.cle === props.filtreTypeRepertoire.libelle
               : true;
           })}
-          onChange={e => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             onChangeTypeRepertoire(e);
           }}
           disabled={props.filtreInactif}

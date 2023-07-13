@@ -59,7 +59,7 @@ const InstitutionnelForm: React.FC<SubFormProps> = props => {
         name={withNamespace(props.nom, TYPE)}
         label={getLibelle("Type")}
         options={TypeInstitutionnel.getAllEnumsAsOptions()}
-        onChange={e => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           onChangeTypeInstitutionnel(e);
         }}
       />

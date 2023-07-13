@@ -25,7 +25,7 @@ import {
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import React, { useCallback, useEffect, useState } from "react";
-import { useRequeteCreationApi } from "../../../common/hook/requete/creation/DonneesRequeteCreationApiHook";
+import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { setParamsUseApercuCreation } from "../commun/requeteCreationUtils";
 import { statutsRequetesCreation } from "./params/EspaceCreationParams";
@@ -50,7 +50,7 @@ export const MesRequetesCreation: React.FC<
   const [linkParameters, setLinkParameters] =
     useState<IQueryParametersPourRequetes>(props.queryParametersPourRequetes);
   const [enChargement, setEnChargement] = React.useState(true);
-  const { dataState, paramsTableau } = useRequeteCreationApi(
+  const { dataState, paramsTableau } = useRequeteCreationApiHook(
     linkParameters,
     TypeAppelRequete.MES_REQUETES_CREATION,
     setEnChargement

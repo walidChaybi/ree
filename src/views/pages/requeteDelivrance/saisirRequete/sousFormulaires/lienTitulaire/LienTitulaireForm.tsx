@@ -1,8 +1,8 @@
 import { LIEN, NATURE_LIEN } from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
-import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
+import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import {
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
@@ -83,7 +83,7 @@ const LienTitulaireForm: React.FC<SubFormProps> = props => {
             name={withNamespace(props.nom, LIEN)}
             label={getLibelle("Lien avec le titulaire")}
             options={props.options ? props.options : []}
-            onChange={e => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               onChangeLienTitulaire(e);
             }}
             disabled={lienInactif}

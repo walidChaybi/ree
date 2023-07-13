@@ -1,0 +1,25 @@
+.FiltreEtRechercheForm {
+    margin: 25px
+}
+.container {
+    display: flex;
+    gap: 1em;
+    margin-right: 0;
+    margin-left: 0; 
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.inputField {
+    width: 100%;
+    padding: 0;
+    border: 1px solid #c8c8c8;
+    border-radius: 3px;
+    height: 1.9em;
+}
+
+.actionButton {
+    height: 1.7em;
+    width: 1.7em;
+    flex-grow: 1;
+}

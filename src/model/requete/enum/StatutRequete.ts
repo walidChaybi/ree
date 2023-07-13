@@ -1,9 +1,9 @@
 /* istanbul ignore file */
-import { Option, Options } from "@util/Type";
 import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { Option, Options } from "@util/Type";
 import { TypeRequete } from "./TypeRequete";
 
 export class StatutRequete extends EnumWithComplete {
@@ -50,6 +50,14 @@ export class StatutRequete extends EnumWithComplete {
   public static readonly TRAITE_DELIVRE_DEMAT = new StatutRequete(
     "TRAITE_DELIVRE_DEMAT",
     "Traitée - Délivrée Démat"
+  );
+  public static readonly TRAITE_A_TRANSMETTRE = new StatutRequete(
+    "TRAITE_A_TRANSMETTRE",
+    "Traitée - A Transmettre"
+  );
+  public static readonly TRAITE_TRANSMIS = new StatutRequete(
+    "TRAITE_TRANSMIS",
+    "Traitée - Transmis"
   );
   public static readonly TRAITE_REPONDU = new StatutRequete(
     "TRAITE_REPONDU",
@@ -131,7 +139,10 @@ export class StatutRequete extends EnumWithComplete {
     StatutRequete.PROJET_VALIDE,
     StatutRequete.A_SIGNER,
     StatutRequete.TRAITE,
-    StatutRequete.EN_TRAITEMENT
+    StatutRequete.EN_TRAITEMENT,
+    StatutRequete.TRAITE_A_TRANSMETTRE,
+    StatutRequete.TRAITE_TRANSMIS,
+    StatutRequete.RETOUR_SDANF
   ];
 
   private static readonly StatutsParTypeRequete = {

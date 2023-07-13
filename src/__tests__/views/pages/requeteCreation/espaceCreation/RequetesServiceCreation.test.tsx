@@ -101,13 +101,13 @@ test("Attendu: les requêtes de service s'affichent correctement", async () => {
     // Attendu: les titres des colonnes sont corrects
     expect(screen.getByText("N°")).toBeDefined();
     expect(screen.getByText("Sous-type")).toBeDefined();
-    expect(screen.getByText("Priorisation")).toBeDefined();
+    expect(screen.getAllByText("Priorisation")[1]).toBeDefined();
     expect(screen.getByText("Postulant/Déclarant")).toBeDefined();
     expect(screen.getByText("Requérant")).toBeDefined();
     expect(screen.getByText("Initialisation")).toBeDefined();
     expect(screen.getByText("Attribuée à")).toBeDefined();
     expect(screen.getByText("Dernière action")).toBeDefined();
-    expect(screen.getByText("Statut")).toBeDefined();
+    expect(screen.getAllByText("Statut")[1]).toBeDefined();
 
     // Attendu: les données sont présentes
     expect(screen.getByText("N7MMP8 / B-2-8GRZFCS3P")).toBeDefined();
@@ -119,13 +119,13 @@ test("Attendu: Le tri sur les requêtes de service s'effectue correctement", asy
   render(<HookConsummer />);
 
   await waitFor(() => {
-    expect(screen.getByText("Statut")).toBeDefined();
+    expect(screen.getAllByText("Statut")[1]).toBeDefined();
   });
 
-  fireEvent.click(screen.getByText("Statut"));
+  fireEvent.click(screen.getAllByText("Statut")[1]);
 
   await waitFor(() => {
-    expect(screen.getByText("Statut")).toBeDefined();
+    expect(screen.getAllByText("Statut")[1]).toBeDefined();
   });
 });
 
@@ -182,7 +182,7 @@ test("Attendu: L'affichage de l'attribution des requêtes de service s'effectue 
     expect(screen.getByText("Valider")).toBeDisabled();
   });
 
-  const autocomplete = screen.getByTestId("autocomplete");
+  const autocomplete = screen.getAllByTestId("autocomplete")[2];
   const champRecherche = screen.getByLabelText(
     "TransfertPopin"
   ) as HTMLInputElement;
@@ -224,7 +224,7 @@ test("DOIT rendre possible le click sur une requête", async () => {
 test("DOIT pouvoir rechercher une requete via son numero NATALi", async () => {
   render(<HookConsummer />);
 
-  const input = screen.getByPlaceholderText("Rechercher une requête Natali");
+  const input = screen.getByPlaceholderText("Rechercher un dossier Natali");
   const boutonRechercher = screen.getByTestId("loupeButton");
 
   fireEvent.change(input, { target: { value: "2022X 200178" } });

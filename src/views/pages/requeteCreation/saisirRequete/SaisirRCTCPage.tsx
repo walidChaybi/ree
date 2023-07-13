@@ -9,22 +9,23 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
+import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import {
   IUpdateRequeteCreationParams,
   useUpdateRequeteCreation
 } from "@hook/requete/UpdateRequeteCreationApiHook";
-import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { ISaisieRequeteRCTC } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { PATH_MODIFIER_RCTC, receUrl } from "@router/ReceUrls";
-import { PieceJointe, getPiecesJointesNonVides } from "@util/FileUtils";
+import { getPiecesJointesNonVides, PieceJointe } from "@util/FileUtils";
 import { getUrlCourante, replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Formulaire } from "@widget/formulaire/Formulaire";
+import { FormikValues } from "formik";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import * as Yup from "yup";
@@ -259,7 +260,7 @@ export const SaisirRCTCPage: React.FC = () => {
           ouverte={transmissionPopinOuverte}
           onTransmissionEffectuee={(
             idRequeteApresCreationEtTransmission: string,
-            formikValues
+            formikValues: FormikValues
           ) => {
             fermePopin();
             setSaisieRequeteRCTC(formikValues as ISaisieRequeteRCTC);

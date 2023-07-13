@@ -55,7 +55,7 @@ const MandataireForm: React.FC<SubFormProps> = props => {
         name={withNamespace(props.nom, TYPE)}
         label={getLibelle("Type")}
         options={TypeMandataireReq.getAllEnumsAsOptions()}
-        onChange={e => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           onChangeTypeMandataire(e);
         }}
       />

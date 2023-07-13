@@ -125,6 +125,9 @@ export const requeteServiceCreationRechercheNatali = {
         }
       ]
     }
-  ]
+  ],
+  headers: {
+    link: 'rel="next"'
+  }
 };
 

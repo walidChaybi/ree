@@ -5,9 +5,9 @@ import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
 import { Options } from "@util/Type";
 import { estRenseigne, getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
-import { CARACTERES_ALPHANUMERIQUE } from "@widget/formulaire/FormulaireMessages";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
+import { CARACTERES_ALPHANUMERIQUE } from "@widget/formulaire/FormulaireMessages";
 import { traiteEspace } from "@widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
@@ -146,7 +146,7 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
             name={typeRequeteWithNamespace}
             label={getLibelle("Type de requête")}
             options={TypeRequete.getAllEnumsAsOptions()}
-            onChange={e => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               onChangeTypeRequete(e);
             }}
           />

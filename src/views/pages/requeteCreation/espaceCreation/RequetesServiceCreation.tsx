@@ -16,31 +16,27 @@ import {
   TransfertParLotParams,
   useTransfertsApi
 } from "@hook/requete/TransfertHook";
-import { useRechercheReqNataliApiHook } from "@hook/requete/creation/RechercheReqNataliHookApi";
-import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
 import { autorisePrendreEnChargeReqTableauCreation } from "@util/RequetesUtils";
+import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
-import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { SortOrder } from "@widget/tableau/TableUtils";
+import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import React, { useCallback, useEffect, useState } from "react";
-import { useRequeteCreationApi } from "../../../common/hook/requete/creation/DonneesRequeteCreationApiHook";
+import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
-import {
-  InputRechercheReqNatali,
-  RechercheNataliValuesForm
-} from "../commun/composants/inputRechercheReqNatali/InputRechercheReqNatali";
+import { FiltreEtRechercheForm } from "../commun/composants/FiltreEtRechercheForm/FiltreEtRechercheForm";
 import { setParamsUseApercuCreation } from "../commun/requeteCreationUtils";
 import { statutsRequetesCreation } from "./params/EspaceCreationParams";
 import { getColonnesTableauRequetesServiceCreation } from "./params/RequetesServiceCreationParams";
@@ -51,11 +47,18 @@ interface RequetesServiceCreationProps {
   setPopinAttribuerAOuvert: Function;
 }
 
+const filtresDefaultValues = {
+  sousType: "",
+  priorisation: "",
+  attribueA: "",
+  attribueAuService: "",
+  statut: ""
+};
+
 export const RequetesServiceCreation: React.FC<
   RequetesServiceCreationProps
 > = props => {
   // STATEs
-  const [numeroReqNatali, setNumeroReqNatali] = useState<string>();
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
   const [paramsMiseAJour, setParamsMiseAJour] = useState<
@@ -74,20 +77,11 @@ export const RequetesServiceCreation: React.FC<
     setIdRequetesSelectionneesAttribueeA
   ] = useState<string[]>([]);
 
-  const { dataState, paramsTableau } = useRequeteCreationApi(
+  const { dataState, paramsTableau, onSubmit } = useRequeteCreationApiHook(
     parametresLienRequete,
     TypeAppelRequete.REQUETE_CREATION_SERVICE,
     setEnChargement
   );
-
-  function onSubmitRechercheReqNatali(values: RechercheNataliValuesForm) {
-    if (values.numeroRequete) {
-      setNumeroReqNatali(values.numeroRequete);
-    }
-  }
-
-  const { dataRechercheReqNatali } =
-    useRechercheReqNataliApiHook(numeroReqNatali);
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
   useNavigationApercuCreation(paramsCreation);
@@ -238,14 +232,16 @@ export const RequetesServiceCreation: React.FC<
         onTimeoutEnd={finOpEnCours}
         onClick={finOpEnCours}
       />
-      <InputRechercheReqNatali onSubmit={onSubmitRechercheReqNatali} />
+      <div className="FiltreEtRechercheReqService">
+          <FiltreEtRechercheForm onSubmit={onSubmit} />
+      </div>
       <TableauRece
         idKey={"idRequete"}
         sortOrderByState={parametresLienRequete.tri}
         sortOrderState={parametresLienRequete.sens}
         onClickOnLine={onClickOnLineTableau}
         columnHeaders={columnHeaders}
-        dataState={numeroReqNatali ? dataRechercheReqNatali : dataState}
+        dataState={dataState}
         paramsTableau={paramsTableau}
         goToLink={changementDePage}
         handleChangeSort={handleChangeSortTableau}
