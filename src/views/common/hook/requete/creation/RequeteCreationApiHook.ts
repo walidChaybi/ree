@@ -111,7 +111,7 @@ export function useRequeteCreationApiHook(
   function onSubmit(values: FiltreEtRechercheFormValues) {
     values.numeroRequete
       ? setNumeroReqNatali(values.numeroRequete)
-      : setFiltresReq(values);
+      : setFiltresReq({ ...values });
   }
 
   return {

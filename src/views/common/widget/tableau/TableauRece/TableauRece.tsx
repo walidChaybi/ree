@@ -86,6 +86,10 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.dataState, pageState, props.resetTableau]);
 
+  useEffect(() => {
+    setPageState(0);
+  }, [props.dataState]);
+
   const handleColumnSort = (
     event: React.MouseEvent<unknown>,
     columnKey: string
