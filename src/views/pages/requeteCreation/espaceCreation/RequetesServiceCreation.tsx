@@ -47,14 +47,6 @@ interface RequetesServiceCreationProps {
   setPopinAttribuerAOuvert: Function;
 }
 
-const filtresDefaultValues = {
-  sousType: "",
-  priorisation: "",
-  attribueA: "",
-  attribueAuService: "",
-  statut: ""
-};
-
 export const RequetesServiceCreation: React.FC<
   RequetesServiceCreationProps
 > = props => {

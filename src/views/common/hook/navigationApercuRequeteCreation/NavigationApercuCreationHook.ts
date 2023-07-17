@@ -8,7 +8,12 @@ import {
   PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET,
   PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE
 } from "@router/ReceUrls";
-import { getUrlCourante, getUrlWithParam } from "@util/route/UrlUtil";
+import {
+  getUrlCourante,
+  getUrlPrecedente,
+  getUrlWithParam,
+  isLastPathElemIsId
+} from "@util/route/UrlUtil";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -66,9 +71,7 @@ function redirectionEtablissement(
   } else {
     path = PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE;
   }
-  history.push(
-    getUrlWithParam(`${getUrlCourante(history)}/${path}/:idRequete`, idRequete)
-  );
+  history.push(getUrlEtablissement(history, path, idRequete));
 }
 
 function redirectionTranscription(
@@ -97,4 +100,15 @@ function redirectionTranscription(
   history.push(
     getUrlWithParam(`${getUrlCourante(history)}/${path}/:idRequete`, idRequete)
   );
+}
+
+function getUrlEtablissement(history: any, path: string, idRequete: string) {
+  let baseUrl;
+  const urlCourante = getUrlCourante(history);
+  if (isLastPathElemIsId(urlCourante)) {
+    baseUrl = getUrlPrecedente(urlCourante);
+  } else {
+    baseUrl = urlCourante;
+  }
+  return getUrlWithParam(`${baseUrl}/${path}/:idRequete`, idRequete);
 }

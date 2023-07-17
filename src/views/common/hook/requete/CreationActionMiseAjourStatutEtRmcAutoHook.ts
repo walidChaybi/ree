@@ -60,7 +60,7 @@ export function useCreationActionMiseAjourStatutEtRmcAuto(
   const callback = useCallback(() => {
     if (params && params.requete) {
       const sousType = SousTypeCreation.getEnumFromLibelleCourt(
-        params?.requete?.sousType
+        params.requete?.sousType
       );
       const statut = StatutRequete.getEnumFromLibelle(params?.requete?.statut);
       if (params.typeRequete === TypeRequete.CREATION) {

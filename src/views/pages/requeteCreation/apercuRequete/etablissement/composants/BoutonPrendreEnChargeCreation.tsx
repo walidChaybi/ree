@@ -5,7 +5,7 @@ import {
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
-import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
+import { mappingUneRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import "@pages/requeteDelivrance/apercuRequete/apercuRequete/contenu/scss/BoutonPrendreEnCharge.scss";
 import { getUrlPrecedente } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
@@ -34,7 +34,7 @@ export const BoutonPrendreEnChargeCreation: React.FC<
     setParams({
       libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
       statutRequete: StatutRequete.PRISE_EN_CHARGE,
-      requete: mapRequeteCreation(props.requete),
+      requete: mappingUneRequeteTableauCreation(props.requete, false),
       urlCourante: getUrlPrecedente(history.location.pathname),
       typeRequete: TypeRequete.CREATION,
       handleTraitementTermine: () => {
@@ -64,15 +64,4 @@ export const BoutonPrendreEnChargeCreation: React.FC<
       </Bouton>
     </>
   );
-};
-
-const mapRequeteCreation = (
-  requete?: IRequeteCreationEtablissement
-): IRequeteTableauCreation => {
-  if (requete) {
-    return { idRequete: requete.id } as IRequeteTableauCreation;
-  } else {
-    return {} as IRequeteTableauCreation;
-  }
-  //TODO: Vrai mapping "mappingRequeteCreationToRequeteTableau()" à faire ici quand ce sera nécessaire
 };
