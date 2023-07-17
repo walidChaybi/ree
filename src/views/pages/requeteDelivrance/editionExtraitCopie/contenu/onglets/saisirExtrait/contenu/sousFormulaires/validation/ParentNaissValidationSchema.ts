@@ -1,7 +1,13 @@
 import {
   DATE_NAISSANCE_OU_AGE_DE,
+  ETRANGER_FRANCE,
+  LIEU_COMPLET,
+  LIEU_NAISSANCE,
   NOM_NAISSANCE,
-  SEXE
+  PAYS,
+  REGION_DEPARTEMENT,
+  SEXE,
+  VILLE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { DateNaissanceOuAgeDeValidationSchema } from "@composant/formulaire/validation/DateNaissanceOuAgeDeFormValidation";
 import { sexeObligatoireValidation } from "@composant/formulaire/validation/SexeObligatoireValidation";
@@ -17,7 +23,14 @@ import * as Yup from "yup";
 
 export const ParentNaissValidationSchema = Yup.object({
   [DATE_NAISSANCE_OU_AGE_DE]: DateNaissanceOuAgeDeValidationSchema,
-  [SEXE]: Yup.string().required()
+  [SEXE]: Yup.string().required(),
+  [LIEU_NAISSANCE]: Yup.object({
+    [LIEU_COMPLET]: Yup.string().optional(),
+    [ETRANGER_FRANCE]: Yup.string().optional(),
+    [VILLE]: Yup.string().optional(),
+    [REGION_DEPARTEMENT]: Yup.string().optional(),
+    [PAYS]: Yup.string().optional()
+  }).required()
 })
   .test("sexeObligatoireParent", function (value: any, error: any) {
     return sexeObligatoireValidation(this, value, error);
