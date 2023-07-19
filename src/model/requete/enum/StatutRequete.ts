@@ -141,8 +141,7 @@ export class StatutRequete extends EnumWithComplete {
     StatutRequete.TRAITE,
     StatutRequete.EN_TRAITEMENT,
     StatutRequete.TRAITE_A_TRANSMETTRE,
-    StatutRequete.TRAITE_TRANSMIS,
-    StatutRequete.RETOUR_SDANF
+    StatutRequete.TRAITE_TRANSMIS
   ];
 
   private static readonly StatutsParTypeRequete = {

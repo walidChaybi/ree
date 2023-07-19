@@ -10,8 +10,8 @@ test("DOIT mapper correctement une PJ venant du serveur en IPieceJustificative",
       taille: 63736
     },
     type: {
-      value: "0f1f9eba-a0a7-47ea-bfb2-f473f88beb9a",
-      str: "Acte à transcrire",
+      cle: "0f1f9eba-a0a7-47ea-bfb2-f473f88beb9a",
+      libelle: "Acte à transcrire",
       ordre: 1
     }
   };

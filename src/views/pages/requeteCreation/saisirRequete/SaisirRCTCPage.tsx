@@ -151,7 +151,6 @@ export const SaisirRCTCPage: React.FC = () => {
 
   // Effects
   //////////////////////////////////////////////////////////////////////////
-
   useEffect(() => {
     setIdRequete(idRequeteParam);
   }, [idRequeteParam]);
@@ -161,7 +160,7 @@ export const SaisirRCTCPage: React.FC = () => {
       const requeteFormMap = mappingRequeteTranscriptionVersForumlaireRCTC(
         detailRequeteState as IRequeteCreation
       );
-      setRequeteForm(requeteFormMap as ISaisieRequeteRCTC);
+      setRequeteForm(requeteFormMap);
     }
   }, [detailRequeteState]);
 

@@ -1,4 +1,4 @@
-import { ApercuReqCreationEtablissementPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/etablissement/ApercuReqCreationEtablissementPriseEnCharge";
+import { ApercuReqCreationEtablissementPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/etablissement/ApercuReqCreationEtablissementPriseEnChargePage";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_PRISE_EN_CHARGE,
   URL_MES_REQUETES_CREATION,

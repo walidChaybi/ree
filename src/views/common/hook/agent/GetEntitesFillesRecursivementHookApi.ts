@@ -10,7 +10,7 @@ export interface IGetEntitesFillesParams {
 export interface IGetEntitesFillesResultat {
     entitesFilles: IEntite[];
 }
-export function useGetEntitesFillesRecurivementHookApi(
+export function useGetEntitesFillesRecursivementHookApi(
   params?: IGetEntitesFillesParams
 ) {
   const [resultat, setResultat] = useState<IGetEntitesFillesResultat>();

@@ -26,7 +26,9 @@ export const PieceJustificative = {
 
 export function mapPieceJustificative(pj: any) {
   const piece = mapDocumentSwift(pj);
-  piece.typePieceJustificative = pj.type?.value;
+  piece.typePieceJustificative = TypePieceJustificative.getKeyForLibelle(
+    pj.type?.libelle
+  );
   return piece as IPieceJustificative;
 }
 

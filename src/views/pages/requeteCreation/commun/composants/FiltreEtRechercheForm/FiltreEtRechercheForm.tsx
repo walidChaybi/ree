@@ -1,6 +1,6 @@
 import {
-  listeEntiteToOptions,
-  listeUtilisateursToOptionsBis
+  listeUtilisateursToOptionsBis,
+  optionsEntite
 } from "@composant/menuTransfert/MenuTransfertUtil";
 import { faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -43,7 +43,6 @@ export const FiltreEtRechercheForm: React.FC<
     idUtilisateur || "",
     false
   );
-  const optionsEntite = listeEntiteToOptions();
 
   const filtreSousTypeCreation: Options =
     SousTypeCreation.getAllEnumsAsOptions();

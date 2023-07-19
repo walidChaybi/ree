@@ -1,7 +1,7 @@
 import {
   IGetEntitesFillesParams,
-  useGetEntitesFillesRecurivementHookApi
-} from "@hook/agent/GetEntitesFillesRecurivementHookApi";
+  useGetEntitesFillesRecursivementHookApi
+} from "@hook/agent/GetEntitesFillesRecursivementHookApi";
 import { Entite } from "@model/agent/IEntiteRattachement";
 import React, { useEffect, useState } from "react";
 import { ListChoixPopin } from "../../widget/popin/listChoixPopin/ListChoixPopin";
@@ -24,7 +24,7 @@ export const ChoixEntitePopin: React.FunctionComponent<
 
   // Hooks
   //////////////////////////////////////////////////////////////////////////
-  const entitesFillesTrouvees = useGetEntitesFillesRecurivementHookApi(
+  const entitesFillesTrouvees = useGetEntitesFillesRecursivementHookApi(
     paramsGetEntitesFilles
   );
 

@@ -1,18 +1,18 @@
 import { TransfertUnitaireParams } from "@hook/requete/TransfertHook";
+import { Droit } from "@model/agent/enum/Droit";
 import {
   IUtilisateur,
   utilisateurADroit,
   utilisateurALeDroitSurUnDesPerimetres
 } from "@model/agent/IUtilisateur";
-import { Droit } from "@model/agent/enum/Droit";
-import { IActionOption } from "@model/requete/IActionOption";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IActionOption } from "@model/requete/IActionOption";
 import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
-import { Option, Options } from "@util/Type";
 import { storeRece } from "@util/storeRece";
+import { Option, Options } from "@util/Type";
 import { Perimetre } from "./../../../../model/agent/enum/Perimetre";
 import { IMenuTransfertProps } from "./MenuTransfert";
 
@@ -248,3 +248,10 @@ function estDansEntiteFille(idEntite: string): boolean {
   }
   return false;
 }
+export const optionsEntite: Options =
+  storeRece.utilisateurCourant?.entitesFilles?.map(f => {
+    return {
+      cle: f.idEntite,
+      libelle: f.libelleEntite
+    };
+  }) || ([] as Options);

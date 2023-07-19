@@ -85,9 +85,9 @@ export const configRequetesCreation = [
       ////////////////////////////
       if (
         url ===
-          "/requetes/creation/mesrequetes?statuts=A_SIGNER%2CA_TRAITER%2CEN_TRAITEMENT%2CPRISE_EN_CHARGE%2CPROJET_VALIDE%2CRETOUR_SDANF%2CRETOUR_SDANF%2CTRAITE%2CTRAITE_A_TRANSMETTRE%2CTRAITE_TRANSMIS&tri=dateCreation&sens=ASC&range=0-105" ||
+          "/requetes/creation/mesrequetes?statuts=A_SIGNER%2CA_TRAITER%2CEN_TRAITEMENT%2CPRISE_EN_CHARGE%2CPROJET_VALIDE%2CRETOUR_SDANF%2CTRAITE%2CTRAITE_A_TRANSMETTRE%2CTRAITE_TRANSMIS&tri=dateCreation&sens=ASC&range=0-105" ||
         url ===
-          "/requetes/creation/mesrequetes?statuts=A_SIGNER%2CA_TRAITER%2CEN_TRAITEMENT%2CPRISE_EN_CHARGE%2CPROJET_VALIDE%2CRETOUR_SDANF%2CRETOUR_SDANF%2CTRAITE%2CTRAITE_A_TRANSMETTRE%2CTRAITE_TRANSMIS&tri=dateCreation&sens=ASC&range=0-105"
+          "/requetes/creation/mesrequetes?statuts=A_SIGNER%2CA_TRAITER%2CEN_TRAITEMENT%2CPRISE_EN_CHARGE%2CPROJET_VALIDE%2CRETOUR_SDANF%2CTRAITE%2CTRAITE_A_TRANSMETTRE%2CTRAITE_TRANSMIS&tri=dateCreation&sens=ASC&range=0-105"
       ) {
         return {
           headers: {

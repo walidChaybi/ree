@@ -87,17 +87,15 @@ import {
   TitulaireRequeteCreation
 } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeTranscription } from "@model/requete/NatureActeTranscription";
-import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
-import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import {
   DEUX,
+  estRenseigne,
+  getValeurOuVide,
   SNP,
   SPC,
   UN,
-  ZERO,
-  estRenseigne,
-  getValeurOuVide
+  ZERO
 } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { AdresseFormDefaultValues } from "@widget/formulaire/adresse/AdresseForm";
@@ -134,7 +132,7 @@ export function mappingRequeteTranscriptionVersForumlaireRCTC(
         )
       },
       [REQUERANT]: saisieRequerant(requerant),
-      [PIECES_JOINTES]: saisiePJ(piecesJustificatives)
+      [PIECES_JOINTES]: saisiePJ(piecesJustificatives || [])
     };
   }
   return saisie as ISaisieRequeteRCTC;
@@ -353,8 +351,8 @@ export function getNationalites(
     : NationalitesFormDefaultValues;
 }
 
-export function saisiePJ(piecesJustificatives?: IPieceJustificativeCreation[]) {
-  return piecesJustificatives?.map(PJ => {
+export function saisiePJ(piecesJustificatives: any[]) {
+  return piecesJustificatives?.map((PJ: any) => {
     return {
       base64File: {
         fileName: PJ.nom || "",
@@ -366,10 +364,8 @@ export function saisiePJ(piecesJustificatives?: IPieceJustificativeCreation[]) {
         extension: PJ.extension
       },
       type: {
-        value: TypePieceJustificative.getKeyForLibelle(
-          PJ.typePieceJustificative.libelle
-        ),
-        str: PJ.typePieceJustificative.libelle
+        cle: PJ.typePieceJustificative.code,
+        libelle: PJ.typePieceJustificative.libelle
       }
     };
   });
