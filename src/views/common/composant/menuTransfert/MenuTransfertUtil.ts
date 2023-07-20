@@ -248,10 +248,13 @@ function estDansEntiteFille(idEntite: string): boolean {
   }
   return false;
 }
-export const optionsEntite: Options =
-  storeRece.utilisateurCourant?.entitesFilles?.map(f => {
-    return {
-      cle: f.idEntite,
-      libelle: f.libelleEntite
-    };
-  }) || ([] as Options);
+export function getEntiteAsOptions(): Options {
+  return (
+    storeRece.utilisateurCourant?.entitesFilles?.map(f => {
+      return {
+        cle: f.idEntite,
+        libelle: f.libelleEntite
+      };
+    }) || ([] as Options)
+  );
+};
