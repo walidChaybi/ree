@@ -4,11 +4,11 @@ import TableRow from "@mui/material/TableRow";
 import { chiffreEstPair } from "@util/Utils";
 import React from "react";
 import { OperationLocaleEnCours } from "../../attente/OperationLocaleEnCours";
-import "./scss/Tableau.scss";
-import "./scss/TableauBody.scss";
 import { TableauBodyCell } from "./TableauBodyCell";
 import { IconeParams } from "./TableauRece";
 import { TableauTypeColumn } from "./TableauTypeColumn";
+import "./scss/Tableau.scss";
+import "./scss/TableauBody.scss";
 
 interface TableauBodyProps {
   data: any[];
@@ -57,7 +57,7 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
             );
           })
         ) : (
-          <TableRow>
+          <TableRow className={noRows && "ligneVide"}>
             <TableCell align="center" colSpan={columnHeaders.length}>
               {enChargement ? (
                 <OperationLocaleEnCours visible={true} />

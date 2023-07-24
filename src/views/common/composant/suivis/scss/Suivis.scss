@@ -9,7 +9,6 @@
   width: 100%;
 
   .title {
-    height: 2.5em !important;
     background-color: $application-color;
     color: white;
     font-weight: bold;
@@ -24,7 +23,8 @@
   }
 
   ul {
-    height: 5rem;
+    width: auto;
+    height: 5.2rem;
     overflow-x: hidden;
     overflow-y: auto;
     text-align: left;

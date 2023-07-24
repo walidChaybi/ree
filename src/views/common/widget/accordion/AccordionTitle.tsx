@@ -40,9 +40,7 @@ export const AccordionTitle: React.FC<AccordionTitleProps> = ({
         ) : (
           <>
             <div className="itemHidden" />
-            <span className="title" onClick={e => e.stopPropagation()}>
-              {props.titre}
-            </span>
+            <span className="title">{props.titre}</span>
           </>
         )}
         {props.bouton}
