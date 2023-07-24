@@ -69,14 +69,16 @@ export const FiltreEtRechercheForm: React.FC<
         onSubmit={values => onSubmitFiltresEtRecherche(values)}
         validationSchema={undefined}
       >
-        {({ values, handleReset }) => (
+        {({ values, handleReset, handleSubmit }) => (
           <div className="container">
-            <InputField
-              data-testid="inputRechercheReqNatali"
-              className="inputField"
-              name="numeroRequete"
-              label={getLibelle("Rechercher un dossier Natali")}
-            />
+            <form onSubmit={handleSubmit}>
+              <InputField
+                data-testid="inputRechercheReqNatali"
+                className="inputField"
+                name="numeroRequete"
+                label={getLibelle("Rechercher un dossier Natali")}
+              />
+            </form>
             <SelectField
               label={getLibelle("Sous-Type")}
               name="sousType"

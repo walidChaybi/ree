@@ -139,9 +139,7 @@ export class StatutRequete extends EnumWithComplete {
     StatutRequete.PROJET_VALIDE,
     StatutRequete.A_SIGNER,
     StatutRequete.TRAITE,
-    StatutRequete.EN_TRAITEMENT,
-    StatutRequete.TRAITE_A_TRANSMETTRE,
-    StatutRequete.TRAITE_TRANSMIS
+    StatutRequete.EN_TRAITEMENT
   ];
 
   private static readonly StatutsParTypeRequete = {

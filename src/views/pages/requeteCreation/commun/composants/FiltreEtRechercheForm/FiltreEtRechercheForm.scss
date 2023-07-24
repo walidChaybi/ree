@@ -1,21 +1,25 @@
 .FiltreEtRechercheForm {
-    margin: 25px
+    margin-bottom: 15px;
+    margin-top: 15px;
+    .ChampRecherche {
+        width: 15%;
+    }
 }
 .container {
     display: flex;
     gap: 1em;
     margin-right: 0;
     margin-left: 0; 
-    justify-content: center;
+    justify-content: space-around;
     align-items: flex-end;
 }
 
 .inputField {
-    width: 100%;
+    width: 80%;
     padding: 0;
     border: 1px solid #c8c8c8;
     border-radius: 3px;
-    height: 1.9em;
+    height: 2em;
 }
 
 .actionButton {
