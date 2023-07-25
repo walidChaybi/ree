@@ -38,6 +38,7 @@ export const ParentFormValidationSchema = Yup.object().shape({
 interface ParentFormProps {
   index?: number;
   nePasAfficherTitre?: boolean;
+  nbPrenoms?: number;
 }
 
 export type ParentSubFormProps = SubFormProps & ParentFormProps;
@@ -63,7 +64,10 @@ const ParentForm: React.FC<ParentSubFormProps> = props => {
         maxLength={NB_CARACT_MAX_SAISIE}
         onBlur={e => sortieChampEnMajuscule(e, props.formik, nomWithNamespace)}
       />
-      <PrenomsForm nom={withNamespace(props.nom, PRENOMS)} />
+      <PrenomsForm
+        nom={withNamespace(props.nom, PRENOMS)}
+        nbPrenoms={props.nbPrenoms}
+      />
     </>
   );
 };

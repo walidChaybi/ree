@@ -24,7 +24,7 @@ import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
 import NomsForm, {
   NomsFormDefaultValues,
@@ -85,12 +85,16 @@ export type IdentiteSubFormProps = SubFormProps & IdentiteFormProps;
 
 const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
   const [afficherParents, setAfficherParents] = useState(false);
+  const titulaires = useMemo(
+    () => props.titulaire?.parentsTitulaire || [],
+    [props.titulaire?.parentsTitulaire]
+  );
 
   useEffect(() => {
-    if (props.titulaire?.parentsTitulaire?.length) {
+    if (titulaires.length) {
       setAfficherParents(true);
     }
-  }, [props.titulaire?.parentsTitulaire?.length]);
+  }, [titulaires]);
 
   const nomsFormProps = {
     nom: withNamespace(props.nom, NOMS),
@@ -105,13 +109,15 @@ const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
   const parent1FormProps = {
     nom: withNamespace(props.nom, PARENT1),
     index: 1,
-    reset: afficherParents
+    reset: afficherParents,
+    nbPrenoms: titulaires.length > 0 ? titulaires[0].prenoms.length : 1
   } as ParentSubFormProps;
 
   const parent2FormProps = {
     nom: withNamespace(props.nom, PARENT2),
     index: 2,
-    reset: afficherParents
+    reset: afficherParents,
+    nbPrenoms: titulaires.length > 1 ? titulaires[1].prenoms.length : 1
   } as ParentSubFormProps;
 
   const toggleAffichageChampsParents = () => {
