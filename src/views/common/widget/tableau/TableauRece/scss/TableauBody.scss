@@ -4,7 +4,7 @@
   .MuiTableBody-root {
     tr {
       &.MuiTableRow-root {
-        &:hover {
+        &:hover:not(.ligneVide) {
           background-color: $application-hoover;
         }
       }
@@ -39,9 +39,5 @@
 
   .ligneImpaire {
     background-color: $tableau-body-ligne-impaire;
-  }
-
-  .ligneVide {
-    cursor: auto;
   }
 }
