@@ -1,26 +1,29 @@
 /* istanbul ignore file */
-import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
+import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { Options } from "@util/Type";
 
-export class NatureActeRequete extends EnumWithLibelle {
-  public static readonly NAISSANCE = new NatureActeRequete("Naissance");
-  public static readonly MARIAGE = new NatureActeRequete("Mariage");
-  public static readonly DECES = new NatureActeRequete("Décès");
+export class NatureActeRequete extends EnumWithComplete {
+  public static readonly NAISSANCE = new NatureActeRequete(
+    "NAISSANCE",
+    "Naissance"
+  );
+  public static readonly MARIAGE = new NatureActeRequete("MARIAGE", "Mariage");
+  public static readonly DECES = new NatureActeRequete("MARIAGE", "Décès");
 
-  public static getEnumFor(str: string) {
-    return EnumWithLibelle.getEnumFor(str, NatureActeRequete);
+  public static getEnumFor(str?: string) {
+    return EnumWithComplete.getEnumFor(str, NatureActeRequete);
   }
 
   public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllLibellesAsOptions(
-      NatureActeRequete,
-      false,
-      false
-    );
+    return EnumWithComplete.getAllLibellesAsOptions(NatureActeRequete);
+  }
+
+  public static getEnumFromLibelle(str: string) {
+    return EnumWithComplete.getEnumFromLibelle(NatureActeRequete, str);
   }
 
   public static getKey(natureActeRequete?: NatureActeRequete): string {
-    return EnumWithLibelle.getKey(NatureActeRequete, natureActeRequete);
+    return EnumWithComplete.getKey(NatureActeRequete, natureActeRequete);
   }
 
   public static estNaissance(natureActe?: NatureActeRequete): boolean {

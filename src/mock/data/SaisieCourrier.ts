@@ -1,5 +1,4 @@
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import {
   Adresse,
@@ -8,6 +7,7 @@ import {
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -159,7 +159,7 @@ export const RequeteRDDCourrier17 = {
   },
   evenement: {
     id: "869ecbcc-af69-4ca3-9695-0d79358a5628",
-    natureActe: NatureActe.MARIAGE,
+    natureActe: NatureActeRequete.MARIAGE,
     jour: 21,
     mois: 7,
     annee: 2015,

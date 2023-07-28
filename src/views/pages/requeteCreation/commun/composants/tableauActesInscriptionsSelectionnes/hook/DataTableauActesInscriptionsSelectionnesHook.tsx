@@ -1,4 +1,5 @@
 import { useActesInscriptionsSauvegardesApiHook } from "@hook/acte/ActesInscriptionsSauvegardesApiHook";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import messageManager from "@util/messageManager";
 import { getValeurOuUndefined, ZERO } from "@util/Utils";
@@ -94,7 +95,8 @@ function mapDataTableauActeInscriptionSelectionne(
   return {
     idPersonne: getValeurOuUndefined(data.personne.idPersonne),
     idActeInscription: getValeurOuUndefined(data.idActeOuInscription),
-    nature: getValeurOuUndefined(data.nature),
+    nature: NatureActeRequete.getEnumFor(getValeurOuUndefined(data.nature))
+      .libelle,
     reference: getValeurOuUndefined(data.reference),
     typePJ: piecesActesInscriptionsSauvegardees.find(
       piece =>

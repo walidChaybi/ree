@@ -1,9 +1,10 @@
 import { postSauvegardePersonneEtActeSelectionne } from "@api/appels/requeteApi";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { logError } from "@util/LogManager";
-import { getValeurOuUndefined } from "@util/Utils";
 import messageManager from "@util/messageManager";
+import { getValeurOuUndefined } from "@util/Utils";
 import { useEffect, useState } from "react";
 import { IDataTableauActeInscriptionSelectionne } from "../../tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
 import { IDataTableauPersonneSelectionnee } from "../IDataTableauPersonneSelectionne";
@@ -145,11 +146,7 @@ function mapPersonneEtActeSelectionne(
 }
 
 const estActeFromNatureActe = (nature?: string): boolean => {
-  if (
-    nature?.includes("Naissance") ||
-    nature?.includes("Mariage") ||
-    nature?.includes("Décès")
-  ) {
+  if (NatureActeRequete.getEnumFor(nature)) {
     return true;
   } else {
     return false;
@@ -158,7 +155,7 @@ const estActeFromNatureActe = (nature?: string): boolean => {
 
 function mapNatureActeOuInscription(nature?: string, reference?: string) {
   if (estActeFromNatureActe(nature)) {
-    return nature?.toUpperCase();
+    return NatureActeRequete.getEnumFromLibelle("Décès").nom;
   } else {
     return getRCAOuRCOuPACS(reference);
   }
