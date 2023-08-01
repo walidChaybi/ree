@@ -109,14 +109,12 @@ const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
   const parent1FormProps = {
     nom: withNamespace(props.nom, PARENT1),
     index: 1,
-    reset: afficherParents,
     nbPrenoms: titulaires.length > 0 ? titulaires[0].prenoms.length : 1
   } as ParentSubFormProps;
 
   const parent2FormProps = {
     nom: withNamespace(props.nom, PARENT2),
     index: 2,
-    reset: afficherParents,
     nbPrenoms: titulaires.length > 1 ? titulaires[1].prenoms.length : 1
   } as ParentSubFormProps;
 
