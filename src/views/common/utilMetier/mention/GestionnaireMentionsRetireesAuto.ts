@@ -13,15 +13,15 @@ import {
   MARIAGE,
   MODIFICATION_PACS,
   NATIONALITE,
+  PACS,
+  REPRISE_VIE_COMMUNE,
+  SEPARATION_CORPS,
   natureRetireesMariageAvecFilliation,
   natureRetireesMariagePlurilingue,
   natureRetireesMariageSansFilliation,
   natureRetireesNaissanceAvecFillation,
   natureRetireesNaissancePlurilingue,
-  natureRetireesNaissanceSansFillation,
-  PACS,
-  REPRISE_VIE_COMMUNE,
-  SEPARATION_CORPS
+  natureRetireesNaissanceSansFillation
 } from "@model/etatcivil/enum/NatureMention";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DEUX } from "@util/Utils";
@@ -35,7 +35,11 @@ export class GestionnaireMentionsRetireesAuto {
     natureActe?: NatureActe
   ): string[] {
     Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions);
-    if (choixDelivrance && natureActe) {
+    if (
+      choixDelivrance &&
+      natureActe &&
+      !ChoixDelivrance.estCopieIntegrale(choixDelivrance)
+    ) {
       if (ChoixDelivrance.estAvecOuSansFiliation(choixDelivrance)) {
         switch (natureActe) {
           case NatureActe.NAISSANCE:

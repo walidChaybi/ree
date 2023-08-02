@@ -25,8 +25,8 @@ import {
 } from "@model/etatcivil/enum/NatureMention";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import {
-  gestionnaireMentionsRetireesAuto,
-  IMentionAvecRetiree
+  IMentionAvecRetiree,
+  gestionnaireMentionsRetireesAuto
 } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
 
 test("deselectionnerRadieParPaire", () => {
@@ -897,4 +897,52 @@ test("deselectionneSituationFamilialePassee", () => {
       deselectionneSituationFamilialePassee5
     )
   ).toStrictEqual(["1"]);
+});
+
+test("DOIT ne pas retirer de mentions QUAND il s'agit de la délivrance d'une copie intégrale", () => {
+  const mentions = [
+    {
+      id: "1",
+      typeMention: {
+        nature: {
+          code: MARIAGE
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "2",
+      typeMention: {
+        nature: {
+          code: DIVORCE
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "3",
+      typeMention: {
+        nature: {
+          code: PACS
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "4",
+      typeMention: {
+        nature: {
+          code: ANNULATION_EVENEMENT
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree
+  ];
+  expect(
+    gestionnaireMentionsRetireesAuto.getIdsMentionsRetirees(
+      mentions,
+      ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE,
+      NatureActe.NAISSANCE
+    )
+  ).toStrictEqual([]);
 });
