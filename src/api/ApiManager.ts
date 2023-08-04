@@ -1,7 +1,8 @@
 import { URL_ACCUEIL } from "@router/ReceUrls";
+import { logInfoDansLaConsole } from "@util/Console";
 import { getCsrfHeader } from "@util/CsrfUtil";
-import { Generateur } from "@util/generateur/Generateur";
 import { GestionnaireCache, ReceCache } from "@util/GestionnaireCache";
+import { Generateur } from "@util/generateur/Generateur";
 import messageManager from "@util/messageManager";
 import * as superagent from "superagent";
 
@@ -17,8 +18,6 @@ export const HTTP_PAYLOAD_TOO_LARGE = 413;
 export const HTTP_REQUEST_TIME_OUT = 408;
 
 const ERROR_OFFLINE_TIMEOUT = 5000;
-
-
 
 type ApisAutorisees =
   | "rece-requete-api"
@@ -149,6 +148,13 @@ export class ApiManager {
     if (httpRequestConfig.responseType) {
       httpRequete = httpRequete.responseType(httpRequestConfig.responseType);
     }
+
+    logInfoDansLaConsole("Appel API", {
+      method: httpRequete?.method,
+      url: httpRequete?.url,
+      parameters: httpRequestConfig?.parameters,
+      data: httpRequestConfig?.data
+    });
 
     return httpRequete
       .then(response => {

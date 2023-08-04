@@ -8,15 +8,16 @@ import {
   necessiteMentionNationalite
 } from "@model/etatcivil/acte/IFicheActe";
 import {
-  mappingVersMentionApi,
-  Mention
+  Mention,
+  mappingVersMentionApi
 } from "@model/etatcivil/acte/mention/IMention";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
+import { OptionCourrier } from "@model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentEC } from "@model/requete/enum/DocumentEC";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { OptionCourrier } from "@model/requete/IOptionCourrier";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { logInfoDansLaConsole } from "@util/Console";
 import { DEUX } from "@util/Utils";
 import { gestionnaireMentionsRetireesAuto } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
 import { useEffect, useState } from "react";
@@ -36,7 +37,6 @@ import {
 } from "../generation/generationECHook/generationECHook";
 import { estPresentIdActeEtChoixDelivrance } from "../generation/generationECHook/generationECHookUtil";
 import { IResultGenerationUnDocument } from "../generation/generationUtils";
-
 
 export interface ICreerCourrierECParams {
   idActe?: string;
@@ -156,6 +156,11 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params, acteApiHookResultat]);
 
+  // TODO log à supprimer quand la Mantis 97940 sera résolue
+  logInfoDansLaConsole(
+    "Debug UAT2 courrier : useCreerCourrierEC",
+    generationCourrierHookParams
+  );
   const resultatGenerationCourrier = useGenerationCourrierHook(
     generationCourrierHookParams
   );
