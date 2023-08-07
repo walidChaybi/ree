@@ -12,10 +12,10 @@ import {
   natureMentionExtraitPlurilingueNaissance
 } from "@model/etatcivil/enum/NatureMention";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import messageManager from "@util/messageManager";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
+import messageManager from "@util/messageManager";
 import { fournisseurDonneesBandeauFactory } from "../../../../../fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 
 export function mappingVersListe(mentionsAffichage: IMentionAffichage[]) {
@@ -67,8 +67,6 @@ export function miseAJourMention(
   }
 }
 
-
-
 export function handleReorga(
   mentions: IMentionAffichage[] | undefined,
   setMentions: any,
@@ -92,7 +90,7 @@ export function handleCheckBox(
   setMentions: any,
   index: number
 ) {
-  if (mentions) {
+  if (mentions && index >= 0) {
     const newListe = [...mentions];
     newListe[index].estPresent = !mentions[index].estPresent;
     setMentions(newListe);

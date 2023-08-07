@@ -2,7 +2,7 @@ import { BoutonVerrouillage } from "@composant/formulaire/boutons/BoutonVerrouil
 import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { getLibelle } from "@util/Utils";
 import { ListeGlisserDeposer } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { handleCheckBox, mappingVersListe } from "./../GestionMentionsUtil";
 
 interface MentionsCopieProps {
@@ -13,11 +13,19 @@ interface MentionsCopieProps {
 }
 
 export const MentionsCopie: React.FC<MentionsCopieProps> = props => {
+  const mentionsAffichees = useMemo(() => {
+    return props.mentions ? props.mentions.filter(el => !el.aPoubelle) : [];
+  }, [props.mentions]);
+
   const handleCheck = useCallback(
     (id: number) => {
-      handleCheckBox(props.mentions, props.setMentions, id);
+      const mentionCochee = mentionsAffichees[id];
+      const index = props.mentions
+        ? props.mentions.findIndex(mention => mention.id === mentionCochee.id)
+        : -1;
+      handleCheckBox(props.mentions, props.setMentions, index);
     },
-    [props.mentions, props.setMentions]
+    [mentionsAffichees, props.mentions, props.setMentions]
   );
 
   return (
@@ -25,9 +33,7 @@ export const MentionsCopie: React.FC<MentionsCopieProps> = props => {
       <ListeGlisserDeposer
         afficheDragHandle={true}
         useDragHandle={true}
-        liste={mappingVersListe(
-          props.mentions ? props.mentions.filter(el => !el.aPoubelle) : []
-        )}
+        liste={mappingVersListe(mentionsAffichees)}
         handleCheckbox={handleCheck}
         deverrouille={props.estDeverrouille}
         libellesSontTitres={false}
