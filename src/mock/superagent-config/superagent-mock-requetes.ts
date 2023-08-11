@@ -42,6 +42,7 @@ import {
   requeteCreationEtablissement,
   requeteCreationTranscription
 } from "../data/requeteCreation";
+import { requeteCreationEtablissement as reqEtablissement } from "../data/requeteCreationEtablissement";
 import {
   idRequeteRDCPourModification,
   idRequeteRDCSC,
@@ -255,6 +256,11 @@ export const configRequetes = [
       if (match[1] === "/requetes/3ed9aa4e-921b-489f-b8fe-531dd703c60c") {
         return {
           data: deepCopie(requeteCreationEtablissement)
+        };
+      }
+      if (match[1] === "/requetes/a2724cc9-450c-4e50-9d05-a44a28717954") {
+        return {
+          data: deepCopie(reqEtablissement)
         };
       }
       // Mes requêtes création Transcription

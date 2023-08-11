@@ -420,9 +420,7 @@ test("render ApercuReqInfoPage : RMC état civil manuelle ", async () => {
   await waitFor(() => {
     expect(linkElement).toBeDefined();
   });
-  await act(async () => {
-    fireEvent.click(linkElement);
-  });
+  fireEvent.click(linkElement);
 
   const dialog = screen.getByRole("dialog");
   const nomTitulaire = screen.getByLabelText(
@@ -437,27 +435,25 @@ test("render ApercuReqInfoPage : RMC état civil manuelle ", async () => {
     expect(boutonRechercher.disabled).toBeTruthy();
   });
 
-  await act(async () => {
-    fireEvent.change(nomTitulaire, {
-      target: { value: NORESULT }
-    });
+  fireEvent.change(nomTitulaire, {
+    target: { value: NORESULT }
   });
 
   await waitFor(() => {
     expect(nomTitulaire.value).toEqual(NORESULT);
+    expect(boutonRechercher.disabled).toBeFalsy();
   });
 
   await act(async () => {
-    expect(boutonRechercher.disabled).toBeFalsy();
     fireEvent.click(boutonRechercher);
   });
 
+  const resultatRMCActe = screen.getByText("Aucun acte n'a été trouvé.");
+  const resultatRMCInscription = screen.getByText(
+    "Aucune inscription n'a été trouvée."
+  );
   await waitFor(() => {
     expect(dialog).not.toBeInTheDocument();
-    const resultatRMCActe = screen.getByText("Aucun acte n'a été trouvé");
-    const resultatRMCInscription = screen.getByText(
-      "Aucune inscription n'a été trouvée"
-    );
     expect(resultatRMCActe).toBeDefined();
     expect(resultatRMCInscription).toBeDefined();
   });

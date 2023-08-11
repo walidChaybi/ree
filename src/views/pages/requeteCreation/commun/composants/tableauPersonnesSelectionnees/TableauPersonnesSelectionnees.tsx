@@ -79,7 +79,7 @@ export const TableauPersonnesSelectionnees: React.FC<
         paramsTableau={{}}
         onClickOnLine={() => {}}
         noRows={getLigneTableauVide(
-          getLibelle("Aucune personne sélectionnée pour le projet.")
+          "Aucune personne sélectionnée pour le projet."
         )}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_PERSONNE}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_PERSONNE}

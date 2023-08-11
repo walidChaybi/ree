@@ -10,22 +10,22 @@ import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
+import { getLibelle } from "@util/Utils";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
-import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { BoutonSignature } from "@widget/signature/BoutonSignature";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE,
   NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import { SortOrder } from "@widget/tableau/TableUtils";
 import React, { useCallback, useEffect, useState } from "react";
 import { validerMentionsPlusieursDocuments } from "../editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import {
@@ -55,7 +55,6 @@ interface MesRequetesPageProps {
 }
 
 export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
-  const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [paramsMiseAJour, setParamsMiseAJour] = useState<
     ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
@@ -130,12 +129,6 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     );
   }
 
-  useEffect(() => {
-    if (dataState && dataState.length === 0) {
-      setZeroRequete(getMessageZeroRequete());
-    }
-  }, [dataState]);
-
   const finOperationEnCours = () => {
     setOperationEnCours(false);
   };
@@ -198,7 +191,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
         goToLink={goToLink}
         handleChangeSort={handleChangeSort}
         handleReload={handleReload}
-        noRows={zeroRequete}
+        noRows={getMessageZeroRequete()}
         enChargement={enChargement}
         icone={{ keyColonne: "actions", getIcone: getBoutonFinConsultation }}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE}

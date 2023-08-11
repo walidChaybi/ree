@@ -38,22 +38,20 @@ beforeEach(async () => {
 });
 
 test("render ApercuRequetePriseEnChargePartieDroite : RMC état civil manuelle ", async () => {
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <ApercuRequetePriseEnChargePartieDroite
-          detailRequete={requeteDelivrance}
-          dataHistory={dataHistory}
-        />
-      </Router>
-    );
-  });
+  render(
+    <Router history={history}>
+      <ApercuRequetePriseEnChargePartieDroite
+        detailRequete={requeteDelivrance}
+        dataHistory={dataHistory}
+      />
+    </Router>
+  );
 
-  await act(async () => {
-    const linkElement = screen.getByText("Nouvelle recherche multi-critères");
+  const linkElement = screen.getByText("Nouvelle recherche multi-critères");
+  await waitFor(() => {
     expect(linkElement).toBeInTheDocument();
-    fireEvent.click(linkElement);
   });
+  fireEvent.click(linkElement);
 
   const dialog = screen.getByRole("dialog");
   const nomTitulaire = screen.getByLabelText(
@@ -68,27 +66,25 @@ test("render ApercuRequetePriseEnChargePartieDroite : RMC état civil manuelle "
     expect(boutonRechercher.disabled).toBeTruthy();
   });
 
-  await act(async () => {
-    fireEvent.change(nomTitulaire, {
-      target: { value: NORESULT }
-    });
+  fireEvent.change(nomTitulaire, {
+    target: { value: NORESULT }
   });
 
   await waitFor(() => {
     expect(nomTitulaire.value).toEqual(NORESULT);
+    expect(boutonRechercher.disabled).toBeFalsy();
   });
 
   await act(async () => {
-    expect(boutonRechercher.disabled).toBeFalsy();
     fireEvent.click(boutonRechercher);
   });
 
+  const resultatRMCActe = screen.getByText("Aucun acte n'a été trouvé.");
+  const resultatRMCInscription = screen.getByText(
+    "Aucune inscription n'a été trouvée."
+  );
   await waitFor(() => {
     expect(dialog).not.toBeInTheDocument();
-    const resultatRMCActe = screen.getByText("Aucun acte n'a été trouvé");
-    const resultatRMCInscription = screen.getByText(
-      "Aucune inscription n'a été trouvée"
-    );
     expect(resultatRMCActe).toBeInTheDocument();
     expect(resultatRMCInscription).toBeInTheDocument();
   });
@@ -230,21 +226,19 @@ test("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes acte",
 });
 
 test("render ApercuRequetePriseEnChargePartieDroite : relance RMC Auto ", async () => {
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <ApercuRequetePriseEnChargePartieDroite
-          detailRequete={requeteDelivrance}
-        />
-      </Router>
-    );
-  });
+  render(
+    <Router history={history}>
+      <ApercuRequetePriseEnChargePartieDroite
+        detailRequete={requeteDelivrance}
+      />
+    </Router>
+  );
 
+  const resultatRMCActe = screen.queryByText("Aucun acte n'a été trouvé.");
+  const resultatRMCInscription = screen.queryByText(
+    "Aucune inscription n'a été trouvée."
+  );
   await waitFor(() => {
-    const resultatRMCActe = screen.queryByText("Aucun acte n'a été trouvé");
-    const resultatRMCInscription = screen.queryByText(
-      "Aucune inscription n'a été trouvée"
-    );
     expect(resultatRMCActe).not.toBeInTheDocument();
     expect(resultatRMCInscription).not.toBeInTheDocument();
   });

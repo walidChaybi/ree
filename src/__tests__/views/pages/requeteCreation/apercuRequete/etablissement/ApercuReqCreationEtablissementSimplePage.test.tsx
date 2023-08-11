@@ -92,7 +92,6 @@ describe("Test de la page Aperçu requête etablissement simple", () => {
           .getByText("Pièces justificatives / Annexes")
           .getAttribute("aria-selected")
       ).toBe("true");
-      expect(screen.getByText("Suivi dossier")).toBeInTheDocument();
     });
   });
 });

@@ -5,6 +5,7 @@ import LabelIcon from "@mui/icons-material/Label";
 import ReportIcon from "@mui/icons-material/Report";
 import { Box } from "@mui/material";
 import { getLibelle, numberToString } from "@util/Utils";
+import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import { getDateStringFromDateCompose } from "../DateUtils";
 import { storeRece } from "../storeRece";
 import "./scss/RequeteUtils.scss";
@@ -149,10 +150,5 @@ export function getCellRequerant(data: any): JSX.Element {
 }
 
 export function getMessageZeroRequete(): JSX.Element {
-  return (
-    <>
-      <ReportIcon />
-      <div>Aucune requête n'a été trouvée</div>
-    </>
-  );
+  return getLigneTableauVide("Aucune requête n'a été trouvée.");
 }

@@ -15,15 +15,15 @@ import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInform
 import { FenetreExterne } from "@util/FenetreExterne";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { storeRece } from "@util/storeRece";
+import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import {
   NB_LIGNES_PAR_APPEL_REQUETE_ASSOCIEES,
   NB_LIGNES_PAR_PAGE_REQUETE_ASSOCIEES
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { BoutonNouvelleRMCRequete } from "../contenu/BoutonNouvelleRMCRequete";
-import { getMessageZeroRequete } from "../hook/RMCAutoRequetesUtils";
 import { columnsTableauRequeteAssociees } from "./RMCTableauRequetesAssocieesParams";
 
 const width = 1100;
@@ -59,15 +59,8 @@ export const RMCTableauRequetesAssociees: React.FC<
   resetTableauRequete
 }) => {
   // Gestion du tableau
-  const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [requeteSelectionnee, setRequeteSelectionnee] =
     useState<IInfoRequeteSelectionnee>();
-
-  useEffect(() => {
-    if (dataRMCRequete?.length === 0) {
-      setZeroRequete(getMessageZeroRequete());
-    }
-  }, [dataRMCRequete]);
 
   const goToLink = useCallback(
     (link: string) => {
@@ -113,7 +106,7 @@ export const RMCTableauRequetesAssociees: React.FC<
         paramsTableau={dataTableauRMCRequete}
         goToLink={goToLink}
         resetTableau={resetTableauRequete}
-        noRows={zeroRequete}
+        noRows={getMessageZeroRequete()}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_REQUETE_ASSOCIEES}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_REQUETE_ASSOCIEES}
       >

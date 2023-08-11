@@ -81,6 +81,6 @@ test("render ApercuRequetePartieGauche", async () => {
 
   await waitFor(() => {
     expect(popinNouvelleRMC).not.toBeInTheDocument();
-    expect(screen.getByText("Aucune requête n'a été trouvée")).toBeDefined();
+    expect(screen.getByText("Aucune requête n'a été trouvée.")).toBeDefined();
   });
 });

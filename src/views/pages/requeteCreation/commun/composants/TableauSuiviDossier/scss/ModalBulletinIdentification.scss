@@ -1,0 +1,22 @@
+
+.modalContainer {
+    .modalTitle {
+        text-align: center;
+    }
+    .textContainer {
+        display: grid;
+    }
+    .ligneInformation {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 1em;
+        text-align: justify;
+        label {
+            vertical-align: center;
+        }
+        p{
+            margin: 10;
+        }
+    }
+}
+

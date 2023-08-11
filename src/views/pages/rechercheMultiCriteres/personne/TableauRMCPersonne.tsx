@@ -20,6 +20,7 @@ import {
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
+import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import React, { useState } from "react";
 import { IFenetreFicheActeInscription } from "../common/IFenetreFicheActeInscription";
 import {
@@ -30,7 +31,6 @@ import "./scss/TableauRMCPersonne.scss";
 import {
   getColonnesTableauRMCAutoPersonne,
   getIdentifiantPersonneOuActeInscription,
-  getLigneTableauVide,
   getRolesPersonneAsOptionsEnFonctionNatureActeRequete
 } from "./TableauRMCPersonneUtils";
 
@@ -184,7 +184,7 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
           nbLignesParPage={NB_LIGNES_PAR_PAGE_PERSONNE}
           nbLignesParAppel={NB_LIGNES_PAR_APPEL_PERSONNE}
           noRows={getLigneTableauVide(
-            getLibelle("Aucun résultat trouvé pour ces critères de recherche.")
+            "Aucun résultat trouvé pour ces critères de recherche."
           )}
           getRowClassName={getLigneClassName}
           stickyHeader={true}

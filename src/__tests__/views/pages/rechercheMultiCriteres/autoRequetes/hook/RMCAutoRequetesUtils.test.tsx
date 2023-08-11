@@ -1,10 +1,6 @@
 import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { goToLinkRMC } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauCommun";
-import {
-  determinerCriteresRMCAuto,
-  getMessageZeroRequete
-} from "@pages/rechercheMultiCriteres/autoRequetes/hook/RMCAutoRequetesUtils";
-import { render, screen } from "@testing-library/react";
+import { determinerCriteresRMCAuto } from "@pages/rechercheMultiCriteres/autoRequetes/hook/RMCAutoRequetesUtils";
 
 test("determinerCriteresRMCAuto", () => {
   const res = determinerCriteresRMCAuto(requeteDelivrance);
@@ -27,12 +23,6 @@ test("determinerCriteresRMCAuto", () => {
       }
     ]
   });
-});
-
-test("getMessageZeroRequete", () => {
-  render(getMessageZeroRequete());
-  const titreNumero = screen.getByText("Aucune requête n'a été trouvée");
-  expect(titreNumero).toBeDefined();
 });
 
 test("goToLinkRMC", () => {

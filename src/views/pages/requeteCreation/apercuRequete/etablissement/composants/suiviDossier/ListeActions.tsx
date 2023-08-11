@@ -18,8 +18,6 @@ interface ListeActionsRetourSDANFProps {
   modeConsultation?: boolean;
 }
 
-
-
 export const getPrenomEtNom = () => {
   let nomPrenom;
   const prenom = storeRece.utilisateurCourant?.prenom || "";
@@ -83,7 +81,8 @@ export const ListeActionsRetourSDANF: React.FC<
     | boolean
     | undefined {
     return (
-      props.statusRequete.statut !== StatutRequete.PRISE_EN_CHARGE ||
+      StatutRequete.getEnumFor(props.statusRequete) !==
+        StatutRequete.PRISE_EN_CHARGE ||
       props.idRequeteCorbeilleAgent !==
         storeRece.utilisateurCourant?.idUtilisateur ||
       props.modeConsultation

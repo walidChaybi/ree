@@ -10,21 +10,21 @@ import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
 import { autorisePrendreEnChargeReqTableauCreation } from "@util/RequetesUtils";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import { SortOrder } from "@widget/tableau/TableUtils";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { setParamsUseApercuCreation } from "../commun/requeteCreationUtils";
@@ -35,10 +35,7 @@ interface MesRequetesCreationProps {
   queryParametersPourRequetes: IQueryParametersPourRequetes;
 }
 
-export const MesRequetesCreation: React.FC<
-  MesRequetesCreationProps
-> = props => {
-  const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
+export const MesRequetesCreation: React.FC<MesRequetesCreationProps> = props => {
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [paramsMiseAJour, setParamsMiseAJour] = useState<
     ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
@@ -76,12 +73,6 @@ export const MesRequetesCreation: React.FC<
 
     setLinkParameters(queryParameters);
   }, []);
-
-  useEffect(() => {
-    if (dataState?.length === 0) {
-      setZeroRequete(getMessageZeroRequete());
-    }
-  }, [dataState]);
 
   const finOperationEnCours = () => {
     setOperationEnCours(false);
@@ -131,7 +122,7 @@ export const MesRequetesCreation: React.FC<
         paramsTableau={paramsTableau}
         goToLink={goToLink}
         handleChangeSort={handleChangeSort}
-        noRows={zeroRequete}
+        noRows={getMessageZeroRequete()}
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}

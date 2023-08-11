@@ -8,7 +8,7 @@ export class NatureActeRequete extends EnumWithComplete {
     "Naissance"
   );
   public static readonly MARIAGE = new NatureActeRequete("MARIAGE", "Mariage");
-  public static readonly DECES = new NatureActeRequete("MARIAGE", "Décès");
+  public static readonly DECES = new NatureActeRequete("DECES", "Décès");
 
   public static getEnumFor(str?: string) {
     return EnumWithComplete.getEnumFor(str, NatureActeRequete);

@@ -1,0 +1,26 @@
+@import "../../../../../../../scss/./colors";
+
+.TableauSuiviDossier {
+    .lignePersonne {
+        background-color: $tableau-body-ligne-main;
+    
+        * {
+          font-weight:900;
+          text-overflow: ellipsis;
+        }
+        .MuiTableCell-root {
+          text-overflow: ellipsis;
+        }
+      }
+    
+      .ligneProjetActe {
+        background-color: $tableau-body-ligne-blanche;
+    
+        * {
+          font-weight:900;
+        }
+        .MuiTableCell-root {
+          text-overflow: ellipsis;
+        }
+      }
+}

@@ -85,7 +85,7 @@ export const TableauActesInscriptionsSelectionnes: React.FC<
         paramsTableau={{}}
         onClickOnLine={() => {}}
         noRows={getLigneTableauVide(
-          getLibelle("Aucun acte ou inscription sélectionné pour le projet.")
+          "Aucun acte ou inscription sélectionné pour le projet."
         )}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_PERSONNE}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_PERSONNE}

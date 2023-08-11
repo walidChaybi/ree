@@ -1,6 +1,8 @@
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
+import { ITitulaireRequeteCreation } from "../ITitulaireRequeteCreation";
 
 export class QualiteFamille extends EnumWithLibelle {
+  public static readonly POSTULANT = new QualiteFamille("Postulant");
   public static readonly PARENT = new QualiteFamille("Parent");
   public static readonly FRATRIE = new QualiteFamille("Fratrie");
   public static readonly ANCIEN_CONJOINT = new QualiteFamille(
@@ -23,5 +25,23 @@ export class QualiteFamille extends EnumWithLibelle {
 
   public static estParent(qualiteFamille?: QualiteFamille): boolean {
     return qualiteFamille === QualiteFamille.PARENT;
+  }
+
+  public static estPostulant(qualiteFamille?: QualiteFamille): boolean {
+    return qualiteFamille === QualiteFamille.POSTULANT;
+  }
+
+  public static getEnumFromLibelle(libelle: string) {
+    return EnumWithLibelle.getEnumFromLibelle(QualiteFamille, libelle);
+  }
+
+  public static getEnumFromTitulaire(
+    titulaire: ITitulaireRequeteCreation
+  ): QualiteFamille | undefined {
+    if (titulaire.typeObjetTitulaire?.startsWith("POSTULANT")) {
+      return QualiteFamille.POSTULANT;
+    } else {
+      return titulaire.qualite;
+    }
   }
 }

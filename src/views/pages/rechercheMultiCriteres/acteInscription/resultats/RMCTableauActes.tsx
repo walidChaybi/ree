@@ -1,25 +1,25 @@
-import { getMessageZeroActe } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { Alerte, IAlerte } from "@model/etatcivil/fiche/IAlerte";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IFenetreFicheActe } from "@pages/rechercheMultiCriteres/common/IFenetreFicheActeInscription";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { getLibelle, getValeurOuVide, supprimeElement } from "@util/Utils";
 import { CompteurElementsCoches } from "@widget/compteurElementsCoches/CompteurElementsCoches";
-import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
+import { getLigneTableauVide } from "@widget/tableau/TableUtils";
+import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
 import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
-import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
+import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import React, { useCallback, useEffect, useState } from "react";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { IDataFicheProps } from "../../../fiche/FichePage";
 import { getColonnesTableauActes } from "./RMCTableauActesParams";
-import { goToLinkRMC, TypeRMC } from "./RMCTableauCommun";
+import { TypeRMC, goToLinkRMC } from "./RMCTableauCommun";
 export interface RMCResultatActeProps {
   typeRMC: TypeRMC;
   dataRequete?: TRequete;
@@ -61,15 +61,6 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   dataRMCFicheActe,
   dataTableauRMCFicheActe
 }) => {
-  // Gestion du tableau
-  const [zeroActe, setZeroActe] = useState<JSX.Element>();
-
-  useEffect(() => {
-    if (dataRMCActe && dataRMCActe.length === 0) {
-      setZeroActe(getMessageZeroActe());
-    }
-  }, [dataRMCActe]);
-
   const goToLink = useCallback(
     (link: string) => {
       const range = goToLinkRMC(link);
@@ -218,7 +209,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
         nbLignesParPage={nbLignesParPage}
         nbLignesParAppel={nbLignesParAppel}
         resetTableau={resetTableauActe}
-        noRows={zeroActe}
+        noRows={getLigneTableauVide("Aucun acte n'a été trouvé.")}
       />
       {typeRMC === "Auto" && dataRequete?.type === TypeRequete.DELIVRANCE && (
         <CompteurElementsCoches nombreElements={idActeSelectionnes.length} />

@@ -50,5 +50,5 @@ test("renders Resultat Recherche requêtes associées aux titulaires => Sans ré
     </Router>
   );
 
-  expect(getByText("Aucune requête n'a été trouvée")).toBeDefined();
+  expect(getByText("Aucune requête n'a été trouvée.")).toBeDefined();
 });

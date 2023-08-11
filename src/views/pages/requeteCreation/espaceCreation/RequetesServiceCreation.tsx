@@ -16,23 +16,23 @@ import {
   TransfertParLotParams,
   useTransfertsApi
 } from "@hook/requete/TransfertHook";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
 import { autorisePrendreEnChargeReqTableauCreation } from "@util/RequetesUtils";
-import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
+import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import { SortOrder } from "@widget/tableau/TableUtils";
+import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import React, { useCallback, useEffect, useState } from "react";
 import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
@@ -51,7 +51,6 @@ export const RequetesServiceCreation: React.FC<
   RequetesServiceCreationProps
 > = props => {
   // STATEs
-  const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
   const [paramsMiseAJour, setParamsMiseAJour] = useState<
     ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
@@ -108,12 +107,6 @@ export const RequetesServiceCreation: React.FC<
     setParametresLienRequete({ ...parametresLienRequete });
     setIdRequetesSelectionneesAttribueeA([]);
   };
-
-  useEffect(() => {
-    if (dataState?.length === 0) {
-      setZeroRequete(getMessageZeroRequete());
-    }
-  }, [dataState]);
 
   const finOpEnCours = () => {
     setOpEnCours(false);
@@ -225,7 +218,7 @@ export const RequetesServiceCreation: React.FC<
         onClick={finOpEnCours}
       />
       <div className="FiltreEtRechercheReqService">
-          <FiltreEtRechercheForm onSubmit={onSubmit} />
+        <FiltreEtRechercheForm onSubmit={onSubmit} />
       </div>
       <TableauRece
         idKey={"idRequete"}
@@ -237,7 +230,7 @@ export const RequetesServiceCreation: React.FC<
         paramsTableau={paramsTableau}
         goToLink={changementDePage}
         handleChangeSort={handleChangeSortTableau}
-        noRows={zeroRequete}
+        noRows={getMessageZeroRequete()}
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}

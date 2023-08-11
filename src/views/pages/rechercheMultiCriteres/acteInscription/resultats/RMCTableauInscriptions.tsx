@@ -1,23 +1,23 @@
-import { getMessageZeroInscription } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
+import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { StatutFiche } from "@model/etatcivil/enum/StatutFiche";
 import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { TRequete } from "@model/requete/IRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { TRequete } from "@model/requete/IRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { getLibelle, getValeurOuVide, supprimeElement } from "@util/Utils";
-import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
+import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
+import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import React, { useCallback, useEffect, useState } from "react";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { IDataFicheProps, IIndex } from "../../../fiche/FichePage";
-import { goToLinkRMC, TypeRMC } from "./RMCTableauCommun";
+import { TypeRMC, goToLinkRMC } from "./RMCTableauCommun";
 import { getColonnesTableauInscriptions } from "./RMCTableauInscriptionsParams";
 
 interface IFenetreFicheInscription {
@@ -65,15 +65,6 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   dataRMCFicheInscription,
   dataTableauRMCFicheInscription
 }) => {
-  // Gestion du tableau
-  const [zeroInscription, setZeroInscription] = useState<JSX.Element>();
-
-  useEffect(() => {
-    if (dataRMCInscription && dataRMCInscription.length === 0) {
-      setZeroInscription(getMessageZeroInscription());
-    }
-  }, [dataRMCInscription]);
-
   const goToLink = useCallback(
     (link: string) => {
       const range = goToLinkRMC(link);
@@ -222,7 +213,7 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
         paramsTableau={dataTableauRMCInscription}
         goToLink={goToLink}
         resetTableau={resetTableauInscription}
-        noRows={zeroInscription}
+        noRows={getLigneTableauVide("Aucune inscription n'a été trouvée.")}
         nbLignesParPage={nbLignesParPage}
         nbLignesParAppel={nbLignesParAppel}
       />

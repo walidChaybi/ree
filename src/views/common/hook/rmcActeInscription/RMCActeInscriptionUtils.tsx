@@ -7,7 +7,6 @@ import { IRMCRequestActesInscriptions } from "@model/rmc/acteInscription/envoi/I
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { RMCRepertoire } from "@model/rmc/acteInscription/rechercheForm/IRMCRepertoire";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import ReportIcon from "@mui/icons-material/Report";
 import {
   getDateDebutFromDateCompose,
   getDateFinFromDateCompose,
@@ -135,24 +134,6 @@ export function rechercherActeAutorise(
     criteres.typeRepertoire ||
     criteres.natureRcRca ||
     criteres.numeroInscription
-  );
-}
-
-export function getMessageZeroActe(): JSX.Element {
-  return (
-    <>
-      <ReportIcon />
-      <div>Aucun acte n'a été trouvé</div>
-    </>
-  );
-}
-
-export function getMessageZeroInscription(): JSX.Element {
-  return (
-    <>
-      <ReportIcon />
-      <div>Aucune inscription n'a été trouvée</div>
-    </>
   );
 }
 

@@ -9,7 +9,7 @@ import {
   requeteCreationAvecMessagesRetourSDANFSansLesDroits,
   requeteCreationEtablissement
 } from "@mock/data/requeteCreation";
-import { OngletsApercuCreationEtablissementSimple } from "@pages/requeteCreation/apercuRequete/etablissement/composants/OngletsApercuCreationEtablissementSimple";
+import { OngletsApercuCreationEtablissementPriseEnCharge } from "@pages/requeteCreation/apercuRequete/etablissement/composants/OngletsApercuCreationEtablissementPriseEnCharge";
 import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID } from "@router/ReceUrls";
 import {
   act,
@@ -46,15 +46,17 @@ test("L'encart retour SDANF est present dans la page", async () => {
               URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
             }
           >
-            <OngletsApercuCreationEtablissementSimple
+            <OngletsApercuCreationEtablissementPriseEnCharge
               requete={mappingRequeteCreation(requeteCreationEtablissement)}
-              onRenommePieceJustificative={function (
+              onRenommePieceJustificative={(
                 idPieceJustificative: string,
                 nouveauLibelle: string,
                 idDocumentPJ?: string | undefined
-              ): void {
-                throw new Error("Function not implemented.");
-              }}
+              ) => {}}
+              resultatRMCPersonne={[]}
+              tableauRMCPersonneEnChargement={false}
+              setDataActesInscriptionsSelectionnes={() => {}}
+              setRmcAutoPersonneParams={() => {}}
             />
           </Route>
         </Router>
@@ -62,10 +64,11 @@ test("L'encart retour SDANF est present dans la page", async () => {
     );
   });
 
+  const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Suivi dossier");
-    fireEvent.click(boutonVoletAction);
+    expect(boutonVoletSuiviDossier).toBeDefined();
   });
+  fireEvent.click(boutonVoletSuiviDossier);
 
   await waitFor(() => {
     expect(screen.getByText("Retour SDANF")).toBeDefined();
@@ -92,17 +95,19 @@ test("Doit afficher le message avec le bon format titre - message - prenomNom", 
               URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
             }
           >
-            <OngletsApercuCreationEtablissementSimple
+            <OngletsApercuCreationEtablissementPriseEnCharge
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecMessages
               )}
-              onRenommePieceJustificative={function (
+              onRenommePieceJustificative={(
                 idPieceJustificative: string,
                 nouveauLibelle: string,
                 idDocumentPJ?: string | undefined
-              ): void {
-                throw new Error("Function not implemented.");
-              }}
+              ) => {}}
+              resultatRMCPersonne={[]}
+              tableauRMCPersonneEnChargement={false}
+              setDataActesInscriptionsSelectionnes={() => {}}
+              setRmcAutoPersonneParams={() => {}}
             />
           </Route>
         </Router>
@@ -110,10 +115,11 @@ test("Doit afficher le message avec le bon format titre - message - prenomNom", 
     );
   });
 
+  const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Suivi dossier");
-    fireEvent.click(boutonVoletAction);
+    expect(boutonVoletSuiviDossier).toBeDefined();
   });
+  fireEvent.click(boutonVoletSuiviDossier);
 
   await waitFor(() => {
     expect(
@@ -144,17 +150,19 @@ test("Doit afficher la liste des messages avec le bon nombre de messages", async
               URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
             }
           >
-            <OngletsApercuCreationEtablissementSimple
+            <OngletsApercuCreationEtablissementPriseEnCharge
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFSansLesDroits
               )}
-              onRenommePieceJustificative={function (
+              onRenommePieceJustificative={(
                 idPieceJustificative: string,
                 nouveauLibelle: string,
                 idDocumentPJ?: string | undefined
-              ): void {
-                throw new Error("Function not implemented.");
-              }}
+              ) => {}}
+              resultatRMCPersonne={[]}
+              tableauRMCPersonneEnChargement={false}
+              setDataActesInscriptionsSelectionnes={() => {}}
+              setRmcAutoPersonneParams={() => {}}
             />
           </Route>
         </Router>
@@ -162,10 +170,11 @@ test("Doit afficher la liste des messages avec le bon nombre de messages", async
     );
   });
 
+  const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Suivi dossier");
-    fireEvent.click(boutonVoletAction);
+    expect(boutonVoletSuiviDossier).toBeDefined();
   });
+  fireEvent.click(boutonVoletSuiviDossier);
 
   await waitFor(() => {
     expect(document.querySelectorAll("li.container").length).toEqual(2);
@@ -198,17 +207,19 @@ test("Doit desactiver les boutons quand la requete n'est pas en statut PRISE_EN_
               URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
             }
           >
-            <OngletsApercuCreationEtablissementSimple
+            <OngletsApercuCreationEtablissementPriseEnCharge
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecMauvaisStatus
               )}
-              onRenommePieceJustificative={function (
+              onRenommePieceJustificative={(
                 idPieceJustificative: string,
                 nouveauLibelle: string,
                 idDocumentPJ?: string | undefined
-              ): void {
-                throw new Error("Function not implemented.");
-              }}
+              ) => {}}
+              resultatRMCPersonne={[]}
+              tableauRMCPersonneEnChargement={false}
+              setDataActesInscriptionsSelectionnes={() => {}}
+              setRmcAutoPersonneParams={() => {}}
             />
           </Route>
         </Router>
@@ -216,13 +227,14 @@ test("Doit desactiver les boutons quand la requete n'est pas en statut PRISE_EN_
     );
   });
 
+  const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Suivi dossier");
-    fireEvent.click(boutonVoletAction);
+    expect(boutonVoletSuiviDossier).toBeDefined();
   });
+  fireEvent.click(boutonVoletSuiviDossier);
 
+  const button = screen.getByText("Acte irrecevable").closest("button");
   await waitFor(() => {
-    const button = screen.getByText("Acte irrecevable").closest("button");
     expect(button).toBeDisabled();
   });
 });
@@ -249,17 +261,19 @@ test("Doit desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete 
               URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
             }
           >
-            <OngletsApercuCreationEtablissementSimple
+            <OngletsApercuCreationEtablissementPriseEnCharge
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut
               )}
-              onRenommePieceJustificative={function (
+              onRenommePieceJustificative={(
                 idPieceJustificative: string,
                 nouveauLibelle: string,
                 idDocumentPJ?: string | undefined
-              ): void {
-                throw new Error("Function not implemented.");
-              }}
+              ) => {}}
+              resultatRMCPersonne={[]}
+              tableauRMCPersonneEnChargement={false}
+              setDataActesInscriptionsSelectionnes={() => {}}
+              setRmcAutoPersonneParams={() => {}}
             />
           </Route>
         </Router>
@@ -267,13 +281,14 @@ test("Doit desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete 
     );
   });
 
+  const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Suivi dossier");
-    fireEvent.click(boutonVoletAction);
+    expect(boutonVoletSuiviDossier).toBeDefined();
   });
+  fireEvent.click(boutonVoletSuiviDossier);
 
+  const button = screen.getByText("Acte irrecevable").closest("button");
   await waitFor(() => {
-    const button = screen.getByText("Acte irrecevable").closest("button");
     expect(button).toBeDisabled();
   });
 });
@@ -301,17 +316,19 @@ test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requ
               URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
             }
           >
-            <OngletsApercuCreationEtablissementSimple
+            <OngletsApercuCreationEtablissementPriseEnCharge
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
               )}
-              onRenommePieceJustificative={function (
+              onRenommePieceJustificative={(
                 idPieceJustificative: string,
                 nouveauLibelle: string,
                 idDocumentPJ?: string | undefined
-              ): void {
-                throw new Error("Function not implemented.");
-              }}
+              ) => {}}
+              resultatRMCPersonne={[]}
+              tableauRMCPersonneEnChargement={false}
+              setDataActesInscriptionsSelectionnes={() => {}}
+              setRmcAutoPersonneParams={() => {}}
             />
           </Route>
         </Router>
@@ -319,10 +336,11 @@ test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requ
     );
   });
 
+  const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Suivi dossier");
-    fireEvent.click(boutonVoletAction);
+    expect(boutonVoletSuiviDossier).toBeDefined();
   });
+  fireEvent.click(boutonVoletSuiviDossier);
 
   const button = screen.getByText("Acte irrecevable").closest("button");
 
@@ -355,17 +373,19 @@ test("Doit ouvrir et changer le titre de la popin au click sur une action", asyn
               URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
             }
           >
-            <OngletsApercuCreationEtablissementSimple
+            <OngletsApercuCreationEtablissementPriseEnCharge
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
               )}
-              onRenommePieceJustificative={function (
+              onRenommePieceJustificative={(
                 idPieceJustificative: string,
                 nouveauLibelle: string,
                 idDocumentPJ?: string | undefined
-              ): void {
-                throw new Error("Function not implemented.");
-              }}
+              ) => {}}
+              resultatRMCPersonne={[]}
+              tableauRMCPersonneEnChargement={false}
+              setDataActesInscriptionsSelectionnes={() => {}}
+              setRmcAutoPersonneParams={() => {}}
             />
           </Route>
         </Router>
@@ -373,30 +393,26 @@ test("Doit ouvrir et changer le titre de la popin au click sur une action", asyn
     );
   });
 
+  const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Suivi dossier");
-    fireEvent.click(boutonVoletAction);
+    expect(boutonVoletSuiviDossier).toBeDefined();
   });
+  fireEvent.click(boutonVoletSuiviDossier);
+
+  const boutonActeIrrecevable = screen
+    .getByText("Acte irrecevable")
+    .closest("button");
+  const boutonElementManquant = screen
+    .getByText("Acte irrecevable")
+    .closest("button");
+  const boutonSuspicionFraudeNouvelElement = screen
+    .getByText("Acte irrecevable")
+    .closest("button");
 
   await waitFor(() => {
-    const boutonAction = screen
-      .getByText("Acte irrecevable")
-      .closest("button") as HTMLElement;
-    fireEvent.click(boutonAction);
-  });
-
-  await waitFor(() => {
-    const boutonAction = screen
-      .getByText("Élément manquant")
-      .closest("button") as HTMLElement;
-    fireEvent.click(boutonAction);
-  });
-
-  await waitFor(() => {
-    const boutonAction = screen
-      .getByText("Suspicion de fraude / nouvel élément")
-      .closest("button") as HTMLElement;
-    fireEvent.click(boutonAction);
+    expect(boutonActeIrrecevable).toBeDefined();
+    expect(boutonElementManquant).toBeDefined();
+    expect(boutonSuspicionFraudeNouvelElement).toBeDefined();
   });
 });
 
@@ -423,34 +439,41 @@ test("Doit ouvrir la popin au click sur une action", async () => {
             URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
           }
         >
-          <OngletsApercuCreationEtablissementSimple
+          <OngletsApercuCreationEtablissementPriseEnCharge
             requete={mappingRequeteCreation(
               requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
             )}
-            onRenommePieceJustificative={function (
+            onRenommePieceJustificative={(
               idPieceJustificative: string,
               nouveauLibelle: string,
               idDocumentPJ?: string | undefined
-            ): void {
-              throw new Error("Function not implemented.");
-            }}
+            ) => {}}
+            resultatRMCPersonne={[]}
+            tableauRMCPersonneEnChargement={false}
+            setDataActesInscriptionsSelectionnes={() => {}}
+            setRmcAutoPersonneParams={() => {}}
           />
         </Route>
       </Router>
     </>
   );
 
+  const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Suivi dossier");
-    fireEvent.click(boutonVoletAction);
+    expect(boutonVoletSuiviDossier).toBeDefined();
+  });
+  fireEvent.click(boutonVoletSuiviDossier);
+
+  const bouton = screen
+    .getByText("Acte irrecevable")
+    .closest("button") as HTMLElement;
+  await waitFor(() => {
+    expect(bouton).toBeDefined();
   });
 
+  fireEvent.click(bouton);
   await waitFor(() => {
-    const bouton = screen
-      .getByText("Acte irrecevable")
-      .closest("button") as HTMLElement;
-    fireEvent.click(bouton);
-    expect(bouton?.getAttribute("disabled")).toBe(null);
+    expect(bouton.getAttribute("disabled")).toBe(null);
   });
 });
 
@@ -478,17 +501,19 @@ test("Doit afficher un message d'erreur quand la taille maximale est dépassée"
               URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
             }
           >
-            <OngletsApercuCreationEtablissementSimple
+            <OngletsApercuCreationEtablissementPriseEnCharge
               requete={mappingRequeteCreation(
                 requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
               )}
-              onRenommePieceJustificative={function (
+              onRenommePieceJustificative={(
                 idPieceJustificative: string,
                 nouveauLibelle: string,
                 idDocumentPJ?: string | undefined
-              ): void {
-                throw new Error("Function not implemented.");
-              }}
+              ) => {}}
+              resultatRMCPersonne={[]}
+              tableauRMCPersonneEnChargement={false}
+              setDataActesInscriptionsSelectionnes={() => {}}
+              setRmcAutoPersonneParams={() => {}}
             />
           </Route>
         </Router>
@@ -496,41 +521,42 @@ test("Doit afficher un message d'erreur quand la taille maximale est dépassée"
     );
   });
 
+  const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
-    const boutonVoletAction = screen.getByText("Suivi dossier");
-    fireEvent.click(boutonVoletAction);
+    expect(boutonVoletSuiviDossier).toBeDefined();
   });
+  fireEvent.click(boutonVoletSuiviDossier);
 
+  const boutonActeIrrecevable = screen
+    .getByText("Acte irrecevable")
+    .closest("button") as HTMLElement;
   await waitFor(() => {
-    const boutonAction = screen
-      .getByText("Acte irrecevable")
-      .closest("button") as HTMLElement;
-    fireEvent.click(boutonAction);
+    expect(boutonActeIrrecevable).toBeDefined();
   });
+  fireEvent.click(boutonActeIrrecevable);
 
+  const popin = screen.queryByTestId("popinConfirmationEtMessage");
   await waitFor(() => {
-    const popin = screen.queryByTestId("popinConfirmationEtMessage");
     expect(popin).toBeDefined();
   });
 
   const message =
     "Lorem Ipsum is simply dummy text of the pridddddnting and typesddetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was populardddd";
 
-  await waitFor(() => {
-    const textArea = screen.getByPlaceholderText("Saisir un message");
-    fireEvent.change(textArea, {
-      target: { value: message }
-    });
+  const textArea = screen.getByPlaceholderText("Saisir un message");
+  fireEvent.change(textArea, {
+    target: { value: message }
   });
 
+  const messageAvertissement = screen.queryByText("500 caractères maximum");
   await waitFor(() => {
-    expect("500 caractères maximum").toBeDefined();
+    expect(messageAvertissement).toBeInTheDocument();
   });
 
+  fireEvent.change(textArea, {
+    target: { value: "ddd" }
+  });
   await waitFor(() => {
-    const textArea = screen.getByPlaceholderText("Saisir un message");
-    fireEvent.change(textArea, {
-      target: { value: "ddd" }
-    });
+    expect(messageAvertissement).not.toBeInTheDocument();
   });
 });

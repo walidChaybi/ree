@@ -14,20 +14,20 @@ import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import { Droit } from "@model/agent/enum/Droit";
-import { Perimetre } from "@model/agent/enum/Perimetre";
 import {
   officierALeDroitSurUnDesPerimetres,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
 import { TRequeteTableau } from "@model/requete/IRequeteTableau";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { setParamsUseApercuCreation } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
@@ -42,7 +42,7 @@ import {
   NB_LIGNES_PAR_PAGE_REQUETE
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { columnsTableauRequete } from "./RMCTableauRequetesParams";
 
@@ -60,7 +60,6 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   resetTableauRequete
 }) => {
   // Gestion du tableau
-  const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
   //**** RMC AUTO ****//
@@ -84,12 +83,6 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   >();
 
   useNavigationApercuInformation(paramsNavReqInfo);
-
-  useEffect(() => {
-    if (dataRMCRequete && dataRMCRequete.length === 0) {
-      setZeroRequete(getMessageZeroRequete());
-    }
-  }, [dataRMCRequete]);
 
   const goToLink = useCallback(
     (link: string) => {
@@ -217,7 +210,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
         paramsTableau={dataTableauRMCRequete}
         goToLink={goToLink}
         resetTableau={resetTableauRequete}
-        noRows={zeroRequete}
+        noRows={getMessageZeroRequete()}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_REQUETE}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
       />

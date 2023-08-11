@@ -7,9 +7,9 @@ import {
   INavigationApercuReqInfoParams,
   useNavigationApercuInformation
 } from "@hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
+import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { getUrlCourante } from "@util/route/UrlUtil";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -19,7 +19,7 @@ import {
   NB_LIGNES_PAR_PAGE_DEFAUT
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { requeteInformationRequetesServiceColumnHeaders } from "./EspaceReqInfoParams";
@@ -34,7 +34,6 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
   parametresReqInfo
 }) => {
   const history = useHistory();
-  const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
     INavigationApercuReqInfoParams | undefined
@@ -80,12 +79,6 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     });
   }
 
-  useEffect(() => {
-    if (dataState && dataState.length === 0) {
-      setZeroRequete(getMessageZeroRequete());
-    }
-  }, [dataState]);
-
   const getIcone = (
     idRequete: string,
     sousType: string,
@@ -126,7 +119,7 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
         icone={{ keyColonne: "iconeAssigne", getIcone }}
         paramsTableau={paramsTableau}
         goToLink={goToLink}
-        noRows={zeroRequete}
+        noRows={getMessageZeroRequete()}
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}

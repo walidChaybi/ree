@@ -7,28 +7,28 @@ import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
+import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
-import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE,
   NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
-import { SortOrder } from "@widget/tableau/TableUtils";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
-  dateStatutColumnHeaders,
   HeaderTableauRequete,
+  dateStatutColumnHeaders,
   requeteColumnHeaders
 } from "./EspaceDelivranceParams";
 import {
@@ -61,9 +61,9 @@ interface MesRequetesServicePageProps {
   ) => void;
 }
 
-export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props => {
-  const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
-
+export const RequetesServicePage: React.FC<
+  MesRequetesServicePageProps
+> = props => {
   const [paramsMiseAJour, setParamsMiseAJour] = useState<
     ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
@@ -133,12 +133,6 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     );
   }
 
-  useEffect(() => {
-    if (dataState && dataState.length === 0) {
-      setZeroRequete(getMessageZeroRequete());
-    }
-  }, [dataState]);
-
   const finOperationEnCours = () => {
     setOperationEnCours(false);
   };
@@ -184,7 +178,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
         paramsTableau={paramsTableau}
         goToLink={goToLink}
         handleChangeSort={handleChangeSort}
-        noRows={zeroRequete}
+        noRows={getMessageZeroRequete()}
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}

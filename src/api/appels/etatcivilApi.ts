@@ -46,6 +46,8 @@ export const URL_POCOPAS = "/mespocopas";
 export const URL_LISTE_PERSONNE = "/personne/listePersonne";
 export const URL_LISTE_ACTES_INSCRIPTIONS =
   "/projetacte/actesinscriptionssauvegardes";
+export const URL_ANALYSE_MARGINALE = "/analyseMarginale";
+export const URL_BULLETIN_IDENTIFICATION = "/bulletinIdentification";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -397,4 +399,23 @@ export function getPocopasAgent(): Promise<any> {
     uri: `${URL_ACTE}${URL_POCOPAS}`
   };
   return api.fetch(config);
+}
+
+export function getTitulaireAnalyseMarginalByIdActe(
+  identifiantsActes: string[]
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_ACTE}${URL_ANALYSE_MARGINALE}`,
+    data: identifiantsActes
+  });
+}
+
+export function getBulletinIdentificationByIdActe(
+  idActe: string
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_ACTE}${URL_BULLETIN_IDENTIFICATION}/${idActe}`
+  });
 }

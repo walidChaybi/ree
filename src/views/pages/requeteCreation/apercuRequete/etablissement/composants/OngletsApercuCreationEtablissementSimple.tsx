@@ -8,7 +8,6 @@ import {
 } from "../../../commun/composants/OngletPiecesJustificatives";
 import { BoutonsApercuCreationEtablissement } from "./BoutonsApercuCreationEtablissement";
 import "./scss/OngletsApercuCreationEtablissement.scss";
-import { SuiviDossier } from "./suiviDossier/SuiviDossier";
 
 interface OngletsApercuCreationEtablissementSimpleProps {
   requete: IRequeteCreationEtablissement;
@@ -38,17 +37,6 @@ export const OngletsApercuCreationEtablissementSimple: React.FC<
         />
       ),
       index: 0
-    },
-    {
-      titre: getLibelle("Suivi dossier"),
-      component: (
-        <SuiviDossier
-          echanges={props.requete?.provenanceNatali?.echanges}
-          requete={props.requete}
-          modeConsultation={props.modeConsultation}
-        />
-      ),
-      index: 1
     }
   ];
 

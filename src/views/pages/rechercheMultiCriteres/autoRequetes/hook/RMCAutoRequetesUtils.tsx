@@ -4,8 +4,7 @@ import {
   ICriteresRMCAutoRequete,
   IRMCRequestRequete
 } from "@model/rmc/requete/IRMCRequestRequete";
-import ReportIcon from "@mui/icons-material/Report";
-import { getLibelle, getValeurOuUndefined } from "@util/Utils";
+import { getValeurOuUndefined } from "@util/Utils";
 
 export function determinerCriteresRMCAuto(
   requete: TRequete
@@ -25,13 +24,4 @@ function criteresRMCAutoMapper(titulaires?: any): IRMCRequestRequete[] {
       anneeNaissance: getValeurOuUndefined(t?.anneeNaissance)
     } as IRMCRequestRequete;
   });
-}
-
-export function getMessageZeroRequete(): JSX.Element {
-  return (
-    <>
-      <ReportIcon />
-      <div>{getLibelle("Aucune requête n'a été trouvée")}</div>
-    </>
-  );
 }

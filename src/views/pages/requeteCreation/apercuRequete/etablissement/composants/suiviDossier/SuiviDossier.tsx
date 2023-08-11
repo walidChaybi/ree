@@ -1,6 +1,7 @@
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
+import TableauSuiviDossier from "@pages/requeteCreation/commun/composants/TableauSuiviDossier/TableauSuiviDossier";
 import { getLibelle } from "@util/Utils";
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router";
 import { IUuidRequeteParams } from "../../../../../../../model/params/IUuidRequeteParams";
 import { IEchange } from "../../../../../../../model/requete/IEchange";
@@ -11,25 +12,25 @@ import "../scss/OngletsApercuCreationEtablissement.scss";
 import { ListeActionsRetourSDANF } from "./ListeActions";
 interface ISuiviDossierProps {
   echanges?: IEchange[];
-  requete?: IRequeteCreationEtablissement;
+  requete: IRequeteCreationEtablissement;
   modeConsultation?: boolean;
 }
 
 export const SuiviDossier: React.FC<ISuiviDossierProps> = props => {
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
-  const [echanges, setEchanges] = React.useState<IEchange[] | undefined>(
+  const [echanges, setEchanges] = useState<IEchange[] | undefined>(
     props.echanges
   );
-
   return (
     <>
+      <TableauSuiviDossier requete={props.requete} />
       <Item titre={getLibelle("Retour SDANF")}>
         <ItemEchangesRetourSDANF echanges={echanges} />
 
         <ListeActionsRetourSDANF
           setEchanges={setEchanges}
           echanges={echanges}
-          statusRequete={props.requete?.statutCourant}
+          statusRequete={props.requete?.statutCourant.statut}
           idRequeteCorbeilleAgent={props.requete?.idUtilisateur}
           idRequeteParam={idRequeteParam}
           modeConsultation={props.modeConsultation}

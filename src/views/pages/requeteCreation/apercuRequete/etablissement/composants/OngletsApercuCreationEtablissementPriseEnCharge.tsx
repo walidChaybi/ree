@@ -83,7 +83,7 @@ export const OngletsApercuCreationEtablissementPriseEnCharge: React.FC<
       titre: getLibelle("Suivi dossier"),
       component: (
         <SuiviDossier
-          echanges={props.requete?.provenanceNatali?.echanges}
+          echanges={props.requete.provenanceNatali?.echanges}
           requete={props.requete}
           modeConsultation={props.modeConsultation}
         />

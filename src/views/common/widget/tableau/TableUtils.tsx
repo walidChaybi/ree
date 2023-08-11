@@ -1,4 +1,6 @@
+import ReportIcon from "@mui/icons-material/Report";
 import { FormatDate } from "@util/DateUtils";
+import { getLibelle } from "@util/Utils";
 import moment from "moment";
 
 export type SortOrder = "ASC" | "DESC";
@@ -136,4 +138,13 @@ export function getSortOrder(
     result = "ASC";
   }
   return result;
+}
+
+export function getLigneTableauVide(message: string): JSX.Element {
+  return (
+    <>
+      <ReportIcon />
+      <div>{getLibelle(message)}</div>
+    </>
+  );
 }
