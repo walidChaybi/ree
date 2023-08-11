@@ -28,11 +28,6 @@ const verificationsRestrictionCriteresErreurs: IVerificationErreur[] = [
     messageErreur: messageErreurPrenomSaisiSansNom
   },
   {
-    test: nomSaisiSansDateNaissance,
-    messageErreur:
-      "Le critère nom ne peut être utilisé sans au moins l'année de la date de naissance"
-  },
-  {
     test: dateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire,
     messageErreur:
       messageErreurDateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire
@@ -60,13 +55,6 @@ export function filtreDateCreationInformatiqueSaisiSeul(
     aucuneProprieteRenseignee(rMCSaisie.requerant) &&
     aucuneProprieteRenseignee(rMCSaisie.requete) &&
     aucuneProprieteRenseignee(rMCSaisie.titulaire)
-  );
-}
-
-export function nomSaisiSansDateNaissance(rMCSaisie: IRMCRequete): boolean {
-  return (
-    estRenseigne(rMCSaisie.titulaire?.nom) &&
-    estNonRenseigne(rMCSaisie.titulaire?.dateNaissance?.annee)
   );
 }
 

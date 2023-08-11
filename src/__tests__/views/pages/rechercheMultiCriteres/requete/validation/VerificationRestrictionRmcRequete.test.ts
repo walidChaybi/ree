@@ -4,7 +4,6 @@ import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
 import {
   filtreDateCreationInformatiqueSaisiSeul,
   getMessageSiVerificationRestrictionRmcRequeteEnErreur,
-  nomSaisiSansDateNaissance,
   typeRequeteSaisiSansSousTypeOuStatut
 } from "@pages/rechercheMultiCriteres/requete/validation/VerificationRestrictionRmcRequete";
 
@@ -75,32 +74,6 @@ test("Attendu: typeRequeteSaisiSansSousTypeOuStatut fonctionne correctement", ()
   expect(
     typeRequeteSaisiSansSousTypeOuStatut(rmcSaisieTypeRequete)
   ).toBeFalsy();
-});
-
-test("Attendu: nomSaisiSansDateNaissance fonctionne correctement", () => {
-  const rmcSaisieTypeRequete: IRMCRequete = {
-    requete: {
-      typeRequete: SOMETHING,
-      sousTypeRequete: undefined,
-      numeroTeledossier: ""
-    },
-    titulaire: {
-      nom: SOMETHING,
-      dateNaissance: { annee: "" }
-    },
-    datesDebutFinAnnee: {
-      dateDebut: undefined,
-      dateFin: {
-        jour: "10",
-        mois: "10",
-        annee: "2022"
-      }
-    }
-  };
-  expect(nomSaisiSansDateNaissance(rmcSaisieTypeRequete)).toBeTruthy();
-
-  rmcSaisieTypeRequete.titulaire!.dateNaissance!.annee = "2010";
-  expect(nomSaisiSansDateNaissance(rmcSaisieTypeRequete)).toBeFalsy();
 });
 
 test("Attendu: filtreDateCreationInformatiqueSaisiSeul fonctionne correctement", () => {
