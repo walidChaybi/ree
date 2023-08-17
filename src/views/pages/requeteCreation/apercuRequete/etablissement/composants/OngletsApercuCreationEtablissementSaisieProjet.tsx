@@ -2,10 +2,10 @@ import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
 import { IRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
+import { ApercuProjet } from "@pages/requeteCreation/commun/composants/ApercuProjet";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { IDataTableauActeInscriptionSelectionne } from "@pages/requeteCreation/commun/composants/tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
-import { DEUX, getLibelle } from "@util/Utils";
+import { UN, getLibelle } from "@util/Utils";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useState } from "react";
 import {
@@ -14,11 +14,9 @@ import {
 } from "../../../commun/composants/OngletPiecesJustificatives";
 import { BoutonsApercuCreationEtablissement } from "./BoutonsApercuCreationEtablissement";
 import "./scss/OngletsApercuCreationEtablissement.scss";
-import { SuiviDossier } from "./suiviDossier/SuiviDossier";
 
-interface OngletsApercuCreationEtablissementPriseEnChargeProps {
+interface OngletsApercuCreationEtablissementSaisieProjetProps {
   requete: IRequeteCreationEtablissement;
-  modeConsultation?: boolean;
   onRenommePieceJustificative: typeFctRenommePieceJustificative;
   resultatRMCPersonne: IRMCPersonneResultat[];
   tableauRMCPersonneEnChargement: boolean;
@@ -37,23 +35,12 @@ interface ItemListe {
   component: JSX.Element;
 }
 
-export const OngletsApercuCreationEtablissementPriseEnCharge: React.FC<
-  OngletsApercuCreationEtablissementPriseEnChargeProps
+export const OngletsApercuCreationEtablissementSaisieProjet: React.FC<
+  OngletsApercuCreationEtablissementSaisieProjetProps
 > = props => {
-  const [ongletSelectionne, setOngletSelectionne] = useState(DEUX);
+  const [ongletSelectionne, setOngletSelectionne] = useState(UN);
 
   const liste: ItemListe[] = [
-    {
-      titre: getLibelle("Pièces justificatives / Annexes"),
-      component: (
-        <OngletPiecesJustificatives
-          requete={props.requete}
-          autoriseOuvertureFenetreExt={true}
-          onRenommePieceJustificative={props.onRenommePieceJustificative}
-        />
-      ),
-      index: 0
-    },
     {
       titre: getLibelle("RMC"),
       component: (
@@ -77,27 +64,27 @@ export const OngletsApercuCreationEtablissementPriseEnCharge: React.FC<
           setRmcAutoPersonneParams={props.setRmcAutoPersonneParams}
         />
       ),
+      index: 0
+    },
+    {
+      titre: getLibelle("Pièces justificatives / Annexes"),
+      component: (
+        <OngletPiecesJustificatives
+          requete={props.requete}
+          autoriseOuvertureFenetreExt={true}
+          onRenommePieceJustificative={props.onRenommePieceJustificative}
+        />
+      ),
       index: 1
     },
     {
-      titre: getLibelle("Suivi dossier"),
-      component: (
-        <SuiviDossier
-          echanges={props.requete.provenanceNatali?.echanges}
-          requete={props.requete}
-          modeConsultation={props.modeConsultation}
-        />
-      ),
+      titre: getLibelle("Apercu du projet"),
+      component: <ApercuProjet />,
       index: 2
-    },
-    {
-      titre: getLibelle("Echanges"),
-      component: <Echanges />,
-      index: 3
     }
   ];
 
-  const handleChange = (e: any, newValue: string) => {
+  const handleChange = (e: React.SyntheticEvent, newValue: string) => {
     setOngletSelectionne(parseInt(newValue));
   };
 

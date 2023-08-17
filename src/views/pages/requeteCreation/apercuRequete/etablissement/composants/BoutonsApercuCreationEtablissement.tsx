@@ -1,12 +1,15 @@
 import { RECEContext } from "@core/body/RECEContext";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import {
+  PATH_APERCU_REQ_ETABLISSEMENT_PRISE_EN_CHARGE,
+  PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
   URL_MES_REQUETES_CREATION,
   URL_RECHERCHE_REQUETE,
   URL_REQUETES_CREATION_SERVICE
 } from "@router/ReceUrls";
 import { autorisePrendreEnChargeDepuisPageCreation } from "@util/RequetesUtils";
 import { getLibelle } from "@util/Utils";
+import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { useContext, useMemo } from "react";
 import { useHistory } from "react-router-dom";
@@ -20,6 +23,7 @@ interface BoutonsApercuCreationEtablissementProps {
 const RETOUR_RECHERCHE_REQUETE = getLibelle("Retour recherche requêtes");
 const RETOUR_MES_REQUETE = getLibelle("Retour mes requêtes");
 const RETOUR_REQUETE_SERVICE = getLibelle("Retour requêtes de service");
+const RETOUR_PRISE_EN_CHARGE = getLibelle("Retour apercu prise en charge");
 
 export const BoutonsApercuCreationEtablissement: React.FC<
   BoutonsApercuCreationEtablissementProps
@@ -36,7 +40,12 @@ export const BoutonsApercuCreationEtablissement: React.FC<
       libelle: RETOUR_RECHERCHE_REQUETE,
       url: URL_RECHERCHE_REQUETE
     };
-    if (pathname.startsWith(URL_MES_REQUETES_CREATION)) {
+    if (pathname.includes(PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET)) {
+      bouton.libelle = RETOUR_PRISE_EN_CHARGE;
+      bouton.url = `${getUrlPrecedente(
+        history.location.pathname
+      )}/${PATH_APERCU_REQ_ETABLISSEMENT_PRISE_EN_CHARGE}/${props.requete.id}`;
+    } else if (pathname.startsWith(URL_MES_REQUETES_CREATION)) {
       bouton.libelle = RETOUR_MES_REQUETE;
       bouton.url = URL_MES_REQUETES_CREATION;
     } else if (pathname.startsWith(URL_REQUETES_CREATION_SERVICE)) {
@@ -44,13 +53,15 @@ export const BoutonsApercuCreationEtablissement: React.FC<
       bouton.url = URL_REQUETES_CREATION_SERVICE;
     }
     return bouton;
-  }, [history]);
+  }, [history.location.pathname, props.requete.id]);
+
+  function onClickBoutonRetour() {
+    replaceUrl(history, boutonRetour.url);
+  }
 
   return (
     <div className="BoutonsApercu">
-      <Bouton onClick={() => history.push(boutonRetour.url)}>
-        {boutonRetour.libelle}
-      </Bouton>
+      <Bouton onClick={onClickBoutonRetour}>{boutonRetour.libelle}</Bouton>
       {estPresentBoutonPriseEnCharge && (
         <BoutonPrendreEnChargeCreation
           requete={props.requete}

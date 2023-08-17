@@ -1,3 +1,5 @@
+import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
+
 export const requeteCreationEtablissement = {
   id: "a2724cc9-450c-4e50-9d05-a44a28717954",
   numeroFonctionnel: "3S3WN7",
@@ -1209,3 +1211,227 @@ export const requeteCreationEtablissement = {
   natureActeTranscrit: "",
   personnesSauvegardees: []
 };
+
+export const requeteCreationEtablissementSaisieProjet = {
+  id: "er5ez456-354v-461z-c5fd-162md289m74h",
+  numeroFonctionnel: "2H5U3Q",
+  dateCreation: 1656404736683,
+  canal: "RIE",
+  type: "CREATION",
+  actions: [],
+  titulaires: [
+    {
+      id: "3ed943e2-daa0-45c0-befd-b5f6b69c31d8",
+      position: 1,
+      nomNaissance: "dupont",
+      nomUsage: "dupont",
+      anneeNaissance: 1963,
+      moisNaissance: 3,
+      jourNaissance: 4,
+      villeNaissance: "nantes",
+      codePostalNaissance: "44000",
+      arrondissementNaissance: "arrondissementNaissance",
+      villeEtrangereNaissance: "villeEtrangereNaissance",
+      regionNaissance: "regionNaissance",
+      paysNaissance: "paysNaissance",
+      sexe: "MASCULIN",
+      nationalite: "FRANCAISE",
+      prenoms: [
+        {
+          id: "3ed9d90f-3e67-42d2-9215-a85c6fa4943b",
+          numeroOrdre: 1,
+          prenom: "paul",
+          estPrenomFrRetenuSdanf: null
+        }
+      ],
+      parentsTitulaire: [
+        {
+          id: "3ed9aa36-dfed-4d6c-b711-af5202e5b920",
+          position: 1,
+          nomNaissance: "dupont",
+          prenoms: [
+            {
+              id: "3ed9d127-ad70-4fa6-8b19-ed530b9be9f9",
+              numeroOrdre: 1,
+              prenom: "luc",
+              estPrenomFrRetenuSdanf: null
+            }
+          ]
+        }
+      ],
+      deces: {
+        id: "3ed9b86b-cd4e-4799-94c4-e047e6e74850",
+        jour: 1,
+        mois: 2,
+        annee: 2000,
+        ville: "ville",
+        arrondissement: "arrondissement",
+        region: "region",
+        pays: "pays"
+      },
+      domiciliation: {
+        id: "3ed990d2-aba8-4fa1-9d0e-6f02c957ba2a",
+        ligne2: "ligne2",
+        ligne3: "ligne3",
+        ligne4: "ligne4",
+        ligne5: "ligne5",
+        codePostal: "44000",
+        ville: "ville",
+        villeEtrangere: "villeEtrangere",
+        arrondissement: "arrondissement",
+        region: "region",
+        pays: "pays"
+      },
+      evenementUnions: [],
+      typeObjetTitulaire: "POSTULANT_NATIONALITE",
+      nomDemandeFrancisation: "nomDemandeFrancisation",
+      nomDemandeIdentification: "nomDemandeIdentification",
+      nomSecable: true,
+      nomPremierePartie: "nomPremierePartie",
+      nomSecondePartie: "nomSecondePartie",
+      courriel: "courriel",
+      telephone: "telephone",
+      situationFamilliale: "CELIBATAIRE",
+      nationalites: [
+        {
+          id: "3ed99c75-17eb-4a09-b747-4cb82387e065",
+          nationalite: "francaise"
+        }
+      ],
+      prenomsDemande: [
+        {
+          id: "3ed9b0f7-921c-4ef3-90a5-bff52013a780",
+          numeroOrdre: 1,
+          prenom: "prenom",
+          estPrenomFrRetenuSdanf: null
+        }
+      ],
+      lienEtatCivil: [
+        {
+          id: "a272ec8a-1351-4edd-99b8-03004292a9d2",
+          dateEtablissement: 1492693480000,
+          natureProjet: "NAISSANCE",
+          avancement: "A_SAISIR"
+        }
+      ],
+      retenueSdanf: {
+        id: "3ed91bb9-1949-4625-b06f-7ce487f8f827",
+        nomNaissance: "nomNaissance",
+        nomUsage: "nomUsage",
+        nomActuel: "nomActuel",
+        nomDemandeFrancisation: null,
+        nomDemandeIdentification: null,
+        jourNaissance: 1,
+        moisNaissance: 2,
+        anneeNaissance: 2000,
+        codePostalNaissance: "codePostalNaissance",
+        villeNaissance: "villeNaissance",
+        villeEtrangereNaissance: "villeEtrangereNaissance",
+        arrondissementNaissance: "arrondissementNaissance",
+        regionNaissance: "regionNaissance",
+        paysNaissance: "paysNaissance",
+        prenomsRetenu: [
+          {
+            id: "3ed99ec3-a80f-480d-b91f-b4068f0b3bf6",
+            numeroOrdre: 1,
+            prenom: "prenom",
+            estPrenomFrRetenuSdanf: null
+          }
+        ]
+      },
+      nomActuel: "nomActuel",
+      nombreEnfantMineur: 0,
+      nombreEnfantEffetCollectif: 0
+    }
+  ],
+  corbeilleAgent: {
+    id: "bbdba5f5-0b65-40d1-a44c-fbbab948b3b6",
+    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55"
+  },
+  corbeilleService: {
+    id: "8035fb6c-df33-11eb-ba80-0242ac130004",
+    idEntiteRattachement: "6737566d-0f25-45dc-8443-97b444e6753a"
+  },
+  piecesJustificatives: [],
+  requerant: {
+    id: "3ed9ea0d-9e13-4249-a82c-3ec2e600175a",
+    dateCreation: 1,
+    nomFamille: "nomFamille",
+    nomUsage: "nomUsage",
+    prenom: "prenom",
+    courriel: "courriel",
+    telephone: "telephone",
+    adresse: {
+      id: "3ed9e295-ef27-4ea3-9034-79da79947fdb",
+      ligne2: "ligne2",
+      ligne3: "ligne3",
+      ligne4: "ligne4",
+      ligne5: "ligne5",
+      codePostal: "codePostal",
+      ville: "ville",
+      pays: "pays",
+      courriel: "courriel"
+    },
+    qualite: "PARTICULIER",
+    detailQualiteRece: null,
+    detailQualiteParticulier: null,
+    detailQualiteMandataireHabilite: null,
+    detailQualiteInstitutionnel: null,
+    detailQualiteAutreProfessionnel: null,
+    courrielAutreContact: "courrielAutreContact@gmail.com",
+    telephoneAutreContact: "0212456512",
+    lienRequerant: {
+      id: "3ed961da-d02e-4a6d-8855-a01d6b719488",
+      typeLienRequerant: "TITULAIRE",
+      nature: "nature"
+    }
+  },
+  mandant: null,
+  observations: [],
+  statut: {
+    id: "3ed97a35-c9b0-4ae4-b2dc-75eb84e4e82d",
+    statutRequete: "PRISE_EN_CHARGE",
+    dateEffet: 1656404736683,
+    raisonStatut: null
+  },
+  lienRequerant: {
+    id: "3ed961da-d02e-4a6d-8855-a01d6b719488",
+    typeLienRequerant: "TITULAIRE",
+    nature: "nature"
+  },
+  doublons: [],
+  origines: null,
+  numeroRequeteOrigine: null,
+  sousType: "RCEXR",
+  numeroAncienSI: "numeroAncienSI",
+  dossierSignale: true,
+  commentaire: "commentaire",
+  demandeIdentification: null,
+  demandeFrancisation: true,
+  provenance: "COURRIER",
+  provenanceServicePublic: null,
+  provenanceNatali: {
+    id: "3ed9bc79-6d67-45c6-98a1-d4b3b53d3132",
+    numeroDossierNational: "numeroDossierNational",
+    statutNatali: "statutNatali",
+    provenanceNaturalisation: "NATALI",
+    numeroDossierLocal: "numeroDossierLocal",
+    dateDepot: 0,
+    datePriseEnChargeSdanf: 0,
+    decisionSdanf: "decisionSdanf",
+    tagPriorisation: "SCEC",
+    agentSdanf: {
+      id: "3ed92284-1ef8-468f-b920-2edd64a9d1a0",
+      nom: "nom",
+      prenom: "prenom",
+      courriel: "courriel"
+    }
+  },
+  provenanceRece: null,
+  documentsPj: [],
+  campagne: "campagne",
+  nature: "NATURALISATION",
+  dossierNouveaux: null,
+  dossierOrigines: null,
+  decret: null
+} as any as IRequeteCreationEtablissement;

@@ -3,14 +3,12 @@ import { requeteCreationEtablissement } from "@mock/data/requeteCreationEtabliss
 import { IEchange } from "@model/requete/IEchange";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { SuiviDossier } from "@pages/requeteCreation/apercuRequete/etablissement/composants/suiviDossier/SuiviDossier";
-import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID } from "@router/ReceUrls";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+  PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
+  URL_MES_REQUETES_CREATION,
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
+} from "@router/ReceUrls";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router";
@@ -47,9 +45,7 @@ const HookConsumerSuiviDossier: React.FC<
 const requete = mappingRequeteCreation(requeteCreationEtablissement);
 
 test("DOIT afficher le tableau de SuiviDossier QUAND on ouvre l'onglet.", async () => {
-  await act(async () => {
-    render(<HookConsumerSuiviDossier requete={requete} />);
-  });
+  render(<HookConsumerSuiviDossier requete={requete} />);
 
   await waitFor(() => {
     expect(screen.getAllByText("Nom")).toBeDefined();
@@ -62,9 +58,7 @@ test("DOIT afficher le tableau de SuiviDossier QUAND on ouvre l'onglet.", async 
 });
 
 test("DOIT afficher les différentes ligne du tableau.", async () => {
-  await act(async () => {
-    render(<HookConsumerSuiviDossier requete={requete} />);
-  });
+  render(<HookConsumerSuiviDossier requete={requete} />);
 
   await waitFor(() => {
     expect(screen.getAllByText("Naissance")).toHaveLength(3);
@@ -75,9 +69,7 @@ test("DOIT afficher les différentes ligne du tableau.", async () => {
 });
 
 test("DOIT afficher le Bulletin d'idenfication lors du clique sur une ligne.", async () => {
-  await act(async () => {
-    render(<HookConsumerSuiviDossier requete={requete} />);
-  });
+  render(<HookConsumerSuiviDossier requete={requete} />);
 
   const boutonLignePostulant = screen.getByText("Postulant");
   await waitFor(() => {
@@ -97,5 +89,21 @@ test("DOIT afficher le Bulletin d'idenfication lors du clique sur une ligne.", a
     expect(screen.getByText("Masculin")).toBeDefined();
     expect(screen.getByText("05/01/1991")).toBeDefined();
     expect(screen.getByText("INC (CUBA)")).toBeDefined();
+  });
+});
+
+test("DOIT rediriger vers l'aperçu saisie projet QUAND on clique sur une ligne naissance d'un postulant", async () => {
+  render(<HookConsumerSuiviDossier requete={requete} />);
+
+  const boutonLigneNaissance = screen.getAllByText("Naissance")[0];
+  await waitFor(() => {
+    expect(boutonLigneNaissance).toBeDefined();
+  });
+  fireEvent.click(boutonLigneNaissance);
+
+  await waitFor(() => {
+    expect(history.location.pathname).toBe(
+      `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/a2724cc9-450c-4e50-9d05-a44a28717954/a272ec8a-1351-4edd-99b8-03004292a9d2`
+    );
   });
 });

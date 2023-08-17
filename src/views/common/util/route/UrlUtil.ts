@@ -5,6 +5,14 @@ export const URL_SEPARATEUR = "/";
 
 // Fontions utilitaires de résolution d'url
 export const urlWithParamPatern = /^(.+)\/:[^/]+$/;
+export const urlWithoutParamPatern = /\/:[^/]+/g;
+
+/*
+ * Supprime les éventuels paramètres de l'url (exemple: .../apercurequete/:idRequete => .../apercurequete)
+ */
+export function getUrlWithoutParam(url: string) {
+  return url.replace(urlWithoutParamPatern, "");
+}
 /**
  * Remplace le paramètre dans une url, exemple:
  * /xxx/yyy/zzz/:id => /xxx/yyy/zzz/123456

@@ -17,7 +17,7 @@ export interface ITableauSuiviDossierParams {
 
 export interface ILigneTableauSuiviDossier {
   id: string;
-  idActe: string;
+  idLienEtatCivil: string;
   qualite: string;
   nom: string;
   prenoms: string;
@@ -66,7 +66,7 @@ export function useTableauSuiviDossierHook(
 
           const ligneTitulaire: ILigneTableauSuiviDossier = {
             id: titulaireCourant.id,
-            idActe: "",
+            idLienEtatCivil: "",
             prenoms: getPrenomTitulaire(titulaireCourant, dataAnalyseMarginale),
             nom: getNomTitulaire(titulaireCourant, dataAnalyseMarginale),
             qualite:
@@ -81,8 +81,8 @@ export function useTableauSuiviDossierHook(
           const lignesDossiers: ILigneTableauSuiviDossier[] =
             titulaireCourant.lienEtatCivil?.map(lienEtatCivil => {
               return {
-                id: "",
-                idActe: lienEtatCivil.id,
+                id: titulaireCourant.id,
+                idLienEtatCivil: lienEtatCivil.id,
                 prenoms: "",
                 nom: "",
                 qualite: "",

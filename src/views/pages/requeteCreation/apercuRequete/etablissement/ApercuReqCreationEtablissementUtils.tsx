@@ -31,13 +31,14 @@ export function onRenommePieceJustificativeEtablissement(
 }
 
 export function getConteneurResumeRequete(
-  requete: IRequeteCreation
+  requete: IRequeteCreation,
+  conteneurFerme = false
 ): JSX.Element {
   return (
     <ConteneurRetractable
       titre={Labels.resume.requete.description}
       className="ResumeRequeteCreation"
-      initConteneurFerme={false}
+      initConteneurFerme={conteneurFerme}
       estADroite={false}
     >
       <ResumeRequeteCreation

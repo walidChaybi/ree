@@ -2,14 +2,14 @@ import { useBlockNavigation } from "@core/body/useBlockNavigation";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { URL_ACCUEIL, URL_CONTEXT_APP } from "@router/ReceUrls";
+import { getLibelle } from "@util/Utils";
 import { IRoute } from "@util/route/IRoute";
 import {
+  URL_SEPARATEUR,
   getUrlWithoutIdParam,
-  isPathElemId,
-  urlWithParamPatern,
-  URL_SEPARATEUR
+  getUrlWithoutParam,
+  isPathElemId
 } from "@util/route/UrlUtil";
-import { getLibelle } from "@util/Utils";
 import React from "react";
 import { Route } from "react-router";
 import { useHistory } from "react-router-dom";
@@ -204,7 +204,6 @@ export function getPathElements(path: string) {
 function getRoute(url: string, routes: IRoute[]) {
   const urlWithoutId = getUrlWithoutIdParam(url);
   return routes.find(r => {
-    // Recherche par url en supprimant les éventuels paramètres (exemple: .../apercurequete/:idRequete => .../apercurequete)
-    return r.url.replace(urlWithParamPatern, "$1") === urlWithoutId;
+    return getUrlWithoutParam(r.url) === urlWithoutId;
   });
 }

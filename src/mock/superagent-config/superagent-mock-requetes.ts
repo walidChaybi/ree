@@ -42,7 +42,10 @@ import {
   requeteCreationEtablissement,
   requeteCreationTranscription
 } from "../data/requeteCreation";
-import { requeteCreationEtablissement as reqEtablissement } from "../data/requeteCreationEtablissement";
+import {
+  requeteCreationEtablissement as reqEtablissement,
+  requeteCreationEtablissementSaisieProjet
+} from "../data/requeteCreationEtablissement";
 import {
   idRequeteRDCPourModification,
   idRequeteRDCSC,
@@ -261,6 +264,11 @@ export const configRequetes = [
       if (match[1] === "/requetes/a2724cc9-450c-4e50-9d05-a44a28717954") {
         return {
           data: deepCopie(reqEtablissement)
+        };
+      }
+      if (match[1] === "/requetes/er5ez456-354v-461z-c5fd-162md289m74h") {
+        return {
+          data: deepCopie(requeteCreationEtablissementSaisieProjet)
         };
       }
       // Mes requêtes création Transcription
