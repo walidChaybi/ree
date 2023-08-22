@@ -3,7 +3,7 @@ import { FilterOptionsState } from "@mui/material/useAutocomplete";
 import makeStyles from "@mui/styles/makeStyles";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
-import { ErrorMessage, Field, connect } from "formik";
+import { connect, ErrorMessage, Field } from "formik";
 import React from "react";
 import { IconeCroix } from "../../icones/IconeCroix";
 import { IconErrorMessage } from "../erreur/IconeErreurMessage";
@@ -40,6 +40,7 @@ export const ChampRecherche: React.FC<ChampRechercheProps> = props => {
   const classes = useStyles();
   return (
     <Autocomplete
+      autoHighlight={true}
       data-testid="autocomplete"
       classes={{
         option: classes.option

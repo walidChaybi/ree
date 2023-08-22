@@ -86,7 +86,6 @@ test("render composant RegistreActeFiltre", async () => {
   await waitFor(() => {
     expect(screen.getByText("TORONTO")).toBeInTheDocument();
   });
-  fireEvent.keyDown(pocopa, { key: "ArrowDown" });
   fireEvent.keyDown(pocopa, { key: "Enter" });
 
   fireEvent.change(natureActe, {
