@@ -42,7 +42,10 @@ export class NatureProjetEtablissement extends EnumWithComplete {
   }
 
   public static estNaissance(natureActe?: NatureProjetEtablissement): boolean {
-    return natureActe === NatureProjetEtablissement.NAISSANCE;
+    return (
+      natureActe === NatureProjetEtablissement.NAISSANCE ||
+      natureActe === NatureProjetEtablissement.NAISSANCE_EN_FRANCE
+    );
   }
 
   public static estMariage(natureActe?: NatureProjetEtablissement): boolean {
