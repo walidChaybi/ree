@@ -3,7 +3,9 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET } from "@router/ReceUrls";
+import { getDateStringFromDateCompose } from "@util/DateUtils";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
+import { getValeurOuVide } from "@util/Utils";
 import { ICelluleFontAwesomeIconeProps } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/CelluleFontAwesomeIcone";
 import {
   getColonneFontAwesomeIcone,
@@ -77,12 +79,22 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
       const titulaire = props.requete.titulaires?.find(
         titulaireCourant => titulaireCourant.id === data[idxGlobal].id
       );
+
+      const dataSdanf = titulaire?.retenueSdanf;
       setDataFromRequete({
         nom: data[idxGlobal].nom,
         prenoms: data[idxGlobal].prenoms,
-        sexe: Sexe.getEnumFor(titulaire?.sexe || "").libelle,
-        dateNaissance: titulaire?.dateNaissanceFormatee || "",
-        lieuNaissance: titulaire?.lieuNaissanceFormate || ""
+        sexe: Sexe.getEnumFor(getValeurOuVide(titulaire?.sexe)).libelle,
+        dateNaissance: getDateStringFromDateCompose({
+          jour: getValeurOuVide(dataSdanf?.jourNaissance?.toString()),
+          mois: getValeurOuVide(dataSdanf?.moisNaissance?.toString()),
+          annee: getValeurOuVide(dataSdanf?.anneeNaissance?.toString())
+        }),
+        lieuNaissance: `${dataSdanf?.villeNaissance} ${
+          dataSdanf?.arrondissementNaissance
+            ? `(${dataSdanf?.arrondissementNaissance})`
+            : ""
+        } (${dataSdanf?.paysNaissance})`
       });
       setIdBIAAfficher(id);
       setIsModalOuverte(true);

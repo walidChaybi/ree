@@ -5,7 +5,7 @@ export interface ILienEtatCivil {
   dateEtablissement?: number;
   jourEvenement?: string;
   moisEvenement?: string;
-  anneeEvenement?: string;
+  anneeEvenement: string;
   natureProjet?: string;
   referenceActe?: string;
   avancement?: string;

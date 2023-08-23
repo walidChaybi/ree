@@ -44,4 +44,18 @@ export class QualiteFamille extends EnumWithLibelle {
       return titulaire.qualite;
     }
   }
+
+  public static afficheLibelleEnfantSiEstEnfant(
+    qualiteFamille?: QualiteFamille
+  ): string | undefined {
+    if (
+      qualiteFamille === QualiteFamille.ENFANT_MAJEUR ||
+      qualiteFamille === QualiteFamille.ENFANT_MINEUR
+    ) {
+      return "Enfant";
+    }
+    return qualiteFamille?.libelle;
+  }
 }
+
+

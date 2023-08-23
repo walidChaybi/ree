@@ -2,12 +2,12 @@ import {
   IAnalyseMarginaleResultat,
   useTitulaireAnalyseMarginaleApiHook
 } from "@hook/acte/TitulaireAnalyseMarginaleApiHook";
-import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
-import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { getDateStringFromDateCompose } from "@util/DateUtils";
 import { getValeurOuUndefined, joint } from "@util/Utils";
 import { useEffect, useMemo, useState } from "react";
 
@@ -70,8 +70,9 @@ export function useTableauSuiviDossierHook(
             prenoms: getPrenomTitulaire(titulaireCourant, dataAnalyseMarginale),
             nom: getNomTitulaire(titulaireCourant, dataAnalyseMarginale),
             qualite:
-              QualiteFamille.getEnumFromTitulaire(titulaireCourant)?.libelle ||
-              "",
+              QualiteFamille.afficheLibelleEnfantSiEstEnfant(
+                QualiteFamille.getEnumFromTitulaire(titulaireCourant)
+              ) || "",
             decret: "",
             evenement: "",
             dateEvenement: "",
@@ -90,9 +91,11 @@ export function useTableauSuiviDossierHook(
                 evenement: NatureProjetEtablissement.getEnumFor(
                   lienEtatCivil.natureProjet
                 ).libelle,
-                dateEvenement: getFormatDateFromTimestamp(
-                  lienEtatCivil.dateEtablissement
-                ),
+                dateEvenement: getDateStringFromDateCompose({
+                  jour: lienEtatCivil.jourEvenement,
+                  mois: lienEtatCivil.moisEvenement,
+                  annee: lienEtatCivil.anneeEvenement
+                }),
                 avancement: AvancementProjetActe.getEnumFor(
                   lienEtatCivil.avancement
                 ).libelle
