@@ -11,6 +11,7 @@ export interface IRMCRequestRequete {
   sousTypeRequete?: string; // SousTypeRequete ?
   statutRequete?: string; // StatutRequete ?
   numeroTeledossier?: string;
+  numeroDossierNational?: string;
 
   // Filtre Titulaire
   nomTitulaire?: string;

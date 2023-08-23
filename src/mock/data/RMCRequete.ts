@@ -1,4 +1,5 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { TagPriorisation } from "@model/requete/enum/TagPriorisation";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 
 export const DataTableauRequete = {
@@ -409,3 +410,49 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
     titulaires: []
   }
 ];
+
+export const DataRMCRequeteRechercheViaNumeroDossierNational = {
+  resultatsRecherche: [
+    {
+      id: "a19132f4-cab9-4d56-a630-428208cc16ac",
+      numero: "4ZPUSX",
+      numeroDossierNational: "2022X 200156",
+      type: "CREATION",
+      sousType: "RCEXR",
+      tagPriorisation: TagPriorisation.SDANF,
+      provenance: "NATALI",
+      nomCompletRequerant: "",
+      idCorbeilleAgent: "6ddd44a2-71a2-40bf-9a90-bc6fd7519ac3",
+      idUtilisateur: "b67f9d14-cc5e-4002-aa06-e54029ffa073",
+      idEntiteRattachement: "6737dca8-2f96-4086-8288-fd1a136a61df",
+      dateCreation: 1669717505000,
+      dateDernierMAJ: 1670494807000,
+      statut: "PROJET_VALIDE",
+      priorite: "HAUTE",
+      observations: [],
+      titulaires: [
+        {
+          nom: "ILLIAT",
+          prenoms: ["Dave", "Jacques", "Noma", "Tom", "Tommy"],
+          jourNaissance: 5,
+          moisNaissance: 10,
+          anneeNaissance: 1958
+        },
+        {
+          nom: "SYPO",
+          prenoms: ["Alexis", "Jiju"],
+          jourNaissance: 10,
+          moisNaissance: 9,
+          anneeNaissance: 1968
+        },
+        {
+          nom: "ILLIAT",
+          prenoms: ["Isabelle", "Bella"],
+          jourNaissance: 14,
+          moisNaissance: 10,
+          anneeNaissance: 2019
+        }
+      ]
+    }
+  ]
+};

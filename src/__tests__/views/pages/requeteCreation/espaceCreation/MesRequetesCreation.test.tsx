@@ -58,7 +58,7 @@ test("DOIT passer dans la fonction onClickOnLine QUAND je click sur une requête
   let requete: HTMLElement;
 
   await waitFor(() => {
-    requete = screen.getByText("IWSZGB / 46478614");
+    requete = screen.getByText("45648231");
     fireEvent.click(requete);
   });
 });

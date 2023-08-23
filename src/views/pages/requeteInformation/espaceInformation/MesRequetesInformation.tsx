@@ -6,7 +6,7 @@ import {
   INavigationApercuReqInfoParams,
   useNavigationApercuInformation
 } from "@hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { getUrlCourante } from "@util/route/UrlUtil";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -57,7 +57,7 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({
 
   function onClickOnLine(
     idRequete: string,
-    data: IRequeteTableauDelivrance[],
+    data: IRequeteTableauInformation[],
     idx: number
   ) {
     const requete = data[idx];

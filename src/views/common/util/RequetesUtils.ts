@@ -16,7 +16,10 @@ import {
   RequeteDelivrance
 } from "@model/requete/IRequeteDelivrance";
 import { TRequeteTableau } from "@model/requete/IRequeteTableau";
-import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
+import {
+  IRequeteTableauCreation,
+  mappingUneRequeteTableauCreation
+} from "@model/requete/IRequeteTableauCreation";
 import {
   IRequeteTableauDelivrance,
   mappingUneRequeteTableauDelivrance
@@ -197,16 +200,18 @@ export function mappingRequetesTableau(
   mappingSupplementaire: boolean
 ): TRequeteTableau[] {
   return resultatsRecherche?.map((requete: TRequeteTableau) => {
-    if (requete.type === TypeRequete.DELIVRANCE.libelle) {
+    if (TypeRequete.getEnumFor(requete.type) === TypeRequete.DELIVRANCE) {
       return mappingUneRequeteTableauDelivrance(requete, mappingSupplementaire);
-    } else if (requete.type === TypeRequete.INFORMATION.libelle) {
+    } else if (
+      TypeRequete.getEnumFor(requete.type) === TypeRequete.INFORMATION
+    ) {
       return mappingUneRequeteTableauInformation(
         requete,
         mappingSupplementaire
       );
     } else {
       // TODO Mapping provisoire pour les autres Type Requete ( CREATION et MISE_A_JOUR )
-      return mappingUneRequeteTableauDelivrance(requete, mappingSupplementaire);
+      return mappingUneRequeteTableauCreation(requete, mappingSupplementaire);
     }
   });
 }

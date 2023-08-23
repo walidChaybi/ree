@@ -110,8 +110,8 @@ test("Attendu: les requêtes de service s'affichent correctement", async () => {
     expect(screen.getAllByText("Statut")[1]).toBeDefined();
 
     // Attendu: les données sont présentes
-    expect(screen.getByText("N7MMP8 / B-2-8GRZFCS3P")).toBeDefined();
-    expect(screen.getByText("YRQFLU /")).toBeDefined();
+    expect(screen.getByText("B-2-8GRZFCS3P")).toBeDefined();
+    expect(screen.getByText("YRQFLU")).toBeDefined();
   });
 });
 
@@ -216,7 +216,7 @@ test("DOIT rendre possible le click sur une requête", async () => {
   let requete: HTMLElement;
 
   await waitFor(() => {
-    requete = screen.getByText("N7MMP8 / B-2-8GRZFCS3P");
+    requete = screen.getByText("B-2-8GRZFCS3P");
     fireEvent.click(requete);
   });
 });
@@ -231,8 +231,8 @@ test("DOIT pouvoir rechercher une requete via son numero NATALi", async () => {
   fireEvent.click(boutonRechercher);
 
   await waitFor(() => {
-    expect(screen.queryByText("N7MMP8 / B-2-8GRZFCS3P")).toBeNull();
-    expect(screen.queryByText("YRQFLU /")).toBeNull();
-    expect(screen.getByText("DGEWAA / 2022X 200178")).toBeDefined();
+    expect(screen.queryByText("B-2-8GRZFCS3P")).toBeNull();
+    expect(screen.queryByText("YRQFLU")).toBeNull();
+    expect(screen.getByText("2022X 200178")).toBeDefined();
   });
 });

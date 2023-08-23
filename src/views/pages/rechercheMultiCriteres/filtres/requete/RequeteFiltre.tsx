@@ -22,6 +22,7 @@ import { CaracteresAlphanumeriques } from "../../../../../ressources/Regex";
 // Noms des champs
 export const NUMERO_REQUETE = "numeroRequete";
 export const NUMERO_TELEDOSSIER = "numeroTeledossier";
+export const NUMERO_DOSSIER_NATIONAL = "numeroDossierNational";
 export const TYPE_REQUETE = "typeRequete";
 export const SOUS_TYPE_REQUETE = "sousTypeRequete";
 export const STATUT_REQUETE = "statutRequete";
@@ -30,6 +31,7 @@ export const STATUT_REQUETE = "statutRequete";
 export const RequeteDefaultValues = {
   [NUMERO_REQUETE]: "",
   [NUMERO_TELEDOSSIER]: "",
+  [NUMERO_DOSSIER_NATIONAL]: "",
   [TYPE_REQUETE]: "",
   [SOUS_TYPE_REQUETE]: "",
   [STATUT_REQUETE]: ""
@@ -42,6 +44,7 @@ export const RequeteValidationSchema = Yup.object({
     CARACTERES_ALPHANUMERIQUE
   ),
   [NUMERO_TELEDOSSIER]: Yup.string(),
+  [NUMERO_DOSSIER_NATIONAL]: Yup.string(),
   [TYPE_REQUETE]: Yup.string(),
   [SOUS_TYPE_REQUETE]: Yup.string(),
   [STATUT_REQUETE]: Yup.string()
@@ -57,6 +60,10 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
   const numeroTeledossierWithNamespace = withNamespace(
     props.nomFiltre,
     NUMERO_TELEDOSSIER
+  );
+  const numeroSDANFWithNamespace = withNamespace(
+    props.nomFiltre,
+    NUMERO_DOSSIER_NATIONAL
   );
   const typeRequeteWithNamespace = withNamespace(props.nomFiltre, TYPE_REQUETE);
   const sousTypeRequeteWithNamespace = withNamespace(
@@ -140,6 +147,11 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
           <InputField
             name={numeroTeledossierWithNamespace}
             label={getLibelle("N° Télédossier")}
+            onBlur={onBlurNumero}
+          />
+          <InputField
+            name={numeroSDANFWithNamespace}
+            label={getLibelle("N° SDANF")}
             onBlur={onBlurNumero}
           />
           <SelectField

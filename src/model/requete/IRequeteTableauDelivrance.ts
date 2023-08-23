@@ -23,7 +23,7 @@ import { IRequeteTableau } from "./IRequeteTableau";
 import { mapTitulaires } from "./ITitulaireRequeteTableau";
 
 export interface IRequeteTableauDelivrance extends IRequeteTableau {
-  numeroTeledossier?: string;
+  numeroTeledossierOuSDANFOuFonctionnel?: string;
   idSagaDila?: string;
   provenance?: string;
   nature?: string;
@@ -65,7 +65,9 @@ export function mappingUneRequeteTableauDelivrance(
   return {
     idRequete: getValeurOuUndefined(requete?.id),
     numero: getValeurOuVide(requete?.numero),
-    numeroTeledossier: getValeurOuVide(requete?.numeroTeledossier),
+    numeroTeledossierOuSDANFOuFonctionnel: getValeurOuVide(
+      requete?.numeroTeledossier
+    ),
     idSagaDila: getValeurOuVide(requete?.idSagaDila),
     type: TypeRequete.getEnumFor(requete?.type)?.libelle,
     sousType: getSousType(requete?.type, requete?.sousType),

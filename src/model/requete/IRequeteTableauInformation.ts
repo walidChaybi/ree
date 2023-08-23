@@ -18,6 +18,7 @@ export interface IRequeteTableauInformation extends IRequeteTableau {
   typeRequerant?: string;
   nomsTitulaires?: string;
   attribueA?: string;
+  numeroTeledossierOuSDANFOuFonctionnel?: string;
 }
 
 //////////////////////////////////////////
@@ -76,7 +77,7 @@ function getNomsTitulaires(titulaires: ITitulaireRequeteTableau[]) {
       } else {
         res += " ";
       }
-      res += `${titulaire.nom} ${titulaire.prenoms[0]}`;
+      res += `${titulaire.nom} ${titulaire.prenoms?.[0]}`;
     }
   }
   return res;

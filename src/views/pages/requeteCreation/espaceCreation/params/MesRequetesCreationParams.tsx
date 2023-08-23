@@ -3,7 +3,7 @@ import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn
 import { styleColonne } from "./EspaceCreationParams";
 
 export enum HeaderTableauMesRequetesCreation {
-  NumeroAffichage = "numeroAffichage",
+  NumeroTeledossierOuSDANFOuFonctionnel = "numeroTeledossierOuSDANFOuFonctionnel",
   SousType = "sousType",
   Priorisation = "tagPriorisation",
   Postulant = "postulant",
@@ -15,7 +15,9 @@ export enum HeaderTableauMesRequetesCreation {
 
 export const colonnesTableauMesRequetesCreation = [
   new TableauTypeColumn({
-    keys: [HeaderTableauMesRequetesCreation.NumeroAffichage],
+    keys: [
+      HeaderTableauMesRequetesCreation.NumeroTeledossierOuSDANFOuFonctionnel
+    ],
     title: getLibelle("N°"),
     align: "center",
     style: styleColonne,

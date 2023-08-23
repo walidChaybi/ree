@@ -15,8 +15,9 @@ import {
 
 export interface IRequeteTableauCreation extends IRequeteTableau {
   numeroFonctionnel: string;
-  numeroNatali: string;
+  numeroTeledossierOuSDANFOuFonctionnel: string;
   numeroDila: string;
+  numeroNatali?: string;
   numeroAncien: string;
   dateDerniereAction: string;
   postulant: string;
@@ -37,7 +38,12 @@ export function mappingUneRequeteTableauCreation(
   return {
     idRequete: getValeurOuUndefined(requete?.id),
     numeroFonctionnel: getValeurOuVide(requete?.numeroFonctionnel),
-    numeroNatali: getValeurOuVide(requete?.numeroNatali),
+    numeroTeledossierOuSDANFOuFonctionnel: requete?.numeroDossierNational
+      ? getValeurOuVide(requete?.numeroDossierNational)
+      : getValeurOuVide(requete?.numeroNatali) ||
+        getValeurOuVide(requete.numeroDila) ||
+        getValeurOuVide(requete.numeroFonctionnel),
+    numero: getValeurOuVide(requete.numero),
     numeroDila: getValeurOuVide(requete?.numeroDila),
     numeroAffichage: getValeurOuVide(requete?.numeroAffichage),
     type: TypeRequete.getEnumFor("CREATION")?.libelle,

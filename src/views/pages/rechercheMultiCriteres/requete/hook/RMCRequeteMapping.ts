@@ -20,6 +20,9 @@ export function mappingCriteresRequete(
     numeroTeledossier: getValeurOuUndefined(
       criteres.requete?.numeroTeledossier
     ),
+    numeroDossierNational: getValeurOuUndefined(
+      criteres.requete?.numeroDossierNational
+    ),
 
     // Filtre Titulaire
     nomTitulaire: getValeurOuUndefined(criteres.titulaire?.nom),

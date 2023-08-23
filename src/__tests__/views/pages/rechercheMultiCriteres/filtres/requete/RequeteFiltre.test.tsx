@@ -105,7 +105,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   await waitFor(() => {
     expect(sousTypeRequete.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-      '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","typeRequete":"DELIVRANCE","sousTypeRequete":"RDD","statutRequete":"A_SIGNER"}}'
+      '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","numeroDossierNational":"","typeRequete":"DELIVRANCE","sousTypeRequete":"RDD","statutRequete":"A_SIGNER"}}'
     );
   });
 });
@@ -164,7 +164,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   await waitFor(() => {
     expect(sousTypeRequete.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-      '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","typeRequete":"CREATION","sousTypeRequete":"RCTC","statutRequete":"RETOUR_SDANF"}}'
+      '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","numeroDossierNational":"","typeRequete":"CREATION","sousTypeRequete":"RCTC","statutRequete":"RETOUR_SDANF"}}'
     );
   });
 });
@@ -223,7 +223,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   await waitFor(() => {
     expect(sousTypeRequete.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-      '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","typeRequete":"MISE_A_JOUR","sousTypeRequete":"RMPR","statutRequete":"DOUBLON"}}'
+      '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","numeroDossierNational":"","typeRequete":"MISE_A_JOUR","sousTypeRequete":"RMPR","statutRequete":"DOUBLON"}}'
     );
   });
 });
@@ -282,7 +282,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   await waitFor(() => {
     expect(sousTypeRequete.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-      '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","typeRequete":"INFORMATION","sousTypeRequete":"COMPLETION_REQUETE_EN_COURS","statutRequete":"A_TRAITER"}}'
+      '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","numeroDossierNational":"","typeRequete":"INFORMATION","sousTypeRequete":"COMPLETION_REQUETE_EN_COURS","statutRequete":"A_TRAITER"}}'
     );
   });
 });

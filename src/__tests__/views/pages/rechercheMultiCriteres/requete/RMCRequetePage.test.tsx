@@ -7,11 +7,15 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { createMemoryHistory } from "history";
+import { Router } from "react-router";
 import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {
   mockFenetreFicheTestFunctions();
 });
+
+const history = createMemoryHistory();
 
 test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
   await act(async () => {
@@ -79,7 +83,7 @@ test("Bouton réinitialisation des champs", async () => {
         value: "A_TRAITER"
       }
     });
-  });  
+  });
 
   await waitFor(() => {
     expect(numeroRequete.value).toBe("1234ABCD");
@@ -97,5 +101,34 @@ test("Bouton réinitialisation des champs", async () => {
     expect(typeRequete.value).toBe("");
     expect(sousTypeRequete.value).toBe("");
     expect(statutRequete.value).toBe("");
+  });
+});
+
+test("DOIT pouvoir rechercher une requete par son N° SDANF / numeroDossierNational", async () => {
+  await act(async () => {
+    render(
+      <Router history={history}>
+        <RMCRequetePage />
+      </Router>
+    );
+  });
+
+  const numeroDossierNational = screen.getByLabelText(
+    "requete.numeroDossierNational"
+  ) as HTMLInputElement;
+
+  act(() => {
+    fireEvent.change(numeroDossierNational, {
+      target: {
+        value: "2022X 200156"
+      }
+    });
+  });
+
+  await fireEvent.click(screen.getByText("Rechercher"));
+
+  await waitFor(() => {
+    expect(numeroDossierNational.value).toBe("2022X 200156");
+    expect(screen.getByText("2022X 200156")).toBeDefined();
   });
 });

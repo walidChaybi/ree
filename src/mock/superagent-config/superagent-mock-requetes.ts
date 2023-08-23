@@ -51,7 +51,10 @@ import {
   idRequeteRDCSC,
   requeteRDCPourModification
 } from "../data/requeteDelivrance";
-import { ReponseAppelRMCRequete } from "../data/RMCRequete";
+import {
+  DataRMCRequeteRechercheViaNumeroDossierNational,
+  ReponseAppelRMCRequete
+} from "../data/RMCRequete";
 import {
   CreationRDCSC,
   UpdateRDC,
@@ -336,6 +339,17 @@ export const configRequetes = [
               link: ""
             },
             data: { resultatsRecherche: [] }
+          };
+        } 
+        // RMC manuelle => recherche via N°SDANF
+        else if(params.numeroDossierNational === "2022X 200156") {
+          return {
+            headers: {
+              "content-range":
+                "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
+              link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
+            },
+            data: DataRMCRequeteRechercheViaNumeroDossierNational
           };
         }
         // RMC Manuelle (vue RMCRequetePage)
