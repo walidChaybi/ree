@@ -99,7 +99,7 @@ test("DOIT rendre le composant d'identite du parent correctement", async () => {
     expect(inputNomActeEtranger).toBeDefined();
   });
 
-  const inputPrenom1 = screen.queryByText("Prénom 1");
+  const inputPrenom1 = screen.queryByText("Prénom");
 
   await waitFor(() => {
     expect(inputPrenom1).toBeInTheDocument();

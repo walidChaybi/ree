@@ -7,6 +7,7 @@ import {
 import { render, screen, waitFor } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { Route, Router } from "react-router";
+import "../../../../../../../mock/element/IntersectionObserver";
 
 describe("Test de la page Aperçu requête etablissement sasie projet", () => {
   test("DOIT afficher l'onglet pièces justificatives et postulant QUAND on arrive sur la page", async () => {

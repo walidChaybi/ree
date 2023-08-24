@@ -2,12 +2,9 @@ import {
   NAISSANCE,
   NATIONALITES,
   NOM,
-  PRENOMS,
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
-import PrenomsForm, {
-  genererDefaultValuesPrenoms
-} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import PrenomsConnusForm from "@composant/formulaire/nomsPrenoms/PrenomsConnusForm";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { SNP, SPC, getLibelle } from "@util/Utils";
@@ -33,7 +30,6 @@ import React, { useEffect, useState } from "react";
 import {
   DATE_NAISSANCE,
   PAS_DE_NOM_CONNU,
-  PAS_DE_PRENOM_CONNU,
   PAYS_ORIGINE,
   PAYS_STATUT_REFUGIE
 } from "../../../../../common/composant/formulaire/ConstantesNomsForm";
@@ -47,7 +43,6 @@ interface ComponentFormProps {
 export type ParentSubFormProps = SubFormProps & ComponentFormProps;
 
 const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
-  const [pasDePrenomConnu, setPasDePrenomConnu] = useState(false);
   const [pasDeNomConnu, setPasDeNomConnu] = useState(false);
 
   const paysStatutRefugieWithNamespace = withNamespace(
@@ -61,10 +56,6 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
   );
 
   const pasDeNomConnuWithNamespace = withNamespace(props.nom, PAS_DE_NOM_CONNU);
-  const pasDePrenomConnuWithNamespace = withNamespace(
-    props.nom,
-    PAS_DE_PRENOM_CONNU
-  );
 
   const nationaliteFormProps = {
     nom: withNamespace(props.nom, NATIONALITES),
@@ -81,31 +72,7 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
     if (props.parent?.nomNaissance === SNP) {
       setPasDeNomConnu(true);
     }
-
-    if (props.parent?.prenoms?.[0].prenom === SPC) {
-      setPasDePrenomConnu(true);
-    }
-  }, [props.parent?.nomNaissance, props.parent?.prenoms]);
-
-  function onChangePasDePrenomConnu(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.checked) {
-      setPasDePrenomConnu(true);
-      reinitialiserPrenoms();
-      props.formik.handleChange(e);
-    } else {
-      setPasDePrenomConnu(false);
-      props.formik.handleChange(e);
-      props.formik.setFieldValue(pasDePrenomConnuWithNamespace, "false");
-    }
-  }
-
-  function reinitialiserPrenoms() {
-    const pathPrenomsAReinitialiser = `${props.nom}.prenoms`;
-    props.formik.setFieldValue(
-      pathPrenomsAReinitialiser,
-      genererDefaultValuesPrenoms()
-    );
-  }
+  }, [props.parent?.nomNaissance]);
 
   function onChangePasDeNomConnu(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
@@ -139,19 +106,12 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
             />
           )}
 
-          <CheckboxField
-            name={withNamespace(props.nom, PAS_DE_PRENOM_CONNU)}
-            label={getLibelle("Pas de prénom connu")}
-            values={[{ libelle: "", cle: PAS_DE_PRENOM_CONNU }]}
-            onChange={onChangePasDePrenomConnu}
+          <PrenomsConnusForm
+            nom={props.nom}
+            libelleAucunPrenom={getLibelle("Pas de prénom connu")}
+            pasDePrenomConnu={props.parent?.prenoms?.[0].prenom === SPC}
+            nbPrenoms={props.parent?.prenoms?.length}
           />
-
-          {!pasDePrenomConnu && (
-            <PrenomsForm
-              nom={withNamespace(props.nom, PRENOMS)}
-              nbPrenoms={props.parent?.prenoms?.length}
-            />
-          )}
 
           <RadioField
             name={withNamespace(props.nom, SEXE)}

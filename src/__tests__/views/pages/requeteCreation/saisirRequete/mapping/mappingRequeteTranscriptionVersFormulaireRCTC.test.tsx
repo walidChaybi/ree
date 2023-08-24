@@ -271,7 +271,10 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
         prenom9: "",
         prenom10: "",
         prenom11: "",
-        prenom12: ""
+        prenom12: "",
+        prenom13: "",
+        prenom14: "",
+        prenom15: ""
       },
       dateNaissance: {
         jour: 1,
@@ -312,7 +315,10 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
         prenom9: "",
         prenom10: "",
         prenom11: "",
-        prenom12: ""
+        prenom12: "",
+        prenom13: "",
+        prenom14: "",
+        prenom15: ""
       },
       dateNaissance: {
         jour: 1,

@@ -13,8 +13,8 @@ import {
   verticalListSortingStrategy
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Checkbox } from "@mui/material";
 import { DeleteOutlined, DragHandle } from "@mui/icons-material";
+import { Checkbox } from "@mui/material";
 import { finirAvec3petitsPoints, getLibelle } from "@util/Utils";
 import React, { useCallback } from "react";
 import "./scss/ListeGlisserDeposer.scss";
@@ -156,12 +156,12 @@ export const ListeGlisserDeposer: React.FC<
   );
 
   return (
-    <ul className="ListeGlisserDeposer">
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleSort}
-      >
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={handleSort}
+    >
+      <ul className="ListeGlisserDeposer">
         <SortableContext
           items={props.liste}
           strategy={verticalListSortingStrategy}
@@ -179,8 +179,8 @@ export const ListeGlisserDeposer: React.FC<
             />
           ))}
         </SortableContext>
-      </DndContext>
-    </ul>
+      </ul>
+    </DndContext>
   );
 };
 function afficherHandle(

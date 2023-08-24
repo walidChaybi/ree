@@ -2,24 +2,8 @@ import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/
 import { fireEvent, waitFor } from "@testing-library/dom";
 import { render, screen } from "@testing-library/react";
 import { getLibelle } from "@util/Utils";
-import React from "react";
 import { act } from "react-test-renderer";
-
-beforeEach(() => {
-  // IntersectionObserver isn't available in test environment
-  const mockIntersectionObserver = jest.fn();
-  mockIntersectionObserver.mockReturnValue({
-    observe: () => null,
-    unobserve: () => null,
-    disconnect: () => null
-  });
-  window.IntersectionObserver = mockIntersectionObserver;
-
-  // mock scrollIntoView element function
-  const scrollIntoViewMock = jest.fn();
-  Element.prototype.scrollIntoView = scrollIntoViewMock();
-  // Element.prototype.scrollIntoView = jest.fn();
-});
+import "../../../../../mock/element/IntersectionObserver";
 
 const getDiv = (index: number) => {
   return (

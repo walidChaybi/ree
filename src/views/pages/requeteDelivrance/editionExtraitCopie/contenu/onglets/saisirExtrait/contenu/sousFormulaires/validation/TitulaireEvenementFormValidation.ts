@@ -16,7 +16,7 @@ import {
   EvenementActeMariageValidationSchema,
   EvenementValidationSchema
 } from "@composant/formulaire/validation/EvenementValidationSchema";
-import { NomSecableFotmValidation } from "@composant/formulaire/validation/NomSecableFormValidation";
+import { NomSecableFormValidation } from "@composant/formulaire/validation/NomSecableFormValidation";
 import { sexeObligatoireValidation } from "@composant/formulaire/validation/SexeObligatoireValidation";
 import { ITitulaireEvtForm } from "@model/form/delivrance/ISaisieExtraitForm";
 import { estNonRenseigne, estRenseigne, getLibelle } from "@util/Utils";
@@ -46,7 +46,7 @@ const validationComplete = {
 // ActeNaissance
 export const TitulaireEvtActeNaissanceValidationSchema = Yup.object({
   ...validationComplete,
-  [NOM_SECABLE]: NomSecableFotmValidation,
+  [NOM_SECABLE]: NomSecableFormValidation,
   [DECLARATION_CONJOINTE]: DeclarationConjointeValidationSchema
 }).test("sexeObligatoire", function (value: any, error: any) {
   return sexeObligatoireValidation(this, value, error);
@@ -55,7 +55,7 @@ export const TitulaireEvtActeNaissanceValidationSchema = Yup.object({
 // Acte Mariage
 const validationSansSexeDateAgeDePourLesParents = {
   ...validationComplete,
-  [NOM_SECABLE]: NomSecableFotmValidation,
+  [NOM_SECABLE]: NomSecableFormValidation,
   [EVENEMENT]: EvenementActeMariageValidationSchema,
   [PARENT_NAISS1]: ParentNaissSansSexeDateAgeDeValidationSchema,
   [PARENT_NAISS2]: ParentNaissSansSexeDateAgeDeValidationSchema,

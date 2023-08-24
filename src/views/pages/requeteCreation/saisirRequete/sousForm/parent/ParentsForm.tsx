@@ -12,7 +12,7 @@ import {
   genererDefaultValuesPrenoms
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { DOUZE, getLibelle } from "@util/Utils";
+import { QUINZE, getLibelle } from "@util/Utils";
 import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
@@ -26,7 +26,7 @@ import {
   SubFormProps,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
-import { FormikProps, FormikValues, connect } from "formik";
+import { connect } from "formik";
 import React, { useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
 import { CaracteresAutorises } from "../../../../../../ressources/Regex";
@@ -127,47 +127,47 @@ const ParentsForm: React.FC<
 
   const boutonAjouterParent = useMemo(() => {
     const libelle = getLibelle("Ajouter un parent");
-    return parents.length < limitesParents.MAX ? 
-        <button
-          aria-label={libelle}
-          type="button"
-          onClick={() => onAjoutParent(props.formik)}
-        >
-          {libelle}
-        </button>
-     : <></>;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    return parents.length < limitesParents.MAX ? (
+      <button aria-label={libelle} type="button" onClick={onAjoutParent}>
+        {libelle}
+      </button>
+    ) : (
+      <></>
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [parents.length]);
 
   const boutonSupprimerParent = useMemo(() => {
     const libelle = getLibelle("Retirer un parent");
     return parents.length > limitesParents.MIN ? (
       <button
-          className="BoutonDanger"
-          aria-label={libelle}
-          type="button"
-          onClick={() => onRetraitParent(props.formik)}
-        >
-          {libelle}
-        </button>
-    ) : <></>;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+        className="BoutonDanger"
+        aria-label={libelle}
+        type="button"
+        onClick={onRetraitParent}
+      >
+        {libelle}
+      </button>
+    ) : (
+      <></>
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [parents.length]);
 
-  const onAjoutParent = (formik: FormikProps<FormikValues>) => {
+  function onAjoutParent() {
     const nomParent2 = withNamespace(PARENTS, "parent2");
-    formik.setFieldValue(nomParent2, {
+    props.formik.setFieldValue(nomParent2, {
       ...ParentFormDefaultValues,
       [PRENOMS]: { ...genererDefaultValuesPrenoms() }
     });
     setParents([...parents, {} as ITitulaireRequeteCreation]);
-  };
+  }
 
-  const onRetraitParent = (formik: FormikProps<FormikValues>) => {
+  function onRetraitParent() {
     const nomParent2 = withNamespace(PARENTS, "parent2");
     setParents(parents.slice(0, -1));
-    formik.setFieldValue(nomParent2, {});
-  };
+    props.formik.setFieldValue(nomParent2, {});
+  }
 
   return (
     <>
@@ -178,7 +178,7 @@ const ParentsForm: React.FC<
             key={index}
             nom={withNamespace(props.nom, `parent${index + 1}`)}
             titre={`Parent ${index + 1}`}
-            maxPrenoms={DOUZE}
+            maxPrenoms={QUINZE}
           />
         ))}
         <div className="conteneurBoutons">

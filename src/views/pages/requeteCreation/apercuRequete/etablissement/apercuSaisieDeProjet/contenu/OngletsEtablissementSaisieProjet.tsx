@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import "../../commun/scss/OngletsApercuCreationEtablissement.scss";
 import { Postulant } from "./postulant/Postulant";
 
-interface OngletsEtablissementSaisieProjetNaissancePostulantProps {
+interface OngletsEtablissementSaisieProjetProps {
   titulaire: ITitulaireRequeteCreation;
 }
 
@@ -16,8 +16,8 @@ interface ItemListe {
   component: JSX.Element;
 }
 
-export const OngletsEtablissementSaisieProjetNaissancePostulant: React.FC<
-  OngletsEtablissementSaisieProjetNaissancePostulantProps
+export const OngletsEtablissementSaisieProjet: React.FC<
+  OngletsEtablissementSaisieProjetProps
 > = props => {
   const [ongletSelectionne, setOngletSelectionne] = useState(ZERO);
 

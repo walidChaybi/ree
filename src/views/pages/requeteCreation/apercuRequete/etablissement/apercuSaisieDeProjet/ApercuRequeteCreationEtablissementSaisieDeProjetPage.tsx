@@ -16,7 +16,7 @@ import {
   onRenommePieceJustificativeEtablissement
 } from "../commun/ApercuRequeteCreationEtablissementUtils";
 import { OngletsApercuCreationEtablissementSaisieProjet } from "./contenu/OngletsApercuCreationEtablissementSaisieProjet";
-import { OngletsEtablissementSaisieProjetNaissancePostulant } from "./contenu/OngletsEtablissementSaisieProjet";
+import { OngletsEtablissementSaisieProjet } from "./contenu/OngletsEtablissementSaisieProjet";
 
 interface ApercuRequeteCreationEtablissementSaisieDeProjetPageProps {
   idRequeteAAfficher?: string;
@@ -118,11 +118,7 @@ function getOngletsEtablissementSaisieProjet(
     lienEtatCivil &&
     estProjetNaissancePostulant(titulaire, lienEtatCivil)
   ) {
-    onglets = (
-      <OngletsEtablissementSaisieProjetNaissancePostulant
-        titulaire={titulaire}
-      />
-    );
+    onglets = <OngletsEtablissementSaisieProjet titulaire={titulaire} />;
   }
   return onglets;
 }

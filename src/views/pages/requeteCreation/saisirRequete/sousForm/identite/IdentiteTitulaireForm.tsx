@@ -14,29 +14,29 @@ import {
   REQUETE,
   SEXE
 } from "@composant/formulaire/ConstantesNomsForm";
-import PrenomsForm, {
+import PrenomsConnusForm from "@composant/formulaire/nomsPrenoms/PrenomsConnusForm";
+import {
   creerValidationSchemaPrenom,
   genererDefaultValuesPrenoms
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { TypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerantCreation";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { getLibelle, SPC } from "@util/Utils";
+import { TypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerantCreation";
+import { SPC, getLibelle } from "@util/Utils";
+import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues
 } from "@widget/formulaire/champsDate/DateComposeForm";
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
-import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
-import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import {
   ISubForm,
   SubFormProps,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import * as Yup from "yup";
 import EvenementEtrangerForm, {
   EvenementEtrangerFormDefaultValues,
@@ -86,50 +86,11 @@ interface ComponentFormProps {
 const IdentiteTitulaireForm: React.FC<
   SubFormProps & ComponentFormProps
 > = props => {
-  const [pasDePrenomConnu, setPasDePrenomConnu] = useState(false);
-
-  const prenom1WithNamespace = withNamespace(
-    props.nom,
-    withNamespace(PRENOMS, PRENOM_1)
-  );
-
   const dateEvenementComposeFormProps = {
     labelDate: getLibelle(`Date de naissance`),
     nomDate: withNamespace(props.nom, DATE_NAISSANCE),
     anneeMax: new Date().getFullYear()
   } as DateComposeFormProps;
-
-  const pasDePrenomConnuForm =
-    props.formik.getFieldProps(prenom1WithNamespace).value;
-
-  useEffect(() => {
-    if (pasDePrenomConnuForm === SPC) {
-      setPasDePrenomConnu(true);
-    }
-  }, [pasDePrenomConnuForm]);
-
-  function onChangePasDePrenomConnu(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.checked) {
-      setPasDePrenomConnu(true);
-      reinitialiserPrenoms();
-      props.formik.handleChange(e);
-    } else {
-      setPasDePrenomConnu(false);
-      props.formik.handleChange(e);
-      props.formik.setFieldValue(
-        withNamespace(props.nom, PAS_DE_PRENOM_CONNU),
-        "false"
-      );
-    }
-  }
-
-  function reinitialiserPrenoms() {
-    const pathPrenomsAReinitialiser = `${props.nom}.prenoms`;
-    props.formik.setFieldValue(
-      pathPrenomsAReinitialiser,
-      genererDefaultValuesPrenoms()
-    );
-  }
 
   function getLienRequerant(): TypeLienRequerantCreation {
     return TypeLienRequerantCreation.getEnumFor(
@@ -190,20 +151,13 @@ const IdentiteTitulaireForm: React.FC<
             }
           />
 
-          <CheckboxField
-            name={withNamespace(props.nom, PAS_DE_PRENOM_CONNU)}
-            label={getLibelle("Pas de prénom connu")}
-            values={[{ libelle: "", cle: PAS_DE_PRENOM_CONNU }]}
-            onChange={e => onChangePasDePrenomConnu(e)}
+          <PrenomsConnusForm
+            nom={props.nom}
+            libelleAucunPrenom={getLibelle("Pas de prénom connu")}
+            pasDePrenomConnu={props.titulaire?.prenoms?.[0].prenom === SPC}
+            nbPrenoms={props.titulaire?.prenoms?.length}
+            onPrenomBlur={handleBlurPrenom1}
           />
-
-          {!pasDePrenomConnu && (
-            <PrenomsForm
-              nom={withNamespace(props.nom, PRENOMS)}
-              nbPrenoms={props.titulaire?.prenoms?.length}
-              onPrenomBlur={handleBlurPrenom1}
-            />
-          )}
 
           <RadioField
             name={withNamespace(props.nom, SEXE)}

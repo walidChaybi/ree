@@ -113,7 +113,7 @@ test("DOIT cacher le sous formulaire des prénoms quand la checkbox 'pas de pré
     render(<HookTitulaireForm />);
   });
 
-  const inputPrenom1 = screen.getByLabelText("Prénom 1");
+  const inputPrenom1 = screen.getByLabelText("Prénom");
 
   await waitFor(() => {
     expect(inputPrenom1).toBeDefined();
@@ -136,7 +136,7 @@ test("DOIT cacher le sous formulaire des prénoms quand la checkbox 'pas de pré
   });
 
   await waitFor(() => {
-    expect(screen.queryByText("Prénom 1")).not.toBeInTheDocument();
+    expect(screen.queryByText("Prénom")).not.toBeInTheDocument();
   });
 
   await waitFor(async () => {

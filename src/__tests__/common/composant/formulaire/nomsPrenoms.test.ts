@@ -14,7 +14,10 @@ describe("Test du composant Prenoms", () => {
       prenom9: "",
       prenom10: "",
       prenom11: "",
-      prenom12: ""
+      prenom12: "",
+      prenom13: "",
+      prenom14: "",
+      prenom15: ""
     };
     const prenomsDefaultValuesGenerer = genererDefaultValuesPrenoms();
 

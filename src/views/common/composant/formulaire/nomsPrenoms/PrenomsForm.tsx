@@ -1,4 +1,4 @@
-import { ZERO, creerPlageDeNombres, getLibelle } from "@util/Utils";
+import { QUINZE, ZERO, creerPlageDeNombres, getLibelle } from "@util/Utils";
 import {
   CARACTERES_AUTORISES_MESSAGE,
   CHAMP_OBLIGATOIRE
@@ -17,7 +17,7 @@ import * as Yup from "yup";
 import { CaracteresAutorises } from "../../../../../ressources/Regex";
 import "./scss/PrenomsForm.scss";
 
-const MAX_PRENOMS = 12;
+const MAX_PRENOMS = QUINZE;
 interface IPrenomsFormProps {
   nbPrenoms?: number;
   nbPrenomsAffiche?: number;
@@ -113,7 +113,11 @@ const PrenomsForm: React.FC<PrenomFormProps> = props => {
       {plageDeNombres.map((v: any, index: number) => (
         <div key={index} className="PrenomsForm">
           <InputField
-            label={getLibelle(`Prénom ${index + 1}`)}
+            label={
+              nbPrenoms === 1
+                ? getLibelle("Prénom")
+                : getLibelle(`Prénom ${index + 1}`)
+            }
             maxLength={NB_CARACT_MAX_SAISIE}
             name={construireNomChamp(index)}
             onChange={e => props.formik.handleChange(e)}

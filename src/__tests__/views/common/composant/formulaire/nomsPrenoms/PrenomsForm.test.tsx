@@ -69,7 +69,7 @@ test("render composant Prenoms Formulaire", async () => {
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"prenoms":{"prenom1":"mockPrenom1","prenom2":"","prenom3":"","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":""}}'
+      '{"prenoms":{"prenom1":"mockPrenom1","prenom2":"","prenom3":"","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":"","prenom13":"","prenom14":"","prenom15":""}}'
     );
   });
 });
@@ -137,7 +137,7 @@ test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async (
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"prenoms":{"prenom1":"mockPrenom1","prenom2":"mockprenom2","prenom3":"mockprenom3","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":""}}'
+      '{"prenoms":{"prenom1":"mockPrenom1","prenom2":"mockprenom2","prenom3":"mockprenom3","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":"","prenom13":"","prenom14":"","prenom15":""}}'
     );
   });
 
@@ -152,7 +152,23 @@ test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async (
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"prenoms":{"prenom1":"mockPrenom1","prenom2":"mockprenom2","prenom3":"","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":""}}'
+      '{"prenoms":{"prenom1":"mockPrenom1","prenom2":"mockprenom2","prenom3":"","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":"","prenom13":"","prenom14":"","prenom15":""}}'
     );
+  });
+});
+
+test("DOIT afficher Prénom QAND il n'y a qu'un seul prénom et Prénom 1 QUAND il y en a plusieurs", async () => {
+  render(<HookPrenomsForm />);
+
+  await waitFor(() => {
+    expect(screen.getByText("Prénom")).toBeDefined();
+    expect(screen.queryByText("Prénom 1")).toBeNull();
+  });
+
+  fireEvent.click(screen.getByText(/Ajouter prénom/i));
+
+  await waitFor(() => {
+    expect(screen.queryByText("Prénom")).toBeNull();
+    expect(screen.getByText("Prénom 1")).toBeDefined();
   });
 });

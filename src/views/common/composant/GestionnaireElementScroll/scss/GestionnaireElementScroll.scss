@@ -1,7 +1,4 @@
-.formDiv {
-    height: 500px;
-    overflow: scroll;
-}
+@import "../../../../../scss/colors";
 
 .selecteursContainer {
     display: flex;
@@ -10,13 +7,8 @@
     padding: 15px;
 }
 
-.refTag {
-    padding: 10px;
-    color: white;
-    background-color: #0579be;
-    border: 1px solid; 
-}
-
-.stepperContainer {
-    padding: 10px;
+.stepperButton {
+    svg {
+        font-size: 2rem;
+    }
 }

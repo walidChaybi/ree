@@ -64,10 +64,10 @@ import {
   ITitulaireEvtForm
 } from "@model/form/delivrance/ISaisieExtraitForm";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
-import { getDateComposeFromDate, IDateCompose } from "@util/DateUtils";
+import { IDateCompose, getDateComposeFromDate } from "@util/DateUtils";
 import {
   ABSENCE_VALIDEE,
-  DOUZE,
+  QUINZE,
   getValeurOuVide,
   numberToString,
   rempliAGaucheAvecZero
@@ -303,7 +303,7 @@ export function saisiePaysInconnuTitulaire(
 function saisiePrenomForm(prenoms?: string[]): Prenoms {
   const prenomsObj: Prenoms = {};
   if (prenoms) {
-    for (let i = 0; i < DOUZE; i++) {
+    for (let i = 0; i < QUINZE; i++) {
       const prenomKey = `prenom${i + 1}`;
       prenomsObj[prenomKey] = getValeurOuVide(prenoms[i]);
     }

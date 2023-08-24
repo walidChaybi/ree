@@ -42,6 +42,7 @@ export const PRENOM_8 = "prenom8";
 export const PRENOM_9 = "prenom9";
 export const PRENOM_10 = "prenom10";
 export const SEXE = "sexe";
+export const IDENTITE = "identite";
 
 // Titulaire: Date evt
 export const DATE_EVENEMENT = "dateEvenement";
@@ -78,6 +79,8 @@ export const PARENT_ADOPTANT_NAISS2 = "parentAdoptantNaiss2";
 export const ARRONDISSEMENT = "arrondissement";
 export const LIEU_NAISSANCE = "lieuNaissance";
 export const ETRANGER_FRANCE = "EtrangerFrance";
+export const ETAT_CANTON_PROVINCE = "etatCantonProvince";
+export const NE_DANS_MARIAGE = "neDansMariage";
 
 // Naissance
 export const DATE_NAISSANCE = "dateNaissance";
@@ -127,6 +130,8 @@ export const NOM = "nom";
 
 export const PAYS_STATUT_REFUGIE = "paysStatutRefugie";
 export const PAYS_ORIGINE = "paysOrigine";
+
+export const PROJET = "projet";
 
 // Noms des champs IdentiteForm
 export const NOMS = "noms";
