@@ -8,7 +8,7 @@ import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
-import { ApercuReqCreationEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/ApercuReqCreationEtablissementSimplePage";
+import { ApercuRequeteCreationEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteCreationEtablissementSimplePage";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
@@ -192,7 +192,7 @@ export const getApercuRequeteEtablissementOuTranscription = (
   );
   if (SousTypeCreation.estRCEXR(sousTypeCreation)) {
     apercuSimpleCreation = (
-      <ApercuReqCreationEtablissementSimplePage
+      <ApercuRequeteCreationEtablissementSimplePage
         idRequeteAAfficher={requeteSelectionnee.idRequete}
       />
     );

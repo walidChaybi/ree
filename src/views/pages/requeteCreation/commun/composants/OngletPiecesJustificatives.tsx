@@ -1,6 +1,6 @@
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
-import { ListePiecesJustificativesEtablissement } from "@pages/requeteCreation/apercuRequete/etablissement/composants/ListePiecesJustificativesEtablissement";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { ListePiecesJustificativesEtablissement } from "@pages/requeteCreation/apercuRequete/etablissement/commun/ListePiecesJustificativesEtablissement";
 import { ListePiecesJustificativesTranscription } from "@pages/requeteCreation/apercuRequete/transcription/composants/ListePiecesJustificativesTranscription";
 import React from "react";
 import "./scss/VoletPiecesJustificatives.scss";

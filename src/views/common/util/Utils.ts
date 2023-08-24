@@ -121,6 +121,12 @@ export function formatPrenom(
   return prenomFormate;
 }
 
+export function triPrenoms(prenoms: IPrenomOrdonnes[]): string[] {
+  return [...prenoms]
+    .sort((a, b) => a.numeroOrdre - b.numeroOrdre)
+    .map(prenom => prenom.prenom);
+}
+
 export function remplaceSNP(nom: string) {
   if (nom === SNP) {
     return SANS_NOM_PATRONYMIQUE;

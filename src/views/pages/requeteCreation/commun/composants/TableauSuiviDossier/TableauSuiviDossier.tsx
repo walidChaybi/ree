@@ -4,31 +4,32 @@ import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtabl
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET } from "@router/ReceUrls";
 import { getDateStringFromDateCompose } from "@util/DateUtils";
-import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { getValeurOuVide } from "@util/Utils";
-import { ICelluleFontAwesomeIconeProps } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/CelluleFontAwesomeIcone";
-import {
-  getColonneFontAwesomeIcone,
-  IColonneFontAwesomeIcone
-} from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/ColonneFontAwesomeIcone";
+import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_PERSONNE,
   NB_LIGNES_PAR_PAGE_PERSONNE
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
-import { getLigneTableauVide } from "@widget/tableau/TableUtils";
+import { ICelluleFontAwesomeIconeProps } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/CelluleFontAwesomeIcone";
+import {
+  IColonneFontAwesomeIcone,
+  getColonneFontAwesomeIcone
+} from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/ColonneFontAwesomeIcone";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import ModalBulletinIdentification from "./ModalBulletinIdentification";
 import { IDataBulletinIdentificationResultat } from "./ModalBulletinIdentificationApiHook";
-import "./scss/TableauSuiviDossier.scss";
 import {
   ILigneTableauSuiviDossier,
   ITableauSuiviDossierParams,
   useTableauSuiviDossierHook
 } from "./TableauSuiviDossierHook";
 import { getColonnesTableauSuiviDossier } from "./TableauSuiviDossierUtils";
+import "./scss/TableauSuiviDossier.scss";
 
 const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
   const [idBIAAfficher, setIdBIAAfficher] = useState<string>("");
@@ -90,11 +91,10 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
           mois: getValeurOuVide(dataSdanf?.moisNaissance?.toString()),
           annee: getValeurOuVide(dataSdanf?.anneeNaissance?.toString())
         }),
-        lieuNaissance: `${dataSdanf?.villeNaissance} ${
-          dataSdanf?.arrondissementNaissance
-            ? `(${dataSdanf?.arrondissementNaissance})`
-            : ""
-        } (${dataSdanf?.paysNaissance})`
+        lieuNaissance: LieuxUtils.getVillePays(
+          dataSdanf?.villeNaissance,
+          dataSdanf?.paysNaissance
+        )
       });
       setIdBIAAfficher(id);
       setIsModalOuverte(true);

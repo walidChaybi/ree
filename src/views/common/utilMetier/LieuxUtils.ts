@@ -208,6 +208,10 @@ export class LieuxUtils {
     return { paysString, regionString, villeString };
   }
 
+  public static getVillePays(ville?: string, pays?: string) {
+    return `${getValeurOuVide(ville)}${this.getLieuEntreParentheses(pays)}`;
+  }
+
   private static getLieuEntreParentheses(lieu?: string) {
     return lieu ? ` (${lieu})` : "";
   }

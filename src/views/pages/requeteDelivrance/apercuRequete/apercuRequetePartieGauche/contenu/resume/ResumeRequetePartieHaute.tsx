@@ -1,11 +1,4 @@
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import { Qualite } from "@model/requete/enum/Qualite";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
-import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
-import { TypeMandant } from "@model/requete/enum/TypeMandant";
 import { IAdresseRequerant } from "@model/requete/IAdresseRequerant";
-import { IdentiteType } from "@model/requete/IdentiteType";
 import {
   EvenementRequete,
   IEvenementRequete
@@ -23,7 +16,13 @@ import {
   ITitulaireRequete,
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
-import { formatagePrenoms } from "@pages/requeteCreation/apercuRequete/etablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
+import { IdentiteType } from "@model/requete/IdentiteType";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { Qualite } from "@model/requete/enum/Qualite";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
+import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
+import { TypeMandant } from "@model/requete/enum/TypeMandant";
 import {
   formatLigne,
   getLibelle,
@@ -34,7 +33,8 @@ import React from "react";
 import {
   formatLigneLieu,
   formatLigneNomPrenoms,
-  formatLigneQualiteType
+  formatLigneQualiteType,
+  formatPrenoms
 } from "./Formatages";
 import { ItemLibelle } from "./item/ItemLibelle";
 import { ItemMultiLignes } from "./item/ItemMultiLignes";
@@ -192,7 +192,7 @@ const getIdentiteTitulaire = (
       naissance: titulaire.nomNaissance
     },
     prenoms: {
-      naissance: formatagePrenoms(titulaire.prenoms)
+      naissance: formatPrenoms(titulaire.prenoms)
     }
   };
 
@@ -205,7 +205,7 @@ const getIdentiteParent = (parent: IParent): string | undefined => {
       naissance: parent.nomNaissance
     },
     prenoms: {
-      naissance: formatagePrenoms(parent.prenoms)
+      naissance: formatPrenoms(parent.prenoms)
     }
   };
 

@@ -9,7 +9,7 @@ import {
   requeteCreationAvecMessagesRetourSDANFSansLesDroits,
   requeteCreationEtablissement
 } from "@mock/data/requeteCreation";
-import { OngletsApercuCreationEtablissementPriseEnCharge } from "@pages/requeteCreation/apercuRequete/etablissement/composants/OngletsApercuCreationEtablissementPriseEnCharge";
+import { OngletsApercuCreationEtablissementPriseEnCharge } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/contenu/OngletsApercuCreationEtablissementPriseEnCharge";
 import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID } from "@router/ReceUrls";
 import {
   act,
