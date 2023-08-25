@@ -1,5 +1,6 @@
 import {
   ADOPTE_PAR,
+  ANALYSE_MARGINALE,
   DATE_NAISSANCE,
   ETAT_CANTON_PROVINCE,
   IDENTITE,
@@ -9,11 +10,13 @@ import {
   NOM_SECABLE,
   PAYS_NAISSANCE,
   PRENOM,
+  PRENOMS,
   SEXE,
   VILLE_NAISSANCE
 } from "@composant/formulaire/ConstantesNomsForm";
 import NomSecableForm from "@composant/formulaire/NomSecableForm";
 import PrenomsConnusForm from "@composant/formulaire/nomsPrenoms/PrenomsConnusForm";
+import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { OuiNon } from "@model/etatcivil/enum/OuiNon";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
@@ -34,7 +37,11 @@ import {
 import { connect } from "formik";
 import React, { useState } from "react";
 import Item from "../../../commun/resumeRequeteCreationEtablissement/items/Item";
-import { estJourMoisVide } from "./mapping/mappingTitulaireVersFormulairePostulant";
+import {
+  estJourMoisVide,
+  getPrenomsFrancises,
+  getPrenomsNonFrancises
+} from "./mapping/mappingTitulaireVersFormulairePostulant";
 
 interface IPostulantFormProps {
   nom: string;
@@ -43,7 +50,11 @@ interface IPostulantFormProps {
 type PostulantFormProps = IPostulantFormProps & FormikComponentProps;
 
 const PostulantForm: React.FC<PostulantFormProps> = props => {
-  const nbPrenom = props.titulaire.retenueSdanf?.prenomsRetenu?.length || 0;
+  const prenomRetenu = props.titulaire.retenueSdanf?.prenomsRetenu;
+  const nbPrenom = getPrenomsNonFrancises(prenomRetenu).length;
+  const nbPrenomAnalyseMarginale =
+    getPrenomsFrancises.length || getPrenomsNonFrancises(prenomRetenu).length;
+  const analyseMarginale = withNamespace(props.nom, ANALYSE_MARGINALE);
   const sexe = withNamespace(props.nom, SEXE);
   const lieuNaissance = withNamespace(props.nom, LIEU_DE_NAISSANCE);
   const afficherMessageSexe = Sexe.estIndetermine(
@@ -77,6 +88,16 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
         pasDePrenomConnu={nbPrenom === 0}
         nom={withNamespace(props.nom, PRENOM)}
         nbPrenoms={nbPrenom}
+      />
+      <div className="Titre">{getLibelle("Analyse marginales")}</div>
+      <InputField
+        name={withNamespace(analyseMarginale, NOM)}
+        label={getLibelle("Nom")}
+        maxLength={NB_CARACT_MAX_SAISIE}
+      />
+      <PrenomsForm
+        nom={withNamespace(analyseMarginale, PRENOMS)}
+        nbPrenoms={nbPrenomAnalyseMarginale}
       />
       <InputField
         name={withNamespace(props.nom, IDENTITE)}

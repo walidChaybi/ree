@@ -1,4 +1,5 @@
 export interface IPrenomOrdonnes {
   prenom: string;
   numeroOrdre: number;
+  estPrenomFrRetenuSdanf?: boolean;
 }

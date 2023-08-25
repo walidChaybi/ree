@@ -1319,7 +1319,7 @@ export const requeteCreationEtablissementSaisieProjet = {
         nomNaissance: "nomNaissance",
         nomUsage: "nomUsage",
         nomActuel: "nomActuel",
-        nomDemandeFrancisation: null,
+        nomDemandeFrancisation: "nomFrancisation",
         nomDemandeIdentification: null,
         jourNaissance: 1,
         moisNaissance: 2,
@@ -1336,6 +1336,12 @@ export const requeteCreationEtablissementSaisieProjet = {
             numeroOrdre: 1,
             prenom: "prenom",
             estPrenomFrRetenuSdanf: null
+          },
+          {
+            id: "3ed99ec3-a80f-480d-b91f-b4068f0b3bf7",
+            numeroOrdre: 1,
+            prenom: "prenomFrancisation",
+            estPrenomFrRetenuSdanf: true
           }
         ]
       },

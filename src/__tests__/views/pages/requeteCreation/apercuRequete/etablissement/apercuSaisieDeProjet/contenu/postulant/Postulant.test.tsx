@@ -8,8 +8,10 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     const titulaire = requeteCreationEtablissementSaisieProjet.titulaires![0];
     render(<Postulant titulaire={titulaire} />);
 
-    const champNom = screen.getByLabelText("Nom") as HTMLInputElement;
-    const champPrenom = screen.getByLabelText("Prénom") as HTMLInputElement;
+    const champNom = screen.getAllByLabelText("Nom") as HTMLInputElement[];
+    const champPrenom = screen.getAllByLabelText(
+      "Prénom"
+    ) as HTMLInputElement[];
     const champIdentite = screen.getByLabelText(
       "Identité avant décret"
     ) as HTMLInputElement;
@@ -28,11 +30,13 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     const champNeMariage = screen.getByLabelText("Non") as HTMLInputElement;
 
     await waitFor(() => {
-      expect(champNom.value).toBe("NOMNAISSANCE");
+      expect(champNom[0].value).toBe("NOMNAISSANCE");
       expect(screen.getByText("Nom sécable")).toBeDefined();
       expect(screen.getByText("Pas de prénom")).toBeDefined();
-      expect(champPrenom.value).toBe("Prenom");
-      expect(champIdentite.value).toBe("prenom nomNaissance");
+      expect(champPrenom[0].value).toBe("Prenom");
+      expect(champNom[1].value).toBe("NOMFRANCISATION");
+      expect(champPrenom[1].value).toBe("Prenomfrancisation");
+      expect(champIdentite.value).toBe("");
       expect(champSexe.checked).toBeTruthy();
       expect(champJourNaissance.value).toBe("01");
       expect(champMoisNaissance.value).toBe("02");

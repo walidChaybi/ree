@@ -28,6 +28,7 @@ export const NOM_ACTE_ETRANGER = "nomActeEtranger";
 export const NOM_SOUHAITE_ACTE_FR = "nomSouhaiteActeFR";
 export const PAS_DE_NOM_CONNU = "pasDeNomConnu";
 export const PAS_DE_PRENOM_CONNU = "pasDePrenomConnu";
+export const ANALYSE_MARGINALE = "analyseMarginale";
 
 // Titulaire: Noms des champs PrenomsForm
 export const NOM_NAISSANCE = "nomNaissance";

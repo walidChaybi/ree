@@ -1,5 +1,6 @@
 import {
   ADOPTE_PAR,
+  ANALYSE_MARGINALE,
   ANNEE,
   DATE_NAISSANCE,
   ETAT_CANTON_PROVINCE,
@@ -55,6 +56,14 @@ export function estJourMoisVide(retenueSdanf?: IRetenueSdanf) {
   );
 }
 
+export function getPrenomsNonFrancises(prenoms: IPrenomOrdonnes[] = []) {
+  return prenoms.filter(prenom => !prenom.estPrenomFrRetenuSdanf);
+}
+
+export function getPrenomsFrancises(prenoms: IPrenomOrdonnes[] = []) {
+  return prenoms.filter(prenom => prenom.estPrenomFrRetenuSdanf);
+}
+
 function mapSaisieProjet(titulaire: ITitulaireRequeteCreation) {
   return {
     [TYPE]: getValeurOuVide(
@@ -67,12 +76,12 @@ function mapSaisieProjet(titulaire: ITitulaireRequeteCreation) {
 function mapSaisiePostulant(titulaire: ITitulaireRequeteCreation) {
   const retenueSdanf = titulaire.retenueSdanf || {};
   const nom = getValeurOuVide(retenueSdanf.nomNaissance);
-  const prenoms = retenueSdanf.prenomsRetenu || [];
   return {
     [NOM]: nom.toUpperCase(),
     [NOM_SECABLE]: mapSaisieNomSecable(),
-    [PRENOM]: mapSaisiePrenoms(prenoms),
-    [IDENTITE]: `${prenoms.map(prenom => prenom.prenom).join(", ")} ${nom}`,
+    [PRENOM]: mapSaisiePrenoms(retenueSdanf.prenomsRetenu || []),
+    [ANALYSE_MARGINALE]: mapAnalyseMarginale(retenueSdanf),
+    [IDENTITE]: "",
     [SEXE]: titulaire.sexe,
     [DATE_NAISSANCE]: mapSaisieDateNaissance(retenueSdanf),
     [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissance(retenueSdanf),
@@ -89,13 +98,25 @@ function mapSaisieNomSecable() {
 }
 
 function mapSaisiePrenoms(prenoms: IPrenomOrdonnes[]) {
-  prenoms = prenoms.map(prenom => ({
-    prenom: formatMajusculesMinusculesMotCompose(prenom.prenom),
-    numeroOrdre: prenom.numeroOrdre
-  }));
+  prenoms = formatPrenoms(getPrenomsNonFrancises(prenoms));
   return {
     [PAS_DE_PRENOM_CONNU]:
       prenoms.length === 0 ? [PAS_DE_PRENOM_CONNU] : "false",
+    [PRENOMS]: getPrenomsOrdonneVersPrenomsDefaultValues(prenoms)
+  };
+}
+
+function mapAnalyseMarginale(retenueSdanf: IRetenueSdanf) {
+  const nom =
+    retenueSdanf.nomDemandeFrancisation ||
+    getValeurOuVide(retenueSdanf.nomNaissance);
+  let prenoms = getPrenomsFrancises(retenueSdanf.prenomsRetenu);
+  if (prenoms.length === 0) {
+    prenoms = getPrenomsNonFrancises(retenueSdanf.prenomsRetenu);
+  }
+  prenoms = formatPrenoms(prenoms);
+  return {
+    [NOM]: nom.toUpperCase(),
     [PRENOMS]: getPrenomsOrdonneVersPrenomsDefaultValues(prenoms)
   };
 }
@@ -128,4 +149,11 @@ function mapSaisieLieuNaissance(retenueSdanf: IRetenueSdanf) {
     ),
     [NE_DANS_MARIAGE]: "NON"
   };
+}
+
+function formatPrenoms(prenoms: IPrenomOrdonnes[]) {
+  return prenoms.map(prenom => ({
+    prenom: formatMajusculesMinusculesMotCompose(prenom.prenom),
+    numeroOrdre: prenom.numeroOrdre
+  }));
 }
