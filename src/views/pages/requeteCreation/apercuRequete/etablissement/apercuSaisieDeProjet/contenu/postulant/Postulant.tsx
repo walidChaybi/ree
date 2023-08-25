@@ -25,7 +25,7 @@ export const Postulant: React.FC<PostulantProps> = props => {
   const elementListe = [
     {
       libelle: "Postulant",
-      element: <PostulantForm titulaire={props.titulaire} nom={TITULAIRE} />
+      element: <PostulantForm nom={TITULAIRE} titulaire={props.titulaire} />
     }
   ];
 

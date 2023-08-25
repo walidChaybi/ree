@@ -1,12 +1,16 @@
 import { getLibelle } from "@util/Utils";
 import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
-import { withNamespace } from "@widget/formulaire/utils/FormUtil";
+import {
+  INomForm,
+  SubFormProps,
+  withNamespace
+} from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { PAS_DE_PRENOM_CONNU, PRENOMS } from "../ConstantesNomsForm";
 import PrenomsForm, {
-  PrenomFormProps,
+  IPrenomsFormProps,
   creerValidationSchemaPrenom,
   genererDefaultValuesPrenoms
 } from "./PrenomsForm";
@@ -33,7 +37,9 @@ interface IPrenomsConnusFormProps {
   pasDePrenomConnu: boolean;
 }
 
-export type PrenomsConnusFormProps = IPrenomsConnusFormProps & PrenomFormProps;
+type PrenomsConnusFormProps = IPrenomsConnusFormProps &
+  IPrenomsFormProps &
+  SubFormProps;
 
 const PrenomsConnusForm: React.FC<PrenomsConnusFormProps> = props => {
   const [pasDePrenomConnu, setPasDePrenomConnu] = useState(false);
@@ -90,4 +96,6 @@ const PrenomsConnusForm: React.FC<PrenomsConnusFormProps> = props => {
   );
 };
 
-export default connect(PrenomsConnusForm);
+export default connect<IPrenomsConnusFormProps & IPrenomsFormProps & INomForm>(
+  PrenomsConnusForm
+);

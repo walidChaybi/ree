@@ -54,7 +54,7 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
 
   function onChangeDateNaissance(
     date: IDateComposeForm,
-    type: ChampDateModifie
+    type?: ChampDateModifie
   ) {
     if (type === ChampDateModifie.JOUR || ChampDateModifie.MOIS) {
       setAfficherMessageNaissance(false);
@@ -68,11 +68,14 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
         label={getLibelle("Nom")}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
-      <NomSecableForm nomComposant={withNamespace(props.nom, NOM_SECABLE)} />
+      <NomSecableForm
+        nomComposant={withNamespace(props.nom, NOM_SECABLE)}
+        saisieVerrouillee={false}
+      />
       <PrenomsConnusForm
-        nom={withNamespace(props.nom, PRENOM)}
         libelleAucunPrenom={getLibelle("Pas de prénom")}
         pasDePrenomConnu={nbPrenom === 0}
+        nom={withNamespace(props.nom, PRENOM)}
         nbPrenoms={nbPrenom}
       />
       <InputField
@@ -140,4 +143,4 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
   );
 };
 
-export default connect(PostulantForm);
+export default connect<IPostulantFormProps>(PostulantForm);

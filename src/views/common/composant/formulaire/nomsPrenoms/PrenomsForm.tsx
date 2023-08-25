@@ -18,7 +18,7 @@ import { CaracteresAutorises } from "../../../../../ressources/Regex";
 import "./scss/PrenomsForm.scss";
 
 const MAX_PRENOMS = QUINZE;
-interface IPrenomsFormProps {
+export interface IPrenomsFormProps {
   nbPrenoms?: number;
   nbPrenomsAffiche?: number;
   prenom1Obligatoire?: boolean;
