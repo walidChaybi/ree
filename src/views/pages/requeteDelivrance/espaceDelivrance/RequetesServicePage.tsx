@@ -7,28 +7,28 @@ import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
-import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
-import { SortOrder } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE,
   NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import React, { useCallback, useState } from "react";
 import {
-  HeaderTableauRequete,
   dateStatutColumnHeaders,
+  HeaderTableauRequete,
   requeteColumnHeaders
 } from "./EspaceDelivranceParams";
 import {
