@@ -4,32 +4,32 @@ import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtabl
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET } from "@router/ReceUrls";
 import { getDateStringFromDateCompose } from "@util/DateUtils";
-import { getValeurOuVide } from "@util/Utils";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
+import { getValeurOuVide } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
-import { getLigneTableauVide } from "@widget/tableau/TableUtils";
+import { ICelluleFontAwesomeIconeProps } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/CelluleFontAwesomeIcone";
+import {
+  getColonneFontAwesomeIcone,
+  IColonneFontAwesomeIcone
+} from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/ColonneFontAwesomeIcone";
 import {
   NB_LIGNES_PAR_APPEL_PERSONNE,
   NB_LIGNES_PAR_PAGE_PERSONNE
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
-import { ICelluleFontAwesomeIconeProps } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/CelluleFontAwesomeIcone";
-import {
-  IColonneFontAwesomeIcone,
-  getColonneFontAwesomeIcone
-} from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/ColonneFontAwesomeIcone";
+import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import ModalBulletinIdentification from "./ModalBulletinIdentification";
 import { IDataBulletinIdentificationResultat } from "./ModalBulletinIdentificationApiHook";
+import "./scss/TableauSuiviDossier.scss";
 import {
   ILigneTableauSuiviDossier,
   ITableauSuiviDossierParams,
   useTableauSuiviDossierHook
 } from "./TableauSuiviDossierHook";
 import { getColonnesTableauSuiviDossier } from "./TableauSuiviDossierUtils";
-import "./scss/TableauSuiviDossier.scss";
 
 const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
   const [idBIAAfficher, setIdBIAAfficher] = useState<string>("");
@@ -49,7 +49,7 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
     ILigneTableauSuiviDossier,
     string
   > = {
-    getIdentifiant: data => data.idLienEtatCivil,
+    getIdentifiant: data => data.idSuiviDossier,
     style: {
       width: "3rem",
       opacity: 0
@@ -134,7 +134,7 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
   return (
     <div className="TableauSuiviDossier">
       <TableauRece
-        idKey={"idLienEtatCivil"}
+        idKey={"idSuiviDossier"}
         columnHeaders={columnHeaderTableauSuiviDossier}
         dataState={dataTableau}
         onClickOnLine={onClickOnLine}

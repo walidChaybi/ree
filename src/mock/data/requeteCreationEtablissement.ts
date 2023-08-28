@@ -111,7 +111,7 @@ export const requeteCreationEtablissement = {
         }
       ],
       prenomsDemande: [],
-      lienEtatCivil: [
+      suiviDossiers: [
         {
           id: "a272ec8a-1351-4edd-99b8-03004292a9d2",
           dateEtablissement: 1492693480000,
@@ -191,7 +191,7 @@ export const requeteCreationEtablissement = {
         }
       ],
       prenomsDemande: [],
-      lienEtatCivil: [],
+      suiviDossiers: [],
       retenueSdanf: {
         id: "a2726fe6-4c4a-4da1-9201-202ea54ab236",
         nomNaissance: "ANBDE",
@@ -264,7 +264,7 @@ export const requeteCreationEtablissement = {
         }
       ],
       prenomsDemande: [],
-      lienEtatCivil: [
+      suiviDossiers: [
         {
           id: "a27241d3-c3fc-46e9-bd1b-92f1b98c3743",
           dateEtablissement: 1492693480000,
@@ -362,7 +362,7 @@ export const requeteCreationEtablissement = {
         }
       ],
       prenomsDemande: [],
-      lienEtatCivil: [
+      suiviDossiers: [
         {
           id: "a27241d3-c3fc-46e9-bd1b-92f1b98c3744",
           dateEtablissement: 1492693480000,
@@ -448,7 +448,7 @@ export const requeteCreationEtablissement = {
         }
       ],
       prenomsDemande: [],
-      lienEtatCivil: [],
+      suiviDossiers: [],
       retenueSdanf: {
         id: "a272150f-8ff8-42b4-8736-0b9960c5479a",
         nomNaissance: "PLAGNE",
@@ -521,7 +521,7 @@ export const requeteCreationEtablissement = {
         }
       ],
       prenomsDemande: [],
-      lienEtatCivil: [],
+      suiviDossiers: [],
       retenueSdanf: {
         id: "a272f921-85b8-410b-9bde-d226d21b7b2c",
         nomNaissance: "PLAGNE",
@@ -598,7 +598,7 @@ export const requeteCreationEtablissement = {
         }
       ],
       prenomsDemande: [],
-      lienEtatCivil: [],
+      suiviDossiers: [],
       retenueSdanf: {
         id: "a27225ea-c410-4f0d-838e-de041ea95f59",
         nomNaissance: "PLAGNE",
@@ -1306,7 +1306,7 @@ export const requeteCreationEtablissementSaisieProjet = {
           estPrenomFrRetenuSdanf: null
         }
       ],
-      lienEtatCivil: [
+      suiviDossiers: [
         {
           id: "a272ec8a-1351-4edd-99b8-03004292a9d2",
           dateEtablissement: 1492693480000,

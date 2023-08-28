@@ -383,7 +383,7 @@ export const requeteCreationEtablissement = {
           estPrenomFrRetenuSdanf: null
         }
       ],
-      lienEtatCivil: [],
+      suiviDossiers: [],
       retenueSdanf: {
         id: "3ed91e46-24ce-46ae-b366-665bfddae946",
         nomNaissance: "nomNaissance",
@@ -499,7 +499,7 @@ export const requeteCreationEtablissement = {
           estPrenomFrRetenuSdanf: null
         }
       ],
-      lienEtatCivil: [],
+      suiviDossiers: [],
       retenueSdanf: {
         id: "3ed91bb9-1949-4625-b06f-7ce487f8f827",
         nomNaissance: "nomNaissance",
@@ -615,7 +615,7 @@ export const requeteCreationEtablissement = {
           estPrenomFrRetenuSdanf: null
         }
       ],
-      lienEtatCivil: [],
+      suiviDossiers: [],
       retenueSdanf: {
         id: "3ed92be9-acf6-4cab-92f4-0f56a7657cf9",
         nomNaissance: "nomNaissance",
@@ -971,7 +971,7 @@ export const requeteCreationTranscription = {
           estPrenomFrRetenuSdanf: null
         }
       ],
-      lienEtatCivil: [],
+      suiviDossiers: [],
       retenueSdanf: {
         id: "3ed91e46-24ce-46ae-b366-665bfddae946",
         nomNaissance: "nomNaissance",
@@ -1056,7 +1056,7 @@ export const requeteCreationTranscription = {
           nationalite: "nationalite"
         }
       ],
-      lienEtatCivil: [],
+      suiviDossiers: [],
       retenueSdanf: {
         id: "3ed91e46-24ce-46ae-b366-665bfddae946",
         nomNaissance: "nomNaissance",
@@ -1342,7 +1342,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
             estPrenomFrRetenuSdanf: null
           }
         ],
-        lienEtatCivil: [],
+        suiviDossiers: [],
         retenueSdanf: {
           id: "6ccc98eb-632f-48b2-b898-6fae9066e734",
           nomNaissance: "nomNaissance",
@@ -1462,7 +1462,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
             estPrenomFrRetenuSdanf: null
           }
         ],
-        lienEtatCivil: [],
+        suiviDossiers: [],
         retenueSdanf: {
           id: "6ccc9d4a-fbbe-4d39-9eca-bbc1ef7d9eff",
           nomNaissance: "nomNaissance",
@@ -1550,7 +1550,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
             estPrenomFrRetenuSdanf: null
           }
         ],
-        lienEtatCivil: [],
+        suiviDossiers: [],
         retenueSdanf: {
           id: "6ccce804-d0af-44ae-b8ed-4241707a22d9",
           nomNaissance: "nomNaissance",
@@ -1654,7 +1654,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
               estPrenomFrRetenuSdanf: null
             }
           ],
-          lienEtatCivil: [],
+          suiviDossiers: [],
           retenueSdanf: {
             id: "6ccc98eb-632f-48b2-b898-6fae9066e734",
             nomNaissance: "nomNaissance",
@@ -1747,7 +1747,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
             estPrenomFrRetenuSdanf: null
           }
         ],
-        lienEtatCivil: [],
+        suiviDossiers: [],
         retenueSdanf: {
           id: "6ccce804-d0af-44ae-b8ed-4241707a22d9",
           nomNaissance: "nomNaissance",
@@ -1851,7 +1851,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
               estPrenomFrRetenuSdanf: null
             }
           ],
-          lienEtatCivil: [],
+          suiviDossiers: [],
           retenueSdanf: {
             id: "6ccc98eb-632f-48b2-b898-6fae9066e734",
             nomNaissance: "nomNaissance",
@@ -1944,7 +1944,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
             estPrenomFrRetenuSdanf: null
           }
         ],
-        lienEtatCivil: [],
+        suiviDossiers: [],
         retenueSdanf: {
           id: "6ccce804-d0af-44ae-b8ed-4241707a22d9",
           nomNaissance: "nomNaissance",
@@ -2045,7 +2045,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
           }
         ],
         prenomsDemande: [],
-        lienEtatCivil: [],
+        suiviDossiers: [],
         retenueSdanf: null,
         qualite: "ANCIEN_CONJOINT",
         numeroDossierNational: null,
@@ -2116,7 +2116,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
           }
         ],
         prenomsDemande: [],
-        lienEtatCivil: [],
+        suiviDossiers: [],
         retenueSdanf: {
           id: "d84929f5-da58-4804-8452-578113581654",
           nomNaissance: "DUPONT",
@@ -2198,7 +2198,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
           }
         ],
         prenomsDemande: [],
-        lienEtatCivil: [],
+        suiviDossiers: [],
         retenueSdanf: {
           id: "d84901a9-0af9-4248-88d5-df9ae4853fbf",
           nomNaissance: "DUPOND",

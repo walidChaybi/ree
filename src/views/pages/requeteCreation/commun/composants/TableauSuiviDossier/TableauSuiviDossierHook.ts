@@ -17,7 +17,7 @@ export interface ITableauSuiviDossierParams {
 
 export interface ILigneTableauSuiviDossier {
   id: string;
-  idLienEtatCivil: string;
+  idSuiviDossier: string;
   qualite: string;
   nom: string;
   prenoms: string;
@@ -58,15 +58,14 @@ export function useTableauSuiviDossierHook(
         ) => {
           const dataAnalyseMarginale = titulaireAnalyseMarginaleResultat.find(
             analyseMarginale =>
-              titulaireCourant.lienEtatCivil?.some(
-                lienEtatCivil =>
-                  lienEtatCivil.idActe === analyseMarginale.idActe
+              titulaireCourant.suiviDossiers?.some(
+                suiviDossier => suiviDossier.idActe === analyseMarginale.idActe
               )
           );
 
           const ligneTitulaire: ILigneTableauSuiviDossier = {
             id: titulaireCourant.id,
-            idLienEtatCivil: "",
+            idSuiviDossier: "",
             prenoms: getPrenomTitulaire(titulaireCourant, dataAnalyseMarginale),
             nom: getNomTitulaire(titulaireCourant, dataAnalyseMarginale),
             qualite:
@@ -80,24 +79,24 @@ export function useTableauSuiviDossierHook(
           };
 
           const lignesDossiers: ILigneTableauSuiviDossier[] =
-            titulaireCourant.lienEtatCivil?.map(lienEtatCivil => {
+            titulaireCourant.suiviDossiers?.map(suiviDossier => {
               return {
                 id: titulaireCourant.id,
-                idLienEtatCivil: lienEtatCivil.id,
+                idSuiviDossier: suiviDossier.id,
                 prenoms: "",
                 nom: "",
                 qualite: "",
                 decret: "",
                 evenement: NatureProjetEtablissement.getEnumFor(
-                  lienEtatCivil.natureProjet
+                  suiviDossier.natureProjet
                 ).libelle,
                 dateEvenement: getDateStringFromDateCompose({
-                  jour: lienEtatCivil.jourEvenement,
-                  mois: lienEtatCivil.moisEvenement,
-                  annee: lienEtatCivil.anneeEvenement
+                  jour: suiviDossier.jourEvenement,
+                  mois: suiviDossier.moisEvenement,
+                  annee: suiviDossier.anneeEvenement
                 }),
                 avancement: AvancementProjetActe.getEnumFor(
-                  lienEtatCivil.avancement
+                  suiviDossier.avancement
                 ).libelle
               };
             }) || [];
@@ -134,7 +133,7 @@ const getTitulairesAAfficher = (
   return (
     titulaires?.filter(
       titulaire =>
-        titulaire.lienEtatCivil && titulaire.lienEtatCivil?.length > 0
+        titulaire.suiviDossiers && titulaire.suiviDossiers?.length > 0
     ) || []
   );
 };
@@ -143,8 +142,8 @@ const getIdentifiantsActeFromTitulaires = (
   identifiantsActes: string[],
   titulaireCourant: ITitulaireRequeteCreation
 ): string[] => {
-  const idActe = titulaireCourant.lienEtatCivil?.find(lienEtatCivil =>
-    Boolean(lienEtatCivil.idActe)
+  const idActe = titulaireCourant.suiviDossiers?.find(suiviDossier =>
+    Boolean(suiviDossier.idActe)
   )?.idActe;
   if (idActe) {
     identifiantsActes.push(idActe);

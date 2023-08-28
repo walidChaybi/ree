@@ -103,7 +103,7 @@ export const requeteCreationTranscription = {
           estPrenomFrRetenuSdanf: null
         }
       ],
-      lienEtatCivil: [],
+      suiviDossiers: [],
       retenueSdanf: {
         id: "3ed91bb9-1949-4625-b06f-7ce487f8f827",
         nomNaissance: "nomNaissance",
@@ -219,7 +219,7 @@ export const requeteCreationTranscription = {
           estPrenomFrRetenuSdanf: null
         }
       ],
-      lienEtatCivil: [],
+      suiviDossiers: [],
       retenueSdanf: {
         id: "3ed92be9-acf6-4cab-92f4-0f56a7657cf9",
         nomNaissance: "nomNaissance",
@@ -479,41 +479,42 @@ export const requeteCreationTranscriptionStatutATraiter = {
   }
 } as any as IRequeteCreationTranscription;
 
-export const creationRequeteTranscriptionParams: ICreationRequeteCreationParams = {
-  requete: {
-    villeRegistre: "",
-    canal: "COURRIER",
-    type: "CREATION",
-    sousType: "RCTC",
-    provenance: "COURRIER",
-    natureActeTranscrit: "NAISSANCE_MINEUR",
-    lienRequerant: { typeLienRequerant: "PERE_MERE" },
-    titulaires: [
-      {
-        prenoms: [{ prenom: "Prenom", numeroOrdre: 1 }],
-        sexe: "INCONNU",
-        nationalite: "INCONNUE",
-        typeObjetTitulaire: "TITULAIRE_ACTE_TRANSCRIT_DRESSE",
-        position: 1,
-        nomNaissance: "Nom acte etranger",
-        nomSouhaite: "Nom souhaite FR",
-        evenementUnions: []
-      },
-      {
-        prenoms: [{ prenom: "SPC", numeroOrdre: 1 }],
-        sexe: "INCONNU",
-        nationalite: "INCONNUE",
-        nomNaissance: "SNP",
-        typeObjetTitulaire: "FAMILLE",
-        qualite: "PARENT",
-        position: 1,
-        nationalites: [],
-        evenementUnions: []
-      }
-    ],
-    requerant: { adresse: {}, qualite: "PARTICULIER" }
-  }
-};
+export const creationRequeteTranscriptionParams: ICreationRequeteCreationParams =
+  {
+    requete: {
+      villeRegistre: "",
+      canal: "COURRIER",
+      type: "CREATION",
+      sousType: "RCTC",
+      provenance: "COURRIER",
+      natureActeTranscrit: "NAISSANCE_MINEUR",
+      lienRequerant: { typeLienRequerant: "PERE_MERE" },
+      titulaires: [
+        {
+          prenoms: [{ prenom: "Prenom", numeroOrdre: 1 }],
+          sexe: "INCONNU",
+          nationalite: "INCONNUE",
+          typeObjetTitulaire: "TITULAIRE_ACTE_TRANSCRIT_DRESSE",
+          position: 1,
+          nomNaissance: "Nom acte etranger",
+          nomSouhaite: "Nom souhaite FR",
+          evenementUnions: []
+        },
+        {
+          prenoms: [{ prenom: "SPC", numeroOrdre: 1 }],
+          sexe: "INCONNU",
+          nationalite: "INCONNUE",
+          nomNaissance: "SNP",
+          typeObjetTitulaire: "FAMILLE",
+          qualite: "PARENT",
+          position: 1,
+          nationalites: [],
+          evenementUnions: []
+        }
+      ],
+      requerant: { adresse: {}, qualite: "PARTICULIER" }
+    }
+  };
 
 export const creationRequeteRCTCResultat = [
   {
@@ -574,7 +575,7 @@ export const creationRequeteRCTCResultat = [
         situationFamilliale: null,
         nationalites: null,
         prenomsDemande: null,
-        lienEtatCivil: null,
+        suiviDossiers: null,
         retenueSdanf: null,
         paysStatutRefugie: null,
         paysOrigine: null,
@@ -622,7 +623,7 @@ export const creationRequeteRCTCResultat = [
         situationFamilliale: null,
         nationalites: [],
         prenomsDemande: null,
-        lienEtatCivil: null,
+        suiviDossiers: null,
         retenueSdanf: null,
         paysStatutRefugie: null,
         paysOrigine: null,

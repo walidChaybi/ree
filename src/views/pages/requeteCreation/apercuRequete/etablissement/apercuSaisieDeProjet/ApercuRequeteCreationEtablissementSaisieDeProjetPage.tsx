@@ -1,10 +1,10 @@
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { IUuidEtatCivilParams } from "@model/params/IUuidEtatCivilParams";
-import { ILienEtatCivil } from "@model/requete/ILienEtatCivil";
-import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
+import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
+import { ISuiviDossier } from "@model/requete/ISuiviDossier";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
@@ -30,15 +30,15 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
   const history = useHistory();
 
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
-  const [titulaire, lienEtatCivil] = useMemo(() => {
-    let lienEtatCivilTitulaire;
+  const [titulaire, suiviDossier] = useMemo(() => {
+    let suiviDossierTitulaire;
     if (requete && requete.titulaires) {
       for (const titulaireRequete of requete.titulaires) {
-        lienEtatCivilTitulaire = titulaireRequete.lienEtatCivil?.find(
+        suiviDossierTitulaire = titulaireRequete.suiviDossiers?.find(
           etatCivil => etatCivil.id === idEtatCivilParam
         );
-        if (lienEtatCivilTitulaire) {
-          return [titulaireRequete, lienEtatCivilTitulaire];
+        if (suiviDossierTitulaire) {
+          return [titulaireRequete, suiviDossierTitulaire];
         }
       }
     }
@@ -99,7 +99,7 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
             tableauRMCPersonneEnChargement={rmcAutoPersonneEnChargement}
             setRmcAutoPersonneParams={setRmcAutoPersonneParams}
           />
-          {getOngletsEtablissementSaisieProjet(titulaire, lienEtatCivil)}
+          {getOngletsEtablissementSaisieProjet(titulaire, suiviDossier)}
         </>
       ) : (
         <OperationLocaleEnCoursSimple />
@@ -110,13 +110,13 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
 
 function getOngletsEtablissementSaisieProjet(
   titulaire?: ITitulaireRequeteCreation,
-  lienEtatCivil?: ILienEtatCivil
+  suiviDossier?: ISuiviDossier
 ): JSX.Element | undefined {
   let onglets;
   if (
     titulaire &&
-    lienEtatCivil &&
-    estProjetNaissancePostulant(titulaire, lienEtatCivil)
+    suiviDossier &&
+    estProjetNaissancePostulant(titulaire, suiviDossier)
   ) {
     onglets = <OngletsEtablissementSaisieProjet titulaire={titulaire} />;
   }
@@ -125,13 +125,13 @@ function getOngletsEtablissementSaisieProjet(
 
 function estProjetNaissancePostulant(
   titulaire: ITitulaireRequeteCreation,
-  lienEtatCivil: ILienEtatCivil
+  suiviDossier: ISuiviDossier
 ) {
   const estPostulant = QualiteFamille.estPostulant(
     QualiteFamille.getEnumFromTitulaire(titulaire)
   );
   const estNaissance = NatureProjetEtablissement.estNaissance(
-    NatureProjetEtablissement.getEnumFor(lienEtatCivil.natureProjet)
+    NatureProjetEtablissement.getEnumFor(suiviDossier.natureProjet)
   );
   return estPostulant && estNaissance;
 }

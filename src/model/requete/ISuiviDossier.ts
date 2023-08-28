@@ -1,4 +1,4 @@
-export interface ILienEtatCivil {
+export interface ISuiviDossier {
   id: string;
   idActe?: string;
   identifiantSuiviProjet?: string;
