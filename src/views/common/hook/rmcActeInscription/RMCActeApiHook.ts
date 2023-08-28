@@ -1,7 +1,8 @@
 import { rechercheMultiCriteresActes } from "@api/appels/etatcivilApi";
 import { getParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
-import { execute } from "@util/Utils";
+import messageManager from "@util/messageManager";
+import { execute, getLibelle } from "@util/Utils";
 import { useEffect, useState } from "react";
 import { mappingActes } from "./mapping/RMCMappingUtil";
 import {
@@ -13,7 +14,6 @@ import {
   mappingCriteres,
   rechercherActeAutorise
 } from "./RMCActeInscriptionUtils";
-
 
 export function useRMCActeApiHook(
   criteres?: ICriteresRechercheActeInscription
@@ -33,7 +33,8 @@ export function useRMCActeApiHook(
               dataTableauRMCActe: getParamsTableau(result),
               // L'identifiant de la fiche qui a démandé la rmc doit être retourné dans la réponse car il est utilisé pour mettre à jour les actes
               //  de la fiche acte pour sa pagination/navigation
-              ficheIdentifiant: criteres.ficheIdentifiant
+              ficheIdentifiant: criteres.ficheIdentifiant,
+              errors: result.body.errors
             });
             execute(criteres.onFinTraitement);
           })
@@ -53,6 +54,14 @@ export function useRMCActeApiHook(
       }
     }
   }, [criteres]);
+
+  useEffect(() => {
+    if (resultat.errors) {
+      resultat.errors.forEach(e =>
+        messageManager.showInfoAndClose(getLibelle(e.message))
+      );
+    }
+  }, [resultat.errors]);
 
   return resultat;
 }

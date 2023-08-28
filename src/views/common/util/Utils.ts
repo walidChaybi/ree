@@ -28,6 +28,7 @@ export const VINGT = 20;
 export const VINGT_QUATRE = 24;
 export const TRENTE_ET_UN = 31;
 export const SOIXANTE = 60;
+export const CENT = 100;
 
 export const CAR_ETOILE = "*";
 

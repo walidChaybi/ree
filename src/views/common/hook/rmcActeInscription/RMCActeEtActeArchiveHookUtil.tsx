@@ -5,6 +5,7 @@ export interface IRMCActeApiHookResultat {
   dataRMCActe?: IResultatRMCActe[];
   dataTableauRMCActe?: IParamsTableau;
   ficheIdentifiant?: string;
+  errors?: any[];
 }
 
 export const RESULTAT_NON_DEFINIT: IRMCActeApiHookResultat = {};

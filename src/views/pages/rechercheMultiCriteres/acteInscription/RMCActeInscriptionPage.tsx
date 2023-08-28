@@ -7,10 +7,10 @@ import { stockageDonnees } from "@util/stockageDonnees";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { AutoScroll } from "@widget/autoScroll/autoScroll";
 import {
-    NB_LIGNES_PAR_APPEL_ACTE,
-    NB_LIGNES_PAR_APPEL_INSCRIPTION,
-    NB_LIGNES_PAR_PAGE_ACTE,
-    NB_LIGNES_PAR_PAGE_INSCRIPTION
+  NB_LIGNES_PAR_APPEL_ACTE,
+  NB_LIGNES_PAR_APPEL_INSCRIPTION,
+  NB_LIGNES_PAR_PAGE_ACTE,
+  NB_LIGNES_PAR_PAGE_INSCRIPTION
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ToastContainer } from "react-toastify";
@@ -54,7 +54,6 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({n
       window.top.dispatchEvent(event);
     }
   }, []);
-
 
   const setRangeActe = useCallback(
     (range: string) => {

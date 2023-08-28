@@ -2,7 +2,8 @@ import { rechercheMultiCriteresInscriptions } from "@api/appels/etatcivilApi";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
-import { execute } from "@util/Utils";
+import messageManager from "@util/messageManager";
+import { execute, getLibelle } from "@util/Utils";
 import { useEffect, useState } from "react";
 import {
   ICriteresRechercheActeInscription,
@@ -15,6 +16,7 @@ export interface IRMCInscriptionApiHookResultat {
   dataRMCInscription?: IResultatRMCInscription[];
   dataTableauRMCInscription?: IParamsTableau;
   ficheIdentifiant?: string;
+  errors?: any[];
 }
 
 const RESULTAT_NON_DEFINIT: IRMCInscriptionApiHookResultat = {};
@@ -43,7 +45,8 @@ export function useRMCInscriptionApiHook(
               dataTableauRMCInscription: getParamsTableau(result),
               // L'identifiant de la fiche qui a démandé la rmc doit être retourné dans la réponse car il est utilisé pour mettre à jour les actes
               //  de la fiche Inscription pour sa pagination/navigation
-              ficheIdentifiant: criteres.ficheIdentifiant
+              ficheIdentifiant: criteres.ficheIdentifiant,
+              errors: result?.body?.errors
             });
             execute(criteres.onFinTraitement);
           } else {
@@ -64,6 +67,14 @@ export function useRMCInscriptionApiHook(
     }
     fetchInscriptions();
   }, [criteres]);
+
+  useEffect(() => {
+    if (resultat.errors) {
+      resultat.errors.forEach(e =>
+        messageManager.showInfoAndClose(getLibelle(e.message))
+      );
+    }
+  }, [resultat.errors]);
 
   return resultat;
 }
