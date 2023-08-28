@@ -23,8 +23,8 @@ export const SaisieCourrier17 = {
     courrier: "fce55a9f-4f4b-4996-a60b-59332bc10565"
   },
   requerant: {
-    requerantLigne1: "POINTEAU Louis",
-    requerantLigne2: ""
+    nom: "POINTEAU",
+    prenom: "Louis"
   },
   option: {
     libelleOption: "",

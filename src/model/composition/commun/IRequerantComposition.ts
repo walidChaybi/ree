@@ -1,21 +1,25 @@
 import { getValeurOuVide } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
-import { TypeCanal } from "../../requete/enum/TypeCanal";
 import { IRequerant, Requerant } from "../../requete/IRequerant";
+import { TypeCanal } from "../../requete/enum/TypeCanal";
 
 export interface IRequerantComposition {
-  identite_requerant: {
-    ligne1: string;
-    ligne2?: string;
-  };
-  adresse_requerant: {
-    ligne2: string;
-    ligne3: string;
-    ligne4: string;
-    ligne5: string;
-    ligne6: string;
-    ligne7: string;
-  };
+  identite_requerant: ICompositionIdentiteRequerant;
+  adresse_requerant: ICompositionAdresseRequerant;
+}
+
+export interface ICompositionIdentiteRequerant {
+  ligne1: string;
+  ligne2?: string;
+}
+
+interface ICompositionAdresseRequerant {
+  ligne2: string;
+  ligne3: string;
+  ligne4: string;
+  ligne5: string;
+  ligne6: string;
+  ligne7: string;
 }
 
 function isNotEmpty(str: any) {
@@ -41,15 +45,7 @@ export const RequerantComposition = {
     requerant?: IRequerant
   ) {
     if (requerant) {
-      obj.identite_requerant = {
-        ligne1: ""
-      };
-      // Affichage de l'identité du requérant sur 1 ou 2 lignes selon le type
-      const identiteRequerant = Requerant.organiserIdentite(requerant);
-      obj.identite_requerant.ligne1 = identiteRequerant.premiereLigne;
-      if (identiteRequerant.deuxiemeLigne !== "") {
-        obj.identite_requerant.ligne2 = identiteRequerant.deuxiemeLigne;
-      }
+      obj.identite_requerant = Requerant.composerIdentite(requerant);
 
       if (canal === TypeCanal.COURRIER && requerant.adresse) {
         obj.adresse_requerant = {

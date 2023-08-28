@@ -26,6 +26,7 @@ import { TypeMandant } from "@model/requete/enum/TypeMandant";
 import {
   formatLigne,
   getLibelle,
+  getValeurOuUndefined,
   getValeurOuVide,
   triListeObjetsSurPropriete
 } from "@util/Utils";
@@ -218,7 +219,8 @@ const getIdentiteRequerant = (requerant: IRequerant): string | undefined => {
   if (requerant.nomFamille) {
     const identiteRequerant: IdentiteType = {
       noms: {
-        naissance: requerant.nomFamille
+        naissance: requerant.nomFamille,
+        usage: getValeurOuUndefined(requerant.nomUsage)
       },
       prenoms: {
         naissance: requerant.prenom ? [requerant.prenom] : []
@@ -271,7 +273,7 @@ const getIdentiteMandant = (
   let resultat: string | undefined = undefined;
 
   if (
-    Qualite.estMandataire(qualite) &&
+    Qualite.estMandataireHabilite(qualite) &&
     TypeMandant.estPhysique(mandant?.type)
   ) {
     const identiteMandant: IdentiteType = {
@@ -294,7 +296,10 @@ const getRaisonSocialeMandant = (
 ): string | undefined => {
   let resultat: string | undefined = undefined;
 
-  if (Qualite.estMandataire(qualite) && TypeMandant.estMorale(mandant?.type)) {
+  if (
+    Qualite.estMandataireHabilite(qualite) &&
+    TypeMandant.estMorale(mandant?.type)
+  ) {
     resultat = mandant?.raisonSociale;
   }
 

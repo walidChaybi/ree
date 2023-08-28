@@ -6,10 +6,11 @@ import {
   DELIVRANCE,
   LIBELLE_OPTION,
   MEMO,
+  NOM,
   OPTION,
+  PRENOM,
+  RAISON_SOCIALE,
   REQUERANT,
-  REQUERANT_LIGNE_1,
-  REQUERANT_LIGNE_2,
   REQUETE,
   TEXTE,
   TEXTE_LIBRE,
@@ -21,7 +22,7 @@ export interface SaisieCourrier {
   [CHOIX_COURRIER]: ChoixCourrier;
   [OPTION]: OptionCourrierForm;
   [TEXTE_LIBRE]: TexteLibre;
-  [REQUERANT]: Requerant;
+  [REQUERANT]: RequerantCourrier;
   [ADRESSE]: Adresse;
   [REQUETE]: Requete;
 }
@@ -42,7 +43,8 @@ export interface TexteLibre {
   [TEXTE]: string;
 }
 
-export interface Requerant {
-  [REQUERANT_LIGNE_1]: string;
-  [REQUERANT_LIGNE_2]: string;
+export interface RequerantCourrier {
+  [RAISON_SOCIALE]: string;
+  [NOM]: string;
+  [PRENOM]: string;
 }

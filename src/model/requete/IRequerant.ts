@@ -1,8 +1,10 @@
+import { ICompositionIdentiteRequerant } from "@model/composition/commun/IRequerantComposition";
 import {
   chainesEgalesIgnoreCasse,
   enMajuscule,
   formatNom,
   formatPrenom,
+  getValeurOuUndefined,
   getValeurOuVide,
   SNP
 } from "@util/Utils";
@@ -39,6 +41,18 @@ export const Requerant = {
   getNomFamille(requerant?: IRequerant): string {
     return requerant ? formatNom(requerant.nomFamille) : "";
   },
+  getNomUsageOuNomFamille(requerant?: IRequerant): string | undefined {
+    let nom = requerant?.nomFamille;
+    if (
+      Qualite.estParticulier(
+        requerant?.qualiteRequerant.qualite
+      ) &&
+      requerant?.qualiteRequerant.particulier?.nomUsage
+    ) {
+      nom = requerant?.qualiteRequerant.particulier?.nomUsage;
+    }
+    return nom;
+  },
   getPrenom(requerant?: IRequerant): string {
     return requerant && requerant.prenom ? formatPrenom(requerant.prenom) : "";
   },
@@ -50,6 +64,27 @@ export const Requerant = {
       nomPrenom += "\n";
     }
     return nomPrenom;
+  },
+  getRaisonSociale(requerant?: IRequerant): string | undefined {
+    let raisonSociale: string | undefined;
+    switch (requerant?.qualiteRequerant.qualite) {
+      case Qualite.MANDATAIRE_HABILITE:
+        raisonSociale =
+          requerant.qualiteRequerant.mandataireHabilite?.raisonSociale;
+        break;
+      case Qualite.INSTITUTIONNEL:
+        raisonSociale =
+          requerant.qualiteRequerant.institutionnel?.nomInstitution;
+        break;
+      case Qualite.AUTRE_PROFESSIONNEL:
+        raisonSociale =
+          requerant.qualiteRequerant.autreProfessionnel?.raisonSociale;
+        break;
+      default:
+        break;
+    }
+
+    return raisonSociale;
   },
   estTitulaireX({
     requerant,
@@ -97,79 +132,39 @@ export const Requerant = {
           })
       : false;
   },
-  isParticulierOuUtilisateur(requerant: IRequerant): requerant is IRequerant {
+  estParticulierOuUtilisateur(requerant: IRequerant): requerant is IRequerant {
     return (
-      requerant.qualiteRequerant?.qualite === Qualite.PARTICULIER ||
-      requerant.qualiteRequerant?.qualite === Qualite.UTILISATEUR_RECE
+      Qualite.estParticulier(requerant.qualiteRequerant?.qualite) ||
+      Qualite.estMandataireHabilite(requerant.qualiteRequerant?.qualite)
     );
   },
-  isRaisonSociale(requerant: IRequerant): requerant is IRequerant {
+  estRaisonSociale(requerant?: IRequerant): boolean {
     return (
-      requerant.qualiteRequerant?.qualite === Qualite.MANDATAIRE_HABILITE ||
-      requerant.qualiteRequerant?.qualite === Qualite.INSTITUTIONNEL ||
-      requerant.qualiteRequerant?.qualite === Qualite.AUTRE_PROFESSIONNEL
+      Qualite.estMandataireHabilite(requerant?.qualiteRequerant?.qualite) ||
+      Qualite.estInstitutionnel(requerant?.qualiteRequerant?.qualite) ||
+      Qualite.estAutreProfessionel(requerant?.qualiteRequerant?.qualite)
     );
   },
-  organiserIdentite(requerant?: IRequerant) {
-    // Affichage de l'identité du requérant sur 1 ou 2 lignes selon le type
-    let ligne1 = "";
-    let ligne2 = "";
-    if (requerant) {
-      switch (requerant.qualiteRequerant?.qualite) {
-        case Qualite.PARTICULIER:
-        case Qualite.UTILISATEUR_RECE:
-          ligne1 = `${enMajuscule(requerant.prenom)} ${enMajuscule(
-            requerant.nomFamille
-          )}`;
-          break;
-        case Qualite.INSTITUTIONNEL:
-          if (requerant?.qualiteRequerant.institutionnel?.nomInstitution) {
-            ligne1 = `${enMajuscule(
-              requerant?.qualiteRequerant.institutionnel?.nomInstitution
-            )}`;
-            ligne2 = `${enMajuscule(requerant.prenom)} ${enMajuscule(
-              requerant.nomFamille
-            )}`;
-          } else {
-            ligne1 = `${enMajuscule(requerant.prenom)} ${enMajuscule(
-              requerant.nomFamille
-            )}`;
-          }
-          break;
-        case Qualite.MANDATAIRE_HABILITE:
-          if (requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale) {
-            ligne1 = `${enMajuscule(
-              requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale
-            )}`;
-            ligne2 = `${enMajuscule(requerant.prenom)} ${enMajuscule(
-              requerant.nomFamille
-            )}`;
-          } else {
-            ligne1 = `${enMajuscule(requerant.prenom)} ${enMajuscule(
-              requerant.nomFamille
-            )}`;
-          }
-          break;
-        case Qualite.AUTRE_PROFESSIONNEL:
-          if (requerant?.qualiteRequerant.autreProfessionnel?.raisonSociale) {
-            ligne1 = `${enMajuscule(
-              requerant?.qualiteRequerant.autreProfessionnel?.raisonSociale
-            )}`;
-            ligne2 = `${enMajuscule(requerant.prenom)} ${enMajuscule(
-              requerant.nomFamille
-            )}`;
-          } else {
-            ligne1 = `${enMajuscule(requerant.prenom)} ${enMajuscule(
-              requerant.nomFamille
-            )}`;
-          }
-          break;
+  composerIdentite(requerant?: IRequerant): ICompositionIdentiteRequerant {
+    // Récupération des informations selon type et données connues.
+    const raisonSociale = enMajuscule(
+      Requerant.estRaisonSociale(requerant)
+        ? Requerant.getRaisonSociale(requerant)
+        : ""
+    );
+    const nom = enMajuscule(Requerant.getNomUsageOuNomFamille(requerant));
+    const prenom = enMajuscule(Requerant.getPrenom(requerant));
 
-        default:
-          break;
-      }
+    // Composition des lignes 1 et 2
+    let ligne1: string | undefined = getValeurOuUndefined(raisonSociale);
+    let ligne2: string | undefined;
+    if (ligne1) {
+      ligne2 = `${prenom} ${nom}`;
+    } else {
+      ligne1 = `${prenom} ${nom}`;
     }
-    return { premiereLigne: ligne1, deuxiemeLigne: ligne2 };
+
+    return { ligne1, ligne2 };
   },
 
   ///////// mapping des requerants venant du serveur //////////

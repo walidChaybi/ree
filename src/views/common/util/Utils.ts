@@ -153,15 +153,9 @@ export function formatNom(
 }
 
 export function formatDe(str: string) {
-  let de = "de ";
   const lettres = ["A", "E", "I", "O", "U", "Y", "H"];
   const premiereLettre = str.charAt(0).toUpperCase();
-  lettres.forEach(lettre => {
-    if (lettre === premiereLettre) {
-      de = "d'";
-    }
-  });
-  return de;
+  return lettres.includes(premiereLettre) ? "d'" : "de ";
 }
 
 export function getValeurOuVide(str?: any) {

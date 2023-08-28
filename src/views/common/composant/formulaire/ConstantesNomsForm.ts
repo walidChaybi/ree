@@ -210,9 +210,6 @@ export const CONTENU = "contenu";
 export const TYPE_MEMO = "typeMemo";
 export const MEMO = "memo";
 
-export const REQUERANT_LIGNE_1 = "requerantLigne1";
-export const REQUERANT_LIGNE_2 = "requerantLigne2";
-
 export const REPONSE = "reponse";
 
 export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";

@@ -25,7 +25,8 @@ const baseReponseSansDelivranceCS = {
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
   sceau_ministere: imagePngVideBase64,
   identite_requerant: {
-    ligne1: "PAUL RUIZ"
+    ligne1: "PAUL RUIZ",
+    ligne2: undefined
   },
   adresse_requerant: {
     ligne2: "Appartement 258",

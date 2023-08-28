@@ -28,7 +28,23 @@ export class Qualite extends EnumWithComplete {
     return EnumWithLibelle.getEnumFor(str, Qualite);
   }
 
-  public static estMandataire(qualite?: Qualite): boolean {
+  public static estMandataireHabilite(qualite?: Qualite): boolean {
     return qualite === Qualite.MANDATAIRE_HABILITE;
+  }
+
+  public static estInstitutionnel(qualite?: Qualite): boolean {
+    return qualite === Qualite.INSTITUTIONNEL;
+  }
+
+  public static estAutreProfessionel(qualite?: Qualite): boolean {
+    return qualite === Qualite.AUTRE_PROFESSIONNEL;
+  }
+
+  public static estParticulier(qualite?: Qualite): boolean {
+    return qualite === Qualite.PARTICULIER;
+  }
+
+  public static estUtilisateurRece(qualite?: Qualite): boolean {
+    return qualite === Qualite.UTILISATEUR_RECE;
   }
 }

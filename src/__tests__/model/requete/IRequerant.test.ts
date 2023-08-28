@@ -673,11 +673,11 @@ test("Attendu: Requerant.organiserRequerant autreProfessionnel", async () => {
   requeteDelivrance.requerant.qualiteRequerant = qualiteAutreProfessionnel;
 
   const identiteAttendue = {
-    premiereLigne: "OTHERPRO",
-    deuxiemeLigne: "PAUL RUIZ"
+    ligne1: "OTHERPRO",
+    ligne2: "PAUL RUIZ"
   };
 
-  const requerant = Requerant.organiserIdentite(requeteDelivrance.requerant);
+  const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
 
   expect(requerant).toEqual(identiteAttendue);
 });
@@ -692,11 +692,11 @@ test("Attendu: Requerant.organiserRequerant autreProfessionnel sans raison socia
   requeteDelivrance.requerant.qualiteRequerant = qualiteAutreProfessionnel;
 
   const identiteAttendue = {
-    premiereLigne: "PAUL RUIZ",
-    deuxiemeLigne: ""
+    ligne1: "PAUL RUIZ",
+    ligne2: undefined
   };
 
-  const requerant = Requerant.organiserIdentite(requeteDelivrance.requerant);
+  const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
 
   expect(requerant).toEqual(identiteAttendue);
 });
@@ -712,11 +712,11 @@ test("Attendu: Requerant.organiserRequerant mandataireHabilite", async () => {
   requeteDelivrance.requerant.qualiteRequerant = qualiteMandataireHabilite;
 
   const identiteAttendue = {
-    premiereLigne: "NOTAIREANDCO",
-    deuxiemeLigne: "PAUL RUIZ"
+    ligne1: "NOTAIREANDCO",
+    ligne2: "PAUL RUIZ"
   };
 
-  const requerant = Requerant.organiserIdentite(requeteDelivrance.requerant);
+  const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
 
   expect(requerant).toEqual(identiteAttendue);
 });
@@ -731,11 +731,11 @@ test("Attendu: Requerant.organiserRequerant mandataireHabilite sans raison socia
   requeteDelivrance.requerant.qualiteRequerant = qualiteMandataireHabilite;
 
   const identiteAttendue = {
-    premiereLigne: "PAUL RUIZ",
-    deuxiemeLigne: ""
+    ligne1: "PAUL RUIZ",
+    ligne2: undefined
   };
 
-  const requerant = Requerant.organiserIdentite(requeteDelivrance.requerant);
+  const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
 
   expect(requerant).toEqual(identiteAttendue);
 });
@@ -751,11 +751,11 @@ test("Attendu: Requerant.organiserRequerant institutionnel", async () => {
   requeteDelivrance.requerant.qualiteRequerant = qualiteInstitutionnel;
 
   const identiteAttendue = {
-    premiereLigne: "AMBASSADE DE FRANCE",
-    deuxiemeLigne: "PAUL RUIZ"
+    ligne1: "AMBASSADE DE FRANCE",
+    ligne2: "PAUL RUIZ"
   };
 
-  const requerant = Requerant.organiserIdentite(requeteDelivrance.requerant);
+  const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
 
   expect(requerant).toEqual(identiteAttendue);
 });
@@ -770,11 +770,11 @@ test("Attendu: Requerant.organiserRequerant institutionnel sans nomInstitution",
   requeteDelivrance.requerant.qualiteRequerant = qualiteInstitutionnel;
 
   const identiteAttendue = {
-    premiereLigne: "PAUL RUIZ",
-    deuxiemeLigne: ""
+    ligne1: "PAUL RUIZ",
+    ligne2: undefined
   };
 
-  const requerant = Requerant.organiserIdentite(requeteDelivrance.requerant);
+  const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
 
   expect(requerant).toEqual(identiteAttendue);
 });

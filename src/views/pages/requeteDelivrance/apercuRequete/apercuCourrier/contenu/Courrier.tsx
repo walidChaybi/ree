@@ -1,7 +1,8 @@
 import {
   ADRESSE,
   CHOIX_COURRIER,
-  OPTION
+  OPTION,
+  REQUERANT
 } from "@composant/formulaire/ConstantesNomsForm";
 import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
@@ -18,6 +19,7 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { RequerantCourrierFormValidationSchema } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/RequerantCourrierForm";
 import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import { getLibelle } from "@util/Utils";
 import { useReinitialisationComposant } from "@util/form/useReinitialisation";
@@ -80,7 +82,8 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
     [ADRESSE]:
       props.requete.sousType === SousTypeDelivrance.RDC
         ? AdresseFormValidationSchemaRequired
-        : AdresseFormValidationSchema
+        : AdresseFormValidationSchema,
+    [REQUERANT]: RequerantCourrierFormValidationSchema
   });
 
   const onChangeTypeCourrier = (idTypeCourrierSelectionne: string) => {
@@ -151,7 +154,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
       documentDelivranceChoisi
     ),
     getTexteLibre(props.requete, documentDelivranceChoisi),
-    getRequerantCourrierForm(isSousTypeRDC),
+    getRequerantCourrierForm(isSousTypeRDC, props.requete.requerant),
     getAdresseCourrierForm(isSousTypeRDC),
     getRequeteCourrierForm(isSousTypeRDC)
   ];

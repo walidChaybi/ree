@@ -3,21 +3,21 @@ import {
   CHOIX_COURRIER,
   OPTION,
   REQUERANT,
-  REQUERANT_LIGNE_1,
-  REQUERANT_LIGNE_2,
   REQUETE,
   TEXTE_LIBRE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
+import { IRequerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import RequerantCourrierForm, {
+  IRequerantCourrierFormProps
+} from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/RequerantCourrierForm";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
-import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import AdresseForm from "@widget/formulaire/adresse/AdresseForm";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import RequeteForm from "@widget/formulaire/requete/RequeteForm";
-import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
+import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import "./scss/CourrierForm.scss";
 import ChoixCourrierForm, {
   ChoixCourrierSubFormProps
@@ -77,23 +77,18 @@ export function getTexteLibre(
   );
 }
 
-export function getRequerantCourrierForm(visible: boolean) {
+export function getRequerantCourrierForm(
+  visible: boolean,
+  requerant: IRequerant
+) {
+  const requerantFormProps = {
+    requerant,
+    titre: getLibelle("Identité du requérant"),
+    formulaireReduit: true
+  } as SubFormProps & IRequerantCourrierFormProps;
   return (
     <div key={REQUERANT}>
-      {visible && (
-        <SousFormulaire titre={getLibelle("Identité du requérant")}>
-          <div className="DeuxColonnesSansLabel">
-            <InputField
-              name={withNamespace(REQUERANT, REQUERANT_LIGNE_1)}
-              disabled={true}
-            />
-            <InputField
-              name={withNamespace(REQUERANT, REQUERANT_LIGNE_2)}
-              disabled={true}
-            />
-          </div>
-        </SousFormulaire>
-      )}
+      {visible && <RequerantCourrierForm {...requerantFormProps} />}
     </div>
   );
 }

@@ -3,7 +3,10 @@ import { IdentiteType } from "@model/requete/IdentiteType";
 import { formatLigne, triPrenoms } from "@util/Utils";
 
 export const formatLigneNomPrenoms = ({ noms, prenoms }: IdentiteType) =>
-  formatLigne([noms.naissance, formatLigne(prenoms.naissance)], " ");
+  formatLigne(
+    [noms.usage ?? noms.naissance, formatLigne(prenoms.naissance)],
+    " "
+  );
 
 export const formatLigneLieu = (
   ville?: string,

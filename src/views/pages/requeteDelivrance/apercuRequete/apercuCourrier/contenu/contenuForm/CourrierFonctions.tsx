@@ -14,12 +14,13 @@ import {
   MOTIF,
   NATURE_ACTE,
   NB_EXEMPLAIRE,
+  NOM,
   NUMERO_TELEPHONE,
   OPTION,
   PAYS,
+  PRENOM,
+  RAISON_SOCIALE,
   REQUERANT,
-  REQUERANT_LIGNE_1,
-  REQUERANT_LIGNE_2,
   REQUETE,
   TEXTE,
   TEXTE_LIBRE,
@@ -138,7 +139,6 @@ export const getDefaultValuesCourrier = (
   requete: IRequeteDelivrance
 ): SaisieCourrier => {
   const documentReponse = getDocumentReponseAModifier(requete);
-  const identiteRequerant = Requerant.organiserIdentite(requete.requerant);
 
   return {
     [CHOIX_COURRIER]: {
@@ -148,8 +148,9 @@ export const getDefaultValuesCourrier = (
         : getTypesCourrier(requete)[0].cle
     },
     [REQUERANT]: {
-      [REQUERANT_LIGNE_1]: identiteRequerant.premiereLigne,
-      [REQUERANT_LIGNE_2]: identiteRequerant.deuxiemeLigne
+      [RAISON_SOCIALE]: Requerant.getRaisonSociale(requete.requerant) ?? "",
+      [NOM]: Requerant.getNomUsageOuNomFamille(requete.requerant) ?? "",
+      [PRENOM]: Requerant.getPrenom(requete.requerant)
     },
     [OPTION]: OptionCourrierFormDefaultValues,
     [TEXTE_LIBRE]: {
@@ -280,4 +281,3 @@ function controleDivers(
   }
   return true;
 }
-

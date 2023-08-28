@@ -7,7 +7,11 @@ import {
   LIEU_DIT,
   MOTIF,
   NB_EXEMPLAIRE,
+  NOM,
   PAYS,
+  PRENOM,
+  RAISON_SOCIALE,
+  REQUERANT,
   REQUETE,
   TEXTE,
   TEXTE_LIBRE,
@@ -25,10 +29,12 @@ import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { Qualite } from "@model/requete/enum/Qualite";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { IAdresseRequerant } from "@model/requete/IAdresseRequerant";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
+import { IRequerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ISauvegardeCourrier } from "@model/requete/ISauvegardeCourrier";
 import { getValeurOuVide } from "@util/Utils";
@@ -132,7 +138,7 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
         construitCourrier(
           elements,
           // @ts-ignore presenceDesElementsPourLaGeneration
-          requeteAvecAdresseSaisie(params?.requete, params?.saisieCourrier),
+          requeteAvecSaisieRequerant(params?.requete, params?.saisieCourrier),
           setCourrierParams,
           setResultatGenerationCourrier,
           // @ts-ignore presenceDesElementsPourLaGeneration
@@ -311,7 +317,12 @@ function mapCourrierPourSauvergarde(
   courrier: any
 ): ISauvegardeCourrier {
   return {
-    adresseRequerant: mappingAdresseSaisieToAdresseRequerant(saisieCourrier),
+    nomRequerant: getValeurOuVide(saisieCourrier?.[REQUERANT][NOM]),
+    prenomRequerant: getValeurOuVide(saisieCourrier?.[REQUERANT][PRENOM]),
+    raisonSocialeRequerant: getValeurOuVide(
+      saisieCourrier?.[REQUERANT][RAISON_SOCIALE]
+    ),
+    adresseRequerant: mappingSaisieAdresseVersAdresseRequerant(saisieCourrier),
     motif: getValeurOuVide(saisieCourrier?.[REQUETE][MOTIF]),
     nombreExemplairesDemandes: parseInt(
       getValeurOuVide(saisieCourrier?.[REQUETE][NB_EXEMPLAIRE])
@@ -339,7 +350,24 @@ function mapCourrierPourSauvergarde(
   };
 }
 
-function mappingAdresseSaisieToAdresseRequerant(
+function requeteAvecSaisieRequerant(
+  requete: IRequeteDelivrance,
+  saisieCourrier: SaisieCourrier
+) {
+  if (saisieCourrier[REQUERANT]) {
+    requete.requerant = ajoutSaisieIdentiteRequerantVersRequerantRequete(
+      saisieCourrier,
+      requete.requerant
+    );
+  }
+  if (saisieCourrier[ADRESSE]) {
+    requete.requerant.adresse =
+      mappingSaisieAdresseVersAdresseRequerant(saisieCourrier);
+  }
+  return requete;
+}
+
+function mappingSaisieAdresseVersAdresseRequerant(
   saisieCourrier: SaisieCourrier | undefined
 ): IAdresseRequerant {
   return {
@@ -355,13 +383,44 @@ function mappingAdresseSaisieToAdresseRequerant(
   };
 }
 
-function requeteAvecAdresseSaisie(
-  requete: IRequeteDelivrance,
-  saisieCourrier: SaisieCourrier
-) {
-  if (saisieCourrier[ADRESSE]) {
-    requete.requerant.adresse =
-      mappingAdresseSaisieToAdresseRequerant(saisieCourrier);
+function ajoutSaisieIdentiteRequerantVersRequerantRequete(
+  saisieCourrier: SaisieCourrier,
+  requerantRequete: IRequerant
+): IRequerant {
+  const requerant: IRequerant = { ...requerantRequete };
+
+  const nomRequerant = saisieCourrier[REQUERANT][NOM];
+  const raisonSocialeRequerant = saisieCourrier[REQUERANT][RAISON_SOCIALE];
+
+  requerant.nomFamille = nomRequerant;
+  requerant.prenom = saisieCourrier[REQUERANT][PRENOM];
+
+  switch (requerantRequete.qualiteRequerant.qualite) {
+    case Qualite.PARTICULIER:
+      if (requerant.qualiteRequerant.particulier) {
+        requerant.qualiteRequerant.particulier.nomUsage = nomRequerant;
+      }
+      break;
+    case Qualite.MANDATAIRE_HABILITE:
+      if (requerant.qualiteRequerant.mandataireHabilite) {
+        requerant.qualiteRequerant.mandataireHabilite.raisonSociale =
+          raisonSocialeRequerant;
+      }
+      break;
+    case Qualite.INSTITUTIONNEL:
+      if (requerant.qualiteRequerant.institutionnel) {
+        requerant.qualiteRequerant.institutionnel.nomInstitution =
+          raisonSocialeRequerant;
+      }
+      break;
+    case Qualite.AUTRE_PROFESSIONNEL:
+      if (requerant.qualiteRequerant.autreProfessionnel) {
+        requerant.qualiteRequerant.autreProfessionnel.raisonSociale =
+          raisonSocialeRequerant;
+      }
+      break;
+    default:
+      break;
   }
-  return requete;
+  return requerant;
 }

@@ -253,8 +253,8 @@ export const compositionCourrierAutomatique = (
       },
       texteLibre: { texte: "" },
       requerant: {
-        requerantLigne1: requete?.requerant.prenom,
-        requerantLigne2: requete?.requerant.nomFamille
+        prenom: requete?.requerant.prenom,
+        nom: requete?.requerant.nomFamille
       },
       requete: {
         motif: MotifDelivrance.getKey(getValeurOuVide(requete?.motif)),

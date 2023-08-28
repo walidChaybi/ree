@@ -31,8 +31,9 @@ test("getDefaultValues", () => {
       texte: "Texte libre Courrier 117"
     },
     requerant: {
-      requerantLigne1: "PAUL RUIZ",
-      requerantLigne2: ""
+      nom: "RUIZ",
+      prenom: "Paul",
+      raisonSociale: ""
     },
     adresse: {
       adresseCourriel: "",
@@ -69,8 +70,9 @@ test("getDefaultValues", () => {
       texte: ""
     },
     requerant: {
-      requerantLigne1: "AMBASSADE DU RWANDA",
-      requerantLigne2: "PAUL RUIZ"
+      nom: "Ruiz",
+      prenom: "Paul",
+      raisonSociale: "Ambassade du Rwanda"
     },
     adresse: {
       adresseCourriel: "",
