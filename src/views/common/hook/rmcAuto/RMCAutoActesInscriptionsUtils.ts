@@ -103,7 +103,8 @@ function criteresRMCAutoMapper(
           prenomTitulaire: getPrenomTitulaire(titulaire),
           jourNaissance: getValeurOuUndefined(titulaire?.jourNaissance),
           moisNaissance: getValeurOuUndefined(titulaire?.moisNaissance),
-          anneeNaissance: getValeurOuUndefined(titulaire?.anneeNaissance)
+          anneeNaissance: getValeurOuUndefined(titulaire?.anneeNaissance),
+          numeroOrdre: getValeurOuUndefined(titulaire.position)
         } as IRMCRequestActesInscriptions;
       }
     ) || []

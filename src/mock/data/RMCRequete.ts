@@ -138,7 +138,8 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
         jourNaissance: 31,
         moisNaissance: 12,
         anneeNaissance: 1981,
-        sexe: Sexe.MASCULIN
+        sexe: Sexe.MASCULIN,
+        position: 1
       },
       {
         nom: "Rossi",
@@ -146,7 +147,8 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
         jourNaissance: 16,
         moisNaissance: 8,
         anneeNaissance: 1983,
-        sexe: Sexe.FEMININ
+        sexe: Sexe.FEMININ,
+        position: 2
       }
     ]
   },
@@ -230,7 +232,8 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
         jourNaissance: 31,
         moisNaissance: 12,
         anneeNaissance: 1981,
-        sexe: Sexe.MASCULIN
+        sexe: Sexe.MASCULIN,
+        position: 1
       },
       {
         nom: "Rossi",
@@ -238,7 +241,8 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
         jourNaissance: 16,
         moisNaissance: 8,
         anneeNaissance: 1983,
-        sexe: Sexe.FEMININ
+        sexe: Sexe.FEMININ,
+        position: 2
       }
     ]
   },
@@ -285,7 +289,8 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
         jourNaissance: 31,
         moisNaissance: 12,
         anneeNaissance: 1981,
-        sexe: Sexe.MASCULIN
+        sexe: Sexe.MASCULIN,
+        position: 1
       },
       {
         nom: "Rossi",
@@ -293,7 +298,8 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
         jourNaissance: 16,
         moisNaissance: 8,
         anneeNaissance: 1983,
-        sexe: Sexe.FEMININ
+        sexe: Sexe.FEMININ,
+        position: 2
       }
     ]
   },
@@ -340,7 +346,8 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
         jourNaissance: 31,
         moisNaissance: 12,
         anneeNaissance: 1981,
-        sexe: Sexe.MASCULIN
+        sexe: Sexe.MASCULIN,
+        position: 1
       },
       {
         nom: "Rossi",
@@ -348,7 +355,8 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
         jourNaissance: 16,
         moisNaissance: 8,
         anneeNaissance: 1983,
-        sexe: Sexe.FEMININ
+        sexe: Sexe.FEMININ,
+        position: 2
       }
     ]
   },

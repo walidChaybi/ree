@@ -15,6 +15,7 @@ export interface ITitulaireRequeteTableau {
   sexe?: Sexe;
   qualite?: QualiteFamille;
   nationalite?: Nationalite;
+  position: number;
 }
 
 export function mapTitulaires(
@@ -37,6 +38,7 @@ export function mapTitulaires(
     titulaire.nationalite = Nationalite.getEnumFor(t?.nationalite);
     titulaire.paysNaissance = t?.paysNaissance;
     titulaire.qualite = t?.qualite;
+    titulaire.position = t?.position;
     return titulaire;
   });
 }

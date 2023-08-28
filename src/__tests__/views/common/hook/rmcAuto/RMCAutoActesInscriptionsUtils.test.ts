@@ -23,7 +23,8 @@ const requete = {
       anneeNaissance: 1992,
       villeNaissance: "Nantes",
       paysNaissance: "France",
-      sexe: Sexe.MASCULIN
+      sexe: Sexe.MASCULIN,
+      position: 1
     }
   ]
 } as IRequeteTableauDelivrance;
@@ -38,7 +39,8 @@ test("criteresRMCAutoMapper", () => {
         prenomTitulaire: "Bob",
         jourNaissance: 31,
         moisNaissance: 1,
-        anneeNaissance: 1992
+        anneeNaissance: 1992,
+        numeroOrdre: 1
       }
     ]
   });
