@@ -10,11 +10,6 @@ import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
-import { autorisePrendreEnChargeReqTableauCreation } from "@util/RequetesUtils";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
@@ -27,7 +22,7 @@ import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useState } from "react";
 import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
-import { setParamsUseApercuCreation } from "../commun/requeteCreationUtils";
+import { getOnClickSurLigneTableauEspaceCreation } from "./EspaceCreationUtils";
 import { statutsRequetesCreation } from "./params/EspaceCreationParams";
 import { colonnesTableauMesRequetesCreation } from "./params/MesRequetesCreationParams";
 
@@ -35,7 +30,9 @@ interface MesRequetesCreationProps {
   queryParametersPourRequetes: IQueryParametersPourRequetes;
 }
 
-export const MesRequetesCreation: React.FC<MesRequetesCreationProps> = props => {
+export const MesRequetesCreation: React.FC<
+  MesRequetesCreationProps
+> = props => {
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [paramsMiseAJour, setParamsMiseAJour] = useState<
     ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
@@ -48,9 +45,9 @@ export const MesRequetesCreation: React.FC<MesRequetesCreationProps> = props => 
     useState<IQueryParametersPourRequetes>(props.queryParametersPourRequetes);
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteCreationApiHook(
-    linkParameters,
     TypeAppelRequete.MES_REQUETES_CREATION,
-    setEnChargement
+    setEnChargement,
+    linkParameters
   );
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
@@ -78,33 +75,6 @@ export const MesRequetesCreation: React.FC<MesRequetesCreationProps> = props => 
     setOperationEnCours(false);
   };
 
-  function onClickOnLine(
-    idRequete: string,
-    data: IRequeteTableauCreation[],
-    idx: number
-  ) {
-    setOperationEnCours(true);
-    const requeteSelect = data[idx];
-
-    if (autorisePrendreEnChargeReqTableauCreation(requeteSelect)) {
-      setParamsMiseAJour({
-        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-        statutRequete: StatutRequete.PRISE_EN_CHARGE,
-        requete: requeteSelect,
-        urlCourante: URL_MES_REQUETES_CREATION,
-        typeRequete: TypeRequete.CREATION
-      });
-    } else {
-      setParamsUseApercuCreation(
-        idRequete,
-        setParamsCreation,
-        requeteSelect.sousType,
-        requeteSelect.statut,
-        requeteSelect.idUtilisateur
-      );
-    }
-  }
-
   return (
     <>
       <OperationEnCours
@@ -116,7 +86,11 @@ export const MesRequetesCreation: React.FC<MesRequetesCreationProps> = props => 
         idKey={"idRequete"}
         sortOrderByState={linkParameters.tri}
         sortOrderState={linkParameters.sens}
-        onClickOnLine={onClickOnLine}
+        onClickOnLine={getOnClickSurLigneTableauEspaceCreation(
+          setOperationEnCours,
+          setParamsMiseAJour,
+          setParamsCreation
+        )}
         columnHeaders={colonnesTableauMesRequetesCreation}
         dataState={dataState}
         paramsTableau={paramsTableau}

@@ -27,6 +27,7 @@ import {
   waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
+import { UN } from "@util/Utils";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { createMemoryHistory } from "history";
 import React, { useState } from "react";
@@ -94,7 +95,7 @@ const HookConsummer: React.FC = () => {
   );
 };
 
-test("Attendu: les requêtes de service s'affichent correctement", async () => {
+test("DOIT afficher le tableau des requêtes de service à vide QUAND on arrive sur la page", async () => {
   render(<HookConsummer />);
 
   await waitFor(() => {
@@ -110,12 +111,19 @@ test("Attendu: les requêtes de service s'affichent correctement", async () => {
     expect(screen.getAllByText("Statut")[1]).toBeDefined();
 
     // Attendu: les données sont présentes
+    expect(screen.queryByText("B-2-8GRZFCS3P")).toBeNull();
+    expect(screen.queryByText("YRQFLU")).toBeNull();
+  });
+
+  fireEvent.click(screen.getByTestId("loupeButton"));
+
+  await waitFor(() => {
     expect(screen.getByText("B-2-8GRZFCS3P")).toBeDefined();
     expect(screen.getByText("YRQFLU")).toBeDefined();
   });
 });
 
-test("Attendu: Le tri sur les requêtes de service s'effectue correctement", async () => {
+test("DOIT effectuer correctement le tri sur les requêtes de service QUAND on tri par une colonne", async () => {
   render(<HookConsummer />);
 
   await waitFor(() => {
@@ -129,21 +137,23 @@ test("Attendu: Le tri sur les requêtes de service s'effectue correctement", asy
   });
 });
 
-test("Attendu: L'affichage de l'attribution des requêtes de service s'effectue correctement.", async () => {
+test("DOIT correctement afficher l'attribution des requêtes de service QUAND on clique sur attribuer à", async () => {
   history.push(URL_REQUETES_CREATION_SERVICE);
 
+  render(
+    <Router history={history}>
+      <OfficierContext.Provider
+        value={{
+          officierDataState: storeRece.utilisateurCourant
+        }}
+      >
+        <EspaceCreationPage selectedTab={UN} />
+      </OfficierContext.Provider>
+    </Router>
+  );
+
   await act(async () => {
-    render(
-      <Router history={history}>
-        <OfficierContext.Provider
-          value={{
-            officierDataState: storeRece.utilisateurCourant
-          }}
-        >
-          <EspaceCreationPage selectedTab={1} />
-        </OfficierContext.Provider>
-      </Router>
-    );
+    fireEvent.click(screen.getByTestId("loupeButton"));
   });
 
   const getColonnesOfficierEtCheckbox = (requete: HTMLElement) => ({
@@ -212,6 +222,8 @@ test("Attendu: L'affichage de l'attribution des requêtes de service s'effectue 
 
 test("DOIT rendre possible le click sur une requête", async () => {
   render(<HookConsummer />);
+
+  fireEvent.click(screen.getByTestId("loupeButton"));
 
   let requete: HTMLElement;
 

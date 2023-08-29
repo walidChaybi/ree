@@ -10,9 +10,9 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TagPriorisation } from "@model/requete/enum/TagPriorisation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { Button } from "@mui/material";
-import { storeRece } from "@util/storeRece";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
+import { storeRece } from "@util/storeRece";
 import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
@@ -59,7 +59,6 @@ export const FiltreEtRechercheForm: React.FC<
 
   function onReset(reset: () => void) {
     reset();
-    onSubmitFiltresEtRecherche(FiltreEtRechercheDefaultValues);
   }
 
   return (

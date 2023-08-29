@@ -20,8 +20,6 @@ import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation"
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
-import { autorisePrendreEnChargeReqTableauCreation } from "@util/RequetesUtils";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
@@ -34,10 +32,13 @@ import {
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import React, { useCallback, useEffect, useState } from "react";
-import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
+import {
+  FiltreEtRechercheFormValues,
+  useRequeteCreationApiHook
+} from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { FiltreEtRechercheForm } from "../commun/composants/FiltreEtRechercheForm/FiltreEtRechercheForm";
-import { setParamsUseApercuCreation } from "../commun/requeteCreationUtils";
+import { getOnClickSurLigneTableauEspaceCreation } from "./EspaceCreationUtils";
 import { statutsRequetesCreation } from "./params/EspaceCreationParams";
 import { getColonnesTableauRequetesServiceCreation } from "./params/RequetesServiceCreationParams";
 
@@ -56,8 +57,8 @@ export const RequetesServiceCreation: React.FC<
     ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
   const [parametresLienRequete, setParametresLienRequete] =
-    useState<IQueryParametersPourRequetes>(props.queryParametersPourRequetes);
-  const [enChargement, setEnChargement] = React.useState(true);
+    useState<IQueryParametersPourRequetes>();
+  const [enChargement, setEnChargement] = React.useState(false);
   const [paramsAttributionParLot, setParamAttributionParLot] =
     useState<TransfertParLotParams>();
   const [paramsCreation, setParamsCreation] = useState<
@@ -69,9 +70,9 @@ export const RequetesServiceCreation: React.FC<
   ] = useState<string[]>([]);
 
   const { dataState, paramsTableau, onSubmit } = useRequeteCreationApiHook(
-    parametresLienRequete,
     TypeAppelRequete.REQUETE_CREATION_SERVICE,
-    setEnChargement
+    setEnChargement,
+    parametresLienRequete
   );
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
@@ -104,7 +105,9 @@ export const RequetesServiceCreation: React.FC<
   );
 
   const rafraichirTableau = () => {
-    setParametresLienRequete({ ...parametresLienRequete });
+    if (parametresLienRequete) {
+      setParametresLienRequete({ ...parametresLienRequete });
+    }
     setIdRequetesSelectionneesAttribueeA([]);
   };
 
@@ -120,32 +123,6 @@ export const RequetesServiceCreation: React.FC<
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatTransfertsApi]);
-
-  function onClickOnLineTableau(
-    idRequete: string,
-    data: IRequeteTableauCreation[],
-    idx: number
-  ) {
-    setOpEnCours(true);
-    const requeteSelect = data[idx];
-    if (autorisePrendreEnChargeReqTableauCreation(requeteSelect)) {
-      setParamsMiseAJour({
-        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-        statutRequete: StatutRequete.PRISE_EN_CHARGE,
-        requete: requeteSelect,
-        urlCourante: URL_MES_REQUETES_CREATION,
-        typeRequete: TypeRequete.CREATION
-      });
-    } else {
-      setParamsUseApercuCreation(
-        idRequete,
-        setParamsCreation,
-        requeteSelect.sousType,
-        requeteSelect.statut,
-        requeteSelect.idUtilisateur
-      );
-    }
-  }
 
   const onClosePopinAttribuerA = () => {
     props.setPopinAttribuerAOuvert(false);
@@ -210,6 +187,13 @@ export const RequetesServiceCreation: React.FC<
     colonneCaseACocherAttribueAParams
   );
 
+  function soumettreFiltre(values: FiltreEtRechercheFormValues) {
+    if (!parametresLienRequete) {
+      setParametresLienRequete(props.queryParametersPourRequetes);
+    }
+    onSubmit(values);
+  }
+
   return (
     <>
       <OperationEnCours
@@ -218,13 +202,17 @@ export const RequetesServiceCreation: React.FC<
         onClick={finOpEnCours}
       />
       <div className="FiltreEtRechercheReqService">
-        <FiltreEtRechercheForm onSubmit={onSubmit} />
+        <FiltreEtRechercheForm onSubmit={soumettreFiltre} />
       </div>
       <TableauRece
         idKey={"idRequete"}
-        sortOrderByState={parametresLienRequete.tri}
-        sortOrderState={parametresLienRequete.sens}
-        onClickOnLine={onClickOnLineTableau}
+        sortOrderByState={parametresLienRequete?.tri}
+        sortOrderState={parametresLienRequete?.sens}
+        onClickOnLine={getOnClickSurLigneTableauEspaceCreation(
+          setOpEnCours,
+          setParamsMiseAJour,
+          setParamsCreation
+        )}
         columnHeaders={columnHeaders}
         dataState={dataState}
         paramsTableau={paramsTableau}

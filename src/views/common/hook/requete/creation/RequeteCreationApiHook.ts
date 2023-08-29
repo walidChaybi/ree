@@ -49,9 +49,9 @@ const defaultFiltre: FiltresReqDto = {
 };
 
 export function useRequeteCreationApiHook(
-  queryParameters: IQueryParametersPourRequetes,
   typeRequete: TypeAppelRequete,
-  setEnChargement: (enChargement: boolean) => void
+  setEnChargement: (enChargement: boolean) => void,
+  queryParameters?: IQueryParametersPourRequetes
 ) {
   const [dataState, setDataState] = useState<IRequeteTableauCreation[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
@@ -63,21 +63,23 @@ export function useRequeteCreationApiHook(
   useEffect(() => {
     async function fetchMesRequetes() {
       try {
-        const listeStatuts = queryParameters?.statuts?.join(",");
-        const result =
-          typeRequete === TypeAppelRequete.MES_REQUETES_CREATION
-            ? await getRequetesCreation(listeStatuts, queryParameters)
-            : await postRequetesServiceCreation(
-                queryParameters,
-                mappingFiltresFormToFiltresDto(filtresReq)
-              );
-        const mesRequetes = mappingRequetesTableauCreation(
-          result?.body?.data,
-          false
-        );
-        setDataState(mesRequetes);
-        setParamsTableau(getParamsTableau(result));
-        setEnChargement(false);
+        if (queryParameters) {
+          const listeStatuts = queryParameters.statuts?.join(",");
+          const result =
+            typeRequete === TypeAppelRequete.MES_REQUETES_CREATION
+              ? await getRequetesCreation(listeStatuts, queryParameters)
+              : await postRequetesServiceCreation(
+                  queryParameters,
+                  mappingFiltresFormToFiltresDto(filtresReq)
+                );
+          const mesRequetes = mappingRequetesTableauCreation(
+            result?.body?.data,
+            false
+          );
+          setDataState(mesRequetes);
+          setParamsTableau(getParamsTableau(result));
+          setEnChargement(false);
+        }
       } catch (error) {
         logError({
           messageUtilisateur:
