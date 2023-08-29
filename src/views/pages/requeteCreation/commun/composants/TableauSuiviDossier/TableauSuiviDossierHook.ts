@@ -143,7 +143,9 @@ const getIdentifiantsActeFromTitulaires = (
   titulaireCourant: ITitulaireRequeteCreation
 ): string[] => {
   const idActe = titulaireCourant.suiviDossiers?.find(suiviDossier =>
-    Boolean(suiviDossier.idActe)
+    NatureProjetEtablissement.estNaissance(
+      NatureProjetEtablissement.getEnumFor(suiviDossier.natureProjet)
+    )
   )?.idActe;
   if (idActe) {
     identifiantsActes.push(idActe);
