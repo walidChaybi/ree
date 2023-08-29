@@ -89,7 +89,7 @@ const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
     nomDate: dateNaissanceNamespace
   } as DateComposeFormProps;
 
-  function onBlurChamp(e: any) {
+  function onBlurChamp(e: React.ChangeEvent<HTMLInputElement>): void {
     traiteEspace(e, props.formik.handleChange);
     props.formik.handleBlur(e);
   }
@@ -108,7 +108,7 @@ const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
   function onClickRappelCriteresTitulaire(
     event: React.MouseEvent,
     titulaire: ITitulaireRequete
-  ) {
+  ): void {
     event.preventDefault();
     props.formik.setFieldValue(
       withNamespace(props.nomFiltre, NOM),

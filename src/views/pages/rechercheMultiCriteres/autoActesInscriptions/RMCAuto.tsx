@@ -223,9 +223,7 @@ export const RMCAuto: React.FC<RMCAutoProps> = props => {
         });
         stockageDonnees.stockerCriteresRMCActeInspt(values);
         setResetRMCActeInscription(false);
-        if (props.reset) {
-          props.reset();
-        }
+        props.reset && props.reset();
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

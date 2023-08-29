@@ -1,4 +1,5 @@
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
+import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { MIN_YEAR } from "@util/DateUtils";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { Formulaire } from "@widget/formulaire/Formulaire";
@@ -21,7 +22,6 @@ import TitulaireFiltre, {
   TitulaireValidationSchema
 } from "../filtres/titulaire/TitulaireFiltre";
 import "./scss/RMCActeInscriptionPage.scss";
-import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 
 // Nom des filtres
 export const TITULAIRE = "titulaire";
@@ -49,14 +49,16 @@ interface RMCActeInscriptionFormProps {
   titulaires?: ITitulaireRequete[];
 }
 
-export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = props => {
+export const RMCActeInscriptionForm: React.FC<
+  RMCActeInscriptionFormProps
+> = props => {
   const blocsForm: JSX.Element[] = [
     getFormTitulaire(props.titulaires),
     getRegistreRepertoire(),
     getFormDatesDebutFinAnnee()
   ];
 
-  const onSubmitRMCActeInscription = (values: any) => {
+  const onSubmitRMCActeInscription = (values: any): void => {
     props.onSubmit(values);
   };
 

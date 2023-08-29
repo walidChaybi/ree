@@ -15,10 +15,10 @@ export const BoutonsRappelTitulaire: React.FC<
 > = props => {
   return (
     <div className="containerRappelTitulaire">
-      {props.titulaires?.map((titulaire, index) => (
+      {props.titulaires?.map(titulaire => (
         <Bouton
-          key={index}
-          onClick={event =>
+          key={titulaire.id}
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
             props.onClickRappelCriteresTitulaire(event, titulaire)
           }
         >
