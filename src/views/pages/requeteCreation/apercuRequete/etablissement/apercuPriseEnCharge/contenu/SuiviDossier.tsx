@@ -1,5 +1,7 @@
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
 import TableauSuiviDossier from "@pages/requeteCreation/commun/composants/TableauSuiviDossier/TableauSuiviDossier";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getLibelle } from "@util/Utils";
 import React, { useState } from "react";
 import { useParams } from "react-router";
@@ -27,14 +29,16 @@ export const SuiviDossier: React.FC<ISuiviDossierProps> = props => {
       <Item titre={getLibelle("Retour SDANF")}>
         <ItemEchangesRetourSDANF echanges={echanges} />
 
-        <ListeActionsRetourSDANF
-          setEchanges={setEchanges}
-          echanges={echanges}
-          statusRequete={props.requete?.statutCourant.statut}
-          idRequeteCorbeilleAgent={props.requete?.idUtilisateur}
-          idRequeteParam={idRequeteParam}
-          modeConsultation={props.modeConsultation}
-        />
+        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RETOUR_SDANF) && (
+          <ListeActionsRetourSDANF
+            setEchanges={setEchanges}
+            echanges={echanges}
+            statusRequete={props.requete?.statutCourant.statut}
+            idRequeteCorbeilleAgent={props.requete?.idUtilisateur}
+            idRequeteParam={idRequeteParam}
+            modeConsultation={props.modeConsultation}
+          />
+        )}
       </Item>
 
       <SuiviObservationsRequete

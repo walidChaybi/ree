@@ -44,7 +44,8 @@ export const localStorageFeatureFlagMock = (function () {
     FF_RQT_INFORMATION: "true",
     FF_DELIV_EC_PAC: "true",
     FF_NATALI: "true",
-    LOG_SERVEUR: "1"
+    LOG_SERVEUR: "1",
+    FF_RETOUR_SDANF: "true"
   };
   return {
     getItem(key: string) {

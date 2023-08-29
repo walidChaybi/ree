@@ -1,12 +1,13 @@
-// ID                  | Fonction                                          | Statut  | Date peremption
-// --------------------|---------------------------------------------------|---------|-------------------------------------------------
-// LOG_SERVEUR         | Conditionne l'envoi des logs au serveur           | ACTIF   | Après MES
-// FF_CONSULT_ACTE_RQT | Conditionne RMC Acte/Inscription et requete       | ACTIF   | Après MES RMC dans RECE
-// FF_DELIV_CS         | Conditionne Certificat situation                  | ACTIF   | Après MES Délivrance CS dans RECE
-// FF_RQT_INFORMATION  | Conditionne information usager                    | ACTIF   | Après MES Espace info usager dans RECE
-// FF_DELIV_EC_PAC     | Conditionne la délivrance E/C et Attestation PACS | ACTIF   | Après MES Délivrance E/C et PACS dans RECE
-// FF_NATALI           | Conditionne l'espace creation                     | ACTIF   | Après MES Espace créaton dans RECE
-// FF_RMC_NO_LIMIT     | Conditionne la restriction des critères RMC       | ACTIF   | Aucune
+// ID                   | Fonction                                          | Statut  | Date peremption
+// ---------------------|---------------------------------------------------|---------|-------------------------------------------------
+// LOG_SERVEUR          | Conditionne l'envoi des logs au serveur           | ACTIF   | Après MES
+// FF_CONSULT_ACTE_RQT  | Conditionne RMC Acte/Inscription et requete       | ACTIF   | Après MES RMC dans RECE
+// FF_DELIV_CS          | Conditionne Certificat situation                  | ACTIF   | Après MES Délivrance CS dans RECE
+// FF_RQT_INFORMATION   | Conditionne information usager                    | ACTIF   | Après MES Espace info usager dans RECE
+// FF_DELIV_EC_PAC      | Conditionne la délivrance E/C et Attestation PACS | ACTIF   | Après MES Délivrance E/C et PACS dans RECE
+// FF_NATALI            | Conditionne l'espace creation                     | ACTIF   | Après MES Espace créaton dans RECE
+// FF_RMC_NO_LIMIT      | Conditionne la restriction des critères RMC       | ACTIF   | Aucune
+// FF_RETOUR_SDANF      | Conditionne l'affichage des actions retour SDANF  | ACTIF   | Après reprise des retours SDANF
 
 export enum FeatureFlag {
   LOG_SERVEUR = "LOG_SERVEUR",
@@ -15,5 +16,6 @@ export enum FeatureFlag {
   FF_RQT_INFORMATION = "FF_RQT_INFORMATION",
   FF_DELIV_EC_PAC = "FF_DELIV_EC_PAC",
   FF_NATALI = "FF_NATALI",
-  FF_RMC_NO_LIMIT = "FF_RMC_NO_LIMIT"
+  FF_RMC_NO_LIMIT = "FF_RMC_NO_LIMIT",
+  FF_RETOUR_SDANF = "FF_RETOUR_SDANF"
 }

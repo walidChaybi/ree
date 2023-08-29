@@ -1,6 +1,6 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
-import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import {
   requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut,
   requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut,
@@ -9,15 +9,10 @@ import {
   requeteCreationAvecMessagesRetourSDANFSansLesDroits,
   requeteCreationEtablissement
 } from "@mock/data/requeteCreation";
+import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { OngletsApercuCreationEtablissementPriseEnCharge } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/contenu/OngletsApercuCreationEtablissementPriseEnCharge";
 import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID } from "@router/ReceUrls";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { createMemoryHistory } from "history";
@@ -26,43 +21,51 @@ beforeAll(() => {
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
 });
 
-test("L'encart retour SDANF est present dans la page", async () => {
-  act(() => {
-    const history = createMemoryHistory();
+function afficheComposant(
+  idRequete: string,
+  requete: IRequeteCreationEtablissement
+): void {
+  const history = createMemoryHistory();
 
-    history.push(
-      getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-        "a4cefb71-8457-4f6b-937e-34b49335d404"
-      )
-    );
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+      idRequete
+    )
+  );
 
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
-            }
-          >
-            <OngletsApercuCreationEtablissementPriseEnCharge
-              requete={mappingRequeteCreation(requeteCreationEtablissement)}
-              onRenommePieceJustificative={(
-                idPieceJustificative: string,
-                nouveauLibelle: string,
-                idDocumentPJ?: string | undefined
-              ) => {}}
-              resultatRMCPersonne={[]}
-              tableauRMCPersonneEnChargement={false}
-              setDataActesInscriptionsSelectionnes={() => {}}
-              setRmcAutoPersonneParams={() => {}}
-            />
-          </Route>
-        </Router>
-      </>
-    );
-  });
+  render(
+    <>
+      <Router history={history}>
+        <Route
+          exact={true}
+          path={
+            URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
+          }
+        >
+          <OngletsApercuCreationEtablissementPriseEnCharge
+            requete={mappingRequeteCreation(requete)}
+            onRenommePieceJustificative={(
+              idPieceJustificative: string,
+              nouveauLibelle: string,
+              idDocumentPJ?: string | undefined
+            ) => {}}
+            resultatRMCPersonne={[]}
+            tableauRMCPersonneEnChargement={false}
+            setDataActesInscriptionsSelectionnes={() => {}}
+            setRmcAutoPersonneParams={() => {}}
+          />
+        </Route>
+      </Router>
+    </>
+  );
+}
+
+test("DOIT afficher l'encart 'Retour SDANF' QUAND on rend le composant d'aperçu creation etablissement en prise en charge.", async () => {
+  afficheComposant(
+    "a4cefb71-8457-4f6b-937e-34b49335d404",
+    mappingRequeteCreation(requeteCreationEtablissement)
+  );
 
   const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
@@ -75,45 +78,11 @@ test("L'encart retour SDANF est present dans la page", async () => {
   });
 });
 
-test("Doit afficher le message avec le bon format titre - message - prenomNom", async () => {
-  act(() => {
-    const history = createMemoryHistory();
-
-    history.push(
-      getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-        "3ed9aa4e-921b-429f-b8fe-531dd103c68s"
-      )
-    );
-
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
-            }
-          >
-            <OngletsApercuCreationEtablissementPriseEnCharge
-              requete={mappingRequeteCreation(
-                requeteCreationAvecMessagesRetourSDANFAvecMessages
-              )}
-              onRenommePieceJustificative={(
-                idPieceJustificative: string,
-                nouveauLibelle: string,
-                idDocumentPJ?: string | undefined
-              ) => {}}
-              resultatRMCPersonne={[]}
-              tableauRMCPersonneEnChargement={false}
-              setDataActesInscriptionsSelectionnes={() => {}}
-              setRmcAutoPersonneParams={() => {}}
-            />
-          </Route>
-        </Router>
-      </>
-    );
-  });
+test("DOIT afficher le message avec le bon format titre - message - prenomNom QUAND un message est présent.", async () => {
+  afficheComposant(
+    "3ed9aa4e-921b-429f-b8fe-531dd103c68s",
+    mappingRequeteCreation(requeteCreationAvecMessagesRetourSDANFAvecMessages)
+  );
 
   const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
@@ -130,45 +99,11 @@ test("Doit afficher le message avec le bon format titre - message - prenomNom", 
   });
 });
 
-test("Doit afficher la liste des messages avec le bon nombre de messages", async () => {
-  act(() => {
-    const history = createMemoryHistory();
-
-    history.push(
-      getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-        "a4cefb71-8457-4f6b-937e-34b49335d404"
-      )
-    );
-
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
-            }
-          >
-            <OngletsApercuCreationEtablissementPriseEnCharge
-              requete={mappingRequeteCreation(
-                requeteCreationAvecMessagesRetourSDANFSansLesDroits
-              )}
-              onRenommePieceJustificative={(
-                idPieceJustificative: string,
-                nouveauLibelle: string,
-                idDocumentPJ?: string | undefined
-              ) => {}}
-              resultatRMCPersonne={[]}
-              tableauRMCPersonneEnChargement={false}
-              setDataActesInscriptionsSelectionnes={() => {}}
-              setRmcAutoPersonneParams={() => {}}
-            />
-          </Route>
-        </Router>
-      </>
-    );
-  });
+test("DOIT afficher la liste des messages avec le bon nombre de messages QUAND plusieurs messages sont présent.", async () => {
+  afficheComposant(
+    "a4cefb71-8457-4f6b-937e-34b49335d404",
+    mappingRequeteCreation(requeteCreationAvecMessagesRetourSDANFSansLesDroits)
+  );
 
   const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
@@ -187,45 +122,13 @@ test("Doit afficher la liste des messages avec le bon nombre de messages", async
   });
 });
 
-test("Doit desactiver les boutons quand la requete n'est pas en statut PRISE_EN_CHARGE", async () => {
-  act(() => {
-    const history = createMemoryHistory();
-
-    history.push(
-      getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-        "3ed97a35-c9b0-4ae4-b2dc-75eb84e4085c"
-      )
-    );
-
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
-            }
-          >
-            <OngletsApercuCreationEtablissementPriseEnCharge
-              requete={mappingRequeteCreation(
-                requeteCreationAvecMessagesRetourSDANFAvecMauvaisStatus
-              )}
-              onRenommePieceJustificative={(
-                idPieceJustificative: string,
-                nouveauLibelle: string,
-                idDocumentPJ?: string | undefined
-              ) => {}}
-              resultatRMCPersonne={[]}
-              tableauRMCPersonneEnChargement={false}
-              setDataActesInscriptionsSelectionnes={() => {}}
-              setRmcAutoPersonneParams={() => {}}
-            />
-          </Route>
-        </Router>
-      </>
-    );
-  });
+test("DOIT desactiver les boutons QUAND la requete n'est pas en statut PRISE_EN_CHARGE.", async () => {
+  afficheComposant(
+    "3ed97a35-c9b0-4ae4-b2dc-75eb84e4085c",
+    mappingRequeteCreation(
+      requeteCreationAvecMessagesRetourSDANFAvecMauvaisStatus
+    )
+  );
 
   const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
@@ -239,47 +142,13 @@ test("Doit desactiver les boutons quand la requete n'est pas en statut PRISE_EN_
   });
 });
 
-test("Doit desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete n'est pas la meme que l'agent", async () => {
-  act(() => {
-    const history = createMemoryHistory();
-
-    storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-
-    history.push(
-      getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-        "3ed9aa4e-921b-489f-b8fe-531dd703c68f"
-      )
-    );
-
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
-            }
-          >
-            <OngletsApercuCreationEtablissementPriseEnCharge
-              requete={mappingRequeteCreation(
-                requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut
-              )}
-              onRenommePieceJustificative={(
-                idPieceJustificative: string,
-                nouveauLibelle: string,
-                idDocumentPJ?: string | undefined
-              ) => {}}
-              resultatRMCPersonne={[]}
-              tableauRMCPersonneEnChargement={false}
-              setDataActesInscriptionsSelectionnes={() => {}}
-              setRmcAutoPersonneParams={() => {}}
-            />
-          </Route>
-        </Router>
-      </>
-    );
-  });
+test("DOIT desactiver les boutons QUAND l'idRequeteCorbeilleAgent de la requete n'est pas la meme que l'agent", async () => {
+  afficheComposant(
+    "3ed9aa4e-921b-489f-b8fe-531dd703c68f",
+    mappingRequeteCreation(
+      requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut
+    )
+  );
 
   const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
@@ -293,48 +162,17 @@ test("Doit desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete 
   });
 });
 
-test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete et status est bon", async () => {
-  const history = createMemoryHistory();
-
+test("DOIT ne pas desactiver les boutons QUAND l'idRequeteCorbeilleAgent de la requete et status est bon", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
   storeRece.utilisateurCourant.idUtilisateur =
     "90c6aee1-21be-4ba6-9e55-fc8831252646";
 
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-      "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
+  afficheComposant(
+    "3ed9aa4e-921b-429f-b8fe-531dd103c68f",
+    mappingRequeteCreation(
+      requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
     )
   );
-  act(() => {
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
-            }
-          >
-            <OngletsApercuCreationEtablissementPriseEnCharge
-              requete={mappingRequeteCreation(
-                requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
-              )}
-              onRenommePieceJustificative={(
-                idPieceJustificative: string,
-                nouveauLibelle: string,
-                idDocumentPJ?: string | undefined
-              ) => {}}
-              resultatRMCPersonne={[]}
-              tableauRMCPersonneEnChargement={false}
-              setDataActesInscriptionsSelectionnes={() => {}}
-              setRmcAutoPersonneParams={() => {}}
-            />
-          </Route>
-        </Router>
-      </>
-    );
-  });
 
   const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
@@ -349,49 +187,17 @@ test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requ
   });
 });
 
-test("Doit ouvrir et changer le titre de la popin au click sur une action", async () => {
-  act(() => {
-    const history = createMemoryHistory();
+test("DOIT ouvrir et changer le titre de la popin QUAND on clique sur une action", async () => {
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  storeRece.utilisateurCourant.idUtilisateur =
+    "90c6aee1-21be-4ba6-9e55-fc8831252646";
 
-    storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-    storeRece.utilisateurCourant.idUtilisateur =
-      "90c6aee1-21be-4ba6-9e55-fc8831252646";
-
-    history.push(
-      getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-        "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
-      )
-    );
-
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
-            }
-          >
-            <OngletsApercuCreationEtablissementPriseEnCharge
-              requete={mappingRequeteCreation(
-                requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
-              )}
-              onRenommePieceJustificative={(
-                idPieceJustificative: string,
-                nouveauLibelle: string,
-                idDocumentPJ?: string | undefined
-              ) => {}}
-              resultatRMCPersonne={[]}
-              tableauRMCPersonneEnChargement={false}
-              setDataActesInscriptionsSelectionnes={() => {}}
-              setRmcAutoPersonneParams={() => {}}
-            />
-          </Route>
-        </Router>
-      </>
-    );
-  });
+  afficheComposant(
+    "3ed9aa4e-921b-429f-b8fe-531dd103c68f",
+    mappingRequeteCreation(
+      requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
+    )
+  );
 
   const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {
@@ -416,46 +222,16 @@ test("Doit ouvrir et changer le titre de la popin au click sur une action", asyn
   });
 });
 
-test("Doit ouvrir la popin au click sur une action", async () => {
-  const history = createMemoryHistory();
-
+test("DOIT ouvrir la popin QUAND on clique sur une action", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
   storeRece.utilisateurCourant.idUtilisateur =
     "90c6aee1-21be-4ba6-9e55-fc8831252646";
 
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-      "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
+  afficheComposant(
+    "3ed9aa4e-921b-429f-b8fe-531dd103c68f",
+    mappingRequeteCreation(
+      requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
     )
-  );
-
-  render(
-    <>
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={
-            URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
-          }
-        >
-          <OngletsApercuCreationEtablissementPriseEnCharge
-            requete={mappingRequeteCreation(
-              requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
-            )}
-            onRenommePieceJustificative={(
-              idPieceJustificative: string,
-              nouveauLibelle: string,
-              idDocumentPJ?: string | undefined
-            ) => {}}
-            resultatRMCPersonne={[]}
-            tableauRMCPersonneEnChargement={false}
-            setDataActesInscriptionsSelectionnes={() => {}}
-            setRmcAutoPersonneParams={() => {}}
-          />
-        </Route>
-      </Router>
-    </>
   );
 
   const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
@@ -477,49 +253,17 @@ test("Doit ouvrir la popin au click sur une action", async () => {
   });
 });
 
-test("Doit afficher un message d'erreur quand la taille maximale est dépassée", async () => {
-  const history = createMemoryHistory();
-
+test("DOIT afficher un message d'erreur QUAND la taille maximale est dépassée", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
   storeRece.utilisateurCourant.idUtilisateur =
     "90c6aee1-21be-4ba6-9e55-fc8831252646";
 
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-      "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
+  afficheComposant(
+    "3ed9aa4e-921b-429f-b8fe-531dd103c68f",
+    mappingRequeteCreation(
+      requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
     )
   );
-
-  act(() => {
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
-            }
-          >
-            <OngletsApercuCreationEtablissementPriseEnCharge
-              requete={mappingRequeteCreation(
-                requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
-              )}
-              onRenommePieceJustificative={(
-                idPieceJustificative: string,
-                nouveauLibelle: string,
-                idDocumentPJ?: string | undefined
-              ) => {}}
-              resultatRMCPersonne={[]}
-              tableauRMCPersonneEnChargement={false}
-              setDataActesInscriptionsSelectionnes={() => {}}
-              setRmcAutoPersonneParams={() => {}}
-            />
-          </Route>
-        </Router>
-      </>
-    );
-  });
 
   const boutonVoletSuiviDossier = screen.getByText("Suivi dossier");
   await waitFor(() => {

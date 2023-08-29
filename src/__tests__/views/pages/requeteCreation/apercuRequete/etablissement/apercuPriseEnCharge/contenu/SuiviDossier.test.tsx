@@ -12,6 +12,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router";
+import { localStorageFeatureFlagMock } from "../../../../../../../../setupTests";
 
 interface HookConsumerSuiviDossierProps {
   echanges?: IEchange[];
@@ -105,5 +106,18 @@ test("DOIT rediriger vers l'aperçu saisie projet QUAND on clique sur une ligne 
     expect(history.location.pathname).toBe(
       `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/a2724cc9-450c-4e50-9d05-a44a28717954/a272ec8a-1351-4edd-99b8-03004292a9d2`
     );
+  });
+});
+
+test("NE DOIT PAS afficher les actions 'Retour SDANF' QUAND le FF est activé", async () => {
+  localStorageFeatureFlagMock.setItem("FF_RETOUR_SDANF", "false");
+  render(<HookConsumerSuiviDossier requete={requete} />);
+
+  await waitFor(() => {
+    expect(screen.queryByText("Acte irrecevable")).not.toBeInTheDocument();
+    expect(screen.queryByText("Élément manquant")).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("Suspicion de fraude / nouvel élément")
+    ).not.toBeInTheDocument();
   });
 });
