@@ -32,6 +32,7 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     await waitFor(() => {
       expect(champNom[0].value).toBe("NOMNAISSANCE");
       expect(screen.getByText("Nom sécable")).toBeDefined();
+      expect(screen.queryByText("1re partie")).toBeNull();
       expect(screen.getByText("Pas de prénom")).toBeDefined();
       expect(champPrenom[0].value).toBe("Prenom");
       expect(champNom[1].value).toBe("NOMFRANCISATION");
@@ -89,6 +90,48 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
       expect(
         screen.queryByText("Jour et mois valorisés par défaut")
       ).toBeNull();
+    });
+  });
+  test("DOIT rendre la sécabilité du nom sans message d'attention QUAND il y a seulement 2 vocables", async () => {
+    const titulaire = {
+      ...requeteCreationEtablissementSaisieProjet.titulaires![0]
+    };
+    titulaire.retenueSdanf!.nomNaissance = "Test1 Test2";
+    titulaire.retenueSdanf!.paysNaissance = "Cuba";
+    render(<Postulant titulaire={titulaire} />);
+
+    const champNomPartie1 = screen.getByLabelText(
+      "1re partie"
+    ) as HTMLInputElement;
+    const champNomPartie2 = screen.getByLabelText(
+      "2nde partie"
+    ) as HTMLInputElement;
+
+    await waitFor(() => {
+      expect(champNomPartie1.value).toBe("Test1");
+      expect(champNomPartie2.value).toBe("Test2");
+      expect(screen.queryByText("Nom avec plus de deux vocables")).toBeNull();
+    });
+  });
+  test("DOIT afficher un message d'attention QUAND le pays de naissance est sécable et que le nom a plus de 2 vocables", async () => {
+    const titulaire = {
+      ...requeteCreationEtablissementSaisieProjet.titulaires![0]
+    };
+    titulaire.retenueSdanf!.nomNaissance = "Test1 Test2 Test3";
+    titulaire.retenueSdanf!.paysNaissance = "Cuba";
+    render(<Postulant titulaire={titulaire} />);
+
+    const champNomPartie1 = screen.getByLabelText(
+      "1re partie"
+    ) as HTMLInputElement;
+    const champNomPartie2 = screen.getByLabelText(
+      "2nde partie"
+    ) as HTMLInputElement;
+
+    await waitFor(() => {
+      expect(champNomPartie1.value).toBe("Test1");
+      expect(champNomPartie2.value).toBe("Test2 Test3");
+      expect(screen.getByText("Nom avec plus de deux vocables")).toBeDefined();
     });
   });
 });

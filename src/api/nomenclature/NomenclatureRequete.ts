@@ -1,13 +1,18 @@
 /* istanbul ignore file */
 
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { PaysSecabilite } from "@model/requete/enum/PaysSecabilite";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { logError } from "@util/LogManager";
-import { premiereLettreEnMajuscule } from "@util/Utils";
+import {
+  formatPremieresLettresMajusculesNomCompose,
+  premiereLettreEnMajuscule
+} from "@util/Utils";
 import { getNomenclatureRequete } from "../appels/requeteApi";
 
 const TYPE_PIECE_JUSTIFICATIVE = "TYPE_PIECE_JUSTIFICATIVE";
 const DOCUMENT_DELIVRANCE = "DOCUMENT_DELIVRANCE";
+const PAYS_SECABILITE = "PAYS_SECABILITE";
 export const COURRIER_DELIVRANCE = "COURRIER_DELIVRANCE";
 
 export async function peupleTypePieceJustificative() {
@@ -65,6 +70,31 @@ export async function peupleDocumentDelivrance() {
       logError({
         messageUtilisateur:
           "Impossible de charger les types de documents de délivrance",
+        error
+      });
+    }
+  }
+}
+
+export async function peuplePaysSecabilite() {
+  if (!PaysSecabilite.contientEnums()) {
+    try {
+      const paysSecabilite = await getNomenclatureRequete(PAYS_SECABILITE);
+
+      PaysSecabilite.clean();
+      for (const data of paysSecabilite.body.data) {
+        PaysSecabilite.addEnum(
+          data.id,
+          new PaysSecabilite(
+            data.code,
+            formatPremieresLettresMajusculesNomCompose(data.libelle),
+            data.categorie
+          )
+        );
+      }
+    } catch (error) {
+      logError({
+        messageUtilisateur: "Impossible de charger la liste des pays sécables",
         error
       });
     }

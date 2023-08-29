@@ -34,6 +34,7 @@ import { NOMENCLATURE_OPTION_COURRIER } from "../data/NomenclatureOptionCourrier
 import { parametresBaseRequete } from "../data/NomenclatureParametresBaseRequete";
 import {
   ReponseAppelNomenclatureDocummentDelivrance,
+  ReponseAppelNomenclaturePaysSecabilite,
   ReponseAppelNomenclatureTypePiecesJustificative
 } from "../data/nomenclatures";
 import { pieceComplementInformation } from "../data/PieceComplementInformation";
@@ -254,6 +255,10 @@ export const configRequetes = [
         return { data: ReponseAppelNomenclatureTypePiecesJustificative.data };
       }
 
+      if (match[1] === "/nomenclature/PAYS_SECABILITE") {
+        return { data: ReponseAppelNomenclaturePaysSecabilite.data };
+      }
+
       if (match[1] === "/nomenclature/optioncourrier") {
         return { data: NOMENCLATURE_OPTION_COURRIER };
       }
@@ -340,9 +345,9 @@ export const configRequetes = [
             },
             data: { resultatsRecherche: [] }
           };
-        } 
+        }
         // RMC manuelle => recherche via N°SDANF
-        else if(params.numeroDossierNational === "2022X 200156") {
+        else if (params.numeroDossierNational === "2022X 200156") {
           return {
             headers: {
               "content-range":

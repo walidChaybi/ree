@@ -7,6 +7,7 @@ import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { PaysSecabilite } from "@model/requete/enum/PaysSecabilite";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import "@testing-library/jest-dom/extend-expect";
 import { storeRece } from "@util/storeRece";
@@ -66,6 +67,7 @@ beforeAll(async () => {
   await NatureMention.init();
   await TypeMention.init();
   await TypePieceJustificative.init();
+  await PaysSecabilite.init();
   await ParametreBaseRequete.init();
 });
 

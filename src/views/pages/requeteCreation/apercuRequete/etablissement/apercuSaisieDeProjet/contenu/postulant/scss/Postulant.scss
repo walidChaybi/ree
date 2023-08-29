@@ -34,7 +34,7 @@
             grid-template-columns: 31% 18% 4% 18% 4% 25%;
         }
     }
-    .WarningConteneur {
+    .AvertissementConteneur {
         display: flex;
         .InputField {
             width: 65%;
@@ -48,8 +48,8 @@
         .InputField, .ConteneurDateCompose {
             margin-right: 0.5rem;
         }
-        .WarningDateCompose > .DateComposeForm > input:nth-of-type(-n+2) {
-            border: 1px solid $warning-formulaire;;
+        .AvertissementDateCompose > .DateComposeForm > input:nth-of-type(-n+2) {
+            border: 1px solid $warning-formulaire;
         }
     }
 }

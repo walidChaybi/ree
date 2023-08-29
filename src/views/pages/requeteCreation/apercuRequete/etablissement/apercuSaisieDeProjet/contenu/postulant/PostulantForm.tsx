@@ -39,6 +39,7 @@ import React, { useState } from "react";
 import Item from "../../../commun/resumeRequeteCreationEtablissement/items/Item";
 import {
   estJourMoisVide,
+  getNomSecable,
   getPrenomsFrancises,
   getPrenomsNonFrancises
 } from "./mapping/mappingTitulaireVersFormulairePostulant";
@@ -50,6 +51,7 @@ interface IPostulantFormProps {
 type PostulantFormProps = IPostulantFormProps & FormikComponentProps;
 
 const PostulantForm: React.FC<PostulantFormProps> = props => {
+  const nomSecable = getNomSecable(props.titulaire.retenueSdanf);
   const prenomRetenu = props.titulaire.retenueSdanf?.prenomsRetenu;
   const nbPrenom = getPrenomsNonFrancises(prenomRetenu).length;
   const nbPrenomAnalyseMarginale =
@@ -81,7 +83,11 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
       />
       <NomSecableForm
         nomComposant={withNamespace(props.nom, NOM_SECABLE)}
+        nomTitulaire={nomSecable.nomTitulaire}
+        nomPartie1={nomSecable.nomPartie1}
+        nomPartie2={nomSecable.nomPartie2}
         saisieVerrouillee={false}
+        afficherAvertissementVocable={nomSecable.estPaysSecable}
       />
       <PrenomsConnusForm
         libelleAucunPrenom={getLibelle("Pas de prénom")}
@@ -104,7 +110,7 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
         label={getLibelle("Identité avant décret")}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
-      <div className="WarningConteneur">
+      <div className="AvertissementConteneur">
         <RadioField
           name={withNamespace(props.nom, SEXE)}
           label={getLibelle("Sexe")}
@@ -114,11 +120,11 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
           {getLibelle("Attention, sexe indéterminé")}
         </WarningMessage>
       </div>
-      <div className="WarningConteneur">
+      <div className="AvertissementConteneur">
         <div
           className={
             "ConteneurDateCompose" +
-            (afficherMessageNaissance ? " WarningDateCompose" : "")
+            (afficherMessageNaissance ? " AvertissementDateCompose" : "")
           }
         >
           <DateComposeForm

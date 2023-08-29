@@ -1,7 +1,6 @@
 import { INomSecableForm } from "@model/form/delivrance/ISaisieExtraitForm";
 import { estNonRenseigne, estRenseigne, getLibelle } from "@util/Utils";
 import * as Yup from "yup";
-import { ValidationError } from "yup";
 import { NOM_PARTIE1, NOM_PARTIE2 } from "../ConstantesNomsForm";
 
 const PARTIE_1_OBLIGATOIRE = "La 1re partie est obligatoire";
@@ -57,7 +56,7 @@ const noms1ereEt2emePartieStrictValidation = function (
   if (value.secable[0] === "true") {
     if (estNonRenseigne(value?.nomPartie1)) {
       errors.push(
-        new ValidationError(
+        new Yup.ValidationError(
           PARTIE_1_OBLIGATOIRE,
           null,
           `${error.path}.${NOM_PARTIE1}`
@@ -66,7 +65,7 @@ const noms1ereEt2emePartieStrictValidation = function (
     }
     if (estNonRenseigne(value?.nomPartie2)) {
       errors.push(
-        new ValidationError(
+        new Yup.ValidationError(
           PARTIE_2_OBLIGATOIRE,
           null,
           `${error.path}.${NOM_PARTIE2}`
@@ -74,7 +73,7 @@ const noms1ereEt2emePartieStrictValidation = function (
       );
     }
     if (errors.length > 0) {
-      res = new ValidationError(errors);
+      res = new Yup.ValidationError(errors);
     }
   }
 

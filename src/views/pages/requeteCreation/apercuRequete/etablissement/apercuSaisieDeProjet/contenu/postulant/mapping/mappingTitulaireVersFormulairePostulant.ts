@@ -29,6 +29,7 @@ import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
+import { PaysSecabilite } from "@model/requete/enum/PaysSecabilite";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import {
@@ -38,6 +39,14 @@ import {
   numberToString,
   rempliAGaucheAvecZero
 } from "@util/Utils";
+import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";
+
+interface NomSecablePostulant {
+  estPaysSecable: boolean;
+  nomTitulaire: string;
+  nomPartie1: string;
+  nomPartie2: string;
+}
 
 export function mappingTitulaireVersSaisieProjetPostulant(
   titulaire: ITitulaireRequeteCreation
@@ -54,6 +63,23 @@ export function estJourMoisVide(retenueSdanf?: IRetenueSdanf) {
     !retenueSdanf?.moisNaissance &&
     !!retenueSdanf?.anneeNaissance
   );
+}
+
+export function getNomSecable(
+  retenueSdanf?: IRetenueSdanf
+): NomSecablePostulant {
+  const nom = getValeurOuVide(retenueSdanf?.nomNaissance);
+  const estPaysSecable = PaysSecabilite.estSecable(
+    formatPremieresLettresMajusculesNomCompose(retenueSdanf?.paysNaissance)
+  );
+  const vocables = EtatCivilUtil.getVocables(nom);
+  const estSecable = estPaysSecable && vocables.length > 1;
+  return {
+    estPaysSecable,
+    nomTitulaire: nom,
+    nomPartie1: estSecable ? vocables[0] : "",
+    nomPartie2: estSecable ? vocables.slice(1).join(" ") : ""
+  };
 }
 
 export function getPrenomsNonFrancises(prenoms: IPrenomOrdonnes[] = []) {
@@ -78,7 +104,7 @@ function mapSaisiePostulant(titulaire: ITitulaireRequeteCreation) {
   const nom = getValeurOuVide(retenueSdanf.nomNaissance);
   return {
     [NOM]: nom.toUpperCase(),
-    [NOM_SECABLE]: mapSaisieNomSecable(),
+    [NOM_SECABLE]: mapSaisieNomSecable(retenueSdanf),
     [PRENOM]: mapSaisiePrenoms(retenueSdanf.prenomsRetenu || []),
     [ANALYSE_MARGINALE]: mapAnalyseMarginale(retenueSdanf),
     [IDENTITE]: "",
@@ -89,11 +115,12 @@ function mapSaisiePostulant(titulaire: ITitulaireRequeteCreation) {
   };
 }
 
-function mapSaisieNomSecable() {
+function mapSaisieNomSecable(retenueSdanf: IRetenueSdanf) {
+  const nomSecable = getNomSecable(retenueSdanf);
   return {
-    [SECABLE]: [],
-    [NOM_PARTIE1]: "",
-    [NOM_PARTIE2]: ""
+    [SECABLE]: nomSecable.nomPartie1 ? ["true"] : [],
+    [NOM_PARTIE1]: nomSecable.nomPartie1,
+    [NOM_PARTIE2]: nomSecable.nomPartie2
   };
 }
 

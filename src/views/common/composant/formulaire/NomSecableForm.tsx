@@ -1,7 +1,15 @@
-import { ABSENCE_VALIDEE, estRenseigne, getLibelle } from "@util/Utils";
+import {
+  ABSENCE_VALIDEE,
+  DEUX,
+  UN,
+  ZERO,
+  estRenseigne,
+  getLibelle
+} from "@util/Utils";
 import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";
 import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { WarningMessage } from "@widget/formulaire/erreur/WarningMessage";
 import {
   FormikComponentProps,
   withNamespace
@@ -17,6 +25,7 @@ interface ComponentFormProps {
   nomPartie2?: string;
   origineTitulaireActe?: boolean;
   saisieVerrouillee: boolean;
+  afficherAvertissementVocable: boolean;
 }
 
 type NomSecableFormProps = ComponentFormProps & FormikComponentProps;
@@ -29,11 +38,14 @@ const NomSecableForm: React.FC<NomSecableFormProps> = props => {
     estDisabled(props.nomPartie1, props.origineTitulaireActe) &&
     props.saisieVerrouillee;
 
+    const afficherMessageAvertissement =
+      props.afficherAvertissementVocable &&
+      EtatCivilUtil.getVocables(props.nomTitulaire).length > DEUX;
+
   const onCaseACocherNomSecableChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       //Provoque un comportement inaproprié : e.preventDefault();
       const nouvelEtatDeAfficheNomSecable = !afficheNomSecable;
-      setAfficheNomSecable(nouvelEtatDeAfficheNomSecable);
 
       let nomPartie1 = "";
       let nomPartie2 = "";
@@ -41,11 +53,13 @@ const NomSecableForm: React.FC<NomSecableFormProps> = props => {
       // Décompositon du nom du titulaire AM lorsqu'il n'y a deux vocables dans son nom
       if (nouvelEtatDeAfficheNomSecable) {
         const vocables = EtatCivilUtil.getVocables(props.nomTitulaire);
-        if (vocables.length > 1) {
-          nomPartie1 = vocables[0];
-          nomPartie2 = vocables[1];
+        if (vocables.length > UN) {
+          nomPartie1 = vocables[ZERO];
+          nomPartie2 = vocables.slice(UN).join(" ");
         }
       }
+
+      setAfficheNomSecable(nouvelEtatDeAfficheNomSecable);
 
       props.formik.setFieldValue(
         withNamespace(props.nomComposant, NOM_PARTIE1),
@@ -72,18 +86,23 @@ const NomSecableForm: React.FC<NomSecableFormProps> = props => {
         onChange={onCaseACocherNomSecableChange}
       />
       {afficheNomSecable && (
-        <InputField
-          name={withNamespace(props.nomComposant, NOM_PARTIE1)}
-          label={getLibelle("1re partie")}
-          disabled={disabled}
-        />
-      )}
-      {afficheNomSecable && (
-        <InputField
-          name={withNamespace(props.nomComposant, NOM_PARTIE2)}
-          label={getLibelle("2nde partie")}
-          disabled={disabled}
-        />
+        <>
+          <InputField
+            name={withNamespace(props.nomComposant, NOM_PARTIE1)}
+            label={getLibelle("1re partie")}
+            disabled={disabled}
+          />
+          <div className="AvertissementConteneur">
+            <InputField
+              name={withNamespace(props.nomComposant, NOM_PARTIE2)}
+              label={getLibelle("2nde partie")}
+              disabled={disabled}
+            />
+            <WarningMessage afficherMessage={afficherMessageAvertissement}>
+              {getLibelle("Nom avec plus de deux vocables")}
+            </WarningMessage>
+          </div>
+        </>
       )}
     </div>
   );

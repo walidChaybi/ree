@@ -720,6 +720,22 @@ export const ReponseAppelNomenclatureTypePiecesJustificative = {
   errors: []
 };
 
+export const ReponseAppelNomenclaturePaysSecabilite = {
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-requete-api/v2/nomenclature/TYPE_PIECE_JUSTIFICATIVE",
+  data: [
+    {
+      id: "7bcfc85f-6f44-4f3d-a2a6-1a7647d85838",
+      categorie: "PAYS_SECABILITE",
+      code: "CUBA",
+      libelle: "Cuba"
+    }
+  ],
+  errors: []
+};
+
 export const ReponseAppelNomenclatureTypeAlerte = {
   hasTechnicalError: false,
   hasBusinessError: false,
