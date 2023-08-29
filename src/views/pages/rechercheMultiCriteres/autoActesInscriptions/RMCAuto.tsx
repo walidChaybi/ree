@@ -46,32 +46,25 @@ export interface RMCAutoProps {
   reset?: () => void;
 }
 
-export const RMCAuto: React.FC<RMCAutoProps> = ({
-  requete,
-  dataHistory,
-  dataAlertes,
-  onClickCheckboxTableauActes,
-  onClickCheckboxTableauInscriptions,
-  reset
-}) => {
+export const RMCAuto: React.FC<RMCAutoProps> = props => {
   const [popinAffichee, setPopinAffichee] = useState<boolean>(false);
 
   /* Etats RMC Auto */
   const [rmcAutoActe, setRmcAutoActe] = useState<
     IResultatRMCActe[] | undefined
-  >(dataHistory?.dataRMCAutoActe);
+  >(props.dataHistory?.dataRMCAutoActe);
 
   const [tableauRMCAutoActe, setTableauRMCAutoActe] = useState<
     IParamsTableau | undefined
-  >(dataHistory?.dataTableauRMCAutoActe);
+  >(props.dataHistory?.dataTableauRMCAutoActe);
 
   const [rmcAutoInscription, setRmcAutoInscription] = useState<
     IResultatRMCInscription[] | undefined
-  >(dataHistory?.dataRMCAutoInscription);
+  >(props.dataHistory?.dataRMCAutoInscription);
 
   const [tableauRMCAutoInscription, setTableauRMCAutoInscription] = useState<
     IParamsTableau | undefined
-  >(dataHistory?.dataTableauRMCAutoInscription);
+  >(props.dataHistory?.dataTableauRMCAutoInscription);
 
   /* Etats RMC manuelle */
   const [resetRMCActeInscription, setResetRMCActeInscription] =
@@ -100,13 +93,13 @@ export const RMCAuto: React.FC<RMCAutoProps> = ({
   const [paramsRMCAuto, setParamsRMCAuto] = useState<RMCAutoParams>();
 
   useEffect(() => {
-    if (!dataHistory && requete) {
+    if (!props.dataHistory && props.requete) {
       setParamsRMCAuto({
-        requete,
+        requete: props.requete,
         range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
       });
     }
-  }, [requete, dataHistory]);
+  }, [props.requete, props.dataHistory]);
 
   /* Hooks RMC Auto */
   const { dataRMCAutoActe, dataTableauRMCAutoActe } = useRMCAutoActeApiHook(
@@ -230,12 +223,13 @@ export const RMCAuto: React.FC<RMCAutoProps> = ({
         });
         stockageDonnees.stockerCriteresRMCActeInspt(values);
         setResetRMCActeInscription(false);
-        if (reset) {
-          reset();
+        if (props.reset) {
+          props.reset();
         }
       }
     },
-    [reset]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [props.reset]
   );
 
   return (
@@ -246,15 +240,15 @@ export const RMCAuto: React.FC<RMCAutoProps> = ({
         tableauRMCAutoInscription && (
           <RMCActeInscriptionResultats
             typeRMC="Auto"
-            dataAlertes={dataAlertes}
-            dataRequete={requete}
+            dataAlertes={props.dataAlertes}
+            dataRequete={props.requete}
             dataRMCActe={rmcAutoActe}
             dataTableauRMCActe={tableauRMCAutoActe}
             dataRMCInscription={rmcAutoInscription}
             dataTableauRMCInscription={tableauRMCAutoInscription}
-            onClickCheckboxTableauActes={onClickCheckboxTableauActes}
+            onClickCheckboxTableauActes={props.onClickCheckboxTableauActes}
             onClickCheckboxTableauInscriptions={
-              onClickCheckboxTableauInscriptions
+              props.onClickCheckboxTableauInscriptions
             }
             resetRMC={resetRMCActeInscription}
             setRangeInscription={setRangeInscription}
@@ -285,6 +279,7 @@ export const RMCAuto: React.FC<RMCAutoProps> = ({
         nouvelleRMCActeInscription={nouvelleRMCActeInscription}
         setPopinAffichee={setPopinAffichee}
         popinAffichee={popinAffichee}
+        titulaires={props.requete?.titulaires}
       />
     </>
   );

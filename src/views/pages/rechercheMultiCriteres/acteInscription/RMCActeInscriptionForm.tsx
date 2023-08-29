@@ -21,6 +21,7 @@ import TitulaireFiltre, {
   TitulaireValidationSchema
 } from "../filtres/titulaire/TitulaireFiltre";
 import "./scss/RMCActeInscriptionPage.scss";
+import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 
 // Nom des filtres
 export const TITULAIRE = "titulaire";
@@ -45,19 +46,18 @@ export const titreForm = "Critères de recherche d'un acte et d'une inscription"
 
 interface RMCActeInscriptionFormProps {
   onSubmit: (values: any) => void;
+  titulaires?: ITitulaireRequete[];
 }
 
-export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = ({
-  onSubmit
-}) => {
+export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = props => {
   const blocsForm: JSX.Element[] = [
-    getFormTitulaire(),
+    getFormTitulaire(props.titulaires),
     getRegistreRepertoire(),
     getFormDatesDebutFinAnnee()
   ];
 
   const onSubmitRMCActeInscription = (values: any) => {
-    onSubmit(values);
+    props.onSubmit(values);
   };
 
   const rappelCriteres = () => {
@@ -79,14 +79,14 @@ export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = ({
   );
 };
 
-export function getFormTitulaire(): JSX.Element {
+function getFormTitulaire(titulaires? : ITitulaireRequete[]): JSX.Element {
   const titulaireFiltreProps = {
     nomFiltre: TITULAIRE
   } as TitulaireFiltreProps;
-  return <TitulaireFiltre key={TITULAIRE} {...titulaireFiltreProps} />;
+  return <TitulaireFiltre key={TITULAIRE} {...titulaireFiltreProps} titulaires={titulaires} />;
 }
 
-export function getFormDatesDebutFinAnnee(): JSX.Element {
+function getFormDatesDebutFinAnnee(): JSX.Element {
   const datesDebutFinAnneeFiltreProps = {
     nomFiltre: DATES_DEBUT_FIN_ANNEE,
     anneeMin: MIN_YEAR
@@ -99,7 +99,7 @@ export function getFormDatesDebutFinAnnee(): JSX.Element {
   );
 }
 
-export function getRegistreRepertoire(): JSX.Element {
+function getRegistreRepertoire(): JSX.Element {
   const registreRepertoireFiltreFiltreProps = {
     nomFiltre: REGISTRE_REPERTOIRE
   } as RegistreRepertoireFiltreProps;

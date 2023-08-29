@@ -1,17 +1,19 @@
+import { ANNEE, JOUR, MOIS } from "@composant/formulaire/ConstantesNomsForm";
+import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import SwapHoriz from "@mui/icons-material/SwapHoriz";
 import IconButton from "@mui/material/IconButton";
-import { getLibelle } from "@util/Utils";
+import { getLibelle, UN, ZERO } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
-import {
-  ASTERISQUE_MESSAGE,
-  CARACTERES_AUTORISES_MESSAGE
-} from "@widget/formulaire/FormulaireMessages";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues
 } from "@widget/formulaire/champsDate/DateComposeForm";
 import { DateValidationSchema } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import {
+  ASTERISQUE_MESSAGE,
+  CARACTERES_AUTORISES_MESSAGE
+} from "@widget/formulaire/FormulaireMessages";
 import { traiteEspace } from "@widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
@@ -26,6 +28,7 @@ import {
   CaracteresAutorisesRecherche
 } from "../../../../../ressources/Regex";
 import "../scss/FiltreRMC.scss";
+import { BoutonsRappelTitulaire } from "./BoutonsRappelTitulaire";
 
 // Noms des champs
 export const NOM = "nom";
@@ -71,12 +74,19 @@ export const TitulaireValidationSchema = Yup.object()
       : true;
   });
 
-export type TitulaireFiltreProps = ComponentFiltreProps & FormikComponentProps;
+interface ITitulaireFiltreProps {
+  titulaires?: ITitulaireRequete[];
+}
+
+export type TitulaireFiltreProps = ComponentFiltreProps &
+  FormikComponentProps &
+  ITitulaireFiltreProps;
 
 const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
+  const dateNaissanceNamespace = withNamespace(props.nomFiltre, DATE_NAISSANCE);
   const dateDebutComposeFormProps = {
     labelDate: "Date de naissance",
-    nomDate: withNamespace(props.nomFiltre, DATE_NAISSANCE)
+    nomDate: dateNaissanceNamespace
   } as DateComposeFormProps;
 
   function onBlurChamp(e: any) {
@@ -93,6 +103,39 @@ const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
     ).value;
     props.formik.setFieldValue(withNamespace(props.nomFiltre, NOM), prenomOld);
     props.formik.setFieldValue(withNamespace(props.nomFiltre, PRENOM), nomOld);
+  }
+
+  function onClickRappelCriteresTitulaire(
+    event: React.MouseEvent,
+    titulaire: ITitulaireRequete
+  ) {
+    event.preventDefault();
+    props.formik.setFieldValue(
+      withNamespace(props.nomFiltre, NOM),
+      titulaire.nomNaissance
+    );
+    if (titulaire.prenoms && titulaire.prenoms.length > ZERO) {
+      props.formik.setFieldValue(
+        withNamespace(props.nomFiltre, PRENOM),
+        titulaire.prenoms.find(prenom => prenom.numeroOrdre === UN)?.prenom
+      );
+    }
+    props.formik.setFieldValue(
+      withNamespace(props.nomFiltre, PAYS_NAISSANCE),
+      titulaire.paysNaissance
+    );
+    props.formik.setFieldValue(
+      withNamespace(dateNaissanceNamespace, JOUR),
+      titulaire.jourNaissance
+    );
+    props.formik.setFieldValue(
+      withNamespace(dateNaissanceNamespace, MOIS),
+      titulaire.moisNaissance
+    );
+    props.formik.setFieldValue(
+      withNamespace(dateNaissanceNamespace, ANNEE),
+      titulaire.anneeNaissance
+    );
   }
 
   return (
@@ -127,6 +170,11 @@ const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
             name={withNamespace(props.nomFiltre, PAYS_NAISSANCE)}
             label={getLibelle("Pays de naissance")}
             onBlur={onBlurChamp}
+          />
+
+          <BoutonsRappelTitulaire
+            onClickRappelCriteresTitulaire={onClickRappelCriteresTitulaire}
+            titulaires={props.titulaires}
           />
         </div>
       </Fieldset>

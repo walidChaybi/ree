@@ -6,12 +6,14 @@ import { Button } from "reakit/Button";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
 import { PopinNouvelleRMCActeInscription } from "./PopinNouvelleRMCActeInscription";
 import "./scss/BoutonNouvelleRMCActeInscription.scss";
+import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 
 interface BoutonNouvelleRMCActeInscriptionProps
   extends DialogDisclosureHTMLProps {
   nouvelleRMCActeInscription: (values: any) => void;
   popinAffichee: boolean;
   setPopinAffichee: (affichee: boolean) => void;
+  titulaires?: ITitulaireRequete[]
 }
 
 export const BoutonNouvelleRMCActeInscription: React.FC<
@@ -32,6 +34,7 @@ export const BoutonNouvelleRMCActeInscription: React.FC<
         open={props.popinAffichee}
         setPopinAffichee={props.setPopinAffichee}
         nouvelleRMCActeInscription={props.nouvelleRMCActeInscription}
+        titulaires={props.titulaires}
       />
     </>
   );

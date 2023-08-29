@@ -8,25 +8,27 @@ import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 import { RMCActeInscriptionForm } from "../acteInscription/RMCActeInscriptionForm";
 import "./scss/PopinNouvelleRMCActeInscription.scss";
+import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 
 interface PopinNouvelleRMCActeInscriptionProps {
   open: boolean;
   setPopinAffichee: (affichee: boolean) => void;
   nouvelleRMCActeInscription: (values: any) => void;
+  titulaires? : ITitulaireRequete[];
 }
 
 export const PopinNouvelleRMCActeInscription: React.FC<
   PopinNouvelleRMCActeInscriptionProps
-> = ({ open, setPopinAffichee, nouvelleRMCActeInscription }) => {
+> = props => {
   const handleClose = () => {
-    setPopinAffichee(false);
+    props.setPopinAffichee(false);
   };
 
   return (
     <Dialog
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
-      open={open}
+      open={props.open}
       className="PopinNouvelleRMCActeInscription"
     >
       <DialogTitle>
@@ -39,7 +41,7 @@ export const PopinNouvelleRMCActeInscription: React.FC<
         </IconButton>
       </DialogTitle>
       <DialogContent>
-        <RMCActeInscriptionForm onSubmit={nouvelleRMCActeInscription} />
+        <RMCActeInscriptionForm onSubmit={props.nouvelleRMCActeInscription} titulaires={props.titulaires}/>
       </DialogContent>
     </Dialog>
   );
