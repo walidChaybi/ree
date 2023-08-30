@@ -2,7 +2,7 @@ import { ANNEE, JOUR, MOIS } from "@composant/formulaire/ConstantesNomsForm";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import SwapHoriz from "@mui/icons-material/SwapHoriz";
 import IconButton from "@mui/material/IconButton";
-import { getLibelle, UN, ZERO } from "@util/Utils";
+import { getLibelle, rempliAGaucheAvecZero, UN, ZERO } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import DateComposeForm, {
   DateComposeFormProps,
@@ -18,6 +18,7 @@ import { traiteEspace } from "@widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
+  reinitialiserChamps,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
@@ -110,32 +111,53 @@ const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
     titulaire: ITitulaireRequete
   ): void {
     event.preventDefault();
-    props.formik.setFieldValue(
-      withNamespace(props.nomFiltre, NOM),
-      titulaire.nomNaissance
+    reinitialiserChamps(
+      props.nomFiltre,
+      [NOM, PRENOM, PAYS_NAISSANCE],
+      props.formik
     );
+    reinitialiserChamps(
+      dateNaissanceNamespace,
+      [JOUR, MOIS, ANNEE],
+      props.formik
+    );
+
+    if (titulaire.nomNaissance) {
+      props.formik.setFieldValue(
+        withNamespace(props.nomFiltre, NOM),
+        titulaire.nomNaissance
+      );
+    }
     if (titulaire.prenoms && titulaire.prenoms.length > ZERO) {
       props.formik.setFieldValue(
         withNamespace(props.nomFiltre, PRENOM),
         titulaire.prenoms.find(prenom => prenom.numeroOrdre === UN)?.prenom
       );
     }
-    props.formik.setFieldValue(
-      withNamespace(props.nomFiltre, PAYS_NAISSANCE),
-      titulaire.paysNaissance
-    );
-    props.formik.setFieldValue(
-      withNamespace(dateNaissanceNamespace, JOUR),
-      titulaire.jourNaissance
-    );
-    props.formik.setFieldValue(
-      withNamespace(dateNaissanceNamespace, MOIS),
-      titulaire.moisNaissance
-    );
-    props.formik.setFieldValue(
-      withNamespace(dateNaissanceNamespace, ANNEE),
-      titulaire.anneeNaissance
-    );
+    if (titulaire.paysNaissance) {
+      props.formik.setFieldValue(
+        withNamespace(props.nomFiltre, PAYS_NAISSANCE),
+        titulaire.paysNaissance
+      );
+    }
+    if (titulaire.jourNaissance) {
+      props.formik.setFieldValue(
+        withNamespace(dateNaissanceNamespace, JOUR),
+        rempliAGaucheAvecZero(titulaire.jourNaissance)
+      );
+    }
+    if (titulaire.moisNaissance) {
+      props.formik.setFieldValue(
+        withNamespace(dateNaissanceNamespace, MOIS),
+        rempliAGaucheAvecZero(titulaire.moisNaissance)
+      );
+    }
+    if (titulaire.anneeNaissance) {
+      props.formik.setFieldValue(
+        withNamespace(dateNaissanceNamespace, ANNEE),
+        titulaire.anneeNaissance
+      );
+    }
   }
 
   return (

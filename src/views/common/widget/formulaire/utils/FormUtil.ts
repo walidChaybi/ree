@@ -48,3 +48,13 @@ export type SubFormProps = ISubForm & FormikComponentProps;
 export function withNamespace(nomParent: string, nomChamp: string) {
   return nomParent ? `${nomParent}.${nomChamp}` : nomChamp;
 }
+
+export function reinitialiserChamps(
+  prefixChamp: string,
+  suffixChamps: string[],
+  formik: FormikProps<FormikValues>
+): void {
+  for (const suffixChamp of suffixChamps) {
+    formik.setFieldValue(withNamespace(prefixChamp, suffixChamp), "");
+  }
+}

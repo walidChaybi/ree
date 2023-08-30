@@ -229,8 +229,8 @@ describe("Tests des boutons 'Rappel titulaire'", () => {
     await waitFor(() => {
       expect(screen.queryByDisplayValue("nomNaissance1")).toBeInTheDocument();
       expect(screen.queryByDisplayValue("prenom11")).toBeInTheDocument();
-      expect(screen.queryByDisplayValue("1")).toBeInTheDocument();
-      expect(screen.queryByDisplayValue("2")).toBeInTheDocument();
+      expect(screen.queryByDisplayValue("01")).toBeInTheDocument();
+      expect(screen.queryByDisplayValue("02")).toBeInTheDocument();
       expect(screen.queryByDisplayValue("1990")).toBeInTheDocument();
       expect(screen.queryByDisplayValue("Maroc")).toBeInTheDocument();
     });
