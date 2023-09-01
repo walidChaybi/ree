@@ -1,12 +1,12 @@
 import { requeteCreationEtablissementSaisieProjet } from "@mock/data/requeteCreationEtablissement";
 import "@mock/element/IntersectionObserver";
-import { Postulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/postulant/Postulant";
+import { SaisiePostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/postulant/SaisiePostulant";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 describe("Test du bloc Postulant de l'onglet Postulant", () => {
   test("DOIT afficher et renseigner les champs du bloc postulant QUAND le formulaire est affiché", async () => {
     const titulaire = requeteCreationEtablissementSaisieProjet.titulaires![0];
-    render(<Postulant titulaire={titulaire} />);
+    render(<SaisiePostulant titulaire={titulaire} />);
 
     const champNom = screen.getAllByLabelText("Nom") as HTMLInputElement[];
     const champPrenom = screen.getAllByLabelText(
@@ -51,7 +51,7 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
   });
   test("DOIT afficher un message d'attention QUAND le sexe est indéterminé", async () => {
     const titulaire = requeteCreationEtablissementSaisieProjet.titulaires![0];
-    render(<Postulant titulaire={titulaire} />);
+    render(<SaisiePostulant titulaire={titulaire} />);
 
     await waitFor(() => {
       expect(screen.queryByText("Attention, sexe indéterminé")).toBeNull();
@@ -69,7 +69,7 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     };
     titulaire.retenueSdanf!.jourNaissance = undefined;
     titulaire.retenueSdanf!.moisNaissance = undefined;
-    render(<Postulant titulaire={titulaire} />);
+    render(<SaisiePostulant titulaire={titulaire} />);
 
     const champJourNaissance = screen.getByText("Date de naissance")
       .nextElementSibling as HTMLInputElement;
@@ -98,7 +98,7 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     };
     titulaire.retenueSdanf!.nomNaissance = "Test1 Test2";
     titulaire.retenueSdanf!.paysNaissance = "Cuba";
-    render(<Postulant titulaire={titulaire} />);
+    render(<SaisiePostulant titulaire={titulaire} />);
 
     const champNomPartie1 = screen.getByLabelText(
       "1re partie"
@@ -119,7 +119,7 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     };
     titulaire.retenueSdanf!.nomNaissance = "Test1 Test2 Test3";
     titulaire.retenueSdanf!.paysNaissance = "Cuba";
-    render(<Postulant titulaire={titulaire} />);
+    render(<SaisiePostulant titulaire={titulaire} />);
 
     const champNomPartie1 = screen.getByLabelText(
       "1re partie"

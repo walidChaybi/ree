@@ -36,13 +36,13 @@ import {
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useState } from "react";
-import Item from "../../../commun/resumeRequeteCreationEtablissement/items/Item";
+import Item from "../../../../commun/resumeRequeteCreationEtablissement/items/Item";
 import {
   estJourMoisVide,
   getNomSecable,
   getPrenomsFrancises,
   getPrenomsNonFrancises
-} from "./mapping/mappingTitulaireVersFormulairePostulant";
+} from "../mapping/mappingTitulaireVersFormulairePostulant";
 
 interface IPostulantFormProps {
   nom: string;

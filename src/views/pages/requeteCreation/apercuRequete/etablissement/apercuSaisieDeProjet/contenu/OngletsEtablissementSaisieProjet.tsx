@@ -1,10 +1,10 @@
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
-import { ZERO, getLibelle } from "@util/Utils";
+import { getLibelle, ZERO } from "@util/Utils";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useState } from "react";
 import "../../commun/scss/OngletsApercuCreationEtablissement.scss";
-import { Postulant } from "./postulant/Postulant";
+import { SaisiePostulant } from "./postulant/SaisiePostulant";
 
 interface OngletsEtablissementSaisieProjetProps {
   titulaire: ITitulaireRequeteCreation;
@@ -24,7 +24,7 @@ export const OngletsEtablissementSaisieProjet: React.FC<
   const liste: ItemListe[] = [
     {
       titre: getLibelle("Postulant"),
-      component: <Postulant titulaire={props.titulaire} />,
+      component: <SaisiePostulant titulaire={props.titulaire} />,
       index: 0
     },
     {
