@@ -4,9 +4,9 @@ import { getLibelle, ZERO } from "@util/Utils";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useState } from "react";
 import "../../commun/scss/OngletsApercuCreationEtablissement.scss";
-import { SaisiePostulant } from "./postulant/SaisiePostulant";
+import { SaisiePostulantForm } from "./saisiePostulantForm/SaisiePostulantForm";
 
-interface OngletsEtablissementSaisieProjetProps {
+interface IOngletsEtablissementSaisieProjetProps {
   titulaire: ITitulaireRequeteCreation;
 }
 
@@ -17,14 +17,14 @@ interface ItemListe {
 }
 
 export const OngletsEtablissementSaisieProjet: React.FC<
-  OngletsEtablissementSaisieProjetProps
+  IOngletsEtablissementSaisieProjetProps
 > = props => {
   const [ongletSelectionne, setOngletSelectionne] = useState(ZERO);
 
   const liste: ItemListe[] = [
     {
       titre: getLibelle("Postulant"),
-      component: <SaisiePostulant titulaire={props.titulaire} />,
+      component: <SaisiePostulantForm titulaire={props.titulaire} />,
       index: 0
     },
     {

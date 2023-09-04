@@ -9,7 +9,6 @@ import {
   NOM,
   NOM_SECABLE,
   PAYS_NAISSANCE,
-  PRENOM,
   PRENOMS,
   SEXE,
   VILLE_NAISSANCE
@@ -28,7 +27,7 @@ import { IDateComposeForm } from "@widget/formulaire/champsDate/DateComposeFormU
 import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
-import { WarningMessage } from "@widget/formulaire/erreur/WarningMessage";
+import { MessageAvertissement } from "@widget/formulaire/erreur/MessageAvertissement";
 import {
   FormikComponentProps,
   NB_CARACT_MAX_SAISIE,
@@ -39,10 +38,10 @@ import React, { useState } from "react";
 import Item from "../../../../commun/resumeRequeteCreationEtablissement/items/Item";
 import {
   estJourMoisVide,
-  getNomSecable,
-  getPrenomsFrancises,
-  getPrenomsNonFrancises
-} from "../mapping/mappingTitulaireVersFormulairePostulant";
+  filtrePrenomsFrancises,
+  filtrePrenomsNonFrancises,
+  getNomSecable
+} from "../SaisiePostulantFormUtils";
 
 interface IPostulantFormProps {
   nom: string;
@@ -53,9 +52,9 @@ type PostulantFormProps = IPostulantFormProps & FormikComponentProps;
 const PostulantForm: React.FC<PostulantFormProps> = props => {
   const nomSecable = getNomSecable(props.titulaire.retenueSdanf);
   const prenomRetenu = props.titulaire.retenueSdanf?.prenomsRetenu;
-  const nbPrenom = getPrenomsNonFrancises(prenomRetenu).length;
+  const nbPrenom = filtrePrenomsNonFrancises(prenomRetenu).length;
   const nbPrenomAnalyseMarginale =
-    getPrenomsFrancises.length || getPrenomsNonFrancises(prenomRetenu).length;
+    filtrePrenomsFrancises(prenomRetenu).length || nbPrenom;
   const analyseMarginale = withNamespace(props.nom, ANALYSE_MARGINALE);
   const sexe = withNamespace(props.nom, SEXE);
   const lieuNaissance = withNamespace(props.nom, LIEU_DE_NAISSANCE);
@@ -92,7 +91,7 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
       <PrenomsConnusForm
         libelleAucunPrenom={getLibelle("Pas de prénom")}
         pasDePrenomConnu={nbPrenom === 0}
-        nom={withNamespace(props.nom, PRENOM)}
+        nom={withNamespace(props.nom, PRENOMS)}
         nbPrenoms={nbPrenom}
       />
       <div className="Titre">{getLibelle("Analyse marginales")}</div>
@@ -116,9 +115,9 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
           label={getLibelle("Sexe")}
           values={Sexe.getAllEnumsAsOptionsSansInconnu()}
         />
-        <WarningMessage afficherMessage={afficherMessageSexe}>
+        <MessageAvertissement afficherMessage={afficherMessageSexe}>
           {getLibelle("Attention, sexe indéterminé")}
-        </WarningMessage>
+        </MessageAvertissement>
       </div>
       <div className="AvertissementConteneur">
         <div
@@ -136,9 +135,9 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
             onChange={onChangeDateNaissance}
           />
         </div>
-        <WarningMessage afficherMessage={afficherMessageNaissance}>
+        <MessageAvertissement afficherMessage={afficherMessageNaissance}>
           {getLibelle("Jour et mois valorisés par défaut")}
-        </WarningMessage>
+        </MessageAvertissement>
       </div>
       <div className="Titre">{getLibelle("Lieu de naissance")}</div>
       <InputField

@@ -5,7 +5,7 @@ import Item from "@pages/requeteCreation/apercuRequete/etablissement/commun/resu
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
-import { WarningMessage } from "@widget/formulaire/erreur/WarningMessage";
+import { MessageAvertissement } from "@widget/formulaire/erreur/MessageAvertissement";
 import {
   FormikComponentProps,
   NB_CARACT_MAX_SAISIE,
@@ -38,9 +38,9 @@ const ParentForm: React.FC<ParentFormProps> = props => {
           label={getLibelle("Sexe")}
           values={Sexe.getAllEnumsAsOptionsSansInconnu()}
         />
-        <WarningMessage afficherMessage={true}>
+        <MessageAvertissement afficherMessage={true}>
           {getLibelle("Attention, sexe indéterminé")}
-        </WarningMessage>
+        </MessageAvertissement>
       </div>
     </Item>
   );

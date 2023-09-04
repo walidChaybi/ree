@@ -4,6 +4,7 @@ import {
   ANNEE,
   DATE_NAISSANCE,
   ETAT_CANTON_PROVINCE,
+  FRANCISATION_POSTULANT,
   IDENTITE,
   JOUR,
   LIEU_DE_NAISSANCE,
@@ -16,7 +17,6 @@ import {
   NOM_SECABLE,
   PAS_DE_PRENOM_CONNU,
   PAYS_NAISSANCE,
-  PRENOM,
   PRENOMS,
   PROJET,
   SECABLE,
@@ -25,72 +25,51 @@ import {
   TYPE,
   VILLE_NAISSANCE
 } from "@composant/formulaire/ConstantesNomsForm";
+import {
+  ISaisieAnalyseMarginale,
+  ISaisieDateNaissance,
+  ISaisieFrancisationPostulantSousForm,
+  ISaisieLieuNaissance,
+  ISaisieNomSecable,
+  ISaisiePostulantSousForm,
+  ISaisiePrenoms,
+  ISaisieProjetPostulantForm,
+  ISaisieProjetSousForm
+} from "@model/form/creation/etablissement/ISaisiePostulantForm";
+import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
-import { PaysSecabilite } from "@model/requete/enum/PaysSecabilite";
-import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import {
   formatMajusculesMinusculesMotCompose,
   formatPremieresLettresMajusculesNomCompose,
   getValeurOuVide,
+  joint,
   numberToString,
   rempliAGaucheAvecZero
 } from "@util/Utils";
-import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";
-
-interface NomSecablePostulant {
-  estPaysSecable: boolean;
-  nomTitulaire: string;
-  nomPartie1: string;
-  nomPartie2: string;
-}
+import {
+  estJourMoisVide,
+  filtrePrenomsFrancises,
+  filtrePrenomsNonFrancises,
+  getNomSecable
+} from "../SaisiePostulantFormUtils";
 
 export function mappingTitulaireVersSaisieProjetPostulant(
   titulaire: ITitulaireRequeteCreation
-) {
+): ISaisieProjetPostulantForm {
   return {
     [PROJET]: mapSaisieProjet(titulaire),
-    [TITULAIRE]: mapSaisiePostulant(titulaire)
+    [TITULAIRE]: mapSaisiePostulant(titulaire),
+    [FRANCISATION_POSTULANT]: mapFrancisationPostulant(titulaire)
   };
 }
 
-export function estJourMoisVide(retenueSdanf?: IRetenueSdanf) {
-  return (
-    !retenueSdanf?.jourNaissance &&
-    !retenueSdanf?.moisNaissance &&
-    !!retenueSdanf?.anneeNaissance
-  );
-}
-
-export function getNomSecable(
-  retenueSdanf?: IRetenueSdanf
-): NomSecablePostulant {
-  const nom = getValeurOuVide(retenueSdanf?.nomNaissance);
-  const estPaysSecable = PaysSecabilite.estSecable(
-    formatPremieresLettresMajusculesNomCompose(retenueSdanf?.paysNaissance)
-  );
-  const vocables = EtatCivilUtil.getVocables(nom);
-  const estSecable = estPaysSecable && vocables.length > 1;
-  return {
-    estPaysSecable,
-    nomTitulaire: nom,
-    nomPartie1: estSecable ? vocables[0] : "",
-    nomPartie2: estSecable ? vocables.slice(1).join(" ") : ""
-  };
-}
-
-export function getPrenomsNonFrancises(prenoms: IPrenomOrdonnes[] = []) {
-  return prenoms.filter(prenom => !prenom.estPrenomFrRetenuSdanf);
-}
-
-export function getPrenomsFrancises(prenoms: IPrenomOrdonnes[] = []) {
-  return prenoms.filter(prenom => prenom.estPrenomFrRetenuSdanf);
-}
-
-function mapSaisieProjet(titulaire: ITitulaireRequeteCreation) {
+function mapSaisieProjet(
+  titulaire: ITitulaireRequeteCreation
+): ISaisieProjetSousForm {
   return {
     [TYPE]: getValeurOuVide(
       QualiteFamille.getEnumFromTitulaire(titulaire)?.libelle
@@ -99,13 +78,15 @@ function mapSaisieProjet(titulaire: ITitulaireRequeteCreation) {
   };
 }
 
-function mapSaisiePostulant(titulaire: ITitulaireRequeteCreation) {
+function mapSaisiePostulant(
+  titulaire: ITitulaireRequeteCreation
+): ISaisiePostulantSousForm {
   const retenueSdanf = titulaire.retenueSdanf || {};
   const nom = getValeurOuVide(retenueSdanf.nomNaissance);
   return {
     [NOM]: nom.toUpperCase(),
     [NOM_SECABLE]: mapSaisieNomSecable(retenueSdanf),
-    [PRENOM]: mapSaisiePrenoms(retenueSdanf.prenomsRetenu || []),
+    [PRENOMS]: mapSaisiePrenoms(retenueSdanf.prenomsRetenu || []),
     [ANALYSE_MARGINALE]: mapAnalyseMarginale(retenueSdanf),
     [IDENTITE]: "",
     [SEXE]: titulaire.sexe,
@@ -115,7 +96,35 @@ function mapSaisiePostulant(titulaire: ITitulaireRequeteCreation) {
   };
 }
 
-function mapSaisieNomSecable(retenueSdanf: IRetenueSdanf) {
+function mapFrancisationPostulant(
+  titulaire: ITitulaireRequeteCreation
+): ISaisieFrancisationPostulantSousForm {
+  const nomFrancise = titulaire.retenueSdanf?.nomDemandeFrancisation;
+
+  // TODO: A modifier lorsque le refacto sur les deux listes de prénoms francisés / non-francisés renvoyé par le back aura été fait.
+  const prenomsFrancises = filtrePrenomsFrancises(
+    titulaire.retenueSdanf?.prenomsRetenu
+  );
+  const prenomsNonFrancises = filtrePrenomsNonFrancises(
+    titulaire.retenueSdanf?.prenomsRetenu
+  );
+  const prenoms = joint(
+    prenomsNonFrancises.map(
+      prenomNonFrancise =>
+        prenomsFrancises.find(
+          prenomFrancise =>
+            prenomFrancise.numeroOrdre === prenomNonFrancise.numeroOrdre
+        )?.prenom || prenomNonFrancise.prenom
+    )
+  );
+
+  return {
+    [NOM]: nomFrancise,
+    [PRENOMS]: prenoms
+  };
+}
+
+function mapSaisieNomSecable(retenueSdanf: IRetenueSdanf): ISaisieNomSecable {
   const nomSecable = getNomSecable(retenueSdanf);
   return {
     [SECABLE]: nomSecable.nomPartie1 ? ["true"] : [],
@@ -124,8 +133,8 @@ function mapSaisieNomSecable(retenueSdanf: IRetenueSdanf) {
   };
 }
 
-function mapSaisiePrenoms(prenoms: IPrenomOrdonnes[]) {
-  prenoms = formatPrenoms(getPrenomsNonFrancises(prenoms));
+function mapSaisiePrenoms(prenoms: IPrenomOrdonnes[]): ISaisiePrenoms {
+  prenoms = formatPrenoms(filtrePrenomsNonFrancises(prenoms));
   return {
     [PAS_DE_PRENOM_CONNU]:
       prenoms.length === 0 ? [PAS_DE_PRENOM_CONNU] : "false",
@@ -133,13 +142,15 @@ function mapSaisiePrenoms(prenoms: IPrenomOrdonnes[]) {
   };
 }
 
-function mapAnalyseMarginale(retenueSdanf: IRetenueSdanf) {
+function mapAnalyseMarginale(
+  retenueSdanf: IRetenueSdanf
+): ISaisieAnalyseMarginale {
   const nom =
     retenueSdanf.nomDemandeFrancisation ||
     getValeurOuVide(retenueSdanf.nomNaissance);
-  let prenoms = getPrenomsFrancises(retenueSdanf.prenomsRetenu);
+  let prenoms = filtrePrenomsFrancises(retenueSdanf.prenomsRetenu);
   if (prenoms.length === 0) {
-    prenoms = getPrenomsNonFrancises(retenueSdanf.prenomsRetenu);
+    prenoms = filtrePrenomsNonFrancises(retenueSdanf.prenomsRetenu);
   }
   prenoms = formatPrenoms(prenoms);
   return {
@@ -148,7 +159,9 @@ function mapAnalyseMarginale(retenueSdanf: IRetenueSdanf) {
   };
 }
 
-function mapSaisieDateNaissance(retenueSdanf: IRetenueSdanf) {
+function mapSaisieDateNaissance(
+  retenueSdanf: IRetenueSdanf
+): ISaisieDateNaissance {
   let mois;
   let jour;
   if (estJourMoisVide(retenueSdanf)) {
@@ -165,7 +178,9 @@ function mapSaisieDateNaissance(retenueSdanf: IRetenueSdanf) {
   };
 }
 
-function mapSaisieLieuNaissance(retenueSdanf: IRetenueSdanf) {
+function mapSaisieLieuNaissance(
+  retenueSdanf: IRetenueSdanf
+): ISaisieLieuNaissance {
   return {
     [VILLE_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(
       retenueSdanf.villeEtrangereNaissance
@@ -178,7 +193,7 @@ function mapSaisieLieuNaissance(retenueSdanf: IRetenueSdanf) {
   };
 }
 
-function formatPrenoms(prenoms: IPrenomOrdonnes[]) {
+function formatPrenoms(prenoms: IPrenomOrdonnes[]): IPrenomOrdonnes[] {
   return prenoms.map(prenom => ({
     prenom: formatMajusculesMinusculesMotCompose(prenom.prenom),
     numeroOrdre: prenom.numeroOrdre

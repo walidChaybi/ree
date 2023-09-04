@@ -1,15 +1,15 @@
 import {
   ABSENCE_VALIDEE,
   DEUX,
-  UN,
-  ZERO,
   estRenseigne,
-  getLibelle
+  getLibelle,
+  UN,
+  ZERO
 } from "@util/Utils";
 import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";
 import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { WarningMessage } from "@widget/formulaire/erreur/WarningMessage";
+import { MessageAvertissement } from "@widget/formulaire/erreur/MessageAvertissement";
 import {
   FormikComponentProps,
   withNamespace
@@ -25,7 +25,7 @@ interface ComponentFormProps {
   nomPartie2?: string;
   origineTitulaireActe?: boolean;
   saisieVerrouillee: boolean;
-  afficherAvertissementVocable: boolean;
+  afficherAvertissementVocable?: boolean;
 }
 
 type NomSecableFormProps = ComponentFormProps & FormikComponentProps;
@@ -38,9 +38,9 @@ const NomSecableForm: React.FC<NomSecableFormProps> = props => {
     estDisabled(props.nomPartie1, props.origineTitulaireActe) &&
     props.saisieVerrouillee;
 
-    const afficherMessageAvertissement =
-      props.afficherAvertissementVocable &&
-      EtatCivilUtil.getVocables(props.nomTitulaire).length > DEUX;
+  const afficherMessageAvertissement =
+    props.afficherAvertissementVocable &&
+    EtatCivilUtil.getVocables(props.nomTitulaire).length > DEUX;
 
   const onCaseACocherNomSecableChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,9 +98,11 @@ const NomSecableForm: React.FC<NomSecableFormProps> = props => {
               label={getLibelle("2nde partie")}
               disabled={disabled}
             />
-            <WarningMessage afficherMessage={afficherMessageAvertissement}>
+            <MessageAvertissement
+              afficherMessage={afficherMessageAvertissement || false}
+            >
               {getLibelle("Nom avec plus de deux vocables")}
-            </WarningMessage>
+            </MessageAvertissement>
           </div>
         </>
       )}

@@ -7,7 +7,6 @@ import {
   NOM,
   NOM_SECABLE,
   PAYS_NAISSANCE,
-  PRENOM,
   PRENOMS,
   SEXE,
   TITULAIRE,
@@ -16,8 +15,8 @@ import {
 import { PrenomsConnusValidationSchema } from "@composant/formulaire/nomsPrenoms/PrenomsConnusForm";
 import { creerValidationSchemaPrenom } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { NomSecableStrictFormValidation } from "@composant/formulaire/validation/NomSecableFormValidation";
-import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
+import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import * as Yup from "yup";
 import { CaracteresAutorises } from "../../../../../../../../../ressources/Regex";
 
@@ -31,7 +30,7 @@ function validationSchemaPostulant() {
       .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
       .required("La saisie du nom est obligatoire"),
     [NOM_SECABLE]: NomSecableStrictFormValidation,
-    [PRENOM]: PrenomsConnusValidationSchema,
+    [PRENOMS]: PrenomsConnusValidationSchema,
     [ANALYSE_MARGINALE]: Yup.object().shape({
       [NOM]: Yup.string().matches(
         CaracteresAutorises,

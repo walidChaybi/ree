@@ -2,11 +2,13 @@ import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./scss/Erreur.scss";
 
-interface WarningMessageProps {
+interface IAvertissementMessageProps {
   afficherMessage: boolean;
 }
 
-export const WarningMessage: React.FC<WarningMessageProps> = props => {
+export const MessageAvertissement: React.FC<
+  IAvertissementMessageProps
+> = props => {
   return (
     <>
       {props.afficherMessage && (

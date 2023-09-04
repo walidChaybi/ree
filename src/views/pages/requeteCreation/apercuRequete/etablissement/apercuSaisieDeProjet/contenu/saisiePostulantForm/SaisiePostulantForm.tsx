@@ -1,4 +1,5 @@
 import {
+  FRANCISATION_POSTULANT,
   NATURE_ACTE,
   PROJET,
   TITULAIRE,
@@ -12,20 +13,30 @@ import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import React from "react";
+import FrancisationPostulantForm from "./form/FrancisationPostulantForm";
 import PostulantForm from "./form/PostulantForm";
 import { mappingTitulaireVersSaisieProjetPostulant } from "./mapping/mappingTitulaireVersFormulairePostulant";
 import "./scss/Postulant.scss";
 import { PostulantValidationSchema } from "./validation/PostulantValidationSchema";
 
-interface SaisiePostulantProps {
+interface ISaisiePostulantFormProps {
   titulaire: ITitulaireRequeteCreation;
 }
 
-export const SaisiePostulant: React.FC<SaisiePostulantProps> = props => {
+export const SaisiePostulantForm: React.FC<ISaisiePostulantFormProps> = props => {
   const elementListe = [
     {
-      libelle: "Postulant",
+      libelle: getLibelle("Postulant"),
       element: <PostulantForm nom={TITULAIRE} titulaire={props.titulaire} />
+    },
+    {
+      libelle: getLibelle("Francisation postulant"),
+      element: (
+        <FrancisationPostulantForm
+          nom={FRANCISATION_POSTULANT}
+          retenueSdanf={props.titulaire.retenueSdanf}
+        />
+      )
     }
   ];
 
