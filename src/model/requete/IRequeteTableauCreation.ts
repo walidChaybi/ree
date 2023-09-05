@@ -1,6 +1,5 @@
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { getValeurOuUndefined, getValeurOuVide } from "@util/Utils";
-import { QualiteFamille } from "./enum/QualiteFamille";
 import { SousTypeCreation } from "./enum/SousTypeCreation";
 import { StatutRequete } from "./enum/StatutRequete";
 import { TagPriorisation } from "./enum/TagPriorisation";
@@ -65,7 +64,6 @@ export function mappingUneRequeteTableauCreation(
 function getPostulant(titulaires: ITitulaireRequeteTableau[]) {
   return titulaires.length > 0
     ? titulaires
-        .filter(el => el.qualite !== QualiteFamille.PARENT)
         .map(el => `${el.nom} ${getValeurOuVide(el.prenoms[0])}`)
         .reduce((accumulateur, valeurCourante) => {
           return `${accumulateur}, ${valeurCourante}`;

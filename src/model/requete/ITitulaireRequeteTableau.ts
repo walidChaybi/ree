@@ -37,7 +37,7 @@ export function mapTitulaires(
     titulaire.villeNaissance = t?.villeNaissance;
     titulaire.nationalite = Nationalite.getEnumFor(t?.nationalite);
     titulaire.paysNaissance = t?.paysNaissance;
-    titulaire.qualite = t?.qualite;
+    titulaire.qualite = QualiteFamille.getEnumFor(t?.qualite);
     titulaire.position = t?.position;
     return titulaire;
   });

@@ -124,7 +124,7 @@ export function useRequeteCreationApiHook(
   };
 }
 
-export function mappingRequetesTableauCreation(
+function mappingRequetesTableauCreation(
   resultatsRecherche: any,
   mappingSupplementaire: boolean
 ): IRequeteTableauCreation[] {
