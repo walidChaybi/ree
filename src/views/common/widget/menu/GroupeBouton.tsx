@@ -1,7 +1,7 @@
-import { Button, ButtonGroup } from "@mui/material";
 import { IActionOption } from "@model/requete/IActionOption";
-import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
-import React from "react";
+import { Button, ButtonGroup } from "@mui/material";
+import { DoubleClicUtil } from "@util/DoubleClicUtil";
+import React, { MutableRefObject } from "react";
 import "./scss/GroupeBouton.scss";
 
 interface IGroupeBoutonProps {
@@ -9,6 +9,7 @@ interface IGroupeBoutonProps {
   onSelect: (indexMenu: number, e?: any) => any;
   listeActions: IActionOption[];
   disabled?: boolean;
+  refs?: MutableRefObject<HTMLElement[]>;
 }
 
 export const GroupeBouton: React.FC<IGroupeBoutonProps> = props => {
@@ -21,13 +22,16 @@ export const GroupeBouton: React.FC<IGroupeBoutonProps> = props => {
         {props.listeActions.map(el => (
           <Button
             disabled={props.disabled}
-            ref={el.ref}
+            ref={element => {
+              if (props.refs && element) {
+                props.refs.current.push(element);
+              }
+            }}
             onClick={() => {
-              if (
-                el.eviterAntiDoubleClic === undefined ||
-                el.eviterAntiDoubleClic === false
-              ) {
-                DoubleSubmitUtil.desactiveOnClick(el.ref?.current);
+              if (props.refs) {
+                props.refs.current.forEach(ref => {
+                  DoubleClicUtil.desactiveOnClick(ref);
+                });
               }
               props.onSelect(el.value);
             }}

@@ -1,4 +1,4 @@
-import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
+import { DoubleClicUtil } from "@util/DoubleClicUtil";
 import React, { useRef } from "react";
 
 type BoutonProps = React.DetailedHTMLProps<
@@ -14,9 +14,9 @@ export const Bouton: React.FC<BoutonProps> = props => {
 
   function onClickEmpecheDoubleSubmit(event: any) {
     if (props.onClick) {
-      DoubleSubmitUtil.desactiveOnClick(boutonRef?.current);
+      DoubleClicUtil.desactiveOnClick(boutonRef?.current);
       setTimeout(() => {
-        DoubleSubmitUtil.reactiveOnClick(boutonRef?.current);
+        DoubleClicUtil.reactiveOnClick(boutonRef?.current);
       }, TIME_OUT_MS);
       props.onClick(event);
     }

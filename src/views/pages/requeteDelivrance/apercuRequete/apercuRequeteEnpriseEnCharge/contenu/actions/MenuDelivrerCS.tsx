@@ -1,25 +1,25 @@
+import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
+import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_ATTESTATION_PACS } from "@model/requete/enum/DocumentDelivranceConstante";
-import { IActionOption } from "@model/requete/IActionOption";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { receUrl } from "@router/ReceUrls";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
-import { replaceUrl } from "@util/route/UrlUtil";
 import {
   estRenseigne,
   getLibelle,
   supprimerNullEtUndefinedDuTableau
 } from "@util/Utils";
+import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../../mapping/ReqDelivranceToReqTableau";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
-import { useDelivrerCertificatSituationHook } from "./hook/DelivrerCertificatSituationHook";
 import {
   estMemeNombreDeRCModificationEtRadiation,
   estPresentRcTypeModification,
@@ -28,9 +28,11 @@ import {
   menuDelivrerActions,
   triTableauRCRadiationParDate
 } from "./MenuUtilsCS";
+import { useDelivrerCertificatSituationHook } from "./hook/DelivrerCertificatSituationHook";
 
 export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
   const history = useHistory();
+  const refs = useRef([]);
 
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
@@ -43,7 +45,10 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
   >();
   const boutonsPopin = {
     label: "OK",
-    action: () => setMessagesBloquant(undefined)
+    action: () => {
+      setMessagesBloquant(undefined);
+      reinitialiserOnClick(refs);
+    }
   };
 
   useEffect(() => {
@@ -155,6 +160,7 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
           props.requete
         )}
         onSelect={handleDelivrerMenu}
+        refs={refs}
       />
       <ConfirmationPopin
         isOpen={estRenseigne(messagesBloquant)}

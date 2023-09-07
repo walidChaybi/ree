@@ -1,3 +1,4 @@
+import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
@@ -27,12 +28,11 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { PATH_EDITION } from "@router/ReceUrls";
-import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { IBoutonPopin } from "@widget/popin/ConfirmationPopin";
 import { History } from "history";
-import React from "react";
+import React, { MutableRefObject } from "react";
 
 const ORDRE_OPTION_MAX = 900;
 const enum MaxTitulaireDelivrance {
@@ -60,11 +60,11 @@ type ControleCoherenceType = {
   indexMenu: number;
   actes?: IResultatRMCActe[];
   inscriptions?: IResultatRMCInscription[];
-  actions: IActionOption[];
   requete?: IRequeteDelivrance;
   titulairesActeMap?: Map<string, ITitulaireActe[]>;
   nbTitulairesActeMap?: Map<string, number>;
   alertesActe?: IAlerte[];
+  refs: MutableRefObject<HTMLElement[]>;
   setMessagesBloquant: React.Dispatch<
     React.SetStateAction<string[] | undefined>
   >;
@@ -118,9 +118,7 @@ export const estChoixActeNonDetenu = (indexMenu: number) =>
 
 // getOptionsMenu --------------------------------------------------------
 
-export const getOptionsMenuDelivrer = (
-  refDelivrerOptions0: React.MutableRefObject<null>
-): IActionOption[] => {
+export const getOptionsMenuDelivrer = (): IActionOption[] => {
   return [
     {
       value: IndexAction.COPIE_INTEGRALE,
@@ -130,7 +128,6 @@ export const getOptionsMenuDelivrer = (
         SousTypeDelivrance.RDD,
         SousTypeDelivrance.RDDP
       ],
-      ref: refDelivrerOptions0,
       choixDelivrance: ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE
     },
     {
@@ -141,7 +138,6 @@ export const getOptionsMenuDelivrer = (
         SousTypeDelivrance.RDD,
         SousTypeDelivrance.RDDP
       ],
-      ref: refDelivrerOptions0,
       // attribut supplémentaire pour trouver facilement le choix de délivrance en fonction de l'index du menu sélectionné
       choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
     },
@@ -153,29 +149,24 @@ export const getOptionsMenuDelivrer = (
         SousTypeDelivrance.RDD,
         SousTypeDelivrance.RDDP
       ],
-      ref: refDelivrerOptions0,
       choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
     },
     {
       value: IndexAction.EXTRAIT_PLURILINGUE,
       label: getLibelle("Extrait plurilingue"),
       sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
-      ref: refDelivrerOptions0,
       choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE
     },
     {
       value: IndexAction.COPIE_ARCHIVE,
       label: getLibelle("Copie archive (118)"),
       sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
-      ref: refDelivrerOptions0,
       choixDelivrance: ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE
     }
   ];
 };
 
-export const getOptionsMenuReponseSansDelivrance = (
-  refRepondreSansDelivranceOptions0: React.MutableRefObject<null>
-): IActionOption[] => {
+export const getOptionsMenuReponseSansDelivrance = (): IActionOption[] => {
   return [
     {
       value: IndexAction.REQUETE_INCOMPLETE,
@@ -185,7 +176,6 @@ export const getOptionsMenuReponseSansDelivrance = (
         SousTypeDelivrance.RDD,
         SousTypeDelivrance.RDDP
       ],
-      ref: refRepondreSansDelivranceOptions0,
       choixDelivrance: ChoixDelivrance.REP_SANS_DEL_EC_REQUETE_INCOMPLETE
     },
     {
@@ -196,7 +186,6 @@ export const getOptionsMenuReponseSansDelivrance = (
         SousTypeDelivrance.RDD,
         SousTypeDelivrance.RDDP
       ],
-      ref: refRepondreSansDelivranceOptions0,
       choixDelivrance: ChoixDelivrance.REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC
     },
     {
@@ -207,7 +196,6 @@ export const getOptionsMenuReponseSansDelivrance = (
         SousTypeDelivrance.RDD,
         SousTypeDelivrance.RDDP
       ],
-      ref: refRepondreSansDelivranceOptions0,
       choixDelivrance: ChoixDelivrance.REP_SANS_DEL_EC_DIVERS
     },
     {
@@ -217,8 +205,7 @@ export const getOptionsMenuReponseSansDelivrance = (
         SousTypeDelivrance.RDC,
         SousTypeDelivrance.RDCSC,
         SousTypeDelivrance.RDDP
-      ],
-      ref: refRepondreSansDelivranceOptions0
+      ]
     }
   ];
 };
@@ -319,12 +306,6 @@ export const aGenreIndetermine = (genres: (string | undefined)[]) =>
 
 const aGenreInconnu = (genres: (string | undefined)[]) =>
   genres.find(genre => genre === Sexe.getKey(Sexe.INCONNU)) != null;
-
-const resetDoubleSubmit = (actions: IActionOption[]) => {
-  actions.forEach(action => {
-    DoubleSubmitUtil.reactiveOnClick(action.ref?.current);
-  });
-};
 
 export const redirection = ({
   history,
@@ -529,18 +510,18 @@ export const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = ({
   indexMenu,
   actes,
   inscriptions,
-  actions,
   requete,
   titulairesActeMap,
   nbTitulairesActeMap,
   alertesActe,
+  refs,
   setBoutonsPopin,
   setMessagesBloquant
 }: ControleCoherenceType) => {
   if (SousTypeDelivrance.estRDDouRDCouRDDP(requete?.sousType)) {
     const fermer = () => {
       setMessagesBloquant(undefined);
-      resetDoubleSubmit(actions);
+      reinitialiserOnClick(refs);
     };
     const continuer = () => setMessagesBloquant([]);
 
@@ -601,8 +582,8 @@ export const controleCoherenceEntreDocumentSelectionneEtActionReponseSansDelivra
     indexMenu,
     actes,
     inscriptions,
-    actions,
     requete,
+    refs,
     setBoutonsPopin,
     setMessagesBloquant
   }: Omit<
@@ -612,7 +593,7 @@ export const controleCoherenceEntreDocumentSelectionneEtActionReponseSansDelivra
     if (SousTypeDelivrance.estRDDouRDCouRDDP(requete?.sousType)) {
       const fermer = () => {
         setMessagesBloquant(undefined);
-        resetDoubleSubmit(actions);
+        reinitialiserOnClick(refs);
       };
 
       const boutonOK = getBoutonsActionPopin([["OK", fermer]]);

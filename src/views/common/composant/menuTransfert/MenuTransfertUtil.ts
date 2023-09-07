@@ -1,18 +1,18 @@
 import { TransfertUnitaireParams } from "@hook/requete/TransfertHook";
-import { Droit } from "@model/agent/enum/Droit";
 import {
   IUtilisateur,
   utilisateurADroit,
   utilisateurALeDroitSurUnDesPerimetres
 } from "@model/agent/IUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IActionOption } from "@model/requete/IActionOption";
-import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
-import { storeRece } from "@util/storeRece";
+import { DoubleClicUtil } from "@util/DoubleClicUtil";
 import { Option, Options } from "@util/Type";
+import { storeRece } from "@util/storeRece";
+import { MutableRefObject } from "react";
 import { Perimetre } from "./../../../../model/agent/enum/Perimetre";
 import { IMenuTransfertProps } from "./MenuTransfert";
 
@@ -43,11 +43,9 @@ export function onValidateService(
   }
 }
 
-export function resetDoubleSubmit(
-  reponseSansDelivranceCSOptions: IActionOption[]
-) {
-  reponseSansDelivranceCSOptions.forEach(el => {
-    DoubleSubmitUtil.reactiveOnClick(el.ref?.current);
+export function reinitialiserOnClick(refs: MutableRefObject<HTMLElement[]>) {
+  refs.current.forEach(ref => {
+    DoubleClicUtil.reactiveOnClick(ref);
   });
 }
 
@@ -257,4 +255,4 @@ export function getEntiteAsOptions(): Options {
       };
     }) || ([] as Options)
   );
-};
+}

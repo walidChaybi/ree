@@ -1,20 +1,20 @@
+import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
 import { useReponseSansDelivranceCS } from "@hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
 import { NOM_DOCUMENT_REFUS_FRANCAIS } from "@model/composition/IReponseSansDelivranceCSFrancaisComposition";
 import { NOM_DOCUMENT_REFUS_MARIAGE } from "@model/composition/IReponseSansDelivranceCSMariageComposition";
 import { NOM_DOCUMENT_REFUS_PACS_NON_INSCRIT } from "@model/composition/IReponseSansDelivranceCSPACSNonInscritComposition";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IActionOption } from "@model/requete/IActionOption";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { receUrl } from "@router/ReceUrls";
-import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
-import { replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle, supprimerNullEtUndefinedDuTableau } from "@util/Utils";
+import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
   createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
@@ -26,8 +26,8 @@ import {
 import { IgnoreRequetePopin } from "../IgnoreRequetePopin";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {
-  filtrerListeActionsParDocumentDemande,
   INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE,
+  filtrerListeActionsParDocumentDemande,
   menuSansDelivranceActions
 } from "./MenuUtilsCS";
 
@@ -35,6 +35,7 @@ export const MenuReponseSansDelivranceCS: React.FC<
   IChoixActionDelivranceProps
 > = props => {
   const history = useHistory();
+  const refs = useRef([]);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [reponseSansDelivranceCS, setReponseSansDelivranceCS] = useState<
@@ -122,12 +123,6 @@ export const MenuReponseSansDelivranceCS: React.FC<
     }
   };
 
-  const resetDoubleSubmit = () => {
-    listeActionsFiltreParSousTypes.forEach(el => {
-      DoubleSubmitUtil.reactiveOnClick(el.ref?.current);
-    });
-  };
-
   const listeActionsFiltreParSousTypes: IActionOption[] =
     filtrerListeActionsParSousTypes(props.requete, menuSansDelivranceActions);
 
@@ -145,12 +140,13 @@ export const MenuReponseSansDelivranceCS: React.FC<
           props.requete
         )}
         onSelect={handleReponseSansDelivranceCSMenu}
+        refs={refs}
       />
       <IgnoreRequetePopin
         isOpen={popinOuverte}
         onClosePopin={() => {
           setPopinOuverte(false);
-          resetDoubleSubmit();
+          reinitialiserOnClick(refs);
         }}
         requete={props.requete}
       />
@@ -166,7 +162,7 @@ export const MenuReponseSansDelivranceCS: React.FC<
             label: getLibelle("OK"),
             action: () => {
               setHasMessageBloquant(false);
-              resetDoubleSubmit();
+              reinitialiserOnClick(refs);
             }
           }
         ]}

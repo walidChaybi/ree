@@ -1,10 +1,10 @@
-import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
+import { DoubleClicUtil } from "@util/DoubleClicUtil";
 
-test("Attendu: DoubleSubmitUtil fonctionne correctement", () => {
+test("DOIT être non cliquable QUAND on désactive le clique", () => {
   const element: any = {};
-  DoubleSubmitUtil.desactiveOnClick(element);
+  DoubleClicUtil.desactiveOnClick(element);
   expect(element.onclick).not.toBeNull();
 
-  DoubleSubmitUtil.reactiveOnClick(element);
+  DoubleClicUtil.reactiveOnClick(element);
   expect(element.onclick).toBeNull();
 });

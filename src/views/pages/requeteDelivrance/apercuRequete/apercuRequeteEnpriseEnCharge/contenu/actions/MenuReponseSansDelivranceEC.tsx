@@ -1,6 +1,6 @@
-import { resetDoubleSubmit } from "@composant/menuTransfert/MenuTransfertUtil";
-import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
 import { IActionOption } from "@model/requete/IActionOption";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
@@ -16,22 +16,22 @@ import { DocumentEC } from "../../../../../../../model/requete/enum/DocumentEC";
 import { IgnoreRequetePopin } from "../IgnoreRequetePopin";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {
-  UpdateChoixDelivranceProps,
-  useUpdateChoixDelivrance
-} from "./hook/UpdateChoixDelivranceApiHook";
-import {
   controleCoherenceEntreDocumentSelectionneEtActionReponseSansDelivrance,
   estChoixActeNonDetenu,
   estChoixIgnorerRequete,
   getOptionsMenuReponseSansDelivrance,
   redirection
 } from "./MenuUtilEC";
+import {
+  UpdateChoixDelivranceProps,
+  useUpdateChoixDelivrance
+} from "./hook/UpdateChoixDelivranceApiHook";
 
 export const MenuReponseSansDelivranceEC: React.FC<
   IChoixActionDelivranceProps
 > = props => {
   const history = useHistory();
-  const refReponseSansDelivranceOptions0 = useRef(null);
+  const refs = useRef([]);
 
   const [actes, setActes] = useState<IResultatRMCActe[] | undefined>();
   const [inscriptions, setInscriptions] = useState<
@@ -68,7 +68,7 @@ export const MenuReponseSansDelivranceEC: React.FC<
   );
 
   const reponseSansDelivranceOptions: IActionOption[] =
-    getOptionsMenuReponseSansDelivrance(refReponseSansDelivranceOptions0);
+    getOptionsMenuReponseSansDelivrance();
 
   const handleReponseSansDelivranceMenu = (indexMenu: number) => {
     if (estChoixIgnorerRequete(indexMenu)) {
@@ -84,8 +84,8 @@ export const MenuReponseSansDelivranceEC: React.FC<
         indexMenu,
         actes,
         inscriptions,
-        actions,
         requete: props.requete,
+        refs,
         setBoutonsPopin,
         setMessagesBloquant
       });
@@ -126,6 +126,7 @@ export const MenuReponseSansDelivranceEC: React.FC<
         titre={getLibelle("Réponse sans délivrance")}
         listeActions={actions}
         onSelect={handleReponseSansDelivranceMenu}
+        refs={refs}
       />
       <ConfirmationPopin
         isOpen={estRenseigne(messagesBloquant)}
@@ -136,7 +137,7 @@ export const MenuReponseSansDelivranceEC: React.FC<
         isOpen={popinIgnorerOuverte}
         onClosePopin={() => {
           setPopinIgnorerOuverte(false);
-          resetDoubleSubmit(actions);
+          reinitialiserOnClick(refs);
         }}
         requete={props.requete}
       />

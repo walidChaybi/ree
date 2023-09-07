@@ -13,7 +13,6 @@ import {
   IRequeteDelivrance,
   RequeteDelivrance
 } from "@model/requete/IRequeteDelivrance";
-import { logInfoDansLaConsole } from "@util/Console";
 import { useEffect, useState } from "react";
 import {
   IGenerationECParams,
@@ -47,11 +46,6 @@ export function useRegenerationDocumentsHook(
 
   const resultatGenerationEC = useGenerationEC(generationECParams);
 
-  // TODO log à supprimer quand la Mantis 97940 sera résolue
-  logInfoDansLaConsole(
-    "Debug UAT2 courrier : useRegenerationDocumentsHook",
-    generationCourrierParams
-  );
   const resultatGenerationCourrier = useGenerationCourrierHook(
     generationCourrierParams
   );

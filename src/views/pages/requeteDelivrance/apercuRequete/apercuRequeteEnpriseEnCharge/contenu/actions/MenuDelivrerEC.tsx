@@ -2,10 +2,10 @@ import {
   ICreerCourrierECParams,
   useCreerCourrierEC
 } from "@hook/requete/creerCourrierECHook";
+import { IActionOption } from "@model/requete/IActionOption";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { IActionOption } from "@model/requete/IActionOption";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
@@ -22,20 +22,20 @@ import { DocumentEC } from "../../../../../../../model/requete/enum/DocumentEC";
 import { useOptionsCourriersApiHook } from "../../../apercuCourrier/contenu/hook/OptionsCourriersHook";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {
-  UpdateChoixDelivranceProps,
-  useUpdateChoixDelivrance
-} from "./hook/UpdateChoixDelivranceApiHook";
-import {
   compositionCourrierAutomatique,
   controleCoherenceEntreDocumentSelectionneEtActionDelivrer,
   getIdCourrierAuto,
   getOptionsMenuDelivrer,
   redirection
 } from "./MenuUtilEC";
+import {
+  UpdateChoixDelivranceProps,
+  useUpdateChoixDelivrance
+} from "./hook/UpdateChoixDelivranceApiHook";
 
 export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
   const history = useHistory();
-  const refDelivrerOptions0 = useRef(null);
+  const refs = useRef([]);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [actes, setActes] = useState<IResultatRMCActe[] | undefined>();
@@ -110,8 +110,7 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateChoixDelivranceResultat, options]);
 
-  const delivrerOptions: IActionOption[] =
-    getOptionsMenuDelivrer(refDelivrerOptions0);
+  const delivrerOptions: IActionOption[] = getOptionsMenuDelivrer();
 
   const handleDelivrerMenu = (indexMenu: number) => {
     setChoixDelivrance(delivrerOptions[indexMenu].choixDelivrance);
@@ -119,11 +118,11 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
       indexMenu,
       actes,
       inscriptions,
-      actions,
       requete: props.requete,
       titulairesActeMap: props.titulairesActe,
       nbTitulairesActeMap: props.nbrTitulairesActe,
       alertesActe: props.alertesActe,
+      refs,
       setBoutonsPopin,
       setMessagesBloquant
     });
@@ -172,6 +171,7 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
         titre={getLibelle("Délivrer")}
         listeActions={actions}
         onSelect={handleDelivrerMenu}
+        refs={refs}
       />
       <ConfirmationPopin
         isOpen={estRenseigne(messagesBloquant)}

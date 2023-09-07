@@ -1,3 +1,4 @@
+import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
 import { IActionOption } from "@model/requete/IActionOption";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -5,9 +6,9 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { DoubleSubmitUtil } from "@util/DoubleSubmitUtil";
+import { DoubleClicUtil } from "@util/DoubleClicUtil";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
-import React from "react";
+import React, { MutableRefObject, useRef } from "react";
 import "./scss/MenuAction.scss";
 
 interface IMenuActionProps {
@@ -23,7 +24,8 @@ interface IMenuActionProps {
   actionMoins?: () => void;
 }
 
-export const MenuAction: React.FC<IMenuActionProps> = (props) => {
+export const MenuAction: React.FC<IMenuActionProps> = props => {
+  const refs: MutableRefObject<HTMLElement[]> = useRef([]);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -70,12 +72,7 @@ export const MenuAction: React.FC<IMenuActionProps> = (props) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
         TransitionProps={{
-          onEnter: () => {
-            props.listeActions &&
-              props.listeActions.forEach((el) => {
-                DoubleSubmitUtil.reactiveOnClick(el.ref?.current);
-              });
-          }
+          onEnter: () => reinitialiserOnClick(refs)
         }}
         PaperProps={{
           style: {
@@ -92,11 +89,17 @@ export const MenuAction: React.FC<IMenuActionProps> = (props) => {
         }}
       >
         {props.listeActions &&
-          props.listeActions.map((el) => (
+          props.listeActions.map(el => (
             <MenuItem
-              ref={el.ref}
-              onClick={(event) => {
-                DoubleSubmitUtil.desactiveOnClick(el.ref?.current);
+              ref={element => {
+                if (element) {
+                  refs.current.push(element);
+                }
+              }}
+              onClick={() => {
+                refs.current.forEach(ref => {
+                  DoubleClicUtil.desactiveOnClick(ref);
+                });
                 handleClose();
                 props.onSelect(el.value);
               }}

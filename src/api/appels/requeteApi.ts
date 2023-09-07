@@ -1,10 +1,10 @@
-import { FiltresReqDto } from "@hook/requete/creation/RequeteCreationApiHook";
 import { ISaisieRequeteAEnvoyer } from "@hook/requete/CreationRequeteCreationApiHook";
+import { FiltresReqDto } from "@hook/requete/creation/RequeteCreationApiHook";
 import { CLES } from "@model/parametres/clesParametres";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IEchange } from "@model/requete/IEchange";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import {
   ICriteresRMCAutoRequete,
@@ -349,19 +349,6 @@ export async function creationRequeteCreationEtTransmissionEntite(
   });
 }
 
-export async function patchSauvegarderDocument(
-  idRequete: string,
-  requete: Object
-) {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_COURRIER}`,
-    parameters: {
-      idRequete
-    },
-    data: requete
-  });
-}
 export async function postSauvCourrierCreerActionMajStatutRequete(
   idRequete: string,
   statutRequete: StatutRequete,

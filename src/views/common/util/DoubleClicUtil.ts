@@ -1,4 +1,4 @@
-export class DoubleSubmitUtil {
+export class DoubleClicUtil {
   public static reactiveOnClick(element: any) {
     if (element) {
       element.onclick = null;
