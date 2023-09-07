@@ -116,7 +116,7 @@ export const getRequerant = (saisie: SaisieRequeteRDCSC) => {
 
 const getMandataire = ({ requerant, adresse }: SaisieRequeteRDCSC) => {
   return {
-    nomFamille: requerant.mandataire.nom ? requerant.mandataire.nom : SNP,
+    nomFamille: requerant.mandataire.nom,
     prenom: getValeurOuVide(requerant.mandataire.prenom),
     courriel: adresse.adresseCourriel,
     telephone: adresse.numeroTelephone,
@@ -132,9 +132,7 @@ const getMandataire = ({ requerant, adresse }: SaisieRequeteRDCSC) => {
 
 const getInstitutionnel = ({ requerant, adresse }: SaisieRequeteRDCSC) => {
   return {
-    nomFamille: requerant.institutionnel.nom
-      ? requerant.institutionnel.nom
-      : SNP,
+    nomFamille: requerant.institutionnel.nom,
     prenom: getValeurOuVide(requerant.institutionnel.prenom),
     courriel: adresse.adresseCourriel,
     telephone: adresse.numeroTelephone,

@@ -2,26 +2,26 @@ import {
   Adresse,
   Identite
 } from "@model/form/delivrance/ISaisirRequetePageForm";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import {
   IPieceJustificative,
   mapPieceJustificative
 } from "@model/requete/pieceJointe/IPieceJustificative";
 import { estDateVide } from "@util/DateUtils";
-import {
-  DEUX,
-  SNP,
-  UN,
-  auMoinsUneProprieteEstRenseigne,
-  getValeurOuVide
-} from "@util/Utils";
 import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
+import {
+  auMoinsUneProprieteEstRenseigne,
+  DEUX,
+  getValeurOuVide,
+  SNP,
+  UN
+} from "@util/Utils";
 import {
   CreationRequeteRDC,
   SaisieRequeteRDC
@@ -193,7 +193,7 @@ function getRequerant(saisie: SaisieRequeteRDC) {
 function getMandataire(saisie: SaisieRequeteRDC) {
   const requerant = saisie.requerant;
   return {
-    nomFamille: requerant.mandataire.nom ? requerant.mandataire.nom : SNP,
+    nomFamille: requerant.mandataire.nom,
     prenom: getValeurOuVide(requerant.mandataire.prenom),
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
@@ -210,9 +210,7 @@ function getMandataire(saisie: SaisieRequeteRDC) {
 function getInstitutionnel(saisie: SaisieRequeteRDC) {
   const requerant = saisie.requerant;
   return {
-    nomFamille: requerant.institutionnel.nom
-      ? requerant.institutionnel.nom
-      : SNP,
+    nomFamille: requerant.institutionnel.nom,
     prenom: getValeurOuVide(requerant.institutionnel.prenom),
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
@@ -258,9 +256,7 @@ function getAutreProfessionnel(saisie: SaisieRequeteRDC) {
   const requerant = saisie.requerant;
 
   return {
-    nomFamille: requerant.autreProfessionnel.nom
-      ? requerant.autreProfessionnel.nom
-      : SNP,
+    nomFamille: requerant.autreProfessionnel.nom,
     prenom: getValeurOuVide(requerant.autreProfessionnel.prenom),
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
