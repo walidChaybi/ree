@@ -1,3 +1,4 @@
+import LieuForm, { ILieuProps } from "@composant/formulaire/LieuForm";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { getLibelle } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
@@ -8,11 +9,12 @@ import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   INomForm,
+  NB_CARACT_MAX_SAISIE,
   SubFormProps,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import * as Yup from "yup";
 import { CaracteresAutorises } from "../../../../../../ressources/Regex";
 import {
@@ -23,11 +25,10 @@ import {
   REGION_NAISSANCE,
   VILLE_NAISSANCE
 } from "../../../../../common/composant/formulaire/ConstantesNomsForm";
-import EvenementEtrangerForm from "./EvenementEtranger";
 import "./scss/EvenementForm.scss";
 
 export const EvenementParentsFormDefaultValues = {
-  [LIEU_DE_NAISSANCE]: "INCONNU",
+  [LIEU_DE_NAISSANCE]: "",
   [VILLE_NAISSANCE]: "",
   [ARRONDISSEMENT_NAISSANCE]: "",
   [DEPARTEMENT_NAISSANCE]: "",
@@ -54,110 +55,85 @@ export const EvenementParentsFormValidationSchema = Yup.object().shape({
   )
 });
 const EvenementParentsForm: React.FC<SubFormProps> = props => {
-  const villeWithNamespace = withNamespace(props.nom, VILLE_NAISSANCE);
-  const departementWithspace = withNamespace(props.nom, DEPARTEMENT_NAISSANCE);
-
-  const lieuNaissanceWithNamespace = withNamespace(
+  const lieuNamespace = withNamespace(props.nom, LIEU_DE_NAISSANCE);
+  const villeNamespace = withNamespace(props.nom, VILLE_NAISSANCE);
+  const arrondissementNamespace = withNamespace(
     props.nom,
-    LIEU_DE_NAISSANCE
+    ARRONDISSEMENT_NAISSANCE
   );
+  const departementNamespace = withNamespace(props.nom, DEPARTEMENT_NAISSANCE);
+  const regionNamespace = withNamespace(props.nom, REGION_NAISSANCE);
+  const paysNamespace = withNamespace(props.nom, PAYS_NAISSANCE);
 
-  const lieuNaissanceForm = props.formik.getFieldProps(
-    lieuNaissanceWithNamespace
-  ).value;
-
-  const [naissance, setNaissance] = useState<EtrangerFrance>(
-    EtrangerFrance.INCONNU
-  );
-
-  useEffect(() => {
-    if (lieuNaissanceForm !== EtrangerFrance.getEnumFor("INCONNU")) {
-      setNaissance(EtrangerFrance.getEnumFor(lieuNaissanceForm));
-    }
-  }, [lieuNaissanceForm]);
-
-  function onChangeLieuNaissance(e: React.ChangeEvent<HTMLInputElement>) {
-    setNaissance(EtrangerFrance.getEnumFor(e.target.value));
-    props.formik.handleChange(e);
-  }
-
-  function getFormulaireNaissanceParentEtranger(): JSX.Element {
-    return <EvenementEtrangerForm nom={props.nom} />;
-  }
-
-  function getFormulaireNaissanceParentFrance(): JSX.Element {
-    return (
-      <>
-        <InputField
-          name={withNamespace(props.nom, VILLE_NAISSANCE)}
-          label={getLibelle("Ville de naissance")}
-          onBlur={e =>
-            sortieChampPremiereLettreEnMajuscule(
-              e,
-              props.formik,
-              villeWithNamespace
-            )
-          }
-        />
-
-        {LieuxUtils.estVilleAvecArrondissement(
-          props.formik.getFieldProps(villeWithNamespace).value
-        ) && (
-          <SelectField
-            name={withNamespace(props.nom, ARRONDISSEMENT_NAISSANCE)}
-            label={getLibelle("Arrondissement de naissance")}
-            options={LieuxUtils.getOptionsArrondissement(
-              props.formik.getFieldProps(villeWithNamespace).value
-            )}
-          />
+  const lieuElements: ILieuProps = {
+    lieu: (
+      <RadioField
+        name={lieuNamespace}
+        label={getLibelle("Lieu de naissance")}
+        values={EtrangerFrance.getAllEnumsAsOptions()}
+      />
+    ),
+    ville: (
+      <InputField
+        name={villeNamespace}
+        label={getLibelle("Ville de naissance")}
+        onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+          sortieChampPremiereLettreEnMajuscule(e, props.formik, villeNamespace)
+        }
+      />
+    ),
+    arrondissement: (
+      <SelectField
+        name={arrondissementNamespace}
+        label={getLibelle("Arrondissement de naissance")}
+        options={LieuxUtils.getOptionsArrondissement(
+          props.formik.getFieldProps(villeNamespace).value
         )}
-
-        <InputField
-          name={withNamespace(props.nom, DEPARTEMENT_NAISSANCE)}
-          label={getLibelle("Département de naissance")}
-          onBlur={e =>
-            sortieChampPremiereLettreEnMajuscule(
-              e,
-              props.formik,
-              departementWithspace
-            )
-          }
-        />
-      </>
-    );
-  }
-
-  function rendreComposantEnFonctionDuLieuDeNaissance(
-    lieuNaissanceSelectionne: EtrangerFrance
-  ): JSX.Element {
-    let composantLieuNaissance: JSX.Element = <></>;
-    switch (lieuNaissanceSelectionne) {
-      case EtrangerFrance.ETRANGER:
-        composantLieuNaissance = getFormulaireNaissanceParentEtranger();
-        break;
-      case EtrangerFrance.FRANCE:
-        composantLieuNaissance = getFormulaireNaissanceParentFrance();
-        break;
-      default:
-        break;
-    }
-
-    return composantLieuNaissance;
-  }
+      />
+    ),
+    departement: (
+      <InputField
+        name={departementNamespace}
+        label={getLibelle("Département de naissance")}
+        onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+          sortieChampPremiereLettreEnMajuscule(
+            e,
+            props.formik,
+            departementNamespace
+          )
+        }
+      />
+    ),
+    region: (
+      <InputField
+        name={regionNamespace}
+        label={getLibelle("Région/état de naissance")}
+        maxLength={NB_CARACT_MAX_SAISIE}
+        onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+          sortieChampPremiereLettreEnMajuscule(e, props.formik, regionNamespace)
+        }
+      />
+    ),
+    pays: (
+      <InputField
+        name={paysNamespace}
+        label={getLibelle(`Pays de naissance`)}
+        maxLength={NB_CARACT_MAX_SAISIE}
+        onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+          sortieChampPremiereLettreEnMajuscule(e, props.formik, paysNamespace)
+        }
+      />
+    )
+  };
 
   return (
-    <div className="EvenementParentsForm">
-      <div className="lieuNaissance">
-        <RadioField
-          name={withNamespace(props.nom, LIEU_DE_NAISSANCE)}
-          label={getLibelle("Lieu de naissance")}
-          values={EtrangerFrance.getAllEnumsAsOptions()}
-          onChange={onChangeLieuNaissance}
-        />
-
-        {rendreComposantEnFonctionDuLieuDeNaissance(naissance)}
-      </div>
-    </div>
+    <LieuForm
+      elements={lieuElements}
+      afficherArrondissement={LieuxUtils.estVilleAvecArrondissement(
+        props.formik.getFieldProps(villeNamespace).value
+      )}
+      afficherDepartement={true}
+    ></LieuForm>
   );
 };
 
