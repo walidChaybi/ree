@@ -1284,6 +1284,7 @@ export const requeteCreationEtablissementSaisieProjet = {
       },
       evenementUnions: [],
       typeObjetTitulaire: "POSTULANT_NATIONALITE",
+      qualite: "",
       nomDemandeFrancisation: "nomDemandeFrancisation",
       nomDemandeIdentification: "nomDemandeIdentification",
       nomSecable: true,
@@ -1328,7 +1329,7 @@ export const requeteCreationEtablissementSaisieProjet = {
         villeNaissance: "villeNaissance",
         villeEtrangereNaissance: "villeEtrangereNaissance",
         arrondissementNaissance: "arrondissementNaissance",
-        regionNaissance: "regionNaissance",
+        regionNaissance: "",
         paysNaissance: "paysNaissance",
         prenomsRetenu: [
           {
@@ -1342,6 +1343,260 @@ export const requeteCreationEtablissementSaisieProjet = {
             numeroOrdre: 1,
             prenom: "prenomFrancisation",
             estPrenomFrRetenuSdanf: true
+          }
+        ]
+      },
+      nomActuel: "nomActuel",
+      nombreEnfantMineur: 0,
+      nombreEnfantEffetCollectif: 0
+    },
+    {
+      id: "3ed943e2-daa0-45c0-befd-b5f6b69c31c3",
+      position: 1,
+      nomNaissance: "champNomParent2",
+      nomUsage: "champNomParent2",
+      anneeNaissance: 1963,
+      moisNaissance: 3,
+      jourNaissance: 4,
+      villeNaissance: "nantes",
+      codePostalNaissance: "44000",
+      arrondissementNaissance: "arrondissementNaissance",
+      villeEtrangereNaissance: "villeEtrangereNaissance",
+      regionNaissance: "regionNaissance",
+      paysNaissance: "paysNaissance",
+      sexe: "MASCULIN",
+      nationalite: "FRANCAISE",
+      prenoms: [
+        {
+          id: "3ed9d90f-3e67-42d2-9215-a85c6fa4943b",
+          numeroOrdre: 1,
+          prenom: "champPrenomParent1",
+          estPrenomFrRetenuSdanf: null
+        }
+      ],
+      parentsTitulaire: [
+        {
+          id: "3ed9aa36-dfed-4d6c-b711-af5202e5b920",
+          position: 1,
+          nomNaissance: "dupont",
+          prenoms: [
+            {
+              id: "3ed9d127-ad70-4fa6-8b19-ed530b9be9f9",
+              numeroOrdre: 1,
+              prenom: "luc",
+              estPrenomFrRetenuSdanf: null
+            }
+          ]
+        }
+      ],
+      deces: {
+        id: "3ed9b86b-cd4e-4799-94c4-e047e6e74850",
+        jour: 1,
+        mois: 2,
+        annee: 2000,
+        ville: "ville",
+        arrondissement: "arrondissement",
+        region: "region",
+        pays: "pays"
+      },
+      domiciliation: {
+        id: "3ed990d2-aba8-4fa1-9d0e-6f02c957ba2a",
+        ligne2: "ligne2",
+        ligne3: "ligne3",
+        ligne4: "ligne4",
+        ligne5: "ligne5",
+        codePostal: "44000",
+        ville: "ville",
+        villeEtrangere: "villeEtrangere",
+        arrondissement: "arrondissement",
+        region: "region",
+        pays: "pays"
+      },
+      evenementUnions: [],
+      typeObjetTitulaire: "FAMILLE",
+      qualite: "PARENT",
+      nomDemandeFrancisation: "nomDemandeFrancisation",
+      nomDemandeIdentification: "nomDemandeIdentification",
+      nomSecable: true,
+      nomPremierePartie: "nomPremierePartie",
+      nomSecondePartie: "nomSecondePartie",
+      courriel: "courriel",
+      telephone: "telephone",
+      situationFamilliale: "CELIBATAIRE",
+      nationalites: [
+        {
+          id: "3ed99c75-17eb-4a09-b747-4cb82387e065",
+          nationalite: "francaise"
+        }
+      ],
+      prenomsDemande: [
+        {
+          id: "3ed9b0f7-921c-4ef3-90a5-bff52013a780",
+          numeroOrdre: 1,
+          prenom: "prenom",
+          estPrenomFrRetenuSdanf: null
+        }
+      ],
+      suiviDossiers: [
+        {
+          id: "a272ec8a-1351-4edd-99b8-03004292a9d2",
+          dateEtablissement: 1492693480000,
+          natureProjet: "NAISSANCE",
+          avancement: "A_SAISIR"
+        }
+      ],
+      retenueSdanf: {
+        id: "3ed91bb9-1949-4625-b06f-7ce487f8f827",
+        nomNaissance: "champNomNaissanceParent1",
+        nomUsage: "champNomNaissanceParent1",
+        nomActuel: "champNomParent1",
+        nomDemandeFrancisation: "champNomNaissanceParent1",
+        nomDemandeIdentification: null,
+        jourNaissance: 1,
+        moisNaissance: 1,
+        anneeNaissance: 2001,
+        codePostalNaissance: "champCodePostalNaissanceParent1",
+        villeNaissance: "champVilleNaissanceParent1",
+        villeEtrangereNaissance: "champVilleEtrangereNaissanceParent1",
+        arrondissementNaissance: "champArrondissementNaissanceParent1",
+        regionNaissance: "",
+        paysNaissance: "champPaysNaissanceParent1",
+        prenomsRetenu: [
+          {
+            id: "3ed9d90f-3e67-42d2-9215-a85c6fa4943b",
+            numeroOrdre: 1,
+            prenom: "champPrenomParent1",
+            estPrenomFrRetenuSdanf: null
+          }
+        ]
+      },
+      nomActuel: "nomActuel",
+      nombreEnfantMineur: 0,
+      nombreEnfantEffetCollectif: 0
+    },
+    {
+      id: "3ed943e2-daa0-45c0-befd-b5f6b69c31d8",
+      position: 2,
+      nomNaissance: "champNomParent2",
+      nomUsage: "champNomParent2",
+      anneeNaissance: 1963,
+      moisNaissance: 3,
+      jourNaissance: 4,
+      villeNaissance: "nantes",
+      codePostalNaissance: "44000",
+      arrondissementNaissance: "arrondissementNaissance",
+      villeEtrangereNaissance: "villeEtrangereNaissance",
+      regionNaissance: "regionNaissance",
+      paysNaissance: "paysNaissance",
+      sexe: "FEMININ",
+      nationalite: "FRANCAISE",
+      prenoms: [
+        {
+          id: "3ed9d90f-3e67-42d2-9215-a85c6fa4943b",
+          numeroOrdre: 1,
+          prenom: "Sarah",
+          estPrenomFrRetenuSdanf: null
+        },
+        {
+          id: "3ed9d90f-3e67-42d2-9215-a85c6fa4943b",
+          numeroOrdre: 2,
+          prenom: "Beths",
+          estPrenomFrRetenuSdanf: null
+        }
+      ],
+      parentsTitulaire: [
+        {
+          id: "3ed9aa36-dfed-4d6c-b711-af5202e5b920",
+          position: 1,
+          nomNaissance: "dupont",
+          prenoms: [
+            {
+              id: "3ed9d127-ad70-4fa6-8b19-ed530b9be9f9",
+              numeroOrdre: 1,
+              prenom: "luc",
+              estPrenomFrRetenuSdanf: null
+            }
+          ]
+        }
+      ],
+      deces: {
+        id: "3ed9b86b-cd4e-4799-94c4-e047e6e74850",
+        jour: 1,
+        mois: 2,
+        annee: 2000,
+        ville: "ville",
+        arrondissement: "arrondissement",
+        region: "region",
+        pays: "pays"
+      },
+      domiciliation: {
+        id: "3ed990d2-aba8-4fa1-9d0e-6f02c957ba2a",
+        ligne2: "ligne2",
+        ligne3: "ligne3",
+        ligne4: "ligne4",
+        ligne5: "ligne5",
+        codePostal: "44000",
+        ville: "ville",
+        villeEtrangere: "villeEtrangere",
+        arrondissement: "arrondissement",
+        region: "region",
+        pays: "pays"
+      },
+      evenementUnions: [],
+      typeObjetTitulaire: "FAMILLE",
+      qualite: "PARENT",
+      nomDemandeFrancisation: "nomDemandeFrancisation",
+      nomDemandeIdentification: "nomDemandeIdentification",
+      nomSecable: true,
+      nomPremierePartie: "nomPremierePartie",
+      nomSecondePartie: "nomSecondePartie",
+      courriel: "courriel",
+      telephone: "telephone",
+      situationFamilliale: "CELIBATAIRE",
+      nationalites: [
+        {
+          id: "3ed99c75-17eb-4a09-b747-4cb82387e065",
+          nationalite: "francaise"
+        }
+      ],
+      prenomsDemande: [
+        {
+          id: "3ed9b0f7-921c-4ef3-90a5-bff52013a780",
+          numeroOrdre: 1,
+          prenom: "prenom",
+          estPrenomFrRetenuSdanf: null
+        }
+      ],
+      suiviDossiers: [
+        {
+          id: "a272ec8a-1351-4edd-99b8-03004292a9d2",
+          dateEtablissement: 1492693480000,
+          natureProjet: "NAISSANCE",
+          avancement: "A_SAISIR"
+        }
+      ],
+      retenueSdanf: {
+        id: "3ed91bb9-1949-4625-b06f-7ce487f8f827",
+        nomNaissance: "champNomNaissanceParent2",
+        nomUsage: "champNomNaissanceParent2",
+        nomActuel: "champNomNaissanceParent2",
+        nomDemandeFrancisation: "nomFrancisation",
+        nomDemandeIdentification: null,
+        jourNaissance: 2,
+        moisNaissance: 2,
+        anneeNaissance: 2002,
+        codePostalNaissance: "champCodePostalNaissanceParent2",
+        villeNaissance: "champVilleNaissanceParent2",
+        villeEtrangereNaissance: "champVilleEtrangereNaissanceParent2",
+        arrondissementNaissance: "champArrondissementNaissance",
+        regionNaissance: "",
+        paysNaissance: "champPaysNaissanceParent2",
+        prenomsRetenu: [
+          {
+            id: "3ed9d90f-3e67-42d2-9215-a85c6fa4943b",
+            numeroOrdre: 1,
+            prenom: "champPrenomParent2",
+            estPrenomFrRetenuSdanf: null
           }
         ]
       },

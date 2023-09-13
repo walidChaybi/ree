@@ -1,5 +1,8 @@
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { TRequete } from "@model/requete/IRequete";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { Options } from "@util/Type";
+import { getLibelle } from "@util/Utils";
 import { FormikProps, FormikValues } from "formik";
 
 export const NB_CARACT_MAX_SAISIE = "100";
@@ -56,5 +59,17 @@ export function reinitialiserChamps(
 ): void {
   for (const suffixChamp of suffixChamps) {
     formik.setFieldValue(withNamespace(prefixChamp, suffixChamp), "");
+  }
+}
+
+export function getLibelleParentFromSexe(parent: ITitulaireRequeteCreation) {
+  const sexeEnum = Sexe.getEnumFor(parent.sexe);
+  switch (sexeEnum) {
+    case Sexe.FEMININ:
+      return getLibelle("Mère");
+    case Sexe.MASCULIN:
+      return getLibelle("Père");
+    default:
+      return getLibelle(`Parent ${parent.position}`);
   }
 }

@@ -2,10 +2,12 @@ import { Step, StepButton, Stepper } from "@mui/material";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./scss/GestionnaireElementScroll.scss";
 
-type GestionnaireElementScrollItemProps = {
-  element: JSX.Element;
-  libelle: string;
-};
+type GestionnaireElementScrollItemProps =
+  | {
+      element: JSX.Element;
+      libelle: string;
+    }
+  | undefined;
 
 type GestionnaireElementScrollProps = {
   elementListe: GestionnaireElementScrollItemProps[];
@@ -76,25 +78,29 @@ export const GestionnaireElementScroll: React.FC<
     <div>
       <div className="selecteursContainer">
         <Stepper nonLinear activeStep={etapeActive}>
-          {props.elementListe.map((el, i) => (
-            <Step key={i}>
-              <StepButton
-                data-testid={`scrollBouton${el.libelle}`}
-                className="stepperButton"
-                onClick={() => handleStep(i)}
-              >
-                {el.libelle}
-              </StepButton>
-            </Step>
-          ))}
+          {props.elementListe.map((el, i) => {
+            return el ? (
+              <Step key={i}>
+                <StepButton
+                  data-testid={`scrollBouton${el.libelle}`}
+                  className="stepperButton"
+                  onClick={() => handleStep(i)}
+                >
+                  {el.libelle}
+                </StepButton>
+              </Step>
+            ) : undefined;
+          })}
         </Stepper>
       </div>
       <div className="formDiv">
-        {props.elementListe.map((ele, i) => (
-          <div key={i} ref={elref => (refListe.current[i] = elref)}>
-            {ele.element}
-          </div>
-        ))}
+        {props.elementListe.map((ele, i) => {
+          return ele ? (
+            <div key={i} ref={elref => (refListe.current[i] = elref)}>
+              {ele.element}
+            </div>
+          ) : undefined;
+        })}
       </div>
     </div>
   );

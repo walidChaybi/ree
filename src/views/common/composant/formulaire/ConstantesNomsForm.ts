@@ -215,6 +215,8 @@ export const REPONSE = "reponse";
 
 export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
 export const TITULAIRE = "titulaire";
+export const PERE = "pere";
+export const MERE = "mere";
 
 // Acte transcription
 export const LIEN_REQUERANT = "lienRequerant";

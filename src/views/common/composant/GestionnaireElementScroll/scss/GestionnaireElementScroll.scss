@@ -1,9 +1,13 @@
 @import "../../../../../scss/colors";
 
 .selecteursContainer {
+    position: sticky;
+    top: -0.2rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    z-index: 1;
+    background-color: white;
     padding: 15px;
 }
 

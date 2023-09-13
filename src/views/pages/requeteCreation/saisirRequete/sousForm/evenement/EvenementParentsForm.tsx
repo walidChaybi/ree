@@ -2,10 +2,10 @@ import LieuForm, { ILieuProps } from "@composant/formulaire/LieuForm";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { getLibelle } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
-import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
+import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import {
   INomForm,

@@ -1,12 +1,17 @@
 import {
   ANALYSE_MARGINALE,
+  ARRONDISSEMENT_NAISSANCE,
   DATE_NAISSANCE,
+  DEPARTEMENT_NAISSANCE,
   ETAT_CANTON_PROVINCE,
   LIEU_DE_NAISSANCE,
+  LIEU_NAISSANCE,
   NE_DANS_MARIAGE,
   NOM,
   NOM_SECABLE,
+  PARENTS,
   PAYS_NAISSANCE,
+  PRENOM,
   PRENOMS,
   SEXE,
   TITULAIRE,
@@ -15,13 +20,19 @@ import {
 import { PrenomsConnusValidationSchema } from "@composant/formulaire/nomsPrenoms/PrenomsConnusForm";
 import { creerValidationSchemaPrenom } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { NomSecableStrictFormValidation } from "@composant/formulaire/validation/NomSecableFormValidation";
+import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import * as Yup from "yup";
 import { CaracteresAutorises } from "../../../../../../../../../ressources/Regex";
 
 export const PostulantValidationSchema = Yup.object({
-  [TITULAIRE]: validationSchemaPostulant()
+  [TITULAIRE]: validationSchemaPostulant(),
+  [PARENTS]: Yup.object({
+    parent1: validationSchemaParent(),
+    parent2: validationSchemaParent()
+  })
 });
 
 function validationSchemaPostulant() {
@@ -54,6 +65,52 @@ function validationSchemaPostulant() {
       ),
       [NE_DANS_MARIAGE]: Yup.string().required(
         "La saisie né dans le mariage est obligatoire"
+      )
+    })
+  });
+}
+
+function validationSchemaParent() {
+  return Yup.object({
+    [NOM]: Yup.string()
+      .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
+      .required("La saisie du nom est obligatoire"),
+    [PRENOM]: PrenomsConnusValidationSchema,
+    [SEXE]: Yup.string().required("La saisie du sexe est obligatoire"),
+    [DATE_NAISSANCE]: DateValidationSchemaSansTestFormat,
+    [LIEU_DE_NAISSANCE]: Yup.object().shape({
+      [LIEU_DE_NAISSANCE]: Yup.string(),
+      [VILLE_NAISSANCE]: Yup.string()
+        .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
+        .required("La saisie de la ville est obligatoire"),
+      [ETAT_CANTON_PROVINCE]: Yup.string().matches(
+        CaracteresAutorises,
+        CARACTERES_AUTORISES_MESSAGE
+      ),
+      [DEPARTEMENT_NAISSANCE]: Yup.string()
+        .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
+        .when([LIEU_NAISSANCE, VILLE_NAISSANCE], {
+          is: (adresse: string, ville: string) =>
+            EtrangerFrance.getEnumFor(adresse) === EtrangerFrance.FRANCE &&
+            !LieuxUtils.estVilleParis(ville),
+          then: Yup.string().required(
+            "La saisie du département est obligatoire"
+          )
+        }),
+      [ARRONDISSEMENT_NAISSANCE]: Yup.string()
+        .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
+        .when([LIEU_DE_NAISSANCE, VILLE_NAISSANCE], {
+          is: (lieuNaissance: string, ville: string) =>
+            EtrangerFrance.getEnumFor(lieuNaissance) ===
+              EtrangerFrance.FRANCE && LieuxUtils.estVilleMarseilleLyon(ville),
+          then: Yup.string().required(
+            "La saisie de l'arrondissement est obligatoire"
+          )
+        }),
+
+      [PAYS_NAISSANCE]: Yup.string().matches(
+        CaracteresAutorises,
+        CARACTERES_AUTORISES_MESSAGE
       )
     })
   });

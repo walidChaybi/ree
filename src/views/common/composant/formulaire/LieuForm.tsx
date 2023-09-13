@@ -21,30 +21,12 @@ type LieuFormProps = ILieuFormProps & FormikComponentProps;
 
 const LieuForm: React.FC<LieuFormProps> = props => {
   const valeurLieu = getValeur(props.elements.lieu);
-  const valeurVille = getValeur(props.elements.ville);
 
   const [lieu, setLieu] = useState<EtrangerFrance>();
 
   useEffect(() => {
     setLieu(EtrangerFrance.getEnumFor(valeurLieu));
   }, [valeurLieu]);
-
-  useEffect(() => {
-    switch (lieu) {
-      case EtrangerFrance.ETRANGER:
-        viderChampPourEtranger();
-        break;
-      case EtrangerFrance.FRANCE:
-        viderChampPourFrance();
-        break;
-      case EtrangerFrance.INCONNU:
-        viderChampPourInconnu();
-        break;
-      default:
-        break;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lieu, valeurVille]);
 
   const rendreComposantEnFonctionDuLieu = useMemo(() => {
     let formulaireLieu: JSX.Element = <></>;
@@ -81,34 +63,6 @@ const LieuForm: React.FC<LieuFormProps> = props => {
         {props.afficherDepartement && props.elements.departement}
       </>
     );
-  }
-
-  function viderChampPourEtranger() {
-    viderChamp(props.elements.arrondissement);
-    viderChamp(props.elements.departement);
-  }
-
-  function viderChampPourFrance() {
-    if (!props.afficherArrondissement) {
-      viderChamp(props.elements.arrondissement);
-    }
-    if (!props.afficherDepartement) {
-      viderChamp(props.elements.departement);
-    }
-    viderChamp(props.elements.region);
-    viderChamp(props.elements.pays);
-  }
-
-  function viderChampPourInconnu() {
-    viderChamp(props.elements.ville);
-    viderChamp(props.elements.arrondissement);
-    viderChamp(props.elements.departement);
-    viderChamp(props.elements.region);
-    viderChamp(props.elements.pays);
-  }
-
-  function viderChamp(champ: JSX.Element) {
-    props.formik.setFieldValue(champ.props.name, "");
   }
 
   function getValeur(champ: JSX.Element): string {

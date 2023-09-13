@@ -89,6 +89,24 @@ export const TitulaireRequeteCreation = {
       )
       .sort((a, b) => a.position - b.position);
   },
+  getParentsTriesParSexe(
+    titulaires?: ITitulaireRequeteCreation[]
+  ): ITitulaireRequeteCreation[] | undefined {
+    return titulaires
+      ?.filter(
+        titulaire =>
+          titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
+          titulaire.qualite === QualiteFamille.PARENT
+      )
+      .sort((a, b) => a.position - b.position)
+      .sort(a => {
+        if (a.sexe === Sexe.MASCULIN.libelle) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+  },
   getTitulairesTries(
     titulaires?: ITitulaireRequeteCreation[]
   ): ITitulaireRequeteCreation[] | undefined {

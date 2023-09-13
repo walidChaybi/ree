@@ -1,8 +1,12 @@
 import {
   ADOPTE_PAR,
+  AGE,
   ANALYSE_MARGINALE,
   ANNEE,
+  ARRONDISSEMENT_NAISSANCE,
+  DATE,
   DATE_NAISSANCE,
+  DEPARTEMENT_NAISSANCE,
   ETAT_CANTON_PROVINCE,
   FRANCISATION_POSTULANT,
   IDENTITE,
@@ -15,21 +19,29 @@ import {
   NOM_PARTIE1,
   NOM_PARTIE2,
   NOM_SECABLE,
+  PARENT1,
+  PARENT2,
+  PARENTS,
   PAS_DE_PRENOM_CONNU,
   PAYS_NAISSANCE,
+  PRENOM,
   PRENOMS,
   PROJET,
+  REGION_NAISSANCE,
   SECABLE,
   SEXE,
   TITULAIRE,
   TYPE,
   VILLE_NAISSANCE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import {
   ISaisieAnalyseMarginale,
   ISaisieDateNaissance,
+  ISaisieDateNaissanceOuAgeDe,
   ISaisieFrancisationPostulantSousForm,
   ISaisieLieuNaissance,
+  ISaisieLieuNaissanceParent,
   ISaisieNomSecable,
   ISaisiePostulantSousForm,
   ISaisiePrenoms,
@@ -57,13 +69,18 @@ import {
   getNomSecable
 } from "../SaisiePostulantFormUtils";
 
-export function mappingTitulaireVersSaisieProjetPostulant(
-  titulaire: ITitulaireRequeteCreation
+export function mappingTitulairesVersSaisieProjetPostulant(
+  titulaire: ITitulaireRequeteCreation,
+  parentsTitulaire: ITitulaireRequeteCreation[]
 ): ISaisieProjetPostulantForm {
   return {
     [PROJET]: mapSaisieProjet(titulaire),
     [TITULAIRE]: mapSaisiePostulant(titulaire),
-    [FRANCISATION_POSTULANT]: mapFrancisationPostulant(titulaire)
+    [FRANCISATION_POSTULANT]: mapFrancisationPostulant(titulaire),
+    [PARENTS]: {
+      [PARENT1]: mapSaisieParent(parentsTitulaire[0]),
+      [PARENT2]: mapSaisieParent(parentsTitulaire[1])
+    }
   };
 }
 
@@ -124,6 +141,18 @@ function mapFrancisationPostulant(
   };
 }
 
+function mapSaisieParent(parent: ITitulaireRequeteCreation) {
+  const retenueSdanf = parent.retenueSdanf || {};
+  const nom = getValeurOuVide(retenueSdanf.nomNaissance).toUpperCase();
+  return {
+    [NOM]: nom,
+    [PRENOM]: mapSaisiePrenoms(retenueSdanf.prenomsRetenu || []),
+    [SEXE]: parent.sexe,
+    [DATE_NAISSANCE]: mapSaisieDateNaissanceEtAgeDe(retenueSdanf),
+    [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissanceParent(retenueSdanf)
+  };
+}
+
 function mapSaisieNomSecable(retenueSdanf: IRetenueSdanf): ISaisieNomSecable {
   const nomSecable = getNomSecable(retenueSdanf);
   return {
@@ -178,6 +207,19 @@ function mapSaisieDateNaissance(
   };
 }
 
+function mapSaisieDateNaissanceEtAgeDe(
+  retenueSdanf: IRetenueSdanf
+): ISaisieDateNaissanceOuAgeDe {
+  const mapSaisieNaissance = mapSaisieDateNaissance(retenueSdanf);
+  return {
+    [DATE]: {
+      ...mapSaisieNaissance
+    },
+    // TODO: remplir avec les données nécéssaires pour le calcul de l'age
+    [AGE]: ""
+  };
+}
+
 function mapSaisieLieuNaissance(
   retenueSdanf: IRetenueSdanf
 ): ISaisieLieuNaissance {
@@ -190,6 +232,25 @@ function mapSaisieLieuNaissance(
       retenueSdanf.paysNaissance
     ),
     [NE_DANS_MARIAGE]: "NON"
+  };
+}
+
+function mapSaisieLieuNaissanceParent(
+  retenueSdanf: IRetenueSdanf
+): ISaisieLieuNaissanceParent {
+  return {
+    [LIEU_DE_NAISSANCE]: EtrangerFrance.getEnumFromPays(
+      retenueSdanf.paysNaissance
+    ).libelle.toUpperCase(),
+    [VILLE_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(
+      retenueSdanf.villeNaissance
+    ),
+    [ARRONDISSEMENT_NAISSANCE]: "",
+    [DEPARTEMENT_NAISSANCE]: "",
+    [REGION_NAISSANCE]: "",
+    [PAYS_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(
+      retenueSdanf.paysNaissance
+    )
   };
 }
 

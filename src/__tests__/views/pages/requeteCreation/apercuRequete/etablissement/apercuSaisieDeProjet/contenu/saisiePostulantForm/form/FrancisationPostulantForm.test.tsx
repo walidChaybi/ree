@@ -1,9 +1,11 @@
 import { FRANCISATION_POSTULANT } from "@composant/formulaire/ConstantesNomsForm";
+import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
+import { requeteCreationEtablissementSaisieProjet } from "@mock/data/requeteCreationEtablissement";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import FrancisationPostulantForm from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/form/FrancisationPostulantForm";
-import { mappingTitulaireVersSaisieProjetPostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
+import { mappingTitulairesVersSaisieProjetPostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
 import { PostulantValidationSchema } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/validation/PostulantValidationSchema";
 import { render, screen, waitFor } from "@testing-library/react";
 import { Formulaire } from "@widget/formulaire/Formulaire";
@@ -16,6 +18,10 @@ const TITULAIRE: ITitulaireRequeteCreation = {
   nationalite: Nationalite.ETRANGERE
 };
 
+const parentsPourMapping = mappingRequeteCreation(
+  requeteCreationEtablissementSaisieProjet
+).titulaires;
+
 function afficheComposantFrancisationPostulant(
   retenueSdanf: IRetenueSdanf
 ): void {
@@ -26,7 +32,10 @@ function afficheComposantFrancisationPostulant(
 
   render(
     <Formulaire
-      formDefaultValues={mappingTitulaireVersSaisieProjetPostulant(titulaire)}
+      formDefaultValues={mappingTitulairesVersSaisieProjetPostulant(titulaire, [
+        parentsPourMapping![1],
+        parentsPourMapping![2]
+      ])}
       formValidationSchema={PostulantValidationSchema}
       onSubmit={() => {}}
       className="FormulairePostulant"

@@ -1,8 +1,12 @@
 import {
   ADOPTE_PAR,
+  AGE,
   ANALYSE_MARGINALE,
   ANNEE,
+  ARRONDISSEMENT_NAISSANCE,
+  DATE,
   DATE_NAISSANCE,
+  DEPARTEMENT_NAISSANCE,
   ETAT_CANTON_PROVINCE,
   FRANCISATION_POSTULANT,
   IDENTITE,
@@ -15,9 +19,14 @@ import {
   NOM_PARTIE1,
   NOM_PARTIE2,
   NOM_SECABLE,
+  PARENT1,
+  PARENT2,
+  PARENTS,
   PAYS_NAISSANCE,
+  PRENOM,
   PRENOMS,
   PROJET,
+  REGION_NAISSANCE,
   SECABLE,
   SEXE,
   TITULAIRE,
@@ -31,6 +40,7 @@ export interface ISaisieProjetPostulantForm {
   [PROJET]: ISaisieProjetSousForm;
   [TITULAIRE]: ISaisiePostulantSousForm;
   [FRANCISATION_POSTULANT]: ISaisieFrancisationPostulantSousForm;
+  [PARENTS]: ISaisieParentsPostulant;
 }
 
 export interface ISaisieProjetSousForm {
@@ -77,9 +87,36 @@ export interface ISaisieDateNaissance {
   [ANNEE]: string;
 }
 
+export interface ISaisieDateNaissanceOuAgeDe {
+  [DATE]: ISaisieDateNaissance;
+  [AGE]: string;
+}
+
 export interface ISaisieLieuNaissance {
   [VILLE_NAISSANCE]: string;
   [ETAT_CANTON_PROVINCE]: string;
   [PAYS_NAISSANCE]: string;
   [NE_DANS_MARIAGE]: string;
+}
+
+export interface ISaisieLieuNaissanceParent {
+  [LIEU_DE_NAISSANCE]: string;
+  [VILLE_NAISSANCE]: string;
+  [REGION_NAISSANCE]: string;
+  [DEPARTEMENT_NAISSANCE]: string;
+  [ARRONDISSEMENT_NAISSANCE]: string;
+  [PAYS_NAISSANCE]: string;
+}
+
+export interface ISaisieParentsPostulant {
+  [PARENT1]: ISaisieParentSousForm;
+  [PARENT2]: ISaisieParentSousForm;
+}
+
+export interface ISaisieParentSousForm {
+  [NOM]: string;
+  [PRENOM]: ISaisiePrenoms;
+  [SEXE]: string;
+  [DATE_NAISSANCE]: ISaisieDateNaissanceOuAgeDe;
+  [LIEU_DE_NAISSANCE]: ISaisieLieuNaissanceParent;
 }

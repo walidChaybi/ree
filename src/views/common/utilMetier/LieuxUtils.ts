@@ -2,14 +2,11 @@ import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { Option, Options } from "@util/Type";
 import {
-  NEUF,
-  SEIZE,
-  VINGT,
   chainesEgalesIgnoreCasseEtAccent,
   estRenseigne,
   formatLigne,
-  getValeurOuVide,
-  supprimerZerosAGauche
+  getValeurOuVide, NEUF,
+  SEIZE, supprimerZerosAGauche, VINGT
 } from "@util/Utils";
 
 export const FRANCE = "FRANCE";
@@ -18,6 +15,7 @@ const PARIS = "PARIS";
 const MARSEILLE = "MARSEILLE";
 const LYON = "LYON";
 const villesMarseilleLyonParis = [MARSEILLE, LYON, PARIS];
+const villesMarseilleLyon = [MARSEILLE, LYON];
 const JERUSALEM = "JERUSALEM";
 const INCONNU = "INCONNU";
 
@@ -59,6 +57,12 @@ export class LieuxUtils {
   public static estVilleMarseilleLyonParis(ville?: string): boolean {
     return (
       ville != null && villesMarseilleLyonParis.includes(ville.toUpperCase())
+    );
+  }
+
+  public static estVilleMarseilleLyon(ville?: string): boolean {
+    return (
+      ville != null && villesMarseilleLyon.includes(ville.toUpperCase())
     );
   }
 

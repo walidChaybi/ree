@@ -72,7 +72,6 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
       setAfficherMessageNaissance(false);
     }
   }
-
   return (
     <Item titre={"Postulant"}>
       <InputField

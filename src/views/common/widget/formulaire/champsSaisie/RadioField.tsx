@@ -15,6 +15,7 @@ interface RadioFieldProps {
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
 }
 export const RadioField: React.FC<RadioFieldProps> = ({
   type,
@@ -27,7 +28,8 @@ export const RadioField: React.FC<RadioFieldProps> = ({
   noErrorMessage,
   onInput,
   onBlur,
-  onChange
+  onChange,
+  className
 }) => {
   type = type || "radio";
   const otherProps = {} as any;
@@ -42,7 +44,7 @@ export const RadioField: React.FC<RadioFieldProps> = ({
   }
 
   return (
-    <div className="InputField">
+    <div className={`InputField ${className}`}>
       <div className="BlockInput">
         <label htmlFor={name}>{label}</label>
         <div id={name} aria-label={name} className="RadioInput">

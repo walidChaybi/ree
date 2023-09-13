@@ -1,43 +1,106 @@
 import {
   FRANCISATION_POSTULANT,
   NATURE_ACTE,
+  PARENT1,
+  PARENT2,
+  PARENTS,
   PROJET,
   TITULAIRE,
   TYPE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { IUuidEtatCivilParams } from "@model/params/IUuidEtatCivilParams";
+import {
+  ITitulaireRequeteCreation,
+  TitulaireRequeteCreation
+} from "@model/requete/ITitulaireRequeteCreation";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import { withNamespace } from "@widget/formulaire/utils/FormUtil";
-import React from "react";
+import {
+  getLibelleParentFromSexe,
+  withNamespace
+} from "@widget/formulaire/utils/FormUtil";
+import React, { useMemo } from "react";
+import { useParams } from "react-router";
 import FrancisationPostulantForm from "./form/FrancisationPostulantForm";
+import ParentForm from "./form/ParentForm";
 import PostulantForm from "./form/PostulantForm";
-import { mappingTitulaireVersSaisieProjetPostulant } from "./mapping/mappingTitulaireVersFormulairePostulant";
+import { mappingTitulairesVersSaisieProjetPostulant } from "./mapping/mappingTitulaireVersFormulairePostulant";
 import "./scss/Postulant.scss";
 import { PostulantValidationSchema } from "./validation/PostulantValidationSchema";
 
 interface ISaisiePostulantFormProps {
-  titulaire: ITitulaireRequeteCreation;
+  titulaires: ITitulaireRequeteCreation[];
 }
 
-export const SaisiePostulantForm: React.FC<ISaisiePostulantFormProps> = props => {
+export const SaisiePostulantForm: React.FC<
+  ISaisiePostulantFormProps
+> = props => {
+  const { idEtatCivilParam } = useParams<IUuidEtatCivilParams>();
+
+  const [titulaire] = useMemo(() => {
+    let suiviDossierTitulaire;
+    if (props.titulaires) {
+      for (const titulaireRequete of props.titulaires) {
+        suiviDossierTitulaire = titulaireRequete.suiviDossiers?.find(
+          etatCivil => etatCivil.id === idEtatCivilParam
+        );
+        if (suiviDossierTitulaire) {
+          return [titulaireRequete, suiviDossierTitulaire];
+        }
+      }
+    }
+    return [undefined, undefined];
+  }, [props.titulaires, idEtatCivilParam]);
+
+  const parentsTitulaire =
+    TitulaireRequeteCreation.getParentsTriesParSexe(props.titulaires) || [];
+
+  const titulaireParent1 = TitulaireRequeteCreation.getParentsTriesParSexe(
+    props.titulaires
+  )?.[0];
+  const titulaireParent2 = TitulaireRequeteCreation.getParentsTriesParSexe(
+    props.titulaires
+  )?.[1];
+
   const elementListe = [
     {
-      libelle: getLibelle("Postulant"),
-      element: <PostulantForm nom={TITULAIRE} titulaire={props.titulaire} />
+      libelle: "Postulant",
+      element: <PostulantForm nom={TITULAIRE} titulaire={titulaire} />
     },
     {
       libelle: getLibelle("Francisation postulant"),
       element: (
         <FrancisationPostulantForm
           nom={FRANCISATION_POSTULANT}
-          retenueSdanf={props.titulaire.retenueSdanf}
+          retenueSdanf={titulaire?.retenueSdanf}
         />
       )
-    }
+    },
+    titulaireParent1
+      ? {
+          libelle: getLibelleParentFromSexe(titulaireParent1),
+          element: (
+            <ParentForm
+              nom={`${PARENTS}.${PARENT1}`}
+              parent={titulaireParent1}
+            />
+          )
+        }
+      : undefined,
+    titulaireParent2
+      ? {
+          libelle: getLibelleParentFromSexe(titulaireParent2),
+          element: (
+            <ParentForm
+              nom={`${PARENTS}.${PARENT2}`}
+              parent={titulaireParent2}
+            />
+          )
+        }
+      : undefined
   ];
 
   function validerProjetPostulant() {}
@@ -45,8 +108,9 @@ export const SaisiePostulantForm: React.FC<ISaisiePostulantFormProps> = props =>
   return (
     <div className="Postulant">
       <Formulaire
-        formDefaultValues={mappingTitulaireVersSaisieProjetPostulant(
-          props.titulaire
+        formDefaultValues={mappingTitulairesVersSaisieProjetPostulant(
+          titulaire || ({} as ITitulaireRequeteCreation),
+          parentsTitulaire
         )}
         formValidationSchema={PostulantValidationSchema}
         onSubmit={validerProjetPostulant}

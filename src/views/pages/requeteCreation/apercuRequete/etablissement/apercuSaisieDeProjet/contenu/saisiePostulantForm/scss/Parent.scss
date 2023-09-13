@@ -1,0 +1,31 @@
+@import "../../../../../../../../../scss/colors";
+
+.FormulairePostulant {
+    .Parent {
+        .AvertissementConteneur {
+            display: flex;
+            .InputField.SexeRadio {
+                .BlockInput {
+                    grid-template-columns: 21% 79%;
+                }
+            }
+            .InputField {
+                width: 100%;
+            }
+            .BlockInput {
+                grid-template-columns: 31% 69%;
+            }
+
+            .BlockErreur {
+                margin-left: 31%;
+            }
+            .ConteneurDateCompose {
+                margin-right: 0.5rem;
+            }
+            .AvertissementDateCompose > .DateComposeForm > input:nth-of-type(-n+2) {
+                border: 1px solid $warning-formulaire;
+            }
+        }
+    }
+    
+}

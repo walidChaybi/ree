@@ -27,6 +27,10 @@ export class QualiteFamille extends EnumWithLibelle {
     return qualiteFamille === QualiteFamille.PARENT;
   }
 
+  public static estParentFromLibelle(str: string): boolean {
+      return QualiteFamille.getEnumFromLibelle(str) === QualiteFamille.PARENT;
+  }
+
   public static estPostulant(qualiteFamille?: QualiteFamille): boolean {
     return qualiteFamille === QualiteFamille.POSTULANT;
   }
