@@ -75,7 +75,7 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
       expect(champJourNaissance.value).toBe("01");
       expect(champMoisNaissance.value).toBe("02");
       expect(champAnneeNaissance.value).toBe("2000");
-      expect(champVille.value).toBe("Villeetrangerenaissance");
+      expect(champVille.value).toBe("Villenaissance");
       expect(champEtat.value).toBe("");
       expect(champPays.value).toBe("Paysnaissance");
       expect(champNeMariage.checked).toBeTruthy();
@@ -143,8 +143,8 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     ) as HTMLInputElement;
 
     await waitFor(() => {
-      expect(champNomPartie1.value).toBe("Test1");
-      expect(champNomPartie2.value).toBe("Test2");
+      expect(champNomPartie1.value).toBe("TEST1");
+      expect(champNomPartie2.value).toBe("TEST2");
       expect(screen.queryByText("Nom avec plus de deux vocables")).toBeNull();
     });
   });
@@ -164,8 +164,8 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     ) as HTMLInputElement;
 
     await waitFor(() => {
-      expect(champNomPartie1.value).toBe("Test1");
-      expect(champNomPartie2.value).toBe("Test2 Test3");
+      expect(champNomPartie1.value).toBe("TEST1");
+      expect(champNomPartie2.value).toBe("TEST2 TEST3");
       expect(screen.getByText("Nom avec plus de deux vocables")).toBeDefined();
     });
   });

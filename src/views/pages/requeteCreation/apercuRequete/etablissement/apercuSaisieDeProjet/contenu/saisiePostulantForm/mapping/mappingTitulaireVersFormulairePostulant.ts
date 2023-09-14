@@ -254,7 +254,7 @@ function mapSaisieLieuNaissance(
 ): ISaisieLieuNaissance {
   return {
     [VILLE_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(
-      retenueSdanf.villeEtrangereNaissance
+      retenueSdanf.villeNaissance
     ),
     [ETAT_CANTON_PROVINCE]: "",
     [PAYS_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(

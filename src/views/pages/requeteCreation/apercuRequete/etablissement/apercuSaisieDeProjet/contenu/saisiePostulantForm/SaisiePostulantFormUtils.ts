@@ -25,9 +25,9 @@ export function getNomSecable(
   const estSecable = estPaysSecable && vocables.length > 1;
   return {
     estPaysSecable,
-    nomTitulaire: nom,
-    nomPartie1: estSecable ? vocables[0] : "",
-    nomPartie2: estSecable ? vocables.slice(1).join(" ") : ""
+    nomTitulaire: nom.toUpperCase(),
+    nomPartie1: estSecable ? vocables[0].toUpperCase() : "",
+    nomPartie2: estSecable ? vocables.slice(1).join(" ").toUpperCase() : ""
   };
 }
 

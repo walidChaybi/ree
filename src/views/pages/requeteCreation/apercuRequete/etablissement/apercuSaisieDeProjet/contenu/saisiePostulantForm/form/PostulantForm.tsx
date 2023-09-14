@@ -85,7 +85,7 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
         nomPartie1={nomSecable.nomPartie1}
         nomPartie2={nomSecable.nomPartie2}
         saisieVerrouillee={false}
-        afficherAvertissementVocable={nomSecable.estPaysSecable}
+        afficherAvertissementVocable={true}
       />
       <PrenomsConnusForm
         libelleAucunPrenom={getLibelle("Pas de prénom")}
@@ -93,7 +93,7 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
         nom={withNamespace(props.nom, PRENOMS)}
         nbPrenoms={nbPrenom}
       />
-      <div className="Titre">{getLibelle("Analyse marginales")}</div>
+      <div className="Titre">{getLibelle("Analyse marginale")}</div>
       <InputField
         name={withNamespace(analyseMarginale, NOM)}
         label={getLibelle("Nom")}

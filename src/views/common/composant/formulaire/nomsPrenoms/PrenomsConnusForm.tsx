@@ -42,7 +42,10 @@ type PrenomsConnusFormProps = IPrenomsConnusFormProps &
   SubFormProps;
 
 const PrenomsConnusForm: React.FC<PrenomsConnusFormProps> = props => {
-  const [pasDePrenomConnu, setPasDePrenomConnu] = useState(false);
+  const [pasDePrenomConnu, setPasDePrenomConnu] = useState<boolean>(false);
+  const [nbPrenoms, setNbPrenoms] = useState<number | undefined>(
+    props.nbPrenoms
+  );
 
   useEffect(() => {
     setPasDePrenomConnu(props.pasDePrenomConnu);
@@ -69,6 +72,7 @@ const PrenomsConnusForm: React.FC<PrenomsConnusFormProps> = props => {
       pathPrenomsAReinitialiser,
       genererDefaultValuesPrenoms()
     );
+    setNbPrenoms(0);
   }
 
   return (
@@ -84,7 +88,7 @@ const PrenomsConnusForm: React.FC<PrenomsConnusFormProps> = props => {
         <PrenomsForm
           nom={withNamespace(props.nom, PRENOMS)}
           disabled={props.disabled}
-          nbPrenoms={props.nbPrenoms}
+          nbPrenoms={nbPrenoms}
           nbPrenomsAffiche={props.nbPrenomsAffiche}
           prenom1Obligatoire={props.prenom1Obligatoire}
           onNbPrenomChange={props.onNbPrenomChange}
