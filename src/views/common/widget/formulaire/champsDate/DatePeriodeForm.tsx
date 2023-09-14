@@ -10,7 +10,7 @@ import { Periode } from "@model/requete/enum/Periode";
 import { Options } from "@util/Type";
 import { connect } from "formik";
 import { useEffect, useState } from "react";
-import { SelectField } from "../champsSaisie/SelectField";
+import { OptionVide, SelectField } from "../champsSaisie/SelectField";
 import { FormikComponentProps, withNamespace } from "../utils/FormUtil";
 import DateComposeForm from "./DateComposeForm";
 import "./scss/DateComposeForm.scss";
@@ -60,7 +60,7 @@ const DatePeriodeForm: React.FC<DatePeriodeFormProps> = props => {
           options={props.choixPeriodes}
           disabled={props.disabled}
           label={props.label}
-          pasPremiereOptionVide={true}
+          optionVide={OptionVide.NON_PRESENTE}
           onChange={(e: any) => {
             setChoixIntervalle(e.target.value);
           }}

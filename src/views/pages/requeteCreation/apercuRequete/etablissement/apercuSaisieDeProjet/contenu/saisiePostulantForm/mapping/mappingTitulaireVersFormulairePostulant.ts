@@ -1,11 +1,17 @@
 import {
   ADOPTE_PAR,
+  ADRESSE,
   AGE,
   ANALYSE_MARGINALE,
   ANNEE,
+  ARRONDISSEMENT,
   ARRONDISSEMENT_NAISSANCE,
+  AUTRES,
+  AUTRE_DECLARANT,
   DATE,
   DATE_NAISSANCE,
+  DECLARANT,
+  DEPARTEMENT,
   DEPARTEMENT_NAISSANCE,
   ETAT_CANTON_PROVINCE,
   FRANCISATION_POSTULANT,
@@ -23,20 +29,24 @@ import {
   PARENT2,
   PARENTS,
   PAS_DE_PRENOM_CONNU,
+  PAYS,
   PAYS_NAISSANCE,
   PRENOM,
   PRENOMS,
   PROJET,
+  RECONNAISSANCE,
   REGION_NAISSANCE,
   SECABLE,
   SEXE,
   TITULAIRE,
   TYPE,
+  VILLE,
   VILLE_NAISSANCE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import {
   ISaisieAnalyseMarginale,
+  ISaisieAutresSousForm,
   ISaisieDateNaissance,
   ISaisieDateNaissanceOuAgeDe,
   ISaisieFrancisationPostulantSousForm,
@@ -48,11 +58,11 @@ import {
   ISaisieProjetPostulantForm,
   ISaisieProjetSousForm
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
-import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
-import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import {
   formatMajusculesMinusculesMotCompose,
@@ -80,7 +90,8 @@ export function mappingTitulairesVersSaisieProjetPostulant(
     [PARENTS]: {
       [PARENT1]: mapSaisieParent(parentsTitulaire[0]),
       [PARENT2]: mapSaisieParent(parentsTitulaire[1])
-    }
+    },
+    [AUTRES]: mapSaisieAutres(titulaire)
   };
 }
 
@@ -150,6 +161,24 @@ function mapSaisieParent(parent: ITitulaireRequeteCreation) {
     [SEXE]: parent.sexe,
     [DATE_NAISSANCE]: mapSaisieDateNaissanceEtAgeDe(retenueSdanf),
     [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissanceParent(retenueSdanf)
+  };
+}
+
+function mapSaisieAutres(
+  titulaire: ITitulaireRequeteCreation
+): ISaisieAutresSousForm {
+  const domiciliation = titulaire.domiciliation;
+  return {
+    [ADRESSE]: EtrangerFrance.getKey(
+      EtrangerFrance.getEnumFromPays(domiciliation?.pays)
+    ),
+    [VILLE]: formatPremieresLettresMajusculesNomCompose(domiciliation?.ville),
+    [ARRONDISSEMENT]: "",
+    [DEPARTEMENT]: "",
+    [PAYS]: formatPremieresLettresMajusculesNomCompose(domiciliation?.pays),
+    [RECONNAISSANCE]: "",
+    [DECLARANT]: "",
+    [AUTRE_DECLARANT]: ""
   };
 }
 

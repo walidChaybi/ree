@@ -8,7 +8,7 @@ export interface ILieuProps {
   ville: JSX.Element;
   arrondissement: JSX.Element;
   departement: JSX.Element;
-  region: JSX.Element;
+  region?: JSX.Element;
   pays: JSX.Element;
 }
 

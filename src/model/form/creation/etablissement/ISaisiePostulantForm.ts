@@ -1,11 +1,17 @@
 import {
   ADOPTE_PAR,
+  ADRESSE,
   AGE,
   ANALYSE_MARGINALE,
   ANNEE,
+  ARRONDISSEMENT,
   ARRONDISSEMENT_NAISSANCE,
+  AUTRES,
+  AUTRE_DECLARANT,
   DATE,
   DATE_NAISSANCE,
+  DECLARANT,
+  DEPARTEMENT,
   DEPARTEMENT_NAISSANCE,
   ETAT_CANTON_PROVINCE,
   FRANCISATION_POSTULANT,
@@ -22,15 +28,18 @@ import {
   PARENT1,
   PARENT2,
   PARENTS,
+  PAYS,
   PAYS_NAISSANCE,
   PRENOM,
   PRENOMS,
   PROJET,
+  RECONNAISSANCE,
   REGION_NAISSANCE,
   SECABLE,
   SEXE,
   TITULAIRE,
   TYPE,
+  VILLE,
   VILLE_NAISSANCE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
@@ -41,6 +50,7 @@ export interface ISaisieProjetPostulantForm {
   [TITULAIRE]: ISaisiePostulantSousForm;
   [FRANCISATION_POSTULANT]: ISaisieFrancisationPostulantSousForm;
   [PARENTS]: ISaisieParentsPostulant;
+  [AUTRES]: ISaisieAutresSousForm;
 }
 
 export interface ISaisieProjetSousForm {
@@ -63,6 +73,17 @@ export interface ISaisiePostulantSousForm {
 export interface ISaisieFrancisationPostulantSousForm {
   [NOM]?: string;
   [PRENOMS]?: string;
+}
+
+export interface ISaisieAutresSousForm {
+  [ADRESSE]: string;
+  [VILLE]: string;
+  [ARRONDISSEMENT]: string;
+  [DEPARTEMENT]: string;
+  [PAYS]: string;
+  [RECONNAISSANCE]: string;
+  [DECLARANT]: string;
+  [AUTRE_DECLARANT]?: string;
 }
 
 export interface ISaisieNomSecable {

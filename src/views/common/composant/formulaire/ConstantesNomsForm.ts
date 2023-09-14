@@ -79,6 +79,7 @@ export const PARENT_ADOPTANT_NAISS2 = "parentAdoptantNaiss2";
 
 // Parents : lieu naissance
 export const ARRONDISSEMENT = "arrondissement";
+export const DEPARTEMENT = "departement";
 export const LIEU_NAISSANCE = "lieuNaissance";
 export const ETRANGER_FRANCE = "EtrangerFrance";
 export const ETAT_CANTON_PROVINCE = "etatCantonProvince";
@@ -134,6 +135,9 @@ export const PAYS_STATUT_REFUGIE = "paysStatutRefugie";
 export const PAYS_ORIGINE = "paysOrigine";
 
 export const PROJET = "projet";
+export const AUTRES = "autres";
+export const DECLARANT = "declarant";
+export const AUTRE_DECLARANT = "autreDeclarant";
 
 // Noms des champs IdentiteForm
 export const NOMS = "noms";

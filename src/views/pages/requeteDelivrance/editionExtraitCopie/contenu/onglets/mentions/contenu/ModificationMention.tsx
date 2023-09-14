@@ -2,7 +2,10 @@ import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAfficha
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
-import { SelectRece } from "@widget/formulaire/champsSaisie/SelectField";
+import {
+  OptionVide,
+  SelectRece
+} from "@widget/formulaire/champsSaisie/SelectField";
 import React from "react";
 import { getOptionsMentions } from "../GestionMentionsUtil";
 
@@ -30,7 +33,7 @@ export const ModificationMention: React.FC<ModificationMentionProps> = ({
         <span className="SelectNature">
           <label>{getLibelle("Nature mention")}</label>
           <SelectRece
-            pasPremiereOptionVide={true}
+            optionVide={OptionVide.NON_PRESENTE}
             options={getOptionsMentions(estExtraitPlurilingue, natureActe)}
             placeholder="Nature sélectionnée"
             value={NatureMention.getUuidFromNature(mentionSelect?.nature)}

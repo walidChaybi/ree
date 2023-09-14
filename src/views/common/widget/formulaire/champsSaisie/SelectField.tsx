@@ -11,6 +11,12 @@ import { IconErrorMessage } from "../erreur/IconeErreurMessage";
 import { FormikComponentProps } from "../utils/FormUtil";
 import "./scss/SelectField.scss";
 
+export enum OptionVide {
+  NON_PRESENTE,
+  NON_SELECTIONNABLE,
+  SELECTIONNABLE
+}
+
 interface SelectProps {
   componentName?: string;
   options: Option[];
@@ -19,7 +25,7 @@ interface SelectProps {
   placeholder?: string;
   onChange?: (e: any, formik?: FormikProps<FormikValues>) => void;
   ariaLabel?: string;
-  pasPremiereOptionVide?: boolean;
+  optionVide?: OptionVide;
   onBlur?: (e: any) => void;
 }
 
@@ -54,8 +60,11 @@ export const SelectRece: React.FC<SelectProps> = props => {
         data-testid={props.componentName}
         style={props.placeholder ? { color: "gray" } : undefined}
       >
-        {!props.pasPremiereOptionVide && (
-          <option value={""} disabled={true}>
+        {props.optionVide !== OptionVide.NON_PRESENTE && (
+          <option
+            value={""}
+            disabled={props.optionVide !== OptionVide.SELECTIONNABLE}
+          >
             {props.placeholder ? props.placeholder : ""}
           </option>
         )}
@@ -100,7 +109,7 @@ const _SelectField: React.FC<SelectFieldProps> = ({
   formik,
   onChange,
   onBlur,
-  pasPremiereOptionVide,
+  optionVide,
   placeholder
 }) => {
   return (
@@ -126,7 +135,7 @@ const _SelectField: React.FC<SelectFieldProps> = ({
               formik.setFieldValue(name, "");
             }
           }}
-          pasPremiereOptionVide={pasPremiereOptionVide}
+          optionVide={optionVide}
           placeholder={placeholder}
         />
       </div>

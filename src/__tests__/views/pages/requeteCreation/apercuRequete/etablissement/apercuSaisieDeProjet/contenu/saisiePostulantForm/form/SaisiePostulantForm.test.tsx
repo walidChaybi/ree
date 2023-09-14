@@ -59,7 +59,7 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     const champEtat = screen.getAllByLabelText(
       "Etat, canton, province"
     )[0] as HTMLInputElement;
-    const champPays = screen.getByLabelText("Pays") as HTMLInputElement;
+    const champPays = screen.getAllByLabelText("Pays")[0] as HTMLInputElement;
     const champNeMariage = screen.getByLabelText("Non") as HTMLInputElement;
 
     await waitFor(() => {

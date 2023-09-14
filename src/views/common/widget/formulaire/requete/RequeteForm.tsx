@@ -20,8 +20,6 @@ import { getLibelle } from "@util/Utils";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { InputField } from "../champsSaisie/InputField";
-import { SelectField } from "../champsSaisie/SelectField";
 import {
   DOCUMENT_DEMANDE_OBLIGATOIRE,
   NATURE_ACTE_OBLIGATOIRE,
@@ -30,6 +28,8 @@ import {
   NB_EXEMPLAIRE_OBLIGATOIRE
 } from "../FormulaireMessages";
 import { SousFormulaire } from "../SousFormulaire";
+import { InputField } from "../champsSaisie/InputField";
+import { OptionVide, SelectField } from "../champsSaisie/SelectField";
 import {
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
@@ -142,13 +142,13 @@ const RequeteForm: React.FC<SubFormProps> = props => {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onChangeNatureActeRequete(e);
                 }}
-                pasPremiereOptionVide={true}
+                optionVide={OptionVide.NON_PRESENTE}
               />
               <SelectField
                 name={withNamespace(props.nom, DOCUMENT_DEMANDE)}
                 label={getLibelle("Document demandé")}
                 options={documentDemandeOptions}
-                pasPremiereOptionVide={true}
+                optionVide={OptionVide.NON_PRESENTE}
               />
             </>
           )}
@@ -164,7 +164,7 @@ const RequeteForm: React.FC<SubFormProps> = props => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               onChangeMotif(e);
             }}
-            pasPremiereOptionVide={true}
+            optionVide={OptionVide.NON_PRESENTE}
           />
           {!complementMotifInactif && (
             <InputField

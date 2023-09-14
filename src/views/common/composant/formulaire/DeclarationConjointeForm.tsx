@@ -4,6 +4,7 @@ import DateComposeForm, {
   DateComposeFormProps
 } from "@widget/formulaire/champsDate/DateComposeForm";
 import {
+  OptionVide,
   SelectField,
   SelectFieldProps
 } from "@widget/formulaire/champsSaisie/SelectField";
@@ -54,7 +55,7 @@ const DeclarationConjointeForm: React.FC<
     disabled:
       estDisabled(props.type, props.origineTitulaireActe) &&
       props.saisieVerrouillee,
-    pasPremiereOptionVide: true,
+    optionVide: OptionVide.NON_PRESENTE,
     onChange: onTypeChange
   } as SelectFieldProps;
 

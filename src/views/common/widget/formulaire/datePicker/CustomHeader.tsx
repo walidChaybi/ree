@@ -1,5 +1,5 @@
 import React from "react";
-import { SelectRece } from "../champsSaisie/SelectField";
+import { OptionVide, SelectRece } from "../champsSaisie/SelectField";
 
 function range(n1: number, n2: number) {
   const resRange: string[] = [];
@@ -74,7 +74,7 @@ export const customHeaderRenderer = ({
       value={months[getMonth(date)]}
       onChange={({ target: { value } }) => changeMonth(months.indexOf(value))}
       options={months.map(month => ({ cle: month, libelle: month }))}
-      pasPremiereOptionVide={true}
+      optionVide={OptionVide.NON_PRESENTE}
     />
 
     <SelectRece

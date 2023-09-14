@@ -1,9 +1,12 @@
 import { COURRIER, DELIVRANCE } from "@composant/formulaire/ConstantesNomsForm";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import {
+  OptionVide,
+  SelectField
+} from "@widget/formulaire/champsSaisie/SelectField";
 import {
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
@@ -50,7 +53,7 @@ const ChoixCourrierForm: React.FC<ChoixCourrierSubFormProps> = props => {
           name={withNamespace(props.nom, COURRIER)}
           label={getLibelle("Courrier")}
           options={props.typesCourrier}
-          pasPremiereOptionVide={true}
+          optionVide={OptionVide.NON_PRESENTE}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             onChangeTypeCourrier(e);
           }}

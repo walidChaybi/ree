@@ -1,4 +1,6 @@
+import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
 import {
+  AUTRES,
   FRANCISATION_POSTULANT,
   NATURE_ACTE,
   PARENT1,
@@ -8,7 +10,6 @@ import {
   TITULAIRE,
   TYPE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
 import { IUuidEtatCivilParams } from "@model/params/IUuidEtatCivilParams";
 import {
   ITitulaireRequeteCreation,
@@ -16,14 +17,15 @@ import {
 } from "@model/requete/ITitulaireRequeteCreation";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { Formulaire } from "@widget/formulaire/Formulaire";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
   getLibelleParentFromSexe,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import React, { useMemo } from "react";
 import { useParams } from "react-router";
+import AutresForm from "./form/AutresForm";
 import FrancisationPostulantForm from "./form/FrancisationPostulantForm";
 import ParentForm from "./form/ParentForm";
 import PostulantForm from "./form/PostulantForm";
@@ -100,7 +102,11 @@ export const SaisiePostulantForm: React.FC<
             />
           )
         }
-      : undefined
+      : undefined,
+    {
+      libelle: getLibelle("Autres"),
+      element: <AutresForm nom={AUTRES} />
+    }
   ];
 
   function validerProjetPostulant() {}
