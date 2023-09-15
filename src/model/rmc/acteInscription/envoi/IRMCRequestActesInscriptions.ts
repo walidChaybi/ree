@@ -26,6 +26,9 @@ export interface IRMCRequestActesInscriptions {
   posteOuPocopa?: string;
   numeroActe?: string;
   anneeRegistre?: string;
+  numeroBisTer?: string;
+  support1?: string;
+  support2?: string;
   //Repertoire
   numeroInscription?: string;
   typeRepertoire?: TypeRepertoire;

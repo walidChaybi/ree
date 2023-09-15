@@ -12,7 +12,7 @@ import "./scss/ChampRecherche.scss";
 
 interface ChampRechercheProps {
   componentName: string;
-  options: Option[];
+  options: Options;
   disabled?: boolean;
   noOptionsText?: string;
   onInput?: (value: string | null) => void;
@@ -24,6 +24,7 @@ interface ChampRechercheProps {
     state: FilterOptionsState<Option>
   ) => Options;
   disabledPortal?: boolean;
+  optionsValidesNonAffichees?: Options;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -56,7 +57,13 @@ export const ChampRecherche: React.FC<ChampRechercheProps> = props => {
       }
       getOptionLabel={(option: Option) => option.libelle || ""}
       isOptionEqualToValue={(option, val) => {
-        return option.cle === val.cle;
+        return (
+          option.cle === val.cle ||
+          props.optionsValidesNonAffichees?.some(
+            optionNonAffichee => optionNonAffichee.cle === val.cle
+          ) ||
+          false
+        );
       }}
       options={props.options}
       value={props.value}
@@ -125,7 +132,8 @@ const _ChampRechercheField: React.FC<ChampRechercheFieldProps> = ({
   onChange,
   noOptionsText,
   formik,
-  disabledPortal
+  disabledPortal,
+  optionsValidesNonAffichees
 }) => {
   return (
     <div className="BlockInput ChampRecherche">
@@ -162,6 +170,7 @@ const _ChampRechercheField: React.FC<ChampRechercheFieldProps> = ({
           noOptionsText={noOptionsText}
           value={formik.getFieldProps(name).value}
           disabledPortal={disabledPortal}
+          optionsValidesNonAffichees={optionsValidesNonAffichees}
         />
         <div className="BlockErreur">
           <ErrorMessage component={IconErrorMessage} name={name} />

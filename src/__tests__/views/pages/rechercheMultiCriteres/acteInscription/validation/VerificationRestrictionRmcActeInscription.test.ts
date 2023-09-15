@@ -460,6 +460,59 @@ test("Attendu: familleRegistreCSLouACQSaisieSansPocopa fonctionnne correctement"
   ).toBeFalsy();
 });
 
+test.each([
+  { cle: "ACQ", libelleTest: "NE DOIT PAS", estValide: false },
+  { cle: "CSL", libelleTest: "NE DOIT PAS", estValide: false },
+  { cle: "DEP", libelleTest: "NE DOIT PAS", estValide: false },
+  { cle: "COL", libelleTest: "NE DOIT PAS", estValide: false },
+  { cle: "AR2", libelleTest: "NE DOIT PAS", estValide: false },
+  { cle: "AR3", libelleTest: "NE DOIT PAS", estValide: false },
+  { cle: "OP2", libelleTest: "DOIT", estValide: true },
+  { cle: "OP3", libelleTest: "DOIT", estValide: true },
+  { cle: "JUG", libelleTest: "NE DOIT PAS", estValide: false },
+  { cle: "MAR", libelleTest: "NE DOIT PAS", estValide: false },
+  { cle: "CPN", libelleTest: "NE DOIT PAS", estValide: false },
+  { cle: "AFF", libelleTest: "NE DOIT PAS", estValide: false },
+  { cle: "XDX", libelleTest: "NE DOIT PAS", estValide: false },
+  { cle: "OPT", libelleTest: "NE DOIT PAS", estValide: false },
+  { cle: "PR", libelleTest: "NE DOIT PAS", estValide: false },
+  { cle: "PAC", libelleTest: "NE DOIT PAS", estValide: false }
+])(
+  "$libelleTest valider la saisie QUAND le champ 'Nature d'acte' est saisi, que la cle '$cle' du champ 'Famille de registre' est sélectionné et que l'année de registre n'est pas saisie.",
+  async params => {
+    const rmcSaisieNatureEtFamille: IRMCActeInscription = {
+      registreRepertoire: {
+        registre: {
+          natureActe: SOMETHING,
+          familleRegistre: params.cle,
+          pocopa: undefined
+        }
+      },
+      titulaire: {
+        dateNaissance: { jour: "", mois: "", annee: "" },
+        paysNaissance: undefined
+      },
+      evenement: {
+        paysEvenement: ""
+      }
+    };
+
+    if (params.estValide) {
+      expect(
+        tripletNatureFamilleAnneeNonSaisiEntierementEtPasDAutreCritereSaisi(
+          rmcSaisieNatureEtFamille
+        )
+      ).toBeFalsy();
+    } else {
+      expect(
+        tripletNatureFamilleAnneeNonSaisiEntierementEtPasDAutreCritereSaisi(
+          rmcSaisieNatureEtFamille
+        )
+      ).toBeTruthy();
+    }
+  }
+);
+
 test("Attendu: tripletNatureFamilleAnneeNonSaisiEntierementEtPasDAutreCritereSaisi fonctionnne correctement", () => {
   const rmcSaisieNatureEtFamille: IRMCActeInscription = {
     registreRepertoire: {
@@ -560,7 +613,7 @@ test("Attendu: numeroActeSaisiSansFamilleRegistreEtPocopa fonctionnne correcteme
         natureActe: "",
         anneeRegistre: "",
         pocopa: undefined,
-        numeroActe: SOMETHING
+        numeroActe: { numeroActeOuOrdre: SOMETHING, numeroBisTer: "" }
       }
     },
     titulaire: {

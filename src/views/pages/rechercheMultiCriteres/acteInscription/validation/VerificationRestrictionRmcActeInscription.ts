@@ -51,7 +51,7 @@ const verificationsRestrictionCriteresErreurs: IVerificationErreur[] = [
   {
     test: familleRegistreCSLouACQSaisieSansPocopa,
     messageErreur:
-      'Le critère "Poste Commune Pays" est obligatoire pour cette famille de registre'
+      'Le critère "Type / Poste / Commune / Pays" est obligatoire pour cette famille de registre'
   },
   {
     test: tripletNatureFamilleAnneeNonSaisiEntierementEtPasDAutreCritereSaisi,
@@ -61,7 +61,7 @@ const verificationsRestrictionCriteresErreurs: IVerificationErreur[] = [
   {
     test: numeroActeSaisiSansFamilleRegistreEtPocopa,
     messageErreur:
-      'Complétez votre recherche avec la Famille de registre et le "Poste Commune Pays"'
+      'Complétez votre recherche avec la Famille de registre et le critère "Type / Poste / Commune / Pays"'
   }
 ];
 
@@ -77,7 +77,7 @@ export function numeroActeSaisiSansFamilleRegistreEtPocopa(
 ): boolean {
   const registre = rMCSaisie.registreRepertoire?.registre;
   return (
-    estRenseigne(registre?.numeroActe) &&
+    estRenseigne(registre?.numeroActe?.numeroActeOuOrdre) &&
     (estNonRenseigne(registre?.familleRegistre) ||
       estNonRenseigne(registre?.pocopa))
   );
@@ -89,7 +89,7 @@ export function tripletNatureFamilleAnneeNonSaisiEntierementEtPasDAutreCritereSa
   const registre = rMCSaisie?.registreRepertoire?.registre;
   return (
     tripletNatureFamilleAnneeIncomplet(registre) &&
-    estNonRenseigne(registre?.numeroActe) &&
+    estNonRenseigne(registre?.numeroActe?.numeroActeOuOrdre) &&
     estNonRenseigne(registre?.pocopa) &&
     aucuneProprieteRenseignee(rMCSaisie.evenement) &&
     aucuneProprieteRenseignee(rMCSaisie.datesDebutFinAnnee) &&
@@ -118,7 +118,8 @@ function sontRenseignesNatureActeEtFamilleRegistreEtNonRenseigneAnneeRegistre(
 ): boolean {
   return (
     tousRenseignes(registre?.natureActe, registre?.familleRegistre) &&
-    estNonRenseigne(registre?.anneeRegistre)
+    estNonRenseigne(registre?.anneeRegistre) &&
+    !estFamilleRegistreOP2OuOP3(registre)
   );
 }
 
@@ -137,6 +138,16 @@ function sontRenseignesFamilleRegistreEtAnneeRegistreEtNonRenseigneNatureActe(
   return (
     tousRenseignes(registre?.familleRegistre, registre?.anneeRegistre) &&
     estNonRenseigne(registre?.natureActe)
+  );
+}
+
+function estFamilleRegistreOP2OuOP3(registre?: IRMCRegistre): boolean {
+  const enumFamilleRegistre = TypeFamille.getEnumFor(
+    registre?.familleRegistre ?? ""
+  );
+  return (
+    TypeFamille.estOP2(enumFamilleRegistre) ||
+    TypeFamille.estOP3(enumFamilleRegistre)
   );
 }
 

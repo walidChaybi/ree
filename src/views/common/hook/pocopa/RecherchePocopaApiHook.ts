@@ -40,7 +40,6 @@ export function useRecherchePocopa(
             )
           );
         }
-
         setPocopasState(pocopas.body.data);
       } else {
         setPocopasState([]);

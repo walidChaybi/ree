@@ -15,7 +15,7 @@ import RegistreRepertoireFiltre, {
   RegistreRepertoireDefaultValues,
   RegistreRepertoireFiltreProps,
   RegistreRepertoireValidationSchema
-} from "../filtres/registreReperoire/RegistreReperoireFiltre";
+} from "../filtres/registreReperoire/RegistreRepertoireFiltre";
 import TitulaireFiltre, {
   TitulaireDefaultValues,
   TitulaireFiltreProps,

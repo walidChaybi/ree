@@ -9,7 +9,6 @@
 
   }
 
-
   input:not([type="checkbox"]):not([type="radio"]):disabled {
     background-color: $form-input-disabled-bg;
     -webkit-appearance: none;
@@ -31,12 +30,16 @@
     }
     input {
       align-self: center;
+      margin: 0.25rem;
+    }
+    select {
+      align-self: center;
+      margin: 0.25rem;
     }
   }
 
   .BlockErreur {
     color: $error-formulaire;
-    margin-bottom: 0.5rem;
     font-size: 0.9rem;
     .Warning {
       font-size: 0.9rem;

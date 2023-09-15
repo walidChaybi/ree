@@ -10,10 +10,10 @@ import {
   CARACTERES_AUTORISES_MESSAGE,
   NUMERO_INSCRIPTION_MESSAGE
 } from "@widget/formulaire/FormulaireMessages";
-import { traiteEspace } from "@widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
+  onBlurChampNumero,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect, FormikValues, getIn } from "formik";
@@ -71,11 +71,6 @@ const RepertoireInscriptionFiltre: React.FC<
 
   const [natureInactif, setNatureInactif] = useState<boolean>(true);
   const [natureOptions, setNatureOptions] = useState<Options>([]);
-
-  const onBlurNumero = (e: any) => {
-    traiteEspace(e, props.formik.handleChange);
-    props.formik.handleBlur(e);
-  };
 
   const manageNatureOptions = async (type: string) => {
     if (type === "RC") {
@@ -139,7 +134,9 @@ const RepertoireInscriptionFiltre: React.FC<
           label={getLibelle("N° de l'inscription")}
           onInput={formatNumber}
           disabled={props.filtreInactif}
-          onBlur={onBlurNumero}
+          onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onBlurChampNumero(e, props.formik)
+          }
         />
         <SelectField
           name={natureInscriptionWithNamespace}

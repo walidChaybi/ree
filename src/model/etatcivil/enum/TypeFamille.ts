@@ -35,7 +35,7 @@ export class TypeFamille extends EnumWithLibelle {
   public static readonly OPT = new TypeFamille("Dossier d'optants");
   public static readonly PR = new TypeFamille("Pré-dossier");
   public static readonly PAC = new TypeFamille(
-    "Français vivant à l'étranger ayant conclu un PACS en poste"
+    "Etranger ayant conclu un PACS en France"
   );
 
   public static getEnumFor(str: string) {
@@ -57,5 +57,33 @@ export class TypeFamille extends EnumWithLibelle {
       typeFamille === TypeFamille.PR ||
       typeFamille === TypeFamille.XDX
     );
+  }
+
+  public static estCPN(typeFamille?: TypeFamille) {
+    return typeFamille === TypeFamille.CPN;
+  }
+
+  public static estPAC(typeFamille?: TypeFamille) {
+    return typeFamille === TypeFamille.PAC;
+  }
+
+  public static estOP2(typeFamille?: TypeFamille) {
+    return typeFamille === TypeFamille.OP2;
+  }
+
+  public static estOP3(typeFamille?: TypeFamille) {
+    return typeFamille === TypeFamille.OP3;
+  }
+
+  public static estACQ(typeFamille?: TypeFamille) {
+    return typeFamille === TypeFamille.ACQ;
+  }
+
+  public static estCOL(typeFamille?: TypeFamille) {
+    return typeFamille === TypeFamille.COL;
+  }
+
+  public static estMAR(typeFamille?: TypeFamille) {
+    return typeFamille === TypeFamille.MAR;
   }
 }

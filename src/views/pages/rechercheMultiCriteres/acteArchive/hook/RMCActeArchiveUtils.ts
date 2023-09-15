@@ -9,8 +9,7 @@ import { getValeurOuUndefined } from "@util/Utils";
 
 /** Critères de recherche: mapping avant appel d'api */
 export function mappingCriteres(criteres: IRMCActeArchive): IRMCArchiveRequest {
-  let criteresMapper: IRMCArchiveRequest;
-  criteresMapper = {
+  const criteresMapper: IRMCArchiveRequest = {
     // Filtre Titulaire
     ...getCriteresTitulaire(criteres),
     // Filtre Date de création
@@ -32,10 +31,19 @@ export function mappingCriteres(criteres: IRMCActeArchive): IRMCArchiveRequest {
       criteres.registreArchive?.registre?.pocopa?.cle
     ),
     numeroActe: getValeurOuUndefined(
-      criteres.registreArchive?.registre?.numeroActe
+      criteres.registreArchive?.registre?.numeroActe?.numeroActeOuOrdre
     ),
     anneeRegistre: getValeurOuUndefined(
       criteres.registreArchive?.registre?.anneeRegistre
+    ),
+    numeroBisTer: getValeurOuUndefined(
+      criteres.registreArchive?.registre?.numeroActe?.numeroBisTer
+    ),
+    support1: getValeurOuUndefined(
+      criteres.registreArchive?.registre?.registreSupport?.supportUn
+    ),
+    support2: getValeurOuUndefined(
+      criteres.registreArchive?.registre?.registreSupport?.supportDeux
     ),
     jourDateEvenement: getValeurOuUndefined(
       criteres.registreArchive?.evenement?.dateEvenement?.jour

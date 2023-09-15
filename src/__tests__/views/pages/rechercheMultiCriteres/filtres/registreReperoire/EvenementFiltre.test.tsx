@@ -2,7 +2,7 @@ import EvenementFiltre, {
   EvenementDefaultValues,
   EvenementFiltreProps
 } from "@pages/rechercheMultiCriteres/filtres/registreReperoire/EvenementFiltre";
-import { EVENEMENT } from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
+import { EVENEMENT } from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreRepertoireFiltre";
 import {
   act,
   fireEvent,

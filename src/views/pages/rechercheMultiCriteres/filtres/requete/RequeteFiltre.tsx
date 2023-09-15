@@ -8,10 +8,10 @@ import { Fieldset } from "@widget/fieldset/Fieldset";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { CARACTERES_ALPHANUMERIQUE } from "@widget/formulaire/FormulaireMessages";
-import { traiteEspace } from "@widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
+  onBlurChampNumero,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect, getIn } from "formik";
@@ -105,11 +105,6 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
     }
   };
 
-  const onBlurNumero = (e: any) => {
-    traiteEspace(e, props.formik.handleChange);
-    props.formik.handleBlur(e);
-  };
-
   const onChangeTypeRequete = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     props.formik.setFieldValue(sousTypeRequeteWithNamespace, "");
@@ -142,17 +137,23 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
           <InputField
             name={numeroRequeteWithNamespace}
             label={getLibelle("N° Requête")}
-            onBlur={onBlurNumero}
+            onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+              onBlurChampNumero(e, props.formik)
+            }
           />
           <InputField
             name={numeroTeledossierWithNamespace}
             label={getLibelle("N° Télédossier")}
-            onBlur={onBlurNumero}
+            onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+              onBlurChampNumero(e, props.formik)
+            }
           />
           <InputField
             name={numeroSDANFWithNamespace}
             label={getLibelle("N° SDANF")}
-            onBlur={onBlurNumero}
+            onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+              onBlurChampNumero(e, props.formik)
+            }
           />
           <SelectField
             name={typeRequeteWithNamespace}

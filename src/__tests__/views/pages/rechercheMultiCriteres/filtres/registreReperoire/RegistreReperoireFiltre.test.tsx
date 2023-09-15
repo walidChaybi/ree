@@ -1,14 +1,14 @@
 import { REGISTRE_REPERTOIRE } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
 import RegistreRepertoireFiltre, {
-    RegistreRepertoireDefaultValues,
-    RegistreRepertoireFiltreProps
-} from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
+  RegistreRepertoireDefaultValues,
+  RegistreRepertoireFiltreProps
+} from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreRepertoireFiltre";
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { getLibelle } from "@util/Utils";
 import { Form, Formik } from "formik";

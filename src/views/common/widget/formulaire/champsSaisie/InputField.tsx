@@ -65,7 +65,7 @@ export const InputField: React.FC<InputFieldProps> = ({
       <div className="BlockInput">
         {label && <label htmlFor={name}>{label}</label>}
         <Field
-          aria-label={`${ariaLabel ? ariaLabel : name}`}
+          aria-label={`${ariaLabel || name}`}
           component={component}
           name={name}
           id={name}
@@ -75,7 +75,7 @@ export const InputField: React.FC<InputFieldProps> = ({
           type={typeInput?.type}
           min={typeInput?.min}
           max={typeInput?.max}
-          placeholder={placeholder ? placeholder : label}
+          placeholder={placeholder || label}
           {...(component === "textarea" ? { rows } : {})}
           className={className}
           validate={validate}

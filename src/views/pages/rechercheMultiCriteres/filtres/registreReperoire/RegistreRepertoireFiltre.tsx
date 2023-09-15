@@ -49,15 +49,11 @@ export type RegistreRepertoireFiltreProps = ComponentFiltreProps &
 const RegistreRepertoireFiltre: React.FC<
   RegistreRepertoireFiltreProps
 > = props => {
-  const [filtreActeInactif, setFiltreActeInactif] = useState<
-    boolean | undefined
-  >(false);
-  const [filtreInscriptionInactif, setFiltreInscriptionInactif] = useState<
-    boolean | undefined
-  >(false);
-  const [filteEvenementInactif, setFilteEvenementInactif] = useState<
-    boolean | undefined
-  >(false);
+  const [filtreActeInactif, setFiltreActeInactif] = useState<boolean>(false);
+  const [filtreInscriptionInactif, setFiltreInscriptionInactif] =
+    useState<boolean>(false);
+  const [filtreEvenementInactif, setFiltreEvenementInactif] =
+    useState<boolean>(false);
   const [filtreTypeRepertoire, setFiltreTypeRepertoire] = useState<
     TypeRepertoire | undefined
   >();
@@ -73,7 +69,7 @@ const RegistreRepertoireFiltre: React.FC<
       isRegistreDirty(props.formik.values as IRMCActeInscription)
     );
 
-    setFilteEvenementInactif(
+    setFiltreEvenementInactif(
       isTypeRcRca(props.formik.values as IRMCActeInscription)
     );
 
@@ -106,7 +102,7 @@ const RegistreRepertoireFiltre: React.FC<
         {...registreRepertoireFiltreProps}
       />
       <EvenementFiltre
-        filtreInactif={filteEvenementInactif}
+        filtreInactif={filtreEvenementInactif}
         {...evenementFiltreProps}
       />
     </div>
@@ -121,7 +117,10 @@ function isRegistreDirty(values: IRMCActeInscription) {
     criteres?.familleRegistre !== "" ||
     criteres?.natureActe !== "" ||
     criteres?.anneeRegistre !== "" ||
-    criteres?.numeroActe !== "" ||
+    criteres?.numeroActe?.numeroActeOuOrdre !== "" ||
+    criteres?.numeroActe?.numeroBisTer !== "" ||
+    criteres?.registreSupport?.supportUn !== "" ||
+    criteres?.registreSupport?.supportDeux !== "" ||
     criteres?.pocopa !== null
   );
 }

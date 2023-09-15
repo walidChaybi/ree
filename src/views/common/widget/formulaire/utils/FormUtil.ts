@@ -4,6 +4,7 @@ import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreat
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { FormikProps, FormikValues } from "formik";
+import { traiteEspace } from "./ControlesUtil";
 
 export const NB_CARACT_MAX_SAISIE = "100";
 export const NB_CARACT_ADRESSE = "38";
@@ -74,3 +75,11 @@ export function getLibelleParentFromSexe(parent: ITitulaireRequeteCreation) {
       return getLibelle(`Parent ${parent.position}`);
   }
 }
+
+export const onBlurChampNumero = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  formik: FormikProps<FormikValues>
+): void => {
+  traiteEspace(e, formik.handleChange);
+  formik.handleBlur(e);
+};

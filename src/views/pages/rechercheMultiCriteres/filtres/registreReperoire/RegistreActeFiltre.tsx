@@ -1,8 +1,22 @@
+import { ANNEE } from "@composant/formulaire/ConstantesNomsForm";
 import RecherchePocopas from "@composant/recherchePocopas/RecherchePocopas";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
+import { IRMCRegistre } from "@model/rmc/acteInscription/rechercheForm/IRMCRegistre";
 import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
+import NumeroActeForm, {
+  NumeroActeDefaultValues,
+  NumeroActeFormProps,
+  NumeroActeValidationSchema,
+  NUMERO_BIS_TER
+} from "@widget/formulaire/champNumeroActe/NumeroActeForm";
+import RegistreSupportForm, {
+  RegistreSupportDefaultValues,
+  RegistreSupportFormProps,
+  SUPPORT_DEUX,
+  SUPPORT_UN
+} from "@widget/formulaire/champRegistreSupport/RegistreSupportForm";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import {
@@ -11,8 +25,7 @@ import {
 } from "@widget/formulaire/FormulaireMessages";
 import {
   digitSeulement,
-  traiteCarAutorises,
-  traiteEspace
+  traiteCarAutorises
 } from "@widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
@@ -24,19 +37,21 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 
 // Noms des champs
-export const NATURE_ACTE = "natureActe";
-export const FAMILLE_REGISTRE = "familleRegistre";
-export const POCOPA = "pocopa";
-export const NUMERO_ACTE = "numeroActe";
-export const ANNEE = "anneeRegistre";
+const NATURE_ACTE = "natureActe";
+const FAMILLE_REGISTRE = "familleRegistre";
+const POCOPA = "pocopa";
+const ANNEE_REGISTRE = "anneeRegistre";
+const REGISTRE_SUPPORT = "registreSupport";
+const NUMERO_ACTE = "numeroActe";
 
 // Valeurs par défaut des champs
-export const RegistreActeDefaultValues = {
+export const RegistreActeDefaultValues: IRMCRegistre = {
   [NATURE_ACTE]: "",
   [FAMILLE_REGISTRE]: "",
-  [ANNEE]: "",
-  [POCOPA]: null, // Pocopa est un objet de type Option ({value: "", str: ""})
-  [NUMERO_ACTE]: ""
+  [ANNEE_REGISTRE]: "",
+  [POCOPA]: null, // Pocopa est un objet de type Option ({cle: "", libelle: ""})
+  [REGISTRE_SUPPORT]: RegistreSupportDefaultValues,
+  [NUMERO_ACTE]: NumeroActeDefaultValues
 };
 
 const MIN_LENGTH_ANNEE = 999;
@@ -48,7 +63,7 @@ export const RegistreActeValidationSchema = Yup.object({
   [ANNEE]: Yup.number()
     .min(MIN_LENGTH_ANNEE, MIN_LENGTH_ANNEE_MESSAGE)
     .max(new Date().getFullYear(), MAX_ANNEE_MESSAGE),
-  [NUMERO_ACTE]: Yup.string()
+  [NUMERO_ACTE]: NumeroActeValidationSchema
 });
 
 export type RegistreActeFiltreProps = ComponentFiltreProps &
@@ -56,81 +71,159 @@ export type RegistreActeFiltreProps = ComponentFiltreProps &
 
 const NOMBRE_RESULTAT_MAX = 15;
 const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
-  const [familleRegistre, setFamilleRegistre] = useState("");
-  // Namespace des composants formik
-  const pocopaWithNamespace = withNamespace(props.nomFiltre, POCOPA);
-  const numeroActeWithNamespace = withNamespace(props.nomFiltre, NUMERO_ACTE);
-  const familleRegistreWithNamespace = withNamespace(
+  const [familleRegistre, setFamilleRegistre] = useState<string>("");
+  const [champsVerrouilles, setChampsVerrouilles] = useState({
+    natureActe: false,
+    pocopa: false,
+    anneeRegistre: false,
+    supportUn: false,
+    supportDeux: false,
+    numeroBisTer: false
+  });
+
+  // Namespace champs
+  const anneeRegistreAvecNamespace = withNamespace(
     props.nomFiltre,
-    FAMILLE_REGISTRE
+    ANNEE_REGISTRE
   );
-  const natureActeWithNamespace = withNamespace(props.nomFiltre, NATURE_ACTE);
+  const pocopaWithNamespace = withNamespace(props.nomFiltre, POCOPA);
+  const natureActeAvecNamespace = withNamespace(props.nomFiltre, NATURE_ACTE);
+  const numeroActeAvecNamespace = withNamespace(props.nomFiltre, NUMERO_ACTE);
+  const registreSupportAvecNamespace = withNamespace(
+    props.nomFiltre,
+    REGISTRE_SUPPORT
+  );
+
+  const registreSupportProps: RegistreSupportFormProps = {
+    nomFiltre: registreSupportAvecNamespace,
+    estInactifChampSupportUn: champsVerrouilles.supportUn,
+    estInactifChampSupportDeux: champsVerrouilles.supportDeux
+  };
+
+  const numeroActeProps: NumeroActeFormProps = {
+    nomFiltre: numeroActeAvecNamespace,
+    estInactifChampNumeroBisTer: champsVerrouilles.numeroBisTer
+  };
 
   // Evennement
-  function numeroChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const anneeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     traiteCarAutorises(e.target, digitSeulement);
-  }
-
-  const onBlurNumero = (e: any) => {
-    traiteEspace(e, props.formik.handleChange);
-    props.formik.handleBlur(e);
   };
 
-  function anneeChange(e: React.ChangeEvent<HTMLInputElement>) {
-    traiteCarAutorises(e.target, digitSeulement);
-  }
+  function onFamilleRegistreChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const valeur = e.target.value;
+    const enumTypeFamille = TypeFamille.getEnumFor(valeur);
+    setFamilleRegistre(valeur);
 
-  const onFamilleRegistreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Réinitialisation du POCOPA si la famille change
-    setFamilleRegistre(e.target.value);
-    props.formik.setFieldValue(pocopaWithNamespace, null);
+    const estCPNOuPAC = estTypeFamilleCPNOuPAC(enumTypeFamille);
+    const estOP2OuOP3 = estTypeFamilleOP2OuOP3(enumTypeFamille);
+    const estACQOuCOL = estTypeFamilleACQOuCOL(enumTypeFamille);
+
+    // Réinitialiser les champs.
+    props.formik.setFieldValue(
+      pocopaWithNamespace,
+      TypeFamille.estMAR(enumTypeFamille)
+        ? {
+            cle: "TR-ACTES",
+            libelle: "TR-ACTES"
+          }
+        : null
+    );
+
+    if (estCPNOuPAC) {
+      props.formik.setFieldValue(natureActeAvecNamespace, null);
+      props.formik.setFieldValue(
+        withNamespace(registreSupportAvecNamespace, SUPPORT_UN),
+        ""
+      );
+      props.formik.setFieldValue(
+        withNamespace(numeroActeAvecNamespace, NUMERO_BIS_TER),
+        ""
+      );
+    }
+
+    if (estOP2OuOP3) {
+      props.formik.setFieldValue(anneeRegistreAvecNamespace, "");
+    }
+
+    if (!estACQOuCOL) {
+      props.formik.setFieldValue(
+        withNamespace(registreSupportAvecNamespace, SUPPORT_DEUX),
+        ""
+      );
+    }
+
+    // (Dé)Verrouiller les champs.
+    setChampsVerrouilles({
+      natureActe: estCPNOuPAC,
+      pocopa: estCPNOuPAC || estOP2OuOP3 || TypeFamille.estMAR(enumTypeFamille),
+      anneeRegistre: estOP2OuOP3,
+      supportUn: estCPNOuPAC,
+      supportDeux: !estACQOuCOL,
+      numeroBisTer: estCPNOuPAC
+    });
+
     props.formik.handleChange(e);
-  };
+  }
 
   return (
     <Fieldset titre={getLibelle("Filtre registre")}>
       <div className="FormFiltre">
         <SelectField
-          name={natureActeWithNamespace}
+          name={natureActeAvecNamespace}
           label={getLibelle("Nature de l'acte")}
           options={NatureActe.getAllEnumsAsOptions()}
-          disabled={props.filtreInactif}
+          disabled={props.filtreInactif || champsVerrouilles.natureActe}
         />
         <SelectField
-          name={familleRegistreWithNamespace}
+          name={withNamespace(props.nomFiltre, FAMILLE_REGISTRE)}
           label={getLibelle("Famille de registre")}
           options={TypeFamille.getAllEnumsAsOptions()}
           disabled={props.filtreInactif}
           onChange={onFamilleRegistreChange}
         />
-
-        <InputField
-          name={withNamespace(props.nomFiltre, ANNEE)}
-          label={getLibelle("Année de registre")}
-          ariaLabel={`${props.nomFiltre}.annee`}
-          maxLength="4"
-          onInput={anneeChange}
-          disabled={props.filtreInactif}
-        />
-
         <RecherchePocopas
           nom={pocopaWithNamespace}
-          label={"Poste Commune Pays"}
+          label={"Type / Poste / Commune / Pays"}
           nombreResultatsMax={NOMBRE_RESULTAT_MAX}
           familleRegistre={familleRegistre}
           estOuvert={undefined}
+          disabled={champsVerrouilles.pocopa}
+          optionsValidesNonAffichees={[
+            { cle: "TR-ACTES", libelle: "TR-ACTES" }
+          ]}
         />
-
         <InputField
-          name={numeroActeWithNamespace}
-          label={getLibelle("N° de l'acte")}
-          disabled={props.filtreInactif}
-          onBlur={onBlurNumero}
-          onInput={numeroChange}
+          name={anneeRegistreAvecNamespace}
+          label={getLibelle("Année")}
+          ariaLabel={`${props.nomFiltre}.annee`}
+          maxLength="4"
+          onInput={anneeChange}
+          disabled={props.filtreInactif || champsVerrouilles.anneeRegistre}
         />
+        <RegistreSupportForm {...registreSupportProps} />
+        <NumeroActeForm {...numeroActeProps} />
       </div>
     </Fieldset>
   );
 };
 
 export default connect(RegistreActeFiltre);
+
+function estTypeFamilleCPNOuPAC(familleRegistre: TypeFamille): boolean {
+  return (
+    TypeFamille.estCPN(familleRegistre) || TypeFamille.estPAC(familleRegistre)
+  );
+}
+
+function estTypeFamilleOP2OuOP3(familleRegistre: TypeFamille): boolean {
+  return (
+    TypeFamille.estOP2(familleRegistre) || TypeFamille.estOP3(familleRegistre)
+  );
+}
+
+function estTypeFamilleACQOuCOL(familleRegistre: TypeFamille): boolean {
+  return (
+    TypeFamille.estACQ(familleRegistre) || TypeFamille.estCOL(familleRegistre)
+  );
+}

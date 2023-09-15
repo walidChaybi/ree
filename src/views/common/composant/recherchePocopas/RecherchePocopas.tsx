@@ -15,6 +15,7 @@ interface RecherchePocopasProps {
   nombreResultatsMax: number;
   familleRegistre: string;
   estOuvert?: boolean;
+  optionsValidesNonAffichees?: Options;
 }
 
 type RecherchePocopasSubForm = RecherchePocopasProps & SubFormProps;
@@ -85,6 +86,8 @@ const RecherchePocopas: React.FC<RecherchePocopasSubForm> = props => {
       onInput={onChampRechercheInput}
       options={getPocopasAsOptions()}
       disabledPortal={true}
+      disabled={props.disabled}
+      optionsValidesNonAffichees={props.optionsValidesNonAffichees}
     />
   );
 };

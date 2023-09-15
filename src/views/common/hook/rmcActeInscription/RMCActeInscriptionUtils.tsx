@@ -56,10 +56,19 @@ export function mappingCriteres(
       criteres.registreRepertoire?.registre?.pocopa?.cle
     ),
     numeroActe: getValeurOuUndefined(
-      criteres.registreRepertoire?.registre?.numeroActe
+      criteres.registreRepertoire?.registre?.numeroActe?.numeroActeOuOrdre
     ),
     anneeRegistre: getValeurOuUndefined(
       criteres.registreRepertoire?.registre?.anneeRegistre
+    ),
+    numeroBisTer: getValeurOuUndefined(
+      criteres.registreRepertoire?.registre?.numeroActe?.numeroBisTer
+    ),
+    support1: getValeurOuUndefined(
+      criteres.registreRepertoire?.registre?.registreSupport?.supportUn
+    ),
+    support2: getValeurOuUndefined(
+      criteres.registreRepertoire?.registre?.registreSupport?.supportDeux
     ),
     numeroInscription: getValeurOuUndefined(
       criteres.registreRepertoire?.repertoire?.numeroInscription

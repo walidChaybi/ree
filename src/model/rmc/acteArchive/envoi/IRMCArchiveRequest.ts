@@ -20,6 +20,9 @@ export interface IRMCArchiveRequest {
   posteOuPocopa?: string;
   numeroActe?: string;
   anneeRegistre?: string;
+  numeroBisTer?: string;
+  support1?: string;
+  support2?: string;
 
   // Evenement
   jourDateEvenement?: string;
