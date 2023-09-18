@@ -13,7 +13,7 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequete } from "@model/requete/IRequete";
 import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { Options } from "@util/Type";
-import { getLibelle } from "@util/Utils";
+import { DEUX, getLibelle, UN } from "@util/Utils";
 import AdresseForm from "@widget/formulaire/adresse/AdresseForm";
 import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
 import RequeteForm from "@widget/formulaire/requete/RequeteForm";
@@ -64,10 +64,10 @@ export function getTitulaire1Form(requete: TRequete | undefined): JSX.Element {
   const interesseFormProps = {
     nom: TITULAIRE1,
     titre: getLibelle("Titulaire 1"),
-    titulaire: TitulaireRequete.getTitulaireByPosition({
-      titulaires: requete?.titulaires,
-      position: 1
-    }),
+    titulaire: TitulaireRequete.getTitulaireParPosition(
+      requete?.titulaires || [],
+      UN
+    ),
     filiation: true
   } as IdentiteSubFormProps;
   return <IdentiteForm key={TITULAIRE1} {...interesseFormProps} />;
@@ -80,10 +80,10 @@ export function getTitulaire2Form(
   const interesseFormProps = {
     nom: TITULAIRE2,
     titre: getLibelle("Titulaire 2"),
-    titulaire: TitulaireRequete.getTitulaireByPosition({
-      titulaires: requete?.titulaires,
-      position: 2
-    }),
+    titulaire: TitulaireRequete.getTitulaireParPosition(
+      requete?.titulaires || [],
+      DEUX
+    ),
     reset: visible,
     filiation: true
   } as IdentiteSubFormProps;

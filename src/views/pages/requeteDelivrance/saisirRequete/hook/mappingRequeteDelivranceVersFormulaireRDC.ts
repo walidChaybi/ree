@@ -47,7 +47,7 @@ import {
   ITitulaireRequete,
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
-import { getValeurOuVide } from "@util/Utils";
+import { DEUX, getValeurOuVide, UN } from "@util/Utils";
 import { SaisieRequeteRDC } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
 import { IdentiteFormDefaultValues } from "../sousFormulaires/identite/IdentiteForm";
 import {
@@ -66,10 +66,10 @@ export function mappingRequeteDelivranceVersFormulaireRDC(
     [REQUETE]: saisieRequete(requete),
     [EVENEMENT]: saisieEvenement(requete.evenement),
     [TITULAIRE1]: saisieTitulaireRDC(
-      TitulaireRequete.getTitulaireByPosition({ titulaires, position: 1 })
+      TitulaireRequete.getTitulaireParPosition(titulaires || [], UN)
     ),
     [TITULAIRE2]: saisieTitulaireRDC(
-      TitulaireRequete.getTitulaireByPosition({ titulaires, position: 2 })
+      TitulaireRequete.getTitulaireParPosition(titulaires || [], DEUX)
     ),
     [REQUERANT]: saisieRequerant(requete),
     [MANDANT]: saisieMandant(requete.mandant),

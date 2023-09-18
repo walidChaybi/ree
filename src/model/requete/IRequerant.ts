@@ -1,12 +1,14 @@
 import { ICompositionIdentiteRequerant } from "@model/composition/commun/IRequerantComposition";
 import {
   chainesEgalesIgnoreCasse,
+  DEUX,
   enMajuscule,
   formatNom,
   formatPrenom,
   getValeurOuUndefined,
   getValeurOuVide,
-  SNP
+  SNP,
+  UN
 } from "@util/Utils";
 import { Qualite } from "./enum/Qualite";
 import { TypeInstitutionnel } from "./enum/TypeInstitutionnel";
@@ -44,9 +46,7 @@ export const Requerant = {
   getNomUsageOuNomFamille(requerant?: IRequerant): string | undefined {
     let nom = requerant?.nomFamille;
     if (
-      Qualite.estParticulier(
-        requerant?.qualiteRequerant.qualite
-      ) &&
+      Qualite.estParticulier(requerant?.qualiteRequerant.qualite) &&
       requerant?.qualiteRequerant.particulier?.nomUsage
     ) {
       nom = requerant?.qualiteRequerant.particulier?.nomUsage;
@@ -117,17 +117,17 @@ export const Requerant = {
   }) {
     return requerant
       ? Requerant.estTitulaireX({
-          titulaire: TitulaireRequete.getTitulaireByPosition({
-            titulaires,
-            position: 1
-          }),
+          titulaire: TitulaireRequete.getTitulaireParPosition(
+            titulaires || [],
+            UN
+          ),
           requerant
         }) ||
           Requerant.estTitulaireX({
-            titulaire: TitulaireRequete.getTitulaireByPosition({
-              titulaires,
-              position: 2
-            }),
+            titulaire: TitulaireRequete.getTitulaireParPosition(
+              titulaires || [],
+              DEUX
+            ),
             requerant
           })
       : false;

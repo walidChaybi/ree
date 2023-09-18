@@ -12,6 +12,7 @@ import {
   ITitulaireRequete,
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
+import { DEUX, UN } from "@util/Utils";
 import { IdentiteFormDefaultValuesRDCSC } from "../sousFormulaires/identite/IdentiteForm";
 import {
   saisieAdresse,
@@ -29,10 +30,10 @@ export function mappingRequeteDelivranceVersFormulaireRDCSC(
     [DOCUMENT]: DocumentDelivrance.getUuidFromDocument(documentDemande),
     [TITULAIRES]: {
       titulaire1: saisieTitulaireRDCSC(
-        TitulaireRequete.getTitulaireByPosition({ titulaires, position: 1 })
+        TitulaireRequete.getTitulaireParPosition(titulaires || [], UN)
       ),
       titulaire2: saisieTitulaireRDCSC(
-        TitulaireRequete.getTitulaireByPosition({ titulaires, position: 2 })
+        TitulaireRequete.getTitulaireParPosition(titulaires || [], DEUX)
       )
     },
     [REQUERANT]: saisieRequerant(requete),

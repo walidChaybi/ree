@@ -1,4 +1,3 @@
-import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
 import {
   AUTRES,
   FRANCISATION_POSTULANT,
@@ -10,15 +9,17 @@ import {
   TITULAIRE,
   TYPE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IUuidEtatCivilParams } from "@model/params/IUuidEtatCivilParams";
 import {
   ITitulaireRequeteCreation,
   TitulaireRequeteCreation
 } from "@model/requete/ITitulaireRequeteCreation";
-import { getLibelle } from "@util/Utils";
+import { DEUX, getLibelle, UN } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
-import { Formulaire } from "@widget/formulaire/Formulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { Formulaire } from "@widget/formulaire/Formulaire";
 import {
   getLibelleParentFromSexe,
   withNamespace
@@ -57,15 +58,18 @@ export const SaisiePostulantForm: React.FC<
     return [undefined, undefined];
   }, [props.titulaires, idEtatCivilParam]);
 
-  const parentsTitulaire =
-    TitulaireRequeteCreation.getParentsTriesParSexe(props.titulaires) || [];
-
-  const titulaireParent1 = TitulaireRequeteCreation.getParentsTriesParSexe(
-    props.titulaires
-  )?.[0];
-  const titulaireParent2 = TitulaireRequeteCreation.getParentsTriesParSexe(
-    props.titulaires
-  )?.[1];
+  const parentMasculinEtOuPositionUn =
+    TitulaireRequeteCreation.getParentParSexeEtOuParPosition(
+      props.titulaires,
+      Sexe.MASCULIN,
+      UN
+    );
+  const parentFemininEtOuPositionDeux =
+    TitulaireRequeteCreation.getParentParSexeEtOuParPosition(
+      props.titulaires,
+      Sexe.FEMININ,
+      DEUX
+    );
 
   const elementListe = [
     {
@@ -81,24 +85,24 @@ export const SaisiePostulantForm: React.FC<
         />
       )
     },
-    titulaireParent1
+    parentMasculinEtOuPositionUn
       ? {
-          libelle: getLibelleParentFromSexe(titulaireParent1),
+          libelle: getLibelleParentFromSexe(parentMasculinEtOuPositionUn),
           element: (
             <ParentForm
               nom={`${PARENTS}.${PARENT1}`}
-              parent={titulaireParent1}
+              parent={parentMasculinEtOuPositionUn}
             />
           )
         }
       : undefined,
-    titulaireParent2
+    parentFemininEtOuPositionDeux
       ? {
-          libelle: getLibelleParentFromSexe(titulaireParent2),
+          libelle: getLibelleParentFromSexe(parentFemininEtOuPositionDeux),
           element: (
             <ParentForm
               nom={`${PARENTS}.${PARENT2}`}
-              parent={titulaireParent2}
+              parent={parentFemininEtOuPositionDeux}
             />
           )
         }
@@ -116,7 +120,8 @@ export const SaisiePostulantForm: React.FC<
       <Formulaire
         formDefaultValues={mappingTitulairesVersSaisieProjetPostulant(
           titulaire || ({} as ITitulaireRequeteCreation),
-          parentsTitulaire
+          parentMasculinEtOuPositionUn,
+          parentFemininEtOuPositionDeux
         )}
         formValidationSchema={PostulantValidationSchema}
         onSubmit={validerProjetPostulant}
@@ -134,9 +139,7 @@ export const SaisiePostulantForm: React.FC<
             disabled={true}
           />
         </div>
-        <GestionnaireElementScroll
-          elementListe={elementListe}
-        ></GestionnaireElementScroll>
+        <GestionnaireElementScroll elementListe={elementListe} />
         <Bouton type="submit">{getLibelle("Valider le postulant")}</Bouton>
       </Formulaire>
     </div>

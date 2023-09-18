@@ -13,7 +13,8 @@ function afficheComposantAutresSaisieDeProjet() {
     <Formulaire
       formDefaultValues={mappingTitulairesVersSaisieProjetPostulant(
         titulaires![0],
-        [titulaires![1], titulaires![2]]
+        titulaires![1],
+        titulaires![2]
       )}
       formValidationSchema={PostulantValidationSchema}
       onSubmit={() => {}}

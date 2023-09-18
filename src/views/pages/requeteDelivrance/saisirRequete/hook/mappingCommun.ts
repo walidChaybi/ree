@@ -60,7 +60,7 @@ import {
   ITitulaireRequete,
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
-import { getValeurOuVide } from "@util/Utils";
+import { DEUX, getValeurOuVide, UN } from "@util/Utils";
 import { AutreProfessionnelFormDefaultValues } from "../sousFormulaires/requerant/autreProfessionnel/AutreProfessionnelForm";
 import { InstitutionnelFormDefaultValues } from "../sousFormulaires/requerant/institutionnel/InstitutionnelForm";
 import { MandataireFormDefaultValues } from "../sousFormulaires/requerant/mandataire/MandataireForm";
@@ -186,20 +186,20 @@ export const saisieRequerant = (
       if (
         Requerant.estTitulaireX({
           requerant: requete.requerant,
-          titulaire: TitulaireRequete.getTitulaireByPosition({
-            titulaires: requete.titulaires,
-            position: 1
-          })
+          titulaire: TitulaireRequete.getTitulaireParPosition(
+            requete.titulaires || [],
+            UN
+          )
         })
       ) {
         requerant[TYPE_REQUERANT] = "TITULAIRE1";
       } else if (
         Requerant.estTitulaireX({
           requerant: requete.requerant,
-          titulaire: TitulaireRequete.getTitulaireByPosition({
-            titulaires: requete.titulaires,
-            position: 2
-          })
+          titulaire: TitulaireRequete.getTitulaireParPosition(
+            requete.titulaires || [],
+            DEUX
+          )
         })
       ) {
         requerant[TYPE_REQUERANT] = "TITULAIRE2";

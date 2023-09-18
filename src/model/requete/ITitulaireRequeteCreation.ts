@@ -78,34 +78,38 @@ export const TitulaireRequeteCreation = {
 
     return nationalites;
   },
+  getParents(
+    titulaires?: ITitulaireRequeteCreation[]
+  ): ITitulaireRequeteCreation[] | undefined {
+    return titulaires?.filter(filtreTitulairesCreationParQualiteFamilleParent);
+  },
   getParentsTries(
     titulaires?: ITitulaireRequeteCreation[]
   ): ITitulaireRequeteCreation[] | undefined {
-    return titulaires
-      ?.filter(
-        titulaire =>
-          titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
-          titulaire.qualite === QualiteFamille.PARENT
-      )
-      .sort((a, b) => a.position - b.position);
+    return this.getParents(titulaires)?.sort(triTitulairesCreationParPosition);
   },
-  getParentsTriesParSexe(
-    titulaires?: ITitulaireRequeteCreation[]
-  ): ITitulaireRequeteCreation[] | undefined {
-    return titulaires
-      ?.filter(
-        titulaire =>
-          titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
-          titulaire.qualite === QualiteFamille.PARENT
-      )
-      .sort((a, b) => a.position - b.position)
-      .sort(a => {
-        if (a.sexe === Sexe.MASCULIN.libelle) {
-          return -1;
-        } else {
-          return 1;
-        }
-      });
+  getParentParSexeEtOuParPosition(
+    titulaires: ITitulaireRequeteCreation[],
+    sexe: Sexe,
+    position: number
+  ): ITitulaireRequeteCreation | undefined {
+    let parentResultat: ITitulaireRequeteCreation | undefined = undefined;
+
+    const parents = this.getParents(titulaires);
+    if (parents?.length) {
+      const parentsParSexe = parents.filter(
+        parent => Sexe.getEnumFromLibelle(parent.sexe) === sexe
+      );
+
+      if (parentsParSexe?.length) {
+        parentResultat = this.getTitulaireParPosition(parentsParSexe, position);
+      }
+      if (!parentResultat) {
+        parentResultat = this.getTitulaireParPosition(parents, position);
+      }
+    }
+
+    return parentResultat;
   },
   getTitulairesTries(
     titulaires?: ITitulaireRequeteCreation[]
@@ -116,7 +120,7 @@ export const TitulaireRequeteCreation = {
           titulaire.typeObjetTitulaire ===
           TypeObjetTitulaire.TITULAIRE_ACTE_TRANSCRIT_DRESSE
       )
-      .sort((a, b) => a.position - b.position);
+      .sort(triTitulairesCreationParPosition);
   },
   getNomNaissanceOuSNP(titulaire?: ITitulaireRequeteCreation): string {
     let nomNaissanceFormate;
@@ -146,17 +150,28 @@ export const TitulaireRequeteCreation = {
 
     return lignePrenomsFormates;
   },
-  getTitulaireByPosition({
-    titulaires,
-    position
-  }: {
-    titulaires?: ITitulaireRequeteCreation[];
-    position: number;
-  }): ITitulaireRequeteCreation | undefined {
-    return titulaires
-      ? titulaires.find(titulaire => {
-          return titulaire.position === position;
-        })
-      : undefined;
+  getTitulaireParPosition(
+    titulaires: ITitulaireRequeteCreation[],
+    position: number
+  ): ITitulaireRequeteCreation | undefined {
+    return titulaires.find(titulaire => {
+      return titulaire.position === position;
+    });
   }
+};
+
+const filtreTitulairesCreationParQualiteFamilleParent = (
+  titulaire: ITitulaireRequeteCreation
+): boolean => {
+  return (
+    titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
+    titulaire.qualite === QualiteFamille.PARENT
+  );
+};
+
+const triTitulairesCreationParPosition = (
+  titulaire1: ITitulaireRequeteCreation,
+  titulaire2: ITitulaireRequeteCreation
+): number => {
+  return titulaire1.position - titulaire2.position;
 };

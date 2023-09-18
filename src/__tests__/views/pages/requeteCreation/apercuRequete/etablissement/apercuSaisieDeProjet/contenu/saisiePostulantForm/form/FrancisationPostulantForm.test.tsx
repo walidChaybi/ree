@@ -32,10 +32,11 @@ function afficheComposantFrancisationPostulant(
 
   render(
     <Formulaire
-      formDefaultValues={mappingTitulairesVersSaisieProjetPostulant(titulaire, [
+      formDefaultValues={mappingTitulairesVersSaisieProjetPostulant(
+        titulaire,
         parentsPourMapping![1],
         parentsPourMapping![2]
-      ])}
+      )}
       formValidationSchema={PostulantValidationSchema}
       onSubmit={() => {}}
       className="FormulairePostulant"

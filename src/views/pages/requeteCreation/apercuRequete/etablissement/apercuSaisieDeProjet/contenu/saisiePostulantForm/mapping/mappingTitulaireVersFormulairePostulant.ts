@@ -53,16 +53,17 @@ import {
   ISaisieLieuNaissance,
   ISaisieLieuNaissanceParent,
   ISaisieNomSecable,
+  ISaisieParentSousForm,
   ISaisiePostulantSousForm,
   ISaisiePrenoms,
   ISaisieProjetPostulantForm,
   ISaisieProjetSousForm
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
+import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
-import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import {
   formatMajusculesMinusculesMotCompose,
@@ -81,15 +82,16 @@ import {
 
 export function mappingTitulairesVersSaisieProjetPostulant(
   titulaire: ITitulaireRequeteCreation,
-  parentsTitulaire: ITitulaireRequeteCreation[]
+  parentUn?: ITitulaireRequeteCreation,
+  parentDeux?: ITitulaireRequeteCreation
 ): ISaisieProjetPostulantForm {
   return {
     [PROJET]: mapSaisieProjet(titulaire),
     [TITULAIRE]: mapSaisiePostulant(titulaire),
     [FRANCISATION_POSTULANT]: mapFrancisationPostulant(titulaire),
     [PARENTS]: {
-      [PARENT1]: mapSaisieParent(parentsTitulaire[0]),
-      [PARENT2]: mapSaisieParent(parentsTitulaire[1])
+      [PARENT1]: mapSaisieParent(parentUn),
+      [PARENT2]: mapSaisieParent(parentDeux)
     },
     [AUTRES]: mapSaisieAutres(titulaire)
   };
@@ -152,16 +154,22 @@ function mapFrancisationPostulant(
   };
 }
 
-function mapSaisieParent(parent: ITitulaireRequeteCreation) {
-  const retenueSdanf = parent.retenueSdanf || {};
-  const nom = getValeurOuVide(retenueSdanf.nomNaissance).toUpperCase();
-  return {
-    [NOM]: nom,
-    [PRENOM]: mapSaisiePrenoms(retenueSdanf.prenomsRetenu || []),
-    [SEXE]: parent.sexe,
-    [DATE_NAISSANCE]: mapSaisieDateNaissanceEtAgeDe(retenueSdanf),
-    [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissanceParent(retenueSdanf)
-  };
+function mapSaisieParent(
+  parent?: ITitulaireRequeteCreation
+): ISaisieParentSousForm | undefined {
+  let saisieParent: ISaisieParentSousForm | undefined = undefined;
+  if (parent) {
+    const retenueSdanf = parent.retenueSdanf || {};
+    const nom = getValeurOuVide(retenueSdanf.nomNaissance).toUpperCase();
+    saisieParent = {
+      [NOM]: nom,
+      [PRENOM]: mapSaisiePrenoms(retenueSdanf.prenomsRetenu || []),
+      [SEXE]: parent.sexe,
+      [DATE_NAISSANCE]: mapSaisieDateNaissanceEtAgeDe(retenueSdanf),
+      [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissanceParent(retenueSdanf)
+    };
+  }
+  return saisieParent;
 }
 
 function mapSaisieAutres(

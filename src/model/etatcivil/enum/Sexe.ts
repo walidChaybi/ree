@@ -49,4 +49,8 @@ export class Sexe extends EnumWithLibelle {
   public static estIndetermineOuInconnu(sexe: any) {
     return this.estIndetermine(sexe) || this.estInconnu(sexe);
   }
+
+  public static estMasculin(sexe: Sexe): boolean {
+    return sexe === Sexe.MASCULIN;
+  }
 }

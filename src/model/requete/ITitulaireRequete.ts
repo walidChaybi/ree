@@ -115,18 +115,11 @@ export const TitulaireRequete = {
   getParentsTries(parents?: IParent[]) {
     return parents?.sort((a, b) => a.position - b.position);
   },
-  getTitulaireByPosition({
-    titulaires,
-    position
-  }: {
-    titulaires?: ITitulaireRequete[];
-    position: number;
-  }): ITitulaireRequete | undefined {
-    return titulaires
-      ? titulaires.find(titulaire => {
-          return titulaire.position === position;
-        })
-      : undefined;
+  getTitulaireParPosition(
+    titulaires: ITitulaireRequete[],
+    position: number
+  ): ITitulaireRequete | undefined {
+    return titulaires.find(titulaire => titulaire.position === position);
   },
   getParent(
     titulaire: ITitulaireRequete | undefined,

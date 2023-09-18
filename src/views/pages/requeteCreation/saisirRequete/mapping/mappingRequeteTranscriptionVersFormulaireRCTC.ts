@@ -295,10 +295,10 @@ export function getTitulaireActeTranscitDresseEtDePositionUn(
 ): ITitulaireRequeteCreation | undefined {
   const titulairesActeTranscritDresse =
     TitulaireRequeteCreation.getTitulairesTries(titulairesReq);
-  return TitulaireRequeteCreation.getTitulaireByPosition({
-    titulaires: titulairesActeTranscritDresse,
-    position: 1
-  });
+  return TitulaireRequeteCreation.getTitulaireParPosition(
+    titulairesActeTranscritDresse || [],
+    1
+  );
 }
 
 export function getLieuEvenement(pays?: string): string {

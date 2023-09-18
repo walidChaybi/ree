@@ -129,9 +129,9 @@ export interface ISaisieLieuNaissanceParent {
   [PAYS_NAISSANCE]: string;
 }
 
-export interface ISaisieParentsPostulant {
-  [PARENT1]: ISaisieParentSousForm;
-  [PARENT2]: ISaisieParentSousForm;
+interface ISaisieParentsPostulant {
+  [PARENT1]?: ISaisieParentSousForm;
+  [PARENT2]?: ISaisieParentSousForm;
 }
 
 export interface ISaisieParentSousForm {
