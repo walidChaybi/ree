@@ -44,16 +44,15 @@ import {
   VOIE
 } from "@composant/formulaire/ConstantesNomsForm";
 
-export interface Requerant {
+export interface ISaisieRequerant {
   [TYPE_REQUERANT]: string;
-  [MANDATAIRE]: Mandataire;
-  [INSTITUTI0NNEL]: Institutionnel;
-  [PARTICULIER]: Particulier;
-  [AUTRE_PROFESSIONNEL]: AutreProfessionnel;
+  [MANDATAIRE]: ISaisieMandataireHabilite;
+  [INSTITUTI0NNEL]: ISaisieInstitutionnel;
+  [PARTICULIER]: ISaisieParticulier;
+  [AUTRE_PROFESSIONNEL]: ISaisieAutreProfessionnel;
 }
 
-
-export interface Mandataire {
+export interface ISaisieMandataireHabilite {
   [TYPE]: string;
   [NATURE]: string;
   [RAISON_SOCIALE]: string;
@@ -61,14 +60,14 @@ export interface Mandataire {
   [PRENOM]: string;
 }
 
-export interface AutreProfessionnel {
+export interface ISaisieAutreProfessionnel {
   [NATURE]: string;
   [RAISON_SOCIALE]: string;
   [NOM]: string;
   [PRENOM]: string;
 }
 
-export interface Institutionnel {
+export interface ISaisieInstitutionnel {
   [TYPE]: string;
   [NATURE]: string;
   [NOM_INSTITUTION]: string;
@@ -76,23 +75,23 @@ export interface Institutionnel {
   [PRENOM]: string;
 }
 
-export interface Particulier {
+export interface ISaisieParticulier {
   [NOM_NAISSANCE]: string;
   [NOM_USAGE]: string;
   [PRENOM]: string;
 }
 
-export interface Identite {
+export interface ISaisieIdentite {
   [NOMS]: Noms;
   [PRENOMS]: Prenoms;
   [SEXE]: string;
   [NAISSANCE]: Evenement;
   [NATIONALITE]: string;
-  [PARENT1]: Parent;
-  [PARENT2]: Parent;
+  [PARENT1]: ISaisieParent;
+  [PARENT2]: ISaisieParent;
 }
 
-export interface Adresse {
+export interface ISaisieAdresse {
   [VOIE]: string;
   [LIEU_DIT]: string;
   [COMPLEMENT_DESTINATAIRE]: string;
@@ -145,7 +144,7 @@ export interface LienTitulaire {
   [NATURE_LIEN]: string;
 }
 
-export interface Parent {
+export interface ISaisieParent {
   [NOM_NAISSANCE]: string;
   [PRENOMS]: Prenoms;
 }

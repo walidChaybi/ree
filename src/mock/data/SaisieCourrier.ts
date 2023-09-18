@@ -1,7 +1,7 @@
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import {
-  Adresse,
+  ISaisieAdresse,
   Requete
 } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
@@ -33,7 +33,7 @@ export const SaisieCourrier17 = {
   texteLibre: {
     texte: "Test Texte Libre courrier 17"
   },
-  adresse: {} as Adresse,
+  adresse: {} as ISaisieAdresse,
   requete: {
     motif: "DIVORCE_CONTENTIEUX",
     complementMotif: "",

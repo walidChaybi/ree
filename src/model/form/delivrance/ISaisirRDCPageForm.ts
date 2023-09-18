@@ -12,12 +12,12 @@ import {
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { PieceJointe } from "@util/FileUtils";
 import {
-  Adresse,
   Evenement,
-  Identite,
+  ISaisieAdresse,
+  ISaisieIdentite,
+  ISaisieRequerant,
   LienTitulaire,
   Mandant,
-  Requerant,
   Requete
 } from "./ISaisirRequetePageForm";
 
@@ -36,11 +36,11 @@ export interface UpdateRequeteRDC {
 export interface SaisieRequeteRDC {
   [REQUETE]: Requete;
   [EVENEMENT]: Evenement;
-  [TITULAIRE1]: Identite;
-  [TITULAIRE2]: Identite;
-  [REQUERANT]: Requerant;
+  [TITULAIRE1]: ISaisieIdentite;
+  [TITULAIRE2]: ISaisieIdentite;
+  [REQUERANT]: ISaisieRequerant;
   [MANDANT]: Mandant;
   [LIEN_TITULAIRE]: LienTitulaire;
-  [ADRESSE]: Adresse;
+  [ADRESSE]: ISaisieAdresse;
   [PIECES_JOINTES]?: PieceJointe[];
 }

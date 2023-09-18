@@ -4,8 +4,8 @@ import {
   UpdateRequeteRDCSC
 } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import {
-  Adresse,
-  Identite
+  ISaisieAdresse,
+  ISaisieIdentite
 } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { Qualite } from "@model/requete/enum/Qualite";
@@ -56,7 +56,7 @@ function getPiecesJustificativesAGarder(saisie: SaisieRequeteRDCSC) {
   return piecesJustificatives;
 }
 
-function getTitulaireRequete(titulaire: Identite, position = 1) {
+function getTitulaireRequete(titulaire: ISaisieIdentite, position = 1) {
   return titulaire
     ? {
         position,
@@ -166,8 +166,8 @@ const getTitulaire = ({
   titulaire,
   adresse
 }: {
-  titulaire: Identite;
-  adresse: Adresse;
+  titulaire: ISaisieIdentite;
+  adresse: ISaisieAdresse;
 }) => {
   return {
     nomFamille: titulaire.noms?.nomNaissance,
@@ -179,7 +179,7 @@ const getTitulaire = ({
   };
 };
 
-export const getAdresse = (adresse: Adresse) => {
+export const getAdresse = (adresse: ISaisieAdresse) => {
   return adresse
     ? {
         ligne2: adresse.complementDestinataire,

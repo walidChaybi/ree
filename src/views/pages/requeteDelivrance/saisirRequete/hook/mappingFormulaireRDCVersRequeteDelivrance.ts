@@ -1,6 +1,6 @@
 import {
-  Adresse,
-  Identite
+  ISaisieAdresse,
+  ISaisieIdentite
 } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Provenance } from "@model/requete/enum/Provenance";
@@ -93,7 +93,7 @@ function getTitulairesRequete(saisie: SaisieRequeteRDC) {
   const titulaire2 = saisie.titulaire2;
   const natureActe = NatureActeRequete.getEnumFor(saisie.requete.natureActe);
 
-  function titulaire2estVide(personne: Identite) {
+  function titulaire2estVide(personne: ISaisieIdentite) {
     return (
       !personne.noms.nomNaissance &&
       !personne.prenoms.prenom1 &&
@@ -112,7 +112,7 @@ function getTitulairesRequete(saisie: SaisieRequeteRDC) {
   return newTitulaires;
 }
 
-function getTitulaire(titulaire: Identite, position: number) {
+function getTitulaire(titulaire: ISaisieIdentite, position: number) {
   return {
     position,
     nomNaissance: titulaire.noms?.nomNaissance
@@ -131,7 +131,7 @@ function getTitulaire(titulaire: Identite, position: number) {
   };
 }
 
-function getFiliation(titulaire: Identite) {
+function getFiliation(titulaire: ISaisieIdentite) {
   const parents = [];
   if (auMoinsUneProprieteEstRenseigne(titulaire.parent1)) {
     parents.push({
@@ -241,7 +241,10 @@ function getParticulier(saisie: SaisieRequeteRDC) {
   };
 }
 
-function getRequerantTitulaire(titulaire: Identite, adresse: Adresse) {
+function getRequerantTitulaire(
+  titulaire: ISaisieIdentite,
+  adresse: ISaisieAdresse
+) {
   return {
     nomFamille: titulaire.noms?.nomNaissance,
     prenom: titulaire.prenoms.prenom1,
@@ -282,7 +285,7 @@ function getLienRequerant(saisie: SaisieRequeteRDC) {
   return null;
 }
 
-function getAdresse(adresse: Adresse) {
+function getAdresse(adresse: ISaisieAdresse) {
   return adresse
     ? {
         ligne2: adresse.complementDestinataire,

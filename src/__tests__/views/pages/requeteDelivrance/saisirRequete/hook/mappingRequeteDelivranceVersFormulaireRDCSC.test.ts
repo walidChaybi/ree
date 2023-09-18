@@ -100,6 +100,12 @@ test("test du mapping Particulier", () => {
         nom: "",
         prenom: ""
       },
+      autreProfessionnel: {
+        nature: "",
+        nom: "",
+        prenom: "",
+        raisonSociale: ""
+      },
       particulier: { nomNaissance: "RUIZ", nomUsage: "", prenom: "Paul" }
     },
     adresse: {
@@ -156,6 +162,12 @@ test("test du mapping Institutionnel", () => {
         nomInstitution: "Ambassade du Rwanda",
         nom: "Ruiz",
         prenom: "Paul"
+      },
+      autreProfessionnel: {
+        nature: "",
+        nom: "",
+        prenom: "",
+        raisonSociale: ""
       },
       particulier: { nomNaissance: "", nomUsage: "", prenom: "" }
     },

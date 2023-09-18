@@ -1,6 +1,7 @@
 import {
   ADRESSE_COURRIEL,
   ANNEE,
+  AUTRE_PROFESSIONNEL,
   CODE_POSTAL,
   COMMUNE,
   COMPLEMENT_DESTINATAIRE,
@@ -34,22 +35,33 @@ import {
   VILLE_EVENEMENT,
   VOIE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { ParentFormDefaultValues } from "@composant/formulaire/ParentForm";
 import { genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
-import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
+import { ParentFormDefaultValues } from "@composant/formulaire/ParentForm";
+import {
+  ISaisieAdresse,
+  ISaisieAutreProfessionnel,
+  ISaisieIdentite,
+  ISaisieInstitutionnel,
+  ISaisieMandataireHabilite,
+  ISaisieParent,
+  ISaisieParticulier,
+  ISaisieRequerant,
+  Prenoms
+} from "@model/form/delivrance/ISaisirRequetePageForm";
+import { Qualite } from "@model/requete/enum/Qualite";
+import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
+import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { IParent } from "@model/requete/IParents";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
-import { Requerant } from "@model/requete/IRequerant";
+import { IRequerant, Requerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import {
   ITitulaireRequete,
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
-import { Qualite } from "@model/requete/enum/Qualite";
-import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
-import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
-import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { getValeurOuVide } from "@util/Utils";
+import { AutreProfessionnelFormDefaultValues } from "../sousFormulaires/requerant/autreProfessionnel/AutreProfessionnelForm";
 import { InstitutionnelFormDefaultValues } from "../sousFormulaires/requerant/institutionnel/InstitutionnelForm";
 import { MandataireFormDefaultValues } from "../sousFormulaires/requerant/mandataire/MandataireForm";
 import { ParticulierFormDefaultValues } from "../sousFormulaires/requerant/particulier/ParticulierForm";
@@ -76,9 +88,9 @@ export function getPrenomsOrdonneVersPrenomsDefaultValues(
 ): Prenoms {
   const prenomsDefaultValues: Prenoms = genererDefaultValuesPrenoms();
   if (prenomsOrdonne) {
-    for (let i = 0; i < prenomsOrdonne.length; i++) {
-      const prenom = prenomsOrdonne[i].prenom;
-      const numeroOrdre = prenomsOrdonne[i].numeroOrdre;
+    for (const prenomOrdonne of prenomsOrdonne) {
+      const prenom = prenomOrdonne.prenom;
+      const numeroOrdre = prenomOrdonne.numeroOrdre;
       if (prenom) {
         prenomsDefaultValues[`prenom${numeroOrdre}`] = prenom;
       }
@@ -110,7 +122,9 @@ export function saisiePJ(requete: IRequeteDelivrance) {
   });
 }
 
-export const saisieTitulaire = (titulaire?: ITitulaireRequete) => {
+export const saisieTitulaire = (
+  titulaire?: ITitulaireRequete
+): ISaisieIdentite | undefined => {
   return titulaire
     ? {
         [NOMS]: {
@@ -135,7 +149,7 @@ export const saisieTitulaire = (titulaire?: ITitulaireRequete) => {
     : undefined;
 };
 
-const saisieFiliation = (parent?: IParent) => {
+const saisieFiliation = (parent?: IParent): ISaisieParent => {
   return parent
     ? {
         [NOM_NAISSANCE]: getValeurOuVide(parent.nomNaissance),
@@ -144,50 +158,30 @@ const saisieFiliation = (parent?: IParent) => {
     : ParentFormDefaultValues;
 };
 
-export const saisieRequerant = (requete: IRequeteDelivrance) => {
-  switch (requete.requerant.qualiteRequerant.qualite) {
+export const saisieRequerant = (
+  requete: IRequeteDelivrance
+): ISaisieRequerant => {
+  const qualite: Qualite = requete.requerant.qualiteRequerant.qualite;
+  const requerant = {
+    [TYPE_REQUERANT]: qualite.nom,
+    [MANDATAIRE]: MandataireFormDefaultValues,
+    [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
+    [PARTICULIER]: ParticulierFormDefaultValues,
+    [AUTRE_PROFESSIONNEL]: AutreProfessionnelFormDefaultValues
+  };
+
+  switch (qualite) {
     case Qualite.INSTITUTIONNEL:
-      return {
-        [TYPE_REQUERANT]: "INSTITUTIONNEL",
-        [MANDATAIRE]: MandataireFormDefaultValues,
-        [INSTITUTI0NNEL]: {
-          [TYPE]: getValeurOuVide(
-            TypeInstitutionnel.getKey(
-              requete.requerant.qualiteRequerant.institutionnel?.type
-            )
-          ),
-          [NATURE]: getValeurOuVide(
-            requete.requerant.qualiteRequerant.institutionnel?.nature
-          ),
-          [NOM_INSTITUTION]: getValeurOuVide(
-            requete.requerant.qualiteRequerant.institutionnel?.nomInstitution
-          ),
-          [NOM]: getValeurOuVide(requete.requerant.nomFamille),
-          [PRENOM]: getValeurOuVide(requete.requerant.prenom)
-        },
-        [PARTICULIER]: ParticulierFormDefaultValues
-      };
+      requerant[INSTITUTI0NNEL] = mapRequerantInstitutionnel(requete.requerant);
+      break;
     case Qualite.MANDATAIRE_HABILITE:
-      return {
-        [TYPE_REQUERANT]: "MANDATAIRE",
-        [MANDATAIRE]: {
-          [TYPE]: getValeurOuVide(
-            TypeMandataireReq.getKey(
-              requete.requerant.qualiteRequerant.mandataireHabilite?.type
-            )
-          ),
-          [NATURE]: getValeurOuVide(
-            requete.requerant.qualiteRequerant.mandataireHabilite?.nature
-          ),
-          [RAISON_SOCIALE]: getValeurOuVide(
-            requete.requerant.qualiteRequerant.mandataireHabilite?.raisonSociale
-          ),
-          [NOM]: getValeurOuVide(requete.requerant.nomFamille),
-          [PRENOM]: getValeurOuVide(requete.requerant.prenom)
-        },
-        [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
-        [PARTICULIER]: ParticulierFormDefaultValues
-      };
+      requerant[MANDATAIRE] = mapRequerantMandataireHabilite(requete.requerant);
+      break;
+    case Qualite.AUTRE_PROFESSIONNEL:
+      requerant[AUTRE_PROFESSIONNEL] = mapRequerantAutreProfessionnel(
+        requete.requerant
+      );
+      break;
     case Qualite.PARTICULIER:
       if (
         Requerant.estTitulaireX({
@@ -198,12 +192,7 @@ export const saisieRequerant = (requete: IRequeteDelivrance) => {
           })
         })
       ) {
-        return {
-          [TYPE_REQUERANT]: "TITULAIRE1",
-          [MANDATAIRE]: MandataireFormDefaultValues,
-          [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
-          [PARTICULIER]: ParticulierFormDefaultValues
-        };
+        requerant[TYPE_REQUERANT] = "TITULAIRE1";
       } else if (
         Requerant.estTitulaireX({
           requerant: requete.requerant,
@@ -213,37 +202,19 @@ export const saisieRequerant = (requete: IRequeteDelivrance) => {
           })
         })
       ) {
-        return {
-          [TYPE_REQUERANT]: "TITULAIRE2",
-          [MANDATAIRE]: MandataireFormDefaultValues,
-          [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
-          [PARTICULIER]: ParticulierFormDefaultValues
-        };
+        requerant[TYPE_REQUERANT] = "TITULAIRE2";
       } else {
-        return {
-          [TYPE_REQUERANT]: "PARTICULIER",
-          [MANDATAIRE]: MandataireFormDefaultValues,
-          [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
-          [PARTICULIER]: {
-            [NOM_NAISSANCE]: getValeurOuVide(requete.requerant.nomFamille),
-            [NOM_USAGE]: getValeurOuVide(
-              requete.requerant.qualiteRequerant.particulier?.nomUsage
-            ),
-            [PRENOM]: getValeurOuVide(requete.requerant.prenom)
-          }
-        };
+        requerant[TYPE_REQUERANT] = "PARTICULIER";
+        requerant[PARTICULIER] = mapRequerantParticulier(requete.requerant);
       }
+      break;
     default:
-      return {
-        [TYPE_REQUERANT]: "TITULAIRE1",
-        [MANDATAIRE]: MandataireFormDefaultValues,
-        [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
-        [PARTICULIER]: ParticulierFormDefaultValues
-      };
+      requerant[TYPE_REQUERANT] = "TITULAIRE1";
   }
+  return requerant;
 };
 
-export const saisieAdresse = (requete: IRequeteDelivrance) => {
+export const saisieAdresse = (requete: IRequeteDelivrance): ISaisieAdresse => {
   return {
     [VOIE]: getValeurOuVide(requete.requerant.adresse?.ligne4),
     [LIEU_DIT]: getValeurOuVide(requete.requerant.adresse?.ligne5),
@@ -256,5 +227,72 @@ export const saisieAdresse = (requete: IRequeteDelivrance) => {
     [PAYS]: getValeurOuVide(requete.requerant.adresse?.pays),
     [ADRESSE_COURRIEL]: getValeurOuVide(requete.requerant.courriel),
     [NUMERO_TELEPHONE]: getValeurOuVide(requete.requerant.telephone)
+  };
+};
+
+const mapNomPrenomRequerant = (requerant: IRequerant) => {
+  return {
+    [NOM]: getValeurOuVide(requerant.nomFamille),
+    [PRENOM]: getValeurOuVide(requerant.prenom)
+  };
+};
+
+const mapRequerantInstitutionnel = (
+  requerant: IRequerant
+): ISaisieInstitutionnel => {
+  return {
+    ...mapNomPrenomRequerant(requerant),
+    [TYPE]: getValeurOuVide(
+      TypeInstitutionnel.getKey(requerant.qualiteRequerant.institutionnel?.type)
+    ),
+    [NATURE]: getValeurOuVide(
+      requerant.qualiteRequerant.institutionnel?.nature
+    ),
+    [NOM_INSTITUTION]: getValeurOuVide(
+      requerant.qualiteRequerant.institutionnel?.nomInstitution
+    )
+  };
+};
+
+const mapRequerantMandataireHabilite = (
+  requerant: IRequerant
+): ISaisieMandataireHabilite => {
+  return {
+    ...mapNomPrenomRequerant(requerant),
+    [TYPE]: getValeurOuVide(
+      TypeMandataireReq.getKey(
+        requerant.qualiteRequerant.mandataireHabilite?.type
+      )
+    ),
+    [NATURE]: getValeurOuVide(
+      requerant.qualiteRequerant.mandataireHabilite?.nature
+    ),
+    [RAISON_SOCIALE]: getValeurOuVide(
+      requerant.qualiteRequerant.mandataireHabilite?.raisonSociale
+    )
+  };
+};
+
+const mapRequerantAutreProfessionnel = (
+  requerant: IRequerant
+): ISaisieAutreProfessionnel => {
+  return {
+    ...mapNomPrenomRequerant(requerant),
+    [NATURE]: getValeurOuVide(
+      requerant.qualiteRequerant.autreProfessionnel?.nature
+    ),
+    [RAISON_SOCIALE]: getValeurOuVide(
+      requerant.qualiteRequerant.autreProfessionnel?.raisonSociale
+    )
+  };
+};
+
+const mapRequerantParticulier = (requerant: IRequerant): ISaisieParticulier => {
+  return {
+    [NOM_NAISSANCE]: getValeurOuVide(requerant.nomFamille),
+    [NOM_USAGE]: getValeurOuVide(
+      requerant.qualiteRequerant.particulier?.nomUsage
+    ),
+    [PRENOM]: getValeurOuVide(requerant.prenom)
   };
 };

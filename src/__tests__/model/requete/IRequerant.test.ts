@@ -1,8 +1,8 @@
 import requeteDelivrance from "@mock/data/requeteDelivrance";
-import { Requerant } from "@model/requete/IRequerant";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
+import { Requerant } from "@model/requete/IRequerant";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 test("Attendu: Requerant.setRequerant mandataire", async () => {
   const qualiteMandataire = {
@@ -170,7 +170,7 @@ test("Attendu: Requerant.setRequerant mandataire", async () => {
       }
     },
     requerant: {
-      typeRequerant: "MANDATAIRE",
+      typeRequerant: "MANDATAIRE_HABILITE",
       mandataire: {
         type: "NOTAIRE",
         nature: "",
@@ -184,6 +184,12 @@ test("Attendu: Requerant.setRequerant mandataire", async () => {
         nomInstitution: "",
         nom: "",
         prenom: ""
+      },
+      autreProfessionnel: {
+        nature: "",
+        nom: "",
+        prenom: "",
+        raisonSociale: ""
       },
       particulier: {
         nomNaissance: "",
@@ -405,6 +411,12 @@ test("Attendu: Requerant.setRequerant institutionnel", async () => {
         nom: "RUIZ",
         prenom: "Paul"
       },
+      autreProfessionnel: {
+        nature: "",
+        nom: "",
+        prenom: "",
+        raisonSociale: ""
+      },
       particulier: {
         nomNaissance: "",
         nomUsage: "",
@@ -622,6 +634,12 @@ test("Attendu: Requerant.setRequerant interessé", async () => {
         nomInstitution: "",
         nom: "",
         prenom: ""
+      },
+      autreProfessionnel: {
+        nature: "",
+        nom: "",
+        prenom: "",
+        raisonSociale: ""
       },
       particulier: {
         nomNaissance: "RUIZ",

@@ -16,14 +16,14 @@ import {
   TEXTE_LIBRE,
   TYPE_MEMO
 } from "@composant/formulaire/ConstantesNomsForm";
-import { Adresse, Requete } from "./ISaisirRequetePageForm";
+import { ISaisieAdresse, Requete } from "./ISaisirRequetePageForm";
 
 export interface SaisieCourrier {
   [CHOIX_COURRIER]: ChoixCourrier;
   [OPTION]: OptionCourrierForm;
   [TEXTE_LIBRE]: TexteLibre;
   [REQUERANT]: RequerantCourrier;
-  [ADRESSE]: Adresse;
+  [ADRESSE]: ISaisieAdresse;
   [REQUETE]: Requete;
 }
 

@@ -7,7 +7,11 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { PieceJointe } from "@util/FileUtils";
-import { Adresse, Identite, Requerant } from "./ISaisirRequetePageForm";
+import {
+  ISaisieAdresse,
+  ISaisieIdentite,
+  ISaisieRequerant
+} from "./ISaisirRequetePageForm";
 
 export interface CreationRequeteRDCSC {
   id?: string;
@@ -25,12 +29,12 @@ export interface UpdateRequeteRDCSC {
 export interface SaisieRequeteRDCSC {
   [DOCUMENT]: string;
   [TITULAIRES]: Titulaires;
-  [REQUERANT]: Requerant;
-  [ADRESSE]: Adresse;
+  [REQUERANT]: ISaisieRequerant;
+  [ADRESSE]: ISaisieAdresse;
   [PIECES_JOINTES]?: PieceJointe[];
 }
 
 type Titulaires = {
-  titulaire1: Identite;
-  titulaire2: Identite;
+  titulaire1: ISaisieIdentite;
+  titulaire2: ISaisieIdentite;
 };
