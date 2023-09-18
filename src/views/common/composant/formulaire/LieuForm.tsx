@@ -25,7 +25,9 @@ const LieuForm: React.FC<LieuFormProps> = props => {
   const [lieu, setLieu] = useState<EtrangerFrance>();
 
   useEffect(() => {
+    reinitialiserErreurs();
     setLieu(EtrangerFrance.getEnumFor(valeurLieu));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valeurLieu]);
 
   const rendreComposantEnFonctionDuLieu = useMemo(() => {
@@ -67,6 +69,12 @@ const LieuForm: React.FC<LieuFormProps> = props => {
 
   function getValeur(champ: JSX.Element): string {
     return props.formik.getFieldProps(champ.props.name).value;
+  }
+
+  function reinitialiserErreurs() {
+    for (const champ of Object.values(props.elements)) {
+      props.formik.setFieldError(champ.props.name, undefined);
+    }
   }
 
   return (
