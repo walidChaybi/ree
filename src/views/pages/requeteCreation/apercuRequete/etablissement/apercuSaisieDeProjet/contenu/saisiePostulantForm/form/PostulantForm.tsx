@@ -81,7 +81,9 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
       />
       <NomSecableForm
         nomComposant={withNamespace(props.nom, NOM_SECABLE)}
-        nomTitulaire={nomSecable.nomTitulaire}
+        nomTitulaire={
+          props.formik.getFieldProps(withNamespace(props.nom, NOM)).value
+        }
         nomPartie1={nomSecable.nomPartie1}
         nomPartie2={nomSecable.nomPartie2}
         saisieVerrouillee={false}
