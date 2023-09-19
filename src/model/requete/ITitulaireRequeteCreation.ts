@@ -1,8 +1,7 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { DateCoordonneesType } from "@model/requete/DateCoordonneesType";
 import { SANS_NOM_CONNU, SANS_PRENOM_CONNU, SNP, SPC } from "@util/Utils";
-import { QualiteFamille } from "./enum/QualiteFamille";
-import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
+import { IDecret } from "./IDecret";
 import { IDomiciliation } from "./IDomiciliation";
 import { IEnfantTitulaireActeTranscritDresse } from "./IEnfantTitulaireActeTranscritDresse";
 import { IEvenementUnion } from "./IEvenementUnion";
@@ -11,6 +10,8 @@ import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 import { IRetenueSdanf } from "./IRetenueSdanf";
 import { ISuiviDossier } from "./ISuiviDossier";
 import { ITitulaireRequete, TitulaireRequete } from "./ITitulaireRequete";
+import { QualiteFamille } from "./enum/QualiteFamille";
+import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 
 export interface ITitulaireRequeteCreation extends ITitulaireRequete {
   villeEtrangereNaissance?: string;
@@ -24,6 +25,7 @@ export interface ITitulaireRequeteCreation extends ITitulaireRequete {
   nomActuel?: string;
   nombreEnfantMineur?: number;
   typeObjetTitulaire?: TypeObjetTitulaire;
+  decret?: IDecret;
   qualite?: QualiteFamille;
   courriel?: string;
   telephone?: string;

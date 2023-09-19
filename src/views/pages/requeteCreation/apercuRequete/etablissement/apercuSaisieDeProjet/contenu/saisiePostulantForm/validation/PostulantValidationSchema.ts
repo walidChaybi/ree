@@ -1,10 +1,12 @@
 import {
+  ACQUISITION,
   ADRESSE,
   ANALYSE_MARGINALE,
   ARRONDISSEMENT,
   ARRONDISSEMENT_NAISSANCE,
   AUTRES,
   AUTRE_DECLARANT,
+  DATE,
   DATE_NAISSANCE,
   DECLARANT,
   DEPARTEMENT,
@@ -12,6 +14,7 @@ import {
   ETAT_CANTON_PROVINCE,
   LIEU_DE_NAISSANCE,
   LIEU_NAISSANCE,
+  NATURE,
   NE_DANS_MARIAGE,
   NOM,
   NOM_SECABLE,
@@ -43,7 +46,8 @@ export const PostulantValidationSchema = Yup.object({
     parent1: validationSchemaParent(),
     parent2: validationSchemaParent()
   }),
-  [AUTRES]: validationSchemaAutres()
+  [AUTRES]: validationSchemaAutres(),
+  [ACQUISITION]: validationSchemaAcquisition()
 });
 
 function validationSchemaPostulant() {
@@ -168,3 +172,9 @@ function validationSchemaAutres() {
   });
 }
 
+function validationSchemaAcquisition() {
+  return Yup.object({
+    [NATURE]: Yup.string(),
+    [DATE]: DateValidationSchemaSansTestFormat
+  });
+}

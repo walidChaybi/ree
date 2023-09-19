@@ -36,6 +36,7 @@
     }
     .AvertissementConteneur {
         display: flex;
+        align-items: center;
         .InputField {
             width: 65%;
         }
@@ -51,5 +52,8 @@
         .AvertissementDateCompose > .DateComposeForm > input:nth-of-type(-n+2) {
             border: 1px solid $warning-formulaire;
         }
+    }
+    .BoutonAffichage {
+        margin: 0.5rem 0 0 0;
     }
 }

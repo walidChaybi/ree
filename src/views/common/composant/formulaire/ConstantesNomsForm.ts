@@ -138,6 +138,7 @@ export const PROJET = "projet";
 export const AUTRES = "autres";
 export const DECLARANT = "declarant";
 export const AUTRE_DECLARANT = "autreDeclarant";
+export const ACQUISITION = "acquisition";
 
 // Noms des champs IdentiteForm
 export const NOMS = "noms";

@@ -26,7 +26,7 @@ function afficheComposantSaisiePostulantForm(
         exact={true}
         path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}
       >
-        <SaisiePostulantForm titulaires={titulaires!} />
+        <SaisiePostulantForm titulaires={titulaires} />
       </Route>
     </Router>
   );
@@ -34,10 +34,10 @@ function afficheComposantSaisiePostulantForm(
 
 describe("Test du bloc Postulant de l'onglet Postulant", () => {
   test("DOIT afficher et renseigner les champs du bloc postulant QUAND le formulaire est affiché", async () => {
-    const titulaires = mappingRequeteCreation(
+    const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
-    ).titulaires;
-    afficheComposantSaisiePostulantForm(titulaires!);
+    );
+    afficheComposantSaisiePostulantForm(requete.titulaires!);
 
     const champNom = screen.getAllByLabelText("Nom") as HTMLInputElement[];
     const champPrenom = screen.getAllByLabelText(
@@ -83,10 +83,10 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     });
   });
   test("DOIT afficher un message d'attention QUAND le sexe est indéterminé", async () => {
-    const titulaires = mappingRequeteCreation(
+    const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
-    ).titulaires;
-    afficheComposantSaisiePostulantForm(titulaires!);
+    );
+    afficheComposantSaisiePostulantForm(requete.titulaires!);
     await waitFor(() => {
       expect(screen.queryByText("Attention, sexe indéterminé")).toBeNull();
     });
@@ -98,13 +98,12 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     });
   });
   test("DOIT afficher un message d'attention QUAND le postulant n'a pas de jour et mois de naissance", async () => {
-    const titulaires = mappingRequeteCreation(
+    const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
-    ).titulaires;
-
-    titulaires![0].retenueSdanf!.jourNaissance = undefined;
-    titulaires![0].retenueSdanf!.moisNaissance = undefined;
-    afficheComposantSaisiePostulantForm(titulaires!);
+    );
+    requete.titulaires![0].retenueSdanf!.jourNaissance = undefined;
+    requete.titulaires![0].retenueSdanf!.moisNaissance = undefined;
+    afficheComposantSaisiePostulantForm(requete.titulaires!);
 
     const champJourNaissance = screen.getAllByText("Date de naissance")[0]
       .nextElementSibling as HTMLInputElement;
@@ -128,12 +127,12 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     });
   });
   test("DOIT rendre la sécabilité du nom sans message d'attention QUAND il y a seulement 2 vocables", async () => {
-    const titulaires = mappingRequeteCreation(
+    const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
-    ).titulaires;
-    titulaires![0].retenueSdanf!.nomNaissance = "Test1 Test2";
-    titulaires![0].retenueSdanf!.paysNaissance = "Cuba";
-    afficheComposantSaisiePostulantForm(titulaires!);
+    );
+    requete.titulaires![0].retenueSdanf!.nomNaissance = "Test1 Test2";
+    requete.titulaires![0].retenueSdanf!.paysNaissance = "Cuba";
+    afficheComposantSaisiePostulantForm(requete.titulaires!);
 
     const champNomPartie1 = screen.getByLabelText(
       "1re partie"
@@ -149,12 +148,12 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     });
   });
   test("DOIT afficher un message d'attention QUAND le pays de naissance est sécable et que le nom a plus de 2 vocables", async () => {
-    const titulaires = mappingRequeteCreation(
+    const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
-    ).titulaires;
-    titulaires![0].retenueSdanf!.nomNaissance = "Test1 Test2 Test3";
-    titulaires![0].retenueSdanf!.paysNaissance = "Cuba";
-    afficheComposantSaisiePostulantForm(titulaires!);
+    );
+    requete.titulaires![0].retenueSdanf!.nomNaissance = "Test1 Test2 Test3";
+    requete.titulaires![0].retenueSdanf!.paysNaissance = "Cuba";
+    afficheComposantSaisiePostulantForm(requete.titulaires!);
 
     const champNomPartie1 = screen.getByLabelText(
       "1re partie"
@@ -173,10 +172,10 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
 
 describe("Test du bloc Parent de l'onglet Postulant", () => {
   test("DOIT afficher et reseigner les champs des blocs Parent QUAND le formulaire est affiché", async () => {
-    const titulaires = mappingRequeteCreation(
+    const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
-    ).titulaires;
-    afficheComposantSaisiePostulantForm(titulaires!);
+    );
+    afficheComposantSaisiePostulantForm(requete.titulaires!);
 
     const champNomParent1 = screen.getAllByLabelText(
       "Nom"

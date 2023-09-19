@@ -1348,7 +1348,13 @@ export const requeteCreationEtablissementSaisieProjet = {
       },
       nomActuel: "nomActuel",
       nombreEnfantMineur: 0,
-      nombreEnfantEffetCollectif: 0
+      nombreEnfantEffetCollectif: 0,
+      decret: {
+        id: "db48117d-3b19-483f-ae3e-188feff9eac4",
+        numeroDecret: "123456",
+        dateSignature: 1500000000000,
+        datePublication: 1600000000000
+      }
     },
     {
       id: "3ed943e2-daa0-45c0-befd-b5f6b69c31c3",

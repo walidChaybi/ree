@@ -1,4 +1,5 @@
 import {
+  ACQUISITION,
   ADOPTE_PAR,
   ADRESSE,
   AGE,
@@ -19,6 +20,7 @@ import {
   JOUR,
   LIEU_DE_NAISSANCE,
   MOIS,
+  NATURE,
   NATURE_ACTE,
   NE_DANS_MARIAGE,
   NOM,
@@ -45,9 +47,10 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import {
+  ISaisieAcquisitionSousForm,
   ISaisieAnalyseMarginale,
   ISaisieAutresSousForm,
-  ISaisieDateNaissance,
+  ISaisieDate,
   ISaisieDateNaissanceOuAgeDe,
   ISaisieFrancisationPostulantSousForm,
   ISaisieLieuNaissance,
@@ -59,11 +62,12 @@ import {
   ISaisieProjetPostulantForm,
   ISaisieProjetSousForm
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
-import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
-import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
+import { TypeNature } from "@model/requete/enum/TypeNature";
 import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import {
   formatMajusculesMinusculesMotCompose,
@@ -83,7 +87,8 @@ import {
 export function mappingTitulairesVersSaisieProjetPostulant(
   titulaire: ITitulaireRequeteCreation,
   parentUn?: ITitulaireRequeteCreation,
-  parentDeux?: ITitulaireRequeteCreation
+  parentDeux?: ITitulaireRequeteCreation,
+  nature?: string
 ): ISaisieProjetPostulantForm {
   return {
     [PROJET]: mapSaisieProjet(titulaire),
@@ -93,7 +98,8 @@ export function mappingTitulairesVersSaisieProjetPostulant(
       [PARENT1]: mapSaisieParent(parentUn),
       [PARENT2]: mapSaisieParent(parentDeux)
     },
-    [AUTRES]: mapSaisieAutres(titulaire)
+    [AUTRES]: mapSaisieAutres(titulaire),
+    [ACQUISITION]: mapSaisieAcquisition(titulaire, nature)
   };
 }
 
@@ -190,6 +196,22 @@ function mapSaisieAutres(
   };
 }
 
+function mapSaisieAcquisition(
+  titulaire: ITitulaireRequeteCreation,
+  nature?: string
+): ISaisieAcquisitionSousForm {
+  const decret = titulaire.decret;
+  return {
+    [NATURE]:
+      decret && nature ? TypeNature.getKey(TypeNature.getEnumFor(nature)) : "",
+    [DATE]: {
+      [JOUR]: decret?.dateSignature.jour || "",
+      [MOIS]: decret?.dateSignature.mois || "",
+      [ANNEE]: decret?.dateSignature.annee || ""
+    }
+  };
+}
+
 function mapSaisieNomSecable(retenueSdanf: IRetenueSdanf): ISaisieNomSecable {
   const nomSecable = getNomSecable(retenueSdanf);
   return {
@@ -225,9 +247,7 @@ function mapAnalyseMarginale(
   };
 }
 
-function mapSaisieDateNaissance(
-  retenueSdanf: IRetenueSdanf
-): ISaisieDateNaissance {
+function mapSaisieDateNaissance(retenueSdanf: IRetenueSdanf): ISaisieDate {
   let mois;
   let jour;
   if (estJourMoisVide(retenueSdanf)) {

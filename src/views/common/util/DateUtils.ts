@@ -225,6 +225,14 @@ export function getDateComposeFromDate(date?: Date): IDateCompose {
   return dateCompose;
 }
 
+export function getDateComposeFromTimestamp(timestamp?: number): IDateCompose {
+  let date;
+  if (timestamp) {
+    date = getDateFromTimestamp(timestamp);
+  }
+  return getDateComposeFromDate(date);
+}
+
 export function getFormatDateFromTimestamp(timestamp?: number): string {
   if (timestamp) {
     return getDateString(getDateFromTimestamp(timestamp));

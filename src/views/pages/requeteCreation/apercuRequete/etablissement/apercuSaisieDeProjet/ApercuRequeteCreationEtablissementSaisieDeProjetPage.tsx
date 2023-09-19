@@ -70,19 +70,6 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
     );
   }
 
-  const liste: ItemListe[] = [
-    {
-      titre: getLibelle("Postulant"),
-      component: <SaisiePostulantForm titulaires={requete?.titulaires || []} />,
-      index: 0
-    },
-    {
-      titre: getLibelle("Echanges"),
-      component: <Echanges />,
-      index: 1
-    }
-  ];
-
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
     setOngletSelectionne(parseInt(newValue));
   };
@@ -110,7 +97,7 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
           />
           <div className="OngletsApercuCreationEtablissement">
             <VoletAvecOnglet
-              liste={liste}
+              liste={getOnglets(requete)}
               ongletSelectionne={ongletSelectionne}
               handleChange={handleChange}
             />
@@ -122,3 +109,25 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
     </div>
   );
 };
+
+function getOnglets(
+  requeteCreation: IRequeteCreationEtablissement
+): ItemListe[] {
+  return [
+    {
+      titre: getLibelle("Postulant"),
+      component: (
+        <SaisiePostulantForm
+          titulaires={requeteCreation.titulaires || []}
+          nature={requeteCreation.nature}
+        />
+      ),
+      index: 0
+    },
+    {
+      titre: getLibelle("Echanges"),
+      component: <Echanges />,
+      index: 1
+    }
+  ];
+}

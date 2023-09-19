@@ -16,6 +16,7 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { IStatutCourant } from "@model/requete/IStatutCourant";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeTranscription } from "@model/requete/NatureActeTranscription";
 import { BesoinUsager } from "@model/requete/enum/BesoinUsager";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
@@ -41,7 +42,10 @@ import {
   IPieceJustificativeCreation,
   PieceJustificativeCreation
 } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
-import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import {
+  getDateComposeFromTimestamp,
+  getFormatDateFromTimestamp
+} from "@util/DateUtils";
 import { logError } from "@util/LogManager";
 import { getValeurOuUndefined } from "@util/Utils";
 import { storeRece } from "@util/storeRece";
@@ -322,9 +326,9 @@ function mapUnePieceJustificativeCreation(
 function mapPiecesJustificativesCreation(
   pieces?: any
 ): IPieceJustificativeCreation[] {
-  const piecesJustificatives: IPieceJustificativeCreation[] = pieces ? pieces?.map(
-    (pj: any) => mapUnePieceJustificativeCreation(pj)
-  ) : [];
+  const piecesJustificatives: IPieceJustificativeCreation[] = pieces
+    ? pieces?.map((pj: any) => mapUnePieceJustificativeCreation(pj))
+    : [];
 
   PieceJustificativeCreation.setOrdre(piecesJustificatives);
 
@@ -407,10 +411,21 @@ export function mappingRequeteCreation(data: any): IRequeteCreation {
   };
 }
 
-export function mapTitulairesCreation(titulaires: any[]) {
+export function mapTitulairesCreation(
+  titulaires: any[]
+): ITitulaireRequeteCreation[] {
   return titulaires.map(titulaire => ({
     ...titulaire,
-    qualite: QualiteFamille.getEnumFor(titulaire.qualite)
+    qualite: QualiteFamille.getEnumFor(titulaire.qualite),
+    decret: titulaire.decret && {
+      numeroDecret: titulaire.decret.numeroDecret,
+      dateSignature: getDateComposeFromTimestamp(
+        titulaire.decret.dateSignature
+      ),
+      datePublication: getDateComposeFromTimestamp(
+        titulaire.decret.datePublication
+      )
+    }
   }));
 }
 

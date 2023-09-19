@@ -1,4 +1,6 @@
+import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
 import {
+  ACQUISITION,
   AUTRES,
   FRANCISATION_POSTULANT,
   NATURE_ACTE,
@@ -9,23 +11,24 @@ import {
   TITULAIRE,
   TYPE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IUuidEtatCivilParams } from "@model/params/IUuidEtatCivilParams";
 import {
   ITitulaireRequeteCreation,
   TitulaireRequeteCreation
 } from "@model/requete/ITitulaireRequeteCreation";
-import { DEUX, getLibelle, UN } from "@util/Utils";
+import { estDateVide } from "@util/DateUtils";
+import { DEUX, UN, getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { Formulaire } from "@widget/formulaire/Formulaire";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
   getLibelleParentFromSexe,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import React, { useMemo } from "react";
 import { useParams } from "react-router";
+import AcquisitionForm from "./form/AcquisitionForm";
 import AutresForm from "./form/AutresForm";
 import FrancisationPostulantForm from "./form/FrancisationPostulantForm";
 import ParentForm from "./form/ParentForm";
@@ -36,6 +39,7 @@ import { PostulantValidationSchema } from "./validation/PostulantValidationSchem
 
 interface ISaisiePostulantFormProps {
   titulaires: ITitulaireRequeteCreation[];
+  nature?: string;
 }
 
 export const SaisiePostulantForm: React.FC<
@@ -110,6 +114,15 @@ export const SaisiePostulantForm: React.FC<
     {
       libelle: getLibelle("Autres"),
       element: <AutresForm nom={AUTRES} />
+    },
+    {
+      libelle: getLibelle("Acquisition"),
+      element: (
+        <AcquisitionForm
+          nom={ACQUISITION}
+          afficherDateDecret={!estDateVide(titulaire?.decret?.dateSignature)}
+        />
+      )
     }
   ];
 
@@ -121,7 +134,8 @@ export const SaisiePostulantForm: React.FC<
         formDefaultValues={mappingTitulairesVersSaisieProjetPostulant(
           titulaire || ({} as ITitulaireRequeteCreation),
           parentMasculinEtOuPositionUn,
-          parentFemininEtOuPositionDeux
+          parentFemininEtOuPositionDeux,
+          props.nature
         )}
         formValidationSchema={PostulantValidationSchema}
         onSubmit={validerProjetPostulant}

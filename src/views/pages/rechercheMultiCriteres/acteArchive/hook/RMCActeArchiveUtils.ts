@@ -9,7 +9,7 @@ import { getValeurOuUndefined } from "@util/Utils";
 
 /** Critères de recherche: mapping avant appel d'api */
 export function mappingCriteres(criteres: IRMCActeArchive): IRMCArchiveRequest {
-  const criteresMapper: IRMCArchiveRequest = {
+  return {
     // Filtre Titulaire
     ...getCriteresTitulaire(criteres),
     // Filtre Date de création
@@ -58,5 +58,4 @@ export function mappingCriteres(criteres: IRMCActeArchive): IRMCArchiveRequest {
       criteres.registreArchive?.evenement?.paysEvenement
     )
   };
-  return criteresMapper;
 }

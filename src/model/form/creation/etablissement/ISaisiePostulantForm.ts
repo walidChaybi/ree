@@ -1,4 +1,5 @@
 import {
+  ACQUISITION,
   ADOPTE_PAR,
   ADRESSE,
   AGE,
@@ -19,6 +20,7 @@ import {
   JOUR,
   LIEU_DE_NAISSANCE,
   MOIS,
+  NATURE,
   NATURE_ACTE,
   NE_DANS_MARIAGE,
   NOM,
@@ -51,6 +53,7 @@ export interface ISaisieProjetPostulantForm {
   [FRANCISATION_POSTULANT]: ISaisieFrancisationPostulantSousForm;
   [PARENTS]: ISaisieParentsPostulant;
   [AUTRES]: ISaisieAutresSousForm;
+  [ACQUISITION]: ISaisieAcquisitionSousForm;
 }
 
 export interface ISaisieProjetSousForm {
@@ -65,7 +68,7 @@ export interface ISaisiePostulantSousForm {
   [ANALYSE_MARGINALE]: ISaisieAnalyseMarginale;
   [IDENTITE]: string;
   [SEXE]: string;
-  [DATE_NAISSANCE]: ISaisieDateNaissance;
+  [DATE_NAISSANCE]: ISaisieDate;
   [LIEU_DE_NAISSANCE]: ISaisieLieuNaissance;
   [ADOPTE_PAR]: unknown[];
 }
@@ -102,14 +105,14 @@ export interface ISaisieAnalyseMarginale {
   [PRENOMS]: Prenoms;
 }
 
-export interface ISaisieDateNaissance {
+export interface ISaisieDate {
   [JOUR]: string;
   [MOIS]: string;
   [ANNEE]: string;
 }
 
 export interface ISaisieDateNaissanceOuAgeDe {
-  [DATE]: ISaisieDateNaissance;
+  [DATE]: ISaisieDate;
   [AGE]: string;
 }
 
@@ -132,6 +135,11 @@ export interface ISaisieLieuNaissanceParent {
 interface ISaisieParentsPostulant {
   [PARENT1]?: ISaisieParentSousForm;
   [PARENT2]?: ISaisieParentSousForm;
+}
+
+export interface ISaisieAcquisitionSousForm {
+  [NATURE]: string;
+  [DATE]: ISaisieDate;
 }
 
 export interface ISaisieParentSousForm {
