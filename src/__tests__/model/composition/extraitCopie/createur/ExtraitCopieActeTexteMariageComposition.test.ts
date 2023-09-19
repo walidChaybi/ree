@@ -26,9 +26,8 @@ test("Attendu: getCorpsTexte fonctionne correctement", () => {
       choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
     });
 
-  const corpsTexteAttendu = `Le 25 juin 1990
-a été célébré à Barcelone, Catalogne (Espagne)
-le mariage
+  const corpsTexteAttendu = `Le 25 juin 1990 à Barcelone, Catalogne (Espagne)
+a été célébré le mariage
 de Jean-Louis, Alphonse, Raoül MARTIN 
 né le 29 novembre 1989 à Paris
   fils de Carmela, Linzy Sacken
@@ -549,9 +548,8 @@ test("Doit retourner les bonnes données pour la naissance des titulaires dans l
       choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
     });
 
-  const corpsTexteAttendu = `Le 25 juin 1990
-a été célébré à Barcelone, Catalogne (Espagne)
-le mariage
+  const corpsTexteAttendu = `Le 25 juin 1990 à Barcelone, Catalogne (Espagne)
+a été célébré le mariage
 de Jean-Louis, Alphonse, Raoül MARTIN 
 né le 29 novembre 1989 à Paris
   fils de Carmela, Linzy Sacken

@@ -72,9 +72,8 @@ export class ExtraitCopieActeTexteMariageComposition {
         acteMariage.detailMariage?.contrat
       ); //<énonciation contrat de mariage>
 
-    return `${evtActe.leouEnEvenement} ${evtActe.dateEvenement}
-a été célébré à ${evtActe.lieuEvenement}
-le mariage
+    return `${evtActe.leouEnEvenement} ${evtActe.dateEvenement} à ${evtActe.lieuEvenement}
+a été célébré le mariage
 de ${ecTitulaire1.prenoms} ${ecTitulaire1.nom} ${
       ecTitulaire1.partiesNom
     }${this.getNaissance(
