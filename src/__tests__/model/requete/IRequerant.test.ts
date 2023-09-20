@@ -170,7 +170,7 @@ test("Attendu: Requerant.setRequerant mandataire", async () => {
       }
     },
     requerant: {
-      typeRequerant: "MANDATAIRE_HABILITE",
+      typeRequerant: "MANDATAIRE",
       mandataire: {
         type: "NOTAIRE",
         nature: "",

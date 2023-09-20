@@ -65,6 +65,7 @@ import { AutreProfessionnelFormDefaultValues } from "../sousFormulaires/requeran
 import { InstitutionnelFormDefaultValues } from "../sousFormulaires/requerant/institutionnel/InstitutionnelForm";
 import { MandataireFormDefaultValues } from "../sousFormulaires/requerant/mandataire/MandataireForm";
 import { ParticulierFormDefaultValues } from "../sousFormulaires/requerant/particulier/ParticulierForm";
+import { TypeRequerantRDC } from "./../../../../../model/requete/enum/TypeRequerantRDC";
 
 export function getPrenomsTableauStringVersPrenomsOrdonnes(
   prenoms?: Prenoms
@@ -162,8 +163,8 @@ export const saisieRequerant = (
   requete: IRequeteDelivrance
 ): ISaisieRequerant => {
   const qualite: Qualite = requete.requerant.qualiteRequerant.qualite;
-  const requerant = {
-    [TYPE_REQUERANT]: qualite.nom,
+  const requerant: ISaisieRequerant = {
+    [TYPE_REQUERANT]: "",
     [MANDATAIRE]: MandataireFormDefaultValues,
     [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
     [PARTICULIER]: ParticulierFormDefaultValues,
@@ -172,12 +173,15 @@ export const saisieRequerant = (
 
   switch (qualite) {
     case Qualite.INSTITUTIONNEL:
+      requerant[TYPE_REQUERANT] = TypeRequerantRDC.INSTITUTIONNEL.nom;
       requerant[INSTITUTI0NNEL] = mapRequerantInstitutionnel(requete.requerant);
       break;
     case Qualite.MANDATAIRE_HABILITE:
+      requerant[TYPE_REQUERANT] = TypeRequerantRDC.MANDATAIRE.nom;
       requerant[MANDATAIRE] = mapRequerantMandataireHabilite(requete.requerant);
       break;
     case Qualite.AUTRE_PROFESSIONNEL:
+      requerant[TYPE_REQUERANT] = TypeRequerantRDC.AUTRE_PROFESSIONNEL.nom;
       requerant[AUTRE_PROFESSIONNEL] = mapRequerantAutreProfessionnel(
         requete.requerant
       );
@@ -192,7 +196,7 @@ export const saisieRequerant = (
           )
         })
       ) {
-        requerant[TYPE_REQUERANT] = "TITULAIRE1";
+        requerant[TYPE_REQUERANT] = TypeRequerantRDC.TITULAIRE1.nom;
       } else if (
         Requerant.estTitulaireX({
           requerant: requete.requerant,
@@ -202,14 +206,14 @@ export const saisieRequerant = (
           )
         })
       ) {
-        requerant[TYPE_REQUERANT] = "TITULAIRE2";
+        requerant[TYPE_REQUERANT] = TypeRequerantRDC.TITULAIRE2.nom;
       } else {
-        requerant[TYPE_REQUERANT] = "PARTICULIER";
+        requerant[TYPE_REQUERANT] = TypeRequerantRDC.PARTICULIER.nom;
         requerant[PARTICULIER] = mapRequerantParticulier(requete.requerant);
       }
       break;
     default:
-      requerant[TYPE_REQUERANT] = "TITULAIRE1";
+      requerant[TYPE_REQUERANT] = TypeRequerantRDC.TITULAIRE1.nom;
   }
   return requerant;
 };
