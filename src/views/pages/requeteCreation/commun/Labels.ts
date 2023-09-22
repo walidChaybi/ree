@@ -61,6 +61,12 @@ export const resume = {
   parent: getLibelle("Parent"),
   nationalite,
   effetCollectif: getLibelle("Effet collectif"),
+  enfantMineurHorsEffetCollectif: getLibelle(
+    "Enfant mineur hors effet collectif"
+  ),
+  enfantMineurAttenteSDANF: getLibelle(
+    "Enfant mineur en attente décision SDANF"
+  ),
   residence: getLibelle("Résidence"),
   fraterie: getLibelle("Fratrie")
 };

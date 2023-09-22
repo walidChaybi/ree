@@ -33,10 +33,10 @@ test(`Attendu: Les titulaires famille de types X ont un bloc par X existant, et 
   await renduResumeRequeteCreation();
 
   const itemEffetCollectif1 = screen.queryByText(
-    `${Labels.effetCollectif} 1`
+    `${Labels.enfantMineurAttenteSDANF} 1`
   ) as HTMLDivElement;
   const itemEffetCollectif2 = screen.queryByText(
-    `${Labels.effetCollectif} 2`
+    `${Labels.enfantMineurAttenteSDANF} 2`
   ) as HTMLDivElement;
   const itemEnfantMajeur = screen.queryByText(
     Labels.enfant.majeur

@@ -1371,7 +1371,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
         qualite: "PARENT2ENFANT",
         numeroDossierNational: "numeroDossierNational",
         demandeEffetCollectif: true,
-        valideEffetCollectif: "valideEffetCollectif",
+        valideEffetCollectif: "NON_RENSEIGNE",
         residence: "IDENTIQUE_TITULAIRE_REQUETE",
         domiciliationEnfant: "domiciliationEnfant",
         parent2Enfant: null
@@ -1579,7 +1579,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
         qualite: "ENFANT_MINEUR",
         numeroDossierNational: "numeroDossierNational",
         demandeEffetCollectif: true,
-        valideEffetCollectif: "valideEffetCollectif",
+        valideEffetCollectif: "NON_RENSEIGNE",
         residence: "IDENTIQUE_TITULAIRE_REQUETE",
         domiciliationEnfant: "domiciliationEnfant",
         parent2Enfant: {
@@ -1683,7 +1683,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
           qualite: "PARENT2ENFANT",
           numeroDossierNational: "numeroDossierNational",
           demandeEffetCollectif: true,
-          valideEffetCollectif: "valideEffetCollectif",
+          valideEffetCollectif: "NON_RENSEIGNE",
           residence: "IDENTIQUE_TITULAIRE_REQUETE",
           domiciliationEnfant: "domiciliationEnfant",
           parent2Enfant: null
@@ -1776,7 +1776,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
         qualite: "ENFANT_MINEUR",
         numeroDossierNational: "numeroDossierNational",
         demandeEffetCollectif: true,
-        valideEffetCollectif: "valideEffetCollectif",
+        valideEffetCollectif: "NON_RENSEIGNE",
         residence: "IDENTIQUE_TITULAIRE_REQUETE",
         domiciliationEnfant: "domiciliationEnfant",
         parent2Enfant: {
@@ -1880,7 +1880,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
           qualite: "PARENT2ENFANT",
           numeroDossierNational: "numeroDossierNational",
           demandeEffetCollectif: true,
-          valideEffetCollectif: "valideEffetCollectif",
+          valideEffetCollectif: "NON_RENSEIGNE",
           residence: "IDENTIQUE_TITULAIRE_REQUETE",
           domiciliationEnfant: "domiciliationEnfant",
           parent2Enfant: null

@@ -15,11 +15,11 @@ import {
 } from "@util/DateUtils";
 import { triPrenoms } from "@util/Utils";
 import { ResumeRequeteCreationEtablissementProps } from "./ResumeRequeteCreationEtablissement";
-import { ItemEffetCollectifProps } from "./items/ItemEffetCollectif";
 import {
   ItemEnfantMajeurProps,
   ItemEnfantMajeurProps as ItemFraterieProps
 } from "./items/ItemEnfantMajeur";
+import { ItemEnfantMineurProps } from "./items/ItemEnfantMineur";
 import { ItemParentProps } from "./items/ItemParent";
 import { ItemRequeteProps } from "./items/ItemRequete";
 import { ItemTitulaireProps } from "./items/ItemTitulaire";
@@ -66,13 +66,14 @@ const mappingIRequeteCreationVersResumeRequeteCreationProps = (
     nomInstitution:
       requeteCreation?.requerant.qualiteRequerant.institutionnel?.nomInstitution
   };
-
   const {
     titulaire,
     parentsTitulaire = [],
     union,
     unionsAnterieurs,
     effetsCollectifs,
+    enfantsMineursHorsEffetCollectif,
+    enfantsMineursAttenteSDANF,
     enfantsMajeurs,
     frateries
   } = triTitulaires(requeteCreation?.titulaires);
@@ -94,8 +95,16 @@ const mappingIRequeteCreationVersResumeRequeteCreationProps = (
       unionsAnterieurs
     ),
     effetsCollectifs: mappingTableau(
-      mappingITitulaireRequeteCreationVersItemEffetCollectifProps,
+      mappingITitulaireRequeteCreationVersItemEnfantMineurProps,
       effetsCollectifs
+    ),
+    enfantsMineursHorsEffetCollectif: mappingTableau(
+      mappingITitulaireRequeteCreationVersItemEnfantMineurProps,
+      enfantsMineursHorsEffetCollectif
+    ),
+    enfantsMineursAttenteSDANF: mappingTableau(
+      mappingITitulaireRequeteCreationVersItemEnfantMineurProps,
+      enfantsMineursAttenteSDANF
     ),
     enfantsMajeurs: mappingTableau(
       mappingITitulaireRequeteCreationVersItemEnfantMajeurProps,
@@ -283,9 +292,9 @@ const mappingEvenementUnionDeces = (dateDeces: any): DateCoordonneesType => {
   };
 };
 
-const mappingITitulaireRequeteCreationVersItemEffetCollectifProps = (
-  effetCollectif: ITitulaireRequeteCreation
-): ItemEffetCollectifProps => {
+const mappingITitulaireRequeteCreationVersItemEnfantMineurProps = (
+  enfantMineur: ITitulaireRequeteCreation
+): ItemEnfantMineurProps => {
   // TODO: cette version de la condition sera correcte lorsque demandeEffetCollectif sera utilisé (voir avec Alice)
   // const statut =
   //   effetCollectif.valideEffetCollectif === "OUI"
@@ -294,50 +303,50 @@ const mappingITitulaireRequeteCreationVersItemEffetCollectifProps = (
   //     ? "Proposé"
   //     : undefined;
   const statut =
-    effetCollectif.valideEffetCollectif === "OUI"
+    enfantMineur.valideEffetCollectif === "OUI"
       ? "Validé"
-      : effetCollectif.valideEffetCollectif === "NON"
+      : enfantMineur.valideEffetCollectif === "NON"
       ? "Non validé"
-      : undefined;
+      : "Non renseigné";
 
   return {
     numeros: {
-      requeteLiee: effetCollectif.numeroDossierNational
+      requeteLiee: enfantMineur.numeroDossierNational
     },
     identite: {
       noms: {
-        naissance: effetCollectif.nomNaissance,
-        actuel: effetCollectif.nomActuel,
-        francisation: effetCollectif.nomDemandeFrancisation,
-        usage: effetCollectif.nomUsage
+        naissance: enfantMineur.nomNaissance,
+        actuel: enfantMineur.nomActuel,
+        francisation: enfantMineur.nomDemandeFrancisation,
+        usage: enfantMineur.nomUsage
       },
       prenoms: {
-        naissance: formatagePrenoms(effetCollectif.prenoms),
-        francisation: formatagePrenoms(effetCollectif.prenomsDemande)
+        naissance: formatagePrenoms(enfantMineur.prenoms),
+        francisation: formatagePrenoms(enfantMineur.prenomsDemande)
       },
-      genre: Sexe.getEnumFor(effetCollectif.sexe)
+      genre: Sexe.getEnumFor(enfantMineur.sexe)
     },
     naissance: {
-      date: mappingDateNaissance(effetCollectif),
+      date: mappingDateNaissance(enfantMineur),
       ville:
-        effetCollectif.villeNaissance || effetCollectif.villeEtrangereNaissance,
-      arrondissement: effetCollectif.arrondissementNaissance,
-      region: effetCollectif.regionNaissance,
-      pays: effetCollectif.paysNaissance,
-      annee: effetCollectif.anneeNaissance,
-      mois: effetCollectif.moisNaissance,
-      jour: effetCollectif.jourNaissance,
-      codePostal: effetCollectif.codePostalNaissance
+        enfantMineur.villeNaissance || enfantMineur.villeEtrangereNaissance,
+      arrondissement: enfantMineur.arrondissementNaissance,
+      region: enfantMineur.regionNaissance,
+      pays: enfantMineur.paysNaissance,
+      annee: enfantMineur.anneeNaissance,
+      mois: enfantMineur.moisNaissance,
+      jour: enfantMineur.jourNaissance,
+      codePostal: enfantMineur.codePostalNaissance
     },
-    nationalites: effetCollectif.nationalites || [],
+    nationalites: enfantMineur.nationalites || [],
     statut,
-    residence: Residence.getEnumFor(effetCollectif.residence),
-    domiciliation: effetCollectif.domiciliationEnfant,
-    retenueSdanf: effetCollectif.retenueSdanf ?? undefined,
+    residence: Residence.getEnumFor(enfantMineur.residence),
+    domiciliation: enfantMineur.domiciliationEnfant,
+    retenueSdanf: enfantMineur.retenueSdanf ?? undefined,
     parent:
-      effetCollectif.parent2Enfant &&
+      enfantMineur.parent2Enfant &&
       mappingITitulaireRequeteCreationVersItemParentProps(
-        effetCollectif.parent2Enfant
+        enfantMineur.parent2Enfant
       )
   };
 };
@@ -420,7 +429,21 @@ const triTitulaires = (titulaires?: ITitulaireRequeteCreation[]) => {
   const effetsCollectifs = titulaires?.filter(
     titulaireRequete =>
       titulaireRequete.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
-      titulaireRequete.qualite === QualiteFamille.ENFANT_MINEUR
+      titulaireRequete.qualite === QualiteFamille.ENFANT_MINEUR &&
+      titulaireRequete.valideEffetCollectif === "OUI"
+  );
+  const enfantsMineursHorsEffetCollectif = titulaires?.filter(
+    titulaireRequete =>
+      titulaireRequete.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
+      titulaireRequete.qualite === QualiteFamille.ENFANT_MINEUR &&
+      titulaireRequete.valideEffetCollectif === "NON"
+  );
+  const enfantsMineursAttenteSDANF = titulaires?.filter(
+    titulaireRequete =>
+      titulaireRequete.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
+      titulaireRequete.qualite === QualiteFamille.ENFANT_MINEUR &&
+      (!titulaireRequete.valideEffetCollectif ||
+        titulaireRequete.valideEffetCollectif === "NON_RENSEIGNE")
   );
   const enfantsMajeurs = titulaires?.filter(
     titulaireRequete =>
@@ -444,6 +467,8 @@ const triTitulaires = (titulaires?: ITitulaireRequeteCreation[]) => {
     union,
     unionsAnterieurs,
     effetsCollectifs,
+    enfantsMineursHorsEffetCollectif,
+    enfantsMineursAttenteSDANF,
     enfantsMajeurs,
     frateries
   };

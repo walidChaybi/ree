@@ -3,14 +3,13 @@ import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { IdentiteType } from "@model/requete/IdentiteType";
 import { NationaliteType } from "@model/requete/NationaliteType";
 import { Residence } from "@model/requete/enum/Residence";
+import Labels from "@pages/requeteCreation/commun/Labels";
 import {
   estRenseigne,
   formatLigne,
   formatMajusculesMinusculesMotCompose,
   getLibelle
 } from "@util/Utils";
-import React from "react";
-import Labels from "../../../../../commun/Labels";
 import { formatLigneNationalites } from "../formatages";
 import { LigneDateNaissanceAdresse } from "../lignes/LigneDateNaissanceAdresse";
 import { LigneFrancisationIdentification } from "../lignes/LigneFrancisationIdentification";
@@ -19,7 +18,7 @@ import Item, { ItemProps } from "./Item";
 import { ItemLigne } from "./ItemLigne";
 import { ItemLigneSdanf } from "./ItemLigneSdanf";
 import ItemParent, { ItemParentProps } from "./ItemParent";
-export interface ItemEffetCollectifProps {
+export interface ItemEnfantMineurProps {
   numeros: {
     requeteLiee?: string;
   };
@@ -33,11 +32,7 @@ export interface ItemEffetCollectifProps {
   retenueSdanf?: IRetenueSdanf;
 }
 
-const VALIDE = "Validé";
-
-const ItemEffetCollectif: React.FC<
-  ItemEffetCollectifProps & ItemProps
-> = props => {
+const ItemEnfantMineur: React.FC<ItemEnfantMineurProps & ItemProps> = props => {
   const idDeuxiemeParent = 2;
 
   return (
@@ -47,8 +42,7 @@ const ItemEffetCollectif: React.FC<
         texte={`N° ${props.numeros.requeteLiee}`}
         visible={estRenseigne(props.numeros.requeteLiee)}
       />
-
-      <div className="itemLigneEffetCollectif">
+      <div className="itemLigneEnfantMineur">
         <ItemLigneSdanf
           separateur={""}
           texteSdanf={
@@ -77,7 +71,6 @@ const ItemEffetCollectif: React.FC<
           separateurVisible={false}
         />
       </div>
-
       <div>
         <ItemLigneSdanf
           texteTitulaire={formatLigne(props.identite.prenoms.naissance)}
@@ -87,17 +80,14 @@ const ItemEffetCollectif: React.FC<
           separateurVisible={false}
         />
       </div>
-
       <LigneFrancisationIdentification
         identite={props.identite}
         retenueSdanf={props.retenueSdanf}
       />
-
       <LigneDateNaissanceAdresse
         naissance={props.naissance}
         retenueSdanf={props.retenueSdanf}
       />
-
       <ItemLigne
         texte={
           formatMajusculesMinusculesMotCompose(
@@ -105,11 +95,9 @@ const ItemEffetCollectif: React.FC<
           ) ?? Labels.resume.nationalite.defaut
         }
       />
-
-      {props.statut === VALIDE && (
+      {props.statut === "Non renseigné" ? (
         <ItemLigne label={Labels.resume.effetCollectif} texte={props.statut} />
-      )}
-
+      ) : null}
       {props.parent && (
         <ItemParent
           {...props.parent}
@@ -123,4 +111,4 @@ const ItemEffetCollectif: React.FC<
   );
 };
 
-export default ItemEffetCollectif;
+export default ItemEnfantMineur;
