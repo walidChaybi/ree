@@ -1,5 +1,6 @@
 import { TypeRepertoire } from "@model/etatcivil/enum/TypeRepertoire";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { IRMCRegistre } from "@model/rmc/acteInscription/rechercheForm/IRMCRegistre";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
@@ -16,7 +17,8 @@ import EvenementFiltre, {
 import RegistreActeFiltre, {
   RegistreActeDefaultValues,
   RegistreActeFiltreProps,
-  RegistreActeValidationSchema
+  RegistreActeValidationSchema,
+  registreFormEstModifie
 } from "./RegistreActeFiltre";
 import RepertoireInscriptionFiltre, {
   RepertoireInscriptionDefaultValues,
@@ -62,20 +64,25 @@ const RegistreRepertoireFiltre: React.FC<
   // Ou de griser si besoin un des filtres apres un rappelCriteres
   useEffect(() => {
     setFiltreActeInactif(
-      isRepertoireDirty(props.formik.values as IRMCActeInscription)
+      repertoireFormEstModifie(props.formik.values as IRMCActeInscription)
     );
 
     setFiltreInscriptionInactif(
-      isRegistreDirty(props.formik.values as IRMCActeInscription)
+      registreFormEstModifie(
+        props.formik.getFieldProps<IRMCRegistre>(
+          withNamespace(props.nomFiltre, REGISTRE)
+        ).value
+      )
     );
 
     setFiltreEvenementInactif(
-      isTypeRcRca(props.formik.values as IRMCActeInscription)
+      estTypeRcRca(props.formik.values as IRMCActeInscription)
     );
 
-    isPaysEvenementDirty(props.formik.values as IRMCActeInscription)
+    paysEvenementEstModifie(props.formik.values as IRMCActeInscription)
       ? setFiltreTypeRepertoire(TypeRepertoire.PACS)
       : setFiltreTypeRepertoire(undefined);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.formik.dirty, props.formik.values]);
 
   const registreRepertoireFiltreProps = {
@@ -111,31 +118,17 @@ const RegistreRepertoireFiltre: React.FC<
 
 export default connect(RegistreRepertoireFiltre);
 
-function isRegistreDirty(values: IRMCActeInscription) {
-  const criteres = values.registreRepertoire?.registre;
-  return (
-    criteres?.familleRegistre !== "" ||
-    criteres?.natureActe !== "" ||
-    criteres?.anneeRegistre !== "" ||
-    criteres?.numeroActe?.numeroActeOuOrdre !== "" ||
-    criteres?.numeroActe?.numeroBisTer !== "" ||
-    criteres?.registreSupport?.supportUn !== "" ||
-    criteres?.registreSupport?.supportDeux !== "" ||
-    criteres?.pocopa !== null
-  );
-}
-
-function isRepertoireDirty(values: IRMCActeInscription) {
+function repertoireFormEstModifie(values: IRMCActeInscription) {
   const criteres = values.registreRepertoire?.repertoire;
   return criteres?.numeroInscription !== "" || criteres?.typeRepertoire !== "";
 }
 
-function isPaysEvenementDirty(values: IRMCActeInscription) {
+function paysEvenementEstModifie(values: IRMCActeInscription) {
   const criteres = values.registreRepertoire?.evenement;
   return criteres?.paysEvenement !== "";
 }
 
-function isTypeRcRca(values: IRMCActeInscription) {
+function estTypeRcRca(values: IRMCActeInscription) {
   const criteres = values.registreRepertoire?.repertoire;
   return (
     criteres?.typeRepertoire === TypeRepertoire.RC.libelle ||
