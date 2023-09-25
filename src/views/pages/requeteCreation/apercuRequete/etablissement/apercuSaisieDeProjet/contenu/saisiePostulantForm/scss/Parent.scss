@@ -4,13 +4,13 @@
     .Parent {
         .AvertissementConteneur {
             display: flex;
-            .InputField.SexeRadio {
-                .BlockInput {
-                    grid-template-columns: 21% 79%;
+            .DateComposeFormContainer {
+                .InputField {
+                    width: 100%;
                 }
             }
             .InputField {
-                width: 100%;
+                width: 65%;
             }
             .BlockInput {
                 grid-template-columns: 31% 69%;

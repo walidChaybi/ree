@@ -82,7 +82,7 @@ const DateNaissanceOuAgeDeForm: React.FC<
   };
 
   return (
-    <div>
+    <div className="DateComposeFormContainer">
       {
         <DateComposeForm
           nomDate={withNamespace(props.nom, DATE)}

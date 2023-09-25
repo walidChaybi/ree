@@ -92,7 +92,7 @@ const ParentForm: React.FC<ParentFormProps> = props => {
     pays: (
       <InputField
         name={withNamespace(lieuNaissanceNamespace, PAYS_NAISSANCE)}
-        label={getLibelle(`Pays de naissance`)}
+        label={getLibelle(`Pays`)}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
     )
@@ -101,7 +101,7 @@ const ParentForm: React.FC<ParentFormProps> = props => {
   const afficherArrondissement = LieuxUtils.estVilleMarseilleLyonParis(
     props.formik.getFieldProps(villeNamespace).value
   );
-  const afficherDepartement = LieuxUtils.estVilleMarseilleLyon(
+  const afficherDepartement = !LieuxUtils.estVilleMarseilleLyon(
     props.formik.getFieldProps(villeNamespace).value
   );
 

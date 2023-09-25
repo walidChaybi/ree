@@ -35,8 +35,8 @@ import { NomSecableStrictFormValidation } from "@composant/formulaire/validation
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
-import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
+import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import * as Yup from "yup";
 import { CaracteresAutorises } from "../../../../../../../../../ressources/Regex";
 
@@ -95,9 +95,10 @@ function validationSchemaParent() {
     [DATE_NAISSANCE]: DateValidationSchemaSansTestFormat,
     [LIEU_DE_NAISSANCE]: Yup.object().shape({
       [LIEU_DE_NAISSANCE]: Yup.string(),
-      [VILLE_NAISSANCE]: Yup.string()
-        .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
-        .required("La saisie de la ville est obligatoire"),
+      [VILLE_NAISSANCE]: Yup.string().matches(
+        CaracteresAutorises,
+        CARACTERES_AUTORISES_MESSAGE
+      ),
       [ETAT_CANTON_PROVINCE]: Yup.string().matches(
         CaracteresAutorises,
         CARACTERES_AUTORISES_MESSAGE
