@@ -3,7 +3,7 @@ import { IFicheLien } from "@model/etatcivil/commun/IFicheLien";
 import { IFicheLienActes } from "@model/etatcivil/commun/IFicheLienActes";
 import { IPersonne, Personne } from "@model/etatcivil/commun/IPersonne";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { formatDe, getLibelle, remplaceSNP, remplaceSPC } from "@util/Utils";
+import { getLibelle, remplaceSNP, remplaceSPC } from "@util/Utils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
@@ -243,9 +243,7 @@ function getActesPersonne(actes: IFicheLienActes[]): SectionContentProps {
     <div key={`acte-${acte.numero}`}>
       <LienFiche
         categorie={TypeFiche.ACTE}
-        numero={`Acte ${formatDe(
-          acte.nature.libelle
-        )}${acte.nature.libelle.toLocaleLowerCase()} N°${acte.numero}`}
+        numero={acte.referenceComplete}
         identifiant={acte.id}
       />
     </div>

@@ -88,7 +88,8 @@ export const personneMock: IPersonne = {
     {
       id: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
       numero: "413",
-      nature: NatureActe.getEnumFor("ABSENCE")
+      nature: NatureActe.getEnumFor("ABSENCE"),
+      referenceComplete: "Mariage ACQ.Y.2023.2"
     }
   ]
 };
