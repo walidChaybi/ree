@@ -13,6 +13,10 @@ import {
   ISaisieRequerant
 } from "./ISaisirRequetePageForm";
 
+export interface IComplementCreationUpdateRequete {
+  statutFinal?: StatutRequete;
+}
+
 export interface CreationRequeteRDCSC {
   id?: string;
   saisie: SaisieRequeteRDCSC;

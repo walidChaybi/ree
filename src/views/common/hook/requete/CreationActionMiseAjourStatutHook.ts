@@ -22,13 +22,13 @@ export interface ICreationActionMiseAjourStatutHookParams {
 }
 
 export function useCreationActionMiseAjourStatut(
-  params: ICreationActionMiseAjourStatutHookParams | undefined
+  params?: ICreationActionMiseAjourStatutHookParams
 ) {
   const history = useHistory();
   const [
     creationActionEtMiseAjourStatutParams,
     setCreationActionEtMiseAjourStatutParams
-  ] = useState<ICreationActionEtMiseAjourStatutParams | undefined>();
+  ] = useState<ICreationActionEtMiseAjourStatutParams>();
 
   useEffect(() => {
     if (params) {

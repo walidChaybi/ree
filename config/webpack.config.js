@@ -353,6 +353,10 @@ module.exports = function (webpackEnv) {
         "@api": path.resolve(__dirname, `${appSrc}/api`),
         "@model": path.resolve(__dirname, `${appSrc}/model`),
         "@scss": path.resolve(__dirname, `${appSrc}/scss`),
+        "@pageEtablissement": path.resolve(
+          __dirname,
+          `${appSrc}/views/pages/requeteCreation/apercuRequete/etablissement`
+        ),
         ...(modules.webpackAliases || {})
       },
       plugins: [

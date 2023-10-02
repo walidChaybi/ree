@@ -9,7 +9,6 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { TypeRequerant } from "@model/requete/enum/TypeRequerant";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequete } from "@model/requete/IRequete";
-import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import AdresseForm from "@widget/formulaire/adresse/AdresseForm";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
@@ -17,26 +16,11 @@ import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesFor
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { FormikProps, FormikValues } from "formik";
 import React from "react";
-import { limitesTitulaires } from "../SaisirRDCSCPage";
-import { IdentiteSubFormProps } from "../sousFormulaires/identite/IdentiteForm";
+import { limitesTitulaires, TitulairesStateType } from "../SaisirRDCSCPage";
 import IdentitesForm from "../sousFormulaires/identite/IdentitesForm";
 import RequerantForm from "../sousFormulaires/requerant/RequerantForm";
 
-type TitulaireFormType = {
-  requete?: TRequete;
-  titulaires: IdentiteSubFormProps[];
-  maxTitulaires: number;
-  onAjoutTitulaire: (formik: FormikProps<FormikValues>) => void;
-  onRetraitTitulaire: (formik: FormikProps<FormikValues>) => void;
-};
-
-type RequerantFormType = {
-  requete?: TRequete;
-  nbTitulaires: number;
-};
-
 export function getDocumentDemandeForm(
-  documentDemandeOptions: Options,
   onChangeMaxTitulaires: (nb: number, formik: FormikProps<FormikValues>) => void
 ): JSX.Element {
   return (
@@ -44,7 +28,7 @@ export function getDocumentDemandeForm(
       <SelectField
         name={DOCUMENT}
         label={getLibelle("Document demandé")}
-        options={documentDemandeOptions}
+        options={DocumentDelivrance.getAllCertificatSituationDemandeEtAttestationAsOptions()}
         onChange={(e: any, formik?: FormikProps<FormikValues>) => {
           if (formik) {
             DocumentDelivrance.estAttestationPacs(e.target.value)
@@ -57,21 +41,38 @@ export function getDocumentDemandeForm(
   );
 }
 
-export const getTitulairesForm = (props: TitulaireFormType): JSX.Element => (
-  <IdentitesForm key={TITULAIRES} {...props} />
-);
+export const getTitulairesForm = (
+  titulairesState: TitulairesStateType,
+  onAjoutTitulaire: (formik: FormikProps<FormikValues>) => void,
+  onRetraitTitulaire: (formik: FormikProps<FormikValues>) => void,
+  requeteState?: TRequete
+): JSX.Element => {
+  return (
+    <IdentitesForm
+      key={TITULAIRES}
+      requete={requeteState}
+      titulaires={titulairesState.titulaires}
+      maxTitulaires={titulairesState.maxTitulaires}
+      onAjoutTitulaire={onAjoutTitulaire}
+      onRetraitTitulaire={onRetraitTitulaire}
+    />
+  );
+};
 
-export function getRequerantForm(props: RequerantFormType): JSX.Element {
+export function getRequerantForm(
+  nbTitulaires: number,
+  requete?: TRequete
+): JSX.Element {
   const requerantFromProps = {
     nom: REQUERANT,
     titre: getLibelle("Identité du requérant"),
     options: TypeRequerant.getAllEnumsAsOptions({
       exclusions:
-        props.nbTitulaires < limitesTitulaires.MAX
+        nbTitulaires < limitesTitulaires.MAX
           ? [TypeRequerant.TITULAIRE2]
           : undefined
     }),
-    requete: props.requete
+    requete
   } as SubFormProps;
   return <RequerantForm key={REQUERANT} {...requerantFromProps} />;
 }

@@ -21,16 +21,17 @@ import {
   Requete
 } from "./ISaisirRequetePageForm";
 
+export interface IComplementCreationUpdateRequete {
+  statutFinal?: StatutRequete;
+}
+
 export interface CreationRequeteRDC {
   saisie: SaisieRequeteRDC;
   refus?: boolean;
   futurStatut: StatutRequete;
 }
-export interface UpdateRequeteRDC {
+export interface UpdateRequeteRDC extends CreationRequeteRDC {
   idRequete: string;
-  saisie: SaisieRequeteRDC;
-  refus?: boolean;
-  futurStatut: StatutRequete;
 }
 
 export interface SaisieRequeteRDC {

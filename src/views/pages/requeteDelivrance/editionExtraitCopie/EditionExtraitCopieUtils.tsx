@@ -4,6 +4,7 @@ import { IActeApiHookResultat } from "@hook/acte/ActeApiHook";
 import { IGetImagesDeLActeParams } from "@hook/acte/GetImagesDeLActeApiHook";
 import { IGenerationECParams } from "@hook/generation/generationECHook/generationECHook";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { Mention } from "@model/etatcivil/acte/mention/IMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeActe } from "@model/etatcivil/enum/TypeActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -14,6 +15,7 @@ import {
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
+  ACTE_NON_TROUVE,
   CODE_COPIE_INTEGRALE,
   CODE_COPIE_NON_SIGNEE,
   CODE_EXTRAIT_AVEC_FILIATION,
@@ -30,6 +32,7 @@ import {
   estTableauNonVide,
   getLibelle
 } from "@util/Utils";
+import { gestionnaireMentionsRetireesAuto } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { OngletProps } from "@widget/voletAvecOnglet/VoletAvecOnglet";
@@ -40,8 +43,11 @@ import { BoutonModifierTraitement } from "../apercuRequete/apercuRequeteEnTraite
 import { BoutonsTerminerOuRelecture } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonsTerminerOuRelecture";
 import { ResumeRequetePartieHaute } from "../apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequetePartieHaute";
 import { ResumeRequeteType } from "../apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequeteType";
+import { OngletsDocumentsEdites } from "./contenu/OngletsDocumentsEdites";
 import { VisionneuseActeEdition } from "./contenu/onglets/VisionneuseActeEdition";
 import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
+import { VoletEdition } from "./contenu/onglets/VoletEdition";
+import { VoletVisualisation } from "./contenu/onglets/VoletVisualisation";
 import { GestionMentions } from "./contenu/onglets/mentions/GestionMentions";
 import { ModifierCorpsExtrait } from "./contenu/onglets/modifierCorpsExtrait/ModifierCorpsExtrait";
 import { SaisirExtraitForm } from "./contenu/onglets/saisirExtrait/SaisirExtraitForm";
@@ -412,9 +418,106 @@ export function getBoutonsEdition(
 }
 
 export function filtrerDocumentComplementaireASupprimer(
-  documents: IDocumentReponse[]
-) {
-  return documents.find(document => {
+  documents?: IDocumentReponse[]
+): IDocumentReponse | undefined {
+  return documents?.find(document => {
     return document.ordre === DocumentEC.Complementaire;
   });
 }
+
+export const getContenuEdition = (
+  requete: IRequeteDelivrance,
+  documentEdite?: IDocumentReponse,
+  resultatInformationsActeApiHook?: IActeApiHookResultat
+): JSX.Element | undefined => {
+  return (
+    <div className="contenu-edition">
+      {documentEdite && (
+        <>
+          <VoletVisualisation
+            requete={requete}
+            document={documentEdite}
+            acte={resultatInformationsActeApiHook?.acte}
+          />
+          <div className="Separateur"></div>
+          <VoletEdition
+            requete={requete}
+            document={documentEdite}
+            acte={resultatInformationsActeApiHook?.acte}
+          />
+        </>
+      )}
+    </div>
+  );
+};
+
+export const getParamsCreationEC = (
+  typeDocument: string,
+  requete: IRequeteDelivrance,
+  resultatInformationsActeApiHook?: IActeApiHookResultat
+): IGenerationECParams => {
+  const choixDelivrance =
+    DocumentDelivrance.getChoixDelivranceFromUUID(typeDocument);
+  const paramsCreationEC: IGenerationECParams = {
+    requete,
+    validation: Validation.O,
+    pasDAction: true,
+    choixDelivrance,
+    mentionsRetirees: []
+  };
+  if (DocumentDelivrance.estCopieIntegrale(typeDocument)) {
+    paramsCreationEC.idActe = resultatInformationsActeApiHook?.acte?.id;
+  } else {
+    let mentions = resultatInformationsActeApiHook?.acte?.mentions
+      ? resultatInformationsActeApiHook?.acte?.mentions
+      : [];
+    if (ChoixDelivrance.estPlurilingue(choixDelivrance)) {
+      mentions = Mention.filtrerFormaterEtTrierMentionsPlurilingues(
+        resultatInformationsActeApiHook?.acte?.mentions
+          ? resultatInformationsActeApiHook?.acte?.mentions
+          : [],
+        resultatInformationsActeApiHook?.acte?.nature
+      );
+    }
+    paramsCreationEC.acte = resultatInformationsActeApiHook?.acte;
+    paramsCreationEC.mentionsRetirees.push(
+      ...gestionnaireMentionsRetireesAuto.getIdsMentionsRetirees(
+        mentions,
+        choixDelivrance,
+        resultatInformationsActeApiHook?.acte?.nature
+      )
+    );
+  }
+  return paramsCreationEC;
+};
+
+export const getDocumentEditeDefaut = (idActe: string): IDocumentReponse => {
+  return {
+    id: "COURRIER",
+    idActe,
+    typeDocument: DocumentDelivrance.getUuidFromCode(ACTE_NON_TROUVE),
+    nbPages: 0
+  } as IDocumentReponse;
+};
+
+export const getOngletsDocumentsEdites = (
+  requete: IRequeteDelivrance,
+  ajouteDocument: (typeDocument: string) => void,
+  retirerDocument: () => void,
+  changementDocEdite: (id: string) => void,
+  documents?: IDocumentReponse[],
+  documentEdite?: IDocumentReponse,
+  resultatInformationsActeApiHook?: IActeApiHookResultat
+): JSX.Element => {
+  return (
+    <OngletsDocumentsEdites
+      documents={documents}
+      idDocumentEdite={documentEdite?.id}
+      acte={resultatInformationsActeApiHook?.acte}
+      ajouterDocument={ajouteDocument}
+      retirerDocument={retirerDocument}
+      setDocumentEdite={changementDocEdite}
+      requete={requete}
+    />
+  );
+};

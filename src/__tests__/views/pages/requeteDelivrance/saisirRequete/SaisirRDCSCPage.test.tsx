@@ -62,34 +62,30 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
     "titulaires.titulaire1.naissance.dateEvenement.annee"
   ) as HTMLInputElement;
 
-  act(() => {
-    fireEvent.change(inputPaysNaissance, {
-      target: {
-        value: "mockPaysNaissance"
-      }
-    });
-    fireEvent.change(inputVilleNaissance, {
-      target: {
-        value: "mockVilleNaissance"
-      }
-    });
-    fireEvent.change(inputAnneeNaissance, {
-      target: {
-        value: "1990"
-      }
-    });
+  fireEvent.change(inputPaysNaissance, {
+    target: {
+      value: "mockPaysNaissance"
+    }
+  });
+  fireEvent.change(inputVilleNaissance, {
+    target: {
+      value: "mockVilleNaissance"
+    }
+  });
+  fireEvent.change(inputAnneeNaissance, {
+    target: {
+      value: "1990"
+    }
   });
   const submit = screen.getByText(/Prendre en charge/i);
 
-  await act(async () => {
-    fireEvent.change(inputDocumentDemande, {
-      target: {
-        value: "34da88e2-c5c7-4324-ac8e-b35193352e64"
-      }
-    });
-    fireEvent.blur(inputPaysNaissance);
-    fireEvent.blur(inputVilleNaissance);
+  fireEvent.change(inputDocumentDemande, {
+    target: {
+      value: "34da88e2-c5c7-4324-ac8e-b35193352e64"
+    }
   });
+  fireEvent.blur(inputPaysNaissance);
+  fireEvent.blur(inputVilleNaissance);
 
   await waitFor(() => {
     expect(inputDocumentDemande.value).toEqual(
@@ -97,9 +93,7 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
     );
   });
 
-  await act(async () => {
-    fireEvent.click(submit);
-  });
+  fireEvent.click(submit);
 
   await waitFor(() => {
     expect(getLastPathElem(history.location.pathname)).toEqual(

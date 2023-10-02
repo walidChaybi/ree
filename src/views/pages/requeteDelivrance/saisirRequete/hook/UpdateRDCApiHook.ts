@@ -1,17 +1,12 @@
 import { updateRequeteDelivrance } from "@api/appels/requeteApi";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import { UpdateRequeteRDC } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
 import { mappingFormulaireRDCVersRequeteDelivrance } from "./mappingFormulaireRDCVersRequeteDelivrance";
+import { ICreationOuMiseAJourRDCResultat } from "./SoumissionFormulaireRDCHook";
 
-export interface IUpdateRequeteDelivranceRDCResultat {
-  requete: IRequeteDelivrance;
-  futurStatut: StatutRequete;
-  refus?: boolean;
-}
+type IUpdateRequeteDelivranceRDCResultat = ICreationOuMiseAJourRDCResultat;
 
 export function useUpdateRequeteDelivranceRDC(
   requeteRDC?: UpdateRequeteRDC

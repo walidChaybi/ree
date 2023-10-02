@@ -7,6 +7,7 @@ import {
   useDeleteAlerteActeApiHook
 } from "@hook/alertes/DeleteAlerteActeHookApi";
 import { officierDroitConsulterSurLeTypeRegistreOuDroitMEAE } from "@model/agent/IOfficier";
+import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { FenetreExterneUtil } from "@util/FenetreExterne";
@@ -26,7 +27,7 @@ import { BandeauAlertesActe } from "./contenu/BandeauAlertesActe";
 import { BandeauFiche } from "./contenu/BandeauFiche";
 import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
 import { BandeauFicheRcRcaPacsNumero } from "./contenu/BandeauFicheRcRcaPacsNumero";
-import { setFiche } from "./FicheUtils";
+import { IAccordionReceSection, setFiche } from "./FicheUtils";
 import { useFichePageApiHook } from "./hook/FichePageApiHook";
 import "./scss/FichePage.scss";
 
@@ -187,12 +188,10 @@ export const FichePage: React.FC<FichePageProps> = ({
         idx >= 0 &&
         idx < nbLignesTotales
       ) {
-        const estSuivant = idx > indexCourant;
-        const idxLocal = getIndexLocal(idx, nbLignesParAppel);
-        if (estSuivant) {
-          obtenirFicheSuivante(idxLocal, idx);
+        if (idx > indexCourant) {
+          obtenirFicheSuivante(getIndexLocal(idx, nbLignesParAppel), idx);
         } else {
-          obtenirFichePrecedente(idx, idxLocal);
+          obtenirFichePrecedente(idx, getIndexLocal(idx, nbLignesParAppel));
         }
       }
       setIndexCourant(idx);
@@ -259,73 +258,27 @@ export const FichePage: React.FC<FichePageProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatSuppressionAlerte]);
 
-  const acte = dataFicheState.data as IFicheActe;
-
-  const elementAAfficherisReady =
-    bandeauFiche && panelsFiche && dataFicheState && dataFicheCourante;
-
   return (
     <div className="FichePage">
-      {elementAAfficherisReady ? (
+      {bandeauFiche && panelsFiche && dataFicheState && dataFicheCourante ? (
         <>
-          <BandeauFiche
-            dataBandeau={bandeauFiche}
-            elementNumeroLigne={getElementNumeroLigne(
-              bandeauFiche,
-              dataFicheCourante.categorie
-            )}
-          />
-
-          {datasFiches.length > UN ? (
-            <div className="barreNavigationSuivPrec">
-              <BarreNavigationSuivPrec
-                index={indexCourant}
-                max={nbLignesTotales}
-                setIndex={setIndexFiche}
-              />
-            </div>
-          ) : undefined}
-          {dataFicheCourante.categorie === TypeFiche.ACTE && (
-            <>
-              <BandeauAlertesActe
-                alertes={alertes}
-                idTypeRegistre={acte?.registre?.type?.id}
-                ajouterAlerteCallBack={ajouterAlerteCallBack}
-                supprimerAlerteCallBack={supprimerAlerteCallBack}
-                afficherBouton={visuBoutonAlertes}
-              />
-              {acte &&
-                !officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(
-                  acte.registre?.type?.id
-                ) &&
-                gestionnaireFeatureFlag.estActif(
-                  FeatureFlag.FF_DELIV_EC_PAC
-                ) && (
-                  <BoutonCreationRDD
-                    label="Demander la délivrance"
-                    labelPopin={`Vous allez demander la délivrance de cet acte. Souhaitez-vous continuer ?`}
-                    acte={acte}
-                    numeroFonctionnel={numeroRequete}
-                  />
-                )}
-            </>
+          {getBandeauFiche(bandeauFiche, dataFicheCourante.categorie)}
+          {getBarreNavigationSuivPrec(
+            datasFiches,
+            indexCourant,
+            nbLignesTotales,
+            setIndexFiche
           )}
-          {panelsFiche?.panels?.map((panel: SectionPanelProps, idx: number) => (
-            <AccordionRece
-              key={`accordion-rece-${idx}`}
-              panel={panel}
-              index={idx}
-              expanded={
-                panelsFiche.panelParDefaut
-                  ? idx === panelsFiche.panelParDefaut
-                  : idx === 0
-              }
-              titre={panel?.title}
-              disabled={panel?.panelAreas.every(
-                (pa: SectionPanelAreaProps) => !pa.value && !pa.parts
-              )}
-            />
-          ))}
+          {getBandeauAlerteActe(
+            dataFicheCourante.categorie,
+            alertes,
+            dataFicheState.data,
+            ajouterAlerteCallBack,
+            supprimerAlerteCallBack,
+            visuBoutonAlertes,
+            numeroRequete
+          )}
+          {getAccordionListe(panelsFiche?.panels, panelsFiche)}
         </>
       ) : (
         <OperationLocaleEnCours visible={true} />
@@ -333,6 +286,90 @@ export const FichePage: React.FC<FichePageProps> = ({
     </div>
   );
 };
+
+function getBandeauFiche(bandeauFiche: IBandeauFiche, categorie: TypeFiche) {
+  return (
+    <BandeauFiche
+      dataBandeau={bandeauFiche}
+      elementNumeroLigne={getElementNumeroLigne(bandeauFiche, categorie)}
+    />
+  );
+}
+
+function getAccordionListe(
+  liste: SectionPanelProps[],
+  panelsFiche: IAccordionReceSection
+) {
+  return liste.map((panel: SectionPanelProps, idx: number) => (
+    <AccordionRece
+      key={`accordion-rece-${idx}`}
+      panel={panel}
+      index={idx}
+      expanded={
+        panelsFiche.panelParDefaut
+          ? idx === panelsFiche.panelParDefaut
+          : idx === 0
+      }
+      titre={panel?.title}
+      disabled={panel?.panelAreas.every(
+        (pa: SectionPanelAreaProps) => !pa.value && !pa.parts
+      )}
+    />
+  ));
+}
+
+function getBandeauAlerteActe(
+  categorie: TypeFiche,
+  alertes: IAlerte[],
+  acte: IFicheActe,
+  ajouterAlerteCallBack: (value: IAjouterAlerteFormValue) => void,
+  supprimerAlerteCallBack: (idAlerteActe: string, idActe: string) => void,
+  visuBoutonAlertes: boolean,
+  numeroRequete: string | undefined
+) {
+  return (
+    categorie === TypeFiche.ACTE && (
+      <>
+        <BandeauAlertesActe
+          alertes={alertes}
+          idTypeRegistre={acte?.registre?.type?.id}
+          ajouterAlerteCallBack={ajouterAlerteCallBack}
+          supprimerAlerteCallBack={supprimerAlerteCallBack}
+          afficherBouton={visuBoutonAlertes}
+        />
+        {acte &&
+          !officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(
+            acte.registre?.type?.id
+          ) &&
+          gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) && (
+            <BoutonCreationRDD
+              label="Demander la délivrance"
+              labelPopin={`Vous allez demander la délivrance de cet acte. Souhaitez-vous continuer ?`}
+              acte={acte}
+              numeroFonctionnel={numeroRequete}
+            />
+          )}
+      </>
+    )
+  );
+}
+
+function getBarreNavigationSuivPrec(
+  datasFiches: IDataFicheProps[],
+  indexCourant: number,
+  nbLignesTotales: number,
+  setIndexFiche: (idx: number) => void
+) {
+  return datasFiches.length > UN ? (
+    <div className="barreNavigationSuivPrec">
+      <BarreNavigationSuivPrec
+        index={indexCourant}
+        max={nbLignesTotales}
+        setIndex={setIndexFiche}
+      />
+    </div>
+  ) : undefined;
+}
 
 /**
  * Passage à la plage suivante si le prochain index local est 0 et que ce n'est pas le 0 du tout début

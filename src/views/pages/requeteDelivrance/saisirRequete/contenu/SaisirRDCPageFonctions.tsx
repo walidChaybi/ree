@@ -1,4 +1,11 @@
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
+import {
+  TypeLienRequerant,
+  TYPE_LIEN_REQUERANT_POUR_TITULAIRE
+} from "@model/requete/enum/TypeLienRequerant";
+import { TypeRequerantRDC } from "@model/requete/enum/TypeRequerantRDC";
+import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { SaisieRequeteRDC } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
 
@@ -16,8 +23,9 @@ export function verifierDonneesObligatoires(values: SaisieRequeteRDC) {
   const motif = values.requete.motif;
 
   if (
-    NatureActeRequete.NAISSANCE ===
-    NatureActeRequete.getEnumFor(values.requete.natureActe)
+    NatureActeRequete.estNaissance(
+      NatureActeRequete.getEnumFor(values.requete.natureActe)
+    )
   ) {
     const titulaire1 = values.titulaire1;
     return (
@@ -35,3 +43,33 @@ export function verifierDonneesObligatoires(values: SaisieRequeteRDC) {
     motif !== ""
   );
 }
+
+export const modificationChamps = (
+  typeRequerant: string,
+  setMandantVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setLienTitulaireVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setOptionsLienTitulaire: React.Dispatch<React.SetStateAction<Options>>
+): void => {
+  const typeRequerantRDC = TypeRequerantRDC.getEnumFor(typeRequerant);
+
+  setMandantVisible(TypeRequerantRDC.estMandataire(typeRequerantRDC));
+
+  setLienTitulaireVisible(
+    !(
+      TypeRequerantRDC.estInstitutionnel(typeRequerantRDC) ||
+      TypeRequerantRDC.estAutreProfessionnel(typeRequerantRDC)
+    )
+  );
+
+  if (TypeRequerantRDC.estTitulaire(typeRequerantRDC)) {
+    setOptionsLienTitulaire(
+      TypeLienRequerant.getListEnumsAsOptions(
+        TYPE_LIEN_REQUERANT_POUR_TITULAIRE
+      )
+    );
+  } else if (TypeRequerantRDC.estParticulier(typeRequerantRDC)) {
+    setOptionsLienTitulaire(TypeLienRequerant.getAllEnumsAsOptions());
+  } else if (TypeRequerantRDC.estMandataire(typeRequerantRDC)) {
+    setOptionsLienTitulaire(TypeLienMandant.getAllEnumsAsOptions());
+  }
+};

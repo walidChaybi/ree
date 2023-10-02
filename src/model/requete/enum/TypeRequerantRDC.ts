@@ -54,4 +54,37 @@ export class TypeRequerantRDC extends EnumWithComplete {
       return keys.includes(el.cle) ? el : undefined;
     });
   }
+
+  public static estTitulaire1(typeRequerantRDC: TypeRequerantRDC): boolean {
+    return typeRequerantRDC === TypeRequerantRDC.TITULAIRE1;
+  }
+
+  public static estTitulaire2(typeRequerantRDC: TypeRequerantRDC): boolean {
+    return typeRequerantRDC === TypeRequerantRDC.TITULAIRE2;
+  }
+
+  public static estParticulier(typeRequerantRDC: TypeRequerantRDC): boolean {
+    return typeRequerantRDC === TypeRequerantRDC.PARTICULIER;
+  }
+
+  public static estMandataire(typeRequerantRDC: TypeRequerantRDC): boolean {
+    return typeRequerantRDC === TypeRequerantRDC.MANDATAIRE;
+  }
+
+  public static estInstitutionnel(typeRequerantRDC: TypeRequerantRDC): boolean {
+    return typeRequerantRDC === TypeRequerantRDC.INSTITUTIONNEL;
+  }
+
+  public static estAutreProfessionnel(
+    typeRequerantRDC: TypeRequerantRDC
+  ): boolean {
+    return typeRequerantRDC === TypeRequerantRDC.AUTRE_PROFESSIONNEL;
+  }
+
+  public static estTitulaire(typeRequerantRDC: TypeRequerantRDC): boolean {
+    return (
+      this.estTitulaire1(typeRequerantRDC) ||
+      this.estTitulaire2(typeRequerantRDC)
+    );
+  }
 }

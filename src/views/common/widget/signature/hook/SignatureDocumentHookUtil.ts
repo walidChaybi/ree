@@ -104,7 +104,7 @@ function sendDocumentToSignature(
   pinCode: string,
   documentsToSignWating: DocumentsByRequete,
   idRequetesToSign: string[],
-  handleBackFromWebExtension: any
+  handleBackFromWebExtensionCallback: any
 ) {
   const detail = {
     function: "SIGN",
@@ -124,7 +124,7 @@ function sendDocumentToSignature(
     TIMER_SIGNATURE,
     SIGNATURE_TIMEOUT,
     true,
-    handleBackFromWebExtension,
+    handleBackFromWebExtensionCallback,
     EVENT_NON_DISPO
   );
   if (window.top) {
@@ -138,7 +138,7 @@ export function getDocumentAndSendToSignature(
   documentsToSignWating: DocumentsByRequete,
   setErrorsSignature: (errors: SignatureErrors) => void,
   setDocumentsToSignWating: (documentByRequete: DocumentsByRequete) => void,
-  handleBackFromWebExtension: any,
+  handleBackFromWebExtensionCallback: any,
   setDocumentsToSave: React.Dispatch<React.SetStateAction<DocumentToSave[]>>,
   pinCode?: string
 ) {
@@ -168,7 +168,7 @@ export function getDocumentAndSendToSignature(
             pinCode,
             documentsToSignWating,
             idRequetesToSign,
-            handleBackFromWebExtension
+            handleBackFromWebExtensionCallback
           );
         } else {
           changeDocumentToSign(
@@ -276,6 +276,42 @@ export function handleResultatPatch(
       });
     } else {
       majStatusRequete();
+    }
+  }
+}
+
+export function handleBackFromWebExtension(
+  resultat: any,
+  documentsToSignWating: DocumentsByRequete,
+  idRequetesToSign: string[],
+  setErrorsSignature: React.Dispatch<
+    React.SetStateAction<SignatureErrors | undefined>
+  >,
+  setDocumentsToSignWating: React.Dispatch<
+    React.SetStateAction<DocumentsByRequete>
+  >,
+  setDocumentsToSave: React.Dispatch<React.SetStateAction<DocumentToSave[]>>
+): void {
+  gestionnaireTimer.annuleTimer(TIMER_SIGNATURE);
+  if (laDirectionEstVersLAppliRece(resultat)) {
+    if (desErreursOntEteRecues(resultat)) {
+      setErrorsSignature({
+        numeroRequete:
+          documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
+            ?.numeroRequete,
+        erreurs: resultat.erreurs
+      });
+    } else {
+      changeDocumentToSign(
+        documentsToSignWating,
+        idRequetesToSign,
+        resultat.document,
+        setDocumentsToSignWating
+      );
+      processResultWebExtension(
+        documentsToSignWating[idRequetesToSign[0]],
+        setDocumentsToSave
+      );
     }
   }
 }

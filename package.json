@@ -1,7 +1,7 @@
 {
   "name": "rece-ui",
   "maeGroup": "fr.gouv.diplomatie.rece",
-  "version": "2.10.0",
+  "version": "2.11.0",
   "private": true,
   "homepage": "rece/rece-ui/",
   "dependencies": {
@@ -178,7 +178,8 @@
       "@api/(.+)$": "<rootDir>/src/api/$1",
       "@model/(.+)$": "<rootDir>/src/model/$1",
       "@scss/(.+)$": "<rootDir>/src/scss/$1",
-      "@mock/(.+)$": "<rootDir>/src/mock/$1"
+      "@mock/(.+)$": "<rootDir>/src/mock/$1",
+      "@pageEtablissement/(.+)$": "<rootDir>/src/views/pages/requeteCreation/apercuRequete/etablissement/$1"
     },
     "moduleFileExtensions": [
       "web.js",
