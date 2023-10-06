@@ -256,12 +256,11 @@ function getActesPersonne(actes: IFicheLienActes[]): SectionContentProps {
 
 function getRcsPersonne(rcs: IFicheLien[]): SectionContentProps {
   const liensRcs = rcs?.map(rc => {
-    const statut = ` (${rc.statut?.toLowerCase()})`;
     return (
       <div key={`rc-${rc.numero}`}>
         <LienFiche
           categorie={TypeFiche.RC}
-          numero={`Inscription RC N°${rc.numero}${rc.statut ? statut : ""}`}
+          numero={rc.referenceComplete}
           identifiant={rc.id}
         />
       </div>
@@ -275,12 +274,11 @@ function getRcsPersonne(rcs: IFicheLien[]): SectionContentProps {
 
 function getRcasPersonne(rcas: IFicheLien[]): SectionContentProps {
   const liensRcas = rcas?.map(rca => {
-    const statut = ` (${rca.statut?.toLowerCase()})`;
     return (
       <div key={`rca-${rca.numero}`}>
         <LienFiche
           categorie={TypeFiche.RCA}
-          numero={`Inscription RCA N°${rca.numero}${rca.statut ? statut : ""}`}
+          numero={rca.referenceComplete}
           identifiant={rca.id}
         />
       </div>
@@ -294,14 +292,11 @@ function getRcasPersonne(rcas: IFicheLien[]): SectionContentProps {
 
 function getPacssPersonne(pacss: IFicheLien[]): SectionContentProps {
   const liensPacss = pacss?.map(pacs => {
-    const statut = ` (${pacs.statut?.toLowerCase()})`;
     return (
       <div key={`pacs-${pacs.numero}`}>
         <LienFiche
           categorie={TypeFiche.PACS}
-          numero={`Inscription PACS N°${pacs.numero}${
-            pacs.statut ? statut : ""
-          }`}
+          numero={pacs.referenceComplete}
           identifiant={pacs.id}
         />
       </div>

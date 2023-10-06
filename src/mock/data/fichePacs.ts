@@ -131,14 +131,34 @@ export const fichePacs = {
           }
         ],
         rcs: [
-          { id: "85df1d10-71b7-4336-9463-bb1c5760d1a0", numero: "3" },
-          { id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918", numero: "4" }
+          {
+            id: "85df1d10-71b7-4336-9463-bb1c5760d1a0",
+            numero: "3",
+            referenceComplete: "RC N° 2020-4"
+          },
+          {
+            id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918",
+            numero: "4",
+            referenceComplete: "RC N° 2020-4"
+          }
         ],
         rcas: [],
         pacss: [
-          { id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0", numero: "1234507" },
-          { id: "89c9d030-26c3-41d3-bdde-8b4dcc0420df", numero: "1234506" },
-          { id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e1", numero: "1234508" }
+          {
+            id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
+            numero: "1234507",
+            referenceComplete: "PACS N° 2020-1234507"
+          },
+          {
+            id: "89c9d030-26c3-41d3-bdde-8b4dcc0420df",
+            numero: "1234506",
+            referenceComplete: "PACS N° 2020-1234508"
+          },
+          {
+            id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e1",
+            numero: "1234508",
+            referenceComplete: "PACS N° 2020-1234509"
+          }
         ],
         actes: [
           {

@@ -166,10 +166,20 @@ export const ficheActe1 = {
           }
         ],
         rcs: [
-          { id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918", numero: "4" },
+          {
+            id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918",
+            numero: "4",
+            referenceComplete: "RC N° 2020-4"
+          },
           { id: "76b62678-8b06-4442-ad5b-b9207627a6e3", numero: "1" }
         ],
-        rcas: [{ id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e", numero: "4094" }],
+        rcas: [
+          {
+            id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
+            numero: "4094",
+            referenceComplete: "RCA N° 2019-492"
+          }
+        ],
         pacss: [],
         actes: [
           {
@@ -480,10 +490,20 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
           }
         ],
         rcs: [
-          { id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918", numero: "4" },
+          {
+            id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918",
+            numero: "4",
+            referenceComplete: "RC N° 2020-4"
+          },
           { id: "76b62678-8b06-4442-ad5b-b9207627a6e3", numero: "1" }
         ],
-        rcas: [{ id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e", numero: "4094" }],
+        rcas: [
+          {
+            id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
+            numero: "4094",
+            rreferenceComplete: "RCA N° 2019-492"
+          }
+        ],
         pacss: [],
         actes: [
           {
@@ -794,10 +814,24 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
           }
         ],
         rcs: [
-          { id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918", numero: "4" },
-          { id: "76b62678-8b06-4442-ad5b-b9207627a6e3", numero: "1" }
+          {
+            id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918",
+            numero: "4",
+            referenceComplete: "RC N° 2020-4"
+          },
+          {
+            id: "76b62678-8b06-4442-ad5b-b9207627a6e3",
+            numero: "1",
+            referenceComplete: "RC N° 2020-9"
+          }
         ],
-        rcas: [{ id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e", numero: "4094" }],
+        rcas: [
+          {
+            id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
+            numero: "4094",
+            referenceComplete: "RCA N° 2019-492"
+          }
+        ],
         pacss: [],
         actes: [
           {
@@ -1888,21 +1922,24 @@ export const ficheActeMariage2 = {
           {
             id: "85df1d10-71b7-4336-9463-bb1c5760d1a0",
             numero: "3",
-            statut: "INACTIF"
+            statut: "INACTIF",
+            referenceComplete: "RC N° 2020-4"
           }
         ],
         rcas: [
           {
             id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63c",
             numero: "4092",
-            statut: "ACTIF"
+            statut: "ACTIF",
+            referenceComplete: "RCA N° 2019-492"
           }
         ],
         pacss: [
           {
             id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
             numero: "1234507",
-            statut: "ACTIF"
+            statut: "ACTIF",
+            referenceComplete: "PACS N° 2020-1234507"
           }
         ],
         actes: [
@@ -2278,14 +2315,16 @@ export const ficheActeNaissance = {
           {
             id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918",
             numero: "4",
-            statut: "INACTIF"
+            statut: "INACTIF",
+            referenceComplete: "RC N° 2020-4"
           }
         ],
         rcas: [
           {
             id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
             numero: "4094",
-            statut: "ACTIF"
+            statut: "ACTIF",
+            referenceComplete: "RCA N° 2019-492"
           }
         ],
         pacss: [],
@@ -3604,14 +3643,16 @@ export const ficheActeEC = {
           {
             id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918",
             numero: "4",
-            statut: "INACTIF"
+            statut: "INACTIF",
+            referenceComplete: "RC N° 2020-4"
           }
         ],
         rcas: [
           {
             id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
             numero: "4094",
-            statut: "ACTIF"
+            statut: "ACTIF",
+            referenceComplete: "RCA N° 2019-492"
           }
         ],
         pacss: [],
@@ -3979,14 +4020,16 @@ export const ficheActeAvecGenreIndetermine = {
           {
             id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918",
             numero: "4",
-            statut: "INACTIF"
+            statut: "INACTIF",
+            referenceComplete: "RC N° 2020-4"
           }
         ],
         rcas: [
           {
             id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
             numero: "4094",
-            statut: "ACTIF"
+            statut: "ACTIF",
+            referenceComplete: "RCA N° 2019-492"
           }
         ],
         pacss: [],

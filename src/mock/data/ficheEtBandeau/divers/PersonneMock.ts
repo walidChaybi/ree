@@ -46,42 +46,54 @@ export const personneMock: IPersonne = {
     {
       id: "85df1d10-71b7-4336-9463-bb1c5760d1a0",
       numero: "3",
-      statut: "ACTIF"
+      statut: "ACTIF",
+      referenceComplete: "RC N° 2020-4"
     },
-    { id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918", numero: "4", statut: "ACTIF" }
+    {
+      id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918",
+      numero: "4",
+      statut: "ACTIF",
+      referenceComplete: "RC N° 2020-5"
+    }
   ],
   rcas: [
     {
       id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
       numero: "4094",
-      statut: "INACTIF"
+      statut: "INACTIF",
+      referenceComplete: "RCA N° 2019-492"
     }
   ],
   pacss: [
     {
       id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
       numero: "123456",
-      statut: "INACTIF"
+      statut: "INACTIF",
+      referenceComplete: "PACS N° 2020-1234507"
     },
     {
       id: "89c9d030-26c3-41d3-bdde-8b4dcc0420df",
       numero: "1234506",
-      statut: "ACTIF"
+      statut: "ACTIF",
+      referenceComplete: "PACS N° 2020-1234508"
     },
     {
       id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e1",
       numero: "1234508",
-      statut: "INACTIF"
+      statut: "INACTIF",
+      referenceComplete: "PACS N° 2020-1234509"
     },
     {
       id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e2",
       numero: "1234509",
-      statut: "ACTIF"
+      statut: "ACTIF",
+      referenceComplete: "PACS N° 2020-1234505"
     },
     {
       id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e3",
       numero: "1234510",
-      statut: "INACTIF"
+      statut: "INACTIF",
+      referenceComplete: "PACS N° 2020-1234504"
     }
   ],
   actes: [
