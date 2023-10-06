@@ -25,14 +25,23 @@ type DateNaissanceOuAgeDeFormProps = ComponentProps & FormikComponentProps;
 const DateNaissanceOuAgeDeForm: React.FC<
   DateNaissanceOuAgeDeFormProps
 > = props => {
+  const getDateNaissanceSaisie = () => {
+    return props.formik.getFieldProps(withNamespace(props.nom, DATE)).value;
+  };
+
+  const getAgeSaisi = () => {
+    return props.formik.getFieldProps(withNamespace(props.nom, AGE)).value;
+  };
+
   const [disabledAgeDe, setDisabledAgeDe] = useState<boolean>(
-    Evenement.estPartiellementRenseigne(props.naissance) ||
-      estRenseigne(props.age)
+    Evenement.estPartiellementRenseigne(getDateNaissanceSaisie()) ||
+      estRenseigne(getAgeSaisi())
   );
 
   const [disabledDate, setDisabledDate] = useState<boolean>(
-    Evenement.estTotalementRenseigne(props.naissance) ||
-      (Evenement.estNonRenseigne(props.naissance) && estRenseigne(props.age))
+    Evenement.estTotalementRenseigne(getDateNaissanceSaisie()) ||
+      (Evenement.estNonRenseigne(getDateNaissanceSaisie()) &&
+        estRenseigne(getAgeSaisi()))
   );
 
   const onChangeDate = useCallback(
@@ -72,14 +81,6 @@ const DateNaissanceOuAgeDeForm: React.FC<
     },
     [props.formik, props.nom]
   );
-
-  const getDateNaissanceSaisie = () => {
-    return props.formik.getFieldProps(withNamespace(props.nom, DATE)).value;
-  };
-
-  const getAgeSaisi = () => {
-    return props.formik.getFieldProps(withNamespace(props.nom, AGE)).value;
-  };
 
   return (
     <div className="DateComposeFormContainer">
