@@ -13,12 +13,12 @@ import {
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
-import { SortOrder } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import React, { useCallback, useState } from "react";
 import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";

@@ -64,6 +64,9 @@ export function mappingCriteres(
     numeroBisTer: getValeurOuUndefined(
       criteres.registreRepertoire?.registre?.numeroActe?.numeroBisTer
     ),
+    aPartirDeNumeroActe: getValeurOuUndefined(
+      criteres.registreRepertoire?.registre?.numeroActe?.aPartirDe
+    ),
     support1: getValeurOuUndefined(
       criteres.registreRepertoire?.registre?.registreSupport?.supportUn
     ),

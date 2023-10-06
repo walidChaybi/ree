@@ -21,6 +21,10 @@ $largeur-block-input: 65%;
   .BlockInput.DeuxInputs {
     grid-template-columns: $largeur-libelle calc($largeur-block-input / 2) calc($largeur-block-input / 2);
   }
+  .BlockInput.TroisInputs {
+    grid-template-columns: $largeur-libelle calc($largeur-block-input / 3) calc($largeur-block-input / 3) calc($largeur-block-input / 3);
+  }
+
   .BlockErreur {
     margin-left: $largeur-libelle;
   }

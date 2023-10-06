@@ -25,6 +25,7 @@ export interface IRMCRequestActesInscriptions {
   familleRegistre?: TypeFamille;
   posteOuPocopa?: string;
   numeroActe?: string;
+  aPartirDeNumeroActe?: boolean;
   anneeRegistre?: string;
   numeroBisTer?: string;
   support1?: string;

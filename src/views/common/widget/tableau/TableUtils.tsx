@@ -59,8 +59,7 @@ export function stableSort<T>(
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
+    return order === 0 ? a[1] - b[1] : order;
   });
   return stabilizedThis.map(el => el[0]);
 }
@@ -148,3 +147,27 @@ export function getLigneTableauVide(message: string): JSX.Element {
     </>
   );
 }
+
+export const getItemAriaLabel = (
+  type: string,
+  nombreResultats?: number
+): string => {
+  let ariaLabel = "";
+  switch (type) {
+    case "first":
+      ariaLabel = `Rechercher les ${nombreResultats} résultats précédents`;
+      break;
+    case "previous":
+      ariaLabel = "Page précédente";
+      break;
+    case "next":
+      ariaLabel = "Page suivante";
+      break;
+    case "last":
+      ariaLabel = `Rechercher les ${nombreResultats} résultats suivants`;
+      break;
+    default:
+      ariaLabel = "";
+  }
+  return ariaLabel;
+};

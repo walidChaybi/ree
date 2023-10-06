@@ -1,3 +1,4 @@
+import { Checkbox, FormControlLabel } from "@mui/material";
 import { getLibelle } from "@util/Utils";
 import { connect, Field } from "formik";
 import * as Yup from "yup";
@@ -11,10 +12,12 @@ import {
 
 const NUMERO_ACTE_OU_ORDRE = "numeroActeOuOrdre";
 export const NUMERO_BIS_TER = "numeroBisTer";
+const A_PARTIR_DE = "aPartirDe";
 
 export const NumeroActeDefaultValues = {
   [NUMERO_ACTE_OU_ORDRE]: "",
-  [NUMERO_BIS_TER]: ""
+  [NUMERO_BIS_TER]: "",
+  [A_PARTIR_DE]: false
 };
 
 export const NumeroActeValidationSchema = Yup.object({
@@ -35,19 +38,28 @@ const NumeroActeForm: React.FC<
     NUMERO_ACTE_OU_ORDRE
   );
   const nomChampNumeroBisTer = withNamespace(props.nomFiltre, NUMERO_BIS_TER);
+  const nomChampAPartirDe = withNamespace(props.nomFiltre, A_PARTIR_DE);
 
   const onInputNumeroActeOuOrdre = (e: React.ChangeEvent<HTMLInputElement>) => {
     traiteCarAutorises(e.target, digitSeulement);
   };
 
+  const caseACocherAPartirDe = (
+    <Checkbox
+      inputProps={{ "aria-label": getLibelle("A partir de") }}
+      name={nomChampAPartirDe}
+      checked={props.formik.getFieldProps(nomChampAPartirDe).value}
+      disabled={!props.formik.getFieldProps(nomChampNumeroActeOuOrdre).value}
+      onChange={props.formik.handleChange}
+    />
+  );
+
   return (
     <div className="InputField">
-      <div className="BlockInput DeuxInputs">
-        {
-          <label htmlFor={nomChampNumeroActeOuOrdre}>
-            {getLibelle("N° d'acte / N° d'ordre")}
-          </label>
-        }
+      <div className="BlockInput TroisInputs">
+        <label htmlFor={nomChampNumeroActeOuOrdre}>
+          {getLibelle("N° d'acte / N° d'ordre")}
+        </label>
         <Field
           component="input"
           name={nomChampNumeroActeOuOrdre}
@@ -66,6 +78,10 @@ const NumeroActeForm: React.FC<
           aria-label={getLibelle("Numero BisTer")}
           placeholder={getLibelle("N° BisTer")}
           disabled={props.estInactifChampNumeroBisTer}
+        />
+        <FormControlLabel
+          control={caseACocherAPartirDe}
+          label={getLibelle("A partir de")}
         />
       </div>
     </div>

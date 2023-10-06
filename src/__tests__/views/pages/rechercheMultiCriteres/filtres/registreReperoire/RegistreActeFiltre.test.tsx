@@ -1323,7 +1323,7 @@ test("render composant RegistreActeFiltre", async () => {
   const result = screen.getByTestId("result");
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"registre":{"natureActe":"MARIAGE","familleRegistre":"ACQ","anneeRegistre":"","pocopa":{"cle":"TORONTO","libelle":"TORONTO"},"registreSupport":{"supportUn":"","supportDeux":""},"numeroActe":{"numeroActeOuOrdre":"123456","numeroBisTer":""}}}'
+      '{"registre":{"natureActe":"MARIAGE","familleRegistre":"ACQ","anneeRegistre":"","pocopa":{"cle":"TORONTO","libelle":"TORONTO"},"registreSupport":{"supportUn":"","supportDeux":""},"numeroActe":{"numeroActeOuOrdre":"123456","numeroBisTer":"","aPartirDe":false}}}'
     );
   });
 });

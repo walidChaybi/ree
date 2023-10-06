@@ -7,6 +7,7 @@ import { getLibelle } from "@util/Utils";
 import React, { useCallback, useEffect } from "react";
 import { Box } from "reakit/Box";
 import {
+  getItemAriaLabel,
   getPaginatedData,
   getSortOrder,
   laPageDAvantEstEnDehors,
@@ -48,6 +49,7 @@ export interface TableauReceProps {
   stickyHeader?: boolean;
   getRowClassName?: (data: any) => string;
   onChangementDePage?: () => void;
+  afficheBoutonsNavigationRapide?: boolean;
 }
 
 export const TableauRece: React.FC<TableauReceProps> = props => {
@@ -213,13 +215,15 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
           labelDisplayedRows={({ from, to, count }) =>
             getLibelle(`${from}-${to} sur ${count}`)
           }
+          showFirstButton={props.afficheBoutonsNavigationRapide}
+          showLastButton={props.afficheBoutonsNavigationRapide}
           page={
             pageState > 0 && paramsTableau.rowsNumberState === 0 ? 0 : pageState
           }
           onPageChange={handleChangePage}
-          getItemAriaLabel={(type: string) => {
-            return type === "previous" ? "Page précédente" : "Page suivante";
-          }}
+          getItemAriaLabel={(type: string) =>
+            getItemAriaLabel(type, paramsTableau.maxRangeState)
+          }
         />
       )}
       <div className="ToolbarBottom">
