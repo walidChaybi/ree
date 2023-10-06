@@ -11,7 +11,7 @@ import { MEP_YEAR } from "@util/DateUtils";
 import messageManager from "@util/messageManager";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { NB_LIGNES_PAR_APPEL_REQUETE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import * as Yup from "yup";
 import RMCBoutons from "../boutons/RMCBoutons";
@@ -90,7 +90,7 @@ export const RMCRequeteForm: React.FC<RMCRequeteFormProps> = ({
       setValuesRMCRequete(values);
       setCriteresRechercheRequete({
         valeurs: values,
-        range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+        range: `0-${NB_LIGNES_PAR_APPEL_REQUETE}`
       });
       stockageDonnees.stockerCriteresRMCReq(values);
       setNouvelleRMCRequete(false);
