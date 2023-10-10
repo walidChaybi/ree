@@ -1,13 +1,9 @@
 import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
-import {
-  Base64File,
-  ExtensionDocumentTypeMime,
-  PieceJointe
-} from "@util/FileUtils";
+import { Base64File, FILE_TYPES, PieceJointe } from "@util/FileUtils";
+import messageManager from "@util/messageManager";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
-import messageManager from "@util/messageManager";
 import React from "react";
 import { IconePoubelle } from "../../icones/IconePoubelle";
 import {
@@ -16,13 +12,6 @@ import {
 } from "../../tableau/TableauSimple/TableauSimple";
 import UploadFileField from "../champsSaisie/UploadFileField";
 import "../scss/PiecesJointesForm.scss";
-
-const FILE_TYPES: ExtensionDocumentTypeMime[] = [
-  { extension: "png", mimeType: "image/png" },
-  { extension: "pdf", mimeType: "application/pdf" },
-  { extension: "jpg", mimeType: "image/jpeg" },
-  { extension: "jpeg", mimeType: "image/jpeg" }
-];
 
 const FILE_MAX_SIZE_KB = 2000;
 
@@ -99,7 +88,7 @@ export const PiecesJointes: React.FC<PiecesJointesProps> = props => {
 };
 
 /** Construction du tableau des pièces jointes */
-function getTableauPiecesJointes(
+export function getTableauPiecesJointes(
   piecesJointes: PieceJointe[],
   supprimePieceJointe: (libelle: string) => void
 ): JSX.Element {

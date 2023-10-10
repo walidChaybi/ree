@@ -8,7 +8,10 @@ import {
   TITULAIRE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
-import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
+import {
+  IDetailRequeteParams,
+  useDetailRequeteApiHook
+} from "@hook/requete/DetailRequeteHook";
 import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import {
   IUpdateRequeteCreationParams,
@@ -20,7 +23,11 @@ import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
-import { PATH_MODIFIER_RCTC, receUrl } from "@router/ReceUrls";
+import {
+  PATH_MODIFIER_RCTC,
+  receUrl,
+  URL_RECHERCHE_REQUETE
+} from "@router/ReceUrls";
 import { getPiecesJointesNonVides, PieceJointe } from "@util/FileUtils";
 import { getUrlCourante, replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -122,10 +129,12 @@ export const SaisirRCTCPage: React.FC = () => {
     useState<string>();
   const [updateRequeteCreation, setUpdateRequeteCreation] =
     useState<IUpdateRequeteCreationParams>();
+    const [detailRequeteParams, setDetailRequeteParams] =
+      useState<IDetailRequeteParams>();
 
   // Hooks
   //////////////////////////////////////////////////////////////////////////
-  const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
+  const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
   const idRequeteCreee = useCreationRequeteCreation(creationRequeteRCTCParams);
   const idRequeteUpdate = useUpdateRequeteCreation(
     idRequete,
@@ -154,6 +163,14 @@ export const SaisirRCTCPage: React.FC = () => {
   useEffect(() => {
     setIdRequete(idRequeteParam);
   }, [idRequeteParam]);
+
+  useEffect(() => {
+    setDetailRequeteParams({
+      idRequete: idRequete ?? idRequeteParam,
+      estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+    });
+  }, [idRequete, history.location.pathname, idRequeteParam]);
+
 
   useEffect(() => {
     if (detailRequeteState) {

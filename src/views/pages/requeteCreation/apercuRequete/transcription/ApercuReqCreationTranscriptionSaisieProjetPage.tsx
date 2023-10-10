@@ -1,34 +1,37 @@
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
+import {
+  IDetailRequeteParams,
+  useDetailRequeteApiHook
+} from "@hook/requete/DetailRequeteHook";
 import { mAppartient } from "@model/agent/IOfficier";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
-import { IRequete } from "@model/requete/IRequete";
-import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { IRequete } from "@model/requete/IRequete";
+import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { ApercuProjet } from "@pages/requeteCreation/commun/composants/ApercuProjet";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { GestionMentions } from "@pages/requeteCreation/commun/composants/GestionMentions";
-
+import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
+import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { PiecesAnnexes } from "@pages/requeteCreation/commun/composants/PiecesAnnexes";
 import { SaisieProjet } from "@pages/requeteCreation/commun/composants/SaisieProjet";
-import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
-import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import {
   URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID,
   URL_RECHERCHE_REQUETE
 } from "@router/ReceUrls";
-import { getLibelle } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
+import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import "../../commun/scss/ApercuReqCreationPage.scss";
 import { getComposantResumeRequeteEnFonctionNatureActe } from "./ApercuReqCreationTranscriptionUtils";
+
 
 interface ApercuReqCreationTranscriptionSaisieProjetPageProps {
   idRequeteAAfficher?: string;
@@ -47,12 +50,19 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
     useState(0);
   const [ongletSelectionnePartieDroite, setOngletSelectionnePartieDroite] =
     useState(0);
+  const [detailRequeteParams, setDetailRequeteParams] =
+    useState<IDetailRequeteParams>();
 
   // Hooks
-  const { detailRequeteState } = useDetailRequeteApiHook(
-    props.idRequeteAAfficher ?? idRequeteParam,
-    history.location.pathname.includes(URL_RECHERCHE_REQUETE)
-  );
+  const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
+
+  useEffect(() => {
+    setDetailRequeteParams({
+      idRequete: props.idRequeteAAfficher ?? idRequeteParam,
+      estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+    });
+  }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
+
   const {
     dataPersonnesSelectionnees,
     setDataPersonnesSelectionnees,
@@ -74,7 +84,7 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
       setRequete(detailRequeteState as IRequeteCreationTranscription);
     }
   }, [detailRequeteState]);
-  
+
   const handleChangeOngletPartieGauche = (e: any, newValue: string) => {
     /* istanbul ignore next */
     setOngletSelectionnePartieGauche(parseInt(newValue));
@@ -83,7 +93,7 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
   const handleChangeOngletPartieDroite = (e: any, newValue: string) => {
     setOngletSelectionnePartieDroite(parseInt(newValue));
   };
-  
+
   const getComposantsPartieGauche = () => {
     return (
       <>

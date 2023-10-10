@@ -1,4 +1,7 @@
-import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
+import {
+  IDetailRequeteParams,
+  useDetailRequeteApiHook
+} from "@hook/requete/DetailRequeteHook";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
@@ -27,12 +30,23 @@ export const ApercuRequeteCreationEtablissementPriseEnChargePage: React.FC<
 
   // States
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
+  const [detailRequeteParams, setDetailRequeteParams] =
+      useState<IDetailRequeteParams>();
 
   // Hooks
-  const { detailRequeteState } = useDetailRequeteApiHook(
-    props.idRequeteAAfficher ?? idRequeteParam,
-    history.location.pathname.includes(URL_RECHERCHE_REQUETE)
-  );
+  const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
+
+  useEffect(() => {
+    rechargerLaRequete();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
+
+  function rechargerLaRequete() {
+    setDetailRequeteParams({
+      idRequete: props.idRequeteAAfficher ?? idRequeteParam,
+      estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+    });
+  }
 
   const {
     dataActesInscriptionsSelectionnes,
@@ -83,6 +97,7 @@ export const ApercuRequeteCreationEtablissementPriseEnChargePage: React.FC<
             }
             tableauRMCPersonneEnChargement={rmcAutoPersonneEnChargement}
             setRmcAutoPersonneParams={setRmcAutoPersonneParams}
+            rechargerRequete={rechargerLaRequete}
           />
 
           {getConteneurPieceJustificative(

@@ -24,9 +24,10 @@ export interface UploadFileFieldProps {
   hideInput?: boolean;
   onFileChange: (base64File: Base64File, type?: Option) => void;
   verificationAvantDOuvriLeMenu?: () => boolean;
+  className?: string;
 }
 
-const UploadFileField: React.FC<UploadFileFieldProps> = (props) => {
+const UploadFileField: React.FC<UploadFileFieldProps> = props => {
   const [menu, setMenu] = React.useState<null | HTMLElement>(null);
   const [fileState, setFileState] = useState<Base64File>();
   const [menuItemState, setMenuItemState] = useState<Option>();
@@ -45,7 +46,6 @@ const UploadFileField: React.FC<UploadFileFieldProps> = (props) => {
         props.maxSizeKB,
         props.acceptFileTypes
       );
-
       setFileState(base64File);
       props.onFileChange(base64File, menuItemState);
     } catch (error) {
@@ -75,7 +75,7 @@ const UploadFileField: React.FC<UploadFileFieldProps> = (props) => {
   const refLabelButton = useRef<HTMLLabelElement>(null);
 
   return (
-    <>
+    <div className={props.className}>
       {!props.hideInput && (
         <input
           id={`input-file-name-${props.name}`}
@@ -137,7 +137,7 @@ const UploadFileField: React.FC<UploadFileFieldProps> = (props) => {
           hidden
         />
       </label>
-    </>
+    </div>
   );
 
   /**
@@ -145,7 +145,7 @@ const UploadFileField: React.FC<UploadFileFieldProps> = (props) => {
    * Ex: ["png", "pdf", "jpg", "jpeg"] => ".png, .pdf, .jpg, .jpeg"
    */
   function formatAcceptFileTypes(fileTypes: ExtensionDocumentTypeMime[]) {
-    return "." + fileTypes.map((f) => f.extension).join(", .");
+    return "." + fileTypes.map(f => f.extension).join(", .");
   }
 };
 

@@ -3,12 +3,12 @@ import {
   IRequeteCreationEtablissement,
   RequeteCreationEtablissement
 } from "@model/requete/IRequeteCreationEtablissement";
-import Labels from "@pages/requeteCreation/commun/Labels";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
+import Labels from "@pages/requeteCreation/commun/Labels";
 import { getLibelle } from "@util/Utils";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
-import ResumeRequeteCreationEtablissement from "./resumeRequeteCreationEtablissement/ResumeRequeteCreationEtablissement";
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "./resumeRequeteCreationEtablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
+import ResumeRequeteCreationEtablissement from "./resumeRequeteCreationEtablissement/ResumeRequeteCreationEtablissement";
 
 export function onRenommePieceJustificativeEtablissement(
   requete: IRequeteCreationEtablissement | undefined,

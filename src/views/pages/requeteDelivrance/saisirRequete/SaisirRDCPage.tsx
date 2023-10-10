@@ -12,7 +12,10 @@ import {
   TYPE_REQUERANT
 } from "@composant/formulaire/ConstantesNomsForm";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
-import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
+import {
+  IDetailRequeteParams,
+  useDetailRequeteApiHook
+} from "@hook/requete/DetailRequeteHook";
 import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
@@ -123,7 +126,9 @@ export const SaisirRDCPage: React.FC = () => {
   // Informations de la requête
   const [idRequete, setIdRequete] = useState<string>();
   const [requete, setRequete] = useState<SaisieRequeteRDC>();
-  const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
+  const [detailRequeteParams, setDetailRequeteParams] =
+    useState<IDetailRequeteParams>();
+  const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
 
   // Etats champs du formulaire
   const [evenementVisible, setEvenementVisible] = useState<boolean>(false);
@@ -176,6 +181,13 @@ export const SaisirRDCPage: React.FC = () => {
     requeteRDCResultat?.requete.id,
     piecesjointesAMettreAJour
   );
+
+  useEffect(() => {
+    setDetailRequeteParams({
+      idRequete,
+      estConsultation: false
+    });
+  }, [idRequete]);
 
   useEffect(() => {
     if (history) {

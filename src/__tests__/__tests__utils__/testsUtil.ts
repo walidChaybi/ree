@@ -18,7 +18,7 @@ function dataURLtoFile(dataurl: string, filename: string): File {
 }
 
 const pngFile = dataURLtoFile(urlImagePngVideBase64, "hello.png");
-const pngFiles = [pngFile];
+export const pngFiles = [pngFile];
 export const inputPngFiles = {
   item: (index: number) => pngFiles[index],
   ...pngFiles

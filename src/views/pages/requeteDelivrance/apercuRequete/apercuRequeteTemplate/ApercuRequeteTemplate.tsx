@@ -1,6 +1,9 @@
 import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuRequete";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
-import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
+import {
+  IDetailRequeteParams,
+  useDetailRequeteApiHook
+} from "@hook/requete/DetailRequeteHook";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -23,11 +26,20 @@ export const ApercuRequeteTemplate: React.FC<TemplateProps> = props => {
   const [idRequete, setIdRequete] = useState<string>();
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const history = useHistory();
-  const { detailRequeteState } = useDetailRequeteApiHook(
-    idRequete,
-    history.location.pathname.includes(URL_RECHERCHE_REQUETE)
-  );
+    const [detailRequeteParams, setDetailRequeteParams] =
+      useState<IDetailRequeteParams>();
+    const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
   const [requete, setRequete] = useState<IRequeteDelivrance>();
+
+     useEffect(() => {
+       setDetailRequeteParams({
+         idRequete: idRequete ?? idRequeteParam,
+         estConsultation: history.location.pathname.includes(
+           URL_RECHERCHE_REQUETE
+         )
+       });
+     }, [idRequete, history.location.pathname, idRequeteParam]);
+
 
   useEffect(() => {
     // L'idRequete peut venir de l'URL ou bien être une props dans le cas d'une requete liée

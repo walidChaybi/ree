@@ -1,0 +1,26 @@
+
+.modalContainer {
+
+    .inputsConteneur {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5em;
+        justify-content: center;
+        align-items: center;
+        width: 35vw;
+        height: 30vh;
+
+        .InputField {
+            width: 60%;
+        }
+    }
+
+    .boutonUploadFile {
+        align-self: center;
+        size: 2 7;
+    }
+}
+
+.modalContainer h2 {
+    font-size: 2em;
+}

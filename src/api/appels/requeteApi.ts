@@ -1,10 +1,10 @@
-import { ISaisieRequeteAEnvoyer } from "@hook/requete/CreationRequeteCreationApiHook";
 import { FiltresReqDto } from "@hook/requete/creation/RequeteCreationApiHook";
+import { ISaisieRequeteAEnvoyer } from "@hook/requete/CreationRequeteCreationApiHook";
 import { CLES } from "@model/parametres/clesParametres";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IEchange } from "@model/requete/IEchange";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import {
   ICriteresRMCAutoRequete,
@@ -68,6 +68,7 @@ export const URL_RECHERCHE_REQ_NATALI =
   "/requetes/creation/natali/numeroDossierNational";
 export const URL_SAUVEGARDE_PERSONNE_ACTE_RMC =
   "/requetes/creation/sauvegardeDetailsRMC";
+export const URL_PIECE_JUSTIFICATIVES_CREATION = "/pieceJustificative";
 
 const URL_REPONSES = "/reponses";
 
@@ -765,5 +766,16 @@ export const postSauvegardePersonneEtActeSelectionne = (
     method: HttpMethod.POST,
     uri: `${URL_SAUVEGARDE_PERSONNE_ACTE_RMC}/${id}`,
     data: data
+  });
+};
+
+export const postAjoutPieceJustificativeAUneRequeteCreation = (
+  idRequete: string,
+  data: any
+): Promise<any> => {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_CREATION}${idRequete}${URL_PIECE_JUSTIFICATIVES_CREATION}`,
+    data
   });
 };

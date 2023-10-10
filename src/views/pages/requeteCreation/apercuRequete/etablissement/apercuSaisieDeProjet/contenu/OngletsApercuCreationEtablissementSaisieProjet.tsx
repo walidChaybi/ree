@@ -1,11 +1,11 @@
 import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
 import { IRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
-import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { ApercuProjet } from "@pages/requeteCreation/commun/composants/ApercuProjet";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { IDataTableauActeInscriptionSelectionne } from "@pages/requeteCreation/commun/composants/tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
-import { UN, getLibelle } from "@util/Utils";
+import { getLibelle, UN } from "@util/Utils";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useState } from "react";
 import {
@@ -27,6 +27,7 @@ interface OngletsApercuCreationEtablissementSaisieProjetProps {
   setRmcAutoPersonneParams: React.Dispatch<
     React.SetStateAction<IRMCAutoPersonneParams | undefined>
   >;
+  rechargerRequete: () => void;
 }
 
 interface ItemListe {
@@ -70,6 +71,7 @@ export const OngletsApercuCreationEtablissementSaisieProjet: React.FC<
       titre: getLibelle("Pièces justificatives / Annexes"),
       component: (
         <OngletPiecesJustificatives
+          rechargerRequete={props.rechargerRequete}
           requete={props.requete}
           autoriseOuvertureFenetreExt={true}
           onRenommePieceJustificative={props.onRenommePieceJustificative}

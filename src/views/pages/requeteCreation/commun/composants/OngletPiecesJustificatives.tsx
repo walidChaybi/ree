@@ -1,5 +1,5 @@
-import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { ListePiecesJustificativesEtablissement } from "@pages/requeteCreation/apercuRequete/etablissement/commun/ListePiecesJustificativesEtablissement";
 import { ListePiecesJustificativesTranscription } from "@pages/requeteCreation/apercuRequete/transcription/composants/ListePiecesJustificativesTranscription";
 import React from "react";
@@ -15,6 +15,7 @@ interface OngletPiecesJustificativesProps {
   requete: IRequeteCreation;
   autoriseOuvertureFenetreExt?: boolean;
   onRenommePieceJustificative: typeFctRenommePieceJustificative;
+  rechargerRequete?: () => void;
 }
 
 export const OngletPiecesJustificatives: React.FC<
@@ -31,6 +32,7 @@ export const OngletPiecesJustificatives: React.FC<
       )}
       {!SousTypeCreation.estSousTypeTranscription(props.requete?.sousType) && (
         <ListePiecesJustificativesEtablissement
+          rechargerRequete={props.rechargerRequete}
           requete={props.requete}
           autoriseOuvertureFenetreExt={autoriseOuvertureFenetreExt}
           onRenommePieceJustificative={props.onRenommePieceJustificative}

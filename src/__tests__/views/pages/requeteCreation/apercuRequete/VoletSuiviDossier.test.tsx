@@ -54,6 +54,7 @@ function afficheComposant(
             tableauRMCPersonneEnChargement={false}
             setDataActesInscriptionsSelectionnes={() => {}}
             setRmcAutoPersonneParams={() => {}}
+            rechargerRequete={() => {}}
           />
         </Route>
       </Router>

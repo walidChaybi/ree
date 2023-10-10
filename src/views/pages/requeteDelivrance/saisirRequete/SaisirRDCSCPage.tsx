@@ -107,7 +107,7 @@ export const SaisirRDCSCPage: React.FC = () => {
   const [idRequete, setIdRequete] = useState<string>();
   const [saisieRequeteRDCSC, setSaisieRequeteRDCSC] =
     useState<SaisieRequeteRDCSC>();
-  const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
+  const { detailRequeteState } = useDetailRequeteApiHook({idRequete});
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [modeModification, setModeModification] = useState(false);

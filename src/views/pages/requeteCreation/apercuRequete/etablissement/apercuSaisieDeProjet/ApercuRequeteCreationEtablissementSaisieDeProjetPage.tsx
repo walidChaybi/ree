@@ -1,4 +1,7 @@
-import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
+import {
+  IDetailRequeteParams,
+  useDetailRequeteApiHook
+} from "@hook/requete/DetailRequeteHook";
 import { IUuidEtatCivilParams } from "@model/params/IUuidEtatCivilParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
@@ -36,11 +39,10 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
 
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
   const [ongletSelectionne, setOngletSelectionne] = useState(ZERO);
+  const [detailRequeteParams, setDetailRequeteParams] =
+    useState<IDetailRequeteParams>();
 
-  const { detailRequeteState } = useDetailRequeteApiHook(
-    props.idRequeteAAfficher ?? idRequeteParam,
-    history.location.pathname.includes(URL_RECHERCHE_REQUETE)
-  );
+  const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
 
   const {
     dataActesInscriptionsSelectionnes,
@@ -55,6 +57,20 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
       setRequete(detailRequeteState as IRequeteCreationEtablissement);
     }
   }, [detailRequeteState]);
+
+  useEffect(() => {
+    rechargerLaRequete();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
+
+    function rechargerLaRequete() {
+      setDetailRequeteParams({
+        idRequete: props.idRequeteAAfficher ?? idRequeteParam,
+        estConsultation: history.location.pathname.includes(
+          URL_RECHERCHE_REQUETE
+        )
+      });
+    }
 
   function onRenommePieceJustificativeSaisieProjet(
     idPieceJustificative: string,
@@ -94,6 +110,7 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
             }
             tableauRMCPersonneEnChargement={rmcAutoPersonneEnChargement}
             setRmcAutoPersonneParams={setRmcAutoPersonneParams}
+            rechargerRequete={rechargerLaRequete}
           />
           <div className="OngletsApercuCreationEtablissement">
             <VoletAvecOnglet

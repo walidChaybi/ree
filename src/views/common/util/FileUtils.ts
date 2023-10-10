@@ -5,6 +5,14 @@ import { Option } from "./Type";
 const DATA_URL_BASE_64 = ";base64,";
 const NB_BYTES_IN_KILOBYTES = 1000;
 
+
+export const FILE_TYPES: ExtensionDocumentTypeMime[] = [
+  { extension: "png", mimeType: "image/png" },
+  { extension: "pdf", mimeType: "application/pdf" },
+  { extension: "jpg", mimeType: "image/jpeg" },
+  { extension: "jpeg", mimeType: "image/jpeg" }
+];
+
 export interface ExtensionDocumentTypeMime {
   extension: string;
   mimeType: string;

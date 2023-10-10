@@ -13,6 +13,7 @@ interface OngletsApercuCreationEtablissementSimpleProps {
   requete: IRequeteCreationEtablissement;
   modeConsultation?: boolean;
   onRenommePieceJustificative: typeFctRenommePieceJustificative;
+  rechargerRequete: () => void;
 }
 
 interface ItemListe {
@@ -31,6 +32,7 @@ export const OngletsApercuCreationEtablissementSimple: React.FC<
       titre: getLibelle("Pièces justificatives / Annexes"),
       component: (
         <OngletPiecesJustificatives
+          rechargerRequete={props.rechargerRequete}
           requete={props.requete}
           autoriseOuvertureFenetreExt={true}
           onRenommePieceJustificative={props.onRenommePieceJustificative}

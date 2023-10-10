@@ -2,7 +2,10 @@ import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
-import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
+import {
+  IDetailRequeteParams,
+  useDetailRequeteApiHook
+} from "@hook/requete/DetailRequeteHook";
 import { Droit } from "@model/agent/enum/Droit";
 import {
   appartientAMonServiceOuServicesMeresOuServicesFilles,
@@ -48,10 +51,9 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
   const [ongletSelectionne, setOngletSelectionne] = useState(0);
   const [requete, setRequete] = useState<IRequeteCreationTranscription>();
   const history = useHistory();
-  const { detailRequeteState } = useDetailRequeteApiHook(
-    props.idRequeteAAfficher ?? idRequeteParam,
-    history.location.pathname.includes(URL_RECHERCHE_REQUETE)
-  );
+  const [detailRequeteParams, setDetailRequeteParams] =
+    useState<IDetailRequeteParams>();
+  const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
 
   const [
     paramsCreationActionMiseAjourStatut,
@@ -67,6 +69,13 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
       setRequete(detailRequeteState as IRequeteCreationTranscription);
     }
   }, [detailRequeteState]);
+
+  useEffect(() => {
+    setDetailRequeteParams({
+      idRequete: props.idRequeteAAfficher ?? idRequeteParam,
+      estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+    });
+  }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
 
   const handleChange = (e: any, newValue: string) => {
     setOngletSelectionne(parseInt(newValue));

@@ -3,25 +3,51 @@ import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEt
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import { typeFctRenommePieceJustificative } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
-import { estRenseigne } from "@util/Utils";
+import { Options } from "@util/Type";
+import { estRenseigne, getLibelle } from "@util/Utils";
 import { AccordionVisionneuse } from "@widget/accordion/AccordionVisionneuse";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { IconePlus } from "@widget/icones/IconePlus";
 import {
   ListeGlisserDeposer,
   ListeItem
 } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useEffect, useState } from "react";
+import { ModaleAjoutPieceJustificativeRequeteCreation } from "./ModalAjoutPieceJustificative";
+import "./scss/ListePiecesJustificativesEtablissement.scss";
 
 interface ListePiecesJustificativesEtablissementProps {
   requete?: IRequeteCreationEtablissement;
   autoriseOuvertureFenetreExt?: boolean;
   onRenommePieceJustificative: typeFctRenommePieceJustificative;
+  rechargerRequete?: () => void;
 }
 
 export const ListePiecesJustificativesEtablissement: React.FC<
   ListePiecesJustificativesEtablissementProps
 > = ({ autoriseOuvertureFenetreExt = false, ...props }) => {
   const [documentPJTries, setDocumentPjTries] = useState<IDocumentPJ[]>([]);
+  const [estModaleOuverte, setEstModaleOuverte] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (props.requete?.documentsPj) {
+      let nouveauxDocumentPJTries;
+      if (estRenseigne(documentPJTries)) {
+        nouveauxDocumentPJTries = majLibellesPiecesJustificatives(
+          documentPJTries,
+          props.requete.documentsPj
+        );
+      } else {
+        nouveauxDocumentPJTries = [...props.requete.documentsPj];
+      }
+      setDocumentPjTries(nouveauxDocumentPJTries);
+    }
+    return () => {
+      setDocumentPjTries([]);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.requete]);
 
   const setNouveauLibellePieceJointe = (
     idDocumentPJ: string,
@@ -79,24 +105,38 @@ export const ListePiecesJustificativesEtablissement: React.FC<
     );
   };
 
-  useEffect(() => {
-    if (props.requete?.documentsPj) {
-      let nouveauxDocumentPJTries;
-      if (estRenseigne(documentPJTries)) {
-        nouveauxDocumentPJTries = majLibellesPiecesJustificatives(
-          documentPJTries,
-          props.requete.documentsPj
-        );
-      } else {
-        nouveauxDocumentPJTries = [...props.requete?.documentsPj];
-      }
-      setDocumentPjTries(nouveauxDocumentPJTries);
+  function ouvrirModal() {
+    setEstModaleOuverte(true);
+  }
+
+  function fermerModal() {
+    setEstModaleOuverte(false);
+    setDocumentPjTries([]);
+    if (props.rechargerRequete) {
+      props.rechargerRequete();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.requete]);
+  }
+
+  const listeCategoriePJ: Options = documentPJTries.map(documentPJ => {
+    return {
+      cle: documentPJ.id,
+      libelle: documentPJ.categorie.libelleAAfficher
+    };
+  });
 
   return (
-    <span className="PiecesJustificatives">
+    <span className="PiecesJustificativesContainer">
+      <div className="IconePlusContainer">
+        <Bouton onClick={ouvrirModal} className="BoutonPlus">
+          {getLibelle("Ajouter un fichier")}
+          <IconePlus
+            size={"2x"}
+            title={getLibelle("Ajouter une pièce justificatives")}
+            onClick={ouvrirModal}
+          />
+        </Bouton>
+      </div>
+
       {props.requete?.documentsPj && documentPJTries ? (
         <ListeGlisserDeposer
           liste={mapDocumentsPjTriesVersListeItem()}
@@ -109,6 +149,11 @@ export const ListePiecesJustificativesEtablissement: React.FC<
       ) : (
         <OperationLocaleEnCoursSimple />
       )}
+      <ModaleAjoutPieceJustificativeRequeteCreation
+        estOuvert={estModaleOuverte}
+        onClose={fermerModal}
+        listeCategoriePJ={listeCategoriePJ}
+      />
     </span>
   );
 
