@@ -42,6 +42,9 @@ const NumeroActeForm: React.FC<
 
   const onInputNumeroActeOuOrdre = (e: React.ChangeEvent<HTMLInputElement>) => {
     traiteCarAutorises(e.target, digitSeulement);
+    if (!e.target.value) {
+      props.formik.setFieldValue(nomChampAPartirDe, false);
+    }
   };
 
   const caseACocherAPartirDe = (

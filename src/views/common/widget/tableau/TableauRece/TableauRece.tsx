@@ -131,6 +131,9 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
       ) &&
       paramsTableau.previousDataLinkState
     ) {
+      if (newPage === 0) {
+        newPage = Math.max(pageState - nbPages, 0);
+      }
       setMultiplicateur(Number(multiplicateur) - 1);
       props.goToLink(paramsTableau.previousDataLinkState);
     }

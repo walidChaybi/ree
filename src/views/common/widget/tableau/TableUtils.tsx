@@ -118,8 +118,8 @@ export function laPageDAvantEstEnDehors(
   return (
     pageState > 0 &&
     newPage < pageState &&
-    // La numérotation des pages commence à zéro donc c'est newPage+1 qu'il faut tester (= pageState car newPage < pageState)
-    pageState * nbLignesParPage <= nbLignesParAppel * (multiplicateur - 1)
+    // La numérotation des pages commence à zéro donc c'est newPage+1
+    (newPage + 1) * nbLignesParPage <= nbLignesParAppel * (multiplicateur - 1)
   );
 }
 
