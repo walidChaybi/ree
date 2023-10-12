@@ -155,7 +155,7 @@ export const getItemAriaLabel = (
   let ariaLabel = "";
   switch (type) {
     case "first":
-      ariaLabel = `Rechercher les ${nombreResultats} résultats précédents`;
+      ariaLabel = `Retourner au début de la précédente plage de ${nombreResultats} résultats`;
       break;
     case "previous":
       ariaLabel = "Page précédente";
@@ -164,7 +164,7 @@ export const getItemAriaLabel = (
       ariaLabel = "Page suivante";
       break;
     case "last":
-      ariaLabel = `Rechercher les ${nombreResultats} résultats suivants`;
+      ariaLabel = `Avancer au début de la prochaine plage de ${nombreResultats} résultats`;
       break;
     default:
       ariaLabel = "";

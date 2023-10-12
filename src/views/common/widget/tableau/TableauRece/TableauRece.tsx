@@ -132,7 +132,9 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
       paramsTableau.previousDataLinkState
     ) {
       if (newPage === 0) {
-        newPage = Math.max(pageState - nbPages, 0);
+        // Si retour arrière rapide, on ne retourne pas à la première page
+        // mais à la première page de la plage précédente
+        newPage = (Math.floor(pageState / nbPages) - 1) * nbPages;
       }
       setMultiplicateur(Number(multiplicateur) - 1);
       props.goToLink(paramsTableau.previousDataLinkState);
