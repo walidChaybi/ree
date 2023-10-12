@@ -2,6 +2,7 @@ import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtrait
 import { AddAlerteActeApiHookParameters } from "@hook/alertes/AddAlerteActeHookApi";
 import { DeleteAlerteActeApiHookParameters } from "@hook/alertes/DeleteAlerteActeHookApi";
 import { IDerniereDelivranceRcRcaPacsParams } from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
+import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import {
@@ -44,7 +45,8 @@ export const URL_RC = "/rc";
 export const URL_PERSONNE_RMC_AUTO = "/personne/rmcauto";
 export const URL_POCOPAS = "/mespocopas";
 export const URL_LISTE_PERSONNE = "/personne/listePersonne";
-export const URL_LISTE_ACTES_INSCRIPTIONS =
+export const URL_PROJET_ACTE = "/projetacte";
+export const URL_PROJET_ACTE_INSCRIPTION_LISTE =
   "/projetacte/actesinscriptionssauvegardes";
 export const URL_ANALYSE_MARGINALE = "/analyseMarginale";
 export const URL_BULLETIN_IDENTIFICATION = "/bulletinIdentification";
@@ -69,8 +71,19 @@ export function getActesInscriptionsSauvegardes(
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.POST,
-    uri: `${URL_LISTE_ACTES_INSCRIPTIONS}`,
+    uri: `${URL_PROJET_ACTE_INSCRIPTION_LISTE}`,
     data: actesInscriptionsSauvegardes
+  });
+}
+
+/**
+ * Envoi d'un projet d'acte pour enregistrement'
+ */
+export function postProjetActe(acte: IProjetActe): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_PROJET_ACTE}`,
+    data: acte
   });
 }
 

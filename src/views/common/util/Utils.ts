@@ -423,7 +423,7 @@ export function checkDirty(isDirty: boolean, setIsDirty: any) {
   if (isDirty) {
     if (
       window.confirm(
-        getLibelle(`Vous n'avez pas validé vos modifications !
+        getLibelle(`Vous n'avez pas validé vos modifications.
   Si vous continuez, celles-ci seront perdues et les données réinitialisées. 
    Voulez-vous continuer ?`)
       )

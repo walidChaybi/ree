@@ -9,4 +9,8 @@ export class StatutActe extends EnumWithLibelle {
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, StatutActe);
   }
+
+  public static getKey(obj: StatutActe) {
+    return EnumWithLibelle.getKey(StatutActe, obj);
+  }
 }

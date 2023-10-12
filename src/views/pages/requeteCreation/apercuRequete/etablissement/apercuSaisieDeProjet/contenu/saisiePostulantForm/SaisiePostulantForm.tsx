@@ -1,3 +1,4 @@
+import { compositionApi } from "@api/appels/compositionApi";
 import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
 import {
   ACQUISITION,
@@ -11,7 +12,11 @@ import {
   TITULAIRE,
   TYPE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { RECEContext } from "@core/body/RECEContext";
+import { useProjetActeApiHook } from "@hook/acte/ProjetActeApiHook";
+import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { IUuidEtatCivilParams } from "@model/params/IUuidEtatCivilParams";
 import {
   ITitulaireRequeteCreation,
@@ -26,13 +31,16 @@ import {
   getLibelleParentFromSexe,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
-import React, { useMemo } from "react";
+import FormikEffect from "@widget/formulaire/utils/FormikEffect";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router";
 import AcquisitionForm from "./form/AcquisitionForm";
 import AutresForm from "./form/AutresForm";
 import FrancisationPostulantForm from "./form/FrancisationPostulantForm";
 import ParentForm from "./form/ParentForm";
 import PostulantForm from "./form/PostulantForm";
+import { mappingSaisieProjetPostulantFormVersProjetActe } from "./mapping/mappingFormulaireSaisiePostulantVersProjetActeAEnvoyer";
+import { mappingProjetActeVersProjetActeComposition } from "./mapping/mappingProjetActeVersProjetActeComposition";
 import { mappingTitulairesVersSaisieProjetPostulant } from "./mapping/mappingTitulaireVersFormulairePostulant";
 import "./scss/Postulant.scss";
 import { PostulantValidationSchema } from "./validation/PostulantValidationSchema";
@@ -45,6 +53,17 @@ interface ISaisiePostulantFormProps {
 export const SaisiePostulantForm: React.FC<
   ISaisiePostulantFormProps
 > = props => {
+  const { isDirty, setIsDirty } = useContext(RECEContext);
+  const [projetActe, setProjetActe] = useState<IProjetActe>();
+  const projetActeEnregistre = useProjetActeApiHook(projetActe);
+  useEffect(() => {
+    if (projetActeEnregistre) {
+      compositionApi.getCompositionProjetActe(
+        mappingProjetActeVersProjetActeComposition(projetActeEnregistre)
+      );
+    }
+  }, [projetActeEnregistre]);
+
   const { idEtatCivilParam } = useParams<IUuidEtatCivilParams>();
 
   const [titulaire] = useMemo(() => {
@@ -61,6 +80,15 @@ export const SaisiePostulantForm: React.FC<
     }
     return [undefined, undefined];
   }, [props.titulaires, idEtatCivilParam]);
+
+  const validerProjetPostulant = (values: ISaisieProjetPostulantForm) => {
+    setProjetActe(
+      mappingSaisieProjetPostulantFormVersProjetActe(
+        values,
+        titulaire?.numeroDossierNational
+      )
+    );
+  };
 
   const parentMasculinEtOuPositionUn =
     TitulaireRequeteCreation.getParentParSexeEtOuParPosition(
@@ -126,8 +154,6 @@ export const SaisiePostulantForm: React.FC<
     }
   ];
 
-  function validerProjetPostulant() {}
-
   return (
     <div className="Postulant">
       <Formulaire
@@ -141,6 +167,11 @@ export const SaisiePostulantForm: React.FC<
         onSubmit={validerProjetPostulant}
         className="FormulairePostulant"
       >
+        <FormikEffect
+          onChange={(dirty: boolean) => {
+            setIsDirty(dirty);
+          }}
+        />
         <div className="Projet">
           <InputField
             name={withNamespace(PROJET, TYPE)}
@@ -154,7 +185,10 @@ export const SaisiePostulantForm: React.FC<
           />
         </div>
         <GestionnaireElementScroll elementListe={elementListe} />
-        <Bouton type="submit">{getLibelle("Valider le postulant")}</Bouton>
+        <Bouton type="submit" disabled={!isDirty}>
+          {getLibelle("Actualiser et visualiser")}
+        </Bouton>
+        <Bouton>{getLibelle("Valider le postulant")}</Bouton>
       </Formulaire>
     </div>
   );

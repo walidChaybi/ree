@@ -19,6 +19,7 @@ export interface IEvenement {
   pays: string;
   lieuReprise?: string;
   lieuFormate?: string;
+  neDansLeMariage?: boolean;
 }
 
 export const Evenement = {

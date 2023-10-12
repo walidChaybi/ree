@@ -1,6 +1,7 @@
 import { IRequete } from "@model/requete/IRequete";
 import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { TypeCanal } from "../requete/enum/TypeCanal";
+import { OBJET_COURRIER_CERTIFICAT_SITUATION } from "./ObjetsComposition";
 import {
   CommunComposition,
   ICommunComposition
@@ -13,7 +14,6 @@ import {
   IRequerantComposition,
   RequerantComposition
 } from "./commun/IRequerantComposition";
-import { OBJET_COURRIER_CERTIFICAT_SITUATION } from "./ObjetsComposition";
 
 export const NOM_DOCUMENT_REFUS_PACS_NON_INSCRIT = "CARN_PAC_01";
 export interface IReponseSansDelivranceCSPACSNonInscritComposition

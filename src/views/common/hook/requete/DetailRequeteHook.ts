@@ -410,7 +410,10 @@ export function mappingRequeteCreation(data: any): IRequeteCreation {
     provenanceServicePublic: data.provenanceServicePublic,
     documentsPj: mapDocumentPJ(getValeurOuUndefined(data.documentsPj)),
     provenance: Provenance.getEnumFor(data.provenance),
-    titulaires: mapTitulairesCreation(requete.titulaires),
+    titulaires: mapTitulairesCreation(
+      requete.titulaires,
+      data.provenanceNatali?.numeroDossierNational
+    ),
     natureActeTranscrit,
     personnesSauvegardees: mapPersonnesSauvegardees(
       getValeurOuUndefined(data.personnesSauvegardees),
@@ -420,10 +423,12 @@ export function mappingRequeteCreation(data: any): IRequeteCreation {
 }
 
 export function mapTitulairesCreation(
-  titulaires: any[]
+  titulaires: any[],
+  numeroDossierNational?: string
 ): ITitulaireRequeteCreation[] {
   return titulaires.map(titulaire => ({
     ...titulaire,
+    numeroDossierNational: numeroDossierNational,
     qualite: QualiteFamille.getEnumFor(titulaire.qualite),
     decret: titulaire.decret && {
       numeroDecret: titulaire.decret.numeroDecret,

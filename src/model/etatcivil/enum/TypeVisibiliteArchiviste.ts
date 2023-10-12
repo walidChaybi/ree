@@ -8,4 +8,8 @@ export class TypeVisibiliteArchiviste extends EnumWithLibelle {
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, TypeVisibiliteArchiviste);
   }
+
+  public static getKey(obj: TypeVisibiliteArchiviste) {
+    return EnumWithLibelle.getKey(TypeVisibiliteArchiviste, obj);
+  }
 }

@@ -5,6 +5,7 @@ import { ITitulaireRequeteTableau } from "../../requete/ITitulaireRequeteTableau
 export interface ITitulaireComposition {
   prenoms?: string;
   nom?: string;
+  ordre?: number;
   jour_naissance?: string;
   mois_naissance?: string;
   annee_naissance?: string;

@@ -1,5 +1,5 @@
-import { IExtraitCopieComposition } from "@model/composition/extraitCopie/IExtraitCopieComposition";
 import { IContenuReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
+import { IExtraitCopieComposition } from "@model/composition/extraitCopie/IExtraitCopieComposition";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
 import { ApiManager, HttpMethod } from "../ApiManager";
@@ -24,6 +24,8 @@ const URL_COMPOSITION_EXTRAIT_PLURILINGUE_NAISSANCE =
 const URL_COMPOSITION_EXTRAIT_PLURILINGUE_MARIAGE =
   "/composition/ACTE_MARIAGE/4";
 const URL_COMPOSITION_EXTRAIT_PLURILINGUE_DECES = "/composition/ACTE_DECES/4";
+
+const URL_COMPOSITION_PROJET_ACTE = "/composition/PROJET_ACTE/1";
 
 function getCompositionReponseSansDelivranceCS(
   document: string,
@@ -122,6 +124,10 @@ function getCompositionExtraitPlurilingueDeces(obj: any): Promise<any> {
   return getComposition(URL_COMPOSITION_EXTRAIT_PLURILINGUE_DECES, obj);
 }
 
+function getCompositionProjetActe(obj: any): Promise<any> {
+  return getComposition(URL_COMPOSITION_PROJET_ACTE, obj);
+}
+
 function getComposition(
   uri: string,
   data: any
@@ -144,5 +150,6 @@ export const compositionApi = {
   getCompositionCourrier,
   getCompositionExtraitOuCopieActeTexte,
   getCompositionCopieActeImage,
-  getCompositionExtraitPlurilingue
+  getCompositionExtraitPlurilingue,
+  getCompositionProjetActe
 };

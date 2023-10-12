@@ -11,6 +11,7 @@ import {
 import LieuForm, { ILieuProps } from "@composant/formulaire/LieuForm";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
+import { TypeReconnaissance } from "@model/requete/enum/TypeReconnaissance";
 import { getLibelle } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
@@ -90,7 +91,7 @@ const AutresForm: React.FC<AutresFormProps> = props => {
       <SelectField
         name={withNamespace(props.nom, RECONNAISSANCE)}
         label={getLibelle("Reconnaissance")}
-        options={TypeDeclarant.getEnumsSansAutreAsOptions()}
+        options={TypeReconnaissance.getAllEnumsAsOptions()}
         optionVide={OptionVide.SELECTIONNABLE}
       />
       <SelectField

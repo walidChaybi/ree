@@ -35,8 +35,8 @@ import {
   VILLE_EVENEMENT,
   VOIE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { ParentFormDefaultValues } from "@composant/formulaire/ParentForm";
+import { genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import {
   ISaisieAdresse,
   ISaisieAutreProfessionnel,
@@ -48,10 +48,6 @@ import {
   ISaisieRequerant,
   Prenoms
 } from "@model/form/delivrance/ISaisirRequetePageForm";
-import { Qualite } from "@model/requete/enum/Qualite";
-import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
-import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
-import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { IParent } from "@model/requete/IParents";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRequerant, Requerant } from "@model/requete/IRequerant";
@@ -60,7 +56,11 @@ import {
   ITitulaireRequete,
   TitulaireRequete
 } from "@model/requete/ITitulaireRequete";
-import { DEUX, getValeurOuVide, UN } from "@util/Utils";
+import { Qualite } from "@model/requete/enum/Qualite";
+import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
+import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { DEUX, UN, getValeurOuVide } from "@util/Utils";
 import { AutreProfessionnelFormDefaultValues } from "../sousFormulaires/requerant/autreProfessionnel/AutreProfessionnelForm";
 import { InstitutionnelFormDefaultValues } from "../sousFormulaires/requerant/institutionnel/InstitutionnelForm";
 import { MandataireFormDefaultValues } from "../sousFormulaires/requerant/mandataire/MandataireForm";

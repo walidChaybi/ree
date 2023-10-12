@@ -1,0 +1,32 @@
+import { IMentionComposition } from "@model/composition/IMentionComposition";
+import { IProjetActeComposition } from "@model/composition/acte/IProjetActeComposition";
+import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
+
+export function mappingProjetActeVersProjetActeComposition(
+  acteEnregistre: IProjetActe
+): IProjetActeComposition {
+  const projetActeComposition = {} as IProjetActeComposition;
+  const { nature, titulaires, mentions, corpsTexte } = acteEnregistre;
+  const titulaire = titulaires[0];
+  let mentionsComposition = [] as IMentionComposition[];
+  mentions?.forEach(mention => {
+    mentionsComposition = [
+      ...mentionsComposition,
+      {
+        mention: mention?.textes.texteMention,
+        numero: mention?.numeroOrdre
+      }
+    ];
+  });
+  projetActeComposition.nature_acte = nature;
+  projetActeComposition.titulaires_AM = [
+    {
+      ordre: titulaire.ordre,
+      nom: titulaire.nom,
+      prenoms: titulaire.prenoms?.join(", ")
+    }
+  ];
+  projetActeComposition.mentions = mentionsComposition;
+  projetActeComposition.texte_corps_acte = corpsTexte?.texte;
+  return projetActeComposition;
+}

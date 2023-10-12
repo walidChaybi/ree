@@ -35,6 +35,7 @@ export interface ITitulaireActe {
   dateDeclarationConjointe?: Date; // concerne les titulaires de l'analyse marginale
   origineDeclarationConjointeTitulaireActe?: boolean;
   origineNomPartiesTitulaireActe?: boolean;
+  identiteAvantDecret?: string;
 }
 
 export const TitulaireActe = {

@@ -8,4 +8,8 @@ export class TypeActe extends EnumWithLibelle {
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, TypeActe);
   }
+
+  public static getKey(obj: TypeActe) {
+    return EnumWithLibelle.getKey(TypeActe, obj);
+  }
 }

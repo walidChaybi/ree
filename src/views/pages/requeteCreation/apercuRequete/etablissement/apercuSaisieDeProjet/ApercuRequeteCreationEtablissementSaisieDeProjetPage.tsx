@@ -1,3 +1,4 @@
+import { RECEContext } from "@core/body/RECEContext";
 import {
   IDetailRequeteParams,
   useDetailRequeteApiHook
@@ -7,10 +8,10 @@ import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEt
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
-import { getLibelle, ZERO } from "@util/Utils";
+import { ZERO, checkDirty, getLibelle } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import {
@@ -37,6 +38,7 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
   const { idRequeteParam } = useParams<IUuidEtatCivilParams>();
   const history = useHistory();
 
+  const { isDirty, setIsDirty } = useContext(RECEContext);
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
   const [ongletSelectionne, setOngletSelectionne] = useState(ZERO);
   const [detailRequeteParams, setDetailRequeteParams] =
@@ -63,14 +65,12 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
 
-    function rechargerLaRequete() {
-      setDetailRequeteParams({
-        idRequete: props.idRequeteAAfficher ?? idRequeteParam,
-        estConsultation: history.location.pathname.includes(
-          URL_RECHERCHE_REQUETE
-        )
-      });
-    }
+  function rechargerLaRequete() {
+    setDetailRequeteParams({
+      idRequete: props.idRequeteAAfficher ?? idRequeteParam,
+      estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+    });
+  }
 
   function onRenommePieceJustificativeSaisieProjet(
     idPieceJustificative: string,
@@ -87,7 +87,7 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
   }
 
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
-    setOngletSelectionne(parseInt(newValue));
+    checkDirty(isDirty, setIsDirty) && setOngletSelectionne(parseInt(newValue));
   };
 
   return (
