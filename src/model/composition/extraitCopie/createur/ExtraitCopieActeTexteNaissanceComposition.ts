@@ -16,7 +16,7 @@ export class ExtraitCopieActeTexteNaissanceComposition {
   public static creerExtraitCopieActeTexteNaissance(
     params: ICreerExtraitCopieActeTexteAvantCompositionParams
   ) {
-    const natureActe = NatureActe.getKey(NatureActe.NAISSANCE);
+    const natureActe = NatureActe.NAISSANCE.libelle.toUpperCase();
     const corpsTexte =
       Validation.E !== params.validation
         ? ExtraitCopieActeTexteNaissanceComposition.getCorpsTexte(

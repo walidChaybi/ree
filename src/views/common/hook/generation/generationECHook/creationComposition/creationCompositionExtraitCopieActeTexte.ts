@@ -60,7 +60,7 @@ export const creationCompositionExtraitCopieActeTexte = function (
       composition =
         CommunExtraitOuCopieActeTexteComposition.creerExtraitCopieActeTexte({
           acte: acteComplet,
-          natureActe: acteComplet.nature.libelle,
+          natureActe: acteComplet.nature.libelle.toUpperCase(),
           choixDelivrance,
           sousTypeRequete: requete.sousType,
           validation,

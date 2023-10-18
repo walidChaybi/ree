@@ -8,7 +8,7 @@ export class CopieActeTexteDecesComposition {
   public static creerCopieActeTexteDeces(
     params: ICreerExtraitCopieActeTexteAvantCompositionParams
   ) {
-    const natureActe = NatureActe.getKey(NatureActe.DECES);
+    const natureActe = NatureActe.DECES.libelle.toUpperCase();
     const corpsTexte = params.acte.corpsTexte?.texte;
 
     return CommunExtraitOuCopieActeTexteComposition.creerExtraitCopieActeTexte({
