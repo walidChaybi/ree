@@ -179,11 +179,7 @@ export function useGenerationEC(
         extraitCopieApiHookResultat.donneesComposition.nbPages
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [extraitCopieApiHookResultat]);
-
-  // Traitement de l'erreur si useExtraitCopieApiHook plante
-  useEffect(() => {
+    // Traitement de l'erreur si useExtraitCopieApiHook plante
     if (extraitCopieApiHookResultat?.erreur) {
       setResultat({
         erreur: extraitCopieApiHookResultat.erreur

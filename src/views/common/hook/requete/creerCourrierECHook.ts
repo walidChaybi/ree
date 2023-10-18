@@ -259,13 +259,11 @@ export function getOngletSelectVenantDePriseEnCharge(
   sousType: SousTypeDelivrance,
   choixDelivrance?: ChoixDelivrance
 ) {
-  if (
-    choixDelivrance &&
+  return choixDelivrance &&
     ChoixDelivrance.estReponseAvecDelivrance(choixDelivrance) &&
     SousTypeDelivrance.estSousTypeCreationCourrierAutomatique(sousType)
-  ) {
-    return DocumentEC.Principal;
-  } else return DocumentEC.Courrier;
+    ? DocumentEC.Principal
+    : DocumentEC.Courrier;
 }
 
 function traitementFini(

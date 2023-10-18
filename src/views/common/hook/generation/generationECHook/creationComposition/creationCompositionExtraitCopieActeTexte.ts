@@ -1,3 +1,4 @@
+import { CommunExtraitOuCopieActeTexteComposition } from "@model/composition/extraitCopie/createur/CommunExtraitOuCopieActeTexteComposition";
 import { CopieActeTexteDecesComposition } from "@model/composition/extraitCopie/createur/CopieActeTexteDecesComposition";
 import { ExtraitCopieActeTexteMariageComposition } from "@model/composition/extraitCopie/createur/ExtraitCopieActeTexteMariageComposition";
 import { ExtraitCopieActeTexteNaissanceComposition } from "@model/composition/extraitCopie/createur/ExtraitCopieActeTexteNaissanceComposition";
@@ -18,39 +19,55 @@ export const creationCompositionExtraitCopieActeTexte = function (
 ) {
   let composition;
   const choixDelivrance = getValeurOuVide(choixDelivranceEC);
-  if (acteComplet.nature === NatureActe.MARIAGE) {
-    composition =
-      ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexteMariage(
-        {
+  switch (acteComplet.nature) {
+    case NatureActe.MARIAGE:
+      composition =
+        ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexteMariage(
+          {
+            acte: acteComplet,
+            requete,
+            validation,
+            mentionsRetirees,
+            choixDelivrance,
+            ctv
+          }
+        );
+      break;
+    case NatureActe.DECES:
+      composition = CopieActeTexteDecesComposition.creerCopieActeTexteDeces({
+        acte: acteComplet,
+        requete,
+        validation,
+        mentionsRetirees,
+        choixDelivrance,
+        ctv
+      });
+      break;
+    case NatureActe.NAISSANCE:
+      composition =
+        ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance(
+          {
+            acte: acteComplet,
+            requete,
+            validation,
+            mentionsRetirees,
+            choixDelivrance,
+            ctv
+          }
+        );
+      break;
+    default:
+      composition =
+        CommunExtraitOuCopieActeTexteComposition.creerExtraitCopieActeTexte({
           acte: acteComplet,
-          requete,
-          validation,
-          mentionsRetirees,
+          natureActe: acteComplet.nature.libelle,
           choixDelivrance,
-          ctv
-        }
-      );
-  } else if (acteComplet.nature === NatureActe.DECES) {
-    composition = CopieActeTexteDecesComposition.creerCopieActeTexteDeces({
-      acte: acteComplet,
-      requete,
-      validation,
-      mentionsRetirees,
-      choixDelivrance,
-      ctv
-    });
-  } else if (acteComplet.nature === NatureActe.NAISSANCE) {
-    composition =
-      ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance(
-        {
-          acte: acteComplet,
-          requete,
+          sousTypeRequete: requete.sousType,
           validation,
-          mentionsRetirees,
-          choixDelivrance,
+          mentionsRetirees: [],
           ctv
-        }
-      );
+        });
+      break;
   }
 
   return composition;

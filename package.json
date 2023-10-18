@@ -1,7 +1,7 @@
 {
   "name": "rece-ui",
   "maeGroup": "fr.gouv.diplomatie.rece",
-  "version": "2.11.0",
+  "version": "2.12.0",
   "private": true,
   "homepage": "rece/rece-ui/",
   "dependencies": {
@@ -107,7 +107,7 @@
     "resolve-url-loader": "5.0.0",
     "sass": "1.55.0",
     "sass-loader": "12.6.0",
-    "semver": "6.3.0",
+    "semver": "6.3.1",
     "source-map-loader": "3.0.1",
     "style-loader": "3.3.1",
     "superagent-mock": "4.0.0",
