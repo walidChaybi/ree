@@ -1,6 +1,5 @@
 import { compositionApi } from "@api/appels/compositionApi";
 import { patchModificationAvancementProjet } from "@api/appels/requeteApi";
-import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
 import {
   ACQUISITION,
   AUTRES,
@@ -13,27 +12,28 @@ import {
   TITULAIRE,
   TYPE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
 import { RECEContext } from "@core/body/RECEContext";
 import { useProjetActeApiHook } from "@hook/acte/ProjetActeApiHook";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { IUuidSuiviDossierParams } from "@model/params/IUuidSuiviDossierParams";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import {
   ITitulaireRequeteCreation,
   TitulaireRequeteCreation
 } from "@model/requete/ITitulaireRequeteCreation";
-import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { estDateVide } from "@util/DateUtils";
-import { DEUX, UN, getLibelle } from "@util/Utils";
+import { DEUX, getLibelle, UN } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
-import { Formulaire } from "@widget/formulaire/Formulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { Formulaire } from "@widget/formulaire/Formulaire";
+import FormikEffect from "@widget/formulaire/utils/FormikEffect";
 import {
   getLibelleParentFromSexe,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
-import FormikEffect from "@widget/formulaire/utils/FormikEffect";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router";
 import AcquisitionForm from "./form/AcquisitionForm";
@@ -73,6 +73,7 @@ export const SaisiePostulantForm: React.FC<
       setIsProjetExistant(true);
       setIsDirty(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projetActeEnregistre]);
 
   const [titulaire] = useMemo(() => {
