@@ -3,7 +3,7 @@ import {
   IDetailRequeteParams,
   useDetailRequeteApiHook
 } from "@hook/requete/DetailRequeteHook";
-import { IUuidEtatCivilParams } from "@model/params/IUuidEtatCivilParams";
+import { IUuidSuiviDossierParams } from "@model/params/IUuidSuiviDossierParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
@@ -35,7 +35,7 @@ interface ItemListe {
 export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
   ApercuRequeteCreationEtablissementSaisieDeProjetPageProps
 > = props => {
-  const { idRequeteParam } = useParams<IUuidEtatCivilParams>();
+  const { idRequeteParam } = useParams<IUuidSuiviDossierParams>();
   const history = useHistory();
 
   const { isDirty, setIsDirty } = useContext(RECEContext);

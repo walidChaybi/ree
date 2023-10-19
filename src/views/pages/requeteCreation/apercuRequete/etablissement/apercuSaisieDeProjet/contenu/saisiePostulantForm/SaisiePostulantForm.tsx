@@ -1,4 +1,5 @@
 import { compositionApi } from "@api/appels/compositionApi";
+import { patchModificationAvancementProjet } from "@api/appels/requeteApi";
 import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
 import {
   ACQUISITION,
@@ -17,11 +18,12 @@ import { useProjetActeApiHook } from "@hook/acte/ProjetActeApiHook";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
-import { IUuidEtatCivilParams } from "@model/params/IUuidEtatCivilParams";
+import { IUuidSuiviDossierParams } from "@model/params/IUuidSuiviDossierParams";
 import {
   ITitulaireRequeteCreation,
   TitulaireRequeteCreation
 } from "@model/requete/ITitulaireRequeteCreation";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { estDateVide } from "@util/DateUtils";
 import { DEUX, UN, getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
@@ -56,22 +58,29 @@ export const SaisiePostulantForm: React.FC<
   const { isDirty, setIsDirty } = useContext(RECEContext);
   const [projetActe, setProjetActe] = useState<IProjetActe>();
   const projetActeEnregistre = useProjetActeApiHook(projetActe);
+  const { idSuiviDossierParam } = useParams<IUuidSuiviDossierParams>();
+  const [isProjetExistant, setIsProjetExistant] = useState<boolean>(false);
+
   useEffect(() => {
     if (projetActeEnregistre) {
       compositionApi.getCompositionProjetActe(
         mappingProjetActeVersProjetActeComposition(projetActeEnregistre)
       );
+      patchModificationAvancementProjet(
+        idSuiviDossierParam,
+        AvancementProjetActe.EN_COURS.nom
+      );
+      setIsProjetExistant(true);
+      setIsDirty(false);
     }
   }, [projetActeEnregistre]);
-
-  const { idEtatCivilParam } = useParams<IUuidEtatCivilParams>();
 
   const [titulaire] = useMemo(() => {
     let suiviDossierTitulaire;
     if (props.titulaires) {
       for (const titulaireRequete of props.titulaires) {
         suiviDossierTitulaire = titulaireRequete.suiviDossiers?.find(
-          etatCivil => etatCivil.id === idEtatCivilParam
+          etatCivil => etatCivil.id === idSuiviDossierParam
         );
         if (suiviDossierTitulaire) {
           return [titulaireRequete, suiviDossierTitulaire];
@@ -79,7 +88,7 @@ export const SaisiePostulantForm: React.FC<
       }
     }
     return [undefined, undefined];
-  }, [props.titulaires, idEtatCivilParam]);
+  }, [props.titulaires, idSuiviDossierParam]);
 
   const validerProjetPostulant = (values: ISaisieProjetPostulantForm) => {
     setProjetActe(
@@ -185,7 +194,7 @@ export const SaisiePostulantForm: React.FC<
           />
         </div>
         <GestionnaireElementScroll elementListe={elementListe} />
-        <Bouton type="submit" disabled={!isDirty}>
+        <Bouton type="submit" disabled={!isDirty && isProjetExistant}>
           {getLibelle("Actualiser et visualiser")}
         </Bouton>
         <Bouton>{getLibelle("Valider le postulant")}</Bouton>

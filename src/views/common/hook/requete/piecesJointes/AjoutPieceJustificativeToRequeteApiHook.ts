@@ -1,5 +1,5 @@
 import { postAjoutPieceJustificativeAUneRequeteCreation } from "@api/appels/requeteApi";
-import { IUuidEtatCivilParams } from "@model/params/IUuidEtatCivilParams";
+import { IUuidSuiviDossierParams } from "@model/params/IUuidSuiviDossierParams";
 import { PieceJointe } from "@util/FileUtils";
 import { logError } from "@util/LogManager";
 import messageManager from "@util/messageManager";
@@ -23,7 +23,7 @@ export interface IAjoutPieceJustificativeToRequeteParams {
 export function useAjoutPieceJustificativeToRequete(
   params?: IAjoutPieceJustificativeToRequeteParams
 ): void {
-  const { idRequeteParam } = useParams<IUuidEtatCivilParams>();
+  const { idRequeteParam } = useParams<IUuidSuiviDossierParams>();
 
   useEffect(() => {
     if (params) {
