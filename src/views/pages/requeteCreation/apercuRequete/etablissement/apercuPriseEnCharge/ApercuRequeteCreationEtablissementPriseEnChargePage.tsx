@@ -37,11 +37,11 @@ export const ApercuRequeteCreationEtablissementPriseEnChargePage: React.FC<
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
 
   useEffect(() => {
-    rechargerLaRequete();
+    rechargerRequete();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
 
-  function rechargerLaRequete() {
+  function rechargerRequete() {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
       estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
@@ -97,12 +97,13 @@ export const ApercuRequeteCreationEtablissementPriseEnChargePage: React.FC<
             }
             tableauRMCPersonneEnChargement={rmcAutoPersonneEnChargement}
             setRmcAutoPersonneParams={setRmcAutoPersonneParams}
-            rechargerRequete={rechargerLaRequete}
+            rechargerRequete={rechargerRequete}
           />
 
           {getConteneurPieceJustificative(
             requete,
-            onRenommePieceJustificativePriseEnCharge
+            onRenommePieceJustificativePriseEnCharge,
+            rechargerRequete
           )}
         </>
       ) : (

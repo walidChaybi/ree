@@ -30,8 +30,8 @@ const FormDefaultValues: ModalPieceJustificativeProps = {
 };
 
 const FormValidationSchema = Yup.object({
-  categoriePJ: Yup.string(),
-  file: Yup.object()
+  categoriePJ: Yup.string().required(),
+  file: Yup.object().required()
 });
 
 export const ModaleAjoutPieceJustificativeRequeteCreation: React.FC<

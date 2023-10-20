@@ -9,6 +9,7 @@ import UploadFileField from "@widget/formulaire/champsSaisie/UploadFileField";
 import { getTableauPiecesJointes } from "@widget/formulaire/piecesJointes/PiecesJointes";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
+import { useEffect, useState } from "react";
 
 interface ContenuModalProps {
   listeCategoriePJ: Options;
@@ -20,6 +21,15 @@ type ContenuModalAjoutPieceJustificativeProps = SubFormProps &
 const ContenuModalAjoutPieceJustificative: React.FC<
   ContenuModalAjoutPieceJustificativeProps
 > = props => {
+  const [formulaireEstChange, setFormulaireEstChange] =
+    useState<boolean>(false);
+
+  useEffect(() => {
+    if (props.formik.values.categoriePJ && props.formik.values.file) {
+      setFormulaireEstChange(true);
+    }
+  }, [props.formik.values.categoriePJ, props.formik.values.file]);
+
   function onFileChange(
     base64File: Base64File,
     type?: Option | undefined
@@ -31,8 +41,9 @@ const ContenuModalAjoutPieceJustificative: React.FC<
     props.formik.setFieldValue("file", undefined);
   }
 
-  function onSubmitForm() {
-    props.formik.submitForm();
+  async function onSubmitForm() {
+    await props.formik.submitForm();
+    setFormulaireEstChange(false);
   }
 
   const fileFieldValue = props.formik.getFieldProps("file").value;
@@ -73,9 +84,7 @@ const ContenuModalAjoutPieceJustificative: React.FC<
             type="submit"
             aria-label="submitButton"
             onClick={onSubmitForm}
-            disabled={
-              !props.formik.values.categoriePJ || !props.formik.values.file
-            }
+            disabled={!formulaireEstChange}
           >
             {getLibelle("Valider")}
           </Bouton>

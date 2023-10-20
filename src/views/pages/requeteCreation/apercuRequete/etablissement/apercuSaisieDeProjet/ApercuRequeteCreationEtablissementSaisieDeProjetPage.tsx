@@ -8,7 +8,7 @@ import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEt
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
-import { ZERO, checkDirty, getLibelle } from "@util/Utils";
+import { checkDirty, getLibelle, ZERO } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useContext, useEffect, useState } from "react";
@@ -61,11 +61,11 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
   }, [detailRequeteState]);
 
   useEffect(() => {
-    rechargerLaRequete();
+    rechargerRequete();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
 
-  function rechargerLaRequete() {
+  function rechargerRequete() {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
       estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
@@ -110,7 +110,7 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
             }
             tableauRMCPersonneEnChargement={rmcAutoPersonneEnChargement}
             setRmcAutoPersonneParams={setRmcAutoPersonneParams}
-            rechargerRequete={rechargerLaRequete}
+            rechargerRequete={rechargerRequete}
           />
           <div className="OngletsApercuCreationEtablissement">
             <VoletAvecOnglet

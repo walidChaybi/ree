@@ -42,11 +42,11 @@ export const ApercuRequeteCreationEtablissementSimplePage: React.FC<
   }, [detailRequeteState]);
 
   useEffect(() => {
-    rechargerLaRequete();
+    rechargerRequete();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
 
-  function rechargerLaRequete() {
+  function rechargerRequete() {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
       estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
@@ -74,7 +74,7 @@ export const ApercuRequeteCreationEtablissementSimplePage: React.FC<
           {getConteneurResumeRequete(requete)}
 
           <OngletsApercuCreationEtablissementSimple
-            rechargerRequete={rechargerLaRequete}
+            rechargerRequete={rechargerRequete}
             requete={requete}
             modeConsultation={props.idRequeteAAfficher !== undefined}
             onRenommePieceJustificative={onRenommePieceJustificativeSimple}
@@ -82,7 +82,8 @@ export const ApercuRequeteCreationEtablissementSimplePage: React.FC<
 
           {getConteneurPieceJustificative(
             requete,
-            onRenommePieceJustificativeSimple
+            onRenommePieceJustificativeSimple,
+            rechargerRequete
           )}
         </>
       ) : (

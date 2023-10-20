@@ -54,7 +54,8 @@ export function getConteneurPieceJustificative(
     idPieceJustificative: string,
     nouveauLibelle: string,
     idDocumentPJ?: string
-  ) => void
+  ) => void,
+  rechargerRequete: () => void
 ): JSX.Element {
   return (
     <ConteneurRetractable
@@ -65,6 +66,7 @@ export function getConteneurPieceJustificative(
       <OngletPiecesJustificatives
         requete={requete}
         onRenommePieceJustificative={onRenommePieceJustificative}
+        rechargerRequete={rechargerRequete}
       />
     </ConteneurRetractable>
   );
