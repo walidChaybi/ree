@@ -16,21 +16,21 @@ import {
   TransfertParLotParams,
   useTransfertsApi
 } from "@hook/requete/TransfertHook";
-import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
+import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
-import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { SortOrder } from "@widget/tableau/TableUtils";
+import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   FiltreEtRechercheFormValues,
@@ -188,7 +188,7 @@ export const RequetesServiceCreation: React.FC<
   );
 
   function soumettreFiltre(values: FiltreEtRechercheFormValues) {
-    if (!parametresLienRequete) {
+    if (!parametresLienRequete && !values.numeroRequete) {
       setParametresLienRequete(props.queryParametersPourRequetes);
     }
     onSubmit(values);
