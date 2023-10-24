@@ -106,7 +106,7 @@ test("Test Attribuée à", async () => {
     expect(screen.getByText("Attribuer à un service")).toBeDefined();
   });
 
-  const autocomplete = screen.getByTestId("autocomplete");
+  const autocomplete = screen.getAllByTestId("autocomplete")[0];
   const inputChampRecherche = screen.getByLabelText(
     "TransfertPopin"
   ) as HTMLInputElement;
@@ -141,4 +141,42 @@ test("Test Attribuée à", async () => {
   });
 });
 
+test("la page DOIT afficher les requetes filtrées QUAND on selectionne un filtre et qu'on clique sur la recherche", async () => {
+  render(
+    <Router history={history}>
+      <RequetesServicePage setParamsRMCAuto={setParamsRMCAuto} />
+    </Router>
+  );
+
+  await waitFor(() => {
+    expect(screen.getAllByText("1234")).toBeDefined();
+    expect(screen.getAllByText("2090860")).toBeDefined();
+    expect(screen.getAllByText("9876")).toBeDefined();
+    expect(screen.getAllByText("9012")).toBeDefined();
+    expect(screen.getAllByText("1235")).toBeDefined();
+    expect(screen.getAllByText("2090861")).toBeDefined();
+    expect(screen.getAllByText("9877")).toBeDefined();
+  });
+
+  const boutonRechercher = screen.getByTestId("loupeButton");
+
+  await waitFor(() => {
+    fireEvent.change(screen.getByLabelText("Sous-Type"), {
+      target: {
+        value: "RDDCO"
+      }
+    });
+    fireEvent.click(boutonRechercher);
+  });
+
+  await waitFor(() => {
+    expect(screen.getAllByText("1234")).toBeDefined();
+    expect(screen.getAllByText("2090860")).toBeDefined();
+    expect(screen.getAllByText("9876")).toBeDefined();
+    expect(screen.getAllByText("9012")).toBeDefined();
+    expect(screen.getAllByText("1235")).toBeDefined();
+    expect(screen.getAllByText("2090861")).toBeDefined();
+    expect(screen.getAllByText("9877")).toBeDefined();
+  });
+});
 

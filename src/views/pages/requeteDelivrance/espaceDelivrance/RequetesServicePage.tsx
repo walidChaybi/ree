@@ -27,6 +27,10 @@ import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn
 import { SortOrder } from "@widget/tableau/TableUtils";
 import React, { useCallback, useState } from "react";
 import {
+  FiltreServiceRequeteDelivranceForm,
+  IFiltreServiceRequeteDelivranceFormValues
+} from "./contenu/FiltreServiceRequeteDelivranceForm";
+import {
   dateStatutColumnHeaders,
   HeaderTableauRequete,
   requeteColumnHeaders
@@ -35,7 +39,7 @@ import {
   goToLinkRequete,
   miseAjourOuRedirection
 } from "./EspaceDelivranceUtils";
-import { useRequeteDelivranceApi } from "./hook/DonneesRequeteDelivranceHook";
+import { useRequeteDelivranceApiHook } from "./hook/DonneesRequeteDelivranceApiHook";
 import "./scss/RequeteTableau.scss";
 
 const columnsRequestesService = [
@@ -61,6 +65,13 @@ interface MesRequetesServicePageProps {
   ) => void;
 }
 
+const defaultParamsRequetes = {
+  statuts: StatutRequete.getStatutsRequetesService(),
+  tri: "dateCreation",
+  sens: "ASC",
+  range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
+} as IQueryParametersPourRequetes;
+
 export const RequetesServicePage: React.FC<
   MesRequetesServicePageProps
 > = props => {
@@ -68,21 +79,17 @@ export const RequetesServicePage: React.FC<
     ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
 
-  const [linkParameters, setLinkParameters] =
-    React.useState<IQueryParametersPourRequetes>({
-      statuts: StatutRequete.getStatutsRequetesService(),
-      tri: "dateStatut",
-      sens: "ASC",
-      range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
-    });
+  const [parametresLienRequete, setParametresLienRequete] =
+    React.useState<IQueryParametersPourRequetes>(defaultParamsRequetes);
   const [enChargement, setEnChargement] = React.useState(true);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const { dataState, paramsTableau } = useRequeteDelivranceApi(
-    linkParameters,
-    TypeAppelRequete.REQUETE_DELIVRANCE_SERVICE,
-    setEnChargement
-  );
+  const { dataState, paramsTableau, onSubmitFiltres } =
+    useRequeteDelivranceApiHook(
+      parametresLienRequete,
+      TypeAppelRequete.REQUETE_DELIVRANCE_SERVICE,
+      setEnChargement
+    );
 
   function goToLink(link: string) {
     const queryParametersPourRequetes = goToLinkRequete(
@@ -90,14 +97,14 @@ export const RequetesServicePage: React.FC<
       "requetesService"
     );
     if (queryParametersPourRequetes) {
-      setLinkParameters(queryParametersPourRequetes);
+      setParametresLienRequete(queryParametersPourRequetes);
     }
   }
 
   function rafraichirParent() {
-    setLinkParameters({
+    setParametresLienRequete({
       statuts: StatutRequete.getStatutsRequetesService(),
-      tri: "dateStatut",
+      tri: "dateCreation",
       sens: "ASC",
       range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
     });
@@ -112,7 +119,7 @@ export const RequetesServicePage: React.FC<
       sens,
       range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
     };
-    setLinkParameters(queryParameters);
+    setParametresLienRequete(queryParameters);
   }, []);
 
   function onClickOnLine(
@@ -160,6 +167,15 @@ export const RequetesServicePage: React.FC<
     );
   };
 
+  function onSubmitFiltreServiceRequeteDelivrance(
+    values: IFiltreServiceRequeteDelivranceFormValues
+  ) {
+    if (!parametresLienRequete) {
+      setParametresLienRequete(defaultParamsRequetes);
+    }
+    onSubmitFiltres(values);
+  }
+
   return (
     <>
       <OperationEnCours
@@ -167,10 +183,13 @@ export const RequetesServicePage: React.FC<
         onTimeoutEnd={finOperationEnCours}
         onClick={finOperationEnCours}
       />
+      <FiltreServiceRequeteDelivranceForm
+        onSubmit={onSubmitFiltreServiceRequeteDelivrance}
+      />
       <TableauRece
         idKey={"idRequete"}
-        sortOrderByState={linkParameters.tri}
-        sortOrderState={linkParameters.sens}
+        sortOrderByState={parametresLienRequete.tri}
+        sortOrderState={parametresLienRequete.sens}
         onClickOnLine={onClickOnLine}
         columnHeaders={columnsRequestesService}
         dataState={dataState}

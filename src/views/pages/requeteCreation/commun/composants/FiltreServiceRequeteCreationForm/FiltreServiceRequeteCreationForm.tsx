@@ -4,7 +4,7 @@ import {
 } from "@composant/menuTransfert/MenuTransfertUtil";
 import { faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FiltreEtRechercheFormValues } from "@hook/requete/creation/RequeteCreationApiHook";
+import { IFiltreServiceRequeteCreationFormValues } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TagPriorisation } from "@model/requete/enum/TagPriorisation";
@@ -18,23 +18,24 @@ import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { Formik } from "formik";
 import React from "react";
-import "./FiltreEtRechercheForm.scss";
+import "./FiltreServiceRequeteCreationForm.scss";
 
-export interface FiltreEtRechercheProps {
-  onSubmit: (values: FiltreEtRechercheFormValues) => void;
+export interface FiltreServiceRequeteCreationFormProps {
+  onSubmit: (values: IFiltreServiceRequeteCreationFormValues) => void;
 }
 
-export const FiltreEtRechercheDefaultValues: FiltreEtRechercheFormValues = {
-  numeroRequete: "",
-  sousType: "",
-  priorisation: "",
-  attribueA: { cle: "", libelle: "" },
-  attribueAuService: { cle: "", libelle: "" },
-  statut: ""
-};
+export const FiltreServiceRequeteCreationFormDefaultValues: IFiltreServiceRequeteCreationFormValues =
+  {
+    numeroRequete: "",
+    sousType: "",
+    priorisation: "",
+    attribueA: { cle: "", libelle: "" },
+    attribueAuService: { cle: "", libelle: "" },
+    statut: ""
+  };
 
-export const FiltreEtRechercheForm: React.FC<
-  FiltreEtRechercheProps
+export const FiltreServiceRequeteCreationForm: React.FC<
+  FiltreServiceRequeteCreationFormProps
 > = props => {
   const idUtilisateur = storeRece.utilisateurCourant?.idUtilisateur;
   const optionsUtilisateurs = listeUtilisateursToOptionsBis(
@@ -51,7 +52,9 @@ export const FiltreEtRechercheForm: React.FC<
   const filtreStatutRequete: Options =
     StatutRequete.getOptionsAPartirTypeRequete(TypeRequete.CREATION);
 
-  function onSubmitFiltresEtRecherche(values: FiltreEtRechercheFormValues) {
+  function onSubmitFiltresEtRecherche(
+    values: IFiltreServiceRequeteCreationFormValues
+  ) {
     if (values) {
       props.onSubmit(values);
     }
@@ -62,9 +65,9 @@ export const FiltreEtRechercheForm: React.FC<
   }
 
   return (
-    <div className="FiltreEtRechercheForm">
+    <div className="FiltreServiceRequeteCreationForm">
       <Formik
-        initialValues={FiltreEtRechercheDefaultValues}
+        initialValues={FiltreServiceRequeteCreationFormDefaultValues}
         onSubmit={onSubmitFiltresEtRecherche}
         validationSchema={undefined}
       >

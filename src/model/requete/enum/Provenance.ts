@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
+import { Options } from "@util/Type";
 
 export class Provenance extends EnumWithComplete {
   public static readonly INTERNET = new Provenance("INTERNET", "Internet");
@@ -20,5 +21,9 @@ export class Provenance extends EnumWithComplete {
 
   public static getKey(provenance?: Provenance): string {
     return EnumWithLibelle.getKey(Provenance, provenance);
+  }
+
+  public static getAllEnumsAsOptions(): Options {
+    return EnumWithLibelle.getAllLibellesAsOptions(Provenance);
   }
 }

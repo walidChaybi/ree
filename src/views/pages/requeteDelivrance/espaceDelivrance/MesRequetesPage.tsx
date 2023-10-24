@@ -36,7 +36,7 @@ import {
   goToLinkRequete,
   miseAjourOuRedirection
 } from "./EspaceDelivranceUtils";
-import { useRequeteDelivranceApi } from "./hook/DonneesRequeteDelivranceHook";
+import { useRequeteDelivranceApiHook } from "./hook/DonneesRequeteDelivranceApiHook";
 import "./scss/RequeteTableau.scss";
 
 const columnsMesRequestes = [
@@ -74,7 +74,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
       range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
     });
   const [enChargement, setEnChargement] = React.useState(true);
-  const { dataState, paramsTableau } = useRequeteDelivranceApi(
+  const { dataState, paramsTableau } = useRequeteDelivranceApiHook(
     linkParameters,
     TypeAppelRequete.MES_REQUETES_DELIVRANCE,
     setEnChargement

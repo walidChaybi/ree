@@ -1,10 +1,11 @@
 import { ISaisieRequeteAEnvoyer } from "@hook/requete/CreationRequeteCreationApiHook";
-import { FiltresReqDto } from "@hook/requete/creation/RequeteCreationApiHook";
+import { IFiltreServiceRequeteCreationDto } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
+import { IFiltreServiceRequeteDelivranceDto } from "@model/form/delivrance/IFiltreServiceRequeteDelivrance";
 import { CLES } from "@model/parametres/clesParametres";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IEchange } from "@model/requete/IEchange";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import {
   ICriteresRMCAutoRequete,
@@ -122,7 +123,7 @@ export function getParametresBaseRequete(): Promise<any> {
   });
 }
 
-export function getRequetesDelivrance(
+export function getTableauRequetesDelivrance(
   typeRequete: TypeAppelRequete,
   listeStatuts: string,
   queryParameters: IQueryParametersPourRequetes
@@ -142,6 +143,25 @@ export function getRequetesDelivrance(
       sens: queryParameters.sens,
       range: queryParameters.range
     }
+  });
+}
+
+export function postTableauRequetesDelivranceService(
+  queryParameters: IQueryParametersPourRequetes,
+  filtresReq: IFiltreServiceRequeteDelivranceDto
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: URL_REQUETES_DELIVRANCE_SERVICE,
+    parameters: {
+      tri:
+        queryParameters.tri !== "prioriteRequete"
+          ? queryParameters.tri
+          : "dateStatut",
+      sens: queryParameters.sens,
+      range: queryParameters.range
+    },
+    data: filtresReq
   });
 }
 
@@ -189,7 +209,7 @@ export function getRequetesCreation(
 
 export function postRequetesServiceCreation(
   queryParameters: IQueryParametersPourRequetes,
-  filtresReq: FiltresReqDto
+  filtresReq: IFiltreServiceRequeteCreationDto
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.POST,

@@ -1,9 +1,9 @@
 import {
-    IQueryParametersPourRequetes,
-    TypeAppelRequete
+  IQueryParametersPourRequetes,
+  TypeAppelRequete
 } from "@api/appels/requeteApi";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { useRequeteDelivranceApi } from "@pages/requeteDelivrance/espaceDelivrance/hook/DonneesRequeteDelivranceHook";
+import { useRequeteDelivranceApiHook } from "@pages/requeteDelivrance/espaceDelivrance/hook/DonneesRequeteDelivranceApiHook";
 import { NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -19,7 +19,7 @@ let container: Element | null;
 
 const HookConsummer: React.FC = () => {
   const [enChargement, setEnChargement] = React.useState(true);
-  const { dataState = [] } = useRequeteDelivranceApi(
+  const { dataState = [] } = useRequeteDelivranceApiHook(
     queryParam,
     TypeAppelRequete.MES_REQUETES_DELIVRANCE,
     setEnChargement

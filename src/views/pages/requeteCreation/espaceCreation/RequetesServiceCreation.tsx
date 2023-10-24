@@ -16,6 +16,7 @@ import {
   TransfertParLotParams,
   useTransfertsApi
 } from "@hook/requete/TransfertHook";
+import { IFiltreServiceRequeteCreationFormValues } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -32,12 +33,9 @@ import {
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  FiltreEtRechercheFormValues,
-  useRequeteCreationApiHook
-} from "../../../common/hook/requete/creation/RequeteCreationApiHook";
+import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
-import { FiltreEtRechercheForm } from "../commun/composants/FiltreEtRechercheForm/FiltreEtRechercheForm";
+import { FiltreServiceRequeteCreationForm } from "../commun/composants/FiltreServiceRequeteCreationForm/FiltreServiceRequeteCreationForm";
 import { getOnClickSurLigneTableauEspaceCreation } from "./EspaceCreationUtils";
 import { statutsRequetesCreation } from "./params/EspaceCreationParams";
 import { getColonnesTableauRequetesServiceCreation } from "./params/RequetesServiceCreationParams";
@@ -187,8 +185,8 @@ export const RequetesServiceCreation: React.FC<
     colonneCaseACocherAttribueAParams
   );
 
-  function soumettreFiltre(values: FiltreEtRechercheFormValues) {
-    if (!parametresLienRequete && !values.numeroRequete) {
+  function soumettreFiltre(values: IFiltreServiceRequeteCreationFormValues) {
+    if (!parametresLienRequete) {
       setParametresLienRequete(props.queryParametersPourRequetes);
     }
     onSubmit(values);
@@ -201,9 +199,7 @@ export const RequetesServiceCreation: React.FC<
         onTimeoutEnd={finOpEnCours}
         onClick={finOpEnCours}
       />
-      <div className="FiltreEtRechercheReqService">
-        <FiltreEtRechercheForm onSubmit={soumettreFiltre} />
-      </div>
+      <FiltreServiceRequeteCreationForm onSubmit={soumettreFiltre} />
       <TableauRece
         idKey={"idRequete"}
         sortOrderByState={parametresLienRequete?.tri}
