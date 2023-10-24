@@ -7,6 +7,7 @@ import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { IFiltreServiceRequeteDelivranceFormValues } from "@model/form/delivrance/IFiltreServiceRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -26,10 +27,7 @@ import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import React, { useCallback, useState } from "react";
-import {
-  FiltreServiceRequeteDelivranceForm,
-  IFiltreServiceRequeteDelivranceFormValues
-} from "./contenu/FiltreServiceRequeteDelivranceForm";
+import { FiltreServiceRequeteDelivranceForm } from "./contenu/FiltreServiceRequeteDelivranceForm";
 import {
   dateStatutColumnHeaders,
   HeaderTableauRequete,

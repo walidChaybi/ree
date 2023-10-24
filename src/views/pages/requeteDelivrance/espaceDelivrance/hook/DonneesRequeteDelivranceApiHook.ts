@@ -4,7 +4,10 @@ import {
   postTableauRequetesDelivranceService,
   TypeAppelRequete
 } from "@api/appels/requeteApi";
-import { mappingFiltreServiceRequeteDelivranceVersFiltreDto } from "@model/form/delivrance/IFiltreServiceRequeteDelivrance";
+import {
+  IFiltreServiceRequeteDelivranceFormValues,
+  mappingFiltreServiceRequeteDelivranceVersFiltreDto
+} from "@model/form/delivrance/IFiltreServiceRequeteDelivrance";
 import {
   IRequeteTableauDelivrance,
   mappingRequetesTableauDelivrance
@@ -12,7 +15,6 @@ import {
 import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { IFiltreServiceRequeteDelivranceFormValues } from "../contenu/FiltreServiceRequeteDelivranceForm";
 
 export function useRequeteDelivranceApiHook(
   queryParameters: IQueryParametersPourRequetes,
