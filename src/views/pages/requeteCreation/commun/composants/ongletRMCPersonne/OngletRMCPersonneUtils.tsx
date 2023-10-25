@@ -2,8 +2,8 @@ import {
   IPersonneRMCPersonne,
   IRMCPersonneResultat
 } from "@hook/rmcAuto/IRMCPersonneResultat";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
 import {
   formatDataTableauPersonne,
@@ -67,7 +67,7 @@ export function triDataTableauPersonneSelectionneeSurNomPrenom(
 }
 
 export function getTitulairesAsOptions(
-  sousTypeRequete: SousTypeCreation,
+  sousTypeRequete?: SousTypeCreation,
   titulaires?: ITitulaireRequeteCreation[]
 ): Options {
   return titulaires
@@ -75,5 +75,5 @@ export function getTitulairesAsOptions(
         cle: titulaire.id,
         libelle: getLibelleMenuItemPersonne(titulaire, sousTypeRequete)
       }))
-    : [];
+    : ([] as Options);
 }

@@ -1,3 +1,4 @@
+import { ReponseEnregistrementProjetActe } from "@mock/data/ProjetActe";
 import { ActeAnalyseMarginales } from "../data/ActeAnalyseMarginales";
 import {
   ReponseAppelAddAlerteActe,
@@ -237,6 +238,12 @@ export const configEtatcivil = [
         return { data: mentions };
       }
       if (
+        match[1] === "/acte/b41079a5-9e8f-478a-b04c-c4c2ac671123/mentions" &&
+        context.method === "get"
+      ) {
+        return { data: mentions };
+      }
+      if (
         match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/mentions" &&
         context.method === "get"
       ) {
@@ -420,6 +427,10 @@ export const configEtatcivil = [
       /////////////////
       // Projet acte //
       /////////////////
+
+      if (match[1] === "/projetacte") {
+        return ReponseEnregistrementProjetActe;
+      }
 
       // Actes / inscriptions sauvegardes
       if (match[1] === "/projetacte/actesinscriptionssauvegardes") {

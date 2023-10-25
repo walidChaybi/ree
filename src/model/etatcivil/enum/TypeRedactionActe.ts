@@ -8,13 +8,13 @@ export enum TypeRedactionActe {
 }
 
 export const getTypeRedactionActeParSousTypeCreation = (
-  sousTypeCreation: SousTypeCreation
+  sousTypeCreation?: SousTypeCreation
 ): TypeRedactionActe => {
   let typeRedactionActe: TypeRedactionActe = TypeRedactionActe.INCONNU;
   if (SousTypeCreation.estSousTypeTranscription(sousTypeCreation)) {
-    typeRedactionActe = TypeRedactionActe.TRANSCRIT
+    typeRedactionActe = TypeRedactionActe.TRANSCRIT;
   } else if (SousTypeCreation.estSousTypeEtablissement(sousTypeCreation)) {
-    typeRedactionActe = TypeRedactionActe.ETABLI
+    typeRedactionActe = TypeRedactionActe.ETABLI;
   }
   return typeRedactionActe;
-} 
+}; 

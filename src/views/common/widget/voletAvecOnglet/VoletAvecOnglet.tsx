@@ -1,7 +1,9 @@
+import { RECEContext } from "@core/body/RECEContext";
 import { ErrorOutline } from "@mui/icons-material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Tab } from "@mui/material";
-import React from "react";
+import { checkDirty } from "@util/Utils";
+import React, { useContext, useState } from "react";
 import "./VoletAvecOnglet.scss";
 
 export interface IOnglet {
@@ -16,20 +18,44 @@ export interface OngletProps {
 }
 export interface VoletOngletProps {
   liste: IOnglet[];
-  ongletSelectionne: number;
-  handleChange?: (event: any, newValue: string) => void;
+  ongletSelectionne?: number;
+  handleChange?: (valeur: number) => void;
+  onChangeCallback?: () => void;
+  checkDirty?: boolean;
+  ongletParDefault?: number;
 }
 
 export const VoletAvecOnglet: React.FC<VoletOngletProps> = props => {
+  const [ongletSelectionne, setOngletSelectionne] = useState(
+    props.ongletParDefault || 0
+  );
+  const { isDirty, setIsDirty } = useContext(RECEContext);
+
+  const handleChangeLocalOnglet = (valeur: number) => {
+    const estDirty = props.checkDirty && checkDirty(isDirty, setIsDirty);
+    if (!props.checkDirty || estDirty) {
+      setOngletSelectionne(valeur);
+      props.onChangeCallback && props.onChangeCallback();
+    }
+  };
+
+  const handleChange = (e: React.SyntheticEvent, newValue: string) => {
+    props.handleChange
+      ? props.handleChange(parseInt(newValue))
+      : handleChangeLocalOnglet(parseInt(newValue));
+  };
+
   return (
     <div className="VoletAvecOnglet">
       <TabContext
         value={
-          props.ongletSelectionne ? props.ongletSelectionne.toString() : "0"
+          props.ongletSelectionne === undefined
+            ? ongletSelectionne.toString()
+            : props.ongletSelectionne.toString()
         }
       >
         <TabList
-          onChange={props.handleChange}
+          onChange={handleChange}
           className="BarreOnglet"
           indicatorColor="secondary"
         >

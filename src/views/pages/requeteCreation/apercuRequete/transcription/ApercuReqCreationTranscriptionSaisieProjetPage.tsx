@@ -46,10 +46,6 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
 
   // States
   const [requete, setRequete] = useState<IRequeteCreationTranscription>();
-  const [ongletSelectionnePartieGauche, setOngletSelectionnePartieGauche] =
-    useState(0);
-  const [ongletSelectionnePartieDroite, setOngletSelectionnePartieDroite] =
-    useState(0);
   const [detailRequeteParams, setDetailRequeteParams] =
     useState<IDetailRequeteParams>();
 
@@ -84,15 +80,6 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
       setRequete(detailRequeteState as IRequeteCreationTranscription);
     }
   }, [detailRequeteState]);
-
-  const handleChangeOngletPartieGauche = (e: any, newValue: string) => {
-    /* istanbul ignore next */
-    setOngletSelectionnePartieGauche(parseInt(newValue));
-  };
-
-  const handleChangeOngletPartieDroite = (e: any, newValue: string) => {
-    setOngletSelectionnePartieDroite(parseInt(newValue));
-  };
 
   const getComposantsPartieGauche = () => {
     return (
@@ -203,17 +190,9 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
     <div className="ApercuReqCreationTranscriptionSaisieProjetPage">
       {requete && (
         <>
-          <VoletAvecOnglet
-            liste={getListeOngletsPartieGauche()}
-            ongletSelectionne={ongletSelectionnePartieGauche}
-            handleChange={handleChangeOngletPartieGauche}
-          />
+          <VoletAvecOnglet liste={getListeOngletsPartieGauche()} />
 
-          <VoletAvecOnglet
-            liste={getListeOngletsPartieDroite()}
-            ongletSelectionne={ongletSelectionnePartieDroite}
-            handleChange={handleChangeOngletPartieDroite}
-          />
+          <VoletAvecOnglet liste={getListeOngletsPartieDroite()} />
         </>
       )}
     </div>

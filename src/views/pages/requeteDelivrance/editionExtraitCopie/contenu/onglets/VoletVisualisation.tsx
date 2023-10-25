@@ -5,7 +5,7 @@ import {
   OngletProps,
   VoletAvecOnglet
 } from "@widget/voletAvecOnglet/VoletAvecOnglet";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getOngletsVisu } from "../../EditionExtraitCopieUtils";
 
 interface VoletVisualisationProps {
@@ -23,24 +23,9 @@ export const VoletVisualisation: React.FC<VoletVisualisationProps> = props => {
     setOnglet(getOngletsVisu(props.requete, props.document, props.acte));
   }, [props]);
 
-  const handleChange = useCallback(
-    (event: any, newValue: string) => {
-      setOnglet({
-        liste,
-        ongletSelectionne: parseInt(newValue)
-      });
-    },
-
-    [liste]
-  );
-
   return (
     <div className="side Visualisation">
-      <VoletAvecOnglet
-        liste={liste}
-        ongletSelectionne={ongletSelectionne}
-        handleChange={handleChange}
-      />
+      <VoletAvecOnglet liste={liste} ongletParDefault={ongletSelectionne} />
     </div>
   );
 };

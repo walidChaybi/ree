@@ -4,8 +4,11 @@ import {
 } from "@hook/requete/DetailRequeteHook";
 import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
+import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
+import { getLibelle } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
+import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
@@ -14,10 +17,17 @@ import {
   getConteneurResumeRequete,
   onRenommePieceJustificativeEtablissement
 } from "../commun/ApercuRequeteCreationEtablissementUtils";
-import { OngletsApercuCreationEtablissementSimple } from "./contenu/OngletsApercuCreationEtablissementSimple";
+import { BoutonsApercuCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
+import "../commun/scss/OngletsApercuCreationEtablissement.scss";
 
 interface ApercuRequeteCreationEtablissementSimplePageProps {
   idRequeteAAfficher?: string;
+}
+
+interface ItemListe {
+  titre: string;
+  index: number;
+  component: JSX.Element;
 }
 
 export const ApercuRequeteCreationEtablissementSimplePage: React.FC<
@@ -67,18 +77,31 @@ export const ApercuRequeteCreationEtablissementSimplePage: React.FC<
     );
   }
 
+  const liste: ItemListe[] = [
+    {
+      titre: getLibelle("Pièces justificatives / Annexes"),
+      component: (
+        <OngletPiecesJustificatives
+          rechargerRequete={rechargerRequete}
+          requete={requete || ({} as IRequeteCreationEtablissement)}
+          autoriseOuvertureFenetreExt={true}
+          onRenommePieceJustificative={onRenommePieceJustificativeSimple}
+        />
+      ),
+      index: 0
+    }
+  ];
+
   return (
     <div className="ApercuReqCreationEtablissementSimplePage">
       {requete ? (
         <>
           {getConteneurResumeRequete(requete)}
 
-          <OngletsApercuCreationEtablissementSimple
-            rechargerRequete={rechargerRequete}
-            requete={requete}
-            modeConsultation={props.idRequeteAAfficher !== undefined}
-            onRenommePieceJustificative={onRenommePieceJustificativeSimple}
-          />
+          <div className="OngletsApercuCreationEtablissement">
+            <VoletAvecOnglet liste={liste} />
+            <BoutonsApercuCreationEtablissement requete={requete} />
+          </div>
 
           {getConteneurPieceJustificative(
             requete,

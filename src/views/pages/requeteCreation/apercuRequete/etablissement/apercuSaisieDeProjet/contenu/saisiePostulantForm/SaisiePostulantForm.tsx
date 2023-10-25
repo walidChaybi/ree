@@ -1,4 +1,4 @@
-import { compositionApi } from "@api/appels/compositionApi";
+import { compositionApi, ICompositionDto } from "@api/appels/compositionApi";
 import { patchModificationAvancementProjet } from "@api/appels/requeteApi";
 import {
   ACQUISITION,
@@ -25,6 +25,7 @@ import {
   TitulaireRequeteCreation
 } from "@model/requete/ITitulaireRequeteCreation";
 import { estDateVide } from "@util/DateUtils";
+import { logError } from "@util/LogManager";
 import { DEUX, getLibelle, UN } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
@@ -50,6 +51,7 @@ import { PostulantValidationSchema } from "./validation/PostulantValidationSchem
 interface ISaisiePostulantFormProps {
   titulaires: ITitulaireRequeteCreation[];
   nature?: string;
+  setPdfFromComposition: React.Dispatch<ICompositionDto>;
 }
 
 export const SaisiePostulantForm: React.FC<
@@ -63,9 +65,18 @@ export const SaisiePostulantForm: React.FC<
 
   useEffect(() => {
     if (projetActeEnregistre) {
-      compositionApi.getCompositionProjetActe(
-        mappingProjetActeVersProjetActeComposition(projetActeEnregistre)
-      );
+      compositionApi
+        .getCompositionProjetActe(
+          mappingProjetActeVersProjetActeComposition(projetActeEnregistre)
+        )
+        .then(res => {
+          props.setPdfFromComposition(res?.body?.data);
+        })
+        .catch(error =>
+          logError({
+            error
+          })
+        );
       patchModificationAvancementProjet(
         idSuiviDossierParam,
         AvancementProjetActe.EN_COURS.nom

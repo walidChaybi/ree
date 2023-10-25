@@ -7,7 +7,7 @@ import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongl
 import { IDataTableauActeInscriptionSelectionne } from "@pages/requeteCreation/commun/composants/tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
 import { DEUX, getLibelle } from "@util/Utils";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
-import React, { useState } from "react";
+import React from "react";
 import {
   OngletPiecesJustificatives,
   typeFctRenommePieceJustificative
@@ -41,8 +41,6 @@ interface ItemListe {
 export const OngletsApercuCreationEtablissementPriseEnCharge: React.FC<
   OngletsApercuCreationEtablissementPriseEnChargeProps
 > = props => {
-  const [ongletSelectionne, setOngletSelectionne] = useState(DEUX);
-
   const liste: ItemListe[] = [
     {
       titre: getLibelle("Pièces justificatives / Annexes"),
@@ -99,17 +97,9 @@ export const OngletsApercuCreationEtablissementPriseEnCharge: React.FC<
     }
   ];
 
-  const handleChange = (e: any, newValue: string) => {
-    setOngletSelectionne(parseInt(newValue));
-  };
-
   return (
     <div className="OngletsApercuCreationEtablissement">
-      <VoletAvecOnglet
-        liste={liste}
-        ongletSelectionne={ongletSelectionne}
-        handleChange={handleChange}
-      />
+      <VoletAvecOnglet liste={liste} ongletParDefault={DEUX} />
       <BoutonsApercuCreationEtablissement requete={props.requete} />
     </div>
   );

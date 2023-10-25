@@ -48,7 +48,6 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
   ApercuReqCreationTranscriptionSimplePageProps
 > = props => {
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
-  const [ongletSelectionne, setOngletSelectionne] = useState(0);
   const [requete, setRequete] = useState<IRequeteCreationTranscription>();
   const history = useHistory();
   const [detailRequeteParams, setDetailRequeteParams] =
@@ -76,10 +75,6 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
       estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
     });
   }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
-
-  const handleChange = (e: any, newValue: string) => {
-    setOngletSelectionne(parseInt(newValue));
-  };
 
   function onRenommePieceJustificativeApercuSimple(
     idPieceJustificative: string,
@@ -171,11 +166,7 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
             )}
           </ConteneurRetractable>
 
-          <VoletAvecOnglet
-            liste={getListeOnglets()}
-            ongletSelectionne={ongletSelectionne}
-            handleChange={handleChange}
-          >
+          <VoletAvecOnglet liste={getListeOnglets()}>
             <div className="boutons">
               {pagePrecedenteEstRechercherUneRequete() && <BoutonRetour />}
 

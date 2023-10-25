@@ -308,6 +308,15 @@ export const configRequetes = [
         };
       }
 
+      //// Aavancement du statut apres une saisie de projet
+
+      if (
+        match[1] ===
+        "/requetes/creation/suiviDossier/a272ec8a-1351-4edd-99b8-03004292a9d2/avancement?avancement=EN_COURS"
+      ) {
+        return {};
+      }
+
       // Transfert requête
       if (
         match[1] ===

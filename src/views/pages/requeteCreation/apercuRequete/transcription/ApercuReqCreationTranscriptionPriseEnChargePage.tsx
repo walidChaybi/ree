@@ -23,7 +23,7 @@ import {
   URL_RECHERCHE_REQUETE
 } from "@router/ReceUrls";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { getLibelle } from "@util/Utils";
+import { getLibelle, UN } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
@@ -49,7 +49,6 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
 
   // States
   const [requete, setRequete] = useState<IRequeteCreation>();
-  const [ongletSelectionne, setOngletSelectionne] = useState(1);
   const [detailRequeteParams, setDetailRequeteParams] =
     useState<IDetailRequeteParams>();
   const { setIsDirty } = useContext(RECEContext);
@@ -100,10 +99,6 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
       setRequete
     );
   }
-
-  const handleChange = (e: any, newValue: string) => {
-    setOngletSelectionne(parseInt(newValue));
-  };
 
   function getListeOnglets(): OngletProps[] {
     return requete
@@ -205,11 +200,7 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
 
         {requete && (
           <>
-            <VoletAvecOnglet
-              liste={getListeOnglets()}
-              ongletSelectionne={ongletSelectionne}
-              handleChange={handleChange}
-            />
+            <VoletAvecOnglet liste={getListeOnglets()} ongletParDefault={UN} />
 
             <ConteneurRetractable
               titre="Pièces justificatives"

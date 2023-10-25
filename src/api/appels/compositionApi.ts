@@ -1,8 +1,13 @@
-import { IContenuReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { IExtraitCopieComposition } from "@model/composition/extraitCopie/IExtraitCopieComposition";
+import { IContenuReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
 import { ApiManager, HttpMethod } from "../ApiManager";
+
+export interface ICompositionDto {
+  contenu: string;
+  nbPages: number;
+}
 
 const api = ApiManager.getInstance("rece-composition-api", "v1");
 

@@ -36,6 +36,12 @@ export const configComposition = [
         return { data: { contenu: imagePngVideBase64, nbPages: 2 } };
       }
 
+      if (match[1] === "/composition/PROJET_ACTE/1") {
+        return {
+          data: { contenu: imagePngVideBase64, nbPages: 2 }
+        };
+      }
+
       const error = { msg: "url api composition non mockée", url: match[1] };
       const message = `Erreur mock api composition: ${JSON.stringify(error)}`;
       console.error(message);

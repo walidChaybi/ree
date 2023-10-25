@@ -3,11 +3,11 @@ import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
 import { IRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { getTypeRedactionActeParSousTypeCreation } from "@model/etatcivil/enum/TypeRedactionActe";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
 import { TableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonne";
 import { mapDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
@@ -21,12 +21,12 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { IDataTableauActeInscriptionSelectionne } from "../tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
 import { TableauActesInscriptionsSelectionnes } from "../tableauActesInscriptionsSelectionnes/TableauActesInscriptionsSelectionnes";
-import { IDataTableauPersonneSelectionnee } from "../tableauPersonnesSelectionnees/IDataTableauPersonneSelectionne";
-import { TableauPersonnesSelectionnees } from "../tableauPersonnesSelectionnees/TableauPersonnesSelectionnees";
 import {
   ISauvegardeRMCApiHookParams,
   useSauvegardeRMCApiHook
 } from "../tableauPersonnesSelectionnees/hook/useSauvegardeRMCApiHook";
+import { IDataTableauPersonneSelectionnee } from "../tableauPersonnesSelectionnees/IDataTableauPersonneSelectionne";
+import { TableauPersonnesSelectionnees } from "../tableauPersonnesSelectionnees/TableauPersonnesSelectionnees";
 import {
   getTitulairesAsOptions,
   mapDataTableauRMCPersonneVersDataTableauActeInscriptionSelectionne,
@@ -36,7 +36,7 @@ import {
 import "./scss/OngletRMCPersonne.scss";
 
 interface OngletRMCPersonneProps {
-  sousTypeRequete: SousTypeCreation;
+  sousTypeRequete?: SousTypeCreation;
   natureActeRequete: NatureActeRequete;
   resultatRMCPersonne: IRMCPersonneResultat[];
   listeTitulaires?: ITitulaireRequeteCreation[];

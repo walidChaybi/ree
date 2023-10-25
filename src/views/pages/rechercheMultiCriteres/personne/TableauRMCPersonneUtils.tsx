@@ -1,30 +1,30 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
+import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { HeaderTableauRMCPersonne } from "@model/rmc/headerTableau/HeaderTableauRMCPersonne";
 import ReportIcon from "@mui/icons-material/Report";
 import { getDateStringFromDateCompose } from "@util/DateUtils";
 import { Options } from "@util/Type";
 import {
   CINQ,
-  TROIS,
   enMajuscule,
   formatNoms,
   formatPrenoms,
-  getValeurOuVide
+  getValeurOuVide,
+  TROIS
 } from "@util/Utils";
-import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
+import {
+  getColonneBoutonMenu,
+  IColonneBoutonMenuParams
+} from "@widget/tableau/TableauRece/colonneElements/boutonMenu/ColonneBoutonMenu";
 import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
 import { TMouseEventSurHTMLButtonElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
-import {
-  IColonneBoutonMenuParams,
-  getColonneBoutonMenu
-} from "@widget/tableau/TableauRece/colonneElements/boutonMenu/ColonneBoutonMenu";
+import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import {
   IActeInscriptionRMCPersonne,
   IPersonneRMCPersonne,
@@ -107,7 +107,7 @@ export function getLigneTableauVide(message: string): JSX.Element {
 
 export function getLibelleMenuItemPersonne(
   titulaire: ITitulaireRequeteCreation,
-  sousTypeRequete: SousTypeCreation
+  sousTypeRequete?: SousTypeCreation
 ) {
   let libelle = "";
 
@@ -144,7 +144,7 @@ export function getLibelleMenuItemPersonne(
 
 function getLibelleQualiteTitulaire(
   titulaire: ITitulaireRequeteCreation,
-  sousTypeRequete: SousTypeCreation
+  sousTypeRequete?: SousTypeCreation
 ): string {
   let libelleQualiteTitulaire: string;
 
