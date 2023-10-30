@@ -48,10 +48,6 @@ export const ModaleAjoutPieceJustificativeRequeteCreation: React.FC<
     });
   }
 
-  function onClose() {
-    props.onClose();
-  }
-
   return (
     <Formulaire
       className="FormulaireAjouterPJ"
@@ -63,11 +59,11 @@ export const ModaleAjoutPieceJustificativeRequeteCreation: React.FC<
         maxWidth={"xl"}
         className="modalContainer"
         open={props.estOuvert}
-        onClose={onClose}
+        onClose={props.onClose}
       >
         <ContenuModalAjoutPieceJustificative
           listeCategoriePJ={props.listeCategoriePJ}
-          onClose={onClose}
+          onClose={props.onClose}
         />
       </Dialog>
     </Formulaire>

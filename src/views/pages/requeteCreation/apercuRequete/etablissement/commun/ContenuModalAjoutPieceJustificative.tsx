@@ -46,6 +46,11 @@ const ContenuModalAjoutPieceJustificative: React.FC<
     setFormulaireEstChange(false);
   }
 
+  function onClose() {
+    props.onClose();
+    props.formik.resetForm();
+  }
+
   const fileFieldValue = props.formik.getFieldProps("file").value;
 
   return (
@@ -91,7 +96,7 @@ const ContenuModalAjoutPieceJustificative: React.FC<
         </div>
       </DialogContent>
       <DialogActions>
-        <Bouton onClick={props.onClose}>{getLibelle("Fermer")}</Bouton>
+        <Bouton onClick={onClose}>{getLibelle("Fermer")}</Bouton>
       </DialogActions>
     </div>
   );
