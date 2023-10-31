@@ -2,7 +2,7 @@ import { ACQUISITION } from "@composant/formulaire/ConstantesNomsForm";
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { requeteCreationEtablissementSaisieProjet } from "@mock/data/requeteCreationEtablissement";
 import AcquisitionForm from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/form/AcquisitionForm";
-import { mappingTitulairesVersSaisieProjetPostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
+import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
 import { PostulantValidationSchema } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/validation/PostulantValidationSchema";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formulaire } from "@widget/formulaire/Formulaire";
@@ -17,7 +17,7 @@ function afficheComposantAcquisitionSaisieDeProjet(
 
   render(
     <Formulaire
-      formDefaultValues={mappingTitulairesVersSaisieProjetPostulant(
+      formDefaultValues={mappingTitulairesVersFormulairePostulant(
         titulaires![0],
         titulaires![1],
         titulaires![2],

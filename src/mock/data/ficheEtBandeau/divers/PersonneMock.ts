@@ -5,6 +5,7 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 
 export const personneMock: IPersonne = {
+  id: "53b3e881-9ee1-4ad5-bcfa-de3dec1ce944",
   nom: "Faulkner",
   sexe: Sexe.MASCULIN,
   nationalite: Nationalite.FRANCAISE,

@@ -69,8 +69,7 @@ export const URL_RECHERCHE_REQ_NATALI =
   "/requetes/creation/natali/numeroDossierNational";
 export const URL_SAUVEGARDE_PERSONNE_ACTE_RMC =
   "/requetes/creation/sauvegardeDetailsRMC";
-export const URL_MISE_A_JOUR_AVANCEMENT_PROJET =
-  "/requetes/creation/suiviDossier";
+export const URL_MISE_A_JOUR_SUIVI_DOSSIER = "/requetes/creation/suiviDossier";
 export const URL_AVANCEMENT_PROJET = "/avancement";
 export const URL_PIECE_JUSTIFICATIVES_CREATION = "/pieceJustificative";
 
@@ -798,7 +797,7 @@ export const patchModificationAvancementProjet = (
 ): Promise<any> => {
   return api.fetch({
     method: HttpMethod.PATCH,
-    uri: `${URL_MISE_A_JOUR_AVANCEMENT_PROJET}/${id}${URL_AVANCEMENT_PROJET}`,
+    uri: `${URL_MISE_A_JOUR_SUIVI_DOSSIER}/${id}${URL_AVANCEMENT_PROJET}`,
     parameters: {
       avancement: data
     }
@@ -813,5 +812,19 @@ export const postAjoutPieceJustificativeAUneRequeteCreation = (
     method: HttpMethod.POST,
     uri: `${URL_CREATION}${idRequete}${URL_PIECE_JUSTIFICATIVES_CREATION}`,
     data
+  });
+};
+
+export const patchMiseAJourIdSuiviDossier = (
+  idSuiviDossier: string,
+  idActe: string
+): Promise<any> => {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_MISE_A_JOUR_SUIVI_DOSSIER}/${idSuiviDossier}/acte/${idActe}`,
+    data: {
+      idSuiviDossier,
+      idActe
+    }
   });
 };

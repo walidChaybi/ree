@@ -309,10 +309,17 @@ export const configRequetes = [
       }
 
       //// Aavancement du statut apres une saisie de projet
-
       if (
         match[1] ===
         "/requetes/creation/suiviDossier/a272ec8a-1351-4edd-99b8-03004292a9d2/avancement?avancement=EN_COURS"
+      ) {
+        return {};
+      }
+
+      // Mise à jour de l'id_acte du suii dossier après création du projet d'acte
+      if (
+        match[1] ===
+        "/requetes/creation/suiviDossier/a272ec8a-1351-4edd-99b8-03004292a9d2/acte/dcd70ce9-1bb4-45b1-b672-a94dc152c339"
       ) {
         return {};
       }

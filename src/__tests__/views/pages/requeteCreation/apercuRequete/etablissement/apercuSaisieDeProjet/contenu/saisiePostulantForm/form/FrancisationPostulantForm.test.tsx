@@ -5,7 +5,7 @@ import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import FrancisationPostulantForm from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/form/FrancisationPostulantForm";
-import { mappingTitulairesVersSaisieProjetPostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
+import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
 import { PostulantValidationSchema } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/validation/PostulantValidationSchema";
 import { render, screen, waitFor } from "@testing-library/react";
 import { Formulaire } from "@widget/formulaire/Formulaire";
@@ -32,7 +32,7 @@ function afficheComposantFrancisationPostulant(
 
   render(
     <Formulaire
-      formDefaultValues={mappingTitulairesVersSaisieProjetPostulant(
+      formDefaultValues={mappingTitulairesVersFormulairePostulant(
         titulaire,
         parentsPourMapping![1],
         parentsPourMapping![2]

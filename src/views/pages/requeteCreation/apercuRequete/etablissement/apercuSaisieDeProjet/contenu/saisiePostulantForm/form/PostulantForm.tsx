@@ -18,7 +18,8 @@ import PrenomsConnusForm from "@composant/formulaire/nomsPrenoms/PrenomsConnusFo
 import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { OuiNon } from "@model/etatcivil/enum/OuiNon";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
+import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { getLibelle } from "@util/Utils";
 import DateComposeForm, {
   ChampDateModifie
@@ -36,33 +37,33 @@ import {
 import { connect } from "formik";
 import React, { useState } from "react";
 import Item from "../../../../commun/resumeRequeteCreationEtablissement/items/Item";
-import {
-  estJourMoisVide,
-  filtrePrenomsFrancises,
-  filtrePrenomsNonFrancises,
-  getNomSecable
-} from "../SaisiePostulantFormUtils";
 
 interface IPostulantFormProps {
   nom: string;
-  titulaire: ITitulaireRequeteCreation;
+  valeursForm?: ISaisieProjetPostulantForm;
+  afficherMessageNaissance: boolean;
 }
 type PostulantFormProps = IPostulantFormProps & FormikComponentProps;
 
 const PostulantForm: React.FC<PostulantFormProps> = props => {
-  const nomSecable = getNomSecable(props.titulaire.retenueSdanf);
-  const prenomRetenu = props.titulaire.retenueSdanf?.prenomsRetenu;
-  const nbPrenom = filtrePrenomsNonFrancises(prenomRetenu).length;
-  const nbPrenomAnalyseMarginale =
-    filtrePrenomsFrancises(prenomRetenu).length || nbPrenom;
+  const [afficherMessageNaissance, setAfficherMessageNaissance] =
+    useState<boolean>(props.afficherMessageNaissance);
+
+  const nbPrenoms = compteNombreDePrenoms(
+    props.valeursForm?.titulaire.prenoms.prenoms
+  );
+  const nbPrenomAnalyseMarginale = compteNombreDePrenoms(
+    props.valeursForm?.titulaire.analyseMarginale.prenoms
+  );
+
+  const nomSecableWithNamespace = withNamespace(props.nom, NOM_SECABLE);
   const analyseMarginale = withNamespace(props.nom, ANALYSE_MARGINALE);
   const sexe = withNamespace(props.nom, SEXE);
   const lieuNaissance = withNamespace(props.nom, LIEU_DE_NAISSANCE);
+
   const afficherMessageSexe = Sexe.estIndetermine(
     props.formik.getFieldProps(sexe).value
   );
-  const [afficherMessageNaissance, setAfficherMessageNaissance] =
-    useState<boolean>(estJourMoisVide(props.titulaire.retenueSdanf));
 
   function onChangeDateNaissance(
     date: IDateComposeForm,
@@ -80,20 +81,18 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
         maxLength={NB_CARACT_MAX_SAISIE}
       />
       <NomSecableForm
-        nomComposant={withNamespace(props.nom, NOM_SECABLE)}
+        nomComposant={nomSecableWithNamespace}
         nomTitulaire={
           props.formik.getFieldProps(withNamespace(props.nom, NOM)).value
         }
-        nomPartie1={nomSecable.nomPartie1}
-        nomPartie2={nomSecable.nomPartie2}
         saisieVerrouillee={false}
         afficherAvertissementVocable={true}
       />
       <PrenomsConnusForm
         libelleAucunPrenom={getLibelle("Pas de prénom")}
-        pasDePrenomConnu={nbPrenom === 0}
+        pasDePrenomConnu={nbPrenoms === 0}
         nom={withNamespace(props.nom, PRENOMS)}
-        nbPrenoms={nbPrenom}
+        nbPrenoms={nbPrenoms}
       />
       <div className="Titre">{getLibelle("Analyse marginale")}</div>
       <InputField
@@ -171,3 +170,11 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
 };
 
 export default connect<IPostulantFormProps>(PostulantForm);
+
+function compteNombreDePrenoms(prenoms?: Prenoms): number {
+  return Object.values(prenoms || {}).reduce(
+    (resultat: number, prenom: string) =>
+      prenom === "" ? resultat : resultat + 1,
+    0
+  );
+}

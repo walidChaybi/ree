@@ -2,7 +2,6 @@ import {
   IAnalyseMarginaleResultat,
   useTitulaireAnalyseMarginaleApiHook
 } from "@hook/acte/TitulaireAnalyseMarginaleApiHook";
-import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
@@ -82,22 +81,18 @@ export function useTableauSuiviDossierHook(
             titulaireCourant.suiviDossiers?.map(suiviDossier => {
               return {
                 id: titulaireCourant.id,
-                idSuiviDossier: suiviDossier.id,
+                idSuiviDossier: suiviDossier.idSuiviDossier,
                 prenoms: "",
                 nom: "",
                 qualite: "",
                 decret: "",
-                evenement: NatureProjetEtablissement.getEnumFor(
-                  suiviDossier.natureProjet
-                ).libelle,
+                evenement: suiviDossier.natureProjet?.libelle ?? "",
                 dateEvenement: getDateStringFromDateCompose({
                   jour: suiviDossier.jourEvenement,
                   mois: suiviDossier.moisEvenement,
                   annee: suiviDossier.anneeEvenement
                 }),
-                avancement: AvancementProjetActe.getEnumFor(
-                  suiviDossier.avancement
-                ).libelle
+                avancement: suiviDossier.avancement.libelle ?? ""
               };
             }) || [];
 
@@ -143,9 +138,7 @@ const getIdentifiantsActeFromTitulaires = (
   titulaireCourant: ITitulaireRequeteCreation
 ): string[] => {
   const idActe = titulaireCourant.suiviDossiers?.find(suiviDossier =>
-    NatureProjetEtablissement.estNaissance(
-      NatureProjetEtablissement.getEnumFor(suiviDossier.natureProjet)
-    )
+    NatureProjetEtablissement.estNaissance(suiviDossier.natureProjet)
   )?.idActe;
   if (idActe) {
     identifiantsActes.push(idActe);

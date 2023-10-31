@@ -1,6 +1,8 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { DateCoordonneesType } from "@model/requete/DateCoordonneesType";
 import { SANS_NOM_CONNU, SANS_PRENOM_CONNU, SNP, SPC } from "@util/Utils";
+import { QualiteFamille } from "./enum/QualiteFamille";
+import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 import { IDecret } from "./IDecret";
 import { IDomiciliation } from "./IDomiciliation";
 import { IEnfantTitulaireActeTranscritDresse } from "./IEnfantTitulaireActeTranscritDresse";
@@ -10,8 +12,6 @@ import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 import { IRetenueSdanf } from "./IRetenueSdanf";
 import { ISuiviDossier } from "./ISuiviDossier";
 import { ITitulaireRequete, TitulaireRequete } from "./ITitulaireRequete";
-import { QualiteFamille } from "./enum/QualiteFamille";
-import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 
 export interface ITitulaireRequeteCreation extends ITitulaireRequete {
   villeEtrangereNaissance?: string;
@@ -91,9 +91,9 @@ export const TitulaireRequeteCreation = {
     return this.getParents(titulaires)?.sort(triTitulairesCreationParPosition);
   },
   getParentParSexeEtOuParPosition(
-    titulaires: ITitulaireRequeteCreation[],
     sexe: Sexe,
-    position: number
+    position: number,
+    titulaires?: ITitulaireRequeteCreation[]
   ): ITitulaireRequeteCreation | undefined {
     let parentResultat: ITitulaireRequeteCreation | undefined = undefined;
 

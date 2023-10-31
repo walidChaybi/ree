@@ -2,6 +2,7 @@ import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { requeteCreationEtablissementSaisieProjet } from "@mock/data/requeteCreationEtablissement";
 import "@mock/element/IntersectionObserver";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
 import { SaisiePostulantForm } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/SaisiePostulantForm";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
@@ -9,6 +10,7 @@ import {
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID
 } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { DEUX, UN, ZERO } from "@util/Utils";
 import { createMemoryHistory } from "history";
 import { Route, Router } from "react-router-dom";
 
@@ -26,7 +28,17 @@ function afficheComposantSaisiePostulantForm(
         exact={true}
         path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}
       >
-        <SaisiePostulantForm titulaires={titulaires} />
+        <SaisiePostulantForm
+          postulant={titulaires[ZERO]}
+          estProjetExistant={false}
+          onSubmitSaisieProjetForm={() => {}}
+          valeursForm={mappingTitulairesVersFormulairePostulant(
+            titulaires[ZERO],
+            titulaires[UN],
+            titulaires[DEUX],
+            "NAISSANCE"
+          )}
+        />
       </Route>
     </Router>
   );

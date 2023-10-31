@@ -64,8 +64,6 @@ const TitulaireEvenementForm: React.FC<
           <NomSecableForm
             nomComposant={withNamespace(props.nom, NOM_SECABLE)}
             nomTitulaire={props.titulaire.nom}
-            nomPartie1={props.titulaire.nomPartie1}
-            nomPartie2={props.titulaire.nomPartie2}
             origineTitulaireActe={
               props.titulaire.origineNomPartiesTitulaireActe
             }

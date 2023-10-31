@@ -246,9 +246,9 @@ test("DOIT rediriger vers l'apercu requête en prise en charge QUAND je clique s
 
   // Parent 1
   fireEvent.click(getInput("parents.parent1.pasdenomconnu.pasdenomconnu"));
-  fireEvent.click(
-    getInput("parents.parent1.pasdeprenomconnu.pasdeprenomconnu")
-  );
+  fireEvent.change(getInput("parents.parent1.prenoms.prenom1"), {
+    target: { value: "Prenom Un" }
+  });
 
   fireEvent.click(boutonPrendreEnCharge);
 

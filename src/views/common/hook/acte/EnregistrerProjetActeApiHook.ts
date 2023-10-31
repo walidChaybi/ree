@@ -3,7 +3,7 @@ import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
-export function useProjetActeApiHook(
+export function useEnregistrerProjetActeApiHook(
   acte?: IProjetActe
 ): IProjetActe | undefined {
   const [resultat, setResultat] = useState<IProjetActe>();
@@ -15,7 +15,7 @@ export function useProjetActeApiHook(
         })
         .catch((error: any) => {
           logError({
-            messageUtilisateur: "Impossible d'enregistrer le projet d'acte'",
+            messageUtilisateur: "Impossible d'enregistrer le projet d'acte",
             error
           });
         });

@@ -7,6 +7,7 @@ import { estRenseigne, getValeurOuVide, numberToString } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export interface IEvenement {
+  id?: string;
   heure?: number;
   minute?: number;
   jour?: number;

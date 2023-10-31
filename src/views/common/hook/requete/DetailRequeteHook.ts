@@ -34,6 +34,7 @@ import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { IStatutCourant } from "@model/requete/IStatutCourant";
+import { ISuiviDossier } from "@model/requete/ISuiviDossier";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeTranscription } from "@model/requete/NatureActeTranscription";
@@ -50,7 +51,10 @@ import { logError } from "@util/LogManager";
 import { storeRece } from "@util/storeRece";
 import { getValeurOuUndefined } from "@util/Utils";
 import { useEffect, useState } from "react";
+import { AvancementProjetActe } from "./../../../../model/requete/enum/AvancementProjetActe";
+import { NatureProjetEtablissement } from "./../../../../model/requete/enum/NatureProjetEtablissement";
 import { RolePersonneSauvegardee } from "./../../../../model/requete/enum/RolePersonneSauvegardee";
+import { UnionActuelle } from "./../../../../model/requete/enum/UnionActuelle";
 
 export interface IDetailRequeteParams {
   idRequete?: string;
@@ -438,7 +442,10 @@ export function mapTitulairesCreation(
       datePublication: getDateComposeFromTimestamp(
         titulaire.decret.datePublication
       )
-    }
+    },
+    suiviDossiers: mapSuiviDossiers(
+      getValeurOuUndefined(titulaire.suiviDossiers)
+    )
   }));
 }
 
@@ -447,8 +454,8 @@ function mapPersonnesSauvegardees(
   estRequeteMariage = false
 ): IPersonneSauvegardee[] {
   const personnesSauvegardees: IPersonneSauvegardee[] = [];
-  data?.forEach(dataCourant =>{
-    const role =  RolePersonneSauvegardee.getEnumForEnFonctionNatureActeRequete(
+  data?.forEach(dataCourant => {
+    const role = RolePersonneSauvegardee.getEnumForEnFonctionNatureActeRequete(
       dataCourant.role,
       estRequeteMariage
     );
@@ -456,8 +463,29 @@ function mapPersonnesSauvegardees(
       personnesSauvegardees.push({
         idPersonne: dataCourant.idPersonne,
         role
-      })
+      });
     }
   });
   return personnesSauvegardees;
+}
+
+function mapSuiviDossiers(suiviDossiers?: any[]): ISuiviDossier[] | undefined {
+  return suiviDossiers?.map(suiviDossier => ({
+    idSuiviDossier: suiviDossier.id,
+    idActe: getValeurOuUndefined(suiviDossier.idActe),
+    dateEtablissement: getValeurOuUndefined(suiviDossier.dateEtablissement),
+    jourEvenement: getValeurOuUndefined(suiviDossier.jourEvenement),
+    moisEvenement: getValeurOuUndefined(suiviDossier.moisEvenement),
+    anneeEvenement: getValeurOuUndefined(suiviDossier.anneeEvenement),
+    natureProjet: NatureProjetEtablissement.getEnumFor(
+      getValeurOuUndefined(suiviDossier.natureProjet)
+    ),
+    referenceActe: getValeurOuUndefined(suiviDossier.referenceActe),
+    avancement: AvancementProjetActe.getEnumFor(
+      getValeurOuUndefined(suiviDossier.avancement)
+    ),
+    unionActuelle: UnionActuelle.getEnumFor(
+      getValeurOuUndefined(suiviDossier.unionActuelle)
+    )
+  }));
 }

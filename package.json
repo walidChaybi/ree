@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.17.8",
+    "@babel/plugin-proposal-private-property-in-object": "7.21.0-placeholder-for-preset-env.2",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.7",
     "@svgr/webpack": "6.5.1",
     "@testing-library/dom": "8.1.0",
@@ -153,7 +154,7 @@
     ],
     "testEnvironment": "jest-environment-jsdom",
     "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.(js|jsx|ts|tsx|cjs)$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },

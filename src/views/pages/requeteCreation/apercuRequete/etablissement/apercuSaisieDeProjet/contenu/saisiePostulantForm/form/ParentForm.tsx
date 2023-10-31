@@ -16,7 +16,6 @@ import LieuForm, { ILieuProps } from "@composant/formulaire/LieuForm";
 import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import Item from "@pages/requeteCreation/apercuRequete/etablissement/commun/resumeRequeteCreationEtablissement/items/Item";
 import { getLibelle } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
@@ -26,7 +25,6 @@ import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { MessageAvertissement } from "@widget/formulaire/erreur/MessageAvertissement";
 import {
   FormikComponentProps,
-  getLibelleParentFromSexe,
   NB_CARACT_MAX_SAISIE,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
@@ -36,7 +34,7 @@ import "../scss/Parent.scss";
 
 interface IParentFormProps {
   nom: string;
-  parent: ITitulaireRequeteCreation;
+  libelle: string;
 }
 
 type ParentFormProps = IParentFormProps & FormikComponentProps;
@@ -107,43 +105,38 @@ const ParentForm: React.FC<ParentFormProps> = props => {
 
   return (
     <div className="Parent">
-      {props.parent && (
-        <Item titre={getLibelleParentFromSexe(props.parent)}>
-          <InputField
-            name={withNamespace(props.nom, NOM)}
-            label={getLibelle("Nom")}
-            maxLength={NB_CARACT_MAX_SAISIE}
+      <Item titre={props.libelle}>
+        <InputField
+          name={withNamespace(props.nom, NOM)}
+          label={getLibelle("Nom")}
+          maxLength={NB_CARACT_MAX_SAISIE}
+        />
+        <PrenomsForm nom={withNamespace(props.nom, `${PRENOM}.${PRENOMS}`)} />
+        <div className="AvertissementConteneur">
+          <RadioField
+            className="SexeRadio"
+            name={withNamespace(props.nom, SEXE)}
+            label={getLibelle("Sexe")}
+            values={Sexe.getAllEnumsAsOptionsSansInconnu()}
           />
-          <PrenomsForm
-            nom={withNamespace(props.nom, `${PRENOM}.${PRENOMS}`)}
-            // nbPrenoms={nbPrenomAnalyseMarginale}
-          />
-          <div className="AvertissementConteneur">
-            <RadioField
-              className="SexeRadio"
-              name={withNamespace(props.nom, SEXE)}
-              label={getLibelle("Sexe")}
-              values={Sexe.getAllEnumsAsOptionsSansInconnu()}
+          <MessageAvertissement afficherMessage={afficherMessageSexe}>
+            {getLibelle("Attention, sexe indéterminé")}
+          </MessageAvertissement>
+        </div>
+        <div className="AvertissementConteneur">
+          <div className="ConteneurDateCompose">
+            <DateNaissanceOuAgeDeForm
+              nom={withNamespace(props.nom, DATE_NAISSANCE)}
+              labelDate={getLibelle("Date de naissance")}
             />
-            <MessageAvertissement afficherMessage={afficherMessageSexe}>
-              {getLibelle("Attention, sexe indéterminé")}
-            </MessageAvertissement>
           </div>
-          <div className="AvertissementConteneur">
-            <div className="ConteneurDateCompose">
-              <DateNaissanceOuAgeDeForm
-                nom={withNamespace(props.nom, DATE_NAISSANCE)}
-                labelDate={getLibelle("Date de naissance")}
-              />
-            </div>
-          </div>
-          <LieuForm
-            elements={lieuElements}
-            afficherArrondissement={afficherArrondissement}
-            afficherDepartement={afficherDepartement}
-          />
-        </Item>
-      )}
+        </div>
+        <LieuForm
+          elements={lieuElements}
+          afficherArrondissement={afficherArrondissement}
+          afficherDepartement={afficherDepartement}
+        />
+      </Item>
     </div>
   );
 };

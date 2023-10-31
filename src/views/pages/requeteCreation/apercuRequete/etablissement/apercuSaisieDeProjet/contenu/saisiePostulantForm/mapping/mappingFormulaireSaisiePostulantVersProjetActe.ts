@@ -7,8 +7,6 @@ import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ITitulaireProjetActe } from "@model/etatcivil/acte/projetActe/ITitulaireProjetActe";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { StatutActe } from "@model/etatcivil/enum/StatutActe";
-import { TypeActe } from "@model/etatcivil/enum/TypeActe";
 import { TypeRedactionActe } from "@model/etatcivil/enum/TypeRedactionActe";
 import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
 import {
@@ -18,15 +16,20 @@ import {
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
-import { SPC, UN } from "@util/Utils";
+import { getValeurOuUndefined, SPC, UN } from "@util/Utils";
 import { FRANCE } from "@utilMetier/LieuxUtils";
 
 export function mappingSaisieProjetPostulantFormVersProjetActe(
-  saisieProjetPostulant: ISaisieProjetPostulantForm, // Changer acte en un autre nom
-  numeroDossierNational?: string
+  saisieProjetPostulant: ISaisieProjetPostulantForm,
+  numeroDossierNational?: string,
+  projetActeExistant?: IProjetActe
 ): IProjetActe {
-  const DATE_DU_JOUR = new Date();
-  const projetActeAEnvoyer = {} as IProjetActe;
+  const projetActeAEnvoyer = projetActeExistant
+    ? { ...projetActeExistant, corpsTexte: undefined }
+    : ({} as IProjetActe);
+
+  projetActeAEnvoyer.modeCreation = TypeRedactionActe.ETABLI;
+
   const naissancePostulantEvenement = {
     annee: +saisieProjetPostulant.titulaire.dateNaissance.annee,
     mois: +saisieProjetPostulant.titulaire.dateNaissance.mois,
@@ -40,15 +43,16 @@ export function mappingSaisieProjetPostulantFormVersProjetActe(
   const mappingAnalyseMarginale = (): IProjetAnalyseMarginale[] => {
     return [
       {
-        dateDebut: DATE_DU_JOUR,
+        id: projetActeAEnvoyer?.analyseMarginales?.[0].id,
         titulaires: projetActeAEnvoyer.titulaires
       } as IProjetAnalyseMarginale
     ];
   };
 
-  projetActeAEnvoyer.evenement = naissancePostulantEvenement;
-  projetActeAEnvoyer.dateDerniereMaj = DATE_DU_JOUR;
-  projetActeAEnvoyer.dateCreation = DATE_DU_JOUR;
+  projetActeAEnvoyer.evenement = {
+    ...projetActeAEnvoyer.evenement,
+    ...naissancePostulantEvenement
+  };
   projetActeAEnvoyer.titulaires = [
     {
       ...mapPostulantVersTitulaireProjetActe(
@@ -58,19 +62,16 @@ export function mappingSaisieProjetPostulantFormVersProjetActe(
     } as ITitulaireProjetActe
   ];
   projetActeAEnvoyer.analyseMarginales = mappingAnalyseMarginale();
-  projetActeAEnvoyer.nature = NatureActe.getKey(
-    NatureActe.getEnumFromLibelle(saisieProjetPostulant.projet.natureActe)
-  );
-  projetActeAEnvoyer.type = TypeActe.getKey(TypeActe.TEXTE);
-  projetActeAEnvoyer.modeCreation = TypeRedactionActe.ETABLI;
-  projetActeAEnvoyer.statut = StatutActe.getKey(StatutActe.BROUILLON);
-  projetActeAEnvoyer.dateStatut = DATE_DU_JOUR;
-  projetActeAEnvoyer.dateInitialisation = DATE_DU_JOUR;
+  projetActeAEnvoyer.nature =
+    NatureActe.getKey(
+      NatureActe.getEnumFromLibelle(saisieProjetPostulant.projet.natureActe)
+    ) || saisieProjetPostulant.projet.natureActe;
   projetActeAEnvoyer.numeroDossierNational = numeroDossierNational;
   projetActeAEnvoyer.visibiliteArchiviste = TypeVisibiliteArchiviste.getKey(
     TypeVisibiliteArchiviste.NON
   );
   projetActeAEnvoyer.declarant = {
+    ...projetActeAEnvoyer.declarant,
     identiteDeclarant:
       saisieProjetPostulant.autres.declarant ||
       TypeDeclarant.getKey(TypeDeclarant.ABSCENCE_DE_VALEUR),
@@ -100,9 +101,9 @@ function getFiliationParParent(
         ? parentForm.lieuNaissance.departementNaissance
         : parentForm.lieuNaissance.regionNaissance,
       arrondissement: parentForm.lieuNaissance.arrondissementNaissance,
-      annee: +parentForm.dateNaissance.date.annee,
-      mois: +parentForm.dateNaissance.date.mois,
-      jour: +parentForm.dateNaissance.date.jour
+      annee: getValeurOuUndefined(parentForm.dateNaissance.date.annee),
+      mois: getValeurOuUndefined(parentForm.dateNaissance.date.mois),
+      jour: getValeurOuUndefined(parentForm.dateNaissance.date.jour)
     } as IEvenement,
     age: +parentForm.dateNaissance.age,
     prenoms: getPrenomsTableauStringVersPrenomsOrdonnes(

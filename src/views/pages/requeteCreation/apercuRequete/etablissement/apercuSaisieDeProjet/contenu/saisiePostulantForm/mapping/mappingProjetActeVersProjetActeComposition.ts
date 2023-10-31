@@ -1,5 +1,5 @@
-import { IMentionComposition } from "@model/composition/IMentionComposition";
 import { IProjetActeComposition } from "@model/composition/acte/IProjetActeComposition";
+import { IMentionComposition } from "@model/composition/IMentionComposition";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 
 export function mappingProjetActeVersProjetActeComposition(

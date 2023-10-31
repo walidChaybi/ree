@@ -59,9 +59,9 @@ describe("Tests sur le fonctionnement de la fonction TitulaireRequeteCreation.fi
     "DOIT retourner le parent de nom de naissance '$nomNaissance' QUAND on filtre par sexe '$sexe' et position '$position'",
     async params => {
       const parent = TitulaireRequeteCreation.getParentParSexeEtOuParPosition(
-        titulaires,
         Sexe.getEnumFromLibelle(params.sexe),
-        params.position
+        params.position,
+        titulaires
       );
       expect(parent?.nomNaissance).toBe(params.nomNaissance);
     }

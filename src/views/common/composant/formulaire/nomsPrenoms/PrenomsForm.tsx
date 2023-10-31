@@ -1,9 +1,9 @@
-import { QUINZE, ZERO, creerPlageDeNombres, getLibelle } from "@util/Utils";
+import { creerPlageDeNombres, getLibelle, QUINZE, ZERO } from "@util/Utils";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
   CARACTERES_AUTORISES_MESSAGE,
   CHAMP_OBLIGATOIRE
 } from "@widget/formulaire/FormulaireMessages";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
   IGNORER_TABULATION,
   INomForm,

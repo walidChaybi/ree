@@ -11,6 +11,7 @@ import { IFicheLienActes } from "./IFicheLienActes";
 import { ILieuEvenement } from "./ILieuEvenement";
 
 export interface IPersonne {
+  id: string;
   nom: string;
   autresNoms: IAutresNoms[];
   prenoms: string[];

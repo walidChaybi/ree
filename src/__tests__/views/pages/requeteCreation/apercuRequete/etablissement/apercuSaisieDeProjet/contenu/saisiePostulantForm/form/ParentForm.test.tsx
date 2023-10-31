@@ -2,7 +2,7 @@ import { PARENT1, PARENTS } from "@composant/formulaire/ConstantesNomsForm";
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { requeteCreationEtablissementSaisieProjet } from "@mock/data/requeteCreationEtablissement";
 import ParentForm from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/form/ParentForm";
-import { mappingTitulairesVersSaisieProjetPostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
+import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
 import { PostulantValidationSchema } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/validation/PostulantValidationSchema";
 import { render, screen, waitFor } from "@testing-library/react";
 import { Formulaire } from "@widget/formulaire/Formulaire";
@@ -14,7 +14,7 @@ const titulaires = mappingRequeteCreation(
 function afficheComposantSaisiePostulantForm(): void {
   render(
     <Formulaire
-      formDefaultValues={mappingTitulairesVersSaisieProjetPostulant(
+      formDefaultValues={mappingTitulairesVersFormulairePostulant(
         titulaires![0],
         titulaires![1],
         titulaires![2]
@@ -23,7 +23,7 @@ function afficheComposantSaisiePostulantForm(): void {
       onSubmit={() => {}}
       className="FormulairePostulant"
     >
-      <ParentForm nom={`${PARENTS}.${PARENT1}`} parent={titulaires![1]} />
+      <ParentForm nom={`${PARENTS}.${PARENT1}`} libelle={"Parent 1"} />
     </Formulaire>
   );
 }

@@ -1,12 +1,16 @@
+import { AvancementProjetActe } from "./enum/AvancementProjetActe";
+import { NatureProjetEtablissement } from "./enum/NatureProjetEtablissement";
+import { UnionActuelle } from "./enum/UnionActuelle";
+
 export interface ISuiviDossier {
-  id: string;
+  idSuiviDossier: string;
   idActe?: string;
-  identifiantSuiviProjet?: string;
   dateEtablissement?: number;
   jourEvenement?: string;
   moisEvenement?: string;
   anneeEvenement: string;
-  natureProjet?: string;
+  natureProjet?: NatureProjetEtablissement;
   referenceActe?: string;
-  avancement?: string;
+  avancement: AvancementProjetActe;
+  unionActuelle?: UnionActuelle;
 }

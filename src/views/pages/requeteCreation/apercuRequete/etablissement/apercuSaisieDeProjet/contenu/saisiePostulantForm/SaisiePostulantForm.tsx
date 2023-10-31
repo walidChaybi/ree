@@ -1,5 +1,3 @@
-import { compositionApi, ICompositionDto } from "@api/appels/compositionApi";
-import { patchModificationAvancementProjet } from "@api/appels/requeteApi";
 import {
   ACQUISITION,
   AUTRES,
@@ -14,18 +12,9 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
 import { RECEContext } from "@core/body/RECEContext";
-import { useProjetActeApiHook } from "@hook/acte/ProjetActeApiHook";
-import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
-import { IUuidSuiviDossierParams } from "@model/params/IUuidSuiviDossierParams";
-import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
-import {
-  ITitulaireRequeteCreation,
-  TitulaireRequeteCreation
-} from "@model/requete/ITitulaireRequeteCreation";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { estDateVide } from "@util/DateUtils";
-import { logError } from "@util/LogManager";
 import { DEUX, getLibelle, UN } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
@@ -35,131 +24,71 @@ import {
   getLibelleParentFromSexe,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router";
+import React, { useContext } from "react";
 import AcquisitionForm from "./form/AcquisitionForm";
 import AutresForm from "./form/AutresForm";
 import FrancisationPostulantForm from "./form/FrancisationPostulantForm";
 import ParentForm from "./form/ParentForm";
 import PostulantForm from "./form/PostulantForm";
-import { mappingSaisieProjetPostulantFormVersProjetActe } from "./mapping/mappingFormulaireSaisiePostulantVersProjetActeAEnvoyer";
-import { mappingProjetActeVersProjetActeComposition } from "./mapping/mappingProjetActeVersProjetActeComposition";
-import { mappingTitulairesVersSaisieProjetPostulant } from "./mapping/mappingTitulaireVersFormulairePostulant";
+import { estJourMoisVide } from "./SaisiePostulantFormUtils";
 import "./scss/Postulant.scss";
 import { PostulantValidationSchema } from "./validation/PostulantValidationSchema";
 
 interface ISaisiePostulantFormProps {
-  titulaires: ITitulaireRequeteCreation[];
-  nature?: string;
-  setPdfFromComposition: React.Dispatch<ICompositionDto>;
+  postulant: ITitulaireRequeteCreation;
+  valeursForm?: ISaisieProjetPostulantForm;
+  estProjetExistant: boolean;
+  onSubmitSaisieProjetForm: (valeurs: ISaisieProjetPostulantForm) => void;
 }
 
 export const SaisiePostulantForm: React.FC<
   ISaisiePostulantFormProps
 > = props => {
   const { isDirty, setIsDirty } = useContext(RECEContext);
-  const [projetActe, setProjetActe] = useState<IProjetActe>();
-  const projetActeEnregistre = useProjetActeApiHook(projetActe);
-  const { idSuiviDossierParam } = useParams<IUuidSuiviDossierParams>();
-  const [isProjetExistant, setIsProjetExistant] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (projetActeEnregistre) {
-      compositionApi
-        .getCompositionProjetActe(
-          mappingProjetActeVersProjetActeComposition(projetActeEnregistre)
-        )
-        .then(res => {
-          props.setPdfFromComposition(res?.body?.data);
-        })
-        .catch(error =>
-          logError({
-            error
-          })
-        );
-      patchModificationAvancementProjet(
-        idSuiviDossierParam,
-        AvancementProjetActe.EN_COURS.nom
-      );
-      setIsProjetExistant(true);
-      setIsDirty(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projetActeEnregistre]);
-
-  const [titulaire] = useMemo(() => {
-    let suiviDossierTitulaire;
-    if (props.titulaires) {
-      for (const titulaireRequete of props.titulaires) {
-        suiviDossierTitulaire = titulaireRequete.suiviDossiers?.find(
-          etatCivil => etatCivil.id === idSuiviDossierParam
-        );
-        if (suiviDossierTitulaire) {
-          return [titulaireRequete, suiviDossierTitulaire];
-        }
-      }
-    }
-    return [undefined, undefined];
-  }, [props.titulaires, idSuiviDossierParam]);
-
-  const validerProjetPostulant = (values: ISaisieProjetPostulantForm) => {
-    setProjetActe(
-      mappingSaisieProjetPostulantFormVersProjetActe(
-        values,
-        titulaire?.numeroDossierNational
-      )
-    );
-  };
-
-  const parentMasculinEtOuPositionUn =
-    TitulaireRequeteCreation.getParentParSexeEtOuParPosition(
-      props.titulaires,
-      Sexe.MASCULIN,
-      UN
-    );
-  const parentFemininEtOuPositionDeux =
-    TitulaireRequeteCreation.getParentParSexeEtOuParPosition(
-      props.titulaires,
-      Sexe.FEMININ,
-      DEUX
-    );
+  const libelleParent1 = getLibelleParentFromSexe(
+    UN,
+    props.valeursForm?.parents.parent1
+  );
+  const libelleParent2 = getLibelleParentFromSexe(
+    DEUX,
+    props.valeursForm?.parents.parent2
+  );
 
   const elementListe = [
     {
       libelle: "Postulant",
-      element: <PostulantForm nom={TITULAIRE} titulaire={titulaire} />
+      element: (
+        <PostulantForm
+          nom={TITULAIRE}
+          valeursForm={props.valeursForm}
+          afficherMessageNaissance={estJourMoisVide(
+            props.postulant.retenueSdanf
+          )}
+        />
+      )
     },
     {
       libelle: getLibelle("Francisation postulant"),
       element: (
         <FrancisationPostulantForm
           nom={FRANCISATION_POSTULANT}
-          retenueSdanf={titulaire?.retenueSdanf}
+          retenueSdanf={props.postulant?.retenueSdanf}
         />
       )
     },
-    parentMasculinEtOuPositionUn
-      ? {
-          libelle: getLibelleParentFromSexe(parentMasculinEtOuPositionUn),
-          element: (
-            <ParentForm
-              nom={`${PARENTS}.${PARENT1}`}
-              parent={parentMasculinEtOuPositionUn}
-            />
-          )
-        }
-      : undefined,
-    parentFemininEtOuPositionDeux
-      ? {
-          libelle: getLibelleParentFromSexe(parentFemininEtOuPositionDeux),
-          element: (
-            <ParentForm
-              nom={`${PARENTS}.${PARENT2}`}
-              parent={parentFemininEtOuPositionDeux}
-            />
-          )
-        }
-      : undefined,
+    {
+      libelle: libelleParent1,
+      element: (
+        <ParentForm nom={`${PARENTS}.${PARENT1}`} libelle={libelleParent1} />
+      )
+    },
+    {
+      libelle: libelleParent2,
+      element: (
+        <ParentForm nom={`${PARENTS}.${PARENT2}`} libelle={libelleParent2} />
+      )
+    },
     {
       libelle: getLibelle("Autres"),
       element: <AutresForm nom={AUTRES} />
@@ -169,7 +98,9 @@ export const SaisiePostulantForm: React.FC<
       element: (
         <AcquisitionForm
           nom={ACQUISITION}
-          afficherDateDecret={!estDateVide(titulaire?.decret?.dateSignature)}
+          afficherDateDecret={
+            !estDateVide(props.postulant?.decret?.dateSignature)
+          }
         />
       )
     }
@@ -178,14 +109,9 @@ export const SaisiePostulantForm: React.FC<
   return (
     <div className="Postulant">
       <Formulaire
-        formDefaultValues={mappingTitulairesVersSaisieProjetPostulant(
-          titulaire || ({} as ITitulaireRequeteCreation),
-          parentMasculinEtOuPositionUn,
-          parentFemininEtOuPositionDeux,
-          props.nature
-        )}
+        formDefaultValues={props.valeursForm}
         formValidationSchema={PostulantValidationSchema}
-        onSubmit={validerProjetPostulant}
+        onSubmit={props.onSubmitSaisieProjetForm}
         className="FormulairePostulant"
       >
         <FormikEffect
@@ -206,10 +132,9 @@ export const SaisiePostulantForm: React.FC<
           />
         </div>
         <GestionnaireElementScroll elementListe={elementListe} />
-        <Bouton type="submit" disabled={!isDirty && isProjetExistant}>
+        <Bouton type="submit" disabled={!isDirty && props.estProjetExistant}>
           {getLibelle("Actualiser et visualiser")}
         </Bouton>
-        <Bouton>{getLibelle("Valider le postulant")}</Bouton>
       </Formulaire>
     </div>
   );

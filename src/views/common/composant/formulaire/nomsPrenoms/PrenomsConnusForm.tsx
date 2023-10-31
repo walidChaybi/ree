@@ -10,9 +10,9 @@ import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { PAS_DE_PRENOM_CONNU, PRENOMS } from "../ConstantesNomsForm";
 import PrenomsForm, {
-  IPrenomsFormProps,
   creerValidationSchemaPrenom,
-  genererDefaultValuesPrenoms
+  genererDefaultValuesPrenoms,
+  IPrenomsFormProps
 } from "./PrenomsForm";
 
 export const PrenomsConnusValidationSchema = Yup.object()

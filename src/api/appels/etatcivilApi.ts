@@ -77,11 +77,32 @@ export function getActesInscriptionsSauvegardes(
 }
 
 /**
+ * Recuperation d'un projet d'acte'
+ */
+export function getProjetActe(idActe: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_PROJET_ACTE}/${idActe}`,
+  });
+}
+
+/**
  * Envoi d'un projet d'acte pour enregistrement'
  */
 export function postProjetActe(acte: IProjetActe): Promise<any> {
   return api.fetch({
     method: HttpMethod.POST,
+    uri: `${URL_PROJET_ACTE}`,
+    data: acte
+  });
+}
+
+/**
+ * Envoi d'un projet d'acte pour modification'
+ */
+export function patchProjetActe(acte: IProjetActe): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.PATCH,
     uri: `${URL_PROJET_ACTE}`,
     data: acte
   });

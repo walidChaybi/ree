@@ -3,14 +3,14 @@ import { TypeRedactionActe } from "../../enum/TypeRedactionActe";
 import { ICorpsExtraitRectification } from "../ICorpsExtraitRectification";
 import { ICorpsText } from "../ICorpsText";
 import { IDeclarant } from "../IDeclarant";
-import { IDetailMariage } from "../IDetailMariage";
 import { IEvenement } from "../IEvenement";
 import { IRegistre } from "../IRegistre";
-import { ICorpsImage } from "../imageActe/ICorpsImage";
 import { IMention } from "../mention/IMention";
 import { IProjetAnalyseMarginale } from "./IAnalyseMarginaleProjetActe";
 import { ITitulaireProjetActe } from "./ITitulaireProjetActe";
 
+// TODO: Ne devrait-on pas l'appeler IActe ?
+// Puisque qu'un projet d'acte est juste un acte au statut BROUILLON
 export interface IProjetActe {
   id: string;
   titulaires: ITitulaireProjetActe[];
@@ -26,13 +26,10 @@ export interface IProjetActe {
   dateCreation?: Date;
   visibiliteArchiviste: string;
   analyseMarginales?: IProjetAnalyseMarginale[];
-  detailMariage?: IDetailMariage;
   corpsTexte?: ICorpsText;
-  corpsImage?: ICorpsImage;
   type: string;
   corpsExtraitRectifications: ICorpsExtraitRectification[];
   mentions: IMention[];
-  sexe: string;
   declarant?: IDeclarant;
   reconnuPar?: string;
   numeroDossierNational?: string;
