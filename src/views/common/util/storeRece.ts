@@ -3,7 +3,7 @@ import { IOfficier } from "@model/agent/IOfficier";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
 import parametres from "../../../ressources/parametres.json";
-import { Rot18 } from "./crypto/Rot18";
+import { Rot5 } from "./crypto/Rot5";
 
 const codePin = parametres.code_pin;
 
@@ -46,13 +46,13 @@ class StoreRece {
   }
 
   set codePin(code: string | undefined) {
-    this._codePin = Rot18.crypte(code);
+    this._codePin = Rot5.crypte(code);
     this.timeoutCodePin();
   }
 
   get codePin(): string | undefined {
     this.timeoutCodePin();
-    return Rot18.decrypte(this._codePin);
+    return Rot5.decrypte(this._codePin);
   }
 
   resetCodePin() {

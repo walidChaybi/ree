@@ -17,7 +17,7 @@ import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
 export function useRequeteDelivranceApiHook(
-  queryParameters: IQueryParametersPourRequetes,
+  queryParameters: IQueryParametersPourRequetes | undefined,
   typeRequete: TypeAppelRequete,
   setEnChargement: (enChargement: boolean) => void
 ) {
@@ -32,6 +32,7 @@ export function useRequeteDelivranceApiHook(
     async function fetchMesRequetes() {
       try {
         if (queryParameters) {
+          setEnChargement(true);
           const listeStatuts = queryParameters?.statuts?.join(",");
           const result =
             typeRequete === TypeAppelRequete.MES_REQUETES_DELIVRANCE

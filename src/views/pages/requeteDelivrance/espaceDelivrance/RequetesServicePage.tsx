@@ -8,35 +8,35 @@ import {
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
 import { IFiltreServiceRequeteDelivranceFormValues } from "@model/form/delivrance/IFiltreServiceRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
+import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
-import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE,
   NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
-import { SortOrder } from "@widget/tableau/TableUtils";
 import React, { useCallback, useState } from "react";
-import { FiltreServiceRequeteDelivranceForm } from "./contenu/FiltreServiceRequeteDelivranceForm";
 import {
-  dateStatutColumnHeaders,
   HeaderTableauRequete,
+  dateStatutColumnHeaders,
   requeteColumnHeaders
 } from "./EspaceDelivranceParams";
 import {
   goToLinkRequete,
   miseAjourOuRedirection
 } from "./EspaceDelivranceUtils";
+import { FiltreServiceRequeteDelivranceForm } from "./contenu/FiltreServiceRequeteDelivranceForm";
 import { useRequeteDelivranceApiHook } from "./hook/DonneesRequeteDelivranceApiHook";
 import "./scss/RequeteTableau.scss";
 
@@ -78,8 +78,8 @@ export const RequetesServicePage: React.FC<
   >();
 
   const [parametresLienRequete, setParametresLienRequete] =
-    React.useState<IQueryParametersPourRequetes>(defaultParamsRequetes);
-  const [enChargement, setEnChargement] = React.useState(true);
+    React.useState<IQueryParametersPourRequetes>();
+  const [enChargement, setEnChargement] = React.useState(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
   const { dataState, paramsTableau, onSubmitFiltres } =
@@ -186,8 +186,8 @@ export const RequetesServicePage: React.FC<
       />
       <TableauRece
         idKey={"idRequete"}
-        sortOrderByState={parametresLienRequete.tri}
-        sortOrderState={parametresLienRequete.sens}
+        sortOrderByState={parametresLienRequete?.tri}
+        sortOrderState={parametresLienRequete?.sens}
         onClickOnLine={onClickOnLine}
         columnHeaders={columnsRequestesService}
         dataState={dataState}

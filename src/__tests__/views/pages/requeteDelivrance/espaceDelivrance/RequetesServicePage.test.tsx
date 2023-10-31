@@ -45,6 +45,8 @@ test("renders Page requete interactions works, no errors returned", async () => 
   const titreNumero = screen.getByText("N°");
   const pageSuivante = screen.getByTitle("Page suivante");
 
+  fireEvent.click(screen.getByTestId("loupeButton"));
+  
   await waitFor(() => {
     const numero = screen.getByText("1234");
     expect(titreNumero).toBeDefined();
@@ -83,6 +85,7 @@ test("Test Attribuée à", async () => {
       <RequetesServicePage setParamsRMCAuto={setParamsRMCAuto} />
     </Router>
   );
+  fireEvent.click(screen.getByTestId("loupeButton"));
 
   await waitFor(() => {
     const numero = screen.getByText("1234");
@@ -147,6 +150,7 @@ test("la page DOIT afficher les requetes filtrées QUAND on selectionne un filtr
       <RequetesServicePage setParamsRMCAuto={setParamsRMCAuto} />
     </Router>
   );
+  fireEvent.click(screen.getByTestId("loupeButton"));
 
   await waitFor(() => {
     expect(screen.getAllByText("1234")).toBeDefined();
