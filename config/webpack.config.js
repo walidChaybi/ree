@@ -102,6 +102,8 @@ module.exports = function (webpackEnv) {
   // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
+  // On passe la version dans l'environnement pour la récuperer dans le index.html
+  env.raw["VERSION"] = packageJson.version
 
   const shouldUseReactRefresh = env.raw.FAST_REFRESH;
 
