@@ -12,6 +12,7 @@ import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
+import { SuiviDossier } from "../apercuPriseEnCharge/contenu/SuiviDossier";
 import {
   getConteneurPieceJustificative,
   getConteneurResumeRequete,
@@ -89,6 +90,17 @@ export const ApercuRequeteCreationEtablissementSimplePage: React.FC<
         />
       ),
       index: 0
+    },
+    {
+      titre: getLibelle("Suivi dossier"),
+      component: (
+        <SuiviDossier
+          echanges={requete?.provenanceNatali?.echanges}
+          requete={requete || ({} as IRequeteCreationEtablissement)}
+          modeConsultation={props.idRequeteAAfficher !== undefined}
+        />
+      ),
+      index: 1
     }
   ];
 
