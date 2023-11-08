@@ -36,6 +36,7 @@ export interface ITitulaireRequete {
   paysStatutRefugie?: string;
   paysOrigine?: string;
   nationalites?: INationalite[];
+  numeroDossierNational?: string;
 }
 
 export const TitulaireRequete = {

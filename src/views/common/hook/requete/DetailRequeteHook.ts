@@ -1,6 +1,24 @@
 import { getDetailRequete } from "@api/appels/requeteApi";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { CategorieDocument } from "@model/requete/CategorieDocument";
+import { IAction } from "@model/requete/IActions";
+import { DocumentPJ, IDocumentPJ } from "@model/requete/IDocumentPj";
+import { IEchange } from "@model/requete/IEchange";
+import { IEvenementRequete } from "@model/requete/IEvenementRequete";
+import { IMandant } from "@model/requete/IMandant";
+import { IObservation } from "@model/requete/IObservation";
+import { IPersonneSauvegardee } from "@model/requete/IPersonneSauvegardee";
+import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
+import { Requerant } from "@model/requete/IRequerant";
+import { TRequete } from "@model/requete/IRequete";
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IRequeteInformation } from "@model/requete/IRequeteInformation";
+import { IStatutCourant } from "@model/requete/IStatutCourant";
+import { ISuiviDossier } from "@model/requete/ISuiviDossier";
+import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { NatureActeTranscription } from "@model/requete/NatureActeTranscription";
 import { BesoinUsager } from "@model/requete/enum/BesoinUsager";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
@@ -20,24 +38,6 @@ import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
 import { TypeMandant } from "@model/requete/enum/TypeMandant";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IAction } from "@model/requete/IActions";
-import { DocumentPJ, IDocumentPJ } from "@model/requete/IDocumentPj";
-import { IEchange } from "@model/requete/IEchange";
-import { IEvenementRequete } from "@model/requete/IEvenementRequete";
-import { IMandant } from "@model/requete/IMandant";
-import { IObservation } from "@model/requete/IObservation";
-import { IPersonneSauvegardee } from "@model/requete/IPersonneSauvegardee";
-import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
-import { Requerant } from "@model/requete/IRequerant";
-import { TRequete } from "@model/requete/IRequete";
-import { IRequeteCreation } from "@model/requete/IRequeteCreation";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IRequeteInformation } from "@model/requete/IRequeteInformation";
-import { IStatutCourant } from "@model/requete/IStatutCourant";
-import { ISuiviDossier } from "@model/requete/ISuiviDossier";
-import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { NatureActeTranscription } from "@model/requete/NatureActeTranscription";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import {
   IPieceJustificativeCreation,
@@ -48,8 +48,8 @@ import {
   getFormatDateFromTimestamp
 } from "@util/DateUtils";
 import { logError } from "@util/LogManager";
-import { storeRece } from "@util/storeRece";
 import { getValeurOuUndefined } from "@util/Utils";
+import { storeRece } from "@util/storeRece";
 import { useEffect, useState } from "react";
 import { AvancementProjetActe } from "./../../../../model/requete/enum/AvancementProjetActe";
 import { NatureProjetEtablissement } from "./../../../../model/requete/enum/NatureProjetEtablissement";
@@ -414,10 +414,7 @@ export function mappingRequeteCreation(data: any): IRequeteCreation {
     provenanceServicePublic: data.provenanceServicePublic,
     documentsPj: mapDocumentPJ(getValeurOuUndefined(data.documentsPj)),
     provenance: Provenance.getEnumFor(data.provenance),
-    titulaires: mapTitulairesCreation(
-      requete.titulaires,
-      data.provenanceNatali?.numeroDossierNational
-    ),
+    titulaires: mapTitulairesCreation(requete.titulaires),
     natureActeTranscrit,
     personnesSauvegardees: mapPersonnesSauvegardees(
       getValeurOuUndefined(data.personnesSauvegardees),
@@ -426,13 +423,9 @@ export function mappingRequeteCreation(data: any): IRequeteCreation {
   };
 }
 
-export function mapTitulairesCreation(
-  titulaires: any[],
-  numeroDossierNational?: string
-): ITitulaireRequeteCreation[] {
+export function mapTitulairesCreation(titulaires: any[]): ITitulaireRequeteCreation[] {
   return titulaires.map(titulaire => ({
     ...titulaire,
-    numeroDossierNational,
     qualite: QualiteFamille.getEnumFor(titulaire.qualite),
     decret: titulaire.decret && {
       numeroDecret: titulaire.decret.numeroDecret,
