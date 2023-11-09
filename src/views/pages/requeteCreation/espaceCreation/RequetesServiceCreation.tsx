@@ -186,7 +186,7 @@ export const RequetesServiceCreation: React.FC<
   );
 
   function soumettreFiltre(values: IFiltreServiceRequeteCreationFormValues) {
-    if (!parametresLienRequete) {
+    if (!parametresLienRequete && !values.numeroRequete) {
       setParametresLienRequete(props.queryParametersPourRequetes);
     }
     onSubmit(values);
