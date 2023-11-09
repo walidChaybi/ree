@@ -1,8 +1,9 @@
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
+import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import TableauSuiviDossier from "@pages/requeteCreation/commun/composants/TableauSuiviDossier/TableauSuiviDossier";
+import { ZERO, getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { getLibelle } from "@util/Utils";
 import React, { useState } from "react";
 import { useParams } from "react-router";
 import { IUuidRequeteParams } from "../../../../../../../model/params/IUuidRequeteParams";
@@ -23,9 +24,23 @@ export const SuiviDossier: React.FC<ISuiviDossierProps> = props => {
   const [echanges, setEchanges] = useState<IEchange[] | undefined>(
     props.echanges
   );
+  const postulant = props.requete.titulaires?.find(
+    titu => TypeObjetTitulaire.POSTULANT_NATIONALITE === titu.typeObjetTitulaire
+  );
+
+  const afficherTableauSuiviDossier =
+    postulant &&
+    postulant.situationFamiliale === "CELIBATAIRE" &&
+    postulant.nombreEnfantMineur === ZERO &&
+    postulant.evenementUnions?.length === ZERO;
   return (
     <>
-      <TableauSuiviDossier requete={props.requete} />
+      {gestionnaireFeatureFlag.estActif(
+        FeatureFlag.FF_INTEGRATION_REQUETE_CIBLE
+      ) &&
+        afficherTableauSuiviDossier && (
+          <TableauSuiviDossier requete={props.requete} />
+        )}
       <Item titre={getLibelle("Retour SDANF")}>
         <ItemEchangesRetourSDANF echanges={echanges} />
 
