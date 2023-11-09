@@ -18,6 +18,16 @@ import { Formik } from "formik";
 import React from "react";
 import "./scss/FiltreServiceRequeteDelivranceForm.scss";
 
+const STATUTS_REQUETE_A_EXCLURE: StatutRequete[] = [
+  StatutRequete.DOUBLON,
+  StatutRequete.IGNOREE,
+  StatutRequete.TRAITE_IMPRIME,
+  StatutRequete.TRAITE_DELIVRE_DEMAT,
+  StatutRequete.REJET_IMPRESSION,
+  StatutRequete.TRAITE_IMPRIME_LOCAL,
+  StatutRequete.REJET
+];
+
 export interface IFiltreServiceRequeteDelivranceFormProps {
   onSubmit: (values: IFiltreServiceRequeteDelivranceFormValues) => void;
 }
@@ -45,6 +55,15 @@ export const FiltreServiceRequeteDelivranceForm: React.FC<
   function onReset(reset: () => void) {
     reset();
   }
+
+  const optionsStatutRequete = StatutRequete.getOptionsAPartirTypeRequete(
+    TypeRequete.DELIVRANCE
+  ).filter(
+    statutCourant =>
+      !STATUTS_REQUETE_A_EXCLURE.includes(
+        StatutRequete.getEnumFromLibelle(statutCourant.libelle)
+      )
+  );
 
   return (
     <div className="FiltreServiceRequeteDelivranceForm">
@@ -85,9 +104,7 @@ export const FiltreServiceRequeteDelivranceForm: React.FC<
             <SelectField
               name="statut"
               label={getLibelle("Statut")}
-              options={StatutRequete.getOptionsAPartirTypeRequete(
-                TypeRequete.DELIVRANCE
-              )}
+              options={optionsStatutRequete}
             />
             <Button
               data-testid="loupeButton"

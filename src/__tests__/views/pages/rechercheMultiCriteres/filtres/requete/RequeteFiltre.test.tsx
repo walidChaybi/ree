@@ -213,7 +213,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   act(() => {
     fireEvent.change(statutRequete, {
       target: {
-        value: "PRISE_EN_CHARGE"
+        value: "DOUBLON"
       }
     });
   });
@@ -223,7 +223,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   await waitFor(() => {
     expect(sousTypeRequete.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-      '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","numeroDossierNational":"","typeRequete":"MISE_A_JOUR","sousTypeRequete":"RMPR","statutRequete":"PRISE_EN_CHARGE"}}'
+      '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","numeroDossierNational":"","typeRequete":"MISE_A_JOUR","sousTypeRequete":"RMPR","statutRequete":"DOUBLON"}}'
     );
   });
 });

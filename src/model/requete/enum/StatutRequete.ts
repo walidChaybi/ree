@@ -1,9 +1,9 @@
 /* istanbul ignore file */
-import { Option, Options } from "@util/Type";
 import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { Option, Options } from "@util/Type";
 import { TypeRequete } from "./TypeRequete";
 
 export class StatutRequete extends EnumWithComplete {
@@ -105,14 +105,21 @@ export class StatutRequete extends EnumWithComplete {
 
   private static readonly StatutsPourTypeRequeteDelivrance = [
     StatutRequete.BROUILLON,
+    StatutRequete.DOUBLON,
     StatutRequete.A_TRAITER,
     StatutRequete.PRISE_EN_CHARGE,
     StatutRequete.TRANSFEREE,
     StatutRequete.A_VALIDER,
+    StatutRequete.IGNOREE,
     StatutRequete.A_SIGNER,
     StatutRequete.TRAITE_A_IMPRIMER,
+    StatutRequete.TRAITE_IMPRIME,
     StatutRequete.TRAITE_A_DELIVRER_DEMAT,
+    StatutRequete.TRAITE_DELIVRE_DEMAT,
     StatutRequete.TRAITE_REPONDU,
+    StatutRequete.REJET_IMPRESSION,
+    StatutRequete.TRAITE_IMPRIME_LOCAL,
+    StatutRequete.REJET,
     StatutRequete.TRANSMISE_A_VALIDEUR,
     StatutRequete.A_REVOIR
   ];
