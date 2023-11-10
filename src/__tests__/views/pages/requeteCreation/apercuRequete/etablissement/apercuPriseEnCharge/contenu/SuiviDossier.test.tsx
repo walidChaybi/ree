@@ -1,11 +1,17 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { requeteCreationEtablissement } from "@mock/data/requeteCreationEtablissement";
+import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { IEchange } from "@model/requete/IEchange";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { SuiviDossier } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/contenu/SuiviDossier";
-import { PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET, URL_MES_REQUETES_CREATION, URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID } from "@router/ReceUrls";
+import {
+  PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
+  URL_MES_REQUETES_CREATION,
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
+} from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
@@ -50,7 +56,6 @@ const requeteAvecTitulaires: IRequeteCreation = {
     {
       ...titulaire,
       situationFamiliale: "CELIBATAIRE",
-      nombreEnfantMineur: 0,
       evenementUnions: []
     }
   ]
@@ -92,7 +97,18 @@ test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le postulant n'est p
 
 test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le postulant a des enfants mineurs.", async () => {
   if (requeteAvecTitulaires.titulaires) {
-    requeteAvecTitulaires.titulaires[0].nombreEnfantMineur = 1;
+    requeteAvecTitulaires.titulaires.push({
+      id: "17e17c5e-e689-40a2-99e4-6f8927231794",
+      position: 1,
+      nomNaissance: "nomNaissance",
+      sexe: "MASCULIN",
+      nationalite: Nationalite.ETRANGERE,
+      valideEffetCollectif: "OUI",
+      retenueSdanf: {
+        paysNaissance: "CUBA"
+      },
+      qualite: QualiteFamille.ENFANT_MINEUR
+    });
   }
 
   render(<HookConsumerSuiviDossier requete={requeteAvecTitulaires} />);
@@ -107,7 +123,7 @@ test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le postulant a des e
   });
 
   if (requeteAvecTitulaires.titulaires) {
-    requeteAvecTitulaires.titulaires[0].nombreEnfantMineur = 0;
+    requeteAvecTitulaires.titulaires.pop();
   }
 });
 

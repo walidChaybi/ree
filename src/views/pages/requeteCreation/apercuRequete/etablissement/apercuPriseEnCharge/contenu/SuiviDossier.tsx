@@ -1,9 +1,11 @@
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
+import { SituationFamiliale } from "@model/requete/enum/SituationFamiliale";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import TableauSuiviDossier from "@pages/requeteCreation/commun/composants/TableauSuiviDossier/TableauSuiviDossier";
-import { ZERO, getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { getLibelle, ZERO } from "@util/Utils";
 import React, { useState } from "react";
 import { useParams } from "react-router";
 import { IUuidRequeteParams } from "../../../../../../../model/params/IUuidRequeteParams";
@@ -30,9 +32,15 @@ export const SuiviDossier: React.FC<ISuiviDossierProps> = props => {
 
   const afficherTableauSuiviDossier =
     postulant &&
-    postulant.situationFamiliale === "CELIBATAIRE" &&
-    postulant.nombreEnfantMineur === ZERO &&
+    postulant.situationFamiliale === SituationFamiliale.CELIBATAIRE.nom &&
+    !props.requete.titulaires?.some(
+      titulaire =>
+        titulaire.qualite === QualiteFamille.ENFANT_MINEUR &&
+        titulaire.valideEffetCollectif === "OUI" &&
+        titulaire.retenueSdanf?.paysNaissance?.toUpperCase() !== "FRANCE"
+    ) &&
     postulant.evenementUnions?.length === ZERO;
+
   return (
     <>
       {gestionnaireFeatureFlag.estActif(
