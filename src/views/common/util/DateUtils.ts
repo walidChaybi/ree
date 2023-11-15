@@ -215,10 +215,12 @@ export function getDateComposeFromDate(date?: Date): IDateCompose {
     dateCompose = {
       jour: rempliAGaucheAvecZero(date.getDate()),
       mois: rempliAGaucheAvecZero(date.getMonth() + 1),
-      annee: String(date.getFullYear())
+      annee: String(date.getFullYear()) || ""
     };
   } else {
     dateCompose = {
+      jour: "",
+      mois: "",
       annee: ""
     };
   }

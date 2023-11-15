@@ -19,7 +19,6 @@ import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { OuiNon } from "@model/etatcivil/enum/OuiNon";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
-import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { getLibelle } from "@util/Utils";
 import DateComposeForm, {
   ChampDateModifie
@@ -30,6 +29,7 @@ import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { MessageAvertissement } from "@widget/formulaire/erreur/MessageAvertissement";
 import {
+  compteNombreDePrenoms,
   FormikComponentProps,
   NB_CARACT_MAX_SAISIE,
   withNamespace
@@ -52,6 +52,7 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
   const nbPrenoms = compteNombreDePrenoms(
     props.valeursForm?.titulaire.prenoms.prenoms
   );
+
   const nbPrenomAnalyseMarginale = compteNombreDePrenoms(
     props.valeursForm?.titulaire.analyseMarginale.prenoms
   );
@@ -73,6 +74,7 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
       setAfficherMessageNaissance(false);
     }
   }
+
   return (
     <Item titre={"Postulant"}>
       <InputField
@@ -92,6 +94,7 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
         libelleAucunPrenom={getLibelle("Pas de prénom")}
         pasDePrenomConnu={nbPrenoms === 0}
         nom={withNamespace(props.nom, PRENOMS)}
+        nbPrenomsAffiche={nbPrenoms}
         nbPrenoms={nbPrenoms}
       />
       <div className="Titre">{getLibelle("Analyse marginale")}</div>
@@ -103,6 +106,7 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
       <PrenomsForm
         nom={withNamespace(analyseMarginale, PRENOMS)}
         nbPrenoms={nbPrenomAnalyseMarginale}
+        nbPrenomsAffiche={nbPrenomAnalyseMarginale}
       />
       <InputField
         name={withNamespace(props.nom, IDENTITE)}
@@ -170,11 +174,3 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
 };
 
 export default connect<IPostulantFormProps>(PostulantForm);
-
-function compteNombreDePrenoms(prenoms?: Prenoms): number {
-  return Object.values(prenoms || {}).reduce(
-    (resultat: number, prenom: string) =>
-      prenom === "" ? resultat : resultat + 1,
-    0
-  );
-}

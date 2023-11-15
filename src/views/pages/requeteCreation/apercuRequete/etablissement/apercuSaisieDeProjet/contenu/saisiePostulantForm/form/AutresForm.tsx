@@ -81,6 +81,7 @@ const AutresForm: React.FC<AutresFormProps> = props => {
       />
     )
   };
+
   return (
     <Item titre={"Autres"}>
       <LieuForm

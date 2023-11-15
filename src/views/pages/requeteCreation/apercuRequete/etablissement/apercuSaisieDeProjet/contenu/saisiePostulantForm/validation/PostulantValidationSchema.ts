@@ -30,12 +30,18 @@ import {
   VILLE_NAISSANCE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { PrenomsConnusValidationSchema } from "@composant/formulaire/nomsPrenoms/PrenomsConnusForm";
-import { creerValidationSchemaPrenom } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import {
+  creerValidationSchemaPrenom,
+  creerValidationSchemaPrenomParent
+} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { NomSecableStrictFormValidation } from "@composant/formulaire/validation/NomSecableFormValidation";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
-import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
+import {
+  DateValidationSchema,
+  DateValidationSchemaSansTestFormatRequired
+} from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import * as Yup from "yup";
 import { CaracteresAutorises } from "../../../../../../../../../ressources/Regex";
@@ -65,7 +71,7 @@ function validationSchemaPostulant() {
       [PRENOMS]: creerValidationSchemaPrenom()
     }),
     [SEXE]: Yup.string().required("La saisie du sexe est obligatoire"),
-    [DATE_NAISSANCE]: DateValidationSchemaSansTestFormat,
+    [DATE_NAISSANCE]: DateValidationSchemaSansTestFormatRequired,
     [LIEU_DE_NAISSANCE]: Yup.object().shape({
       [VILLE_NAISSANCE]: Yup.string()
         .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
@@ -90,9 +96,13 @@ function validationSchemaParent() {
     [NOM]: Yup.string()
       .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
       .required("La saisie du nom est obligatoire"),
-    [PRENOM]: PrenomsConnusValidationSchema,
+    [PRENOM]: Yup.object().shape({
+      [PRENOMS]: creerValidationSchemaPrenomParent()
+    }),
     [SEXE]: Yup.string().required("La saisie du sexe est obligatoire"),
-    [DATE_NAISSANCE]: DateValidationSchemaSansTestFormat,
+    [DATE_NAISSANCE]: Yup.object().shape({
+      [DATE]: DateValidationSchemaSansTestFormatRequired
+    }),
     [LIEU_DE_NAISSANCE]: Yup.object().shape({
       [LIEU_DE_NAISSANCE]: Yup.string(),
       [VILLE_NAISSANCE]: Yup.string().matches(
@@ -176,6 +186,6 @@ function validationSchemaAutres() {
 function validationSchemaAcquisition() {
   return Yup.object({
     [NATURE]: Yup.string(),
-    [DATE]: DateValidationSchemaSansTestFormat
+    [DATE]: DateValidationSchema
   });
 }

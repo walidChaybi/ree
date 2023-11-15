@@ -1,4 +1,5 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { TRequete } from "@model/requete/IRequete";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
@@ -86,3 +87,11 @@ export const onBlurChampNumero = (
   traiteEspace(e, formik.handleChange);
   formik.handleBlur(e);
 };
+
+export function compteNombreDePrenoms(prenoms?: Prenoms): number {
+  return Object.values(prenoms || {}).reduce(
+    (resultat: number, prenom: string) =>
+      prenom === "" ? resultat : resultat + 1,
+    0
+  );
+}

@@ -1,5 +1,5 @@
-import { IMentionComposition } from "../IMentionComposition";
 import { ITitulaireComposition } from "../commun/ITitulaireComposition";
+import { IMentionComposition } from "../IMentionComposition";
 
 export interface IProjetActeComposition {
   nature_acte: string;

@@ -6,7 +6,7 @@ export interface IProjetFiliation {
   ordre: number;
   nom: string;
   sexe: string;
-  naissance: IEvenement;
+  naissance: IEvenement | null;
   age: number;
   profession: string;
   domicile: IAdresse;

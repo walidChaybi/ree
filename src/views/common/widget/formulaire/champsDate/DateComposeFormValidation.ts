@@ -126,6 +126,14 @@ export const DateValidationSchema = Yup.object()
     return this.createError(paramsError);
   });
 
+export const DateValidationSchemaSansTestFormatRequired = Yup.object().shape({
+  [JOUR]: Yup.number(),
+  [MOIS]: Yup.number(),
+  [ANNEE]: Yup.number().required(
+    "La saisie de l'année de naissance est obligatoire"
+  )
+});
+
 export const DateValidationSchemaSansTestFormat = Yup.object().shape({
   [JOUR]: Yup.number(),
   [MOIS]: Yup.number(),

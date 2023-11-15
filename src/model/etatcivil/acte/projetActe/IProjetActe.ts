@@ -30,8 +30,7 @@ export interface IProjetActe {
   type: string;
   corpsExtraitRectifications: ICorpsExtraitRectification[];
   mentions: IMention[];
-  declarant?: IDeclarant;
-  reconnuPar?: string;
+  declarant?: IDeclarant | null;
   numeroDossierNational?: string;
   statut: string;
   dateStatut: Date;

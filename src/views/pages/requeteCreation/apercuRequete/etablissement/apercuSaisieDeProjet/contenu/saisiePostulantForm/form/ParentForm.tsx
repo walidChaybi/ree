@@ -24,6 +24,7 @@ import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { MessageAvertissement } from "@widget/formulaire/erreur/MessageAvertissement";
 import {
+  compteNombreDePrenoms,
   FormikComponentProps,
   NB_CARACT_MAX_SAISIE,
   withNamespace
@@ -99,8 +100,13 @@ const ParentForm: React.FC<ParentFormProps> = props => {
   const afficherArrondissement = LieuxUtils.estVilleMarseilleLyonParis(
     props.formik.getFieldProps(villeNamespace).value
   );
-  const afficherDepartement = !LieuxUtils.estVilleMarseilleLyon(
+  const afficherDepartement = !LieuxUtils.estVilleParis(
     props.formik.getFieldProps(villeNamespace).value
+  );
+
+  const nbPrenoms = compteNombreDePrenoms(
+    props.formik.getFieldProps(withNamespace(props.nom, `${PRENOM}.${PRENOMS}`))
+      .value
   );
 
   return (
@@ -111,7 +117,11 @@ const ParentForm: React.FC<ParentFormProps> = props => {
           label={getLibelle("Nom")}
           maxLength={NB_CARACT_MAX_SAISIE}
         />
-        <PrenomsForm nom={withNamespace(props.nom, `${PRENOM}.${PRENOMS}`)} />
+        <PrenomsForm
+          nom={withNamespace(props.nom, `${PRENOM}.${PRENOMS}`)}
+          nbPrenoms={nbPrenoms}
+          nbPrenomsAffiche={nbPrenoms}
+        />
         <div className="AvertissementConteneur">
           <RadioField
             className="SexeRadio"

@@ -70,7 +70,7 @@ export interface ISaisiePostulantSousForm {
   [SEXE]: string;
   [DATE_NAISSANCE]: ISaisieDate;
   [LIEU_DE_NAISSANCE]: ISaisieLieuNaissance;
-  [ADOPTE_PAR]: unknown[];
+  [ADOPTE_PAR]: boolean;
 }
 
 export interface ISaisieFrancisationPostulantSousForm {
@@ -112,7 +112,7 @@ export interface ISaisieDate {
 }
 
 export interface ISaisieDateNaissanceOuAgeDe {
-  [DATE]: ISaisieDate;
+  [DATE]: ISaisieDate | null;
   [AGE]: string;
 }
 
@@ -120,6 +120,7 @@ export interface ISaisieLieuNaissance {
   [VILLE_NAISSANCE]: string;
   [ETAT_CANTON_PROVINCE]: string;
   [PAYS_NAISSANCE]: string;
+  [ARRONDISSEMENT_NAISSANCE]?: string;
   [NE_DANS_MARIAGE]: string;
 }
 
@@ -128,7 +129,7 @@ export interface ISaisieLieuNaissanceParent {
   [VILLE_NAISSANCE]: string;
   [REGION_NAISSANCE]: string;
   [DEPARTEMENT_NAISSANCE]: string;
-  [ARRONDISSEMENT_NAISSANCE]: string;
+  [ARRONDISSEMENT_NAISSANCE]?: string;
   [PAYS_NAISSANCE]: string;
 }
 

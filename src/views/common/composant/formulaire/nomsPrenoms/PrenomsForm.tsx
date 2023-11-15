@@ -1,4 +1,4 @@
-import { creerPlageDeNombres, getLibelle, QUINZE, ZERO } from "@util/Utils";
+import { creerPlageDeNombres, getLibelle, QUINZE, UN, ZERO } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
   CARACTERES_AUTORISES_MESSAGE,
@@ -40,13 +40,13 @@ export function genererDefaultValuesPrenoms() {
 
 export function creerValidationSchemaPrenom() {
   const schemaValidation: { [key: string]: any } = {};
-  for (let i = 1; i <= MAX_PRENOMS; i++) {
+  for (let i = UN; i <= MAX_PRENOMS; i++) {
     schemaValidation[`prenom${i}`] = Yup.string()
       .nullable()
       .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE);
     if (i !== MAX_PRENOMS) {
       schemaValidation[`prenom${i}`] = schemaValidation[`prenom${i}`].when(
-        `prenom${i + 1}`,
+        `prenom${i + UN}`,
         (prenomSuivant: string, schema: any) => {
           return prenomSuivant
             ? schema.required(`La saisie du Prénom ${i} est obligatoire`)
@@ -59,15 +59,34 @@ export function creerValidationSchemaPrenom() {
   return Yup.object(schemaValidation);
 }
 
+export function creerValidationSchemaPrenomParent() {
+  const schemaValidation: { [key: string]: any } = {};
+  for (let i = UN; i <= MAX_PRENOMS; i++) {
+    const prenomClef = `prenom${i}`;
+    schemaValidation[`prenom${i}`] = Yup.string()
+      .nullable()
+      .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE);
+    if (i !== MAX_PRENOMS) {
+      schemaValidation[prenomClef] = schemaValidation[prenomClef].when(
+        `prenom${i + UN}`,
+        (prenomSuivant: string, schema: any) => {
+          return schema;
+        }
+      );
+    }
+  }
+
+  return Yup.object(schemaValidation);
+}
+
 export type PrenomFormProps = IPrenomsFormProps & SubFormProps;
 
 const PrenomsForm: React.FC<PrenomFormProps> = props => {
   const [nbPrenoms, setNbPrenoms] = useState(1);
-  const [nbPrenomInitialise, setNbPrenomInitialise] = useState(false);
   const [nbPrenomEnregistre, setNbPrenomEnregistre] = useState(0);
 
   useEffect(() => {
-    if (!nbPrenomInitialise && props.nbPrenoms != null) {
+    if (props.nbPrenoms != null) {
       if (
         props.nbPrenomsAffiche != null &&
         props.nbPrenomsAffiche > props.nbPrenoms
@@ -77,7 +96,6 @@ const PrenomsForm: React.FC<PrenomFormProps> = props => {
         setNbPrenoms(props.nbPrenoms);
       }
       setNbPrenomEnregistre(props.nbPrenoms);
-      setNbPrenomInitialise(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.nbPrenoms]);

@@ -439,12 +439,21 @@ export function checkDirty(isDirty: boolean, setIsDirty: any) {
 }
 
 export function getNombreOuUndefined(nombreStr?: string): number | undefined {
-  const nombre = parseInt(nombreStr || "", 10);
+  const nombre = parseInt(nombreStr || "", DIX);
   return isNaN(nombre) ? undefined : nombre;
+}
+
+export function getNombreOuNull(nombreStr?: string): number | null {
+  const nombre = parseInt(nombreStr || "", DIX);
+  return isNaN(nombre) ? null : nombre;
 }
 
 export function getValeurOuUndefined(valeur?: any): any | undefined {
   return valeur ? valeur : undefined;
+}
+
+export function getValeurOuNull<T>(valeur?: T): T | null {
+  return valeur ? valeur : null;
 }
 
 export function getTableauAPartirElementsNonVides(...args: any[]) {

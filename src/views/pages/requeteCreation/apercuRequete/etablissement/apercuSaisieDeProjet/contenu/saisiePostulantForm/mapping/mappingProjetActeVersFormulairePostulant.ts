@@ -54,6 +54,7 @@ import { IProjetFiliation } from "@model/etatcivil/acte/projetActe/IFiliationPro
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ITitulaireProjetActe } from "@model/etatcivil/acte/projetActe/ITitulaireProjetActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import {
   ISaisieAcquisitionSousForm,
   ISaisieAnalyseMarginale,
@@ -71,8 +72,9 @@ import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { TypeNature } from "@model/requete/enum/TypeNature";
+import { TypeReconnaissance } from "@model/requete/enum/TypeReconnaissance";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { getDateComposeFromDate } from "@util/DateUtils";
+import { getDateComposeFromTimestamp } from "@util/DateUtils";
 import {
   DEUX,
   formatPremieresLettresMajusculesNomCompose,
@@ -92,7 +94,7 @@ export const mappingProjetActeVersFormulairePostulant = (
   return {
     [PROJET]: {
       [TYPE]: QualiteFamille.POSTULANT.libelle,
-      [NATURE_ACTE]: projetActe?.nature || ""
+      [NATURE_ACTE]: projetActe?.nature || NatureActe.NAISSANCE.libelle
     },
     [TITULAIRE]: mapSaisiePostulant(
       titulaireProjetActe,
@@ -111,7 +113,7 @@ export const mappingProjetActeVersFormulairePostulant = (
     [AUTRES]: mapSaisieAutres(
       titulaireProjetActe?.domicile,
       projetActe?.declarant,
-      projetActe?.reconnuPar
+      projetActe?.titulaires[0].reconnuPar
     ),
     [ACQUISITION]: mapSaisieAcquisition(
       titulaireProjetActe?.decretNaturalisation
@@ -140,7 +142,10 @@ function mapSaisiePostulant(
       evenement,
       titulaire?.naissance?.neDansLeMariage
     ),
-    [ADOPTE_PAR]: []
+    [ADOPTE_PAR]:
+      titulaire?.filiations.find(
+        filiation => filiation.naissance?.neDansLeMariage
+      )?.naissance?.neDansLeMariage || false
   };
 }
 
@@ -153,10 +158,12 @@ function mapSaisieParent(
         [PRENOM]: mapSaisiePrenoms(parent.prenoms || []),
         [SEXE]: parent.sexe,
         [DATE_NAISSANCE]: mapSaisieDateNaissanceEtAgeDe(
-          parent.naissance,
-          parent.age
+          parent.naissance || ({} as IEvenement),
+          parent.age || undefined
         ),
-        [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissanceParent(parent.naissance)
+        [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissanceParent(
+          parent.naissance || ({} as IEvenement)
+        )
       }
     : {
         [NOM]: "",
@@ -169,7 +176,7 @@ function mapSaisieParent(
 
 function mapSaisieAutres(
   domicile?: IAdresse,
-  declarant?: IDeclarant,
+  declarant?: IDeclarant | null,
   reconnuPar?: string
 ): ISaisieAutresSousForm {
   return {
@@ -180,7 +187,9 @@ function mapSaisieAutres(
     [ARRONDISSEMENT]: domicile?.arrondissement || "",
     [DEPARTEMENT]: domicile?.region || "",
     [PAYS]: formatPremieresLettresMajusculesNomCompose(domicile?.pays),
-    [RECONNAISSANCE]: reconnuPar || "",
+    [RECONNAISSANCE]: TypeReconnaissance.getKey(
+      TypeReconnaissance.getEnumFor(reconnuPar || "")
+    ),
     [DECLARANT]: TypeDeclarant.getKey(
       TypeDeclarant.getEnumFor(declarant?.identiteDeclarant || "")
     ),
@@ -189,9 +198,9 @@ function mapSaisieAutres(
 }
 
 function mapSaisieAcquisition(
-  decretNaturalisation?: IDecretNaturalisation
+  decretNaturalisation?: IDecretNaturalisation | null
 ): ISaisieAcquisitionSousForm {
-  const dateCompose = getDateComposeFromDate(
+  const dateCompose = getDateComposeFromTimestamp(
     decretNaturalisation?.dateSignature
   );
   return {
@@ -254,9 +263,11 @@ function mapSaisieDateNaissanceEtAgeDe(
 ): ISaisieDateNaissanceOuAgeDe {
   const mapSaisieNaissance = mapSaisieDateNaissance(evenement);
   return {
-    [DATE]: {
-      ...mapSaisieNaissance
-    },
+    [DATE]: mapSaisieNaissance
+      ? {
+          ...mapSaisieNaissance
+        }
+      : null,
     [AGE]: age ? `${age}` : ""
   };
 }

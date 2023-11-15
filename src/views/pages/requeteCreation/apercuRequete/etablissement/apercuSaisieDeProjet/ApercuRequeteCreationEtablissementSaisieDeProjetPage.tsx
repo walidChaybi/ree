@@ -107,7 +107,7 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
     dossierProjetActe?.idSuiviDossier,
     dossierProjetActe?.avancement,
     dossierProjetActe?.idActe,
-    titulaireProjetActe?.numeroDossierNational
+    requete?.provenanceNatali?.numeroDossierNational
   );
 
   const {

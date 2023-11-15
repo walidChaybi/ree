@@ -108,7 +108,8 @@ function mapTitulairesProjetActe(titulaires: any[]): ITitulaireProjetActe[] {
     decretNaturalisation: mapDecretNaturalisation(
       getValeurOuUndefined(titulaire.decretNaturalisation)
     ),
-    pasDePrenom: getValeurOuUndefined(titulaire.pasDePrenom)
+    pasDePrenom: getValeurOuUndefined(titulaire.pasDePrenom),
+    reconnuPar: titulaire.reconnuPar
   }));
 }
 

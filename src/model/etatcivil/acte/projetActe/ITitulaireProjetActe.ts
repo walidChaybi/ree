@@ -9,7 +9,7 @@ export interface ITitulaireProjetActe {
   prenoms?: string[];
   sexe: string;
   naissance?: IEvenement;
-  age?: number;
+  age?: number | null;
   profession?: string;
   domicile?: IAdresse;
   filiations: IProjetFiliation[];
@@ -24,6 +24,7 @@ export interface ITitulaireProjetActe {
   origineDeclarationConjointeTitulaireActe?: boolean;
   origineNomPartiesTitulaireActe?: boolean;
   identiteAvantDecret?: string;
-  decretNaturalisation: IDecretNaturalisation;
+  decretNaturalisation: IDecretNaturalisation | null;
   pasDePrenom: boolean;
+  reconnuPar?: string;
 }

@@ -6,8 +6,10 @@ export function mappingProjetActeVersProjetActeComposition(
   acteEnregistre: IProjetActe
 ): IProjetActeComposition {
   const projetActeComposition = {} as IProjetActeComposition;
-  const { nature, titulaires, mentions, corpsTexte } = acteEnregistre;
+  const { nature, titulaires, mentions, corpsTexte, analyseMarginales } =
+    acteEnregistre;
   const titulaire = titulaires[0];
+  const analyseMarginal = analyseMarginales?.[0].titulaires[0];
   let mentionsComposition = [] as IMentionComposition[];
   mentions?.forEach(mention => {
     mentionsComposition = [
@@ -22,8 +24,8 @@ export function mappingProjetActeVersProjetActeComposition(
   projetActeComposition.titulaires_AM = [
     {
       ordre: titulaire.ordre,
-      nom: titulaire.nom,
-      prenoms: titulaire.prenoms?.join(", ")
+      nom: analyseMarginal?.nom,
+      prenoms: analyseMarginal?.prenoms?.join(", ")
     }
   ];
   projetActeComposition.mentions = mentionsComposition;

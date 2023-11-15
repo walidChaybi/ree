@@ -128,7 +128,7 @@ function mapSaisiePostulant(
     [SEXE]: titulaire.sexe,
     [DATE_NAISSANCE]: mapSaisieDateNaissance(retenueSdanf),
     [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissance(retenueSdanf),
-    [ADOPTE_PAR]: []
+    [ADOPTE_PAR]: false
   };
 }
 
@@ -190,7 +190,7 @@ function mapSaisieAutres(
       EtrangerFrance.getEnumFromPays(domiciliation?.pays)
     ),
     [VILLE]: formatPremieresLettresMajusculesNomCompose(domiciliation?.ville),
-    [ARRONDISSEMENT]: "",
+    [ARRONDISSEMENT]: titulaire.arrondissementNaissance || "",
     [DEPARTEMENT]: "",
     [PAYS]: formatPremieresLettresMajusculesNomCompose(domiciliation?.pays),
     [RECONNAISSANCE]: "",
