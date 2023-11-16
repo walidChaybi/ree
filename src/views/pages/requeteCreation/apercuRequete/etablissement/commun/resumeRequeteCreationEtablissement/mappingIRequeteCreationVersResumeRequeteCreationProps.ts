@@ -15,11 +15,9 @@ import {
 } from "@util/DateUtils";
 import { triPrenoms } from "@util/Utils";
 import { ResumeRequeteCreationEtablissementProps } from "./ResumeRequeteCreationEtablissement";
-import {
-  ItemEnfantMajeurProps,
-  ItemEnfantMajeurProps as ItemFraterieProps
-} from "./items/ItemEnfantMajeur";
+import { ItemEnfantMajeurProps } from "./items/ItemEnfantMajeur";
 import { ItemEnfantMineurProps } from "./items/ItemEnfantMineur";
+import { ItemFraterieProps } from "./items/ItemFraterie";
 import { ItemParentProps } from "./items/ItemParent";
 import { ItemRequeteProps } from "./items/ItemRequete";
 import { ItemTitulaireProps } from "./items/ItemTitulaire";
@@ -355,6 +353,9 @@ const mappingITitulaireRequeteCreationVersItemEnfantMajeurProps = (
   enfantMajeur: ITitulaireRequeteCreation
 ): ItemEnfantMajeurProps => {
   return {
+    numeros: {
+      requeteLiee: enfantMajeur.numeroDossierNational
+    },
     identite: {
       noms: {
         naissance: enfantMajeur.nomNaissance

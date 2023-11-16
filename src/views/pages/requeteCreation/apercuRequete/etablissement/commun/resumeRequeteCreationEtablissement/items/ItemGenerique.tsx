@@ -1,24 +1,27 @@
-import { DateCoordonneesType } from "@model/requete/DateCoordonneesType";
-import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
-import { IdentiteType } from "@model/requete/IdentiteType";
-import { NationaliteType } from "@model/requete/NationaliteType";
-import { formatMajusculesMinusculesMotCompose } from "@util/Utils";
+import {
+  estRenseigne,
+  formatMajusculesMinusculesMotCompose
+} from "@util/Utils";
 import React from "react";
 import Labels from "../../../../../commun/Labels";
 import { formatLigneNationalites } from "../formatages";
 import { LigneDateNaissanceAdresse } from "../lignes/LigneDateNaissanceAdresse";
 import { LignesNomPrenoms } from "../lignes/LignesNomPrenom";
-import Item, { ItemProps } from "./Item";
+import { ItemProps } from "./Item";
+import { ItemEnfantMajeurProps } from "./ItemEnfantMajeur";
 import { ItemLigne } from "./ItemLigne";
-export interface ItemFraterieProps {
-  identite: IdentiteType;
-  naissance: DateCoordonneesType;
-  nationalites: NationaliteType[];
-  retenueSdanf?: IRetenueSdanf;
-}
-const ItemFraterie: React.FC<ItemFraterieProps & ItemProps> = props => {
+import { ItemParentProps } from "./ItemParent";
+
+export type ItemGenericProps = ItemParentProps | ItemEnfantMajeurProps;
+
+export const ItemGenerique: React.FC<ItemGenericProps & ItemProps> = props => {
   return (
-    <Item {...props}>
+    <>
+      <ItemLigne
+        label={Labels.resume.requete.liee}
+        texte={`N° ${props.numeros.requeteLiee}`}
+        visible={estRenseigne(props.numeros.requeteLiee)}
+      />
       <LignesNomPrenoms
         identite={props.identite}
         retenueSdanf={props.retenueSdanf}
@@ -38,8 +41,6 @@ const ItemFraterie: React.FC<ItemFraterieProps & ItemProps> = props => {
           ) ?? Labels.resume.nationalite.defaut
         }
       />
-    </Item>
+    </>
   );
 };
-
-export default ItemFraterie;

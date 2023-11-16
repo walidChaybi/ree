@@ -3,13 +3,12 @@ import React from "react";
 import Labels, { UNION, UNION_ACTUELLE } from "../../../../commun/Labels";
 import "../scss/ResumeRequeteCreation.scss";
 import ItemEnfantMajeur, {
-  ItemEnfantMajeurProps,
-  ItemEnfantMajeurProps as ItemFraterieProps
+  ItemEnfantMajeurProps
 } from "./items/ItemEnfantMajeur";
 import ItemEnfantMineur, {
   ItemEnfantMineurProps
 } from "./items/ItemEnfantMineur";
-import ItemFraterie from "./items/ItemFraterie";
+import ItemFraterie, { ItemFraterieProps } from "./items/ItemFraterie";
 import ItemRequete, { ItemRequeteProps } from "./items/ItemRequete";
 import ItemTitulaire, { ItemTitulaireProps } from "./items/ItemTitulaire";
 import ItemUnion, { ItemUnionProps } from "./items/ItemUnion";

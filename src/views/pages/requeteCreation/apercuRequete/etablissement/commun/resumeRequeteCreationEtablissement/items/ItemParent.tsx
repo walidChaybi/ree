@@ -4,17 +4,10 @@ import { DomiciliationType } from "@model/requete/DomiciliationType";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { IdentiteType } from "@model/requete/IdentiteType";
 import { NationaliteType } from "@model/requete/NationaliteType";
-import {
-  estRenseigne,
-  formatMajusculesMinusculesMotCompose,
-  getLibelle
-} from "@util/Utils";
+import { getLibelle } from "@util/Utils";
 import React from "react";
-import Labels from "../../../../../commun/Labels";
-import { formatLigneNationalites } from "../formatages";
-import { LigneDateNaissanceAdresse } from "../lignes/LigneDateNaissanceAdresse";
-import { LignesNomPrenoms } from "../lignes/LignesNomPrenom";
 import Item, { ItemProps } from "./Item";
+import { ItemGenerique } from "./ItemGenerique";
 import { ItemLigne } from "./ItemLigne";
 
 export interface ItemParentProps {
@@ -49,31 +42,7 @@ const ItemParent: React.FC<ItemParentProps & ItemProps> = ({
 
   return (
     <Item className={{ title: "bg-clair" }} {...props} titre={titreParent}>
-      <ItemLigne
-        label={Labels.resume.requete.liee}
-        texte={`N° ${props.numeros.requeteLiee}`}
-        visible={estRenseigne(props.numeros.requeteLiee)}
-      />
-
-      <LignesNomPrenoms
-        identite={props.identite}
-        retenueSdanf={props.retenueSdanf}
-      />
-
-      <ItemLigne texte={props.identite.genre?.libelle} />
-
-      <LigneDateNaissanceAdresse
-        naissance={props.naissance}
-        retenueSdanf={props.retenueSdanf}
-      />
-
-      <ItemLigne
-        texte={
-          formatMajusculesMinusculesMotCompose(
-            formatLigneNationalites(props.nationalites)
-          ) ?? Labels.resume.nationalite.defaut
-        }
-      />
+      <ItemGenerique {...props} />
 
       {parent2Enfant && (
         <>
