@@ -15,6 +15,7 @@ import {
   ISaisiePostulantSousForm,
   ISaisieProjetPostulantForm
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
+import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import { getNombreOuNull, getValeurOuNull, SPC, UN } from "@util/Utils";
 
@@ -84,9 +85,11 @@ export function mappingSaisieProjetPostulantFormVersProjetActe(
         identiteDeclarant: getValeurOuNull(
           saisieProjetPostulant.autres.declarant
         ),
-        complementDeclarant: getValeurOuNull(
-          saisieProjetPostulant.autres.autreDeclarant
-        )
+        complementDeclarant:
+          TypeDeclarant.getEnumFor(saisieProjetPostulant.autres.declarant) ===
+          TypeDeclarant.AUTRE
+            ? saisieProjetPostulant.autres.autreDeclarant
+            : null
       } as IDeclarant)
     : null;
   return projetActeAEnvoyer;
@@ -114,9 +117,9 @@ function getFiliationParParent(
           ? EtrangerFrance.FRANCE.libelle
           : parentForm.lieuNaissance.paysNaissance
         : null,
-      ville:
-        lieuNaissanceExiste &&
-        getValeurOuNull(parentForm.lieuNaissance.villeNaissance),
+      ville: lieuNaissanceExiste
+        ? parentForm.lieuNaissance.villeNaissance
+        : null,
       region: lieuNaissanceExiste
         ? lieuNaissanceEstFrance
           ? parentForm.lieuNaissance.departementNaissance
@@ -124,13 +127,15 @@ function getFiliationParParent(
         : null,
       arrondissement:
         lieuNaissanceEstFrance &&
-        getValeurOuNull(parentForm.lieuNaissance.arrondissementNaissance),
+        parentForm.lieuNaissance.villeNaissance === "Paris"
+          ? parentForm.lieuNaissance.arrondissementNaissance
+          : null,
       annee: getNombreOuNull(parentForm.dateNaissance.date?.annee),
       mois: getNombreOuNull(parentForm.dateNaissance.date?.mois),
       jour: getNombreOuNull(parentForm.dateNaissance.date?.jour)
     } as IEvenement,
     age: getValeurOuNull(parseInt(parentForm.dateNaissance.age)),
-    prenoms: prenoms.length && getValeurOuNull(prenoms)
+    prenoms: prenoms.length ? prenoms : null
   } as IProjetFiliation;
 }
 

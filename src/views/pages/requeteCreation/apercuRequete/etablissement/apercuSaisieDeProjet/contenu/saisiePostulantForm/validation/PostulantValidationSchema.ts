@@ -1,6 +1,7 @@
 import {
   ACQUISITION,
   ADRESSE,
+  AGE,
   ANALYSE_MARGINALE,
   ARRONDISSEMENT,
   ARRONDISSEMENT_NAISSANCE,
@@ -36,6 +37,7 @@ import {
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { NomSecableStrictFormValidation } from "@composant/formulaire/validation/NomSecableFormValidation";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
+import { ISaisieDate } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
@@ -46,15 +48,17 @@ import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessa
 import * as Yup from "yup";
 import { CaracteresAutorises } from "../../../../../../../../../ressources/Regex";
 
-export const PostulantValidationSchema = Yup.object({
-  [TITULAIRE]: validationSchemaPostulant(),
-  [PARENTS]: Yup.object({
-    parent1: validationSchemaParent(),
-    parent2: validationSchemaParent()
-  }),
-  [AUTRES]: validationSchemaAutres(),
-  [ACQUISITION]: validationSchemaAcquisition()
-});
+export const PostulantValidationSchema = Yup.lazy(() =>
+  Yup.object({
+    [TITULAIRE]: validationSchemaPostulant(),
+    [PARENTS]: Yup.object({
+      parent1: validationSchemaParent(),
+      parent2: validationSchemaParent()
+    }),
+    [AUTRES]: validationSchemaAutres(),
+    [ACQUISITION]: validationSchemaAcquisition()
+  })
+);
 
 function validationSchemaPostulant() {
   return Yup.object({
@@ -93,15 +97,45 @@ function validationSchemaPostulant() {
 
 function validationSchemaParent() {
   return Yup.object({
-    [NOM]: Yup.string()
-      .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
-      .required("La saisie du nom est obligatoire"),
-    [PRENOM]: Yup.object().shape({
-      [PRENOMS]: creerValidationSchemaPrenomParent()
-    }),
+    [NOM]: Yup.lazy(() =>
+      Yup.string()
+        .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
+        .required("La saisie d'un nom est obligatoire")
+    ),
+    [PRENOM]: Yup.lazy(() =>
+      Yup.object()
+        .shape({
+          [PRENOMS]: creerValidationSchemaPrenomParent()
+        })
+        .when([NOM], {
+          is: (nom: string) => !nom,
+          then: creerValidationSchemaPrenomParent().required(
+            "La saisie d'un nom ou d'un prénom est obligatoire"
+          ),
+          otherwise: Yup.object().nullable()
+        })
+    ),
     [SEXE]: Yup.string().required("La saisie du sexe est obligatoire"),
     [DATE_NAISSANCE]: Yup.object().shape({
-      [DATE]: DateValidationSchemaSansTestFormatRequired
+      [DATE]: Yup.lazy(() =>
+        DateValidationSchema.when([AGE], {
+          is: (age: string) => !age,
+          then: DateValidationSchema.required(
+            "La date de naissance ou l'age du parent est obligatoire"
+          ),
+          otherwise: DateValidationSchema.nullable()
+        })
+      ),
+      [AGE]: Yup.lazy(() =>
+        Yup.string().when([DATE], {
+          is: (date: ISaisieDate | null) =>
+            !date?.jour && !date?.mois && !date?.annee,
+          then: Yup.string().required(
+            "La date de naissance ou l'age du parent est obligatoire"
+          ),
+          otherwise: Yup.string().nullable()
+        })
+      )
     }),
     [LIEU_DE_NAISSANCE]: Yup.object().shape({
       [LIEU_DE_NAISSANCE]: Yup.string(),
