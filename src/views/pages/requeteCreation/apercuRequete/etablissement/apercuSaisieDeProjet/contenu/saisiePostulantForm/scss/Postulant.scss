@@ -33,6 +33,9 @@
         .DateComposeForm {
             grid-template-columns: 31% 18% 4% 18% 4% 25%;
         }
+        .BlockErreur {
+            margin-left: 30%;
+        }
     }
     .AvertissementConteneur {
         display: flex;
@@ -52,6 +55,7 @@
         .AvertissementDateCompose > .DateComposeForm > input:nth-of-type(-n+2) {
             border: 1px solid $warning-formulaire;
         }
+    
     }
     .BoutonAffichage {
         margin: 0.5rem 0 0 0;

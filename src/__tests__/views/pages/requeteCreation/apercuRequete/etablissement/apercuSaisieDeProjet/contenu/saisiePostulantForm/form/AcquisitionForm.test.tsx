@@ -3,7 +3,7 @@ import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { requeteCreationEtablissementSaisieProjet } from "@mock/data/requeteCreationEtablissement";
 import AcquisitionForm from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/form/AcquisitionForm";
 import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
-import { PostulantValidationSchema } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/validation/PostulantValidationSchema";
+import { getPostulantValidationSchema } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/validation/PostulantValidationSchema";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 
@@ -23,7 +23,7 @@ function afficheComposantAcquisitionSaisieDeProjet(
         titulaires![2],
         requeteCreationEtablissementSaisieProjet.nature
       )}
-      formValidationSchema={PostulantValidationSchema}
+      formValidationSchema={getPostulantValidationSchema}
       onSubmit={() => {}}
     >
       <AcquisitionForm

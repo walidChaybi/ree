@@ -1,3 +1,4 @@
+import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
 import {
   ACQUISITION,
   AUTRES,
@@ -10,34 +11,37 @@ import {
   TITULAIRE,
   TYPE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
 import { RECEContext } from "@core/body/RECEContext";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { estDateVide } from "@util/DateUtils";
-import { DEUX, getLibelle, UN } from "@util/Utils";
+import { DEUX, UN, getLibelle } from "@util/Utils";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import FormikEffect from "@widget/formulaire/utils/FormikEffect";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
   getLibelleParentFromSexe,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
+import FormikEffect from "@widget/formulaire/utils/FormikEffect";
 import React, { useContext } from "react";
+import { estJourMoisVide } from "./SaisiePostulantFormUtils";
 import AcquisitionForm from "./form/AcquisitionForm";
 import AutresForm from "./form/AutresForm";
 import FrancisationPostulantForm from "./form/FrancisationPostulantForm";
 import ParentForm from "./form/ParentForm";
 import PostulantForm from "./form/PostulantForm";
-import { estJourMoisVide } from "./SaisiePostulantFormUtils";
 import "./scss/Postulant.scss";
-import { PostulantValidationSchema } from "./validation/PostulantValidationSchema";
+import { getPostulantValidationSchema } from "./validation/PostulantValidationSchema";
 
 interface ISaisiePostulantFormProps {
   postulant: ITitulaireRequeteCreation;
-  valeursForm?: ISaisieProjetPostulantForm;
   estProjetExistant: boolean;
+  valeursForm?: ISaisieProjetPostulantForm;
+  avancementProjet?: AvancementProjetActe;
   onSubmitSaisieProjetForm: (valeurs: ISaisieProjetPostulantForm) => void;
 }
 
@@ -54,7 +58,6 @@ export const SaisiePostulantForm: React.FC<
     DEUX,
     props.valeursForm?.parents.parent2
   );
-
   const elementListe = [
     {
       libelle: "Postulant",
@@ -92,25 +95,49 @@ export const SaisiePostulantForm: React.FC<
     {
       libelle: getLibelle("Autres"),
       element: <AutresForm nom={AUTRES} />
-    },
-    {
+    }
+  ];
+
+  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACQUISITION_DECRET)) {
+    props.avancementProjet &&
+      !AvancementProjetActe.getAvancementsMasquantAcquisitionjDecret().includes(
+        props.avancementProjet
+      ) &&
+      elementListe.push({
+        libelle: getLibelle("Acquisition"),
+        element: (
+          <AcquisitionForm
+            nom={ACQUISITION}
+            afficherDateDecret={
+              AvancementProjetActe.estASigner(props.avancementProjet) &&
+              !estDateVide(props.postulant?.decret?.dateSignature)
+            }
+            estAvancementASigner={AvancementProjetActe.estASigner(
+              props.avancementProjet
+            )}
+          />
+        )
+      });
+  } else {
+    elementListe.push({
       libelle: getLibelle("Acquisition"),
       element: (
         <AcquisitionForm
           nom={ACQUISITION}
-          afficherDateDecret={
-            !estDateVide(props.postulant?.decret?.dateSignature)
-          }
+          afficherDateDecret={false}
+          estAvancementASigner={false}
         />
       )
-    }
-  ];
+    });
+  }
 
   return (
     <div className="Postulant">
       <Formulaire
         formDefaultValues={props.valeursForm}
-        formValidationSchema={PostulantValidationSchema}
+        formValidationSchema={getPostulantValidationSchema(
+          props.avancementProjet
+        )}
         onSubmit={props.onSubmitSaisieProjetForm}
         className="FormulairePostulant"
       >

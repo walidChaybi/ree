@@ -18,6 +18,7 @@ import { useState } from "react";
 interface IAcquisitionFormProps {
   nom: string;
   afficherDateDecret: boolean;
+  estAvancementASigner: boolean;
 }
 type AcquisitionFormProps = IAcquisitionFormProps & FormikComponentProps;
 
@@ -42,7 +43,9 @@ const AcquisitionForm: React.FC<AcquisitionFormProps> = props => {
           options={TypeNature.getAllEnumsAsOptions()}
           optionVide={OptionVide.SELECTIONNABLE}
         />
-        <MessageAvertissement afficherMessage={!nature}>
+        <MessageAvertissement
+          afficherMessage={!nature && props.estAvancementASigner}
+        >
           {getLibelle("La nature du décret n'est pas spécifiée")}
         </MessageAvertissement>
       </div>

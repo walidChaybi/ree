@@ -62,12 +62,12 @@ import {
   ISaisieProjetPostulantForm,
   ISaisieProjetSousForm
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
-import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
-import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
-import { TypeNature } from "@model/requete/enum/TypeNature";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
+import { TypeNature } from "@model/requete/enum/TypeNature";
 import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import {
   formatMajusculesMinusculesMotCompose,

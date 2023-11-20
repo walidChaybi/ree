@@ -15,21 +15,21 @@ import {
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { IUuidSuiviDossierParams } from "@model/params/IUuidSuiviDossierParams";
-import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { ISuiviDossier } from "@model/requete/ISuiviDossier";
 import {
   ITitulaireRequeteCreation,
   TitulaireRequeteCreation
 } from "@model/requete/ITitulaireRequeteCreation";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { ApercuProjet } from "@pages/requeteCreation/commun/composants/ApercuProjet";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
-import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
+import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
-import { checkDirty, DEUX, getLibelle, UN } from "@util/Utils";
+import { DEUX, UN, checkDirty, getLibelle } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useContext, useEffect, useState } from "react";
@@ -41,12 +41,12 @@ import {
 } from "../commun/ApercuRequeteCreationEtablissementUtils";
 import { BoutonsApercuCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
 import "../commun/scss/OngletsApercuCreationEtablissement.scss";
+import { SaisiePostulantForm } from "./contenu/saisiePostulantForm/SaisiePostulantForm";
 import { useProjetActeHook } from "./contenu/saisiePostulantForm/hook/ProjetActeHook";
 import { mappingSaisieProjetPostulantFormVersProjetActe } from "./contenu/saisiePostulantForm/mapping/mappingFormulaireSaisiePostulantVersProjetActe";
 import { mappingProjetActeVersFormulairePostulant } from "./contenu/saisiePostulantForm/mapping/mappingProjetActeVersFormulairePostulant";
 import { mappingProjetActeVersProjetActeComposition } from "./contenu/saisiePostulantForm/mapping/mappingProjetActeVersProjetActeComposition";
 import { mappingTitulairesVersFormulairePostulant } from "./contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
-import { SaisiePostulantForm } from "./contenu/saisiePostulantForm/SaisiePostulantForm";
 
 interface ApercuRequeteCreationEtablissementSaisieDeProjetPageProps {
   idRequeteAAfficher?: string;
@@ -206,7 +206,14 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
     postulant: ITitulaireRequeteCreation
   ): ISaisieProjetPostulantForm => {
     return estProjetExistant
-      ? mappingProjetActeVersFormulairePostulant(postulant, projetActe)
+      ? mappingProjetActeVersFormulairePostulant(
+          postulant,
+          dossierProjetActe
+            ? AvancementProjetActe.estASigner(dossierProjetActe.avancement)
+            : false,
+          projetActe,
+          requete?.nature
+        )
       : mappingTitulairesVersFormulairePostulant(
           postulant,
           parentMasculinEtOuPositionUn,
@@ -273,8 +280,9 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
           {titulaireProjetActe && (
             <SaisiePostulantForm
               postulant={titulaireProjetActe}
-              valeursForm={getValeursPostulantForm(titulaireProjetActe)}
               estProjetExistant={estProjetExistant}
+              valeursForm={getValeursPostulantForm(titulaireProjetActe)}
+              avancementProjet={dossierProjetActe?.avancement}
               onSubmitSaisieProjetForm={onSubmitSaisieProjetForm}
             />
           )}

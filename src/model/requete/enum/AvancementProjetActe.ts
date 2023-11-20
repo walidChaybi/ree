@@ -8,6 +8,16 @@ export class AvancementProjetActe extends EnumWithLibelle {
   public static readonly EN_COURS = new AvancementProjetActe("En cours");
   public static readonly VALIDE = new AvancementProjetActe("Validé");
   public static readonly INVALIDE = new AvancementProjetActe("Invalidé");
+  // Ajout pour faire fonctionner le code, mais sera ajouté proprement via l'US d'ajout des nouveaux avancements
+  public static readonly A_SIGNER = new AvancementProjetActe("A signer");
+
+  public static getAvancementsMasquantAcquisitionjDecret(): AvancementProjetActe[] {
+    return [
+      AvancementProjetActe.A_SAISIR,
+      AvancementProjetActe.EN_COURS,
+      AvancementProjetActe.VALIDE
+    ];
+  }
 
   public static getEnumFor(str?: string) {
     return EnumWithLibelle.getEnumFor(str, AvancementProjetActe);
@@ -21,5 +31,11 @@ export class AvancementProjetActe extends EnumWithLibelle {
     avancementProjetActe: AvancementProjetActe
   ): boolean {
     return avancementProjetActe === AvancementProjetActe.A_SAISIR;
+  }
+
+  public static estASigner(
+    avancementProjetActe: AvancementProjetActe
+  ): boolean {
+    return avancementProjetActe === AvancementProjetActe.A_SIGNER;
   }
 }

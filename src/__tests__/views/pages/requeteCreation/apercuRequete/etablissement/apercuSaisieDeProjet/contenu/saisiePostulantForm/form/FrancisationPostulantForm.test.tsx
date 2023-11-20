@@ -6,7 +6,7 @@ import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import FrancisationPostulantForm from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/form/FrancisationPostulantForm";
 import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
-import { PostulantValidationSchema } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/validation/PostulantValidationSchema";
+import { getPostulantValidationSchema } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/validation/PostulantValidationSchema";
 import { render, screen, waitFor } from "@testing-library/react";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 
@@ -37,7 +37,7 @@ function afficheComposantFrancisationPostulant(
         parentsPourMapping![1],
         parentsPourMapping![2]
       )}
-      formValidationSchema={PostulantValidationSchema}
+      formValidationSchema={getPostulantValidationSchema}
       onSubmit={() => {}}
       className="FormulairePostulant"
     >

@@ -2,8 +2,9 @@ import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { requeteCreationEtablissementSaisieProjet } from "@mock/data/requeteCreationEtablissement";
 import "@mock/element/IntersectionObserver";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { SaisiePostulantForm } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/SaisiePostulantForm";
+import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
   URL_MES_REQUETES_CREATION,
@@ -13,9 +14,11 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { DEUX, UN, ZERO } from "@util/Utils";
 import { createMemoryHistory } from "history";
 import { Route, Router } from "react-router-dom";
+import { localStorageFeatureFlagMock } from "../../../../../../../../../../setupTests";
 
 function afficheComposantSaisiePostulantForm(
-  titulaires: ITitulaireRequeteCreation[]
+  titulaires: ITitulaireRequeteCreation[],
+  avancement?: AvancementProjetActe
 ): void {
   const history = createMemoryHistory();
   history.push(
@@ -32,6 +35,7 @@ function afficheComposantSaisiePostulantForm(
           postulant={titulaires[ZERO]}
           estProjetExistant={false}
           onSubmitSaisieProjetForm={() => {}}
+          avancementProjet={avancement}
           valeursForm={mappingTitulairesVersFormulairePostulant(
             titulaires[ZERO],
             titulaires[UN],
@@ -178,6 +182,70 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
       expect(champNomPartie1.value).toBe("TEST1");
       expect(champNomPartie2.value).toBe("TEST2 TEST3");
       expect(screen.getByText("Nom avec plus de deux vocables")).toBeDefined();
+    });
+  });
+  test("DOIT afficher le formulaire d'acquisition QUAND l'avancement est a signer'.", async () => {
+    localStorageFeatureFlagMock.setItem("FF_ACQUISITION_DECRET", "true");
+    const requete = mappingRequeteCreation(
+      requeteCreationEtablissementSaisieProjet
+    );
+    afficheComposantSaisiePostulantForm(
+      requete.titulaires!,
+      AvancementProjetActe.A_SIGNER
+    );
+    await waitFor(() => {
+      expect(screen.queryByTitle("Acquisition")).toBeInTheDocument();
+    });
+  });
+  test("NE DOIT PAS afficher le formulaire d'acquisition QUAND l'avancement est a saisir'.", async () => {
+    localStorageFeatureFlagMock.setItem("FF_ACQUISITION_DECRET", "true");
+    const requete = mappingRequeteCreation(
+      requeteCreationEtablissementSaisieProjet
+    );
+    afficheComposantSaisiePostulantForm(
+      requete.titulaires!,
+      AvancementProjetActe.A_SAISIR
+    );
+    await waitFor(() => {
+      expect(screen.queryByTitle("Acquisition")).not.toBeInTheDocument();
+    });
+  });
+
+  test("NE DOIT PAS afficher le formulaire d'acquisition QUAND l'avancement est en cours'.", async () => {
+    localStorageFeatureFlagMock.setItem("FF_ACQUISITION_DECRET", "true");
+    const requete = mappingRequeteCreation(
+      requeteCreationEtablissementSaisieProjet
+    );
+    afficheComposantSaisiePostulantForm(
+      requete.titulaires!,
+      AvancementProjetActe.EN_COURS
+    );
+    await waitFor(() => {
+      expect(screen.queryByTitle("Acquisition")).not.toBeInTheDocument();
+    });
+  });
+  test("NE DOIT PAS afficher le formulaire d'acquisition QUAND l'avancement est valide'.", async () => {
+    localStorageFeatureFlagMock.setItem("FF_ACQUISITION_DECRET", "true");
+    const requete = mappingRequeteCreation(
+      requeteCreationEtablissementSaisieProjet
+    );
+    afficheComposantSaisiePostulantForm(
+      requete.titulaires!,
+      AvancementProjetActe.VALIDE
+    );
+    await waitFor(() => {
+      expect(screen.queryByTitle("Acquisition")).not.toBeInTheDocument();
+    });
+  });
+
+  test("DOIT afficher le formulaire d'acquisition QUAND le FF est inactif.", async () => {
+    localStorageFeatureFlagMock.setItem("FF_ACQUISITION_DECRET", "false");
+    const requete = mappingRequeteCreation(
+      requeteCreationEtablissementSaisieProjet
+    );
+    afficheComposantSaisiePostulantForm(requete.titulaires!);
+    await waitFor(() => {
+      expect(screen.queryByTitle("Acquisition")).toBeInTheDocument();
     });
   });
 });

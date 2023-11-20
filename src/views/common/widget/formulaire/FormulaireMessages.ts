@@ -70,6 +70,10 @@ export const MSG_CURRENT_YEAR_MAX = getLibelle(
 );
 export const ANNEE_OBLIGATOIRE = getLibelle("L'année est obligatoire");
 
+export const DATE_OBLIGATOIRE = getLibelle(
+  "La saisie de la date complète est obligatoire"
+);
+
 export const CHAMP_OBLIGATOIRE = getLibelle("Ce champ est obligatoire");
 
 export const LIEN_REQUERANT_OBLIGATOIRE = getLibelle(

@@ -69,28 +69,46 @@ import {
   ISaisieProjetPostulantForm
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { TypeNature } from "@model/requete/enum/TypeNature";
 import { TypeReconnaissance } from "@model/requete/enum/TypeReconnaissance";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { getDateComposeFromTimestamp } from "@util/DateUtils";
+import {
+  getDateComposeFromDate,
+  getDateFromDateCompose
+} from "@util/DateUtils";
 import {
   DEUX,
+  UN,
   formatPremieresLettresMajusculesNomCompose,
   numberToString,
-  rempliAGaucheAvecZero,
-  UN
+  rempliAGaucheAvecZero
 } from "@util/Utils";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { mapFrancisationPostulant } from "./mappingTitulaireVersFormulairePostulant";
 
 export const mappingProjetActeVersFormulairePostulant = (
   titulaireRequete: ITitulaireRequeteCreation,
-  projetActe?: IProjetActe
+  estAvancementASigner: boolean,
+  projetActe?: IProjetActe,
+  nature?: string
 ): ISaisieProjetPostulantForm => {
   const titulaireProjetActe = projetActe?.titulaires.find(
     titulaire => titulaire.ordre === UN
   );
+  const decret = estAvancementASigner
+    ? titulaireProjetActe?.decretNaturalisation ?? titulaireRequete.decret
+      ? ({
+          numeroDecret: titulaireRequete.decret?.numeroDecret,
+          dateSignature: getDateFromDateCompose(
+            titulaireRequete.decret?.dateSignature
+          ),
+          natureDecret: nature
+        } as IDecretNaturalisation)
+      : undefined
+    : undefined;
   return {
     [PROJET]: {
       [TYPE]: QualiteFamille.POSTULANT.libelle,
@@ -115,8 +133,11 @@ export const mappingProjetActeVersFormulairePostulant = (
       projetActe?.declarant,
       projetActe?.titulaires[0].reconnuPar
     ),
+    // TODO : Retirer le FF et ne laisser que le decret
     [ACQUISITION]: mapSaisieAcquisition(
-      titulaireProjetActe?.decretNaturalisation
+      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACQUISITION_DECRET)
+        ? decret
+        : titulaireProjetActe?.decretNaturalisation
     )
   };
 };
@@ -200,9 +221,10 @@ function mapSaisieAutres(
 function mapSaisieAcquisition(
   decretNaturalisation?: IDecretNaturalisation | null
 ): ISaisieAcquisitionSousForm {
-  const dateCompose = getDateComposeFromTimestamp(
+  const dateCompose = getDateComposeFromDate(
     decretNaturalisation?.dateSignature
   );
+
   return {
     [NATURE]:
       decretNaturalisation && decretNaturalisation.natureDecret

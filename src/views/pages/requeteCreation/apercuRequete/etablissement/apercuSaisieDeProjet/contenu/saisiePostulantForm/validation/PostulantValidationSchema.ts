@@ -38,27 +38,39 @@ import {
 import { NomSecableStrictFormValidation } from "@composant/formulaire/validation/NomSecableFormValidation";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { ISaisieDate } from "@model/form/creation/etablissement/ISaisiePostulantForm";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
+  CARACTERES_AUTORISES_MESSAGE,
+  NATURE_ACTE_OBLIGATOIRE
+} from "@widget/formulaire/FormulaireMessages";
+import {
+  DateValidationCompleteSchemaSansTestFormatRequired,
   DateValidationSchema,
+  DateValidationSchemaSansTestFormat,
   DateValidationSchemaSansTestFormatRequired
 } from "@widget/formulaire/champsDate/DateComposeFormValidation";
-import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import * as Yup from "yup";
 import { CaracteresAutorises } from "../../../../../../../../../ressources/Regex";
 
-export const PostulantValidationSchema = Yup.lazy(() =>
+export function getPostulantValidationSchema(
+  avancement?: AvancementProjetActe
+) {
+  return Yup.lazy(() =>
   Yup.object({
-    [TITULAIRE]: validationSchemaPostulant(),
-    [PARENTS]: Yup.object({
-      parent1: validationSchemaParent(),
-      parent2: validationSchemaParent()
-    }),
-    [AUTRES]: validationSchemaAutres(),
-    [ACQUISITION]: validationSchemaAcquisition()
-  })
+      [TITULAIRE]: validationSchemaPostulant(),
+      [PARENTS]: Yup.object({
+        parent1: validationSchemaParent(),
+        parent2: validationSchemaParent()
+      }),
+      [AUTRES]: validationSchemaAutres(),
+      [ACQUISITION]: validationSchemaAcquisition(avancement)
+    })
 );
+}
 
 function validationSchemaPostulant() {
   return Yup.object({
@@ -217,9 +229,18 @@ function validationSchemaAutres() {
   });
 }
 
-function validationSchemaAcquisition() {
+function validationSchemaAcquisition(avancement?: AvancementProjetActe) {
+  // TODO : Retirer le FF qui désactive la condition si le flag est faux
+  const estASigner =
+    avancement &&
+    AvancementProjetActe.estASigner(avancement) &&
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACQUISITION_DECRET);
   return Yup.object({
-    [NATURE]: Yup.string(),
-    [DATE]: DateValidationSchema
+    [NATURE]: estASigner
+      ? Yup.string().required(NATURE_ACTE_OBLIGATOIRE)
+      : Yup.string().notRequired(),
+    [DATE]: estASigner
+      ? DateValidationCompleteSchemaSansTestFormatRequired
+      : DateValidationSchemaSansTestFormat
   });
 }

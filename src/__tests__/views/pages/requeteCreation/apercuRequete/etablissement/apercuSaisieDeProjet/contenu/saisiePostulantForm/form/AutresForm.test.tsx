@@ -2,7 +2,7 @@ import { AUTRES } from "@composant/formulaire/ConstantesNomsForm";
 import { requeteCreationEtablissementSaisieProjet } from "@mock/data/requeteCreationEtablissement";
 import AutresForm from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/form/AutresForm";
 import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
-import { PostulantValidationSchema } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/validation/PostulantValidationSchema";
+import { getPostulantValidationSchema } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/validation/PostulantValidationSchema";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 
@@ -16,7 +16,7 @@ function afficheComposantAutresSaisieDeProjet() {
         titulaires![1],
         titulaires![2]
       )}
-      formValidationSchema={PostulantValidationSchema}
+      formValidationSchema={getPostulantValidationSchema}
       onSubmit={() => {}}
     >
       <AutresForm nom={AUTRES} />

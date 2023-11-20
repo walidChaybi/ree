@@ -1,5 +1,5 @@
 export interface IDecretNaturalisation {
   numeroDecret: string;
-  dateSignature: number;
+  dateSignature: Date;
   natureDecret?: string;
 }

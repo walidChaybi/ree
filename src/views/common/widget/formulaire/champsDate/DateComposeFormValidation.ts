@@ -6,16 +6,17 @@ import {
   NB_MINUTE
 } from "@composant/formulaire/ConstantesNomsForm";
 import {
-  estDateReceValide,
   IDateCompose,
   MEP_YEAR,
   MIN_LENGTH_ANNEE,
-  MIN_YEAR
+  MIN_YEAR,
+  estDateReceValide
 } from "@util/DateUtils";
 import { estHeureValide, getLibelle } from "@util/Utils";
 import * as Yup from "yup";
 import {
   ANNEE_OBLIGATOIRE,
+  DATE_OBLIGATOIRE,
   MIN_LENGTH_ANNEE_MESSAGE,
   MSG_CURRENT_YEAR_MAX,
   MSG_DATE_MEP_MIN,
@@ -126,6 +127,12 @@ export const DateValidationSchema = Yup.object()
     return this.createError(paramsError);
   });
 
+export const DateValidationSchemaSansTestFormat = Yup.object().shape({
+  [JOUR]: Yup.number(),
+  [MOIS]: Yup.number(),
+  [ANNEE]: Yup.number()
+});
+
 export const DateValidationSchemaSansTestFormatRequired = Yup.object().shape({
   [JOUR]: Yup.number(),
   [MOIS]: Yup.number(),
@@ -134,8 +141,18 @@ export const DateValidationSchemaSansTestFormatRequired = Yup.object().shape({
   )
 });
 
-export const DateValidationSchemaSansTestFormat = Yup.object().shape({
-  [JOUR]: Yup.number(),
-  [MOIS]: Yup.number(),
-  [ANNEE]: Yup.number()
-});
+export const DateValidationCompleteSchemaSansTestFormatRequired = Yup.object()
+  .shape({
+    [JOUR]: Yup.number(),
+    [MOIS]: Yup.number(),
+    [ANNEE]: Yup.number()
+  })
+  .test("dateCompleteObligatoire", function (date, error) {
+    const paramsError = {
+      path: `${error.path}.annee`,
+      message: getLibelle(DATE_OBLIGATOIRE)
+    };
+    return !(date.jour && date.mois && date.annee)
+      ? this.createError(paramsError)
+      : true;
+  });
