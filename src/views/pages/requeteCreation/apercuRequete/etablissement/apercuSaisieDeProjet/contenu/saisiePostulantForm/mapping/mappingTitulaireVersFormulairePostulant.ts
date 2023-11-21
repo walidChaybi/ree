@@ -91,9 +91,12 @@ export function mappingTitulairesVersFormulairePostulant(
   parentDeux?: ITitulaireRequeteCreation,
   nature?: string
 ): ISaisieProjetPostulantForm {
+
   const ordreHommeFemmeInverse =
-    parentUn?.sexe !== Sexe.MASCULIN.libelle &&
-    parentDeux?.sexe === Sexe.MASCULIN.libelle;
+    parentUn &&
+    !Sexe.estMasculin(Sexe.getEnumFor(parentUn.sexe)) &&
+    parentDeux &&
+    Sexe.estMasculin(Sexe.getEnumFor(parentDeux.sexe));
   return {
     [PROJET]: mapSaisieProjet(titulaire),
     [TITULAIRE]: mapSaisiePostulant(titulaire),
