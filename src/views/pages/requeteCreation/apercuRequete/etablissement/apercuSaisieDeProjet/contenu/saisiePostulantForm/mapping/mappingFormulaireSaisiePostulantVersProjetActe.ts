@@ -18,6 +18,7 @@ import {
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import { getNombreOuNull, getValeurOuNull, SPC, UN } from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export function mappingSaisieProjetPostulantFormVersProjetActe(
   saisieProjetPostulant: ISaisieProjetPostulantForm,
@@ -99,10 +100,6 @@ function getFiliationParParent(
   parentForm: ISaisieParentSousForm,
   ordre: number
 ): IProjetFiliation {
-  const lieuNaissanceExiste =
-    parentForm.lieuNaissance.lieuNaissance !== "INCONNU";
-  const lieuNaissanceEstFrance =
-    parentForm.lieuNaissance.lieuNaissance === "FRANCE";
   const prenoms = getPrenomsTableauStringVersPrenomsOrdonnes(
     parentForm.prenom.prenoms
   ).map(p => p.prenom);
@@ -111,32 +108,52 @@ function getFiliationParParent(
     ordre,
     nom: getValeurOuNull(parentForm.nom),
     sexe: parentForm.sexe,
-    naissance: {
-      pays: lieuNaissanceExiste
-        ? lieuNaissanceEstFrance
-          ? EtrangerFrance.FRANCE.libelle
-          : parentForm.lieuNaissance.paysNaissance
-        : null,
-      ville: lieuNaissanceExiste
-        ? parentForm.lieuNaissance.villeNaissance
-        : null,
-      region: lieuNaissanceExiste
-        ? lieuNaissanceEstFrance
-          ? parentForm.lieuNaissance.departementNaissance
-          : parentForm.lieuNaissance.regionNaissance
-        : null,
-      arrondissement:
-        lieuNaissanceEstFrance &&
-        parentForm.lieuNaissance.villeNaissance === "Paris"
-          ? parentForm.lieuNaissance.arrondissementNaissance
-          : null,
-      annee: getNombreOuNull(parentForm.dateNaissance.date?.annee),
-      mois: getNombreOuNull(parentForm.dateNaissance.date?.mois),
-      jour: getNombreOuNull(parentForm.dateNaissance.date?.jour)
-    } as IEvenement,
+    naissance: getFiliationNaissance(parentForm) as IEvenement,
     age: getValeurOuNull(parseInt(parentForm.dateNaissance.age)),
     prenoms: prenoms.length ? prenoms : null
   } as IProjetFiliation;
+}
+
+function getFiliationNaissance(parentForm: ISaisieParentSousForm) {
+  const lieuNaissanceExiste =
+    parentForm.lieuNaissance.lieuNaissance !== "INCONNU";
+  const lieuNaissanceEstFrance =
+    parentForm.lieuNaissance.lieuNaissance === "FRANCE";
+
+  return {
+    pays: lieuNaissanceExiste
+      ? lieuNaissanceEstFrance
+        ? EtrangerFrance.FRANCE.libelle
+        : parentForm.lieuNaissance.paysNaissance
+      : null,
+    ville: lieuNaissanceExiste ? parentForm.lieuNaissance.villeNaissance : null,
+    region: getRegionNaissanceFiliation(parentForm),
+    arrondissement:
+      lieuNaissanceEstFrance &&
+      LieuxUtils.estVilleMarseilleLyonParis(
+        parentForm.lieuNaissance.villeNaissance
+      )
+        ? parentForm.lieuNaissance.arrondissementNaissance
+        : null,
+    annee: getNombreOuNull(parentForm.dateNaissance.date?.annee),
+    mois: getNombreOuNull(parentForm.dateNaissance.date?.mois),
+    jour: getNombreOuNull(parentForm.dateNaissance.date?.jour)
+  };
+}
+function getRegionNaissanceFiliation(parentForm: ISaisieParentSousForm) {
+  const lieuNaissanceEstEtranger =
+    parentForm.lieuNaissance.lieuNaissance === "ETRANGER";
+  const lieuNaissanceEstFrance =
+    parentForm.lieuNaissance.lieuNaissance === "FRANCE";
+  if (lieuNaissanceEstEtranger) {
+    return parentForm.lieuNaissance.regionNaissance;
+  } else if (lieuNaissanceEstFrance) {
+    return parentForm.lieuNaissance.villeNaissance !== "Paris"
+      ? parentForm.lieuNaissance.departementNaissance
+      : null;
+  } else {
+    return null;
+  }
 }
 
 function getFiliation(acte: ISaisieProjetPostulantForm): IProjetFiliation[] {
@@ -178,16 +195,20 @@ function mapPostulantVersTitulaireProjetActe(
       ? ({
           ville: getValeurOuNull(acte.autres.ville),
           region:
-            adresse === "FRANCE" && getValeurOuNull(acte.autres.departement),
+            lieuDeNaissanceEstFrance &&
+            !LieuxUtils.estVilleParis(acte.autres.ville)
+              ? getValeurOuNull(acte.autres.departement)
+              : null,
           pays: getValeurOuNull(
             lieuDeNaissanceEstFrance
               ? EtrangerFrance.FRANCE.libelle
               : acte.autres.pays
           ),
           arrondissement:
-            adresse === "FRANCE" &&
-            acte.autres.ville === "Paris" &&
-            getValeurOuNull(acte.autres.arrondissement)
+            lieuDeNaissanceEstFrance &&
+            LieuxUtils.estVilleMarseilleLyonParis(acte.autres.ville)
+              ? getValeurOuNull(acte.autres.arrondissement)
+              : null
         } as IAdresse)
       : null,
     filiations: getFiliation(acte),

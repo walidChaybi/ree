@@ -44,15 +44,15 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
-  CARACTERES_AUTORISES_MESSAGE,
-  NATURE_ACTE_OBLIGATOIRE
-} from "@widget/formulaire/FormulaireMessages";
-import {
   DateValidationCompleteSchemaSansTestFormatRequired,
   DateValidationSchema,
   DateValidationSchemaSansTestFormat,
   DateValidationSchemaSansTestFormatRequired
 } from "@widget/formulaire/champsDate/DateComposeFormValidation";
+import {
+  CARACTERES_AUTORISES_MESSAGE,
+  NATURE_ACTE_OBLIGATOIRE
+} from "@widget/formulaire/FormulaireMessages";
 import * as Yup from "yup";
 import { CaracteresAutorises } from "../../../../../../../../../ressources/Regex";
 
@@ -60,7 +60,7 @@ export function getPostulantValidationSchema(
   avancement?: AvancementProjetActe
 ) {
   return Yup.lazy(() =>
-  Yup.object({
+    Yup.object({
       [TITULAIRE]: validationSchemaPostulant(),
       [PARENTS]: Yup.object({
         parent1: validationSchemaParent(),
@@ -69,7 +69,7 @@ export function getPostulantValidationSchema(
       [AUTRES]: validationSchemaAutres(),
       [ACQUISITION]: validationSchemaAcquisition(avancement)
     })
-);
+  );
 }
 
 function validationSchemaPostulant() {
@@ -169,17 +169,10 @@ function validationSchemaParent() {
             "La saisie du département est obligatoire"
           )
         }),
-      [ARRONDISSEMENT_NAISSANCE]: Yup.string()
-        .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
-        .when([LIEU_DE_NAISSANCE, VILLE_NAISSANCE], {
-          is: (lieuNaissance: string, ville: string) =>
-            EtrangerFrance.getEnumFor(lieuNaissance) ===
-              EtrangerFrance.FRANCE && LieuxUtils.estVilleMarseilleLyon(ville),
-          then: Yup.string().required(
-            "La saisie de l'arrondissement est obligatoire"
-          )
-        }),
-
+      [ARRONDISSEMENT_NAISSANCE]: Yup.string().matches(
+        CaracteresAutorises,
+        CARACTERES_AUTORISES_MESSAGE
+      ),
       [PAYS_NAISSANCE]: Yup.string().matches(
         CaracteresAutorises,
         CARACTERES_AUTORISES_MESSAGE
@@ -194,16 +187,10 @@ function validationSchemaAutres() {
       CaracteresAutorises,
       CARACTERES_AUTORISES_MESSAGE
     ),
-    [ARRONDISSEMENT]: Yup.string()
-      .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
-      .when([ADRESSE, VILLE], {
-        is: (adresse: string, ville: string) =>
-          EtrangerFrance.getEnumFor(adresse) === EtrangerFrance.FRANCE &&
-          LieuxUtils.estVilleParis(ville),
-        then: Yup.string().required(
-          "La saisie de l'arrondissement est obligatoire"
-        )
-      }),
+    [ARRONDISSEMENT]: Yup.string().matches(
+      CaracteresAutorises,
+      CARACTERES_AUTORISES_MESSAGE
+    ),
     [DEPARTEMENT]: Yup.string()
       .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
       .when([ADRESSE, VILLE], {

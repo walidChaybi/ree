@@ -137,7 +137,7 @@ function mapDomicile(domicile?: any): IAdresse {
     voie: getValeurOuUndefined(domicile?.voie),
     ville: getValeurOuUndefined(domicile?.ville),
     arrondissement: getValeurOuUndefined(domicile?.arrondissement),
-    region: getValeurOuUndefined(domicile?.region),
+    region: getValeurOuUndefined(domicile?.region) ?? null,
     pays: getValeurOuUndefined(domicile?.pays)
   };
 }

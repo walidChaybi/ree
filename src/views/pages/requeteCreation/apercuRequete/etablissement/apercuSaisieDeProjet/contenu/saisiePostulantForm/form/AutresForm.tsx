@@ -64,6 +64,7 @@ const AutresForm: React.FC<AutresFormProps> = props => {
         options={LieuxUtils.getOptionsArrondissement(
           props.formik.getFieldProps(villeNamespace).value
         )}
+        optionVide={OptionVide.SELECTIONNABLE}
       />
     ),
     departement: (
