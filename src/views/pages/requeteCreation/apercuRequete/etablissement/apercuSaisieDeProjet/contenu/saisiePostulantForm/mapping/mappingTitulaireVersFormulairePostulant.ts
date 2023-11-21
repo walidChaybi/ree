@@ -46,6 +46,7 @@ import {
   VILLE_NAISSANCE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import {
   ISaisieAcquisitionSousForm,
   ISaisieAnalyseMarginale,
@@ -90,13 +91,18 @@ export function mappingTitulairesVersFormulairePostulant(
   parentDeux?: ITitulaireRequeteCreation,
   nature?: string
 ): ISaisieProjetPostulantForm {
+  const ordreHommeFemmeInverse =
+    parentUn?.sexe !== Sexe.MASCULIN.libelle &&
+    parentDeux?.sexe === Sexe.MASCULIN.libelle;
   return {
     [PROJET]: mapSaisieProjet(titulaire),
     [TITULAIRE]: mapSaisiePostulant(titulaire),
     [FRANCISATION_POSTULANT]: mapFrancisationPostulant(titulaire),
     [PARENTS]: {
-      [PARENT1]: mapSaisieParent(parentUn),
-      [PARENT2]: mapSaisieParent(parentDeux)
+      [PARENT1]: mapSaisieParent(
+        ordreHommeFemmeInverse ? parentDeux : parentUn
+      ),
+      [PARENT2]: mapSaisieParent(ordreHommeFemmeInverse ? parentUn : parentDeux)
     },
     [AUTRES]: mapSaisieAutres(titulaire),
     [ACQUISITION]: mapSaisieAcquisition(titulaire, nature)
