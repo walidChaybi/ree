@@ -7,7 +7,11 @@ import {
   IAnalyseMarginale
 } from "@model/etatcivil/acte/IAnalyseMarginale";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { TitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import {
+  ITitulaireActe,
+  TitulaireActe
+} from "@model/etatcivil/acte/ITitulaireActe";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
@@ -30,50 +34,57 @@ async function ajoutInfosTitulaire(
 ) {
   let titulaires = [];
   let analyseMarginale: IAnalyseMarginale | undefined;
+  let estTitulairesActe = false;
 
-  if (acte?.id && acte?.analyseMarginales) {
+  if (acte && NatureActe.estReconnaissance(acte.nature)) {
+    elementsJasper.referenceActe = FicheActe.getReference(acte);
+    titulaires = triListeObjetsSurPropriete([...acte.titulaires], "ordre");
+    estTitulairesActe = true;
+  } else if (acte?.id && acte?.analyseMarginales) {
     analyseMarginale = AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(
       acte?.analyseMarginales
     );
-  }
+    estTitulairesActe = !!analyseMarginale?.titulaires;
+    if (analyseMarginale && estTitulairesActe) {
+      elementsJasper.referenceActe = FicheActe.getReference(acte);
 
-  if (analyseMarginale?.titulaires) {
-    elementsJasper.referenceActe = FicheActe.getReference(acte);
-
-    titulaires = triListeObjetsSurPropriete(
-      [...analyseMarginale.titulaires],
-      "ordre"
-    );
-
-    elementsJasper.nomTitulaire1 = TitulaireActe.getNom(titulaires[0]);
-    elementsJasper.prenomsTitulaire1 = getPrenomsTitulaireActe(
-      titulaires[0].prenoms
-    );
-
-    if (titulaires.length > 1) {
-      elementsJasper.nomTitulaire2 = TitulaireActe.getNom(titulaires[1]);
-      elementsJasper.prenomsTitulaire2 = getPrenomsTitulaireActe(
-        titulaires[1].prenoms
-      );
-    }
-  } else {
-    if (requete.titulaires) {
       titulaires = triListeObjetsSurPropriete(
-        [...requete.titulaires],
-        "position"
-      ) as ITitulaireRequete[];
-      elementsJasper.nomTitulaire1 = TitulaireRequete.getNom(titulaires[0]);
-      elementsJasper.prenomsTitulaire1 = getPrenomsTitulaireRequete(
-        titulaires[0].prenoms
-      );
-
-      if (titulaires.length > 1) {
-        elementsJasper.nomTitulaire2 = TitulaireRequete.getNom(titulaires[1]);
-        elementsJasper.prenomsTitulaire2 = getPrenomsTitulaireRequete(
-          titulaires[1].prenoms
-        );
-      }
+        [...analyseMarginale.titulaires],
+        "ordre"
+      ) as ITitulaireActe[];
     }
+  } else if (requete.titulaires) {
+    titulaires = triListeObjetsSurPropriete(
+      [...requete.titulaires],
+      "position"
+    ) as ITitulaireRequete[];
+  }
+  ajoutIdentiteTitulairesAuJasper(
+    elementsJasper,
+    estTitulairesActe,
+    titulaires
+  );
+}
+
+function ajoutIdentiteTitulairesAuJasper(
+  elementsJasper: IElementsJasperCourrier,
+  estTitulairesActe: boolean,
+  titulaires: any[]
+) {
+  elementsJasper.nomTitulaire1 = estTitulairesActe
+    ? TitulaireActe.getNom(titulaires[0])
+    : TitulaireRequete.getNom(titulaires[0]);
+  elementsJasper.prenomsTitulaire1 = estTitulairesActe
+    ? getPrenomsTitulaireActe(titulaires[0].prenoms)
+    : getPrenomsTitulaireRequete(titulaires[0].prenoms);
+
+  if (titulaires.length > 1) {
+    elementsJasper.nomTitulaire2 = estTitulairesActe
+      ? TitulaireActe.getNom(titulaires[1])
+      : TitulaireRequete.getNom(titulaires[1]);
+    elementsJasper.prenomsTitulaire2 = estTitulairesActe
+      ? getPrenomsTitulaireActe(titulaires[1].prenoms)
+      : getPrenomsTitulaireRequete(titulaires[1].prenoms);
   }
 }
 

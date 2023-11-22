@@ -38,4 +38,8 @@ export class NatureActe extends EnumWithLibelle {
   public static getKey(obj: NatureActe) {
     return EnumWithLibelle.getKey(NatureActe, obj);
   }
+
+  public static estReconnaissance(obj: NatureActe): boolean {
+    return obj === this.RECONNAISSANCE;
+  }
 }
