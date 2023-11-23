@@ -69,24 +69,26 @@ import {
   ISaisieProjetPostulantForm
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { TypeNature } from "@model/requete/enum/TypeNature";
 import { TypeReconnaissance } from "@model/requete/enum/TypeReconnaissance";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import {
   getDateComposeFromDate,
   getDateFromDateCompose
 } from "@util/DateUtils";
-import {
-  DEUX,
-  UN,
-  formatPremieresLettresMajusculesNomCompose,
-  numberToString,
-  rempliAGaucheAvecZero
-} from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import {
+  DEUX,
+  formatPremieresLettresMajusculesNomCompose,
+  numberToString,
+  rempliAGaucheAvecZero,
+  SPC,
+  UN,
+  ZERO
+} from "@util/Utils";
 import { mapFrancisationPostulant } from "./mappingTitulaireVersFormulairePostulant";
 
 export const mappingProjetActeVersFormulairePostulant = (
@@ -243,7 +245,9 @@ function mapSaisieAcquisition(
 function mapSaisiePrenoms(prenoms: string[]): ISaisiePrenoms {
   return {
     [PAS_DE_PRENOM_CONNU]:
-      prenoms.length === 0 ? [PAS_DE_PRENOM_CONNU] : "false",
+      prenoms.length === ZERO || prenoms[ZERO] === SPC
+        ? [PAS_DE_PRENOM_CONNU]
+        : "false",
     [PRENOMS]: mapPrenoms(prenoms) || {}
   };
 }
@@ -252,7 +256,7 @@ function mapPrenoms(prenoms?: string[]): Prenoms | undefined {
   return prenoms?.reduce(
     (valeursForm: Prenoms, prenomCourant: string, index: number) => ({
       ...valeursForm,
-      [`prenom${index + 1}`]: prenomCourant
+      [`prenom${index + UN}`]: prenomCourant
     }),
     {}
   );
@@ -263,7 +267,7 @@ function mapAnalyseMarginale(
 ): ISaisieAnalyseMarginale {
   let titulaire: ITitulaireProjetActe | undefined = undefined;
   if (analysesMarginales && analysesMarginales[0]?.titulaires) {
-    titulaire = analysesMarginales[0].titulaires[0];
+    titulaire = analysesMarginales[ZERO].titulaires[ZERO];
   }
   return {
     [NOM]: titulaire?.nom?.toUpperCase() || "",

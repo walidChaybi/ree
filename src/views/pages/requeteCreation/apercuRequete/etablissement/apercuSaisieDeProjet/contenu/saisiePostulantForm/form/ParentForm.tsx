@@ -21,7 +21,10 @@ import { getLibelle } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
-import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
+import {
+  OptionVide,
+  SelectField
+} from "@widget/formulaire/champsSaisie/SelectField";
 import { MessageAvertissement } from "@widget/formulaire/erreur/MessageAvertissement";
 import {
   compteNombreDePrenoms,
@@ -72,6 +75,7 @@ const ParentForm: React.FC<ParentFormProps> = props => {
         options={LieuxUtils.getOptionsArrondissement(
           props.formik.getFieldProps(villeNamespace).value
         )}
+        optionVide={OptionVide.SELECTIONNABLE}
       />
     ),
     departement: (
