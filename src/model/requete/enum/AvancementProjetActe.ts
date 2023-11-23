@@ -2,11 +2,13 @@
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 
 export class AvancementProjetActe extends EnumWithLibelle {
-  public static readonly A_SAISIR = new AvancementProjetActe("A saisir");
-  public static readonly A_VERIFIER = new AvancementProjetActe("A vérifier");
-  public static readonly VERIFIE = new AvancementProjetActe("Vérifié");
-  public static readonly EN_COURS = new AvancementProjetActe("En cours");
-  public static readonly VALIDE = new AvancementProjetActe("Validé");
+  public static readonly A_SAISIR = new AvancementProjetActe("Projet à saisir");
+  public static readonly A_VERIFIER = new AvancementProjetActe(
+    "Acte à vérifier"
+  );
+  public static readonly VERIFIE = new AvancementProjetActe("Acte vérifié");
+  public static readonly EN_COURS = new AvancementProjetActe("Projet créé");
+  public static readonly VALIDE = new AvancementProjetActe("Projet validé");
   public static readonly INVALIDE = new AvancementProjetActe("Invalidé");
   // Ajout pour faire fonctionner le code, mais sera ajouté proprement via l'US d'ajout des nouveaux avancements
   public static readonly A_SIGNER = new AvancementProjetActe("A signer");
@@ -37,5 +39,18 @@ export class AvancementProjetActe extends EnumWithLibelle {
     avancementProjetActe: AvancementProjetActe
   ): boolean {
     return avancementProjetActe === AvancementProjetActe.A_SIGNER;
+  }
+  public static estAVerifier(
+    avancementProjetActe: AvancementProjetActe
+  ): boolean {
+    return avancementProjetActe === AvancementProjetActe.A_VERIFIER;
+  }
+  public static estProjetCree(avancement: AvancementProjetActe) {
+    return (
+      avancement === AvancementProjetActe.A_SAISIR ||
+      avancement === AvancementProjetActe.A_VERIFIER ||
+      avancement === AvancementProjetActe.EN_COURS ||
+      avancement === AvancementProjetActe.VERIFIE
+    );
   }
 }

@@ -72,6 +72,7 @@ export const URL_SAUVEGARDE_PERSONNE_ACTE_RMC =
 export const URL_MISE_A_JOUR_SUIVI_DOSSIER = "/requetes/creation/suiviDossier";
 export const URL_AVANCEMENT_PROJET = "/avancement";
 export const URL_PIECE_JUSTIFICATIVES_CREATION = "/pieceJustificative";
+export const URL_STATUT = "/statut";
 
 const URL_REPONSES = "/reponses";
 
@@ -826,5 +827,15 @@ export const patchMiseAJourIdSuiviDossier = (
       idSuiviDossier,
       idActe
     }
+  });
+};
+
+export const postValiderProjetActe = (
+  idRequete: string,
+  idSuiviDossier: string
+) => {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_CREATION}${idRequete}/suivi-dossier/${idSuiviDossier}/valider-projet`
   });
 };

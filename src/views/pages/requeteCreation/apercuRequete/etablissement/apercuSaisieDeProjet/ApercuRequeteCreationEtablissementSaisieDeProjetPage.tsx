@@ -1,5 +1,6 @@
 import { ICompositionDto } from "@api/appels/compositionApi";
 import { RECEContext } from "@core/body/RECEContext";
+import { useValiderProjetActeApiHook } from "@hook/acte/ValiderProjetActeApiHook";
 import {
   ICompositionProjetActeParams,
   useCompositionProjetActeApiHook
@@ -28,12 +29,16 @@ import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
-import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
+import {
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
+  URL_RECHERCHE_REQUETE
+} from "@router/ReceUrls";
+import { getUrlWithParam } from "@util/route/UrlUtil";
 import { DEUX, getLibelle, UN } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useParams } from "react-router-dom";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import {
   getConteneurResumeRequete,
@@ -83,6 +88,11 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
   const [compositionProjetActeParams, setCompositionProjetActeParams] =
     useState<ICompositionProjetActeParams>();
 
+  const [validerProjetActeParams, setValiderProjetActeParams] = useState<{
+    idRequete: string;
+    idSuiviDossier: string;
+  }>();
+
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
   useModifierAvancementSuiviDossierApiHook(modifierAvancementProjetParams);
   const { documentComposer } = useCompositionProjetActeApiHook(
@@ -110,6 +120,14 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
     requete?.provenanceNatali?.numeroDossierNational
   );
 
+  const { projetEstValide } = useValiderProjetActeApiHook(
+    validerProjetActeParams
+  );
+
+  const validerProjetActe = (idRequete: string, idSuiviDossier: string) => {
+    setValiderProjetActeParams({ idRequete, idSuiviDossier });
+  };
+
   const {
     dataActesInscriptionsSelectionnes,
     setDataActesInscriptionsSelectionnes,
@@ -129,6 +147,20 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
       setPdfFromComposition(documentComposer);
     }
   }, [documentComposer]);
+
+  useEffect(() => {
+    if (projetEstValide) {
+      history.push({
+        pathname: getUrlWithParam(
+          URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
+          idRequeteParam
+        ),
+        // TODO: passage du state non fonctionnel ==> reussir a passer l'idSuiviDossier & le location.pathname a l'apercu prise en charge
+        state: { idSuiviDossier: idSuiviDossierParam }
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projetEstValide]);
 
   useEffect(() => {
     if (requete?.titulaires && idSuiviDossierParam) {
@@ -152,7 +184,11 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
       if (dossierProjetActe && !estProjetExistant) {
         setModifierAvancementProjetParams({
           idSuiviDossier: dossierProjetActe.idSuiviDossier,
-          avancement: AvancementProjetActe.EN_COURS
+          avancement: AvancementProjetActe.estAVerifier(
+            dossierProjetActe.avancement
+          )
+            ? AvancementProjetActe.VERIFIE
+            : AvancementProjetActe.EN_COURS
         });
         setDossierProjetActe({
           ...dossierProjetActe,
@@ -312,7 +348,13 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
               ongletSelectionne={ongletSelectionne}
               handleChange={handleChange}
             />
-            <BoutonsApercuCreationEtablissement requete={requete} />
+            <BoutonsApercuCreationEtablissement
+              requete={requete}
+              conditionAffichageBouton={
+                ongletSelectionne === DEUX && Boolean(documentComposer)
+              }
+              validerProjetActe={validerProjetActe}
+            />
           </div>
           <div className="OngletsApercuCreationEtablissement">
             <VoletAvecOnglet liste={listeOngletsDroit} checkDirty={true} />

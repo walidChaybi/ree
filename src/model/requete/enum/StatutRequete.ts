@@ -102,6 +102,10 @@ export class StatutRequete extends EnumWithComplete {
   );
   public static readonly A_REVOIR = new StatutRequete("A_REVOIR", "À revoir");
   public static readonly TRAITE = new StatutRequete("TRAITE", "Traité");
+  public static readonly BI_A_ENVOYER = new StatutRequete(
+    "BI_A_ENVOYER",
+    "BI à envoyer"
+  );
 
   private static readonly StatutsPourTypeRequeteDelivrance = [
     StatutRequete.BROUILLON,
@@ -139,7 +143,8 @@ export class StatutRequete extends EnumWithComplete {
     StatutRequete.PROJET_VALIDE,
     StatutRequete.A_SIGNER,
     StatutRequete.TRAITE,
-    StatutRequete.EN_TRAITEMENT
+    StatutRequete.EN_TRAITEMENT,
+    StatutRequete.BI_A_ENVOYER
   ];
 
   private static readonly StatutsParTypeRequete = {

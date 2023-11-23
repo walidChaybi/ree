@@ -41,7 +41,6 @@ export const ApercuRequeteCreationEtablissementPriseEnChargePage: React.FC<
   // Params & History
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const history = useHistory();
-
   // States
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
   const [detailRequeteParams, setDetailRequeteParams] =
