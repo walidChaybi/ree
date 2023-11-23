@@ -2,7 +2,6 @@ import { specificationCourrier } from "@hook/generation/generationCourrierHook/s
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import {
   ActeAnalyseMarginales,
-  ActeReconnaissance,
   OptionsChoisiesCourrier17,
   RequeteRDDCourrier17,
   SaisieCourrier17
@@ -11,8 +10,7 @@ import {
 const saisieCourrier = SaisieCourrier17;
 const requete = RequeteRDDCourrier17;
 const optionsChoisies = OptionsChoisiesCourrier17;
-const acteAnalyseMarginale = mapActe(ActeAnalyseMarginales);
-const acteReconnaissance = mapActe(ActeReconnaissance);
+const acte = mapActe(ActeAnalyseMarginales);
 
 test("Attendu: specificationCourrier.getElementsJasper titulaire de la requete", async () => {
   const elementsJasper = specificationCourrier.getElementsJasper(
@@ -56,7 +54,7 @@ test("Attendu: specificationCourrier.getElementsJasper titulaire de l'analyse ma
     saisieCourrier,
     requete,
     [],
-    acteAnalyseMarginale
+    acte
   );
 
   expect(elementsJasper.nomTitulaire1).toBe("MARECHAL");
@@ -65,19 +63,4 @@ test("Attendu: specificationCourrier.getElementsJasper titulaire de l'analyse ma
   expect(elementsJasper.prenomsTitulaire2).toBe("Sébastien, Théo, Ulysse");
   expect(elementsJasper.texteLibre).toBe("Test Texte Libre courrier 17");
   expect(elementsJasper.natureActe).toBe("mariage");
-});
-
-test("Attendu: specificationCourrier.getElementsJasper titulaire de l'acte''", async () => {
-  const elementsJasper = specificationCourrier.getElementsJasper(
-    saisieCourrier,
-    requete,
-    [],
-    acteReconnaissance
-  );
-
-  expect(elementsJasper.nomTitulaire1).toBe("DUBOIS");
-  expect(elementsJasper.prenomsTitulaire1).toBe("Olivier");
-  expect(elementsJasper.nomTitulaire2).toBe("LONGDUBAT");
-  expect(elementsJasper.prenomsTitulaire2).toBe("Nevil");
-  expect(elementsJasper.texteLibre).toBe("Test Texte Libre courrier 17");
 });

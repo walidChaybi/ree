@@ -285,7 +285,7 @@ function estSousTypeRequeteRDDPEtChoixDelivranceEstReponseSansDelivrance(
   }
 }
 
-async function construitCourrier(
+function construitCourrier(
   elements: IElementsJasperCourrier,
   requete: IRequeteDelivrance,
   setCourrierParams: any,

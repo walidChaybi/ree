@@ -3,6 +3,7 @@ import {
   DEUX,
   getLibelle,
   getValeurOuVide,
+  jointAvecEspace,
   jointAvecRetourALaLigne,
   TROIS,
   UN,
@@ -177,7 +178,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
         composition.corps_texte = params.corpsTexte;
       }
     }
-    
+
     CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(
       composition,
       params.choixDelivrance,
@@ -234,8 +235,28 @@ export class CommunExtraitOuCopieActeTexteComposition {
     composition: IExtraitCopieComposition,
     acte: IFicheActe
   ) {
-    // Titulaires analyse marginale
-    if (acte.analyseMarginales) {
+    if (NatureActe.estReconnaissance(acte.nature)) {
+      // Titulaires de l'acte dans le cas d'une reconnaissance.
+      const titulaireActe1 = acte.titulaires.find(
+        titulaire => titulaire.ordre === UN
+      );
+      const titulaireActe2 = acte.titulaires.find(
+        titulaire => titulaire.ordre === DEUX
+      );
+      if (titulaireActe1) {
+        composition.nom_titulaire1 = getValeurOuVide(titulaireActe1.nom);
+        composition.prenoms_titulaire1 = getValeurOuVide(
+          jointAvecEspace(titulaireActe1.prenoms ?? [])
+        );
+      }
+      if (titulaireActe2) {
+        composition.nom_titulaire1 = getValeurOuVide(titulaireActe2.nom);
+        composition.prenoms_titulaire1 = getValeurOuVide(
+          jointAvecEspace(titulaireActe2.prenoms ?? [])
+        );
+      }
+    } else if (acte.analyseMarginales) {
+      // Titulaires analyse marginale
       const { titulaireAMCompositionEC1, titulaireAMCompositionEC2 } =
         CommunExtraitOuCopieActeTexteComposition.getTitulairesAnalayseMarginaleCompositionEC(
           acte
@@ -518,7 +539,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
       composition.pas_de_bloc_signature = true;
       composition.pas_de_bloc_notice = false;
       composition.pas_de_nomPrenomAgent = true;
-      
+
       CommunExtraitOuCopieActeTexteComposition.creerFormuleNoticeDelivrance(
         composition,
         choixDelivrance,
@@ -581,19 +602,16 @@ export class CommunExtraitOuCopieActeTexteComposition {
     // Formule de notice délivrance
     if (choixDelivrance === ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE) {
       composition.formule_notice_delivrance =
-        CommunExtraitOuCopieActeTexteComposition.FORMULE_NOTICE_DELIVRANCE[
-          UN
-        ];
+        CommunExtraitOuCopieActeTexteComposition.FORMULE_NOTICE_DELIVRANCE[UN];
     } else if (
-      choixDelivrance ===
-        ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION ||
+      choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION ||
       choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
     ) {
       composition.formule_notice_delivrance =
         CommunExtraitOuCopieActeTexteComposition.FORMULE_NOTICE_DELIVRANCE[
           ZERO
         ];
-      }
+    }
   }
 
   public static getTexteMentions(
