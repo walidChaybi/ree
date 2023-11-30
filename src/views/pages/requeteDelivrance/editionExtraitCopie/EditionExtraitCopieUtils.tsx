@@ -166,7 +166,13 @@ function ajoutDocumentEditeeOuModifierCourrier(
   ) {
     res.liste.push({
       titre: "Modifier le courrier",
-      component: <Courrier requete={requete} idActe={acte?.id}></Courrier>
+      component: (
+        <Courrier
+          requete={requete}
+          idActe={acte?.id}
+          natureActe={acte?.nature}
+        />
+      )
     });
     res.ongletSelectionne = 0;
   } else {

@@ -7,6 +7,8 @@ import { mapActe } from "../repertoires/MappingRepertoires";
 export interface IActeApiHookParams {
   idActe?: string;
   recupereImagesEtTexte?: boolean;
+  isConsultation?: boolean;
+  remplaceIdentiteTitulaireParIdentiteTitulaireAM?: boolean;
 }
 
 export interface IActeApiHookResultat {
@@ -21,7 +23,12 @@ export function useInformationsActeApiHook(
 
   useEffect(() => {
     if (params?.idActe) {
-      getInformationsFicheActe(params.idActe, params.recupereImagesEtTexte)
+      getInformationsFicheActe(
+        params.idActe,
+        params.recupereImagesEtTexte,
+        params.isConsultation,
+        params.remplaceIdentiteTitulaireParIdentiteTitulaireAM
+      )
         .then((result: any) => {
           const acte: IFicheActe = mapActe(result.body.data);
           setActeApiHookResultat({ acte });

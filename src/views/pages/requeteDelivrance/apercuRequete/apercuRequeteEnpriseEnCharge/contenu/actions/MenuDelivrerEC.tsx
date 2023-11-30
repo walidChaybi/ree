@@ -2,10 +2,10 @@ import {
   ICreerCourrierECParams,
   useCreerCourrierEC
 } from "@hook/requete/creerCourrierECHook";
-import { IActionOption } from "@model/requete/IActionOption";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { IActionOption } from "@model/requete/IActionOption";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
@@ -22,16 +22,16 @@ import { DocumentEC } from "../../../../../../../model/requete/enum/DocumentEC";
 import { useOptionsCourriersApiHook } from "../../../apercuCourrier/contenu/hook/OptionsCourriersHook";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {
+  UpdateChoixDelivranceProps,
+  useUpdateChoixDelivrance
+} from "./hook/UpdateChoixDelivranceApiHook";
+import {
   compositionCourrierAutomatique,
   controleCoherenceEntreDocumentSelectionneEtActionDelivrer,
   getIdCourrierAuto,
   getOptionsMenuDelivrer,
   redirection
 } from "./MenuUtilEC";
-import {
-  UpdateChoixDelivranceProps,
-  useUpdateChoixDelivrance
-} from "./hook/UpdateChoixDelivranceApiHook";
 
 export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
   const history = useHistory();
@@ -93,7 +93,10 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
         props.requete.sousType
       )
     ) {
-      const requeteAvecChoixDelivrance = { ...props.requete, choixDelivrance };
+      const requeteAvecChoixDelivrance = {
+        ...props.requete,
+        choixDelivrance
+      };
       setOperationEnCours(true);
       setCourrierEcParams({
         ...compositionCourrierAutomatique(

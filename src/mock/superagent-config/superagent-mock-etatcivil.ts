@@ -126,11 +126,12 @@ export const configEtatcivil = [
       }
 
       if (
-        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a/resume" ||
         match[1] ===
-          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a/resume?recupereImagesEtTexte=true" ||
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true" ||
         match[1] ===
-          "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/resume?recupereImagesEtTexte=true"
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&recupereImagesEtTexte=true" ||
+        match[1] ===
+          "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&recupereImagesEtTexte=true"
       ) {
         return { data: acteNationalite };
       }
@@ -143,73 +144,83 @@ export const configEtatcivil = [
       ) {
         return { data: pacsModificationNotaire.data };
       } else if (
-        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume" ||
         match[1] ===
-          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?recupereImagesEtTexte=true" ||
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true" ||
+        match[1] ===
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&recupereImagesEtTexte=true" ||
         match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4da/resume" ||
         match[1] === "/acte/f9279c00-5d2b-11ea-bc55-0242ac130004/resume" ||
         match[1] ===
-          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?isConsultation=true"
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true"
       ) {
         return { data: acte };
       } else if (
         match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc/resume" ||
         match[1] ===
-          "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc/resume?isConsultation=true"
+          "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true"
       ) {
         return { data: acte1 };
       } else if (
-        match[1] === "/acte/6e89c1c1-16c4-4e40-9b72-7b567270b26f/resume"
+        match[1] ===
+        "/acte/6e89c1c1-16c4-4e40-9b72-7b567270b26f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"
       ) {
         return { data: acteExtraitSaisie };
       } else if (
         match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume" ||
         match[1] ===
-          "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume?isConsultation=true"
+          "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true"
       ) {
         return { data: acte2 };
       } else if (
         match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4db/resume" ||
         match[1] ===
-          "/acte/d8708d77-a359-4553-be72-1eb5f246d4db/resume?isConsultation=true"
+          "/acte/d8708d77-a359-4553-be72-1eb5f246d4db/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true"
       ) {
         return { data: acte3 };
       } else if (
         match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9/resume" ||
         match[1] ===
-          "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9/resume?isConsultation=true"
+          "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true"
       ) {
         return { data: acte4 };
       } else if (
-        match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/resume"
+        match[1] ===
+        "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"
       ) {
         return { data: acte5 };
       } else if (
-        match[1] === "/acte/b41079a5-9e8f-478a-b04c-c4c2ac671123/resume"
+        match[1] ===
+        "/acte/b41079a5-9e8f-478a-b04c-c4c2ac671123/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"
       ) {
         return { data: ficheActeEC.data };
       } else if (
-        match[1] === "/acte/b45079a5-9e8f-488a-b07c-c4c2az613121/resume"
+        match[1] ===
+        "/acte/b45079a5-9e8f-488a-b07c-c4c2az613121/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"
       ) {
         return { data: ficheActeAvecTitulaireMultiple.data };
       } else if (
-        match[1] === "/acte/b45079a5-9e8f-478a-b07c-c4c2az671123/resume"
+        match[1] ===
+        "/acte/b45079a5-9e8f-478a-b07c-c4c2az671123/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"
       ) {
         return { data: ficheActeAvecGenreIndetermine.data };
       } else if (
-        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/resume"
+        match[1] ===
+        "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"
       ) {
         return { data: ficheActeMariage.data };
       } else if (
-        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac671348/resume"
+        match[1] ===
+        "/acte/b41079a5-9e8d-478c-b04c-c4c2ac671348/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"
       ) {
         return { data: acteMariage };
       } else if (
-        match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/resume"
+        match[1] ===
+        "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"
       ) {
         return { data: acteNaissance };
       } else if (
-        match[1] === "/acte/923a10fb-0b15-452d-83c0-d24c76d1d19d/resume"
+        match[1] ===
+        "/acte/923a10fb-0b15-452d-83c0-d24c76d1d19d/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"
       ) {
         return { data: ActeAnalyseMarginales };
       } else if (
@@ -300,24 +311,28 @@ export const configEtatcivil = [
       /////////////////////////////////////////////////////////////////////
       // actes utilisés pour le test de pagination (avec changement de plage)
       if (
-        match[1] === `/acte/${idFicheActe1}/resume` ||
-        match[1] === `/acte/${idFicheActe1}/resume?isConsultation=true`
+        match[1] ===
+          `/acte/${idFicheActe1}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true` ||
+        match[1] ===
+          `/acte/${idFicheActe1}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true`
       ) {
         return ficheActe1;
       }
 
       if (
         match[1] === `/acte/${idFicheActe2}/resume` ||
-        match[1] === `/acte/${idFicheActe2}/resume?isConsultation=true`
+        match[1] ===
+          `/acte/${idFicheActe2}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true`
       ) {
         return ficheActe2;
       }
       /////////////////////////////////////////////////////////////////////
 
       if (
-        match[1] === `/acte/${idFicheActeMariage}/resume` ||
         match[1] ===
-          `/acte/${idFicheActeMariage}/resume?recupereImagesEtTexte=true`
+          `/acte/${idFicheActeMariage}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true` ||
+        match[1] ===
+          `/acte/${idFicheActeMariage}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&recupereImagesEtTexte=true`
       ) {
         return ficheActeMariage;
       }

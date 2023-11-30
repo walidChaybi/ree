@@ -8,15 +8,15 @@ import {
   necessiteMentionNationalite
 } from "@model/etatcivil/acte/IFicheActe";
 import {
-  Mention,
-  mappingVersMentionApi
+  mappingVersMentionApi,
+  Mention
 } from "@model/etatcivil/acte/mention/IMention";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
-import { OptionCourrier } from "@model/requete/IOptionCourrier";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentEC } from "@model/requete/enum/DocumentEC";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { OptionCourrier } from "@model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DEUX } from "@util/Utils";
 import { gestionnaireMentionsRetireesAuto } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
 import { useEffect, useState } from "react";
@@ -36,9 +36,11 @@ import {
 } from "../generation/generationECHook/generationECHook";
 import { estPresentIdActeEtChoixDelivrance } from "../generation/generationECHook/generationECHookUtil";
 import { IResultGenerationUnDocument } from "../generation/generationUtils";
+import { NatureActe } from "./../../../../model/etatcivil/enum/NatureActe";
 
 export interface ICreerCourrierECParams {
   idActe?: string;
+  natureActe?: NatureActe;
   requete: IRequeteDelivrance;
   saisieCourrier: SaisieCourrier;
   optionsChoisies: OptionCourrier[];
@@ -71,7 +73,10 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
             //@ts-ignore params.requete.choixDelivrance non null
             params.requete.choixDelivrance
             //@ts-ignore params.requete.choixDelivrance non null
-          ) || ChoixDelivrance.estAvecFiliation(params.requete.choixDelivrance)
+          ) || ChoixDelivrance.estAvecFiliation(params.requete.choixDelivrance),
+        remplaceIdentiteTitulaireParIdentiteTitulaireAM: params?.natureActe
+          ? !NatureActe.estReconnaissance(params.natureActe)
+          : true
       });
     }
   }, [params, acteApiHookResultat]);

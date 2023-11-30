@@ -127,26 +127,26 @@ export function getInformationsFicheRepertoire(
 export function getInformationsFicheActe(
   identifiant: string,
   recupereImagesEtTexte = false,
-  estConsultation = false
+  estConsultation = false,
+  remplaceIdentiteTitulaireParIdentiteTitulaireAM = true
 ): Promise<any> {
-  let config: any = {
+  const config: any = {
     method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${identifiant}${URL_RESUME}`
+    uri: `${URL_ACTE}/${identifiant}${URL_RESUME}`,
+    parameters: {
+      remplaceIdentiteTitulaireParIdentiteTitulaireAM
+    }
   };
   if (recupereImagesEtTexte) {
-    config = {
-      ...config,
-      parameters: {
-        recupereImagesEtTexte
-      }
+    config.parameters = {
+      ...config.parameters,
+      recupereImagesEtTexte
     };
   }
   if (estConsultation) {
-    config = {
-      ...config,
-      parameters: {
-        isConsultation: estConsultation
-      }
+    config.parameters = {
+      ...config.parameters,
+      isConsultation: estConsultation
     };
   }
 
