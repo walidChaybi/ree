@@ -250,8 +250,8 @@ export class CommunExtraitOuCopieActeTexteComposition {
         );
       }
       if (titulaireActe2) {
-        composition.nom_titulaire1 = getValeurOuVide(titulaireActe2.nom);
-        composition.prenoms_titulaire1 = getValeurOuVide(
+        composition.nom_titulaire2 = getValeurOuVide(titulaireActe2.nom);
+        composition.prenoms_titulaire2 = getValeurOuVide(
           jointAvecEspace(titulaireActe2.prenoms ?? [])
         );
       }
