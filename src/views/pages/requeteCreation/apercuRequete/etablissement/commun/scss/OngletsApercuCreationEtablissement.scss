@@ -49,12 +49,10 @@
     position: sticky;
     bottom: 0px;
     text-align: left;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 
-  .boutonValiderProjet {
-    position: absolute;
-    right: 0;
-    bottom: 0;
   }
-
 }

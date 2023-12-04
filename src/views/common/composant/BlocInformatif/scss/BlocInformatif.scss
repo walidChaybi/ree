@@ -1,0 +1,11 @@
+
+@import "../../../../../scss/colors.scss";
+
+
+.BlocInfo {
+    flex-basis: 100%;
+    text-align: end; 
+    color: $title-application-color; 
+    margin-top: -5px;
+    margin-bottom: 5px;
+  }

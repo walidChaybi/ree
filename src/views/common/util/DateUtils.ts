@@ -336,6 +336,10 @@ export function getJourOu1er(jour?: number) {
   return jourOu1er;
 }
 
+export function getDateActuelle(): Date {
+  return new Date();
+}
+
 export function formatJour(str?: string): string {
   let jourFormate = "";
   if (str) {

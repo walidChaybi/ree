@@ -1,6 +1,7 @@
 import { RECEContext } from "@core/body/RECEContext";
 import { IUuidSuiviDossierParams } from "@model/params/IUuidSuiviDossierParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_PRISE_EN_CHARGE,
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
@@ -9,17 +10,21 @@ import {
   URL_REQUETES_CREATION_SERVICE
 } from "@router/ReceUrls";
 import { autorisePrendreEnChargeDepuisPageCreation } from "@util/RequetesUtils";
-import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
+import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { useContext, useMemo } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { BlocInformatif } from "../../../../../common/composant/BlocInformatif/BlocInformatif";
 import { BoutonPrendreEnChargeCreation } from "./BoutonPrendreEnChargeCreation";
 import "./scss/OngletsApercuCreationEtablissement.scss";
 
 interface BoutonsApercuCreationEtablissementProps {
   requete: IRequeteCreationEtablissement;
-  conditionAffichageBouton?: boolean;
+  conditionAffichageBoutonsApercuActe?: boolean;
+  avancement?: AvancementProjetActe;
+  estRegistreOuvert?: boolean;
+  estFormulaireModifie?: boolean;
   validerProjetActe?: (idRequeteParam: string, idSuiviDossier: string) => void;
 }
 
@@ -27,6 +32,12 @@ const RETOUR_RECHERCHE_REQUETE = getLibelle("Retour recherche requêtes");
 const RETOUR_MES_REQUETE = getLibelle("Retour mes requêtes");
 const RETOUR_REQUETE_SERVICE = getLibelle("Retour requêtes de service");
 const RETOUR_PRISE_EN_CHARGE = getLibelle("Retour apercu prise en charge");
+const ERREUR_REGISTRE_NON_OUVERT = getLibelle(
+  "Le registre n'est pas ouvert. Vous ne pouvez pas signer l'acte."
+);
+const ERREUR_DONNEES_MODIFIEES_FORMULAIRE = getLibelle(
+  'Des données ont été modifiées. Veuillez cliquer sur le bouton "Actualiser et Visualiser".'
+);
 
 export const BoutonsApercuCreationEtablissement: React.FC<
   BoutonsApercuCreationEtablissementProps
@@ -38,6 +49,12 @@ export const BoutonsApercuCreationEtablissement: React.FC<
 
   const estPresentBoutonPriseEnCharge =
     autorisePrendreEnChargeDepuisPageCreation(props.requete);
+
+  const estProjetActeASigner =
+    props.avancement && AvancementProjetActe.estASigner(props.avancement);
+
+  const estBoutonSignatureDesactive =
+    !props.estRegistreOuvert || props.estFormulaireModifie;
 
   const boutonRetour = useMemo(() => {
     const pathname = history.location.pathname;
@@ -64,6 +81,15 @@ export const BoutonsApercuCreationEtablissement: React.FC<
     replaceUrl(history, boutonRetour.url);
   }
 
+  function getMessageErreur(): string {
+    if (!props.estRegistreOuvert) {
+      return ERREUR_REGISTRE_NON_OUVERT;
+    } else if (props.estFormulaireModifie) {
+      return ERREUR_DONNEES_MODIFIEES_FORMULAIRE;
+    }
+    return "";
+  }
+
   return (
     <div className="BoutonsApercu">
       <Bouton onClick={onClickBoutonRetour}>{boutonRetour.libelle}</Bouton>
@@ -73,18 +99,37 @@ export const BoutonsApercuCreationEtablissement: React.FC<
           onClick={rechargementPage}
         />
       )}
-      {props.conditionAffichageBouton && (
-        <Bouton
-          className="boutonValiderProjet"
-          title={getLibelle("Valider le projet d'acte")}
-          onClick={() =>
-            props.validerProjetActe
-              ? props.validerProjetActe(idRequeteParam, idSuiviDossierParam)
-              : () => {}
-          }
-        >
-          {getLibelle("Valider le projet d'acte")}
-        </Bouton>
+      {props.conditionAffichageBoutonsApercuActe && (
+        <>
+          <div>
+              {estProjetActeASigner ? (
+                <Bouton
+                  disabled={estBoutonSignatureDesactive}
+                  title={getLibelle("SIGNER")}
+                  onClick={() => {}} //TODO ouvrir la popup de signature.
+                >
+                  {getLibelle("SIGNER")}
+                </Bouton>
+              ) : (
+                <Bouton
+                  title={getLibelle("Valider le projet d'acte")}
+                  onClick={() =>
+                    props.validerProjetActe
+                      ? props.validerProjetActe(
+                          idRequeteParam,
+                          idSuiviDossierParam
+                        )
+                      : () => {}
+                  }
+                >
+                  {getLibelle("Valider le projet d'acte")}
+                </Bouton>
+              )}
+          </div>
+          {estProjetActeASigner && estBoutonSignatureDesactive && (
+            <BlocInformatif texte={getMessageErreur()}></BlocInformatif>
+          )}
+        </>
       )}
     </div>
   );
