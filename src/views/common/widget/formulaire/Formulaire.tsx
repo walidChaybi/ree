@@ -1,18 +1,19 @@
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
 import React from "react";
 import { Fieldset } from "../fieldset/Fieldset";
 import "./scss/Formulaire.scss";
 
-interface FomulaireProps {
+interface IFormulaireProps<T extends any> {
   titre?: string;
   formDefaultValues: any;
   formValidationSchema: any;
-  onSubmit: (values: any, errors?: any) => void;
+  // TODO: Supprimer l'optionnel pour formikHelpers
+  onSubmit: (values: T, formikHelpers?: FormikHelpers<T>) => void;
   className?: string;
   disabled?: boolean;
 }
 
-export const Formulaire: React.FC<FomulaireProps> = ({
+export const Formulaire = <T,>({
   children,
   titre = "",
   formDefaultValues,
@@ -20,7 +21,7 @@ export const Formulaire: React.FC<FomulaireProps> = ({
   onSubmit,
   className,
   disabled
-}) => {
+}: React.PropsWithChildren<IFormulaireProps<T>>) => {
   const form = getForm(
     onSubmit,
     formDefaultValues,
@@ -35,8 +36,8 @@ export const Formulaire: React.FC<FomulaireProps> = ({
     </div>
   );
 };
-function getForm(
-  onSubmit: (values: any, errors?: any) => void,
+function getForm<T>(
+  onSubmit: (values: T, formikHelpers?: FormikHelpers<T>) => void,
   formDefaultValues: any,
   formValidationSchema: any,
   disabled = false,
@@ -45,9 +46,7 @@ function getForm(
 ) {
   return (
     <Formik
-      onSubmit={(e: any) => {
-        onSubmit(e);
-      }}
+      onSubmit={onSubmit}
       initialValues={formDefaultValues}
       validationSchema={formValidationSchema}
       enableReinitialize={true}

@@ -16,43 +16,46 @@ import {
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { IUuidSuiviDossierParams } from "@model/params/IUuidSuiviDossierParams";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { ISuiviDossier } from "@model/requete/ISuiviDossier";
 import {
   ITitulaireRequeteCreation,
   TitulaireRequeteCreation
 } from "@model/requete/ITitulaireRequeteCreation";
-import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { ApercuProjet } from "@pages/requeteCreation/commun/composants/ApercuProjet";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
-import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
+import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import {
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
   URL_RECHERCHE_REQUETE
 } from "@router/ReceUrls";
 import { getDateActuelle } from "@util/DateUtils";
-import { DEUX, UN, getLibelle } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
+import { DEUX, getLibelle, UN } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
+import { FormikHelpers } from "formik";
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import {
+  annulerModificationBulletinIdentification,
+  estModificationsDonneesBIAAnnuler,
   getConteneurResumeRequete,
   onRenommePieceJustificativeEtablissement
 } from "../commun/ApercuRequeteCreationEtablissementUtils";
 import { BoutonsApercuCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
 import "../commun/scss/OngletsApercuCreationEtablissement.scss";
-import { SaisiePostulantForm } from "./contenu/saisiePostulantForm/SaisiePostulantForm";
 import { useProjetActeHook } from "./contenu/saisiePostulantForm/hook/ProjetActeHook";
 import { mappingSaisieProjetPostulantFormVersProjetActe } from "./contenu/saisiePostulantForm/mapping/mappingFormulaireSaisiePostulantVersProjetActe";
 import { mappingProjetActeVersFormulairePostulant } from "./contenu/saisiePostulantForm/mapping/mappingProjetActeVersFormulairePostulant";
 import { mappingProjetActeVersProjetActeComposition } from "./contenu/saisiePostulantForm/mapping/mappingProjetActeVersProjetActeComposition";
 import { mappingTitulairesVersFormulairePostulant } from "./contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
+import { SaisiePostulantForm } from "./contenu/saisiePostulantForm/SaisiePostulantForm";
 
 interface ApercuRequeteCreationEtablissementSaisieDeProjetPageProps {
   idRequeteAAfficher?: string;
@@ -266,9 +269,25 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
         );
   };
 
-  function onSubmitSaisieProjetForm(valeurs: ISaisieProjetPostulantForm): void {
-    onClickActualiserProjet(valeurs);
-    navigueEtAffichePdfProjetActe(documentComposer);
+  function onSubmitSaisieProjetForm(
+    valeurs: ISaisieProjetPostulantForm,
+    formikHelpers?: FormikHelpers<ISaisieProjetPostulantForm>
+  ): void {
+    if (
+      dossierProjetActe &&
+      projetActe &&
+      formikHelpers &&
+      estModificationsDonneesBIAAnnuler(
+        dossierProjetActe?.avancement,
+        projetActe,
+        valeurs
+      )
+    ) {
+      annulerModificationBulletinIdentification(formikHelpers, projetActe);
+    } else {
+      onClickActualiserProjet(valeurs);
+      navigueEtAffichePdfProjetActe(documentComposer);
+    }
   }
 
   const listeOngletsGauche: ItemListe[] = [

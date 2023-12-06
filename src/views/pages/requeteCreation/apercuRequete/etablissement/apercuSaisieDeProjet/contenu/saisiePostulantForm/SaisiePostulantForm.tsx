@@ -1,4 +1,3 @@
-import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
 import {
   ACQUISITION,
   AUTRES,
@@ -11,29 +10,31 @@ import {
   TITULAIRE,
   TYPE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
 import { RECEContext } from "@core/body/RECEContext";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { estDateVide } from "@util/DateUtils";
-import { DEUX, UN, getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { DEUX, getLibelle, UN } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
-import { Formulaire } from "@widget/formulaire/Formulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { Formulaire } from "@widget/formulaire/Formulaire";
+import FormikEffect from "@widget/formulaire/utils/FormikEffect";
 import {
   getLibelleParentFromSexe,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
-import FormikEffect from "@widget/formulaire/utils/FormikEffect";
+import { FormikHelpers } from "formik";
 import React, { useContext } from "react";
-import { estJourMoisVide } from "./SaisiePostulantFormUtils";
 import AcquisitionForm from "./form/AcquisitionForm";
 import AutresForm from "./form/AutresForm";
 import FrancisationPostulantForm from "./form/FrancisationPostulantForm";
 import ParentForm from "./form/ParentForm";
 import PostulantForm from "./form/PostulantForm";
+import { estJourMoisVide } from "./SaisiePostulantFormUtils";
 import "./scss/Postulant.scss";
 import { getPostulantValidationSchema } from "./validation/PostulantValidationSchema";
 
@@ -42,7 +43,10 @@ interface ISaisiePostulantFormProps {
   estProjetExistant: boolean;
   valeursForm?: ISaisieProjetPostulantForm;
   avancementProjet?: AvancementProjetActe;
-  onSubmitSaisieProjetForm: (valeurs: ISaisieProjetPostulantForm) => void;
+  onSubmitSaisieProjetForm: (
+    valeurs: ISaisieProjetPostulantForm,
+    formikHelpers?: FormikHelpers<ISaisieProjetPostulantForm>
+  ) => void;
 }
 
 export const SaisiePostulantForm: React.FC<
@@ -64,7 +68,6 @@ export const SaisiePostulantForm: React.FC<
       element: (
         <PostulantForm
           nom={TITULAIRE}
-          valeursForm={props.valeursForm}
           afficherMessageNaissance={estJourMoisVide(
             props.postulant.retenueSdanf
           )}

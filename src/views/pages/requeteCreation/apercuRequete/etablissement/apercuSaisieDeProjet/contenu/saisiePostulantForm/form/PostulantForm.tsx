@@ -18,7 +18,6 @@ import PrenomsConnusForm from "@composant/formulaire/nomsPrenoms/PrenomsConnusFo
 import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { OuiNon } from "@model/etatcivil/enum/OuiNon";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { getLibelle } from "@util/Utils";
 import DateComposeForm, {
   ChampDateModifie
@@ -40,7 +39,6 @@ import Item from "../../../../commun/resumeRequeteCreationEtablissement/items/It
 
 interface IPostulantFormProps {
   nom: string;
-  valeursForm?: ISaisieProjetPostulantForm;
   afficherMessageNaissance: boolean;
 }
 type PostulantFormProps = IPostulantFormProps & FormikComponentProps;
@@ -50,11 +48,11 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
     useState<boolean>(props.afficherMessageNaissance);
 
   const nbPrenoms = compteNombreDePrenoms(
-    props.valeursForm?.titulaire.prenoms.prenoms
+    props.formik.values.titulaire.prenoms.prenoms
   );
 
   const nbPrenomAnalyseMarginale = compteNombreDePrenoms(
-    props.valeursForm?.titulaire.analyseMarginale.prenoms
+    props.formik.values.titulaire.analyseMarginale.prenoms
   );
 
   const nomSecableWithNamespace = withNamespace(props.nom, NOM_SECABLE);

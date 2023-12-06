@@ -35,6 +35,12 @@ export class AvancementProjetActe extends EnumWithLibelle {
     return avancementProjetActe === AvancementProjetActe.A_SAISIR;
   }
 
+  public static estProjetValide(
+    avancementProjetActe: AvancementProjetActe
+  ): boolean {
+    return avancementProjetActe === AvancementProjetActe.VALIDE;
+  }
+
   public static estASigner(
     avancementProjetActe: AvancementProjetActe
   ): boolean {
