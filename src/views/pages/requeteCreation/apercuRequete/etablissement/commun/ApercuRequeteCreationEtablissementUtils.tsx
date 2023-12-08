@@ -214,7 +214,7 @@ export function estModificationsDonneesBIAAnnuler(
     estModifieBulletinIdentification(saisieProjetPostulant, projetActe) &&
     !window.confirm(
       getLibelle(
-        `Attention ! Des données du bulletin d'identification ont été modifiées après l'envoie du BI.\n\nVoulez-vous continuer ?`
+        `Attention ! Vous avez modifié des données des cinq items après validation du BI ou après publication du décret.\n\nVoulez-vous continuer ?`
       )
     )
   );
@@ -248,7 +248,7 @@ export function annulerModificationBulletinIdentification(
 
   modifierChampAvecValeur(
     [TITULAIRE, ANALYSE_MARGINALE, NOM],
-    analyseMarginalePostulant?.nom
+    analyseMarginalePostulant?.nom ?? ""
   );
   modifierChampAvecValeur(
     [TITULAIRE, ANALYSE_MARGINALE, PRENOMS],
@@ -273,15 +273,14 @@ export function annulerModificationBulletinIdentification(
   );
   modifierChampAvecValeur(
     [TITULAIRE, LIEU_DE_NAISSANCE, VILLE_NAISSANCE],
-
-    postulantProjetActe.naissance?.ville
+    postulantProjetActe.naissance?.ville ?? ""
   );
   modifierChampAvecValeur(
     [TITULAIRE, LIEU_DE_NAISSANCE, ETAT_CANTON_PROVINCE],
-    postulantProjetActe.naissance?.region
+    postulantProjetActe.naissance?.region ?? ""
   );
   modifierChampAvecValeur(
     [TITULAIRE, LIEU_DE_NAISSANCE, PAYS_NAISSANCE],
-    postulantProjetActe.naissance?.pays
+    postulantProjetActe.naissance?.pays ?? ""
   );
 }
