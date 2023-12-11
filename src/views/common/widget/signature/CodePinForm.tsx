@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
-import { storeRece } from "@util/storeRece";
-import { getLibelle } from "@util/Utils";
+import { getLibelle, HUIT, QUATRE } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { useFormik } from "formik";
 import React from "react";
 import { Button } from "reakit/Button";
@@ -8,27 +8,35 @@ import "./scss/FormPinCode.scss";
 
 interface FormPinCodePros {
   onClose: (isOpen: boolean, changePage: boolean) => void;
-  setPinCode: (pinCode?: string) => void;
+  setCodePin: (codePin?: string) => void;
 }
 
 interface FormValues {
-  pinCode?: string;
+  codePin?: string;
 }
 
 interface FormValuesErrors {
-  pinCode?: string;
+  codePin?: string;
 }
 
-export const FormPinCode: React.FC<FormPinCodePros> = ({
+export const CodePinForm: React.FC<FormPinCodePros> = ({
   onClose,
-  setPinCode
+  setCodePin
 }) => {
   const validate = (values: FormValues) => {
     const errors: FormValuesErrors = {};
-    if (!values.pinCode) {
-      errors.pinCode = getLibelle("Le code pin de la carte doit être fourni");
-    } else if (isNaN(Number(values.pinCode))) {
-      errors.pinCode = getLibelle("Le code pin doit être un nombre");
+    if (!values.codePin) {
+      errors.codePin = getLibelle("Le code pin de la carte doit être fourni");
+    } else if (isNaN(Number(values.codePin))) {
+      errors.codePin = getLibelle("Le code pin doit être un nombre");
+    } else if (formik.isSubmitting && values.codePin.length < QUATRE) {
+      errors.codePin = getLibelle(
+        "Le code pin doit être d'au moins 4 caractères"
+      );
+    } else if (values.codePin.length > HUIT) {
+      errors.codePin = getLibelle(
+        "Le code pin ne doit pas dépasser 8 caractères"
+      );
     }
 
     return errors;
@@ -38,16 +46,15 @@ export const FormPinCode: React.FC<FormPinCodePros> = ({
     initialValues: {},
     validate,
     onSubmit: (values: FormValues) => {
-      storeRece.codePin = values.pinCode;
-      setPinCode(values.pinCode);
+      setCodePin(values.codePin);
     }
   });
 
   return (
     <form onSubmit={formik.handleSubmit}>
       <TextField
-        id="pinCode"
-        name="pinCode"
+        id="codePin"
+        name="codePin"
         label="Code pin"
         variant="filled"
         type="password"
@@ -63,18 +70,21 @@ export const FormPinCode: React.FC<FormPinCodePros> = ({
           }
         }}
       />
-      {formik.errors.pinCode ? (
-        <div className={"ErrorField"}>{formik.errors.pinCode}</div>
+      {formik.errors.codePin ? (
+        <div className={"ErrorField"}>{formik.errors.codePin}</div>
       ) : null}
       <div className="PopinSignaturePinCodeActions">
-        <Button
+        <Bouton
           color="primary"
           type="submit"
           name={"validate"}
-          disabled={formik.errors.pinCode !== undefined}
+          disabled={formik.errors.codePin !== undefined}
+          onClick={() => {
+            formik.setSubmitting(true);
+          }}
         >
           {getLibelle("Valider")}
-        </Button>
+        </Bouton>
         <Button onClick={() => onClose(false, false)}>
           {getLibelle("Annuler")}
         </Button>

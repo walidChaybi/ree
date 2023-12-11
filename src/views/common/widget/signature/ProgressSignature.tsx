@@ -2,21 +2,21 @@ import { Box, LinearProgress, Typography } from "@mui/material";
 import { getLibelle } from "@util/Utils";
 import React, { useCallback, useEffect } from "react";
 import { Button } from "reakit/Button";
-import { DocumentsByRequete } from "./hook/SignatureDocumentHookUtil";
-import "./scss/PopinSignature.scss";
+import { DocumentsByRequete } from "./hook/SignatureDocumentHookUtilDelivrance";
+import "./scss/PopinSignatureDelivrance.scss";
 
 interface ProgressSignatureProps {
   onClose: (isOpen: boolean, hasErrors: boolean) => void;
   documentsByRequete: DocumentsByRequete;
   idsRequetesToSign: string[];
-  errors: boolean;
+  error: boolean;
 }
 
 export const ProgressSignature: React.FC<ProgressSignatureProps> = ({
   onClose,
   documentsByRequete,
   idsRequetesToSign,
-  errors
+  error
 }) => {
   const totalPercentageToComplete = 100;
   const minWidthForProgressBar = 35;
@@ -32,12 +32,12 @@ export const ProgressSignature: React.FC<ProgressSignatureProps> = ({
 
   useEffect(() => {
     if (
-      errors === false &&
+      error === false &&
       getSignatureProgress() === totalPercentageToComplete
     ) {
       onClose(false, true);
     }
-  }, [getSignatureProgress, onClose, errors]);
+  }, [getSignatureProgress, onClose, error]);
 
   return (
     <>
@@ -56,11 +56,11 @@ export const ProgressSignature: React.FC<ProgressSignatureProps> = ({
       </Box>
       <Button
         onClick={() => {
-          onClose(false, errors !== true);
+          onClose(false, error !== true);
         }}
         disabled={
           getSignatureProgress() !== totalPercentageToComplete &&
-          errors === false
+          error === false
         }
         className={"CloseButtonSignature"}
       >

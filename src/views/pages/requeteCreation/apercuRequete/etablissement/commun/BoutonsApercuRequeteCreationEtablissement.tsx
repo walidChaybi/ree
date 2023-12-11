@@ -25,6 +25,7 @@ interface BoutonsApercuCreationEtablissementProps {
   avancement?: AvancementProjetActe;
   estRegistreOuvert?: boolean;
   estFormulaireModifie?: boolean;
+  setEstOuvertPopinSignature?: React.Dispatch<React.SetStateAction<boolean>>;
   validerProjetActe?: (idRequeteParam: string, idSuiviDossier: string) => void;
 }
 
@@ -99,32 +100,32 @@ export const BoutonsApercuCreationEtablissement: React.FC<
           onClick={rechargementPage}
         />
       )}
+
       {props.conditionAffichageBoutonsApercuActe && (
         <>
           <div>
-              {estProjetActeASigner ? (
-                <Bouton
-                  disabled={estBoutonSignatureDesactive}
-                  title={getLibelle("SIGNER")}
-                  onClick={() => {}} //TODO ouvrir la popup de signature.
-                >
-                  {getLibelle("SIGNER")}
-                </Bouton>
-              ) : (
-                <Bouton
-                  title={getLibelle("Valider le projet d'acte")}
-                  onClick={() =>
-                    props.validerProjetActe
-                      ? props.validerProjetActe(
-                          idRequeteParam,
-                          idSuiviDossierParam
-                        )
-                      : () => {}
-                  }
-                >
-                  {getLibelle("Valider le projet d'acte")}
-                </Bouton>
-              )}
+            {estProjetActeASigner ? (
+              <Bouton
+                disabled={estBoutonSignatureDesactive}
+                title={getLibelle("SIGNER")}
+                onClick={() =>
+                  props.setEstOuvertPopinSignature &&
+                  props.setEstOuvertPopinSignature(true)
+                }
+              >
+                {getLibelle("SIGNER")}
+              </Bouton>
+            ) : (
+              <Bouton
+                title={getLibelle("Valider le projet d'acte")}
+                onClick={() =>
+                  props.validerProjetActe &&
+                  props.validerProjetActe(idRequeteParam, idSuiviDossierParam)
+                }
+              >
+                {getLibelle("Valider le projet d'acte")}
+              </Bouton>
+            )}
           </div>
           {estProjetActeASigner && estBoutonSignatureDesactive && (
             <BlocInformatif texte={getMessageErreur()}></BlocInformatif>

@@ -1,95 +1,31 @@
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import {
-  createEvent,
-  fireEvent,
-  render,
-  waitFor
-} from "@testing-library/react";
+import { createEvent, fireEvent, render, screen } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { PopinSignature } from "@widget/signature/PopinSignature";
-import { acte } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
 
-
-
-test("renders PopinSignature, signature event is received and success displayed", async () => {
-  const { getByText } = render(
+test("DOIT render de la PopinSignature avec succès", () => {
+  render(
     <PopinSignature
-      documentsByRequete={{
-        "104b8563-c7f8-4748-9daa-f26558985894": {
-          documentsToSign: [
-            {
-              infos: [],
-              id: "f9279c00-5d2b-11ea-bc55-0242ac130004",
-              mimeType: "application/pdf",
-              nomDocument: "Naissance copie",
-              conteneurSwift: "b9bc2637eb612d9e0cd5d7bfb1a94207",
-              idRequete: "104b8563-c7f8-4748-9daa-f26558985894",
-              numeroRequete: "1"
-            }
-          ],
-          documentsToSave: [],
-          sousTypeRequete: SousTypeDelivrance.RDD,
-          acte: acte
-        }
-      }}
-      open={true}
-      onClose={() => {
-        return;
-      }}
+      estOuvert={true}
+      setEstOuvert={() => {}}
+      onSuccesSignature={() => {}}
+      titre="Titre Popin"
+      texte="Texte Popin"
     />
   );
-
-  fireEvent(
-    window,
-    // @ts-ignore
-    createEvent(
-      "signWebextResponse",
-      window,
-      {
-        detail: {
-          direction: "to-call-app",
-          erreurs: []
-        }
-      },
-      { EventType: "CustomEvent" }
-    )
-  );
-  await waitFor(() => {
-    const successMsg = getByText(
-      "Le(s) document(s) de la requête n°1 a (ont) été signé(s) le",
-      { exact: false }
-    );
-    expect(successMsg).toBeDefined();
-  });
+  expect(screen.getByText("Titre Popin")).toBeInTheDocument();
+  expect(screen.getByText("Texte Popin")).toBeInTheDocument();
 });
 
-test("renders PopinSignature, signature event is received and error displayed", async () => {
-  // Désactivation de la log car l'erreur loguée est normale
+test("DOIT appeller la methode de succès QUAND la signature se fait avec succès", () => {
   storeRece.logErrorOff = true;
-  const { getByText } = render(
+  const onSuccesSignatureMock = jest.fn();
+
+  render(
     <PopinSignature
-      documentsByRequete={{
-        "104b8563-c7f8-4748-9daa-f26558985894": {
-          documentsToSign: [
-            {
-              infos: [],
-              id: "f9279c00-5d2b-11ea-bc55-0242ac130004",
-              mimeType: "application/pdf",
-              nomDocument: "Naissance copie",
-              conteneurSwift: "b9bc2637eb612d9e0cd5d7bfb1a94207",
-              idRequete: "104b8563-c7f8-4748-9daa-f26558985894",
-              numeroRequete: "1"
-            }
-          ],
-          documentsToSave: [],
-          sousTypeRequete: SousTypeDelivrance.RDD,
-          acte: acte
-        }
-      }}
-      open={true}
-      onClose={() => {
-        return;
-      }}
+      estOuvert={true}
+      setEstOuvert={() => {}}
+      onSuccesSignature={onSuccesSignatureMock}
+      titre="Cette Popin est ouverte"
     />
   );
 
@@ -102,79 +38,66 @@ test("renders PopinSignature, signature event is received and error displayed", 
       {
         detail: {
           direction: "to-call-app",
-          erreurs: [
-            {
-              code: "TECH_1"
-            }
-          ]
+          erreur: null
         }
       },
       { EventType: "CustomEvent" }
     )
   );
-  await waitFor(() => {
-    const errorCode = getByText("Requête n°1");
-    const errorMsg = getByText("Erreur technique inconnue");
-    expect(errorCode).toBeDefined();
-    expect(errorMsg).toBeDefined();
-  });
+
+  expect(onSuccesSignatureMock).toHaveBeenCalled();
+});
+
+test("DOIT afficher un message d'erreur QUAND la signature échoue", () => {
+  storeRece.logErrorOff = true;
+  const onSuccesSignatureMock = jest.fn();
+
+  const { getByText } = render(
+    <PopinSignature
+      estOuvert={true}
+      setEstOuvert={() => {}}
+      onSuccesSignature={onSuccesSignatureMock}
+    />
+  );
+
+  fireEvent(
+    window,
+    // @ts-ignore
+    createEvent(
+      "signWebextResponse",
+      window,
+      {
+        detail: {
+          direction: "to-call-app",
+          erreur: {
+            code: "FONC_3",
+            libelle: "Code PIN invalide"
+          }
+        }
+      },
+      { EventType: "CustomEvent" }
+    )
+  );
+
+  const errorMsg = getByText("Code PIN invalide");
+  expect(errorMsg).toBeDefined();
+  expect(onSuccesSignatureMock).not.toHaveBeenCalled();
+
   storeRece.logErrorOff = false;
 });
 
-test("renders PopinSignature, code erroné", async () => {
-  // Désactivation de la log car l'erreur loguée est normale
-  storeRece.logErrorOff = true;
-  storeRece.codePin = "0121";
-  const { getByText } = render(
+test("DOIT fermer la popin QUAND le bouton Annuler est cliqué", () => {
+  const setEstOuvertMock = jest.fn();
+
+  render(
     <PopinSignature
-      documentsByRequete={{
-        "104b8563-c7f8-4748-9daa-f26558985894": {
-          documentsToSign: [
-            {
-              infos: [],
-              id: "f9279c00-5d2b-11ea-bc55-0242ac130004",
-              mimeType: "application/pdf",
-              nomDocument: "Naissance copie",
-              conteneurSwift: "b9bc2637eb612d9e0cd5d7bfb1a94207",
-              idRequete: "104b8563-c7f8-4748-9daa-f26558985894",
-              numeroRequete: "1"
-            }
-          ],
-          documentsToSave: [],
-          sousTypeRequete: SousTypeDelivrance.RDD,
-          acte: acte
-        }
-      }}
-      open={true}
-      onClose={() => {
-        return;
-      }}
+      estOuvert={true}
+      setEstOuvert={setEstOuvertMock}
+      onSuccesSignature={() => {}}
     />
   );
 
-  fireEvent(
-    window,
-    // @ts-ignore
-    createEvent(
-      "signWebextResponse",
-      window,
-      {
-        detail: {
-          direction: "to-call-app",
-          erreurs: [
-            {
-              code: "FONC_3"
-            }
-          ]
-        }
-      },
-      { EventType: "CustomEvent" }
-    )
-  );
-  await waitFor(() => {
-    expect(storeRece.codePin).toBeUndefined();
-  });
-  storeRece.logErrorOff = false;
+  fireEvent.click(screen.getByText("Annuler"));
+
+  expect(setEstOuvertMock).toHaveBeenCalledWith(false);
 });
-
-

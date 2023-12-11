@@ -1,4 +1,4 @@
-.PopinSignature {
+.popin-signature {
   .h2 {
     text-align: center;
   }
@@ -8,10 +8,26 @@
     margin-top: 1em;
   }
 
+  .texte-popin-signature {
+    padding: 1rem 2rem 2rem 2rem;    
+  }
+
   .MuiPaper-root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
     li.MuiListItem-root {
-      padding-top: 4px;
-      padding-bottom: 4px;
+      padding-top: 0.3rem;
+      padding-bottom: 0.3rem;  
     }
   }
 }

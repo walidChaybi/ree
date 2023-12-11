@@ -13,13 +13,6 @@ test("store rece works ", async () => {
   expect(storeRece.utilisateurCourant).toBeDefined();
 });
 
-test("store rece code pin ", async () => {
-  expect(storeRece.codePin).toBeUndefined();
-
-  storeRece.codePin = "1234";
-  expect(storeRece.codePin).toBeDefined();
-});
-
 test("get prenom d'un id ", () => {
   storeRece.listeUtilisateurs = [
     {

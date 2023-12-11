@@ -37,6 +37,7 @@ import { getDateActuelle } from "@util/DateUtils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { DEUX, getLibelle, UN } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
+import { SignatureCreation } from "@widget/signature/SignatureCreation";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import { FormikHelpers } from "formik";
 import React, { useContext, useEffect, useState } from "react";
@@ -82,6 +83,9 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
   const [dossierProjetActe, setDossierProjetActe] = useState<ISuiviDossier>();
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
   const [estProjetExistant, setEstProjetExistant] = useState<boolean>(false);
+  const [estOuvertPopinSignature, setEstOuvertPopinSignature] =
+    useState<boolean>(false);
+
   const [ongletSelectionne, setOngletSelectionne] = useState(UN);
 
   const [detailRequeteParams, setDetailRequeteParams] =
@@ -366,6 +370,10 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
 
   return (
     <div className="ApercuReqCreationEtablissementSaisieProjetPage">
+      <SignatureCreation
+        estOuvert={estOuvertPopinSignature}
+        setEstOuvert={setEstOuvertPopinSignature}
+      />
       {requete ? (
         <>
           {getConteneurResumeRequete(requete, true)}
@@ -384,6 +392,7 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
               estRegistreOuvert={estRegistreOuvert}
               estFormulaireModifie={isDirty}
               validerProjetActe={validerProjetActe}
+              setEstOuvertPopinSignature={setEstOuvertPopinSignature}
             />
           </div>
           <div className="OngletsApercuCreationEtablissement">

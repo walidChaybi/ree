@@ -6,7 +6,7 @@ test("renders progress bar, close function is called automatically", () => {
 
   render(
     <ProgressSignature
-      errors={false}
+      error={false}
       idsRequetesToSign={[]}
       onClose={handleClickButton}
       documentsByRequete={{
@@ -37,7 +37,7 @@ test("renders progress bar, close function is called when click on button", () =
 
   const { getByText } = render(
     <ProgressSignature
-      errors={true}
+      error={true}
       idsRequetesToSign={[]}
       onClose={handleClickButton}
       documentsByRequete={{
@@ -70,7 +70,7 @@ test("renders progress bar, close function can't be called", () => {
 
   const { getByText } = render(
     <ProgressSignature
-      errors={false}
+      error={false}
       onClose={handleClickButton}
       idsRequetesToSign={["idRequeteRDCSC", "idRequeteRDC"]}
       documentsByRequete={{

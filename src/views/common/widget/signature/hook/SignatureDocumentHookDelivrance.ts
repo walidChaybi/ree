@@ -1,9 +1,9 @@
 import { IMiseAJourDocumentParams } from "@api/appels/requeteApi";
+import { usePatchDocumentsReponseAvecSignatureApi } from "@hook/DocumentReponseHook";
 import {
   IDerniereDelivranceActeParams,
   useDerniereDelivranceActeApiHook
 } from "@hook/acte/DerniereDelivranceActeApiHook";
-import { usePatchDocumentsReponseAvecSignatureApi } from "@hook/DocumentReponseHook";
 import {
   IStockerDocumentsTeleverifParams,
   useStockerDocumentTeleverif
@@ -13,22 +13,22 @@ import {
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
 import { FormatDate } from "@util/DateUtils";
-import messageManager from "@util/messageManager";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
+import messageManager from "@util/messageManager";
 import moment from "moment";
 import { useCallback, useEffect, useState } from "react";
-import { SignatureErrors } from "../messages/ErrorsSignature";
+import { SignatureErreur } from "../messages/ErreurSignature";
 import { SuccessSignatureType } from "../messages/SuccessSignature";
 import {
-  DocumentsByRequete,
   DocumentToSave,
+  DocumentsByRequete,
   getDocumentAndSendToSignature,
   getNewStatusRequete,
   handleBackFromWebExtension,
   handleResultatPatch
-} from "./SignatureDocumentHookUtil";
+} from "./SignatureDocumentHookUtilDelivrance";
 
-export function useSignatureDocumentHook(
+export function useSignatureDocumentHookDelivrance(
   documentsByRequete: DocumentsByRequete,
   pinCode?: string
 ) {
@@ -41,7 +41,7 @@ export function useSignatureDocumentHook(
   const [successSignature, setSuccessSignature] = useState<
     SuccessSignatureType[]
   >([]);
-  const [errorsSignature, setErrorsSignature] = useState<SignatureErrors>();
+  const [errorSignature, setErrorSignature] = useState<SignatureErreur>();
   const [miseAJourDocumentParams, setMiseAJourDocumentParams] = useState<
     IMiseAJourDocumentParams[]
   >([]);
@@ -157,7 +157,7 @@ export function useSignatureDocumentHook(
   useEffect(() => {
     handleResultatPatch(
       resultatPatchDocumentReponse,
-      setErrorsSignature,
+      setErrorSignature,
       documentsByRequete,
       idRequetesToSign,
       majStatusRequete
@@ -187,7 +187,7 @@ export function useSignatureDocumentHook(
     setDocumentsToSignWating(documentsByRequete);
     setIdRequetesToSign(Object.keys(documentsByRequete));
     setSuccessSignature([]);
-    setErrorsSignature(undefined);
+    setErrorSignature(undefined);
   }, [documentsByRequete]);
 
   /**
@@ -202,7 +202,7 @@ export function useSignatureDocumentHook(
         (event as CustomEvent).detail,
         documentsToSignWating,
         idRequetesToSign,
-        setErrorsSignature,
+        setErrorSignature,
         setDocumentsToSignWating,
         setDocumentsToSave
       );
@@ -215,7 +215,7 @@ export function useSignatureDocumentHook(
     getDocumentAndSendToSignature(
       idRequetesToSign,
       documentsToSignWating,
-      setErrorsSignature,
+      setErrorSignature,
       setDocumentsToSignWating,
       handleBackFromWebExtensionCallback,
       setDocumentsToSave,
@@ -229,13 +229,11 @@ export function useSignatureDocumentHook(
   ]);
 
   useEffect(() => {
-    // Ajout du listener pour communiquer avec la webextension
     window.top &&
       window.top.addEventListener(
         "signWebextResponse",
         handleBackFromWebExtensionCallback
       );
-
     return () => {
       window.top &&
         window.top.removeEventListener(
@@ -247,7 +245,7 @@ export function useSignatureDocumentHook(
 
   return {
     successSignature,
-    errorsSignature,
+    errorSignature,
     idRequetesToSign
   };
 }

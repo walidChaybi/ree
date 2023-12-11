@@ -2,15 +2,9 @@ import { IEntite } from "@model/agent/IEntiteRattachement";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
-import parametres from "../../../ressources/parametres.json";
-import { Rot5 } from "./crypto/Rot5";
-
-const codePin = parametres.code_pin;
 
 class StoreRece {
   private _utilisateurCourant?: IOfficier;
-  private _codePin?: string;
-  private _timerCodePin?: number;
   private _retourUrl = "";
   private _listeUtilisateurs: IUtilisateur[] = [];
   private _listeEntite: IEntite[] = [];
@@ -45,20 +39,6 @@ class StoreRece {
     return this._utilisateurCourant;
   }
 
-  set codePin(code: string | undefined) {
-    this._codePin = Rot5.crypte(code);
-    this.timeoutCodePin();
-  }
-
-  get codePin(): string | undefined {
-    this.timeoutCodePin();
-    return Rot5.decrypte(this._codePin);
-  }
-
-  resetCodePin() {
-    this._codePin = undefined;
-  }
-
   set listeUtilisateurs(liste: IUtilisateur[]) {
     this._listeUtilisateurs = liste;
   }
@@ -82,16 +62,6 @@ class StoreRece {
   get listeEntite(): IEntite[] {
     return this._listeEntite;
   }
-
-  // La sauvegarde du code pin est de 30 min (1800000 millisecondes) depuis sa dernière utilisation
-  private readonly timeoutCodePin = () => {
-    if (this._timerCodePin != null) {
-      window.clearTimeout(this._timerCodePin);
-    }
-    this._timerCodePin = window.setTimeout(() => {
-      this._codePin = undefined;
-    }, codePin.time_out_ms);
-  };
 
   public getNomPrenomUtilisateurAPartirId(id: string) {
     return `${this.getNomUtilisateurAPartirID(

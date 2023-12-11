@@ -1,23 +1,23 @@
 import { getDocumentReponseById } from "@api/appels/requeteApi";
 import { IResultatPatchDocumentReponse } from "@hook/DocumentReponseHook";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
-import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
 import { gestionnaireSignatureFlag } from "@util/signatureFlag/gestionnaireSignatureFlag";
 import gestionnaireTimer from "@util/timer/GestionnaireTimer";
 import parametres from "../../../../../ressources/parametres.json";
-import { SignatureErrors } from "../messages/ErrorsSignature";
+import { SignatureErreur } from "../messages/ErreurSignature";
 export interface DocumentsByRequete {
   [idRequete: string]: DocumentsATraiter;
 }
 
 export interface SignatureReturn {
   document: string;
-  erreurs: SignatureErrors[];
+  erreur: SignatureErreur;
 }
 
 export interface DocumentToSign {
@@ -54,6 +54,8 @@ export interface DocumentToSave {
 
 export const DIRECTION_TO_CALL_APP = "to-call-app";
 export const CODE_ERREUR_NON_DISPO = "WEB_EXT1";
+export const LIBELLE_ERREUR_NON_DISPO =
+  "La signature électronique est actuellement indisponible ou n'est pas installée.";
 export const TIMER_SIGNATURE = "TimerContactWebExt";
 export const SIGNATURE_TIMEOUT = parametres.signature.time_out_ms;
 export const MAX_LEN_DOCUMENT_TO_SIGN_IN_BYTES =
@@ -62,7 +64,7 @@ export const MAX_LEN_DOCUMENT_TO_SIGN_IN_BYTES =
 export const EVENT_NON_DISPO = {
   detail: {
     direction: DIRECTION_TO_CALL_APP,
-    erreurs: [{ code: CODE_ERREUR_NON_DISPO }]
+    erreur: { code: CODE_ERREUR_NON_DISPO, libelle: LIBELLE_ERREUR_NON_DISPO }
   }
 };
 
@@ -117,7 +119,7 @@ function sendDocumentToSignature(
       ? gestionnaireSignatureFlag.getSignatureMode()
       : ModeSignature.CERTIGNA_SIGNED,
     infos: documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].infos,
-    erreursSimulees: getErrorsMock()
+    erreurSimulee: getErrorMock()
   };
 
   gestionnaireTimer.declancheTimer(
@@ -136,7 +138,7 @@ function sendDocumentToSignature(
 export function getDocumentAndSendToSignature(
   idRequetesToSign: string[],
   documentsToSignWating: DocumentsByRequete,
-  setErrorsSignature: (errors: SignatureErrors) => void,
+  setErrorSignature: (error: SignatureErreur) => void,
   setDocumentsToSignWating: (documentByRequete: DocumentsByRequete) => void,
   handleBackFromWebExtensionCallback: any,
   setDocumentsToSave: React.Dispatch<React.SetStateAction<DocumentToSave[]>>,
@@ -149,18 +151,28 @@ export function getDocumentAndSendToSignature(
       .then((resultApi: any) => {
         const result: IDocumentReponse = resultApi.body.data;
         if (!result.contenu) {
-          setErrorsSignature({
-            numeroRequete:
+          setErrorSignature({
+            complementInformationErreur: `Requête n°${
               documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
-                .numeroRequete,
-            erreurs: [{ code: "FONC_4", libelle: "", detail: "" }]
+                .numeroRequete
+            }`,
+            typeErreur: {
+              code: "FONC_4",
+              libelle: "Document à signer vide ou null",
+              detail: ""
+            }
           });
         } else if (result.contenu.length > MAX_LEN_DOCUMENT_TO_SIGN_IN_BYTES) {
-          setErrorsSignature({
-            numeroRequete:
+          setErrorSignature({
+            complementInformationErreur: `Requête n°${
               documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
-                .numeroRequete,
-            erreurs: [{ code: "FONC_10", libelle: "", detail: "" }]
+                .numeroRequete
+            }`,
+            typeErreur: {
+              code: "FONC_10",
+              libelle: "Document à signer trop gros",
+              detail: ""
+            }
           });
         } else if (estUnDocumentASigner(result.typeDocument)) {
           sendDocumentToSignature(
@@ -188,11 +200,17 @@ export function getDocumentAndSendToSignature(
         }
       })
       .catch(error => {
-        setErrorsSignature({
-          numeroRequete:
+        setErrorSignature({
+          complementInformationErreur: `Requête n°${
             documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
-              .numeroRequete,
-          erreurs: [{ code: "FONC_11", libelle: "", detail: "" }]
+              .numeroRequete
+          }`,
+          typeErreur: {
+            code: "FONC_11",
+            libelle:
+              "Récupération des documents à signer impossible actuellement",
+            detail: ""
+          }
         });
       });
   }
@@ -222,26 +240,21 @@ export function getNewStatusRequete(
   }
 }
 
-function getErrorsMock(): string[] {
-  const erreurs: string[] = [];
-  const erreursMockTest = document.cookie.replace(
+function getErrorMock(): string | null {
+  const erreurMockTest = document.cookie.replace(
     /(?:(?:^|.*;\s*)receTestErreur\s*=\s*([^;]*).*$)|^.*$/,
     "$1"
   );
 
-  if (erreursMockTest !== "" && erreursMockTest !== undefined) {
-    erreurs.push(erreursMockTest);
+  if (erreurMockTest !== "" && erreurMockTest !== undefined) {
+    return erreurMockTest;
   }
 
-  return erreurs;
+  return null;
 }
 
 export function laDirectionEstVersLAppliRece(result: any) {
   return result.direction && result.direction === DIRECTION_TO_CALL_APP;
-}
-
-export function desErreursOntEteRecues(result: any) {
-  return result.erreurs !== undefined && result.erreurs.length > 0;
 }
 
 export function processResultWebExtension(
@@ -263,13 +276,11 @@ export function handleResultatPatch(
   if (resultatPatchDocumentReponse) {
     if (resultatPatchDocumentReponse.erreur) {
       setErrorsSignature({
-        erreurs: [
-          {
-            code: "UPDATE_DOC",
-            libelle: "",
-            detail: ""
-          }
-        ],
+        erreur: {
+          code: "UPDATE_DOC",
+          libelle: "Impossible de mettre à jour les documents",
+          detail: ""
+        },
         numeroRequete:
           documentsByRequete[idRequetesToSign[0]].documentsToSave[0]
             ?.numeroRequete
@@ -285,7 +296,7 @@ export function handleBackFromWebExtension(
   documentsToSignWating: DocumentsByRequete,
   idRequetesToSign: string[],
   setErrorsSignature: React.Dispatch<
-    React.SetStateAction<SignatureErrors | undefined>
+    React.SetStateAction<SignatureErreur | undefined>
   >,
   setDocumentsToSignWating: React.Dispatch<
     React.SetStateAction<DocumentsByRequete>
@@ -294,12 +305,13 @@ export function handleBackFromWebExtension(
 ): void {
   gestionnaireTimer.annuleTimer(TIMER_SIGNATURE);
   if (laDirectionEstVersLAppliRece(resultat)) {
-    if (desErreursOntEteRecues(resultat)) {
+    if (resultat.erreur && Object.keys(resultat.erreur).length > 0) {
       setErrorsSignature({
-        numeroRequete:
+        typeErreur: resultat.erreur,
+        complementInformationErreur: `Requête n°${
           documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
-            ?.numeroRequete,
-        erreurs: resultat.erreurs
+            ?.numeroRequete
+        }`
       });
     } else {
       changeDocumentToSign(

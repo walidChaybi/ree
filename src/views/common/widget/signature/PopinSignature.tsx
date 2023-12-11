@@ -1,80 +1,56 @@
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle
-} from "@mui/material";
-import { storeRece } from "@util/storeRece";
+import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { getLibelle } from "@util/Utils";
-import React from "react";
-import { FormPinCode } from "./FormPinCode";
-import { useSignatureDocumentHook } from "./hook/SignatureDocumentHook";
-import { DocumentsByRequete } from "./hook/SignatureDocumentHookUtil";
-import { ErrorsSignature } from "./messages/ErrorsSignature";
-import { SuccessSignature } from "./messages/SuccessSignature";
-import { ProgressSignature } from "./ProgressSignature";
+import React, { useEffect } from "react";
+import { CodePinForm } from "./CodePinForm";
+import { useSignatureHook } from "./hook/SignatureHook";
+import { ErreurSignature } from "./messages/ErreurSignature";
 import "./scss/PopinSignature.scss";
 
-interface PopinSignatureProps {
-  documentsByRequete: DocumentsByRequete;
-  open: boolean;
-  onClose: (isOpen: boolean, hasError: boolean) => void;
+export interface PopinSignatureProps {
+  titre: string;
+  estOuvert: boolean;
+  setEstOuvert: React.Dispatch<React.SetStateAction<boolean>>;
+  onSuccesSignature: (document: string) => void;
+  texte?: string;
 }
 
-export const PopinSignature: React.FC<PopinSignatureProps> = ({
-  documentsByRequete,
-  open,
-  onClose
-}) => {
-  const [pinCode, setPinCode] = React.useState<string | undefined>(
-    storeRece.codePin
-  );
+export const PopinSignature: React.FC<PopinSignatureProps> = props => {
+  const [codePin, setCodePin] = React.useState<string | undefined>();
+  const { succes, erreur } = useSignatureHook(codePin);
 
-  const { successSignature, errorsSignature, idRequetesToSign } =
-    useSignatureDocumentHook(documentsByRequete, pinCode);
+  useEffect(() => {
+    if (succes || erreur?.typeErreur.code === "FONC_3") {
+      setCodePin(undefined);
+    }
+  }, [erreur, succes]);
 
-  // Si une des erreurs concerne le code Pin on le réinitialise pour que l'utilisateur le saisisse à nouveau lors d'une prochaine tentative de signature
-  if (storeRece.codePin && erreurDeCodePin()) {
-    storeRece.resetCodePin();
-    setPinCode(storeRece.codePin);
-  }
+  useEffect(() => {
+    if (succes) {
+      props.onSuccesSignature("test"); // TODO: RECE-1318
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [succes]);
 
   return (
     <>
       <Dialog
-        open={open}
+        open={props.estOuvert}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        className="PopinSignature"
+        className="popin-signature"
       >
         <DialogTitle id="alert-dialog-title">
-          {getLibelle("Signature des documents")}
+          {getLibelle(props.titre)}
         </DialogTitle>
         <DialogContent>
-          <SuccessSignature successes={successSignature} />
-
-          {errorsSignature !== undefined && (
-            <ErrorsSignature errors={errorsSignature} />
-          )}
-          {pinCode !== undefined || erreurDeCodePin() ? (
-            <>
-              <ProgressSignature
-                onClose={onClose}
-                errors={errorsSignature !== undefined}
-                documentsByRequete={documentsByRequete}
-                idsRequetesToSign={idRequetesToSign}
-              />
-            </>
-          ) : (
-            <FormPinCode onClose={onClose} setPinCode={setPinCode} />
-          )}
+          {erreur && <ErreurSignature erreur={erreur} />}
+          <div className="texte-popin-signature">{getLibelle(props.texte)}</div>
+          <CodePinForm
+            onClose={() => props.setEstOuvert(false)}
+            setCodePin={setCodePin}
+          />
         </DialogContent>
-        <DialogActions></DialogActions>
       </Dialog>
     </>
   );
-
-  function erreurDeCodePin() {
-    return errorsSignature?.erreurs.find(erreur => erreur.code === "FONC_3");
-  }
 };

@@ -1,9 +1,13 @@
 @import "../../../../../../scss/colors";
 
-.ErrorItem {
+.error-message {
   color: $error;
+  margin-left: 1rem;
 
   p {
     color: $error;
+    margin-top:0;
+    margin-left: 1rem;
+
   }
 }

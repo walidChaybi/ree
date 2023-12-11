@@ -116,7 +116,7 @@ test("renders titre bouton signature 2", async () => {
   });
   expect(screen.getByText(/Signature des documents/i)).toBeDefined();
   act(() => {
-    const pinCodeInput = document.getElementById("pinCode");
+    const pinCodeInput = document.getElementById("codePin");
 
     fireEvent.change(pinCodeInput!, {
       target: { value: "1234" }

@@ -8,8 +8,8 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { useSignatureDocumentHook } from "@widget/signature/hook/SignatureDocumentHook";
-import { DocumentsByRequete } from "@widget/signature/hook/SignatureDocumentHookUtil";
+import { useSignatureDocumentHookDelivrance } from "@widget/signature/hook/SignatureDocumentHookDelivrance";
+import { DocumentsByRequete } from "@widget/signature/hook/SignatureDocumentHookUtilDelivrance";
 import React from "react";
 
 const documentsByRequete: DocumentsByRequete = {
@@ -54,7 +54,7 @@ const documentsByRequete: DocumentsByRequete = {
 };
 
 const HookConsummer: React.FC = () => {
-  const { idRequetesToSign = [] } = useSignatureDocumentHook(
+  const { idRequetesToSign = [] } = useSignatureDocumentHookDelivrance(
     documentsByRequete,
     "1324"
   );
