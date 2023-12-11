@@ -8,7 +8,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 
 function afficheComposantAcquisitionSaisieDeProjet(
-  afficherDateDecret: boolean
+  estAvancementASigner: boolean
 ) {
   const requete = mappingRequeteCreation(
     requeteCreationEtablissementSaisieProjet
@@ -28,13 +28,13 @@ function afficheComposantAcquisitionSaisieDeProjet(
     >
       <AcquisitionForm
         nom={ACQUISITION}
-        afficherDateDecret={afficherDateDecret}
+        estAvancementASigner={estAvancementASigner}
       />
     </Formulaire>
   );
 }
 
-test("DOIT afficher la nature et la date decret QUAND on affiche tous les champs", async () => {
+test("DOIT afficher la nature et la date decret QUAND l'avancement est a signer", async () => {
   afficheComposantAcquisitionSaisieDeProjet(true);
 
   const champNature = screen.getByLabelText("Nature") as HTMLInputElement;

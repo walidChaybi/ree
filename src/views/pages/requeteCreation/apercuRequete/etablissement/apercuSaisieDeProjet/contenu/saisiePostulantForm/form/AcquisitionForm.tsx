@@ -17,14 +17,13 @@ import { useState } from "react";
 
 interface IAcquisitionFormProps {
   nom: string;
-  afficherDateDecret: boolean;
   estAvancementASigner: boolean;
 }
 type AcquisitionFormProps = IAcquisitionFormProps & FormikComponentProps;
 
 const AcquisitionForm: React.FC<AcquisitionFormProps> = props => {
   const [afficherDateDecret, setAfficherDateDecret] = useState<boolean>(
-    props.afficherDateDecret
+    props.estAvancementASigner
   );
   const nature = props.formik.getFieldProps(
     withNamespace(props.nom, NATURE)
