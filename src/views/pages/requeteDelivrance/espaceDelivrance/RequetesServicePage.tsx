@@ -26,7 +26,7 @@ import {
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   HeaderTableauRequete,
   dateStatutColumnHeaders,
@@ -81,6 +81,8 @@ export const RequetesServicePage: React.FC<
     React.useState<IQueryParametersPourRequetes>();
   const [enChargement, setEnChargement] = React.useState(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
+  const [estTableauARafraichir, setEstTableauARafraichir] =
+    useState<boolean>(false);
 
   const { dataState, paramsTableau, onSubmitFiltres } =
     useRequeteDelivranceApiHook(
@@ -98,6 +100,9 @@ export const RequetesServicePage: React.FC<
       setParametresLienRequete(queryParametersPourRequetes);
     }
   }
+  useEffect(() => {
+    setEstTableauARafraichir(false);
+  }, [estTableauARafraichir]);
 
   function rafraichirParent() {
     setParametresLienRequete({
@@ -172,6 +177,7 @@ export const RequetesServicePage: React.FC<
       setParametresLienRequete(defaultParamsRequetes);
     }
     onSubmitFiltres(values);
+    setEstTableauARafraichir(true);
   }
 
   return (
@@ -199,6 +205,7 @@ export const RequetesServicePage: React.FC<
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}
+        resetTableau={estTableauARafraichir}
       />
       <BoutonRetour />
     </>

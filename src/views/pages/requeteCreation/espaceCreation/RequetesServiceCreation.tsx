@@ -17,21 +17,21 @@ import {
   useTransfertsApi
 } from "@hook/requete/TransfertHook";
 import { IFiltreServiceRequeteCreationFormValues } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
-import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
+import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import { SortOrder } from "@widget/tableau/TableUtils";
+import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import React, { useCallback, useEffect, useState } from "react";
 import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
@@ -66,6 +66,8 @@ export const RequetesServiceCreation: React.FC<
     idRequetesSelectionneesAttribueeA,
     setIdRequetesSelectionneesAttribueeA
   ] = useState<string[]>([]);
+  const [estTableauARafraichir, setEstTableauARafraichir] =
+    useState<boolean>(false);
 
   const { dataState, paramsTableau, onSubmit } = useRequeteCreationApiHook(
     TypeAppelRequete.REQUETE_CREATION_SERVICE,
@@ -121,6 +123,10 @@ export const RequetesServiceCreation: React.FC<
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatTransfertsApi]);
+
+  useEffect(() => {
+    setEstTableauARafraichir(false);
+  }, [estTableauARafraichir]);
 
   const onClosePopinAttribuerA = () => {
     props.setPopinAttribuerAOuvert(false);
@@ -190,6 +196,7 @@ export const RequetesServiceCreation: React.FC<
       setParametresLienRequete(props.queryParametersPourRequetes);
     }
     onSubmit(values);
+    setEstTableauARafraichir(true);
   }
 
   return (
@@ -219,6 +226,7 @@ export const RequetesServiceCreation: React.FC<
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
         onChangementDePage={() => setIdRequetesSelectionneesAttribueeA([])}
+        resetTableau={estTableauARafraichir}
       />
 
       <TransfertPopin
