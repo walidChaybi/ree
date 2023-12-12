@@ -161,7 +161,9 @@ function mapDecretNaturalisation(
 ): IDecretNaturalisation {
   return {
     numeroDecret: getValeurOuUndefined(decretNaturalisation?.numeroDecret),
-    dateSignature: getValeurOuUndefined(decretNaturalisation?.dateSignature),
+    dateSignature: new Date(
+      getValeurOuUndefined(decretNaturalisation?.dateSignature)
+    ),
     natureDecret: getValeurOuUndefined(decretNaturalisation?.natureDecret)
   };
 }
