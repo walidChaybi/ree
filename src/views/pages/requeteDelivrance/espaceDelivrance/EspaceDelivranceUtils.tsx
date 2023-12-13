@@ -10,6 +10,7 @@ import {
   autorisePrendreEnChargeReqTableauDelivrance,
   indexParamsReq
 } from "@util/RequetesUtils";
+import { DEUX, UN, ZERO } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { SortOrder } from "@widget/tableau/TableUtils";
 
@@ -20,14 +21,23 @@ export function goToLinkRequete(
   let queryParameters: IQueryParametersPourRequetes | undefined = undefined;
   if (link.indexOf("range") > 0) {
     let params = [];
+    const estRequeteService = separator === "requetesService";
     params = link.split(`${separator}?`)[1].split("&");
     queryParameters = {
-      statuts: [
-        StatutRequete.getEnumFor(params[indexParamsReq.Statut].split("=")[1])
-      ],
-      tri: params[indexParamsReq.Tri].split("=")[1],
-      sens: params[indexParamsReq.Sens].split("=")[1] as SortOrder,
-      range: params[indexParamsReq.Range].split("=")[1]
+      statuts: estRequeteService
+        ? []
+        : [
+            StatutRequete.getEnumFor(
+              params[indexParamsReq.Statut].split("=")[1]
+            )
+          ],
+
+      tri: params[estRequeteService ? ZERO : indexParamsReq.Tri].split("=")[1],
+      sens: params[estRequeteService ? UN : indexParamsReq.Sens].split(
+        "="
+      )[1] as SortOrder,
+      range:
+        params[estRequeteService ? DEUX : indexParamsReq.Range].split("=")[1]
     };
   }
   return queryParameters;

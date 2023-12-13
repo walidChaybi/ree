@@ -2,9 +2,9 @@ import {
   requeteRDCSC,
   requeteRDCSCCertificatSituationRCA
 } from "@mock/data/requeteDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { mappingRequetesTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import {
   ADonneesTitulaireRequeteAbsentes,
   goToLinkRequete
@@ -14,8 +14,8 @@ import { getIconPrioriteRequete } from "@util/tableauRequete/TableauRequeteUtils
 
 test("espace delivrance utils goToLinkRequete", () => {
   const result = goToLinkRequete(
-    "<http://localhost:80/rece-requete-api/v2/requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105",
-    "requetesService"
+    "<http://localhost:80/rece-requete-api/v2/requetes/mesrequetescreation?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105",
+    "mesrequetescreation"
   );
   expect(result?.statuts).toStrictEqual([StatutRequete.A_SIGNER]);
   expect(result?.tri).toBe("dateStatut");

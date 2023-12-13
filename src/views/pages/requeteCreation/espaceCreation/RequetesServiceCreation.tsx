@@ -17,21 +17,21 @@ import {
   useTransfertsApi
 } from "@hook/requete/TransfertHook";
 import { IFiltreServiceRequeteCreationFormValues } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
-import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
+import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
-import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { SortOrder } from "@widget/tableau/TableUtils";
+import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import React, { useCallback, useEffect, useState } from "react";
 import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
@@ -80,7 +80,7 @@ export const RequetesServiceCreation: React.FC<
 
   const resultatTransfertsApi = useTransfertsApi(paramsAttributionParLot);
 
-  const changementDePage = useCallback((link: string) => {
+  const changementDePage = (link: string) => {
     const queryParametersPourRequetes = goToLinkRequete(
       link,
       "requetesService"
@@ -88,7 +88,7 @@ export const RequetesServiceCreation: React.FC<
     if (queryParametersPourRequetes) {
       setParametresLienRequete(queryParametersPourRequetes);
     }
-  }, []);
+  };
 
   const handleChangeSortTableau = useCallback(
     (tri: string, sens: SortOrder) => {
