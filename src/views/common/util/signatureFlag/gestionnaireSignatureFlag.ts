@@ -3,7 +3,7 @@ import { ModeSignature } from "@model/requete/ModeSignature";
 const NOM_CLE_SIGNATURE_FLAG = "signatureFlag";
 
 class GestionnaireSignatureFlag {
-  getSignatureMode(): ModeSignature {
+  getModeSignature(): ModeSignature {
     return localStorage.getItem(NOM_CLE_SIGNATURE_FLAG) as ModeSignature;
   }
 }

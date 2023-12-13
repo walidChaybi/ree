@@ -13,9 +13,12 @@ import {
   TITULAIRE,
   VILLE_NAISSANCE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { IDecretNaturalisation } from "@model/etatcivil/acte/IDecretNaturalisation";
+import { IRegistre } from "@model/etatcivil/acte/IRegistre";
 import { IProjetAnalyseMarginale } from "@model/etatcivil/acte/projetActe/IAnalyseMarginaleProjetActe";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ITitulaireProjetActe } from "@model/etatcivil/acte/projetActe/ITitulaireProjetActe";
+import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import {
   ISaisieAnalyseMarginale,
   ISaisieDate,
@@ -98,6 +101,24 @@ export function getConteneurPieceJustificative(
     </ConteneurRetractable>
   );
 }
+
+export const estOuvertRegistrePapier = (
+  decretNaturalisaton?: IDecretNaturalisation | null,
+  registrePapier?: IRegistre
+): boolean => {
+  let estOuvert = false;
+
+  if (decretNaturalisaton && registrePapier) {
+    const [support1, annee] = decretNaturalisaton?.numeroDecret.split("/");
+    estOuvert =
+      TypeFamille.estACQ(TypeFamille.getEnumFor(registrePapier.famille)) &&
+      registrePapier.pocopa === "X" &&
+      Number(registrePapier.annee) === Number(annee) &&
+      registrePapier.support1 === support1;
+  }
+
+  return estOuvert;
+};
 
 export function estModifieBulletinIdentification(
   saisieProjetPostulant: ISaisieProjetPostulantForm,

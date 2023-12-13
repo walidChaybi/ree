@@ -69,24 +69,22 @@ import {
   ISaisieProjetPostulantForm
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { TypeNature } from "@model/requete/enum/TypeNature";
 import { TypeReconnaissance } from "@model/requete/enum/TypeReconnaissance";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { getDateComposeFromDate } from "@util/DateUtils";
-import {
-  DEUX,
-  SPC,
-  UN,
-  ZERO,
-  formatPremieresLettresMajusculesNomCompose,
-  getValeurOuNull,
-  numberToString,
-  rempliAGaucheAvecZero
-} from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import {
+  DEUX, formatPremieresLettresMajusculesNomCompose,
+  getValeurOuNull,
+  numberToString,
+  rempliAGaucheAvecZero, SPC,
+  UN,
+  ZERO
+} from "@util/Utils";
 import { mapFrancisationPostulant } from "./mappingTitulaireVersFormulairePostulant";
 
 export const mappingProjetActeVersFormulairePostulant = (

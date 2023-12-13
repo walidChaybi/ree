@@ -1,16 +1,17 @@
 import { getDocumentReponseById } from "@api/appels/requeteApi";
 import { IResultatPatchDocumentReponse } from "@hook/DocumentReponseHook";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
 import { gestionnaireSignatureFlag } from "@util/signatureFlag/gestionnaireSignatureFlag";
 import gestionnaireTimer from "@util/timer/GestionnaireTimer";
 import parametres from "../../../../../ressources/parametres.json";
 import { SignatureErreur } from "../messages/ErreurSignature";
+import { IDetailInfos } from "../types";
 export interface DocumentsByRequete {
   [idRequete: string]: DocumentsATraiter;
 }
@@ -21,18 +22,13 @@ export interface SignatureReturn {
 }
 
 export interface DocumentToSign {
-  infos: InfosSignature[];
+  infos: IDetailInfos[];
   id: string;
   mimeType: string;
   nomDocument: string;
   conteneurSwift: string;
   idRequete: string;
   numeroRequete: string;
-}
-
-export interface InfosSignature {
-  cle: string;
-  valeur: string;
 }
 
 export interface DocumentsATraiter {
@@ -113,10 +109,10 @@ function sendDocumentToSignature(
     direction: "to-webextension",
     document: result.contenu,
     pin: pinCode,
-    mode: ModeSignatureUtil.isValid(
-      gestionnaireSignatureFlag.getSignatureMode()
+    mode: ModeSignatureUtil.estValide(
+      gestionnaireSignatureFlag.getModeSignature()
     )
-      ? gestionnaireSignatureFlag.getSignatureMode()
+      ? gestionnaireSignatureFlag.getModeSignature()
       : ModeSignature.CERTIGNA_SIGNED,
     infos: documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].infos,
     erreurSimulee: getErrorMock()

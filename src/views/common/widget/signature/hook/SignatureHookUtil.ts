@@ -2,7 +2,11 @@ import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
 import { gestionnaireSignatureFlag } from "@util/signatureFlag/gestionnaireSignatureFlag";
 import gestionnaireTimer from "@util/timer/GestionnaireTimer";
 import parametres from "../../../../../ressources/parametres.json";
-import { SignatureErreur } from "../messages/ErreurSignature";
+import {
+  DetailSignature,
+  DetailSignatureToCallApp,
+  IDetailInfos
+} from "../types";
 
 export const DIRECTION_TO_CALL_APP = "to-call-app";
 export const CODE_ERREUR_NON_DISPO = "WEB_EXT1";
@@ -16,17 +20,16 @@ export const MAX_LEN_DOCUMENT_TO_SIGN_IN_BYTES =
 export const EVENT_NON_DISPO = {
   detail: {
     direction: DIRECTION_TO_CALL_APP,
-    erreurs: [
-      {
-        code: CODE_ERREUR_NON_DISPO,
-        libelle: LIBELLE_ERREUR_NON_DISPO
-      }
-    ]
+    erreur: {
+      code: CODE_ERREUR_NON_DISPO,
+      libelle: LIBELLE_ERREUR_NON_DISPO,
+      detail: ""
+    }
   }
 };
 
-// A Supprimer lorsque le vrai document à signer sera envoyé à la WebExtension, permet d'appeller la signature sans erreur
-const documentMock =
+// Document vide pour simuler une signature fictive et remonter les informations de la carte.
+export const DOCUMENT_VIDE_A_SIGNER =
   "JVBERi0xLjYKJcOkw7zDtsOfCjIgMCBvYmoKPDwvTGVuZ3RoIDMgMCBSL0ZpbHRlci9GbGF0ZURlY29kZT4+CnN0cmVhbQp4nCXKuwrCQBBG4X6e4q+FjDOTbH"+
   "YWli0CpkgXGEghdl46wTS+voqc6oMjrHjTCwJhMUcqiS0n+KDso2K/0XbA83982x80BaWRHTn3XLwgrjjOCjXE/VxFm1WxplX61tnPl1joFLTSig8XpBemCmVu"+
   "ZHN0cmVhbQplbmRvYmoKCjMgMCBvYmoKMTA5CmVuZG9iagoKNSAwIG9iago8PC9MZW5ndGggNiAwIFIvRmlsdGVyL0ZsYXRlRGVjb2RlL0xlbmd0aDEgNzc5Mj4"+
@@ -97,24 +100,28 @@ const documentMock =
   "wMjE5IDAwMDAwIG4gCjAwMDAwMDQ3MTkgMDAwMDAgbiAKMDAwMDAwNDc0MCAwMDAwMCBuIAowMDAwMDA0OTM1IDAwMDAwIG4gCjAwMDAwMDUyMzkgMDAwMDAgbi"+
   "AKMDAwMDAwNTQxMCAwMDAwMCBuIAowMDAwMDA1NDQyIDAwMDAwIG4gCjAwMDAwMDU3OTEgMDAwMDAgbiAKMDAwMDAwNTg4OCAwMDAwMCBuIAp0cmFpbGVyCjw8L"+
   "1NpemUgMTQvUm9vdCAxMiAwIFIKL0luZm8gMTMgMCBSCi9JRCBbIDw0NDM1QzY0OUQ0OURDQjkwRkFDMTM5MUNCNTk1M0ZFMD4KPDQ0MzVDNjQ5RDQ5RENCOTBG"+
-  "QUMxMzkxQ0I1OTUzRkUwPiBdCi9Eb2NDaGVja3N1bSAvQjM1QzUyOTJFRTI3ODhCNzZCODEyODNFRjBDNDIwMDIKPj4Kc3RhcnR4cmVmCjYwNjMKJSVFT0YK"; // TODO : us155
+  "QUMxMzkxQ0I1OTUzRkUwPiBdCi9Eb2NDaGVja3N1bSAvQjM1QzUyOTJFRTI3ODhCNzZCODEyODNFRjBDNDIwMDIKPj4Kc3RhcnR4cmVmCjYwNjMKJSVFT0YK";
 
-export function sendToSignature(
-  handleBackFromWebExtensionCallback: (event: Event) => void,
-  pinCode?: string
+export function signerDocument(
+  document: string,
+  handleBackFromWebExtensionCallback: (event: CustomEvent) => void,
+  infos: IDetailInfos[] = [],
+  codePin?: string
 ) {
-  if (pinCode !== undefined) {
-    const detail = {
+  if (codePin !== undefined) {
+    const modeSignature: ModeSignature = ModeSignatureUtil.estValide(
+      gestionnaireSignatureFlag.getModeSignature()
+    )
+      ? gestionnaireSignatureFlag.getModeSignature()
+      : ModeSignature.CERTIGNA_SIGNED;
+
+    const detail: DetailSignature = {
       function: "SIGN",
       direction: "to-webextension",
-      document: documentMock,
-      pin: pinCode,
-      mode: ModeSignatureUtil.isValid(
-        gestionnaireSignatureFlag.getSignatureMode()
-      )
-        ? gestionnaireSignatureFlag.getSignatureMode()
-        : ModeSignature.CERTIGNA_SIGNED,
-      infos: [], // TODO : us155
+      document,
+      pin: codePin,
+      mode: modeSignature,
+      infos,
       erreurSimulee: null
     };
 
@@ -131,28 +138,14 @@ export function sendToSignature(
   }
 }
 
-export function laDirectionEstVersLAppliRece(result: any) {
-  return result.direction && result.direction === DIRECTION_TO_CALL_APP;
-}
-
 export function handleBackFromWebExtension(
-  resultat: any,
-  setErreur: React.Dispatch<React.SetStateAction<SignatureErreur | undefined>>,
-  setSucces: React.Dispatch<React.SetStateAction<boolean>>
+  detail: DetailSignature,
+  setResultatWebext: React.Dispatch<
+    React.SetStateAction<DetailSignatureToCallApp | undefined>
+  >
 ): void {
   gestionnaireTimer.annuleTimer(TIMER_SIGNATURE);
-  laDirectionEstVersLAppliRece(resultat) &&
-    (resultat.erreur && Object.keys(resultat.erreur).length > 0
-      ? setErreur({
-          typeErreur: resultat.erreur
-        })
-      : onSuccesSignature(setErreur, setSucces));
-}
-
-export function onSuccesSignature(
-  setErreur: React.Dispatch<React.SetStateAction<SignatureErreur | undefined>>,
-  setSucces: React.Dispatch<React.SetStateAction<boolean>>
-): void {
-  setErreur(undefined);
-  setSucces(true);
+  if (detail.direction === DIRECTION_TO_CALL_APP) {
+    setResultatWebext(detail);
+  }
 }

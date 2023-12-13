@@ -1,5 +1,8 @@
-import { ICompositionDto } from "@api/appels/compositionApi";
 import { RECEContext } from "@core/body/RECEContext";
+import {
+  IRecupererRegistrePapierParIdActeParams,
+  useRecupererRegistrePapierParIdActeApiHook
+} from "@hook/acte/RecupererRegistrePapierParIdActeApiHook";
 import { useValiderProjetActeApiHook } from "@hook/acte/ValiderProjetActeApiHook";
 import {
   ICompositionProjetActeParams,
@@ -33,7 +36,6 @@ import {
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
   URL_RECHERCHE_REQUETE
 } from "@router/ReceUrls";
-import { getDateActuelle } from "@util/DateUtils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { DEUX, getLibelle, UN } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
@@ -46,6 +48,7 @@ import "../../../commun/scss/ApercuReqCreationPage.scss";
 import {
   annulerModificationBulletinIdentification,
   estModificationsDonneesBIAAnnuler,
+  estOuvertRegistrePapier,
   getConteneurResumeRequete,
   onRenommePieceJustificativeEtablissement
 } from "../commun/ApercuRequeteCreationEtablissementUtils";
@@ -74,9 +77,6 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
   const { idRequeteParam, idSuiviDossierParam } =
     useParams<IUuidSuiviDossierParams>();
   const history = useHistory();
-  const [pdfFromComposition, setPdfFromComposition] = useState<ICompositionDto>(
-    {} as ICompositionDto
-  );
   const { isDirty, setIsDirty } = useContext(RECEContext);
   const [titulaireProjetActe, setTitulaireProjetActe] =
     useState<ITitulaireRequeteCreation>();
@@ -128,6 +128,14 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
     requete?.provenanceNatali?.numeroDossierNational
   );
 
+  const [
+    recupererRegistrePapierParIdProjetActeParams,
+    setRecupererRegistrePapierParIdProjetActeParams
+  ] = useState<IRecupererRegistrePapierParIdActeParams>();
+  const registrePapier = useRecupererRegistrePapierParIdActeApiHook(
+    recupererRegistrePapierParIdProjetActeParams
+  );
+
   const { projetEstValide } = useValiderProjetActeApiHook(
     validerProjetActeParams
   );
@@ -144,24 +152,11 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
     rmcAutoPersonneEnChargement
   } = useDataTableauxOngletRMCPersonne(requete);
 
-  const registreProjetActe = projetActe?.registre;
-  const estRegistreOuvert =
-    registreProjetActe &&
-    registreProjetActe.dateOuverture &&
-    (!registreProjetActe.dateFermeture ||
-      new Date(registreProjetActe.dateFermeture) > getDateActuelle());
-
   useEffect(() => {
     if (detailRequeteState) {
       setRequete(detailRequeteState as IRequeteCreationEtablissement);
     }
   }, [detailRequeteState]);
-
-  useEffect(() => {
-    if (documentComposer) {
-      setPdfFromComposition(documentComposer);
-    }
-  }, [documentComposer]);
 
   useEffect(() => {
     if (projetEstValide) {
@@ -191,6 +186,9 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
         );
       setTitulaireProjetActe(titulaire);
       setDossierProjetActe(dossier);
+      setRecupererRegistrePapierParIdProjetActeParams({
+        idActe: dossier?.idActe
+      });
     }
   }, [requete?.titulaires, idSuiviDossierParam]);
 
@@ -248,10 +246,9 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
     );
   }
 
-  function navigueEtAffichePdfProjetActe(value: ICompositionDto): void {
-    setPdfFromComposition(value);
+  function navigueEtAffichePdfProjetActe(): void {
     setOngletSelectionne(DEUX);
-    isDirty && setIsDirty(false);
+    setIsDirty(false);
   }
   const getValeursPostulantForm = (
     postulant: ITitulaireRequeteCreation
@@ -290,7 +287,7 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
       annulerModificationBulletinIdentification(formikHelpers, projetActe);
     } else {
       onClickActualiserProjet(valeurs);
-      navigueEtAffichePdfProjetActe(documentComposer);
+      navigueEtAffichePdfProjetActe();
     }
   }
 
@@ -334,7 +331,7 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
     },
     {
       titre: getLibelle("Apercu du projet"),
-      component: <ApercuProjet documentAAfficher={pdfFromComposition} />,
+      component: <ApercuProjet documentAAfficher={documentComposer} />,
       index: 2
     }
   ];
@@ -371,6 +368,7 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
   return (
     <div className="ApercuReqCreationEtablissementSaisieProjetPage">
       <SignatureCreation
+        idActe={dossierProjetActe?.idActe}
         estOuvert={estOuvertPopinSignature}
         setEstOuvert={setEstOuvertPopinSignature}
       />
@@ -389,7 +387,11 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
                 ongletSelectionne === DEUX && Boolean(documentComposer)
               }
               avancement={dossierProjetActe?.avancement}
-              estRegistreOuvert={estRegistreOuvert}
+              estRegistreOuvert={estOuvertRegistrePapier(
+                projetActe?.titulaires.find(titulaire => titulaire.ordre === UN)
+                  ?.decretNaturalisation,
+                registrePapier
+              )}
               estFormulaireModifie={isDirty}
               validerProjetActe={validerProjetActe}
               setEstOuvertPopinSignature={setEstOuvertPopinSignature}

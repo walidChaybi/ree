@@ -22,5 +22,5 @@ test("gestion signature flag works ", async () => {
     value: localStorageMock,
     writable: true
   });
-  expect(gestionnaireSignatureFlag.getSignatureMode()).toBe("DRY_RUN");
+  expect(gestionnaireSignatureFlag.getModeSignature()).toBe("DRY_RUN");
 });

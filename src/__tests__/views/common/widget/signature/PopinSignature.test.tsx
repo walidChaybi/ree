@@ -10,6 +10,7 @@ test("DOIT render de la PopinSignature avec succès", () => {
       onSuccesSignature={() => {}}
       titre="Titre Popin"
       texte="Texte Popin"
+      documentASigner={""}
     />
   );
   expect(screen.getByText("Titre Popin")).toBeInTheDocument();
@@ -26,6 +27,7 @@ test("DOIT appeller la methode de succès QUAND la signature se fait avec succè
       setEstOuvert={() => {}}
       onSuccesSignature={onSuccesSignatureMock}
       titre="Cette Popin est ouverte"
+      documentASigner={""}
     />
   );
 
@@ -57,6 +59,8 @@ test("DOIT afficher un message d'erreur QUAND la signature échoue", () => {
       estOuvert={true}
       setEstOuvert={() => {}}
       onSuccesSignature={onSuccesSignatureMock}
+      titre={""}
+      documentASigner={""}
     />
   );
 
@@ -94,6 +98,8 @@ test("DOIT fermer la popin QUAND le bouton Annuler est cliqué", () => {
       estOuvert={true}
       setEstOuvert={setEstOuvertMock}
       onSuccesSignature={() => {}}
+      titre={""}
+      documentASigner={""}
     />
   );
 

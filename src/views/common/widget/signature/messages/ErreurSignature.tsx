@@ -2,6 +2,7 @@ import { Divider } from "@mui/material";
 import { logError } from "@util/LogManager";
 import { getLibelle } from "@util/Utils";
 import React, { useCallback } from "react";
+import { ITypeErreurSignature } from "../types";
 import "./scss/ErrorsSignature.scss";
 
 interface ErreurSignatureProps {
@@ -9,14 +10,9 @@ interface ErreurSignatureProps {
 }
 
 export interface SignatureErreur {
-  typeErreur: TypeErreur;
+  typeErreur: ITypeErreurSignature;
+  numeroRequete?: string;
   complementInformationErreur?: string;
-}
-
-export interface TypeErreur {
-  code: string;
-  libelle: string;
-  detail: string;
 }
 
 export const ErreurSignature: React.FC<ErreurSignatureProps> = ({ erreur }) => {

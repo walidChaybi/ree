@@ -50,6 +50,8 @@ export const URL_PROJET_ACTE_INSCRIPTION_LISTE =
   "/projetacte/actesinscriptionssauvegardes";
 export const URL_ANALYSE_MARGINALE = "/analyseMarginale";
 export const URL_BULLETIN_IDENTIFICATION = "/bulletinIdentification";
+const URL_COMPOSER_DOCUMENT_FINAL = "/composer-document-final";
+const URL_REGISTRE_PAPIER_PROJET_ACTE = "/registre-papier";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -82,7 +84,7 @@ export function getActesInscriptionsSauvegardes(
 export function getProjetActe(idActe: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_PROJET_ACTE}/${idActe}`,
+    uri: `${URL_PROJET_ACTE}/${idActe}`
   });
 }
 
@@ -105,6 +107,36 @@ export function patchProjetActe(acte: IProjetActe): Promise<any> {
     method: HttpMethod.PATCH,
     uri: `${URL_PROJET_ACTE}`,
     data: acte
+  });
+}
+
+/**
+ * Composition d'un projet d'acte final à signer.
+ */
+export function composerDocumentFinal(
+  idActe: string,
+  issuerCertificat: string,
+  nomDansCertificat: string
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_PROJET_ACTE}/${idActe}${URL_COMPOSER_DOCUMENT_FINAL}`,
+    data: {
+      infosSignature: {
+        issuerCertificat,
+        nomDansCertificat
+      }
+    }
+  });
+}
+
+/**
+ * Récupérer le registre papier qui sera associé à un projet d'acte.
+ */
+export function getRegistrePapierParIdProjetActe(idActe: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_PROJET_ACTE}/${idActe}${URL_REGISTRE_PAPIER_PROJET_ACTE}`
   });
 }
 

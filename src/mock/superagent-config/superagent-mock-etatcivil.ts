@@ -447,6 +447,13 @@ export const configEtatcivil = [
         return ReponseEnregistrementProjetActe;
       }
 
+      if (
+        match[1] ===
+        "/projetacte/d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca/composer-document-final"
+      ) {
+        return { data: "documentFinalSigneEncodeEnBase64" };
+      }
+
       // Actes / inscriptions sauvegardes
       if (match[1] === "/projetacte/actesinscriptionssauvegardes") {
         return { data: actesInscriptionsSauvegardes };

@@ -11,7 +11,7 @@ export class ModeSignatureUtil {
     [ModeSignature.CERTIGNA_SIGNED]: "DRY_RUN"
   };
 
-  public static isValid(mode: ModeSignature): boolean {
+  public static estValide(mode: ModeSignature): boolean {
     return this.modesSignature[mode] != null;
   }
 }
