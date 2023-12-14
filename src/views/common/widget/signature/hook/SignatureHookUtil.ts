@@ -113,7 +113,7 @@ export function signerDocument(
       gestionnaireSignatureFlag.getModeSignature()
     )
       ? gestionnaireSignatureFlag.getModeSignature()
-      : ModeSignature.CERTIGNA_SIGNED;
+      : ModeSignature.PKCS11_SIGNED;
 
     const detail: DetailSignature = {
       function: "SIGN",
