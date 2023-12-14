@@ -54,7 +54,7 @@ export const MesRequetesCreation: React.FC<
   useNavigationApercuCreation(paramsCreation);
 
   const goToLink = useCallback((link: string) => {
-    const queryParametersPourRequetes = goToLinkRequete(link, "requetes");
+    const queryParametersPourRequetes = goToLinkRequete(link, "mesrequetes");
     if (queryParametersPourRequetes) {
       setLinkParameters(queryParametersPourRequetes);
     }

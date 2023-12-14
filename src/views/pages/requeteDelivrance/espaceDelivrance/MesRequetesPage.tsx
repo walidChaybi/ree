@@ -83,7 +83,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
 
   const goToLink = useCallback((link: string) => {
-    const queryParametersPourRequetes = goToLinkRequete(link, "requetes");
+    const queryParametersPourRequetes = goToLinkRequete(link, "mesrequetes");
     if (queryParametersPourRequetes) {
       setLinkParameters(queryParametersPourRequetes);
     }
