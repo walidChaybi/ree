@@ -22,12 +22,14 @@ export function useSignatureHook(
   };
 
   useEffect(() => {
-    signerDocument(
-      document,
-      handleBackFromWebExtensionCallback,
-      informations,
-      pinCode
-    );
+    if (pinCode) {
+      signerDocument(
+        document,
+        handleBackFromWebExtensionCallback,
+        informations,
+        pinCode
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pinCode]);
 

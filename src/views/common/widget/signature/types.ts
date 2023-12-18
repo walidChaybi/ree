@@ -19,6 +19,7 @@ type DetailToWebextSousType = {
   mode: ModeSignature;
   infos: IDetailInfos[];
   erreurSimulee: string | null;
+  erreursSimulees: string[] | null;
 };
 
 type DetailToCallAppSousType = {

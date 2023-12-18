@@ -113,7 +113,7 @@ export function signerDocument(
       gestionnaireSignatureFlag.getModeSignature()
     )
       ? gestionnaireSignatureFlag.getModeSignature()
-      : ModeSignature.PKCS11_SIGNED;
+      : ModeSignature.CERTIGNA_SIGNED;
 
     const detail: DetailSignature = {
       function: "SIGN",
@@ -122,7 +122,8 @@ export function signerDocument(
       pin: codePin,
       mode: modeSignature,
       infos,
-      erreurSimulee: null
+      erreurSimulee: null,
+      erreursSimulees: null
     };
 
     gestionnaireTimer.declancheTimer(
