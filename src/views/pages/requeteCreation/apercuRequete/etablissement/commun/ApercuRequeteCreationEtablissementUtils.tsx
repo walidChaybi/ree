@@ -26,19 +26,25 @@ import {
   ISaisieProjetPostulantForm
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
-import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import {
   IRequeteCreationEtablissement,
   RequeteCreationEtablissement
 } from "@model/requete/IRequeteCreationEtablissement";
-import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import Labels from "@pages/requeteCreation/commun/Labels";
-import { getLibelle, jointAvec, rempliAGaucheAvecZero, UN } from "@util/Utils";
+import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
+import {
+  UN,
+  getLibelle,
+  getValeurOuVide,
+  jointAvec,
+  rempliAGaucheAvecZero
+} from "@util/Utils";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { FormikHelpers } from "formik";
-import mappingIRequeteCreationVersResumeRequeteCreationProps from "./resumeRequeteCreationEtablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
 import ResumeRequeteCreationEtablissement from "./resumeRequeteCreationEtablissement/ResumeRequeteCreationEtablissement";
+import mappingIRequeteCreationVersResumeRequeteCreationProps from "./resumeRequeteCreationEtablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
 
 export function onRenommePieceJustificativeEtablissement(
   requete: IRequeteCreationEtablissement | undefined,
@@ -216,11 +222,13 @@ function estModifieLieuDeNaissance(
 ): boolean {
   const { paysNaissance, villeNaissance, etatCantonProvince } =
     saisieLieuNaissance;
-
   return (
-    paysNaissance.toUpperCase() !== paysSaisie?.toUpperCase() ||
-    villeNaissance?.toUpperCase() !== villeSaisie?.toUpperCase() ||
-    etatCantonProvince?.toUpperCase() !== regionSaisie?.toUpperCase()
+    getValeurOuVide(paysNaissance.toUpperCase()) !==
+      getValeurOuVide(paysSaisie?.toUpperCase()) ||
+    getValeurOuVide(villeNaissance?.toUpperCase()) !==
+      getValeurOuVide(villeSaisie?.toUpperCase()) ||
+    getValeurOuVide(etatCantonProvince?.toUpperCase()) !==
+      getValeurOuVide(regionSaisie?.toUpperCase())
   );
 }
 
