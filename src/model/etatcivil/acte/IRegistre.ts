@@ -12,6 +12,6 @@ export interface IRegistre {
   pvOuverture: string;
   dateOuverture: Date;
   pvFermeture: string;
-  dateFermeture: Date;
+  dateFermeture?: Date;
   decret2017: boolean;
 }

@@ -26,25 +26,25 @@ import {
   ISaisieProjetPostulantForm
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import {
   IRequeteCreationEtablissement,
   RequeteCreationEtablissement
 } from "@model/requete/IRequeteCreationEtablissement";
-import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
-import Labels from "@pages/requeteCreation/commun/Labels";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
+import Labels from "@pages/requeteCreation/commun/Labels";
+import { getDateActuelle } from "@util/DateUtils";
 import {
-  UN,
   getLibelle,
   getValeurOuVide,
   jointAvec,
-  rempliAGaucheAvecZero
+  rempliAGaucheAvecZero, UN
 } from "@util/Utils";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { FormikHelpers } from "formik";
-import ResumeRequeteCreationEtablissement from "./resumeRequeteCreationEtablissement/ResumeRequeteCreationEtablissement";
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "./resumeRequeteCreationEtablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
+import ResumeRequeteCreationEtablissement from "./resumeRequeteCreationEtablissement/ResumeRequeteCreationEtablissement";
 
 export function onRenommePieceJustificativeEtablissement(
   requete: IRequeteCreationEtablissement | undefined,
@@ -116,7 +116,12 @@ export const estOuvertRegistrePapier = (
 
   if (decretNaturalisaton && registrePapier) {
     const [support1, annee] = decretNaturalisaton?.numeroDecret.split("/");
+    const dateActuelle = getDateActuelle();
     estOuvert =
+      registrePapier.dateOuverture <= dateActuelle &&
+      (registrePapier.dateFermeture
+        ? registrePapier.dateFermeture > dateActuelle
+        : true) &&
       TypeFamille.estACQ(TypeFamille.getEnumFor(registrePapier.famille)) &&
       registrePapier.pocopa === "X" &&
       Number(registrePapier.annee) === Number(annee) &&

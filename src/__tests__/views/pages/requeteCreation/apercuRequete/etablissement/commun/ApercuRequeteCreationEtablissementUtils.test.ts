@@ -13,9 +13,15 @@ import {
   TITULAIRE,
   VILLE_NAISSANCE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { IDecretNaturalisation } from "@model/etatcivil/acte/IDecretNaturalisation";
+import { IRegistre } from "@model/etatcivil/acte/IRegistre";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
-import { estModifieBulletinIdentification } from "@pages/requeteCreation/apercuRequete/etablissement/commun/ApercuRequeteCreationEtablissementUtils";
+import {
+  estModifieBulletinIdentification,
+  estOuvertRegistrePapier
+} from "@pages/requeteCreation/apercuRequete/etablissement/commun/ApercuRequeteCreationEtablissementUtils";
+import { getDateActuelle } from "@util/DateUtils";
 
 describe("Test la modification des donnees du BI.", () => {
   const SAISIE_PROJET = {
@@ -149,4 +155,70 @@ describe("Test la modification des donnees du BI.", () => {
       estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
     ).toBeFalsy();
   });
+});
+
+describe("Vérification de l'ouverture du registre", () => {
+  const DIX_MINUTES_MS = 6000000;
+  const UN_JOUR_MS = 86400000;
+
+  const DECRET_NATURALISATION: IDecretNaturalisation = {
+    numeroDecret: "0036/2023",
+    dateSignature: new Date()
+  };
+
+  const dateActuelle = getDateActuelle();
+  const REGISTRE_PAPIER: IRegistre = {
+    id: "846236f3-8438-4f11-8347-6fe5aadff663",
+    famille: "ACQ",
+    pocopa: "X",
+    annee: "2023",
+    support1: "0036",
+    support2: "",
+    numeroDernierActe: "",
+    pvOuverture: "",
+    dateOuverture: new Date(dateActuelle.getTime() - UN_JOUR_MS),
+    pvFermeture: "",
+    dateFermeture: new Date(dateActuelle.getTime() + UN_JOUR_MS),
+    decret2017: false
+  };
+
+  test("DOIT confirmer que le registre est ouvert en retournant 'true'.", async () => {
+    expect(
+      estOuvertRegistrePapier(DECRET_NATURALISATION, REGISTRE_PAPIER)
+    ).toBeTruthy();
+  });
+
+  test.each([
+    {
+      CLE: "dateOuverture",
+      VALEUR: new Date(dateActuelle.getTime() + DIX_MINUTES_MS)
+    },
+    { CLE: "dateFermeture", VALEUR: dateActuelle },
+    { CLE: "famille", VALEUR: "CSL" },
+    { CLE: "pocopa", VALEUR: "ALGER" },
+    { CLE: "annee", VALEUR: "2024" },
+    { CLE: "support1", VALEUR: "036" }
+  ])(
+    "DOIT confirmer que le registre est fermé en retournant 'false' après avoir modifié le paramètre $CLE avec la valeur $VALEUR.",
+    async ({ CLE, VALEUR }) => {
+      expect(
+        estOuvertRegistrePapier(DECRET_NATURALISATION, {
+          ...REGISTRE_PAPIER,
+          [CLE]: VALEUR
+        })
+      ).toBeFalsy();
+    }
+  );
+
+  test.each([{ CLE: "dateFermeture", VALEUR: undefined }])(
+    "DOIT confirmer que le registre est ouvert en retournant 'true' après avoir modifié le paramètre $CLE avec la valeur $VALEUR.",
+    async ({ CLE, VALEUR }) => {
+      expect(
+        estOuvertRegistrePapier(DECRET_NATURALISATION, {
+          ...REGISTRE_PAPIER,
+          [CLE]: VALEUR
+        })
+      ).toBeTruthy();
+    }
+  );
 });
