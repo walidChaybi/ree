@@ -217,9 +217,9 @@ function mapSaisieAcquisition(
     [NATURE]:
       decret && nature ? TypeNature.getKey(TypeNature.getEnumFor(nature)) : "",
     [DATE]: {
-      [JOUR]: decret?.dateSignature.jour || "",
-      [MOIS]: decret?.dateSignature.mois || "",
-      [ANNEE]: decret?.dateSignature.annee || ""
+      [JOUR]: decret?.dateSignature?.jour || "",
+      [MOIS]: decret?.dateSignature?.mois || "",
+      [ANNEE]: decret?.dateSignature?.annee || ""
     }
   };
 }

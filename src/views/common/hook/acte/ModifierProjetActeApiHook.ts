@@ -2,6 +2,7 @@ import { patchProjetActe } from "@api/appels/etatcivilApi";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import { mappingProjetActe } from "../../mapping/mappingProjetActe";
 
 export function useModifierProjetActeApiHook(
   acte?: IProjetActe
@@ -11,7 +12,7 @@ export function useModifierProjetActeApiHook(
     if (acte) {
       patchProjetActe(acte)
         .then(result => {
-          setResultat(result.body.data);
+          setResultat(mappingProjetActe(result.body.data));
         })
         .catch(error => {
           logError({
@@ -21,6 +22,5 @@ export function useModifierProjetActeApiHook(
         });
     }
   }, [acte]);
-
   return resultat;
 }

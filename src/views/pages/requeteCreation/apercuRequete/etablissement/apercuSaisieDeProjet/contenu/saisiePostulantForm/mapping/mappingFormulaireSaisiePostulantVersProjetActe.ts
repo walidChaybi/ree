@@ -17,7 +17,7 @@ import {
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
-import { getNombreOuNull, getValeurOuNull, SPC, UN } from "@util/Utils";
+import { SPC, UN, getNombreOuNull, getValeurOuNull } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export function mappingSaisieProjetPostulantFormVersProjetActe(
@@ -224,7 +224,7 @@ function mapPostulantVersTitulaireProjetActe(
               new Date(
                 +acte.acquisition.date.annee,
                 +acte.acquisition.date.mois - UN,
-                +acte.acquisition.date.jour + UN
+                +acte.acquisition.date.jour
               ),
             natureDecret: acte.acquisition.nature
           }
