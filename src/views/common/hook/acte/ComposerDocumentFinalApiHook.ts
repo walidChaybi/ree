@@ -19,6 +19,7 @@ export const useComposerDocumentFinalApiHook = (
     useState<IComposerDocumentFinalApiHookResultat>();
 
   useEffect(() => {
+    console.log("useComposerDocumentFinalApiHook", params);
     if (
       params?.idActe &&
       params?.issuerCertificat &&

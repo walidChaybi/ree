@@ -40,6 +40,7 @@ export const SignatureCreation: React.FC<SignatureCreationProps> = ({
     document: string,
     informationsCarte: IInfosCarteSignature
   ) {
+    console.log("onSuccesSignature", informationsCarte);
     setComposerDocumentFinalParams({
       idActe,
       issuerCertificat: informationsCarte.issuerCertificat,
