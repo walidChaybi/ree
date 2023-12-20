@@ -214,8 +214,7 @@ function mapSaisieAcquisition(
 ): ISaisieAcquisitionSousForm {
   const decret = titulaire.decret;
   return {
-    [NATURE]:
-      decret && nature ? TypeNature.getKey(TypeNature.getEnumFor(nature)) : "",
+    [NATURE]: nature ? TypeNature.getKey(TypeNature.getEnumFor(nature)) : "",
     [DATE]: {
       [JOUR]: decret?.dateSignature?.jour || "",
       [MOIS]: decret?.dateSignature?.mois || "",
