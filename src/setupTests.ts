@@ -47,7 +47,8 @@ export const localStorageFeatureFlagMock = (function () {
     LOG_SERVEUR: "1",
     FF_RETOUR_SDANF: "true",
     FF_ACQUISITION_DECRET: "true",
-    FF_INTEGRATION_REQUETE_CIBLE: "true"
+    FF_INTEGRATION_REQUETE_CIBLE: "true",
+    FF_SIGNER_ACTE_ETABLISSEMENT: "true"
   };
   return {
     getItem(key: string) {

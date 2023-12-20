@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export interface IComposerDocumentFinalApiHookParams {
   idActe?: string;
   issuerCertificat?: string;
-  nomDansCertificat?: string;
+  entiteCertificat?: string;
 }
 
 export interface IComposerDocumentFinalApiHookResultat {
@@ -19,16 +19,15 @@ export const useComposerDocumentFinalApiHook = (
     useState<IComposerDocumentFinalApiHookResultat>();
 
   useEffect(() => {
-    console.log("useComposerDocumentFinalApiHook", params);
     if (
       params?.idActe &&
       params?.issuerCertificat &&
-      params?.nomDansCertificat
+      params?.entiteCertificat
     ) {
       composerDocumentFinal(
         params.idActe,
         params.issuerCertificat,
-        params.nomDansCertificat
+        params.entiteCertificat
       )
         .then(reponse => {
           setResultat({ documentRecomposeASigner: reponse.body.data });

@@ -1,7 +1,7 @@
 import { RECEContext } from "@core/body/RECEContext";
 import { IUuidSuiviDossierParams } from "@model/params/IUuidSuiviDossierParams";
-import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
+import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_PRISE_EN_CHARGE,
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
@@ -9,9 +9,11 @@ import {
   URL_RECHERCHE_REQUETE,
   URL_REQUETES_CREATION_SERVICE
 } from "@router/ReceUrls";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { autorisePrendreEnChargeDepuisPageCreation } from "@util/RequetesUtils";
-import { getLibelle } from "@util/Utils";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
+import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { useContext, useMemo } from "react";
 import { useHistory, useParams } from "react-router-dom";
@@ -101,21 +103,10 @@ export const BoutonsApercuCreationEtablissement: React.FC<
         />
       )}
 
-      {props.conditionAffichageBoutonsApercuActe && (
+      {props.conditionAffichageBoutonsApercuActe && props.avancement && (
         <>
           <div>
-            {estProjetActeASigner ? (
-              <Bouton
-                disabled={estBoutonSignatureDesactive}
-                title={getLibelle("SIGNER")}
-                onClick={() =>
-                  props.setEstOuvertPopinSignature &&
-                  props.setEstOuvertPopinSignature(true)
-                }
-              >
-                {getLibelle("SIGNER")}
-              </Bouton>
-            ) : (
+            {AvancementProjetActe.estProjetCree(props.avancement) && (
               <Bouton
                 title={getLibelle("Valider le projet d'acte")}
                 onClick={() =>
@@ -126,6 +117,21 @@ export const BoutonsApercuCreationEtablissement: React.FC<
                 {getLibelle("Valider le projet d'acte")}
               </Bouton>
             )}
+            {gestionnaireFeatureFlag.estActif(
+              FeatureFlag.FF_SIGNER_ACTE_ETABLISSEMENT
+            ) &&
+              AvancementProjetActe.estASigner(props.avancement) && (
+                <Bouton
+                  disabled={estBoutonSignatureDesactive}
+                  title={getLibelle("SIGNER")}
+                  onClick={() =>
+                    props.setEstOuvertPopinSignature &&
+                    props.setEstOuvertPopinSignature(true)
+                  }
+                >
+                  {getLibelle("SIGNER")}
+                </Bouton>
+              )}
           </div>
           {estProjetActeASigner && estBoutonSignatureDesactive && (
             <BlocInformatif texte={getMessageErreur()}></BlocInformatif>

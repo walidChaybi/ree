@@ -43,7 +43,7 @@ describe("Doit afficher la popin de signature lors de la création d'un acte", (
 });
 
 describe("Doit signer le document QUAND on valide le code pin.", () => {
-  test("DOIT composer le document final en lui envoyant les informations 'issuerCertificat' et 'nomDansCertificat' de la carte", async () => {
+  test("DOIT composer le document final en lui envoyant les informations 'issuerCertificat' et 'entiteCertificat' de la carte", async () => {
     const composerDocumentFinalSpy = jest.spyOn(
       EtatCivilApi,
       "composerDocumentFinal"
@@ -70,7 +70,7 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
             erreur: null,
             infosSignature: {
               issuerCertificat: "issuerCertificat",
-              nomDansCertificat: "nomDansCertificat",
+              entiteCertificat: "entiteCertificat",
               autresInformation: "autresInformation"
             }
           }
@@ -83,14 +83,14 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       expect(composerDocumentFinalSpy).toHaveBeenCalledWith(
         "d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca",
         "issuerCertificat",
-        "nomDansCertificat"
+        "entiteCertificat"
       );
     });
 
     composerDocumentFinalSpy.mockClear();
   });
 
-  test("NE DOIT PAS composer le document final si l'information 'nomDansCertificat' de la carte est manquant", async () => {
+  test("NE DOIT PAS composer le document final si l'information 'entiteCertificat' de la carte est manquant", async () => {
     const composerDocumentFinalSpy = jest.spyOn(
       EtatCivilApi,
       "composerDocumentFinal"
@@ -157,7 +157,7 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
             document: "",
             erreur: null,
             infosSignature: {
-              nomDansCertificat: "nomDansCertificat",
+              entiteCertificat: "entiteCertificat",
               autresInformation: "autresInformation"
             }
           }

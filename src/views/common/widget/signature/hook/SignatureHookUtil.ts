@@ -145,7 +145,6 @@ export function handleBackFromWebExtension(
     React.SetStateAction<DetailSignatureToCallApp | undefined>
   >
 ): void {
-  console.log("handleBackFromWebExtension", detail);
   gestionnaireTimer.annuleTimer(TIMER_SIGNATURE);
   if (detail.direction === DIRECTION_TO_CALL_APP) {
     setResultatWebext(detail);

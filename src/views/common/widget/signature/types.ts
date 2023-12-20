@@ -29,16 +29,16 @@ type DetailToCallAppSousType = {
 };
 
 export interface IInfosCarteSignature {
-  manufacturerIDCarte: string;
   noSerieCarte: string;
+  manufacturerIDCarte: string;
+  modelCarte: string;
+  flagsCarte: string;
+  algoSignature: string;
+  notBeforeCertificat: string;
+  notAfterCertificat: string;
+  entiteCertificat: string;
   noSerieCertificat: string;
   issuerCertificat: string;
-  algoSignature: string;
-  modelCarte: string;
-  nomDansCertificat: string;
-  notAfterCertificat: string;
-  notBeforeCertificat: string;
-  flagsCarte: string;
 }
 
 export interface IDetailInfos {

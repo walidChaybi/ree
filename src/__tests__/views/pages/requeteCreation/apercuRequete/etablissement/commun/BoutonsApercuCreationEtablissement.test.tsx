@@ -12,6 +12,7 @@ import {
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
+import { localStorageFeatureFlagMock } from "../../../../../../../setupTests";
 
 test("DOIT rediriger vers Mes requêtes de création QUAND le bouton affiche Retour mes requêtes", async () => {
   const history = afficherEtCliquerSurBoutonRetour(
@@ -43,7 +44,8 @@ test("DOIT rediriger vers Rechercher une requête QUAND le bouton affiche Retour
   });
 });
 
-test("DOIT afficher le bouton SIGNER QUAND le projet est a signer", async () => {
+test("NE DOIT PAS afficher le bouton 'SIGNER' QUAND le feature flag est désactivé.", async () => {
+  localStorageFeatureFlagMock.setItem("FF_SIGNER_ACTE_ETABLISSEMENT", "false");
   afficherBoutonSigner(
     AvancementProjetActe.A_SIGNER,
     true,
@@ -51,9 +53,86 @@ test("DOIT afficher le bouton SIGNER QUAND le projet est a signer", async () => 
     URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID
   );
   await waitFor(() => {
-    expect(screen.queryByTitle("SIGNER")).toBeInTheDocument();
+    expect(screen.queryByTitle("SIGNER")).not.toBeInTheDocument();
   });
+  localStorageFeatureFlagMock.setItem("FF_SIGNER_ACTE_ETABLISSEMENT", "true");
 });
+
+test.each([
+  {
+    avancement: AvancementProjetActe.A_SAISIR,
+    afficherBoutonSigner: false
+  },
+  {
+    avancement: AvancementProjetActe.EN_COURS,
+    afficherBoutonSigner: false
+  },
+  {
+    avancement: AvancementProjetActe.VALIDE,
+    afficherBoutonSigner: false
+  },
+  {
+    avancement: AvancementProjetActe.A_SIGNER,
+    afficherBoutonSigner: true
+  }
+])(
+  "DOIT afficher le bouton 'SIGNER' QUAND l'avancement du projet est '$avancement'.",
+  async params => {
+    afficherBoutonSigner(
+      params.avancement,
+      true,
+      false,
+      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID
+    );
+    await waitFor(() => {
+      const boutonSigner = screen.queryByTitle("SIGNER");
+      if (params.afficherBoutonSigner) {
+        expect(boutonSigner).toBeInTheDocument();
+      } else {
+        expect(boutonSigner).not.toBeInTheDocument();
+      }
+    });
+  }
+);
+
+test.each([
+  {
+    avancement: AvancementProjetActe.A_SAISIR,
+    afficherBoutonValideLeProjet: false
+  },
+  {
+    avancement: AvancementProjetActe.EN_COURS,
+    afficherBoutonValideLeProjet: true
+  },
+  {
+    avancement: AvancementProjetActe.VALIDE,
+    afficherBoutonValideLeProjet: false
+  },
+  {
+    avancement: AvancementProjetActe.A_SIGNER,
+    afficherBoutonValideLeProjet: false
+  }
+])(
+  "DOIT afficher le bouton 'VALIDER LE PROJET' QUAND l'avancement du projet est '$avancement'.",
+  async params => {
+    afficherBoutonSigner(
+      params.avancement,
+      true,
+      false,
+      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID
+    );
+    await waitFor(() => {
+      const boutonValiderLeProjet = screen.queryByTitle(
+        "Valider le projet d'acte"
+      );
+      if (params.afficherBoutonValideLeProjet) {
+        expect(boutonValiderLeProjet).toBeInTheDocument();
+      } else {
+        expect(boutonValiderLeProjet).not.toBeInTheDocument();
+      }
+    });
+  }
+);
 
 test("NE DOIT PAS afficher le bouton SIGNER QUAND le projet n'est pas a signer", async () => {
   afficherBoutonSigner(

@@ -116,7 +116,7 @@ export function patchProjetActe(acte: IProjetActe): Promise<any> {
 export function composerDocumentFinal(
   idActe: string,
   issuerCertificat: string,
-  nomDansCertificat: string
+  entiteCertificat: string
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.PATCH,
@@ -124,7 +124,7 @@ export function composerDocumentFinal(
     data: {
       infosSignature: {
         issuerCertificat,
-        nomDansCertificat
+        entiteCertificat
       }
     }
   });

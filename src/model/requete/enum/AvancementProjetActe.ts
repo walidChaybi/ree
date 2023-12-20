@@ -52,11 +52,6 @@ export class AvancementProjetActe extends EnumWithLibelle {
     return avancementProjetActe === AvancementProjetActe.A_VERIFIER;
   }
   public static estProjetCree(avancement: AvancementProjetActe) {
-    return (
-      avancement === AvancementProjetActe.A_SAISIR ||
-      avancement === AvancementProjetActe.A_VERIFIER ||
-      avancement === AvancementProjetActe.EN_COURS ||
-      avancement === AvancementProjetActe.VERIFIE
-    );
+    return avancement === AvancementProjetActe.EN_COURS;
   }
 }
