@@ -8,7 +8,8 @@ import "./scss/FormPinCode.scss";
 
 interface FormPinCodePros {
   onClose: (isOpen: boolean, changePage: boolean) => void;
-  setCodePin: (codePin?: string) => void;
+  setCodePin: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setSignatureEnCours?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface FormValues {
@@ -21,7 +22,8 @@ interface FormValuesErrors {
 
 export const CodePinForm: React.FC<FormPinCodePros> = ({
   onClose,
-  setCodePin
+  setCodePin,
+  setSignatureEnCours
 }) => {
   const validate = (values: FormValues) => {
     const errors: FormValuesErrors = {};
@@ -46,6 +48,7 @@ export const CodePinForm: React.FC<FormPinCodePros> = ({
     initialValues: {},
     validate,
     onSubmit: (values: FormValues) => {
+      setSignatureEnCours && setSignatureEnCours(true);
       setCodePin(values.codePin);
     }
   });

@@ -1,8 +1,8 @@
 import { URL_ACCUEIL } from "@router/ReceUrls";
 import { logInfoDansLaConsole } from "@util/Console";
 import { getCsrfHeader } from "@util/CsrfUtil";
-import { GestionnaireCache, ReceCache } from "@util/GestionnaireCache";
 import { Generateur } from "@util/generateur/Generateur";
+import { GestionnaireCache, ReceCache } from "@util/GestionnaireCache";
 import messageManager from "@util/messageManager";
 import * as superagent from "superagent";
 
@@ -11,6 +11,7 @@ const EXPIRATION_CACHE_SECONDS = 43200; // Expiration du cache au bout de 12h (4
 
 export const HTTP_STATUS_OK = 200;
 
+export const HTTP_BAD_REQUEST = 400;
 export const HTTP_UNAUTHORIZED = 401;
 export const HTTP_FORBIDDEN = 403;
 export const HTTP_NOT_FOUND = 404;

@@ -1,11 +1,12 @@
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { getLibelle } from "@util/Utils";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import React, { useEffect, useState } from "react";
 import { CodePinForm } from "./CodePinForm";
 import { useSignatureHook } from "./hook/SignatureHook";
 import { ErreurSignature, SignatureErreur } from "./messages/ErreurSignature";
 import "./scss/PopinSignature.scss";
-import { IInfosCarteSignature } from "./types";
+import { IDetailInfos, IInfosCarteSignature } from "./types";
 
 export interface PopinSignatureProps {
   titre: string;
@@ -17,11 +18,19 @@ export interface PopinSignatureProps {
     documentAvecSignature: string,
     infosSignature: IInfosCarteSignature
   ) => void;
+  informations?: IDetailInfos[];
+  traitementSignatureTermine: boolean;
 }
 
 export const PopinSignature: React.FC<PopinSignatureProps> = props => {
   const [codePin, setCodePin] = useState<string | undefined>();
-  const resultatWebext = useSignatureHook(props.documentASigner, codePin);
+  const [signatureEnCours, setSignatureEnCours] = useState(false);
+
+  const resultatWebext = useSignatureHook(
+    props.documentASigner,
+    codePin,
+    props.informations
+  );
 
   // TODO: Refacto / Supprimer le state erreurSignature quand on aura refacto la signature délivrance.
   //       Normalment on devrait pouvoir directement passer `resultatWebext.erreur` au composant <ErreurSignature />
@@ -42,6 +51,14 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatWebext]);
 
+  useEffect(() => {
+    if (props.traitementSignatureTermine) {
+      setSignatureEnCours(false);
+      props.setEstOuvert(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.traitementSignatureTermine]);
+
   return (
     <>
       <Dialog
@@ -59,7 +76,9 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
           <CodePinForm
             onClose={() => props.setEstOuvert(false)}
             setCodePin={setCodePin}
+            setSignatureEnCours={setSignatureEnCours}
           />
+          <OperationEnCours visible={signatureEnCours} />
         </DialogContent>
       </Dialog>
     </>

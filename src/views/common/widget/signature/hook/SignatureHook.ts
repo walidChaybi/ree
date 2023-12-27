@@ -8,7 +8,7 @@ import {
 
 export function useSignatureHook(
   document: string,
-  pinCode?: string,
+  codePin?: string,
   informations?: IDetailInfos[]
 ): DetailSignatureToCallApp | undefined {
   const [resultatWebext, setResultatWebext] =
@@ -22,16 +22,16 @@ export function useSignatureHook(
   };
 
   useEffect(() => {
-    if (pinCode) {
+    if (codePin && document) {
       signerDocument(
         document,
         handleBackFromWebExtensionCallback,
         informations,
-        pinCode
+        codePin
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pinCode]);
+  }, [codePin, document]);
 
   useEffect(() => {
     window.top &&

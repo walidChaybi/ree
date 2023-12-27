@@ -12,6 +12,7 @@ import {
 import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
 import { IActeInscriptionSauvegardeDto } from "../../dto/etatcivil/acte/actesInscriptionsSauvegardes/IActeInscriptionSauvegardeDto";
 import { ApiManager, HttpMethod } from "../ApiManager";
+import { IInfosCarteSignature } from "./../../views/common/widget/signature/types";
 
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
 
@@ -52,6 +53,7 @@ export const URL_ANALYSE_MARGINALE = "/analyseMarginale";
 export const URL_BULLETIN_IDENTIFICATION = "/bulletinIdentification";
 const URL_COMPOSER_DOCUMENT_FINAL = "/composer-document-final";
 const URL_REGISTRE_PAPIER_PROJET_ACTE = "/registre-papier";
+const URL_SIGNER_ACTE = "/signer";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -126,6 +128,24 @@ export function composerDocumentFinal(
         issuerCertificat,
         entiteCertificat
       }
+    }
+  });
+}
+
+/**
+ * Enregistrer l'acte final signé.
+ */
+export function enregistrerActeSigne(
+  idActe: string,
+  document: string,
+  infosCarteSignature: IInfosCarteSignature
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_PROJET_ACTE}/${idActe}${URL_SIGNER_ACTE}`,
+    data: {
+      documentPades: document,
+      signature: { infosSignature: infosCarteSignature }
     }
   });
 }

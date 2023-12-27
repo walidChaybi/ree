@@ -1,3 +1,4 @@
+import { HTTP_BAD_REQUEST } from "@api/ApiManager";
 import { composerDocumentFinal } from "@api/appels/etatcivilApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
@@ -10,6 +11,7 @@ export interface IComposerDocumentFinalApiHookParams {
 
 export interface IComposerDocumentFinalApiHookResultat {
   documentRecomposeASigner: string;
+  codeReponse: number;
 }
 
 export const useComposerDocumentFinalApiHook = (
@@ -30,12 +32,20 @@ export const useComposerDocumentFinalApiHook = (
         params.entiteCertificat
       )
         .then(reponse => {
-          setResultat({ documentRecomposeASigner: reponse.body.data });
+          setResultat({
+            documentRecomposeASigner: reponse.body.data,
+            codeReponse: reponse.status
+          });
         })
-        .catch((erreur: any) => {
+        .catch((errors: any) => {
+          setResultat({
+            documentRecomposeASigner: "",
+            codeReponse: HTTP_BAD_REQUEST // TODO: Revoir la gestion du status code.
+          });
           logError({
-            error: erreur,
-            messageUtilisateur: "Impossible de signer le projet d'acte."
+            error: errors,
+            messageUtilisateur:
+              "Impossible de composer le document final du projet d'acte."
           });
         });
     }

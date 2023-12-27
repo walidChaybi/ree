@@ -1,12 +1,7 @@
-import {
-  IComposerDocumentFinalApiHookParams,
-  useComposerDocumentFinalApiHook
-} from "@hook/acte/ComposerDocumentFinalApiHook";
-import React, { useEffect, useState } from "react";
-import { DOCUMENT_VIDE_A_SIGNER } from "./hook/SignatureHookUtil";
+import React from "react";
+import { useSignatureCreationEtablisementHook } from "./hook/SignatureCreationActeEtablissementHook";
 import { PopinSignature, PopinSignatureProps } from "./PopinSignature";
 import "./scss/PopinSignature.scss";
-import { IInfosCarteSignature } from "./types";
 
 type SignatureCreationProps = {
   idActe?: string;
@@ -22,39 +17,18 @@ export const SignatureCreation: React.FC<SignatureCreationProps> = ({
   estOuvert,
   setEstOuvert
 }) => {
-  const [composerDocumentFinalParams, setComposerDocumentFinalParams] =
-    useState<IComposerDocumentFinalApiHookParams>();
-  const composerDocumentFinalResultat = useComposerDocumentFinalApiHook(
-    composerDocumentFinalParams
-  );
-
-  useEffect(() => {
-    // TODO: A déplacer autre part quand on aura complètement terminé le pipeline de signature.
-    if (composerDocumentFinalResultat) {
-      setEstOuvert(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [composerDocumentFinalResultat]);
-
-  function onSuccesSignature(
-    document: string,
-    informationsCarte: IInfosCarteSignature
-  ) {
-    setComposerDocumentFinalParams({
-      idActe,
-      issuerCertificat: informationsCarte.issuerCertificat,
-      entiteCertificat: informationsCarte.entiteCertificat
-    });
-  }
+  const { documentASigner, onSuccesSignature, traitementSignatureTermine } =
+    useSignatureCreationEtablisementHook(idActe);
 
   return (
     <PopinSignature
       titre="Signature du document"
       estOuvert={estOuvert}
       setEstOuvert={setEstOuvert}
-      documentASigner={DOCUMENT_VIDE_A_SIGNER}
+      documentASigner={documentASigner}
       onSuccesSignature={onSuccesSignature}
       texte={TEXTE_POPIN}
+      traitementSignatureTermine={traitementSignatureTermine}
     />
   );
 };
