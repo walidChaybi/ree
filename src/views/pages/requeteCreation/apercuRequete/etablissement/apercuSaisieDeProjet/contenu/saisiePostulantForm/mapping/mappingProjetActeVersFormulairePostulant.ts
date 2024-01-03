@@ -69,21 +69,20 @@ import {
   ISaisieProjetPostulantForm
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { TypeNature } from "@model/requete/enum/TypeNature";
 import { TypeReconnaissance } from "@model/requete/enum/TypeReconnaissance";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { getDateComposeFromDate } from "@util/DateUtils";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import {
-  DEUX, formatPremieresLettresMajusculesNomCompose,
-  getValeurOuNull,
-  numberToString,
-  rempliAGaucheAvecZero, SPC,
+  DEUX,
+  SPC,
   UN,
-  ZERO
+  ZERO,
+  formatPremieresLettresMajusculesNomCompose,
+  numberToString,
+  rempliAGaucheAvecZero
 } from "@util/Utils";
 import { mapFrancisationPostulant } from "./mappingTitulaireVersFormulairePostulant";
 
@@ -96,9 +95,6 @@ export const mappingProjetActeVersFormulairePostulant = (
   const titulaireProjetActe = projetActe?.titulaires.find(
     titulaire => titulaire.ordre === UN
   );
-  const decret = estAvancementASigner
-    ? getValeurOuNull(titulaireProjetActe?.decretNaturalisation)
-    : null;
   return {
     [PROJET]: {
       [TYPE]: QualiteFamille.POSTULANT.libelle,
@@ -123,11 +119,8 @@ export const mappingProjetActeVersFormulairePostulant = (
       projetActe?.declarant,
       projetActe?.titulaires[0].reconnuPar
     ),
-    // TODO : Retirer le FF et ne laisser que le decret
     [ACQUISITION]: mapSaisieAcquisition(
-      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACQUISITION_DECRET)
-        ? decret
-        : titulaireProjetActe?.decretNaturalisation
+      titulaireProjetActe?.decretNaturalisation
     )
   };
 };
