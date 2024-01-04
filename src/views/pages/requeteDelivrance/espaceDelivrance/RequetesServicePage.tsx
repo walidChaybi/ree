@@ -88,7 +88,8 @@ export const RequetesServicePage: React.FC<
     useRequeteDelivranceApiHook(
       parametresLienRequete,
       TypeAppelRequete.REQUETE_DELIVRANCE_SERVICE,
-      setEnChargement
+      setEnChargement,
+      setParametresLienRequete
     );
 
   function goToLink(link: string) {

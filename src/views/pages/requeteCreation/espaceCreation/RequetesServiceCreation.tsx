@@ -72,7 +72,8 @@ export const RequetesServiceCreation: React.FC<
   const { dataState, paramsTableau, onSubmit } = useRequeteCreationApiHook(
     TypeAppelRequete.REQUETE_CREATION_SERVICE,
     setEnChargement,
-    parametresLienRequete
+    parametresLienRequete,
+    setParametresLienRequete
   );
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);

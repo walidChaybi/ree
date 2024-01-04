@@ -16,12 +16,16 @@ import {
 } from "@model/requete/IRequeteTableauCreation";
 import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
+import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useEffect, useState } from "react";
 
 export function useRequeteCreationApiHook(
   typeRequete: TypeAppelRequete,
   setEnChargement: (enChargement: boolean) => void,
-  queryParameters?: IQueryParametersPourRequetes
+  parametresLienRequete?: IQueryParametersPourRequetes,
+  setParametresLienRequete?: React.Dispatch<
+    React.SetStateAction<IQueryParametersPourRequetes | undefined>
+  >
 ) {
   const [dataState, setDataState] = useState<IRequeteTableauCreation[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
@@ -33,13 +37,13 @@ export function useRequeteCreationApiHook(
   useEffect(() => {
     async function fetchMesRequetes() {
       try {
-        if (queryParameters) {
-          const listeStatuts = queryParameters.statuts?.join(",");
+        if (parametresLienRequete) {
+          const listeStatuts = parametresLienRequete.statuts?.join(",");
           const result =
             typeRequete === TypeAppelRequete.MES_REQUETES_CREATION
-              ? await getRequetesCreation(listeStatuts, queryParameters)
+              ? await getRequetesCreation(listeStatuts, parametresLienRequete)
               : await postRequetesServiceCreation(
-                  queryParameters,
+                  parametresLienRequete,
                   mappingFiltreServiceCreationVersFiltreDto(filtresReq)
                 );
           const mesRequetes = mappingRequetesTableauCreation(
@@ -60,7 +64,7 @@ export function useRequeteCreationApiHook(
     }
     fetchMesRequetes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryParameters, typeRequete, setEnChargement, filtresReq]);
+  }, [parametresLienRequete, typeRequete, setEnChargement, filtresReq]);
 
   useEffect(() => {
     if (numeroReqNatali) {
@@ -84,6 +88,12 @@ export function useRequeteCreationApiHook(
     setNumeroReqNatali(values.numeroRequete);
     if (!values.numeroRequete) {
       setFiltresReq({ ...values });
+      if (setParametresLienRequete && parametresLienRequete) {
+        setParametresLienRequete({
+          ...parametresLienRequete,
+          range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+        });
+      }
     }
   }
 

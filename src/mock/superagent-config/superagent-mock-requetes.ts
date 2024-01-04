@@ -227,7 +227,10 @@ export const configRequetes = [
           "/requetes/requetesService?tri=dateDerniereAction&sens=ASC&range=0-105" ||
         match[1] ===
           "/requetes/requetesService?tri=provenance&sens=ASC&range=0-105" ||
-        match[1] === "/requetes/requetesService?tri=numero&sens=ASC&range=0-100"
+        match[1] ===
+          "/requetes/requetesService?tri=numero&sens=ASC&range=0-100" ||
+        match[1] ===
+          "/requetes/requetesService?tri=dateCreation&sens=ASC&range=0-105"
       ) {
         return {
           data: ReponseAppelRequetesService,

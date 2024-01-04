@@ -14,12 +14,16 @@ import {
 } from "@model/requete/IRequeteTableauDelivrance";
 import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
+import { NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useEffect, useState } from "react";
 
 export function useRequeteDelivranceApiHook(
-  queryParameters: IQueryParametersPourRequetes | undefined,
+  parametresLienRequete: IQueryParametersPourRequetes | undefined,
   typeRequete: TypeAppelRequete,
-  setEnChargement: (enChargement: boolean) => void
+  setEnChargement: (enChargement: boolean) => void,
+  setParametresLienRequete?: React.Dispatch<
+    React.SetStateAction<IQueryParametersPourRequetes | undefined>
+  >
 ) {
   const [dataState, setDataState] = useState<IRequeteTableauDelivrance[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
@@ -31,18 +35,18 @@ export function useRequeteDelivranceApiHook(
   useEffect(() => {
     async function fetchMesRequetes() {
       try {
-        if (queryParameters) {
+        if (parametresLienRequete) {
           setEnChargement(true);
-          const listeStatuts = queryParameters?.statuts?.join(",");
+          const listeStatuts = parametresLienRequete?.statuts?.join(",");
           const result =
             typeRequete === TypeAppelRequete.MES_REQUETES_DELIVRANCE
               ? await getTableauRequetesDelivrance(
                   typeRequete,
                   listeStatuts,
-                  queryParameters
+                  parametresLienRequete
                 )
               : await postTableauRequetesDelivranceService(
-                  queryParameters,
+                  parametresLienRequete,
                   mappingFiltreServiceRequeteDelivranceVersFiltreDto(filtresReq)
                 );
           const mesRequetes = mappingRequetesTableauDelivrance(
@@ -62,10 +66,16 @@ export function useRequeteDelivranceApiHook(
       }
     }
     fetchMesRequetes();
-  }, [queryParameters, typeRequete, setEnChargement, filtresReq]);
+  }, [parametresLienRequete, typeRequete, setEnChargement, filtresReq]);
 
   function onSubmitFiltres(values: IFiltreServiceRequeteDelivranceFormValues) {
     setFiltresReq({ ...values });
+    if (setParametresLienRequete && parametresLienRequete) {
+      setParametresLienRequete({
+        ...parametresLienRequete,
+        range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
+      });
+    }
   }
 
   return {
