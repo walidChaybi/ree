@@ -144,7 +144,7 @@ export function enregistrerActeSigne(
     method: HttpMethod.PATCH,
     uri: `${URL_PROJET_ACTE}/${idActe}${URL_SIGNER_ACTE}`,
     data: {
-      documentPades: document,
+      documentPadesBase64: document,
       signature: { infosSignature: infosCarteSignature }
     }
   });
