@@ -18,6 +18,7 @@ export const userDroitConsulterArchive: IOfficier = {
   service: "serviceConnectedUser",
   poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
+  modeAuthentification: "AROBAS_MDP",
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -60,6 +61,7 @@ export const userDroitConsulterConsulterArchive: IOfficier = {
   service: "serviceConnectedUser",
   poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
+  modeAuthentification: "AROBAS_MDP",
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -105,6 +107,7 @@ export const userDroitConsulterPerimetreMEAE: IOfficier = {
   service: "serviceConnectedUser",
   poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
+  modeAuthentification: "AROBAS_MDP",
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -154,6 +157,7 @@ export const userDroitCreerActeEtabliPerimetreMEAE: IOfficier = {
   service: "serviceConnectedUser",
   poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
+  modeAuthentification: "AROBAS_MDP",
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -203,6 +207,7 @@ export const userDroitCreerActeTranscritPerimetreMEAE: IOfficier = {
   service: "serviceConnectedUser",
   poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
+  modeAuthentification: "AROBAS_MDP",
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -255,6 +260,7 @@ export const userDroitDelivrer: IOfficier = {
   service: "serviceConnectedUser",
   poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
+  modeAuthentification: "AROBAS_MDP",
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -304,6 +310,7 @@ export const userDroitInformerUsager: IOfficier = {
   service: "serviceConnectedUser",
   poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
+  modeAuthentification: "AROBAS_MDP",
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -353,6 +360,7 @@ export const userDroitConsulterPerimetreTUNIS: IOfficier = {
   service: "serviceConnectedUser",
   poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
+  modeAuthentification: "AROBAS_MDP",
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -395,6 +403,7 @@ export const userDroitnonCOMEDEC: IOfficier = {
   service: "serviceConnectedUser",
   poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
+  modeAuthentification: "AROBAS_MDP",
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -465,6 +474,7 @@ export const userDroitCOMEDEC: IOfficier = {
   service: "serviceConnectedUser",
   poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
+  modeAuthentification: "AROBAS_MDP",
   habilitations: [
     {
       idHabilitation: "h12345",

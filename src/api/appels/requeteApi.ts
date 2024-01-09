@@ -73,6 +73,7 @@ export const URL_MISE_A_JOUR_SUIVI_DOSSIER = "/requetes/creation/suiviDossier";
 export const URL_AVANCEMENT_PROJET = "/avancement";
 export const URL_PIECE_JUSTIFICATIVES_CREATION = "/pieceJustificative";
 export const URL_STATUT = "/statut";
+const URL_SUIVI_DOSSIER = "/suivi-dossier";
 
 const URL_REPONSES = "/reponses";
 
@@ -359,6 +360,16 @@ export async function updateRequeteCreation(
     method: HttpMethod.PATCH,
     uri: `${URL_REQUETES_CREATION}/${idRequete}`,
     data: requete
+  });
+}
+
+export async function miseAJourStatutRequeteEtAvancementProjetApresSignature(
+  idRequete: string,
+  idSuiviDossier: string
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_REQUETES_CREATION}/${idRequete}${URL_SUIVI_DOSSIER}/${idSuiviDossier}/signer`
   });
 }
 
@@ -836,6 +847,6 @@ export const postValiderProjetActe = (
 ) => {
   return api.fetch({
     method: HttpMethod.POST,
-    uri: `${URL_CREATION}${idRequete}/suivi-dossier/${idSuiviDossier}/valider-projet`
+    uri: `${URL_CREATION}${idRequete}${URL_SUIVI_DOSSIER}/${idSuiviDossier}/valider-projet`
   });
 };

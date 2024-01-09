@@ -10,8 +10,8 @@ export class AvancementProjetActe extends EnumWithLibelle {
   public static readonly EN_COURS = new AvancementProjetActe("Projet créé");
   public static readonly VALIDE = new AvancementProjetActe("Projet validé");
   public static readonly INVALIDE = new AvancementProjetActe("Invalidé");
-  // Ajout pour faire fonctionner le code, mais sera ajouté proprement via l'US d'ajout des nouveaux avancements
   public static readonly A_SIGNER = new AvancementProjetActe("A signer");
+  public static readonly SIGNE = new AvancementProjetActe("Signé");
 
   public static getAvancementsMasquantAcquisitionjDecret(): AvancementProjetActe[] {
     return [

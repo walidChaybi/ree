@@ -57,7 +57,8 @@ export function mappingOfficier(headers: any, body: any): IOfficier {
     habilitations: [],
     entite: body.entite,
     entitesFilles: body.entitesFillesDirectes,
-    fonctionAgent: body.fonctionAgent
+    fonctionAgent: body.fonctionAgent,
+    modeAuthentification: "AROBAS_MDP"
   };
 }
 

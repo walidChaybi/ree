@@ -327,6 +327,14 @@ export const configRequetes = [
         return {};
       }
 
+      // Mise à jour du statut de la requete et de l'avancement du projet d'acte après signature de l'acte
+      if (
+        match[1] ===
+        "/requetes/creation/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/suivi-dossier/a5187320-d722-4673-abd7-a73ed41ad8c1/signer"
+      ) {
+        return {};
+      }
+
       // Transfert requête
       if (
         match[1] ===

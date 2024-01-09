@@ -2,6 +2,7 @@ import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtrait
 import { AddAlerteActeApiHookParameters } from "@hook/alertes/AddAlerteActeHookApi";
 import { DeleteAlerteActeApiHookParameters } from "@hook/alertes/DeleteAlerteActeHookApi";
 import { IDerniereDelivranceRcRcaPacsParams } from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
+import { TModeAuthentification } from "@model/agent/types";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
@@ -138,14 +139,15 @@ export function composerDocumentFinal(
 export function enregistrerActeSigne(
   idActe: string,
   document: string,
-  infosCarteSignature: IInfosCarteSignature
+  infosCarteSignature: IInfosCarteSignature,
+  modeAuthentification: TModeAuthentification
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.PATCH,
     uri: `${URL_PROJET_ACTE}/${idActe}${URL_SIGNER_ACTE}`,
     data: {
       documentPadesBase64: document,
-      signature: { infosSignature: infosCarteSignature }
+      signature: { infosSignature: infosCarteSignature, modeAuthentification }
     }
   });
 }

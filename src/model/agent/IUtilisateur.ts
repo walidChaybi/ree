@@ -6,6 +6,7 @@ import { IDroit, IHabilitation, IProfil } from "./Habilitation";
 import { IEntite } from "./IEntiteRattachement";
 import { IOfficier } from "./IOfficier";
 import { IPerimetre } from "./IPerimetre";
+import { TModeAuthentification } from "./types";
 
 export interface IUtilisateur {
   actif?: boolean;
@@ -30,6 +31,7 @@ export interface IUtilisateur {
   prenom: string;
   signatureManuscrite?: string;
   trigramme: string;
+  modeAuthentification: TModeAuthentification;
 }
 
 export function mapHabilitationsUtilisateur(

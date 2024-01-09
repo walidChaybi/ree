@@ -454,6 +454,12 @@ export const configEtatcivil = [
         return { data: "documentFinalSigneEncodeEnBase64" };
       }
 
+      if (
+        match[1] === "/projetacte/d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca/signer"
+      ) {
+        return { status: 200 };
+      }
+
       // Actes / inscriptions sauvegardes
       if (match[1] === "/projetacte/actesinscriptionssauvegardes") {
         return { data: actesInscriptionsSauvegardes };
@@ -748,9 +754,11 @@ export const configEtatcivil = [
      * @param data  mixed Data returns by `fixtures` attribute
      */
     patch: function (match: any, data: any) {
+      // TODO: Séparer clairement body, status et header (pour le moment, on doit passer les deux derniers dans data).
       return {
         body: data,
-        header: data.headers
+        header: data.headers,
+        status: data.status
       };
     },
     delete: function (match: any, data: any) {

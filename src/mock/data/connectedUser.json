@@ -19,5 +19,6 @@
         "droits": [{ "idDroit": "d12345", "nom": "ATTRIBUER" }]
       }
     }
-  ]
+  ],
+  "modeAuthentification": "AROBAS_MDP"
 }

@@ -39,7 +39,7 @@ import {
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { DEUX, getLibelle, UN } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
-import { SignatureCreation } from "@widget/signature/SignatureCreation";
+import { PopinSignatureCreationEtablissement } from "@widget/signature/PopinSignatureCreationEtablissement";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import { FormikHelpers } from "formik";
 import React, { useContext, useEffect, useState } from "react";
@@ -122,7 +122,7 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
 
   const { projetActe, onClickActualiserProjet } = useProjetActeHook(
     mappingSaisieProjetPostulantFormVersProjetActe,
-    dossierProjetActe?.idSuiviDossier,
+    idSuiviDossierParam,
     dossierProjetActe?.avancement,
     dossierProjetActe?.idActe,
     requete?.provenanceNatali?.numeroDossierNational
@@ -194,9 +194,9 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
 
   useEffect(() => {
     if (projetActe) {
-      if (dossierProjetActe && !estProjetExistant) {
+      if (dossierProjetActe && idSuiviDossierParam && !estProjetExistant) {
         setModifierAvancementProjetParams({
-          idSuiviDossier: dossierProjetActe.idSuiviDossier,
+          idSuiviDossier: idSuiviDossierParam,
           avancement: AvancementProjetActe.estAVerifier(
             dossierProjetActe.avancement
           )
@@ -367,7 +367,7 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
 
   return (
     <div className="ApercuReqCreationEtablissementSaisieProjetPage">
-      <SignatureCreation
+      <PopinSignatureCreationEtablissement
         idActe={dossierProjetActe?.idActe}
         estOuvert={estOuvertPopinSignature}
         setEstOuvert={setEstOuvertPopinSignature}

@@ -1,4 +1,5 @@
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { logError } from "@util/LogManager";
 import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import React, { useEffect, useState } from "react";
@@ -20,6 +21,7 @@ export interface PopinSignatureProps {
   ) => void;
   informations?: IDetailInfos[];
   traitementSignatureTermine: boolean;
+  timeoutTraitementSignature?: number;
 }
 
 export const PopinSignature: React.FC<PopinSignatureProps> = props => {
@@ -59,6 +61,15 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.traitementSignatureTermine]);
 
+  const onTimeoutEnd = () => {
+    setSignatureEnCours(false);
+    logError({
+      messageUtilisateur: getLibelle(
+        "Une erreur est survenue. Veuillez rafraîchir la page du navigateur et réessayer."
+      )
+    });
+  };
+
   return (
     <>
       <Dialog
@@ -78,7 +89,11 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
             setCodePin={setCodePin}
             setSignatureEnCours={setSignatureEnCours}
           />
-          <OperationEnCours visible={signatureEnCours} />
+          <OperationEnCours
+            visible={signatureEnCours}
+            onTimeoutEnd={onTimeoutEnd}
+            timeoutInMiliSec={props.timeoutTraitementSignature}
+          />
         </DialogContent>
       </Dialog>
     </>
