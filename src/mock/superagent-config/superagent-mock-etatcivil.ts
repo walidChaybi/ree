@@ -451,7 +451,7 @@ export const configEtatcivil = [
         match[1] ===
         "/projetacte/d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca/composer-document-final"
       ) {
-        return { data: "documentFinalSigneEncodeEnBase64" };
+        return { data: "documentFinalSigneEncodeEnBase64", status: 200 };
       }
 
       if (
@@ -459,6 +459,17 @@ export const configEtatcivil = [
         "/projetacte/d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca/integrer-acte-signe"
       ) {
         return { status: 200 };
+      };
+      /////////////////
+      // Signature //
+      /////////////////
+      if (
+        match[1] ===
+        "/acte/885bdb13-d995-4dbd-93cb-a7a3b2eee5c8/recomposer-document-final"
+      ) {
+        return {
+          data: "documentFinalActeSigneResponseTypeBlob"
+        };
       }
 
       // Actes / inscriptions sauvegardes

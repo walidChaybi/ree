@@ -1,10 +1,12 @@
 import { IUuidSuiviDossierParams } from "@model/params/IUuidSuiviDossierParams";
 import { Erreurs } from "@model/requete/Erreurs";
+import { URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID } from "@router/ReceUrls";
+import { replaceUrl } from "@util/route/UrlUtil";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { PopinSignature, PopinSignatureProps } from "./PopinSignature";
+import { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router";
 import { useSignatureCreationEtablisementHook } from "./hook/SignatureCreationActeEtablissementHook";
+import { PopinSignature, PopinSignatureProps } from "./PopinSignature";
 import "./scss/PopinSignature.scss";
 
 type PopinSignatureCreationEtablissementProps = {
@@ -21,16 +23,33 @@ const TRAITEMENT_SIGNATURE_TIMEOUT_MS = 45000;
 export const PopinSignatureCreationEtablissement: React.FC<
   PopinSignatureCreationEtablissementProps
 > = ({ idActe, estOuvert, setEstOuvert }) => {
-  const [estOuvertPopinConfirmation, setEstOuvertPopinConfirmation] =
-    useState<boolean>(false);
+  const history = useHistory();
   const { idRequeteParam, idSuiviDossierParam } =
     useParams<IUuidSuiviDossierParams>();
-  const { documentASigner, onSuccesSignature, traitementSignatureTermine } =
-    useSignatureCreationEtablisementHook(
-      idActe,
-      idRequeteParam,
-      idSuiviDossierParam
-    );
+
+  const [estOuvertPopinConfirmation, setEstOuvertPopinConfirmation] =
+    useState<boolean>(false);
+
+  const {
+    documentASigner,
+    onSuccesSignatureAppNative,
+    traitementSignatureTermine
+  } = useSignatureCreationEtablisementHook(
+    idActe,
+    idRequeteParam,
+    idSuiviDossierParam
+  );
+
+  const redirectionOnSuccesSignature = () => {
+    if (idActe) {
+      const url =
+        URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID.replace(
+          ":idRequeteParam",
+          idRequeteParam
+        ).replace(":idActeParam", idActe);
+      replaceUrl(history, url);
+    }
+  };
 
   useEffect(() => {
     setEstOuvertPopinConfirmation(
@@ -57,9 +76,10 @@ export const PopinSignatureCreationEtablissement: React.FC<
         estOuvert={estOuvert}
         setEstOuvert={setEstOuvert}
         documentASigner={documentASigner}
-        onSuccesSignature={onSuccesSignature}
+        onSuccesSignature={onSuccesSignatureAppNative}
         texte={TEXTE_POPIN}
         traitementSignatureTermine={traitementSignatureTermine.termine}
+        onTraitementSignatureTermine={redirectionOnSuccesSignature}
         timeoutTraitementSignature={TRAITEMENT_SIGNATURE_TIMEOUT_MS}
       />
       <ConfirmationPopin

@@ -22,6 +22,7 @@ export interface PopinSignatureProps {
   informations?: IDetailInfos[];
   traitementSignatureTermine: boolean;
   timeoutTraitementSignature?: number;
+  onTraitementSignatureTermine?: () => void;
 }
 
 export const PopinSignature: React.FC<PopinSignatureProps> = props => {
@@ -57,6 +58,9 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
     if (props.traitementSignatureTermine) {
       setSignatureEnCours(false);
       props.setEstOuvert(false);
+      if (props.onTraitementSignatureTermine) {
+        props.onTraitementSignatureTermine();
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.traitementSignatureTermine]);

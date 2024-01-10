@@ -77,7 +77,7 @@ export const useSignatureCreationEtablisementHook = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [codeReponseIntegrerActeSigne]);
 
-  const onSuccesSignature = (
+  const onSuccesSignatureAppNative = (
     document: string,
     informationsCarte: IInfosCarteSignature
   ): void => {
@@ -103,7 +103,7 @@ export const useSignatureCreationEtablisementHook = (
 
   return {
     documentASigner,
-    onSuccesSignature,
+    onSuccesSignatureAppNative,
     traitementSignatureTermine
   };
 };

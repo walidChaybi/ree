@@ -14,7 +14,7 @@ import {
   useGenerationEC
 } from "@hook/generation/generationECHook/generationECHook";
 import { useSupprimerDocumentComplementaireApi } from "@hook/requete/SupprimerDocumentComplementaireHook";
-import { IUuidEditionParams } from "@model/params/IUuidEditionParams";
+import { IUuidActeParams } from "@model/params/IUuidActeParams";
 import {
   DocumentReponse,
   IDocumentReponse
@@ -59,7 +59,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
   useTitreDeLaFenetre("Édition extrait copie");
   const history = useHistory();
   const { isDirty, setIsDirty } = useContext(RECEContext);
-  const { idRequeteParam, idActeParam } = useParams<IUuidEditionParams>();
+  const { idRequeteParam, idActeParam } = useParams<IUuidActeParams>();
 
   // States
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);

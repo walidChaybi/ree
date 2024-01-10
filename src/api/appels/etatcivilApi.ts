@@ -55,6 +55,7 @@ export const URL_BULLETIN_IDENTIFICATION = "/bulletinIdentification";
 const URL_COMPOSER_DOCUMENT_FINAL = "/composer-document-final";
 const URL_REGISTRE_PAPIER_PROJET_ACTE = "/registre-papier";
 const URL_INTEGRER_ACTE_SIGNE = "/integrer-acte-signe";
+const URL_ACTE_RECOMPOSER_APRES_SIGNATURE = "/recomposer-document-final";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -505,5 +506,13 @@ export function getBulletinIdentificationByIdActe(
   return api.fetch({
     method: HttpMethod.GET,
     uri: `${URL_ACTE}${URL_BULLETIN_IDENTIFICATION}/${idActe}`
+  });
+}
+
+export function getActeRecomposerApresSignature(idActe: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_ACTE}/${idActe}${URL_ACTE_RECOMPOSER_APRES_SIGNATURE}`,
+    responseType: "blob"
   });
 }
