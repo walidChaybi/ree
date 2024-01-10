@@ -1,6 +1,7 @@
 import { HTTP_STATUS_OK } from "@api/ApiManager";
 import {
   IComposerDocumentFinalApiHookParams,
+  IErreurCompositionDocumentSigne,
   useComposerDocumentFinalApiHook
 } from "@hook/acte/ComposerDocumentFinalApiHook";
 import {
@@ -15,13 +16,18 @@ import { IInfosCarteSignature } from "../types";
 import { storeRece } from "./../../../util/storeRece";
 import { DOCUMENT_VIDE_A_SIGNER } from "./SignatureHookUtil";
 
+export interface IEtatTraitementSignature {
+  termine: boolean;
+  erreur?: IErreurCompositionDocumentSigne;
+}
+
 export const useSignatureCreationEtablisementHook = (
   idActe?: string,
   idRequete?: string,
   idSuiviDossier?: string
 ) => {
   const [traitementSignatureTermine, setTraitementSignatureTermine] =
-    useState(false);
+    useState<IEtatTraitementSignature>({ termine: false });
   const [documentASigner, setDocumentASigner] = useState<string>(
     DOCUMENT_VIDE_A_SIGNER
   );
@@ -46,11 +52,15 @@ export const useSignatureCreationEtablisementHook = (
 
   useEffect(() => {
     if (composerDocumentFinalResultat) {
-      setDocumentASigner(
-        composerDocumentFinalResultat.documentRecomposeASigner
-      );
       if (composerDocumentFinalResultat.codeReponse !== HTTP_STATUS_OK) {
-        setTraitementSignatureTermine(true);
+        setTraitementSignatureTermine({
+          termine: true,
+          erreur: composerDocumentFinalResultat.erreur
+        });
+      } else {
+        setDocumentASigner(
+          composerDocumentFinalResultat.documentRecomposeASigner
+        );
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,7 +68,7 @@ export const useSignatureCreationEtablisementHook = (
 
   useEffect(() => {
     if (codeReponseEnregistrerActeSigne) {
-      setTraitementSignatureTermine(true);
+      setTraitementSignatureTermine({ termine: true });
       setModifierStatutRequeteEtAvancementProjetApresSignatureParams({
         idRequete,
         idSuiviDossier

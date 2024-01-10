@@ -1,8 +1,10 @@
 import { IUuidSuiviDossierParams } from "@model/params/IUuidSuiviDossierParams";
-import React from "react";
+import { Erreurs } from "@model/requete/Erreurs";
+import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useSignatureCreationEtablisementHook } from "./hook/SignatureCreationActeEtablissementHook";
 import { PopinSignature, PopinSignatureProps } from "./PopinSignature";
+import { useSignatureCreationEtablisementHook } from "./hook/SignatureCreationActeEtablissementHook";
 import "./scss/PopinSignature.scss";
 
 type PopinSignatureCreationEtablissementProps = {
@@ -19,6 +21,8 @@ const TRAITEMENT_SIGNATURE_TIMEOUT_MS = 45000;
 export const PopinSignatureCreationEtablissement: React.FC<
   PopinSignatureCreationEtablissementProps
 > = ({ idActe, estOuvert, setEstOuvert }) => {
+  const [estOuvertPopinConfirmation, setEstOuvertPopinConfirmation] =
+    useState<boolean>(false);
   const { idRequeteParam, idSuiviDossierParam } =
     useParams<IUuidSuiviDossierParams>();
   const { documentASigner, onSuccesSignature, traitementSignatureTermine } =
@@ -28,16 +32,48 @@ export const PopinSignatureCreationEtablissement: React.FC<
       idSuiviDossierParam
     );
 
+  useEffect(() => {
+    setEstOuvertPopinConfirmation(
+      traitementSignatureTermine.erreur?.code ===
+        Erreurs.FCT_PLAGE_HORAIRE_SIGNATURE
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [traitementSignatureTermine]);
+
+  const boutonsPopinConfirmation = [
+    {
+      label: "Fermer",
+      action: () => {
+        setEstOuvertPopinConfirmation(false);
+      },
+      color: "primary"
+    }
+  ];
+
   return (
-    <PopinSignature
-      titre="Signature du document"
-      estOuvert={estOuvert}
-      setEstOuvert={setEstOuvert}
-      documentASigner={documentASigner}
-      onSuccesSignature={onSuccesSignature}
-      texte={TEXTE_POPIN}
-      traitementSignatureTermine={traitementSignatureTermine}
-      timeoutTraitementSignature={TRAITEMENT_SIGNATURE_TIMEOUT_MS}
-    />
+    <>
+      <PopinSignature
+        titre="Signature du document"
+        estOuvert={estOuvert}
+        setEstOuvert={setEstOuvert}
+        documentASigner={documentASigner}
+        onSuccesSignature={onSuccesSignature}
+        texte={TEXTE_POPIN}
+        traitementSignatureTermine={traitementSignatureTermine.termine}
+        timeoutTraitementSignature={TRAITEMENT_SIGNATURE_TIMEOUT_MS}
+      />
+      <ConfirmationPopin
+        messages={
+          traitementSignatureTermine.erreur?.message
+            ? [traitementSignatureTermine.erreur.message]
+            : undefined
+        }
+        isOpen={estOuvertPopinConfirmation}
+        boutons={boutonsPopinConfirmation}
+      />
+    </>
   );
 };
+
+
+

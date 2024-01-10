@@ -1,5 +1,5 @@
-import { HTTP_BAD_REQUEST } from "@api/ApiManager";
 import { composerDocumentFinal } from "@api/appels/etatcivilApi";
+import { Erreurs } from "@model/requete/Erreurs";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
@@ -12,6 +12,12 @@ export interface IComposerDocumentFinalApiHookParams {
 export interface IComposerDocumentFinalApiHookResultat {
   documentRecomposeASigner: string;
   codeReponse: number;
+  erreur?: IErreurCompositionDocumentSigne;
+}
+
+export interface IErreurCompositionDocumentSigne {
+  code: string;
+  message: string;
 }
 
 export const useComposerDocumentFinalApiHook = (
@@ -38,15 +44,21 @@ export const useComposerDocumentFinalApiHook = (
           });
         })
         .catch((errors: any) => {
+          const erreur: IErreurCompositionDocumentSigne = {
+            code: JSON.parse(errors?.message)?.errors[0]?.code,
+            message: JSON.parse(errors?.message)?.errors[0]?.message
+          };
           setResultat({
             documentRecomposeASigner: "",
-            codeReponse: HTTP_BAD_REQUEST // TODO: Revoir la gestion du status code.
+            codeReponse: errors.status,
+            erreur
           });
-          logError({
-            error: errors,
-            messageUtilisateur:
-              "Impossible de composer le document final du projet d'acte."
-          });
+          erreur.code !== Erreurs.FCT_PLAGE_HORAIRE_SIGNATURE &&
+            logError({
+              error: errors,
+              messageUtilisateur:
+                "Impossible de composer le document final du projet d'acte."
+            });
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

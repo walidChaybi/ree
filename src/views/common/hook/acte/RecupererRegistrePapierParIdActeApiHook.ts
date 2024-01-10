@@ -28,7 +28,6 @@ export const useRecupererRegistrePapierParIdActeApiHook = (
         });
     }
   }, [params]);
-
   return registre;
 };
 
