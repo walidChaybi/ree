@@ -114,15 +114,11 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       EtatCivilApi,
       "composerDocumentFinal"
     );
-    const enregistrerActeSigneSpy = jest.spyOn(
-      EtatCivilApi,
-      "enregistrerActeSigne"
+    const integrerActeSigneSpy = jest.spyOn(EtatCivilApi, "integrerActeSigne");
+    const mettreAJourStatutApresSignatureSpy = jest.spyOn(
+      RequeteApi,
+      "mettreAJourStatutApresSignature"
     );
-    const miseAJourStatutRequeteEtAvancementProjetApresSignatureSpy =
-      jest.spyOn(
-        RequeteApi,
-        "miseAJourStatutRequeteEtAvancementProjetApresSignature"
-      );
 
     const history = createMemoryHistory();
     history.push(
@@ -198,24 +194,22 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       )
     );
 
-    // Test l'enregistrement du document final signé
+    // Test l'intégration du document final signé
     await waitFor(() => {
-      expect(enregistrerActeSigneSpy).toHaveBeenCalledTimes(1);
+      expect(integrerActeSigneSpy).toHaveBeenCalledTimes(1);
     });
 
     // Test la modification du statut de la requete et de l'avancement du projet d'acte
     await waitFor(() => {
-      expect(
-        miseAJourStatutRequeteEtAvancementProjetApresSignatureSpy
-      ).toHaveBeenCalledWith(
+      expect(mettreAJourStatutApresSignatureSpy).toHaveBeenCalledWith(
         "e5fdfe01-655b-44b9-a1fd-86c1169bb2ee",
         "a5187320-d722-4673-abd7-a73ed41ad8c1"
       );
     });
 
     // Clear mocks
-    enregistrerActeSigneSpy.mockClear();
-    miseAJourStatutRequeteEtAvancementProjetApresSignatureSpy.mockClear();
+    integrerActeSigneSpy.mockClear();
+    mettreAJourStatutApresSignatureSpy.mockClear();
     composerDocumentFinalSpy.mockClear();
   });
 

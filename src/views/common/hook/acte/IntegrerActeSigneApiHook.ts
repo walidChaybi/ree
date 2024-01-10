@@ -1,25 +1,25 @@
 import { HTTP_BAD_REQUEST } from "@api/ApiManager";
-import { enregistrerActeSigne } from "@api/appels/etatcivilApi";
+import { integrerActeSigne } from "@api/appels/etatcivilApi";
 import { TModeAuthentification } from "@model/agent/types";
 import { logError } from "@util/LogManager";
 import { IInfosCarteSignature } from "@widget/signature/types";
 import { useEffect, useState } from "react";
 
-export interface IEnregistrerActeSigneApiHookParams {
+export interface IIntegrerActeSigneApiHookParams {
   idActe: string;
   document: string;
   infosCarteSignature: IInfosCarteSignature;
   modeAuthentification: TModeAuthentification;
 }
 
-export const useEnregistrerActeSigneApiHook = (
-  params?: IEnregistrerActeSigneApiHookParams
+export const useIntegrerActeSigneApiHook = (
+  params?: IIntegrerActeSigneApiHookParams
 ): number | undefined => {
   const [codeReponse, setCodeReponse] = useState<number>();
 
   useEffect(() => {
     if (params) {
-      enregistrerActeSigne(
+      integrerActeSigne(
         params.idActe,
         params.document,
         params.infosCarteSignature,

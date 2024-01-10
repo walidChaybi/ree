@@ -74,6 +74,8 @@ export const URL_AVANCEMENT_PROJET = "/avancement";
 export const URL_PIECE_JUSTIFICATIVES_CREATION = "/pieceJustificative";
 export const URL_STATUT = "/statut";
 const URL_SUIVI_DOSSIER = "/suivi-dossier";
+const URL_METTRE_AJOUR_STATUT_APRES_SIGNATURE =
+  "/mettre-a-jour-statut-apres-signature";
 
 const URL_REPONSES = "/reponses";
 
@@ -363,13 +365,13 @@ export async function updateRequeteCreation(
   });
 }
 
-export async function miseAJourStatutRequeteEtAvancementProjetApresSignature(
+export async function mettreAJourStatutApresSignature(
   idRequete: string,
   idSuiviDossier: string
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.PATCH,
-    uri: `${URL_REQUETES_CREATION}/${idRequete}${URL_SUIVI_DOSSIER}/${idSuiviDossier}/signer`
+    uri: `${URL_REQUETES_CREATION}/${idRequete}${URL_SUIVI_DOSSIER}/${idSuiviDossier}${URL_METTRE_AJOUR_STATUT_APRES_SIGNATURE}`
   });
 }
 

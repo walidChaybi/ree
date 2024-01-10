@@ -455,7 +455,8 @@ export const configEtatcivil = [
       }
 
       if (
-        match[1] === "/projetacte/d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca/signer"
+        match[1] ===
+        "/projetacte/d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca/integrer-acte-signe"
       ) {
         return { status: 200 };
       }

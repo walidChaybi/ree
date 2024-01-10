@@ -54,7 +54,7 @@ export const URL_ANALYSE_MARGINALE = "/analyseMarginale";
 export const URL_BULLETIN_IDENTIFICATION = "/bulletinIdentification";
 const URL_COMPOSER_DOCUMENT_FINAL = "/composer-document-final";
 const URL_REGISTRE_PAPIER_PROJET_ACTE = "/registre-papier";
-const URL_SIGNER_ACTE = "/signer";
+const URL_INTEGRER_ACTE_SIGNE = "/integrer-acte-signe";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -136,7 +136,7 @@ export function composerDocumentFinal(
 /**
  * Enregistrer l'acte final signé.
  */
-export function enregistrerActeSigne(
+export function integrerActeSigne(
   idActe: string,
   document: string,
   infosCarteSignature: IInfosCarteSignature,
@@ -144,7 +144,7 @@ export function enregistrerActeSigne(
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.PATCH,
-    uri: `${URL_PROJET_ACTE}/${idActe}${URL_SIGNER_ACTE}`,
+    uri: `${URL_PROJET_ACTE}/${idActe}${URL_INTEGRER_ACTE_SIGNE}`,
     data: {
       documentPadesBase64: document,
       signature: { infosSignature: infosCarteSignature, modeAuthentification }

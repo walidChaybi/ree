@@ -1,18 +1,18 @@
-import { miseAJourStatutRequeteEtAvancementProjetApresSignature } from "@api/appels/requeteApi";
+import { mettreAJourStatutApresSignature } from "@api/appels/requeteApi";
 import { logError } from "@util/LogManager";
 import { useEffect } from "react";
 
-export interface IModifierStatutRequeteEtAvancementProjetApresSignatureParams {
+export interface IMettreAJourStatutApresSignatureParams {
   idRequete?: string;
   idSuiviDossier?: string;
 }
 
-const useModifierStatutRequeteEtAvancementProjetApresSignatureApiHook = (
-  parametres?: IModifierStatutRequeteEtAvancementProjetApresSignatureParams
+const useMettreAJourStatutApresSignatureApiHook = (
+  parametres?: IMettreAJourStatutApresSignatureParams
 ): void => {
   useEffect(() => {
     if (parametres?.idRequete && parametres?.idSuiviDossier) {
-      miseAJourStatutRequeteEtAvancementProjetApresSignature(
+      mettreAJourStatutApresSignature(
         parametres.idRequete,
         parametres.idSuiviDossier
       ).catch(error => {
@@ -26,4 +26,4 @@ const useModifierStatutRequeteEtAvancementProjetApresSignatureApiHook = (
   }, [parametres]);
 };
 
-export default useModifierStatutRequeteEtAvancementProjetApresSignatureApiHook;
+export default useMettreAJourStatutApresSignatureApiHook;

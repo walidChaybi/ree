@@ -5,15 +5,15 @@ import {
   useComposerDocumentFinalApiHook
 } from "@hook/acte/ComposerDocumentFinalApiHook";
 import {
-  IEnregistrerActeSigneApiHookParams,
-  useEnregistrerActeSigneApiHook
-} from "@hook/acte/EnregistrerActeSigneApiHook";
-import useModifierStatutRequeteEtAvancementProjetApresSignatureApiHook, {
-  IModifierStatutRequeteEtAvancementProjetApresSignatureParams
-} from "@hook/requete/ModifierStatutRequeteEtAvancementProjetActeApresSignatureApiHook";
+  IIntegrerActeSigneApiHookParams,
+  useIntegrerActeSigneApiHook
+} from "@hook/acte/IntegrerActeSigneApiHook";
+import useMettreAJourStatutApresSignatureApiHook, {
+  IMettreAJourStatutApresSignatureParams
+} from "@hook/requete/MettreAJourStatutApresSignatureApiHook";
+import { storeRece } from "@util/storeRece";
 import { useEffect, useState } from "react";
 import { IInfosCarteSignature } from "../types";
-import { storeRece } from "./../../../util/storeRece";
 import { DOCUMENT_VIDE_A_SIGNER } from "./SignatureHookUtil";
 
 export interface IEtatTraitementSignature {
@@ -33,21 +33,21 @@ export const useSignatureCreationEtablisementHook = (
   );
   const [composerDocumentFinalParams, setComposerDocumentFinalParams] =
     useState<IComposerDocumentFinalApiHookParams>();
-  const [enregistrerActeSigneParams, setEnregistrerActeSigneParams] =
-    useState<IEnregistrerActeSigneApiHookParams>();
+  const [integrerActeSigneParams, setIntegrerActeSigneParams] =
+    useState<IIntegrerActeSigneApiHookParams>();
   const [
-    modifierStatutRequeteEtAvancementProjetApresSignatureParams,
-    setModifierStatutRequeteEtAvancementProjetApresSignatureParams
-  ] = useState<IModifierStatutRequeteEtAvancementProjetApresSignatureParams>();
+    mettreAJourStatutApresSignatureParams,
+    setMettreAJourStatutApresSignatureParams
+  ] = useState<IMettreAJourStatutApresSignatureParams>();
 
   const composerDocumentFinalResultat = useComposerDocumentFinalApiHook(
     composerDocumentFinalParams
   );
-  const codeReponseEnregistrerActeSigne = useEnregistrerActeSigneApiHook(
-    enregistrerActeSigneParams
+  const codeReponseIntegrerActeSigne = useIntegrerActeSigneApiHook(
+    integrerActeSigneParams
   );
-  useModifierStatutRequeteEtAvancementProjetApresSignatureApiHook(
-    modifierStatutRequeteEtAvancementProjetApresSignatureParams
+  useMettreAJourStatutApresSignatureApiHook(
+    mettreAJourStatutApresSignatureParams
   );
 
   useEffect(() => {
@@ -67,15 +67,15 @@ export const useSignatureCreationEtablisementHook = (
   }, [composerDocumentFinalResultat]);
 
   useEffect(() => {
-    if (codeReponseEnregistrerActeSigne) {
+    if (codeReponseIntegrerActeSigne) {
       setTraitementSignatureTermine({ termine: true });
-      setModifierStatutRequeteEtAvancementProjetApresSignatureParams({
+      setMettreAJourStatutApresSignatureParams({
         idRequete,
         idSuiviDossier
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [codeReponseEnregistrerActeSigne]);
+  }, [codeReponseIntegrerActeSigne]);
 
   const onSuccesSignature = (
     document: string,
@@ -90,7 +90,7 @@ export const useSignatureCreationEtablisementHook = (
         });
       } else {
         storeRece.utilisateurCourant &&
-          setEnregistrerActeSigneParams({
+          setIntegrerActeSigneParams({
             idActe,
             document,
             infosCarteSignature: informationsCarte,
