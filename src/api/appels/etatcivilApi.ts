@@ -148,7 +148,8 @@ export function integrerActeSigne(
     uri: `${URL_PROJET_ACTE}/${idActe}${URL_INTEGRER_ACTE_SIGNE}`,
     data: {
       documentPadesBase64: document,
-      signature: { infosSignature: infosCarteSignature, modeAuthentification }
+      signature: { infosSignature: infosCarteSignature },
+      modeAuthentification
     }
   });
 }
