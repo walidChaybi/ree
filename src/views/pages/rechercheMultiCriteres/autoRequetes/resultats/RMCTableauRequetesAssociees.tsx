@@ -3,12 +3,12 @@ import {
   aDroitConsulterRequeteCreation,
   aDroitConsulterRequeteDelivrance
 } from "@model/agent/IOfficier";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
-import { ApercuRequeteCreationEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteCreationEtablissementSimplePage";
+import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
@@ -192,7 +192,7 @@ export const getApercuRequeteEtablissementOuTranscription = (
   );
   if (SousTypeCreation.estRCEXR(sousTypeCreation)) {
     apercuSimpleCreation = (
-      <ApercuRequeteCreationEtablissementSimplePage
+      <ApercuRequeteEtablissementSimplePage
         idRequeteAAfficher={requeteSelectionnee.idRequete}
       />
     );

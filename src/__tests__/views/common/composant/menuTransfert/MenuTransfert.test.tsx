@@ -1,11 +1,11 @@
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
 import { idRequeteRDCSC, requeteRDCSC } from "@mock/data/requeteDelivrance";
 import { requeteInformation } from "@mock/data/requeteInformation";
+import { Droit } from "@model/agent/enum/Droit";
+import { TypeEntite } from "@model/agent/enum/TypeEntite";
 import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IEntite } from "@model/agent/IEntiteRattachement";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
-import { Droit } from "@model/agent/enum/Droit";
-import { TypeEntite } from "@model/agent/enum/TypeEntite";
 import {
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
   URL_MES_REQUETES_DELIVRANCE,

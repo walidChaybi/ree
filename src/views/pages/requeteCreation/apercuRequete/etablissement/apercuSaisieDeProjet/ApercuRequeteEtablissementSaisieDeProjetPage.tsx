@@ -33,7 +33,7 @@ import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/compos
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import {
-  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
   URL_RECHERCHE_REQUETE
 } from "@router/ReceUrls";
 import { getUrlWithParam } from "@util/route/UrlUtil";
@@ -51,7 +51,7 @@ import {
   estOuvertRegistrePapier,
   getConteneurResumeRequete,
   onRenommePieceJustificativeEtablissement
-} from "../commun/ApercuRequeteCreationEtablissementUtils";
+} from "../commun/ApercuRequeteEtablissementUtils";
 import { BoutonsApercuCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
 import "../commun/scss/OngletsApercuCreationEtablissement.scss";
 import { useProjetActeHook } from "./contenu/saisiePostulantForm/hook/ProjetActeHook";
@@ -61,7 +61,7 @@ import { mappingProjetActeVersProjetActeComposition } from "./contenu/saisiePost
 import { mappingTitulairesVersFormulairePostulant } from "./contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
 import { SaisiePostulantForm } from "./contenu/saisiePostulantForm/SaisiePostulantForm";
 
-interface ApercuRequeteCreationEtablissementSaisieDeProjetPageProps {
+interface ApercuRequeteEtablissementSaisieDeProjetPageProps {
   idRequeteAAfficher?: string;
 }
 
@@ -71,8 +71,8 @@ interface ItemListe {
   component: JSX.Element;
 }
 
-export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
-  ApercuRequeteCreationEtablissementSaisieDeProjetPageProps
+export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
+  ApercuRequeteEtablissementSaisieDeProjetPageProps
 > = props => {
   const { idRequeteParam, idSuiviDossierParam } =
     useParams<IUuidSuiviDossierParams>();
@@ -162,10 +162,10 @@ export const ApercuRequeteCreationEtablissementSaisieDeProjetPage: React.FC<
     if (projetEstValide) {
       history.push({
         pathname: getUrlWithParam(
-          URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
+          URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
           idRequeteParam
         ),
-        // TODO: passage du state non fonctionnel ==> reussir a passer l'idSuiviDossier & le location.pathname a l'apercu prise en charge
+        // TODO: passage du state non fonctionnel ==> reussir a passer l'idSuiviDossier & le location.pathname a l'apercu suivi dossier
         state: { idSuiviDossier: idSuiviDossierParam }
       });
     }

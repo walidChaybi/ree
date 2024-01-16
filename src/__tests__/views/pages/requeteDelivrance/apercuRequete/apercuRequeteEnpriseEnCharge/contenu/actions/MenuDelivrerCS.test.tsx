@@ -1,10 +1,10 @@
-import { DataRMCActeAvecResultat } from "@mock/data/RMCActe";
-import { DataRMCInscriptionAvecUnRCA } from "@mock/data/RMCInscription";
 import {
   idRequeteRDC,
   idRequeteRDCSC,
   requeteRDCSC
 } from "@mock/data/requeteDelivrance";
+import { DataRMCActeAvecResultat } from "@mock/data/RMCActe";
+import { DataRMCInscriptionAvecUnRCA } from "@mock/data/RMCInscription";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_ATTESTATION_PACS } from "@model/requete/enum/DocumentDelivranceConstante";
 import { MenuDelivrerCS } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerCS";

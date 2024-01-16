@@ -2,27 +2,30 @@ import {
   IDetailRequeteParams,
   useDetailRequeteApiHook
 } from "@hook/requete/DetailRequeteHook";
-import { IUuidActeParams } from "@model/params/IUuidActeParams";
+import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
-import ActeRegistre from "@pages/requeteCreation/commun/composants/ActeRegistre";
+import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
-import { DEUX, getLibelle, UN, ZERO } from "@util/Utils";
+import { DEUX, getLibelle } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import {
+  getConteneurPieceJustificative,
   getConteneurResumeRequete,
   onRenommePieceJustificativeEtablissement
-} from "../commun/ApercuRequeteCreationEtablissementUtils";
+} from "../commun/ApercuRequeteEtablissementUtils";
+import { BoutonsApercuCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
 import "../commun/scss/OngletsApercuCreationEtablissement.scss";
+import { SuiviDossier } from "./contenu/SuiviDossier";
 
-interface ApercuRequeteCreationEtablissementActeRegistreProps {
+interface ApercuRequeteEtablissementSuiviDossierPageProps {
   idRequeteAAfficher?: string;
 }
 
@@ -32,16 +35,31 @@ interface ItemListe {
   component: JSX.Element;
 }
 
-export const ApercuRequeteCreationEtablissementActeRegistre: React.FC<
-  ApercuRequeteCreationEtablissementActeRegistreProps
+export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<
+  ApercuRequeteEtablissementSuiviDossierPageProps
 > = props => {
-  const { idRequeteParam, idActeParam } = useParams<IUuidActeParams>();
+  // Params & History
+  const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const history = useHistory();
+  // States
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
   const [detailRequeteParams, setDetailRequeteParams] =
     useState<IDetailRequeteParams>();
 
+  // Hooks
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
+
+  useEffect(() => {
+    rechargerRequete();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
+
+  function rechargerRequete() {
+    setDetailRequeteParams({
+      idRequete: props.idRequeteAAfficher ?? idRequeteParam,
+      estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+    });
+  }
 
   const {
     dataActesInscriptionsSelectionnes,
@@ -57,19 +75,7 @@ export const ApercuRequeteCreationEtablissementActeRegistre: React.FC<
     }
   }, [detailRequeteState]);
 
-  useEffect(() => {
-    rechargerRequete();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
-
-  function rechargerRequete() {
-    setDetailRequeteParams({
-      idRequete: props.idRequeteAAfficher ?? idRequeteParam,
-      estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
-    });
-  }
-
-  function onRenommePieceJustificativeActeRegistre(
+  function onRenommePieceJustificativeSuiviDossier(
     idPieceJustificative: string,
     nouveauLibelle: string,
     idDocumentPJ?: string
@@ -83,7 +89,19 @@ export const ApercuRequeteCreationEtablissementActeRegistre: React.FC<
     );
   }
 
-  const listeOngletsGauche: ItemListe[] = [
+  const liste: ItemListe[] = [
+    {
+      titre: getLibelle("Pièces justificatives / Annexes"),
+      component: (
+        <OngletPiecesJustificatives
+          rechargerRequete={rechargerRequete}
+          requete={requete || ({} as IRequeteCreationEtablissement)}
+          autoriseOuvertureFenetreExt={true}
+          onRenommePieceJustificative={onRenommePieceJustificativeSuiviDossier}
+        />
+      ),
+      index: 0
+    },
     {
       titre: getLibelle("RMC"),
       component: (
@@ -91,7 +109,9 @@ export const ApercuRequeteCreationEtablissementActeRegistre: React.FC<
           resultatRMCPersonne={resultatRMCAutoPersonne ?? []}
           sousTypeRequete={requete?.sousType}
           listeTitulaires={requete?.titulaires}
-          natureActeRequete={NatureActeRequete.getEnumFor(requete?.nature)}
+          natureActeRequete={NatureActeRequete.getEnumFor(
+            requete?.nature ?? ""
+          )}
           tableauRMCPersonneEnChargement={rmcAutoPersonneEnChargement}
           tableauActesInscriptionsSelectionnesEnChargement={
             !dataActesInscriptionsSelectionnes
@@ -105,42 +125,42 @@ export const ApercuRequeteCreationEtablissementActeRegistre: React.FC<
           setRmcAutoPersonneParams={setRmcAutoPersonneParams}
         />
       ),
-      index: ZERO
+      index: 1
     },
     {
-      titre: getLibelle("Pièces justificatives / Annexes"),
+      titre: getLibelle("Suivi dossier"),
       component: (
-        <OngletPiecesJustificatives
-          rechargerRequete={rechargerRequete}
+        <SuiviDossier
+          echanges={requete?.provenanceNatali?.echanges}
           requete={requete || ({} as IRequeteCreationEtablissement)}
-          autoriseOuvertureFenetreExt={true}
-          onRenommePieceJustificative={onRenommePieceJustificativeActeRegistre}
+          modeConsultation={props.idRequeteAAfficher !== undefined}
         />
       ),
-      index: UN
+      index: 2
     },
     {
-      titre: getLibelle("Acte Registre"),
-      component: <ActeRegistre idActeAAfficher={idActeParam} />,
-      index: DEUX
+      titre: getLibelle("Echanges"),
+      component: <Echanges />,
+      index: 3
     }
   ];
 
   return (
-    <div className="ApercuReqCreationEtablissementSaisieProjetPage">
+    <div className="ApercuReqCreationEtablissementSuiviDossierPage">
       {requete ? (
         <>
           {getConteneurResumeRequete(requete)}
+
           <div className="OngletsApercuCreationEtablissement">
-            <VoletAvecOnglet
-              liste={listeOngletsGauche}
-              ongletParDefault={DEUX}
-            />
+            <VoletAvecOnglet liste={liste} ongletParDefault={DEUX} />
+            <BoutonsApercuCreationEtablissement requete={requete} />
           </div>
-          {/* TODO: remettre onglet "Echange" une fois que celui ci sera developpé (on le retire car vide donc inutile) */}
-          {/* <div className="OngletsApercuCreationEtablissement">
-            <VoletAvecOnglet liste={listeOngletsDroit} checkDirty={true} />
-          </div> */}
+
+          {getConteneurPieceJustificative(
+            requete,
+            onRenommePieceJustificativeSuiviDossier,
+            rechargerRequete
+          )}
         </>
       ) : (
         <OperationLocaleEnCoursSimple />

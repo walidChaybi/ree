@@ -9,17 +9,17 @@ import { requeteInformation } from "@mock/data/requeteInformation";
 import { IDroit } from "@model/agent/Habilitation";
 import { INomenclatureAgentApi } from "@model/agent/INomenclatureAgentApi";
 import {
-  IOfficier,
   aDroitConsulterApercuRequeteInformation,
   aDroitConsulterRequeteCreation,
-  aDroitConsulterRequeteDelivrance
+  aDroitConsulterRequeteDelivrance,
+  IOfficier
 } from "@model/agent/IOfficier";
 import { IPerimetre } from "@model/agent/IPerimetre";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import {
-  IInfoRequeteSelectionnee,
   getApercuRequeteSimple,
+  IInfoRequeteSelectionnee,
   utilisateurADroitOuvrirRequete
 } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCTableauRequetesAssociees";
 import {

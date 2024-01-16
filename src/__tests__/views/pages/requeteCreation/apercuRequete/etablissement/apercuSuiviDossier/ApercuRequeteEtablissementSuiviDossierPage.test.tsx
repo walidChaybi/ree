@@ -1,15 +1,15 @@
-import { ApercuRequeteCreationEtablissementPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteCreationEtablissementPriseEnChargePage";
+import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
 import {
-  PATH_APERCU_REQ_ETABLISSEMENT_PRISE_EN_CHARGE,
+  PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER,
   URL_MES_REQUETES_CREATION,
-  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID
 } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import { Route, Router } from "react-router";
 
-describe("Test de la page Aperçu requête etablissement prise en charge", () => {
+describe("Test de la page Aperçu requête etablissement suivi dossier", () => {
   test("DOIT afficher les onglets avec pièce justificative active QUAND on arrive sur la page", async () => {
     afficherPageRequeteCreationEtablissment();
 
@@ -30,7 +30,7 @@ function afficherPageRequeteCreationEtablissment() {
   const history = createMemoryHistory();
   history.push(
     getUrlWithParam(
-      `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_PRISE_EN_CHARGE}/:idRequete`,
+      `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER}/:idRequete`,
       "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
     )
   );
@@ -38,9 +38,9 @@ function afficherPageRequeteCreationEtablissment() {
     <Router history={history}>
       <Route
         exact={true}
-        path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID}
+        path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID}
       >
-        <ApercuRequeteCreationEtablissementPriseEnChargePage />
+        <ApercuRequeteEtablissementSuiviDossierPage />
       </Route>
     </Router>
   );

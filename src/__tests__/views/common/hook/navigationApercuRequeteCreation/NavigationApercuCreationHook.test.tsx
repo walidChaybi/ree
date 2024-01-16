@@ -72,7 +72,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
 });
 
 describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonction du statut et du sousType", () => {
-  test("Doit rediriger sur l'aperçu de requête de création prise en charge QUAND le sousType est RCEXR et au statut À traiter", async () => {
+  test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut À traiter", async () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
       idRequete: ID_REQUETE,
       sousType: SousTypeCreation.RCEXR,
@@ -81,11 +81,11 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
     naviguerApercuRequete(paramsCreation);
 
     expect(history.location.pathname).toBe(
-      apercuRequeteURL("apercurequetecreationetablissementpriseencharge")
+      apercuRequeteURL("apercurequetecreationetablissementsuividossier")
     );
   });
 
-  test("Doit rediriger sur l'aperçu de requête de création prise en charge QUAND le sousType est RCEXR et au statut Prise en charge", async () => {
+  test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut Prise en charge", async () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
       idRequete: ID_REQUETE,
       sousType: SousTypeCreation.RCEXR,
@@ -94,7 +94,7 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
     naviguerApercuRequete(paramsCreation);
 
     expect(history.location.pathname).toBe(
-      apercuRequeteURL("apercurequetecreationetablissementpriseencharge")
+      apercuRequeteURL("apercurequetecreationetablissementsuividossier")
     );
   });
 

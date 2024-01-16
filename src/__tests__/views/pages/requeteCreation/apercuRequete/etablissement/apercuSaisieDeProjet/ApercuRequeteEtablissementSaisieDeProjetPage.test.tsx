@@ -1,4 +1,4 @@
-import { ApercuRequeteCreationEtablissementSaisieDeProjetPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/ApercuRequeteCreationEtablissementSaisieDeProjetPage";
+import { ApercuRequeteEtablissementSaisieDeProjetPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/ApercuRequeteEtablissementSaisieDeProjetPage";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
   URL_MES_REQUETES_CREATION,
@@ -63,7 +63,7 @@ function afficherPageRequeteCreationEtablissment() {
         exact={true}
         path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}
       >
-        <ApercuRequeteCreationEtablissementSaisieDeProjetPage />
+        <ApercuRequeteEtablissementSaisieDeProjetPage />
       </Route>
     </Router>
   );

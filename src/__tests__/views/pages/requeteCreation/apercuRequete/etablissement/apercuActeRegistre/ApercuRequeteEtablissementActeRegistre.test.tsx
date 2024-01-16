@@ -1,4 +1,4 @@
-import { ApercuRequeteCreationEtablissementActeRegistre } from "@pages/requeteCreation/apercuRequete/etablissement/apercuActeRegistre/ApercuRequeteCreationEtablissementActeRegistre";
+import { ApercuRequeteEtablissementActeRegistrePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuActeRegistre/ApercuRequeteEtablissementActeRegistre";
 import {
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID,
   URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID
@@ -45,7 +45,7 @@ function afficherPageRequeteCreationEtablissmentActeRegistre() {
         exact={true}
         path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID}
       >
-        <ApercuRequeteCreationEtablissementActeRegistre />
+        <ApercuRequeteEtablissementActeRegistrePage />
       </Route>
     </Router>
   );

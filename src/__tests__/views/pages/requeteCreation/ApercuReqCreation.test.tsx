@@ -5,7 +5,7 @@ import {
 } from "@mock/data/connectedUserAvecDroit";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
-import { ApercuRequeteCreationEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteCreationEtablissementSimplePage";
+import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import {
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
@@ -20,7 +20,7 @@ import {
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { MemoryHistory, createMemoryHistory } from "history";
+import { createMemoryHistory, MemoryHistory } from "history";
 import { Route, Router } from "react-router-dom";
 
 beforeAll(() => {
@@ -52,7 +52,7 @@ test("renders VoletPiecesJustificatives Etablissement", async () => {
         exact={true}
         path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID}
       >
-        <ApercuRequeteCreationEtablissementSimplePage />
+        <ApercuRequeteEtablissementSimplePage />
       </Route>
     </Router>
   );
@@ -114,7 +114,7 @@ test("Modifier le titre d'un fichier d'une pièce jointe Etablissement", async (
         exact={true}
         path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID}
       >
-        <ApercuRequeteCreationEtablissementSimplePage />
+        <ApercuRequeteEtablissementSimplePage />
       </Route>
     </Router>
   );
@@ -192,7 +192,7 @@ test("Modifier le titre d'un fichier et revenir en arrière", async () => {
         exact={true}
         path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID}
       >
-        <ApercuRequeteCreationEtablissementSimplePage />
+        <ApercuRequeteEtablissementSimplePage />
       </Route>
     </Router>
   );
@@ -244,7 +244,7 @@ test("Modifier le titre puis annuler", async () => {
         exact={true}
         path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID}
       >
-        <ApercuRequeteCreationEtablissementSimplePage />
+        <ApercuRequeteEtablissementSimplePage />
       </Route>
     </Router>
   );
@@ -288,7 +288,7 @@ test("Ouvrir deux pièces jointes côte à côte.", async () => {
         exact={true}
         path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID}
       >
-        <ApercuRequeteCreationEtablissementSimplePage />
+        <ApercuRequeteEtablissementSimplePage />
       </Route>
     </Router>
   );

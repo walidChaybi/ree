@@ -1,4 +1,4 @@
-import { ApercuRequeteCreationEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteCreationEtablissementSimplePage";
+import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,
   URL_MES_REQUETES_CREATION,
@@ -21,7 +21,7 @@ describe("Test de la page Aperçu requête etablissement simple", () => {
 
     const { container } = render(
       <Router history={history}>
-        <ApercuRequeteCreationEtablissementSimplePage />
+        <ApercuRequeteEtablissementSimplePage />
       </Router>
     );
     await waitFor(async () => {
@@ -44,7 +44,7 @@ describe("Test de la page Aperçu requête etablissement simple", () => {
 
     const { container } = render(
       <Router history={history}>
-        <ApercuRequeteCreationEtablissementSimplePage />
+        <ApercuRequeteEtablissementSimplePage />
       </Router>
     );
 
@@ -81,7 +81,7 @@ describe("Test de la page Aperçu requête etablissement simple", () => {
             URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
           }
         >
-          <ApercuRequeteCreationEtablissementSimplePage />
+          <ApercuRequeteEtablissementSimplePage />
         </Route>
       </Router>
     );

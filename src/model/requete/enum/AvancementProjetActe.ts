@@ -25,6 +25,10 @@ export class AvancementProjetActe extends EnumWithLibelle {
     return EnumWithLibelle.getEnumFor(str, AvancementProjetActe);
   }
 
+  public static getEnumFromLibelle(libelle: string) {
+    return EnumWithLibelle.getEnumFromLibelle(AvancementProjetActe, libelle);
+  }
+
   public static getKey(valeur: AvancementProjetActe): string {
     return EnumWithLibelle.getKey(AvancementProjetActe, valeur);
   }
@@ -53,5 +57,9 @@ export class AvancementProjetActe extends EnumWithLibelle {
   }
   public static estProjetCree(avancement: AvancementProjetActe) {
     return avancement === AvancementProjetActe.EN_COURS;
+  }
+
+  public static estSigne(avancement: AvancementProjetActe) {
+    return avancement === AvancementProjetActe.SIGNE;
   }
 }

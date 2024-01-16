@@ -1,5 +1,5 @@
-import { DataRMCInscriptionAvecUnRCA } from "@mock/data/RMCInscription";
 import { idRequeteRDC, requeteRDC } from "@mock/data/requeteDelivrance";
+import { DataRMCInscriptionAvecUnRCA } from "@mock/data/RMCInscription";
 import { MenuDelivrerEC } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerEC";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "@router/ReceUrls";
 import {

@@ -2,8 +2,8 @@ import { mAppartient } from "@model/agent/IOfficier";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import {
-  PATH_APERCU_REQ_ETABLISSEMENT_PRISE_EN_CHARGE,
   PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,
+  PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER,
   PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE,
   PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET,
   PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE
@@ -67,7 +67,7 @@ function redirectionEtablissement(
     (StatutRequete.estATraiter(statut) ||
       StatutRequete.estPriseEnCharge(statut))
   ) {
-    path = PATH_APERCU_REQ_ETABLISSEMENT_PRISE_EN_CHARGE;
+    path = PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER;
   } else {
     path = PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE;
   }

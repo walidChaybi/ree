@@ -3,7 +3,7 @@ $spacing: 0.35rem;
 $height: calc($spacing * 2.5);
 
 .ApercuReqCreationEtablissementSimplePage,
-.ApercuReqCreationEtablissementPriseEnChargePage,
+.ApercuReqCreationEtablissementSuiviDossierPage,
 .ApercuReqCreationEtablissementSaisieProjetPage,
 .ApercuReqCreationTranscriptionSimplePage,
 .ApercuReqCreationTranscriptionPriseEnChargePage,
@@ -80,7 +80,7 @@ $height: calc($spacing * 2.5);
 
 
 .ApercuReqCreationEtablissementSimplePage,
-.ApercuReqCreationEtablissementPriseEnChargePage,
+.ApercuReqCreationEtablissementSuiviDossierPage,
 .ApercuReqCreationEtablissementSaisieProjetPage {
   display: flex;
   height: 88vh;

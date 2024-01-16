@@ -2,8 +2,8 @@ import { userDroitCreerActeEtabliPerimetreMEAE } from "@mock/data/connectedUserA
 import { requeteCreationATraiter } from "@mock/data/requeteCreation";
 import { BoutonPrendreEnChargeCreation } from "@pages/requeteCreation/apercuRequete/etablissement/commun/BoutonPrendreEnChargeCreation";
 import {
-  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID
 } from "@router/ReceUrls";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
@@ -43,7 +43,7 @@ test("DOIT rediriger sur l'appercu prise en charge QUAND on clique sur le bouton
   await waitFor(() => {
     expect(history.location.pathname).toBe(
       getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
         ID
       )
     );

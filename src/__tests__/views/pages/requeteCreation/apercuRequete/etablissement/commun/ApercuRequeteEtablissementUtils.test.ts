@@ -20,7 +20,7 @@ import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/I
 import {
   estModifieBulletinIdentification,
   estOuvertRegistrePapier
-} from "@pages/requeteCreation/apercuRequete/etablissement/commun/ApercuRequeteCreationEtablissementUtils";
+} from "@pages/requeteCreation/apercuRequete/etablissement/commun/ApercuRequeteEtablissementUtils";
 import { getDateActuelle } from "@util/DateUtils";
 
 describe("Test la modification des donnees du BI.", () => {

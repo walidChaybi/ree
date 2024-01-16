@@ -17,11 +17,11 @@ import {
   getConteneurPieceJustificative,
   getConteneurResumeRequete,
   onRenommePieceJustificativeEtablissement
-} from "../commun/ApercuRequeteCreationEtablissementUtils";
+} from "../commun/ApercuRequeteEtablissementUtils";
 import { BoutonsApercuCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
 import "../commun/scss/OngletsApercuCreationEtablissement.scss";
 
-interface ApercuRequeteCreationEtablissementSimplePageProps {
+interface ApercuRequeteEtablissementSimplePageProps {
   idRequeteAAfficher?: string;
 }
 
@@ -31,8 +31,8 @@ interface ItemListe {
   component: JSX.Element;
 }
 
-export const ApercuRequeteCreationEtablissementSimplePage: React.FC<
-  ApercuRequeteCreationEtablissementSimplePageProps
+export const ApercuRequeteEtablissementSimplePage: React.FC<
+  ApercuRequeteEtablissementSimplePageProps
 > = props => {
   // Params & History
   const { idRequeteParam } = useParams<IUuidRequeteParams>();

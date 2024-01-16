@@ -1,9 +1,9 @@
 import { mappingOfficier } from "@core/login/LoginHook";
-import { ReponseAppelMesRequetes } from "@mock/data/EspaceDelivrance";
 import {
   resultatHeaderUtilistateurLaurenceBourdeau,
   resultatRequeteUtilistateurLaurenceBourdeau
 } from "@mock/data/connectedUserAvecDroit";
+import { ReponseAppelMesRequetes } from "@mock/data/EspaceDelivrance";
 import { BoutonPrendreEnChargeAleatoirement } from "@pages/requeteDelivrance/espaceDelivrance/contenu/BoutonPrendreEnChargeAleatoirement";
 import {
   URL_MES_REQUETES_DELIVRANCE,

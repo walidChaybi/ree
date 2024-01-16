@@ -3,7 +3,7 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import BoutonPrendreEnChargePlusAncienneCreation from "@pages/requeteCreation/espaceCreation/BoutonPrendreEnChargePlusAncienneCreation";
 import {
   URL_MES_REQUETES_CREATION,
-  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID
 } from "@router/ReceUrls";
 import {
   act,
@@ -44,7 +44,7 @@ test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l
   await waitFor(() => {
     expect(history.location.pathname).toBe(
       getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
         "54ddf213-d9b7-4747-8e92-68c220f66de3"
       )
     );

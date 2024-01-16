@@ -38,7 +38,6 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 
-
 const RDCSC = () => {
   const history = createMemoryHistory();
 

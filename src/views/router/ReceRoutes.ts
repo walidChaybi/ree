@@ -3,14 +3,14 @@
 import { PageMessage } from "@core/login/PageMessage";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { ApercuRequeteCreationEtablissementPriseEnChargePage } from "@pageEtablissement/apercuPriseEnCharge/ApercuRequeteCreationEtablissementPriseEnChargePage";
-import { ApercuRequeteCreationEtablissementSaisieDeProjetPage } from "@pageEtablissement/apercuSaisieDeProjet/ApercuRequeteCreationEtablissementSaisieDeProjetPage";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { RMCArchivePage } from "@pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
-import { ApercuRequeteCreationEtablissementActeRegistre } from "@pages/requeteCreation/apercuRequete/etablissement/apercuActeRegistre/ApercuRequeteCreationEtablissementActeRegistre";
-import { ApercuRequeteCreationEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteCreationEtablissementSimplePage";
+import { ApercuRequeteEtablissementActeRegistrePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuActeRegistre/ApercuRequeteEtablissementActeRegistre";
+import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
+import { ApercuRequeteEtablissementSaisieDeProjetPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/ApercuRequeteEtablissementSaisieDeProjetPage";
+import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
 import { ApercuReqCreationTranscriptionSaisieProjetPage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSaisieProjetPage";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
@@ -37,9 +37,9 @@ import {
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID,
-  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
   URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID,
   URL_MES_REQUETES_CREATION_SAISIR_RCTC,
   URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
@@ -61,8 +61,8 @@ import {
   URL_RECHERCHE_ACTE_INSCRIPTION,
   URL_RECHERCHE_REQUETE,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_APERCU_SIMPLE_ID,
-  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_PRISE_EN_CHARGE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_SAISIE_PROJET_ID,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_SUIVI_DOSSIER_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_APERCU_SIMPLE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_EN_TRAITEMENT_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID,
@@ -73,9 +73,9 @@ import {
   URL_RECHERCHE_REQUETE_EDITION_ID,
   URL_REQUETES_CREATION_SERVICE,
   URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID,
-  URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
   URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
   URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
+  URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
   URL_REQUETES_CREATION_SERVICE_SAISIR_RCTC,
   URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
   URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
@@ -98,6 +98,7 @@ import {
 const LIBELLE_APERCU_REQUETE_TRAITEMENT = "Aperçu requête (traitement)";
 const LIBELLE_APERCU_REQUETE = "Aperçu de requête";
 const LIBELLE_APERCU_PRISE_EN_CHARGE = "Aperçu requête (prise en charge)";
+const LIBELLE_APERCU_SUIVI_DOSSIER = "Apercu requête (suivi dossier)";
 const LIBELLE_APERCU_SAISIE_PROJET = "Aperçu requête (saisie de projet)";
 const LIBELLE_APERCU_ACTE_REGISTRE = "Aperçu requête (acte registre)";
 const Labels = {
@@ -354,7 +355,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_APERCU_SIMPLE_ID,
-    component: ApercuRequeteCreationEtablissementSimplePage,
+    component: ApercuRequeteEtablissementSimplePage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
       perimetres: [Perimetre.ETAX, Perimetre.MEAE]
@@ -362,17 +363,17 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
   {
-    url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_PRISE_EN_CHARGE_ID,
-    component: ApercuRequeteCreationEtablissementPriseEnChargePage,
+    url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_SUIVI_DOSSIER_ID,
+    component: ApercuRequeteEtablissementSuiviDossierPage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
       perimetres: [Perimetre.ETAX, Perimetre.MEAE]
     },
-    libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
+    libelle: getLibelle(LIBELLE_APERCU_SUIVI_DOSSIER)
   },
   {
     url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_SAISIE_PROJET_ID,
-    component: ApercuRequeteCreationEtablissementSaisieDeProjetPage,
+    component: ApercuRequeteEtablissementSaisieDeProjetPage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
       perimetres: [Perimetre.ETAX, Perimetre.MEAE]
@@ -464,7 +465,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-    component: ApercuRequeteCreationEtablissementSimplePage,
+    component: ApercuRequeteEtablissementSimplePage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
       perimetres: [Perimetre.ETAX, Perimetre.MEAE]
@@ -472,17 +473,17 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
   {
-    url: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
-    component: ApercuRequeteCreationEtablissementPriseEnChargePage,
+    url: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
+    component: ApercuRequeteEtablissementSuiviDossierPage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
       perimetres: [Perimetre.ETAX, Perimetre.MEAE]
     },
-    libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
+    libelle: getLibelle(LIBELLE_APERCU_SUIVI_DOSSIER)
   },
   {
     url: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
-    component: ApercuRequeteCreationEtablissementSaisieDeProjetPage,
+    component: ApercuRequeteEtablissementSaisieDeProjetPage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
       perimetres: [Perimetre.ETAX, Perimetre.MEAE]
@@ -491,7 +492,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID,
-    component: ApercuRequeteCreationEtablissementActeRegistre,
+    component: ApercuRequeteEtablissementActeRegistrePage,
     droits: [Droit.SIGNER_ACTE],
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
@@ -551,7 +552,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-    component: ApercuRequeteCreationEtablissementSimplePage,
+    component: ApercuRequeteEtablissementSimplePage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
       perimetres: [Perimetre.ETAX, Perimetre.MEAE]
@@ -559,17 +560,17 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
   {
-    url: URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_PRISE_EN_CHARGE_ID,
-    component: ApercuRequeteCreationEtablissementPriseEnChargePage,
+    url: URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
+    component: ApercuRequeteEtablissementSuiviDossierPage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
       perimetres: [Perimetre.ETAX, Perimetre.MEAE]
     },
-    libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
+    libelle: getLibelle(LIBELLE_APERCU_SUIVI_DOSSIER)
   },
   {
     url: URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
-    component: ApercuRequeteCreationEtablissementSaisieDeProjetPage,
+    component: ApercuRequeteEtablissementSaisieDeProjetPage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
       perimetres: [Perimetre.ETAX, Perimetre.MEAE]
@@ -578,7 +579,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID,
-    component: ApercuRequeteCreationEtablissementActeRegistre,
+    component: ApercuRequeteEtablissementActeRegistrePage,
     droits: [Droit.SIGNER_ACTE],
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
