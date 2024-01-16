@@ -11,9 +11,9 @@ import {
   IRMCRequestActesInscriptions
 } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
+import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { IActeInscriptionSauvegardeDto } from "../../dto/etatcivil/acte/actesInscriptionsSauvegardes/IActeInscriptionSauvegardeDto";
 import { ApiManager, HttpMethod } from "../ApiManager";
-import { IInfosCarteSignature } from "./../../views/common/widget/signature/types";
 
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
 

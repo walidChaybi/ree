@@ -1,7 +1,6 @@
 import { HTTP_STATUS_OK } from "@api/ApiManager";
 import {
   IComposerDocumentFinalApiHookParams,
-  IErreurCompositionDocumentSigne,
   useComposerDocumentFinalApiHook
 } from "@hook/acte/ComposerDocumentFinalApiHook";
 import {
@@ -11,22 +10,20 @@ import {
 import useMettreAJourStatutApresSignatureApiHook, {
   IMettreAJourStatutApresSignatureParams
 } from "@hook/requete/MettreAJourStatutApresSignatureApiHook";
+import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
+import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { storeRece } from "@util/storeRece";
 import { useEffect, useState } from "react";
-import { IInfosCarteSignature } from "../types";
+import { HTTP_BAD_REQUEST } from "./../../../../../api/ApiManager";
 import { DOCUMENT_VIDE_A_SIGNER } from "./SignatureHookUtil";
 
-export interface IEtatTraitementSignature {
-  termine: boolean;
-  erreur?: IErreurCompositionDocumentSigne;
-}
-
 export const useSignatureCreationEtablisementHook = (
+  redirectionApresSuccesTraitementSignature: () => void,
   idActe?: string,
   idRequete?: string,
   idSuiviDossier?: string
 ) => {
-  const [traitementSignatureTermine, setTraitementSignatureTermine] =
+  const [etatTraitementSignature, setEtatTraitementSignature] =
     useState<IEtatTraitementSignature>({ termine: false });
   const [documentASigner, setDocumentASigner] = useState<string>(
     DOCUMENT_VIDE_A_SIGNER
@@ -40,20 +37,23 @@ export const useSignatureCreationEtablisementHook = (
     setMettreAJourStatutApresSignatureParams
   ] = useState<IMettreAJourStatutApresSignatureParams>();
 
-  const composerDocumentFinalResultat = useComposerDocumentFinalApiHook(
-    composerDocumentFinalParams
-  );
-  const codeReponseIntegrerActeSigne = useIntegrerActeSigneApiHook(
-    integrerActeSigneParams
-  );
-  useMettreAJourStatutApresSignatureApiHook(
-    mettreAJourStatutApresSignatureParams
-  );
+  const [
+    composerDocumentFinalResultat,
+    reinitialiserComposerDocumentFinalResultat
+  ] = useComposerDocumentFinalApiHook(composerDocumentFinalParams);
+  const [
+    codeReponseIntegrerActeSigne,
+    reinitialiserCodeReponseIntegrerActeSigne
+  ] = useIntegrerActeSigneApiHook(integrerActeSigneParams);
+  const mettreAJourStatutApresSignatureResultat =
+    useMettreAJourStatutApresSignatureApiHook(
+      mettreAJourStatutApresSignatureParams
+    );
 
   useEffect(() => {
     if (composerDocumentFinalResultat) {
       if (composerDocumentFinalResultat.codeReponse !== HTTP_STATUS_OK) {
-        setTraitementSignatureTermine({
+        setEtatTraitementSignature({
           termine: true,
           erreur: composerDocumentFinalResultat.erreur
         });
@@ -68,21 +68,41 @@ export const useSignatureCreationEtablisementHook = (
 
   useEffect(() => {
     if (codeReponseIntegrerActeSigne) {
-      setTraitementSignatureTermine({ termine: true });
-      setMettreAJourStatutApresSignatureParams({
-        idRequete,
-        idSuiviDossier
-      });
+      if (codeReponseIntegrerActeSigne === HTTP_STATUS_OK) {
+        setMettreAJourStatutApresSignatureParams({
+          idRequete,
+          idSuiviDossier
+        });
+      } else {
+        setEtatTraitementSignature({
+          termine: true,
+          erreur: {
+            code:
+              codeReponseIntegrerActeSigne?.toString() ||
+              HTTP_BAD_REQUEST.toString(),
+            message: ""
+          }
+        });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [codeReponseIntegrerActeSigne]);
+
+  useEffect(() => {
+    if (mettreAJourStatutApresSignatureResultat) {
+      setEtatTraitementSignature({
+        termine: true,
+        erreur: mettreAJourStatutApresSignatureResultat.erreur
+      });
+    }
+  }, [mettreAJourStatutApresSignatureResultat]);
 
   const onSuccesSignatureAppNative = (
     document: string,
     informationsCarte: IInfosCarteSignature
   ): void => {
     if (idActe) {
-      if (!composerDocumentFinalParams) {
+      if (!composerDocumentFinalResultat) {
         setComposerDocumentFinalParams({
           idActe,
           issuerCertificat: informationsCarte.issuerCertificat,
@@ -101,9 +121,19 @@ export const useSignatureCreationEtablisementHook = (
     }
   };
 
+  const onTraitementSignatureTermine = () => {
+    if (!etatTraitementSignature.erreur) {
+      redirectionApresSuccesTraitementSignature();
+    }
+    setEtatTraitementSignature({ termine: false });
+    reinitialiserComposerDocumentFinalResultat();
+    reinitialiserCodeReponseIntegrerActeSigne();
+  };
+
   return {
     documentASigner,
     onSuccesSignatureAppNative,
-    traitementSignatureTermine
+    etatTraitementSignature,
+    onTraitementSignatureTermine
   };
 };

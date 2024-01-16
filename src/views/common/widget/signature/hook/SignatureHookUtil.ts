@@ -1,12 +1,12 @@
 import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
+import {
+  DetailSignature,
+  DetailSignatureToCallApp
+} from "@model/signature/DetailSignature";
+import { IDetailInfos } from "@model/signature/IDetailInfos";
 import { gestionnaireSignatureFlag } from "@util/signatureFlag/gestionnaireSignatureFlag";
 import gestionnaireTimer from "@util/timer/GestionnaireTimer";
 import parametres from "../../../../../ressources/parametres.json";
-import {
-  DetailSignature,
-  DetailSignatureToCallApp,
-  IDetailInfos
-} from "../types";
 
 export const DIRECTION_TO_CALL_APP = "to-call-app";
 export const CODE_ERREUR_NON_DISPO = "WEB_EXT1";

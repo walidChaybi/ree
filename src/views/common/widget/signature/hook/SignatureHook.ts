@@ -1,6 +1,6 @@
+import { DetailSignatureToCallApp } from "@model/signature/DetailSignature";
+import { IDetailInfos } from "@model/signature/IDetailInfos";
 import { useEffect, useState } from "react";
-import { DetailSignatureToCallApp } from "../types";
-import { IDetailInfos } from "./../types";
 import {
   handleBackFromWebExtension,
   signerDocument

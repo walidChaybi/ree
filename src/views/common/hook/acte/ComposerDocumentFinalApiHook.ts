@@ -1,4 +1,5 @@
 import { composerDocumentFinal } from "@api/appels/etatcivilApi";
+import { IErreurTraitementApi } from "@api/IErreurTraitementApi";
 import { Erreurs } from "@model/requete/Erreurs";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
@@ -12,19 +13,18 @@ export interface IComposerDocumentFinalApiHookParams {
 export interface IComposerDocumentFinalApiHookResultat {
   documentRecomposeASigner: string;
   codeReponse: number;
-  erreur?: IErreurCompositionDocumentSigne;
-}
-
-export interface IErreurCompositionDocumentSigne {
-  code: string;
-  message: string;
+  erreur?: IErreurTraitementApi;
 }
 
 export const useComposerDocumentFinalApiHook = (
   params?: IComposerDocumentFinalApiHookParams
-): IComposerDocumentFinalApiHookResultat | undefined => {
+): [IComposerDocumentFinalApiHookResultat | undefined, () => void] => {
   const [resultat, setResultat] =
     useState<IComposerDocumentFinalApiHookResultat>();
+
+  const reinitialiserResultatApi = () => {
+    setResultat(undefined);
+  };
 
   useEffect(() => {
     if (
@@ -44,7 +44,7 @@ export const useComposerDocumentFinalApiHook = (
           });
         })
         .catch((errors: any) => {
-          const erreur: IErreurCompositionDocumentSigne = {
+          const erreur: IErreurTraitementApi = {
             code: JSON.parse(errors?.message)?.errors[0]?.code,
             message: JSON.parse(errors?.message)?.errors[0]?.message
           };
@@ -64,5 +64,5 @@ export const useComposerDocumentFinalApiHook = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 
-  return resultat;
+  return [resultat, reinitialiserResultatApi];
 };

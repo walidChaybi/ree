@@ -30,17 +30,7 @@ export const PopinSignatureCreationEtablissement: React.FC<
   const [estOuvertPopinConfirmation, setEstOuvertPopinConfirmation] =
     useState<boolean>(false);
 
-  const {
-    documentASigner,
-    onSuccesSignatureAppNative,
-    traitementSignatureTermine
-  } = useSignatureCreationEtablisementHook(
-    idActe,
-    idRequeteParam,
-    idSuiviDossierParam
-  );
-
-  const redirectionOnSuccesSignature = () => {
+  const redirectionApresSuccesTraitementSignature = () => {
     if (idActe) {
       const url =
         URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID.replace(
@@ -51,13 +41,25 @@ export const PopinSignatureCreationEtablissement: React.FC<
     }
   };
 
+  const {
+    documentASigner,
+    onSuccesSignatureAppNative,
+    etatTraitementSignature,
+    onTraitementSignatureTermine
+  } = useSignatureCreationEtablisementHook(
+    redirectionApresSuccesTraitementSignature,
+    idActe,
+    idRequeteParam,
+    idSuiviDossierParam
+  );
+
   useEffect(() => {
     setEstOuvertPopinConfirmation(
-      traitementSignatureTermine.erreur?.code ===
+      etatTraitementSignature.erreur?.code ===
         Erreurs.FCT_PLAGE_HORAIRE_SIGNATURE
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [traitementSignatureTermine]);
+  }, [etatTraitementSignature]);
 
   const boutonsPopinConfirmation = [
     {
@@ -78,14 +80,14 @@ export const PopinSignatureCreationEtablissement: React.FC<
         documentASigner={documentASigner}
         onSuccesSignature={onSuccesSignatureAppNative}
         texte={TEXTE_POPIN}
-        traitementSignatureTermine={traitementSignatureTermine.termine}
-        onTraitementSignatureTermine={redirectionOnSuccesSignature}
+        etatTraitementSignature={etatTraitementSignature}
+        onTraitementSignatureTermine={onTraitementSignatureTermine}
         timeoutTraitementSignature={TRAITEMENT_SIGNATURE_TIMEOUT_MS}
       />
       <ConfirmationPopin
         messages={
-          traitementSignatureTermine.erreur?.message
-            ? [traitementSignatureTermine.erreur.message]
+          etatTraitementSignature.erreur?.message
+            ? [etatTraitementSignature.erreur.message]
             : undefined
         }
         isOpen={estOuvertPopinConfirmation}

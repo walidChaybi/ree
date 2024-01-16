@@ -1,4 +1,7 @@
-import { ModeSignature } from "./../../../../model/requete/ModeSignature";
+import { ModeSignature } from "@model/requete/ModeSignature";
+import { IDetailInfos } from "./IDetailInfos";
+import { IInfosCarteSignature } from "./IInfosCarteSignature";
+import { ITypeErreurSignature } from "./ITypeErreurSignature";
 
 export type DetailSignature = DetailSignatureCommun &
   (DetailToCallAppSousType | DetailToWebextSousType);
@@ -27,27 +30,3 @@ type DetailToCallAppSousType = {
   erreur: ITypeErreurSignature | null;
   infosSignature: IInfosCarteSignature;
 };
-
-export interface IInfosCarteSignature {
-  noSerieCarte: string;
-  manufacturerIDCarte: string;
-  modelCarte: string;
-  flagsCarte: string;
-  algoSignature: string;
-  notBeforeCertificat: string;
-  notAfterCertificat: string;
-  entiteCertificat: string;
-  noSerieCertificat: string;
-  issuerCertificat: string;
-}
-
-export interface IDetailInfos {
-  cle: string;
-  valeur: string;
-}
-
-export interface ITypeErreurSignature {
-  code: string;
-  libelle: string;
-  detail: string;
-}

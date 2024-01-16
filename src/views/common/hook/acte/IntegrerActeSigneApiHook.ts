@@ -1,8 +1,8 @@
 import { HTTP_BAD_REQUEST } from "@api/ApiManager";
 import { integrerActeSigne } from "@api/appels/etatcivilApi";
 import { TModeAuthentification } from "@model/agent/types";
+import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { logError } from "@util/LogManager";
-import { IInfosCarteSignature } from "@widget/signature/types";
 import { useEffect, useState } from "react";
 
 export interface IIntegrerActeSigneApiHookParams {
@@ -14,8 +14,12 @@ export interface IIntegrerActeSigneApiHookParams {
 
 export const useIntegrerActeSigneApiHook = (
   params?: IIntegrerActeSigneApiHookParams
-): number | undefined => {
+): [number | undefined, () => void] => {
   const [codeReponse, setCodeReponse] = useState<number>();
+
+  const reinitialiserCodeReponse = () => {
+    setCodeReponse(undefined);
+  };
 
   useEffect(() => {
     if (params) {
@@ -38,5 +42,5 @@ export const useIntegrerActeSigneApiHook = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 
-  return codeReponse;
+  return [codeReponse, reinitialiserCodeReponse];
 };

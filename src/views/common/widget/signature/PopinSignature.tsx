@@ -1,3 +1,6 @@
+import { IDetailInfos } from "@model/signature/IDetailInfos";
+import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
+import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { logError } from "@util/LogManager";
 import { getLibelle } from "@util/Utils";
@@ -7,7 +10,6 @@ import { CodePinForm } from "./CodePinForm";
 import { useSignatureHook } from "./hook/SignatureHook";
 import { ErreurSignature, SignatureErreur } from "./messages/ErreurSignature";
 import "./scss/PopinSignature.scss";
-import { IDetailInfos, IInfosCarteSignature } from "./types";
 
 export interface PopinSignatureProps {
   titre: string;
@@ -20,7 +22,7 @@ export interface PopinSignatureProps {
     infosSignature: IInfosCarteSignature
   ) => void;
   informations?: IDetailInfos[];
-  traitementSignatureTermine: boolean;
+  etatTraitementSignature: IEtatTraitementSignature;
   timeoutTraitementSignature?: number;
   onTraitementSignatureTermine?: () => void;
 }
@@ -34,6 +36,12 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
     codePin,
     props.informations
   );
+
+  useEffect(() => {
+    if (props.estOuvert) {
+      setCodePin(undefined);
+    }
+  }, [props.estOuvert]);
 
   // TODO: Refacto / Supprimer le state erreurSignature quand on aura refacto la signature délivrance.
   //       Normalment on devrait pouvoir directement passer `resultatWebext.erreur` au composant <ErreurSignature />
@@ -55,7 +63,7 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
   }, [resultatWebext]);
 
   useEffect(() => {
-    if (props.traitementSignatureTermine) {
+    if (props.etatTraitementSignature.termine) {
       setSignatureEnCours(false);
       props.setEstOuvert(false);
       if (props.onTraitementSignatureTermine) {
@@ -63,7 +71,7 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.traitementSignatureTermine]);
+  }, [props.etatTraitementSignature.termine]);
 
   const onTimeoutEnd = () => {
     setSignatureEnCours(false);

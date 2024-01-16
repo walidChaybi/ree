@@ -7,11 +7,11 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
+import { IDetailInfos } from "@model/signature/IDetailInfos";
 import { gestionnaireSignatureFlag } from "@util/signatureFlag/gestionnaireSignatureFlag";
 import gestionnaireTimer from "@util/timer/GestionnaireTimer";
 import parametres from "../../../../../ressources/parametres.json";
 import { SignatureErreur } from "../messages/ErreurSignature";
-import { IDetailInfos } from "../types";
 export interface DocumentsByRequete {
   [idRequete: string]: DocumentsATraiter;
 }
