@@ -1,12 +1,12 @@
 import { IUuidSuiviDossierParams } from "@model/params/IUuidSuiviDossierParams";
-import { Erreurs } from "@model/requete/Erreurs";
+import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
 import { URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID } from "@router/ReceUrls";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { useSignatureCreationEtablisementHook } from "./hook/SignatureCreationActeEtablissementHook";
 import { PopinSignature, PopinSignatureProps } from "./PopinSignature";
+import { useSignatureCreationEtablisementHook } from "./hook/SignatureCreationActeEtablissementHook";
 import "./scss/PopinSignature.scss";
 
 type PopinSignatureCreationEtablissementProps = {
@@ -56,7 +56,7 @@ export const PopinSignatureCreationEtablissement: React.FC<
   useEffect(() => {
     setEstOuvertPopinConfirmation(
       etatTraitementSignature.erreur?.code ===
-        Erreurs.FCT_PLAGE_HORAIRE_SIGNATURE
+        CodeErreurFonctionnelle.FCT_PLAGE_HORAIRE_SIGNATURE
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [etatTraitementSignature]);

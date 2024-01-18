@@ -1,6 +1,6 @@
 import { composerDocumentFinal } from "@api/appels/etatcivilApi";
 import { IErreurTraitementApi } from "@api/IErreurTraitementApi";
-import { Erreurs } from "@model/requete/Erreurs";
+import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
@@ -53,7 +53,7 @@ export const useComposerDocumentFinalApiHook = (
             codeReponse: errors.status,
             erreur
           });
-          erreur.code !== Erreurs.FCT_PLAGE_HORAIRE_SIGNATURE &&
+          erreur.code !== CodeErreurFonctionnelle.FCT_PLAGE_HORAIRE_SIGNATURE &&
             logError({
               error: errors,
               messageUtilisateur:
