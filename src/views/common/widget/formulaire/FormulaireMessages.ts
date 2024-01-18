@@ -74,6 +74,10 @@ export const DATE_OBLIGATOIRE = getLibelle(
   "La saisie de la date complète est obligatoire"
 );
 
+export const DEFINITION_SEXE_OBLIGATOIRE = getLibelle(
+  'Le sexe doit être renseigné à "Masculin" ou "Féminin"'
+);
+
 export const CHAMP_OBLIGATOIRE = getLibelle("Ce champ est obligatoire");
 
 export const LIEN_REQUERANT_OBLIGATOIRE = getLibelle(

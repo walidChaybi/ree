@@ -37,22 +37,26 @@ import {
 } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { NomSecableStrictFormValidation } from "@composant/formulaire/validation/NomSecableFormValidation";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ISaisieDate } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
+import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
+import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import {
+  CARACTERES_AUTORISES_MESSAGE,
+  DEFINITION_SEXE_OBLIGATOIRE,
+  NATURE_ACTE_OBLIGATOIRE
+} from "@widget/formulaire/FormulaireMessages";
 import {
   DateValidationCompleteSchemaSansTestFormatRequired,
   DateValidationSchema,
   DateValidationSchemaSansTestFormat,
   DateValidationSchemaSansTestFormatRequired
 } from "@widget/formulaire/champsDate/DateComposeFormValidation";
-import {
-  CARACTERES_AUTORISES_MESSAGE,
-  NATURE_ACTE_OBLIGATOIRE
-} from "@widget/formulaire/FormulaireMessages";
 import * as Yup from "yup";
 import { CaracteresAutorises } from "../../../../../../../../../ressources/Regex";
 
@@ -127,7 +131,7 @@ function validationSchemaParent() {
           otherwise: Yup.object().nullable()
         })
     ),
-    [SEXE]: Yup.string().required("La saisie du sexe est obligatoire"),
+    [SEXE]: Yup.string().required(getLibelle(DEFINITION_SEXE_OBLIGATOIRE)),
     [DATE_NAISSANCE]: Yup.object().shape({
       [DATE]: Yup.lazy(() =>
         DateValidationSchema.when([AGE], {
@@ -178,6 +182,20 @@ function validationSchemaParent() {
         CARACTERES_AUTORISES_MESSAGE
       )
     })
+  }).test("sexeDefiniObligatoire", function (value, error) {
+    const sexe = value[SEXE] as string;
+    const nomOuPrenomRenseigne =
+      value[NOM] ||
+      getPrenomsTableauStringVersPrenomsOrdonnes(value[PRENOM][PRENOMS])
+        .length > 0;
+
+    const paramsError = {
+      path: `${error?.path}.sexe`,
+      message: getLibelle(DEFINITION_SEXE_OBLIGATOIRE)
+    };
+    return nomOuPrenomRenseigne && Sexe.estIndetermine(sexe)
+      ? this.createError(paramsError)
+      : true;
   });
 }
 function validationSchemaAutres() {

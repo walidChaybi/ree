@@ -17,7 +17,7 @@ import {
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
-import { SPC, UN, getNombreOuNull, getValeurOuNull } from "@util/Utils";
+import { SPC, UN, ZERO, getNombreOuNull, getValeurOuNull } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export function mappingSaisieProjetPostulantFormVersProjetActe(
@@ -48,7 +48,7 @@ export function mappingSaisieProjetPostulantFormVersProjetActe(
     ).map(p => p.prenom);
     return [
       {
-        id: projetActeAEnvoyer?.analyseMarginales?.[0].id,
+        id: projetActeAEnvoyer?.analyseMarginales?.[ZERO].id,
         titulaires: projetActeAEnvoyer.titulaires.map(titulaire => ({
           ...titulaire,
           nom: saisieProjetPostulant.titulaire.analyseMarginale.nom,
@@ -96,6 +96,64 @@ export function mappingSaisieProjetPostulantFormVersProjetActe(
   return projetActeAEnvoyer;
 }
 
+function mapPostulantVersTitulaireProjetActe(
+  acte: ISaisieProjetPostulantForm,
+  naissancePostulantEvenement: IEvenement
+): ITitulaireProjetActe {
+  const postulant: ISaisiePostulantSousForm = acte.titulaire;
+  const prenoms: string[] = getPrenomsTitulaire(postulant);
+  const adresse = acte.autres.adresse;
+  const lieuDeNaissanceExiste = !LieuxUtils.estPaysInconnu(adresse);
+  const lieuDeNaissanceEstFrance = LieuxUtils.estPaysFrance(adresse);
+  return {
+    nom: postulant.nom,
+    ordre: UN,
+    prenoms,
+    sexe: postulant.sexe,
+    age: null,
+    naissance: naissancePostulantEvenement,
+    domicile: lieuDeNaissanceExiste
+      ? ({
+          ville: getValeurOuNull(acte.autres.ville),
+          region:
+            lieuDeNaissanceEstFrance &&
+            !LieuxUtils.estVilleParis(acte.autres.ville)
+              ? getValeurOuNull(acte.autres.departement)
+              : null,
+          pays: getValeurOuNull(
+            lieuDeNaissanceEstFrance
+              ? EtrangerFrance.FRANCE.libelle
+              : acte.autres.pays
+          ),
+          arrondissement:
+            lieuDeNaissanceEstFrance &&
+            LieuxUtils.estVilleMarseilleLyonParis(acte.autres.ville)
+              ? getValeurOuNull(acte.autres.arrondissement)
+              : null
+        } as IAdresse)
+      : null,
+    filiations: getFiliation(acte),
+    nomPartie1: getValeurOuNull(postulant.nomSecable.nomPartie1),
+    nomPartie2: getValeurOuNull(postulant.nomSecable.nomPartie2),
+    identiteAvantDecret: getValeurOuNull(postulant.identite),
+    pasDePrenom: prenoms.length === ZERO,
+    decretNaturalisation:
+      acte.acquisition.nature !== ""
+        ? {
+            dateSignature:
+              acte.acquisition.date.annee &&
+              new Date(
+                +acte.acquisition.date.annee,
+                +acte.acquisition.date.mois - UN,
+                +acte.acquisition.date.jour
+              ),
+            natureDecret: acte.acquisition.nature
+          }
+        : null,
+    reconnuPar: getValeurOuNull(acte.autres.reconnaissance)
+  } as ITitulaireProjetActe;
+}
+
 function getFiliationParParent(
   parentForm: ISaisieParentSousForm,
   ordre: number
@@ -115,10 +173,12 @@ function getFiliationParParent(
 }
 
 function getFiliationNaissance(parentForm: ISaisieParentSousForm) {
-  const lieuNaissanceExiste =
-    parentForm.lieuNaissance.lieuNaissance !== "INCONNU";
-  const lieuNaissanceEstFrance =
-    parentForm.lieuNaissance.lieuNaissance === "FRANCE";
+  const lieuNaissanceExiste = !LieuxUtils.estPaysInconnu(
+    parentForm.lieuNaissance.lieuNaissance
+  );
+  const lieuNaissanceEstFrance = LieuxUtils.estPaysFrance(
+    parentForm.lieuNaissance.lieuNaissance
+  );
 
   return {
     pays: lieuNaissanceExiste
@@ -159,10 +219,14 @@ function getRegionNaissanceFiliation(parentForm: ISaisieParentSousForm) {
 function getFiliation(acte: ISaisieProjetPostulantForm): IProjetFiliation[] {
   let filiation: IProjetFiliation[] = [];
   const listeParents: ISaisieParentSousForm[] = [];
-  acte.parents.parent1 && listeParents.push(acte.parents.parent1);
-  acte.parents.parent2 && listeParents.push(acte.parents.parent2);
+  acte.parents.parent1 &&
+    estParentRenseigne(acte.parents.parent1) &&
+    listeParents.push(acte.parents.parent1);
+  acte.parents.parent2 &&
+    estParentRenseigne(acte.parents.parent2) &&
+    listeParents.push(acte.parents.parent2);
   listeParents.forEach((parent, index) => {
-    const ordreDuParent = index + 1;
+    const ordreDuParent = index + UN;
     filiation = [...filiation, getFiliationParParent(parent, ordreDuParent)];
   });
   return filiation;
@@ -175,60 +239,10 @@ function getPrenomsTitulaire(postulant: ISaisiePostulantSousForm): string[] {
   return listePrenoms.length ? listePrenoms : [SPC];
 }
 
-function mapPostulantVersTitulaireProjetActe(
-  acte: ISaisieProjetPostulantForm,
-  naissancePostulantEvenement: IEvenement
-): ITitulaireProjetActe {
-  const postulant: ISaisiePostulantSousForm = acte.titulaire;
-  const prenoms: string[] = getPrenomsTitulaire(postulant);
-  const adresse = acte.autres.adresse;
-  const lieuDeNaissanceExiste = adresse !== "INCONNU";
-  const lieuDeNaissanceEstFrance = adresse === "FRANCE";
-  return {
-    nom: postulant.nom,
-    ordre: UN,
-    prenoms,
-    sexe: postulant.sexe,
-    age: null,
-    naissance: naissancePostulantEvenement,
-    domicile: lieuDeNaissanceExiste
-      ? ({
-          ville: getValeurOuNull(acte.autres.ville),
-          region:
-            lieuDeNaissanceEstFrance &&
-            !LieuxUtils.estVilleParis(acte.autres.ville)
-              ? getValeurOuNull(acte.autres.departement)
-              : null,
-          pays: getValeurOuNull(
-            lieuDeNaissanceEstFrance
-              ? EtrangerFrance.FRANCE.libelle
-              : acte.autres.pays
-          ),
-          arrondissement:
-            lieuDeNaissanceEstFrance &&
-            LieuxUtils.estVilleMarseilleLyonParis(acte.autres.ville)
-              ? getValeurOuNull(acte.autres.arrondissement)
-              : null
-        } as IAdresse)
-      : null,
-    filiations: getFiliation(acte),
-    nomPartie1: getValeurOuNull(postulant.nomSecable.nomPartie1),
-    nomPartie2: getValeurOuNull(postulant.nomSecable.nomPartie2),
-    identiteAvantDecret: getValeurOuNull(postulant.identite),
-    pasDePrenom: prenoms.length === 0,
-    decretNaturalisation:
-      acte.acquisition.nature !== ""
-        ? {
-            dateSignature:
-              acte.acquisition.date.annee &&
-              new Date(
-                +acte.acquisition.date.annee,
-                +acte.acquisition.date.mois - UN,
-                +acte.acquisition.date.jour
-              ),
-            natureDecret: acte.acquisition.nature
-          }
-        : null,
-    reconnuPar: getValeurOuNull(acte.autres.reconnaissance)
-  } as ITitulaireProjetActe;
+function estParentRenseigne(parent: ISaisieParentSousForm): boolean {
+  return (
+    Boolean(parent.nom) ||
+    getPrenomsTableauStringVersPrenomsOrdonnes(parent.prenom?.prenoms)?.length >
+      ZERO
+  );
 }
