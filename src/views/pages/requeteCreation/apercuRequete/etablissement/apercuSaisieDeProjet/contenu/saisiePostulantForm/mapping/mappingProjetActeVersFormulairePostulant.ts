@@ -55,6 +55,7 @@ import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ITitulaireProjetActe } from "@model/etatcivil/acte/projetActe/ITitulaireProjetActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import {
   ISaisieAcquisitionSousForm,
   ISaisieAnalyseMarginale,
@@ -81,6 +82,7 @@ import {
   UN,
   ZERO,
   formatPremieresLettresMajusculesNomCompose,
+  getValeurOuVide,
   numberToString,
   rempliAGaucheAvecZero
 } from "@util/Utils";
@@ -95,6 +97,18 @@ export const mappingProjetActeVersFormulairePostulant = (
   const titulaireProjetActe = projetActe?.titulaires.find(
     titulaire => titulaire.ordre === UN
   );
+
+  const parentUn = titulaireProjetActe?.filiations.find(
+    parent => parent.ordre === UN
+  );
+  const parentDeux = titulaireProjetActe?.filiations.find(
+    parent => parent.ordre === DEUX
+  );
+
+  const estOrdreInverseParentsFormulaire =
+    (!parentUn || !Sexe.estMasculin(Sexe.getEnumFor(parentUn.sexe))) &&
+    (!parentDeux || !Sexe.estFeminin(Sexe.getEnumFor(parentDeux.sexe)));
+
   return {
     [PROJET]: {
       [TYPE]: QualiteFamille.POSTULANT.libelle,
@@ -108,10 +122,10 @@ export const mappingProjetActeVersFormulairePostulant = (
     [FRANCISATION_POSTULANT]: mapFrancisationPostulant(titulaireRequete),
     [PARENTS]: {
       [PARENT1]: mapSaisieParent(
-        titulaireProjetActe?.filiations.find(parent => parent.ordre === UN)
+        estOrdreInverseParentsFormulaire ? parentDeux : parentUn
       ),
       [PARENT2]: mapSaisieParent(
-        titulaireProjetActe?.filiations.find(parent => parent.ordre === DEUX)
+        estOrdreInverseParentsFormulaire ? parentUn : parentDeux
       )
     },
     [AUTRES]: mapSaisieAutres(
@@ -158,7 +172,7 @@ function mapSaisieParent(
 ): ISaisieParentSousForm | undefined {
   return parent
     ? {
-        [NOM]: parent.nom.toUpperCase(),
+        [NOM]: getValeurOuVide(parent.nom).toUpperCase(),
         [PRENOM]: mapSaisiePrenoms(parent.prenoms || []),
         [SEXE]: parent.sexe,
         [DATE_NAISSANCE]: mapSaisieDateNaissanceEtAgeDe(

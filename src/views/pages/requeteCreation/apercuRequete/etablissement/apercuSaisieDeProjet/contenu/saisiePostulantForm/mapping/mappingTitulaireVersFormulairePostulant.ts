@@ -91,21 +91,20 @@ export function mappingTitulairesVersFormulairePostulant(
   parentDeux?: ITitulaireRequeteCreation,
   nature?: string
 ): ISaisieProjetPostulantForm {
-
-  const ordreHommeFemmeInverse =
-    parentUn &&
-    !Sexe.estMasculin(Sexe.getEnumFor(parentUn.sexe)) &&
-    parentDeux &&
-    Sexe.estMasculin(Sexe.getEnumFor(parentDeux.sexe));
+  const estOrdreInverseParentsFormulaire =
+    (!parentUn || !Sexe.estMasculin(Sexe.getEnumFor(parentUn.sexe))) &&
+    (!parentDeux || !Sexe.estFeminin(Sexe.getEnumFor(parentDeux.sexe)));
   return {
     [PROJET]: mapSaisieProjet(titulaire),
     [TITULAIRE]: mapSaisiePostulant(titulaire),
     [FRANCISATION_POSTULANT]: mapFrancisationPostulant(titulaire),
     [PARENTS]: {
       [PARENT1]: mapSaisieParent(
-        ordreHommeFemmeInverse ? parentDeux : parentUn
+        estOrdreInverseParentsFormulaire ? parentDeux : parentUn
       ),
-      [PARENT2]: mapSaisieParent(ordreHommeFemmeInverse ? parentUn : parentDeux)
+      [PARENT2]: mapSaisieParent(
+        estOrdreInverseParentsFormulaire ? parentUn : parentDeux
+      )
     },
     [AUTRES]: mapSaisieAutres(titulaire),
     [ACQUISITION]: mapSaisieAcquisition(titulaire, nature)

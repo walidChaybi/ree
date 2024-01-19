@@ -53,4 +53,8 @@ export class Sexe extends EnumWithLibelle {
   public static estMasculin(sexe: Sexe): boolean {
     return sexe === Sexe.MASCULIN;
   }
+
+  public static estFeminin(sexe: Sexe): boolean {
+    return sexe === Sexe.FEMININ;
+  }
 }
