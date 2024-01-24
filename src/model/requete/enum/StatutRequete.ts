@@ -102,6 +102,10 @@ export class StatutRequete extends EnumWithComplete {
   );
   public static readonly A_REVOIR = new StatutRequete("A_REVOIR", "À revoir");
   public static readonly TRAITE = new StatutRequete("TRAITE", "Traité");
+  public static readonly BI_VALIDE = new StatutRequete(
+    "BI_VALIDE",
+    "BI validé"
+  );
   public static readonly BI_A_ENVOYER = new StatutRequete(
     "BI_A_ENVOYER",
     "BI à envoyer"
@@ -144,7 +148,8 @@ export class StatutRequete extends EnumWithComplete {
     StatutRequete.A_SIGNER,
     StatutRequete.TRAITE,
     StatutRequete.EN_TRAITEMENT,
-    StatutRequete.BI_A_ENVOYER
+    StatutRequete.BI_A_ENVOYER,
+    StatutRequete.BI_VALIDE
   ];
 
   private static readonly StatutsParTypeRequete = {
