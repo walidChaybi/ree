@@ -114,22 +114,12 @@ function validationSchemaPostulant() {
 function validationSchemaParent() {
   return Yup.object({
     [NOM]: Yup.lazy(() =>
-      Yup.string()
-        .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
-        .required("La saisie d'un nom est obligatoire")
+      Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
     ),
     [PRENOM]: Yup.lazy(() =>
-      Yup.object()
-        .shape({
-          [PRENOMS]: creerValidationSchemaPrenomParent()
-        })
-        .when([NOM], {
-          is: (nom: string) => !nom,
-          then: creerValidationSchemaPrenomParent().required(
-            "La saisie d'un nom ou d'un prénom est obligatoire"
-          ),
-          otherwise: Yup.object().nullable()
-        })
+      Yup.object().shape({
+        [PRENOMS]: creerValidationSchemaPrenomParent()
+      })
     ),
     [SEXE]: Yup.string().required(getLibelle(DEFINITION_SEXE_OBLIGATOIRE)),
     [DATE_NAISSANCE]: Yup.object().shape({
