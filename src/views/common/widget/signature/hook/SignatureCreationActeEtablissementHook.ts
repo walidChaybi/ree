@@ -10,6 +10,7 @@ import {
 import useMettreAJourStatutApresSignatureApiHook, {
   IMettreAJourStatutApresSignatureParams
 } from "@hook/requete/MettreAJourStatutApresSignatureApiHook";
+import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
 import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { storeRece } from "@util/storeRece";
@@ -125,7 +126,12 @@ export const useSignatureCreationEtablisementHook = (
     if (!etatTraitementSignature.erreur) {
       redirectionApresSuccesTraitementSignature();
     }
-    setEtatTraitementSignature({ termine: false });
+    if (
+      etatTraitementSignature.erreur?.code !==
+      CodeErreurFonctionnelle.FCT_PLAGE_HORAIRE_SIGNATURE
+    ) {
+      setEtatTraitementSignature({ termine: false });
+    }
     reinitialiserComposerDocumentFinalResultat();
     reinitialiserCodeReponseIntegrerActeSigne();
   };
