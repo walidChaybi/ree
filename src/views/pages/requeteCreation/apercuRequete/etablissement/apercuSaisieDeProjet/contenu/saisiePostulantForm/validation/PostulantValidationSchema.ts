@@ -38,7 +38,6 @@ import {
 import { NomSecableStrictFormValidation } from "@composant/formulaire/validation/NomSecableFormValidation";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { ISaisieDate } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
@@ -121,27 +120,10 @@ function validationSchemaParent() {
         [PRENOMS]: creerValidationSchemaPrenomParent()
       })
     ),
-    [SEXE]: Yup.string().required(getLibelle(DEFINITION_SEXE_OBLIGATOIRE)),
+    [SEXE]: Yup.string(),
     [DATE_NAISSANCE]: Yup.object().shape({
-      [DATE]: Yup.lazy(() =>
-        DateValidationSchema.when([AGE], {
-          is: (age: string) => !age,
-          then: DateValidationSchema.required(
-            "La date de naissance ou l'age du parent est obligatoire"
-          ),
-          otherwise: DateValidationSchema.nullable()
-        })
-      ),
-      [AGE]: Yup.lazy(() =>
-        Yup.string().when([DATE], {
-          is: (date: ISaisieDate | null) =>
-            !date?.jour && !date?.mois && !date?.annee,
-          then: Yup.string().required(
-            "La date de naissance ou l'age du parent est obligatoire"
-          ),
-          otherwise: Yup.string().nullable()
-        })
-      )
+      [DATE]: DateValidationSchema,
+      [AGE]: Yup.string()
     }),
     [LIEU_DE_NAISSANCE]: Yup.object().shape({
       [LIEU_DE_NAISSANCE]: Yup.string(),
@@ -183,7 +165,8 @@ function validationSchemaParent() {
       path: `${error?.path}.sexe`,
       message: getLibelle(DEFINITION_SEXE_OBLIGATOIRE)
     };
-    return nomOuPrenomRenseigne && Sexe.estIndetermine(sexe)
+
+    return nomOuPrenomRenseigne && (!sexe || Sexe.estIndetermine(sexe))
       ? this.createError(paramsError)
       : true;
   });
