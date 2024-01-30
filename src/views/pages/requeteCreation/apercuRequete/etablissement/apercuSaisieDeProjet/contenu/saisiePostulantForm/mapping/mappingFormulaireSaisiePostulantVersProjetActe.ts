@@ -17,7 +17,7 @@ import {
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
-import { SPC, UN, ZERO, getNombreOuNull, getValeurOuNull } from "@util/Utils";
+import { getNombreOuNull, getValeurOuNull, SPC, UN, ZERO } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export function mappingSaisieProjetPostulantFormVersProjetActe(
@@ -37,7 +37,7 @@ export function mappingSaisieProjetPostulantFormVersProjetActe(
     jour: getValeurOuNull(+saisieProjetPostulant.titulaire.dateNaissance.jour),
     pays: saisieProjetPostulant.titulaire.lieuNaissance.paysNaissance,
     ville: saisieProjetPostulant.titulaire.lieuNaissance.villeNaissance,
-    region: saisieProjetPostulant.titulaire.lieuNaissance.etatCantonProvince,
+    region: saisieProjetPostulant.titulaire.lieuNaissance.regionNaissance,
     neDansLeMariage:
       saisieProjetPostulant.titulaire.lieuNaissance.neDansMariage === "OUI"
   } as IEvenement;
@@ -201,14 +201,16 @@ function getFiliationNaissance(parentForm: ISaisieParentSousForm) {
   };
 }
 function getRegionNaissanceFiliation(parentForm: ISaisieParentSousForm) {
-  const lieuNaissanceEstEtranger =
-    parentForm.lieuNaissance.lieuNaissance === "ETRANGER";
-  const lieuNaissanceEstFrance =
-    parentForm.lieuNaissance.lieuNaissance === "FRANCE";
+  const lieuNaissanceEstEtranger = LieuxUtils.estPaysEtranger(
+    parentForm.lieuNaissance.lieuNaissance
+  );
+  const lieuNaissanceEstFrance = LieuxUtils.estPaysFrance(
+    parentForm.lieuNaissance.lieuNaissance
+  );
   if (lieuNaissanceEstEtranger) {
     return parentForm.lieuNaissance.regionNaissance;
   } else if (lieuNaissanceEstFrance) {
-    return parentForm.lieuNaissance.villeNaissance !== "Paris"
+    return !LieuxUtils.estVilleParis(parentForm.lieuNaissance.villeNaissance)
       ? parentForm.lieuNaissance.departementNaissance
       : null;
   } else {

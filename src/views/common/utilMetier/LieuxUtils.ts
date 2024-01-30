@@ -42,6 +42,10 @@ export class LieuxUtils {
     return pays != null && pays.toUpperCase() === INCONNU;
   }
 
+  public static estPaysEtranger(pays?: string): boolean {
+    return !this.estPaysFrance(pays) && !this.estPaysInconnu(pays);
+  }
+
   public static estVilleParis(ville?: string): boolean {
     return ville != null && ville.toUpperCase() === PARIS;
   }
@@ -61,9 +65,7 @@ export class LieuxUtils {
   }
 
   public static estVilleMarseilleLyon(ville?: string): boolean {
-    return (
-      ville != null && villesMarseilleLyon.includes(ville.toUpperCase())
-    );
+    return ville != null && villesMarseilleLyon.includes(ville.toUpperCase());
   }
 
   public static getDepartement(ville?: string, departement?: string): string {

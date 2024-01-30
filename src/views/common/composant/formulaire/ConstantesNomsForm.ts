@@ -77,14 +77,6 @@ export const PARENT_ADOPTANT_NAISS = "parentAdoptantNaiss";
 export const PARENT_ADOPTANT_NAISS1 = "parentAdoptantNaiss1";
 export const PARENT_ADOPTANT_NAISS2 = "parentAdoptantNaiss2";
 
-// Parents : lieu naissance
-export const ARRONDISSEMENT = "arrondissement";
-export const DEPARTEMENT = "departement";
-export const LIEU_NAISSANCE = "lieuNaissance";
-export const ETRANGER_FRANCE = "EtrangerFrance";
-export const ETAT_CANTON_PROVINCE = "etatCantonProvince";
-export const NE_DANS_MARIAGE = "neDansMariage";
-
 // Naissance
 export const DATE_NAISSANCE = "dateNaissance";
 export const VILLE_NAISSANCE = "villeNaissance";
@@ -93,6 +85,14 @@ export const REGION_NAISSANCE = "regionNaissance";
 export const PAYS_NAISSANCE = "paysNaissance";
 export const DEPARTEMENT_NAISSANCE = "departementNaissance";
 export const LIEU_DE_NAISSANCE = "lieuNaissance";
+
+// Parents : lieu naissance
+export const ARRONDISSEMENT = "arrondissement";
+export const DEPARTEMENT = "departement";
+export const LIEU_NAISSANCE = "lieuNaissance";
+export const ETRANGER_FRANCE = "EtrangerFrance";
+export const ETAT_CANTON_PROVINCE = REGION_NAISSANCE;
+export const NE_DANS_MARIAGE = "neDansMariage";
 
 // Mariage
 export const MARIAGE = "mariage";

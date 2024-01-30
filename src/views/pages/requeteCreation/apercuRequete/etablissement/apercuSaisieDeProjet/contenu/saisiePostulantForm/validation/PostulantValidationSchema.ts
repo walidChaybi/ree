@@ -41,23 +41,27 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
-import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { getLibelle } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
-import {
-  CARACTERES_AUTORISES_MESSAGE,
-  DEFINITION_SEXE_OBLIGATOIRE,
-  NATURE_ACTE_OBLIGATOIRE
-} from "@widget/formulaire/FormulaireMessages";
 import {
   DateValidationCompleteSchemaSansTestFormatRequired,
   DateValidationSchema,
   DateValidationSchemaSansTestFormat,
   DateValidationSchemaSansTestFormatRequired
 } from "@widget/formulaire/champsDate/DateComposeFormValidation";
+import {
+  CARACTERES_AUTORISES_AVEC_VIRGULE_MESSAGE,
+  CARACTERES_AUTORISES_MESSAGE,
+  DEFINITION_SEXE_OBLIGATOIRE,
+  NATURE_ACTE_OBLIGATOIRE
+} from "@widget/formulaire/FormulaireMessages";
 import * as Yup from "yup";
-import { CaracteresAutorises } from "../../../../../../../../../ressources/Regex";
+import {
+  CaracteresAutorises,
+  CaracteresAutorisesAvecVirgule
+} from "../../../../../../../../../ressources/Regex";
 
 export function getPostulantValidationSchema(
   avancement?: AvancementProjetActe
@@ -93,11 +97,14 @@ function validationSchemaPostulant() {
     [DATE_NAISSANCE]: DateValidationSchemaSansTestFormatRequired,
     [LIEU_DE_NAISSANCE]: Yup.object().shape({
       [VILLE_NAISSANCE]: Yup.string()
-        .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
+        .matches(
+          CaracteresAutorisesAvecVirgule,
+          CARACTERES_AUTORISES_AVEC_VIRGULE_MESSAGE
+        )
         .required("La saisie de la ville est obligatoire"),
       [ETAT_CANTON_PROVINCE]: Yup.string().matches(
-        CaracteresAutorises,
-        CARACTERES_AUTORISES_MESSAGE
+        CaracteresAutorisesAvecVirgule,
+        CARACTERES_AUTORISES_AVEC_VIRGULE_MESSAGE
       ),
       [PAYS_NAISSANCE]: Yup.string().matches(
         CaracteresAutorises,
@@ -128,12 +135,12 @@ function validationSchemaParent() {
     [LIEU_DE_NAISSANCE]: Yup.object().shape({
       [LIEU_DE_NAISSANCE]: Yup.string(),
       [VILLE_NAISSANCE]: Yup.string().matches(
-        CaracteresAutorises,
-        CARACTERES_AUTORISES_MESSAGE
+        CaracteresAutorisesAvecVirgule,
+        CARACTERES_AUTORISES_AVEC_VIRGULE_MESSAGE
       ),
       [ETAT_CANTON_PROVINCE]: Yup.string().matches(
-        CaracteresAutorises,
-        CARACTERES_AUTORISES_MESSAGE
+        CaracteresAutorisesAvecVirgule,
+        CARACTERES_AUTORISES_AVEC_VIRGULE_MESSAGE
       ),
       [DEPARTEMENT_NAISSANCE]: Yup.string()
         .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
@@ -175,8 +182,8 @@ function validationSchemaAutres() {
   return Yup.object({
     [ADRESSE]: Yup.string().required("La saisie de l'adresse est obligatoire"),
     [VILLE]: Yup.string().matches(
-      CaracteresAutorises,
-      CARACTERES_AUTORISES_MESSAGE
+      CaracteresAutorisesAvecVirgule,
+      CARACTERES_AUTORISES_AVEC_VIRGULE_MESSAGE
     ),
     [ARRONDISSEMENT]: Yup.string().matches(
       CaracteresAutorises,

@@ -6,6 +6,10 @@ export const CaracteresAutorises = new RegExp(
   /^[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]+$/
 );
 
+export const CaracteresAutorisesAvecVirgule = new RegExp(
+  /^[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ', .-]+$/
+);
+
 // Formulaire de recherche (RMC)
 export const CaracteresAutorisesRecherche = new RegExp(
   /^[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .*-]+$/

@@ -137,7 +137,7 @@ describe("Test la modification des donnees du BI.", () => {
 
   test("DOIT renvoyer 'true' QUAND la saisie du lieu de naissance diffère du projet d'acte.", async () => {
     SAISIE_PROJET.titulaire.lieuNaissance.villeNaissance = "Test";
-    SAISIE_PROJET.titulaire.lieuNaissance.etatCantonProvince = "Test";
+    SAISIE_PROJET.titulaire.lieuNaissance.regionNaissance = "Test";
     SAISIE_PROJET.titulaire.lieuNaissance.paysNaissance = "Test";
     expect(
       estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
@@ -146,7 +146,7 @@ describe("Test la modification des donnees du BI.", () => {
     expect(
       estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
     ).toBeTruthy();
-    SAISIE_PROJET.titulaire.lieuNaissance.etatCantonProvince = "Region";
+    SAISIE_PROJET.titulaire.lieuNaissance.regionNaissance = "Region";
     expect(
       estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
     ).toBeTruthy();

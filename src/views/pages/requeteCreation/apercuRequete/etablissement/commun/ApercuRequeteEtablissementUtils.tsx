@@ -225,14 +225,14 @@ function estModifieLieuDeNaissance(
   regionSaisie?: string,
   villeSaisie?: string
 ): boolean {
-  const { paysNaissance, villeNaissance, etatCantonProvince } =
+  const { paysNaissance, villeNaissance, regionNaissance } =
     saisieLieuNaissance;
   return (
     getValeurOuVide(paysNaissance.toUpperCase()) !==
       getValeurOuVide(paysSaisie?.toUpperCase()) ||
     getValeurOuVide(villeNaissance?.toUpperCase()) !==
       getValeurOuVide(villeSaisie?.toUpperCase()) ||
-    getValeurOuVide(etatCantonProvince?.toUpperCase()) !==
+    getValeurOuVide(regionNaissance?.toUpperCase()) !==
       getValeurOuVide(regionSaisie?.toUpperCase())
   );
 }

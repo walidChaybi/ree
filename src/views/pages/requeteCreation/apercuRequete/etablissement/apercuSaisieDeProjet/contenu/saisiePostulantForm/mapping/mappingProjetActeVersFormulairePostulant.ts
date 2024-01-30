@@ -63,36 +63,35 @@ import {
   ISaisieDate,
   ISaisieDateNaissanceOuAgeDe,
   ISaisieLieuNaissance,
-  ISaisieLieuNaissanceParent,
   ISaisieParentSousForm,
   ISaisiePostulantSousForm,
   ISaisiePrenoms,
   ISaisieProjetPostulantForm
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { TypeNature } from "@model/requete/enum/TypeNature";
 import { TypeReconnaissance } from "@model/requete/enum/TypeReconnaissance";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { getDateComposeFromDate } from "@util/DateUtils";
 import {
   DEUX,
-  SPC,
-  UN,
-  ZERO,
   formatPremieresLettresMajusculesNomCompose,
   getValeurOuVide,
   numberToString,
-  rempliAGaucheAvecZero
+  rempliAGaucheAvecZero,
+  SPC,
+  UN,
+  ZERO
 } from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import { ISaisieLieuNaissanceParent } from "./../../../../../../../../../model/form/creation/etablissement/ISaisiePostulantForm";
 import { mapFrancisationPostulant } from "./mappingTitulaireVersFormulairePostulant";
 
 export const mappingProjetActeVersFormulairePostulant = (
   titulaireRequete: ITitulaireRequeteCreation,
-  estAvancementASigner: boolean,
-  projetActe?: IProjetActe,
-  nature?: string
+  projetActe?: IProjetActe
 ): ISaisieProjetPostulantForm => {
   const titulaireProjetActe = projetActe?.titulaires.find(
     titulaire => titulaire.ordre === UN
@@ -314,18 +313,32 @@ function mapSaisieLieuNaissance(
 function mapSaisieLieuNaissanceParent(
   naissance?: IEvenement
 ): ISaisieLieuNaissanceParent {
-  return {
-    [LIEU_DE_NAISSANCE]: EtrangerFrance.getEnumFromPays(
-      naissance?.pays
-    ).libelle.toUpperCase(),
+  const saisieLieuNaissanceParent = {
+    [LIEU_DE_NAISSANCE]: "",
     [VILLE_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(
       naissance?.ville
     ),
-    [ARRONDISSEMENT_NAISSANCE]: naissance?.arrondissement || "",
-    [DEPARTEMENT_NAISSANCE]: naissance?.region || "",
-    [REGION_NAISSANCE]: naissance?.region || "",
+    [REGION_NAISSANCE]: "",
+    [DEPARTEMENT_NAISSANCE]: "",
+    [ARRONDISSEMENT_NAISSANCE]: "",
     [PAYS_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(
       naissance?.pays
     )
   };
+
+  if (LieuxUtils.estPaysFrance(naissance?.pays)) {
+    saisieLieuNaissanceParent[LIEU_DE_NAISSANCE] = EtrangerFrance.getKey(
+      EtrangerFrance.FRANCE
+    );
+    saisieLieuNaissanceParent[DEPARTEMENT_NAISSANCE] = naissance?.region || "";
+    saisieLieuNaissanceParent[ARRONDISSEMENT_NAISSANCE] =
+      naissance?.arrondissement || "";
+  } else if (LieuxUtils.estPaysEtranger(naissance?.pays)) {
+    saisieLieuNaissanceParent[LIEU_DE_NAISSANCE] = EtrangerFrance.getKey(
+      EtrangerFrance.ETRANGER
+    );
+    saisieLieuNaissanceParent[REGION_NAISSANCE] = naissance?.region || "";
+  }
+
+  return saisieLieuNaissanceParent;
 }

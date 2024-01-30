@@ -254,14 +254,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
     postulant: ITitulaireRequeteCreation
   ): ISaisieProjetPostulantForm => {
     return estProjetExistant
-      ? mappingProjetActeVersFormulairePostulant(
-          postulant,
-          dossierProjetActe
-            ? AvancementProjetActe.estASigner(dossierProjetActe.avancement)
-            : false,
-          projetActe,
-          requete?.nature
-        )
+      ? mappingProjetActeVersFormulairePostulant(postulant, projetActe)
       : mappingTitulairesVersFormulairePostulant(
           postulant,
           parentMasculinEtOuPositionUn,
