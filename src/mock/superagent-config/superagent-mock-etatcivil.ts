@@ -5,6 +5,26 @@ import {
   ReponseAppelGetAlertesActe
 } from "../data/Alertes";
 import { acteExtraitSaisie } from "../data/DonneesSaisieExtrait";
+import { imagePngVideBase64 } from "../data/ImagePng";
+import { decrets } from "../data/NomenclatureEtatCivilDecrets";
+import { pacsModificationNotaire } from "../data/PACS";
+import mockRC from "../data/RC.json";
+import mockRCA from "../data/RCA.json";
+import {
+  ReponseAppelRMCActe,
+  ReponseAppelRMCActe4DernierResultats,
+  ReponseAppelRMCActe4PremiersResultats
+} from "../data/RMCActe";
+import {
+  RMCAutoPersonneResponseAlpha,
+  RMCAutoPersonneResponseBeta
+} from "../data/RMCAutoPersonne";
+import {
+  ReponseAppelRMCInscription,
+  ReponseAppelRMCInscription4DernierResultats,
+  ReponseAppelRMCInscription4PremiersResultats
+} from "../data/RMCInscription";
+import { getTitulairesActeAPI } from "../data/Titulaire";
 import {
   ficheActe1,
   ficheActe2,
@@ -27,20 +47,19 @@ import {
   acte4,
   acte5,
   acteMariage,
+  acteMariageElectronique,
   acteNaissance,
   acteNationalite
 } from "../data/ficheEtBandeau/ficheActe";
 import { fichePacs, idFichePacs } from "../data/fichePacs";
 import { inscriptionsRc } from "../data/ficheRC";
 import {
-  ficheRca,
   FicheRcaDecisionJuridictionEtrangere,
+  ficheRca,
   idFicheRca
 } from "../data/ficheRCA";
-import { imagePngVideBase64 } from "../data/ImagePng";
 import { listeDeuxPersonnes } from "../data/listePersonnes";
 import { mentions, mentionsPlurilingues } from "../data/mentions";
-import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import {
   ReponseAppelNomenclatureMandataire,
   ReponseAppelNomenclatureNatureMention,
@@ -49,24 +68,6 @@ import {
   ReponseAppelNomenclatureTypeAlerte,
   ReponseAppelNomenclatureTypeMention
 } from "../data/nomenclatures";
-import { pacsModificationNotaire } from "../data/PACS";
-import mockRC from "../data/RC.json";
-import mockRCA from "../data/RCA.json";
-import {
-  ReponseAppelRMCActe,
-  ReponseAppelRMCActe4DernierResultats,
-  ReponseAppelRMCActe4PremiersResultats
-} from "../data/RMCActe";
-import {
-  RMCAutoPersonneResponseAlpha,
-  RMCAutoPersonneResponseBeta
-} from "../data/RMCAutoPersonne";
-import {
-  ReponseAppelRMCInscription,
-  ReponseAppelRMCInscription4DernierResultats,
-  ReponseAppelRMCInscription4PremiersResultats
-} from "../data/RMCInscription";
-import { getTitulairesActeAPI } from "../data/Titulaire";
 import { actesInscriptionsSauvegardes } from "./../data/actesInscriptionsSauvegardes";
 
 export const NORESULT = "NORESULT";
@@ -213,6 +214,11 @@ export const configEtatcivil = [
         "/acte/b41079a5-9e8d-478c-b04c-c4c2ac671348/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"
       ) {
         return { data: acteMariage };
+      } else if (
+        match[1] ===
+        "/acte/b41079a5-9e8d-478c-b04c-c4c2ac671349/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"
+      ) {
+        return { data: acteMariageElectronique };
       } else if (
         match[1] ===
         "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"

@@ -8,9 +8,13 @@ import {
   reponseSansDelivranceCSDemandeIncomplete,
   reponseSansDelivranceCSFrancais,
   reponseSansDelivranceCSMariage,
+  reponseSansDelivranceCSMariageElectronique,
   reponseSansDelivranceCSPACSNonInscrit
 } from "@mock/data/Composition";
-import { acteMariage } from "@mock/data/ficheEtBandeau/ficheActe";
+import {
+  acteMariage,
+  acteMariageElectronique
+} from "@mock/data/ficheEtBandeau/ficheActe";
 import requeteDelivrance, {
   idRequeteRDCSC,
   idRequeteRDCSCCertificatSituationRCA,
@@ -184,6 +188,21 @@ describe("Menu réponse sans délivrance", () => {
 
     expect(reponseSansDelivranceCS).toStrictEqual(
       reponseSansDelivranceCSMariage
+    );
+  });
+
+  test("test de création réponse sans délivrance mariage electronique", async () => {
+    const acte = {
+      idActe: acteMariageElectronique.id
+    } as IResultatRMCActe;
+    const reponseSansDelivranceCS =
+      await createReponseSansDelivranceCSPourCompositionApiMariage(
+        requeteDelivrance,
+        acte
+      );
+
+    expect(reponseSansDelivranceCS).toStrictEqual(
+      reponseSansDelivranceCSMariageElectronique
     );
   });
 

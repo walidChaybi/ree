@@ -2579,7 +2579,15 @@ export const acteMariage: any = {
       image: null,
       noPage: 2
     }
-  ]
+  ],
+  referenceActe: "CSL.DX.NA.T.410.681"
+};
+
+export const acteMariageElectronique = {
+  ...acteMariage,
+  id: "b41079a5-9e8d-478c-b04c-c4c2ac671349",
+  referenceActe: "RECE.1234.2024",
+  numeroActeElectronique: "1234"
 };
 
 export const acteNationalite = {

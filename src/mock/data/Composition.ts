@@ -104,6 +104,12 @@ export const reponseSansDelivranceCSMariage: IReponseSansDelivranceCSMariageComp
     reference_acte: "CSL.DX.NA.T.410.681"
   };
 
+  export const reponseSansDelivranceCSMariageElectronique: IReponseSansDelivranceCSMariageComposition =
+    {
+      ...reponseSansDelivranceCSMariage,
+      reference_acte: "RECE.1234.2024"
+    };
+
 export const reponseSansDelivranceCSFrancais: IReponseSansDelivranceCSFrancaisComposition =
   {
     ...baseReponseSansDelivranceCS,

@@ -1,8 +1,6 @@
 import { DATE_MES } from "@util/DateUtils";
 import {
-  compactObject,
   DEUX,
-  getValeurOuVide,
   premiereLettreEnMinuscule,
   SNP,
   SPC,
@@ -51,6 +49,8 @@ export interface IFicheActe {
   type: TypeActe;
   corpsExtraitRectifications: ICorpsExtraitRectification[];
   mentions: IMention[];
+  numeroActeElectronique?: number;
+  referenceActe: string;
 }
 
 interface ITitulairesActe {
@@ -84,16 +84,7 @@ export const FicheActe = {
   },
 
   getReference(acte?: IFicheActe): string {
-    const registre: any = {
-      famille: getValeurOuVide(acte?.registre?.famille).toLocaleUpperCase(),
-      pocopa: getValeurOuVide(acte?.registre?.pocopa).toLocaleUpperCase(),
-      annee: getValeurOuVide(acte?.registre?.annee),
-      support1: getValeurOuVide(acte?.registre?.support1).toLocaleUpperCase(),
-      support2: getValeurOuVide(acte?.registre?.support2).toLocaleUpperCase(),
-      numeroActe: getValeurOuVide(acte?.numero),
-      numeroBisTer: getValeurOuVide(acte?.numeroBisTer)
-    };
-    return Object.values(compactObject(registre)).join(".");
+    return acte?.referenceActe ?? "";
   },
 
   estActeImage(acte: IFicheActe) {

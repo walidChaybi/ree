@@ -368,7 +368,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     titulaire: ITitulaireActe
   ): ITitulaireCompositionEC {
     const estActeMariageOuDecesEtPaysInconnu =
-      (FicheActe.estActeDeces(acte) || FicheActe.estActeMariage) &&
+      (FicheActe.estActeDeces(acte) || FicheActe.estActeMariage(acte)) &&
       LieuxUtils.estPaysInconnu(titulaire.naissance?.pays);
     const prenoms = EtatCivilUtil.getPrenomsOuVide(titulaire.prenoms); //<Prénom(s) titulaire 1)>
     const nom = EtatCivilUtil.getNomOuVide(titulaire.nom); //<Nom titulaire 1>
