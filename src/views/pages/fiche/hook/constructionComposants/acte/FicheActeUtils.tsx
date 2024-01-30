@@ -1,10 +1,10 @@
 import { VisionneuseActe } from "@composant/visionneuseActe/VisionneuseActe";
+import { Droit } from "@model/agent/enum/Droit";
 import {
   officierDroitConsulterSurLeTypeRegistre,
   officierDroitConsulterSurLeTypeRegistreOuDroitMEAE,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
-import { Droit } from "@model/agent/enum/Droit";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
@@ -58,6 +58,7 @@ function getPanelAreasActeImage(
         value: (
           <VisionneuseActe
             idActe={acte.id}
+            typeActe={acte.type}
             estReecrit={
               params.visuActe === "classique" ? acte.estReecrit : undefined
             }

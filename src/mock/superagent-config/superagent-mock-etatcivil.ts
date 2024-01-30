@@ -280,20 +280,20 @@ export const configEtatcivil = [
         return ficheActe1;
       }
 
+      // acte corps image
       if (
-        // acte corps
-        match[1] === "/acte/corps/b41079a5-9e8d-478c-b04c-c4c4ey86537g" ||
-        match[1] === "/acte/corps/923a10fb-0b15-452d-83c0-d24c76d1de8d" ||
-        match[1] === "/acte/corps/b41079a3-9e8d-478c-b04c-c4c2ac47134f" ||
-        match[1] === "/acte/corps/19c0d767-64e5-4376-aa1f-6d781a2a235a" ||
-        match[1] === "/acte/corps/b41079a5-9e8d-478c-b04c-c4c2ac67134b" ||
-        match[1] === "/acte/corps/b41079a5-9e8d-478c-b04c-c4c2ac67134a" ||
-        match[1] === "/acte/corps/b41079a5-9e8f-478a-b04c-c4c2ac671123" ||
-        match[1] === "/acte/corps/b45079a5-9e8f-488a-b07c-c4c2az613121" ||
-        match[1] === "/acte/corps/b45079a5-9e8f-478a-b07c-c4c2az671123" ||
-        match[1] === "/acte/corps/19c0d767-64e5-4376-aa1f-6d781a2a235e" ||
-        // acte texte
-        match[1] === "/acte/texte/b41079a5-9e8d-478c-b04c-c4c4ey86537g"
+        [
+          "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/corps-image",
+          "/acte/923a10fb-0b15-452d-83c0-d24c76d1de8d/corps-image",
+          "/acte/b41079a3-9e8d-478c-b04c-c4c2ac47134f/corps-image",
+          "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/corps-image",
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/corps-image",
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a/corps-image",
+          "/acte/b41079a5-9e8f-478a-b04c-c4c2ac671123/corps-image",
+          "/acte/b45079a5-9e8f-488a-b07c-c4c2az613121/corps-image",
+          "/acte/b45079a5-9e8f-478a-b07c-c4c2az671123/corps-image",
+          "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/corps-image"
+        ].includes(match[1])
       ) {
         return {
           headers: [
@@ -305,6 +305,33 @@ export const configEtatcivil = [
             }
           ],
           body: "contenubase64dupdf"
+        };
+      }
+
+      // Donnees pour composition acte texte et acte repris.
+      if (
+        [
+          "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/donnees-pour-composition-acte-texte",
+          "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/donnees-pour-composition-acte-texte",
+          "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/donnees-pour-composition-acte-texte",
+          "/acte/923a10fb-0b15-452d-83c0-d24c76d1de8d/donnees-pour-composition-acte-texte",
+          "/acte/b41079a3-9e8d-478c-b04c-c4c2ac47134f/donnees-pour-composition-acte-texte",
+          "/acte/b41079a5-9e8f-478a-b04c-c4c2ac671123/donnees-pour-composition-acte-texte",
+          "/acte/b45079a5-9e8f-478a-b07c-c4c2az671123/donnees-pour-composition-acte-texte",
+          "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/donnees-pour-composition-acte-repris",
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a/donnees-pour-composition-acte-repris",
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/donnees-pour-composition-acte-repris"
+        ].includes(match[1])
+      ) {
+        return {
+          body: {
+            reference_acte: null,
+            nature_acte: "DONNEES SAISIES SUR CET ACTE",
+            titulaires: null,
+            texte_corps_acte:
+              "Nom                : BEDROS\nPrénoms            : Balli\nSexe               : masculin\nné le              : huit mars mil neuf cent cinquante neuf\nà                  : Soueida (Syrie)\n\nNom du père        : BEDROS\nPrénoms            : Médard\nné en              : 1929\nà                  : Michrefa (Syrie)\n\nNom de la mère     : MARDAM BEK\nPrénoms            : Nadira\nnée en             : 1935\nà                  : Lattaquieh (Syrie)\n\nAdresse            : 61, rue des Migneaux - 78300 POISSY\nFrançais par       : Déclaration d'acquisition souscrite le 1er octobre 1991\n                     (Art. 37-1 du code de la Nationalité Française) \n\n                     Acte établi par Nous, Rafik MALAKIAN,\nofficier de l'état civil du service central d'état civil du ministère\ndes affaires étrangères - (loi n°78-731 du 12 juillet 1978).\n\n          Nantes, le 11 juin 1996",
+            mentions: ""
+          }
         };
       }
 
@@ -459,7 +486,7 @@ export const configEtatcivil = [
         "/projetacte/d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca/integrer-acte-signe"
       ) {
         return { status: 200 };
-      };
+      }
       /////////////////
       // Signature //
       /////////////////

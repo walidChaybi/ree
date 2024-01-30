@@ -146,12 +146,10 @@ export function validateFile(
 
 export function base64toBlobUrl(base64String: string, type: string): string {
   const byteCharacters = window.atob(base64String);
-  const byteNumbers = new Array(byteCharacters.length);
-  for (let i = 0; i < byteCharacters.length; i++) {
-    byteNumbers[i] = byteCharacters.charCodeAt(i);
-  }
-  const byteArray = new Uint8Array(byteNumbers);
-  const blob = new Blob([byteArray], { type });
+  const byteNumbers = new Array(byteCharacters.length).map((_, index) =>
+    byteCharacters.charCodeAt(index)
+  );
+  const blob = new Blob([new Uint8Array(byteNumbers)], { type });
   return URL.createObjectURL(blob);
 }
 
@@ -161,4 +159,14 @@ export function bloblToBlobUrl(blob: Blob, type: string): string {
 
 export function estTypeMimePdf(typeMime?: string) {
   return typeMime === MimeType.APPLI_PDF;
+}
+
+export function base64ToBlob(base64: string): Blob {
+  const byteCharacters = atob(base64);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  return new Blob([byteArray], { type: "application/pdf" });
 }

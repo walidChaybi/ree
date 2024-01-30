@@ -23,6 +23,7 @@ const URL_COMPOSITION_EXTRAIT_COPIE_ACTE_TEXTE =
   "/composition/EXTAIT_COPIE_ACTE_TEXTE/1";
 
 const URL_COMPOSITION_COPIE_ACTE_IMAGE = "/composition/ACTE_IMAGE/1";
+const URL_COMPOSITION_ACTE_TEXTE = "/composition/ACTE_TEXTE/1";
 
 const URL_COMPOSITION_EXTRAIT_PLURILINGUE_NAISSANCE =
   "/composition/ACTE_NAISSANCE/4";
@@ -117,6 +118,10 @@ function getCompositionCopieActeImage(obj: any): Promise<any> {
   return getComposition(URL_COMPOSITION_COPIE_ACTE_IMAGE, obj);
 }
 
+function getCompositionActeTexte(obj: any): Promise<any> {
+  return getComposition(URL_COMPOSITION_ACTE_TEXTE, obj, true);
+}
+
 function getCompositionExtraitPlurilingueNaissance(obj: any): Promise<any> {
   return getComposition(URL_COMPOSITION_EXTRAIT_PLURILINGUE_NAISSANCE, obj);
 }
@@ -135,14 +140,18 @@ function getCompositionProjetActe(obj: any): Promise<any> {
 
 function getComposition(
   uri: string,
-  data: any
+  data: any,
+  utiliserCache = false
 ): // Renvoie le document en base64
 Promise<any> {
-  return api.fetch({
+  const configuration = {
     method: HttpMethod.POST,
     uri,
     data
-  });
+  };
+  return utiliserCache
+    ? api.fetchCache(configuration)
+    : api.fetch(configuration);
 }
 
 export const compositionApi = {
@@ -155,6 +164,7 @@ export const compositionApi = {
   getCompositionCourrier,
   getCompositionExtraitOuCopieActeTexte,
   getCompositionCopieActeImage,
+  getCompositionActeTexte,
   getCompositionExtraitPlurilingue,
   getCompositionProjetActe
 };

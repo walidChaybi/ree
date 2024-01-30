@@ -12,4 +12,8 @@ export class TypeActe extends EnumWithLibelle {
   public static getKey(obj: TypeActe) {
     return EnumWithLibelle.getKey(TypeActe, obj);
   }
+
+  public static estImage(obj?: TypeActe): boolean {
+    return obj === TypeActe.IMAGE;
+  }
 }

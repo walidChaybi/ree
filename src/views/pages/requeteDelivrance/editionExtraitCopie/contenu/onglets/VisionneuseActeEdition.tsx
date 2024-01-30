@@ -20,6 +20,7 @@ export const VisionneuseActeEdition: React.FC<
       />
       <VisionneuseActe
         idActe={props.acte?.id}
+        typeActe={props.acte?.type}
         estReecrit={props.acte?.estReecrit}
       />
     </>

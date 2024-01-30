@@ -25,9 +25,12 @@ export const URL_ETAT_CIVIL = "/repertoirecivil";
 export const URL_ETAT_CIVIL_RMC = "/repertoirecivil/rmc";
 export const URL_ACTE_RMC = "/acte/rmc";
 // Utilisé pour visualiser les images de l'acte dans la fiche Acte (renvoie un "InputStreamResource")
-export const URL_ACTE_CORPS_IMAGE = "/acte/corps";
+export const URL_CORPS_IMAGE = "/corps-image";
 export const URL_ACTE_IMAGES = "/acteimage/images";
-export const URL_ACTE_TEXTE = "/acte/texte";
+export const URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE =
+  "/donnees-pour-composition-acte-texte";
+const URL_DONNEES_POUR_COMPOSITION_ACTE_REPRIS =
+  "/donnees-pour-composition-acte-repris";
 export const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_MENTION = "/mentions";
@@ -287,10 +290,10 @@ export function getPersonnesSauvegardees(idPersonnes: string[]): Promise<any> {
 }
 
 /** Utilisé pour visualiser les images de l'acte dans la fiche Acte (renvoie un "InputStreamResource")*/
-export function getImagesActe(identifiant: string): Promise<any> {
+export function getCorpsActeImage(identifiant: string): Promise<any> {
   return api.fetchCache({
     method: HttpMethod.GET,
-    uri: `${URL_ACTE_CORPS_IMAGE}/${identifiant}`,
+    uri: `${URL_ACTE}/${identifiant}${URL_CORPS_IMAGE}`,
     responseType: "blob"
   });
 }
@@ -303,11 +306,21 @@ export function getImagesDeLActe(identifiantActe: string): Promise<any> {
   });
 }
 
-export function getTexteActe(identifiant: string): Promise<any> {
-  return api.fetch({
+export function getDonneesPourCompositionActeTexte(
+  identifiant: string
+): Promise<any> {
+  return api.fetchCache({
     method: HttpMethod.GET,
-    uri: `${URL_ACTE_TEXTE}/${identifiant}`,
-    responseType: "blob"
+    uri: `${URL_ACTE}/${identifiant}${URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE}`
+  });
+}
+
+export function getDonneesPourCompositionActeRepris(
+  identifiant: string
+): Promise<any> {
+  return api.fetchCache({
+    method: HttpMethod.GET,
+    uri: `${URL_ACTE}/${identifiant}${URL_DONNEES_POUR_COMPOSITION_ACTE_REPRIS}`
   });
 }
 
