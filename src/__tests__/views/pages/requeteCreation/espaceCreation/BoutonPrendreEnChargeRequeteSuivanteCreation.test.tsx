@@ -1,6 +1,6 @@
 import { userDroitCreerActeEtabliPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import BoutonPrendreEnChargePlusAncienneCreation from "@pages/requeteCreation/espaceCreation/BoutonPrendreEnChargePlusAncienneCreation";
+import BoutonPrendreEnChargeRequeteSuivanteCreation from "@pages/requeteCreation/espaceCreation/BoutonPrendreEnChargeRequeteSuivanteCreation";
 import {
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID
@@ -23,7 +23,7 @@ test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l
   history.push(URL_MES_REQUETES_CREATION);
   render(
     <Router history={history}>
-      <BoutonPrendreEnChargePlusAncienneCreation
+      <BoutonPrendreEnChargeRequeteSuivanteCreation
         typeRequete={TypeRequete.CREATION}
       />
     </Router>

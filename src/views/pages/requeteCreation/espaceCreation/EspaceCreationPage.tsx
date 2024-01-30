@@ -10,11 +10,11 @@ import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useState } from "react";
 import { BoutonAttribuerRequete } from "./BoutonAttribuerRequete";
-import BoutonPrendreEnChargePlusAncienneCreation from "./BoutonPrendreEnChargePlusAncienneCreation";
-import { MesRequetesCreation } from "./MesRequetesCreation";
-import { RequetesServiceCreation } from "./RequetesServiceCreation";
+import BoutonPrendreEnChargeRequeteSuivanteCreation from "./BoutonPrendreEnChargeRequeteSuivanteCreation";
 import MenuSaisirRequeteCreation from "./contenu/MenuSaisirRequeteCreation";
+import { MesRequetesCreation } from "./MesRequetesCreation";
 import { statutsRequetesCreation } from "./params/EspaceCreationParams";
+import { RequetesServiceCreation } from "./RequetesServiceCreation";
 
 interface LocalProps {
   selectedTab?: number;
@@ -41,7 +41,7 @@ const getBlocBoutons = (
       {selectedTabState === 1 && (
         <BoutonAttribuerRequete onClick={ouvrirPopinAttribuerA} />
       )}
-      <BoutonPrendreEnChargePlusAncienneCreation
+      <BoutonPrendreEnChargeRequeteSuivanteCreation
         typeRequete={TypeRequete.CREATION}
       />
     </div>

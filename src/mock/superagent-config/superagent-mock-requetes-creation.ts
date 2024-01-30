@@ -3,7 +3,10 @@ import {
   ReponseAppelNomenclatureDocummentDelivrance,
   ReponseAppelNomenclatureTypePiecesJustificative
 } from "../data/nomenclatures";
-import { requetesCreationAlimentationTableau } from "../data/requeteCreation";
+import {
+  requeteCreationATraiter,
+  requetesCreationAlimentationTableau
+} from "../data/requeteCreation";
 import {
   creationRequeteRCTCResultat,
   requeteCreationTranscription,
@@ -13,7 +16,6 @@ import {
   requeteServiceCreationRechercheNatali,
   requetesServiceCreationTableauResultatQuery
 } from "../data/requetesServiceCreation";
-import { requeteTableauCreation } from "../data/requeteTableauCreation";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 
 export const NORESULT = "NORESULT";
@@ -35,13 +37,6 @@ export const configRequetesCreation = [
      */
     fixtures: function (match: any, params: any, headers: any, context: any) {
       const url = match[1];
-
-      // Requête plus ancienne
-      if (url === "/requetes/requeteplusancienne?type=CREATION") {
-        return {
-          data: requeteTableauCreation
-        };
-      }
 
       if (url === "/requetes/dd96cc3a-9865-4c83-b634-37fad2680f41") {
         return {
@@ -70,6 +65,11 @@ export const configRequetesCreation = [
         "/requetes/action/majStatut?idRequete=3ed9aa4e-921b-489f-b8fe-531dd703c60c&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE"
       ) {
         return { data: "123456789" };
+      }
+      if (url === "/requetes/creation/requete-a-prendre-en-charge") {
+        return {
+          data: requeteCreationATraiter
+        };
       }
       if (
         url ===

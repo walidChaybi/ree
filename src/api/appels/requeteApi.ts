@@ -57,7 +57,6 @@ export const URL_RETOUR_VALIDEUR = "/requetes/action/retourValideur";
 export const URL_OBSERVATION = "/requetes/observation";
 export const URL_IGNORER = "/requetes/action/ignorer";
 export const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
-export const URL_REQUETE_PLUS_ANCIENNE = "/requetes/requeteplusancienne";
 export const URL_OPTION_COURRIER = "/optioncourrier";
 export const URL_REPONSE_REQ_INFO = "/reponse";
 export const URL_NB_REQ_INFO = "/requetes/information/count";
@@ -76,6 +75,8 @@ export const URL_STATUT = "/statut";
 const URL_SUIVI_DOSSIER = "/suivi-dossier";
 const URL_METTRE_AJOUR_STATUT_APRES_SIGNATURE =
   "/mettre-a-jour-statut-apres-signature";
+export const URL_PRENDRE_EN_CHARGE_REQUETE_SUIVANTE =
+  "/requetes/creation/requete-a-prendre-en-charge";
 
 const URL_REPONSES = "/reponses";
 
@@ -631,13 +632,10 @@ export function getRequeteAleatoire(type: string) {
   });
 }
 
-export function getRequetePlusAncienne(type: string) {
+export function getPrendreEnChargeRequeteSuivante(): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: URL_REQUETE_PLUS_ANCIENNE,
-    parameters: {
-      type
-    }
+    uri: URL_PRENDRE_EN_CHARGE_REQUETE_SUIVANTE
   });
 }
 

@@ -3,9 +3,9 @@ import {
   useMiseAjourStatutCreation
 } from "@hook/requete/creation/MiseAJourStatutCreationApiHook";
 import {
-  IRequetePlusAncienneResultat,
-  useGetRequetePlusAncienne
-} from "@hook/requete/PrendreEnChargePlusAncienneApiHook";
+  IPrendreEnChargeRequeteSuivanteResultat,
+  usePrendreEnChargeRequeteSuivanteApiHook
+} from "@hook/requete/PrendreEnChargeRequeteSuivanteApiHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID } from "@router/ReceUrls";
@@ -17,13 +17,13 @@ import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-interface BoutonPrendreEnChargePlusAncienneCreationProps {
+interface BoutonPrendreEnChargeRequeteSuivanteProps {
   typeRequete: TypeRequete;
   disabled?: boolean;
 }
 
-export const BoutonPrendreEnChargePlusAncienneCreation: React.FC<
-  BoutonPrendreEnChargePlusAncienneCreationProps
+export const BoutonPrendreEnChargeRequeteSuivanteCreation: React.FC<
+  BoutonPrendreEnChargeRequeteSuivanteProps
 > = props => {
   const history = useHistory();
 
@@ -31,18 +31,22 @@ export const BoutonPrendreEnChargePlusAncienneCreation: React.FC<
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [miseAJourStatutCreationParams, setMiseAJourStatutCreationParams] =
     useState<MiseAjourStatutCreationParams | undefined>();
-  const requetePlusAncienneResultat: IRequetePlusAncienneResultat | undefined =
-    useGetRequetePlusAncienne(props.typeRequete, prendreEnCharge);
+  const requeteSuivanteAPrendreEnCharge:
+    | IPrendreEnChargeRequeteSuivanteResultat
+    | undefined = usePrendreEnChargeRequeteSuivanteApiHook(
+    props.typeRequete,
+    prendreEnCharge
+  );
 
   useEffect(() => {
-    if (requetePlusAncienneResultat) {
-      if (requetePlusAncienneResultat.requete) {
+    if (requeteSuivanteAPrendreEnCharge) {
+      if (requeteSuivanteAPrendreEnCharge.requete) {
         setMiseAJourStatutCreationParams({
-          idRequete: requetePlusAncienneResultat.requete.idRequete,
+          idRequete: requeteSuivanteAPrendreEnCharge.requete.idRequete,
           statutRequete: StatutRequete.PRISE_EN_CHARGE,
           callback: redirectApercuRequete
         });
-      } else if (!requetePlusAncienneResultat.requete) {
+      } else if (!requeteSuivanteAPrendreEnCharge.requete) {
         messageManager.showInfoAndClose(
           getLibelle(
             "Il n'existe plus de requêtes disponibles à la prise en charge"
@@ -53,21 +57,21 @@ export const BoutonPrendreEnChargePlusAncienneCreation: React.FC<
       setOperationEnCours(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [requetePlusAncienneResultat]);
+  }, [requeteSuivanteAPrendreEnCharge]);
 
   useMiseAjourStatutCreation(miseAJourStatutCreationParams);
 
   const redirectApercuRequete = useCallback(() => {
-    if (requetePlusAncienneResultat) {
+    if (requeteSuivanteAPrendreEnCharge) {
       history.push(
         getUrlWithParam(
           URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
-          requetePlusAncienneResultat.requete.idRequete
+          requeteSuivanteAPrendreEnCharge.requete.idRequete
         )
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [requetePlusAncienneResultat]);
+  }, [requeteSuivanteAPrendreEnCharge]);
 
   const onClickPrendreEnCharge = () => {
     setPrendreEnCharge(true);
@@ -86,6 +90,6 @@ export const BoutonPrendreEnChargePlusAncienneCreation: React.FC<
 };
 
 export default WithHabilitation(
-  BoutonPrendreEnChargePlusAncienneCreation,
+  BoutonPrendreEnChargeRequeteSuivanteCreation,
   "BoutonPrendreEnChargePlusAncienneCreation"
 );
