@@ -81,6 +81,10 @@ export const DEFINITION_SEXE_OBLIGATOIRE = getLibelle(
   'Le sexe doit être renseigné à "Masculin" ou "Féminin"'
 );
 
+export const DEPARTEMENT_OBLIGATOIRE = getLibelle(
+  "La saisie du département est obligatoire"
+);
+
 export const CHAMP_OBLIGATOIRE = getLibelle("Ce champ est obligatoire");
 
 export const LIEN_REQUERANT_OBLIGATOIRE = getLibelle(

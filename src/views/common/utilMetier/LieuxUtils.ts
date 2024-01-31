@@ -2,11 +2,14 @@ import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { Option, Options } from "@util/Type";
 import {
+  NEUF,
+  SEIZE,
+  VINGT,
   chainesEgalesIgnoreCasseEtAccent,
   estRenseigne,
   formatLigne,
-  getValeurOuVide, NEUF,
-  SEIZE, supprimerZerosAGauche, VINGT
+  getValeurOuVide,
+  supprimerZerosAGauche
 } from "@util/Utils";
 
 export const FRANCE = "FRANCE";
@@ -39,7 +42,7 @@ export class LieuxUtils {
   }
 
   public static estPaysInconnu(pays?: string): boolean {
-    return pays != null && pays.toUpperCase() === INCONNU;
+    return !pays || pays.toUpperCase() === INCONNU;
   }
 
   public static estPaysEtranger(pays?: string): boolean {

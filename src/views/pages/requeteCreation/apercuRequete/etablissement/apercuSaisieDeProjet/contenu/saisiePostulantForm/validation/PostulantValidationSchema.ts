@@ -14,7 +14,6 @@ import {
   DEPARTEMENT_NAISSANCE,
   ETAT_CANTON_PROVINCE,
   LIEU_DE_NAISSANCE,
-  LIEU_NAISSANCE,
   NATURE,
   NE_DANS_MARIAGE,
   NOM,
@@ -41,22 +40,23 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
+import { ZERO, getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { getLibelle } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import {
+  CARACTERES_AUTORISES_AVEC_VIRGULE_MESSAGE,
+  CARACTERES_AUTORISES_MESSAGE,
+  DEFINITION_SEXE_OBLIGATOIRE,
+  DEPARTEMENT_OBLIGATOIRE,
+  NATURE_ACTE_OBLIGATOIRE
+} from "@widget/formulaire/FormulaireMessages";
 import {
   DateValidationCompleteSchemaSansTestFormatRequired,
   DateValidationSchema,
   DateValidationSchemaSansTestFormat,
   DateValidationSchemaSansTestFormatRequired
 } from "@widget/formulaire/champsDate/DateComposeFormValidation";
-import {
-  CARACTERES_AUTORISES_AVEC_VIRGULE_MESSAGE,
-  CARACTERES_AUTORISES_MESSAGE,
-  DEFINITION_SEXE_OBLIGATOIRE,
-  NATURE_ACTE_OBLIGATOIRE
-} from "@widget/formulaire/FormulaireMessages";
 import * as Yup from "yup";
 import {
   CaracteresAutorises,
@@ -142,16 +142,10 @@ function validationSchemaParent() {
         CaracteresAutorisesAvecVirgule,
         CARACTERES_AUTORISES_AVEC_VIRGULE_MESSAGE
       ),
-      [DEPARTEMENT_NAISSANCE]: Yup.string()
-        .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
-        .when([LIEU_NAISSANCE, VILLE_NAISSANCE], {
-          is: (adresse: string, ville: string) =>
-            EtrangerFrance.getEnumFor(adresse) === EtrangerFrance.FRANCE &&
-            !LieuxUtils.estVilleParis(ville),
-          then: Yup.string().required(
-            "La saisie du département est obligatoire"
-          )
-        }),
+      [DEPARTEMENT_NAISSANCE]: Yup.string().matches(
+        CaracteresAutorises,
+        CARACTERES_AUTORISES_MESSAGE
+      ),
       [ARRONDISSEMENT_NAISSANCE]: Yup.string().matches(
         CaracteresAutorises,
         CARACTERES_AUTORISES_MESSAGE
@@ -161,22 +155,41 @@ function validationSchemaParent() {
         CARACTERES_AUTORISES_MESSAGE
       )
     })
-  }).test("sexeDefiniObligatoire", function (value, error) {
-    const sexe = value[SEXE] as string;
-    const nomOuPrenomRenseigne =
-      value[NOM] ||
-      getPrenomsTableauStringVersPrenomsOrdonnes(value[PRENOM][PRENOMS])
-        .length > 0;
+  })
+    .test("sexeDefiniObligatoire", function (value, error) {
+      const sexe = value[SEXE] as string;
+      const nomOuPrenomRenseigne =
+        value[NOM] ||
+        getPrenomsTableauStringVersPrenomsOrdonnes(value[PRENOM][PRENOMS])
+          .length > ZERO;
 
-    const paramsError = {
-      path: `${error?.path}.sexe`,
-      message: getLibelle(DEFINITION_SEXE_OBLIGATOIRE)
-    };
+      const paramsError = {
+        path: `${error?.path}.${SEXE}`,
+        message: getLibelle(DEFINITION_SEXE_OBLIGATOIRE)
+      };
 
-    return nomOuPrenomRenseigne && (!sexe || Sexe.estIndetermine(sexe))
-      ? this.createError(paramsError)
-      : true;
-  });
+      return nomOuPrenomRenseigne && (!sexe || Sexe.estIndetermine(sexe))
+        ? this.createError(paramsError)
+        : true;
+    })
+    .test("departementObligatoire", function (value, error) {
+      const nomOuPrenomRenseigne =
+        value[NOM] ||
+        getPrenomsTableauStringVersPrenomsOrdonnes(value[PRENOM][PRENOMS])
+          .length > ZERO;
+      const departementObligatoire =
+        LieuxUtils.estPaysFrance(value[LIEU_DE_NAISSANCE][LIEU_DE_NAISSANCE]) &&
+        !LieuxUtils.estVilleParis(value[LIEU_DE_NAISSANCE][VILLE_NAISSANCE]);
+      const departement = value[LIEU_DE_NAISSANCE][DEPARTEMENT_NAISSANCE];
+      const paramsError = {
+        path: `${error?.path}.${LIEU_DE_NAISSANCE}.${DEPARTEMENT_NAISSANCE}`,
+        message: getLibelle(DEPARTEMENT_OBLIGATOIRE)
+      };
+
+      return nomOuPrenomRenseigne && departementObligatoire && !departement
+        ? this.createError(paramsError)
+        : true;
+    });
 }
 function validationSchemaAutres() {
   return Yup.object({

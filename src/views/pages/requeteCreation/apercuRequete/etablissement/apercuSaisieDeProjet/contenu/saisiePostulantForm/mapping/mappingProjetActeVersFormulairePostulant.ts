@@ -69,21 +69,21 @@ import {
   ISaisieProjetPostulantForm
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { TypeNature } from "@model/requete/enum/TypeNature";
 import { TypeReconnaissance } from "@model/requete/enum/TypeReconnaissance";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { getDateComposeFromDate } from "@util/DateUtils";
 import {
   DEUX,
+  SPC,
+  UN,
+  ZERO,
   formatPremieresLettresMajusculesNomCompose,
   getValeurOuVide,
   numberToString,
-  rempliAGaucheAvecZero,
-  SPC,
-  UN,
-  ZERO
+  rempliAGaucheAvecZero
 } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { ISaisieLieuNaissanceParent } from "./../../../../../../../../../model/form/creation/etablissement/ISaisiePostulantForm";
@@ -338,6 +338,10 @@ function mapSaisieLieuNaissanceParent(
       EtrangerFrance.ETRANGER
     );
     saisieLieuNaissanceParent[REGION_NAISSANCE] = naissance?.region || "";
+  } else {
+    saisieLieuNaissanceParent[LIEU_DE_NAISSANCE] = EtrangerFrance.getKey(
+      EtrangerFrance.INCONNU
+    );
   }
 
   return saisieLieuNaissanceParent;
