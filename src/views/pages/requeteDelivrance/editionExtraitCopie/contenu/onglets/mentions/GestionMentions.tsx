@@ -5,29 +5,28 @@ import {
   SauvegarderMentionsParam,
   useSauvegarderMentions
 } from "@hook/acte/mentions/SauvegarderMentionsHook";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { Mention } from "@model/etatcivil/acte/mention/IMention";
 import {
   IMentionAffichage,
   mappingVersMentionAffichage,
   modificationEffectue
 } from "@model/etatcivil/acte/mention/IMentionAffichage";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_COPIE_INTEGRALE } from "@model/requete/enum/DocumentDelivranceConstante";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { estTableauNonVide, getLibelle, getValeurOuVide } from "@util/Utils";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
-import { MentionsCopie } from "./contenu/MentionsCopie";
-import { MentionsExtrait } from "./contenu/MentionsExtrait";
 import {
   boutonReinitialiserEstDisabled,
-  getRegistreActe,
   getValeurEstdeverrouillerCommencement,
   validerMentions
 } from "./GestionMentionsUtil";
+import { MentionsCopie } from "./contenu/MentionsCopie";
+import { MentionsExtrait } from "./contenu/MentionsExtrait";
 import "./scss/Mention.scss";
 
 export interface GestionMentionsProps {
@@ -151,7 +150,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
           </div>
           <div>
             <h3>{`${getLibelle("Référence")}`}</h3>
-            <span>{getRegistreActe(props.acte)}</span>
+            <span>{FicheActe.getReference(props.acte)}</span>
           </div>
         </div>
       )}
