@@ -45,13 +45,23 @@ export const useComposerDocumentFinalApiHook = (
           });
         })
         .catch((errors: any) => {
+          logInfoDansLaConsole("errors", errors);
+          logInfoDansLaConsole("errors.message", errors.message); // Attendu sur UAT: Bad request
+          logInfoDansLaConsole("errors.response", errors.response);
+          logInfoDansLaConsole("errors.response.text", errors.response.text);
+          logInfoDansLaConsole("errors.response.body", errors.response.body);
           logInfoDansLaConsole(
-            "ComposerDocumentFinalApiHook .catch(errors)",
-            errors
+            "errors.response.body.errors",
+            errors.response.body.errors
           );
+          logInfoDansLaConsole(
+            "errors.response.body.errors[0]",
+            errors.response.body.errors[0]
+          );
+          const erreurs = errors?.response?.body?.errors;
           const erreur: IErreurTraitementApi = {
-            code: JSON.parse(errors?.message)?.errors[0]?.code,
-            message: JSON.parse(errors?.message)?.errors[0]?.message
+            code: erreurs[0]?.code,
+            message: erreurs[0]?.message
           };
           setResultat({
             documentRecomposeASigner: "",
