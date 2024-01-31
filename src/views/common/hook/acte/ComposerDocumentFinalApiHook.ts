@@ -1,6 +1,7 @@
 import { composerDocumentFinal } from "@api/appels/etatcivilApi";
 import { IErreurTraitementApi } from "@api/IErreurTraitementApi";
 import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
+import { logInfoDansLaConsole } from "@util/Console";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
@@ -44,6 +45,10 @@ export const useComposerDocumentFinalApiHook = (
           });
         })
         .catch((errors: any) => {
+          logInfoDansLaConsole(
+            "ComposerDocumentFinalApiHook .catch(errors)",
+            errors
+          );
           const erreur: IErreurTraitementApi = {
             code: JSON.parse(errors?.message)?.errors[0]?.code,
             message: JSON.parse(errors?.message)?.errors[0]?.message
