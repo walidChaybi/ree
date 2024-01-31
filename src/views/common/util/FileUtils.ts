@@ -146,10 +146,12 @@ export function validateFile(
 
 export function base64toBlobUrl(base64String: string, type: string): string {
   const byteCharacters = window.atob(base64String);
-  const byteNumbers = new Array(byteCharacters.length).map((_, index) =>
-    byteCharacters.charCodeAt(index)
-  );
-  const blob = new Blob([new Uint8Array(byteNumbers)], { type });
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  const blob = new Blob([byteArray], { type });
   return URL.createObjectURL(blob);
 }
 
