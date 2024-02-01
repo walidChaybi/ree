@@ -291,7 +291,7 @@ export function getPersonnesSauvegardees(idPersonnes: string[]): Promise<any> {
 
 /** Utilisé pour visualiser les images de l'acte dans la fiche Acte (renvoie un "InputStreamResource")*/
 export function getCorpsActeImage(identifiant: string): Promise<any> {
-  return api.fetchCache({
+  return api.fetch({
     method: HttpMethod.GET,
     uri: `${URL_ACTE}/${identifiant}${URL_CORPS_IMAGE}`,
     responseType: "blob"
@@ -309,7 +309,7 @@ export function getImagesDeLActe(identifiantActe: string): Promise<any> {
 export function getDonneesPourCompositionActeTexte(
   identifiant: string
 ): Promise<any> {
-  return api.fetchCache({
+  return api.fetch({
     method: HttpMethod.GET,
     uri: `${URL_ACTE}/${identifiant}${URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE}`
   });
@@ -318,7 +318,7 @@ export function getDonneesPourCompositionActeTexte(
 export function getDonneesPourCompositionActeRepris(
   identifiant: string
 ): Promise<any> {
-  return api.fetchCache({
+  return api.fetch({
     method: HttpMethod.GET,
     uri: `${URL_ACTE}/${identifiant}${URL_DONNEES_POUR_COMPOSITION_ACTE_REPRIS}`
   });
