@@ -119,7 +119,7 @@ function getCompositionCopieActeImage(obj: any): Promise<any> {
 }
 
 function getCompositionActeTexte(obj: any): Promise<any> {
-  return getComposition(URL_COMPOSITION_ACTE_TEXTE, obj, true);
+  return getComposition(URL_COMPOSITION_ACTE_TEXTE, obj);
 }
 
 function getCompositionExtraitPlurilingueNaissance(obj: any): Promise<any> {
@@ -140,18 +140,14 @@ function getCompositionProjetActe(obj: any): Promise<any> {
 
 function getComposition(
   uri: string,
-  data: any,
-  utiliserCache = false
+  data: any
 ): // Renvoie le document en base64
 Promise<any> {
-  const configuration = {
+  return api.fetch({
     method: HttpMethod.POST,
     uri,
     data
-  };
-  return utiliserCache
-    ? api.fetchCache(configuration)
-    : api.fetch(configuration);
+  });
 }
 
 export const compositionApi = {

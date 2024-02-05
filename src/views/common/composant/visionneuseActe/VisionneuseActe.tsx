@@ -61,12 +61,14 @@ export const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({
   useEffect(() => {
     if (idActe) {
       if (estImage) {
-        setRecupererActeImageParams({ idActe });
+        !recupererActeImageResultat && setRecupererActeImageParams({ idActe });
       } else {
         if (estReecrit) {
-          setRecupererActeTexteReprisParams({ idActe });
+          !recupererActeTexteReprisResultat &&
+            setRecupererActeTexteReprisParams({ idActe });
         } else {
-          setRecupererActeTexteParams({ idActe });
+          !recupererActeTexteResultat &&
+            setRecupererActeTexteParams({ idActe });
         }
       }
     }
