@@ -1,7 +1,6 @@
 import { composerDocumentFinal } from "@api/appels/etatcivilApi";
 import { IErreurTraitementApi } from "@api/IErreurTraitementApi";
 import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
-import { logInfoDansLaConsole } from "@util/Console";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
@@ -45,19 +44,6 @@ export const useComposerDocumentFinalApiHook = (
           });
         })
         .catch((errors: any) => {
-          logInfoDansLaConsole("errors", errors);
-          logInfoDansLaConsole("errors.message", errors.message); // Attendu sur UAT: Bad request
-          logInfoDansLaConsole("errors.response", errors.response);
-          logInfoDansLaConsole("errors.response.text", errors.response.text);
-          logInfoDansLaConsole("errors.response.body", errors.response.body);
-          logInfoDansLaConsole(
-            "errors.response.body.errors",
-            errors.response.body.errors
-          );
-          logInfoDansLaConsole(
-            "errors.response.body.errors[0]",
-            errors.response.body.errors[0]
-          );
           const erreurs = errors?.response?.body?.errors;
           const erreur: IErreurTraitementApi = {
             code: erreurs[0]?.code,
