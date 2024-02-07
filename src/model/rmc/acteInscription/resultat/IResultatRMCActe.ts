@@ -9,7 +9,8 @@ export interface IResultatRMCActe {
   dateEvenement: string;
   paysNaissance: string;
   nature: string;
-  registre: string;
+  referenceRece: string;
+  referenceRegistre: string;
   familleRegistre: TypeFamille;
   type: string;
 }

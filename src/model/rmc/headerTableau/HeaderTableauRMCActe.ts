@@ -5,8 +5,13 @@ export class HeaderTableauRMCActe extends EnumWithComplete {
     "dateEvenement",
     "Date d'événement"
   );
-  public static readonly REGISTRE = new HeaderTableauRMCActe(
-    "registre",
-    "Réf. acte"
+
+  public static readonly REGISTRE_ELECTRONIQUE = new HeaderTableauRMCActe(
+    "referenceRece",
+    "Réf. RECE"
+  );
+  public static readonly REGISTRE_PAPIER = new HeaderTableauRMCActe(
+    "referenceRegistre",
+    "Réf. registre"
   );
 }

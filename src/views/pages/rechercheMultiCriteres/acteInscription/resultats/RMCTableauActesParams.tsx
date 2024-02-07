@@ -17,8 +17,14 @@ const columnsTableauRmc = [
     className: "ColOverflow"
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRMCActe.REGISTRE.nom],
-    title: HeaderTableauRMCActe.REGISTRE.libelle,
+    keys: [HeaderTableauRMCActe.REGISTRE_ELECTRONIQUE.nom],
+    title: HeaderTableauRMCActe.REGISTRE_ELECTRONIQUE.libelle,
+    className: "ColOverflow",
+    style: { width: "200px" }
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRMCActe.REGISTRE_PAPIER.nom],
+    title: HeaderTableauRMCActe.REGISTRE_PAPIER.libelle,
     className: "ColOverflow",
     style: { width: "200px" }
   })

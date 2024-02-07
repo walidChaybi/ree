@@ -54,7 +54,8 @@ export function mappingActes(data: any): IResultatRMCActe[] {
       }),
       paysNaissance: getValeurOuVide(acte.paysNaissance),
       nature: NatureActe.getEnumFor(acte.nature).libelle,
-      registre: getValeurOuVide(acte.registre),
+      referenceRece: getValeurOuVide(acte.referenceRece),
+      referenceRegistre: getValeurOuVide(acte.referenceRegistre),
       familleRegistre: TypeFamille.getEnumFor(acte.familleRegistre),
       type: TypeActe.getEnumFor(acte.type).libelle
     };

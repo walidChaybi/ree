@@ -27,7 +27,8 @@ export const ReponseAppelRMCActe = {
         anneeNaissance: "1960",
         paysNaissance: "Tunisie",
         nature: "RECONNAISSANCE",
-        registre: "4568",
+        referenceRece: "RECE.999",
+        referenceRegistre: "4568",
         familleRegistre: TypeFamille.ACQ
       }
     ]
@@ -44,7 +45,8 @@ export const DataRMCActeAvecResultat: IResultatRMCActe[] = [
     dateEvenement: "08/12/1980",
     paysNaissance: "Tunisie",
     nature: "Reconnaissance",
-    registre: "4568",
+    referenceRece: "RECE.999",
+    referenceRegistre: "4568",
     familleRegistre: TypeFamille.ACQ,
     type: "TEXTE"
   },
@@ -57,7 +59,8 @@ export const DataRMCActeAvecResultat: IResultatRMCActe[] = [
     dateEvenement: "08/12/1980",
     paysNaissance: "Tunisie",
     nature: "Reconnaissance",
-    registre: "4569",
+    referenceRece: "RECE.999",
+    referenceRegistre: "4569",
     familleRegistre: TypeFamille.ACQ,
     type: "TEXTE"
   },
@@ -70,7 +73,8 @@ export const DataRMCActeAvecResultat: IResultatRMCActe[] = [
     dateEvenement: "08/12/1980",
     paysNaissance: "Australie",
     nature: "Naissance",
-    registre: "8547",
+    referenceRece: "RECE.999",
+    referenceRegistre: "8547",
     familleRegistre: TypeFamille.ACQ,
     type: "TEXTE"
   },
@@ -83,7 +87,8 @@ export const DataRMCActeAvecResultat: IResultatRMCActe[] = [
     dateEvenement: "08/12/1981",
     paysNaissance: "Tunisie",
     nature: "Reconnaissance",
-    registre: "4570",
+    referenceRece: "RECE.999",
+    referenceRegistre: "4570",
     familleRegistre: TypeFamille.ACQ,
     type: "TEXTE"
   },
@@ -96,7 +101,8 @@ export const DataRMCActeAvecResultat: IResultatRMCActe[] = [
     dateEvenement: "08/12/1987",
     paysNaissance: "Australie",
     nature: "Naissance",
-    registre: "8548",
+    referenceRece: "RECE.999",
+    referenceRegistre: "8548",
     familleRegistre: TypeFamille.ACQ,
     type: "TEXTE"
   }
@@ -124,7 +130,8 @@ export const ReponseAppelRMCActe4PremiersResultats = {
         anneeNaissance: "1995",
         paysNaissance: "Italie",
         nature: "NAISSANCE",
-        registre: "DEP.IRAN.1987.13",
+        referenceRece: "RECE.999",
+        referenceRegistre: "DEP.IRAN.1987.13",
         familleRegistre: TypeFamille.DEP
       },
       {
@@ -137,7 +144,8 @@ export const ReponseAppelRMCActe4PremiersResultats = {
         anneeNaissance: "1975",
         paysNaissance: "France",
         nature: "NAISSANCE",
-        registre: "ACQ.X.1951.1.413",
+        referenceRece: "RECE.999",
+        referenceRegistre: "ACQ.X.1951.1.413",
         familleRegistre: TypeFamille.ACQ
       },
       {
@@ -150,7 +158,8 @@ export const ReponseAppelRMCActe4PremiersResultats = {
         anneeNaissance: "1975",
         paysNaissance: "France",
         nature: "NAISSANCE",
-        registre: "PAC.ORAN.2010.support 1.support 2.100.552",
+        referenceRece: "RECE.999",
+        referenceRegistre: "PAC.ORAN.2010.support 1.support 2.100.552",
         familleRegistre: TypeFamille.PAC
       },
       {
@@ -163,7 +172,8 @@ export const ReponseAppelRMCActe4PremiersResultats = {
         anneeNaissance: "1960",
         paysNaissance: "France",
         nature: "NAISSANCE",
-        registre: "DEP.IRAN.1987.254.35",
+        referenceRece: "RECE.999",
+        referenceRegistre: "DEP.IRAN.1987.254.35",
         familleRegistre: TypeFamille.DEP
       }
     ]
@@ -192,7 +202,8 @@ export const ReponseAppelRMCActe4DernierResultats = {
         anneeNaissance: "1975",
         paysNaissance: "France",
         nature: "NAISSANCE",
-        registre: "ACQ.X.1951.1.483",
+        referenceRece: "RECE.999",
+        referenceRegistre: "ACQ.X.1951.1.483",
         familleRegistre: TypeFamille.ACQ
       },
       {
@@ -205,7 +216,8 @@ export const ReponseAppelRMCActe4DernierResultats = {
         anneeNaissance: "1975",
         paysNaissance: "Tunisie",
         nature: "NAISSANCE",
-        registre: "PAC.ORAN.2010.support 1.support 2.691.552",
+        referenceRece: "RECE.999",
+        referenceRegistre: "PAC.ORAN.2010.support 1.support 2.691.552",
         familleRegistre: TypeFamille.PAC
       },
       {
@@ -218,7 +230,8 @@ export const ReponseAppelRMCActe4DernierResultats = {
         anneeNaissance: "1993",
         paysNaissance: "Japon",
         nature: "NAISSANCE",
-        registre: "PAC.ORAN.2010.support 1.support 2.101.552",
+        referenceRece: "RECE.999",
+        referenceRegistre: "PAC.ORAN.2010.support 1.support 2.101.552",
         familleRegistre: TypeFamille.PAC
       },
       {
@@ -231,7 +244,8 @@ export const ReponseAppelRMCActe4DernierResultats = {
         anneeNaissance: "1975",
         paysNaissance: "Tunisie",
         nature: "NAISSANCE",
-        registre: "PAC.ORAN.2010.support 1.support 2.102.552",
+        referenceRece: "RECE.999",
+        referenceRegistre: "PAC.ORAN.2010.support 1.support 2.102.552",
         familleRegistre: TypeFamille.PAC
       }
     ]
