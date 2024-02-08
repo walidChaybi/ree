@@ -14,30 +14,30 @@ import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { localStorageFeatureFlagMock } from "../../../../../../../setupTests";
 
-test("DOIT rediriger vers Mes requêtes de création QUAND le bouton affiche Retour mes requêtes", async () => {
+test("DOIT rediriger vers Mes requêtes de création QUAND le bouton affiche 'Retour mes requêtes de création'", async () => {
   const history = afficherEtCliquerSurBoutonRetour(
     URL_MES_REQUETES_CREATION,
-    "Retour mes requêtes"
+    "Retour mes requêtes de création"
   );
   await waitFor(() => {
     expect(history.location.pathname).toBe(URL_MES_REQUETES_CREATION);
   });
 });
 
-test("DOIT rediriger vers Requêtes de création de mon service QUAND le bouton affiche Retour requêtes de service", async () => {
+test("DOIT rediriger vers Requêtes de création de mon service QUAND le bouton affiche 'Retour requêtes de création de mon service'", async () => {
   const history = afficherEtCliquerSurBoutonRetour(
     URL_REQUETES_CREATION_SERVICE,
-    "Retour requêtes de service"
+    "Retour requêtes de création de mon service"
   );
   await waitFor(() => {
     expect(history.location.pathname).toBe(URL_REQUETES_CREATION_SERVICE);
   });
 });
 
-test("DOIT rediriger vers Rechercher une requête QUAND le bouton affiche Retour recherche requêtes", async () => {
+test("DOIT rediriger vers Rechercher une requête QUAND le bouton affiche 'Retour recherche requête'", async () => {
   const history = afficherEtCliquerSurBoutonRetour(
     URL_RECHERCHE_REQUETE,
-    "Retour recherche requêtes"
+    "Retour recherche requête"
   );
   await waitFor(() => {
     expect(history.location.pathname).toBe(URL_RECHERCHE_REQUETE);

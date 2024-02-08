@@ -32,9 +32,13 @@ interface BoutonsApercuCreationEtablissementProps {
   tousLesProjetsSontSignes?: boolean;
 }
 
-const RETOUR_RECHERCHE_REQUETE = getLibelle("Retour recherche requêtes");
-const RETOUR_MES_REQUETE = getLibelle("Retour mes requêtes");
-const RETOUR_REQUETE_SERVICE = getLibelle("Retour requêtes de service");
+const RETOUR_RECHERCHE_REQUETE = getLibelle("Retour recherche requête");
+const RETOUR_MES_REQUETES_CREATION = getLibelle(
+  "Retour mes requêtes de création"
+);
+const RETOUR_REQUETES_SERVICE_CREATION = getLibelle(
+  "Retour requêtes de création de mon service"
+);
 const RETOUR_SUIVI_DOSSIER = getLibelle("Retour apercu suivi dossier");
 const ERREUR_REGISTRE_NON_OUVERT = getLibelle(
   "Le registre n'est pas ouvert. Vous ne pouvez pas signer l'acte."
@@ -72,15 +76,15 @@ export const BoutonsApercuCreationEtablissement: React.FC<
         history.location.pathname
       )}/${PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER}/${props.requete.id}`;
     } else if (pathname.startsWith(URL_MES_REQUETES_CREATION)) {
-      bouton.libelle = RETOUR_MES_REQUETE;
+      bouton.libelle = RETOUR_MES_REQUETES_CREATION;
       bouton.url = URL_MES_REQUETES_CREATION;
     } else if (pathname.startsWith(URL_REQUETES_CREATION_SERVICE)) {
-      bouton.libelle = RETOUR_REQUETE_SERVICE;
+      bouton.libelle = RETOUR_REQUETES_SERVICE_CREATION;
       bouton.url = URL_REQUETES_CREATION_SERVICE;
     }
 
     if (props.tousLesProjetsSontSignes) {
-      bouton.libelle = RETOUR_MES_REQUETE;
+      bouton.libelle = RETOUR_MES_REQUETES_CREATION;
       bouton.url = URL_MES_REQUETES_CREATION;
     }
 
