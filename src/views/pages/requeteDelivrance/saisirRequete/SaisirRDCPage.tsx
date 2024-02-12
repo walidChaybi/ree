@@ -17,7 +17,7 @@ import {
   useDetailRequeteApiHook
 } from "@hook/requete/DetailRequeteHook";
 import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
-import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import {
@@ -32,7 +32,6 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { PATH_MODIFIER_RDC } from "@router/ReceUrls";
 import { getPiecesJointesNonVides, PieceJointe } from "@util/FileUtils";
-import { getUrlCourante } from "@util/route/UrlUtil";
 import { Options } from "@util/Type";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import {
@@ -46,7 +45,7 @@ import {
 } from "@widget/formulaire/requete/RequeteForm";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import { SaisieRequeteRDC } from "../../../../model/form/delivrance/ISaisirRDCPageForm";
 import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
@@ -120,8 +119,8 @@ export const titreForm = SousTypeDelivrance.getEnumFor("RDC").libelle;
 export const SaisirRDCPage: React.FC = () => {
   // Parametres
   useTitreDeLaFenetre(titreForm);
-  const history = useHistory();
-  const { idRequeteParam } = useParams<IUuidRequeteParams>();
+  const location = useLocation();
+  const { idRequeteParam } = useParams<TUuidRequeteParams>();
 
   // Informations de la requête
   const [idRequete, setIdRequete] = useState<string>();
@@ -169,7 +168,7 @@ export const SaisirRDCPage: React.FC = () => {
     miseAJourStatutRequetePuisRedirection,
     miseAJourActionPuisRedirection
   } = useRedirectionApresSoumissionRDCHook(
-    history.location.pathname,
+    location.pathname,
     setOperationEnCours,
     creationRDCParams,
     miseAJourRDCParams,
@@ -190,11 +189,11 @@ export const SaisirRDCPage: React.FC = () => {
   }, [idRequete]);
 
   useEffect(() => {
-    if (history) {
-      const url = getUrlCourante(history);
+    if (location) {
+      const url = location.pathname;
       setModeModification(url.includes(PATH_MODIFIER_RDC));
     }
-  }, [history]);
+  }, [location]);
 
   useEffect(() => {
     setIdRequete(idRequeteParam);

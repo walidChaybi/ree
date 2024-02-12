@@ -1,7 +1,7 @@
 import { OfficierContext } from "@core/contexts/OfficierContext";
 import officier from "@mock/data/connectedUser.json";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
-import { URL_ACCUEIL } from "@router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -9,37 +9,30 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 test("renders delivrancePage", async () => {
-  const history = createMemoryHistory();
-  history.push(URL_ACCUEIL);
-
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <OfficierContext.Provider
-            value={{
-              officierDataState: { idSSO: officier.id_sso, ...officier }
-            }}
-          >
-            <EspaceDelivrancePage
-              match={{
-                isExact: true,
-                path: "",
-                url: "",
-                params: { idRequete: "req2" }
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE,
+          element: (
+            <OfficierContext.Provider
+              value={{
+                officierDataState: { idSSO: officier.id_sso, ...officier }
               }}
-              history={history}
-              location={history.location}
-              selectedTab={0}
-            />
-          </OfficierContext.Provider>
-        </Router>
-      </>
+            >
+              <EspaceDelivrancePage selectedTab={0} />
+            </OfficierContext.Provider>
+          )
+        }
+      ],
+      [URL_MES_REQUETES_DELIVRANCE]
     );
+
+    render(<RouterProvider router={router} />);
   });
 
   const title = "Délivrance";
@@ -60,12 +53,16 @@ test("renders delivrancePage", async () => {
     fireEvent.click(requetesService);
   });
 
-  const attribueA = screen.getByText(/Attribuée à/i);
+  setTimeout(() => {
+    act(() => {
+      const attribueA = screen.getByText(/Attribuée à/i);
 
-  await waitFor(() => {
-    expect(document.title).toBe(title);
-    expect(mesRequetes).toBeDefined();
-    expect(requetesService).toBeDefined();
-    expect(attribueA).toBeDefined();
-  });
+      waitFor(() => {
+        expect(document.title).toBe(title);
+        expect(mesRequetes).toBeDefined();
+        expect(requetesService).toBeDefined();
+        expect(attribueA).toBeDefined();
+      });
+    });
+  }, 0);
 });

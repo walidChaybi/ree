@@ -12,7 +12,7 @@ import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useState } from "react";
-import { useHistory } from "react-router";
+import { useLocation } from "react-router-dom";
 
 interface BoutonPrendreEnChargeCreationProps {
   requete?: IRequeteCreationEtablissement;
@@ -23,7 +23,7 @@ interface BoutonPrendreEnChargeCreationProps {
 export const BoutonPrendreEnChargeCreation: React.FC<
   BoutonPrendreEnChargeCreationProps
 > = props => {
-  const history = useHistory();
+  const location = useLocation();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [params, setParams] = useState<
     ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
@@ -35,7 +35,7 @@ export const BoutonPrendreEnChargeCreation: React.FC<
       libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
       statutRequete: StatutRequete.PRISE_EN_CHARGE,
       requete: mappingUneRequeteTableauCreation(props.requete, false),
-      urlCourante: getUrlPrecedente(history.location.pathname),
+      urlCourante: getUrlPrecedente(location.pathname),
       typeRequete: TypeRequete.CREATION,
       handleTraitementTermine: () => {
         if (props.onClick) {

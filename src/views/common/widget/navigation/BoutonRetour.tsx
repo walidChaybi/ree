@@ -8,12 +8,12 @@ import {
 import { getUrlPrecedente } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export const BoutonRetour: React.FC = () => {
-  const history = useHistory();
+  const location = useLocation();
   const [libelle, retourUrl] = getLibelleEtUrl(
-    getUrlPrecedente(history.location.pathname)
+    getUrlPrecedente(location.pathname)
   );
 
   return (

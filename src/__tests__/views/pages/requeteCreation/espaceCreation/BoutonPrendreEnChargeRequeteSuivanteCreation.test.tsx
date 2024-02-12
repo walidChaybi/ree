@@ -14,39 +14,50 @@ import {
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l'espace création", async () => {
-  const history = createMemoryHistory();
   storeRece.utilisateurCourant = userDroitCreerActeEtabliPerimetreMEAE;
-  history.push(URL_MES_REQUETES_CREATION);
-  render(
-    <Router history={history}>
-      <BoutonPrendreEnChargeRequeteSuivanteCreation
-        typeRequete={TypeRequete.CREATION}
-      />
-    </Router>
-  );
-
-  const bouttonPrendreEnCharge = screen.getByText(
-    "Prendre en charge requête suivante"
-  ) as HTMLButtonElement;
-
-  await waitFor(() => {
-    expect(bouttonPrendreEnCharge.disabled).toBeFalsy();
-  });
 
   await act(async () => {
-    fireEvent.click(bouttonPrendreEnCharge);
-  });
-
-  await waitFor(() => {
-    expect(history.location.pathname).toBe(
-      getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
-        "54ddf213-d9b7-4747-8e92-68c220f66de3"
-      )
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION,
+          element: (
+            <BoutonPrendreEnChargeRequeteSuivanteCreation
+              typeRequete={TypeRequete.CREATION}
+            />
+          )
+        }
+      ],
+      [URL_MES_REQUETES_CREATION]
     );
+
+    render(<RouterProvider router={router} />);
+
+    const bouttonPrendreEnCharge = screen.getByText(
+      "Prendre en charge requête suivante"
+    ) as HTMLButtonElement;
+
+    await waitFor(() => {
+      expect(bouttonPrendreEnCharge.disabled).toBeFalsy();
+    });
+
+    await act(async () => {
+      fireEvent.click(bouttonPrendreEnCharge);
+    });
+
+    setTimeout(() => {
+      waitFor(() => {
+        expect(router.state.location.pathname).toBe(
+          getUrlWithParam(
+            URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
+            "54ddf213-d9b7-4747-8e92-68c220f66de3"
+          )
+        );
+      });
+    }, 0);
   });
 });

@@ -4,7 +4,7 @@ import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { getLibelle } from "@util/Utils";
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LinkTab } from "./LinkTab";
 import { TabPanel } from "./TabPanel";
 
@@ -71,13 +71,13 @@ export function a11yProps(index: any) {
 }
 
 export const BoiteAOnglets: React.FC<IBoiteAOngletsProps> = props => {
-  const history = useHistory();
   const [selectedTabState, setSelectedTabState] = React.useState<number>(
     props.selectedTab
   );
+  const navigate = useNavigate();
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    history.push(props.onglets[newValue]?.enTete.url);
+    navigate(props.onglets[newValue]?.enTete.url);
     setSelectedTabState(newValue);
   };
 

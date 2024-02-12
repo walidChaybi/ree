@@ -9,21 +9,18 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 
 beforeEach(() => {
   TypePieceJustificative.init();
 });
 
-const history = createMemoryHistory();
-
 test("render ApercuRequetePartieGauche", async () => {
   await act(async () => {
     render(
-      <Router history={history}>
+      <MemoryRouter>
         <ApercuRequetePartieGauche requete={requeteDelivrance} />
-      </Router>
+      </MemoryRouter>
     );
   });
 

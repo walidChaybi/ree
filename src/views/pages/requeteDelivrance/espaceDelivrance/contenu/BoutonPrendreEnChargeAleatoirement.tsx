@@ -10,14 +10,13 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import messageManager from "@util/messageManager";
-import { getUrlCourante } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
-  const history = useHistory();
+  const location = useLocation();
 
   const [prendreEnCharge, setPrendreEnCharge] = useState<boolean>(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
@@ -34,7 +33,7 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
           requete: requeteAleatoireResultat.requete,
           libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
           statutRequete: StatutRequete.PRISE_EN_CHARGE,
-          urlCourante: getUrlCourante(history),
+          urlCourante: location.pathname,
           typeRequete: TypeRequete.DELIVRANCE
         });
       } else if (!requeteAleatoireResultat.requete) {
@@ -47,7 +46,7 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
       setPrendreEnCharge(false);
       setOperationEnCours(false);
     }
-  }, [requeteAleatoireResultat, history]);
+  }, [requeteAleatoireResultat, location]);
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsDelivrance);
 

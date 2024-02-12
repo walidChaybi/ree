@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface CategorieProps {
   url: string;
@@ -8,9 +8,9 @@ interface CategorieProps {
 }
 
 export const Categorie: React.FC<CategorieProps> = ({ url, message, last }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const onClickLink = () => {
-  history.push(url);
+    navigate(url);
   };
 
   return (

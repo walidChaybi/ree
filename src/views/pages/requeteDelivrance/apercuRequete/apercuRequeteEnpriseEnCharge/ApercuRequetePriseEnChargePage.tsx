@@ -4,7 +4,7 @@ import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IRe
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { getLibelle } from "@util/Utils";
 import React, { useCallback, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
 import { ApercuRequetePriseEnChargePartieDroite } from "./contenu/ApercuRequetePriseEnChargePartieDroite";
 
@@ -16,10 +16,8 @@ export interface DataRMCAuto {
 }
 
 export const ApercuRequetePriseEnChargePage: React.FC = () => {
-  const history = useHistory();
-  const [dataHistory] = useState<DataRMCAuto>(
-    history?.location?.state as DataRMCAuto
-  );
+  const location = useLocation();
+  const [dataHistory] = useState<DataRMCAuto>(location.state as DataRMCAuto);
 
   const [requete, setRequete] = useState<IRequeteDelivrance>();
 

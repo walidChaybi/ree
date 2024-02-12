@@ -1,4 +1,6 @@
+import { UN } from "@util/Utils";
 import { gestionnaireNavigation } from "@widget/filAriane/FilAriane";
+import { NavigateFunction } from "react-router-dom";
 import { UUID } from "../../../../ressources/Regex";
 
 export const URL_SEPARATEUR = "/";
@@ -19,7 +21,7 @@ export function getUrlWithoutParam(url: string) {
  * @param path
  * @param param
  */
-export function getUrlWithParam(path: string, param: string) {
+export function getUrlWithParam(path: string, param?: string) {
   return path.replace(urlWithParamPatern, `$1/${param}`);
 }
 
@@ -67,16 +69,16 @@ export function getUrlPrecedente(url: string) {
   return urlWithoutIdParam.substring(0, idxLastUrlSep);
 }
 
-export function replaceUrl(history: any, url: string, data?: any) {
+export function replaceUrl(
+  navigate: NavigateFunction,
+  url: string,
+  data?: any
+) {
   gestionnaireNavigation.deleteLastUrl();
-  history.replace(url, data);
+  navigate(url, { state: data });
 }
 
-export function goBack(history: any) {
+export function goBack(navigate: NavigateFunction) {
   gestionnaireNavigation.deleteLastUrl();
-  history.goBack();
-}
-
-export function getUrlCourante(history: any): string {
-  return history.location.pathname; // history.location.pathname renvoie une url du type /rece/rece-ui/xxx
+  navigate(-UN);
 }

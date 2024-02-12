@@ -2,7 +2,7 @@ import {
   IDetailRequeteParams,
   useDetailRequeteApiHook
 } from "@hook/requete/DetailRequeteHook";
-import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
@@ -10,7 +10,7 @@ import { getLibelle } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useLocation, useParams } from "react-router-dom";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import { SuiviDossier } from "../apercuPriseEnCharge/contenu/SuiviDossier";
 import {
@@ -35,8 +35,8 @@ export const ApercuRequeteEtablissementSimplePage: React.FC<
   ApercuRequeteEtablissementSimplePageProps
 > = props => {
   // Params & History
-  const { idRequeteParam } = useParams<IUuidRequeteParams>();
-  const history = useHistory();
+  const { idRequeteParam } = useParams<TUuidRequeteParams>();
+  const location = useLocation();
 
   // States
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
@@ -55,12 +55,12 @@ export const ApercuRequeteEtablissementSimplePage: React.FC<
   useEffect(() => {
     rechargerRequete();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
+  }, [props.idRequeteAAfficher, location.pathname, idRequeteParam]);
 
   function rechargerRequete() {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
-      estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
     });
   }
 

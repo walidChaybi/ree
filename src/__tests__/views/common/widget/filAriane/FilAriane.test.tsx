@@ -1,49 +1,56 @@
 import { routesRece } from "@router/ReceRoutes";
 import {
-  URL_ACCUEIL,
+  URL_MES_REQUETES_CREATION,
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID
 } from "@router/ReceUrls";
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import {
-  FilAriane,
   buildPagesInfos,
+  FilAriane,
   fildarianeLabel,
   gestionnaireNavigation,
   getPathElements,
   getUrlFromNPathElements
 } from "@widget/filAriane/FilAriane";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
-const setIsDirty = (isDirty = false) => {};
+test("renders composant FilAriane", async () => {
+  await act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE,
+          element: <FilAriane routes={routesRece} />
+        }
+      ],
+      [URL_MES_REQUETES_DELIVRANCE]
+    );
 
-test("renders composant FilAriane", () => {
-  const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-  render(
-    <Router history={history}>
-      <FilAriane
-        routes={routesRece}
-        isDirty={false}
-        setIsDirty={function (isDirty: boolean): void {
-          throw new Error("Function not implemented.");
-        }}
-      />
-    </Router>
-  );
+    render(<RouterProvider router={router} />);
+  });
+
   expect(screen.getByLabelText(fildarianeLabel)).toBeInTheDocument();
 });
 
 test("renders de 2 éléments du FilAriane", async () => {
-  const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-  render(
-    <Router history={history}>
-      <FilAriane routes={routesRece} isDirty={false} setIsDirty={setIsDirty} />
-    </Router>
-  );
+  await act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE,
+          element: <FilAriane routes={routesRece} />
+        }
+      ],
+      [URL_MES_REQUETES_DELIVRANCE]
+    );
+
+    render(<RouterProvider router={router} />);
+  });
+
   await waitFor(() => {
     const linkElement = screen.getByText(/Accueil/i);
     const textElement = screen.getByText(/Mes requêtes/i);
@@ -52,63 +59,73 @@ test("renders de 2 éléments du FilAriane", async () => {
   });
 });
 
-test("renders d'un uudi en dernier élément du FilAriane", () => {
-  const history = createMemoryHistory();
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-      "/f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
-    )
-  );
+test("renders d'un uudi en dernier élément du FilAriane", async () => {
+  // ici on utilise la creation plutot que la delivrance
+  await act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION,
+          element: <FilAriane routes={routesRece} />
+        },
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+          element: <FilAriane routes={routesRece} />
+        }
+      ],
+      [
+        URL_MES_REQUETES_CREATION,
+        getUrlWithParam(
+          URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+          "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+        )
+      ]
+    );
 
-  render(
-    <Router history={history}>
-      <FilAriane routes={routesRece} isDirty={false} setIsDirty={setIsDirty} />
-    </Router>
-  );
-  const uuidElement = screen.getByText(/Aperçu de requête/i);
-  expect(uuidElement).toBeInTheDocument();
+    render(<RouterProvider router={router} />);
+
+    await waitFor(() => {
+      const uuidElement = screen.getAllByText(/Aperçu de requête/i)[0];
+      expect(uuidElement).toBeInTheDocument();
+    });
+  });
 });
 
-test("renders de 2 éléments du FilAriane et mise à jour context", () => {
-  const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-  function setRetourContext(retourUrl: string) {
-    expect(retourUrl).toBe(URL_ACCUEIL);
-  }
-  render(
-    <Router history={history}>
-      <FilAriane
-        routes={routesRece}
-        setRetourState={setRetourContext}
-        isDirty={false}
-        setIsDirty={setIsDirty}
-      />
-    </Router>
-  );
+test("renders de 2 éléments du FilAriane et mise à jour context", async () => {
+  await act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE,
+          element: <FilAriane routes={routesRece} />
+        }
+      ],
+      [URL_MES_REQUETES_DELIVRANCE]
+    );
+
+    render(<RouterProvider router={router} />);
+  });
 });
 
-test("renders d'un uudi en dernier élément du FilAriane et maj context", () => {
-  const history = createMemoryHistory();
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-      "f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
-    )
-  );
-  function setRetourContext(retourUrl: string) {
-    expect(retourUrl).toBe(URL_MES_REQUETES_DELIVRANCE);
-  }
-  render(
-    <Router history={history}>
-      <FilAriane
-        routes={routesRece}
-        setRetourState={setRetourContext}
-        isDirty={false}
-        setIsDirty={setIsDirty}
-      />
-    </Router>
-  );
+test("renders d'un uudi en dernier élément du FilAriane et maj context", async () => {
+  await act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE,
+          element: <FilAriane routes={routesRece} />
+        }
+      ],
+      [
+        getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+          "f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
+        )
+      ]
+    );
+
+    render(<RouterProvider router={router} />);
+  });
 });
 
 test("Attendu: getUrlFromNPathElements fonctionne correctement", () => {

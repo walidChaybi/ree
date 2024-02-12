@@ -14,7 +14,7 @@ import { Fieldset } from "@widget/fieldset/Fieldset";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import {
   IEnvoyerReponseReqInfoParams,
@@ -70,7 +70,7 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   affichageBoutonPrendreEnCharge,
   onclickPrendreEnCharge
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const blocsForm: JSX.Element = getReponseForm(
     formulaireDisabled,
     boutonVisible,
@@ -148,9 +148,9 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   useEffect(() => {
     if (idReponse) {
       setOperationEnCours(false);
-      history.push(URL_MES_REQUETES_INFORMATION);
+      navigate(URL_MES_REQUETES_INFORMATION);
     }
-  }, [idReponse, history]);
+  }, [idReponse, navigate]);
 
   return (
     <div className="ReponseReqInfo">

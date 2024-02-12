@@ -11,7 +11,7 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import "./scss/BoutonPrendreEnCharge.scss";
 
@@ -23,7 +23,7 @@ interface BoutonPrendreEnChargeProps {
 export const BoutonPrendreEnCharge: React.FC<
   BoutonPrendreEnChargeProps
 > = props => {
-  const history = useHistory();
+  const location = useLocation();
 
   const [params, setParams] = useState<
     ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
@@ -34,7 +34,7 @@ export const BoutonPrendreEnCharge: React.FC<
       requete: mapRequeteRmcAuto(props.requete),
       libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
       statutRequete: StatutRequete.PRISE_EN_CHARGE,
-      urlCourante: getUrlWithParam(history.location.pathname, props.requete.id),
+      urlCourante: getUrlWithParam(location.pathname, props.requete.id),
       typeRequete: TypeRequete.DELIVRANCE
     });
   };

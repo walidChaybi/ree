@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Badge from "@mui/material/Badge";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "reakit/Button";
 import "../accueil/scss/BoutonAccueil.scss";
 
@@ -26,14 +26,14 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
   title,
   onClickHandler
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function onClickDefaultHandler(event: React.MouseEvent, paramURL: string) {
     if (!disabled) {
       if (onClickHandler) {
         onClickHandler(event, paramURL);
       }
-      history.push(`${paramURL}`);
+      navigate(`${paramURL}`);
     }
   }
 

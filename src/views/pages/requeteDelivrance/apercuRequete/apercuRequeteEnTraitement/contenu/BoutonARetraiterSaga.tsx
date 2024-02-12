@@ -10,7 +10,7 @@ import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARet
 import { goBack } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "reakit/Button";
 import "./scss/BoutonARetraiterSaga.scss";
 
@@ -21,7 +21,7 @@ interface BoutonARetraiterSagaProps {
 export const BoutonARetraiterSaga: React.FC<BoutonARetraiterSagaProps> = ({
   idRequete
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [
     creationActionEtMiseAjourStatutParams,
     setCreationActionEtMiseAjourStatutParams
@@ -33,7 +33,7 @@ export const BoutonARetraiterSaga: React.FC<BoutonARetraiterSagaProps> = ({
 
   useEffect(() => {
     if (idActionCreee) {
-      goBack(history);
+      goBack(navigate);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idActionCreee]);

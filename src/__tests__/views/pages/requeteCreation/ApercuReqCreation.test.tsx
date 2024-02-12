@@ -20,8 +20,8 @@ import {
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory, MemoryHistory } from "history";
-import { Route, Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
   storeRece.utilisateurCourant = mappingOfficier(
@@ -33,29 +33,29 @@ beforeAll(() => {
   );
 });
 
-let history: MemoryHistory;
 beforeEach(() => {
-  history = createMemoryHistory();
   TypePieceJustificative.init();
 });
 
 test("renders VoletPiecesJustificatives Etablissement", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-      "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        element: <ApercuRequeteEtablissementSimplePage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+      )
+    ]
   );
-  render(
-    <Router history={history}>
-      <Route
-        exact={true}
-        path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID}
-      >
-        <ApercuRequeteEtablissementSimplePage />
-      </Route>
-    </Router>
-  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   await waitFor(() => {
     fireEvent.click(screen.getByText("Pièces justificatives"));
@@ -74,22 +74,24 @@ test("renders VoletPiecesJustificatives Etablissement", async () => {
 });
 
 test("renders VoletPiecesJustificatives Transcription", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
-      "d4f9e898-cf26-42cc-850b-007e9e475e7a"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+        element: <ApercuReqCreationTranscriptionSimplePage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+        "d4f9e898-cf26-42cc-850b-007e9e475e7a"
+      )
+    ]
   );
-  render(
-    <Router history={history}>
-      <Route
-        exact={true}
-        path={URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID}
-      >
-        <ApercuReqCreationTranscriptionSimplePage />
-      </Route>
-    </Router>
-  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   await waitFor(() => {
     expect(screen.getAllByText("Acte à transcrire")[0]).toBeDefined();
@@ -102,22 +104,24 @@ test("renders VoletPiecesJustificatives Transcription", async () => {
 });
 
 test("Modifier le titre d'un fichier d'une pièce jointe Etablissement", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-      "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        element: <ApercuRequeteEtablissementSimplePage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+      )
+    ]
   );
-  render(
-    <Router history={history}>
-      <Route
-        exact={true}
-        path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID}
-      >
-        <ApercuRequeteEtablissementSimplePage />
-      </Route>
-    </Router>
-  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   await waitFor(() => {
     expect(screen.getAllByTitle("Modifier le libellé")[3]).toBeDefined();
@@ -142,22 +146,24 @@ test("Modifier le titre d'un fichier d'une pièce jointe Etablissement", async (
 });
 
 test("Modifier le titre d'un fichier d'une pièce jointe Transcription", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
-      "d4f9e898-cf26-42cc-850b-007e9e475e7a"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+        element: <ApercuReqCreationTranscriptionSimplePage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+        "d4f9e898-cf26-42cc-850b-007e9e475e7a"
+      )
+    ]
   );
-  render(
-    <Router history={history}>
-      <Route
-        exact={true}
-        path={URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID}
-      >
-        <ApercuReqCreationTranscriptionSimplePage />
-      </Route>
-    </Router>
-  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   await waitFor(() => {
     expect(screen.getAllByTitle("Modifier le libellé")[0]).toBeDefined();
@@ -180,22 +186,24 @@ test("Modifier le titre d'un fichier d'une pièce jointe Transcription", async (
 });
 
 test("Modifier le titre d'un fichier et revenir en arrière", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-      "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        element: <ApercuRequeteEtablissementSimplePage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+      )
+    ]
   );
-  render(
-    <Router history={history}>
-      <Route
-        exact={true}
-        path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID}
-      >
-        <ApercuRequeteEtablissementSimplePage />
-      </Route>
-    </Router>
-  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   await waitFor(() => {
     expect(screen.getAllByTitle("Modifier le libellé")[3]).toBeDefined();
@@ -232,22 +240,24 @@ test("Modifier le titre d'un fichier et revenir en arrière", async () => {
 });
 
 test("Modifier le titre puis annuler", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-      "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        element: <ApercuRequeteEtablissementSimplePage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+      )
+    ]
   );
-  render(
-    <Router history={history}>
-      <Route
-        exact={true}
-        path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID}
-      >
-        <ApercuRequeteEtablissementSimplePage />
-      </Route>
-    </Router>
-  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   await waitFor(() => {
     expect(screen.getAllByTitle("Modifier le libellé")[3]).toBeDefined();
@@ -276,22 +286,24 @@ test("Modifier le titre puis annuler", async () => {
 });
 
 test("Ouvrir deux pièces jointes côte à côte.", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-      "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        element: <ApercuRequeteEtablissementSimplePage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+      )
+    ]
   );
-  render(
-    <Router history={history}>
-      <Route
-        exact={true}
-        path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID}
-      >
-        <ApercuRequeteEtablissementSimplePage />
-      </Route>
-    </Router>
-  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   await waitFor(() => {
     fireEvent.click(screen.getByText("Pièces justificatives"));

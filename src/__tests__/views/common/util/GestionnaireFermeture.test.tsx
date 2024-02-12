@@ -2,12 +2,11 @@ import officier from "@mock/data/connectedUser.json";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { act, render } from "@testing-library/react";
 import {
-  GestionnaireFermeture,
   appelRequetesASigner,
+  GestionnaireFermeture,
   traiteAppelRequeteASigner
 } from "@util/GestionnaireFermeture";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 
 const xhrMockObj = {
   open: jest.fn(),
@@ -24,23 +23,20 @@ const xhrMockClass = () => xhrMockObj;
 window.XMLHttpRequest = jest.fn().mockImplementation(xhrMockClass);
 
 test("renders GestionnaireFermeture", async () => {
-  const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-
   const fctAAppeler = jest.fn(data => 3);
   const fctTraitementResultat = traiteAppelRequeteASigner;
   appelRequetesASigner({});
 
   await act(async () => {
     render(
-      <Router history={history}>
+      <MemoryRouter>
         <GestionnaireFermeture
           urlRedirection={URL_MES_REQUETES_DELIVRANCE}
           fctTraitementResultat={fctTraitementResultat}
           fctAAppeler={fctAAppeler}
           paramsFctAAppler={officier}
         ></GestionnaireFermeture>
-      </Router>
+      </MemoryRouter>
     );
   });
 

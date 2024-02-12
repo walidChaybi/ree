@@ -13,7 +13,7 @@ import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAvecTitre";
 import React, { useCallback, useState } from "react";
-import { useHistory } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
 import { mappingRequeteDelivranceToRequeteTableau } from "../mapping/ReqDelivranceToReqTableau";
 import { BoutonPrendreEnCharge } from "./contenu/BoutonPrendreEnCharge";
@@ -25,7 +25,8 @@ interface ApercuRequetePageProps {
 export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
   idRequeteAAfficher
 }) => {
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [documentAffiche, setDocumentAffiche] = useState<IDocumentReponse>();
 
   const [requete, setRequete] = useState<IRequeteDelivrance>();
@@ -55,11 +56,11 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
         statutRequete: StatutRequete.TRAITE_DELIVRE_DEMAT,
         requete: mappingRequeteDelivranceToRequeteTableau(requete),
         callback: () => {
-          replaceUrl(history, getUrlPrecedente(history.location.pathname));
+          replaceUrl(navigate, getUrlPrecedente(location.pathname));
         }
       });
     }
-  }, [requete, history]);
+  }, [requete, location, navigate]);
 
   const estPresentBoutonPriseEnCharge =
     StatutRequete.estATraiterOuTransferee(requete?.statutCourant?.statut) &&

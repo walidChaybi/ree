@@ -17,12 +17,10 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory } from "history";
 import React from "react";
 import { act } from "react-dom/test-utils";
-import { Router } from "react-router-dom";
-
-const history = createMemoryHistory();
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 const listeUtilisateurs = [
   {
@@ -66,31 +64,37 @@ const listeUtilisateurs = [
   } as IUtilisateur
 ];
 
-const HookConsummerMenuOuvert: React.FC = () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequeteRDCSC
-    )
+function afficheComposant() {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        element: (
+          <MenuTransfert
+            idRequete={requeteRDCSC.id}
+            typeRequete={requeteRDCSC.type}
+            idUtilisateurRequete="111"
+            sousTypeRequete={requeteRDCSC.sousType}
+            estTransfert={true}
+          />
+        )
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSC
+      )
+    ]
   );
+
+  render(<RouterProvider router={router} />);
 
   storeRece.listeUtilisateurs = listeUtilisateurs;
-
-  return (
-    <Router history={history}>
-      <MenuTransfert
-        idRequete={requeteRDCSC.id}
-        typeRequete={requeteRDCSC.type}
-        idUtilisateurRequete="111"
-        sousTypeRequete={requeteRDCSC.sousType}
-        estTransfert={true}
-      />
-    </Router>
-  );
-};
+}
 
 test("renders du bloc Menu Transfert ouvert ", async () => {
-  render(<HookConsummerMenuOuvert />);
+  afficheComposant();
 
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
@@ -108,7 +112,7 @@ test("renders du bloc Menu Transfert ouvert ", async () => {
 });
 
 test("check popin service", async () => {
-  render(<HookConsummerMenuOuvert />);
+  afficheComposant();
 
   let choixService: HTMLElement;
   await waitFor(() => {
@@ -138,7 +142,7 @@ test("check popin service", async () => {
 });
 
 test("check popin agent", async () => {
-  render(<HookConsummerMenuOuvert />);
+  afficheComposant();
 
   let choixService: HTMLElement;
   await waitFor(() => {
@@ -163,7 +167,7 @@ test("check popin agent", async () => {
 });
 
 test("check autocomplete service", async () => {
-  render(<HookConsummerMenuOuvert />);
+  afficheComposant();
 
   storeRece.listeEntite = [
     {
@@ -232,7 +236,31 @@ test("check autocomplete service", async () => {
 });
 
 test("check autocomplete agent", async () => {
-  render(<HookConsummerMenuOuvert />);
+  storeRece.listeUtilisateurs = listeUtilisateurs;
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        element: (
+          <MenuTransfert
+            idRequete={requeteRDCSC.id}
+            typeRequete={requeteRDCSC.type}
+            idUtilisateurRequete="111"
+            sousTypeRequete={requeteRDCSC.sousType}
+            estTransfert={true}
+          />
+        )
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSC
+      )
+    ]
+  );
+
+  render(<RouterProvider router={router} />);
 
   act(() => {
     const menuTransfert = screen.getByText("Transférer");
@@ -273,35 +301,36 @@ test("check autocomplete agent", async () => {
     fireEvent.click(valider);
   });
 
-  expect(history.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
+  expect(router.state.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
 });
 
-const HookConsummerMenuFermer: React.FC = () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-      requeteInformation.id
-    )
-  );
-
-  storeRece.listeUtilisateurs = listeUtilisateurs;
-
-  return (
-    <Router history={history}>
-      <MenuTransfert
-        idRequete={requeteInformation.id}
-        typeRequete={requeteInformation.type}
-        idUtilisateurRequete="111"
-        sousTypeRequete={requeteInformation.sousType}
-        estTransfert={true}
-        menuFermer={false}
-      />
-    </Router>
-  );
-};
-
 test("renders du bloc Menu Transfert fermer ", async () => {
-  render(<HookConsummerMenuFermer />);
+  storeRece.listeUtilisateurs = listeUtilisateurs;
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        element: (
+          <MenuTransfert
+            idRequete={requeteInformation.id}
+            typeRequete={requeteInformation.type}
+            idUtilisateurRequete="111"
+            sousTypeRequete={requeteInformation.sousType}
+            estTransfert={true}
+            menuFermer={false}
+          />
+        )
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        requeteInformation.id
+      )
+    ]
+  );
+
+  render(<RouterProvider router={router} />);
 
   let menuTransfert = screen.getByText("Transférer");
 
@@ -360,6 +389,6 @@ test("renders du bloc Menu Transfert fermer ", async () => {
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
+    expect(router.state.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
   });
 });

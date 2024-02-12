@@ -12,51 +12,29 @@ import {
   waitFor
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { createMemoryHistory } from "history";
-import { Route, Router } from "react-router";
-
-
-
-const history = createMemoryHistory();
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
 describe("Test de la page Aperçu requête transcription en saisie de projet", () => {
-  beforeEach(async () => {
-    history.push(
-      getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/:idRequete`,
-        "dd96cc3a-9865-4c83-b634-37fad2680f41"
-      )
-    );
-
-    await act(async () => {
-      render(
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
-            }
-          >
-            <ApercuReqCreationTranscriptionSaisieProjetPage />
-          </Route>
-        </Router>
-      );
-    });
-  });
   test("DOIT rendre le composant ApercuReqCreationTranscriptionSaisieProjetPage correctement", async () => {
     await act(async () => {
-      const { container } = render(
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
-            }
-          >
-            <ApercuReqCreationTranscriptionSaisieProjetPage />
-          </Route>
-        </Router>
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+            element: <ApercuReqCreationTranscriptionSaisieProjetPage />
+          }
+        ],
+        [
+          getUrlWithParam(
+            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/:idRequete`,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
       );
+
+      const { container } = render(<RouterProvider router={router} />);
+
       expect(
         container.getElementsByClassName(
           "ApercuReqCreationTranscriptionSaisieProjetPage"
@@ -66,6 +44,25 @@ describe("Test de la page Aperçu requête transcription en saisie de projet", (
   });
 
   test("DOIT passer le tag aria-selected a true QUAND je click sur l'onglet Echanges", async () => {
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+            element: <ApercuReqCreationTranscriptionSaisieProjetPage />
+          }
+        ],
+        [
+          getUrlWithParam(
+            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/:idRequete`,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
+      );
+
+      render(<RouterProvider router={router} />);
+    });
+
     const ongletSaisieLeProjet = screen.getByText("Saisir le projet");
     const ongletEchanges = screen.getByText("Echanges");
 
@@ -82,6 +79,25 @@ describe("Test de la page Aperçu requête transcription en saisie de projet", (
   });
 
   test("DOIT passer le tag aria-selected a true QUAND je click sur l'onglet Aperçu du projet", async () => {
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+            element: <ApercuReqCreationTranscriptionSaisieProjetPage />
+          }
+        ],
+        [
+          getUrlWithParam(
+            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/:idRequete`,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
+      );
+
+      render(<RouterProvider router={router} />);
+    });
+
     const ongletDescriptionRequete = screen.getByText(
       "Description de la requête"
     );
@@ -106,26 +122,23 @@ describe("Test de la page Aperçu requête transcription en saisie de projet", (
 
 describe("Test de la précense du composant RMCRequeteAssociees", () => {
   test("DOIT afficher le composant RMCRequeteAssociees QUAND l'ID de la requête est présent dans l'URL", async () => {
-    history.push(
-      getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/:idRequete`,
-        "dd96cc3a-9865-4c83-b634-37fad2680f41"
-      )
-    );
-
     await act(async () => {
-      render(
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
-            }
-          >
-            <ApercuReqCreationTranscriptionSaisieProjetPage />
-          </Route>
-        </Router>
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+            element: <ApercuReqCreationTranscriptionSaisieProjetPage />
+          }
+        ],
+        [
+          getUrlWithParam(
+            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/:idRequete`,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
       );
+
+      render(<RouterProvider router={router} />);
     });
 
     await waitFor(() => {
@@ -136,11 +149,24 @@ describe("Test de la précense du composant RMCRequeteAssociees", () => {
   });
   test("NE DOIT PAS afficher le composant RMCRequeteAssociees QUAND l'ID de la requête est est founi en props", async () => {
     await act(async () => {
-      render(
-        <Router history={history}>
-          <ApercuReqCreationTranscriptionSaisieProjetPage idRequeteAAfficher="dd96cc3a-9865-4c83-b634-37fad2680f41" />
-        </Router>
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+            element: (
+              <ApercuReqCreationTranscriptionSaisieProjetPage idRequeteAAfficher="dd96cc3a-9865-4c83-b634-37fad2680f41" />
+            )
+          }
+        ],
+        [
+          getUrlWithParam(
+            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/:idRequete`,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
       );
+
+      render(<RouterProvider router={router} />);
     });
 
     await waitFor(() => {

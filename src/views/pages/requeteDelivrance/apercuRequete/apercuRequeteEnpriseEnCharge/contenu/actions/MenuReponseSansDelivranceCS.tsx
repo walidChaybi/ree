@@ -5,17 +5,17 @@ import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "@model/composition/IRepon
 import { NOM_DOCUMENT_REFUS_FRANCAIS } from "@model/composition/IReponseSansDelivranceCSFrancaisComposition";
 import { NOM_DOCUMENT_REFUS_MARIAGE } from "@model/composition/IReponseSansDelivranceCSMariageComposition";
 import { NOM_DOCUMENT_REFUS_PACS_NON_INSCRIT } from "@model/composition/IReponseSansDelivranceCSPACSNonInscritComposition";
-import { IActionOption } from "@model/requete/IActionOption";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IActionOption } from "@model/requete/IActionOption";
 import { receUrl } from "@router/ReceUrls";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
-import { getLibelle, supprimerNullEtUndefinedDuTableau } from "@util/Utils";
 import { replaceUrl } from "@util/route/UrlUtil";
+import { getLibelle, supprimerNullEtUndefinedDuTableau } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
   createReponseSansDelivranceCSPourCompositionApiFrancais,
@@ -26,15 +26,16 @@ import {
 import { IgnoreRequetePopin } from "../IgnoreRequetePopin";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {
-  INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE,
   filtrerListeActionsParDocumentDemande,
+  INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE,
   menuSansDelivranceActions
 } from "./MenuUtilsCS";
 
 export const MenuReponseSansDelivranceCS: React.FC<
   IChoixActionDelivranceProps
 > = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const refs = useRef([]);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
@@ -53,12 +54,12 @@ export const MenuReponseSansDelivranceCS: React.FC<
   useEffect(() => {
     if (resultatReponseSansDelivranceCS) {
       const url = receUrl.getUrlApercuTraitementAPartirDe({
-        url: history.location.pathname
+        url: location.pathname
       });
-      replaceUrl(history, url);
+      replaceUrl(navigate, url);
     }
     setOperationEnCours(false);
-  }, [resultatReponseSansDelivranceCS, history]);
+  }, [resultatReponseSansDelivranceCS, navigate, location]);
 
   const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
 

@@ -3,10 +3,9 @@ import { RequetesServicePage } from "@pages/requeteDelivrance/espaceDelivrance/R
 import { URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory } from "history";
 import { act } from "react-dom/test-utils";
-import { Router } from "react-router-dom";
-
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 let history: any;
 const setParamsRMCAuto = jest.fn();
@@ -30,23 +29,26 @@ beforeAll(() => {
   ];
 });
 
-beforeEach(() => {
-  history = createMemoryHistory();
-  history.push(URL_REQUETES_DELIVRANCE_SERVICE);
-});
-
 test("renders Page requete interactions works, no errors returned", async () => {
-  render(
-    <Router history={history}>
-      <RequetesServicePage setParamsRMCAuto={setParamsRMCAuto} />
-    </Router>
-  );
+  await act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_REQUETES_DELIVRANCE_SERVICE,
+          element: <RequetesServicePage setParamsRMCAuto={setParamsRMCAuto} />
+        }
+      ],
+      [URL_REQUETES_DELIVRANCE_SERVICE]
+    );
+
+    render(<RouterProvider router={router} />);
+  });
 
   const titreNumero = screen.getByText("N°");
   const pageSuivante = screen.getByTitle("Page suivante");
 
   fireEvent.click(screen.getByTestId("loupeButton"));
-  
+
   await waitFor(() => {
     const numero = screen.getByText("1234");
     expect(titreNumero).toBeDefined();
@@ -80,11 +82,20 @@ test("renders Page requete interactions works, no errors returned", async () => 
 });
 
 test("Test Attribuée à", async () => {
-  render(
-    <Router history={history}>
-      <RequetesServicePage setParamsRMCAuto={setParamsRMCAuto} />
-    </Router>
-  );
+  await act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_REQUETES_DELIVRANCE_SERVICE,
+          element: <RequetesServicePage setParamsRMCAuto={setParamsRMCAuto} />
+        }
+      ],
+      [URL_REQUETES_DELIVRANCE_SERVICE]
+    );
+
+    render(<RouterProvider router={router} />);
+  });
+
   fireEvent.click(screen.getByTestId("loupeButton"));
 
   await waitFor(() => {
@@ -145,11 +156,19 @@ test("Test Attribuée à", async () => {
 });
 
 test("la page DOIT afficher les requetes filtrées QUAND on selectionne un filtre et qu'on clique sur la recherche", async () => {
-  render(
-    <Router history={history}>
-      <RequetesServicePage setParamsRMCAuto={setParamsRMCAuto} />
-    </Router>
-  );
+  await act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_REQUETES_DELIVRANCE_SERVICE,
+          element: <RequetesServicePage setParamsRMCAuto={setParamsRMCAuto} />
+        }
+      ],
+      [URL_REQUETES_DELIVRANCE_SERVICE]
+    );
+
+    render(<RouterProvider router={router} />);
+  });
   fireEvent.click(screen.getByTestId("loupeButton"));
 
   await waitFor(() => {

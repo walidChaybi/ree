@@ -11,7 +11,7 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface BoutonPrendreEnChargeRequeteSuivanteProps {
   typeRequete: TypeRequete;
@@ -21,7 +21,8 @@ interface BoutonPrendreEnChargeRequeteSuivanteProps {
 export const BoutonPrendreEnChargeRequeteSuivanteCreation: React.FC<
   BoutonPrendreEnChargeRequeteSuivanteProps
 > = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
+
   const [prendreEnCharge, setPrendreEnCharge] = useState<boolean>(false);
   const [miseAJourStatutCreationParams, setMiseAJourStatutCreationParams] =
     useState<MiseAjourStatutCreationParams | undefined>();
@@ -46,11 +47,11 @@ export const BoutonPrendreEnChargeRequeteSuivanteCreation: React.FC<
   useMiseAjourStatutCreation(miseAJourStatutCreationParams);
 
   const redirectApercuRequete = useCallback(() => {
-    if (requeteSuivanteAPrendreEnCharge?.requete) {
-      history.push(
+    if (requeteSuivanteAPrendreEnCharge) {
+      navigate(
         getUrlWithParam(
           URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
-          requeteSuivanteAPrendreEnCharge.requete.idRequete
+          requeteSuivanteAPrendreEnCharge.requete?.idRequete
         )
       );
     }

@@ -1,11 +1,11 @@
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
-import { getUrlCourante, goBack } from "@util/route/UrlUtil";
+import { goBack } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../scss/ReponseReqInfo.scss";
 
 export type ComponentProps = {
@@ -18,19 +18,20 @@ export type ComponentProps = {
 type BoutonsReponseReqInfoProps = ComponentProps & FormikComponentProps;
 
 const ReponseReqInfoBoutons: React.FC<BoutonsReponseReqInfoProps> = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [libelleRetour, setLibelleRetour] = useState<string>();
 
   useEffect(() => {
-    if (getUrlCourante(history).includes(URL_RECHERCHE_REQUETE)) {
+    if (location.pathname.includes(URL_RECHERCHE_REQUETE)) {
       setLibelleRetour(getLibelle("Retour rechercher une requête"));
     } else {
       setLibelleRetour(getLibelle("Retour espace information"));
     }
-  }, [history]);
+  }, [location]);
 
   const handleAnnuler = () => {
-    goBack(history);
+    goBack(navigate);
   };
 
   return (

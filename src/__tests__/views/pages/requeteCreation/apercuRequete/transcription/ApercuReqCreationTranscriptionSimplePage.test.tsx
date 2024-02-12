@@ -14,41 +14,28 @@ import {
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory } from "history";
-import { Route, Router } from "react-router";
-
-const history = createMemoryHistory();
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
 describe("Test de la page Aperçu requête transcription simple", () => {
-  beforeEach(async () => {
-    history.push(
-      getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE}/:idRequete`,
-        "dd96cc3a-9865-4c83-b634-37fad2680f41"
-      )
-    );
-
-    await act(async () => {
-      render(
-        <Router history={history}>
-          <ApercuReqCreationTranscriptionSimplePage />
-        </Router>
-      );
-    });
-  });
   test("DOIT rendre le composant ApercuReqCreationTranscriptionSimplePage correctement", async () => {
-    history.push(
-      getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE}/:idRequete`,
-        "dd96cc3a-9865-4c83-b634-37fad2680f41"
-      )
-    );
     await act(async () => {
-      const { container } = render(
-        <Router history={history}>
-          <ApercuReqCreationTranscriptionSimplePage />
-        </Router>
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+            element: <ApercuReqCreationTranscriptionSimplePage />
+          }
+        ],
+        [
+          getUrlWithParam(
+            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE}/:idRequete`,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
       );
+
+      const { container } = render(<RouterProvider router={router} />);
       expect(
         container.getElementsByClassName(
           "ApercuReqCreationTranscriptionSimplePage"
@@ -58,27 +45,23 @@ describe("Test de la page Aperçu requête transcription simple", () => {
   });
 
   test("DOIT avoir tag aria-selected a true à l'arrivée sur la page", async () => {
-    const history = createMemoryHistory();
-    history.push(
-      getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE}/:idRequete`,
-        "dd96cc3a-9865-4c83-b634-37fad2680f41"
-      )
-    );
-
     await act(async () => {
-      render(
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
-            }
-          >
-            <ApercuReqCreationTranscriptionSimplePage />
-          </Route>
-        </Router>
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+            element: <ApercuReqCreationTranscriptionSimplePage />
+          }
+        ],
+        [
+          getUrlWithParam(
+            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE}/:idRequete`,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
       );
+
+      render(<RouterProvider router={router} />);
     });
 
     const ongletPJ = screen.getAllByText("Pièces justificatives / Annexes");
@@ -91,28 +74,24 @@ describe("Test de la page Aperçu requête transcription simple", () => {
 
 describe("Test du rendu du composant RMCRequeteAssociees", () => {
   test("DOIT afficher le composant RMCRequeteAssociees QUAND l'ID de la requête est présent dans l'URL", async () => {
-    history.push(
-      getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE}/:idRequete`,
-        "dd96cc3a-9865-4c83-b634-37fad2680f41"
-      )
-    );
-
     await act(async () => {
-      render(
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
-            }
-          >
-            <ApercuReqCreationTranscriptionSimplePage />
-          </Route>
-        </Router>
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+            element: <ApercuReqCreationTranscriptionSimplePage />
+          }
+        ],
+        [
+          getUrlWithParam(
+            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE}/:idRequete`,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
       );
-    });
 
+      render(<RouterProvider router={router} />);
+    });
     await waitFor(() => {
       expect(
         screen.getByText("Autres requêtes associées au titulaire")
@@ -121,11 +100,24 @@ describe("Test du rendu du composant RMCRequeteAssociees", () => {
   });
   test("NE DOIT PAS afficher le composant RMCRequeteAssociees QUAND l'ID de la requête est est founi en props", async () => {
     await act(async () => {
-      render(
-        <Router history={history}>
-          <ApercuReqCreationTranscriptionSimplePage idRequeteAAfficher="dd96cc3a-9865-4c83-b634-37fad2680f41" />
-        </Router>
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+            element: (
+              <ApercuReqCreationTranscriptionSimplePage idRequeteAAfficher="dd96cc3a-9865-4c83-b634-37fad2680f41" />
+            )
+          }
+        ],
+        [
+          getUrlWithParam(
+            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE}/:idRequete`,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
       );
+
+      render(<RouterProvider router={router} />);
     });
 
     await waitFor(() => {
@@ -137,11 +129,24 @@ describe("Test du rendu du composant RMCRequeteAssociees", () => {
 
   test("NE DOIT PAS afficher le bouton prendre en charge QUAND la requête n'est pas au statut 'PRENDRE EN CHARGE' ou 'TRANSFEREE'", async () => {
     await act(async () => {
-      render(
-        <Router history={history}>
-          <ApercuReqCreationTranscriptionSimplePage idRequeteAAfficher="dd96cc3a-9865-4c83-b634-37fad2680f41" />
-        </Router>
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+            element: (
+              <ApercuReqCreationTranscriptionSimplePage idRequeteAAfficher="dd96cc3a-9865-4c83-b634-37fad2680f41" />
+            )
+          }
+        ],
+        [
+          getUrlWithParam(
+            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE}/:idRequete`,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
       );
+
+      render(<RouterProvider router={router} />);
     });
 
     await waitFor(() => {
@@ -153,11 +158,24 @@ describe("Test du rendu du composant RMCRequeteAssociees", () => {
     storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
 
     await act(async () => {
-      render(
-        <Router history={history}>
-          <ApercuReqCreationTranscriptionSimplePage idRequeteAAfficher="de96cc3n-9865-4c83-b634-37fad2680f41" />
-        </Router>
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+            element: (
+              <ApercuReqCreationTranscriptionSimplePage idRequeteAAfficher="de96cc3n-9865-4c83-b634-37fad2680f41" />
+            )
+          }
+        ],
+        [
+          getUrlWithParam(
+            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE}/:idRequete`,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
       );
+
+      render(<RouterProvider router={router} />);
     });
 
     await waitFor(() => {

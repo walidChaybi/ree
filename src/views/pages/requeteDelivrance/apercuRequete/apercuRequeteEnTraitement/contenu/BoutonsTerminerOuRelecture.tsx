@@ -21,7 +21,7 @@ import { Option } from "@util/Type";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getDefaultValuesCourrier } from "../../apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import { BoutonsTerminer } from "./BoutonsTerminer";
@@ -40,7 +40,8 @@ export const BoutonsTerminerOuRelecture: React.FC<
   const [regenerationParams, setRegenerationParams] =
     useState<IRegenerationDocumentsParams>();
   const [open, setOpen] = useState<boolean>(false);
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
   const { rafraichirRequete, setOperationEnCours } = useContext(
     EditionExtraitCopiePageContext
   );
@@ -68,9 +69,9 @@ export const BoutonsTerminerOuRelecture: React.FC<
 
   useEffect(() => {
     if (idActionRetour) {
-      replaceUrl(history, getUrlPrecedente(history.location.pathname));
+      replaceUrl(navigate, getUrlPrecedente(location.pathname));
     }
-  }, [idActionRetour, history]);
+  }, [idActionRetour, navigate, location]);
 
   function onClickReprise(statut: StatutRequete) {
     setOperationEnCours(true);

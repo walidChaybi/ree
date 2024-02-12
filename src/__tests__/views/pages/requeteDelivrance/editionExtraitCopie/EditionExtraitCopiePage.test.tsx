@@ -1,10 +1,10 @@
-import { requeteAvecCopieIntegraleActeImage } from "@mock/data/DetailRequeteDelivrance";
-import { imagePngVideBase64 } from "@mock/data/ImagePng";
 import {
   userDroitCOMEDEC,
   userDroitnonCOMEDEC
 } from "@mock/data/connectedUserAvecDroit";
+import { requeteAvecCopieIntegraleActeImage } from "@mock/data/DetailRequeteDelivrance";
 import { idFicheActeMariage } from "@mock/data/ficheActe";
+import { imagePngVideBase64 } from "@mock/data/ImagePng";
 import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import {
   PATH_EDITION,
@@ -20,12 +20,12 @@ import {
   waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import { MemoryHistory, createMemoryHistory } from "history";
-import { Route, Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { MimeType } from "../../../../../ressources/MimeType";
-import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
-
-let history: MemoryHistory;
+import {
+  createTestingRouter,
+  mockFenetreFicheTestFunctions
+} from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {
   mockFenetreFicheTestFunctions();
@@ -33,23 +33,23 @@ beforeAll(async () => {
 
 beforeEach(async () => {
   storeRece.utilisateurCourant = userDroitCOMEDEC;
-
-  history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
+  // history.push(URL_MES_REQUETES_DELIVRANCE);
 });
 
 test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", async () => {
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+        element: <EditionExtraitCopiePage />
+      }
+    ],
+    [
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+    ]
   );
 
-  const { container } = render(
-    <Router history={history}>
-      <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-        <EditionExtraitCopiePage />
-      </Route>
-    </Router>
-  );
+  const { container } = render(<RouterProvider router={router} />);
 
   await waitFor(() => {
     expect(
@@ -63,22 +63,24 @@ test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", a
         container.getElementsByClassName("OperationLocaleEnCoursSimple").length
       ).toBe(0);
     });
-  }, 3000);
+  }, 0);
 });
 
 test("Test affichage Edition Extrait", async () => {
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+        element: <EditionExtraitCopiePage />
+      }
+    ],
+    [
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+    ]
   );
 
   await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   await waitFor(() => {
@@ -124,18 +126,20 @@ test("Test affichage Edition Extrait", async () => {
 });
 
 test("Test édition mentions Edition Extrait copie", async () => {
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+        element: <EditionExtraitCopiePage />
+      }
+    ],
+    [
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+    ]
   );
 
   await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   // Gestion des mentions
@@ -186,18 +190,20 @@ test("Test édition mentions Edition Extrait copie", async () => {
 });
 
 test("Ajout mention et réinitialisation", async () => {
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+        element: <EditionExtraitCopiePage />
+      }
+    ],
+    [
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+    ]
   );
 
   await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   // Gestion des mentions
@@ -286,18 +292,20 @@ test("Ajout mention et réinitialisation", async () => {
 });
 
 test("clic sur mention et sur checkbox et valider", async () => {
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+        element: <EditionExtraitCopiePage />
+      }
+    ],
+    [
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+    ]
   );
 
   await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   // Gestion des mentions
@@ -376,24 +384,26 @@ test("clic sur mention et sur checkbox et valider", async () => {
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
+    expect(router.state.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
   });
 });
 
 // Copie Intégral
 test("Test affichage Edition Copie", async () => {
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+        element: <EditionExtraitCopiePage />
+      }
+    ],
+    [
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+    ]
   );
 
   await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   await waitFor(() => {
@@ -445,25 +455,27 @@ test("Test affichage Edition Copie", async () => {
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toBe(
+    expect(router.state.location.pathname).toBe(
       `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
     );
   });
 });
 
 test("Attendu: la modification d'une copie acte image s'effectue correctement", async () => {
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${requeteAvecCopieIntegraleActeImage.id}/${idFicheActeMariage}`
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+        element: <EditionExtraitCopiePage />
+      }
+    ],
+    [
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${requeteAvecCopieIntegraleActeImage.id}/${idFicheActeMariage}`
+    ]
   );
 
   await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   await waitFor(() => {
@@ -512,18 +524,20 @@ async function fireCustomEvent(detail: any) {
 // Modifier Corps extrait
 test("Test modifier corps extrait", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+        element: <EditionExtraitCopiePage />
+      }
+    ],
+    [
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+    ]
   );
 
   await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   await act(async () => {
@@ -575,18 +589,21 @@ test("Test modifier corps extrait", async () => {
 // Ajout mention nationalité auto
 test("Test ajout nationalité auto", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/7b448d64-add5-4dbd-8041-b7081ea7bc86/b41079a5-9e8d-478c-b04c-c4c2ac67134a`
+
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+        element: <EditionExtraitCopiePage />
+      }
+    ],
+    [
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/7b448d64-add5-4dbd-8041-b7081ea7bc86/b41079a5-9e8d-478c-b04c-c4c2ac67134a`
+    ]
   );
 
   await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   await act(async () => {
@@ -600,18 +617,21 @@ test("Test ajout nationalité auto", async () => {
 
 test("Test création extrait plurilingue", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/3f52370d-14ed-4c55-8cf4-afe006d9aa38/19c0d767-64e5-4376-aa1f-6d781a2a235e`
+
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+        element: <EditionExtraitCopiePage />
+      }
+    ],
+    [
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/3f52370d-14ed-4c55-8cf4-afe006d9aa38/19c0d767-64e5-4376-aa1f-6d781a2a235e`
+    ]
   );
 
   await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   await waitFor(() => {
@@ -644,18 +664,21 @@ test("Test création extrait plurilingue", async () => {
 
 test("Test reprendre traitement", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-  history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/3f52370d-14ed-4c55-8cf4-afe006d9aa39/19c0d767-64e5-4376-aa1f-6d781a2a235e`
+
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+        element: <EditionExtraitCopiePage />
+      }
+    ],
+    [
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/3f52370d-14ed-4c55-8cf4-afe006d9aa39/19c0d767-64e5-4376-aa1f-6d781a2a235e`
+    ]
   );
 
   await act(async () => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-          <EditionExtraitCopiePage />
-        </Route>
-      </Router>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   await waitFor(() => {

@@ -1,18 +1,18 @@
-import { useBlockNavigation } from "@core/body/useBlockNavigation";
+import { RECEContext } from "@core/body/RECEContext";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { URL_ACCUEIL, URL_CONTEXT_APP } from "@router/ReceUrls";
-import { getLibelle } from "@util/Utils";
 import { IRoute } from "@util/route/IRoute";
 import {
-  URL_SEPARATEUR,
   getUrlWithoutIdParam,
   getUrlWithoutParam,
-  isPathElemId
+  isPathElemId,
+  URL_SEPARATEUR
 } from "@util/route/UrlUtil";
-import React from "react";
-import { Route } from "react-router";
-import { useHistory } from "react-router-dom";
+import { getLibelle } from "@util/Utils";
+import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
+import React, { useContext } from "react";
+import { useBlocker, useLocation } from "react-router-dom";
 import { Categorie } from "./Categorie";
 
 // Gère l'empilement des urls visités par l'utilisateur
@@ -59,22 +59,21 @@ interface FilArianeProps {
 export const fildarianeLabel = getLibelle("Navigation par fil d'ariane");
 
 export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
-  const history = useHistory();
+  const location = useLocation();
+  const { isDirty } = useContext(RECEContext);
+  const blocker = useBlocker(() => isDirty);
 
-  const locationPathName = history.location.pathname;
-
-  useBlockNavigation();
-
-  gestionnaireNavigation.addUrl(locationPathName);
+  gestionnaireNavigation.addUrl(location.pathname);
   const pagesInfos = buildPagesInfos(
-    history.location.pathname,
+    location.pathname,
     routes,
     gestionnaireNavigation
   );
   const routeAccueil = getRoute(URL_ACCUEIL, routes);
+
   return (
-    <Route>
-      {estUnCheminReceUi(history.location.pathname) && (
+    <div>
+      {estUnCheminReceUi(location.pathname) && (
         <Breadcrumbs
           separator={<NavigateNextIcon fontSize="small" />}
           aria-label={fildarianeLabel}
@@ -98,7 +97,27 @@ export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
           })}
         </Breadcrumbs>
       )}
-    </Route>
+      <ConfirmationPopin
+        boutons={[
+          {
+            label: getLibelle("OK"),
+            action: () => {
+              blocker.proceed?.();
+            }
+          },
+          {
+            label: getLibelle("Annuler"),
+            action: () => {
+              blocker.reset?.();
+            }
+          }
+        ]}
+        isOpen={blocker.state === "blocked"}
+        messages={[
+          `Vous n'avez pas validé vos modifications. Si vous continuez, celles-ci seront perdues et les données réinitialisées.\n\nVoulez-vous continuer ?`
+        ]}
+      />
+    </div>
   );
 };
 

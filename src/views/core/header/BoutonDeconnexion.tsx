@@ -14,7 +14,7 @@ import {
 } from "@util/Utils";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { OfficierContext } from "../contexts/OfficierContext";
 
 interface BoutonDeconnexionProps {
@@ -30,7 +30,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   const [confirmationDeco, setConfirmationDeco] =
     React.useState<boolean>(false);
   const [nbRequetes, setNbRequetes] = React.useState<number>(0);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleClickBoutonOfficer = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -47,8 +47,8 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
 
   function deconnexion() {
     gestionnaireDoubleOuverture.arreterVerification();
-    history.push(URL_DECONNEXION);
-    history.go(0);
+    navigate(URL_DECONNEXION);
+    navigate(0);
   }
 
   const handleClickDeconnexion = () => {
@@ -84,7 +84,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
       label: "Non",
       action: () => {
         setConfirmationDeco(false);
-        history.push(URL_MES_REQUETES_DELIVRANCE);
+        navigate(URL_MES_REQUETES_DELIVRANCE);
       }
     },
     {

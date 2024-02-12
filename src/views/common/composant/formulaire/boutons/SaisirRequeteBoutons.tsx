@@ -3,13 +3,13 @@ import {
   estOfficierHabiliterPourTousLesDroits,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
-import { getLibelle } from "@util/Utils";
+import { getLibelle, UN } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErreur";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import "./scss/SaisirRequeteBoutons.scss";
 
 export interface ComponentProps {
@@ -21,10 +21,10 @@ export interface ComponentProps {
 export type SaisirRequeteBoutonsProps = ComponentProps & FormikComponentProps;
 
 const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const annuler = () => {
-    history.goBack();
+    navigate(-UN);
   };
 
   const valider = () => {

@@ -9,7 +9,7 @@ import { getLibelle } from "@util/Utils";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAvecTitre";
 import React, { useCallback, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
 import { BoutonARetraiterSaga } from "./contenu/BoutonARetraiterSaga";
 import { BoutonModifierTraitement } from "./contenu/BoutonModifierTraitement";
@@ -17,8 +17,8 @@ import { BoutonsTerminerOuRelecture } from "./contenu/BoutonsTerminerOuRelecture
 import "./scss/ApercuRequeteTraitementPage.scss";
 
 export const ApercuRequeteTraitementPage: React.FC = () => {
-  const history = useHistory();
-  const [dataHistory] = useState<any>(history.location.state);
+  const location = useLocation();
+  const [dataHistory] = useState<any>(location.state);
 
   const [documentAffiche, setDocumentAffiche] = useState<IDocumentReponse>();
 

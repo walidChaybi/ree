@@ -17,7 +17,7 @@ import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface BoutonValiderTerminerProps {
   requete: IRequeteDelivrance;
@@ -27,7 +27,8 @@ export const BoutonValiderTerminer: React.FC<
   BoutonValiderTerminerProps
 > = props => {
   const requeteDelivrance = props.requete;
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [estDisabled, setEstDisabled] = useState(true);
 
   const [majStatutParams, setMajStatutParams] = useState<
@@ -83,9 +84,14 @@ export const BoutonValiderTerminer: React.FC<
   // 3 - Navigation après le traitement
   useEffect(() => {
     if (majDateDerniereDelivrance || pasDeMajDateDerniereDelivrance) {
-      replaceUrl(history, getUrlPrecedente(history.location.pathname));
+      replaceUrl(navigate, getUrlPrecedente(location.pathname));
     }
-  }, [majDateDerniereDelivrance, pasDeMajDateDerniereDelivrance, history]);
+  }, [
+    majDateDerniereDelivrance,
+    pasDeMajDateDerniereDelivrance,
+    navigate,
+    location
+  ]);
 
   const estAValider =
     props.requete.statutCourant.statut === StatutRequete.A_VALIDER;

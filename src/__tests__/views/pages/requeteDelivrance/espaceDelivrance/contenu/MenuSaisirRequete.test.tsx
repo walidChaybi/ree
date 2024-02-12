@@ -20,34 +20,26 @@ import {
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory } from "history";
 import React from "react";
-import { Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
-const history = createMemoryHistory();
 window.alert = jest.fn();
-const HookConsummerSaisirRequeteMesRequete: React.FC = () => {
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-
-  return (
-    <Router history={history}>
-      <MenuSaisirRequete indexTabPanel={0} />
-    </Router>
-  );
-};
-
-const HookConsummerSaisirRequeteMesRequeteDeService: React.FC = () => {
-  history.push(URL_REQUETES_DELIVRANCE_SERVICE);
-
-  return (
-    <Router history={history}>
-      <MenuSaisirRequete indexTabPanel={1} />
-    </Router>
-  );
-};
 
 test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Délivrance", async () => {
-  render(<HookConsummerSaisirRequeteMesRequete />);
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE,
+        element: <MenuSaisirRequete indexTabPanel={0} />
+      }
+    ],
+    [URL_MES_REQUETES_DELIVRANCE]
+  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
@@ -74,14 +66,26 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Délivrance"
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(
+    expect(router.state.location.pathname).toEqual(
       URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC
     );
   });
 });
 
 test("renders menu 'Saisir une requête' RDC dans Mes requetes de Délivrance", async () => {
-  render(<HookConsummerSaisirRequeteMesRequete />);
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE,
+        element: <MenuSaisirRequete indexTabPanel={0} />
+      }
+    ],
+    [URL_MES_REQUETES_DELIVRANCE]
+  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 
@@ -102,15 +106,26 @@ test("renders menu 'Saisir une requête' RDC dans Mes requetes de Délivrance", 
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(
+    expect(router.state.location.pathname).toEqual(
       URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC
     );
   });
 });
 
 test("renders menu 'Saisir une requête' RDLFC dans Mes requetes de Délivrance", async () => {
-  render(<HookConsummerSaisirRequeteMesRequete />);
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE,
+        element: <MenuSaisirRequete indexTabPanel={0} />
+      }
+    ],
+    [URL_MES_REQUETES_DELIVRANCE]
+  );
 
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
   const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 
   // Open menu
@@ -130,14 +145,26 @@ test("renders menu 'Saisir une requête' RDLFC dans Mes requetes de Délivrance"
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(
+    expect(router.state.location.pathname).toEqual(
       URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC
     );
   });
 });
 
 test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Service", async () => {
-  render(<HookConsummerSaisirRequeteMesRequeteDeService />);
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_REQUETES_DELIVRANCE_SERVICE,
+        element: <MenuSaisirRequete indexTabPanel={1} />
+      }
+    ],
+    [URL_REQUETES_DELIVRANCE_SERVICE]
+  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
 
   const boutonMenu = screen.getByText(/Saisir requête courrier/i);
@@ -161,14 +188,26 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Service", as
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(
+    expect(router.state.location.pathname).toEqual(
       URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC
     );
   });
 });
 
 test("renders menu 'Saisir une requête' RDC dans Mes requetes de Service", async () => {
-  render(<HookConsummerSaisirRequeteMesRequeteDeService />);
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_REQUETES_DELIVRANCE_SERVICE,
+        element: <MenuSaisirRequete indexTabPanel={1} />
+      }
+    ],
+    [URL_REQUETES_DELIVRANCE_SERVICE]
+  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 
@@ -189,14 +228,26 @@ test("renders menu 'Saisir une requête' RDC dans Mes requetes de Service", asyn
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(
+    expect(router.state.location.pathname).toEqual(
       URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC
     );
   });
 });
 
 test("renders menu 'Saisir une requête' RDLFC dans Mes requetes de Service", async () => {
-  render(<HookConsummerSaisirRequeteMesRequeteDeService />);
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_REQUETES_DELIVRANCE_SERVICE,
+        element: <MenuSaisirRequete indexTabPanel={1} />
+      }
+    ],
+    [URL_REQUETES_DELIVRANCE_SERVICE]
+  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 
@@ -217,7 +268,7 @@ test("renders menu 'Saisir une requête' RDLFC dans Mes requetes de Service", as
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(
+    expect(router.state.location.pathname).toEqual(
       URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC
     );
   });

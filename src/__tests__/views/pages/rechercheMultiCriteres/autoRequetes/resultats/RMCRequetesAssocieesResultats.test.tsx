@@ -18,61 +18,67 @@ import { IPerimetre } from "@model/agent/IPerimetre";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import {
-  getApercuRequeteSimple,
+  getApercuRequeteEtablissementOuTranscription,
   IInfoRequeteSelectionnee,
   utilisateurADroitOuvrirRequete
 } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCTableauRequetesAssociees";
+import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
+import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import {
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "@router/ReceUrls";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory } from "history";
-import { Route, Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
 describe("RMCRequetesAssocieesResultats", () => {
   test("DOIT rendre le titre du tableau des requêtes associées aux titulaires d'une requêtes de délivrance", async () => {
-    await act(async () => {
-      const history = createMemoryHistory();
-      history.push(
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          element: <RMCRequetesAssocieesResultats requete={requeteDelivrance} />
+        }
+      ],
+      [
         getUrlWithParam(
           URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
           requeteDelivrance.id
         )
-      );
+      ]
+    );
 
-      render(
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
-          >
-            <RMCRequetesAssocieesResultats requete={requeteDelivrance} />
-          </Route>
-        </Router>
-      );
+    await act(async () => {
+      render(<RouterProvider router={router} />);
     });
   });
 
   test("DOIT rendre le titre du tableau des requêtes associées aux titulaires d'une requêtes d'information", async () => {
-    await act(async () => {
-      const history = createMemoryHistory();
-      history.push(
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+          element: (
+            <RMCRequetesAssocieesResultats requete={requeteInformation} />
+          )
+        }
+      ],
+      [
         getUrlWithParam(
           URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
           requeteInformation.id
         )
-      );
+      ]
+    );
 
-      render(
-        <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
-            <RMCRequetesAssocieesResultats requete={requeteInformation} />
-          </Route>
-        </Router>
-      );
+    await act(async () => {
+      render(<RouterProvider router={router} />);
     });
 
     await waitFor(() => {
@@ -313,13 +319,27 @@ describe("RMCRequetesAssocieesResultats", () => {
       sousType: "sousType"
     } as IInfoRequeteSelectionnee;
 
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+          element: (
+            <ApercuRequetePage
+              idRequeteAAfficher={requeteSelectionnee?.idRequete}
+            />
+          )
+        }
+      ],
+      [
+        getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+          requeteSelectionnee.idRequete
+        )
+      ]
+    );
+
     await act(async () => {
-      const history = createMemoryHistory();
-      const { container } = render(
-        <Router history={history}>
-          {getApercuRequeteSimple(requeteSelectionnee)}
-        </Router>
-      );
+      const { container } = render(<RouterProvider router={router} />);
 
       expect(container.getElementsByClassName("ApercuRequete").length).toBe(1);
     });
@@ -333,13 +353,24 @@ describe("RMCRequetesAssocieesResultats", () => {
       sousType: "Acte Etab X (d)"
     } as IInfoRequeteSelectionnee;
 
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+          element:
+            getApercuRequeteEtablissementOuTranscription(requeteSelectionnee)
+        }
+      ],
+      [
+        getUrlWithParam(
+          URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+          requeteSelectionnee.idRequete
+        )
+      ]
+    );
+
     await act(async () => {
-      const history = createMemoryHistory();
-      const { container } = render(
-        <Router history={history}>
-          {getApercuRequeteSimple(requeteSelectionnee)}
-        </Router>
-      );
+      const { container } = render(<RouterProvider router={router} />);
 
       expect(
         container.getElementsByClassName(
@@ -358,13 +389,24 @@ describe("RMCRequetesAssocieesResultats", () => {
       sousType: "Acte Transcrit (d)"
     } as IInfoRequeteSelectionnee;
 
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+          element:
+            getApercuRequeteEtablissementOuTranscription(requeteSelectionnee)
+        }
+      ],
+      [
+        getUrlWithParam(
+          URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+          requeteSelectionnee.idRequete
+        )
+      ]
+    );
+
     await act(async () => {
-      const history = createMemoryHistory();
-      const { container } = render(
-        <Router history={history}>
-          {getApercuRequeteSimple(requeteSelectionnee)}
-        </Router>
-      );
+      const { container } = render(<RouterProvider router={router} />);
 
       expect(
         container.getElementsByClassName(
@@ -382,13 +424,27 @@ describe("RMCRequetesAssocieesResultats", () => {
       sousType: "Information"
     } as IInfoRequeteSelectionnee;
 
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+          element: (
+            <ApercuReqInfoPage
+              idRequeteAAfficher={requeteSelectionnee?.idRequete}
+            />
+          )
+        }
+      ],
+      [
+        getUrlWithParam(
+          URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+          requeteSelectionnee.idRequete
+        )
+      ]
+    );
+
     await act(async () => {
-      const history = createMemoryHistory();
-      const { container } = render(
-        <Router history={history}>
-          {getApercuRequeteSimple(requeteSelectionnee)}
-        </Router>
-      );
+      const { container } = render(<RouterProvider router={router} />);
 
       expect(container.getElementsByClassName("ApercuRequete").length).toBe(1);
     });

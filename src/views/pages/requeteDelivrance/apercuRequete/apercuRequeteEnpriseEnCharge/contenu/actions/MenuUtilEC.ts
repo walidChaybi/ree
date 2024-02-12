@@ -31,8 +31,8 @@ import { PATH_EDITION } from "@router/ReceUrls";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { IBoutonPopin } from "@widget/popin/ConfirmationPopin";
-import { History } from "history";
 import React, { MutableRefObject } from "react";
+import { Location, NavigateFunction } from "react-router-dom";
 
 const ORDRE_OPTION_MAX = 900;
 const enum MaxTitulaireDelivrance {
@@ -308,22 +308,24 @@ const aGenreInconnu = (genres: (string | undefined)[]) =>
   genres.find(genre => genre === Sexe.getKey(Sexe.INCONNU)) != null;
 
 export const redirection = ({
-  history,
+  navigate,
+  location,
   idActe,
   idRequete,
   index
 }: {
-  history: History<unknown>;
+  navigate: NavigateFunction;
+  location: Location;
   idActe?: string;
   idRequete?: string;
   index: DocumentEC;
 }) => {
-  const prefix = getUrlPrecedente(history.location.pathname);
+  const prefix = getUrlPrecedente(location.pathname);
 
   if (idRequete) {
     const url = `${prefix}/${PATH_EDITION}/${idRequete}/${idActe}`;
 
-    replaceUrl(history, url, index);
+    replaceUrl(navigate, url, index);
   }
 };
 

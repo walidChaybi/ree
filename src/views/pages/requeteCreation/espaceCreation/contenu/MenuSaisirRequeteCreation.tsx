@@ -2,13 +2,13 @@ import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import {
-  URL_MES_REQUETES_CREATION_SAISIR_RCTC,
+  PATH_SAISIR_RCTC,
   URL_REQUETES_CREATION_SERVICE_SAISIR_RCTC
 } from "@router/ReceUrls";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { getLibelle } from "@util/Utils";
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const DUREE_OUVERTURE_POPIN = 100;
 
@@ -30,13 +30,13 @@ const MenuSaisirRequeteCreation: React.FC<
     setMenu(null);
   };
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const clickMenuItem = (nomRequete: string) => {
     if (props.indexTabPanel === 1) {
       switch (nomRequete) {
         case "RCTC":
-          history.push(URL_REQUETES_CREATION_SERVICE_SAISIR_RCTC);
+          navigate(URL_REQUETES_CREATION_SERVICE_SAISIR_RCTC);
           break;
 
         default:
@@ -45,7 +45,7 @@ const MenuSaisirRequeteCreation: React.FC<
     } else {
       switch (nomRequete) {
         case "RCTC":
-          history.push(URL_MES_REQUETES_CREATION_SAISIR_RCTC);
+          navigate(PATH_SAISIR_RCTC);
           break;
 
         default:

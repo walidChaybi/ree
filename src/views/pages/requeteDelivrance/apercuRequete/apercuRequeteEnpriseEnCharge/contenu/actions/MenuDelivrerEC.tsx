@@ -17,7 +17,7 @@ import {
   IBoutonPopin
 } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DocumentEC } from "../../../../../../../model/requete/enum/DocumentEC";
 import { useOptionsCourriersApiHook } from "../../../apercuCourrier/contenu/hook/OptionsCourriersHook";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
@@ -34,7 +34,8 @@ import {
 } from "./MenuUtilEC";
 
 export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const refs = useRef([]);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
@@ -65,13 +66,14 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
   const redirectionCallback = useCallback(
     (index: DocumentEC) => {
       redirection({
+        navigate,
+        location,
         idActe: actes?.[0] ? actes[0].idActe : "",
         idRequete: updateChoixDelivranceResultat?.idRequete,
-        history,
         index
       });
     },
-    [actes, history, updateChoixDelivranceResultat]
+    [actes, navigate, location, updateChoixDelivranceResultat]
   );
 
   // 2 - Récuperer les options pour la génération du courrier auto

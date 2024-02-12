@@ -4,18 +4,26 @@ import {
 } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
-import { render } from "@testing-library/react";
-import { createMemoryHistory } from "history";
+import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
+import {
+  URL_MES_REQUETES_CREATION,
+  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID
+} from "@router/ReceUrls";
+import { act, render, waitFor } from "@testing-library/react";
 import React from "react";
-import { Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 const ID_REQUETE = "b63ebccd-ba5e-443a-8837-c5e1e111e846";
-const history = createMemoryHistory();
 
-beforeEach(() => {
-  history.push(URL_MES_REQUETES_CREATION);
-});
+type HookConsumerProps = {
+  paramsCreation: NavigationApercuReqCreationParams;
+};
+
+const HookConsumer: React.FC<HookConsumerProps> = props => {
+  useNavigationApercuCreation(props.paramsCreation);
+  return <></>;
+};
 
 describe("Doit rediriger sur le bon aperçu de requête de transcription en fonction du statut et du sousType", () => {
   test("Doit rediriger sur l'aperçu de requête création transcription simple quand le sousType est RCTC et que le statut est A_TRAITER", async () => {
@@ -24,11 +32,33 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
       sousType: SousTypeCreation.RCTC,
       statut: StatutRequete.A_TRAITER
     };
-    naviguerApercuRequete(paramsCreation);
 
-    expect(history.location.pathname).toBe(
-      apercuRequeteURL("apercurequetetranscriptionenpriseencharge")
-    );
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          },
+          {
+            path: URL_MES_REQUETES_CREATION,
+            element: <HookConsumer paramsCreation={paramsCreation} />
+          }
+        ],
+        [URL_MES_REQUETES_CREATION]
+      );
+
+      render(<RouterProvider router={router} />);
+
+      await waitFor(() => {
+        expect(router.state.location.pathname).toBe(
+          apercuRequeteURL(
+            "apercurequetetranscriptionenpriseencharge",
+            paramsCreation.idRequete
+          )
+        );
+      });
+    });
   });
 
   test("Doit rediriger sur l'aperçu de requête création transcription prise en charge quand le sousType est RCTC et que le statut est A_TRAITER", async () => {
@@ -37,11 +67,33 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
       sousType: SousTypeCreation.RCTC,
       statut: StatutRequete.A_TRAITER
     };
-    naviguerApercuRequete(paramsCreation);
 
-    expect(history.location.pathname).toBe(
-      apercuRequeteURL("apercurequetetranscriptionenpriseencharge")
-    );
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          },
+          {
+            path: URL_MES_REQUETES_CREATION,
+            element: <HookConsumer paramsCreation={paramsCreation} />
+          }
+        ],
+        [URL_MES_REQUETES_CREATION]
+      );
+
+      render(<RouterProvider router={router} />);
+
+      await waitFor(() => {
+        expect(router.state.location.pathname).toBe(
+          apercuRequeteURL(
+            "apercurequetetranscriptionenpriseencharge",
+            paramsCreation.idRequete
+          )
+        );
+      });
+    });
   });
 
   test("Doit rediriger sur l'aperçu de requête création transcription prise en charge quand le sousType est RCTD et que le statut est PRISE_EN_CHARGE", async () => {
@@ -50,11 +102,32 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
       sousType: SousTypeCreation.RCTD,
       statut: StatutRequete.PRISE_EN_CHARGE
     };
-    naviguerApercuRequete(paramsCreation);
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          },
+          {
+            path: URL_MES_REQUETES_CREATION,
+            element: <HookConsumer paramsCreation={paramsCreation} />
+          }
+        ],
+        [URL_MES_REQUETES_CREATION]
+      );
 
-    expect(history.location.pathname).toBe(
-      apercuRequeteURL("apercurequetetranscriptionenpriseencharge")
-    );
+      render(<RouterProvider router={router} />);
+
+      await waitFor(() => {
+        expect(router.state.location.pathname).toBe(
+          apercuRequeteURL(
+            "apercurequetetranscriptionenpriseencharge",
+            paramsCreation.idRequete
+          )
+        );
+      });
+    });
   });
 
   test("Doit rediriger sur l'aperçu de requête création transcription en traitement quand le sousType est RCTD et que le statut est EN_TRAITEMENT", async () => {
@@ -63,11 +136,32 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
       sousType: SousTypeCreation.RCTD,
       statut: StatutRequete.EN_TRAITEMENT
     };
-    naviguerApercuRequete(paramsCreation);
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          },
+          {
+            path: URL_MES_REQUETES_CREATION,
+            element: <HookConsumer paramsCreation={paramsCreation} />
+          }
+        ],
+        [URL_MES_REQUETES_CREATION]
+      );
 
-    expect(history.location.pathname).toBe(
-      apercuRequeteURL("apercurequetetranscriptionensaisieprojet")
-    );
+      render(<RouterProvider router={router} />);
+
+      await waitFor(() => {
+        expect(router.state.location.pathname).toBe(
+          apercuRequeteURL(
+            "apercurequetetranscriptionensaisieprojet",
+            paramsCreation.idRequete
+          )
+        );
+      });
+    });
   });
 });
 
@@ -78,11 +172,33 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
       sousType: SousTypeCreation.RCEXR,
       statut: StatutRequete.A_TRAITER
     };
-    naviguerApercuRequete(paramsCreation);
 
-    expect(history.location.pathname).toBe(
-      apercuRequeteURL("apercurequetecreationetablissementsuividossier")
-    );
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          },
+          {
+            path: URL_MES_REQUETES_CREATION,
+            element: <HookConsumer paramsCreation={paramsCreation} />
+          }
+        ],
+        [URL_MES_REQUETES_CREATION]
+      );
+
+      render(<RouterProvider router={router} />);
+
+      await waitFor(() => {
+        expect(router.state.location.pathname).toBe(
+          apercuRequeteURL(
+            "apercurequetecreationetablissementsuividossier",
+            paramsCreation.idRequete
+          )
+        );
+      });
+    });
   });
 
   test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut Prise en charge", async () => {
@@ -91,11 +207,33 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
       sousType: SousTypeCreation.RCEXR,
       statut: StatutRequete.PRISE_EN_CHARGE
     };
-    naviguerApercuRequete(paramsCreation);
 
-    expect(history.location.pathname).toBe(
-      apercuRequeteURL("apercurequetecreationetablissementsuividossier")
-    );
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          },
+          {
+            path: URL_MES_REQUETES_CREATION,
+            element: <HookConsumer paramsCreation={paramsCreation} />
+          }
+        ],
+        [URL_MES_REQUETES_CREATION]
+      );
+
+      render(<RouterProvider router={router} />);
+
+      await waitFor(() => {
+        expect(router.state.location.pathname).toBe(
+          apercuRequeteURL(
+            "apercurequetecreationetablissementsuividossier",
+            paramsCreation.idRequete
+          )
+        );
+      });
+    });
   });
 
   test("Doit rediriger sur l'aperçu de requête de création simple QUAND le sousType est RCEXR et au statut Traité", async () => {
@@ -104,28 +242,35 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
       sousType: SousTypeCreation.RCEXR,
       statut: StatutRequete.TRAITE
     };
-    naviguerApercuRequete(paramsCreation);
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          },
+          {
+            path: URL_MES_REQUETES_CREATION,
+            element: <HookConsumer paramsCreation={paramsCreation} />
+          }
+        ],
+        [URL_MES_REQUETES_CREATION]
+      );
 
-    expect(history.location.pathname).toBe(
-      apercuRequeteURL("apercurequetecreationetablissementsimple")
-    );
+      render(<RouterProvider router={router} />);
+
+      await waitFor(() => {
+        expect(router.state.location.pathname).toBe(
+          apercuRequeteURL(
+            "apercurequetecreationetablissementsimple",
+            paramsCreation.idRequete
+          )
+        );
+      });
+    });
   });
 });
 
-function naviguerApercuRequete(
-  paramsCreation: NavigationApercuReqCreationParams
-) {
-  const HookConsumer: React.FC = () => {
-    useNavigationApercuCreation(paramsCreation);
-    return <></>;
-  };
-  render(
-    <Router history={history}>
-      <HookConsumer />
-    </Router>
-  );
-}
-
-function apercuRequeteURL(apercuRequete: string) {
-  return `${URL_MES_REQUETES_CREATION}/${apercuRequete}/${ID_REQUETE}`;
+function apercuRequeteURL(apercuRequete: string, idRequete: string) {
+  return `${URL_MES_REQUETES_CREATION}/${apercuRequete}/${idRequete}`;
 }

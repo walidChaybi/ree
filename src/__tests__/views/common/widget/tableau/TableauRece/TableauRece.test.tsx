@@ -8,9 +8,8 @@ import {
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
-import { createMemoryHistory } from "history";
 import React from "react";
-import { Router } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 
 const HookConsummer: React.FC = (props: any) => {
   return <button onClick={() => props.reloadData()}>{"BoutonTest"}</button>;
@@ -36,16 +35,13 @@ const columnsTableau = [
 ];
 
 test("TableauRece can be reload", () => {
-  const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
   const handlerelaod = jest.fn();
 
   render(
-    <Router history={history}>
+    <MemoryRouter initialEntries={[URL_MES_REQUETES_DELIVRANCE]}>
       <TableauRece
         idKey={"idRequete"}
         onClickOnLine={handleClickOnLine}
@@ -62,7 +58,7 @@ test("TableauRece can be reload", () => {
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
-    </Router>
+    </MemoryRouter>
   );
 
   const reloadButton = screen.getByText("BoutonTest");
@@ -71,16 +67,13 @@ test("TableauRece can be reload", () => {
 });
 
 test("TableauRece can be reload with true", () => {
-  const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
   const handlerelaod = jest.fn();
 
   render(
-    <Router history={history}>
+    <MemoryRouter initialEntries={[URL_MES_REQUETES_DELIVRANCE]}>
       <TableauRece
         idKey={"idRequete"}
         onClickOnLine={handleClickOnLine}
@@ -97,7 +90,7 @@ test("TableauRece can be reload with true", () => {
       >
         <HookConsummer2></HookConsummer2>
       </TableauRece>
-    </Router>
+    </MemoryRouter>
   );
 
   const reloadButton = screen.getByText("BoutonTest");
@@ -106,9 +99,6 @@ test("TableauRece can be reload with true", () => {
 });
 
 test("TableauRece can be reload with true => go back", () => {
-  const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
@@ -117,7 +107,7 @@ test("TableauRece can be reload with true => go back", () => {
   paramsTableau.rowsNumberState = 200;
 
   render(
-    <Router history={history}>
+    <MemoryRouter initialEntries={[URL_MES_REQUETES_DELIVRANCE]}>
       <TableauRece
         idKey={"idRequete"}
         onClickOnLine={handleClickOnLine}
@@ -134,7 +124,7 @@ test("TableauRece can be reload with true => go back", () => {
       >
         <HookConsummer2></HookConsummer2>
       </TableauRece>
-    </Router>
+    </MemoryRouter>
   );
   expect(screen.getByText("11982")).toBeDefined();
   const changementPageSuivantes = screen.getByTitle("Page suivante");
@@ -148,9 +138,6 @@ test("TableauRece can be reload with true => go back", () => {
 });
 
 test("TableauRece can change page", () => {
-  const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
@@ -160,7 +147,7 @@ test("TableauRece can change page", () => {
   paramsTableau.previousDataLinkState = "previous";
 
   render(
-    <Router history={history}>
+    <MemoryRouter initialEntries={[URL_MES_REQUETES_DELIVRANCE]}>
       <TableauRece
         idKey={"idRequete"}
         onClickOnLine={handleClickOnLine}
@@ -176,7 +163,7 @@ test("TableauRece can change page", () => {
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
-    </Router>
+    </MemoryRouter>
   );
 
   const aLinePage1 = screen.getByText("11982");
@@ -201,9 +188,6 @@ test("TableauRece can change page", () => {
 });
 
 test("TableauRece can change page", () => {
-  const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
@@ -213,7 +197,7 @@ test("TableauRece can change page", () => {
   paramsTableau.previousDataLinkState = "previous";
 
   render(
-    <Router history={history}>
+    <MemoryRouter initialEntries={[URL_MES_REQUETES_DELIVRANCE]}>
       <TableauRece
         idKey={"idRequete"}
         onClickOnLine={handleClickOnLine}
@@ -229,7 +213,7 @@ test("TableauRece can change page", () => {
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
-    </Router>
+    </MemoryRouter>
   );
 
   const row = screen.getByText("11982");
@@ -238,9 +222,6 @@ test("TableauRece can change page", () => {
 });
 
 test("TableauRece can't change page bakc and no error'", () => {
-  const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
@@ -250,7 +231,7 @@ test("TableauRece can't change page bakc and no error'", () => {
   paramsTableau.previousDataLinkState = "previous";
 
   render(
-    <Router history={history}>
+    <MemoryRouter initialEntries={[URL_MES_REQUETES_DELIVRANCE]}>
       <TableauRece
         idKey={"idRequete"}
         onClickOnLine={handleClickOnLine}
@@ -266,7 +247,7 @@ test("TableauRece can't change page bakc and no error'", () => {
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
-    </Router>
+    </MemoryRouter>
   );
 
   expect(screen.getByText("11982")).toBeDefined();
@@ -277,9 +258,6 @@ test("TableauRece can't change page bakc and no error'", () => {
 });
 
 test("TableauRece can't change page next and no error'", () => {
-  const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
@@ -289,7 +267,7 @@ test("TableauRece can't change page next and no error'", () => {
   paramsTableau.previousDataLinkState = "previous";
 
   const { getByText, getByTitle } = render(
-    <Router history={history}>
+    <MemoryRouter initialEntries={[URL_MES_REQUETES_DELIVRANCE]}>
       <TableauRece
         idKey={"idRequete"}
         onClickOnLine={handleClickOnLine}
@@ -305,7 +283,7 @@ test("TableauRece can't change page next and no error'", () => {
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
-    </Router>
+    </MemoryRouter>
   );
 
   expect(getByText("11982")).toBeDefined();
@@ -316,9 +294,6 @@ test("TableauRece can't change page next and no error'", () => {
 });
 
 test("TableauRece can sort", () => {
-  const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
@@ -328,7 +303,7 @@ test("TableauRece can sort", () => {
   paramsTableau.previousDataLinkState = "previous";
 
   const { getByText } = render(
-    <Router history={history}>
+    <MemoryRouter initialEntries={[URL_MES_REQUETES_DELIVRANCE]}>
       <TableauRece
         idKey={"idRequete"}
         onClickOnLine={handleClickOnLine}
@@ -344,7 +319,7 @@ test("TableauRece can sort", () => {
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
-    </Router>
+    </MemoryRouter>
   );
 
   const column = getByText("N°");

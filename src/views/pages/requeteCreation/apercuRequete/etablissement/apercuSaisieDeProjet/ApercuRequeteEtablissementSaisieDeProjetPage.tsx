@@ -18,32 +18,32 @@ import {
 } from "@hook/requete/ModifierAvancementSuiviDossierApiHook";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
-import { IUuidSuiviDossierParams } from "@model/params/IUuidSuiviDossierParams";
+import { TUuidSuiviDossierParams } from "@model/params/TUuidSuiviDossierParams";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { ISuiviDossier } from "@model/requete/ISuiviDossier";
 import {
   ITitulaireRequeteCreation,
   TitulaireRequeteCreation
 } from "@model/requete/ITitulaireRequeteCreation";
-import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { ApercuProjet } from "@pages/requeteCreation/commun/composants/ApercuProjet";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
-import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
+import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import {
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
   URL_RECHERCHE_REQUETE
 } from "@router/ReceUrls";
-import { DEUX, UN, getLibelle } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
+import { DEUX, getLibelle, UN } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { PopinSignatureCreationEtablissement } from "@widget/signature/PopinSignatureCreationEtablissement";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import { FormikHelpers } from "formik";
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import {
   annulerModificationBulletinIdentification,
@@ -54,12 +54,12 @@ import {
 } from "../commun/ApercuRequeteEtablissementUtils";
 import { BoutonsApercuCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
 import "../commun/scss/OngletsApercuCreationEtablissement.scss";
-import { SaisiePostulantForm } from "./contenu/saisiePostulantForm/SaisiePostulantForm";
 import { useProjetActeHook } from "./contenu/saisiePostulantForm/hook/ProjetActeHook";
 import { mappingSaisieProjetPostulantFormVersProjetActe } from "./contenu/saisiePostulantForm/mapping/mappingFormulaireSaisiePostulantVersProjetActe";
 import { mappingProjetActeVersFormulairePostulant } from "./contenu/saisiePostulantForm/mapping/mappingProjetActeVersFormulairePostulant";
 import { mappingProjetActeVersProjetActeComposition } from "./contenu/saisiePostulantForm/mapping/mappingProjetActeVersProjetActeComposition";
 import { mappingTitulairesVersFormulairePostulant } from "./contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
+import { SaisiePostulantForm } from "./contenu/saisiePostulantForm/SaisiePostulantForm";
 
 interface ApercuRequeteEtablissementSaisieDeProjetPageProps {
   idRequeteAAfficher?: string;
@@ -75,8 +75,9 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
   ApercuRequeteEtablissementSaisieDeProjetPageProps
 > = props => {
   const { idRequeteParam, idSuiviDossierParam } =
-    useParams<IUuidSuiviDossierParams>();
-  const history = useHistory();
+    useParams<TUuidSuiviDossierParams>();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { isDirty, setIsDirty } = useContext(RECEContext);
   const [rafraichirForm, setRafraichirForm] = useState<
     (() => void) | undefined
@@ -163,14 +164,14 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
 
   useEffect(() => {
     if (projetEstValide) {
-      history.push({
-        pathname: getUrlWithParam(
+      navigate(
+        getUrlWithParam(
           URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
-          idRequeteParam
+          idRequeteParam || ""
         ),
         // TODO: passage du state non fonctionnel ==> reussir a passer l'idSuiviDossier & le location.pathname a l'apercu suivi dossier
-        state: { idSuiviDossier: idSuiviDossierParam }
-      });
+        { state: { idSuiviDossier: idSuiviDossierParam } }
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projetEstValide]);
@@ -230,12 +231,12 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
   useEffect(() => {
     rechargerRequete();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
+  }, [props.idRequeteAAfficher, location.pathname, idRequeteParam]);
 
   function rechargerRequete() {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
-      estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
     });
   }
 

@@ -5,7 +5,7 @@ import {
   useDetailRequeteApiHook
 } from "@hook/requete/DetailRequeteHook";
 import { mAppartient } from "@model/agent/IOfficier";
-import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { IRequete } from "@model/requete/IRequete";
@@ -28,10 +28,9 @@ import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "../../commun/scss/ApercuReqCreationPage.scss";
 import { getComposantResumeRequeteEnFonctionNatureActe } from "./ApercuReqCreationTranscriptionUtils";
-
 
 interface ApercuReqCreationTranscriptionSaisieProjetPageProps {
   idRequeteAAfficher?: string;
@@ -41,8 +40,9 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
   ApercuReqCreationTranscriptionSaisieProjetPageProps
 > = props => {
   // Params & history
-  const { idRequeteParam } = useParams<IUuidRequeteParams>();
-  const history = useHistory();
+  const { idRequeteParam } = useParams<TUuidRequeteParams>();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // States
   const [requete, setRequete] = useState<IRequeteCreationTranscription>();
@@ -55,9 +55,9 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
   useEffect(() => {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
-      estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
     });
-  }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
+  }, [props.idRequeteAAfficher, location.pathname, idRequeteParam]);
 
   const {
     dataPersonnesSelectionnees,
@@ -180,7 +180,7 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
 
   function onModificationRequete() {
     if (requete) {
-      history.push(
+      navigate(
         getUrlWithParam(URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID, requete.id)
       );
     }

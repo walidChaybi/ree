@@ -4,18 +4,20 @@ import React from "react";
 import { MimeType } from "../../../../../ressources/MimeType";
 
 interface ActeRegistreProps {
-  idActeAAfficher: string;
+  idActeAAfficher?: string;
 }
 
 const ActeRegistre: React.FC<ActeRegistreProps> = ({ idActeAAfficher }) => {
   const resultat = useActeRecomposerApresSignatureApiHook(idActeAAfficher);
   return (
     <div className="ActeRegistre">
-      <VisionneuseDocument
-        infoBulle={""}
-        typeMime={MimeType.APPLI_PDF}
-        contenuBlob={resultat}
-      />
+      {idActeAAfficher && (
+        <VisionneuseDocument
+          infoBulle={""}
+          typeMime={MimeType.APPLI_PDF}
+          contenuBlob={resultat}
+        />
+      )}
     </div>
   );
 };

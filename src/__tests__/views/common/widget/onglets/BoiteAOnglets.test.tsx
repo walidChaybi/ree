@@ -7,8 +7,8 @@ import {
   waitFor
 } from "@testing-library/react";
 import { BoiteAOnglets } from "@widget/onglets/BoiteAOnglets";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 const mock = [
   {
@@ -24,30 +24,34 @@ const mock = [
 ];
 
 test("renders BoiteAOnglet", async () => {
-  const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-
   await act(async () => {
-    render(
-      <Router history={history}>
-        <BoiteAOnglets selectedTab={0} onglets={mock} />
-      </Router>
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE,
+          element: <BoiteAOnglets selectedTab={0} onglets={mock} />
+        }
+      ],
+      [URL_MES_REQUETES_DELIVRANCE]
     );
-  });
-  const mesRequetes = screen.getByText(/Mes requêtes de délivrance/i);
-  const requetesService = screen.getByText(/Requêtes de mon service/i);
 
-  await waitFor(() => {
-    expect(mesRequetes).toBeDefined();
-    expect(requetesService).toBeDefined();
-  });
+    render(<RouterProvider router={router} />);
 
-  act(() => {
-    fireEvent.click(requetesService);
-  });
+    const mesRequetes = screen.getByText(/Mes requêtes de délivrance/i);
+    const requetesService = screen.getByText(/Requêtes de mon service/i);
 
-  const corpsService = screen.getByText(/Non je n'ai pas changé/i);
-  await waitFor(() => {
-    expect(corpsService).toBeDefined();
+    await waitFor(() => {
+      expect(mesRequetes).toBeDefined();
+      expect(requetesService).toBeDefined();
+    });
+
+    act(() => {
+      fireEvent.click(requetesService);
+    });
+
+    const corpsService = screen.getByText(/Non je n'ai pas changé/i);
+    await waitFor(() => {
+      expect(corpsService).toBeDefined();
+    });
   });
 });

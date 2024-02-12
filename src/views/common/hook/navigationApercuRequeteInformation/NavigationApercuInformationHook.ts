@@ -4,7 +4,7 @@ import { PATH_APERCU_REQ_INFO } from "@router/ReceUrls";
 import { autorisePrendreEnChargeReqTableauInformation } from "@util/RequetesUtils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
@@ -23,16 +23,16 @@ export function useNavigationApercuInformation(
     ICreationActionMiseAjourStatutHookParams | undefined
   >();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useCreationActionMiseAjourStatut(paramsMAJReqInfo);
 
   const redirectionVersApercu = useCallback(() => {
     if (params) {
       const url = `${params.urlCourante}/${PATH_APERCU_REQ_INFO}/:idRequete`;
-      history.push(getUrlWithParam(url, params.requete.idRequete));
+      navigate(getUrlWithParam(url, params.requete.idRequete));
     }
-  }, [params, history]);
+  }, [params, navigate]);
 
   useEffect(() => {
     if (params?.requete) {

@@ -12,9 +12,8 @@ import {
 } from "@router/ReceUrls";
 import { getLibelle } from "@util/Utils";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { GestionnaireARetraiterDansSaga } from "../../migration/GestionnaireARetraiterDansSaga";
-import { getUrlCourante } from "../UrlUtil";
 import { Protection } from "./Protection";
 
 interface ProtectionApercuProps {
@@ -31,21 +30,21 @@ export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
   sousType,
   forcePass
 }) => {
-  const history = useHistory();
+  const location = useLocation();
   const [estBonStatut, setEstBonStatut] = useState<boolean>(true);
 
   useEffect(() => {
     if (
       // @ts-ignore
       window.protectionOff ||
-      getUrlCourante(history).includes(`${PATH_APERCU_REQ_DEL}/`) ||
+      location.pathname.includes(`${PATH_APERCU_REQ_DEL}/`) ||
       forcePass
     ) {
       setEstBonStatut(true);
     } else {
-      setEstBonStatut(checkURL(history, statut, type, sousType));
+      setEstBonStatut(checkURL(location.pathname, statut, type, sousType));
     }
-  }, [statut, type, sousType, history, forcePass]);
+  }, [statut, type, sousType, location, forcePass]);
 
   return (
     <Protection
@@ -60,43 +59,43 @@ export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
 };
 
 export function checkURL(
-  history: any,
+  nomChemin: string,
   statut?: StatutRequete,
   type?: TypeRequete,
   sousType?: SousTypeRequete
 ) {
   switch (type) {
     case TypeRequete.DELIVRANCE:
-      return checkURLDelivrance(history, statut, sousType);
+      return checkURLDelivrance(nomChemin, statut, sousType);
     case TypeRequete.INFORMATION:
-      return checkURLInformation(history);
+      return checkURLInformation(nomChemin);
     default:
       return true;
   }
 }
 
 function checkURLDelivrance(
-  history: any,
+  pathname: string,
   statut?: StatutRequete,
   sousType?: SousTypeRequete
 ) {
   switch (statut) {
     case StatutRequete.BROUILLON:
-      return getUrlCourante(history).includes(PATH_SAISIR_RDCSC);
+      return pathname.includes(PATH_SAISIR_RDCSC);
     case StatutRequete.PRISE_EN_CHARGE:
       return (
-        getUrlCourante(history).includes(PATH_APERCU_REQ_PRISE) ||
-        getUrlCourante(history).includes(PATH_MODIFIER_RDCSC)
+        pathname.includes(PATH_APERCU_REQ_PRISE) ||
+        pathname.includes(PATH_MODIFIER_RDCSC)
       );
     case StatutRequete.TRANSFEREE:
     case StatutRequete.A_TRAITER:
-      return getUrlCourante(history).includes(`${PATH_APERCU_REQ_DEL}/`);
+      return pathname.includes(`${PATH_APERCU_REQ_DEL}/`);
     case StatutRequete.A_VALIDER:
     case StatutRequete.A_SIGNER:
     case StatutRequete.TRANSMISE_A_VALIDEUR:
       return (
-        getUrlCourante(history).includes(PATH_APERCU_REQ_TRAITEMENT) ||
-        getUrlCourante(history).includes(PATH_EDITION)
+        pathname.includes(PATH_APERCU_REQ_TRAITEMENT) ||
+        pathname.includes(PATH_EDITION)
       );
     default:
       if (
@@ -106,13 +105,13 @@ function checkURLDelivrance(
           sousType
         )
       ) {
-        return getUrlCourante(history).includes(PATH_APERCU_REQ_TRAITEMENT);
+        return pathname.includes(PATH_APERCU_REQ_TRAITEMENT);
       }
 
       return false;
   }
 }
 
-function checkURLInformation(history: any) {
-  return getUrlCourante(history).includes(PATH_APERCU_REQ_INFO);
+function checkURLInformation(pathname: string) {
+  return pathname.includes(PATH_APERCU_REQ_INFO);
 }

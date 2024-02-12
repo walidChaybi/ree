@@ -1,6 +1,6 @@
 import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
-import { IActionOption } from "@model/requete/IActionOption";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { IActionOption } from "@model/requete/IActionOption";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
@@ -11,10 +11,14 @@ import {
   IBoutonPopin
 } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DocumentEC } from "../../../../../../../model/requete/enum/DocumentEC";
 import { IgnoreRequetePopin } from "../IgnoreRequetePopin";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
+import {
+  UpdateChoixDelivranceProps,
+  useUpdateChoixDelivrance
+} from "./hook/UpdateChoixDelivranceApiHook";
 import {
   controleCoherenceEntreDocumentSelectionneEtActionReponseSansDelivrance,
   estChoixActeNonDetenu,
@@ -22,15 +26,12 @@ import {
   getOptionsMenuReponseSansDelivrance,
   redirection
 } from "./MenuUtilEC";
-import {
-  UpdateChoixDelivranceProps,
-  useUpdateChoixDelivrance
-} from "./hook/UpdateChoixDelivranceApiHook";
 
 export const MenuReponseSansDelivranceEC: React.FC<
   IChoixActionDelivranceProps
 > = props => {
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
   const refs = useRef([]);
 
   const [actes, setActes] = useState<IResultatRMCActe[] | undefined>();
@@ -58,13 +59,14 @@ export const MenuReponseSansDelivranceEC: React.FC<
   const redirectionCallback = useCallback(
     (index: DocumentEC) => {
       redirection({
+        navigate,
+        location,
         idActe: actes?.[0] ? actes[0].idActe : "",
         idRequete: updateChoixDelivranceResultat?.idRequete,
-        history,
         index
       });
     },
-    [actes, history, updateChoixDelivranceResultat]
+    [actes, navigate, location, updateChoixDelivranceResultat]
   );
 
   const reponseSansDelivranceOptions: IActionOption[] =

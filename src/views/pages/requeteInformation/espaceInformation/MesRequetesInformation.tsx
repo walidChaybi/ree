@@ -7,7 +7,6 @@ import {
   useNavigationApercuInformation
 } from "@hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
-import { getUrlCourante } from "@util/route/UrlUtil";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
@@ -17,7 +16,7 @@ import {
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { requeteInformationMesRequetesColumnHeaders } from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationApiHook";
@@ -30,7 +29,7 @@ interface LocalProps {
 export const MesRequetesInformationPage: React.FC<LocalProps> = ({
   parametresReqInfo
 }) => {
-  const history = useHistory();
+  const location = useLocation();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
   const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
@@ -61,7 +60,7 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({
     idx: number
   ) {
     const requete = data[idx];
-    const urlCourante = getUrlCourante(history);
+    const urlCourante = location.pathname;
     setOperationEnCours(true);
     setParamsNavReqInfo({
       requete,

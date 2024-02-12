@@ -15,12 +15,13 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (
   props: any
 ) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [prendreEnCharge, setPrendreEnCharge] = useState<boolean>(false);
@@ -50,20 +51,20 @@ export const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (
       setPrendreEnCharge(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [requeteAleatoireResultat, history]);
+  }, [requeteAleatoireResultat, location]);
 
   useCreationActionMiseAjourStatut(paramsInformation);
 
   const redirectApercuRequeteInfo = useCallback(() => {
     if (requeteAleatoireResultat?.requete) {
-      history.push(
+      navigate(
         getUrlWithParam(
           URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
           requeteAleatoireResultat.requete.idRequete
         )
       );
     }
-  }, [history, requeteAleatoireResultat]);
+  }, [navigate, requeteAleatoireResultat]);
 
   const onClickPrendreEnCharge = () => {
     setPrendreEnCharge(true);

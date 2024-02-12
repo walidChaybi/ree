@@ -4,15 +4,11 @@ import {
 } from "@mock/data/RMCRequete";
 import { RMCTableauRequetesAssociees } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCTableauRequetesAssociees";
 import { render } from "@testing-library/react";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
-
-const history = createMemoryHistory();
-history.push("");
+import { MemoryRouter } from "react-router-dom";
 
 test("renders Resultat Recherche requêtes associées aux titulaires => Avec résultat", () => {
   const { getAllByText } = render(
-    <Router history={history}>
+    <MemoryRouter>
       <RMCTableauRequetesAssociees
         dataRMCRequete={DataRMCRequeteAvecResultat}
         dataTableauRMCRequete={DataTableauRequete}
@@ -22,7 +18,7 @@ test("renders Resultat Recherche requêtes associées aux titulaires => Avec ré
         setCriteresRechercheRequete={jest.fn()}
         resetTableauRequete={true}
       />
-    </Router>
+    </MemoryRouter>
   );
 
   const sousType1 = getAllByText("RCEDXR");
@@ -37,7 +33,7 @@ test("renders Resultat Recherche requêtes associées aux titulaires => Avec ré
 
 test("renders Resultat Recherche requêtes associées aux titulaires => Sans résultat", () => {
   const { getByText } = render(
-    <Router history={history}>
+    <MemoryRouter>
       <RMCTableauRequetesAssociees
         dataRMCRequete={[]}
         dataTableauRMCRequete={{}}
@@ -47,7 +43,7 @@ test("renders Resultat Recherche requêtes associées aux titulaires => Sans ré
         setCriteresRechercheRequete={jest.fn()}
         resetTableauRequete={true}
       />
-    </Router>
+    </MemoryRouter>
   );
 
   expect(getByText("Aucune requête n'a été trouvée.")).toBeDefined();

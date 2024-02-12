@@ -39,44 +39,52 @@ import {
   waitFor
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../../../../__tests__utils__/testsUtil";
 
 const RDCSC = () => {
-  const history = createMemoryHistory();
-
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequeteRDCSC
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        element: <ChoixAction requete={requeteRDCSC} />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSC
+      )
+    ]
   );
 
-  render(
-    <Router history={history}>
-      <ChoixAction requete={requeteRDCSC} />
-    </Router>
-  );
+  act(() => {
+    render(<RouterProvider router={router} />);
+  });
 
-  return { history };
+  return { router };
 };
 const RDCSCCertificatSituationRCA = () => {
-  const history = createMemoryHistory();
-
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequeteRDCSCCertificatSituationRCA
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        element: <ChoixAction requete={requeteRDCSCCertificatSituationRCA} />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSCCertificatSituationRCA
+      )
+    ]
   );
 
-  render(
-    <Router history={history}>
-      <ChoixAction requete={requeteRDCSCCertificatSituationRCA} />
-    </Router>
-  );
+  act(() => {
+    render(<RouterProvider router={router} />);
+  });
 
-  return { history };
+  return { router };
 };
 const Rendus = {
   apercuReqPriseEnCharge: {
@@ -143,7 +151,7 @@ describe("Menu réponse sans délivrance", () => {
       fireEvent.click(Boutons.PACSNonInscrit());
     });
 
-    expect(rendu.history.location.pathname).toBe(
+    expect(rendu.router.state.location.pathname).toBe(
       `${URL_MES_REQUETES_DELIVRANCE}/${PATH_APERCU_REQ_TRAITEMENT}/${idRequeteRDCSC}`
     );
   });

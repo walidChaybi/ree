@@ -8,6 +8,7 @@ import {
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID
 } from "@router/ReceUrls";
 import {
+  act,
   createEvent,
   fireEvent,
   render,
@@ -16,30 +17,32 @@ import {
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { PopinSignatureCreationEtablissement } from "@widget/signature/PopinSignatureCreationEtablissement";
-import { createMemoryHistory } from "history";
-import { Route, Router } from "react-router";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 describe("Doit afficher la popin de signature lors de la création d'un acte", () => {
   test("DOIT afficher la popin de signature basique", async () => {
-    const history = createMemoryHistory();
-    history.push(
-      `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/a5187320-d722-4673-abd7-a73ed41ad8c1`
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
+          element: (
+            <PopinSignatureCreationEtablissement
+              idActe="d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca"
+              estOuvert={true}
+              setEstOuvert={() => {}}
+            />
+          )
+        }
+      ],
+      [
+        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/a5187320-d722-4673-abd7-a73ed41ad8c1`
+      ]
     );
 
-    render(
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}
-        >
-          <PopinSignatureCreationEtablissement
-            idActe="d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca"
-            estOuvert={true}
-            setEstOuvert={() => {}}
-          />
-        </Route>
-      </Router>
-    );
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
 
     await waitFor(() => {
       expect(
@@ -49,25 +52,27 @@ describe("Doit afficher la popin de signature lors de la création d'un acte", (
   });
 
   test("DOIT afficher le titre de la popin de signature de création", async () => {
-    const history = createMemoryHistory();
-    history.push(
-      `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/a5187320-d722-4673-abd7-a73ed41ad8c1`
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
+          element: (
+            <PopinSignatureCreationEtablissement
+              idActe="d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca"
+              estOuvert={true}
+              setEstOuvert={() => {}}
+            />
+          )
+        }
+      ],
+      [
+        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/a5187320-d722-4673-abd7-a73ed41ad8c1`
+      ]
     );
 
-    render(
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}
-        >
-          <PopinSignatureCreationEtablissement
-            idActe="d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca"
-            estOuvert={true}
-            setEstOuvert={() => {}}
-          />
-        </Route>
-      </Router>
-    );
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
 
     await waitFor(() => {
       expect(screen.getByText("Signature du document")).toBeInTheDocument();
@@ -75,25 +80,27 @@ describe("Doit afficher la popin de signature lors de la création d'un acte", (
   });
 
   test("DOIT afficher le texte indicatif de la popin de signature de création", async () => {
-    const history = createMemoryHistory();
-    history.push(
-      `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/a5187320-d722-4673-abd7-a73ed41ad8c1`
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
+          element: (
+            <PopinSignatureCreationEtablissement
+              idActe="d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca"
+              estOuvert={true}
+              setEstOuvert={() => {}}
+            />
+          )
+        }
+      ],
+      [
+        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/a5187320-d722-4673-abd7-a73ed41ad8c1`
+      ]
     );
 
-    render(
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}
-        >
-          <PopinSignatureCreationEtablissement
-            idActe="d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca"
-            estOuvert={true}
-            setEstOuvert={() => {}}
-          />
-        </Route>
-      </Router>
-    );
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
 
     await waitFor(() => {
       expect(
@@ -120,25 +127,27 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       "mettreAJourStatutApresSignature"
     );
 
-    const history = createMemoryHistory();
-    history.push(
-      `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/a5187320-d722-4673-abd7-a73ed41ad8c1`
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
+          element: (
+            <PopinSignatureCreationEtablissement
+              idActe="d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca"
+              estOuvert={true}
+              setEstOuvert={() => {}}
+            />
+          )
+        }
+      ],
+      [
+        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/a5187320-d722-4673-abd7-a73ed41ad8c1`
+      ]
     );
 
-    render(
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}
-        >
-          <PopinSignatureCreationEtablissement
-            idActe="d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca"
-            estOuvert={true}
-            setEstOuvert={() => {}}
-          />
-        </Route>
-      </Router>
-    );
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
 
     // Simulation d'une signature réussie.
     fireEvent(
@@ -219,25 +228,27 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       "composerDocumentFinal"
     );
 
-    const history = createMemoryHistory();
-    history.push(
-      `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/a5187320-d722-4673-abd7-a73ed41ad8c1`
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
+          element: (
+            <PopinSignatureCreationEtablissement
+              idActe="d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca"
+              estOuvert={true}
+              setEstOuvert={() => {}}
+            />
+          )
+        }
+      ],
+      [
+        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/a5187320-d722-4673-abd7-a73ed41ad8c1`
+      ]
     );
 
-    render(
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}
-        >
-          <PopinSignatureCreationEtablissement
-            idActe="d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca"
-            estOuvert={true}
-            setEstOuvert={() => {}}
-          />
-        </Route>
-      </Router>
-    );
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
 
     // Simulation d'une signature réussie.
     fireEvent(
@@ -273,25 +284,27 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       "composerDocumentFinal"
     );
 
-    const history = createMemoryHistory();
-    history.push(
-      `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/a5187320-d722-4673-abd7-a73ed41ad8c1`
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
+          element: (
+            <PopinSignatureCreationEtablissement
+              idActe="d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca"
+              estOuvert={true}
+              setEstOuvert={() => {}}
+            />
+          )
+        }
+      ],
+      [
+        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/a5187320-d722-4673-abd7-a73ed41ad8c1`
+      ]
     );
 
-    render(
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}
-        >
-          <PopinSignatureCreationEtablissement
-            idActe="d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca"
-            estOuvert={true}
-            setEstOuvert={() => {}}
-          />
-        </Route>
-      </Router>
-    );
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
 
     // Simulation d'une signature réussie.
     fireEvent(

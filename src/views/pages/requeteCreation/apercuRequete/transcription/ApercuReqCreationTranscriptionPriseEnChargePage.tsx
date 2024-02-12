@@ -6,7 +6,7 @@ import {
   useAvecRejeuDetailRequeteApiHook
 } from "@hook/requete/DetailRequeteHook";
 import { mAppartient } from "@model/agent/IOfficier";
-import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { IRequete } from "@model/requete/IRequete";
@@ -28,7 +28,7 @@ import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { OngletPiecesJustificatives } from "../../commun/composants/OngletPiecesJustificatives";
 import "../../commun/scss/ApercuReqCreationPage.scss";
 import {
@@ -44,8 +44,9 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
   ApercuReqCreationTranscriptionPriseEnChargePageProps
 > = props => {
   // Params & history
-  const { idRequeteParam } = useParams<IUuidRequeteParams>();
-  const history = useHistory();
+  const { idRequeteParam } = useParams<TUuidRequeteParams>();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // States
   const [requete, setRequete] = useState<IRequeteCreation>();
@@ -65,7 +66,7 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
   function rechargerLaRequete() {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
-      estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
     });
     setIsDirty(false);
   }
@@ -163,7 +164,7 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
 
   function onModificationRequete() {
     if (requete) {
-      history.push(
+      navigate(
         getUrlWithParam(URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID, requete.id)
       );
     }

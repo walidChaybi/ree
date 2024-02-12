@@ -47,7 +47,7 @@ export const GO_BACK = "goBack";
 export const URL_DECONNEXION = "/rece/Shibboleth.sso/Logout";
 
 export const URL_CONTEXT_APP = "/rece/rece-ui";
-export const URL_ACCUEIL = `${URL_CONTEXT_APP}/accueil`;
+export const URL_ACCUEIL = `accueil`;
 
 ////////////////////////////////////////////
 ///// MES REQUETES DE DELIVRANCE (MRD) /////
@@ -147,7 +147,7 @@ export const URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID = `${URL_REQUETE
 ///////////// MES REQUETES DE CRÉATION /////////////////
 ////////////////////////////////////////////////////////
 export const URL_MES_REQUETES_CREATION = `${URL_CONTEXT_APP}/mesrequetescreation`;
-export const URL_LES_REQUETE_CREATION_SERVICE = `${URL_CONTEXT_APP}/requetescreationservice`;
+export const URL_LES_REQUETE_CREATION_SERVICE = `requetescreationservice`;
 export const URL_MES_REQUETES_CREATION_SAISIR_RCTC = `${URL_MES_REQUETES_CREATION}/${PATH_SAISIR_RCTC}`;
 export const URL_REQUETES_CREATION_SERVICE_SAISIR_RCTC = `${URL_LES_REQUETE_CREATION_SERVICE}/${PATH_SAISIR_RCTC}`;
 export const URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID = `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/${ID}`;

@@ -7,23 +7,32 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
-const history = createMemoryHistory();
-history.push(URL_MES_REQUETES_DELIVRANCE);
 const miseAJourCompteur = jest.fn();
 const setParamsRMCAuto = jest.fn();
+//
 
 test("renders Page requete with all elements", async () => {
-  render(
-    <Router history={history}>
-      <MesRequetesPage
-        miseAJourCompteur={miseAJourCompteur}
-        setParamsRMCAuto={setParamsRMCAuto}
-      />
-    </Router>
-  );
+  await act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE,
+          element: (
+            <MesRequetesPage
+              miseAJourCompteur={miseAJourCompteur}
+              setParamsRMCAuto={setParamsRMCAuto}
+            />
+          )
+        }
+      ],
+      [URL_MES_REQUETES_DELIVRANCE]
+    );
+
+    render(<RouterProvider router={router} />);
+  });
 
   const titreNumero = screen.getByText("N°");
   const pageSuivante = screen.getByTitle("Page suivante");
@@ -68,5 +77,3 @@ test("renders Page requete with all elements", async () => {
     expect(screen.getByText("9021")).toBeDefined();
   });
 });
-
-

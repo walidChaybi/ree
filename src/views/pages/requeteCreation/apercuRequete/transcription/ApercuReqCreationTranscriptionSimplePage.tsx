@@ -12,7 +12,7 @@ import {
   mAppartientOuAppartientAPersonne,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
-import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequete } from "@model/requete/IRequete";
@@ -31,7 +31,7 @@ import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetracta
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { OngletPiecesJustificatives } from "../../commun/composants/OngletPiecesJustificatives";
 import Labels from "../../commun/Labels";
 import "../../commun/scss/ApercuReqCreationPage.scss";
@@ -47,9 +47,10 @@ interface ApercuReqCreationTranscriptionSimplePageProps {
 export const ApercuReqCreationTranscriptionSimplePage: React.FC<
   ApercuReqCreationTranscriptionSimplePageProps
 > = props => {
-  const { idRequeteParam } = useParams<IUuidRequeteParams>();
+  const { idRequeteParam } = useParams<TUuidRequeteParams>();
   const [requete, setRequete] = useState<IRequeteCreationTranscription>();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [detailRequeteParams, setDetailRequeteParams] =
     useState<IDetailRequeteParams>();
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
@@ -72,9 +73,9 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
   useEffect(() => {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
-      estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
     });
-  }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
+  }, [props.idRequeteAAfficher, location.pathname, idRequeteParam]);
 
   function onRenommePieceJustificativeApercuSimple(
     idPieceJustificative: string,
@@ -90,7 +91,7 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
 
   function redirectApercuRequetePriseEnCharge() {
     if (requete) {
-      history.push(
+      navigate(
         getUrlWithParam(
           URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID,
           requete?.id
@@ -144,7 +145,7 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
   }
 
   function pagePrecedenteEstRechercherUneRequete(): boolean {
-    return getUrlPrecedente(history.location.pathname) === URL_RECHERCHE_REQUETE
+    return getUrlPrecedente(location.pathname) === URL_RECHERCHE_REQUETE
       ? true
       : false;
   }

@@ -1,4 +1,3 @@
-import { userDroitCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import { acteDeces } from "@mock/data/ficheEtBandeau/ficheActe";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -14,10 +13,11 @@ import {
   URL_MES_REQUETES_DELIVRANCE_EDITION_ID
 } from "@router/ReceUrls";
 import { act, render, waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
-import { createMemoryHistory, MemoryHistory } from "history";
-import { Route, Router } from "react-router-dom";
-import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
+import { RouterProvider } from "react-router-dom";
+import {
+  createTestingRouter,
+  mockFenetreFicheTestFunctions
+} from "../../../../../__tests__utils__/testsUtil";
 
 const documentResponse = [
   {
@@ -58,33 +58,26 @@ const documentResponse = [
   }
 ] as IDocumentReponse[];
 
-let history: MemoryHistory;
-
 beforeAll(async () => {
   mockFenetreFicheTestFunctions();
 });
 
-beforeEach(async () => {
-  storeRece.utilisateurCourant = userDroitCOMEDEC;
-
-  history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-});
-
 describe("Test onglets documents édites", () => {
   test("Doit retourner le bon type de document", async () => {
-    history.push(
-      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f77/19c0d767-64e5-4376-aa1f-6d781a2a235a`
-    );
-
     await act(async () => {
-      render(
-        <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
-            <EditionExtraitCopiePage />
-          </Route>
-        </Router>
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+            element: <EditionExtraitCopiePage />
+          }
+        ],
+        [
+          `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f77/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+        ]
       );
+
+      render(<RouterProvider router={router} />);
     });
 
     await waitFor(() => {
@@ -97,6 +90,22 @@ describe("Test onglets documents édites", () => {
   });
 
   test("Doit générer la bonne liste complémentaire", async () => {
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+            element: <EditionExtraitCopiePage />
+          }
+        ],
+        [
+          `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f77/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+        ]
+      );
+
+      render(<RouterProvider router={router} />);
+    });
+
     let listePlus: ItemListe[];
     const listePlusAttendu: ItemListe[] = [
       { label: "Copie intégrale", value: 3 }

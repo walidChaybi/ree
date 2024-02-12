@@ -1,5 +1,5 @@
 import { RECEContext } from "@core/body/RECEContext";
-import { IUuidSuiviDossierParams } from "@model/params/IUuidSuiviDossierParams";
+import { TUuidSuiviDossierParams } from "@model/params/TUuidSuiviDossierParams";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import {
@@ -16,7 +16,7 @@ import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { useContext, useMemo } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { BlocInformatif } from "../../../../../common/composant/BlocInformatif/BlocInformatif";
 import { BoutonPrendreEnChargeCreation } from "./BoutonPrendreEnChargeCreation";
 import "./scss/OngletsApercuCreationEtablissement.scss";
@@ -51,8 +51,9 @@ export const BoutonsApercuCreationEtablissement: React.FC<
   BoutonsApercuCreationEtablissementProps
 > = props => {
   const { idRequeteParam, idSuiviDossierParam } =
-    useParams<IUuidSuiviDossierParams>();
-  const history = useHistory();
+    useParams<TUuidSuiviDossierParams>();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { rechargementPage } = useContext(RECEContext);
 
   const estPresentBoutonPriseEnCharge =
@@ -65,7 +66,7 @@ export const BoutonsApercuCreationEtablissement: React.FC<
     !props.estRegistreOuvert || props.estFormulaireModifie;
 
   const boutonRetour = useMemo(() => {
-    const pathname = history.location.pathname;
+    const pathname = location.pathname;
     const bouton = {
       libelle: RETOUR_RECHERCHE_REQUETE,
       url: URL_RECHERCHE_REQUETE
@@ -73,7 +74,7 @@ export const BoutonsApercuCreationEtablissement: React.FC<
     if (pathname.includes(PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET)) {
       bouton.libelle = RETOUR_SUIVI_DOSSIER;
       bouton.url = `${getUrlPrecedente(
-        history.location.pathname
+        location.pathname
       )}/${PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER}/${props.requete.id}`;
     } else if (pathname.startsWith(URL_MES_REQUETES_CREATION)) {
       bouton.libelle = RETOUR_MES_REQUETES_CREATION;
@@ -89,14 +90,10 @@ export const BoutonsApercuCreationEtablissement: React.FC<
     }
 
     return bouton;
-  }, [
-    history.location.pathname,
-    props.requete.id,
-    props.tousLesProjetsSontSignes
-  ]);
+  }, [location.pathname, props.requete.id, props.tousLesProjetsSontSignes]);
 
   function onClickBoutonRetour() {
-    replaceUrl(history, boutonRetour.url);
+    replaceUrl(navigate, boutonRetour.url);
   }
 
   function ouvrePopinSignature() {
@@ -139,6 +136,8 @@ export const BoutonsApercuCreationEtablissement: React.FC<
                 title={getLibelle("Valider le projet d'acte")}
                 onClick={() =>
                   props.validerProjetActe &&
+                  idRequeteParam &&
+                  idSuiviDossierParam &&
                   props.validerProjetActe(idRequeteParam, idSuiviDossierParam)
                 }
               >

@@ -6,92 +6,101 @@ import {
 } from "@router/ReceUrls";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { createMemoryHistory } from "history";
-import { Route, Router } from "react-router";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 
 describe("Test de la page Aperçu requête etablissement simple", () => {
   test("DOIT rendre le composant ApercuReqCreationEtablissementSimplePage correctement", async () => {
-    const history = createMemoryHistory();
-    history.push(
-      getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/:idRequete`,
-        "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-      )
-    );
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+            element: <ApercuRequeteEtablissementSimplePage />
+          }
+        ],
+        [
+          getUrlWithParam(
+            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/:idRequete`,
+            "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+          )
+        ]
+      );
 
-    const { container } = render(
-      <Router history={history}>
-        <ApercuRequeteEtablissementSimplePage />
-      </Router>
-    );
-    await waitFor(async () => {
-      expect(
-        container.getElementsByClassName(
-          "ApercuReqCreationEtablissementSimplePage"
-        ).length
-      ).toBe(1);
+      const { container } = render(<RouterProvider router={router} />);
+
+      await waitFor(async () => {
+        expect(
+          container.getElementsByClassName(
+            "ApercuReqCreationEtablissementSimplePage"
+          ).length
+        ).toBe(1);
+      });
     });
   });
 
   test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", async () => {
-    const history = createMemoryHistory();
-    history.push(
-      getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/:idRequete`,
-        "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-      )
-    );
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+            element: <ApercuRequeteEtablissementSimplePage />
+          }
+        ],
+        [
+          getUrlWithParam(
+            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/:idRequete`,
+            "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+          )
+        ]
+      );
 
-    const { container } = render(
-      <Router history={history}>
-        <ApercuRequeteEtablissementSimplePage />
-      </Router>
-    );
+      const { container } = render(<RouterProvider router={router} />);
 
-    await waitFor(async () => {
-      expect(
-        container.getElementsByClassName("OperationLocaleEnCoursSimple").length
-      ).toBe(1);
-    });
-
-    setTimeout(() => {
-      act(() => {
+      await waitFor(async () => {
         expect(
           container.getElementsByClassName("OperationLocaleEnCoursSimple")
             .length
-        ).toBe(0);
+        ).toBe(1);
       });
-    }, 3000);
+
+      setTimeout(() => {
+        act(() => {
+          expect(
+            container.getElementsByClassName("OperationLocaleEnCoursSimple")
+              .length
+          ).toBe(0);
+        });
+      }, 0);
+    });
   });
 
   test("DOIT afficher les onglets avec pièce justificative active QUAND on arrive sur la page", async () => {
-    const history = createMemoryHistory();
-    history.push(
-      getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/:idRequete`,
-        "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-      )
-    );
-
-    render(
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={
-            URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+            element: <ApercuRequeteEtablissementSimplePage />
           }
-        >
-          <ApercuRequeteEtablissementSimplePage />
-        </Route>
-      </Router>
-    );
+        ],
+        [
+          getUrlWithParam(
+            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/:idRequete`,
+            "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+          )
+        ]
+      );
 
-    await waitFor(async () => {
-      expect(
-        screen
-          .getByText("Pièces justificatives / Annexes")
-          .getAttribute("aria-selected")
-      ).toBe("true");
+      render(<RouterProvider router={router} />);
+      await waitFor(async () => {
+        expect(
+          screen
+            .getByText("Pièces justificatives / Annexes")
+            .getAttribute("aria-selected")
+        ).toBe("true");
+      });
     });
   });
 });

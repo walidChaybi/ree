@@ -1,96 +1,113 @@
 import { URL_REQUETES } from "@api/appels/requeteApi";
 import { URL_ACCUEIL } from "@router/ReceUrls";
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, waitFor } from "@testing-library/react";
 import { Categorie } from "@widget/filAriane/Categorie";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
-
-const setIsDirty = (isDirty = false) => {};
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 test("renders not last Categorie", async () => {
-  const history = createMemoryHistory();
-  history.push(URL_REQUETES);
-  const { getByText } = render(
-    <Router history={history}>
-      <Categorie
-        url={URL_ACCUEIL}
-        message={"accueil.test"}
-        last={false}
-        isDirty={false}
-        setIsDirty={setIsDirty}
-      />
-    </Router>
-  );
-  await waitFor(() => {
-    const linkElement = getByText(/accueil.test/);
-    expect(linkElement).toBeInTheDocument();
-    expect(linkElement.className).toBe("LinkFilAriane");
-    fireEvent.click(linkElement);
+  await act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_REQUETES,
+          element: (
+            <Categorie
+              url={URL_ACCUEIL}
+              message={"accueil.test"}
+              last={false}
+            />
+          )
+        }
+      ],
+      [URL_REQUETES]
+    );
+
+    const { getByText } = render(<RouterProvider router={router} />);
+    await waitFor(() => {
+      const linkElement = getByText(/accueil.test/);
+      expect(linkElement).toBeInTheDocument();
+      expect(linkElement.className).toBe("LinkFilAriane");
+      fireEvent.click(linkElement);
+    });
   });
 });
 
 test("renders not last Categorie and click", async () => {
-  const history = createMemoryHistory();
-  history.push(URL_REQUETES);
-  const { getByText } = render(
-    <Router history={history}>
-      <Categorie
-        url={URL_ACCUEIL}
-        message={"accueil.test"}
-        last={false}
-        isDirty={false}
-        setIsDirty={setIsDirty}
-      />
-    </Router>
-  );
-  await waitFor(() => {
-    expect(history.length).toBe(2);
-    const linkElement = getByText("accueil.test");
-    fireEvent.click(linkElement);
-    expect(history.length).toBe(3);
+  await act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_REQUETES,
+          element: (
+            <Categorie
+              url={URL_ACCUEIL}
+              message={"accueil.test"}
+              last={false}
+            />
+          )
+        }
+      ],
+      [URL_REQUETES]
+    );
+
+    const { getByText } = render(<RouterProvider router={router} />);
+    await waitFor(() => {
+      expect(router.state.historyAction.length).toBe(3);
+      const linkElement = getByText("accueil.test");
+      fireEvent.click(linkElement);
+      expect(router.state.historyAction.length).toBe(4);
+    });
   });
 });
 
 test("renders last Categorie", async () => {
-  const history = createMemoryHistory();
-  history.push(URL_REQUETES);
-  const { getByText } = render(
-    <Router history={history}>
-      <Categorie
-        url={URL_ACCUEIL}
-        message={"accueilString"}
-        last={true}
-        isDirty={false}
-        setIsDirty={setIsDirty}
-      />
-    </Router>
-  );
-  await waitFor(() => {
-    const linkElement = getByText("accueilString");
-    expect(linkElement).toBeInTheDocument();
-    expect(linkElement.className).toBe("TextFilAriane");
+  await act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_REQUETES,
+          element: (
+            <Categorie
+              url={URL_ACCUEIL}
+              message={"accueilString"}
+              last={true}
+            />
+          )
+        }
+      ],
+      [URL_REQUETES]
+    );
+
+    const { getByText } = render(<RouterProvider router={router} />);
+    await waitFor(() => {
+      const linkElement = getByText("accueilString");
+      expect(linkElement).toBeInTheDocument();
+      expect(linkElement.className).toBe("TextFilAriane");
+    });
   });
 });
 
 test("renders not last Categorie go to accueil", async () => {
-  const history = createMemoryHistory();
-  history.push(URL_REQUETES);
-  history.push("test2");
-  const { getAllByText } = render(
-    <Router history={history}>
-      <Categorie
-        url={URL_ACCUEIL}
-        message={"Accueil"}
-        last={false}
-        isDirty={false}
-        setIsDirty={setIsDirty}
-      />
-    </Router>
-  );
-  await waitFor(() => {
-    const linkElement = getAllByText("Accueil");
-    expect(history).toHaveLength(3);
-    fireEvent.click(linkElement[0]);
-    expect(history).toHaveLength(4);
+  await act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_REQUETES,
+          element: (
+            <Categorie url={URL_ACCUEIL} message={"Accueil"} last={false} />
+          )
+        }
+      ],
+      ["/test2", URL_REQUETES]
+    );
+
+    const { getAllByText } = render(<RouterProvider router={router} />);
+    await waitFor(() => {
+      const linkElement = getAllByText("Accueil");
+      expect(router.state.historyAction).toHaveLength(3);
+      fireEvent.click(linkElement[0]);
+      expect(router.state.historyAction).toHaveLength(4);
+    });
   });
 });

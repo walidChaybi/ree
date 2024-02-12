@@ -18,7 +18,7 @@ import {
   useUpdateRequeteCreation
 } from "@hook/requete/UpdateRequeteCreationApiHook";
 import { ISaisieRequeteRCTC } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
-import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
@@ -29,12 +29,13 @@ import {
   URL_RECHERCHE_REQUETE
 } from "@router/ReceUrls";
 import { getPiecesJointesNonVides, PieceJointe } from "@util/FileUtils";
-import { getUrlCourante, replaceUrl } from "@util/route/UrlUtil";
+import { replaceUrl } from "@util/route/UrlUtil";
+import { UN } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { FormikValues } from "formik";
 import React, { useCallback, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
 import {
@@ -108,8 +109,9 @@ const ValidationSchemaSaisirRCTC = Yup.object({
 });
 
 export const SaisirRCTCPage: React.FC = () => {
-  const history = useHistory();
-  const { idRequeteParam } = useParams<IUuidRequeteParams>();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { idRequeteParam } = useParams<TUuidRequeteParams>();
 
   //States
   //////////////////////////////////////////////////////////////////////////
@@ -129,8 +131,8 @@ export const SaisirRCTCPage: React.FC = () => {
     useState<string>();
   const [updateRequeteCreation, setUpdateRequeteCreation] =
     useState<IUpdateRequeteCreationParams>();
-    const [detailRequeteParams, setDetailRequeteParams] =
-      useState<IDetailRequeteParams>();
+  const [detailRequeteParams, setDetailRequeteParams] =
+    useState<IDetailRequeteParams>();
 
   // Hooks
   //////////////////////////////////////////////////////////////////////////
@@ -167,11 +169,9 @@ export const SaisirRCTCPage: React.FC = () => {
   useEffect(() => {
     setDetailRequeteParams({
       idRequete: idRequete ?? idRequeteParam,
-      estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
     });
-  }, [idRequete, history.location.pathname, idRequeteParam]);
-
-
+  }, [idRequete, location.pathname, idRequeteParam]);
   useEffect(() => {
     if (detailRequeteState) {
       const requeteFormMap = mappingRequeteTranscriptionVersForumlaireRCTC(
@@ -216,11 +216,11 @@ export const SaisirRCTCPage: React.FC = () => {
   }, [postPiecesJointesApiResultat]);
 
   useEffect(() => {
-    if (history) {
-      const url = getUrlCourante(history);
+    if (location) {
+      const url = location.pathname;
       setModeModification(url.includes(PATH_MODIFIER_RCTC));
     }
-  }, [history]);
+  }, [location]);
 
   // Evenements & fonctions
   //////////////////////////////////////////////////////////////////////////
@@ -308,12 +308,12 @@ export const SaisirRCTCPage: React.FC = () => {
     if (idRequeteCreee || idRequeteUpdate) {
       const url =
         receUrl.getUrlApercuPriseEnChargeCreationTranscriptionAPartirDe({
-          url: history.location.pathname,
+          url: location.pathname,
           idRequete: idRequeteCreee || idRequeteUpdate
         });
-      replaceUrl(history, url);
+      replaceUrl(navigate, url);
     } else if (idRequeteCreerEtTransmise) {
-      history.goBack();
+      navigate(-UN);
     }
   }
 };

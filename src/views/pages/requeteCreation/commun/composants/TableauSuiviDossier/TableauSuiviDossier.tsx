@@ -20,7 +20,7 @@ import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ModalBulletinIdentification from "./ModalBulletinIdentification";
 import { IDataBulletinIdentificationResultat } from "./ModalBulletinIdentificationApiHook";
 import "./scss/TableauSuiviDossier.scss";
@@ -37,7 +37,8 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
   const [dataFromRequete, setDataFromRequete] =
     useState<IDataBulletinIdentificationResultat>();
 
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const { dataTableau } = useTableauSuiviDossierHook(props.requete.titulaires);
 
@@ -114,9 +115,9 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
         )
       ) {
         replaceUrl(
-          history,
+          navigate,
           `${getUrlPrecedente(
-            history.location.pathname
+            location.pathname
           )}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/${
             props.requete.id
           }/${id}`

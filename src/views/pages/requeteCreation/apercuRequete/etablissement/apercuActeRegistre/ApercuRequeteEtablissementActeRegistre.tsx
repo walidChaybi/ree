@@ -2,7 +2,7 @@ import {
   IDetailRequeteParams,
   useDetailRequeteApiHook
 } from "@hook/requete/DetailRequeteHook";
-import { IUuidActeParams } from "@model/params/IUuidActeParams";
+import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
@@ -15,7 +15,7 @@ import { DEUX, getLibelle, UN, ZERO } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import {
   getConteneurResumeRequete,
@@ -37,8 +37,8 @@ interface ItemListe {
 export const ApercuRequeteEtablissementActeRegistrePage: React.FC<
   ApercuRequeteEtablissementActeRegistreProps
 > = props => {
-  const { idRequeteParam, idActeParam } = useParams<IUuidActeParams>();
-  const history = useHistory();
+  const { idRequeteParam, idActeParam } = useParams<TUuidActeParams>();
+  const location = useLocation();
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
   const [detailRequeteParams, setDetailRequeteParams] =
     useState<IDetailRequeteParams>();
@@ -70,12 +70,12 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC<
   useEffect(() => {
     rechargerRequete();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.idRequeteAAfficher, history.location.pathname, idRequeteParam]);
+  }, [props.idRequeteAAfficher, location.pathname, idRequeteParam]);
 
   function rechargerRequete() {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
-      estConsultation: history.location.pathname.includes(URL_RECHERCHE_REQUETE)
+      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
     });
   }
 

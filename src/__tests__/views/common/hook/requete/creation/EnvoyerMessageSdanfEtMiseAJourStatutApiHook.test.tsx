@@ -5,13 +5,10 @@ import {
   requeteCreationAvecMessagesRetourSDANFAvecMessages
 } from "@mock/data/requeteCreation";
 import { IEchange } from "@model/requete/IEchange";
-import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
-let history: MemoryHistory;
 
 beforeAll(async () => {
   mockFenetreFicheTestFunctions();
@@ -39,9 +36,6 @@ const HookConsumer: React.FC = () => {
 
 beforeEach(async () => {
   storeRece.utilisateurCourant = userDroitCOMEDEC;
-
-  history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
 });
 
 test("Attendu: useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook fonctionne correctement", async () => {

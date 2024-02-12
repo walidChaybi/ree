@@ -14,7 +14,7 @@ import {
   useGenerationEC
 } from "@hook/generation/generationECHook/generationECHook";
 import { useSupprimerDocumentComplementaireApi } from "@hook/requete/SupprimerDocumentComplementaireHook";
-import { IUuidActeParams } from "@model/params/IUuidActeParams";
+import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import {
   DocumentReponse,
   IDocumentReponse
@@ -25,7 +25,7 @@ import { checkDirty } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { DocumentEC } from "../../../../model/requete/enum/DocumentEC";
 import {
   IDetailRequeteParams,
@@ -57,9 +57,9 @@ export interface ISuppressionDocumentComplementaireParams {
 export const EditionExtraitCopiePage: React.FC = () => {
   // Params
   useTitreDeLaFenetre("Édition extrait copie");
-  const history = useHistory();
+  const location = useLocation();
   const { isDirty, setIsDirty } = useContext(RECEContext);
-  const { idRequeteParam, idActeParam } = useParams<IUuidActeParams>();
+  const { idRequeteParam, idActeParam } = useParams<TUuidActeParams>();
 
   // States
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
@@ -164,11 +164,9 @@ export const EditionExtraitCopiePage: React.FC = () => {
     idRequeteParam &&
       setDetailRequeteParams({
         idRequete: idRequeteParam,
-        estConsultation: history.location.pathname.includes(
-          URL_RECHERCHE_REQUETE
-        )
+        estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
       });
-  }, [idRequeteParam, history.location.pathname]);
+  }, [idRequeteParam, location.pathname]);
 
   useEffect(() => {
     detailRequeteState && setRequete(detailRequeteState as IRequeteDelivrance);
@@ -186,11 +184,13 @@ export const EditionExtraitCopiePage: React.FC = () => {
   }, [requete]);
 
   useEffect(() => {
-    setDocumentEdite(
-      documents && documents.length === 0
-        ? getDocumentEditeDefaut(idActeParam)
-        : documents?.[indexDocEdite]
-    );
+    if (idActeParam) {
+      setDocumentEdite(
+        documents && documents.length === 0
+          ? getDocumentEditeDefaut(idActeParam || "")
+          : documents?.[indexDocEdite]
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [documents, idActeParam]);
 

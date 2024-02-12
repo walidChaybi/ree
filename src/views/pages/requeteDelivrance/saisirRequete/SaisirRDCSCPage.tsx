@@ -11,7 +11,7 @@ import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { SaisieRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
-import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -20,7 +20,7 @@ import { PATH_MODIFIER_RDCSC } from "@router/ReceUrls";
 import { PieceJointe } from "@util/FileUtils";
 import messageManager from "@util/messageManager";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
-import { getUrlCourante } from "@util/route/UrlUtil";
+import { goBack } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import {
@@ -33,7 +33,7 @@ import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { FormikProps, FormikValues } from "formik";
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
 import {
@@ -100,14 +100,15 @@ export const enum limitesTitulaires {
 export const SaisirRDCSCPage: React.FC = () => {
   /** Parametres */
   useTitreDeLaFenetre(titreForm);
-  const history = useHistory();
-  const { idRequeteParam } = useParams<IUuidRequeteParams>();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { idRequeteParam } = useParams<TUuidRequeteParams>();
 
   /** Informations de la requête */
   const [idRequete, setIdRequete] = useState<string>();
   const [saisieRequeteRDCSC, setSaisieRequeteRDCSC] =
     useState<SaisieRequeteRDCSC>();
-  const { detailRequeteState } = useDetailRequeteApiHook({idRequete});
+  const { detailRequeteState } = useDetailRequeteApiHook({ idRequete });
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [modeModification, setModeModification] = useState(false);
@@ -144,7 +145,7 @@ export const SaisirRDCSCPage: React.FC = () => {
     miseAJourStatutRequetePuisRedirection,
     miseAJourActionPuisRedirection
   } = useRedirectionApresSoumissionRDCSCHook(
-    history.location.pathname,
+    location.pathname,
     modeModification,
     setOperationEnCours,
     setReponseSansDelivranceCS,
@@ -167,11 +168,11 @@ export const SaisirRDCSCPage: React.FC = () => {
   );
 
   useEffect(() => {
-    if (history) {
-      const url = getUrlCourante(history);
+    if (location) {
+      const url = location.pathname;
       setModeModification(url.includes(PATH_MODIFIER_RDCSC));
     }
-  }, [history]);
+  }, [location]);
 
   useEffect(() => {
     if (detailRequeteState) {
@@ -236,9 +237,9 @@ export const SaisirRDCSCPage: React.FC = () => {
         getLibelle("Le refus a bien été enregistré")
       );
 
-      history.goBack();
+      goBack(navigate);
     }
-  }, [resultatReponseSansDelivranceCS, history]);
+  }, [resultatReponseSansDelivranceCS, navigate]);
 
   const onChangeTitulaires = (
     titulaires: IdentiteSubFormProps[],

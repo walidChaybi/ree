@@ -1,51 +1,59 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { requeteCreationEtablissementSaisieProjet } from "@mock/data/requeteCreationEtablissement";
 import "@mock/element/IntersectionObserver";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
-import { SaisiePostulantForm } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/SaisiePostulantForm";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
+import { SaisiePostulantForm } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/SaisiePostulantForm";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID
 } from "@router/ReceUrls";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { DEUX, UN, ZERO } from "@util/Utils";
-import { createMemoryHistory } from "history";
-import { Route, Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { localStorageFeatureFlagMock } from "../../../../../../../../../../setupTests";
+import { createTestingRouter } from "../../../../../../../../../__tests__utils__/testsUtil";
 
 function afficheComposantSaisiePostulantForm(
   titulaires: ITitulaireRequeteCreation[],
   avancement?: AvancementProjetActe
 ): void {
-  const history = createMemoryHistory();
-  history.push(
-    `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/er5ez456-354v-461z-c5fd-162md289m74h/a272ec8a-1351-4edd-99b8-03004292a9d2`
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
+        element: (
+          <SaisiePostulantForm
+            postulant={titulaires[ZERO]}
+            estProjetExistant={false}
+            onSubmitSaisieProjetForm={() => {}}
+            avancementProjet={avancement}
+            valeursForm={mappingTitulairesVersFormulairePostulant(
+              titulaires[ZERO],
+              titulaires[UN],
+              titulaires[DEUX],
+              "NAISSANCE"
+            )}
+          />
+        )
+      }
+    ],
+    [
+      `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/er5ez456-354v-461z-c5fd-162md289m74h/a272ec8a-1351-4edd-99b8-03004292a9d2`
+    ]
   );
 
-  render(
-    <Router history={history}>
-      <Route
-        exact={true}
-        path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}
-      >
-        <SaisiePostulantForm
-          postulant={titulaires[ZERO]}
-          estProjetExistant={false}
-          onSubmitSaisieProjetForm={() => {}}
-          avancementProjet={avancement}
-          valeursForm={mappingTitulairesVersFormulairePostulant(
-            titulaires[ZERO],
-            titulaires[UN],
-            titulaires[DEUX],
-            "NAISSANCE"
-          )}
-        />
-      </Route>
-    </Router>
-  );
+  act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 }
 
 describe("Test du bloc Postulant de l'onglet Postulant", () => {

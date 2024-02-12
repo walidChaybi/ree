@@ -1,7 +1,6 @@
 import { HTTP_FORBIDDEN, HTTP_UNAUTHORIZED } from "@api/ApiManager";
 import { routesRece } from "@router/ReceRoutes";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
-import { RouterComponent } from "@router/RouteComponent";
 import { useReinitialisationComposant } from "@util/form/useReinitialisation";
 import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
 import {
@@ -13,6 +12,7 @@ import { logError } from "@util/LogManager";
 import { getLibelle } from "@util/Utils";
 import { FilAriane } from "@widget/filAriane/FilAriane";
 import React, { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import {
   OfficierContext,
   OfficierContextProps
@@ -60,7 +60,8 @@ export const Body: React.FC = () => {
                   ></GestionnaireFermeture>
 
                   <FilAriane routes={routesRece} />
-                  <RouterComponent key={cleReinitialisation} />
+                  {/* <RouterComponent key={cleReinitialisation} /> */}
+                  <Outlet />
                 </RECEContext.Provider>
               )
             ) : (

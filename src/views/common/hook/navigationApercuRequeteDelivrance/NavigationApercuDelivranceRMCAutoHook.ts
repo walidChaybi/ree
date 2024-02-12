@@ -3,7 +3,7 @@ import { IUrlData, receUrl } from "@router/ReceUrls";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { tousRenseignes } from "@util/Utils";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { IRMCAutoParams, useRMCAutoHook } from "../rmcAuto/RMCAutoHook";
 import {
   INavigationApercuDelivrance,
@@ -19,7 +19,7 @@ export interface INavigationApercuRMCAutoParams {
 export function useNavigationApercuRMCAutoDelivrance(
   rmcAutoNavigationParams?: INavigationApercuRMCAutoParams
 ) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [paramsRMCAuto, setParamsRMCAuto] = useState<
     IRMCAutoParams | undefined
   >();
@@ -59,10 +59,10 @@ export function useNavigationApercuRMCAutoDelivrance(
           )
         ) {
           // @ts-ignore (forcément valué)
-          replaceUrl(history, urlDataToPush.url, urlDataToPush.data);
+          replaceUrl(navigate, urlDataToPush.url, urlDataToPush.data);
         } else {
           // @ts-ignore (forcément valué)
-          history.push(urlDataToPush.url, urlDataToPush.data);
+          navigate(urlDataToPush.url, urlDataToPush.data);
         }
       }
     },

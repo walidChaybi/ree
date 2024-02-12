@@ -15,8 +15,8 @@ import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID } from
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory } from "history";
-import { Route, Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 beforeAll(() => {
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
 });
@@ -25,24 +25,11 @@ function afficheComposant(
   idRequete: string,
   requete: IRequeteCreationEtablissement
 ): void {
-  const history = createMemoryHistory();
-
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-      idRequete
-    )
-  );
-
-  render(
-    <>
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={
-            URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
-          }
-        >
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        element: (
           <OngletsApercuCreationEtablissementPriseEnCharge
             requete={mappingRequeteCreation(requete)}
             onRenommePieceJustificative={(
@@ -56,10 +43,18 @@ function afficheComposant(
             setRmcAutoPersonneParams={() => {}}
             rechargerRequete={() => {}}
           />
-        </Route>
-      </Router>
-    </>
+        )
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        idRequete
+      )
+    ]
   );
+
+  render(<RouterProvider router={router} />);
 }
 
 test("DOIT afficher l'encart 'Retour SDANF' QUAND on rend le composant d'aperçu creation etablissement en prise en charge.", async () => {

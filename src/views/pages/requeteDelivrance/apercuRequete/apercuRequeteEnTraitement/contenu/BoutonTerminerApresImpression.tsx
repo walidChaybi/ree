@@ -13,7 +13,7 @@ import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface BoutonTerminerApresImpressionProps {
   requete: IRequeteDelivrance;
@@ -22,7 +22,8 @@ interface BoutonTerminerApresImpressionProps {
 export const BoutonTerminerApresImpression: React.FC<
   BoutonTerminerApresImpressionProps
 > = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [majStatutParams, setMajStatutParams] = useState<
     ICreationActionEtMiseAjourStatutParams | undefined
@@ -41,9 +42,9 @@ export const BoutonTerminerApresImpression: React.FC<
 
   useEffect(() => {
     if (idAction) {
-      replaceUrl(history, getUrlPrecedente(history.location.pathname));
+      replaceUrl(navigate, getUrlPrecedente(location.pathname));
     }
-  }, [idAction, history]);
+  }, [idAction, location.pathname, navigate]);
 
   const estAValiderOuASigner =
     props.requete.statutCourant.statut === StatutRequete.A_VALIDER ||

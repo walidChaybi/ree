@@ -7,10 +7,9 @@ import {
   INavigationApercuReqInfoParams,
   useNavigationApercuInformation
 } from "@hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
-import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { getUrlCourante } from "@util/route/UrlUtil";
+import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
@@ -20,7 +19,7 @@ import {
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { requeteInformationRequetesServiceColumnHeaders } from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationApiHook";
@@ -33,7 +32,7 @@ interface LocalProps {
 export const ReqInfoServicePage: React.FC<LocalProps> = ({
   parametresReqInfo
 }) => {
-  const history = useHistory();
+  const location = useLocation();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
     INavigationApercuReqInfoParams | undefined
@@ -70,7 +69,7 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     idx: number
   ) {
     const requete = data[idx];
-    const urlCourante = getUrlCourante(history);
+    const urlCourante = location.pathname;
     setOperationEnCours(true);
     setParamsNavReqInfo({
       requete,

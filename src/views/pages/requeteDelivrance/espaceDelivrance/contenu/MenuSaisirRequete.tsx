@@ -17,14 +17,14 @@ import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 interface MenuSaisirRequeteProps {
   indexTabPanel: number;
   disabled?: boolean;
 }
 
 const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const clickMenuItem = (nomRequete: string) => {
     if (props.indexTabPanel === 1) {
@@ -34,18 +34,18 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
             storeRece.utilisateurCourant &&
             utilisateurADroit(Droit.DELIVRER, storeRece.utilisateurCourant)
           ) {
-            history.push(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC);
+            navigate(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC);
           } else {
             alert("Vous n'avez pas les droits pour ce type de requête");
           }
           break;
 
         case "RDC":
-          history.push(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC);
+          navigate(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC);
           break;
 
         case "RDLFC":
-          history.push(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC);
+          navigate(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC);
           break;
 
         default:
@@ -54,15 +54,15 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
     } else {
       switch (nomRequete) {
         case "RDCSC":
-          history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC);
+          navigate(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC);
           break;
 
         case "RDC":
-          history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC);
+          navigate(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC);
           break;
 
         case "RDLFC":
-          history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC);
+          navigate(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC);
           break;
 
         default:

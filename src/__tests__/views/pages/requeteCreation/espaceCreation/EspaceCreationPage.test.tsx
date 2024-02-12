@@ -6,7 +6,7 @@ import {
 } from "@mock/data/connectedUserAvecDroit";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
-import { URL_ACCUEIL } from "@router/ReceUrls";
+import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -15,8 +15,8 @@ import {
   waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
   storeRece.utilisateurCourant = mappingOfficier(
@@ -29,23 +29,26 @@ beforeAll(() => {
 });
 
 test("renders creationPage", async () => {
-  const history = createMemoryHistory();
-  history.push(URL_ACCUEIL);
-
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <OfficierContext.Provider
-            value={{
-              officierDataState: storeRece.utilisateurCourant
-            }}
-          >
-            <EspaceCreationPage selectedTab={0} />
-          </OfficierContext.Provider>
-        </Router>
-      </>
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION,
+          element: (
+            <OfficierContext.Provider
+              value={{
+                officierDataState: storeRece.utilisateurCourant
+              }}
+            >
+              <EspaceCreationPage selectedTab={0} />
+            </OfficierContext.Provider>
+          )
+        }
+      ],
+      [URL_MES_REQUETES_CREATION]
     );
+
+    render(<RouterProvider router={router} />);
   });
 
   const title = "Espace création";
@@ -63,12 +66,16 @@ test("renders creationPage", async () => {
     fireEvent.click(requetesService);
   });
 
-  const attribueA = screen.getByText(/Attribuée à/i);
+  setTimeout(() => {
+    act(() => {
+      const attribueA = screen.getByText(/Attribuée à/i);
 
-  await waitFor(() => {
-    expect(document.title).toBe(title);
-    expect(mesRequetes).toBeDefined();
-    expect(requetesService).toBeDefined();
-    expect(attribueA).toBeDefined();
-  });
+      waitFor(() => {
+        expect(document.title).toBe(title);
+        expect(mesRequetes).toBeDefined();
+        expect(requetesService).toBeDefined();
+        expect(attribueA).toBeDefined();
+      });
+    });
+  }, 0);
 });

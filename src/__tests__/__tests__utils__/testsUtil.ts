@@ -1,6 +1,7 @@
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { act, fireEvent, waitFor } from "@testing-library/react";
+import { createMemoryRouter, RouteObject } from "react-router-dom";
 import { urlImagePngVideBase64 } from "../../mock/data/ImagePng";
 
 function dataURLtoFile(dataurl: string, filename: string): File {
@@ -75,4 +76,18 @@ export async function renseigneChampsRecherche(
 
 export function deepCopie(objet: any) {
   return JSON.parse(JSON.stringify(objet));
+}
+
+export function createTestingRouter(
+  routes: RouteObject[],
+  initialEntries: string[]
+) {
+  return createMemoryRouter(
+    routes.map(route => {
+      return { path: route.path, element: route.element };
+    }),
+    {
+      initialEntries
+    }
+  );
 }

@@ -1,6 +1,5 @@
 /* istanbul ignore file */
 
-import { PageMessage } from "@core/login/PageMessage";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
@@ -31,9 +30,7 @@ import { droitsSaufConsulterArchives } from "@util/habilitation/habilitationsDes
 import { IRoute } from "@util/route/IRoute";
 import { getLibelle } from "@util/Utils";
 import {
-  URL_ACCUEIL,
   URL_CONTEXT_APP,
-  URL_DECONNEXION,
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID,
@@ -106,22 +103,23 @@ const Labels = {
 };
 
 export const routesRece: IRoute[] = [
-  {
-    url: URL_ACCUEIL,
-    component: AccueilPage,
-    libelle: "Accueil"
-  },
+  // {
+  //   url: URL_ACCUEIL,
+  //   component: AccueilPage,
+  //   libelle: "Accueil"
+  // },
   {
     url: URL_CONTEXT_APP,
     component: AccueilPage,
     libelle: getLibelle("Accueil")
   },
-  {
-    url: URL_DECONNEXION,
-    component: PageMessage,
-    props: { message: getLibelle("Déconnexion en cours ...") },
-    libelle: getLibelle("Déconnexion")
-  },
+  // TODO: fix url deconnexxion
+  // {
+  //   url: URL_DECONNEXION,
+  //   component: PageMessage,
+  //   props: { message: getLibelle("Déconnexion en cours ...") },
+  //   libelle: getLibelle("Déconnexion")
+  // },
   ////////////////////////////////////////////
   ///// MES REQUETES DE DELIVRANCE (MRD) /////
   ////////////////////////////////////////////

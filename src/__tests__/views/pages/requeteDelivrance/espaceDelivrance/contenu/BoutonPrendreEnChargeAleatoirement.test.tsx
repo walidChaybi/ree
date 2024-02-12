@@ -18,8 +18,8 @@ import {
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
 test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l'espace Délivrance", async () => {
   storeRece.utilisateurCourant = mappingOfficier(
@@ -27,28 +27,34 @@ test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l
     resultatRequeteUtilistateurLaurenceBourdeau.data
   );
 
-  const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-  render(
-    <Router history={history}>
-      <BoutonPrendreEnChargeAleatoirement />
-    </Router>
-  );
-
-  const bouttonPrendreEnCharge = screen.getByText(
-    /Prendre en charge/i
-  ) as HTMLButtonElement;
-
   await act(async () => {
-    fireEvent.click(bouttonPrendreEnCharge);
-  });
-
-  await waitFor(() => {
-    expect(history.location.pathname).toBe(
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        ReponseAppelMesRequetes[1].id
-      )
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE,
+          element: <BoutonPrendreEnChargeAleatoirement />
+        }
+      ],
+      [URL_MES_REQUETES_DELIVRANCE]
     );
+
+    render(<RouterProvider router={router} />);
+
+    const bouttonPrendreEnCharge = screen.getByText(
+      /Prendre en charge/i
+    ) as HTMLButtonElement;
+
+    await act(async () => {
+      fireEvent.click(bouttonPrendreEnCharge);
+    });
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe(
+        getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          ReponseAppelMesRequetes[1].id
+        )
+      );
+    });
   });
 });

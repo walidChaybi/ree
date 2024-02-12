@@ -1,5 +1,5 @@
-import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import {
@@ -16,17 +16,17 @@ import {
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory } from "history";
-import { Route, Router } from "react-router-dom";
-import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
+import { RouterProvider } from "react-router-dom";
+import {
+  createTestingRouter,
+  mockFenetreFicheTestFunctions
+} from "../../../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {
   mockFenetreFicheTestFunctions();
 });
 
 const sauvFonctionEstActive = gestionnaireFeatureFlag.estActif;
-
-let history: any;
 
 beforeEach(() => {
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS as IUtilisateur[];
@@ -35,7 +35,6 @@ beforeEach(() => {
   gestionnaireFeatureFlag.estActif = function () {
     return true;
   };
-  history = createMemoryHistory();
 });
 
 afterAll(() => {
@@ -43,22 +42,22 @@ afterAll(() => {
 });
 
 test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-      "a4cefb71-8457-4f6b-937e-34b49335d494"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        element: <ApercuRequeteTraitementPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        "a4cefb71-8457-4f6b-937e-34b49335d494"
+      )
+    ]
   );
-  const { container } = render(
-    <Router history={history}>
-      <Route
-        exact={true}
-        path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID}
-      >
-        <ApercuRequeteTraitementPage />
-      </Route>
-    </Router>
-  );
+
+  const { container } = render(<RouterProvider router={router} />);
 
   await waitFor(() => {
     expect(
@@ -72,29 +71,27 @@ test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", a
         container.getElementsByClassName("OperationLocaleEnCoursSimple").length
       ).toBe(0);
     });
-  }, 3000);
+  }, 0);
 });
 
 test("renders ApercuRequeteTraitementPage", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-      "a4cefb71-8457-4f6b-937e-34b49335d494"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        element: <ApercuRequeteTraitementPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        "a4cefb71-8457-4f6b-937e-34b49335d494"
+      )
+    ]
   );
+
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID}
-          >
-            <ApercuRequeteTraitementPage />
-          </Route>
-        </Router>
-      </>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   const bandeau = screen.getByText(
@@ -126,26 +123,25 @@ test("renders ApercuRequeteTraitementPage", async () => {
 });
 
 test("renders document réponses", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-      "a4cefb71-8457-4f6b-937e-34b49335d494"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        element: <ApercuRequeteTraitementPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        "a4cefb71-8457-4f6b-937e-34b49335d494"
+      )
+    ]
   );
+
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID}
-          >
-            <ApercuRequeteTraitementPage />
-          </Route>
-        </Router>
-      </>
-    );
+    render(<RouterProvider router={router} />);
   });
+
   const title = screen.getByText(/Documents à délivrer/i);
   const doc1 = screen.getByText(/^Courrier$/);
   const doc2 = screen.getByText(/Certificat d'inscription au RCA/i);
@@ -162,25 +158,23 @@ test("renders document réponses", async () => {
 });
 
 test("transmettre à valideur", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-      "a4cefb71-8457-4f6b-937e-34b49335d494"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        element: <ApercuRequeteTraitementPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        "a4cefb71-8457-4f6b-937e-34b49335d494"
+      )
+    ]
   );
+
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID}
-          >
-            <ApercuRequeteTraitementPage />
-          </Route>
-        </Router>
-      </>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   await waitFor(() => {
@@ -228,32 +222,30 @@ test("transmettre à valideur", async () => {
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toStrictEqual(
+    expect(router.state.location.pathname).toStrictEqual(
       URL_MES_REQUETES_DELIVRANCE
     );
   });
 });
 
 test("retour approuvé", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-      "a4cefb71-8457-4f6b-937e-34b49335d495"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        element: <ApercuRequeteTraitementPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        "a4cefb71-8457-4f6b-937e-34b49335d495"
+      )
+    ]
   );
+
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID}
-          >
-            <ApercuRequeteTraitementPage />
-          </Route>
-        </Router>
-      </>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   await waitFor(() => {
@@ -283,34 +275,31 @@ test("retour approuvé", async () => {
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toStrictEqual(
+    expect(router.state.location.pathname).toStrictEqual(
       URL_MES_REQUETES_DELIVRANCE
     );
   });
 });
 
 test("reprendre traitement", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-      "a4cefb71-8457-4f6b-937e-34b49335d495"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        element: <ApercuRequeteTraitementPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        "a4cefb71-8457-4f6b-937e-34b49335d495"
+      )
+    ]
   );
-  await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID}
-          >
-            <ApercuRequeteTraitementPage />
-          </Route>
-        </Router>
-      </>
-    );
-  });
 
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
   await waitFor(() => {
     expect(screen.getByText("Reprendre le traitement")).toBeDefined();
   });

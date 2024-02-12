@@ -7,11 +7,6 @@ import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { Mention } from "@model/etatcivil/acte/mention/IMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeActe } from "@model/etatcivil/enum/TypeActe";
-import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import {
-  IRequeteDelivrance,
-  RequeteDelivrance
-} from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
@@ -24,13 +19,18 @@ import {
 } from "@model/requete/enum/DocumentDelivranceConstante";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import {
+  IRequeteDelivrance,
+  RequeteDelivrance
+} from "@model/requete/IRequeteDelivrance";
 import {
   DEUX,
+  estTableauNonVide,
+  getLibelle,
   TROIS,
   UN,
-  ZERO,
-  estTableauNonVide,
-  getLibelle
+  ZERO
 } from "@util/Utils";
 import { gestionnaireMentionsRetireesAuto } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
@@ -43,14 +43,14 @@ import { BoutonModifierTraitement } from "../apercuRequete/apercuRequeteEnTraite
 import { BoutonsTerminerOuRelecture } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonsTerminerOuRelecture";
 import { ResumeRequetePartieHaute } from "../apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequetePartieHaute";
 import { ResumeRequeteType } from "../apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequeteType";
-import { OngletsDocumentsEdites } from "./contenu/OngletsDocumentsEdites";
+import { GestionMentions } from "./contenu/onglets/mentions/GestionMentions";
+import { ModifierCorpsExtrait } from "./contenu/onglets/modifierCorpsExtrait/ModifierCorpsExtrait";
+import { SaisirExtraitForm } from "./contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import { VisionneuseActeEdition } from "./contenu/onglets/VisionneuseActeEdition";
 import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
 import { VoletEdition } from "./contenu/onglets/VoletEdition";
 import { VoletVisualisation } from "./contenu/onglets/VoletVisualisation";
-import { GestionMentions } from "./contenu/onglets/mentions/GestionMentions";
-import { ModifierCorpsExtrait } from "./contenu/onglets/modifierCorpsExtrait/ModifierCorpsExtrait";
-import { SaisirExtraitForm } from "./contenu/onglets/saisirExtrait/SaisirExtraitForm";
+import { OngletsDocumentsEdites } from "./contenu/OngletsDocumentsEdites";
 
 const DOCUMENT_EDITE = "Document édité";
 const REQUETE = "Requête";

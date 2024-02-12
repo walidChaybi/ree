@@ -20,53 +20,55 @@ import {
   waitFor
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../../../../__tests__utils__/testsUtil";
 
-const history = createMemoryHistory();
-
-beforeEach(() => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequeteRDCSC
-    )
-  );
-
+test("renders du bloc Menu Delivrer Certificat de Situation", async () => {
   requeteRDCSC.documentDemande = DocumentDelivrance.getDocumentDelivrance(
     "ec161aa5-5c0c-429d-abdf-f9017e8e26b4"
   );
-});
-
-test("renders du bloc Menu Delivrer Certificat de Situation", async () => {
-  act(() => {
-    render(
-      <Router history={history}>
-        <MenuDelivrerCS
-          requete={requeteRDCSC}
-          inscriptions={DataRMCInscriptionAvecUnRCA}
-        />
-      </Router>
-    );
-  });
-
-  let menuDelivrer = screen.getByText("Délivrer");
-  let certificatSituation = screen.getByText(/Certificat de situation/i);
-
-  expect(menuDelivrer).toBeDefined();
-  expect(certificatSituation).toBeDefined();
 
   await act(async () => {
-    fireEvent.click(certificatSituation);
-  });
-
-  await waitFor(() => {
-    expect(history.location.pathname).toBe(
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-        idRequeteRDC
-      )
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          element: (
+            <MenuDelivrerCS
+              requete={requeteRDCSC}
+              inscriptions={DataRMCInscriptionAvecUnRCA}
+            />
+          )
+        }
+      ],
+      [
+        getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          idRequeteRDCSC
+        )
+      ]
     );
+
+    render(<RouterProvider router={router} />);
+
+    let menuDelivrer = screen.getByText("Délivrer");
+    let certificatSituation = screen.getByText(/Certificat de situation/i);
+
+    expect(menuDelivrer).toBeDefined();
+    expect(certificatSituation).toBeDefined();
+
+    await act(async () => {
+      fireEvent.click(certificatSituation);
+    });
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe(
+        getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+          idRequeteRDC
+        )
+      );
+    });
   });
 });
 
@@ -75,34 +77,48 @@ test("renders du bloc Menu Delivrer Attestation PACS", async () => {
   requete.documentDemande = DocumentDelivrance.getEnumForCode(
     CODE_ATTESTATION_PACS
   );
-  act(() => {
-    render(
-      <Router history={history}>
-        <MenuDelivrerCS
-          requete={requete}
-          inscriptions={DataRMCInscriptionAvecUnRCA}
-        />
-      </Router>
-    );
-  });
-
-  let menuDelivrer = screen.getByText("Délivrer");
-  let attestation = screen.getByText(/Attestation PACS/i);
-
-  expect(menuDelivrer).toBeDefined();
-  expect(attestation).toBeDefined();
 
   await act(async () => {
-    fireEvent.click(attestation);
-  });
-
-  await waitFor(() => {
-    expect(history.location.pathname).toBe(
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-        idRequeteRDC
-      )
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          element: (
+            <MenuDelivrerCS
+              requete={requete}
+              inscriptions={DataRMCInscriptionAvecUnRCA}
+            />
+          )
+        }
+      ],
+      [
+        getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          idRequeteRDCSC
+        )
+      ]
     );
+
+    render(<RouterProvider router={router} />);
+
+    let menuDelivrer = screen.getByText("Délivrer");
+    let attestation = screen.getByText(/Attestation PACS/i);
+
+    expect(menuDelivrer).toBeDefined();
+    expect(attestation).toBeDefined();
+
+    await act(async () => {
+      fireEvent.click(attestation);
+    });
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe(
+        getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+          idRequeteRDC
+        )
+      );
+    });
   });
 });
 
@@ -111,27 +127,44 @@ test("attestationPACS sans inscription", async () => {
   requete.documentDemande = DocumentDelivrance.getEnumForCode(
     CODE_ATTESTATION_PACS
   );
-  render(
-    <Router history={history}>
-      <MenuDelivrerCS requete={requete} inscriptions={[]} actes={[]} />
-    </Router>
-  );
-  let menuDelivrer = screen.getByText("Délivrer");
-  let attestation = screen.getByText(/Attestation PACS/i);
-
-  expect(menuDelivrer).toBeDefined();
-  expect(attestation).toBeDefined();
 
   await act(async () => {
-    fireEvent.click(attestation);
-  });
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          element: (
+            <MenuDelivrerCS requete={requete} inscriptions={[]} actes={[]} />
+          )
+        }
+      ],
+      [
+        getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          idRequeteRDCSC
+        )
+      ]
+    );
 
-  await waitFor(() => {
-    expect(
-      screen.getByText(
-        "Il faut sélectionner au moins un PACS au statut fiche actif"
-      )
-    ).toBeDefined();
+    render(<RouterProvider router={router} />);
+
+    let menuDelivrer = screen.getByText("Délivrer");
+    let attestation = screen.getByText(/Attestation PACS/i);
+
+    expect(menuDelivrer).toBeDefined();
+    expect(attestation).toBeDefined();
+
+    await act(async () => {
+      fireEvent.click(attestation);
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          "Il faut sélectionner au moins un PACS au statut fiche actif"
+        )
+      ).toBeDefined();
+    });
   });
 });
 
@@ -140,30 +173,47 @@ test("attestation pacs acte séléctionné", async () => {
   requete.documentDemande = DocumentDelivrance.getEnumForCode(
     CODE_ATTESTATION_PACS
   );
-  render(
-    <Router history={history}>
-      <MenuDelivrerCS
-        requete={requete}
-        inscriptions={DataRMCInscriptionAvecUnRCA}
-        actes={DataRMCActeAvecResultat}
-      />
-    </Router>
-  );
-  let menuDelivrer = screen.getByText("Délivrer");
-  let attestation = screen.getByText(/Attestation PACS/i);
-
-  expect(menuDelivrer).toBeDefined();
-  expect(attestation).toBeDefined();
 
   await act(async () => {
-    fireEvent.click(attestation);
-  });
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          element: (
+            <MenuDelivrerCS
+              requete={requete}
+              inscriptions={DataRMCInscriptionAvecUnRCA}
+              actes={DataRMCActeAvecResultat}
+            />
+          )
+        }
+      ],
+      [
+        getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          idRequeteRDCSC
+        )
+      ]
+    );
 
-  await waitFor(() => {
-    expect(
-      screen.getByText(
-        "Votre sélection n'est pas cohérente avec le choix de l'action de réponse"
-      )
-    ).toBeDefined();
+    render(<RouterProvider router={router} />);
+
+    let menuDelivrer = screen.getByText("Délivrer");
+    let attestation = screen.getByText(/Attestation PACS/i);
+
+    expect(menuDelivrer).toBeDefined();
+    expect(attestation).toBeDefined();
+
+    await act(async () => {
+      fireEvent.click(attestation);
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          "Votre sélection n'est pas cohérente avec le choix de l'action de réponse"
+        )
+      ).toBeDefined();
+    });
   });
 });

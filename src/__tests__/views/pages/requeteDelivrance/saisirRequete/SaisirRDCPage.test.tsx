@@ -20,23 +20,14 @@ import {
 } from "@testing-library/react";
 import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory } from "history";
-import { Route, Router } from "react-router-dom";
-
-const history = createMemoryHistory();
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 const saisieRDC = () => {
-  history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC);
   storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
 };
 
 const modificationRDC = () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
-      idRequeteRDCPourModification
-    )
-  );
   storeRece.utilisateurCourant = mappingOfficier(
     resultatHeaderUtilistateurLaurenceBourdeau,
     resultatRequeteUtilistateurLaurenceBourdeau.data
@@ -66,12 +57,18 @@ beforeEach(() => {
 });
 
 test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie", async () => {
-  act(() => {
-    render(
-      <Router history={history}>
-        <SaisirRDCPage />
-      </Router>
-    );
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
+        element: <SaisirRDCPage />
+      }
+    ],
+    [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
+  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
   });
 
   const titre = SousTypeDelivrance.getEnumFor("RDC").libelle;
@@ -84,14 +81,24 @@ test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie",
 
 test("renders formulaire de modification d'une Requête de Délivrance Extrait Copie", async () => {
   contextes.modificationRDC();
-  act(() => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID}>
-          <SaisirRDCPage />
-        </Route>
-      </Router>
-    );
+
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
+        element: <SaisirRDCPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
+        idRequeteRDCPourModification
+      )
+    ]
+  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
   });
 
   await waitFor(() => {
@@ -105,20 +112,30 @@ test("renders formulaire de modification d'une Requête de Délivrance Extrait C
 
 test(`test du bouton "mettre en majuscule" pour le nom d'une Requête de Délivrance Extrait Copie`, async () => {
   contextes.modificationRDC();
-  act(() => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID}>
-          <SaisirRDCPage />
-        </Route>
-      </Router>
-    );
+
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
+        element: <SaisirRDCPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
+        idRequeteRDCPourModification
+      )
+    ]
+  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
   });
 
   const inputNomNaissance = getInput("titulaire1.noms.nomNaissance");
-  const buttonChampEnMajuscule = screen.getByTestId(
+  const buttonChampEnMajuscule = screen.getAllByTestId(
     "BoutonChampEnMajuscule"
-  ) as HTMLButtonElement;
+  )[0] as HTMLButtonElement;
 
   await waitFor(() => {
     expect(inputNomNaissance.value).toEqual("NomRDCModifiée");
@@ -134,14 +151,24 @@ test(`test du bouton "mettre en majuscule" pour le nom d'une Requête de Délivr
 
 test("Validation d'une modification de Requête de Délivrance Extrait Copie", async () => {
   contextes.modificationRDC();
-  act(() => {
-    render(
-      <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID}>
-          <SaisirRDCPage />
-        </Route>
-      </Router>
-    );
+
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
+        element: <SaisirRDCPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
+        idRequeteRDCPourModification
+      )
+    ]
+  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
   });
 
   const inputNomNaissance = getInput("titulaire1.noms.nomNaissance");
@@ -163,19 +190,25 @@ test("Validation d'une modification de Requête de Délivrance Extrait Copie", a
     fireEvent.click(buttonValider);
   });
   await waitFor(() => {
-    expect(getLastPathElem(history.location.pathname)).toEqual(
+    expect(getLastPathElem(router.state.location.pathname)).toEqual(
       idRequeteRDCPourModification
     );
   });
 });
 
 test("test onChangeNature", async () => {
-  act(() => {
-    render(
-      <Router history={history}>
-        <SaisirRDCPage />
-      </Router>
-    );
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
+        element: <SaisirRDCPage />
+      }
+    ],
+    [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
+  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
   });
 
   const inputNatureActe = screen.getByTestId(
@@ -202,12 +235,18 @@ test("test onChangeNature", async () => {
 });
 
 test("test onChangeRequerant", async () => {
-  act(() => {
-    render(
-      <Router history={history}>
-        <SaisirRDCPage />
-      </Router>
-    );
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
+        element: <SaisirRDCPage />
+      }
+    ],
+    [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
+  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
   });
 
   // Mandataire
@@ -262,11 +301,19 @@ test("test onChangeRequerant", async () => {
 });
 
 test("test du Prendre en charge du formulaire de saisie d'une Requête de Délivrance Extrait Copie DECES", async () => {
-  render(
-    <Router history={history}>
-      <SaisirRDCPage />
-    </Router>
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
+        element: <SaisirRDCPage />
+      }
+    ],
+    [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
   );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   // Champs Requete
   const inputNatureActe = screen.getByTestId(
@@ -343,18 +390,26 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
     fireEvent.click(submit);
   });
   await waitFor(() => {
-    expect(getLastPathElem(history.location.pathname)).toEqual(
+    expect(getLastPathElem(router.state.location.pathname)).toEqual(
       "1072bc37-f889-4365-8f75-912166b767dd"
     );
   });
 });
 
 test("test du Prendre en charge du formulaire de saisie d'une Requête de Délivrance Extrait Copie NAISSANCE", async () => {
-  render(
-    <Router history={history}>
-      <SaisirRDCPage />
-    </Router>
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
+        element: <SaisirRDCPage />
+      }
+    ],
+    [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
   );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   const submit = screen.getByText(/Prendre en charge/i);
 
@@ -418,7 +473,7 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
     fireEvent.click(submit);
   });
   await waitFor(() => {
-    expect(getLastPathElem(history.location.pathname)).toEqual(
+    expect(getLastPathElem(router.state.location.pathname)).toEqual(
       "1072bc37-f889-4365-8f75-912166b767dd"
     );
   });

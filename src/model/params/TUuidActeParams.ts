@@ -1,4 +1,4 @@
-export interface IUuidActeParams {
+export type TUuidActeParams = {
   idActeParam: string;
   idRequeteParam: string;
-}
+};

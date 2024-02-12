@@ -5,7 +5,7 @@ import { OfficierContextProps } from "@core/contexts/OfficierContext";
 import { IOfficier } from "@model/agent/IOfficier";
 import { executeEnDiffere, getLibelle } from "@util/Utils";
 import React, { useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import apiResources from "../../../ressources/api.json";
 import { getCsrfHeader } from "./CsrfUtil";
 import messageManager from "./messageManager";
@@ -22,7 +22,7 @@ interface GestionnaireFermetureProps {
 export const GestionnaireFermeture: React.FC<
   GestionnaireFermetureProps
 > = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { isDirty } = useContext(RECEContext);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export const GestionnaireFermeture: React.FC<
         if (props.urlRedirection) {
           executeEnDiffere(function () {
             if (props.urlRedirection) {
-              history.push(props.urlRedirection);
+              navigate(props.urlRedirection);
             }
           }, TIME_OUT_MS);
         }

@@ -15,7 +15,7 @@ import { checkDirty, getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { BoutonSignature } from "@widget/signature/BoutonSignature";
 import React, { useCallback, useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import { BoutonTerminerApresImpression } from "./BoutonTerminerApresImpression";
 import { BoutonTransmettreAValideur } from "./BoutonTransmettreAValideur";
@@ -30,7 +30,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
   requete,
   acte
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [estDisabled, setEstDisabled] = useState(true);
   const { isDirty, setIsDirty } = useContext(RECEContext);
 
@@ -58,7 +58,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
   const onClickTerminer = useCallback(() => {
     if (checkDirty(isDirty, setIsDirty)) {
       validerMentionsPlusieursDocuments(
-        () => history.push(URL_MES_REQUETES_DELIVRANCE),
+        () => navigate(URL_MES_REQUETES_DELIVRANCE),
         acte,
         requete.documentsReponses
       );

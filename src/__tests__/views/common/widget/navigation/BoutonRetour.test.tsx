@@ -3,25 +3,28 @@ import {
   URL_RECHERCHE_REQUETE,
   URL_REQUETES_DELIVRANCE_SERVICE
 } from "@router/ReceUrls";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { BoutonRetour, getLibelleEtUrl } from "@widget/navigation/BoutonRetour";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
-
-let history: any;
-beforeEach(() => {
-  history = createMemoryHistory();
-});
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 test("Retour accueil", () => {
-  history.push(URL_MES_REQUETES_DELIVRANCE);
-  render(
-    <Router history={history}>
-      <BoutonRetour />
-    </Router>
-  );
-  const linkElement = screen.getByText(/<< RETOUR ACCUEIL/i);
-  expect(linkElement).toBeDefined();
+  act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE,
+          element: <BoutonRetour />
+        }
+      ],
+      [URL_MES_REQUETES_DELIVRANCE]
+    );
+
+    render(<RouterProvider router={router} />);
+
+    const linkElement = screen.getByText(/<< RETOUR ACCUEIL/i);
+    expect(linkElement).toBeDefined();
+  });
 });
 
 test("retour name", () => {

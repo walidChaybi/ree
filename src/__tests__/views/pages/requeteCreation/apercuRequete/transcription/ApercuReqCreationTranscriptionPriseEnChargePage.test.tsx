@@ -1,9 +1,5 @@
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
-import {
-  PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE,
-  URL_MES_REQUETES_CREATION,
-  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID
-} from "@router/ReceUrls";
+import { URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID } from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -12,42 +8,29 @@ import {
   waitFor
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { createMemoryHistory } from "history";
-import { Route, Router } from "react-router";
-
-const history = createMemoryHistory();
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
 describe("Test de la page Aperçu requête transcription en prise en charge", () => {
-  beforeEach(async () => {
-    history.push(
-      getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/:idRequete`,
-        "dd96cc3a-9865-4c83-b634-37fad2680f41"
-      )
-    );
-
-    await act(async () => {
-      render(
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID
-            }
-          >
-            <ApercuReqCreationTranscriptionPriseEnChargePage />
-          </Route>
-        </Router>
-      );
-    });
-  });
   test("DOIT rendre le composant ApercuReqCreationTranscriptionPriseEnChargePage correctement", async () => {
     await act(async () => {
-      const { container } = render(
-        <Router history={history}>
-          <ApercuReqCreationTranscriptionPriseEnChargePage />
-        </Router>
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          }
+        ],
+        [
+          getUrlWithParam(
+            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
       );
+
+      const { container } = render(<RouterProvider router={router} />);
+
       expect(
         container.getElementsByClassName(
           "ApercuReqCreationTranscriptionPriseEnChargePage"
@@ -57,6 +40,25 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
   });
 
   test("DOIT afficher l'onglet RMC par defaut QUAND j'affiche la page", async () => {
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          }
+        ],
+        [
+          getUrlWithParam(
+            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
+      );
+
+      render(<RouterProvider router={router} />);
+    });
+
     const ongletRMC = screen.getByText("RMC");
 
     await waitFor(async () => {
@@ -65,6 +67,25 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
   });
 
   test("DOIT passer le tag aria-selected a true QUAND je click sur l'onglet Analyse du dossier", async () => {
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          }
+        ],
+        [
+          getUrlWithParam(
+            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
+      );
+
+      render(<RouterProvider router={router} />);
+    });
+
     const ongletRMC = screen.getByText("RMC");
     const ongletAnalyseDuDossier = screen.getByText("Analyse du dossier");
 
@@ -81,6 +102,25 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
   });
 
   test("DOIT sélectionner l'onglet Pieces justificatives / annexes QUAND je clique dessus.", async () => {
+    await act(async () => {
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          }
+        ],
+        [
+          getUrlWithParam(
+            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
+      );
+
+      render(<RouterProvider router={router} />);
+    });
+
     const ongletPJ = screen.getByText("Pièces justificatives / Annexes");
     const ongletRMC = screen.getByText("RMC");
 
@@ -100,26 +140,23 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
 
 describe("Test du rendu du composant RMCRequeteAssociees", () => {
   test("DOIT afficher le composant RMCRequeteAssociees QUAND l'ID de la requête est présent dans l'URL", async () => {
-    history.push(
-      getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/:idRequete`,
-        "dd96cc3a-9865-4c83-b634-37fad2680f41"
-      )
-    );
-
     await act(async () => {
-      render(
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID
-            }
-          >
-            <ApercuReqCreationTranscriptionPriseEnChargePage />
-          </Route>
-        </Router>
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          }
+        ],
+        [
+          getUrlWithParam(
+            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
       );
+
+      render(<RouterProvider router={router} />);
     });
 
     await waitFor(() => {
@@ -130,11 +167,24 @@ describe("Test du rendu du composant RMCRequeteAssociees", () => {
   });
   test("NE DOIT PAS afficher le composant RMCRequeteAssociees QUAND l'ID de la requête est est founi en props", async () => {
     await act(async () => {
-      render(
-        <Router history={history}>
-          <ApercuReqCreationTranscriptionPriseEnChargePage idRequeteAAfficher="dd96cc3a-9865-4c83-b634-37fad2680f41" />
-        </Router>
+      const router = createTestingRouter(
+        [
+          {
+            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            element: (
+              <ApercuReqCreationTranscriptionPriseEnChargePage idRequeteAAfficher="dd96cc3a-9865-4c83-b634-37fad2680f41" />
+            )
+          }
+        ],
+        [
+          getUrlWithParam(
+            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+          )
+        ]
       );
+
+      render(<RouterProvider router={router} />);
     });
 
     await waitFor(() => {

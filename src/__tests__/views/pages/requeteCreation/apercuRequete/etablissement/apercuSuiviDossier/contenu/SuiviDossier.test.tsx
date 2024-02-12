@@ -12,11 +12,17 @@ import {
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
 } from "@router/ReceUrls";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router";
+import { MemoryRouter, RouterProvider } from "react-router-dom";
 import { localStorageFeatureFlagMock } from "../../../../../../../../setupTests";
+import { createTestingRouter } from "../../../../../../../__tests__utils__/testsUtil";
 
 interface HookConsumerSuiviDossierProps {
   echanges?: IEchange[];
@@ -24,26 +30,24 @@ interface HookConsumerSuiviDossierProps {
   modeConsultation?: boolean;
 }
 
-const history = createMemoryHistory();
-
 const HookConsumerSuiviDossier: React.FC<
   HookConsumerSuiviDossierProps
 > = props => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-      props.requete?.id || ""
-    )
-  );
-
   return (
-    <Router history={history}>
+    <MemoryRouter
+      initialEntries={[
+        getUrlWithParam(
+          URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+          props.requete?.id || ""
+        )
+      ]}
+    >
       <SuiviDossier
         requete={props.requete}
         echanges={props.requete?.provenanceNatali?.echanges}
         modeConsultation={true}
       />
-    </Router>
+    </MemoryRouter>
   );
 };
 
@@ -231,7 +235,30 @@ test("DOIT afficher le Bulletin d'idenfication lors du clique sur une ligne.", a
 });
 
 test("DOIT rediriger vers l'aperçu saisie projet QUAND on clique sur une ligne naissance d'un postulant", async () => {
-  render(<HookConsumerSuiviDossier requete={requeteAvecTitulaires} />);
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        element: (
+          <SuiviDossier
+            requete={requeteAvecTitulaires}
+            echanges={requeteAvecTitulaires?.provenanceNatali?.echanges}
+            modeConsultation={true}
+          />
+        )
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        requeteAvecTitulaires.id
+      )
+    ]
+  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   const boutonLigneNaissance = screen.getAllByText("Naissance")[0];
   await waitFor(() => {
@@ -240,7 +267,7 @@ test("DOIT rediriger vers l'aperçu saisie projet QUAND on clique sur une ligne 
   fireEvent.click(boutonLigneNaissance);
 
   await waitFor(() => {
-    expect(history.location.pathname).toBe(
+    expect(router.state.location.pathname).toBe(
       `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/a2724cc9-450c-4e50-9d05-a44a28717954/a272ec8a-1351-4edd-99b8-03004292a9d2`
     );
   });

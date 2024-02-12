@@ -1,12 +1,12 @@
-import { IUuidSuiviDossierParams } from "@model/params/IUuidSuiviDossierParams";
+import { TUuidSuiviDossierParams } from "@model/params/TUuidSuiviDossierParams";
 import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
 import { URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID } from "@router/ReceUrls";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
-import { PopinSignature, PopinSignatureProps } from "./PopinSignature";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSignatureCreationEtablisementHook } from "./hook/SignatureCreationActeEtablissementHook";
+import { PopinSignature, PopinSignatureProps } from "./PopinSignature";
 import "./scss/PopinSignature.scss";
 
 type PopinSignatureCreationEtablissementProps = {
@@ -23,9 +23,9 @@ const TRAITEMENT_SIGNATURE_TIMEOUT_MS = 45000;
 export const PopinSignatureCreationEtablissement: React.FC<
   PopinSignatureCreationEtablissementProps
 > = ({ idActe, estOuvert, setEstOuvert }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { idRequeteParam, idSuiviDossierParam } =
-    useParams<IUuidSuiviDossierParams>();
+    useParams<TUuidSuiviDossierParams>();
 
   const [estOuvertPopinConfirmation, setEstOuvertPopinConfirmation] =
     useState<boolean>(false);
@@ -35,9 +35,9 @@ export const PopinSignatureCreationEtablissement: React.FC<
       const url =
         URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID.replace(
           ":idRequeteParam",
-          idRequeteParam
+          idRequeteParam || ""
         ).replace(":idActeParam", idActe);
-      replaceUrl(history, url);
+      replaceUrl(navigate, url);
     }
   };
 

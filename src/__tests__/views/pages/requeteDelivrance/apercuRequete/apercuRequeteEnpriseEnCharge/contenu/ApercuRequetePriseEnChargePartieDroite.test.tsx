@@ -1,10 +1,10 @@
+import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { DataRMCActeAvecResultat, DataTableauActe } from "@mock/data/RMCActe";
 import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
 } from "@mock/data/RMCInscription";
-import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { NORESULT } from "@mock/superagent-config/superagent-mock-etatcivil";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { DataRMCAuto } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
@@ -21,10 +21,7 @@ import {
   COMPLEMENT_DESCRIPTION,
   ID_TYPE_ALERTE
 } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
-
-const history = createMemoryHistory();
+import { MemoryRouter } from "react-router-dom";
 
 const dataHistory: DataRMCAuto = {
   dataRMCAutoActe: DataRMCActeAvecResultat,
@@ -39,12 +36,12 @@ beforeEach(async () => {
 
 test("render ApercuRequetePriseEnChargePartieDroite : RMC état civil manuelle ", async () => {
   render(
-    <Router history={history}>
+    <MemoryRouter>
       <ApercuRequetePriseEnChargePartieDroite
         detailRequete={requeteDelivrance}
         dataHistory={dataHistory}
       />
-    </Router>
+    </MemoryRouter>
   );
 
   const linkElement = screen.getByText("Nouvelle recherche multi-critères");
@@ -95,12 +92,12 @@ test("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes acte",
 
   await act(async () => {
     render(
-      <Router history={history}>
+      <MemoryRouter>
         <ApercuRequetePriseEnChargePartieDroite
           detailRequete={requeteDelivrance}
           dataHistory={dataHistory}
         />
-      </Router>
+      </MemoryRouter>
     );
   });
 
@@ -227,11 +224,11 @@ test("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes acte",
 
 test("render ApercuRequetePriseEnChargePartieDroite : relance RMC Auto ", async () => {
   render(
-    <Router history={history}>
+    <MemoryRouter>
       <ApercuRequetePriseEnChargePartieDroite
         detailRequete={requeteDelivrance}
       />
-    </Router>
+    </MemoryRouter>
   );
 
   const resultatRMCActe = screen.queryByText("Aucun acte n'a été trouvé.");

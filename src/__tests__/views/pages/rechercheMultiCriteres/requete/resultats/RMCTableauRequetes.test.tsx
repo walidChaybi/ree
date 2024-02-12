@@ -1,8 +1,8 @@
+import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
 import {
   DataRMCRequeteAvecResultat,
   DataTableauRequete
 } from "@mock/data/RMCRequete";
-import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
 import { RMCTableauRequetes } from "@pages/rechercheMultiCriteres/requete/resultats/RMCTableauRequetes";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import {
@@ -14,22 +14,28 @@ import {
 } from "@testing-library/react";
 import { getLastPathElem } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
-const history = createMemoryHistory();
-history.push(URL_RECHERCHE_REQUETE);
 test("renders Resultat Requetes Recherche Multi Critères => Avec résultat", () => {
-  const { getAllByText } = render(
-    <Router history={history}>
-      <RMCTableauRequetes
-        dataRMCRequete={DataRMCRequeteAvecResultat}
-        dataTableauRMCRequete={DataTableauRequete}
-        setRangeRequete={jest.fn()}
-        resetTableauRequete={true}
-      />
-    </Router>
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_RECHERCHE_REQUETE,
+        element: (
+          <RMCTableauRequetes
+            dataRMCRequete={DataRMCRequeteAvecResultat}
+            dataTableauRMCRequete={DataTableauRequete}
+            setRangeRequete={jest.fn()}
+            resetTableauRequete={true}
+          />
+        )
+      }
+    ],
+    [URL_RECHERCHE_REQUETE]
   );
+
+  const { getAllByText } = render(<RouterProvider router={router} />);
 
   const numero1 = getAllByText("1234");
   expect(numero1).toHaveLength(1);
@@ -42,16 +48,24 @@ test("renders Resultat Requetes Recherche Multi Critères => Avec résultat", ()
 });
 
 test("Clic sur une Requête du tableau avec un idUtilisateur", async () => {
-  const { getByTestId } = render(
-    <Router history={history}>
-      <RMCTableauRequetes
-        dataRMCRequete={DataRMCRequeteAvecResultat}
-        dataTableauRMCRequete={DataTableauRequete}
-        setRangeRequete={jest.fn()}
-        resetTableauRequete={true}
-      />
-    </Router>
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_RECHERCHE_REQUETE,
+        element: (
+          <RMCTableauRequetes
+            dataRMCRequete={DataRMCRequeteAvecResultat}
+            dataTableauRMCRequete={DataTableauRequete}
+            setRangeRequete={jest.fn()}
+            resetTableauRequete={true}
+          />
+        )
+      }
+    ],
+    [URL_RECHERCHE_REQUETE]
   );
+
+  const { getByTestId } = render(<RouterProvider router={router} />);
 
   const ligne = getByTestId("8ef11b8b-652c-4c6a-ad27-a544fce635d0");
 
@@ -60,23 +74,31 @@ test("Clic sur une Requête du tableau avec un idUtilisateur", async () => {
   });
 
   await waitFor(() => {
-    expect(getLastPathElem(history.location.pathname)).toEqual(
+    expect(getLastPathElem(router.state.location.pathname)).toEqual(
       "8ef11b8b-652c-4c6a-ad27-a544fce635d0"
     );
   });
 });
 
 test("Clic sur une Requête du tableau sans un idUtilisateur", async () => {
-  const { getByTestId } = render(
-    <Router history={history}>
-      <RMCTableauRequetes
-        dataRMCRequete={DataRMCRequeteAvecResultat}
-        dataTableauRMCRequete={DataTableauRequete}
-        setRangeRequete={jest.fn()}
-        resetTableauRequete={true}
-      />
-    </Router>
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_RECHERCHE_REQUETE,
+        element: (
+          <RMCTableauRequetes
+            dataRMCRequete={DataRMCRequeteAvecResultat}
+            dataTableauRMCRequete={DataTableauRequete}
+            setRangeRequete={jest.fn()}
+            resetTableauRequete={true}
+          />
+        )
+      }
+    ],
+    [URL_RECHERCHE_REQUETE]
   );
+
+  const { getByTestId } = render(<RouterProvider router={router} />);
 
   const ligne = getByTestId("4578e56c-421c-4e6a-b587-a238a665daf8");
 
@@ -85,23 +107,31 @@ test("Clic sur une Requête du tableau sans un idUtilisateur", async () => {
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(
+    expect(router.state.location.pathname).toEqual(
       "/rece/rece-ui/rechercherequete/apercurequeteinformation/4578e56c-421c-4e6a-b587-a238a665daf8"
     );
   });
 });
 
 test("renders Resultat Requetes Recherche Multi Critères => Sans résultat", () => {
-  const { getByText } = render(
-    <Router history={history}>
-      <RMCTableauRequetes
-        dataRMCRequete={[]}
-        dataTableauRMCRequete={{}}
-        setRangeRequete={jest.fn()}
-        resetTableauRequete={true}
-      />
-    </Router>
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_RECHERCHE_REQUETE,
+        element: (
+          <RMCTableauRequetes
+            dataRMCRequete={[]}
+            dataTableauRMCRequete={{}}
+            setRangeRequete={jest.fn()}
+            resetTableauRequete={true}
+          />
+        )
+      }
+    ],
+    [URL_RECHERCHE_REQUETE]
   );
+
+  const { getByText } = render(<RouterProvider router={router} />);
 
   expect(getByText(/Aucune requête n'a été trouvée/i)).toBeDefined();
 });
@@ -112,16 +142,24 @@ test("Clic sur une Requête Délivrance au statut 'Prise en charge'", async () =
 
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
 
-  const { getByTestId } = render(
-    <Router history={history}>
-      <RMCTableauRequetes
-        dataRMCRequete={DataRMCRequeteAvecResultat}
-        dataTableauRMCRequete={DataTableauRequete}
-        setRangeRequete={jest.fn()}
-        resetTableauRequete={true}
-      />
-    </Router>
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_RECHERCHE_REQUETE,
+        element: (
+          <RMCTableauRequetes
+            dataRMCRequete={DataRMCRequeteAvecResultat}
+            dataTableauRMCRequete={DataTableauRequete}
+            setRangeRequete={jest.fn()}
+            resetTableauRequete={true}
+          />
+        )
+      }
+    ],
+    [URL_RECHERCHE_REQUETE]
   );
+
+  const { getByTestId } = render(<RouterProvider router={router} />);
 
   const ligne = getByTestId("8ef11b8b-652c-4c6a-ad27-a544fce635d1");
 
@@ -130,10 +168,10 @@ test("Clic sur une Requête Délivrance au statut 'Prise en charge'", async () =
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(
+    expect(router.state.location.pathname).toEqual(
       "/rece/rece-ui/rechercherequete/apercurequetepriseencharge/8ef11b8b-652c-4c6a-ad27-a544fce635d1"
     );
-    expect(getLastPathElem(history.location.pathname)).toEqual(
+    expect(getLastPathElem(router.state.location.pathname)).toEqual(
       "8ef11b8b-652c-4c6a-ad27-a544fce635d1"
     );
   });
@@ -145,16 +183,24 @@ test("Clic sur une Requête avec des titulaire", async () => {
 
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
 
-  const { getByTestId } = render(
-    <Router history={history}>
-      <RMCTableauRequetes
-        dataRMCRequete={DataRMCRequeteAvecResultat}
-        dataTableauRMCRequete={DataTableauRequete}
-        setRangeRequete={jest.fn()}
-        resetTableauRequete={true}
-      />
-    </Router>
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_RECHERCHE_REQUETE,
+        element: (
+          <RMCTableauRequetes
+            dataRMCRequete={DataRMCRequeteAvecResultat}
+            dataTableauRMCRequete={DataTableauRequete}
+            setRangeRequete={jest.fn()}
+            resetTableauRequete={true}
+          />
+        )
+      }
+    ],
+    [URL_RECHERCHE_REQUETE]
   );
+
+  const { getByTestId } = render(<RouterProvider router={router} />);
 
   const ligne = getByTestId("4578e56c-421c-4e6a-b587-a238a665daf9");
 
@@ -163,10 +209,10 @@ test("Clic sur une Requête avec des titulaire", async () => {
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(
+    expect(router.state.location.pathname).toEqual(
       "/rece/rece-ui/rechercherequete/apercurequetepriseencharge/4578e56c-421c-4e6a-b587-a238a665daf9"
     );
-    expect(getLastPathElem(history.location.pathname)).toEqual(
+    expect(getLastPathElem(router.state.location.pathname)).toEqual(
       "4578e56c-421c-4e6a-b587-a238a665daf9"
     );
   });
@@ -178,16 +224,24 @@ test("Changement de page", async () => {
 
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
 
-  const { getByTestId } = render(
-    <Router history={history}>
-      <RMCTableauRequetes
-        dataRMCRequete={DataRMCRequeteAvecResultat}
-        dataTableauRMCRequete={DataTableauRequete}
-        setRangeRequete={jest.fn()}
-        resetTableauRequete={true}
-      />
-    </Router>
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_RECHERCHE_REQUETE,
+        element: (
+          <RMCTableauRequetes
+            dataRMCRequete={DataRMCRequeteAvecResultat}
+            dataTableauRMCRequete={DataTableauRequete}
+            setRangeRequete={jest.fn()}
+            resetTableauRequete={true}
+          />
+        )
+      }
+    ],
+    [URL_RECHERCHE_REQUETE]
   );
+
+  const { getByTestId } = render(<RouterProvider router={router} />);
 
   const pageSuivante = screen.getByTitle("Page suivante");
 

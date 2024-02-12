@@ -8,7 +8,7 @@ import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFl
 import { getLibelle, ZERO } from "@util/Utils";
 import React, { useState } from "react";
 import { useParams } from "react-router";
-import { IUuidRequeteParams } from "../../../../../../../model/params/IUuidRequeteParams";
+import { TUuidRequeteParams } from "../../../../../../../model/params/TUuidRequeteParams";
 import { IEchange } from "../../../../../../../model/requete/IEchange";
 import { IRequeteCreationEtablissement } from "../../../../../../../model/requete/IRequeteCreationEtablissement";
 import { Item } from "../../commun/resumeRequeteCreationEtablissement/items/Item";
@@ -22,7 +22,7 @@ interface ISuiviDossierProps {
 }
 
 export const SuiviDossier: React.FC<ISuiviDossierProps> = props => {
-  const { idRequeteParam } = useParams<IUuidRequeteParams>();
+  const { idRequeteParam } = useParams<TUuidRequeteParams>();
   const [echanges, setEchanges] = useState<IEchange[] | undefined>(
     props.echanges
   );
@@ -52,20 +52,21 @@ export const SuiviDossier: React.FC<ISuiviDossierProps> = props => {
       <Item titre={getLibelle("Retour SDANF")}>
         <ItemEchangesRetourSDANF echanges={echanges} />
 
-        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RETOUR_SDANF) && (
-          <ListeActionsRetourSDANF
-            setEchanges={setEchanges}
-            echanges={echanges}
-            statusRequete={props.requete?.statutCourant.statut}
-            idRequeteCorbeilleAgent={props.requete?.idUtilisateur}
-            idRequeteParam={idRequeteParam}
-            modeConsultation={props.modeConsultation}
-          />
-        )}
+        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RETOUR_SDANF) &&
+          idRequeteParam && (
+            <ListeActionsRetourSDANF
+              setEchanges={setEchanges}
+              echanges={echanges}
+              statusRequete={props.requete?.statutCourant.statut}
+              idRequeteCorbeilleAgent={props.requete?.idUtilisateur}
+              idRequeteParam={idRequeteParam}
+              modeConsultation={props.modeConsultation}
+            />
+          )}
       </Item>
 
       <SuiviObservationsRequete
-        idRequete={idRequeteParam}
+        idRequete={idRequeteParam || ""}
         observations={props.requete?.observations}
       />
     </>

@@ -6,21 +6,21 @@ import {
   DialogContentText,
   DialogTitle
 } from "@mui/material";
+import { getUrlPrecedente } from "@util/route/UrlUtil";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
-import { getUrlPrecedente } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import {
   ALERTE_AUTRE,
   ALERTE_OBLIGATOIRE,
   COMPLEMENT_DESCRIPTION_LIMITE_TAILLE
 } from "@widget/formulaire/FormulaireMessages";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import FormBoutons, { FormBoutonsProps } from "@widget/popin/FormBoutons";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import "../scss/IgnoreRequetePopin.scss";
 
@@ -74,7 +74,8 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
   onClosePopin,
   requete
 }) => {
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [param, setParam] = useState<IgnorerParams>({});
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
@@ -105,7 +106,7 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
   useEffect(() => {
     if (idAction) {
       setOperationEnCours(false);
-      history.push(getUrlPrecedente(history.location.pathname));
+      navigate(getUrlPrecedente(location.pathname));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idAction]);

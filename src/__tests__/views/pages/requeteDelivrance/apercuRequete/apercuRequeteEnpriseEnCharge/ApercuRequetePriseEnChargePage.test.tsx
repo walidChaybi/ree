@@ -19,45 +19,75 @@ import {
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory } from "history";
-import { Route, Router } from "react-router-dom";
-import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
+import { Navigate, RouterProvider } from "react-router-dom";
+import {
+  createTestingRouter,
+  mockFenetreFicheTestFunctions
+} from "../../../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {
   mockFenetreFicheTestFunctions();
 });
 
-let history: any;
-
 beforeAll(() => {
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
-
-  history = createMemoryHistory();
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      "a4cefb71-8457-4f6b-937e-34b49335d884"
-    ),
-    {
-      dataRMCAutoActe: DataRMCActeAvecResultat,
-      dataTableauRMCAutoActe: { DataTableauActe },
-      dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
-      dataTableauRMCAutoInscription: { DataTableauInscription }
-    }
-  );
 });
 
-test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", async () => {
-  const { container } = render(
-    <Router history={history}>
-      <Route
-        exact={true}
-        path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
-      >
-        <ApercuRequetePriseEnChargePage />
-      </Route>
-    </Router>
+async function afficheComposantTest(idRequete: string) {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        element: <ApercuRequetePriseEnChargePage />
+      },
+      {
+        path: "/",
+        // passer un state
+        element: (
+          <Navigate
+            to={getUrlWithParam(
+              URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+              idRequete
+            )}
+            state={{
+              dataRMCAutoActe: DataRMCActeAvecResultat,
+              dataTableauRMCAutoActe: { DataTableauActe },
+              dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
+              dataTableauRMCAutoInscription: { DataTableauInscription }
+            }}
+          />
+        )
+      }
+    ],
+    [
+      // ici, on passe "/" comme initialEntries afin d'arriver sur la route "/" pour etre redirigé vers la route qu'on souhaite
+      // testé avec le bon navigation state passé via la props state du <Navigate />
+      "/"
+    ]
   );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
+}
+
+test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", async () => {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        element: <ApercuRequetePriseEnChargePage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        "a4cefb71-8457-4f6b-937e-34b49335d884"
+      )
+    ]
+  );
+
+  const { container } = render(<RouterProvider router={router} />);
 
   await waitFor(() => {
     expect(
@@ -71,24 +101,11 @@ test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", a
         container.getElementsByClassName("OperationLocaleEnCoursSimple").length
       ).toBe(0);
     });
-  }, 3000);
+  }, 0);
 });
 
 test("renders ApercuRequetePriseEnChargePage", async () => {
-  await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
-          >
-            <ApercuRequetePriseEnChargePage />
-          </Route>
-        </Router>
-      </>
-    );
-  });
+  await afficheComposantTest("a4cefb71-8457-4f6b-937e-34b49335d884");
 
   const bandeau = screen.getByText(
     "Requête prise en charge par : Ashley YOUNG - Le : 14/07/2020"
@@ -159,19 +176,41 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
 });
 
 test("redirection requete RDD", async () => {
+  // duplica de AfficheComposant() pour avoir acces au router au sein du test
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        element: <ApercuRequetePriseEnChargePage />
+      },
+      {
+        path: "/",
+        // passer un state
+        element: (
+          <Navigate
+            to={getUrlWithParam(
+              URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+              "a4cefb71-8457-4f6b-937e-34b49335d884"
+            )}
+            state={{
+              dataRMCAutoActe: DataRMCActeAvecResultat,
+              dataTableauRMCAutoActe: { DataTableauActe },
+              dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
+              dataTableauRMCAutoInscription: { DataTableauInscription }
+            }}
+          />
+        )
+      }
+    ],
+    [
+      // ici, on passe "/" comme initialEntries afin d'arriver sur la route "/" pour etre redirigé vers la route qu'on souhaite
+      // testé avec le bon navigation state passé via la props state du <Navigate />
+      "/"
+    ]
+  );
+
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route
-            exact={true}
-            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
-          >
-            <ApercuRequetePriseEnChargePage />
-          </Route>
-        </Router>
-      </>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
@@ -193,38 +232,47 @@ test("redirection requete RDD", async () => {
     fireEvent.click(screen.getByText(/Oui/i));
   });
 
-  expect(history.location.pathname).toBe(
+  expect(router.state.location.pathname).toBe(
     "/rece/rece-ui/mesrequetes/Edition/a4cefb71-8457-4f6b-937e-34b49335d666/b41079a5-9e8d-478c-b04c-c4c2ac67134f"
   );
 });
 
 test("redirection requete RDC", async () => {
-  const history2 = createMemoryHistory();
-  history2.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      "a4cefb71-8457-4f6b-937e-34b49335d666"
-    ),
-    {
-      dataRMCAutoActe: DataRMCActeAvecResultat,
-      dataTableauRMCAutoActe: { DataTableauActe },
-      dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
-      dataTableauRMCAutoInscription: { DataTableauInscription }
-    }
+  // duplica de AfficheComposant() pour avoir acces au router au sein du test
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        element: <ApercuRequetePriseEnChargePage />
+      },
+      {
+        path: "/",
+        // element de navigation qui permet de passer un state
+        element: (
+          <Navigate
+            to={getUrlWithParam(
+              URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+              "a4cefb71-8457-4f6b-937e-34b49335d884"
+            )}
+            state={{
+              dataRMCAutoActe: DataRMCActeAvecResultat,
+              dataTableauRMCAutoActe: { DataTableauActe },
+              dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
+              dataTableauRMCAutoInscription: { DataTableauInscription }
+            }}
+          />
+        )
+      }
+    ],
+    [
+      // ici, on passe "/" comme initialEntries afin d'arriver sur la route "/" pour etre redirigé vers la route qu'on souhaite
+      // testé avec le bon navigation state passé via la props state du <Navigate />
+      "/"
+    ]
   );
+
   await act(async () => {
-    render(
-      <>
-        <Router history={history2}>
-          <Route
-            exact={true}
-            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
-          >
-            <ApercuRequetePriseEnChargePage />
-          </Route>
-        </Router>
-      </>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
@@ -246,37 +294,48 @@ test("redirection requete RDC", async () => {
     fireEvent.click(screen.getByText(/Oui/i));
   });
 
-  expect(history2.location.pathname).toBe(
+  expect(router.state.location.pathname).toBe(
     "/rece/rece-ui/mesrequetes/Edition/a4cefb71-8457-4f6b-937e-34b49335d666/b41079a5-9e8d-478c-b04c-c4c2ac67134f"
   );
 });
 
 test("ignorer requete", async () => {
-  const history = createMemoryHistory();
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      "a4cefb71-8457-4f6b-937e-34b49335d666"
-    ),
-    {
-      dataRMCAutoActe: DataRMCActeAvecResultat,
-      dataTableauRMCAutoActe: { DataTableauActe },
-      dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
-      dataTableauRMCAutoInscription: { DataTableauInscription }
-    }
+  // duplica de AfficheComposant() pour avoir acces au router au sein du test
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        element: <ApercuRequetePriseEnChargePage />
+      },
+      {
+        path: "/",
+        // element de navigation qui permet de passer un state
+        element: (
+          <Navigate
+            to={getUrlWithParam(
+              URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+              "a4cefb71-8457-4f6b-937e-34b49335d666"
+            )}
+            state={{
+              dataRMCAutoActe: DataRMCActeAvecResultat,
+              dataTableauRMCAutoActe: { DataTableauActe },
+              dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
+              dataTableauRMCAutoInscription: { DataTableauInscription }
+            }}
+          />
+        )
+      }
+    ],
+    [
+      // ici, on passe "/" comme initialEntries afin d'arriver sur la route "/" pour etre redirigé vers la route qu'on souhaite
+      // testé avec le bon navigation state passé via la props state du <Navigate />
+      "/"
+    ]
   );
-  render(
-    <>
-      <Router history={history}>
-        <Route
-          exact={true}
-          path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
-        >
-          <ApercuRequetePriseEnChargePage />
-        </Route>
-      </Router>
-    </>
-  );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   await waitFor(() => {
     expect(screen.getByText(/Documents à délivrer/i)).toBeDefined();
@@ -312,6 +371,6 @@ test("ignorer requete", async () => {
   fireEvent.click(valider);
 
   await waitFor(() => {
-    expect(history.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
+    expect(router.state.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
   });
 });

@@ -18,7 +18,6 @@ import { storeRece } from "@util/storeRece";
 import fr from "date-fns/locale/fr";
 import React, { useEffect, useState } from "react";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
-import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "./App.scss";
 import { Body } from "./body/Body";
@@ -77,33 +76,31 @@ const App: React.FC = () => {
         }
       >
         <ErrorManager>
-          <Router>
-            <div className="App">
-              <OfficierContext.Provider value={login}>
-                <OfficierContext.Consumer>
-                  {officier => {
-                    storeRece.utilisateurCourant = officier?.officierDataState;
-                    return null;
-                  }}
-                </OfficierContext.Consumer>
+          <div className="App">
+            <OfficierContext.Provider value={login}>
+              <OfficierContext.Consumer>
+                {officier => {
+                  storeRece.utilisateurCourant = officier?.officierDataState;
+                  return null;
+                }}
+              </OfficierContext.Consumer>
 
-                <Header />
-                {!operationEnCours && <Body />}
-                <ToastContainer
-                  containerId={TOASTCONTAINER_PRINCIPAL}
-                  className={"toast-container"}
-                  position="top-center"
-                  hideProgressBar={false}
-                  newestOnTop={true}
-                  closeOnClick={true}
-                  rtl={false}
-                  draggable={true}
-                  pauseOnHover={true}
-                  enableMultiContainer={true}
-                />
-              </OfficierContext.Provider>
-            </div>
-          </Router>
+              <Header />
+              {!operationEnCours && <Body />}
+              <ToastContainer
+                containerId={TOASTCONTAINER_PRINCIPAL}
+                className={"toast-container"}
+                position="top-center"
+                hideProgressBar={false}
+                newestOnTop={true}
+                closeOnClick={true}
+                rtl={false}
+                draggable={true}
+                pauseOnHover={true}
+                enableMultiContainer={true}
+              />
+            </OfficierContext.Provider>
+          </div>
         </ErrorManager>
       </SeulementNavigateur>
     </ThemeProvider>

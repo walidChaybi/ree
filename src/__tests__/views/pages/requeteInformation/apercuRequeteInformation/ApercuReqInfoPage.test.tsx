@@ -1,7 +1,7 @@
+import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
 import { ReponseAppelDetailRequeteInformationSansCorbeilleAgent } from "@mock/data/DetailRequeteInformation";
 import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { NOMENCLATURE_REPONSE } from "@mock/data/NomenclatureReponse";
-import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
 import { NORESULT } from "@mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetesInformation } from "@mock/superagent-config/superagent-mock-requetes-information";
 import { IOfficier } from "@model/agent/IOfficier";
@@ -19,9 +19,11 @@ import {
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory } from "history";
-import { Route, Router } from "react-router-dom";
-import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
+import { RouterProvider } from "react-router-dom";
+import {
+  createTestingRouter,
+  mockFenetreFicheTestFunctions
+} from "../../../../__tests__utils__/testsUtil";
 
 let history: any;
 
@@ -30,15 +32,12 @@ beforeAll(async () => {
 });
 
 beforeEach(() => {
-  history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_INFORMATION);
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
   storeRece.utilisateurCourant = {
     idUtilisateur: LISTE_UTILISATEURS[3].idUtilisateur
   } as IOfficier;
   configRequetesInformation[0].compteurRequeteInformation = 0;
 });
-
 afterEach(() => {
   storeRece.utilisateurCourant = undefined;
 });
@@ -46,23 +45,23 @@ afterEach(() => {
 ////////////////////// DEBUT DES TESTS //////////////////////////////////////////
 
 test("renders ApercuReqInfoPage", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-      "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        element: <ApercuReqInfoPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
+      )
+    ]
   );
 
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
-            <ApercuReqInfoPage />
-          </Route>
-        </Router>
-      </>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   const bandeau = screen.getByText(
@@ -185,28 +184,29 @@ test("renders ApercuReqInfoPage", async () => {
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
+    expect(router.state.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
   });
 });
 
 test("bouton annuler", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-      "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        element: <ApercuReqInfoPage />
+      }
+    ],
+    [
+      URL_MES_REQUETES_INFORMATION,
+      getUrlWithParam(
+        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
+      )
+    ]
   );
 
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
-            <ApercuReqInfoPage />
-          </Route>
-        </Router>
-      </>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   const boutonAnnuler = screen.getByText(/Retour espace information/i);
@@ -220,30 +220,30 @@ test("bouton annuler", async () => {
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
+    expect(router.state.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
   });
 });
 
 test("clique requete liée", async () => {
   const nouvelleFenetreSpy = jest.spyOn(window, "open");
 
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-      "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        element: <ApercuReqInfoPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
+      )
+    ]
   );
 
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
-            <ApercuReqInfoPage />
-          </Route>
-        </Router>
-      </>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   const valeurRequeteLiee = screen.getByText(/LRU1A5/i);
@@ -264,23 +264,23 @@ test("clique requete liée", async () => {
 });
 
 test("bouton saisie libre", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-      "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        element: <ApercuReqInfoPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
+      )
+    ]
   );
 
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
-            <ApercuReqInfoPage />
-          </Route>
-        </Router>
-      </>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   act(() => {
@@ -307,23 +307,23 @@ test("bouton saisie libre", async () => {
 });
 
 test("complétion en cours", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-      "bbd05aed-8ea9-45ba-a7d7-b8d55ad10557"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        element: <ApercuReqInfoPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        "bbd05aed-8ea9-45ba-a7d7-b8d55ad10557"
+      )
+    ]
   );
 
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
-            <ApercuReqInfoPage />
-          </Route>
-        </Router>
-      </>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   await waitFor(() => {
@@ -332,23 +332,23 @@ test("complétion en cours", async () => {
 });
 
 test("renders ApercuReqInfoPage Double Menu", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-      "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        element: <ApercuReqInfoPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
+      )
+    ]
   );
 
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
-            <ApercuReqInfoPage />
-          </Route>
-        </Router>
-      </>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   const boutonReponses = screen.getByText(/Toutes les réponses disponibles/i);
@@ -397,23 +397,23 @@ test("renders ApercuReqInfoPage Double Menu", async () => {
 });
 
 test("render ApercuReqInfoPage : RMC état civil manuelle ", async () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-      "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        element: <ApercuReqInfoPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
+      )
+    ]
   );
 
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
-            <ApercuReqInfoPage />
-          </Route>
-        </Router>
-      </>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   const linkElement = screen.getByText("Nouvelle recherche multi-critères");
@@ -470,23 +470,23 @@ const Labels = {
 const renduApercuReqInfoPage = async () => {
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
 
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-      ReponseAppelDetailRequeteInformationSansCorbeilleAgent.data.id
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        element: <ApercuReqInfoPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        ReponseAppelDetailRequeteInformationSansCorbeilleAgent.data.id
+      )
+    ]
   );
 
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
-            <ApercuReqInfoPage />
-          </Route>
-        </Router>
-      </>
-    );
+    render(<RouterProvider router={router} />);
   });
 };
 
@@ -539,20 +539,24 @@ test("Attendu: les blocs non présents sur l'aperçu de requête sont bien absen
 test("Attendu: le bouton 'prendre en charge' ne s'affiche pas lorsqu'on se trouve sur une fenêtre externe", async () => {
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
 
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        element: (
+          <ApercuReqInfoPage
+            idRequeteAAfficher={
+              ReponseAppelDetailRequeteInformationSansCorbeilleAgent.data.id
+            }
+          />
+        )
+      }
+    ],
+    [URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID]
+  );
+
   await act(async () => {
-    render(
-      <>
-        <Router history={history}>
-          <Route>
-            <ApercuReqInfoPage
-              idRequeteAAfficher={
-                ReponseAppelDetailRequeteInformationSansCorbeilleAgent.data.id
-              }
-            />
-          </Route>
-        </Router>
-      </>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   const boutonPrendreEnCharge = screen.queryByLabelText(

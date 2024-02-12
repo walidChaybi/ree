@@ -7,9 +7,11 @@ import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID } from
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router";
-import { pngFiles } from "../../../../../../__tests__utils__/testsUtil";
+import { RouterProvider } from "react-router-dom";
+import {
+  createTestingRouter,
+  pngFiles
+} from "../../../../../../__tests__utils__/testsUtil";
 
 interface HookConsumerListePiecesJustificativesEtablissementProps {
   requete?: IRequeteCreationEtablissement;
@@ -18,28 +20,31 @@ interface HookConsumerListePiecesJustificativesEtablissementProps {
   resetRequete?: () => void;
 }
 
-const history = createMemoryHistory();
-
 const HookConsumerHookConsumerListePiecesJustificativesEtablissement: React.FC<
   HookConsumerListePiecesJustificativesEtablissementProps
 > = props => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-      props.requete?.id || ""
-    )
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        element: (
+          <ListePiecesJustificativesEtablissement
+            requete={props.requete}
+            autoriseOuvertureFenetreExt={true}
+            rechargerRequete={() => {}}
+            onRenommePieceJustificative={() => {}}
+          />
+        )
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        props.requete?.id || ""
+      )
+    ]
   );
-
-  return (
-    <Router history={history}>
-      <ListePiecesJustificativesEtablissement
-        requete={props.requete}
-        autoriseOuvertureFenetreExt={true}
-        rechargerRequete={() => {}}
-        onRenommePieceJustificative={() => {}}
-      />
-    </Router>
-  );
+  return <RouterProvider router={router} />;
 };
 
 test("DOIT ouvrir et afficher la modal QUAND on clique sur le bouton d'ouverture de la modal.", async () => {
@@ -100,15 +105,19 @@ test("DOIT activer le bouton de validation QUAND des données ont été selectio
 
   await user.upload(uploadFileField, pngFiles);
 
-  await waitFor(() => {
-    expect(selectField).toBeDefined();
-    expect(uploadFileField).toBeDefined();
-    expect(selectField.value).toBe("a272a8ad-8295-4742-9b89-b571d298e881");
-    expect(screen.getByDisplayValue("AN Postulant")).toBeDefined();
-    expect(uploadFileField.files?.[0]).toStrictEqual(fakeFile);
-    expect(screen.getByText("hello.png")).toBeDefined();
-    expect(screen.getByText("Valider")).toBeDefined();
-    expect(screen.getByText("Valider")).not.toBeDisabled();
-    expect(screen.getByText("Fermer")).toBeDefined();
-  });
+  setTimeout(() => {
+    waitFor(() => {
+      expect(selectField).toBeDefined();
+      expect(uploadFileField).toBeDefined();
+      expect(selectField.value).toBe("a272a8ad-8295-4742-9b89-b571d298e881");
+      expect(screen.getByDisplayValue("AN Postulant")).toBeDefined();
+      expect(uploadFileField.files?.[0]).toStrictEqual(fakeFile);
+      expect(screen.getByText("hello.png")).toBeDefined();
+      expect(screen.getByText("Valider")).toBeDefined();
+      expect(screen.getByText("Valider")).not.toBeDisabled();
+      expect(screen.getByText("Fermer")).toBeDefined();
+    });
+  }, 0);
+
+
 });

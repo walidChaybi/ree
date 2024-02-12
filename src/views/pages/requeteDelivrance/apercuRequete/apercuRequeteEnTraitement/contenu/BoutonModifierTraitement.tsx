@@ -7,12 +7,13 @@ import { PATH_APERCU_REQ_PRISE } from "@router/ReceUrls";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import {
   getUrlPrecedente,
-  getUrlWithParam
+  getUrlWithParam,
+  replaceUrl
 } from "../../../../../common/util/route/UrlUtil";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 
@@ -23,7 +24,8 @@ interface BoutonModifierTraitementProps {
 export const BoutonModifierTraitement: React.FC<
   BoutonModifierTraitementProps
 > = props => {
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [params, setParams] = useState<
     ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
@@ -34,19 +36,17 @@ export const BoutonModifierTraitement: React.FC<
       !props.requete.documentsReponses ||
       props.requete.documentsReponses.length === 0
     ) {
-      history.replace(
-        `${getUrlPrecedente(
-          history.location.pathname
-        )}/${PATH_APERCU_REQ_PRISE}/${props.requete.id}`
+      replaceUrl(
+        navigate,
+        `${getUrlPrecedente(location.pathname)}/${PATH_APERCU_REQ_PRISE}/${
+          props.requete.id
+        }`
       );
     } else {
       setParams({
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
         libelleAction: getLibelle("Revue du traitement"),
-        urlCourante: getUrlWithParam(
-          history.location.pathname,
-          props.requete.id
-        ),
+        urlCourante: getUrlWithParam(location.pathname, props.requete.id),
         requete: mappingRequeteDelivranceToRequeteTableau(props.requete),
         pasDeTraitementAuto: true,
         typeRequete: TypeRequete.DELIVRANCE

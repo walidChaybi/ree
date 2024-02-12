@@ -10,7 +10,7 @@ import { Option } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface BoutonTransmettreAValideurProps {
   idRequete: string;
@@ -20,7 +20,8 @@ export const BoutonTransmettreAValideur: React.FC<
   BoutonTransmettreAValideurProps
 > = props => {
   const [open, setOpen] = useState<boolean>(false);
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [params, setParams] = useState<ITransmettreAValideurParams>();
 
   const onValidate = useCallback(
@@ -44,9 +45,9 @@ export const BoutonTransmettreAValideur: React.FC<
 
   useEffect(() => {
     if (idAction) {
-      replaceUrl(history, getUrlPrecedente(history.location.pathname));
+      replaceUrl(navigate, getUrlPrecedente(location.pathname));
     }
-  }, [idAction, history]);
+  }, [idAction, location, navigate]);
 
   return (
     <>

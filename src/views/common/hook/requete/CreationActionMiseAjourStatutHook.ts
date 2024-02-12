@@ -8,7 +8,7 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { storeRece } from "@util/storeRece";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigation } from "react-router-dom";
 
 export interface ICreationActionMiseAjourStatutHookParams {
   statutRequete: StatutRequete;
@@ -24,7 +24,7 @@ export interface ICreationActionMiseAjourStatutHookParams {
 export function useCreationActionMiseAjourStatut(
   params?: ICreationActionMiseAjourStatutHookParams
 ) {
-  const history = useHistory();
+  const navigation = useNavigation();
   const [
     creationActionEtMiseAjourStatutParams,
     setCreationActionEtMiseAjourStatutParams
@@ -55,5 +55,5 @@ export function useCreationActionMiseAjourStatut(
         params.callback();
       }
     }
-  }, [idAction, params, history]);
+  }, [idAction, params, navigation]);
 }

@@ -8,14 +8,8 @@ import {
   PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET,
   PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE
 } from "@router/ReceUrls";
-import {
-  getUrlCourante,
-  getUrlPrecedente,
-  getUrlWithParam,
-  isLastPathElemIsId
-} from "@util/route/UrlUtil";
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 export type NavigationApercuReqCreationParams = {
   idRequete: string;
@@ -28,20 +22,20 @@ export type NavigationApercuReqCreationParams = {
 export function useNavigationApercuCreation(
   props?: NavigationApercuReqCreationParams
 ) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (props) {
       if (SousTypeCreation.estRCEXR(props.sousType)) {
         redirectionEtablissement(
-          history,
+          navigate,
           props.idRequete,
           props.statut,
           props.idUtilisateur
         );
       } else if (SousTypeCreation.estSousTypeTranscription(props.sousType)) {
         redirectionTranscription(
-          history,
+          navigate,
           props.idRequete,
           props.statut,
           props.idUtilisateur
@@ -52,11 +46,11 @@ export function useNavigationApercuCreation(
         props.handleTraitementTermine();
       }
     }
-  }, [props, history]);
+  }, [props, navigate]);
 }
 
 function redirectionEtablissement(
-  history: any,
+  navigate: NavigateFunction,
   idRequete: string,
   statut?: StatutRequete,
   idUtilisateur?: string
@@ -71,11 +65,11 @@ function redirectionEtablissement(
   } else {
     path = PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE;
   }
-  history.push(getUrlEtablissement(history, path, idRequete));
+  navigate(`${path}/${idRequete}`);
 }
 
 function redirectionTranscription(
-  history: any,
+  navigate: NavigateFunction,
   idRequete: string,
   statut?: StatutRequete,
   idUtilisateur?: string
@@ -96,19 +90,5 @@ function redirectionTranscription(
   } else {
     path = PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE;
   }
-
-  history.push(
-    getUrlWithParam(`${getUrlCourante(history)}/${path}/:idRequete`, idRequete)
-  );
-}
-
-function getUrlEtablissement(history: any, path: string, idRequete: string) {
-  let baseUrl;
-  const urlCourante = getUrlCourante(history);
-  if (isLastPathElemIsId(urlCourante)) {
-    baseUrl = getUrlPrecedente(urlCourante);
-  } else {
-    baseUrl = urlCourante;
-  }
-  return getUrlWithParam(`${baseUrl}/${path}/:idRequete`, idRequete);
+  navigate(`${path}/${idRequete}`);
 }

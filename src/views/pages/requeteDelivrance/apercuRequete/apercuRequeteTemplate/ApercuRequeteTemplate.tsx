@@ -4,14 +4,14 @@ import {
   IDetailRequeteParams,
   useDetailRequeteApiHook
 } from "@hook/requete/DetailRequeteHook";
-import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { ApercuRequetePartieGauche } from "../apercuRequetePartieGauche/ApercuRequetePartieGauche";
 import "./scss/ApercuRequeteTemplate.scss";
 
@@ -24,22 +24,19 @@ interface TemplateProps {
 
 export const ApercuRequeteTemplate: React.FC<TemplateProps> = props => {
   const [idRequete, setIdRequete] = useState<string>();
-  const { idRequeteParam } = useParams<IUuidRequeteParams>();
-  const history = useHistory();
-    const [detailRequeteParams, setDetailRequeteParams] =
-      useState<IDetailRequeteParams>();
-    const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
+  const { idRequeteParam } = useParams<TUuidRequeteParams>();
+  const location = useLocation();
+  const [detailRequeteParams, setDetailRequeteParams] =
+    useState<IDetailRequeteParams>();
+  const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
   const [requete, setRequete] = useState<IRequeteDelivrance>();
 
-     useEffect(() => {
-       setDetailRequeteParams({
-         idRequete: idRequete ?? idRequeteParam,
-         estConsultation: history.location.pathname.includes(
-           URL_RECHERCHE_REQUETE
-         )
-       });
-     }, [idRequete, history.location.pathname, idRequeteParam]);
-
+  useEffect(() => {
+    setDetailRequeteParams({
+      idRequete: idRequete ?? idRequeteParam,
+      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
+    });
+  }, [idRequete, location.pathname, idRequeteParam]);
 
   useEffect(() => {
     // L'idRequete peut venir de l'URL ou bien être une props dans le cas d'une requete liée

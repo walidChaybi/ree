@@ -6,7 +6,7 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getLibelle } from "@util/Utils";
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logoReceBlanc from "../../../img/logo-rece-blanc.svg";
 import { BoutonDeconnexion } from "./BoutonDeconnexion";
 import { BoutonRechercheRmc } from "./BoutonRechercheRmc";
@@ -16,14 +16,14 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ onClick }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const version = `${process.env.VERSION}_${process.env.DATE_BUILD}`;
 
   function onClickLogo(event: React.MouseEvent) {
     if (onClick) {
       onClick(event, URL_ACCUEIL);
     }
-    history.push(URL_ACCUEIL);
+    navigate(URL_ACCUEIL);
   }
 
   return (

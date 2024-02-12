@@ -29,9 +29,9 @@ import {
 import { storeRece } from "@util/storeRece";
 import { UN } from "@util/Utils";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import { createMemoryHistory } from "history";
 import React, { useState } from "react";
-import { Router } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
   storeRece.utilisateurCourant = mappingOfficier(
@@ -70,8 +70,6 @@ beforeAll(() => {
   ] as IUtilisateur[];
 });
 
-const history = createMemoryHistory();
-
 const queryParametersPourRequetes = {
   statuts: statutsRequetesCreation,
   tri: "dateCreation",
@@ -80,19 +78,25 @@ const queryParametersPourRequetes = {
 } as IQueryParametersPourRequetes;
 
 const HookConsummer: React.FC = () => {
-  history.push(URL_REQUETES_CREATION_SERVICE);
   const [popinAttribuerAOuvert, setPopinAttribuerAOuvert] =
     useState<boolean>(false);
-
-  return (
-    <Router history={history}>
-      <RequetesServiceCreation
-        queryParametersPourRequetes={queryParametersPourRequetes}
-        popinAttribuerAOuvert={popinAttribuerAOuvert}
-        setPopinAttribuerAOuvert={setPopinAttribuerAOuvert}
-      />
-    </Router>
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_REQUETES_CREATION_SERVICE,
+        element: (
+          <RequetesServiceCreation
+            queryParametersPourRequetes={queryParametersPourRequetes}
+            popinAttribuerAOuvert={popinAttribuerAOuvert}
+            setPopinAttribuerAOuvert={setPopinAttribuerAOuvert}
+          />
+        )
+      }
+    ],
+    [URL_REQUETES_CREATION_SERVICE]
   );
+
+  return <RouterProvider router={router} />;
 };
 
 test("DOIT afficher le tableau des requêtes de service à vide QUAND on arrive sur la page", async () => {
@@ -138,19 +142,27 @@ test("DOIT effectuer correctement le tri sur les requêtes de service QUAND on t
 });
 
 test("DOIT correctement afficher l'attribution des requêtes de service QUAND on clique sur attribuer à", async () => {
-  history.push(URL_REQUETES_CREATION_SERVICE);
-
-  render(
-    <Router history={history}>
-      <OfficierContext.Provider
-        value={{
-          officierDataState: storeRece.utilisateurCourant
-        }}
-      >
-        <EspaceCreationPage selectedTab={UN} />
-      </OfficierContext.Provider>
-    </Router>
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_REQUETES_CREATION_SERVICE,
+        element: (
+          <OfficierContext.Provider
+            value={{
+              officierDataState: storeRece.utilisateurCourant
+            }}
+          >
+            <EspaceCreationPage selectedTab={UN} />
+          </OfficierContext.Provider>
+        )
+      }
+    ],
+    [URL_REQUETES_CREATION_SERVICE]
   );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   await act(async () => {
     fireEvent.click(screen.getByTestId("loupeButton"));

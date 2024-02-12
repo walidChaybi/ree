@@ -3,7 +3,7 @@ import { logError } from "@util/LogManager";
 import { getLibelle } from "@util/Utils";
 import { useEffect, useState } from "react";
 
-export function useActeRecomposerApresSignatureApiHook(idActe: string) {
+export function useActeRecomposerApresSignatureApiHook(idActe?: string) {
   const [resultat, setResultat] = useState<Blob>();
 
   useEffect(() => {

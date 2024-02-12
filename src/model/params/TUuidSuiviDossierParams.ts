@@ -1,4 +1,4 @@
-export interface IUuidSuiviDossierParams {
+export type TUuidSuiviDossierParams = {
   idRequeteParam: string;
   idSuiviDossierParam: string;
-}
+};

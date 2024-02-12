@@ -2,24 +2,24 @@ import {
   TransfertUnitaireParams,
   useTransfertApi
 } from "@hook/requete/TransfertHook";
-import { IActionOption } from "@model/requete/IActionOption";
-import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IActionOption } from "@model/requete/IActionOption";
+import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
 import { AssignmentInd } from "@mui/icons-material";
 import { Menu, MenuItem } from "@mui/material";
 import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_INFORMATION
 } from "@router/ReceUrls";
+import { replaceUrl } from "@util/route/UrlUtil";
 import { Option } from "@util/Type";
 import { getLibelle } from "@util/Utils";
-import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import React, { useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   listeEntiteToOptions,
   listeUtilisateursToOptionsBis,
@@ -46,7 +46,7 @@ export interface IMenuTransfertProps {
 }
 
 export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const refs = useRef([]);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [options, setOptions] = useState<IActionOption[]>([]);
@@ -121,9 +121,9 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
       setOperationEnCours(false);
       if (props.estTransfert) {
         if (props.typeRequete === TypeRequete.DELIVRANCE) {
-          replaceUrl(history, URL_MES_REQUETES_DELIVRANCE);
+          replaceUrl(navigate, URL_MES_REQUETES_DELIVRANCE);
         } else {
-          replaceUrl(history, URL_MES_REQUETES_INFORMATION);
+          replaceUrl(navigate, URL_MES_REQUETES_INFORMATION);
         }
       } else if (props.rafraichirParent) {
         props.rafraichirParent();

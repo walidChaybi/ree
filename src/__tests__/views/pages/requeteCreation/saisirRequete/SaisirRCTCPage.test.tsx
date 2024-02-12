@@ -7,7 +7,11 @@ import {
 import { entiteRatachementEtablissement } from "@mock/data/entiteRatachementEtablissement";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { SaisirRCTCPage } from "@pages/requeteCreation/saisirRequete/SaisirRCTCPage";
-import { PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE } from "@router/ReceUrls";
+import {
+  PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE,
+  URL_MES_REQUETES_CREATION,
+  URL_MES_REQUETES_CREATION_SAISIR_RCTC
+} from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -17,11 +21,13 @@ import {
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { createMemoryHistory } from "history";
 import React from "react";
-import { Router } from "react-router";
+import { RouterProvider } from "react-router-dom";
 import { expectEstBoutonDisabled } from "../../../../__tests__utils__/expectUtils";
-import { renseigneChampsRecherche } from "../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  renseigneChampsRecherche
+} from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
   storeRece.utilisateurCourant = mappingOfficier(
@@ -33,21 +39,27 @@ beforeAll(() => {
   );
 });
 
-const HookSaisirRCTCForm: React.FC = () => {
-  return <SaisirRCTCPage />;
-};
+async function afficheSaisirRCTCForm() {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_CREATION_SAISIR_RCTC,
+        element: <SaisirRCTCPage />
+      }
+    ],
+    [URL_MES_REQUETES_CREATION_SAISIR_RCTC]
+  );
 
-const history = createMemoryHistory();
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
+}
 
 const getInput = (label: string): HTMLInputElement =>
   screen.getByLabelText(label) as HTMLInputElement;
 
 test("DOIT ajouter un parent QUAND on clique sur le bouton 'Ajouter un parent'", async () => {
-  render(
-    <Router history={history}>
-      <HookSaisirRCTCForm />
-    </Router>
-  );
+  await afficheSaisirRCTCForm();
 
   await waitFor(() => {
     expect(screen.queryByText("Parent 2")).not.toBeInTheDocument();
@@ -62,11 +74,7 @@ test("DOIT ajouter un parent QUAND on clique sur le bouton 'Ajouter un parent'",
 });
 
 test("DOIT retirer un parent QUAND on clique sur le bouton 'Retirer un parent'", async () => {
-  render(
-    <Router history={history}>
-      <HookSaisirRCTCForm />
-    </Router>
-  );
+  await afficheSaisirRCTCForm();
 
   fireEvent.click(screen.getByText("Ajouter un parent"));
   fireEvent.click(screen.getByText("Retirer un parent"));
@@ -78,14 +86,24 @@ test("DOIT retirer un parent QUAND on clique sur le bouton 'Retirer un parent'",
 
 test("DOIT afficher la popin de transfert vers les entités fille (triées) du département Etablissement QUAND l'utilisateur clique sur le bouton de transmission", async () => {
   storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
-  const history = createMemoryHistory();
-  history.push("/page1");
-  history.push("/page2");
-  render(
-    <Router history={history}>
-      <SaisirRCTCPage />
-    </Router>
+
+  const router = createTestingRouter(
+    [
+      {
+        path: "/page1",
+        element: <div>Page1</div>
+      },
+      {
+        path: URL_MES_REQUETES_CREATION_SAISIR_RCTC,
+        element: <SaisirRCTCPage />
+      }
+    ],
+    ["/page1", URL_MES_REQUETES_CREATION_SAISIR_RCTC]
   );
+
+  await act(async () => {
+    render(<RouterProvider router={router} />);
+  });
 
   /////////////////////////Saisie des données///////////////////////////////
   // Nature acte et lien requérant
@@ -179,18 +197,12 @@ test("DOIT afficher la popin de transfert vers les entités fille (triées) du d
   fireEvent.click(boutonValider);
 
   await waitFor(() => {
-    expect(history.location.pathname).toBe("/page1");
+    expect(router.state.location.pathname).toBe("/page1");
   });
 });
 
 test("DOIT activer le bouton 'Prendre en charge' QUAND je modifie au moins un champ du formulaire", async () => {
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <HookSaisirRCTCForm />
-      </Router>
-    );
-  });
+  await afficheSaisirRCTCForm();
 
   const boutonPrendreEnCharge = screen.getByText(/Prendre en charge/i);
 
@@ -210,12 +222,18 @@ test("DOIT activer le bouton 'Prendre en charge' QUAND je modifie au moins un ch
 });
 
 test("DOIT rediriger vers l'apercu requête en prise en charge QUAND je clique sur le bouton 'Prendre en charge'", async () => {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_CREATION_SAISIR_RCTC,
+        element: <SaisirRCTCPage />
+      }
+    ],
+    [URL_MES_REQUETES_CREATION_SAISIR_RCTC]
+  );
+
   await act(async () => {
-    render(
-      <Router history={history}>
-        <SaisirRCTCPage />
-      </Router>
-    );
+    render(<RouterProvider router={router} />);
   });
 
   const boutonPrendreEnCharge = screen.getByText(/Prendre en charge/i);
@@ -253,9 +271,9 @@ test("DOIT rediriger vers l'apercu requête en prise en charge QUAND je clique s
   fireEvent.click(boutonPrendreEnCharge);
 
   await waitFor(() => {
-    expect(history.location.pathname).toBe(
+    expect(router.state.location.pathname).toBe(
       getUrlWithParam(
-        `/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/:idRequeteParam`,
+        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/:idRequeteParam`,
         "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
       )
     );

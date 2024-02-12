@@ -7,15 +7,15 @@ import {
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
 import { appartientAMonServiceOuServicesMeresOuServicesFilles } from "@model/agent/IOfficier";
-import { IUuidRequeteParams } from "@model/params/IUuidRequeteParams";
+import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Requete, TRequete } from "@model/requete/IRequete";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import React, { useCallback, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import {
   IDetailRequeteParams,
   useAvecRejeuDetailRequeteApiHook
@@ -34,7 +34,7 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
   const [detailRequeteParams, setDetailRequeteParams] =
     useState<IDetailRequeteParams>();
   const [requete, setRequete] = useState<IRequeteInformation>();
-  const { idRequeteParam } = useParams<IUuidRequeteParams>();
+  const { idRequeteParam } = useParams<TUuidRequeteParams>();
   const [affichageBoutonPrendreEnCharge, setAffichageBoutonPrendreEnCharge] =
     useState(false);
 
@@ -45,7 +45,7 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
 
   useCreationActionMiseAjourStatut(paramsMAJReqInfo);
 
-  const history = useHistory();
+  const location = useLocation();
 
   const { detailRequeteState } =
     useAvecRejeuDetailRequeteApiHook(detailRequeteParams);
@@ -57,12 +57,10 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
     } else {
       setDetailRequeteParams({
         idRequete: idRequeteParam,
-        estConsultation: history.location.pathname.includes(
-          URL_RECHERCHE_REQUETE
-        )
+        estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
       });
     }
-  }, [idRequeteParam, props.idRequeteAAfficher, history.location.pathname]);
+  }, [idRequeteParam, props.idRequeteAAfficher, location.pathname]);
 
   useEffect(() => {
     if (detailRequeteState) {

@@ -3,7 +3,7 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { storeRece } from "@util/storeRece";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigation } from "react-router-dom";
 import { usePostCreationActionApi } from "./CreationActionHook";
 
 export interface CreationActionHookParams {
@@ -15,7 +15,7 @@ export interface CreationActionHookParams {
 export function useCreationAction(
   params: CreationActionHookParams | undefined
 ) {
-  const history = useHistory();
+  const navigation = useNavigation();
   const [creationActionParams, setCreationActionParams] = useState<
     ICreationActionParams | undefined
   >();
@@ -40,5 +40,5 @@ export function useCreationAction(
         params.callback();
       }
     }
-  }, [idAction, params, history]);
+  }, [idAction, params, navigation]);
 }

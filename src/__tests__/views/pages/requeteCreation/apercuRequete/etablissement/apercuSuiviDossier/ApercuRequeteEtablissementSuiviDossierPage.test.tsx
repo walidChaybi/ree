@@ -4,10 +4,10 @@ import {
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID
 } from "@router/ReceUrls";
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { createMemoryHistory } from "history";
-import { Route, Router } from "react-router";
+import { RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 
 describe("Test de la page Aperçu requête etablissement suivi dossier", () => {
   test("DOIT afficher les onglets avec pièce justificative active QUAND on arrive sur la page", async () => {
@@ -27,21 +27,23 @@ describe("Test de la page Aperçu requête etablissement suivi dossier", () => {
 });
 
 function afficherPageRequeteCreationEtablissment() {
-  const history = createMemoryHistory();
-  history.push(
-    getUrlWithParam(
-      `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER}/:idRequete`,
-      "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-    )
-  );
-  render(
-    <Router history={history}>
-      <Route
-        exact={true}
-        path={URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID}
-      >
-        <ApercuRequeteEtablissementSuiviDossierPage />
-      </Route>
-    </Router>
-  );
+
+  act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
+          element: <ApercuRequeteEtablissementSuiviDossierPage />
+        }
+      ],
+      [
+        getUrlWithParam(
+          `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER}/:idRequete`,
+          "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+        )
+      ]
+    );
+
+    render(<RouterProvider router={router} />);
+  });
 }

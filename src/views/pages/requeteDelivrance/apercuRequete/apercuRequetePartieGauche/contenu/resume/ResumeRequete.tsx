@@ -19,7 +19,7 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useState } from "react";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { DetailRequetePage } from "../../../../detailRequete/DetailRequetePage";
 import { ResumeRequetePartieHaute } from "./ResumeRequetePartieHaute";
 import { ResumeRequeteType } from "./ResumeRequeteType";
@@ -36,7 +36,7 @@ const width = 1100;
 const height = 600;
 
 export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [fenetreExterne, setFenetreExterne] = useState<boolean>(false);
 
   const onClickNumero = () => {
@@ -57,7 +57,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
     }
 
     if (url) {
-      history.push(getUrlWithParam(url, props.requete.id));
+      navigate(getUrlWithParam(url, props.requete.id));
     }
   };
 

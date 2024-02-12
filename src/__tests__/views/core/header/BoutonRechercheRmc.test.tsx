@@ -2,13 +2,10 @@ import { OfficierContext } from "@core/contexts/OfficierContext";
 import { BoutonRechercheRmc } from "@core/header/BoutonRechercheRmc";
 import officier from "@mock/data/connectedUser.json";
 import { configFakeUrl } from "@mock/superagent-config/superagent-mock-fake-url";
-import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { MemoryHistory, createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import { mockFenetreFicheTestFunctions } from "../../../__tests__utils__/testsUtil";
 
-let history: MemoryHistory;
 let boutonElement: HTMLElement;
 
 beforeAll(async () => {
@@ -16,16 +13,14 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-  history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_DELIVRANCE);
   render(
-    <Router history={history}>
+    <MemoryRouter>
       <OfficierContext.Provider
         value={{ officierDataState: { idSSO: officier.id_sso, ...officier } }}
       >
         <BoutonRechercheRmc></BoutonRechercheRmc>
       </OfficierContext.Provider>
-    </Router>
+    </MemoryRouter>
   );
   boutonElement = screen.getByTitle("Recherche acte/inscription");
   await waitFor(() => {
