@@ -23,8 +23,7 @@ import { RECEContext } from "./RECEContext";
 export const Body: React.FC = () => {
   const [appliDejaOuverte, setAppliDejaOuverte] = useState<boolean>(false);
   const [isDirty, setIsDirty] = useState<boolean>(false);
-  const { cleReinitialisation, reinitialisation } =
-    useReinitialisationComposant();
+  const { reinitialisation } = useReinitialisationComposant();
 
   useEffect(() => {
     gestionnaireDoubleOuverture.lancerVerification(() => {
@@ -60,7 +59,6 @@ export const Body: React.FC = () => {
                   ></GestionnaireFermeture>
 
                   <FilAriane routes={routesRece} />
-                  {/* <RouterComponent key={cleReinitialisation} /> */}
                   <Outlet />
                 </RECEContext.Provider>
               )
