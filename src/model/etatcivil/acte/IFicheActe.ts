@@ -51,6 +51,7 @@ export interface IFicheActe {
   mentions: IMention[];
   numeroActeElectronique?: number;
   referenceActe: string;
+  referenceSignifiante?: string;
 }
 
 interface ITitulairesActe {

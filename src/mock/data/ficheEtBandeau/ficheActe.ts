@@ -29,6 +29,7 @@ export const acte: any = {
   dateDerniereDelivrance: 1413928800,
   dateDerniereMaj: 1536357600,
   visibiliteArchiviste: "ANOM",
+  referenceActe: "CSL.DX.1922.NA.T.410.681",
   registre: {
     id: "a41079a5-9e8d-478c-b04c-c4c2ac67134f",
     type: {
@@ -329,7 +330,8 @@ export const acte: any = {
         ville: "Marseille",
         arrondissement: "10",
         voie: "",
-        lieuFormate: "Marseille 10ème arrondissement (Provence-Alpes-Côte d'Azur)"
+        lieuFormate:
+          "Marseille 10ème arrondissement (Provence-Alpes-Côte d'Azur)"
       },
       domicile: {
         pays: "DJIBOUTI",
@@ -448,6 +450,7 @@ export const acte1: any = {
   dateDerniereDelivrance: 1413928800,
   dateDerniereMaj: 1536357600,
   visibiliteArchiviste: "ANOM",
+  referenceActe: "CSL.DX.NA.T.411.681",
   registre: {
     id: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
     type: {
@@ -847,6 +850,13 @@ export const acte1: any = {
   ]
 };
 
+export const acteElectronique: any = {
+  ...acte,
+  id: "b41079a5-9e8d-478c-b04c-c4c2ac671333",
+  referenceActe: "RECE.0000.0000",
+  referenceSignifiante: "CSL.DX.1922.NA.T.410.681"
+};
+
 export const acte2: any = {
   id: "2748bb45-22cd-41ea-90db-0483b8ffc8a8",
   dateInitialisation: 1405980000,
@@ -862,6 +872,8 @@ export const acte2: any = {
   dateDerniereDelivrance: 1413928800,
   dateDerniereMaj: 1536357600,
   visibiliteArchiviste: "ANOM",
+  referenceActe: "CSL.DX.NA.T.412.681",
+
   registre: {
     id: "c41079a5-9e8d-478c-b04c-c4c2ac67134f",
     type: {
@@ -1086,6 +1098,7 @@ export const acte3: any = {
   dateDerniereDelivrance: 1413928800,
   dateDerniereMaj: 1536357600,
   visibiliteArchiviste: "ANOM",
+  referenceActe: "CSL.DX.NA.T.413.681",
   registre: {
     id: "d41079a5-9e8d-478c-b04c-c4c2ac67134f",
     type: {
@@ -1310,6 +1323,8 @@ export const acte4: any = {
   dateDerniereDelivrance: 1413928800,
   dateDerniereMaj: 1536357600,
   visibiliteArchiviste: "ANOM",
+  referenceActe: "CSL.DX.NA.T.414.681",
+
   registre: {
     id: "f41079a5-9e8d-478c-b04c-c4c2ac67134f",
     type: {
@@ -1602,6 +1617,7 @@ export const acte5 = {
   dateDerniereDelivrance: 1390561200000,
   dateDerniereMaj: 1042887600000,
   visibiliteArchiviste: "MEAE",
+
   evenement: {
     minute: null,
     heure: null,

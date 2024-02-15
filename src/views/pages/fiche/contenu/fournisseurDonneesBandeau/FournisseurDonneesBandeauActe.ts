@@ -1,6 +1,5 @@
 import { SimplePersonne } from "@model/etatcivil/fiche/SimplePersonne";
 import {
-  compactObject,
   formatDe,
   formatNom,
   formatPrenom,
@@ -50,21 +49,12 @@ export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
   }
 
   getRegistre(): string {
-    const registre: any = {
-      famille: getValeurOuVide(
-        this.data?.registre?.famille
-      ).toLocaleUpperCase(),
-      pocopa: getValeurOuVide(this.data?.registre?.pocopa).toLocaleUpperCase(),
-      annee: getValeurOuVide(this.data?.registre?.annee),
-      support1: getValeurOuVide(
-        this.data?.registre?.support1
-      ).toLocaleUpperCase(),
-      support2: getValeurOuVide(
-        this.data?.registre?.support2
-      ).toLocaleUpperCase(),
-      numeroActe: getValeurOuVide(this.data?.numero),
-      numeroBisTer: getValeurOuVide(this.data?.numeroBisTer)
-    };
-    return Object.values(compactObject(registre)).join(".");
+    if (this.data?.referenceSignifiante) {
+      return getValeurOuVide(
+        `${this.data.referenceActe} / ${this.data.referenceSignifiante}`
+      );
+    } else {
+      return getValeurOuVide(this.data.referenceActe);
+    }
   }
 }

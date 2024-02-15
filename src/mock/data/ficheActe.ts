@@ -10,6 +10,7 @@ export const ficheActe1 = {
   url: "/rece-etatcivil-api/v1/acte/923a10fb-0b15-452d-83c0-d24c76d1de8d",
   data: {
     id: idFicheActe1,
+    referenceActe: "DEP.IRAN.1987.254.35",
     dateInitialisation: null,
     dateCreation: 1141815600000,
     modeCreation: "ETABLI",
@@ -971,6 +972,7 @@ export const ficheActe2 = {
   url: "/rece-etatcivil-api/v1/acte/b41079a3-9e8d-478c-b04c-c4c2ac47134f",
   data: {
     id: idFicheActe2,
+    referenceActe: "ACQ.X.1951.1.483",
     dateInitialisation: null,
     dateCreation: 1233399600000,
     modeCreation: "DRESSE",
