@@ -75,22 +75,11 @@ export const acte: any = {
         }
       ],
       typeMention: {
-        codeType: "1",
-        libelleType: "Mariage",
-        codeSousType: "1-1",
-        libelleSousType: "Mariage célébré en France (mairie)",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-          nom: "NATURE_MENTION",
-          code: "27",
-          libelle: "Mariage",
-          estActif: true,
-          opposableAuTiers: false
-        },
+        idTypeMention: "b03c0e14-bad0-40a7-a895-8169e2b7f38e",
+        libelleType: "1-1 en France (mairie)",
         natureActe: "NAISSANCE",
-        estSousType: false
+        affecteAnalyseMarginale: false,
+        idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -138,22 +127,11 @@ export const acte: any = {
         }
       ],
       typeMention: {
-        codeType: "33",
-        libelleType: "Répertoire civil ",
-        codeSousType: "33-1",
-        libelleSousType: "Inscription au répertoire civil ",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "b03cdc6e-c77f-47a6-bc51-25b52ad7674e",
-          nom: "NATURE_MENTION",
-          code: "21",
-          libelle: "RC",
-          estActif: true,
-          opposableAuTiers: true
-        },
+        idTypeMention: "b04b57f1-7f36-4022-a0b3-0f9bf15911f8",
+        libelleType: "33-1 inscription",
         natureActe: "NAISSANCE",
-        estSousType: true
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03cdc6e-c77f-47a6-bc51-25b52ad7674e"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -201,22 +179,11 @@ export const acte: any = {
         }
       ],
       typeMention: {
-        codeType: "33",
-        libelleType: "Répertoire civil ",
-        codeSousType: "33-2",
-        libelleSousType: "Radiation d'une inscription au répertoire civil",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "b03c5f7f-2ad5-4f55-8599-6192dd6f126e",
-          nom: "NATURE_MENTION",
-          code: "22",
-          libelle: "RC radié",
-          estActif: true,
-          opposableAuTiers: false
-        },
+        idTypeMention: "b04b57f1-7f36-4022-a0b3-0f9bf15911f8",
+        libelleType: "33-1 inscription",
         natureActe: "NAISSANCE",
-        estSousType: true
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03cdc6e-c77f-47a6-bc51-25b52ad7674e"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -264,23 +231,11 @@ export const acte: any = {
         }
       ],
       typeMention: {
-        codeType: "2",
-        libelleType:
-          "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
-        codeSousType: "2-6-a",
-        libelleSousType: "Divorce à l'étranger",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
-          nom: "NATURE_MENTION",
-          code: "5",
-          libelle: "Divorce",
-          estActif: true,
-          opposableAuTiers: true
-        },
-        natureActe: "NAISSANCE",
-        estSousType: false
+        idTypeMention: "b04bb0cc-3a4b-49a3-9c1f-648e151ee021",
+        libelleType: "39-5-a Divorce à l'étranger",
+        natureActe: "MARIAGE",
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -494,22 +449,11 @@ export const acte1: any = {
         }
       ],
       typeMention: {
-        codeType: "1",
-        libelleType: "Mariage",
-        codeSousType: "1-1",
-        libelleSousType: "Mariage célébré en France (mairie)",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-          nom: "NATURE_MENTION",
-          code: "27",
-          libelle: "Mariage",
-          estActif: true,
-          opposableAuTiers: false
-        },
+        idTypeMention: "b03c0e14-bad0-40a7-a895-8169e2b7f38e",
+        libelleType: "1-1 en France (mairie)",
         natureActe: "NAISSANCE",
-        estSousType: false
+        affecteAnalyseMarginale: false,
+        idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -557,22 +501,11 @@ export const acte1: any = {
         }
       ],
       typeMention: {
-        codeType: "33",
-        libelleType: "Répertoire civil ",
-        codeSousType: "33-1",
-        libelleSousType: "Inscription au répertoire civil ",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "b03cdc6e-c77f-47a6-bc51-25b52ad7674e",
-          nom: "NATURE_MENTION",
-          code: "21",
-          libelle: "RC",
-          estActif: true,
-          opposableAuTiers: true
-        },
+        idTypeMention: "b04b57f1-7f36-4022-a0b3-0f9bf15911f8",
+        libelleType: "33-1 inscription",
         natureActe: "NAISSANCE",
-        estSousType: true
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03cdc6e-c77f-47a6-bc51-25b52ad7674e"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -620,22 +553,11 @@ export const acte1: any = {
         }
       ],
       typeMention: {
-        codeType: "33",
-        libelleType: "Répertoire civil ",
-        codeSousType: "33-2",
-        libelleSousType: "Radiation d'une inscription au répertoire civil",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "b03c5f7f-2ad5-4f55-8599-6192dd6f126e",
-          nom: "NATURE_MENTION",
-          code: "22",
-          libelle: "RC radié",
-          estActif: true,
-          opposableAuTiers: false
-        },
+        idTypeMention: "b04bb8af-9e0e-4473-a901-23aae1506b9f",
+        libelleType: "33-2 Radiation",
         natureActe: "NAISSANCE",
-        estSousType: true
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03c5f7f-2ad5-4f55-8599-6192dd6f126e"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -683,23 +605,11 @@ export const acte1: any = {
         }
       ],
       typeMention: {
-        codeType: "2",
-        libelleType:
-          "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
-        codeSousType: "2-6-a",
-        libelleSousType: "Divorce à l'étranger",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
-          nom: "NATURE_MENTION",
-          code: "5",
-          libelle: "Divorce",
-          estActif: true,
-          opposableAuTiers: true
-        },
-        natureActe: "NAISSANCE",
-        estSousType: false
+        idTypeMention: "b04bb0cc-3a4b-49a3-9c1f-648e151ee021",
+        libelleType: "39-5-a Divorce à l'étranger",
+        natureActe: "MARIAGE",
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -917,22 +827,11 @@ export const acte2: any = {
         }
       ],
       typeMention: {
-        codeType: "1",
-        libelleType: "Mariage",
-        codeSousType: "1-1",
-        libelleSousType: "Mariage célébré en France (mairie)",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-          nom: "NATURE_MENTION",
-          code: "27",
-          libelle: "Mariage",
-          estActif: true,
-          opposableAuTiers: false
-        },
+        idTypeMention: "b03c0e14-bad0-40a7-a895-8169e2b7f38e",
+        libelleType: "1-1 en France (mairie)",
         natureActe: "NAISSANCE",
-        estSousType: false
+        affecteAnalyseMarginale: false,
+        idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -1142,22 +1041,11 @@ export const acte3: any = {
         }
       ],
       typeMention: {
-        codeType: "1",
-        libelleType: "Mariage",
-        codeSousType: "1-1",
-        libelleSousType: "Mariage célébré en France (mairie)",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-          nom: "NATURE_MENTION",
-          code: "27",
-          libelle: "Mariage",
-          estActif: true,
-          opposableAuTiers: false
-        },
+        idTypeMention: "b03c0e14-bad0-40a7-a895-8169e2b7f38e",
+        libelleType: "1-1 en France (mairie)",
         natureActe: "NAISSANCE",
-        estSousType: false
+        affecteAnalyseMarginale: false,
+        idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -1368,22 +1256,11 @@ export const acte4: any = {
         }
       ],
       typeMention: {
-        codeType: "1",
-        libelleType: "Mariage",
-        codeSousType: "1-1",
-        libelleSousType: "Mariage célébré en France (mairie)",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-          nom: "NATURE_MENTION",
-          code: "27",
-          libelle: "Mariage",
-          estActif: true,
-          opposableAuTiers: false
-        },
+        idTypeMention: "b03c0e14-bad0-40a7-a895-8169e2b7f38e",
+        libelleType: "1-1 en France (mairie)",
         natureActe: "NAISSANCE",
-        estSousType: false
+        affecteAnalyseMarginale: false,
+        idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -1652,21 +1529,11 @@ export const acte5 = {
         }
       ],
       typeMention: {
-        codeType: "2",
-        libelleType:
-          "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
-        codeSousType: "2-1-a",
-        libelleSousType: "Divorce en France",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
-          nom: "NATURE_MENTION",
-          code: "5",
-          libelle: "Divorce",
-          estActif: true,
-          opposableAuTiers: true
-        }
+        idTypeMention: "b04bc836-dc01-4ba9-95cf-ac102a2373af",
+        libelleType: "39-1-a Divorce en France",
+        natureActe: "MARIAGE",
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -1715,21 +1582,11 @@ export const acte5 = {
         }
       ],
       typeMention: {
-        codeType: "3",
-        libelleType:
-          "Enregistrement/Modification/Dissolution/Annulation du PACS",
-        codeSousType: "3-1",
-        libelleSousType: "Enregistrement du PACS",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "b03cd99d-3422-4d70-98b5-7da12277e179",
-          nom: "NATURE_MENTION",
-          code: "2",
-          libelle: "PACS, mariage",
-          estActif: true,
-          opposableAuTiers: true
-        }
+        idTypeMention: "6cc65fb0-c6ac-43ef-8533-3469e7a88174",
+        libelleType: "3-1 enregistrement en France",
+        natureActe: "NAISSANCE",
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03cd99d-3422-4d70-98b5-7da12277e179"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -2242,22 +2099,11 @@ export const acteMariage: any = {
         }
       ],
       typeMention: {
-        codeType: "1",
-        libelleType: "Mariage",
-        codeSousType: "1-1",
-        libelleSousType: "Mariage célébré en France (mairie)",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-          nom: "NATURE_MENTION",
-          code: "27",
-          libelle: "Mariage",
-          estActif: true,
-          opposableAuTiers: false
-        },
+        idTypeMention: "b03c0e14-bad0-40a7-a895-8169e2b7f38e",
+        libelleType: "1-1 en France (mairie)",
         natureActe: "NAISSANCE",
-        estSousType: false
+        affecteAnalyseMarginale: false,
+        idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -2305,22 +2151,11 @@ export const acteMariage: any = {
         }
       ],
       typeMention: {
-        codeType: "33",
-        libelleType: "Répertoire civil ",
-        codeSousType: "33-1",
-        libelleSousType: "Inscription au répertoire civil ",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "b03cdc6e-c77f-47a6-bc51-25b52ad7674e",
-          nom: "NATURE_MENTION",
-          code: "21",
-          libelle: "RC",
-          estActif: true,
-          opposableAuTiers: true
-        },
+        idTypeMention: "b04b57f1-7f36-4022-a0b3-0f9bf15911f8",
+        libelleType: "33-1 inscription",
         natureActe: "NAISSANCE",
-        estSousType: true
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03cdc6e-c77f-47a6-bc51-25b52ad7674e"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -2368,22 +2203,11 @@ export const acteMariage: any = {
         }
       ],
       typeMention: {
-        codeType: "33",
-        libelleType: "Répertoire civil ",
-        codeSousType: "33-2",
-        libelleSousType: "Radiation d'une inscription au répertoire civil",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "b03c5f7f-2ad5-4f55-8599-6192dd6f126e",
-          nom: "NATURE_MENTION",
-          code: "22",
-          libelle: "RC radié",
-          estActif: true,
-          opposableAuTiers: false
-        },
+        idTypeMention: "b04bb8af-9e0e-4473-a901-23aae1506b9f",
+        libelleType: "33-2 Radiation",
         natureActe: "NAISSANCE",
-        estSousType: true
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03c5f7f-2ad5-4f55-8599-6192dd6f126e"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -2431,23 +2255,11 @@ export const acteMariage: any = {
         }
       ],
       typeMention: {
-        codeType: "2",
-        libelleType:
-          "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
-        codeSousType: "2-6-a",
-        libelleSousType: "Divorce à l'étranger",
-        estActif: true,
-        modeInformatisation: "OUI",
-        nature: {
-          id: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
-          nom: "NATURE_MENTION",
-          code: "5",
-          libelle: "Divorce",
-          estActif: true,
-          opposableAuTiers: true
-        },
-        natureActe: "NAISSANCE",
-        estSousType: false
+        idTypeMention: "b04bb0cc-3a4b-49a3-9c1f-648e151ee021",
+        libelleType: "39-5-a Divorce à l'étranger",
+        natureActe: "MARIAGE",
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9"
       },
       autoriteEtatCivil: {
         libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",

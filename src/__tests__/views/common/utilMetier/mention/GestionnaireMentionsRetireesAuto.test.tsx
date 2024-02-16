@@ -25,8 +25,8 @@ import {
 } from "@model/etatcivil/enum/NatureMention";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import {
-  IMentionAvecRetiree,
-  gestionnaireMentionsRetireesAuto
+  gestionnaireMentionsRetireesAuto,
+  IMentionAvecRetiree
 } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
 
 test("deselectionnerRadieParPaire", () => {
@@ -34,7 +34,7 @@ test("deselectionnerRadieParPaire", () => {
     {
       id: "1",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MARIAGE
         }
       },
@@ -43,7 +43,7 @@ test("deselectionnerRadieParPaire", () => {
     {
       id: "2",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CODE_RC
         }
       },
@@ -52,7 +52,7 @@ test("deselectionnerRadieParPaire", () => {
     {
       id: "3",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CODE_RC_RADIE
         }
       },
@@ -61,7 +61,7 @@ test("deselectionnerRadieParPaire", () => {
     {
       id: "4",
       typeMention: {
-        nature: {
+        natureMention: {
           code: DECES
         }
       },
@@ -83,7 +83,7 @@ test("deselectionnerRadieParPaire", () => {
     {
       id: "1",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MARIAGE
         }
       },
@@ -92,7 +92,7 @@ test("deselectionnerRadieParPaire", () => {
     {
       id: "2",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CODE_RC
         }
       },
@@ -101,7 +101,7 @@ test("deselectionnerRadieParPaire", () => {
     {
       id: "3",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CODE_RC
         }
       },
@@ -110,7 +110,7 @@ test("deselectionnerRadieParPaire", () => {
     {
       id: "4",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CODE_RC_RADIE
         }
       },
@@ -119,7 +119,7 @@ test("deselectionnerRadieParPaire", () => {
     {
       id: "5",
       typeMention: {
-        nature: {
+        natureMention: {
           code: DECES
         }
       },
@@ -141,7 +141,7 @@ test("deselectionnerRadieParPaire", () => {
     {
       id: "1",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MARIAGE
         }
       },
@@ -150,7 +150,7 @@ test("deselectionnerRadieParPaire", () => {
     {
       id: "2",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CODE_RC
         }
       },
@@ -159,7 +159,7 @@ test("deselectionnerRadieParPaire", () => {
     {
       id: "3",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CODE_RC_RADIE
         }
       },
@@ -168,7 +168,7 @@ test("deselectionnerRadieParPaire", () => {
     {
       id: "4",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CODE_RC
         }
       },
@@ -177,7 +177,7 @@ test("deselectionnerRadieParPaire", () => {
     {
       id: "5",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CODE_RC_RADIE
         }
       },
@@ -186,7 +186,7 @@ test("deselectionnerRadieParPaire", () => {
     {
       id: "6",
       typeMention: {
-        nature: {
+        natureMention: {
           code: DIVORCE
         }
       },
@@ -210,7 +210,7 @@ test("deselectionnerAnnulationParPaire", () => {
     {
       id: "1",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MARIAGE
         }
       },
@@ -219,7 +219,7 @@ test("deselectionnerAnnulationParPaire", () => {
     {
       id: "2",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ANNULATION_EVENEMENT
         }
       },
@@ -228,7 +228,7 @@ test("deselectionnerAnnulationParPaire", () => {
     {
       id: "3",
       typeMention: {
-        nature: {
+        natureMention: {
           code: DECES
         }
       },
@@ -250,7 +250,7 @@ test("deselectionnerAnnulationParPaire", () => {
     {
       id: "1",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CHANGEMENT_NOM
         }
       },
@@ -259,7 +259,7 @@ test("deselectionnerAnnulationParPaire", () => {
     {
       id: "2",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MARIAGE
         }
       },
@@ -268,7 +268,7 @@ test("deselectionnerAnnulationParPaire", () => {
     {
       id: "3",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ANNULATION_EVENEMENT
         }
       },
@@ -292,7 +292,7 @@ test("deselectionneMentionsSpecifiquesNaissance", () => {
     {
       id: "1",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MARIAGE
         }
       },
@@ -301,7 +301,7 @@ test("deselectionneMentionsSpecifiquesNaissance", () => {
     {
       id: "2",
       typeMention: {
-        nature: {
+        natureMention: {
           code: REPRISE_VIE_COMMUNE
         }
       },
@@ -310,7 +310,7 @@ test("deselectionneMentionsSpecifiquesNaissance", () => {
     {
       id: "3",
       typeMention: {
-        nature: {
+        natureMention: {
           code: NATIONALITE
         }
       },
@@ -319,7 +319,7 @@ test("deselectionneMentionsSpecifiquesNaissance", () => {
     {
       id: "4",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ADOPTION
         }
       },
@@ -328,7 +328,7 @@ test("deselectionneMentionsSpecifiquesNaissance", () => {
     {
       id: "5",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ANNULATION_MARIAGE
         }
       },
@@ -337,7 +337,7 @@ test("deselectionneMentionsSpecifiquesNaissance", () => {
     {
       id: "6",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ANNULATION_PACS
         }
       },
@@ -346,7 +346,7 @@ test("deselectionneMentionsSpecifiquesNaissance", () => {
     {
       id: "7",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ANNULATION_DECISION
         }
       },
@@ -355,7 +355,7 @@ test("deselectionneMentionsSpecifiquesNaissance", () => {
     {
       id: "8",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ANNULATION_EVENEMENT
         }
       },
@@ -364,7 +364,7 @@ test("deselectionneMentionsSpecifiquesNaissance", () => {
     {
       id: "9",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ANNULATION_MENTION
         }
       },
@@ -373,7 +373,7 @@ test("deselectionneMentionsSpecifiquesNaissance", () => {
     {
       id: "10",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CODE_RC_RADIE
         }
       },
@@ -382,7 +382,7 @@ test("deselectionneMentionsSpecifiquesNaissance", () => {
     {
       id: "11",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CHANGEMENT_NOM
         }
       },
@@ -391,7 +391,7 @@ test("deselectionneMentionsSpecifiquesNaissance", () => {
     {
       id: "12",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CHANGEMENT_SEXE
         }
       },
@@ -400,7 +400,7 @@ test("deselectionneMentionsSpecifiquesNaissance", () => {
     {
       id: "13",
       typeMention: {
-        nature: {
+        natureMention: {
           code: LIEN_FILIATION_HORS_ADOPTION
         }
       },
@@ -409,7 +409,7 @@ test("deselectionneMentionsSpecifiquesNaissance", () => {
     {
       id: "14",
       typeMention: {
-        nature: {
+        natureMention: {
           code: RECTIFICATION
         }
       },
@@ -428,7 +428,7 @@ test("deselectionneMentionsSpecifiquesMariage", () => {
     {
       id: "1",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MARIAGE
         }
       },
@@ -437,7 +437,7 @@ test("deselectionneMentionsSpecifiquesMariage", () => {
     {
       id: "2",
       typeMention: {
-        nature: {
+        natureMention: {
           code: REPRISE_VIE_COMMUNE
         }
       },
@@ -446,7 +446,7 @@ test("deselectionneMentionsSpecifiquesMariage", () => {
     {
       id: "3",
       typeMention: {
-        nature: {
+        natureMention: {
           code: NATIONALITE
         }
       },
@@ -455,7 +455,7 @@ test("deselectionneMentionsSpecifiquesMariage", () => {
     {
       id: "4",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ADOPTION
         }
       },
@@ -464,7 +464,7 @@ test("deselectionneMentionsSpecifiquesMariage", () => {
     {
       id: "5",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ANNULATION_MARIAGE
         }
       },
@@ -473,7 +473,7 @@ test("deselectionneMentionsSpecifiquesMariage", () => {
     {
       id: "6",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ANNULATION_PACS
         }
       },
@@ -482,7 +482,7 @@ test("deselectionneMentionsSpecifiquesMariage", () => {
     {
       id: "7",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ANNULATION_DECISION
         }
       },
@@ -491,7 +491,7 @@ test("deselectionneMentionsSpecifiquesMariage", () => {
     {
       id: "8",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ANNULATION_EVENEMENT
         }
       },
@@ -500,7 +500,7 @@ test("deselectionneMentionsSpecifiquesMariage", () => {
     {
       id: "9",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ANNULATION_MENTION
         }
       },
@@ -509,7 +509,7 @@ test("deselectionneMentionsSpecifiquesMariage", () => {
     {
       id: "10",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CODE_RC_RADIE
         }
       },
@@ -518,7 +518,7 @@ test("deselectionneMentionsSpecifiquesMariage", () => {
     {
       id: "11",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CHANGEMENT_NOM
         }
       },
@@ -527,7 +527,7 @@ test("deselectionneMentionsSpecifiquesMariage", () => {
     {
       id: "12",
       typeMention: {
-        nature: {
+        natureMention: {
           code: CHANGEMENT_SEXE
         }
       },
@@ -536,7 +536,7 @@ test("deselectionneMentionsSpecifiquesMariage", () => {
     {
       id: "13",
       typeMention: {
-        nature: {
+        natureMention: {
           code: LIEN_FILIATION_HORS_ADOPTION
         }
       },
@@ -545,7 +545,7 @@ test("deselectionneMentionsSpecifiquesMariage", () => {
     {
       id: "14",
       typeMention: {
-        nature: {
+        natureMention: {
           code: RECTIFICATION
         }
       },
@@ -571,7 +571,7 @@ test("deselectionneMentionsIncompatibleAvecActe", () => {
       id: "1",
       typeMention: {
         natureActe: NatureActe.NAISSANCE,
-        nature: {
+        natureMention: {
           code: LIEN_FILIATION_HORS_ADOPTION
         }
       },
@@ -581,7 +581,7 @@ test("deselectionneMentionsIncompatibleAvecActe", () => {
       id: "2",
       typeMention: {
         natureActe: NatureActe.MARIAGE,
-        nature: {
+        natureMention: {
           code: RECTIFICATION
         }
       },
@@ -591,7 +591,7 @@ test("deselectionneMentionsIncompatibleAvecActe", () => {
       id: "3",
       typeMention: {
         natureActe: NatureActe.INCONNUE,
-        nature: {
+        natureMention: {
           code: RECTIFICATION
         }
       },
@@ -616,7 +616,7 @@ test("deselectionneExtraneite", () => {
     {
       id: "1",
       typeMention: {
-        nature: {
+        natureMention: {
           code: EXTRANEITE
         }
       },
@@ -625,7 +625,7 @@ test("deselectionneExtraneite", () => {
     {
       id: "2",
       typeMention: {
-        nature: {
+        natureMention: {
           code: EXTRANEITE
         }
       },
@@ -634,7 +634,7 @@ test("deselectionneExtraneite", () => {
     {
       id: "3",
       typeMention: {
-        nature: {
+        natureMention: {
           code: NATIONALITE
         }
       },
@@ -658,7 +658,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "1",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MARIAGE
         }
       },
@@ -667,7 +667,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "2",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MARIAGE
         }
       },
@@ -676,7 +676,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "3",
       typeMention: {
-        nature: {
+        natureMention: {
           code: DIVORCE
         }
       },
@@ -685,7 +685,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "4",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MARIAGE
         }
       },
@@ -694,7 +694,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "5",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ANNULATION_MARIAGE
         }
       },
@@ -716,7 +716,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "1",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MARIAGE
         }
       },
@@ -725,7 +725,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "2",
       typeMention: {
-        nature: {
+        natureMention: {
           code: SEPARATION_CORPS
         }
       },
@@ -734,7 +734,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "3",
       typeMention: {
-        nature: {
+        natureMention: {
           code: DIVORCE
         }
       },
@@ -743,7 +743,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "4",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MARIAGE
         }
       },
@@ -752,7 +752,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "5",
       typeMention: {
-        nature: {
+        natureMention: {
           code: SEPARATION_CORPS
         }
       },
@@ -774,7 +774,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "2",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MARIAGE
         }
       },
@@ -783,7 +783,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "3",
       typeMention: {
-        nature: {
+        natureMention: {
           code: DIVORCE
         }
       },
@@ -792,7 +792,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "1",
       typeMention: {
-        nature: {
+        natureMention: {
           code: PACS
         }
       },
@@ -801,7 +801,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "2",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ANNULATION_PACS
         }
       },
@@ -812,7 +812,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "1",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MODIFICATION_PACS
         }
       },
@@ -821,7 +821,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "2",
       typeMention: {
-        nature: {
+        natureMention: {
           code: PACS
         }
       },
@@ -830,7 +830,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "3",
       typeMention: {
-        nature: {
+        natureMention: {
           code: DISSOLUTION_PACS
         }
       },
@@ -862,7 +862,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "1",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MARIAGE
         }
       },
@@ -871,7 +871,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "2",
       typeMention: {
-        nature: {
+        natureMention: {
           code: PACS
         }
       },
@@ -880,7 +880,7 @@ test("deselectionneSituationFamilialePassee", () => {
     {
       id: "3",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MODIFICATION_PACS
         }
       },
@@ -904,7 +904,7 @@ test("DOIT ne pas retirer de mentions QUAND il s'agit de la délivrance d'une co
     {
       id: "1",
       typeMention: {
-        nature: {
+        natureMention: {
           code: MARIAGE
         }
       },
@@ -913,7 +913,7 @@ test("DOIT ne pas retirer de mentions QUAND il s'agit de la délivrance d'une co
     {
       id: "2",
       typeMention: {
-        nature: {
+        natureMention: {
           code: DIVORCE
         }
       },
@@ -922,7 +922,7 @@ test("DOIT ne pas retirer de mentions QUAND il s'agit de la délivrance d'une co
     {
       id: "3",
       typeMention: {
-        nature: {
+        natureMention: {
           code: PACS
         }
       },
@@ -931,7 +931,7 @@ test("DOIT ne pas retirer de mentions QUAND il s'agit de la délivrance d'une co
     {
       id: "4",
       typeMention: {
-        nature: {
+        natureMention: {
           code: ANNULATION_EVENEMENT
         }
       },

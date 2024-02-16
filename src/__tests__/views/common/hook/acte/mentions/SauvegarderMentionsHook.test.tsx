@@ -17,7 +17,7 @@ const mentionApi = {
     texteApposition: "texte apposition"
   },
   typeMention: {
-    nature: { opposableAuTiers: false } as NatureMention
+    natureMention: { opposableAuTiers: false } as NatureMention
   },
   numeroOrdreExtrait: 1,
   id: "1"

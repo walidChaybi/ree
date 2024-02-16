@@ -137,7 +137,7 @@ test("Atttendu: getTexteMentions fonctionne correctement", () => {
     numeroOrdre: 1,
     numeroOrdreExtrait: 1,
     typeMention: {
-      nature: opposableAuTiers
+      natureMention: opposableAuTiers
     },
     textes: {
       texteApposition: "texteApposition",
@@ -151,7 +151,7 @@ test("Atttendu: getTexteMentions fonctionne correctement", () => {
     numeroOrdre: 2,
     numeroOrdreExtrait: 2,
     typeMention: {
-      nature: opposableAuTiers
+      natureMention: opposableAuTiers
     },
     textes: {
       texteApposition: "texteApposition2",
@@ -165,7 +165,7 @@ test("Atttendu: getTexteMentions fonctionne correctement", () => {
     numeroOrdre: 3,
     numeroOrdreExtrait: 3,
     typeMention: {
-      nature: nonOpposableAuTiers
+      natureMention: nonOpposableAuTiers
     },
     textes: {
       texteApposition: "texteApposition3",
@@ -179,7 +179,7 @@ test("Atttendu: getTexteMentions fonctionne correctement", () => {
     numeroOrdre: 4,
     numeroOrdreExtrait: 4,
     typeMention: {
-      nature: opposableAuTiers
+      natureMention: opposableAuTiers
     },
     textes: {
       texteApposition: undefined,

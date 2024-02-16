@@ -244,13 +244,15 @@ export const FicheActe = {
             )
           },
           typeMention: {
-            nature: {
-              id: NatureMention.getKeyForCode(NatureMention, NATIONALITE)
-            }
+            idNatureMention: NatureMention.getKeyForCode(
+              NatureMention,
+              NATIONALITE
+            )
           }
         }
       ];
-    } else return [];
+    }
+    return [];
   },
 
   estNombreDeTitulaireErrone(acte: IFicheActe): boolean | undefined {

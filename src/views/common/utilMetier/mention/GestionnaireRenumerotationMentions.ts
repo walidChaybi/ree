@@ -230,9 +230,7 @@ export class GestionnaireRenumerotationMentions {
             : undefined
         },
         typeMention: {
-          nature: {
-            id: NatureMention.getUuidFromNature(mention.nature)
-          }
+          idNatureMention: NatureMention.getUuidFromNature(mention.nature)
         }
       };
       mentionsEnBase.push(

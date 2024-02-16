@@ -17,7 +17,7 @@ test("test getTexte", () => {
       texteApposition: "texteApposition"
     },
     typeMention: {
-      nature: {
+      natureMention: {
         code: "5",
         libelle: "Divorce",
         estActif: true,

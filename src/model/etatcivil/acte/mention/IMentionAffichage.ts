@@ -42,9 +42,9 @@ export function mappingVersMentionsApi(
         texteMentionPlurilingue: mR.textes.texteMentionPlurilingue
       },
       typeMention: {
-        nature: {
-          id: NatureMention.getUuidFromNature(mR.typeMention.nature)
-        }
+        idNatureMention: NatureMention.getUuidFromNature(
+          mR.typeMention.natureMention
+        )
       },
       id: mR.id
     };
@@ -54,9 +54,8 @@ export function mappingVersMentionsApi(
       } else {
         mentionAAjouter.textes.texteMentionDelivrance = mention.texte;
       }
-      mentionAAjouter.typeMention.nature.id = NatureMention.getUuidFromNature(
-        mention.nature
-      );
+      mentionAAjouter.typeMention.idNatureMention =
+        NatureMention.getUuidFromNature(mention.nature);
       mentionsAEnvoyer.push(mentionAAjouter);
       if (!mention.estPresent) {
         mentionsRetirees.push(mention.id);
@@ -132,7 +131,7 @@ export function mappingVersMentionAffichagePourExtraitAvecOuSansFiliation(
   Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions);
 
   return mentions.map((mentionApi: IMention) => ({
-    nature: mentionApi.typeMention.nature,
+    nature: mentionApi.typeMention.natureMention,
     texte: Mention.getTexteExtrait(mentionApi),
     estPresent: DocumentReponse.nEstPasMentionRetiree(document, mentionApi),
     id: mentionApi.id,
@@ -153,7 +152,7 @@ export function mappingVersMentionAffichagePourExtraitPlurilingue(
 
   // @ts-ignore le texteMentionPlurilingue n'est pas undefined
   return mentions.map((mentionApi: IMention) => ({
-    nature: mentionApi.typeMention.nature,
+    nature: mentionApi.typeMention.natureMention,
     texte: mentionApi.textes.texteMentionPlurilingue,
     estPresent: DocumentReponse.nEstPasMentionRetiree(document, mentionApi),
     id: mentionApi.id,
@@ -169,7 +168,7 @@ export function mappingVersMentionAffichagePourCopieIntegrale(
   const mentions = Mention.trierMentionsNumeroOrdreApposition([...mentionsApi]);
 
   return mentions.map((mentionApi: IMention) => ({
-    nature: mentionApi.typeMention.nature,
+    nature: mentionApi.typeMention.natureMention,
     texte: Mention.getTexteCopie(mentionApi),
     estPresent: DocumentReponse.nEstPasMentionRetiree(document, mentionApi),
     id: mentionApi.id,

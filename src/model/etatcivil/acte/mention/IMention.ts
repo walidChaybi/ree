@@ -44,7 +44,7 @@ export const Mention = {
       if (mention.textes.texteMentionDelivrance) {
         texte = mention.textes.texteMentionDelivrance;
       } else if (
-        NatureMention.estOpposableAuTiers(mention.typeMention.nature)
+        NatureMention.estOpposableAuTiers(mention.typeMention.natureMention)
       ) {
         const texteApposition = mention.textes.texteApposition
           ? ` ${mention.textes.texteApposition}`
@@ -95,7 +95,7 @@ export const Mention = {
   },
   mentionNationalitePresente(mentions: IMention[]): boolean {
     return Boolean(
-      mentions.find(el => el.typeMention.nature.code === NATIONALITE)
+      mentions.find(el => el.typeMention.natureMention.code === NATIONALITE)
     );
   },
   trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions: IMention[]) {
@@ -137,7 +137,9 @@ export const Mention = {
       ? mentions.filter(
           mention =>
             Boolean(mention.textes?.texteMentionPlurilingue) ||
-            tableauNatureFiltrer.includes(mention.typeMention.nature.code)
+            tableauNatureFiltrer.includes(
+              mention.typeMention.natureMention.code
+            )
         )
       : [];
   },
@@ -154,7 +156,7 @@ export const Mention = {
   },
   getTextePlurilingueAPartirMention(mention: IMention): string {
     const nature = NatureMention.getCodePourNature(
-      mention.typeMention.nature.code
+      mention.typeMention.natureMention.code
     );
 
     let lieu;
@@ -195,7 +197,7 @@ export const Mention = {
 
     let texteMention = `${nature} ${date} ${lieu}`;
     if (
-      mention.typeMention.nature ===
+      mention.typeMention.natureMention ===
       NatureMention.getEnumFromCode(NatureMention, MARIAGE)
     ) {
       const conjoint = getConjoint(mention);
@@ -245,7 +247,6 @@ function getConjoint(mention: IMention) {
   return conjoint;
 }
 
-
 export function mappingVersMentionApi(mention: IMention) {
   return {
     numeroOrdreExtrait: mention.numeroOrdreExtrait,
@@ -253,10 +254,10 @@ export function mappingVersMentionApi(mention: IMention) {
       texteMentionDelivrance: mention.textes.texteMentionDelivrance
     },
     typeMention: {
-      nature: {
-        id: NatureMention.getUuidFromNature(mention.typeMention.nature)
-      }
+      idNatureMention: NatureMention.getUuidFromNature(
+        mention.typeMention.natureMention
+      )
     },
-    id: mention.id
+    idTypeMention: mention.id
   };
 }

@@ -12,10 +12,10 @@ import {
   natureMentionExtraitPlurilingueNaissance
 } from "@model/etatcivil/enum/NatureMention";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import messageManager from "@util/messageManager";
+import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { fournisseurDonneesBandeauFactory } from "../../../../../fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 
 export function mappingVersListe(mentionsAffichage: IMentionAffichage[]) {
@@ -260,7 +260,7 @@ export function aucuneMentionsNationalite(
     ?.filter(el => !mentionsRetirees?.includes(el.id))
     .every(
       el =>
-        el.typeMention.nature !==
+        el.typeMention.natureMention !==
         NatureMention.getEnumFromLibelle(NatureMention, "Nationalité")
     );
 }
@@ -450,7 +450,7 @@ export function getNaturesMentions(
   return mentions
     ? mentions
         .filter(mention => !mentionsRetirees?.includes(mention.id))
-        .map(mention => mention.typeMention.nature)
+        .map(mention => mention.typeMention.natureMention)
     : [];
 }
 
@@ -471,7 +471,8 @@ export function getOptionsMentions(
           NatureMention.getEnumFromCode(NatureMention, el)
         )
       );
-    } else return [];
+    }
+    return [];
   } else {
     // Un TypeMention est lié à une nature d'acte. Ce qui permet de récuperer les Nature
     return natureActe

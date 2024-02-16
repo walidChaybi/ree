@@ -22,21 +22,107 @@ export const mentions = [
       }
     ],
     typeMention: {
-      codeType: "2",
-      libelleType:
-        "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
-      codeSousType: "2-1-a",
-      libelleSousType: "Divorce en France",
-      estActif: true,
-      modeInformatisation: "OUI",
-      nature: {
-        id: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
-        nom: "NATURE_MENTION",
-        code: "5",
-        libelle: "Divorce",
-        estActif: true,
-        opposableAuTiers: true
-      }
+      idTypeMention: "0185f3c8-5f4c-4ea9-89e1-fb65fcb7b17f",
+      libelleType: "2 Divorce/Séparation/Annulation mariage",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      typeMentionEnfantList: [
+        {
+          idTypeMention: "7adaa7f8-6228-4e25-87a1-d99f3b98371a",
+          libelleType: "2-1 & 2-2 divorce/séparation de corps en France",
+          natureActe: "NAISSANCE",
+          affecteAnalyseMarginale: false,
+          typeMentionEnfantList: [
+            {
+              idTypeMention: "b03c54ae-5130-4062-b7e4-34bed2de7989",
+              libelleType: "2-1 notarié",
+              natureActe: "NAISSANCE",
+              affecteAnalyseMarginale: false,
+              idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9"
+            },
+            {
+              idTypeMention: "96189dcf-69f9-41d2-8039-26476b82ee01",
+              libelleType: "2-2 judiciaire",
+              natureActe: "NAISSANCE",
+              affecteAnalyseMarginale: false,
+              idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9"
+            }
+          ]
+        },
+        {
+          idTypeMention: "b03ca46d-592e-4e45-a7b0-39f0f3664ffb",
+          libelleType: "2-3 divorce/séparation de corps avec exequatur",
+          natureActe: "NAISSANCE",
+          affecteAnalyseMarginale: false,
+          idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9"
+        },
+        {
+          idTypeMention: "5f562b8d-0d26-4c55-8311-040ed70c0e15",
+          libelleType: "2-6 & 2-7 divorce/séparation de corps à l'étranger",
+          natureActe: "NAISSANCE",
+          affecteAnalyseMarginale: false,
+          typeMentionEnfantList: [
+            {
+              idTypeMention: "7adec958-a42a-4fbd-918b-c6892b0b5180",
+              libelleType: "2-7 V.O",
+              natureActe: "NAISSANCE",
+              affecteAnalyseMarginale: false,
+              idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9"
+            },
+            {
+              idTypeMention: "b03c0e79-da22-44ef-8256-5276631662b3",
+              libelleType: "2-6 dans l'U.E.",
+              natureActe: "NAISSANCE",
+              affecteAnalyseMarginale: false,
+              idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9"
+            }
+          ]
+        },
+        {
+          idTypeMention: "b03c481e-1cfd-4a3e-8ad5-005975951876",
+          libelleType: "2-8 annulation de mariage",
+          natureActe: "NAISSANCE",
+          affecteAnalyseMarginale: false,
+          idNatureMention: "b03cd289-503f-4c98-8d12-0dffd9c51178"
+        },
+        {
+          idTypeMention: "b04835d7-880e-45f2-9947-da18dd3237de",
+          libelleType: "2-9 reprise de la vie commune",
+          natureActe: "NAISSANCE",
+          affecteAnalyseMarginale: false,
+          idNatureMention: "b03cd7cf-b9e2-4ddc-b039-87f1ab2fadb7",
+          typeMentionEnfantList: [
+            {
+              idTypeMention: "3d62029f-8c16-48dc-bc25-941e7a5d27ac",
+              libelleType: "2-9 OEC",
+              natureActe: "NAISSANCE",
+              affecteAnalyseMarginale: false,
+              idNatureMention: "b03cd7cf-b9e2-4ddc-b039-87f1ab2fadb7"
+            },
+            {
+              idTypeMention: "2e3d768f-2eae-4dba-80fc-5b404c10b589",
+              libelleType: "2-9 notaire",
+              natureActe: "NAISSANCE",
+              affecteAnalyseMarginale: false,
+              idNatureMention: "b03cd7cf-b9e2-4ddc-b039-87f1ab2fadb7"
+            }
+          ]
+        },
+        {
+          idTypeMention: "b048b66e-e0fa-4052-a63d-9111b442c3ee",
+          libelleType: " divorce/séparation de corps - autres",
+          natureActe: "NAISSANCE",
+          affecteAnalyseMarginale: false,
+          idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9"
+        },
+        {
+          idTypeMention: "b0481430-4307-4dd9-a9af-d3c21cb6d8f4",
+          libelleType: " annulation de mariage - autres",
+          natureActe: "NAISSANCE",
+          affecteAnalyseMarginale: false,
+          idNatureMention: "b03cd289-503f-4c98-8d12-0dffd9c51178"
+        }
+      ]
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -84,20 +170,11 @@ export const mentions = [
       }
     ],
     typeMention: {
-      codeType: "3",
-      libelleType: "Enregistrement/Modification/Dissolution/Annulation du PACS",
-      codeSousType: "3-1",
-      libelleSousType: "Enregistrement du PACS",
-      estActif: true,
-      modeInformatisation: "OUI",
-      nature: {
-        id: "b03cd99d-3422-4d70-98b5-7da12277e179",
-        nom: "NATURE_MENTION",
-        code: "2",
-        libelle: "PACS, mariage",
-        estActif: true,
-        opposableAuTiers: true
-      }
+      idTypeMention: "6cc65fb0-c6ac-43ef-8533-3469e7a88174",
+      libelleType: "3-1 enregistrement en France",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "b03cd99d-3422-4d70-98b5-7da12277e179"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -183,15 +260,11 @@ export const mentionsApi = [
     dateStatut: "2022-07-27T13:14:55.602Z",
     titulaires: [],
     typeMention: {
-      codeType: "18",
-      codeSousType: "18-3",
-      libelleSousType: "Changement de sexe",
-      estActif: true,
-      modeInformatisation: "OUI",
-      nature: natureChangementDeSexe,
-      natureActe: {
-        libelle: "Naissance"
-      }
+      idTypeMention: "b048c8a8-ac10-4a70-8fa6-36bf8ba7013b",
+      libelleType: "18-3 Changement de sexe",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: true,
+      idNatureMention: "b03c45b2-74c6-4cc5-9f64-4bad6f343598"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -218,15 +291,11 @@ export const mentionsApi = [
     dateStatut: "2022-07-27T13:09:16.085Z",
     titulaires: [],
     typeMention: {
-      codeType: "18",
-      codeSousType: "18-3",
-      libelleSousType: "Changement de sexe",
-      estActif: true,
-      modeInformatisation: "OUI",
-      nature: natureChangementDeSexe,
-      natureActe: {
-        libelle: "Naissance"
-      }
+      idTypeMention: "b048c8a8-ac10-4a70-8fa6-36bf8ba7013b",
+      libelleType: "18-3 Changement de sexe",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: true,
+      idNatureMention: "b03c45b2-74c6-4cc5-9f64-4bad6f343598"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -258,21 +327,11 @@ export const mentionsApi = [
       }
     ],
     typeMention: {
-      codeType: "2",
-      codeSousType: "2-1-a",
-      libelleSousType: "Divorce en France",
-      estActif: true,
-      modeInformatisation: "OUI",
-      nature: {
-        libelle: "Divorce",
-        code: "5",
-        categorie: "",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: {
-        libelle: "Naissance"
-      }
+      idTypeMention: "b04bc836-dc01-4ba9-95cf-ac102a2373af",
+      libelleType: "39-1-a Divorce en France",
+      natureActe: "MARIAGE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -316,15 +375,11 @@ export const mentionsApi = [
       }
     ],
     typeMention: {
-      codeType: "2",
-      codeSousType: "2-99",
-      libelleSousType: "Annulation de mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: natureAnnulationmariage,
-      natureActe: {
-        libelle: "Naissance"
-      }
+      idTypeMention: "b04b9ffb-1114-4fbc-9c3c-156dc36d8ddc",
+      libelleType: "39-99 Annulation de mariage - Autres",
+      natureActe: "MARIAGE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "b03cd289-503f-4c98-8d12-0dffd9c51178"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
@@ -369,23 +424,11 @@ export const mentionsPlurilingues = [
     dateStatut: 1663158980650,
     titulaires: null,
     typeMention: {
-      codeType: "39",
-      libelleType:
-        "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
-      codeSousType: "39-98",
-      libelleSousType: "Séparation de corps - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
-        nom: "NATURE_MENTION",
-        code: "3",
-        libelle: "Séparation de corps",
-        estActif: true,
-        opposableAuTiers: true
-      },
+      idTypeMention: "b04b7ef0-cefe-4db7-9a36-5e752f1419ce",
+      libelleType: "39-98 Séparation de corps - Autres",
       natureActe: "MARIAGE",
-      estSousType: true
+      affecteAnalyseMarginale: false,
+      idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -425,22 +468,11 @@ export const mentionsPlurilingues = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -481,22 +513,11 @@ export const mentionsPlurilingues = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -536,22 +557,11 @@ export const mentionsPlurilingues = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -591,22 +601,11 @@ export const mentionsPlurilingues = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -646,22 +645,11 @@ export const mentionsPlurilingues = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -704,23 +692,11 @@ export const mentionsPlurilinguesMariageNombre10 = [
     dateStatut: 1663158980650,
     titulaires: null,
     typeMention: {
-      codeType: "39",
-      libelleType:
-        "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
-      codeSousType: "39-98",
-      libelleSousType: "Séparation de corps - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
-        nom: "NATURE_MENTION",
-        code: "3",
-        libelle: "Séparation de corps",
-        estActif: true,
-        opposableAuTiers: true
-      },
+      idTypeMention: "b04b7ef0-cefe-4db7-9a36-5e752f1419ce",
+      libelleType: "39-98 Séparation de corps - Autres",
       natureActe: "MARIAGE",
-      estSousType: true
+      affecteAnalyseMarginale: false,
+      idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -760,22 +736,11 @@ export const mentionsPlurilinguesMariageNombre10 = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -815,22 +780,11 @@ export const mentionsPlurilinguesMariageNombre10 = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -870,22 +824,11 @@ export const mentionsPlurilinguesMariageNombre10 = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -925,22 +868,11 @@ export const mentionsPlurilinguesMariageNombre10 = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -980,22 +912,11 @@ export const mentionsPlurilinguesMariageNombre10 = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -1035,22 +956,11 @@ export const mentionsPlurilinguesMariageNombre10 = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -1090,22 +1000,11 @@ export const mentionsPlurilinguesMariageNombre10 = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -1145,22 +1044,11 @@ export const mentionsPlurilinguesMariageNombre10 = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -1200,22 +1088,11 @@ export const mentionsPlurilinguesMariageNombre10 = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -1258,23 +1135,11 @@ export const mentionsPlurilinguesMariageAvec6 = [
     dateStatut: 1663158980650,
     titulaires: null,
     typeMention: {
-      codeType: "39",
-      libelleType:
-        "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
-      codeSousType: "39-98",
-      libelleSousType: "Séparation de corps - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
-        nom: "NATURE_MENTION",
-        code: "3",
-        libelle: "Séparation de corps",
-        estActif: true,
-        opposableAuTiers: true
-      },
+      idTypeMention: "b04b7ef0-cefe-4db7-9a36-5e752f1419ce",
+      libelleType: "39-98 Séparation de corps - Autres",
       natureActe: "MARIAGE",
-      estSousType: true
+      affecteAnalyseMarginale: false,
+      idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -1314,22 +1179,11 @@ export const mentionsPlurilinguesMariageAvec6 = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -1369,22 +1223,11 @@ export const mentionsPlurilinguesMariageAvec6 = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -1424,22 +1267,11 @@ export const mentionsPlurilinguesMariageAvec6 = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -1479,22 +1311,11 @@ export const mentionsPlurilinguesMariageAvec6 = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",
@@ -1534,22 +1355,11 @@ export const mentionsPlurilinguesMariageAvec6 = [
     dateStatut: 1663158896811,
     titulaires: null,
     typeMention: {
-      codeType: "1",
-      libelleType: "Mariage",
-      codeSousType: "1-99",
-      libelleSousType: "Mariage - Autres",
-      estActif: true,
-      modeInformatisation: "NON",
-      nature: {
-        id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-        nom: "NATURE_MENTION",
-        code: "15",
-        libelle: "Mariage",
-        estActif: true,
-        opposableAuTiers: true
-      },
-      natureActe: "MARIAGE",
-      estSousType: true
+      idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
+      libelleType: " autres",
+      natureActe: "NAISSANCE",
+      affecteAnalyseMarginale: false,
+      idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b"
     },
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil: "Officier de l'état civil",

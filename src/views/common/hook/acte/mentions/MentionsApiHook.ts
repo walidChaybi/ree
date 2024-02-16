@@ -60,7 +60,6 @@ function mappingMention(mention: any): IMention {
       libelleTypeAutoriteEtatCivil:
         mention.autoriteEtatCivil.libelleTypeAutoriteEtatCivil,
       nomOEC: mention.autoriteEtatCivil.nomOEC,
-
       prenomOEC: mention.autoriteEtatCivil.prenomOEC
     },
     evenement: mention.evenement,
@@ -70,15 +69,16 @@ function mappingMention(mention: any): IMention {
 
 export function mappingTypeMention(typeMention: any): ITypeMention {
   return {
-    codeType: typeMention.codeType,
-    libelleType: typeMention.libelleTyp,
-    codeSousType: typeMention.codeSousType,
-    libelleSousType: typeMention.libelleSousType,
-    estActif: typeMention.estActif,
-    modeInformatisation: typeMention.modeInformatisation,
-    nature: NatureMention.getEnumFor(typeMention.nature.id),
-    sousTypeParDefaut: typeMention.sousTypeParDefaut,
-    natureActe: NatureActe.getEnumFor(typeMention.natureActe)
+    id: typeMention.idTypeMention,
+    libelle: typeMention.libelleType,
+    natureMention: NatureMention.getEnumFor(typeMention.idNatureMention),
+    natureActe: NatureActe.getEnumFor(typeMention.natureActe),
+    affecteAnalyseMarginale: typeMention.affecteAnalyseMarginale,
+    sousTypes: typeMention.typeMentionEnfantList
+      ? typeMention.typeMentionEnfantList.map((sousTypeMention: any) =>
+          mappingTypeMention(sousTypeMention)
+        )
+      : undefined
   };
 }
 
