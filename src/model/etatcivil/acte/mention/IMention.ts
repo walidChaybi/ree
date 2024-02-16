@@ -93,9 +93,9 @@ export const Mention = {
 
     return mentions;
   },
-  mentionNationalitePresente(mentions: IMention[]): boolean {
+  mentionNationalitePresente(mentions: IMention[] | undefined): boolean {
     return Boolean(
-      mentions.find(el => el.typeMention.natureMention.code === NATIONALITE)
+      mentions?.find(mention => mention.typeMention.natureMention.code === NATIONALITE)
     );
   },
   trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions: IMention[]) {

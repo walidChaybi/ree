@@ -17,10 +17,10 @@ import { Validation } from "@model/requete/enum/Validation";
 import { getDateComposeFromDate } from "@util/DateUtils";
 import {
   DEUX,
-  getPremiereLettreDunMot,
-  getValeurOuVide,
   TROIS,
-  UN
+  UN,
+  getPremiereLettreDunMot,
+  getValeurOuVide
 } from "@util/Utils";
 import { IExtraitPlurilingueComposition } from "../IExtraitPlurilingueComposition";
 
@@ -142,7 +142,7 @@ export class ExtraitPlurilingueCommunComposition {
 
   public static getMentionsAAfficher(
     idMentionsRetirees: string[],
-    mentions: IMention[]
+    mentions: IMention[] | undefined
   ): IMention[] {
     let mentionsFiltrees = Mention.filtreAvecTexteMentionPlurilingue(mentions);
 

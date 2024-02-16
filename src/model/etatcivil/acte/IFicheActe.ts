@@ -48,7 +48,7 @@ export interface IFicheActe {
   corpsImage?: ICorpsImage;
   type: TypeActe;
   corpsExtraitRectifications: ICorpsExtraitRectification[];
-  mentions: IMention[];
+  mentions?: IMention[];
   numeroActeElectronique?: number;
   referenceActe: string;
   referenceSignifiante?: string;
@@ -232,7 +232,7 @@ export const FicheActe = {
   getMentionNationalite(acte: IFicheActe, choixDelivrance?: ChoixDelivrance) {
     if (acte && necessiteMentionNationalite(acte, choixDelivrance)) {
       let max = 0;
-      acte.mentions.forEach(el => {
+      acte.mentions?.forEach(el => {
         max = max < el.numeroOrdreExtrait ? el.numeroOrdreExtrait : max;
       });
       return [

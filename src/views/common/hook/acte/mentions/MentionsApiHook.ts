@@ -35,10 +35,13 @@ export function useMentionsApiHook(idActe?: string) {
   return mentions;
 }
 
-export function mappingMentions(mentions: any[]): IMention[] {
-  return mentions.map(element => {
-    return mappingMention(element);
-  });
+export function mappingMentions(mentions: any[]): IMention[] | undefined {
+  return (
+    mentions &&
+    mentions.map(mention => {
+      return mention && mappingMention(mention);
+    })
+  );
 }
 
 function mappingMention(mention: any): IMention {

@@ -1,10 +1,10 @@
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   DocumentReponse,
   IDocumentReponse
 } from "@model/requete/IDocumentReponse";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { estNonRenseigne, shallowEgalTableau } from "@util/Utils";
 import { gestionnaireRenumerotationMentions } from "@utilMetier/mention/GestionnaireRenumerotationMentions";
 import { IMention, Mention } from "./IMention";

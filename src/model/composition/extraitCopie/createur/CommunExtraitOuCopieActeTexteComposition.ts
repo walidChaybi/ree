@@ -615,9 +615,9 @@ export class CommunExtraitOuCopieActeTexteComposition {
   }
 
   public static getTexteMentions(
-    mentions: IMention[],
+    mentions: IMention[] | undefined,
     copie: boolean,
-    idMentionsRetirees: string[]
+    idMentionsRetirees: string[] | undefined
   ): string[] {
     const texteMentions: string[] = [];
 
@@ -625,7 +625,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
       Mention.filtreAvecTexteMentionEtTexteMentionDelivrance(mentions);
 
     mentionsFiltrees = mentionsFiltrees.filter(mention => {
-      return !idMentionsRetirees.some(
+      return !idMentionsRetirees?.some(
         idMentionRetiree => idMentionRetiree === mention.id
       );
     });
