@@ -1,4 +1,5 @@
 import { ISaisieRequeteAEnvoyer } from "@hook/requete/CreationRequeteCreationApiHook";
+import { ICreationRequeteMiseAJourApiHookParams } from "@hook/requete/miseajour/CreationRequeteMiseAJourApiHook";
 import { IFiltreServiceRequeteCreationDto } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { IFiltreServiceRequeteDelivranceDto } from "@model/form/delivrance/IFiltreServiceRequeteDelivrance";
 import { CLES } from "@model/parametres/clesParametres";
@@ -77,6 +78,7 @@ const URL_METTRE_AJOUR_STATUT_APRES_SIGNATURE =
   "/mettre-a-jour-statut-apres-signature";
 export const URL_PRENDRE_EN_CHARGE_REQUETE_SUIVANTE =
   "/requetes/creation/requete-a-prendre-en-charge";
+export const URL_MISE_A_JOUR_MENTIONS = "/mise-a-jour";
 
 const URL_REPONSES = "/reponses";
 
@@ -848,5 +850,17 @@ export const postValiderProjetActe = (
   return api.fetch({
     method: HttpMethod.POST,
     uri: `${URL_CREATION}${idRequete}${URL_SUIVI_DOSSIER}/${idSuiviDossier}/valider-projet`
+  });
+};
+
+export const getRequeteMiseAJour = (
+  params: ICreationRequeteMiseAJourApiHookParams
+): Promise<any> => {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_REQUETES}${URL_MISE_A_JOUR_MENTIONS}`,
+    data: {
+      ...params
+    }
   });
 };

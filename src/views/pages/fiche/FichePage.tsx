@@ -6,7 +6,12 @@ import {
   DeleteAlerteActeApiHookParameters,
   useDeleteAlerteActeApiHook
 } from "@hook/alertes/DeleteAlerteActeHookApi";
+import {
+  ICreationRequeteMiseAJourApiHookParams,
+  useCreationRequeteMiseAJourApiHook
+} from "@hook/requete/miseajour/CreationRequeteMiseAJourApiHook";
 import { officierDroitConsulterSurLeTypeRegistreOuDroitMEAE } from "@model/agent/IOfficier";
+import { TypeMiseAJourMentions } from "@model/etatcivil/enum/ITypeMiseAJourMentions";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
@@ -15,6 +20,7 @@ import { UN } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { IAjouterAlerteFormValue } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { OperationLocaleEnCours } from "@widget/attente/OperationLocaleEnCours";
+import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import { BarreNavigationSuivPrec } from "@widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
@@ -73,7 +79,9 @@ export const FichePage: React.FC<FichePageProps> = ({
   const [dataFicheCourante, setDataFicheCourante] = useState<
     IDataFicheProps | undefined
   >(datasFiches[getIndexLocal(index.value, nbLignesParAppel)]);
-
+  const [typeRequeteMiseAJour, setTypeRequeteMiseAJour] = useState<string>();
+  const [requeteMaJParams, setRequeteMaJParams] =
+    useState<ICreationRequeteMiseAJourApiHookParams>();
   // index courant sur la totalité des données
   const [indexCourant, setIndexCourant] = useState<number>(index.value);
 
@@ -107,6 +115,19 @@ export const FichePage: React.FC<FichePageProps> = ({
     dataFicheCourante,
     dataFicheState.data
   );
+
+  useEffect(() => {
+    if (typeRequeteMiseAJour) {
+      setRequeteMaJParams({
+        idActeMAJ: dataFicheState?.data?.id,
+        sousType: typeRequeteMiseAJour || "",
+        titulaires: dataFicheState.data.titulaires
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataFicheState, typeRequeteMiseAJour]);
+
+  useCreationRequeteMiseAJourApiHook(requeteMaJParams);
 
   // Obligatoire pour les styles qui sont chargés dynamiquement
   useEffect(() => {
@@ -276,7 +297,8 @@ export const FichePage: React.FC<FichePageProps> = ({
             ajouterAlerteCallBack,
             supprimerAlerteCallBack,
             visuBoutonAlertes,
-            numeroRequete
+            numeroRequete,
+            setTypeRequeteMiseAJour
           )}
           {getAccordionListe(panelsFiche?.panels, panelsFiche)}
         </>
@@ -325,17 +347,33 @@ function getBandeauAlerteActe(
   ajouterAlerteCallBack: (value: IAjouterAlerteFormValue) => void,
   supprimerAlerteCallBack: (idAlerteActe: string, idActe: string) => void,
   visuBoutonAlertes: boolean,
-  numeroRequete: string | undefined
+  numeroRequete: string | undefined,
+  setTypeRequeteMiseAJour: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >
 ) {
   return (
     categorie === TypeFiche.ACTE && (
-      <>
+      <div className="headerFichePage">
         <BandeauAlertesActe
           alertes={alertes}
           idTypeRegistre={acte?.registre?.type?.id}
           ajouterAlerteCallBack={ajouterAlerteCallBack}
           supprimerAlerteCallBack={supprimerAlerteCallBack}
           afficherBouton={visuBoutonAlertes}
+        />
+        <BoutonMenu
+          boutonLibelle="Mettre à jour"
+          className="menuMettreAJour"
+          options={TypeMiseAJourMentions.getAllEnumsAsOptions()}
+          onClickOption={e =>
+            setTypeRequeteMiseAJour(
+              TypeMiseAJourMentions.getSousTypeRequeteFromTypeMiseAJourLibelle(
+                e
+              ).nom
+            )
+          }
+          anchorOrigin={{ vertical: "center", horizontal: "left" }}
         />
         {acte &&
           !officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(
@@ -349,7 +387,7 @@ function getBandeauAlerteActe(
               numeroFonctionnel={numeroRequete}
             />
           )}
-      </>
+      </div>
     )
   );
 }

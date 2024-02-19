@@ -901,6 +901,12 @@ export const configRequetes = [
         return { data: ["9bfa282d-1e66-4538-b242-b9de4f683777"] };
       }
 
+      // requete de mise a jour
+
+      if (match[1] === "/requetes/mise-a-jour" && context.method === "post") {
+        return { data: { id: "6e89c1c1-16c4-4e40-9b72-7b567270b26f" } };
+      }
+
       let otherData = recupereLesDonneesEnTestantLesAutresConfigs(
         { match, params, headers, context },
         [

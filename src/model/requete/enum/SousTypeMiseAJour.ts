@@ -50,4 +50,11 @@ export class SousTypeMiseAJour extends EnumWithComplete {
   public static getAllLibellesCourtAsOptions(): Options {
     return EnumWithComplete.getAllLibellesCourtAsOptions(SousTypeMiseAJour);
   }
+
+  public static estRMAC(obj: SousTypeMiseAJour) {
+    return obj === SousTypeMiseAJour.RMAC;
+  }
+  public static estRMAR(obj: SousTypeMiseAJour) {
+    return obj === SousTypeMiseAJour.RMAR;
+  }
 }

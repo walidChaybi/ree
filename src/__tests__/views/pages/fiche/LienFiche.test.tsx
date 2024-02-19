@@ -1,6 +1,7 @@
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { LienFiche } from "@pages/fiche/LienFiche";
 import { fireEvent, render, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { mockFenetreFicheTestFunctions } from "../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {
@@ -9,12 +10,14 @@ beforeAll(async () => {
 
 test("renders Lien fiche fonctionne correctement", async () => {
   const { getByText } = render(
-    <LienFiche
-      identifiant={"7566e16c-2b0e-11eb-adc1-0242ac120002"}
-      categorie={TypeFiche.RC}
-      numero={"56533"}
-      title={"titre"}
-    />
+    <MemoryRouter>
+      <LienFiche
+        identifiant={"7566e16c-2b0e-11eb-adc1-0242ac120002"}
+        categorie={TypeFiche.RC}
+        numero={"56533"}
+        title={"titre"}
+      />
+    </MemoryRouter>
   );
 
   const link = getByText("56533");

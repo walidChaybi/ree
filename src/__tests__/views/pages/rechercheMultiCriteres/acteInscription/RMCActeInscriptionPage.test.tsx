@@ -12,7 +12,11 @@ import {
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import * as TableauPaginationConstantes from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
+import { RouterProvider } from "react-router-dom";
+import {
+  createTestingRouter,
+  mockFenetreFicheTestFunctions
+} from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {
   mockFenetreFicheTestFunctions();
@@ -141,11 +145,22 @@ test("La pagination (avec changement de plage) entre les fiches rc/rca/pacs s'ef
 
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
 
-  await act(async () => {
-    render(
-      <RMCActeInscriptionPage noAutoScroll={false} dansFenetreExterne={false} />
-    );
-  });
+  const router = createTestingRouter(
+    [
+      {
+        path: "/",
+        element: (
+          <RMCActeInscriptionPage
+            noAutoScroll={false}
+            dansFenetreExterne={false}
+          />
+        )
+      }
+    ],
+    ["/"]
+  );
+
+  render(<RouterProvider router={router} />);
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
 
@@ -163,7 +178,7 @@ test("La pagination (avec changement de plage) entre les fiches rc/rca/pacs s'ef
   });
 
   // Click bouton submit
-  const submit = screen.getByText(/Rechercher/i);
+  const submit = screen.getAllByText(/Rechercher/i)[0];
   await act(async () => {
     fireEvent.click(submit);
   });
@@ -237,11 +252,22 @@ test("La pagination (avec changement de plage) entre les fiches acte s'effectue 
 
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
 
-  await act(async () => {
-    render(
-      <RMCActeInscriptionPage noAutoScroll={false} dansFenetreExterne={false} />
-    );
-  });
+  const router = createTestingRouter(
+    [
+      {
+        path: "/",
+        element: (
+          <RMCActeInscriptionPage
+            noAutoScroll={false}
+            dansFenetreExterne={false}
+          />
+        )
+      }
+    ],
+    ["/"]
+  );
+
+  render(<RouterProvider router={router} />);
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
 
@@ -259,7 +285,7 @@ test("La pagination (avec changement de plage) entre les fiches acte s'effectue 
   });
 
   // Click bouton submit
-  const submit = screen.getByText(/Rechercher/i);
+  const submit = screen.getAllByText(/Rechercher/i)[0];
   await act(async () => {
     fireEvent.click(submit);
   });

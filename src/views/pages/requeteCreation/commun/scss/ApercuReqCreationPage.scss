@@ -83,11 +83,11 @@ $height: calc($spacing * 2.5);
 .ApercuReqCreationEtablissementSuiviDossierPage,
 .ApercuReqCreationEtablissementSaisieProjetPage {
   display: flex;
-  height: 88vh;
+  height: 87vh;
 
   .FocusPieceJustificative {
     .body {
-      height: 88vh;
+      height: 87vh;
       overflow-y: scroll;
       overflow-x: hidden;
       scrollbar-width: none;
@@ -149,7 +149,7 @@ $height: calc($spacing * 2.5);
 
 .ApercuReqCreationTranscriptionPriseEnChargePage {
   display: flex;
-  height: 88vh;
+  height: 87vh;
 
   .MuiTabPanel-root {
     padding: 0.2rem 0;
@@ -174,7 +174,7 @@ $height: calc($spacing * 2.5);
   }
   .FocusPieceJustificative {
     .body {
-      height: 88vh;
+      height: 87vh;
       overflow-y: scroll;
       overflow-x: hidden;
       scrollbar-width: none;

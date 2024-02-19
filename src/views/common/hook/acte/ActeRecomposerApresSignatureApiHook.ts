@@ -3,11 +3,14 @@ import { logError } from "@util/LogManager";
 import { getLibelle } from "@util/Utils";
 import { useEffect, useState } from "react";
 
-export function useActeRecomposerApresSignatureApiHook(idActe?: string) {
+export function useActeRecomposerApresSignatureApiHook(
+  idActe?: string,
+  estSignature: boolean = false
+) {
   const [resultat, setResultat] = useState<Blob>();
 
   useEffect(() => {
-    if (idActe) {
+    if (idActe && estSignature) {
       getActeRecomposerApresSignature(idActe)
         .then((pdf: any) => {
           if (pdf.body.size === 0) {
@@ -26,7 +29,7 @@ export function useActeRecomposerApresSignatureApiHook(idActe?: string) {
           });
         });
     }
-  }, [idActe]);
+  }, [idActe, estSignature]);
 
   return resultat;
 }

@@ -10,9 +10,9 @@ export interface IUrlData {
   data?: any;
 }
 
-const ID = ":idRequeteParam";
-const ID_ACTE = ":idActeParam";
-const ID_SUIVI_DOSSIER = ":idSuiviDossierParam";
+export const ID = ":idRequeteParam";
+export const ID_ACTE = ":idActeParam";
+export const ID_SUIVI_DOSSIER = ":idSuiviDossierParam";
 
 ///////////// CHEMINS  //////////////
 export const PATH_APERCU_REQ_DEL = "apercurequetedelivrance";
@@ -41,6 +41,9 @@ export const PATH_SAISIR_RDLFC = "saisirlivretfamille";
 export const PATH_MODIFIER_RDC = "modifierextraitcopie";
 export const PATH_MODIFIER_RDCSC = "modifiercertificatsituation";
 export const PATH_MODIFIER_RCTC = "modifiercreation";
+export const PATH_APERCU_REQ_MISE_A_JOUR_SUITE_AVIS =
+  "requetemiseajoursuiteavis";
+export const PATH_APERCU_REQ_MISE_A_JOUR_AUTRE = "requetemiseajourautre";
 
 ///////////// URLs    //////////////
 export const GO_BACK = "goBack";
@@ -188,6 +191,17 @@ export const URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_P
     "URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID"
   );
 
+////////////////////////////////////////////////////////
+///////// REQUETES DE MISE A JOUR //////////////////////
+////////////////////////////////////////////////////////
+export const URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS = `${URL_CONTEXT_APP}/${PATH_APERCU_REQ_MISE_A_JOUR_SUITE_AVIS}`;
+export const URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE = `${URL_CONTEXT_APP}/${PATH_APERCU_REQ_MISE_A_JOUR_AUTRE}`;
+
+export const URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID = `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/${ID}/${ID_ACTE}`;
+export const URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID = `${URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE}/${ID}/${ID_ACTE}`;
+
+
+  
 function estUrlApercuRequete(url: string) {
   return url.indexOf(`/${PATH_APERCU_REQ_DEL}/`) > 0;
 }

@@ -1,9 +1,9 @@
+import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
+import requeteDelivrance from "@mock/data/requeteDelivrance";
 import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
 } from "@mock/data/RMCInscription";
-import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { RMCTableauInscriptions } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauInscriptions";
 import {
   act,
@@ -17,6 +17,7 @@ import {
   NB_LIGNES_PAR_APPEL_INSCRIPTION,
   NB_LIGNES_PAR_PAGE_INSCRIPTION
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { MemoryRouter } from "react-router-dom";
 import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {
@@ -62,13 +63,15 @@ test("Navigation dans les pages du tableau Resultat Inscription Recherche Multi 
 test("Ouverture d'une inscription", async () => {
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
   const { getByTestId } = render(
-    <RMCTableauInscriptions
-      typeRMC="Classique"
-      dataRMCInscription={DataRMCInscriptionAvecResultat}
-      dataTableauRMCInscription={DataTableauInscription}
-      nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
-      nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
-    />
+    <MemoryRouter>
+      <RMCTableauInscriptions
+        typeRMC="Classique"
+        dataRMCInscription={DataRMCInscriptionAvecResultat}
+        dataTableauRMCInscription={DataTableauInscription}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
+      />
+    </MemoryRouter>
   );
 
   const ligne = getByTestId("89c9d030-26c3-41d3-bdde-8b4dcc0420e0");

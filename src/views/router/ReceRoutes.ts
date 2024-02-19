@@ -6,7 +6,7 @@ import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { RMCArchivePage } from "@pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
-import { ApercuRequeteEtablissementActeRegistrePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuActeRegistre/ApercuRequeteEtablissementActeRegistre";
+import { ApercuRequeteEtablissementActeRegistrePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuActeRegistre/ApercuRequeteEtablissementActeRegistrePage";
 import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
 import { ApercuRequeteEtablissementSaisieDeProjetPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/ApercuRequeteEtablissementSaisieDeProjetPage";
 import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
@@ -24,6 +24,7 @@ import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCP
 import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
+import ApercuRequeteMiseAJourPage from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { droitsSaufConsulterArchives } from "@util/habilitation/habilitationsDescription";
@@ -88,6 +89,8 @@ import {
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC_ID,
   URL_REQUETES_INFORMATION_SERVICE,
   URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
+  URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID,
+  URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID,
   URL_SAISIR_RDCSC_RMC,
   URL_SAISIR_RDC_RMC
 } from "./ReceUrls";
@@ -98,6 +101,7 @@ const LIBELLE_APERCU_PRISE_EN_CHARGE = "Aperçu requête (prise en charge)";
 const LIBELLE_APERCU_SUIVI_DOSSIER = "Apercu requête (suivi dossier)";
 const LIBELLE_APERCU_SAISIE_PROJET = "Aperçu requête (saisie de projet)";
 const LIBELLE_APERCU_ACTE_REGISTRE = "Aperçu requête (acte registre)";
+const LIBELLE_APERCU_MISE_A_JOUR_ = "Mise à jour acte";
 const Labels = {
   RDCSC: "certificat & attestation RC/RCA/PACS courrier"
 };
@@ -602,5 +606,21 @@ export const routesRece: IRoute[] = [
     component: ApercuReqCreationTranscriptionSaisieProjetPage,
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: getLibelle(LIBELLE_APERCU_SAISIE_PROJET)
+  },
+
+  ////////////////////////////////////////////////////////
+  ///////// REQUETES DE MISE A JOUR //////////////////////
+  ////////////////////////////////////////////////////////
+  {
+    url: URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID,
+    component: ApercuRequeteMiseAJourPage,
+    auMoinsUnDesDroits: [Droit.METTRE_A_JOUR_ACTE],
+    libelle: getLibelle(LIBELLE_APERCU_MISE_A_JOUR_)
+  },
+  {
+    url: URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID,
+    component: ApercuRequeteMiseAJourPage,
+    auMoinsUnDesDroits: [Droit.METTRE_A_JOUR_ACTE],
+    libelle: getLibelle(LIBELLE_APERCU_MISE_A_JOUR_)
   }
 ];

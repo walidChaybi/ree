@@ -5,26 +5,6 @@ import {
   ReponseAppelGetAlertesActe
 } from "../data/Alertes";
 import { acteExtraitSaisie } from "../data/DonneesSaisieExtrait";
-import { imagePngVideBase64 } from "../data/ImagePng";
-import { decrets } from "../data/NomenclatureEtatCivilDecrets";
-import { pacsModificationNotaire } from "../data/PACS";
-import mockRC from "../data/RC.json";
-import mockRCA from "../data/RCA.json";
-import {
-  ReponseAppelRMCActe,
-  ReponseAppelRMCActe4DernierResultats,
-  ReponseAppelRMCActe4PremiersResultats
-} from "../data/RMCActe";
-import {
-  RMCAutoPersonneResponseAlpha,
-  RMCAutoPersonneResponseBeta
-} from "../data/RMCAutoPersonne";
-import {
-  ReponseAppelRMCInscription,
-  ReponseAppelRMCInscription4DernierResultats,
-  ReponseAppelRMCInscription4PremiersResultats
-} from "../data/RMCInscription";
-import { getTitulairesActeAPI } from "../data/Titulaire";
 import {
   ficheActe1,
   ficheActe2,
@@ -54,12 +34,14 @@ import {
 import { fichePacs, idFichePacs } from "../data/fichePacs";
 import { inscriptionsRc } from "../data/ficheRC";
 import {
-  FicheRcaDecisionJuridictionEtrangere,
   ficheRca,
+  FicheRcaDecisionJuridictionEtrangere,
   idFicheRca
 } from "../data/ficheRCA";
+import { imagePngVideBase64 } from "../data/ImagePng";
 import { listeDeuxPersonnes } from "../data/listePersonnes";
 import { mentions, mentionsPlurilingues } from "../data/mentions";
+import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import {
   ReponseAppelNomenclatureMandataire,
   ReponseAppelNomenclatureNatureMention,
@@ -68,6 +50,24 @@ import {
   ReponseAppelNomenclatureTypeAlerte,
   ReponseAppelNomenclatureTypeMention
 } from "../data/nomenclatures";
+import { pacsModificationNotaire } from "../data/PACS";
+import mockRC from "../data/RC.json";
+import mockRCA from "../data/RCA.json";
+import {
+  ReponseAppelRMCActe,
+  ReponseAppelRMCActe4DernierResultats,
+  ReponseAppelRMCActe4PremiersResultats
+} from "../data/RMCActe";
+import {
+  RMCAutoPersonneResponseAlpha,
+  RMCAutoPersonneResponseBeta
+} from "../data/RMCAutoPersonne";
+import {
+  ReponseAppelRMCInscription,
+  ReponseAppelRMCInscription4DernierResultats,
+  ReponseAppelRMCInscription4PremiersResultats
+} from "../data/RMCInscription";
+import { getTitulairesActeAPI } from "../data/Titulaire";
 import { actesInscriptionsSauvegardes } from "./../data/actesInscriptionsSauvegardes";
 
 export const NORESULT = "NORESULT";
@@ -317,6 +317,7 @@ export const configEtatcivil = [
       // Donnees pour composition acte texte et acte repris.
       if (
         [
+          "/acte/885bdb13-d995-4dbd-93cb-a7a3b2eee5c8/donnees-pour-composition-acte-texte",
           "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/donnees-pour-composition-acte-texte",
           "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/donnees-pour-composition-acte-texte",
           "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/donnees-pour-composition-acte-texte",
