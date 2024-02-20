@@ -14,6 +14,7 @@ import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneReq
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { IActeInscriptionSauvegardeDto } from "../../dto/etatcivil/acte/actesInscriptionsSauvegardes/IActeInscriptionSauvegardeDto";
 import { ApiManager, HttpMethod } from "../ApiManager";
+import { StatutMention } from "./../../model/etatcivil/enum/StatutMention";
 
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
 
@@ -372,10 +373,18 @@ export async function getTypesMention(): Promise<any> {
   });
 }
 
-export async function getMentions(idActe: string): Promise<any> {
+export async function getMentions(
+  idActe: string,
+  statutMention?: StatutMention
+): Promise<any> {
+  const queryParams =
+    statutMention !== undefined
+      ? { statut: StatutMention[statutMention] }
+      : undefined;
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${idActe}${URL_MENTION}`
+    uri: `${URL_ACTE}/${idActe}${URL_MENTION}`,
+    parameters: queryParams
   });
 }
 

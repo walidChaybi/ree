@@ -1,8 +1,18 @@
-import { useMentionsApiHook } from "@hook/acte/mentions/MentionsApiHook";
+import {
+  IMentionsParams,
+  useMentionsApiHook
+} from "@hook/acte/mentions/MentionsApiHook";
 import { render, screen, waitFor } from "@testing-library/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 const HookConsumer: React.FC = () => {
-  const mentions = useMentionsApiHook("19c0d767-64e5-4376-aa1f-6d781a2a235a");
+  const [parametres, setParametres] = useState<IMentionsParams>();
+  const mentions = useMentionsApiHook(parametres);
+
+  useEffect(() => {
+    setParametres({
+      idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235a"
+    });
+  }, []);
 
   return (
     <div>
@@ -26,5 +36,3 @@ test("Attendu: useMentionsApiHook fonctionne correctement", async () => {
     ).not.toBeNull();
   });
 });
-
-

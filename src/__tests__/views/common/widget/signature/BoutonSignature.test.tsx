@@ -1,6 +1,6 @@
 import { Orientation } from "@model/composition/enum/Orientation";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { validerMentionsPlusieursDocuments } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import { createEvent, fireEvent, screen, waitFor } from "@testing-library/dom";
 import { act, render } from "@testing-library/react";

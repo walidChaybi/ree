@@ -53,7 +53,8 @@ export const ListePiecesJustificativesTranscription: React.FC<
           id: group.typePieceJustificative.code,
           libelle: group.typePieceJustificative.libelle,
           checkbox: false,
-          aPoubelle: false,
+          estSupprimable: false,
+          estModifiable: false,
           sousElement: (
             <>
               {group.piecesJustificatives.map(

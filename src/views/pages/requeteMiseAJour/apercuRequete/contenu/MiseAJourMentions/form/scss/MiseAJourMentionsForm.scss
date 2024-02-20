@@ -1,0 +1,23 @@
+.texte-mention {
+  display: flex;
+  margin-top: 2em;
+}
+
+.texte-mention > .InputField {
+  display: flex;
+  width: 100%
+}
+
+.texte-mention > .InputField > .BlockInput {
+  display: flex;
+  width: 100%
+}
+
+textarea {
+  width: 100%
+}
+
+.boutons-mention {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,12 +1,13 @@
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   DocumentReponse,
   IDocumentReponse
 } from "@model/requete/IDocumentReponse";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { estNonRenseigne, shallowEgalTableau } from "@util/Utils";
 import { gestionnaireRenumerotationMentions } from "@utilMetier/mention/GestionnaireRenumerotationMentions";
+import { StatutMention } from "./../../enum/StatutMention";
 import { IMention, Mention } from "./IMention";
 
 export interface IMentionAffichage {
@@ -15,7 +16,8 @@ export interface IMentionAffichage {
   nature: NatureMention;
   id: string;
   numeroOrdre: number;
-  aPoubelle: boolean;
+  estSupprimable: boolean;
+  estModifiable: boolean;
   nouveau?: boolean;
 }
 
@@ -136,7 +138,8 @@ export function mappingVersMentionAffichagePourExtraitAvecOuSansFiliation(
     estPresent: DocumentReponse.nEstPasMentionRetiree(document, mentionApi),
     id: mentionApi.id,
     numeroOrdre: mentionApi.numeroOrdreExtrait,
-    aPoubelle: estNonRenseigne(mentionApi.textes.texteMention)
+    estSupprimable: estNonRenseigne(mentionApi.textes.texteMention),
+    estModifiable: false
   }));
 }
 
@@ -173,6 +176,29 @@ export function mappingVersMentionAffichagePourCopieIntegrale(
     estPresent: DocumentReponse.nEstPasMentionRetiree(document, mentionApi),
     id: mentionApi.id,
     numeroOrdre: mentionApi.numeroOrdre,
-    aPoubelle: mentionApi.textes.texteMention === null
+    estSupprimable: mentionApi.textes.texteMention === null,
+    estModifiable: false
   }));
 }
+
+export const mappingVersMentionAffichagePourMiseAJour = (
+  mentions: IMention[]
+): IMentionAffichage[] => {
+  return mentions.reduce<IMentionAffichage[]>(
+    (mentionsSelectionnees, mention) => {
+      if (mention.textes.texteMention !== undefined) {
+        mentionsSelectionnees.push({
+          id: mention.id,
+          numeroOrdre: mention.numeroOrdre,
+          texte: mention.textes.texteMention,
+          estPresent: mention.statut === StatutMention.BROUILLON,
+          nature: mention.typeMention.natureMention,
+          estSupprimable: true,
+          estModifiable: true
+        });
+      }
+      return mentionsSelectionnees;
+    },
+    []
+  );
+};

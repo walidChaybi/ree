@@ -3,7 +3,8 @@ import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAfficha
 import { getLibelle } from "@util/Utils";
 import { ListeGlisserDeposer } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useCallback, useMemo } from "react";
-import { handleCheckBox, mappingVersListe } from "./../GestionMentionsUtil";
+import { mappingMentionAffichageVersListeItem } from "../../../../../../../common/mapping/mappingMentions";
+import { handleCheckBox } from "../GestionMentionsUtil";
 
 interface MentionsCopieProps {
   mentions?: IMentionAffichage[];
@@ -14,7 +15,9 @@ interface MentionsCopieProps {
 
 export const MentionsCopie: React.FC<MentionsCopieProps> = props => {
   const mentionsAffichees = useMemo(() => {
-    return props.mentions ? props.mentions.filter(el => !el.aPoubelle) : [];
+    return props.mentions
+      ? props.mentions.filter(el => !el.estSupprimable)
+      : [];
   }, [props.mentions]);
 
   const handleCheck = useCallback(
@@ -33,7 +36,7 @@ export const MentionsCopie: React.FC<MentionsCopieProps> = props => {
       <ListeGlisserDeposer
         afficheDragHandle={true}
         useDragHandle={true}
-        liste={mappingVersListe(mentionsAffichees)}
+        liste={mappingMentionAffichageVersListeItem(mentionsAffichees)}
         handleCheckbox={handleCheck}
         deverrouille={props.estDeverrouille}
         libellesSontTitres={false}

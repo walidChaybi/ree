@@ -26,7 +26,6 @@ import {
 } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import { waitFor } from "@testing-library/react";
 
-
 beforeAll(async () => {
   await waitFor(() => {
     expect(DocumentDelivrance.length).toBeGreaterThan(0);
@@ -45,21 +44,23 @@ const mentionApi = {
   id: "1"
 } as IMention;
 
-const mentionOpposable = {
+const mentionOpposable: IMentionAffichage = {
   texte: "texte mention",
   estPresent: true,
   nature: { opposableAuTiers: true } as NatureMention,
   id: "1",
   numeroOrdre: 0,
-  aPoubelle: true
+  estSupprimable: true,
+  estModifiable: false
 };
-const mentionNonOpposable = {
+const mentionNonOpposable: IMentionAffichage = {
   texte: "texte mention",
   estPresent: true,
   nature: { opposableAuTiers: false } as NatureMention,
   id: "1",
   numeroOrdre: 0,
-  aPoubelle: true
+  estSupprimable: true,
+  estModifiable: false
 };
 
 test("texteEnFonctionOpposableAuTiers", () => {
@@ -120,7 +121,8 @@ test("miseAjourEnFonctionNature", () => {
   );
 
   expect(mentionSelectTest!).toStrictEqual({
-    aPoubelle: true,
+    estSupprimable: true,
+    estModifiable: false,
     texte: "texte mention texte apposition",
     estPresent: true,
     nature: { opposableAuTiers: true },
@@ -130,7 +132,8 @@ test("miseAjourEnFonctionNature", () => {
 
   expect(mentionsTest!).toStrictEqual([
     {
-      aPoubelle: true,
+      estSupprimable: true,
+      estModifiable: false,
       texte: "texte mention texte apposition",
       estPresent: true,
       nature: { opposableAuTiers: false },
@@ -150,7 +153,8 @@ test("handleCheckBox", () => {
 
   expect(mentionsTest!).toStrictEqual([
     {
-      aPoubelle: true,
+      estSupprimable: true,
+      estModifiable: false,
       texte: "texte mention texte apposition",
       estPresent: false,
       nature: { opposableAuTiers: false },
@@ -184,7 +188,8 @@ test("mappingVersMentionAffichage", () => {
       estPresent: true,
       id: "1",
       numeroOrdre: 1,
-      aPoubelle: false
+      estSupprimable: false,
+      estModifiable: false
     }
   ]);
 });

@@ -15,22 +15,9 @@ import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import messageManager from "@util/messageManager";
+import { Options } from "@util/Type";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { fournisseurDonneesBandeauFactory } from "../../../../../fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
-
-export function mappingVersListe(mentionsAffichage: IMentionAffichage[]) {
-  return mentionsAffichage
-    .sort((a, b) => a.numeroOrdre - b.numeroOrdre)
-    .map(mentionAffichage => {
-      return {
-        libelle: mentionAffichage.texte,
-        checkbox: mentionAffichage.estPresent,
-        id: mentionAffichage.id,
-        aPoubelle: mentionAffichage.aPoubelle,
-        nouveau: mentionAffichage.nouveau
-      };
-    });
-}
 
 export function miseAJourMention(
   mentionSelect: IMentionAffichage | undefined,
@@ -457,7 +444,7 @@ export function getNaturesMentions(
 export function getOptionsMentions(
   estExtraitPlurilingue: boolean,
   natureActe?: NatureActe
-) {
+): Options {
   if (estExtraitPlurilingue) {
     if (natureActe === NatureActe.NAISSANCE) {
       return NatureMention.getEnumsAsOptions(

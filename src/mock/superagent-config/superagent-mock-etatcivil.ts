@@ -249,19 +249,36 @@ export const configEtatcivil = [
       /////////////////////////////////////////////////////////////////////
       // Mention
       if (
+        match[1] ===
+          "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions?statut=SIGNEE" &&
+        context.method === "get"
+      ) {
+        return {
+          data: mentions.map(mention => ({ ...mention, statut: "SIGNEE" }))
+        };
+      }
+      if (
         match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions" &&
         context.method === "get"
       ) {
         return { data: mentions };
       }
       if (
-        match[1] === "/acte/b41079a5-9e8f-478a-b04c-c4c2ac671123/mentions" &&
+        match[1] ===
+        "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/mentions?statut=BROUILLON"
+      ) {
+        return { data: mentions };
+      }
+      if (
+        match[1] ===
+          "/acte/b41079a5-9e8f-478a-b04c-c4c2ac671123/mentions?statut=SIGNEE" &&
         context.method === "get"
       ) {
         return { data: mentions };
       }
       if (
-        match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/mentions" &&
+        match[1] ===
+          "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/mentions?statut=SIGNEE" &&
         context.method === "get"
       ) {
         return { data: mentionsPlurilingues };

@@ -6,17 +6,23 @@ import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { getDateFromTimestamp } from "@util/DateUtils";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import { StatutMention } from "./../../../../../model/etatcivil/enum/StatutMention";
+
+export interface IMentionsParams {
+  idActe: string;
+  statutMention?: StatutMention
+}
 
 export interface IMentionsResultat {
   mentions?: IMention[];
 }
 
-export function useMentionsApiHook(idActe?: string) {
+export function useMentionsApiHook(params?: IMentionsParams) {
   const [mentions, setMentions] = useState<IMentionsResultat>();
 
   useEffect(() => {
-    if (idActe) {
-      getMentions(idActe)
+    if (params) {
+      getMentions(params.idActe, params.statutMention)
         .then(result => {
           setMentions({ mentions: mappingMentions(result.body.data) });
         })
@@ -30,7 +36,7 @@ export function useMentionsApiHook(idActe?: string) {
           });
         });
     }
-  }, [idActe]);
+  }, [params]);
 
   return mentions;
 }
@@ -53,7 +59,7 @@ function mappingMention(mention: any): IMention {
     regionApposition: mention.regionApposition,
     dateApposition: getDateFromTimestamp(mention.dateApposition),
     dateCreation: getDateFromTimestamp(mention.dateCreation),
-    statut: mention.StatutMention,
+    statut: mappingStatutMention(mention.statut),
     dateStatut: getDateFromTimestamp(mention.dateStatut),
     titulaires: mention.titulaires
       ? mappingTitulairesMention(mention.titulaires)
@@ -84,6 +90,20 @@ export function mappingTypeMention(typeMention: any): ITypeMention {
       : undefined
   };
 }
+
+const mappingStatutMention = (statutMention: string): StatutMention => {
+  switch (statutMention) {
+    case "REPUTEE_NON_ECRITE":
+      return StatutMention.REPUTEE_NON_ECRITE;
+    case "ANNULEE":
+      return StatutMention.ANNULEE;
+    case "SIGNEE":
+      return StatutMention.SIGNEE;
+    case "BROUILLON":
+    default:
+      return StatutMention.BROUILLON;
+  }
+};
 
 function mappingTitulairesMention(titulaires: any[]) {
   return titulaires.map(titulaire => {

@@ -13,13 +13,13 @@ import {
   verticalListSortingStrategy
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { DeleteOutlined, DragHandle } from "@mui/icons-material";
+import { DeleteOutlined, DragHandle, EditOutlined } from "@mui/icons-material";
 import { Checkbox } from "@mui/material";
 import { finirAvec3petitsPoints, getLibelle } from "@util/Utils";
 import React, { useCallback } from "react";
 import "./scss/ListeGlisserDeposer.scss";
 
-const MAX_CARACTERE = 120;
+const CARACTERES_MAXIMUM_LIBELLE_LISTE = 120;
 
 interface ListeGlisserDeposerProps {
   liste: ListeItem[];
@@ -28,17 +28,20 @@ interface ListeGlisserDeposerProps {
   handleReorga?: (oldIndex: number, newIndex: number) => void;
   handleCheckbox?: (id: number) => void;
   onClickSupprimer?: (id: number) => void;
+  onClickModifier?: (id: number) => void;
   deverrouille?: boolean;
   afficheDragHandle: boolean;
   useDragHandle: boolean;
   libellesSontTitres: boolean;
+  nombreCaracteresMaximum?: number;
 }
 
 export interface ListeItem {
   checkbox: boolean;
   libelle: string;
   id: string;
-  aPoubelle: boolean;
+  estSupprimable: boolean;
+  estModifiable: boolean;
   sousElement?: any;
   nouveau?: boolean;
 }
@@ -111,7 +114,7 @@ export const ListeGlisserDeposer: React.FC<
             />
           )}
 
-          {props.onClickSupprimer && item.aPoubelle && (
+          {props.onClickSupprimer && item.estSupprimable && (
             <DeleteOutlined
               onClick={() => {
                 if (props.onClickSupprimer) {
@@ -122,13 +125,32 @@ export const ListeGlisserDeposer: React.FC<
               titleAccess={getLibelle("Supprimer la mention")}
             />
           )}
+          {props.onClickModifier && item.estModifiable && (
+            <EditOutlined
+              onClick={() => {
+                if (props.onClickModifier) {
+                  props.onClickModifier(item.index);
+                }
+              }}
+              className="IconeModifier"
+              titleAccess={getLibelle("Modifier la mention")}
+            />
+          )}
           {props.libellesSontTitres ? (
             <h2 className="titre" title={item.libelle}>
-              {finirAvec3petitsPoints(item.libelle, MAX_CARACTERE)}
+              {props.nombreCaracteresMaximum &&
+                finirAvec3petitsPoints(
+                  item.libelle,
+                  props.nombreCaracteresMaximum
+                )}
             </h2>
           ) : (
             <p title={item.libelle}>
-              {finirAvec3petitsPoints(item.libelle, MAX_CARACTERE)}
+              {props.nombreCaracteresMaximum &&
+                finirAvec3petitsPoints(
+                  item.libelle,
+                  props.nombreCaracteresMaximum
+                )}
             </p>
           )}
         </span>
@@ -173,7 +195,8 @@ export const ListeGlisserDeposer: React.FC<
               checkbox={el.checkbox}
               index={index}
               id={el.id}
-              aPoubelle={el.aPoubelle}
+              estSupprimable={el.estSupprimable}
+              estModifiable={el.estModifiable}
               sousElement={el.sousElement}
               nouveau={el.nouveau}
             />
@@ -190,3 +213,7 @@ function afficherHandle(
     props.handleReorga && props.liste?.length !== 1 && props.afficheDragHandle
   );
 }
+
+ListeGlisserDeposer.defaultProps = {
+  nombreCaracteresMaximum: CARACTERES_MAXIMUM_LIBELLE_LISTE
+};

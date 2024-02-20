@@ -232,3 +232,10 @@ export const NATIONALITE_1 = "nationalite1";
 export const NATIONALITE_2 = "nationalite2";
 export const NATIONALITE_3 = "nationalite3";
 export const INCONNUE = "INCONNUE";
+
+// Mentions
+export const LISTES_TYPES_MENTION = "listesTypesMention";
+export const MENTION_NIVEAU_UN = "mentionNiveauUn";
+export const MENTION_NIVEAU_DEUX = "mentionNiveauDeux";
+export const MENTION_NIVEAU_TROIS = "mentionNiveauTrois";
+export const TEXTE_MENTION = "texteMention";

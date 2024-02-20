@@ -227,7 +227,8 @@ export const mentionsAffichage: IMentionAffichage[] = [
     estPresent: true,
     id: "e31a9791-fbf1-4418-8ede-1520bb1d85a5",
     numeroOrdre: 1,
-    aPoubelle: true
+    estSupprimable: true,
+    estModifiable: false
   },
   {
     nature: natureAnnulationmariage,
@@ -236,7 +237,8 @@ export const mentionsAffichage: IMentionAffichage[] = [
     estPresent: true,
     id: "1a0aa3be-8311-465d-b750-d4c19834430d",
     numeroOrdre: 2,
-    aPoubelle: false
+    estSupprimable: false,
+    estModifiable: false
   },
   {
     nature: natureChangementDeSexe,
@@ -244,7 +246,8 @@ export const mentionsAffichage: IMentionAffichage[] = [
     estPresent: true,
     id: "e315b68d-f43c-4111-9e67-504762161189",
     numeroOrdre: 3,
-    aPoubelle: true
+    estSupprimable: true,
+    estModifiable: false
   }
 ];
 

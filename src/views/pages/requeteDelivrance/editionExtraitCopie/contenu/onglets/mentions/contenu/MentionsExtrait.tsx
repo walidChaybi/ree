@@ -5,11 +5,11 @@ import { MARIAGE, NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { Generateur } from "@util/generateur/Generateur";
 import { ListeGlisserDeposer } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useCallback } from "react";
+import { mappingMentionAffichageVersListeItem } from "../../../../../../../common/mapping/mappingMentions";
 import {
   handleBlur,
   handleCheckBox,
   handleReorga,
-  mappingVersListe,
   selectionneEtMiseAJour
 } from "../GestionMentionsUtil";
 import { AjoutMention } from "./AjoutMention";
@@ -128,7 +128,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
             nature: NatureMention.getEnumFor(event.target.value),
             numeroOrdre: getNumeroOrdreMention(mentions),
             estPresent: true,
-            aPoubelle: true,
+            estSupprimable: true,
             nouveau: true
           } as IMentionAffichage);
         }
@@ -149,7 +149,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
           nature: NatureMention.getEnumFor(""),
           numeroOrdre: getNumeroOrdreMention(mentions),
           estPresent: true,
-          aPoubelle: true,
+          estSupprimable: true,
           nouveau: true
         } as IMentionAffichage);
       }
@@ -204,7 +204,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
                 estExtraitPlurilingue
               )
             }
-            liste={mappingVersListe(mentions)}
+            liste={mappingMentionAffichageVersListeItem(mentions)}
             handleReorga={(oldIndex: number, newIndex: number) =>
               handleReorga(mentions, setMentions, oldIndex, newIndex)
             }

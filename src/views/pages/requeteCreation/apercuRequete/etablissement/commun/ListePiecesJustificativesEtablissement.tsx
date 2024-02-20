@@ -76,7 +76,8 @@ export const ListePiecesJustificativesEtablissement: React.FC<
         id: document.id,
         libelle: document.categorie.libelleAAfficher,
         checkbox: false,
-        aPoubelle: false,
+        estSupprimable: false,
+        estModifiable: false,
         sousElement: (
           <>
             {document.piecesJustificatives.map(
