@@ -52,6 +52,7 @@ export interface IFicheActe {
   numeroActeElectronique?: number;
   referenceActe: string;
   referenceSignifiante?: string;
+  origine: string;
 }
 
 interface ITitulairesActe {

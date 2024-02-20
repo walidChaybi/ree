@@ -387,7 +387,8 @@ export const acte: any = {
       image: null,
       noPage: 2
     }
-  ]
+  ],
+  origine: "RECE"
 };
 
 export const acte1: any = {

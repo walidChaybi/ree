@@ -53,7 +53,7 @@ const ApercuRequeteMiseAJourPage: React.FC<
             <Bouton
               className="boutonAbandonner"
               title="Abandonner"
-              onClick={() => console.log("abandon")}
+              onClick={() => {}}
             >
               {getLibelle("Abandonner")}
             </Bouton>

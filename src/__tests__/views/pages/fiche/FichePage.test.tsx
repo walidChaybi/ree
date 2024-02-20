@@ -1,5 +1,11 @@
-import { userDroitConsulterPerimetreTUNIS } from "@mock/data/connectedUserAvecDroit";
+import { mappingOfficier } from "@core/login/LoginHook";
+import {
+  resultatHeaderUtilistateurLeBiannic,
+  resultatRequeteUtilistateurLeBiannic,
+  userDroitConsulterPerimetreTUNIS
+} from "@mock/data/connectedUserAvecDroit";
 import { idFicheActe1 } from "@mock/data/ficheActe";
+import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { FichePage } from "@pages/fiche/FichePage";
@@ -59,8 +65,16 @@ test("Le render d'une RC via fichePage se fait correctement", async () => {
 });
 
 test("Le render d'un ACTE via fichePage se fait correctement", async () => {
-  await TypeAlerte.init();
+  storeRece.utilisateurCourant = mappingOfficier(
+    resultatHeaderUtilistateurLeBiannic,
+    resultatRequeteUtilistateurLeBiannic.data
+  );
 
+  storeRece.utilisateurCourant.habilitations = mapHabilitationsUtilisateur(
+    resultatRequeteUtilistateurLeBiannic.data.habilitations
+  );
+
+  await TypeAlerte.init();
   await act(async () => {
     const router = createTestingRouter(
       [

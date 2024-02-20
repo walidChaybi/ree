@@ -69,7 +69,6 @@ function getNavigationFromTypeMiseAJour(
 ) {
   let baseUrl: string;
   if (SousTypeMiseAJour.estRMAC(SousTypeMiseAJour.getEnumFor(value))) {
-    console.log("passing here");
     baseUrl = URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID;
   } else {
     baseUrl = URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID;

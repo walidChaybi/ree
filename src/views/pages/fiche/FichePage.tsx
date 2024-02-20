@@ -10,8 +10,13 @@ import {
   ICreationRequeteMiseAJourApiHookParams,
   useCreationRequeteMiseAJourApiHook
 } from "@hook/requete/miseajour/CreationRequeteMiseAJourApiHook";
-import { officierDroitConsulterSurLeTypeRegistreOuDroitMEAE } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
+import {
+  officierDroitConsulterSurLeTypeRegistreOuDroitMEAE,
+  officierHabiliterPourLeDroit
+} from "@model/agent/IOfficier";
 import { TypeMiseAJourMentions } from "@model/etatcivil/enum/ITypeMiseAJourMentions";
+import { OrigineActe } from "@model/etatcivil/enum/OrigineActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
@@ -352,6 +357,9 @@ function getBandeauAlerteActe(
     React.SetStateAction<string | undefined>
   >
 ) {
+  const estPresentBoutonMiseAJour =
+    officierHabiliterPourLeDroit(Droit.METTRE_A_JOUR_ACTE) &&
+    OrigineActe.estRece(OrigineActe.getEnumFor(acte.origine));
   return (
     categorie === TypeFiche.ACTE && (
       <div className="headerFichePage">
@@ -362,19 +370,21 @@ function getBandeauAlerteActe(
           supprimerAlerteCallBack={supprimerAlerteCallBack}
           afficherBouton={visuBoutonAlertes}
         />
-        <BoutonMenu
-          boutonLibelle="Mettre à jour"
-          className="menuMettreAJour"
-          options={TypeMiseAJourMentions.getAllEnumsAsOptions()}
-          onClickOption={e =>
-            setTypeRequeteMiseAJour(
-              TypeMiseAJourMentions.getSousTypeRequeteFromTypeMiseAJourLibelle(
-                e
-              ).nom
-            )
-          }
-          anchorOrigin={{ vertical: "center", horizontal: "left" }}
-        />
+        {estPresentBoutonMiseAJour && (
+          <BoutonMenu
+            boutonLibelle="Mettre à jour"
+            className="menuMettreAJour"
+            options={TypeMiseAJourMentions.getAllEnumsAsOptions()}
+            onClickOption={e =>
+              setTypeRequeteMiseAJour(
+                TypeMiseAJourMentions.getSousTypeRequeteFromTypeMiseAJourLibelle(
+                  e
+                ).nom
+              )
+            }
+            anchorOrigin={{ vertical: "center", horizontal: "left" }}
+          />
+        )}
         {acte &&
           !officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(
             acte.registre?.type?.id
