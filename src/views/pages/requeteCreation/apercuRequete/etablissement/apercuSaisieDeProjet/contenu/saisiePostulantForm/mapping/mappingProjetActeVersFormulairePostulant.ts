@@ -105,6 +105,7 @@ export const mappingProjetActeVersFormulairePostulant = (
   );
 
   const estOrdreInverseParentsFormulaire =
+    !(parentUn && parentDeux) &&
     (!parentUn || !Sexe.estMasculin(Sexe.getEnumFor(parentUn.sexe))) &&
     (!parentDeux || !Sexe.estFeminin(Sexe.getEnumFor(parentDeux.sexe)));
 
