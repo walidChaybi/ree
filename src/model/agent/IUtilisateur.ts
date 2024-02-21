@@ -1,11 +1,11 @@
+import { estTableauNonVide } from "@util/Utils";
 import { storeRece } from "@util/storeRece";
-import { estTableauNonVide, ZERO } from "@util/Utils";
-import { Droit } from "./enum/Droit";
-import { Perimetre, PerimetreEnum } from "./enum/Perimetre";
 import { IDroit, IHabilitation, IProfil } from "./Habilitation";
 import { IEntite } from "./IEntiteRattachement";
 import { IOfficier } from "./IOfficier";
 import { IPerimetre } from "./IPerimetre";
+import { Droit } from "./enum/Droit";
+import { Perimetre, PerimetreEnum } from "./enum/Perimetre";
 import { TModeAuthentification } from "./types";
 
 export interface IUtilisateur {
@@ -117,41 +117,44 @@ export function utilisateurALeDroitSurUnDesPerimetres(
 export const mappingUtilisateurs = (data: any) => {
   const utilisateurs: IUtilisateur[] = [];
   for (const utilisateur of data) {
-    const creationUtilisateur: IUtilisateur = {
-      habilitations: mapHabilitationsUtilisateur(utilisateur.habilitations),
-      mail: utilisateur.mel,
-      actif: utilisateur.actif,
-      dateDebut: utilisateur.dateDebut,
-      dateFin: utilisateur.dateFin,
-      dateMaj: utilisateur.dateMaj,
-      entite: utilisateur.entite,
-      fonctionAgent: utilisateur.fonctionAgent
-        ? {
-            idFonctionAgent: utilisateur.fonctionAgent.idFonctionAgent,
-            libelleFonction: utilisateur.fonctionAgent.libelleFonction,
-            utilisateur: utilisateur.fonctionAgent.utilisateur
-          }
-        : {},
-      idArobas: utilisateur.idArobas,
-      idUtilisateur: utilisateur.idUtilisateur,
-      identifiantArobas: utilisateur.identifiantArobas,
-      listeTitre: utilisateur.listeTitre,
-      nom: utilisateur.nom,
-      origineMaj: utilisateur.origineMaj,
-      prenom: utilisateur.prenom,
-      signatureManuscrite: utilisateur.signatureManuscrite,
-      trigramme: utilisateur.trigramme,
-      entitesFilles: utilisateur.entitesFillesDirectes
-    } as IUtilisateur;
-    utilisateurs.push(creationUtilisateur);
+    if (!getEntiteParUtilisateurId(utilisateur.idUtilisateur)) {
+      const creationUtilisateur: IUtilisateur = {
+        habilitations: mapHabilitationsUtilisateur(utilisateur.habilitations),
+        mail: utilisateur.mel,
+        actif: utilisateur.actif,
+        dateDebut: utilisateur.dateDebut,
+        dateFin: utilisateur.dateFin,
+        dateMaj: utilisateur.dateMaj,
+        entite: utilisateur.entite,
+        fonctionAgent: utilisateur.fonctionAgent
+          ? {
+              idFonctionAgent: utilisateur.fonctionAgent.idFonctionAgent,
+              libelleFonction: utilisateur.fonctionAgent.libelleFonction,
+              utilisateur: utilisateur.fonctionAgent.utilisateur
+            }
+          : {},
+        idArobas: utilisateur.idArobas,
+        idUtilisateur: utilisateur.idUtilisateur,
+        identifiantArobas: utilisateur.identifiantArobas,
+        listeTitre: utilisateur.listeTitre,
+        nom: utilisateur.nom,
+        origineMaj: utilisateur.origineMaj,
+        prenom: utilisateur.prenom,
+        signatureManuscrite: utilisateur.signatureManuscrite,
+        trigramme: utilisateur.trigramme,
+        entitesFilles: utilisateur.entitesFillesDirectes
+      } as IUtilisateur;
+      utilisateurs.push(creationUtilisateur);
+    }
   }
+
   return utilisateurs;
 };
 
 export function getEntiteParUtilisateurId(
   idUtilisateur: string
 ): IEntite | undefined {
-  return storeRece.listeUtilisateurs.filter(
+  return storeRece.listeUtilisateurs.find(
     utilisateur => utilisateur.idUtilisateur === idUtilisateur
-  )[ZERO]?.entite;
+  )?.entite;
 }

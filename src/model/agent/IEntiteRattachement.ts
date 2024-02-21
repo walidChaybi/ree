@@ -35,3 +35,7 @@ export const Entite = {
       : [];
   }
 };
+
+export function getEntiteParId(idEntite: string): IEntite | undefined {
+  return storeRece.listeEntite.find(entite => entite.idEntite === idEntite);
+}

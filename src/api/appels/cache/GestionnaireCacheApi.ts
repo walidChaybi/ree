@@ -1,8 +1,9 @@
+import { IEntite, getEntiteParId } from "@model/agent/IEntiteRattachement";
 import { mappingUtilisateurs } from "@model/agent/IUtilisateur";
 import { Decret, IDecret } from "@model/etatcivil/commun/IDecret";
 import { logError } from "@util/LogManager";
-import { storeRece } from "@util/storeRece";
 import { triListeObjetsSurPropriete } from "@util/Utils";
+import { storeRece } from "@util/storeRece";
 import {
   getTousLesUtilisateurs,
   getToutesLesEntiteRattachement
@@ -52,7 +53,12 @@ export class GestionnaireCacheApi {
       const entites = await getToutesLesEntiteRattachement(
         `${page}-${PLAGE_IMPORT}`
       );
-      storeRece.listeEntite = [...storeRece.listeEntite, ...entites.body.data];
+      storeRece.listeEntite = [
+        ...storeRece.listeEntite,
+        ...entites.body.data.filter(
+          (entite: IEntite) => !getEntiteParId(entite.idEntite)
+        )
+      ];
       if (entites.headers && entites.headers.link.indexOf(`rel="next"`) >= 0) {
         GestionnaireCacheApi.chargerToutesLesEntitesPourLaPage(page + 1);
       }
