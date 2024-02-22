@@ -7,5 +7,6 @@
 }
 
 .boutonAbandonner {
-    align-self: flex-start;
+    display: flex;
+    position: sticky;
 }

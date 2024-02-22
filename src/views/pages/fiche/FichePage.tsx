@@ -373,7 +373,7 @@ function getBandeauAlerteActe(
           supprimerAlerteCallBack={supprimerAlerteCallBack}
           afficherBouton={visuBoutonAlertes}
         />
-        {estPresentBoutonMiseAJour && (
+        {
           <BoutonMenu
             boutonLibelle="Mettre à jour"
             className="menuMettreAJour"
@@ -387,7 +387,7 @@ function getBandeauAlerteActe(
             }
             anchorOrigin={{ vertical: "center", horizontal: "left" }}
           />
-        )}
+        }
         {acte &&
           !officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(
             acte.registre?.type?.id
