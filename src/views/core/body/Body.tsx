@@ -1,7 +1,6 @@
 import { HTTP_FORBIDDEN, HTTP_UNAUTHORIZED } from "@api/ApiManager";
 import { routesRece } from "@router/ReceRoutes";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
-import { useReinitialisationComposant } from "@util/form/useReinitialisation";
 import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
 import {
   appelRequetesASigner,
@@ -23,7 +22,6 @@ import { RECEContext } from "./RECEContext";
 export const Body: React.FC = () => {
   const [appliDejaOuverte, setAppliDejaOuverte] = useState<boolean>(false);
   const [isDirty, setIsDirty] = useState<boolean>(false);
-  const { reinitialisation } = useReinitialisationComposant();
 
   useEffect(() => {
     gestionnaireDoubleOuverture.lancerVerification(() => {
