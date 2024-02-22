@@ -186,7 +186,7 @@ export const mappingVersMentionAffichagePourMiseAJour = (
 ): IMentionAffichage[] => {
   return mentions.reduce<IMentionAffichage[]>(
     (mentionsSelectionnees, mention) => {
-      if (mention.textes.texteMention !== undefined) {
+      if (mention.textes.texteMention) {
         mentionsSelectionnees.push({
           id: mention.id,
           numeroOrdre: mention.numeroOrdre,
