@@ -1,22 +1,36 @@
 import { VisionneuseActe } from "@composant/visionneuseActe/VisionneuseActe";
 import { useActeRecomposerApresSignatureApiHook } from "@hook/acte/ActeRecomposerApresSignatureApiHook";
 import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MimeType } from "../../../../../ressources/MimeType";
 
 interface ActeRegistreProps {
   idActeAAfficher?: string;
-  estSignature?: boolean;
+  affichageApresSignature?: boolean;
 }
 
 const ActeRegistre: React.FC<ActeRegistreProps> = ({
   idActeAAfficher,
-  estSignature
+  affichageApresSignature
 }) => {
-  const resultat = useActeRecomposerApresSignatureApiHook(idActeAAfficher);
+  const [
+    acteRecomposerApresSignatureParams,
+    setActeRecomposerApresSignatureParams
+  ] = useState<string>();
+  const resultat = useActeRecomposerApresSignatureApiHook(
+    acteRecomposerApresSignatureParams
+  );
+
+  useEffect(() => {
+    if (affichageApresSignature && idActeAAfficher) {
+      setActeRecomposerApresSignatureParams(idActeAAfficher);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idActeAAfficher]);
+
   return (
     <div className="ActeRegistre">
-      {idActeAAfficher && estSignature ? (
+      {affichageApresSignature ? (
         <VisionneuseDocument
           infoBulle={""}
           typeMime={MimeType.APPLI_PDF}

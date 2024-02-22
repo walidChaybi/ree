@@ -132,7 +132,10 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC<
     {
       titre: getLibelle("Acte Registre"),
       component: (
-        <ActeRegistre idActeAAfficher={idActeParam} estSignature={true} />
+        <ActeRegistre
+          idActeAAfficher={idActeParam}
+          affichageApresSignature={true}
+        />
       ),
       index: DEUX
     }
