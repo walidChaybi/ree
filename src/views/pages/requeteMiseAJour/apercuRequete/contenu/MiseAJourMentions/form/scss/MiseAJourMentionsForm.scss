@@ -10,7 +10,7 @@
 
 .texte-mention > .InputField > .BlockInput {
   display: flex;
-  width: 100%
+  width: 100%;
 }
 
 textarea {
@@ -20,4 +20,15 @@ textarea {
 .boutons-mention {
   display: flex;
   flex-direction: column;
+}
+
+.selectFieldMentions > .InputField > .BlockInput {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  gap: 2em;
+}
+
+.selectFieldMentions > .InputField > .BlockInput > .SelectField {
+  width: 100%;
 }
