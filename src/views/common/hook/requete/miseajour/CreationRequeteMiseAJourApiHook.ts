@@ -1,5 +1,4 @@
-import { getRequeteMiseAJour } from "@api/appels/requeteApi";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { postRequeteMiseAJour } from "@api/appels/requeteApi";
 import { SousTypeMiseAJour } from "@model/requete/enum/SousTypeMiseAJour";
 import { ITitulaireRequeteMiseAJour } from "@model/requete/ITitulaireRequeteMiseAJour";
 import {
@@ -9,7 +8,6 @@ import {
   URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID
 } from "@router/ReceUrls";
 import { logError } from "@util/LogManager";
-import { mapPrenomsVersPrenomsOrdonnes } from "@util/Utils";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -27,11 +25,7 @@ export function useCreationRequeteMiseAJourApiHook(
   useEffect(() => {
     function fetchData() {
       if (params) {
-        getRequeteMiseAJour({
-          sousType: params.sousType,
-          idActeMAJ: params.idActeMAJ,
-          titulaires: mappingTituActeVersTituRequetMaj(params.titulaires)
-        })
+        postRequeteMiseAJour(params)
           .then(response => {
             setResultatIdRequete(response.body.data.id);
           })
@@ -74,24 +68,4 @@ function getNavigationFromTypeMiseAJour(
     baseUrl = URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID;
   }
   return baseUrl.replace(ID, idRequete).replace(ID_ACTE, idActe);
-}
-
-function mappingTituActeVersTituRequetMaj(
-  titulaires: any[]
-): ITitulaireRequeteMiseAJour[] {
-  return titulaires.map(titulaire => {
-    return {
-      position: titulaire.ordre,
-      nomNaissance: titulaire.nom,
-      anneeNaissance: titulaire.naissance.annee,
-      moisNaissance: titulaire.naissance.mois,
-      jourNaissance: titulaire.naissance.jour,
-      villeEtrangereNaissance: titulaire.naissance.ville,
-      regionNaissance: titulaire.naissance.region,
-      arrondissementNaissance: titulaire.naissance.region,
-      paysNaissance: titulaire.naissance.pays,
-      sexe: Sexe.getKey(Sexe.getEnumFromLibelle(titulaire.sexe.libelle)),
-      prenoms: mapPrenomsVersPrenomsOrdonnes(titulaire.prenoms)
-    };
-  });
 }

@@ -70,7 +70,7 @@ export function getInformationsFiche(
   estConsultation = false
 ): Promise<any> {
   if (typeFiche === TypeFiche.ACTE) {
-    return getInformationsFicheActe(identifiant, false, estConsultation);
+    return getInformationsFicheActe(identifiant, false, estConsultation, false);
   } else {
     return getInformationsFicheRepertoire(typeFiche, identifiant);
   }

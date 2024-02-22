@@ -206,7 +206,7 @@ const restraintArchive = {
 ////////////////////////////////////
 function getComportement(ficheActe: IFicheActe) {
   return getParamsAffichageFicheActe(
-    ficheActe.registre.type.id,
+    ficheActe.registre.type?.id,
     ficheActe.visibiliteArchiviste
   );
 }

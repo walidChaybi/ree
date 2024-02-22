@@ -853,7 +853,7 @@ export const postValiderProjetActe = (
   });
 };
 
-export const getRequeteMiseAJour = (
+export const postRequeteMiseAJour = (
   params: ICreationRequeteMiseAJourApiHookParams
 ): Promise<any> => {
   return api.fetch({

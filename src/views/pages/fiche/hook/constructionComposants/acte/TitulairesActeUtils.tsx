@@ -1,4 +1,4 @@
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import {
   ITitulaireActe,
   TitulaireActe
@@ -12,9 +12,13 @@ import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPartProps } from "@widget/section/SectionPart";
 import React from "react";
 
-export function getTitulaires(acte: IFicheActe): SectionPartProps[] {
-  const sortedTitulaires = acte.titulaires
-    ? triListeObjetsSurPropriete([...acte.titulaires], "numeroOrdreSaisi")
+export function getTitulairesAM(acte: IFicheActe): SectionPartProps[] {
+  const plusRecenteAM = FicheActe.getAnalyseMarginaleLaPlusRecente(acte);
+  const sortedTitulaires = plusRecenteAM
+    ? triListeObjetsSurPropriete(
+        [...plusRecenteAM.titulaires],
+        "numeroOrdreSaisi"
+      )
     : [];
 
   return sortedTitulaires.map((titulaire, index) => {

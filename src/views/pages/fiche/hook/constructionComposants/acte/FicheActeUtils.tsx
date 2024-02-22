@@ -12,7 +12,7 @@ import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
 import { IAccordionReceSection } from "../../../FicheUtils";
 import { getFichesPersonneActe } from "../personne/FichePersonne";
 import { getEvenement } from "./EvenementActeUtils";
-import { getTitulaires } from "./TitulairesActeUtils";
+import { getTitulairesAM } from "./TitulairesActeUtils";
 
 export function getPanelsActe(acte: IFicheActe): IAccordionReceSection {
   const idTypeRegistre = acte?.registre?.type?.id;
@@ -34,7 +34,7 @@ export function getPanelsActe(acte: IFicheActe): IAccordionReceSection {
       {
         panelAreas: [
           {
-            parts: getTitulaires(acte),
+            parts: getTitulairesAM(acte),
             title: "Titulaires",
             nbColonne: 2
           },

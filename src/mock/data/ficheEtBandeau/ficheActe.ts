@@ -358,6 +358,109 @@ export const acte: any = {
       }
     }
   ],
+  analyseMarginales: [
+    {
+      id: "876cd3fb-dfdf-40a6-b102-1ac8ed6b54a4",
+      nomOec: "nomOec",
+      prenomOec: "prenomOec",
+      motifModification: "motifModification",
+      dateDebut: new Date(1256943600),
+      dateFin: new Date(1405980000),
+      titulaires: [
+        {
+          nom: "Greenwild",
+          prenoms: ["Pauliti", "Ziria"],
+          autresNoms: null,
+          autresPrenoms: null,
+          ordre: 1,
+          sexe: "FEMININ",
+          profession: "DEVELOPPEUR",
+          naissance: {
+            minute: null,
+            heure: null,
+            jour: 10,
+            mois: 10,
+            annee: 1901,
+            pays: "France",
+            region: "Provence-Alpes-Côte d'Azur",
+            ville: "Marseille",
+            arrondissement: "10",
+            voie: "",
+            lieuFormate:
+              "Marseille 10ème arrondissement (Provence-Alpes-Côte d'Azur)"
+          },
+          domicile: {
+            pays: "DJIBOUTI",
+            region: "",
+            ville: "Djibouti",
+            arrondissement: null,
+            voie: "Ilot du Héron"
+          },
+          filiation: {
+            domicile: {
+              pays: "BELGIQUE",
+              region: "Flandre",
+              ville: "Bruxelles",
+              arrondissement: null,
+              voie: "7 Rue du Nyer"
+            },
+            naissance: null,
+            nom: "Washington",
+            ordre: 1,
+            prenoms: ["Jsandye"],
+            profession: "Livreur",
+            sexe: "MASCULIN",
+            type: "PARENT"
+          }
+        },
+        {
+          nom: "Dupi",
+          prenoms: ["Laurenti"],
+          autresNoms: null,
+          autresPrenoms: null,
+          ordre: 2,
+          sexe: "MASCULIN",
+          profession: "POMPIER",
+          naissance: {
+            minute: null,
+            heure: null,
+            jour: 30,
+            mois: 3,
+            annee: 1948,
+            pays: "France",
+            region: "Saint-Pierre-et-Miquelon",
+            ville: "Saint-Pierre",
+            arrondissement: "",
+            voie: "",
+            lieuFormate: "Saint-Pierre (Saint-Pierre-et-Miquelon)"
+          },
+          domicile: {
+            pays: "BELGIQUE",
+            region: "Flandre",
+            ville: "Bruxelles2",
+            arrondissement: null,
+            voie: "7 Rue du Noyer"
+          },
+          filiation: {
+            domicile: {
+              pays: "DJIBOUTI",
+              region: "",
+              ville: "Djibouti",
+              arrondissement: null,
+              voie: "16 avenue des Palmiers"
+            },
+            naissance: null,
+            nom: "Sacken",
+            ordre: 1,
+            prenoms: ["Carmela", "Linzy"],
+            profession: "Informaticien",
+            sexe: "MASCULIN",
+            type: "PARENT"
+          }
+        }
+      ]
+    }
+  ],
   piecesAnnexes: [
     {
       nom: "DOC2",

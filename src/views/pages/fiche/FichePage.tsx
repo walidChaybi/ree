@@ -33,6 +33,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { IFicheActe } from "../../../model/etatcivil/acte/IFicheActe";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
+import { mappingTitulaireActeVersTitulaireRequetMaj } from "../../common/mapping/mappingTitulaireRequeteMiseAJour";
 import { BoutonCreationRDD } from "./BoutonCreationRDD/BoutonCreationRDD";
 import { BandeauAlertesActe } from "./contenu/BandeauAlertesActe";
 import { BandeauFiche } from "./contenu/BandeauFiche";
@@ -125,8 +126,10 @@ export const FichePage: React.FC<FichePageProps> = ({
     if (typeRequeteMiseAJour) {
       setRequeteMaJParams({
         idActeMAJ: dataFicheState?.data?.id,
-        sousType: typeRequeteMiseAJour || "",
-        titulaires: dataFicheState.data.titulaires
+        sousType: typeRequeteMiseAJour,
+        titulaires: mappingTitulaireActeVersTitulaireRequetMaj(
+          dataFicheState.data.titulaires
+        )
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
