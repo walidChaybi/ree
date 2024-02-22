@@ -1,6 +1,11 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { SelectDialog } from "@widget/selectDialog/SelectDialog";
-import { act } from "react-test-renderer";
 
 test("open dialog, select new element and validate selection of new element", async () => {
   const handleClickButton = jest.fn();

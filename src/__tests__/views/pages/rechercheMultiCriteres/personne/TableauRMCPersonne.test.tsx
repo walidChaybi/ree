@@ -5,19 +5,24 @@ import {
 } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
-import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
+import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
 import { TableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonne";
 import { mapDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
 import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import React, { useEffect, useState } from "react";
-import { act } from "react-dom/test-utils";
 import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {

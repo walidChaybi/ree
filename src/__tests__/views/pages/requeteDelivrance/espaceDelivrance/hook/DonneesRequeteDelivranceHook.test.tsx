@@ -4,10 +4,10 @@ import {
 } from "@api/appels/requeteApi";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useRequeteDelivranceApiHook } from "@pages/requeteDelivrance/espaceDelivrance/hook/DonneesRequeteDelivranceApiHook";
+import { act } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import ReactDOM from "react-dom";
-import { act } from "react-dom/test-utils";
 
 const queryParam: IQueryParametersPourRequetes = {
   statuts: StatutRequete.getStatutsMesRequetes(),

@@ -1,8 +1,7 @@
 import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
 import { fireEvent, waitFor } from "@testing-library/dom";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { getLibelle } from "@util/Utils";
-import { act } from "react-test-renderer";
 import "../../../../../mock/element/IntersectionObserver";
 
 const getDiv = (index: number) => {

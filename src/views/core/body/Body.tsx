@@ -47,8 +47,7 @@ export const Body: React.FC = () => {
                 <RECEContext.Provider
                   value={{
                     isDirty,
-                    setIsDirty,
-                    rechargementPage: reinitialisation
+                    setIsDirty
                   }}
                 >
                   <GestionnaireFermeture

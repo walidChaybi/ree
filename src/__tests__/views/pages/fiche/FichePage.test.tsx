@@ -10,12 +10,17 @@ import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { FichePage } from "@pages/fiche/FichePage";
 import { URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS } from "@router/ReceUrls";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { storeRece } from "@util/storeRece";
 import { DEUX, UN, ZERO } from "@util/Utils";
-import { act } from "react-dom/test-utils";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 

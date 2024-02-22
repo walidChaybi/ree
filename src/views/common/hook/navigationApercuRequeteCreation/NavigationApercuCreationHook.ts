@@ -20,33 +20,33 @@ export type NavigationApercuReqCreationParams = {
 };
 
 export function useNavigationApercuCreation(
-  props?: NavigationApercuReqCreationParams
+  params?: NavigationApercuReqCreationParams
 ) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (props) {
-      if (SousTypeCreation.estRCEXR(props.sousType)) {
+    if (params) {
+      if (SousTypeCreation.estRCEXR(params.sousType)) {
         redirectionEtablissement(
           navigate,
-          props.idRequete,
-          props.statut,
-          props.idUtilisateur
+          params.idRequete,
+          params.statut,
+          params.idUtilisateur
         );
-      } else if (SousTypeCreation.estSousTypeTranscription(props.sousType)) {
+      } else if (SousTypeCreation.estSousTypeTranscription(params.sousType)) {
         redirectionTranscription(
           navigate,
-          props.idRequete,
-          props.statut,
-          props.idUtilisateur
+          params.idRequete,
+          params.statut,
+          params.idUtilisateur
         );
       }
 
-      if (props.handleTraitementTermine) {
-        props.handleTraitementTermine();
+      if (params.handleTraitementTermine) {
+        params.handleTraitementTermine();
       }
     }
-  }, [props, navigate]);
+  }, [params, navigate]);
 }
 
 function redirectionEtablissement(

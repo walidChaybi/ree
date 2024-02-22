@@ -125,8 +125,8 @@
     "test:devw": "node scripts/test.js --watchAll",
     "test:dev": "CI=true node scripts/test.js",
     "test:dev:update": "node scripts/test.js --watchAll -u",
-    "test:dev:coverage": "node scripts/test.js --coverage --watchAll=false --maxConcurrency=2 --runInBand",
-    "test": "CI=true node scripts/test.js --coverage --maxWorkers=50% --maxConcurrency=2",
+    "test:dev:coverage": "node scripts/test.js --coverage --watchAll=false",
+    "test": "CI=true node scripts/test.js --coverage",
     "package": "node scripts/build.js",
     "publish:pact": "node pact/publish/publish.js"
   },

@@ -1,8 +1,7 @@
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { useFichePageApiHook } from "@pages/fiche/hook/FichePageApiHook";
-import { render, waitFor } from "@testing-library/react";
+import { act, render, waitFor } from "@testing-library/react";
 import React from "react";
-import { act } from "react-dom/test-utils";
 
 const HookConsummerRc: React.FC = () => {
   const { dataFicheState } = useFichePageApiHook(

@@ -1,12 +1,12 @@
 import { RetoucheImage } from "@composant/retoucheImage/RetoucheImage";
 import {
+  act,
   createEvent,
   fireEvent,
   render,
   waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import { act } from "react-test-renderer";
 import { MimeType } from "../../../../../ressources/MimeType";
 
 test("Attendu: Le retour de l'appel à la retouche d'image s'effectue correctement", async () => {

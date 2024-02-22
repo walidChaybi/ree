@@ -1,9 +1,9 @@
-import { RECEContext } from "@core/body/RECEContext";
 import { TUuidSuiviDossierParams } from "@model/params/TUuidSuiviDossierParams";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
+  PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,
   PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER,
   URL_MES_REQUETES_CREATION,
   URL_RECHERCHE_REQUETE,
@@ -15,7 +15,7 @@ import { autorisePrendreEnChargeDepuisPageCreation } from "@util/RequetesUtils";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { BlocInformatif } from "../../../../../common/composant/BlocInformatif/BlocInformatif";
 import { BoutonPrendreEnChargeCreation } from "./BoutonPrendreEnChargeCreation";
@@ -54,7 +54,6 @@ export const BoutonsApercuCreationEtablissement: React.FC<
     useParams<TUuidSuiviDossierParams>();
   const navigate = useNavigate();
   const location = useLocation();
-  const { rechargementPage } = useContext(RECEContext);
 
   const estPresentBoutonPriseEnCharge =
     autorisePrendreEnChargeDepuisPageCreation(props.requete);
@@ -124,7 +123,14 @@ export const BoutonsApercuCreationEtablissement: React.FC<
       {estPresentBoutonPriseEnCharge && (
         <BoutonPrendreEnChargeCreation
           requete={props.requete}
-          onClick={rechargementPage}
+          onClick={() =>
+            navigate(
+              location.pathname.replace(
+                PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,
+                PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER
+              )
+            )
+          }
         />
       )}
 

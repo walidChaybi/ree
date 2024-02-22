@@ -12,13 +12,18 @@ import {
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_INFORMATION
 } from "@router/ReceUrls";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import React from "react";
-import { act } from "react-dom/test-utils";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 

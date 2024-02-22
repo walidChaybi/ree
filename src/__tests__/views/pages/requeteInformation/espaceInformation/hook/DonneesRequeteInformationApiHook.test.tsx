@@ -1,14 +1,14 @@
 import {
-    IQueryParametersPourRequetes,
-    TypeAppelRequete
+  IQueryParametersPourRequetes,
+  TypeAppelRequete
 } from "@api/appels/requeteApi";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { StatutsRequetesInformation } from "@pages/requeteInformation/espaceInformation/EspaceReqInfoParams";
 import { useRequeteInformationApi } from "@pages/requeteInformation/espaceInformation/hook/DonneesRequeteInformationApiHook";
+import { act } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import ReactDOM from "react-dom";
-import { act } from "react-dom/test-utils";
 
 
 

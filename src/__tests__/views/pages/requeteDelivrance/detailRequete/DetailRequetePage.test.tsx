@@ -1,6 +1,5 @@
 import { DetailRequetePage } from "@pages/requeteDelivrance/detailRequete/DetailRequetePage";
-import { render, waitFor } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { act, render, waitFor } from "@testing-library/react";
 
 test("renders Page requete with all elements", async () => {
   act(() => {

@@ -1,7 +1,6 @@
 import { useInformationsActeApiHook } from "@hook/acte/ActeApiHook";
-import { render, waitFor } from "@testing-library/react";
+import { act, render, waitFor } from "@testing-library/react";
 import React from "react";
-import { act } from "react-dom/test-utils";
 
 const hookParams = {
   idActe: "923a10fb-0b15-452d-83c0-d24c76d1d19d"

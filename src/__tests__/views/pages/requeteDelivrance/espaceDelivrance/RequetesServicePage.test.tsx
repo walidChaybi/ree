@@ -1,9 +1,14 @@
 import { TypeEntite } from "@model/agent/enum/TypeEntite";
 import { RequetesServicePage } from "@pages/requeteDelivrance/espaceDelivrance/RequetesServicePage";
 import { URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import { act } from "react-dom/test-utils";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
