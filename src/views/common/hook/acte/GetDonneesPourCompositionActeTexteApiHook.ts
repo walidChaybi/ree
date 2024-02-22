@@ -1,5 +1,8 @@
 import { getDonneesPourCompositionActeTexte } from "@api/appels/etatcivilApi";
+import { IErreurTraitementApi } from "@api/IErreurTraitementApi";
+import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
 import { logError } from "@util/LogManager";
+import { ZERO } from "@util/Utils";
 import { useEffect, useState } from "react";
 
 export interface IGetDonneesPourCompositionActeTexteParams {
@@ -10,6 +13,7 @@ interface IGetDonneesPourCompositionActeTexteResultat {
   // Le back renvoie un fichier JSON au format string.
   // C'est cette valeur qu'il faut renvoyer à composition-api.
   acteTexteJson: string;
+  erreur?: IErreurTraitementApi;
 }
 
 const useGetDonneesPourCompositionActeTexteApiHook = (
@@ -26,12 +30,24 @@ const useGetDonneesPourCompositionActeTexteApiHook = (
             acteTexteJson: reponse.body
           });
         })
-        .catch(error => {
-          logError({
-            error,
-            messageUtilisateur:
-              "Une erreur est survenue lors de la récupération de l'acte texte."
-          });
+        .catch((error: any) => {
+          const premiereErreur: any | undefined = JSON.parse(error?.message)
+            ?.errors[ZERO];
+          const erreur: IErreurTraitementApi = {
+            code: premiereErreur?.code,
+            message: premiereErreur?.message
+          };
+          if (
+            erreur.code === CodeErreurFonctionnelle.FCT_ACTE_SANS_CORPS_TEXTE
+          ) {
+            setResultat({ acteTexteJson: "", erreur });
+          } else {
+            logError({
+              error,
+              messageUtilisateur:
+                "Une erreur est survenue lors de la récupération de l'acte texte."
+            });
+          }
         });
     }
   }, [params]);

@@ -13,6 +13,7 @@ import {
   useCompositionActeTexteApiHook
 } from "@hook/composition/CompositionActeTexte";
 import { TypeActe } from "@model/etatcivil/enum/TypeActe";
+import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
 import { base64ToBlob } from "@util/FileUtils";
 import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
 import React, { useEffect, useState } from "react";
@@ -76,11 +77,18 @@ export const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({
   }, [idActe, estImage]);
 
   useEffect(() => {
-    if (recupererActeTexteResultat?.acteTexteJson && !estReecrit) {
-      setCompositionActeTexteParams({
-        acteTexteJson: recupererActeTexteResultat.acteTexteJson
-      });
-    } else if (recupererActeTexteReprisResultat?.acteTexteJson && estReecrit) {
+    if (!estReecrit) {
+      if (
+        recupererActeTexteResultat?.erreur?.code ===
+        CodeErreurFonctionnelle.FCT_ACTE_SANS_CORPS_TEXTE
+      ) {
+        setErreur(recupererActeTexteResultat.erreur.message);
+      } else if (recupererActeTexteResultat?.acteTexteJson) {
+        setCompositionActeTexteParams({
+          acteTexteJson: recupererActeTexteResultat.acteTexteJson
+        });
+      }
+    } else if (recupererActeTexteReprisResultat?.acteTexteJson) {
       setCompositionActeTexteParams({
         acteTexteJson: recupererActeTexteReprisResultat.acteTexteJson
       });
