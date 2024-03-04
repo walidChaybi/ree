@@ -1,4 +1,5 @@
 import { peupleTypeMention } from "@api/nomenclature/NomenclatureEtatcivil";
+import { Options } from "@util/Type";
 import { ZERO } from "@util/Utils";
 import { NatureActe } from "../../enum/NatureActe";
 import { NatureMention } from "../../enum/NatureMention";
@@ -27,9 +28,9 @@ export class TypeMention {
     return this.typesMentions.length > 0;
   }
 
-  public static getTypesMention(formatListe = false) {
+  public static getTypesMention(formatListe = false, mapSousType = false) {
     return formatListe
-      ? this.mapArborescenceVersListe(this.typesMentions)
+      ? this.mapArborescenceVersListe(this.typesMentions, mapSousType)
       : this.typesMentions;
   }
 
@@ -48,23 +49,57 @@ export class TypeMention {
   }
 
   private static mapArborescenceVersListe(
-    arborescenceTypesMention: ITypeMention[]
+    arborescenceTypesMention: ITypeMention[],
+    mapSousType = false
   ): ITypeMention[] {
     const liste: ITypeMention[] = [];
     for (const typeMention of arborescenceTypesMention) {
       const tempTypeMention: ITypeMention = {
         ...typeMention,
-        sousTypes: undefined
+        sousTypes: mapSousType ? typeMention.sousTypes : undefined
       };
       if (typeMention.sousTypes && typeMention.sousTypes.length > ZERO) {
         liste.push(
           tempTypeMention,
-          ...this.mapArborescenceVersListe(typeMention.sousTypes)
+          ...this.mapArborescenceVersListe(typeMention.sousTypes, mapSousType)
         );
       } else {
         liste.push(tempTypeMention);
       }
     }
     return liste;
+  }
+
+  public static getMentionsById(id: string, mapSousType = false) {
+    return TypeMention.getTypesMention(true, mapSousType).find(
+      mention => mention.id === id
+    );
+  }
+
+  public static getMentionsAsOptions(mentions?: ITypeMention[]): Options {
+    if (mentions && mentions.length > 0) {
+      return mentions.map(mention => {
+        return {
+          cle: mention.id,
+          libelle: mention.libelle
+        };
+      });
+    }
+    return TypeMention.getTypesMention().map(mention => {
+      return {
+        cle: mention.id,
+        libelle: mention.libelle
+      };
+    });
+  }
+
+  public static getIdsMentionsChangementAnalyseMarginal() {
+    return TypeMention.getTypesMention(true)
+      .filter(mention => {
+        return mention.affecteAnalyseMarginale;
+      })
+      .map(mention => {
+        return mention.id;
+      });
   }
 }

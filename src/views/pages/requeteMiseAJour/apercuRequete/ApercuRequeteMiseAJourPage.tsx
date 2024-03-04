@@ -3,6 +3,7 @@ import {
   useMentionsApiHook
 } from "@hook/acte/mentions/MentionsApiHook";
 import { mappingVersMentionAffichagePourMiseAJour } from "@model/etatcivil/acte/mention/IMentionAffichage";
+import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { StatutMention } from "@model/etatcivil/enum/StatutMention";
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import ActeRegistre from "@pages/requeteCreation/commun/composants/ActeRegistre";
@@ -22,11 +23,50 @@ interface ItemListe {
   component: JSX.Element;
 }
 
+export interface IMentionsDetail {
+  idMentionNiveauUn: string;
+  idMentionNiveauDeux: string;
+  idMentionNiveauTrois?: string;
+}
+
+export interface IMentions {
+  texte: string;
+  typeMention: IMentionsDetail;
+  ordre: number;
+}
+
+export const MiseAJourAMContext = React.createContext({
+  afficheOngletAM: false,
+  setAfficheOngletAM: (bool: boolean) => {},
+  listeMentions: [] as IMentions[],
+  setListeMentions: (liste: IMentions[]) => {}
+});
+
 const ApercuRequeteMiseAJourPage: React.FC = () => {
   const { idActeParam } = useParams<TUuidActeParams>();
 
   const [mentionsApiParams, setMentionsApiParams] = useState<IMentionsParams>();
+  const [afficheOngletAM, setAfficheOngletAM] = useState<boolean>(false);
+  const [listeMentions, setListeMentions] = useState<IMentions[]>([]);
   const mentionsActeResultat = useMentionsApiHook(mentionsApiParams);
+
+  useEffect(() => {
+    if (
+      listeMentions.find(mention =>
+        TypeMention.getIdsMentionsChangementAnalyseMarginal().includes(
+          TypeMention.getMentionsById(
+            mention.typeMention.idMentionNiveauTrois ||
+              mention.typeMention.idMentionNiveauDeux ||
+              mention.typeMention.idMentionNiveauUn
+          )?.id || ""
+        )
+      )
+    ) {
+      window.alert(
+        "Veuillez vérifier s'il y a lieu de mettre à jour l'analyse marginal"
+      );
+    }
+  }, [listeMentions]);
 
   useEffect(() => {
     if (idActeParam) {
@@ -69,25 +109,34 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
 
   return (
     <div className="ApercuRequeteMiseAJourPage">
-      {idActeParam ? (
-        <>
-          <div className="OngletsApercuCreationEtablissement">
-            <VoletAvecOnglet liste={listeOngletsGauche} />
-            <Bouton
-              className="boutonAbandonner"
-              title="Abandonner"
-              onClick={() => {}}
-            >
-              {getLibelle("Abandonner")}
-            </Bouton>
-          </div>
-          <div className="OngletsApercuCreationEtablissement">
-            <VoletAvecOnglet liste={listeOngletsDroit} checkDirty={true} />
-          </div>
-        </>
-      ) : (
-        <OperationLocaleEnCoursSimple />
-      )}
+      <MiseAJourAMContext.Provider
+        value={{
+          afficheOngletAM,
+          setAfficheOngletAM,
+          listeMentions,
+          setListeMentions
+        }}
+      >
+        {idActeParam ? (
+          <>
+            <div className="OngletsApercuCreationEtablissement">
+              <VoletAvecOnglet liste={listeOngletsGauche} />
+              <Bouton
+                className="boutonAbandonner"
+                title="Abandonner"
+                onClick={() => {}}
+              >
+                {getLibelle("Abandonner")}
+              </Bouton>
+            </div>
+            <div className="OngletsApercuCreationEtablissement">
+              <VoletAvecOnglet liste={listeOngletsDroit} checkDirty={true} />
+            </div>
+          </>
+        ) : (
+          <OperationLocaleEnCoursSimple />
+        )}
+      </MiseAJourAMContext.Provider>
     </div>
   );
 };
