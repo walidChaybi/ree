@@ -32,9 +32,7 @@ const AjoutMentionsMiseAJour: React.FC<
           <Bouton disabled={!formik.dirty} onClick={() => formik.resetForm()}>
             Annuler
           </Bouton>
-          <Bouton disabled={true} type="submit">
-            Ajouter mention
-          </Bouton>
+          <Bouton type="submit">Ajouter mention</Bouton>
         </div>
       </div>
       <Bouton>{getLibelle("Actualiser et visualiser")}</Bouton>
