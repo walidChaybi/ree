@@ -106,6 +106,7 @@ const ListesTypesMentionForm: React.FC<SubFormProps> = ({ formik, nom }) => {
             options={listeNiveau2}
             optionVide={OptionVide.SELECTIONNABLE}
             onChange={() => resetFormikInput([NOM_CHAMP_MENTION_NIVEAU_TROIS])}
+            label={getLibelle("")}
           />
         </div>
       ) : undefined}
@@ -117,6 +118,7 @@ const ListesTypesMentionForm: React.FC<SubFormProps> = ({ formik, nom }) => {
             name={NOM_CHAMP_MENTION_NIVEAU_TROIS}
             options={listeNiveau3}
             optionVide={OptionVide.SELECTIONNABLE}
+            label={getLibelle("")}
           />
         </div>
       ) : undefined}

@@ -115,7 +115,11 @@ const _SelectField: React.FC<SelectFieldProps> = ({
   return (
     <div className="InputField">
       <div className="BlockInput">
-        {label && <label htmlFor={name}>{label}</label>}
+        {label !== undefined && (
+          <label className="label" htmlFor={name}>
+            {label}
+          </label>
+        )}
         <Field
           name={name}
           options={options}

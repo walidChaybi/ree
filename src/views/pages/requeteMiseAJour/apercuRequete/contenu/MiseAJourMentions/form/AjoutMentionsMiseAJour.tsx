@@ -26,10 +26,15 @@ const AjoutMentionsMiseAJour: React.FC<
           name={TEXTE_MENTION}
           component="textarea"
           placeholder={getLibelle("Texte mention à ajouter")}
+          disabled={true}
         />
         <div className="boutons-mention">
-          <Bouton onClick={() => formik.resetForm()}>Annuler</Bouton>
-          <Bouton type="submit">Ajouter mention</Bouton>
+          <Bouton disabled={!formik.dirty} onClick={() => formik.resetForm()}>
+            Annuler
+          </Bouton>
+          <Bouton disabled={true} type="submit">
+            Ajouter mention
+          </Bouton>
         </div>
       </div>
       <Bouton>{getLibelle("Actualiser et visualiser")}</Bouton>
