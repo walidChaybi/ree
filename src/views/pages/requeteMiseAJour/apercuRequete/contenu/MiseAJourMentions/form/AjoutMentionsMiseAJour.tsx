@@ -2,12 +2,13 @@ import {
   LISTES_TYPES_MENTION,
   TEXTE_MENTION
 } from "@composant/formulaire/ConstantesNomsForm";
+import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React from "react";
+import React, { useContext } from "react";
 import ListesTypesMentionForm from "./ListesTypesMentionForm";
 
 interface AJoutMentionsMiseAJourProps {
@@ -17,6 +18,7 @@ interface AJoutMentionsMiseAJourProps {
 const AjoutMentionsMiseAJour: React.FC<
   AJoutMentionsMiseAJourProps & FormikComponentProps
 > = ({ formik, libelleTitreFormulaire }) => {
+  const { listeMentions } = useContext(MiseAJourMentionsContext);
   return (
     <div>
       <h3>{getLibelle(libelleTitreFormulaire)}</h3>
@@ -26,16 +28,20 @@ const AjoutMentionsMiseAJour: React.FC<
           name={TEXTE_MENTION}
           component="textarea"
           placeholder={getLibelle("Texte mention à ajouter")}
-          disabled={true}
+          disabled={!formik.dirty}
         />
         <div className="boutons-mention">
           <Bouton disabled={!formik.dirty} onClick={() => formik.resetForm()}>
             Annuler
           </Bouton>
-          <Bouton type="submit">Ajouter mention</Bouton>
+          <Bouton disabled={!formik.dirty || !formik.isValid} type="submit">
+            Ajouter mention
+          </Bouton>
         </div>
       </div>
-      <Bouton>{getLibelle("Actualiser et visualiser")}</Bouton>
+      <Bouton disabled={!listeMentions.length || formik.dirty}>
+        {getLibelle("Actualiser et visualiser")}
+      </Bouton>
     </div>
   );
 };

@@ -14,7 +14,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { DeleteOutlined, DragHandle, EditOutlined } from "@mui/icons-material";
-import { Checkbox } from "@mui/material";
+import { Checkbox, Tooltip } from "@mui/material";
 import { finirAvec3petitsPoints, getLibelle } from "@util/Utils";
 import React, { useCallback } from "react";
 import "./scss/ListeGlisserDeposer.scss";
@@ -34,6 +34,7 @@ interface ListeGlisserDeposerProps {
   useDragHandle: boolean;
   libellesSontTitres: boolean;
   nombreCaracteresMaximum?: number;
+  afficheInfoBulle?: boolean;
 }
 
 export interface ListeItem {
@@ -145,7 +146,7 @@ export const ListeGlisserDeposer: React.FC<
                 )}
             </h2>
           ) : (
-            <p title={item.libelle}>
+            <p className="titre" title={item.libelle}>
               {props.nombreCaracteresMaximum &&
                 finirAvec3petitsPoints(
                   item.libelle,
@@ -177,6 +178,32 @@ export const ListeGlisserDeposer: React.FC<
     [props]
   );
 
+  function renderSortableItems(el: ListeItem, index: number) {
+    const component = (
+      <SortableItem
+        key={`item-${el.id}`}
+        libelle={el.libelle}
+        checkbox={el.checkbox}
+        index={index}
+        id={el.id}
+        estSupprimable={el.estSupprimable}
+        estModifiable={el.estModifiable}
+        sousElement={el.sousElement}
+        nouveau={el.nouveau}
+      />
+    );
+
+    if (props.afficheInfoBulle) {
+      return (
+        <Tooltip key={`tooltip-${el.id}`} title={el.libelle}>
+          {component}
+        </Tooltip>
+      );
+    }
+
+    return component;
+  }
+
   return (
     <DndContext
       sensors={sensors}
@@ -188,19 +215,7 @@ export const ListeGlisserDeposer: React.FC<
           items={props.liste}
           strategy={verticalListSortingStrategy}
         >
-          {props.liste.map((el, index) => (
-            <SortableItem
-              key={`item-${el.id}`}
-              libelle={el.libelle}
-              checkbox={el.checkbox}
-              index={index}
-              id={el.id}
-              estSupprimable={el.estSupprimable}
-              estModifiable={el.estModifiable}
-              sousElement={el.sousElement}
-              nouveau={el.nouveau}
-            />
-          ))}
+          {props.liste.map((el, index) => renderSortableItems(el, index))}
         </SortableContext>
       </ul>
     </DndContext>

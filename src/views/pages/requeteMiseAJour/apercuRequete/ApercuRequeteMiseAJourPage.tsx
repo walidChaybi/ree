@@ -1,10 +1,4 @@
-import {
-  IMentionsParams,
-  useMentionsApiHook
-} from "@hook/acte/mentions/MentionsApiHook";
-import { mappingVersMentionAffichagePourMiseAJour } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
-import { StatutMention } from "@model/etatcivil/enum/StatutMention";
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import ActeRegistre from "@pages/requeteCreation/commun/composants/ActeRegistre";
 import { getLibelle, UN, ZERO } from "@util/Utils";
@@ -32,12 +26,10 @@ export interface IMentionsDetail {
 export interface IMentions {
   texte: string;
   typeMention: IMentionsDetail;
-  ordre: number;
+  numeroOrdre: number;
 }
 
-export const MiseAJourAMContext = React.createContext({
-  afficheOngletAM: false,
-  setAfficheOngletAM: (bool: boolean) => {},
+export const MiseAJourMentionsContext = React.createContext({
   listeMentions: [] as IMentions[],
   setListeMentions: (liste: IMentions[]) => {}
 });
@@ -45,10 +37,7 @@ export const MiseAJourAMContext = React.createContext({
 const ApercuRequeteMiseAJourPage: React.FC = () => {
   const { idActeParam } = useParams<TUuidActeParams>();
 
-  const [mentionsApiParams, setMentionsApiParams] = useState<IMentionsParams>();
-  const [afficheOngletAM, setAfficheOngletAM] = useState<boolean>(false);
   const [listeMentions, setListeMentions] = useState<IMentions[]>([]);
-  const mentionsActeResultat = useMentionsApiHook(mentionsApiParams);
 
   useEffect(() => {
     if (
@@ -68,15 +57,6 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     }
   }, [listeMentions]);
 
-  useEffect(() => {
-    if (idActeParam) {
-      setMentionsApiParams({
-        idActe: idActeParam,
-        statutMention: StatutMention.BROUILLON
-      });
-    }
-  }, [idActeParam]);
-
   const listeOngletsGauche: ItemListe[] = [
     {
       titre: getLibelle("Acte Registre"),
@@ -88,16 +68,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   const listeOngletsDroit: ItemListe[] = [
     {
       titre: getLibelle("Gérer les mentions"),
-      component:
-        mentionsActeResultat?.mentions === undefined ? (
-          <></>
-        ) : (
-          <MiseAJourMentions
-            mentionsAffichees={mappingVersMentionAffichagePourMiseAJour(
-              mentionsActeResultat.mentions
-            )}
-          />
-        ),
+      component: <MiseAJourMentions />,
       index: ZERO
     },
     {
@@ -109,10 +80,8 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
 
   return (
     <div className="ApercuRequeteMiseAJourPage">
-      <MiseAJourAMContext.Provider
+      <MiseAJourMentionsContext.Provider
         value={{
-          afficheOngletAM,
-          setAfficheOngletAM,
           listeMentions,
           setListeMentions
         }}
@@ -136,7 +105,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
         ) : (
           <OperationLocaleEnCoursSimple />
         )}
-      </MiseAJourAMContext.Provider>
+      </MiseAJourMentionsContext.Provider>
     </div>
   );
 };

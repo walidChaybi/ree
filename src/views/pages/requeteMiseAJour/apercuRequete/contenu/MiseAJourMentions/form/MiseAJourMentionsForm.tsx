@@ -7,7 +7,8 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { IMiseAJourMentionsForm } from "@model/form/miseAJour/IMiseAJourMentionsForm";
-import { MiseAJourAMContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
+import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
+import { UN } from "@util/Utils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { useContext } from "react";
@@ -31,7 +32,8 @@ const ValidationSchema = Yup.object({
       "Selectionnez le type de la mention"
     ),
     [MENTION_NIVEAU_DEUX]: Yup.string().when(MENTION_NIVEAU_UN, {
-      is: (mentionNiveauUn: string) => mentionNiveauUn !== "",
+      is: (mentionNiveauUn: string) =>
+        TypeMention.getMentionsById(mentionNiveauUn, true)?.sousTypes,
       then: Yup.string().required("Selectionnez le sous-type de la mention")
     }),
     [MENTION_NIVEAU_TROIS]: Yup.string().when(MENTION_NIVEAU_DEUX, {
@@ -52,7 +54,9 @@ interface IMiseAJourMentionsFormProps {
 export const MiseAJourMentionsForm: React.FC<IMiseAJourMentionsFormProps> = ({
   libelleTitreFormulaire
 }) => {
-  const { listeMentions, setListeMentions } = useContext(MiseAJourAMContext);
+  const { listeMentions, setListeMentions } = useContext(
+    MiseAJourMentionsContext
+  );
 
   function ajouterMentions(values: IMiseAJourMentionsForm) {
     setListeMentions([
@@ -64,7 +68,7 @@ export const MiseAJourMentionsForm: React.FC<IMiseAJourMentionsFormProps> = ({
           idMentionNiveauDeux: values.listesTypesMention.mentionNiveauDeux,
           idMentionNiveauTrois: values.listesTypesMention.mentionNiveauTrois
         },
-        ordre: listeMentions.length + 1
+        numeroOrdre: Number(listeMentions.length) + UN
       }
     ]);
   }
