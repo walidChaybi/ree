@@ -31,12 +31,15 @@ export interface IMentions {
 
 export const MiseAJourMentionsContext = React.createContext({
   listeMentions: [] as IMentions[],
-  setListeMentions: (liste: IMentions[]) => {}
+  setListeMentions: (liste: IMentions[]) => {},
+  numeroOrdreEnModification: undefined as any,
+  setNumeroOrdreEnModification: (id?: number) => {}
 });
 
 const ApercuRequeteMiseAJourPage: React.FC = () => {
   const { idActeParam } = useParams<TUuidActeParams>();
-
+  const [numeroOrdreEnModification, setNumeroOrdreEnModification] =
+    useState<number>();
   const [listeMentions, setListeMentions] = useState<IMentions[]>([]);
 
   useEffect(() => {
@@ -83,7 +86,9 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
       <MiseAJourMentionsContext.Provider
         value={{
           listeMentions,
-          setListeMentions
+          setListeMentions,
+          numeroOrdreEnModification,
+          setNumeroOrdreEnModification
         }}
       >
         {idActeParam ? (

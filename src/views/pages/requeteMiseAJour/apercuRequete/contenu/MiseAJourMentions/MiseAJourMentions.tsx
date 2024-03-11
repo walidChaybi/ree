@@ -11,27 +11,38 @@ import {
 } from "../../ApercuRequeteMiseAJourPage";
 import { MiseAJourMentionsForm } from "./form/MiseAJourMentionsForm";
 
-
 const CARACTERES_MAXIMUM_LIBELLE_LISTE = 300;
 
 const MiseAJourMentions: React.FC = () => {
-  const { listeMentions, setListeMentions } = useContext(
-    MiseAJourMentionsContext
-  );
+  const {
+    listeMentions,
+    setListeMentions,
+    numeroOrdreEnModification,
+    setNumeroOrdreEnModification
+  } = useContext(MiseAJourMentionsContext);
   const [estPoppinOuverte, setEstPoppinOuverte] = useState<boolean>(false);
   const [itemASupprimer, setItemASupprimer] = useState<number>();
 
-  const libelleTitreFormulaire =
-    listeMentions.length === ZERO
-      ? getLibelle("Ajout d'une mention")
-      : getLibelle("Ajout d'une autre mention");
+  const getLibelleTitreFormulaire = () => {
+    let libelle: string;
+    if (numeroOrdreEnModification !== undefined) {
+      libelle = getLibelle("Modification d'une mention");
+    } else {
+      libelle =
+        listeMentions.length === ZERO
+          ? getLibelle("Ajout d'une mention")
+          : getLibelle("Ajout d'une autre mention");
+    }
 
-  function handlePopinSupression(value: boolean, idItem?: number) {
+    return libelle;
+  };
+
+  const handlePopinSupression = (value: boolean, idItem?: number) => {
     setItemASupprimer(idItem);
     setEstPoppinOuverte(value);
-  }
+  };
 
-  function supprimerMention(id?: number) {
+  const supprimerMention = (id?: number) => {
     if (id !== undefined) {
       const listeMentionsFiltree = listeMentions
         .filter(mention => {
@@ -47,26 +58,33 @@ const MiseAJourMentions: React.FC = () => {
       setEstPoppinOuverte(false);
       setItemASupprimer(undefined);
     }
-  }
+  };
+
+  const onClickModifierMentions = (id: number) => {
+    setNumeroOrdreEnModification(id);
+  };
 
   return (
     <>
       <ListeGlisserDeposer
-        liste={mappingMentionsFormVersTableauMentions(listeMentions)}
+        liste={mappingMentionsFormVersTableauMentions(
+          listeMentions,
+          numeroOrdreEnModification
+        )}
         handleReorga={(indexPrec: number, indexCourant: number) =>
           handleReorga(listeMentions, setListeMentions, indexPrec, indexCourant)
         }
         onClickSupprimer={id => handlePopinSupression(true, id)}
-        onClickModifier={() => {
-          throw new Error("Function not implemented.");
-        }}
-        afficheDragHandle={true}
+        onClickModifier={onClickModifierMentions}
+        afficheDragHandle={numeroOrdreEnModification === undefined}
         useDragHandle={false}
         libellesSontTitres={false}
         nombreCaracteresMaximum={CARACTERES_MAXIMUM_LIBELLE_LISTE}
         afficheInfoBulle
       />
-      <MiseAJourMentionsForm libelleTitreFormulaire={libelleTitreFormulaire} />
+      <MiseAJourMentionsForm
+        libelleTitreFormulaire={getLibelleTitreFormulaire()}
+      />
       <ConfirmationPopin
         boutons={[
           {
@@ -93,26 +111,27 @@ const MiseAJourMentions: React.FC = () => {
 
 export default MiseAJourMentions;
 
-function mappingMentionsFormVersTableauMentions(
-  mentions: IMentions[]
-): ListeItem[] {
+const mappingMentionsFormVersTableauMentions = (
+  mentions: IMentions[],
+  estModification?: number
+): ListeItem[] => {
   return mentions.map((mention, index) => {
     return {
       id: `${index}.${mention.typeMention}`,
-      estSupprimable: true,
-      estModifiable: true,
+      estSupprimable: estModification === undefined,
+      estModifiable: estModification === undefined,
       checkbox: true,
       libelle: mention.texte
     };
   });
-}
+};
 
-function handleReorga(
+const handleReorga = (
   mentions: IMentions[] | undefined,
   setMentions: any,
   oldIndex: number,
   newIndex: number
-) {
+) => {
   if (mentions) {
     const newList = [...mentions];
     const item = newList[oldIndex];
@@ -123,4 +142,4 @@ function handleReorga(
     });
     setMentions(newList);
   }
-}
+};

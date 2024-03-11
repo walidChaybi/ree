@@ -8,7 +8,7 @@ import {
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { IMiseAJourMentionsForm } from "@model/form/miseAJour/IMiseAJourMentionsForm";
 import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
-import { UN } from "@util/Utils";
+import { triListeObjetsSurPropriete } from "@util/Utils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { useContext } from "react";
@@ -54,11 +54,20 @@ interface IMiseAJourMentionsFormProps {
 export const MiseAJourMentionsForm: React.FC<IMiseAJourMentionsFormProps> = ({
   libelleTitreFormulaire
 }) => {
-  const { listeMentions, setListeMentions } = useContext(
-    MiseAJourMentionsContext
-  );
+  const {
+    listeMentions,
+    setListeMentions,
+    numeroOrdreEnModification,
+    setNumeroOrdreEnModification
+  } = useContext(MiseAJourMentionsContext);
 
-  function ajouterMentions(values: IMiseAJourMentionsForm) {
+  const ajouterOuModifierMention = (values: IMiseAJourMentionsForm) => {
+    numeroOrdreEnModification !== undefined
+      ? modifierMention(values, numeroOrdreEnModification)
+      : ajouterMention(values);
+  };
+
+  const ajouterMention = (values: IMiseAJourMentionsForm) => {
     setListeMentions([
       ...listeMentions,
       {
@@ -68,17 +77,43 @@ export const MiseAJourMentionsForm: React.FC<IMiseAJourMentionsFormProps> = ({
           idMentionNiveauDeux: values.listesTypesMention.mentionNiveauDeux,
           idMentionNiveauTrois: values.listesTypesMention.mentionNiveauTrois
         },
-        numeroOrdre: Number(listeMentions.length) + UN
+        numeroOrdre: Number(listeMentions.length)
       }
     ]);
-  }
+  };
+
+  const modifierMention = (
+    values: IMiseAJourMentionsForm,
+    idAModifier: number
+  ) => {
+    setListeMentions(
+      triListeObjetsSurPropriete(
+        [
+          ...listeMentions.filter(
+            mention => mention.numeroOrdre !== idAModifier
+          ),
+          {
+            numeroOrdre: idAModifier,
+            typeMention: {
+              idMentionNiveauUn: values.listesTypesMention.mentionNiveauUn,
+              idMentionNiveauDeux: values.listesTypesMention.mentionNiveauDeux,
+              idMentionNiveauTrois: values.listesTypesMention.mentionNiveauTrois
+            },
+            texte: values.texteMention
+          }
+        ],
+        "numeroOrdre"
+      )
+    );
+    setNumeroOrdreEnModification();
+  };
 
   return (
     <Formulaire
       formDefaultValues={MISE_A_JOUR_MENTIONS_VALEURS_DEFAUT}
       formValidationSchema={ValidationSchema}
       onSubmit={(values, formik) => {
-        ajouterMentions(values as IMiseAJourMentionsForm);
+        ajouterOuModifierMention(values as IMiseAJourMentionsForm);
         formik?.resetForm();
       }}
     >

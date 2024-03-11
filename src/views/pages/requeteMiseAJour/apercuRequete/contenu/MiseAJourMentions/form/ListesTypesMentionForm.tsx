@@ -4,6 +4,7 @@ import {
   MENTION_NIVEAU_UN
 } from "@composant/formulaire/ConstantesNomsForm";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import {
@@ -16,13 +17,15 @@ import {
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./scss/MiseAJourMentionsForm.scss";
 
 const ListesTypesMentionForm: React.FC<SubFormProps> = ({ formik, nom }) => {
   const listeNiveau1 = TypeMention.getMentionsAsOptions();
   const [listeNiveau2, setListeNiveau2] = useState<Options>();
   const [listeNiveau3, setListeNiveau3] = useState<Options>();
+
+  const { numeroOrdreEnModification } = useContext(MiseAJourMentionsContext);
 
   const NOM_CHAMP_MENTION_NIVEAU_UN = withNamespace(nom, MENTION_NIVEAU_UN);
   const NOM_CHAMP_MENTION_NIVEAU_DEUX = withNamespace(nom, MENTION_NIVEAU_DEUX);
@@ -38,13 +41,20 @@ const ListesTypesMentionForm: React.FC<SubFormProps> = ({ formik, nom }) => {
     NOM_CHAMP_MENTION_NIVEAU_DEUX
   ).value;
 
-  function resetFormikInput(namespaceToReset: string[]) {
+  useEffect(() => {
+    if (numeroOrdreEnModification !== undefined) {
+      setListeNiveau2([]);
+      setListeNiveau3([]);
+    }
+  }, [numeroOrdreEnModification]);
+
+  const resetFormikInput = (namespaceToReset: string[]) => {
     namespaceToReset.forEach(namespace => {
       formik.setFieldValue(namespace, "");
     });
     setListeNiveau2(undefined);
     setListeNiveau3(undefined);
-  }
+  };
 
   // change les valeurs de la liste de 2nd niveau quand le type mentions est selectionné
   useEffect(() => {
@@ -99,6 +109,7 @@ const ListesTypesMentionForm: React.FC<SubFormProps> = ({ formik, nom }) => {
       </div>
 
       {listeNiveau2 &&
+      listeNiveau2.length > 0 &&
       formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_UN).value !== "" ? (
         <div className="selectFieldMentions">
           <SelectField
@@ -112,6 +123,7 @@ const ListesTypesMentionForm: React.FC<SubFormProps> = ({ formik, nom }) => {
       ) : undefined}
 
       {listeNiveau3 &&
+      listeNiveau3.length > 0 &&
       formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_DEUX).value !== "" ? (
         <div className="selectFieldMentions">
           <SelectField
