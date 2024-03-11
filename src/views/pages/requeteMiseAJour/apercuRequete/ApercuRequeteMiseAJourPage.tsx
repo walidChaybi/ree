@@ -52,7 +52,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
       )
     ) {
       window.alert(
-        "Veuillez vérifier s'il y a lieu de mettre à jour l'analyse marginal"
+        "Veuillez vérifier s'il y a lieu de mettre à jour l'analyse marginale"
       );
     }
   }, [listeMentions]);
