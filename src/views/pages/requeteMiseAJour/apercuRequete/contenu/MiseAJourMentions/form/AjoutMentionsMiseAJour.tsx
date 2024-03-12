@@ -30,8 +30,13 @@ const AjoutMentionsMiseAJour: React.FC<
     listeMentions,
     listeMentionsEnregistrees,
     numeroOrdreEnModification,
-    setNumeroOrdreEnModification
+    setNumeroOrdreEnModification,
+    setEstFormulaireDirty
   } = useContext(MiseAJourMentionsContext);
+
+  useEffect(() => {
+    setEstFormulaireDirty(formik.dirty);
+  }, [formik.dirty, setEstFormulaireDirty]);
 
   useEffect(() => {
     if (numeroOrdreEnModification !== undefined) {

@@ -64,7 +64,7 @@ export const MiseAJourMentionsForm: React.FC<IMiseAJourMentionsFormProps> = ({
 
   const ajouterOuModifierMention = (values: IMiseAJourMentionsForm) => {
     numeroOrdreEnModification !== undefined
-      ? modifierMention(values, numeroOrdreEnModification)
+      ? modifierMention(values, numeroOrdreEnModification + UN)
       : ajouterMention(values);
 
     const mentionSelectionne = TypeMention.getTypeMentionById(

@@ -25,7 +25,8 @@ const MiseAJourMentions: React.FC = () => {
     setListeMentions,
     setListeMentionsEnregistrees,
     numeroOrdreEnModification,
-    setNumeroOrdreEnModification
+    setNumeroOrdreEnModification,
+    estFormulaireDirty
   } = useContext(MiseAJourMentionsContext);
   const [estPoppinOuverte, setEstPoppinOuverte] = useState<boolean>(false);
   const [itemASupprimer, setItemASupprimer] = useState<number>();
@@ -104,7 +105,7 @@ const MiseAJourMentions: React.FC = () => {
       <ListeGlisserDeposer
         liste={mappingMentionsFormVersTableauMentions(
           listeMentions,
-          numeroOrdreEnModification
+          estFormulaireDirty
         )}
         handleReorga={(indexPrec: number, indexCourant: number) =>
           handleReorga(listeMentions, setListeMentions, indexPrec, indexCourant)
@@ -149,13 +150,13 @@ export default MiseAJourMentions;
 
 const mappingMentionsFormVersTableauMentions = (
   mentions: IMentions[],
-  estModification?: number
+  estFormulaireDirty = false
 ): ListeItem[] => {
   return mentions.map((mention, index) => {
     return {
       id: `${index}.${mention.typeMention}`,
-      estSupprimable: estModification === undefined,
-      estModifiable: estModification === undefined,
+      estSupprimable: !estFormulaireDirty,
+      estModifiable: !estFormulaireDirty,
       checkbox: true,
       libelle: mention.texte
     };

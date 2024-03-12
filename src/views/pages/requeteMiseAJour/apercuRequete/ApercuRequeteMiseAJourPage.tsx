@@ -35,6 +35,8 @@ interface IMiseAJourMentionsContext {
   setListeMentionsEnregistrees: React.Dispatch<React.SetStateAction<IMentions[]>>,
   numeroOrdreEnModification?: number,
   setNumeroOrdreEnModification: React.Dispatch<React.SetStateAction<number | undefined>>
+  estFormulaireDirty: boolean,
+  setEstFormulaireDirty: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const MiseAJourMentionsContext = React.createContext<IMiseAJourMentionsContext>({
@@ -42,7 +44,11 @@ export const MiseAJourMentionsContext = React.createContext<IMiseAJourMentionsCo
   setListeMentions: ((mentions: IMentions[]) => {}) as React.Dispatch<React.SetStateAction<IMentions[]>>,
   listeMentionsEnregistrees: [],
   setListeMentionsEnregistrees: ((mentions: IMentions[]) => {}) as React.Dispatch<React.SetStateAction<IMentions[]>>,
-  setNumeroOrdreEnModification: ((id: number) => {}) as React.Dispatch<React.SetStateAction<number | undefined>>
+  setNumeroOrdreEnModification: ((id: number) => {}) as React.Dispatch<React.SetStateAction<number | undefined>>,
+  estFormulaireDirty: false,
+  setEstFormulaireDirty: ((value: boolean) => {}) as React.Dispatch<
+    React.SetStateAction<boolean>
+  >
 });
 
 const ApercuRequeteMiseAJourPage: React.FC = () => {
@@ -51,7 +57,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     useState<number>();
   const [listeMentionsEnregistrees, setListeMentionsEnregistrees] = useState<IMentions[]>([]);
   const [listeMentions, setListeMentions] = useState<IMentions[]>([]);
-
+  const [estFormulaireDirty, setEstFormulaireDirty] = useState<boolean>(false);
   const listeOngletsGauche: ItemListe[] = [
     {
       titre: getLibelle("Acte Registre"),
@@ -82,7 +88,9 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
           numeroOrdreEnModification,
           setNumeroOrdreEnModification,
           listeMentionsEnregistrees,
-          setListeMentionsEnregistrees
+          setListeMentionsEnregistrees,
+          estFormulaireDirty,
+          setEstFormulaireDirty
         }}
       >
         {idActeParam ? (
