@@ -84,4 +84,10 @@ export class TypeMention {
       typeMention => typeMention.natureActe === natureActe
     );
   }
+
+  public static getTypeMentionInconnue(): ITypeMention {
+    return this.getTypesMention().find(typeMention =>
+      NatureActe.estInconnue(typeMention.natureActe)
+    ) as ITypeMention;
+  }
 }

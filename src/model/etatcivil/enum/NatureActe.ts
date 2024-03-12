@@ -42,4 +42,8 @@ export class NatureActe extends EnumWithLibelle {
   public static estReconnaissance(obj: NatureActe): boolean {
     return obj === this.RECONNAISSANCE;
   }
+
+  public static estInconnue(natureActe?: NatureActe): boolean {
+    return natureActe === this.INCONNUE;
+  }
 }

@@ -28,9 +28,10 @@ interface IListesTypesMentionForm {
 const ListesTypesMentionForm: React.FC<
   IListesTypesMentionForm & SubFormProps
 > = ({ formik, nom, natureActe }) => {
-  const listeNiveau1 = TypeMention.getTypeMentionAsOptions(
-    TypeMention.getTypeMentionParNatureActe(natureActe)
-  );
+  const listeNiveau1 = TypeMention.getTypeMentionAsOptions([
+    ...TypeMention.getTypeMentionParNatureActe(natureActe),
+    TypeMention.getTypeMentionInconnue()
+  ]);
   const [listeNiveau2, setListeNiveau2] = useState<Options>();
   const [listeNiveau3, setListeNiveau3] = useState<Options>();
 
