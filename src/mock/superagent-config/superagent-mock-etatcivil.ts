@@ -40,7 +40,11 @@ import {
 } from "../data/ficheRCA";
 import { imagePngVideBase64 } from "../data/ImagePng";
 import { listeDeuxPersonnes } from "../data/listePersonnes";
-import { mentions, mentionsPlurilingues } from "../data/mentions";
+import {
+  EnregistrerMentionsResultat,
+  mentions,
+  mentionsPlurilingues
+} from "../data/mentions";
 import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import {
   ReponseAppelNomenclatureMandataire,
@@ -294,6 +298,14 @@ export const configEtatcivil = [
         context.method === "post"
       ) {
         return { data: true };
+      }
+
+      if (
+        (match[1] === "/acte/b00ebeb2-8ddc-4928-b99e-b06a248d21ae/mentions" ||
+          match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/mentions") &&
+        context.method === "put"
+      ) {
+        return EnregistrerMentionsResultat;
       }
 
       /////////////////////////////////////////////////////////////////////
@@ -836,6 +848,17 @@ export const configEtatcivil = [
       return {
         body: data,
         header: data.headers
+      };
+    },
+    /**
+     * returns the result of the PUT request
+     *
+     * @param match array Result of the resolution of the regular expression
+     * @param data  mixed Data returns by `fixtures` attribute
+     */
+    put: function (match: any, data: any) {
+      return {
+        body: data
       };
     }
   }

@@ -7,7 +7,7 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
-import { getLibelle } from "@util/Utils";
+import { getLibelle, shallowEgal } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
@@ -18,15 +18,17 @@ import { connect } from "formik";
 import React, { useContext, useEffect } from "react";
 import ListesTypesMentionForm from "./ListesTypesMentionForm";
 
-interface AJoutMentionsMiseAJourProps {
+interface IAjoutMentionsMiseAJourProps {
   libelleTitreFormulaire: string;
+  actualiserEtVisualiserCallback: () => void;
 }
 
 const AjoutMentionsMiseAJour: React.FC<
-  AJoutMentionsMiseAJourProps & FormikComponentProps
-> = ({ formik, libelleTitreFormulaire }) => {
+  IAjoutMentionsMiseAJourProps & FormikComponentProps
+> = ({ formik, libelleTitreFormulaire, actualiserEtVisualiserCallback }) => {
   const {
     listeMentions,
+    listeMentionsEnregistrees,
     numeroOrdreEnModification,
     setNumeroOrdreEnModification
   } = useContext(MiseAJourMentionsContext);
@@ -57,13 +59,16 @@ const AjoutMentionsMiseAJour: React.FC<
 
   const annulerEnAjoutOuModification = () => {
     formik.resetForm();
-    setNumeroOrdreEnModification();
+    setNumeroOrdreEnModification(undefined);
   };
 
   const boutonAJouterModifier =
     numeroOrdreEnModification !== undefined
       ? getLibelle("Modifier mention")
       : getLibelle("Ajouter mention");
+
+  const estVerrouilleActualiserEtVisualiser =
+    shallowEgal(listeMentions, listeMentionsEnregistrees) || formik.dirty;
 
   return (
     <div>
@@ -91,13 +96,16 @@ const AjoutMentionsMiseAJour: React.FC<
           </Bouton>
         </div>
       </div>
-      <Bouton disabled={!listeMentions.length || formik.dirty}>
+      <Bouton
+        disabled={estVerrouilleActualiserEtVisualiser}
+        onClick={actualiserEtVisualiserCallback}
+      >
         {getLibelle("Actualiser et visualiser")}
       </Bouton>
     </div>
   );
 };
 
-export default connect<AJoutMentionsMiseAJourProps & FormikComponentProps>(
+export default connect<IAjoutMentionsMiseAJourProps & FormikComponentProps>(
   AjoutMentionsMiseAJour
 );

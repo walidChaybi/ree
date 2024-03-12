@@ -1,3 +1,4 @@
+import { IMentionEnregistree } from "@hook/acte/EnregistrerMentionsApiHook";
 import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
 import { AddAlerteActeApiHookParameters } from "@hook/alertes/AddAlerteActeHookApi";
 import { DeleteAlerteActeApiHookParameters } from "@hook/alertes/DeleteAlerteActeHookApi";
@@ -394,6 +395,17 @@ export async function postMentions(
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.POST,
+    uri: `${URL_ACTE}/${idActe}${URL_MENTION}`,
+    data: mentions
+  });
+}
+
+export async function enregistrerMentions(
+  idActe: string,
+  mentions: IMentionEnregistree[]
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.PUT,
     uri: `${URL_ACTE}/${idActe}${URL_MENTION}`,
     data: mentions
   });

@@ -1,10 +1,15 @@
+import {
+  IEnregistrerMentionsParams,
+  useEnregistrerMentionsApiHook
+} from "@hook/acte/EnregistrerMentionsApiHook";
 import { getLibelle, UN, ZERO } from "@util/Utils";
 import {
   ListeGlisserDeposer,
   ListeItem
 } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import {
   IMentions,
   MiseAJourMentionsContext
@@ -14,14 +19,22 @@ import { MiseAJourMentionsForm } from "./form/MiseAJourMentionsForm";
 const CARACTERES_MAXIMUM_LIBELLE_LISTE = 300;
 
 const MiseAJourMentions: React.FC = () => {
+  const { idActeParam } = useParams();
   const {
     listeMentions,
     setListeMentions,
+    setListeMentionsEnregistrees,
     numeroOrdreEnModification,
     setNumeroOrdreEnModification
   } = useContext(MiseAJourMentionsContext);
   const [estPoppinOuverte, setEstPoppinOuverte] = useState<boolean>(false);
   const [itemASupprimer, setItemASupprimer] = useState<number>();
+
+  const [enregistrerMentionsParams, setEnregistrerMentionsParams] =
+    useState<IEnregistrerMentionsParams>();
+  const enregistrerMentionsApiHookResultat = useEnregistrerMentionsApiHook(
+    enregistrerMentionsParams
+  );
 
   const getLibelleTitreFormulaire = () => {
     let libelle: string;
@@ -33,7 +46,6 @@ const MiseAJourMentions: React.FC = () => {
           ? getLibelle("Ajout d'une mention")
           : getLibelle("Ajout d'une autre mention");
     }
-
     return libelle;
   };
 
@@ -64,6 +76,29 @@ const MiseAJourMentions: React.FC = () => {
     setNumeroOrdreEnModification(id);
   };
 
+  const actualiserEtVisualiserCallback = () => {
+    if (idActeParam) {
+      setEnregistrerMentionsParams({
+        idActe: idActeParam,
+        mentions: listeMentions.map(mention => ({
+          idTypeMention:
+            mention.typeMention.idMentionNiveauTrois ||
+            mention.typeMention.idMentionNiveauDeux ||
+            mention.typeMention.idMentionNiveauUn,
+          numeroOrdre: mention.numeroOrdre,
+          texteMention: mention.texte
+        }))
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (enregistrerMentionsApiHookResultat) {
+      setListeMentionsEnregistrees(listeMentions);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enregistrerMentionsApiHookResultat]);
+
   return (
     <>
       <ListeGlisserDeposer
@@ -82,8 +117,9 @@ const MiseAJourMentions: React.FC = () => {
         nombreCaracteresMaximum={CARACTERES_MAXIMUM_LIBELLE_LISTE}
         afficheInfoBulle
       />
-      <MiseAJourMentionsForm
-        libelleTitreFormulaire={getLibelleTitreFormulaire()}
+      <MiseAJourMentionsForm 
+        libelleTitreFormulaire={getLibelleTitreFormulaire()} 
+        actualiserEtVisualiserCallback={actualiserEtVisualiserCallback}
       />
       <ConfirmationPopin
         boutons={[

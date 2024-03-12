@@ -1391,3 +1391,12 @@ export const mentionsPlurilinguesMariageAvec6 = [
     }
   }
 ];
+
+export const EnregistrerMentionsResultat = JSON.stringify({
+  reference_acte: "RECE.2022.000001",
+  nature_acte: "ACTE DE NAISSANCE",
+  titulaires: "de Cassandra, Clara, Angela SCHLOSSER",
+  texte_corps_acte:
+    "Nom                : GREENWALD\nPrénoms            : marie-paulita, zaria, léna\nsexe               : féminin\ndate de naissance  : cinq mars mille huit cent trente-huit\nlieu de naissance  : Milan, Lombardie (Italie)\n\nNom du père        : Sacken\nPrénoms            : Carmela, Linzy\nâgé de             : 55 ans\nlieu de naissance  : Milan, Lombardie (Italie)\nqui déclare la reconnaître\n\nNom de la mère     : Sacken\nPrénoms            : Carmela, Linzy\nâgée de            : 55 ans\nlieu de naissance  : Milan, Lombardie (Italie)\n                     son épouse\n\nDéclarant          : le père\n\nAdresse            : Bruxelles (Flandre)\nFrançaise par      : décret de naturalisation du 23 septembre 3515\n\nActe établi par Nous, Antoine EVAIN, officier de l'état civil du service central d'état civil du ministère des affaires étrangères (loi n°78-731 du 12 juillet 1978 modifiée).\n\n                     Nantes, le 8 février 2024",
+  mentions: "texteMention"
+});

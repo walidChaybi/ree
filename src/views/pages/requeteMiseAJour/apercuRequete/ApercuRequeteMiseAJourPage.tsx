@@ -28,17 +28,28 @@ export interface IMentions {
   numeroOrdre: number;
 }
 
-export const MiseAJourMentionsContext = React.createContext({
-  listeMentions: [] as IMentions[],
-  setListeMentions: (liste: IMentions[]) => {},
-  numeroOrdreEnModification: undefined as any,
-  setNumeroOrdreEnModification: (id?: number) => {}
+interface IMiseAJourMentionsContext {
+  listeMentions: IMentions[],
+  setListeMentions: React.Dispatch<React.SetStateAction<IMentions[]>>,
+  listeMentionsEnregistrees: IMentions[],
+  setListeMentionsEnregistrees: React.Dispatch<React.SetStateAction<IMentions[]>>,
+  numeroOrdreEnModification?: number,
+  setNumeroOrdreEnModification: React.Dispatch<React.SetStateAction<number | undefined>>
+}
+
+export const MiseAJourMentionsContext = React.createContext<IMiseAJourMentionsContext>({
+  listeMentions: [],
+  setListeMentions: ((mentions: IMentions[]) => {}) as React.Dispatch<React.SetStateAction<IMentions[]>>,
+  listeMentionsEnregistrees: [],
+  setListeMentionsEnregistrees: ((mentions: IMentions[]) => {}) as React.Dispatch<React.SetStateAction<IMentions[]>>,
+  setNumeroOrdreEnModification: ((id: number) => {}) as React.Dispatch<React.SetStateAction<number | undefined>>
 });
 
 const ApercuRequeteMiseAJourPage: React.FC = () => {
   const { idActeParam } = useParams<TUuidActeParams>();
   const [numeroOrdreEnModification, setNumeroOrdreEnModification] =
     useState<number>();
+  const [listeMentionsEnregistrees, setListeMentionsEnregistrees] = useState<IMentions[]>([]);
   const [listeMentions, setListeMentions] = useState<IMentions[]>([]);
 
   const listeOngletsGauche: ItemListe[] = [
@@ -69,7 +80,9 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
           listeMentions,
           setListeMentions,
           numeroOrdreEnModification,
-          setNumeroOrdreEnModification
+          setNumeroOrdreEnModification,
+          listeMentionsEnregistrees,
+          setListeMentionsEnregistrees
         }}
       >
         {idActeParam ? (
