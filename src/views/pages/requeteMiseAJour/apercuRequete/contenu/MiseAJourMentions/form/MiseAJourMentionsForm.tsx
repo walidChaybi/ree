@@ -33,12 +33,12 @@ const ValidationSchema = Yup.object({
     ),
     [MENTION_NIVEAU_DEUX]: Yup.string().when(MENTION_NIVEAU_UN, {
       is: (mentionNiveauUn: string) =>
-        TypeMention.getMentionsById(mentionNiveauUn, true)?.sousTypes,
+        TypeMention.getTypeMentionById(mentionNiveauUn)?.sousTypes,
       then: Yup.string().required("Selectionnez le sous-type de la mention")
     }),
     [MENTION_NIVEAU_TROIS]: Yup.string().when(MENTION_NIVEAU_DEUX, {
       is: (mentionNiveauDeux: string) =>
-        TypeMention.getMentionsById(mentionNiveauDeux, true)?.sousTypes,
+        TypeMention.getTypeMentionById(mentionNiveauDeux)?.sousTypes,
       then: Yup.string().required("Selectionnez le sous-type de la mention")
     })
   }),
@@ -66,7 +66,7 @@ export const MiseAJourMentionsForm: React.FC<IMiseAJourMentionsFormProps> = ({
       ? modifierMention(values, numeroOrdreEnModification)
       : ajouterMention(values);
 
-    const mentionSelectionne = TypeMention.getMentionsById(
+    const mentionSelectionne = TypeMention.getTypeMentionById(
       values.listesTypesMention.mentionNiveauTrois ||
         values.listesTypesMention.mentionNiveauDeux ||
         values.listesTypesMention.mentionNiveauUn

@@ -464,7 +464,9 @@ export function getOptionsMentions(
     // Un TypeMention est lié à une nature d'acte. Ce qui permet de récuperer les Nature
     return natureActe
       ? NatureMention.getEnumsAsOptions(
-          TypeMention.getNaturesMentionPourActe(natureActe)
+          TypeMention.getNatureMention(
+            TypeMention.getTypeMentionParNatureActe(natureActe)
+          )
         )
       : NatureMention.getAllEnumsAsOptions();
   }

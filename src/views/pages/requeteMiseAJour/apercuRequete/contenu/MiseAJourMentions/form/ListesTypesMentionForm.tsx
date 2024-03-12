@@ -4,6 +4,7 @@ import {
   MENTION_NIVEAU_UN
 } from "@composant/formulaire/ConstantesNomsForm";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
@@ -20,8 +21,16 @@ import { connect } from "formik";
 import { useContext, useEffect, useState } from "react";
 import "./scss/MiseAJourMentionsForm.scss";
 
-const ListesTypesMentionForm: React.FC<SubFormProps> = ({ formik, nom }) => {
-  const listeNiveau1 = TypeMention.getMentionsAsOptions();
+interface IListesTypesMentionForm {
+  natureActe: NatureActe;
+}
+
+const ListesTypesMentionForm: React.FC<
+  IListesTypesMentionForm & SubFormProps
+> = ({ formik, nom, natureActe }) => {
+  const listeNiveau1 = TypeMention.getTypeMentionAsOptions(
+    TypeMention.getTypeMentionParNatureActe(natureActe)
+  );
   const [listeNiveau2, setListeNiveau2] = useState<Options>();
   const [listeNiveau3, setListeNiveau3] = useState<Options>();
 
@@ -64,7 +73,7 @@ const ListesTypesMentionForm: React.FC<SubFormProps> = ({ formik, nom }) => {
       );
       if (mentionsSelectionne?.sousTypes) {
         setListeNiveau2(
-          TypeMention.getMentionsAsOptions(mentionsSelectionne.sousTypes)
+          TypeMention.getTypeMentionAsOptions(mentionsSelectionne.sousTypes)
         );
       }
     }
@@ -83,7 +92,7 @@ const ListesTypesMentionForm: React.FC<SubFormProps> = ({ formik, nom }) => {
         );
       if (mentionSelectionneNiveauDeux?.sousTypes) {
         setListeNiveau3(
-          TypeMention.getMentionsAsOptions(
+          TypeMention.getTypeMentionAsOptions(
             mentionSelectionneNiveauDeux?.sousTypes
           )
         );
@@ -138,4 +147,6 @@ const ListesTypesMentionForm: React.FC<SubFormProps> = ({ formik, nom }) => {
   );
 };
 
-export default connect<ISubForm>(ListesTypesMentionForm);
+export default connect<IListesTypesMentionForm & ISubForm>(
+  ListesTypesMentionForm
+);

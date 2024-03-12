@@ -5,6 +5,7 @@ import {
   MENTION_NIVEAU_UN,
   TEXTE_MENTION
 } from "@composant/formulaire/ConstantesNomsForm";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
@@ -67,7 +68,10 @@ const AjoutMentionsMiseAJour: React.FC<
   return (
     <div>
       <h3>{getLibelle(libelleTitreFormulaire)}</h3>
-      <ListesTypesMentionForm nom={LISTES_TYPES_MENTION} />
+      <ListesTypesMentionForm
+        natureActe={NatureActe.NAISSANCE} // TODO: Pour le moment spécifique aux actes de naissance, à rendre plus générique plus tard.
+        nom={LISTES_TYPES_MENTION}
+      />
       <div className="texte-mention">
         <InputField
           name={TEXTE_MENTION}
