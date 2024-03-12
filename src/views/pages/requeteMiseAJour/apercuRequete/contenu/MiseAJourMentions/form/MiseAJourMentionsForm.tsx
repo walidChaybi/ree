@@ -8,7 +8,7 @@ import {
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { IMiseAJourMentionsForm } from "@model/form/miseAJour/IMiseAJourMentionsForm";
 import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
-import { triListeObjetsSurPropriete } from "@util/Utils";
+import { triListeObjetsSurPropriete, UN } from "@util/Utils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { useContext } from "react";
@@ -65,6 +65,17 @@ export const MiseAJourMentionsForm: React.FC<IMiseAJourMentionsFormProps> = ({
     numeroOrdreEnModification !== undefined
       ? modifierMention(values, numeroOrdreEnModification)
       : ajouterMention(values);
+
+    const mentionSelectionne = TypeMention.getMentionsById(
+      values.listesTypesMention.mentionNiveauTrois ||
+        values.listesTypesMention.mentionNiveauDeux ||
+        values.listesTypesMention.mentionNiveauUn
+    );
+    if (mentionSelectionne?.affecteAnalyseMarginale) {
+      window.alert(
+        "Veuillez vérifier s'il y a lieu de mettre à jour l'analyse marginale"
+      );
+    }
   };
 
   const ajouterMention = (values: IMiseAJourMentionsForm) => {
@@ -77,7 +88,7 @@ export const MiseAJourMentionsForm: React.FC<IMiseAJourMentionsFormProps> = ({
           idMentionNiveauDeux: values.listesTypesMention.mentionNiveauDeux,
           idMentionNiveauTrois: values.listesTypesMention.mentionNiveauTrois
         },
-        numeroOrdre: Number(listeMentions.length)
+        numeroOrdre: Number(listeMentions.length) + UN
       }
     ]);
   };

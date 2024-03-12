@@ -1,11 +1,10 @@
-import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import ActeRegistre from "@pages/requeteCreation/commun/composants/ActeRegistre";
 import { getLibelle, UN, ZERO } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router";
 import MiseAJourAnalyseMarginale from "./contenu/MiseAJourAnalyseMarginal/MiseAJourAnalyseMarginal";
 import MiseAJourMentions from "./contenu/MiseAJourMentions/MiseAJourMentions";
@@ -41,24 +40,6 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   const [numeroOrdreEnModification, setNumeroOrdreEnModification] =
     useState<number>();
   const [listeMentions, setListeMentions] = useState<IMentions[]>([]);
-
-  useEffect(() => {
-    if (
-      listeMentions.find(mention =>
-        TypeMention.getIdsMentionsChangementAnalyseMarginal().includes(
-          TypeMention.getMentionsById(
-            mention.typeMention.idMentionNiveauTrois ||
-              mention.typeMention.idMentionNiveauDeux ||
-              mention.typeMention.idMentionNiveauUn
-          )?.id || ""
-        )
-      )
-    ) {
-      window.alert(
-        "Veuillez vérifier s'il y a lieu de mettre à jour l'analyse marginale"
-      );
-    }
-  }, [listeMentions]);
 
   const listeOngletsGauche: ItemListe[] = [
     {
