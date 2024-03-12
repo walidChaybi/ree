@@ -18,6 +18,7 @@ import {
 import { TypeMiseAJourMentions } from "@model/etatcivil/enum/ITypeMiseAJourMentions";
 import { OrigineActe } from "@model/etatcivil/enum/OrigineActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { SousTypeMiseAJour } from "@model/requete/enum/SousTypeMiseAJour";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { FenetreExterneUtil } from "@util/FenetreExterne";
@@ -25,7 +26,7 @@ import { UN } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { IAjouterAlerteFormValue } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { OperationLocaleEnCours } from "@widget/attente/OperationLocaleEnCours";
-import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { BarreNavigationSuivPrec } from "@widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
@@ -374,19 +375,22 @@ function getBandeauAlerteActe(
           afficherBouton={visuBoutonAlertes}
         />
         {estPresentBoutonMiseAJour && (
-          <BoutonMenu
-            boutonLibelle="Mettre à jour"
-            className="menuMettreAJour"
-            options={TypeMiseAJourMentions.getAllEnumsAsOptions()}
-            onClickOption={e =>
-              setTypeRequeteMiseAJour(
-                TypeMiseAJourMentions.getSousTypeRequeteFromTypeMiseAJourLibelle(
-                  e
-                ).nom
-              )
-            }
-            anchorOrigin={{ vertical: "center", horizontal: "left" }}
-          />
+          <>
+            <Bouton
+              onClick={() =>
+                setTypeRequeteMiseAJour(SousTypeMiseAJour.RMAC.nom)
+              }
+            >
+              {TypeMiseAJourMentions.MAJ_SUITE_AVIS.libelle}
+            </Bouton>
+            <Bouton
+              onClick={() =>
+                setTypeRequeteMiseAJour(SousTypeMiseAJour.RMAR.nom)
+              }
+            >
+              {TypeMiseAJourMentions.MAJ_AUTRE.libelle}
+            </Bouton>
+          </>
         )}
         {acte &&
           !officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(

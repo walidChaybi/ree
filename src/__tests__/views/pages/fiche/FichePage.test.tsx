@@ -110,19 +110,11 @@ test("Le render d'un ACTE via fichePage se fait correctement", async () => {
       // fct est appelé une fois quand le test est lancé tt seul
       // et est appelé 2 fois lorsque les test sont successifs
       expect(fct).toHaveBeenCalledTimes(DEUX);
-      expect(screen.getByText("Mettre à jour")).toBeDefined();
+      expect(screen.getByText("Apposer mention(s) suite à avis")).toBeDefined();
+      expect(screen.getByText("Apposer mention(s) autre")).toBeDefined();
     });
 
-    fireEvent.mouseOver(screen.getByText("Mettre à jour"));
-
-    await waitFor(() => {
-      expect(
-        screen.getByText("Apposer mentions(s) suite à avis")
-      ).toBeDefined();
-      expect(screen.getByText("Apposer mentions(s) autre")).toBeDefined();
-    });
-
-    fireEvent.click(screen.getByText("Apposer mentions(s) suite à avis"));
+    fireEvent.click(screen.getByText("Apposer mention(s) suite à avis"));
 
     await waitFor(() => {
       expect(router.state.location.pathname).toBe(
