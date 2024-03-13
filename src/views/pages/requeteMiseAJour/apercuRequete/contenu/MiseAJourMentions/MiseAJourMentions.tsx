@@ -112,14 +112,14 @@ const MiseAJourMentions: React.FC = () => {
         }
         onClickSupprimer={id => handlePopinSupression(true, id)}
         onClickModifier={onClickModifierMentions}
-        afficheDragHandle={numeroOrdreEnModification === undefined}
+        afficheDragHandle={!estFormulaireDirty}
         useDragHandle={false}
         libellesSontTitres={false}
         nombreCaracteresMaximum={CARACTERES_MAXIMUM_LIBELLE_LISTE}
         afficheInfoBulle
       />
-      <MiseAJourMentionsForm 
-        libelleTitreFormulaire={getLibelleTitreFormulaire()} 
+      <MiseAJourMentionsForm
+        libelleTitreFormulaire={getLibelleTitreFormulaire()}
         actualiserEtVisualiserCallback={actualiserEtVisualiserCallback}
       />
       <ConfirmationPopin
