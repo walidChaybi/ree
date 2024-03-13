@@ -9,7 +9,6 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { getLibelle, shallowEgal } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
   FormikComponentProps,
   withNamespace
@@ -58,10 +57,6 @@ const AjoutMentionsMiseAJour: React.FC<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numeroOrdreEnModification]);
 
-  const inputValueNiveauUn = formik.getFieldMeta(
-    withNamespace(LISTES_TYPES_MENTION, MENTION_NIVEAU_UN)
-  ).value;
-
   const annulerEnAjoutOuModification = () => {
     formik.resetForm();
     setNumeroOrdreEnModification(undefined);
@@ -78,16 +73,10 @@ const AjoutMentionsMiseAJour: React.FC<
   return (
     <div>
       <h3>{getLibelle(libelleTitreFormulaire)}</h3>
-      <ListesTypesMentionForm
-        natureActe={NatureActe.NAISSANCE} // TODO: Pour le moment spécifique aux actes de naissance, à rendre plus générique plus tard.
-        nom={LISTES_TYPES_MENTION}
-      />
-      <div className="texte-mention">
-        <InputField
-          name={TEXTE_MENTION}
-          component="textarea"
-          placeholder={getLibelle("Texte mention à ajouter")}
-          disabled={!inputValueNiveauUn}
+      <div className="divFormulaire">
+        <ListesTypesMentionForm
+          natureActe={NatureActe.NAISSANCE} // TODO: Pour le moment spécifique aux actes de naissance, à rendre plus générique plus tard.
+          nom={LISTES_TYPES_MENTION}
         />
         <div className="boutons-mention">
           <Bouton
@@ -101,12 +90,14 @@ const AjoutMentionsMiseAJour: React.FC<
           </Bouton>
         </div>
       </div>
-      <Bouton
-        disabled={estVerrouilleActualiserEtVisualiser}
-        onClick={actualiserEtVisualiserCallback}
-      >
-        {getLibelle("Actualiser et visualiser")}
-      </Bouton>
+      <div className="boutonActualiserVisualiser">
+        <Bouton
+          disabled={estVerrouilleActualiserEtVisualiser}
+          onClick={actualiserEtVisualiserCallback}
+        >
+          {getLibelle("Actualiser et visualiser")}
+        </Bouton>
+      </div>
     </div>
   );
 };

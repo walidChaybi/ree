@@ -63,7 +63,11 @@ export const InputField: React.FC<InputFieldProps> = ({
   return (
     <div className="InputField">
       <div className="BlockInput">
-        {label && <label htmlFor={name}>{label}</label>}
+        {label !== undefined && label !== null && (
+          <label className="label" htmlFor={name}>
+            {label}
+          </label>
+        )}
         <Field
           aria-label={`${ariaLabel || name}`}
           component={component}
