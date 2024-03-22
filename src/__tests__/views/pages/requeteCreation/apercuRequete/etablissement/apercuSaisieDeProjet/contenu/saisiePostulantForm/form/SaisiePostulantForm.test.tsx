@@ -10,13 +10,7 @@ import {
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID
 } from "@router/ReceUrls";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { DEUX, UN, ZERO } from "@util/Utils";
 import { RouterProvider } from "react-router-dom";
 import { localStorageFeatureFlagMock } from "../../../../../../../../../../setupTests";
@@ -51,9 +45,7 @@ function afficheComposantSaisiePostulantForm(
     ]
   );
 
-  act(async () => {
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 }
 
 describe("Test du bloc Postulant de l'onglet Postulant", () => {

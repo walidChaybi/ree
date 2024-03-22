@@ -12,13 +12,13 @@ import {
   useRetourValideurApiHook
 } from "@hook/requete/RetourValideur";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
-import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { Option } from "@util/Type";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -71,7 +71,8 @@ export const BoutonsTerminerOuRelecture: React.FC<
     if (idActionRetour) {
       replaceUrl(navigate, getUrlPrecedente(location.pathname));
     }
-  }, [idActionRetour, navigate, location]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idActionRetour]);
 
   function onClickReprise(statut: StatutRequete) {
     setOperationEnCours(true);

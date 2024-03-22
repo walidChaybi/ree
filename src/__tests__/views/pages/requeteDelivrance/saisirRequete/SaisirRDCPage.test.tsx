@@ -4,10 +4,15 @@ import {
   resultatRequeteUtilistateurLaurenceBourdeau,
   userDroitnonCOMEDEC
 } from "@mock/data/connectedUserAvecDroit";
-import { idRequeteRDCPourModification } from "@mock/data/requeteDelivrance";
+import {
+  idRequeteRDCPourModification,
+  idRequeteRDCPourModificationMaCorbeille
+} from "@mock/data/requeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
 import {
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC
 } from "@router/ReceUrls";
@@ -156,20 +161,26 @@ test("Validation d'une modification de Requête de Délivrance Extrait Copie", a
     [
       {
         path: URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
+
         element: <SaisirRDCPage />
+      },
+      {
+        path: getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          idRequeteRDCPourModificationMaCorbeille
+        ),
+        element: <ApercuRequetePriseEnChargePage />
       }
     ],
     [
       getUrlWithParam(
         URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
-        idRequeteRDCPourModification
+        idRequeteRDCPourModificationMaCorbeille
       )
     ]
   );
 
-  await act(async () => {
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 
   const inputNomNaissance = getInput("titulaire1.noms.nomNaissance");
   const buttonValider = screen.getByText(/Valider/i) as HTMLButtonElement;
@@ -189,9 +200,10 @@ test("Validation d'une modification de Requête de Délivrance Extrait Copie", a
   await act(async () => {
     fireEvent.click(buttonValider);
   });
+
   await waitFor(() => {
     expect(getLastPathElem(router.state.location.pathname)).toEqual(
-      idRequeteRDCPourModification
+      idRequeteRDCPourModificationMaCorbeille
     );
   });
 });
@@ -306,14 +318,19 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
       {
         path: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
         element: <SaisirRDCPage />
+      },
+      {
+        path: getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          "1072bc37-f889-4365-8f75-912166b767dd"
+        ),
+        element: <ApercuRequetePriseEnChargePage />
       }
     ],
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
   );
 
-  await act(async () => {
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 
   // Champs Requete
   const inputNatureActe = screen.getByTestId(
@@ -402,6 +419,13 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
       {
         path: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
         element: <SaisirRDCPage />
+      },
+      {
+        path: getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          "1072bc37-f889-4365-8f75-912166b767dd"
+        ),
+        element: <ApercuRequetePriseEnChargePage />
       }
     ],
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]

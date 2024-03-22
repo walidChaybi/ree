@@ -25,11 +25,13 @@ import requeteDelivrance, {
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import { ChoixAction } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ChoixAction";
 import {
   PATH_APERCU_REQ_TRAITEMENT,
   URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID
 } from "@router/ReceUrls";
 import {
   act,
@@ -48,6 +50,13 @@ const RDCSC = () => {
       {
         path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
         element: <ChoixAction requete={requeteRDCSC} />
+      },
+      {
+        path: getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+          "d19650ed-012b-41ec-b7be-9e6ea9101eaa"
+        ),
+        element: <ApercuRequeteTraitementPage />
       }
     ],
     [
@@ -70,6 +79,17 @@ const RDCSCCertificatSituationRCA = () => {
       {
         path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
         element: <ChoixAction requete={requeteRDCSCCertificatSituationRCA} />
+      },
+      {
+        path: getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+          "d19650ed-012b-41ec-b7be-9e6ea9101eaa"
+        ),
+        element: <ApercuRequeteTraitementPage />
+      },
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        element: <ApercuRequeteTraitementPage />
       }
     ],
     [

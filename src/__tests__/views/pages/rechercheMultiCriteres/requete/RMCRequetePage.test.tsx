@@ -18,9 +18,7 @@ beforeAll(async () => {
 });
 
 test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
-  await act(async () => {
-    render(<RMCRequetePage />);
-  });
+  render(<RMCRequetePage />);
   await waitFor(() => {
     expect(document.title).toBe(titreForm);
     expect(screen.getByText(titreForm)).toBeInTheDocument();
@@ -28,9 +26,7 @@ test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async
 });
 
 test("Bouton réinitialisation des champs", async () => {
-  await act(async () => {
-    render(<RMCRequetePage />);
-  });
+  render(<RMCRequetePage />);
 
   const numeroRequete = screen.getByLabelText(
     "requete.numeroRequete"
@@ -92,9 +88,7 @@ test("Bouton réinitialisation des champs", async () => {
     expect(statutRequete.value).toBe("A_TRAITER");
   });
 
-  await act(async () => {
-    fireEvent.click(reset);
-  });
+  fireEvent.click(reset);
 
   await waitFor(() => {
     expect(numeroRequete.value).toBe("");
@@ -105,34 +99,31 @@ test("Bouton réinitialisation des champs", async () => {
 });
 
 test("DOIT pouvoir rechercher une requete par son N° SDANF / numeroDossierNational", async () => {
-  act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: "/",
-          element: <RMCRequetePage />
-        }
-      ],
-      ["/"]
-    );
+  const router = createTestingRouter(
+    [
+      {
+        path: "/",
+        element: <RMCRequetePage />
+      }
+    ],
+    ["/"]
+  );
 
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 
+  const numeroDossierNational = screen.getByLabelText(
+    "requete.numeroDossierNational"
+  ) as HTMLInputElement;
   act(() => {
-    const numeroDossierNational = screen.getByLabelText(
-      "requete.numeroDossierNational"
-    ) as HTMLInputElement;
-
     fireEvent.change(numeroDossierNational, {
       target: {
         value: "2022X 200156"
       }
     });
-    fireEvent.click(screen.getByText("Rechercher"));
-    waitFor(() => {
-      expect(numeroDossierNational.value).toBe("2022X 200156");
-      expect(screen.getByText("2022X 200156")).toBeDefined();
-    });
+  });
+  fireEvent.click(screen.getByText("Rechercher"));
+  await waitFor(() => {
+    expect(numeroDossierNational.value).toBe("2022X 200156");
+    expect(screen.getByText("2022X 200156")).toBeDefined();
   });
 });

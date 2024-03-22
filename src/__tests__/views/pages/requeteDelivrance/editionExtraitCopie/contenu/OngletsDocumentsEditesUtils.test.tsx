@@ -64,21 +64,19 @@ beforeAll(async () => {
 
 describe("Test onglets documents édites", () => {
   test("Doit retourner le bon type de document", async () => {
-    await act(async () => {
-      const router = createTestingRouter(
-        [
-          {
-            path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
-            element: <EditionExtraitCopiePage />
-          }
-        ],
-        [
-          `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f77/19c0d767-64e5-4376-aa1f-6d781a2a235a`
-        ]
-      );
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+          element: <EditionExtraitCopiePage />
+        }
+      ],
+      [
+        `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f77/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+      ]
+    );
 
-      render(<RouterProvider router={router} />);
-    });
+    render(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(getTypeDocument(0)).toBe("ff7fe1fa-a2d6-4bc5-8681-deba65d9e2c6");

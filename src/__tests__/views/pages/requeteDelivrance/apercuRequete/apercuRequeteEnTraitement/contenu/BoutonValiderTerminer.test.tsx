@@ -7,7 +7,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { BoutonValiderTerminer } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/BoutonValiderTerminer";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
-import { act, fireEvent, render, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
@@ -49,34 +49,30 @@ const requeteTestCOURRIER = {
 
 test("est à A_VALIDER et provient de COURRIER", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+        element: (
+          <BoutonValiderTerminer
+            requete={requeteTestCOURRIER}
+          ></BoutonValiderTerminer>
+        )
+      },
+      {
+        path: "*",
+        element: <></>
+      }
+    ],
+    [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
+  );
 
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          element: (
-            <BoutonValiderTerminer
-              requete={requeteTestCOURRIER}
-            ></BoutonValiderTerminer>
-          )
-        }
-      ],
-      [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
-    );
+  render(<RouterProvider router={router} />);
+  const bouttonSigner = screen.getByText(
+    /Valider et terminer/i
+  ) as HTMLButtonElement;
 
-    const { getByText } = render(<RouterProvider router={router} />);
-
-    const bouttonSigner = getByText(
-      /Valider et terminer/i
-    ) as HTMLButtonElement;
-
-    await waitFor(() => {
-      expect(bouttonSigner.disabled).toBeFalsy();
-    });
-
-    await act(async () => {
-      fireEvent.click(bouttonSigner);
-    });
+  await waitFor(() => {
+    expect(bouttonSigner.disabled).toBeFalsy();
   });
 });

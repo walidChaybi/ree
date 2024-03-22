@@ -4,12 +4,20 @@ import {
 } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
+import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
+import { ApercuReqCreationTranscriptionSaisieProjetPage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSaisieProjetPage";
 import {
   URL_MES_REQUETES_CREATION,
-  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
+  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_EN_TRAITEMENT_ID
 } from "@router/ReceUrls";
 import { act, render, waitFor } from "@testing-library/react";
+import { getUrlWithParam } from "@util/route/UrlUtil";
 import React from "react";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
@@ -33,31 +41,33 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
       statut: StatutRequete.A_TRAITER
     };
 
-    await act(async () => {
-      const router = createTestingRouter(
-        [
-          {
-            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
-          },
-          {
-            path: URL_MES_REQUETES_CREATION,
-            element: <HookConsumer paramsCreation={paramsCreation} />
-          }
-        ],
-        [URL_MES_REQUETES_CREATION]
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+          element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+        },
+        {
+          path: URL_MES_REQUETES_CREATION,
+          element: <HookConsumer paramsCreation={paramsCreation} />
+        },
+        {
+          path: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_EN_TRAITEMENT_ID,
+          element: <ApercuReqCreationTranscriptionSaisieProjetPage />
+        }
+      ],
+      [URL_MES_REQUETES_CREATION]
+    );
+
+    render(<RouterProvider router={router} />);
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe(
+        apercuRequeteURL(
+          "apercurequetetranscriptionenpriseencharge",
+          paramsCreation.idRequete
+        )
       );
-
-      render(<RouterProvider router={router} />);
-
-      await waitFor(() => {
-        expect(router.state.location.pathname).toBe(
-          apercuRequeteURL(
-            "apercurequetetranscriptionenpriseencharge",
-            paramsCreation.idRequete
-          )
-        );
-      });
     });
   });
 
@@ -68,31 +78,29 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
       statut: StatutRequete.A_TRAITER
     };
 
-    await act(async () => {
-      const router = createTestingRouter(
-        [
-          {
-            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
-          },
-          {
-            path: URL_MES_REQUETES_CREATION,
-            element: <HookConsumer paramsCreation={paramsCreation} />
-          }
-        ],
-        [URL_MES_REQUETES_CREATION]
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+          element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+        },
+        {
+          path: URL_MES_REQUETES_CREATION,
+          element: <HookConsumer paramsCreation={paramsCreation} />
+        }
+      ],
+      [URL_MES_REQUETES_CREATION]
+    );
+
+    render(<RouterProvider router={router} />);
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe(
+        apercuRequeteURL(
+          "apercurequetetranscriptionenpriseencharge",
+          paramsCreation.idRequete
+        )
       );
-
-      render(<RouterProvider router={router} />);
-
-      await waitFor(() => {
-        expect(router.state.location.pathname).toBe(
-          apercuRequeteURL(
-            "apercurequetetranscriptionenpriseencharge",
-            paramsCreation.idRequete
-          )
-        );
-      });
     });
   });
 
@@ -136,31 +144,36 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
       sousType: SousTypeCreation.RCTD,
       statut: StatutRequete.EN_TRAITEMENT
     };
-    await act(async () => {
-      const router = createTestingRouter(
-        [
-          {
-            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
-          },
-          {
-            path: URL_MES_REQUETES_CREATION,
-            element: <HookConsumer paramsCreation={paramsCreation} />
-          }
-        ],
-        [URL_MES_REQUETES_CREATION]
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+          element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+        },
+        {
+          path: URL_MES_REQUETES_CREATION,
+          element: <HookConsumer paramsCreation={paramsCreation} />
+        },
+        {
+          path: getUrlWithParam(
+            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+            "b63ebccd-ba5e-443a-8837-c5e1e111e846"
+          ),
+          element: <ApercuReqCreationTranscriptionSaisieProjetPage />
+        }
+      ],
+      [URL_MES_REQUETES_CREATION]
+    );
+
+    render(<RouterProvider router={router} />);
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe(
+        apercuRequeteURL(
+          "apercurequetetranscriptionensaisieprojet",
+          paramsCreation.idRequete
+        )
       );
-
-      render(<RouterProvider router={router} />);
-
-      await waitFor(() => {
-        expect(router.state.location.pathname).toBe(
-          apercuRequeteURL(
-            "apercurequetetranscriptionensaisieprojet",
-            paramsCreation.idRequete
-          )
-        );
-      });
     });
   });
 });
@@ -173,31 +186,33 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
       statut: StatutRequete.A_TRAITER
     };
 
-    await act(async () => {
-      const router = createTestingRouter(
-        [
-          {
-            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
-          },
-          {
-            path: URL_MES_REQUETES_CREATION,
-            element: <HookConsumer paramsCreation={paramsCreation} />
-          }
-        ],
-        [URL_MES_REQUETES_CREATION]
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+          element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+        },
+        {
+          path: URL_MES_REQUETES_CREATION,
+          element: <HookConsumer paramsCreation={paramsCreation} />
+        },
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
+          element: <ApercuRequeteEtablissementSuiviDossierPage />
+        }
+      ],
+      [URL_MES_REQUETES_CREATION]
+    );
+
+    render(<RouterProvider router={router} />);
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe(
+        apercuRequeteURL(
+          "apercurequetecreationetablissementsuividossier",
+          paramsCreation.idRequete
+        )
       );
-
-      render(<RouterProvider router={router} />);
-
-      await waitFor(() => {
-        expect(router.state.location.pathname).toBe(
-          apercuRequeteURL(
-            "apercurequetecreationetablissementsuividossier",
-            paramsCreation.idRequete
-          )
-        );
-      });
     });
   });
 
@@ -218,6 +233,10 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
           {
             path: URL_MES_REQUETES_CREATION,
             element: <HookConsumer paramsCreation={paramsCreation} />
+          },
+          {
+            path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
+            element: <ApercuRequeteEtablissementSuiviDossierPage />
           }
         ],
         [URL_MES_REQUETES_CREATION]
@@ -252,6 +271,10 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
           {
             path: URL_MES_REQUETES_CREATION,
             element: <HookConsumer paramsCreation={paramsCreation} />
+          },
+          {
+            path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+            element: <ApercuRequeteEtablissementSimplePage />
           }
         ],
         [URL_MES_REQUETES_CREATION]
@@ -274,3 +297,4 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
 function apercuRequeteURL(apercuRequete: string, idRequete: string) {
   return `${URL_MES_REQUETES_CREATION}/${apercuRequete}/${idRequete}`;
 }
+

@@ -1,6 +1,6 @@
 import { useCreationRequeteCreation } from "@hook/requete/CreationRequeteCreationApiHook";
 import { creationRequeteTranscriptionParams } from "@mock/data/requeteCreationTranscription";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 
 const HookConsumer: React.FC = () => {
@@ -11,9 +11,7 @@ const HookConsumer: React.FC = () => {
 };
 
 test("DOIT retourner la requête de création mappée QUAND on appel la fonction avec les données saisies.", async () => {
-  await act(async () => {
-    render(<HookConsumer />);
-  });
+  render(<HookConsumer />);
 
   await waitFor(() => {
     expect(

@@ -8,17 +8,12 @@ import { DataRMCInscriptionAvecUnRCA } from "@mock/data/RMCInscription";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_ATTESTATION_PACS } from "@model/requete/enum/DocumentDelivranceConstante";
 import { MenuDelivrerCS } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerCS";
+import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import {
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID
 } from "@router/ReceUrls";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../../../../__tests__utils__/testsUtil";
@@ -28,47 +23,52 @@ test("renders du bloc Menu Delivrer Certificat de Situation", async () => {
     "ec161aa5-5c0c-429d-abdf-f9017e8e26b4"
   );
 
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-          element: (
-            <MenuDelivrerCS
-              requete={requeteRDCSC}
-              inscriptions={DataRMCInscriptionAvecUnRCA}
-            />
-          )
-        }
-      ],
-      [
-        getUrlWithParam(
-          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-          idRequeteRDCSC
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        element: (
+          <MenuDelivrerCS
+            requete={requeteRDCSC}
+            inscriptions={DataRMCInscriptionAvecUnRCA}
+          />
         )
-      ]
-    );
-
-    render(<RouterProvider router={router} />);
-
-    let menuDelivrer = screen.getByText("Délivrer");
-    let certificatSituation = screen.getByText(/Certificat de situation/i);
-
-    expect(menuDelivrer).toBeDefined();
-    expect(certificatSituation).toBeDefined();
-
-    await act(async () => {
-      fireEvent.click(certificatSituation);
-    });
-
-    await waitFor(() => {
-      expect(router.state.location.pathname).toBe(
-        getUrlWithParam(
+      },
+      {
+        path: getUrlWithParam(
           URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
           idRequeteRDC
-        )
-      );
-    });
+        ),
+        element: <ApercuRequeteTraitementPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSC
+      )
+    ]
+  );
+
+  render(<RouterProvider router={router} />);
+
+  let menuDelivrer = screen.getByText("Délivrer");
+  let certificatSituation = screen.getByText(/Certificat de situation/i);
+
+  await waitFor(() => {
+    expect(menuDelivrer).toBeDefined();
+    expect(certificatSituation).toBeDefined();
+  });
+
+  fireEvent.click(certificatSituation);
+
+  await waitFor(() => {
+    expect(router.state.location.pathname).toBe(
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        idRequeteRDC
+      )
+    );
   });
 });
 
@@ -78,47 +78,52 @@ test("renders du bloc Menu Delivrer Attestation PACS", async () => {
     CODE_ATTESTATION_PACS
   );
 
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-          element: (
-            <MenuDelivrerCS
-              requete={requete}
-              inscriptions={DataRMCInscriptionAvecUnRCA}
-            />
-          )
-        }
-      ],
-      [
-        getUrlWithParam(
-          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-          idRequeteRDCSC
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        element: (
+          <MenuDelivrerCS
+            requete={requete}
+            inscriptions={DataRMCInscriptionAvecUnRCA}
+          />
         )
-      ]
-    );
-
-    render(<RouterProvider router={router} />);
-
-    let menuDelivrer = screen.getByText("Délivrer");
-    let attestation = screen.getByText(/Attestation PACS/i);
-
-    expect(menuDelivrer).toBeDefined();
-    expect(attestation).toBeDefined();
-
-    await act(async () => {
-      fireEvent.click(attestation);
-    });
-
-    await waitFor(() => {
-      expect(router.state.location.pathname).toBe(
-        getUrlWithParam(
+      },
+      {
+        path: getUrlWithParam(
           URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
           idRequeteRDC
-        )
-      );
-    });
+        ),
+        element: <ApercuRequeteTraitementPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSC
+      )
+    ]
+  );
+
+  render(<RouterProvider router={router} />);
+
+  let menuDelivrer = screen.getByText("Délivrer");
+  let attestation = screen.getByText(/Attestation PACS/i);
+
+  await waitFor(() => {
+    expect(menuDelivrer).toBeDefined();
+    expect(attestation).toBeDefined();
+  });
+
+  fireEvent.click(attestation);
+
+  await waitFor(() => {
+    expect(router.state.location.pathname).toBe(
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        idRequeteRDC
+      )
+    );
   });
 });
 
@@ -128,43 +133,41 @@ test("attestationPACS sans inscription", async () => {
     CODE_ATTESTATION_PACS
   );
 
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-          element: (
-            <MenuDelivrerCS requete={requete} inscriptions={[]} actes={[]} />
-          )
-        }
-      ],
-      [
-        getUrlWithParam(
-          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-          idRequeteRDCSC
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        element: (
+          <MenuDelivrerCS requete={requete} inscriptions={[]} actes={[]} />
         )
-      ]
-    );
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSC
+      )
+    ]
+  );
 
-    render(<RouterProvider router={router} />);
+  render(<RouterProvider router={router} />);
 
-    let menuDelivrer = screen.getByText("Délivrer");
-    let attestation = screen.getByText(/Attestation PACS/i);
+  let menuDelivrer = screen.getByText("Délivrer");
+  let attestation = screen.getByText(/Attestation PACS/i);
 
+  await waitFor(() => {
     expect(menuDelivrer).toBeDefined();
     expect(attestation).toBeDefined();
+  });
 
-    await act(async () => {
-      fireEvent.click(attestation);
-    });
+  fireEvent.click(attestation);
 
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          "Il faut sélectionner au moins un PACS au statut fiche actif"
-        )
-      ).toBeDefined();
-    });
+  await waitFor(() => {
+    expect(
+      screen.getByText(
+        "Il faut sélectionner au moins un PACS au statut fiche actif"
+      )
+    ).toBeDefined();
   });
 });
 
@@ -174,46 +177,44 @@ test("attestation pacs acte séléctionné", async () => {
     CODE_ATTESTATION_PACS
   );
 
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-          element: (
-            <MenuDelivrerCS
-              requete={requete}
-              inscriptions={DataRMCInscriptionAvecUnRCA}
-              actes={DataRMCActeAvecResultat}
-            />
-          )
-        }
-      ],
-      [
-        getUrlWithParam(
-          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-          idRequeteRDCSC
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        element: (
+          <MenuDelivrerCS
+            requete={requete}
+            inscriptions={DataRMCInscriptionAvecUnRCA}
+            actes={DataRMCActeAvecResultat}
+          />
         )
-      ]
-    );
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        idRequeteRDCSC
+      )
+    ]
+  );
 
-    render(<RouterProvider router={router} />);
+  render(<RouterProvider router={router} />);
 
-    let menuDelivrer = screen.getByText("Délivrer");
-    let attestation = screen.getByText(/Attestation PACS/i);
+  let menuDelivrer = screen.getByText("Délivrer");
+  let attestation = screen.getByText(/Attestation PACS/i);
 
+  await waitFor(() => {
     expect(menuDelivrer).toBeDefined();
     expect(attestation).toBeDefined();
+  });
 
-    await act(async () => {
-      fireEvent.click(attestation);
-    });
+  fireEvent.click(attestation);
 
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          "Votre sélection n'est pas cohérente avec le choix de l'action de réponse"
-        )
-      ).toBeDefined();
-    });
+  await waitFor(() => {
+    expect(
+      screen.getByText(
+        "Votre sélection n'est pas cohérente avec le choix de l'action de réponse"
+      )
+    ).toBeDefined();
   });
 });

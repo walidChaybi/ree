@@ -1,22 +1,22 @@
 import App from "@core/App";
 import { PageMessage } from "@core/login/PageMessage";
-import { Droit } from "@model/agent/enum/Droit";
 import {
   estOfficierHabiliterPourSeulementLesDroits,
   estOfficierHabiliterPourTousLesDroits,
   estOfficierHabiliterPourUnDesDroits,
   officierALeDroitSurUnDesPerimetres
 } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
+import { getLibelle } from "@util/Utils";
 import messageManager from "@util/messageManager";
 import { IDroitPerimetre, IRoute } from "@util/route/IRoute";
 import { storeRece } from "@util/storeRece";
-import { getLibelle } from "@util/Utils";
 import {
-  createBrowserRouter,
-  createRoutesFromElements,
   Navigate,
   Outlet,
-  Route
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements
 } from "react-router-dom";
 import { routesRece } from "./ReceRoutes";
 import { URL_CONTEXT_APP, URL_DECONNEXION } from "./ReceUrls";
@@ -35,7 +35,6 @@ const ReceRoute: React.FC<IReceRoute> = ({ route, children }): any => {
     );
     return <Navigate to={URL_CONTEXT_APP} replace />;
   }
-
   return children ? children : <Outlet />;
 };
 

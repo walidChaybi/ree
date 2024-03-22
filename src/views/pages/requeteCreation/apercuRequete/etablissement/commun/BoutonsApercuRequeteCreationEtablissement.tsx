@@ -124,6 +124,10 @@ export const BoutonsApercuCreationEtablissement: React.FC<
         <BoutonPrendreEnChargeCreation
           requete={props.requete}
           onClick={() =>
+            // FIXME
+            // navigate() ne doit pas être là, ce n'est pas cette fonction qui doit s'occuper de la redirection.
+            // En retirant ce navigate() on observe une erreur de redirection de la part de useNavigationApercuCreationHook,
+            // il faut corriger le problème à ce niveau !
             navigate(
               location.pathname.replace(
                 PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,

@@ -1,11 +1,13 @@
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
 import { idRequeteRDCSC, requeteRDCSC } from "@mock/data/requeteDelivrance";
 import { requeteInformation } from "@mock/data/requeteInformation";
-import { Droit } from "@model/agent/enum/Droit";
-import { TypeEntite } from "@model/agent/enum/TypeEntite";
 import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IEntite } from "@model/agent/IEntiteRattachement";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
+import { TypeEntite } from "@model/agent/enum/TypeEntite";
+import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
+import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
 import {
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
   URL_MES_REQUETES_DELIVRANCE,
@@ -23,7 +25,6 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import React from "react";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
@@ -255,6 +256,10 @@ test("check autocomplete agent", async () => {
             estTransfert={true}
           />
         )
+      },
+      {
+        path: URL_MES_REQUETES_DELIVRANCE,
+        element: <EspaceDelivrancePage />
       }
     ],
     [
@@ -325,6 +330,10 @@ test("renders du bloc Menu Transfert fermer ", async () => {
             menuFermer={false}
           />
         )
+      },
+      {
+        path: URL_MES_REQUETES_INFORMATION,
+        element: <EspaceInformationPage />
       }
     ],
     [

@@ -6,7 +6,7 @@ import {
 } from "@mock/data/connectedUserAvecDroit";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
-import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
+import { URL_REQUETES_CREATION_SERVICE } from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -29,27 +29,25 @@ beforeAll(() => {
 });
 
 test("renders creationPage", async () => {
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_MES_REQUETES_CREATION,
-          element: (
-            <OfficierContext.Provider
-              value={{
-                officierDataState: storeRece.utilisateurCourant
-              }}
-            >
-              <EspaceCreationPage selectedTab={0} />
-            </OfficierContext.Provider>
-          )
-        }
-      ],
-      [URL_MES_REQUETES_CREATION]
-    );
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_REQUETES_CREATION_SERVICE,
+        element: (
+          <OfficierContext.Provider
+            value={{
+              officierDataState: storeRece.utilisateurCourant
+            }}
+          >
+            <EspaceCreationPage selectedTab={0} />
+          </OfficierContext.Provider>
+        )
+      }
+    ],
+    [URL_REQUETES_CREATION_SERVICE]
+  );
 
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 
   const title = "Espace création";
   const mesRequetes = screen.getByText(/Mes requêtes de création/i);

@@ -2,10 +2,12 @@ import * as EtatCivilApi from "@api/appels/etatcivilApi";
 import * as RequeteApi from "@api/appels/requeteApi";
 import mockConnectedUser from "@mock/data/connectedUser.json";
 import { IOfficier } from "@model/agent/IOfficier";
+import { ApercuRequeteEtablissementActeRegistrePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuActeRegistre/ApercuRequeteEtablissementActeRegistrePage";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
   URL_MES_REQUETES_CREATION,
-  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
+  URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID
 } from "@router/ReceUrls";
 import {
   act,
@@ -138,6 +140,10 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
               setEstOuvert={() => {}}
             />
           )
+        },
+        {
+          path: URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID,
+          element: <ApercuRequeteEtablissementActeRegistrePage />
         }
       ],
       [

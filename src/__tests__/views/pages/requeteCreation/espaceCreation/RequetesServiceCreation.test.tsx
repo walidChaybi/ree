@@ -5,9 +5,6 @@ import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic
 } from "@mock/data/connectedUserAvecDroit";
-import { Droit } from "@model/agent/enum/Droit";
-import { Perimetre } from "@model/agent/enum/Perimetre";
-import { TypeEntite } from "@model/agent/enum/TypeEntite";
 import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IEntite } from "@model/agent/IEntiteRattachement";
 import { IPerimetre } from "@model/agent/IPerimetre";
@@ -15,10 +12,16 @@ import {
   IUtilisateur,
   mapHabilitationsUtilisateur
 } from "@model/agent/IUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
+import { TypeEntite } from "@model/agent/enum/TypeEntite";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
-import { statutsRequetesCreation } from "@pages/requeteCreation/espaceCreation/params/EspaceCreationParams";
 import { RequetesServiceCreation } from "@pages/requeteCreation/espaceCreation/RequetesServiceCreation";
-import { URL_REQUETES_CREATION_SERVICE } from "@router/ReceUrls";
+import { statutsRequetesCreation } from "@pages/requeteCreation/espaceCreation/params/EspaceCreationParams";
+import {
+  URL_REQUETES_CREATION_SERVICE,
+  URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID
+} from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -26,8 +29,9 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
 import { UN } from "@util/Utils";
+import { getUrlWithParam } from "@util/route/UrlUtil";
+import { storeRece } from "@util/storeRece";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useState } from "react";
 import { RouterProvider } from "react-router-dom";
@@ -91,6 +95,13 @@ const HookConsummer: React.FC = () => {
             setPopinAttribuerAOuvert={setPopinAttribuerAOuvert}
           />
         )
+      },
+      {
+        path: getUrlWithParam(
+          URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+          "c9b817ca-1899-450e-9f04-979541946011"
+        ),
+        element: <></>
       }
     ],
     [URL_REQUETES_CREATION_SERVICE]

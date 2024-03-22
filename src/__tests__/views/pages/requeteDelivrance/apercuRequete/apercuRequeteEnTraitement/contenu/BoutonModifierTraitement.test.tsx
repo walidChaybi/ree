@@ -2,11 +2,11 @@ import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import { idRequeteRDCSC } from "@mock/data/requeteDelivrance";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { BoutonModifierTraitement } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/BoutonModifierTraitement";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { act, fireEvent, render, waitFor } from "@testing-library/react";
@@ -59,6 +59,10 @@ test("est à A_SIGNER", async () => {
               requete={requeteTestCOURRIER}
             ></BoutonModifierTraitement>
           )
+        },
+        {
+          path: "*",
+          element: <></>
         }
       ],
       [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
@@ -94,6 +98,10 @@ test("est à A_VALIDER", async () => {
               requete={requeteTestCOURRIER}
             ></BoutonModifierTraitement>
           )
+        },
+        {
+          path: "*",
+          element: <></>
         }
       ],
       [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]

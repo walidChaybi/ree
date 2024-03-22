@@ -61,18 +61,13 @@ export interface IDetailRequeteParams {
   estConsultation?: boolean;
 }
 
-export function useDetailRequeteApiHook(
-  params: IDetailRequeteParams = {
-    idRequete: undefined,
-    estConsultation: false
-  }
-) {
+export function useDetailRequeteApiHook(params?: IDetailRequeteParams) {
   const [detailRequeteState, setDetailRequeteState] = useState<
     TRequete | undefined
   >();
 
   useEffect(() => {
-    if (params.idRequete) {
+    if (params?.idRequete) {
       fetchDetailRequete(
         setDetailRequeteState,
         params.idRequete,

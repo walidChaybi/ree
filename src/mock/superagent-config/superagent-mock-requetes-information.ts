@@ -63,7 +63,10 @@ export const configRequetesInformation = [
       }
 
       // Détail requête Information
-      if (match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10856") {
+      if (
+        match[1] === "/requetes/0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63" ||
+        match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
+      ) {
         return { data: ReponseAppelDetailRequeteInformation.data };
       }
       if (

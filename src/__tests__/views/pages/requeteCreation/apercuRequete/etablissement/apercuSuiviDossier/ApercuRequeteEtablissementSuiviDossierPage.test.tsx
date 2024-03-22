@@ -4,7 +4,7 @@ import {
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID
 } from "@router/ReceUrls";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
@@ -27,23 +27,20 @@ describe("Test de la page Aperçu requête etablissement suivi dossier", () => {
 });
 
 function afficherPageRequeteCreationEtablissment() {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
+        element: <ApercuRequeteEtablissementSuiviDossierPage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER}/:idRequete`,
+        "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+      )
+    ]
+  );
 
-  act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
-          element: <ApercuRequeteEtablissementSuiviDossierPage />
-        }
-      ],
-      [
-        getUrlWithParam(
-          `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER}/:idRequete`,
-          "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-        )
-      ]
-    );
-
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 }

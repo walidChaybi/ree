@@ -1,5 +1,7 @@
 import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import MenuSaisirRequete from "@pages/requeteDelivrance/espaceDelivrance/contenu/MenuSaisirRequete";
+import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
+import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
 import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
@@ -20,7 +22,6 @@ import {
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { storeRece } from "@util/storeRece";
-import React from "react";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
@@ -32,6 +33,11 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Délivrance"
       {
         path: URL_MES_REQUETES_DELIVRANCE,
         element: <MenuSaisirRequete indexTabPanel={0} />
+      },
+
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
+        element: <SaisirRDCSCPage />
       }
     ],
     [URL_MES_REQUETES_DELIVRANCE]
@@ -78,6 +84,10 @@ test("renders menu 'Saisir une requête' RDC dans Mes requetes de Délivrance", 
       {
         path: URL_MES_REQUETES_DELIVRANCE,
         element: <MenuSaisirRequete indexTabPanel={0} />
+      },
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
+        element: <SaisirRDCPage />
       }
     ],
     [URL_MES_REQUETES_DELIVRANCE]
@@ -118,6 +128,10 @@ test("renders menu 'Saisir une requête' RDLFC dans Mes requetes de Délivrance"
       {
         path: URL_MES_REQUETES_DELIVRANCE,
         element: <MenuSaisirRequete indexTabPanel={0} />
+      },
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC,
+        element: <SaisirRDCSCPage />
       }
     ],
     [URL_MES_REQUETES_DELIVRANCE]
@@ -157,6 +171,10 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Service", as
       {
         path: URL_REQUETES_DELIVRANCE_SERVICE,
         element: <MenuSaisirRequete indexTabPanel={1} />
+      },
+      {
+        path: URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC,
+        element: <SaisirRDCSCPage />
       }
     ],
     [URL_REQUETES_DELIVRANCE_SERVICE]
@@ -200,6 +218,10 @@ test("renders menu 'Saisir une requête' RDC dans Mes requetes de Service", asyn
       {
         path: URL_REQUETES_DELIVRANCE_SERVICE,
         element: <MenuSaisirRequete indexTabPanel={1} />
+      },
+      {
+        path: URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC,
+        element: <SaisirRDCSCPage />
       }
     ],
     [URL_REQUETES_DELIVRANCE_SERVICE]
@@ -239,6 +261,10 @@ test("renders menu 'Saisir une requête' RDLFC dans Mes requetes de Service", as
     [
       {
         path: URL_REQUETES_DELIVRANCE_SERVICE,
+        element: <MenuSaisirRequete indexTabPanel={1} />
+      },
+      {
+        path: URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC,
         element: <MenuSaisirRequete indexTabPanel={1} />
       }
     ],

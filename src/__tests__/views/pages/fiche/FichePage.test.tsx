@@ -9,6 +9,7 @@ import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { FichePage } from "@pages/fiche/FichePage";
+import ApercuRequeteMiseAJourPage from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS } from "@router/ReceUrls";
 import {
   act,
@@ -17,10 +18,10 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { DEUX, UN, ZERO } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { storeRece } from "@util/storeRece";
-import { DEUX, UN, ZERO } from "@util/Utils";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
@@ -37,35 +38,32 @@ beforeEach(() => {
 });
 
 test("Le render d'une RC via fichePage se fait correctement", async () => {
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: "/",
-          element: (
-            <FichePage
-              index={{ value: ZERO }}
-              dataFicheIdentifiant={"7566e16c-2b0e-11eb-adc1-0242ac120002"}
-              nbLignesTotales={UN}
-              nbLignesParAppel={UN}
-              datasFiches={[
-                {
-                  identifiant: "7566e16c-2b0e-11eb-adc1-0242ac120002",
-                  categorie: TypeFiche.RC
-                }
-              ]}
-            />
-          )
-        }
-      ],
-      ["/"]
-    );
+  const router = createTestingRouter(
+    [
+      {
+        path: "/",
+        element: (
+          <FichePage
+            index={{ value: ZERO }}
+            dataFicheIdentifiant={"7566e16c-2b0e-11eb-adc1-0242ac120002"}
+            nbLignesTotales={UN}
+            nbLignesParAppel={UN}
+            datasFiches={[
+              {
+                identifiant: "7566e16c-2b0e-11eb-adc1-0242ac120002",
+                categorie: TypeFiche.RC
+              }
+            ]}
+          />
+        )
+      }
+    ],
+    ["/"]
+  );
 
-    render(<RouterProvider router={router} />);
-
-    await waitFor(() => {
-      expect(fct).toHaveBeenCalledTimes(UN);
-    });
+  render(<RouterProvider router={router} />);
+  await waitFor(() => {
+    expect(fct).toHaveBeenCalledTimes(UN);
   });
 });
 
@@ -80,47 +78,49 @@ test("Le render d'un ACTE via fichePage se fait correctement", async () => {
   );
 
   await TypeAlerte.init();
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: "/",
-          element: (
-            <FichePage
-              index={{ value: ZERO }}
-              dataFicheIdentifiant={"2748bb45-22cd-41ea-90db-0483b8ffc8a9"}
-              nbLignesTotales={UN}
-              nbLignesParAppel={UN}
-              datasFiches={[
-                {
-                  identifiant: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
-                  categorie: TypeFiche.ACTE
-                }
-              ]}
-            />
-          )
-        }
-      ],
-      ["/"]
+  const router = createTestingRouter(
+    [
+      {
+        path: "/",
+        element: (
+          <FichePage
+            index={{ value: ZERO }}
+            dataFicheIdentifiant={"2748bb45-22cd-41ea-90db-0483b8ffc8a9"}
+            nbLignesTotales={UN}
+            nbLignesParAppel={UN}
+            datasFiches={[
+              {
+                identifiant: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
+                categorie: TypeFiche.ACTE
+              }
+            ]}
+          />
+        )
+      },
+      {
+        path: `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/6e89c1c1-16c4-4e40-9b72-7b567270b26f/b41079a5-9e8d-478c-b04c-c4c2ac67134f`,
+        element: <ApercuRequeteMiseAJourPage />
+      }
+    ],
+    ["/"]
+  );
+
+  render(<RouterProvider router={router} />);
+
+  await waitFor(() => {
+    // fct est appelé une fois quand le test est lancé tt seul
+    // et est appelé 2 fois lorsque les test sont successifs
+    expect(fct).toHaveBeenCalledTimes(DEUX);
+    expect(screen.getByText("Apposer mention(s) suite à avis")).toBeDefined();
+    expect(screen.getByText("Apposer mention(s) autre")).toBeDefined();
+  });
+
+  fireEvent.click(screen.getByText("Apposer mention(s) suite à avis"));
+
+  await waitFor(() => {
+    expect(router.state.location.pathname).toBe(
+      `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/6e89c1c1-16c4-4e40-9b72-7b567270b26f/b41079a5-9e8d-478c-b04c-c4c2ac67134f`
     );
-
-    render(<RouterProvider router={router} />);
-
-    await waitFor(() => {
-      // fct est appelé une fois quand le test est lancé tt seul
-      // et est appelé 2 fois lorsque les test sont successifs
-      expect(fct).toHaveBeenCalledTimes(DEUX);
-      expect(screen.getByText("Apposer mention(s) suite à avis")).toBeDefined();
-      expect(screen.getByText("Apposer mention(s) autre")).toBeDefined();
-    });
-
-    fireEvent.click(screen.getByText("Apposer mention(s) suite à avis"));
-
-    await waitFor(() => {
-      expect(router.state.location.pathname).toBe(
-        `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/6e89c1c1-16c4-4e40-9b72-7b567270b26f/b41079a5-9e8d-478c-b04c-c4c2ac67134f`
-      );
-    });
   });
 });
 

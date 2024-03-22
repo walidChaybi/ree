@@ -1,7 +1,10 @@
 import { OfficierContext } from "@core/contexts/OfficierContext";
 import officier from "@mock/data/connectedUser.json";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
-import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
+import {
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_REQUETES_DELIVRANCE_SERVICE
+} from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -27,6 +30,10 @@ test("renders delivrancePage", async () => {
               <EspaceDelivrancePage selectedTab={0} />
             </OfficierContext.Provider>
           )
+        },
+        {
+          path: URL_REQUETES_DELIVRANCE_SERVICE,
+          element: <EspaceDelivrancePage />
         }
       ],
       [URL_MES_REQUETES_DELIVRANCE]

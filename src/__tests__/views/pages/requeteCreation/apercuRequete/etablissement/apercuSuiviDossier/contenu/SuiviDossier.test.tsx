@@ -1,16 +1,18 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { requeteCreationEtablissement } from "@mock/data/requeteCreationEtablissement";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
-import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { IEchange } from "@model/requete/IEchange";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { SuiviDossier } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/contenu/SuiviDossier";
+import { ApercuRequeteEtablissementSaisieDeProjetPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/ApercuRequeteEtablissementSaisieDeProjetPage";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
   URL_MES_REQUETES_CREATION,
-  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID
 } from "@router/ReceUrls";
 import {
   act,
@@ -246,6 +248,10 @@ test("DOIT rediriger vers l'aperçu saisie projet QUAND on clique sur une ligne 
             modeConsultation={true}
           />
         )
+      },
+      {
+        path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
+        element: <ApercuRequeteEtablissementSaisieDeProjetPage />
       }
     ],
     [

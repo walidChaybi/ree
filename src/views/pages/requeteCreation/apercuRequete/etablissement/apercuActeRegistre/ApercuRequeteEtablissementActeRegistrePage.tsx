@@ -24,19 +24,13 @@ import {
 import { BoutonsApercuCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
 import "../commun/scss/OngletsApercuCreationEtablissement.scss";
 
-interface ApercuRequeteEtablissementActeRegistreProps {
-  idRequeteAAfficher?: string;
-}
-
 interface ItemListe {
   titre: string;
   index: number;
   component: JSX.Element;
 }
 
-export const ApercuRequeteEtablissementActeRegistrePage: React.FC<
-  ApercuRequeteEtablissementActeRegistreProps
-> = props => {
+export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
   const { idRequeteParam, idActeParam } = useParams<TUuidActeParams>();
   const location = useLocation();
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
@@ -70,13 +64,15 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC<
   useEffect(() => {
     rechargerRequete();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.idRequeteAAfficher, location.pathname, idRequeteParam]);
+  }, [idRequeteParam]);
 
   function rechargerRequete() {
-    setDetailRequeteParams({
-      idRequete: props.idRequeteAAfficher ?? idRequeteParam,
-      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
-    });
+    if (idRequeteParam) {
+      setDetailRequeteParams({
+        idRequete: idRequeteParam,
+        estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
+      });
+    }
   }
 
   function onRenommePieceJustificativeActeRegistre(
@@ -145,7 +141,7 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC<
     <div className="ApercuReqCreationEtablissementSaisieProjetPage">
       {requete ? (
         <>
-          {getConteneurResumeRequete(requete)}
+          {getConteneurResumeRequete(requete, true)}
           <div className="OngletsApercuCreationEtablissement">
             <VoletAvecOnglet
               liste={listeOngletsGauche}

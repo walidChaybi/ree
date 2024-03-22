@@ -41,7 +41,8 @@ import { pieceComplementInformation } from "../data/PieceComplementInformation";
 import {
   reponseRequeteCreationMessageSdanf,
   requeteCreationEtablissement,
-  requeteCreationTranscription
+  requeteCreationTranscription,
+  requetesCreationAlimentationTableau
 } from "../data/requeteCreation";
 import {
   requeteCreationEtablissement as reqEtablissement,
@@ -49,8 +50,10 @@ import {
 } from "../data/requeteCreationEtablissement";
 import {
   idRequeteRDCPourModification,
+  idRequeteRDCPourModificationMaCorbeille,
   idRequeteRDCSC,
-  requeteRDCPourModification
+  requeteRDCPourModification,
+  requeteRDCPourModificationMaCorbeille
 } from "../data/requeteDelivrance";
 import {
   DataRMCRequeteRechercheViaNumeroDossierNational,
@@ -59,6 +62,7 @@ import {
 import {
   CreationRDCSC,
   UpdateRDC,
+  UpdateRDCMaCorbeille,
   UpdateRDCSC
 } from "../data/SaisirRequeteDelivrance";
 import { configFakeUrl } from "./superagent-mock-fake-url";
@@ -294,7 +298,10 @@ export const configRequetes = [
           data: deepCopie(requeteCreationEtablissement)
         };
       }
-      if (match[1] === "/requetes/a2724cc9-450c-4e50-9d05-a44a28717954") {
+      if (
+        match[1] === "/requetes/a2724cc9-450c-4e50-9d05-a44a28717954" ||
+        match[1] === "/requetes/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"
+      ) {
         return {
           data: deepCopie(reqEtablissement)
         };
@@ -559,33 +566,33 @@ export const configRequetes = [
         match[1] === "/requetes/delivrance?refus=false&futurStatut=A_TRAITER"
       ) {
         return {
-          data: {
-            id: "1072bc37-f889-4365-8f75-912166b767dd",
-            numeroFonctionnel: "U2UN5W",
-            idSagaDila: null,
-            dateCreation: 18 / 10 / 2020,
-            canal: "COURRIER",
-            type: "DELIVRANCE",
-            statut: "A_TRAITER",
-            titulaires: [],
-            requerant: [],
-            mandant: null,
-            idUtilisateur: "id",
-            idEntite: "id",
-            actions: [],
-            observations: [],
-            piecesJustificatives: [],
-            sousType: "RDCSC",
-            documentDemande: [],
-            nbExemplaireImpression: 1,
-            provenanceRequete: "COURRIER",
-            evenement: [],
-            motif: "Certificat de nationalité française",
-            complementMotif: null,
-            choixDelivrance: null,
-            documentsReponses: []
-          }
-        };
+                  data: {
+                    id: "1072bc37-f889-4365-8f75-912166b767dd",
+                    numeroFonctionnel: "U2UN5W",
+                    idSagaDila: null,
+                    dateCreation: 18 / 10 / 2020,
+                    canal: "COURRIER",
+                    type: "DELIVRANCE",
+                    statut: "A_TRAITER",
+                    titulaires: [],
+                    requerant: [],
+                    mandant: null,
+                    idUtilisateur: "id",
+                    idEntite: "id",
+                    actions: [],
+                    observations: [],
+                    piecesJustificatives: [],
+                    sousType: "RDCSC",
+                    documentDemande: [],
+                    nbExemplaireImpression: 1,
+                    provenanceRequete: "COURRIER",
+                    evenement: [],
+                    motif: "Certificat de nationalité française",
+                    complementMotif: null,
+                    choixDelivrance: null,
+                    documentsReponses: []
+                  }
+                };
       }
 
       // Creation Requete Delivrance
@@ -601,12 +608,22 @@ export const configRequetes = [
           data: CreationRDCSC
         };
       }
+      if (match[1] === `/requetes/b63ebccd-ba5e-443a-8837-c5e1e111e846`) {
+        return {
+          data: requetesCreationAlimentationTableau
+        };
+      }
 
       // Update Requete Delivrance
       // Delivrance Extrait/Copie courrier
       if (match[1] === `/requetes/${idRequeteRDCPourModification}`) {
         return {
           data: requeteRDCPourModification
+        };
+      }
+      if (match[1] === `/requetes/${idRequeteRDCPourModificationMaCorbeille}`) {
+        return {
+          data: requeteRDCPourModificationMaCorbeille
         };
       }
       if (
@@ -616,6 +633,16 @@ export const configRequetes = [
       ) {
         return {
           data: UpdateRDC
+        };
+      }
+
+      if (
+        match[1] ===
+          `/requetes/delivrance/${idRequeteRDCPourModificationMaCorbeille}?refus=false&futurStatut=PRISE_EN_CHARGE` &&
+        context.method === "patch"
+      ) {
+        return {
+          data: UpdateRDCMaCorbeille
         };
       }
 
@@ -857,8 +884,10 @@ export const configRequetes = [
 
       // Création d'une action uniquement (pendant l'update d'une requête délivrance)
       if (
-        match[1] ===
-          `/requetes/action?idRequete=${idRequeteRDCPourModification}&libelleAction=Requ%C3%AAte%20modifi%C3%A9e` &&
+        (match[1] ===
+          `/requetes/action?idRequete=${idRequeteRDCPourModification}&libelleAction=Requ%C3%AAte%20modifi%C3%A9e` ||
+          match[1] ===
+            `requetes/action?idRequete=${idRequeteRDCPourModificationMaCorbeille}&libelleAction=Requ%C3%AAte%20modifi%C3%A9e`) &&
         context.method === "post"
       ) {
         return { data: "123456789" };

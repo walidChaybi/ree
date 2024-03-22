@@ -47,7 +47,8 @@ export const BoutonTransmettreAValideur: React.FC<
     if (idAction) {
       replaceUrl(navigate, getUrlPrecedente(location.pathname));
     }
-  }, [idAction, location, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idAction]);
 
   return (
     <>

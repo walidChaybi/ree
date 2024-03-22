@@ -34,11 +34,12 @@ describe("useEnregistrerMentionsApiHook", () => {
         mentions={mentionsEnregistrees}
       />
     );
-
-    expect(enregistrerMentionsSpy).toHaveBeenCalledWith(
-      idActe,
-      mentionsEnregistrees
-    );
+    await waitFor(() => {
+      expect(enregistrerMentionsSpy).toHaveBeenCalledWith(
+        idActe,
+        mentionsEnregistrees
+      );
+    });
   });
 
   test("Récupère les informations de composition du document mis à jour.", async () => {

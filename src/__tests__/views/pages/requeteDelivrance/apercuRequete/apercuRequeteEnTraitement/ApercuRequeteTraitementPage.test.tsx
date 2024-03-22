@@ -65,13 +65,11 @@ test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", a
     ).toBe(1);
   });
 
-  setTimeout(() => {
-    act(() => {
-      expect(
-        container.getElementsByClassName("OperationLocaleEnCoursSimple").length
-      ).toBe(0);
-    });
-  }, 0);
+  await waitFor(() => {
+    expect(
+      container.getElementsByClassName("OperationLocaleEnCoursSimple").length
+    ).toBe(0);
+  });
 });
 
 test("renders ApercuRequeteTraitementPage", async () => {
@@ -156,12 +154,15 @@ test("renders document réponses", async () => {
     fireEvent.click(doc1);
   });
 });
-
 test("transmettre à valideur", async () => {
   const router = createTestingRouter(
     [
       {
         path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+        element: <ApercuRequeteTraitementPage />
+      },
+      {
+        path: URL_MES_REQUETES_DELIVRANCE,
         element: <ApercuRequeteTraitementPage />
       }
     ],
@@ -173,42 +174,33 @@ test("transmettre à valideur", async () => {
     ]
   );
 
-  await act(async () => {
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 
   await waitFor(() => {
     expect(screen.getByText("Transmettre à valideur")).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(screen.getByText("Transmettre à valideur"));
-  });
-
+  fireEvent.click(screen.getByText("Transmettre à valideur"));
   const autocomplete = screen.getByTestId("autocomplete");
   const inputChampRecherche = screen.getByLabelText(
     "TransfertPopin"
   ) as HTMLInputElement;
   autocomplete.focus();
-  act(() => {
-    fireEvent.change(inputChampRecherche, {
-      target: {
-        value: "d"
-      }
-    });
+  fireEvent.change(inputChampRecherche, {
+    target: {
+      value: "d"
+    }
   });
 
   await waitFor(() => {
     expect(screen.getByText("Dylan Bob")).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.click(screen.getByText("Dylan Bob"));
-    fireEvent.change(screen.getByPlaceholderText("Pour vérification"), {
-      target: {
-        value: "salut"
-      }
-    });
+  fireEvent.click(screen.getByText("Dylan Bob"));
+  fireEvent.change(screen.getByPlaceholderText("Pour vérification"), {
+    target: {
+      value: "salut"
+    }
   });
 
   await waitFor(() => {
@@ -217,9 +209,7 @@ test("transmettre à valideur", async () => {
     ).toBeFalsy();
   });
 
-  act(() => {
-    fireEvent.click(screen.getByText("Valider"));
-  });
+  fireEvent.click(screen.getByText("Valider"));
 
   await waitFor(() => {
     expect(router.state.location.pathname).toStrictEqual(
@@ -234,6 +224,10 @@ test("retour approuvé", async () => {
       {
         path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
         element: <ApercuRequeteTraitementPage />
+      },
+      {
+        path: URL_MES_REQUETES_DELIVRANCE,
+        element: <ApercuRequeteTraitementPage />
       }
     ],
     [
@@ -244,24 +238,18 @@ test("retour approuvé", async () => {
     ]
   );
 
-  await act(async () => {
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 
   await waitFor(() => {
     expect(screen.getByText("Relecture commentée")).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(screen.getByText("Relecture commentée"));
-  });
+  fireEvent.click(screen.getByText("Relecture commentée"));
 
-  act(() => {
-    fireEvent.change(screen.getByPlaceholderText("En retour"), {
-      target: {
-        value: "c'est nul"
-      }
-    });
+  fireEvent.change(screen.getByPlaceholderText("En retour"), {
+    target: {
+      value: "c'est nul"
+    }
   });
 
   await waitFor(() => {
@@ -270,9 +258,7 @@ test("retour approuvé", async () => {
     ).toBeFalsy();
   });
 
-  act(() => {
-    fireEvent.click(screen.getByText("Valider"));
-  });
+  fireEvent.click(screen.getByText("Valider"));
 
   await waitFor(() => {
     expect(router.state.location.pathname).toStrictEqual(

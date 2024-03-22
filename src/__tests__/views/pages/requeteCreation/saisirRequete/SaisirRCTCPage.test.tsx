@@ -6,11 +6,11 @@ import {
 } from "@mock/data/connectedUserAvecDroit";
 import { entiteRatachementEtablissement } from "@mock/data/entiteRatachementEtablissement";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
+import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
 import { SaisirRCTCPage } from "@pages/requeteCreation/saisirRequete/SaisirRCTCPage";
 import {
-  PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE,
-  URL_MES_REQUETES_CREATION,
-  URL_MES_REQUETES_CREATION_SAISIR_RCTC
+  URL_MES_REQUETES_CREATION_SAISIR_RCTC,
+  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID
 } from "@router/ReceUrls";
 import {
   act,
@@ -21,7 +21,6 @@ import {
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import React from "react";
 import { RouterProvider } from "react-router-dom";
 import { expectEstBoutonDisabled } from "../../../../__tests__utils__/expectUtils";
 import {
@@ -227,6 +226,13 @@ test("DOIT rediriger vers l'apercu requête en prise en charge QUAND je clique s
       {
         path: URL_MES_REQUETES_CREATION_SAISIR_RCTC,
         element: <SaisirRCTCPage />
+      },
+      {
+        path: getUrlWithParam(
+          URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+          "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+        ),
+        element: <ApercuReqCreationTranscriptionPriseEnChargePage />
       }
     ],
     [URL_MES_REQUETES_CREATION_SAISIR_RCTC]
@@ -273,7 +279,7 @@ test("DOIT rediriger vers l'apercu requête en prise en charge QUAND je clique s
   await waitFor(() => {
     expect(router.state.location.pathname).toBe(
       getUrlWithParam(
-        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/:idRequeteParam`,
+        URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
         "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
       )
     );

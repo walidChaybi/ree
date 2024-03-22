@@ -4,7 +4,10 @@ import {
 } from "@mock/data/connectedUserAvecDroit";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
-import { URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC } from "@router/ReceUrls";
+import {
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC
+} from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -12,12 +15,10 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { getLastPathElem } from "@util/route/UrlUtil";
+import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
-
-let history: any;
 
 beforeAll(() => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
@@ -34,9 +35,7 @@ test("renders formulaire de saisie d'une Requête de Délivrance Certificat de S
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
   );
 
-  await act(async () => {
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 
   const titre = SousTypeDelivrance.getEnumFor("RDCSC").libelle;
   await waitFor(() => {
@@ -45,20 +44,25 @@ test("renders formulaire de saisie d'une Requête de Délivrance Certificat de S
   });
 });
 
-test("test du Prendre en charge du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", async () => {
+test("test du Prendre en charge du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier.", async () => {
   const router = createTestingRouter(
     [
       {
         path: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
+        element: <SaisirRDCSCPage />
+      },
+      {
+        path: getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          "1072bc37-f889-4365-8f75-912166b767dd"
+        ),
         element: <SaisirRDCSCPage />
       }
     ],
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
   );
 
-  await act(async () => {
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 
   const inputDocumentDemande = screen.getByTestId(
     "document"
@@ -88,7 +92,6 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
       value: "1990"
     }
   });
-  const submit = screen.getByText(/Prendre en charge/i);
 
   fireEvent.change(inputDocumentDemande, {
     target: {
@@ -104,6 +107,7 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
     );
   });
 
+  const submit = screen.getByText(/Prendre en charge/i);
   fireEvent.click(submit);
 
   await waitFor(() => {
@@ -113,7 +117,7 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
   });
 });
 
-test("test du Prendre en charge du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier => sans éléments de naissance & pop-in OUI", async () => {
+test("test du Prendre en charge du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier => sans éléments de naissance & pop-in OUI.", async () => {
   const router = createTestingRouter(
     [
       {
@@ -174,11 +178,19 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
   });
 });
 
-test("test du Prendre en charge du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier => sans éléments de naissance & pop-in NON", async () => {
+test("test du Prendre en charge du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier => sans éléments de naissance & pop-in NON.", async () => {
   const router = createTestingRouter(
     [
       {
         path: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
+        element: <SaisirRDCSCPage />
+      },
+
+      {
+        path: getUrlWithParam(
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          "1072bc37-f889-4365-8f75-912166b767dd"
+        ),
         element: <SaisirRDCSCPage />
       }
     ],
@@ -456,9 +468,7 @@ test(`Document demandé != "Attestation PACS" => bouton "ajouter un titulaire" &
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
   );
 
-  await act(async () => {
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 
   const inputDocumentDemande: ChildNode = screen.getByTestId(
     Labels.documentDemande

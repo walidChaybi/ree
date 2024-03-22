@@ -1,7 +1,9 @@
 import { requeteCreationEtablissement } from "@mock/data/requeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
 import { BoutonsApercuCreationEtablissement } from "@pages/requeteCreation/apercuRequete/etablissement/commun/BoutonsApercuRequeteCreationEtablissement";
+import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,
   URL_MES_REQUETES_CREATION,
@@ -30,6 +32,10 @@ test("DOIT rediriger vers Mes requêtes de création QUAND le bouton affiche Ret
       {
         path: `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`,
         element: <BoutonsApercuCreationEtablissement requete={requete} />
+      },
+      {
+        path: URL_MES_REQUETES_CREATION,
+        element: <EspaceCreationPage />
       }
     ],
     [`${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`]
@@ -59,6 +65,10 @@ test("DOIT rediriger vers Requêtes de création de mon service QUAND le bouton 
       {
         path: `${URL_REQUETES_CREATION_SERVICE}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`,
         element: <BoutonsApercuCreationEtablissement requete={requete} />
+      },
+      {
+        path: URL_REQUETES_CREATION_SERVICE,
+        element: <EspaceCreationPage />
       }
     ],
     [`${URL_REQUETES_CREATION_SERVICE}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`]
@@ -88,6 +98,10 @@ test("DOIT rediriger vers Rechercher une requête QUAND le bouton affiche Retour
       {
         path: `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`,
         element: <BoutonsApercuCreationEtablissement requete={requete} />
+      },
+      {
+        path: URL_RECHERCHE_REQUETE,
+        element: <RMCRequetePage />
       }
     ],
     [`${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`]

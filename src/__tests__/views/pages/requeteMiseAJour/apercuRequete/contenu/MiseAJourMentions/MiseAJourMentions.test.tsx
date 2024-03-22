@@ -14,27 +14,25 @@ import { ZERO } from "@util/Utils";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 
-const inputNiveauUn = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_UN}`;
-const inputNiveauDeux = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_DEUX}`;
-const inputNiveauTrois = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_TROIS}`;
-const inputTexteMentionsPlaceholder = "Texte mention à ajouter";
+const LISTE_TYPE_MENTION_NIVEAU_UN = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_UN}`;
+const LISTE_TYPE_MENTION_NIVEAU_DEUX = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_DEUX}`;
+const LISTE_TYPE_MENTION_NIVEAU_TROIS = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_TROIS}`;
+const TEXTE_MENTION_PLACEHOLDER = "Texte mention à ajouter";
 
 const ajouterUneMention = () => {
-  
-
-  fireEvent.change(screen.getByTestId(inputNiveauUn), {
+  fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_UN), {
     target: { value: "0185f3c8-5f4c-4ea9-89e1-fb65fcb7b17f" }
   });
 
-  fireEvent.change(screen.getByTestId(inputNiveauDeux), {
+  fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_DEUX), {
     target: { value: "7adaa7f8-6228-4e25-87a1-d99f3b98371a" }
   });
 
-  fireEvent.change(screen.getByTestId(inputNiveauTrois), {
+  fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_TROIS), {
     target: { value: "b03c54ae-5130-4062-b7e4-34bed2de7989" }
   });
 
-  fireEvent.change(screen.getByPlaceholderText(inputTexteMentionsPlaceholder), {
+  fireEvent.change(screen.getByPlaceholderText(TEXTE_MENTION_PLACEHOLDER), {
     target: {
       value: "Blablablabla ceci est un texte de mention parfaitement correct"
     }
@@ -101,10 +99,10 @@ test("DOIT desafficher la mention du tableau de mentions de l'onglet de Mise A J
   fireEvent.click(screen.getByText("OK"));
 
   await waitFor(() => {
-    expect(screen.queryByTestId(inputNiveauUn)).toBeDefined();
-    expect(screen.queryByTestId(inputNiveauDeux)).toBeNull();
-    expect(screen.queryByTestId(inputNiveauTrois)).toBeNull();
-    expect(screen.queryByTitle(inputTexteMentionsPlaceholder)).toBeNull();
+    expect(screen.queryByTestId(LISTE_TYPE_MENTION_NIVEAU_UN)).toBeDefined();
+    expect(screen.queryByTestId(LISTE_TYPE_MENTION_NIVEAU_DEUX)).toBeNull();
+    expect(screen.queryByTestId(LISTE_TYPE_MENTION_NIVEAU_TROIS)).toBeNull();
+    expect(screen.queryByTitle(TEXTE_MENTION_PLACEHOLDER)).toBeNull();
   });
 });
 
@@ -152,22 +150,19 @@ test("DOIT editer le tableau de mentions QUAND on modifie une mention via la mod
     ).toBeDefined();
   });
 
-  fireEvent.change(screen.getByTestId(inputNiveauTrois), {
+  fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_TROIS), {
     target: { value: "96189dcf-69f9-41d2-8039-26476b82ee01" }
   });
 
-  fireEvent.change(
-    screen.getByPlaceholderText(inputTexteMentionsPlaceholder),
-    {
-      target: {
-        value: "Ceci est une mention de mariage de test"
-      }
+  fireEvent.change(screen.getByPlaceholderText(TEXTE_MENTION_PLACEHOLDER), {
+    target: {
+      value: "Ceci est une mention de mariage de test"
     }
-  );
+  });
 
   await waitFor(() => {
-    expect(screen.getByText("Modifier mention")).not.toBeDisabled()
-  })
+    expect(screen.getByText("Modifier mention")).not.toBeDisabled();
+  });
 
   fireEvent.click(screen.getByText("Modifier mention"));
 

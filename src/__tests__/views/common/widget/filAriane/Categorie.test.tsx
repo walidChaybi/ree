@@ -1,28 +1,32 @@
 import { URL_REQUETES } from "@api/appels/requeteApi";
+import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { URL_ACCUEIL } from "@router/ReceUrls";
 import { act, fireEvent, render, waitFor } from "@testing-library/react";
 import { Categorie } from "@widget/filAriane/Categorie";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
-test("renders not last Categorie", async () => {
+test("renders pas la dernière categorie et clic sur fil ariane", async () => {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_REQUETES,
+        element: (
+          <Categorie
+            url={`/${URL_ACCUEIL}`}
+            message={"accueil.test"}
+            last={false}
+          />
+        )
+      },
+      {
+        path: `/${URL_ACCUEIL}`,
+        element: <AccueilPage />
+      }
+    ],
+    [URL_REQUETES]
+  );
   await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_REQUETES,
-          element: (
-            <Categorie
-              url={URL_ACCUEIL}
-              message={"accueil.test"}
-              last={false}
-            />
-          )
-        }
-      ],
-      [URL_REQUETES]
-    );
-
     const { getByText } = render(<RouterProvider router={router} />);
     await waitFor(() => {
       const linkElement = getByText(/accueil.test/);
@@ -33,24 +37,27 @@ test("renders not last Categorie", async () => {
   });
 });
 
-test("renders not last Categorie and click", async () => {
+test("renders pas la dernière categorie et clic sur element message", async () => {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_REQUETES,
+        element: (
+          <Categorie
+            url={`/${URL_ACCUEIL}`}
+            message={"accueil.test"}
+            last={false}
+          />
+        )
+      },
+      {
+        path: `/${URL_ACCUEIL}`,
+        element: <AccueilPage />
+      }
+    ],
+    [URL_REQUETES]
+  );
   await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_REQUETES,
-          element: (
-            <Categorie
-              url={URL_ACCUEIL}
-              message={"accueil.test"}
-              last={false}
-            />
-          )
-        }
-      ],
-      [URL_REQUETES]
-    );
-
     const { getByText } = render(<RouterProvider router={router} />);
     await waitFor(() => {
       expect(router.state.historyAction.length).toBe(3);
@@ -61,24 +68,23 @@ test("renders not last Categorie and click", async () => {
   });
 });
 
-test("renders last Categorie", async () => {
+test("renders la derniere catégorie", async () => {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_REQUETES,
+        element: (
+          <Categorie url={URL_ACCUEIL} message={"accueilString"} last={true} />
+        )
+      },
+      {
+        path: `/${URL_ACCUEIL}`,
+        element: <AccueilPage />
+      }
+    ],
+    [URL_REQUETES]
+  );
   await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_REQUETES,
-          element: (
-            <Categorie
-              url={URL_ACCUEIL}
-              message={"accueilString"}
-              last={true}
-            />
-          )
-        }
-      ],
-      [URL_REQUETES]
-    );
-
     const { getByText } = render(<RouterProvider router={router} />);
     await waitFor(() => {
       const linkElement = getByText("accueilString");
@@ -88,20 +94,23 @@ test("renders last Categorie", async () => {
   });
 });
 
-test("renders not last Categorie go to accueil", async () => {
+test("renders pas la dernière categorie et clic sur element Accueil", async () => {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_REQUETES,
+        element: (
+          <Categorie url={`/${URL_ACCUEIL}`} message={"Accueil"} last={false} />
+        )
+      },
+      {
+        path: `/${URL_ACCUEIL}`,
+        element: <AccueilPage />
+      }
+    ],
+    ["/test2", URL_REQUETES]
+  );
   await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_REQUETES,
-          element: (
-            <Categorie url={URL_ACCUEIL} message={"Accueil"} last={false} />
-          )
-        }
-      ],
-      ["/test2", URL_REQUETES]
-    );
-
     const { getAllByText } = render(<RouterProvider router={router} />);
     await waitFor(() => {
       const linkElement = getAllByText("Accueil");

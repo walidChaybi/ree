@@ -5,6 +5,26 @@ import {
   ReponseAppelGetAlertesActe
 } from "../data/Alertes";
 import { acteExtraitSaisie } from "../data/DonneesSaisieExtrait";
+import { imagePngVideBase64 } from "../data/ImagePng";
+import { decrets } from "../data/NomenclatureEtatCivilDecrets";
+import { pacsModificationNotaire } from "../data/PACS";
+import mockRC from "../data/RC.json";
+import mockRCA from "../data/RCA.json";
+import {
+  ReponseAppelRMCActe,
+  ReponseAppelRMCActe4DernierResultats,
+  ReponseAppelRMCActe4PremiersResultats
+} from "../data/RMCActe";
+import {
+  RMCAutoPersonneResponseAlpha,
+  RMCAutoPersonneResponseBeta
+} from "../data/RMCAutoPersonne";
+import {
+  ReponseAppelRMCInscription,
+  ReponseAppelRMCInscription4DernierResultats,
+  ReponseAppelRMCInscription4PremiersResultats
+} from "../data/RMCInscription";
+import { getTitulairesActeAPI } from "../data/Titulaire";
 import {
   ficheActe1,
   ficheActe2,
@@ -34,18 +54,16 @@ import {
 import { fichePacs, idFichePacs } from "../data/fichePacs";
 import { inscriptionsRc } from "../data/ficheRC";
 import {
-  ficheRca,
   FicheRcaDecisionJuridictionEtrangere,
+  ficheRca,
   idFicheRca
 } from "../data/ficheRCA";
-import { imagePngVideBase64 } from "../data/ImagePng";
 import { listeDeuxPersonnes } from "../data/listePersonnes";
 import {
   EnregistrerMentionsResultat,
   mentions,
   mentionsPlurilingues
 } from "../data/mentions";
-import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import {
   ReponseAppelNomenclatureMandataire,
   ReponseAppelNomenclatureNatureMention,
@@ -54,24 +72,6 @@ import {
   ReponseAppelNomenclatureTypeAlerte,
   ReponseAppelNomenclatureTypeMention
 } from "../data/nomenclatures";
-import { pacsModificationNotaire } from "../data/PACS";
-import mockRC from "../data/RC.json";
-import mockRCA from "../data/RCA.json";
-import {
-  ReponseAppelRMCActe,
-  ReponseAppelRMCActe4DernierResultats,
-  ReponseAppelRMCActe4PremiersResultats
-} from "../data/RMCActe";
-import {
-  RMCAutoPersonneResponseAlpha,
-  RMCAutoPersonneResponseBeta
-} from "../data/RMCAutoPersonne";
-import {
-  ReponseAppelRMCInscription,
-  ReponseAppelRMCInscription4DernierResultats,
-  ReponseAppelRMCInscription4PremiersResultats
-} from "../data/RMCInscription";
-import { getTitulairesActeAPI } from "../data/Titulaire";
 import { actesInscriptionsSauvegardes } from "./../data/actesInscriptionsSauvegardes";
 
 export const NORESULT = "NORESULT";
@@ -158,11 +158,14 @@ export const configEtatcivil = [
         match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4da/resume" ||
         match[1] === "/acte/f9279c00-5d2b-11ea-bc55-0242ac130004/resume" ||
         match[1] ===
-          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true"
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true" ||
+        match[1] ===
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false&isConsultation=true"
       ) {
         return { data: acte };
       } else if (
-        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc/resume" ||
+        match[1] ===
+          "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false&isConsultation=true" ||
         match[1] ===
           "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true"
       ) {
@@ -175,13 +178,19 @@ export const configEtatcivil = [
       } else if (
         match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume" ||
         match[1] ===
-          "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true"
+          "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true" ||
+        match[1] ===
+          "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false&isConsultation=true"
       ) {
         return { data: acte2 };
       } else if (
         match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4db/resume" ||
         match[1] ===
-          "/acte/d8708d77-a359-4553-be72-1eb5f246d4db/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true"
+          "/acte/d8708d77-a359-4553-be72-1eb5f246d4db/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true" ||
+        match[1] ===
+          "/acte/d8708d77-a359-4553-be72-1eb5f246d4db/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false&isConsultation=true" ||
+        match[1] ===
+          "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false&isConsultation=true"
       ) {
         return { data: acte3 };
       } else if (
@@ -356,6 +365,7 @@ export const configEtatcivil = [
           "/acte/b41079a3-9e8d-478c-b04c-c4c2ac47134f/donnees-pour-composition-acte-texte",
           "/acte/b41079a5-9e8f-478a-b04c-c4c2ac671123/donnees-pour-composition-acte-texte",
           "/acte/b45079a5-9e8f-478a-b07c-c4c2az671123/donnees-pour-composition-acte-texte",
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/donnees-pour-composition-acte-texte",
           "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/donnees-pour-composition-acte-repris",
           "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a/donnees-pour-composition-acte-repris",
           "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/donnees-pour-composition-acte-repris"

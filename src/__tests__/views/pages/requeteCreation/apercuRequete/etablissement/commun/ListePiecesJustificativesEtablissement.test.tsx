@@ -63,9 +63,7 @@ test("DOIT ouvrir et afficher la modal QUAND on clique sur le bouton d'ouverture
     expect(boutonOuvrirModal).toBeDefined();
   });
 
-  await waitFor(() => {
-    fireEvent.click(boutonOuvrirModal);
-  });
+  fireEvent.click(boutonOuvrirModal);
 
   await waitFor(() => {
     expect(
@@ -97,27 +95,21 @@ test("DOIT activer le bouton de validation QUAND des données ont été selectio
   const uploadFileField = screen.getByTestId("file") as HTMLInputElement;
   const fakeFile = new File(["hello"], "hello.png", { type: "image/jpg" });
 
-  await waitFor(() => {
-    fireEvent.change(selectField, {
-      target: { value: "a272a8ad-8295-4742-9b89-b571d298e881" }
-    });
+  fireEvent.change(selectField, {
+    target: { value: "a272a8ad-8295-4742-9b89-b571d298e881" }
   });
 
   await user.upload(uploadFileField, pngFiles);
 
-  setTimeout(() => {
-    waitFor(() => {
-      expect(selectField).toBeDefined();
-      expect(uploadFileField).toBeDefined();
-      expect(selectField.value).toBe("a272a8ad-8295-4742-9b89-b571d298e881");
-      expect(screen.getByDisplayValue("AN Postulant")).toBeDefined();
-      expect(uploadFileField.files?.[0]).toStrictEqual(fakeFile);
-      expect(screen.getByText("hello.png")).toBeDefined();
-      expect(screen.getByText("Valider")).toBeDefined();
-      expect(screen.getByText("Valider")).not.toBeDisabled();
-      expect(screen.getByText("Fermer")).toBeDefined();
-    });
-  }, 0);
-
-
+  await waitFor(() => {
+    expect(selectField).toBeDefined();
+    expect(uploadFileField).toBeDefined();
+    expect(selectField.value).toBe("a272a8ad-8295-4742-9b89-b571d298e881");
+    expect(screen.getByDisplayValue("AN Postulant")).toBeDefined();
+    expect(uploadFileField.files?.[0]).toStrictEqual(fakeFile);
+    expect(screen.getByText("hello.png")).toBeDefined();
+    expect(screen.getByText("Valider")).toBeDefined();
+    expect(screen.getByText("Valider")).not.toBeDisabled();
+    expect(screen.getByText("Fermer")).toBeDefined();
+  });
 });

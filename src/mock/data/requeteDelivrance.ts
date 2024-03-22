@@ -535,6 +535,8 @@ export const requeteRDD = {
 
 export const idRequeteRDCPourModification =
   "9d00fe88-9d21-482e-bb02-223636f78386";
+export const idRequeteRDCPourModificationMaCorbeille =
+  "8f00fe88-9d21-482e-bb02-223636f78386";
 export const requeteRDCPourModification = {
   id: "9d00fe88-9d21-482e-bb02-223636f78386",
   numeroFonctionnel: "SIE5G4",
@@ -688,3 +690,9 @@ export const requeteRDCPourModification = {
   },
   choixDelivrance: null
 } as any;
+export const requeteRDCPourModificationMaCorbeille = {
+  ...requeteRDCPourModification,
+  id: "8f00fe88-9d21-482e-bb02-223636f78386",
+  documentDemande: "5f1e909f-f74c-4b16-9c03-b3733354cxyz"
+} as any;
+

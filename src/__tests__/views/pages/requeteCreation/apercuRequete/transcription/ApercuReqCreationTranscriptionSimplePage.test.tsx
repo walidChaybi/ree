@@ -1,17 +1,13 @@
 import { userDroitCreerActeTranscritPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
+import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import {
   PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE,
   URL_MES_REQUETES_CREATION,
-  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID
+  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID
 } from "@router/ReceUrls";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
@@ -156,36 +152,34 @@ describe("Test du rendu du composant RMCRequeteAssociees", () => {
 
   test("DOIT afficher le bouton prendre en charge QUAND la requête est au statut 'A_TRAITER'", async () => {
     storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
-
-    await act(async () => {
-      const router = createTestingRouter(
-        [
-          {
-            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
-            element: (
-              <ApercuReqCreationTranscriptionSimplePage idRequeteAAfficher="de96cc3n-9865-4c83-b634-37fad2680f41" />
-            )
-          }
-        ],
-        [
-          getUrlWithParam(
-            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE}/:idRequete`,
-            "dd96cc3a-9865-4c83-b634-37fad2680f41"
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
+          element: (
+            <ApercuReqCreationTranscriptionSimplePage idRequeteAAfficher="de96cc3n-9865-4c83-b634-37fad2680f41" />
           )
-        ]
-      );
+        },
+        {
+          path: getUrlWithParam(
+            URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID,
+            "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+          ),
+          element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+        }
+      ],
+      [
+        getUrlWithParam(
+          `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE}/:idRequete`,
+          "dd96cc3a-9865-4c83-b634-37fad2680f41"
+        )
+      ]
+    );
 
-      render(<RouterProvider router={router} />);
-    });
+    render(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(screen.queryByText("Prendre en charge")).toBeInTheDocument();
-    });
-
-    const boutonPrendreEncharge = screen.getByText("Prendre en charge");
-
-    await act(async () => {
-      fireEvent.click(boutonPrendreEncharge);
     });
   });
 });

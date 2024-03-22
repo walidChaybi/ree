@@ -1,13 +1,16 @@
+import { requeteAvecCopieIntegraleActeImage } from "@mock/data/DetailRequeteDelivrance";
+import { imagePngVideBase64 } from "@mock/data/ImagePng";
 import {
   userDroitCOMEDEC,
   userDroitnonCOMEDEC
 } from "@mock/data/connectedUserAvecDroit";
-import { requeteAvecCopieIntegraleActeImage } from "@mock/data/DetailRequeteDelivrance";
 import { idFicheActeMariage } from "@mock/data/ficheActe";
-import { imagePngVideBase64 } from "@mock/data/ImagePng";
+import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
+import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import {
   PATH_EDITION,
+  URL_CONTEXT_APP,
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_EDITION_ID
 } from "@router/ReceUrls";
@@ -202,22 +205,20 @@ test("Ajout mention et réinitialisation", async () => {
     ]
   );
 
-  await act(async () => {
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 
   // Gestion des mentions
-  act(() => {
-    fireEvent.click(screen.getAllByText("Extrait avec filiation")[0]);
+  await waitFor(() => {
+    expect(
+      screen.getAllByText("Extrait avec filiation")[0]
+    ).toBeInTheDocument();
   });
+  fireEvent.click(screen.getAllByText("Extrait avec filiation")[0]);
 
   await waitFor(() => {
-    expect(screen.getByText("Gérer les mentions")).toBeDefined();
+    expect(screen.getAllByText("Gérer les mentions")[0]).toBeInTheDocument();
   });
-
-  act(() => {
-    fireEvent.click(screen.getAllByText("Gérer les mentions")[0]);
-  });
+  fireEvent.click(screen.getAllByText("Gérer les mentions")[0]);
 
   // Ajout d'une mention
   await waitFor(() => {
@@ -226,14 +227,11 @@ test("Ajout mention et réinitialisation", async () => {
     ).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.change(screen.getByPlaceholderText("Texte mention à ajouter"), {
-      target: {
-        value: "Troisième mention ajoutée"
-      }
-    });
+  fireEvent.change(screen.getByPlaceholderText("Texte mention à ajouter"), {
+    target: {
+      value: "Troisième mention ajoutée"
+    }
   });
-
   await waitFor(() => {
     expect(
       (
@@ -242,31 +240,23 @@ test("Ajout mention et réinitialisation", async () => {
         ) as HTMLTextAreaElement
       ).value
     ).toBe("Troisième mention ajoutée");
-    expect(
-      (screen.getByTitle("Ajouter la mention") as HTMLButtonElement).disabled
-    ).toBeTruthy();
+    expect(screen.getByTitle("Ajouter la mention")).toBeDisabled();
   });
 
-  act(() => {
-    fireEvent.change(screen.getByLabelText("Nature ajoutée"), {
-      target: {
-        value: "b03c5992-d421-4aa1-a4cf-f97f22b267f9"
-      }
-    });
+  fireEvent.change(screen.getByLabelText("Nature ajoutée"), {
+    target: {
+      value: "b03c45b2-74c6-4cc5-9f64-4bad6f343598"
+    }
   });
 
   await waitFor(() => {
-    expect(
-      (screen.getByTitle("Ajouter la mention") as HTMLButtonElement).disabled
-    ).toBeFalsy();
+    expect(screen.getByTitle("Ajouter la mention")).not.toBeDisabled();
     expect(
       (screen.getByLabelText("Nature ajoutée") as HTMLSelectElement).value
-    ).toBe("b03c5992-d421-4aa1-a4cf-f97f22b267f9");
+    ).toBe("b03c45b2-74c6-4cc5-9f64-4bad6f343598");
   });
 
-  act(() => {
-    fireEvent.click(screen.getByTitle("Ajouter la mention"));
-  });
+  fireEvent.click(screen.getByTitle("Ajouter la mention"));
 
   await waitFor(() => {
     expect(screen.getAllByText("Troisième mention ajoutée")).toBeDefined();
@@ -276,13 +266,9 @@ test("Ajout mention et réinitialisation", async () => {
     ).toBeFalsy();
   });
 
-  act(() => {
-    fireEvent.click(screen.getAllByTitle("Supprimer la mention")[0]);
-  });
+  fireEvent.click(screen.getAllByTitle("Supprimer la mention")[0]);
 
-  act(() => {
-    fireEvent.click(screen.getByText("Réinitialiser"));
-  });
+  fireEvent.click(screen.getByText("Réinitialiser"));
 
   await waitFor(() => {
     expect(
@@ -297,6 +283,14 @@ test("clic sur mention et sur checkbox et valider", async () => {
       {
         path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
         element: <EditionExtraitCopiePage />
+      },
+      {
+        path: URL_MES_REQUETES_DELIVRANCE,
+        element: <EspaceDelivrancePage />
+      },
+      {
+        path: URL_CONTEXT_APP,
+        element: <AccueilPage />
       }
     ],
     [

@@ -46,11 +46,11 @@ describe("Test onglets documents édites", () => {
       render(<RouterProvider router={router} />);
     });
 
-    await waitFor(() => {
-      expect(
-        screen.getByTitle("Ajout d'un document complémentaire")
-      ).toBeDefined();
-    });
+      await waitFor(() => {
+        expect(
+          screen.getByTitle("Ajout d'un document complémentaire")
+        ).toBeDefined();
+      });
   });
 
   test("Doit rendre le bouton x pour retirer un document complémentaire quand plusieurs documentResponse sont présent dans la requête", async () => {

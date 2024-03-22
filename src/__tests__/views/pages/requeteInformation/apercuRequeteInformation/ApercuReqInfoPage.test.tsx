@@ -1,13 +1,16 @@
-import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
 import { ReponseAppelDetailRequeteInformationSansCorbeilleAgent } from "@mock/data/DetailRequeteInformation";
 import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { NOMENCLATURE_REPONSE } from "@mock/data/NomenclatureReponse";
+import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
 import { NORESULT } from "@mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetesInformation } from "@mock/superagent-config/superagent-mock-requetes-information";
 import { IOfficier } from "@model/agent/IOfficier";
+import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
+import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
 import {
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+  URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_INFORMATION
 } from "@router/ReceUrls";
 import {
@@ -42,14 +45,16 @@ afterEach(() => {
   storeRece.utilisateurCourant = undefined;
 });
 
-////////////////////// DEBUT DES TESTS //////////////////////////////////////////
-
 test("renders ApercuReqInfoPage", async () => {
   const router = createTestingRouter(
     [
       {
         path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
         element: <ApercuReqInfoPage />
+      },
+      {
+        path: URL_MES_REQUETES_INFORMATION,
+        element: <EspaceInformationPage />
       }
     ],
     [
@@ -194,6 +199,10 @@ test("bouton annuler", async () => {
       {
         path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
         element: <ApercuReqInfoPage />
+      },
+      {
+        path: URL_MES_REQUETES_INFORMATION,
+        element: <EspaceInformationPage />
       }
     ],
     [
@@ -232,6 +241,10 @@ test("clique requete liée", async () => {
       {
         path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
         element: <ApercuReqInfoPage />
+      },
+      {
+        path: URL_MES_REQUETES_DELIVRANCE,
+        element: <EspaceDelivrancePage />
       }
     ],
     [

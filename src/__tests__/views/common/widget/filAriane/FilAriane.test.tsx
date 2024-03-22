@@ -1,3 +1,4 @@
+import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { routesRece } from "@router/ReceRoutes";
 import {
   URL_MES_REQUETES_CREATION,
@@ -8,8 +9,8 @@ import {
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import {
-  buildPagesInfos,
   FilAriane,
+  buildPagesInfos,
   fildarianeLabel,
   gestionnaireNavigation,
   getPathElements,
@@ -18,7 +19,7 @@ import {
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
-test("renders composant FilAriane", async () => {
+test("renders composant FilAriane.", async () => {
   await act(async () => {
     const router = createTestingRouter(
       [
@@ -36,7 +37,7 @@ test("renders composant FilAriane", async () => {
   expect(screen.getByLabelText(fildarianeLabel)).toBeInTheDocument();
 });
 
-test("renders de 2 éléments du FilAriane", async () => {
+test("renders de 2 éléments du FilAriane.", async () => {
   await act(async () => {
     const router = createTestingRouter(
       [
@@ -59,7 +60,7 @@ test("renders de 2 éléments du FilAriane", async () => {
   });
 });
 
-test("renders d'un uudi en dernier élément du FilAriane", async () => {
+test("renders d'un uudi en dernier élément du FilAriane.", async () => {
   // ici on utilise la creation plutot que la delivrance
   await act(async () => {
     const router = createTestingRouter(
@@ -91,7 +92,7 @@ test("renders d'un uudi en dernier élément du FilAriane", async () => {
   });
 });
 
-test("renders de 2 éléments du FilAriane et mise à jour context", async () => {
+test("renders de 2 éléments du FilAriane et mise à jour context.", async () => {
   await act(async () => {
     const router = createTestingRouter(
       [
@@ -106,29 +107,32 @@ test("renders de 2 éléments du FilAriane et mise à jour context", async () =>
     render(<RouterProvider router={router} />);
   });
 });
-
-test("renders d'un uudi en dernier élément du FilAriane et maj context", async () => {
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_MES_REQUETES_DELIVRANCE,
-          element: <FilAriane routes={routesRece} />
-        }
-      ],
-      [
-        getUrlWithParam(
+test("renders d'un uudi en dernier élément du FilAriane et maj context.", () => {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE,
+        element: <FilAriane routes={routesRece} />
+      },
+      {
+        path: getUrlWithParam(
           URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
           "f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
-        )
-      ]
-    );
-
-    render(<RouterProvider router={router} />);
-  });
+        ),
+        element: <ApercuRequetePage />
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+        "f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
+      )
+    ]
+  );
+  render(<RouterProvider router={router} />);
 });
 
-test("Attendu: getUrlFromNPathElements fonctionne correctement", () => {
+test("Attendu: getUrlFromNPathElements fonctionne correctement.", () => {
   expect(getUrlFromNPathElements(["p1"], 0)).toBe("/rece/rece-ui/p1");
   expect(getUrlFromNPathElements(["p1", "p2"], 0)).toBe("/rece/rece-ui/p1");
   expect(getUrlFromNPathElements(["p1", "p2"], 1)).toBe("/rece/rece-ui/p1/p2");
@@ -143,7 +147,7 @@ test("Attendu: getUrlFromNPathElements fonctionne correctement", () => {
   );
 });
 
-test("Attendu: getPathElements fonctionne correctement", () => {
+test("Attendu: getPathElements fonctionne correctement.", () => {
   expect(
     getPathElements("/rece/rece-ui/mesrequetes/apercurequetedelivrance")
   ).toEqual(["mesrequetes", "apercurequetedelivrance"]);
@@ -153,7 +157,7 @@ test("Attendu: getPathElements fonctionne correctement", () => {
   expect(getPathElements("/rece/rece-ui/accueil/")).toEqual([]);
 });
 
-test("Attendu: buildPagesInfos fonctionne correctement", () => {
+test("Attendu: buildPagesInfos fonctionne correctement.", () => {
   gestionnaireNavigation.addUrl(
     "/rece/rece-ui/mesrequetes/apercurequetedelivrance/a8c57b94-b623-4e79-b3a4-08cdf0447623"
   );

@@ -1,10 +1,16 @@
-import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
 import {
   DataRMCRequeteAvecResultat,
   DataTableauRequete
 } from "@mock/data/RMCRequete";
+import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
 import { RMCTableauRequetes } from "@pages/rechercheMultiCriteres/requete/resultats/RMCTableauRequetes";
-import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
+import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
+import {
+  URL_RECHERCHE_REQUETE,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_ID,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_INFORMATION_ID,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+} from "@router/ReceUrls";
 import {
   act,
   fireEvent,
@@ -12,7 +18,7 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { getLastPathElem } from "@util/route/UrlUtil";
+import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
@@ -60,6 +66,13 @@ test("Clic sur une Requête du tableau avec un idUtilisateur", async () => {
             resetTableauRequete={true}
           />
         )
+      },
+      {
+        path: getUrlWithParam(
+          URL_RECHERCHE_REQUETE_APERCU_REQUETE_ID,
+          "8ef11b8b-652c-4c6a-ad27-a544fce635d0"
+        ),
+        element: <ApercuRequetePage />
       }
     ],
     [URL_RECHERCHE_REQUETE]
@@ -93,6 +106,13 @@ test("Clic sur une Requête du tableau sans un idUtilisateur", async () => {
             resetTableauRequete={true}
           />
         )
+      },
+      {
+        path: getUrlWithParam(
+          URL_RECHERCHE_REQUETE_APERCU_REQUETE_INFORMATION_ID,
+          "4578e56c-421c-4e6a-b587-a238a665daf8"
+        ),
+        element: <ApercuRequetePage />
       }
     ],
     [URL_RECHERCHE_REQUETE]
@@ -154,6 +174,13 @@ test("Clic sur une Requête Délivrance au statut 'Prise en charge'", async () =
             resetTableauRequete={true}
           />
         )
+      },
+      {
+        path: getUrlWithParam(
+          URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          "8ef11b8b-652c-4c6a-ad27-a544fce635d1"
+        ),
+        element: <ApercuRequetePage />
       }
     ],
     [URL_RECHERCHE_REQUETE]
@@ -195,6 +222,13 @@ test("Clic sur une Requête avec des titulaire", async () => {
             resetTableauRequete={true}
           />
         )
+      },
+      {
+        path: getUrlWithParam(
+          URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          "4578e56c-421c-4e6a-b587-a238a665daf9"
+        ),
+        element: <ApercuRequetePage />
       }
     ],
     [URL_RECHERCHE_REQUETE]
