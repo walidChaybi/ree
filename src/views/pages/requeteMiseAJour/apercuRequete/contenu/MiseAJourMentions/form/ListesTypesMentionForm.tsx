@@ -166,6 +166,10 @@ const ListesTypesMentionForm: React.FC<
           component="textarea"
           placeholder={getLibelle("Texte mention à ajouter")}
           disabled={getConditionDesaffichageTexteMention()}
+          onChange={event => {
+            formik.setFieldTouched(TEXTE_MENTION);
+            formik.setFieldValue(TEXTE_MENTION, event.target.value, true);
+          }}
         />
       </div>
     </div>
