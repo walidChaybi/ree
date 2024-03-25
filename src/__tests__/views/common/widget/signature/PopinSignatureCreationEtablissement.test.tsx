@@ -107,9 +107,7 @@ describe("Doit afficher la popin de signature lors de la création d'un acte", (
     await waitFor(() => {
       expect(
         screen.getByText(
-          "En cliquant sur VALIDER, vous acceptez de signer électroniquement un document qui comportera les données suivantes insérées automatiquement : un numéro d’ordre, constitutif " +
-            "de la référence de l’acte dans le RECE, informatiquement attribué selon une numérotation chronologique annuelle ; la formule de désignation de l’officier de l’état civil, " +
-            "comprenant ses nom et prénom usuel contenus dans le dispositif de création de signature qualifiée, ses fonctions, et le nom de la ville où il exerce ; la date de signature."
+          "Après validation, les données suivantes seront générées automatiquement et inscrites sur le document final: référence de l’acte ; formule finale, comprenant le nom et le prénom figurant sur le certificat électronique servant à la signature ; date et lieu de signature."
         )
       ).toBeInTheDocument();
     });

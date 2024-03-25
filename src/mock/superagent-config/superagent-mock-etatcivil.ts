@@ -69,6 +69,7 @@ import {
   ReponseAppelNomenclatureNatureMention,
   ReponseAppelNomenclatureNatureRC,
   ReponseAppelNomenclatureNatureRCA,
+  ReponseAppelNomenclaturePopinSignature,
   ReponseAppelNomenclatureTypeAlerte,
   ReponseAppelNomenclatureTypeMention
 } from "../data/nomenclatures";
@@ -585,6 +586,10 @@ export const configEtatcivil = [
 
       if (match[1] === "/nomenclature/NATURE_MENTION") {
         return { data: ReponseAppelNomenclatureNatureMention.data };
+      }
+
+      if (match[1] === "/nomenclature/POPIN_SIGNATURE") {
+        return { data: ReponseAppelNomenclaturePopinSignature.data };
       }
 
       if (match[1] === "/nomenclature/typemention") {

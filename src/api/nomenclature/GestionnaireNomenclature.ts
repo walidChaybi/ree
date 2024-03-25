@@ -9,6 +9,7 @@ import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseReque
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { PaysSecabilite } from "@model/requete/enum/PaysSecabilite";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
 
 export class GestionnaireNomenclature {
   static async chargerToutesLesNomenclatures() {
@@ -19,6 +20,7 @@ export class GestionnaireNomenclature {
     await NatureMention.init();
     await TypeAlerte.init();
     await TypeMention.init();
+    await TypePopinSignature.init();
     // Nomenclatures Requete
     await DocumentDelivrance.init();
     await TypePieceJustificative.init();

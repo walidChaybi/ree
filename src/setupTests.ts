@@ -9,6 +9,7 @@ import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseReque
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { PaysSecabilite } from "@model/requete/enum/PaysSecabilite";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
 import "@testing-library/jest-dom/extend-expect";
 import { storeRece } from "@util/storeRece";
 import React from "react";
@@ -70,6 +71,7 @@ beforeAll(async () => {
   await DocumentDelivrance.init();
   await NatureMention.init();
   await TypeMention.init();
+  await TypePopinSignature.init();
   await TypePieceJustificative.init();
   await PaysSecabilite.init();
   await ParametreBaseRequete.init();

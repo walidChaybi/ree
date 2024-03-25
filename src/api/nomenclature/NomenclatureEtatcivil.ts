@@ -5,6 +5,7 @@ import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { NatureRca } from "@model/etatcivil/enum/NatureRca";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
+import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
 import { logError } from "@util/LogManager";
 import { premiereLettreEnMajusculeLeResteEnMinuscule } from "@util/Utils";
 import {
@@ -17,6 +18,7 @@ const NATURE_RCA = "NATURE_RCA";
 const MANDATAIRE = "MANDATAIRE";
 const TYPE_ALERTE = "TYPE_ALERTE";
 const NATURE_MENTION = "NATURE_MENTION";
+const POPIN_SIGNATURE = "POPIN_SIGNATURE";
 
 export async function peupleNatureRc() {
   if (!NatureRc.contientEnums()) {
@@ -148,3 +150,20 @@ export async function peupleTypeMention() {
     }
   }
 }
+
+export async function peuplePopinSignature() {
+  if (!TypePopinSignature.contientEnums()) {
+    try {
+      const popinsSignature = await getNomenclatureEtatCivil(POPIN_SIGNATURE);
+      TypePopinSignature.clean();
+      for (const data of popinsSignature.body.data) {
+        TypePopinSignature.ajouteTypePopinSignature(data);
+      }
+    } catch (error) {
+      logError({
+        messageUtilisateur: "Impossible de charger les popins signatures",
+        error
+      });
+    }
+  }
+};
