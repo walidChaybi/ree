@@ -41,8 +41,6 @@ import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import { ZERO, getLibelle } from "@util/Utils";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
   CARACTERES_AUTORISES_AVEC_VIRGULE_MESSAGE,
@@ -228,11 +226,7 @@ function validationSchemaAutres() {
 }
 
 function validationSchemaAcquisition(avancement?: AvancementProjetActe) {
-  // TODO : Retirer le FF qui désactive la condition si le flag est faux
-  const estASigner =
-    avancement &&
-    AvancementProjetActe.estASigner(avancement) &&
-    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACQUISITION_DECRET);
+  const estASigner = avancement && AvancementProjetActe.estASigner(avancement);
   return Yup.object({
     [NATURE]: estASigner
       ? Yup.string().required(NATURE_ACTE_OBLIGATOIRE)

@@ -44,10 +44,8 @@ export const localStorageFeatureFlagMock = (function () {
     FF_DELIV_CS: "true",
     FF_RQT_INFORMATION: "true",
     FF_DELIV_EC_PAC: "true",
-    FF_NATALI: "true",
     LOG_SERVEUR: "1",
     FF_RETOUR_SDANF: "true",
-    FF_ACQUISITION_DECRET: "true",
     FF_INTEGRATION_REQUETE_CIBLE: "true",
     FF_SIGNER_ACTE_ETABLISSEMENT: "true"
   };

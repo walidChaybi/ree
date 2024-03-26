@@ -17,7 +17,7 @@ class GestionnaireFeatureFlag {
   }
 
   positionneFlagsAPartirDuHeader(header: any) {
-    // Exemple canary testing '[{"0123456": ["FF_DELIV_EC_PAC","FF_NATALI"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]';
+    // Exemple canary testing '[{"0123456": ["FF_DELIV_EC_PAC"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]';
     const idSSOsEtFeaturesFlags: IdSSOEtFeaturesFlags[] | undefined =
       this.getIdSSOsEtFeaturesFlags(header);
     const idSSOUtilisateurCourant = this.getIdSSOUtilisateur(header);
@@ -26,7 +26,6 @@ class GestionnaireFeatureFlag {
       FeatureFlag.FF_CONSULT_ACTE_RQT,
       FeatureFlag.FF_DELIV_CS,
       FeatureFlag.FF_DELIV_EC_PAC,
-      FeatureFlag.FF_NATALI,
       FeatureFlag.FF_RQT_INFORMATION
     ]);
     const props = Object.getOwnPropertyNames(FeatureFlag);

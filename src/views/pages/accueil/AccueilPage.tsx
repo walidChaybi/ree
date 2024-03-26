@@ -77,21 +77,19 @@ export const AccueilPage: React.FC = () => {
           badge={nbReqTraiteRepondu}
           title={getLibelle("Bouton pour accèder à l'espace délivrance")}
         ></BoutonAccueilEspaceDelivrance>
-
         <BoutonAccueilEspaceMiseAjour
           libelle={getLibelle("Mise à jour")}
           pageUrl="miseAJour"
           iconFA={faSync}
           title={getLibelle("Bouton pour accèder à l'espace mise à jour")}
         ></BoutonAccueilEspaceMiseAjour>
-        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_NATALI) && (
-          <BoutonAccueilEspaceCreation
-            libelle={getLibelle("Création")}
-            pageUrl="mesrequetescreation"
-            iconFA={faPlusCircle}
-            title={getLibelle("Bouton pour accèder à l'espace création")}
-          ></BoutonAccueilEspaceCreation>
-        )}
+        <BoutonAccueilEspaceCreation
+          libelle={getLibelle("Création")}
+          pageUrl="mesrequetescreation"
+          iconFA={faPlusCircle}
+          title={getLibelle("Bouton pour accèder à l'espace création")}
+        ></BoutonAccueilEspaceCreation>
+
         {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION) && (
           <BoutonAccueilCommunication
             libelle={getLibelle("Communication avec les usagers")}

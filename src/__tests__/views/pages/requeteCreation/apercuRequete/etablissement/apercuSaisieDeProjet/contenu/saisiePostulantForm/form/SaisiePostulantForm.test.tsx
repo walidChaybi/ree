@@ -1,10 +1,10 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { requeteCreationEtablissementSaisieProjet } from "@mock/data/requeteCreationEtablissement";
 import "@mock/element/IntersectionObserver";
-import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { SaisiePostulantForm } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/SaisiePostulantForm";
+import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
   URL_MES_REQUETES_CREATION,
@@ -13,7 +13,6 @@ import {
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { DEUX, UN, ZERO } from "@util/Utils";
 import { RouterProvider } from "react-router-dom";
-import { localStorageFeatureFlagMock } from "../../../../../../../../../../setupTests";
 import { createTestingRouter } from "../../../../../../../../../__tests__utils__/testsUtil";
 
 function afficheComposantSaisiePostulantForm(
@@ -185,7 +184,6 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     });
   });
   test("DOIT afficher le formulaire d'acquisition QUAND l'avancement est a signer'.", async () => {
-    localStorageFeatureFlagMock.setItem("FF_ACQUISITION_DECRET", "true");
     const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
     );
@@ -198,7 +196,6 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     });
   });
   test("NE DOIT PAS afficher le formulaire d'acquisition QUAND l'avancement est a saisir'.", async () => {
-    localStorageFeatureFlagMock.setItem("FF_ACQUISITION_DECRET", "true");
     const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
     );
@@ -212,7 +209,6 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
   });
 
   test("NE DOIT PAS afficher le formulaire d'acquisition QUAND l'avancement est en cours'.", async () => {
-    localStorageFeatureFlagMock.setItem("FF_ACQUISITION_DECRET", "true");
     const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
     );
@@ -225,7 +221,6 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     });
   });
   test("NE DOIT PAS afficher le formulaire d'acquisition QUAND l'avancement est valide'.", async () => {
-    localStorageFeatureFlagMock.setItem("FF_ACQUISITION_DECRET", "true");
     const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
     );
@@ -235,17 +230,6 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     );
     await waitFor(() => {
       expect(screen.queryByTitle("Acquisition")).not.toBeInTheDocument();
-    });
-  });
-
-  test("DOIT afficher le formulaire d'acquisition QUAND le FF est inactif.", async () => {
-    localStorageFeatureFlagMock.setItem("FF_ACQUISITION_DECRET", "false");
-    const requete = mappingRequeteCreation(
-      requeteCreationEtablissementSaisieProjet
-    );
-    afficheComposantSaisiePostulantForm(requete.titulaires!);
-    await waitFor(() => {
-      expect(screen.queryByTitle("Acquisition")).toBeInTheDocument();
     });
   });
 });

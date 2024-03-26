@@ -13,7 +13,7 @@ export class AvancementProjetActe extends EnumWithLibelle {
   public static readonly A_SIGNER = new AvancementProjetActe("A signer");
   public static readonly SIGNE = new AvancementProjetActe("Signé");
 
-  public static getAvancementsMasquantAcquisitionjDecret(): AvancementProjetActe[] {
+  public static getAvancementsMasquantAcquisitionDecret(): AvancementProjetActe[] {
     return [
       AvancementProjetActe.A_SAISIR,
       AvancementProjetActe.EN_COURS,

@@ -1,7 +1,7 @@
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 
-test("gestion feature flag works ", async () => {
+test("gestion feature flag works", async () => {
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
   ).toBeTruthy();
@@ -34,7 +34,6 @@ test("DOIT mettre à jour les features flags dans le localstorage QUAND le heade
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
   ).toBeFalsy();
-  expect(gestionnaireFeatureFlag.estActif(FeatureFlag.FF_NATALI)).toBeFalsy();
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_CONSULT_ACTE_RQT)
   ).toBeFalsy();
@@ -43,12 +42,11 @@ test("DOIT mettre à jour les features flags dans le localstorage QUAND le heade
   gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader({
     id_sso: "0123456",
     CANARY_TESTING:
-      '[{"0123456": ["FF_DELIV_EC_PAC","FF_NATALI"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]'
+      '[{"0123456": ["FF_DELIV_EC_PAC"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]'
   });
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
   ).toBeTruthy();
-  expect(gestionnaireFeatureFlag.estActif(FeatureFlag.FF_NATALI)).toBeTruthy();
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_CONSULT_ACTE_RQT)
   ).toBeFalsy();
@@ -57,12 +55,11 @@ test("DOIT mettre à jour les features flags dans le localstorage QUAND le heade
   gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader({
     id_sso: "0456255",
     CANARY_TESTING:
-      '[{"0123456": ["FF_DELIV_EC_PAC","FF_NATALI"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]'
+      '[{"0123456": ["FF_DELIV_EC_PAC"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]'
   });
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
   ).toBeFalsy();
-  expect(gestionnaireFeatureFlag.estActif(FeatureFlag.FF_NATALI)).toBeFalsy();
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
   ).toBeTruthy();
@@ -73,12 +70,11 @@ test("DOIT mettre à jour les features flags dans le localstorage QUAND le heade
   gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader({
     id_sso: "xxx",
     CANARY_TESTING:
-      '[{"0123456": ["FF_DELIV_EC_PAC","FF_NATALI"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]'
+      '[{"0123456": ["FF_DELIV_EC_PAC"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]'
   });
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
   ).toBeFalsy();
-  expect(gestionnaireFeatureFlag.estActif(FeatureFlag.FF_NATALI)).toBeFalsy();
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_CONSULT_ACTE_RQT)
   ).toBeFalsy();
@@ -89,15 +85,13 @@ test("DOIT gérer l'erreur de parsing du JSON QUAND la valeur de la clé CANARY_
   gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader({
     id_sso: "0123456",
     CANARY_TESTING:
-      '[{0123456: "FF_DELIV_EC_PAC","FF_NATALI"]} {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]]'
+      '[{0123456: "FF_DELIV_EC_PAC"]} {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]]'
   });
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
   ).toBeFalsy();
-  expect(gestionnaireFeatureFlag.estActif(FeatureFlag.FF_NATALI)).toBeFalsy();
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_CONSULT_ACTE_RQT)
   ).toBeFalsy();
   expect(gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS)).toBeFalsy();
 });
-

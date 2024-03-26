@@ -16,8 +16,6 @@ import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/I
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { DEUX, UN, getLibelle } from "@util/Utils";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
@@ -100,34 +98,21 @@ export const SaisiePostulantForm: React.FC<
     }
   ];
 
-  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACQUISITION_DECRET)) {
-    props.avancementProjet &&
-      !AvancementProjetActe.getAvancementsMasquantAcquisitionjDecret().includes(
-        props.avancementProjet
-      ) &&
-      elementListe.push({
-        libelle: getLibelle("Acquisition"),
-        element: (
-          <AcquisitionForm
-            nom={ACQUISITION}
-            estAvancementASigner={AvancementProjetActe.estASigner(
-              props.avancementProjet
-            )}
-          />
-        )
-      });
-  } else {
+  props.avancementProjet &&
+    !AvancementProjetActe.getAvancementsMasquantAcquisitionDecret().includes(
+      props.avancementProjet
+    ) &&
     elementListe.push({
       libelle: getLibelle("Acquisition"),
       element: (
         <AcquisitionForm
           nom={ACQUISITION}
-          afficherDateDecret={false}
-          estAvancementASigner={false}
+          estAvancementASigner={AvancementProjetActe.estASigner(
+            props.avancementProjet
+          )}
         />
       )
     });
-  }
 
   return (
     <div className="Postulant">
