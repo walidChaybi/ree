@@ -83,31 +83,29 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
   };
 
   return (
-    <>
-      <Dialog
-        open={props.estOuvert}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        className="popin-signature"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {getLibelle(props.titre)}
-        </DialogTitle>
-        <DialogContent>
-          {erreurSignature && <ErreurSignature erreur={erreurSignature} />}
-          <div className="texte-popin-signature">{getLibelle(props.texte)}</div>
-          <CodePinForm
-            onClose={() => props.setEstOuvert(false)}
-            setCodePin={setCodePin}
-            setSignatureEnCours={setSignatureEnCours}
-          />
-          <OperationEnCours
-            visible={signatureEnCours}
-            onTimeoutEnd={onTimeoutEnd}
-            timeoutInMiliSec={props.timeoutTraitementSignature}
-          />
-        </DialogContent>
-      </Dialog>
-    </>
+    <Dialog
+      open={props.estOuvert}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+      className="popin-signature"
+    >
+      <DialogTitle id="alert-dialog-title">
+        {getLibelle(props.titre)}
+      </DialogTitle>
+      <DialogContent>
+        {erreurSignature && <ErreurSignature erreur={erreurSignature} />}
+        <div className="texte-popin-signature">{getLibelle(props.texte)}</div>
+        <CodePinForm
+          onClose={() => props.setEstOuvert(false)}
+          setCodePin={setCodePin}
+          setSignatureEnCours={setSignatureEnCours}
+        />
+        <OperationEnCours
+          visible={signatureEnCours}
+          onTimeoutEnd={onTimeoutEnd}
+          timeoutInMiliSec={props.timeoutTraitementSignature}
+        />
+      </DialogContent>
+    </Dialog>
   );
 };

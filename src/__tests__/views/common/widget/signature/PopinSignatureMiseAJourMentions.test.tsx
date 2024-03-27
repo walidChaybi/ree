@@ -1,16 +1,28 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import * as EtatCivilApi from "@api/appels/etatcivilApi";
+import mockConnectedUser from "@mock/data/connectedUser.json";
+import { IOfficier } from "@model/agent/IOfficier";
+import {
+  URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS,
+  URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID
+} from "@router/ReceUrls";
+import {
+  createEvent,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
+import { storeRece } from "@util/storeRece";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, RouterProvider } from "react-router-dom";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 test("render PopinSignatureMiseAJourMentions QUAND on ouvre la popin", async () => {
-
+  const message =
+    "En cliquant sur VALIDER, vous acceptez de signer électroniquement la ou les mentions apposée(s) qui comporteront les données suivantes insérées automatiquement : lieu et date d’apposition, qualité du signataire, prénom et nom usuels dans le dispositif de création de signature qualifiée.";
   await waitFor(() => {
     expect(screen.queryByText("Signature des mentions")).toBeNull();
-    expect(
-      screen.queryByText(
-        "En cliquant sur VALIDER, vous acceptez de signer électroniquement la ou les mentions apposée(s) qui comporteront les données suivantes insérées automatiquement : lieu et date d’apposition, qualité du signataire, prénom et nom usuels dans le dispositif de création de signature qualifiée."
-      )
-    ).toBeNull();
+    expect(screen.queryByText(message)).toBeNull();
   });
 
   render(
@@ -23,10 +35,197 @@ test("render PopinSignatureMiseAJourMentions QUAND on ouvre la popin", async () 
   );
   await waitFor(() => {
     expect(screen.queryByText("Signature des mentions")).toBeDefined();
-    expect(
-      screen.getByText(
-        "En cliquant sur VALIDER, vous acceptez de signer électroniquement la ou les mentions apposée(s) qui comporteront les données suivantes insérées automatiquement : lieu et date d’apposition, qualité du signataire, prénom et nom usuels dans le dispositif de création de signature qualifiée."
+    expect(screen.getByText(message)).toBeDefined();
+  });
+});
+
+describe("Doit signer le document QUAND on valide le code pin.", () => {
+  test("DOIT composer le document final, puis enregistrer le document final signé, puis modifier le statut de la requete et l'avancement du projet d'acte", async () => {
+    storeRece.utilisateurCourant = mockConnectedUser as any as IOfficier;
+    const composerDocumentMentionsUlterieuresSpy = jest.spyOn(
+      EtatCivilApi,
+      "composerDocumentMentionsUlterieures"
+    );
+
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID,
+          element: (
+            <PopinSignatureMiseAJourMentions
+              estOuvert={true}
+              setEstOuvert={() => {}}
+            />
+          )
+        }
+      ],
+      [
+        `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/a5187320-d722-4673-abd7-a73ed41ad8c1`
+      ]
+    );
+
+    render(<RouterProvider router={router} />);
+
+    // Simulation d'une signature réussie.
+    fireEvent(
+      window,
+      // @ts-ignore
+      createEvent(
+        "signWebextResponse",
+        window,
+        {
+          detail: {
+            direction: "to-call-app",
+            document: "documentFictif",
+            erreur: null,
+            infosSignature: {
+              issuerCertificat: "issuerCertificat",
+              entiteCertificat: "entiteCertificat",
+              autresInformation: "autresInformation"
+            }
+          }
+        },
+        { EventType: "CustomEvent" }
       )
-    ).toBeDefined();
+    );
+
+    // Test la composition du document final
+    await waitFor(() => {
+      expect(composerDocumentMentionsUlterieuresSpy).toHaveBeenCalledWith(
+        "a5187320-d722-4673-abd7-a73ed41ad8c1",
+        "issuerCertificat",
+        "entiteCertificat"
+      );
+    });
+
+    fireEvent(
+      window,
+      // @ts-ignore
+      createEvent(
+        "signWebextResponse",
+        window,
+        {
+          detail: {
+            direction: "to-call-app",
+            document: "documentFinalCompose",
+            erreur: null,
+            infosSignature: {
+              issuerCertificat: "issuerCertificat",
+              entiteCertificat: "entiteCertificat",
+              autresInformation: "autresInformation"
+            }
+          }
+        },
+        { EventType: "CustomEvent" }
+      )
+    );
+
+    composerDocumentMentionsUlterieuresSpy.mockClear();
+  });
+
+  test("NE DOIT PAS composer le document final si l'information 'entiteCertificat' de la carte est manquant", async () => {
+    const composerDocumentMentionsUlterieuresSpy = jest.spyOn(
+      EtatCivilApi,
+      "composerDocumentMentionsUlterieures"
+    );
+
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID,
+          element: (
+            <PopinSignatureMiseAJourMentions
+              estOuvert={true}
+              setEstOuvert={() => {}}
+            />
+          )
+        }
+      ],
+      [
+        `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/a5187320-d722-4673-abd7-a73ed41ad8c1`
+      ]
+    );
+
+    render(<RouterProvider router={router} />);
+
+    // Simulation d'une signature réussie.
+    fireEvent(
+      window,
+      // @ts-ignore
+      createEvent(
+        "signWebextResponse",
+        window,
+        {
+          detail: {
+            direction: "to-call-app",
+            document: "",
+            erreur: null,
+            infosSignature: {
+              issuerCertificat: "issuerCertificat",
+              autresInformation: "autresInformation"
+            }
+          }
+        },
+        { EventType: "CustomEvent" }
+      )
+    );
+
+    await waitFor(() => {
+      expect(composerDocumentMentionsUlterieuresSpy).not.toHaveBeenCalled();
+    });
+    composerDocumentMentionsUlterieuresSpy.mockClear();
+  });
+
+  test("NE DOIT PAS composer le document final si l'information 'issuerCertificat' de la carte est manquant", async () => {
+    const composerDocumentMentionsUlterieuresSpy = jest.spyOn(
+      EtatCivilApi,
+      "composerDocumentMentionsUlterieures"
+    );
+
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID,
+          element: (
+            <PopinSignatureMiseAJourMentions
+              estOuvert={true}
+              setEstOuvert={() => {}}
+            />
+          )
+        }
+      ],
+      [
+        `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/a5187320-d722-4673-abd7-a73ed41ad8c1`
+      ]
+    );
+
+    render(<RouterProvider router={router} />);
+
+    // Simulation d'une signature réussie.
+    fireEvent(
+      window,
+      // @ts-ignore
+      createEvent(
+        "signWebextResponse",
+        window,
+        {
+          detail: {
+            direction: "to-call-app",
+            document: "",
+            erreur: null,
+            infosSignature: {
+              entiteCertificat: "entiteCertificat",
+              autresInformation: "autresInformation"
+            }
+          }
+        },
+        { EventType: "CustomEvent" }
+      )
+    );
+
+    await waitFor(() => {
+      expect(composerDocumentMentionsUlterieuresSpy).not.toHaveBeenCalled();
+    });
+    composerDocumentMentionsUlterieuresSpy.mockClear();
   });
 });

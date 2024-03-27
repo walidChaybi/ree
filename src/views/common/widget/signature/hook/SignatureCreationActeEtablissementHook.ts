@@ -1,4 +1,3 @@
-import { HTTP_STATUS_OK } from "@api/ApiManager";
 import {
   IComposerDocumentFinalApiHookParams,
   useComposerDocumentFinalApiHook
@@ -10,25 +9,20 @@ import {
 import useMettreAJourStatutApresSignatureApiHook, {
   IMettreAJourStatutApresSignatureParams
 } from "@hook/requete/MettreAJourStatutApresSignatureApiHook";
-import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
-import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { storeRece } from "@util/storeRece";
-import { useEffect, useState } from "react";
-import { HTTP_BAD_REQUEST } from "./../../../../../api/ApiManager";
-import { DOCUMENT_VIDE_A_SIGNER } from "./SignatureHookUtil";
+import { useState } from "react";
+import useComposerEtIntegrerDocumentFinalHook, {
+  IResultatComposerDocumentFinalHook,
+  ISuccesSignatureEtAppelApi
+} from "./ComposerEtIntegrerDocumentFinalHook";
 
 export const useSignatureCreationEtablisementHook = (
   redirectionApresSuccesTraitementSignature: () => void,
   idActe?: string,
   idRequete?: string,
   idSuiviDossier?: string
-) => {
-  const [etatTraitementSignature, setEtatTraitementSignature] =
-    useState<IEtatTraitementSignature>({ termine: false });
-  const [documentASigner, setDocumentASigner] = useState<string>(
-    DOCUMENT_VIDE_A_SIGNER
-  );
+): IResultatComposerDocumentFinalHook => {
   const [composerDocumentFinalParams, setComposerDocumentFinalParams] =
     useState<IComposerDocumentFinalApiHookParams>();
   const [integrerActeSigneParams, setIntegrerActeSigneParams] =
@@ -51,95 +45,59 @@ export const useSignatureCreationEtablisementHook = (
       mettreAJourStatutApresSignatureParams
     );
 
-  useEffect(() => {
-    if (composerDocumentFinalResultat) {
-      if (composerDocumentFinalResultat.codeReponse !== HTTP_STATUS_OK) {
-        setEtatTraitementSignature({
-          termine: true,
-          erreur: composerDocumentFinalResultat.erreur
-        });
-      } else {
-        setDocumentASigner(
-          composerDocumentFinalResultat.documentRecomposeASigner
-        );
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [composerDocumentFinalResultat]);
-
-  useEffect(() => {
-    if (codeReponseIntegrerActeSigne) {
-      if (codeReponseIntegrerActeSigne === HTTP_STATUS_OK) {
-        setMettreAJourStatutApresSignatureParams({
-          idRequete,
-          idSuiviDossier
-        });
-      } else {
-        setEtatTraitementSignature({
-          termine: true,
-          erreur: {
-            code:
-              codeReponseIntegrerActeSigne?.toString() ||
-              HTTP_BAD_REQUEST.toString(),
-            message: ""
-          }
-        });
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [codeReponseIntegrerActeSigne]);
-
-  useEffect(() => {
-    if (mettreAJourStatutApresSignatureResultat) {
-      setEtatTraitementSignature({
-        termine: true,
-        erreur: mettreAJourStatutApresSignatureResultat.erreur
-      });
-    }
-  }, [mettreAJourStatutApresSignatureResultat]);
-
-  const onSuccesSignatureAppNative = (
+  const handleComposerDocumentFinal = (
     document: string,
     informationsCarte: IInfosCarteSignature
   ): void => {
-    if (idActe) {
-      if (!composerDocumentFinalResultat) {
-        setComposerDocumentFinalParams({
-          idActe,
-          issuerCertificat: informationsCarte.issuerCertificat,
-          entiteCertificat: informationsCarte.entiteCertificat
-        });
-      } else {
-        storeRece.utilisateurCourant &&
-          setIntegrerActeSigneParams({
-            idActe,
-            document,
-            infosCarteSignature: informationsCarte,
-            modeAuthentification:
-              storeRece.utilisateurCourant?.modeAuthentification
-          });
-      }
+    setComposerDocumentFinalParams({
+      idActe,
+      issuerCertificat: informationsCarte.issuerCertificat,
+      entiteCertificat: informationsCarte.entiteCertificat
+    });
+  };
+
+  const handleIntegrerDocumentSigne = (
+    document: string,
+    informationsCarte: IInfosCarteSignature
+  ) => {
+    if (idActe && storeRece.utilisateurCourant) {
+      setIntegrerActeSigneParams({
+        idActe,
+        document,
+        infosCarteSignature: informationsCarte,
+        modeAuthentification: storeRece.utilisateurCourant.modeAuthentification
+      });
     }
   };
 
-  const onTraitementSignatureTermine = () => {
-    if (!etatTraitementSignature.erreur) {
-      redirectionApresSuccesTraitementSignature();
-    }
-    if (
-      etatTraitementSignature.erreur?.code !==
-      CodeErreurFonctionnelle.FCT_PLAGE_HORAIRE_SIGNATURE
-    ) {
-      setEtatTraitementSignature({ termine: false });
-    }
-    reinitialiserComposerDocumentFinalResultat();
-    reinitialiserCodeReponseIntegrerActeSigne();
+  const handleMiseAJourStatutRequeteApresIntegration = () => {
+    setMettreAJourStatutApresSignatureParams({
+      idRequete,
+      idSuiviDossier
+    });
   };
 
-  return {
-    documentASigner,
-    onSuccesSignatureAppNative,
-    etatTraitementSignature,
-    onTraitementSignatureTermine
+  const composerDocumentApresSignature: ISuccesSignatureEtAppelApi<
+    Exclude<typeof composerDocumentFinalResultat, undefined>
+  > = {
+    onSuccesSignatureAppNative: handleComposerDocumentFinal,
+    reinitialiserParamsApiHook: reinitialiserComposerDocumentFinalResultat,
+    resultatApiHook: composerDocumentFinalResultat
   };
+
+  const integrerDocumentApresSignature: ISuccesSignatureEtAppelApi<
+    Exclude<typeof codeReponseIntegrerActeSigne, undefined>
+  > = {
+    onSuccesSignatureAppNative: handleIntegrerDocumentSigne,
+    reinitialiserParamsApiHook: reinitialiserCodeReponseIntegrerActeSigne,
+    resultatApiHook: codeReponseIntegrerActeSigne
+  };
+
+  return useComposerEtIntegrerDocumentFinalHook(
+    composerDocumentApresSignature,
+    integrerDocumentApresSignature,
+    handleMiseAJourStatutRequeteApresIntegration,
+    mettreAJourStatutApresSignatureResultat,
+    redirectionApresSuccesTraitementSignature
+  );
 };

@@ -61,6 +61,8 @@ const URL_COMPOSER_DOCUMENT_FINAL = "/composer-document-final";
 const URL_REGISTRE_PAPIER_PROJET_ACTE = "/registre-papier";
 const URL_INTEGRER_ACTE_SIGNE = "/integrer-acte-signe";
 const URL_ACTE_RECOMPOSER_APRES_SIGNATURE = "/recomposer-document-final";
+const URL_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES =
+  "/composer-document-mentions-ulterieures";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -155,6 +157,26 @@ export function integrerActeSigne(
       documentPadesBase64: document,
       signature: { infosSignature: infosCarteSignature },
       modeAuthentification
+    }
+  });
+}
+
+/**
+ * Composition du document mention final à signer.
+ */
+export function composerDocumentMentionsUlterieures(
+  idActe: string,
+  issuerCertificat: string,
+  entiteCertificat: string
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_ACTE}/${idActe}${URL_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES}`,
+    data: {
+      infosSignature: {
+        issuerCertificat,
+        entiteCertificat
+      }
     }
   });
 }

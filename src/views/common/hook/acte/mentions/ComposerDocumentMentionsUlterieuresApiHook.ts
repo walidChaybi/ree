@@ -1,18 +1,18 @@
-import { composerDocumentFinal } from "@api/appels/etatcivilApi";
+import { composerDocumentMentionsUlterieures } from "@api/appels/etatcivilApi";
 import { IErreurTraitementApi } from "@api/IErreurTraitementApi";
 import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { IComposerDocumentFinalApiHookResultat } from "../../../../model/signature/IComposerDocumentFinalApiHookResultat";
+import { IComposerDocumentFinalApiHookResultat } from "../../../../../model/signature/IComposerDocumentFinalApiHookResultat";
 
-export interface IComposerDocumentFinalApiHookParams {
+export interface IComposerDocumentMentionsUlterieuresParams {
   idActe?: string;
   issuerCertificat?: string;
   entiteCertificat?: string;
 }
 
-export const useComposerDocumentFinalApiHook = (
-  params?: IComposerDocumentFinalApiHookParams
+export const useComposerDocumentMentionsUlterieuresApiHook = (
+  params?: IComposerDocumentMentionsUlterieuresParams
 ): [IComposerDocumentFinalApiHookResultat | undefined, () => void] => {
   const [resultat, setResultat] =
     useState<IComposerDocumentFinalApiHookResultat>();
@@ -27,7 +27,7 @@ export const useComposerDocumentFinalApiHook = (
       params?.issuerCertificat &&
       params?.entiteCertificat
     ) {
-      composerDocumentFinal(
+      composerDocumentMentionsUlterieures(
         params.idActe,
         params.issuerCertificat,
         params.entiteCertificat
