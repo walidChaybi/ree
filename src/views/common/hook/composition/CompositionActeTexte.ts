@@ -9,7 +9,7 @@ export interface ICompositionActeTexteParams {
   acteTexteJson: string;
 }
 
-interface ICompositionActeTexteResultat {
+export interface ICompositionActeTexteResultat {
   donneesComposition?: IDonneesComposition;
   erreur?: string;
 }

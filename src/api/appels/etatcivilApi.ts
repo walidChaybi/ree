@@ -33,6 +33,8 @@ export const URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE =
   "/donnees-pour-composition-acte-texte";
 const URL_DONNEES_POUR_COMPOSITION_ACTE_REPRIS =
   "/donnees-pour-composition-acte-repris";
+const URL_DONNEES_POUR_COMPOSITION_ACTE_AVANT_SIGNATURE_MENTIONS =
+  "/donnees-pour-composition-acte-texte-mis-a-jour";
 export const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_MENTION = "/mentions";
@@ -330,21 +332,26 @@ export function getImagesDeLActe(identifiantActe: string): Promise<any> {
   });
 }
 
-export function getDonneesPourCompositionActeTexte(
-  identifiant: string
-): Promise<any> {
+export function getDonneesPourCompositionActeTexte(idActe: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${identifiant}${URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE}`
+    uri: `${URL_ACTE}/${idActe}${URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE}`
   });
 }
 
-export function getDonneesPourCompositionActeRepris(
-  identifiant: string
+export function getDonneesPourCompositionActeRepris(idActe: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_ACTE}/${idActe}${URL_DONNEES_POUR_COMPOSITION_ACTE_REPRIS}`
+  });
+}
+
+export function getDonneesPourCompositionActeAvantSignatureMentions(
+  idActe: string
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${identifiant}${URL_DONNEES_POUR_COMPOSITION_ACTE_REPRIS}`
+    uri: `${URL_ACTE}/${idActe}${URL_DONNEES_POUR_COMPOSITION_ACTE_AVANT_SIGNATURE_MENTIONS}`
   });
 }
 

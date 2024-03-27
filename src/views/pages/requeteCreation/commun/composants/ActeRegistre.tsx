@@ -33,7 +33,7 @@ const ActeRegistre: React.FC<ActeRegistreProps> = ({
     <div className="ActeRegistre">
       {affichageApresSignature ? (
         <VisionneuseDocument
-          infoBulle={""}
+          infoBulle="Visionneuse acte registre"
           typeMime={MimeType.APPLI_PDF}
           contenuBlob={resultat}
         />

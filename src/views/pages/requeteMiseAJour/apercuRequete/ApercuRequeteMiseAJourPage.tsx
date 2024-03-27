@@ -1,5 +1,6 @@
 import { Droit } from "@model/agent/enum/Droit";
 import { estOfficierHabiliterPourTousLesDroits } from "@model/agent/IOfficier";
+import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import ActeRegistre from "@pages/requeteCreation/commun/composants/ActeRegistre";
 import { getLibelle, UN, ZERO } from "@util/Utils";
@@ -7,8 +8,9 @@ import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnC
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { ApercuActeMisAJour } from "../commun/ApercuActeMisAjour";
 import MiseAJourAnalyseMarginale from "./contenu/MiseAJourAnalyseMarginal/MiseAJourAnalyseMarginal";
 import MiseAJourMentions from "./contenu/MiseAJourMentions/MiseAJourMentions";
 import "./scss/ApercuRequeteMiseAJourPage.scss";
@@ -44,6 +46,7 @@ interface IMiseAJourMentionsContext {
   >;
   estFormulaireDirty: boolean;
   setEstFormulaireDirty: React.Dispatch<React.SetStateAction<boolean>>;
+  setOngletSelectionne: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const MiseAJourMentionsContext =
@@ -62,6 +65,9 @@ export const MiseAJourMentionsContext =
     estFormulaireDirty: false,
     setEstFormulaireDirty: ((value: boolean) => {}) as React.Dispatch<
       React.SetStateAction<boolean>
+    >,
+    setOngletSelectionne: ((value: number) => {}) as React.Dispatch<
+      React.SetStateAction<number>
     >
   });
 
@@ -75,27 +81,63 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   const [listeMentions, setListeMentions] = useState<IMentions[]>([]);
   const [estFormulaireDirty, setEstFormulaireDirty] = useState<boolean>(false);
   const [estPopinOuverte, setEstPopinOuverte] = useState<boolean>(false);
+  const [ongletSelectionne, setOngletSelectionne] = useState(0);
 
-  const listeOngletsGauche: ItemListe[] = [
-    {
-      titre: getLibelle("Acte Registre"),
-      component: <ActeRegistre idActeAAfficher={idActeParam} />,
-      index: ZERO
+  const getListeOngletsGauche = (): ItemListe[] => {
+    const liste: ItemListe[] = [
+      {
+        titre: getLibelle("Acte Registre"),
+        component: <ActeRegistre idActeAAfficher={idActeParam} />,
+        index: ZERO
+      }
+    ];
+    if (listeMentionsEnregistrees.length > 0) {
+      liste.push({
+        titre: getLibelle("Apercu acte mis à jour"),
+        component: <ApercuActeMisAJour idActeAAfficher={idActeParam} />,
+        index: UN
+      });
     }
-  ];
 
-  const listeOngletsDroit: ItemListe[] = [
-    {
-      titre: getLibelle("Gérer les mentions"),
-      component: <MiseAJourMentions />,
-      index: ZERO
-    },
-    {
-      titre: getLibelle("Analyse marginale"),
-      component: <MiseAJourAnalyseMarginale />,
-      index: UN
+    return liste;
+  };
+
+  useEffect(() => {
+    if (!listeMentionsEnregistrees.length) {
+      setOngletSelectionne(ZERO);
     }
-  ];
+  }, [listeMentionsEnregistrees]);
+
+  const getListeOngletsDroit = (): ItemListe[] => {
+    const liste: ItemListe[] = [
+      {
+        titre: getLibelle("Gérer les mentions"),
+        component: <MiseAJourMentions />,
+        index: ZERO
+      }
+    ];
+
+    const mentionChangeAM = listeMentions.some(mention => {
+      return TypeMention.getTypeMentionById(
+        mention.typeMention.idMentionNiveauTrois ||
+          mention.typeMention.idMentionNiveauDeux ||
+          mention.typeMention.idMentionNiveauUn
+      )?.affecteAnalyseMarginale;
+    });
+
+    if (mentionChangeAM) {
+      liste.push({
+        titre: getLibelle("Analyse marginale"),
+        component: <MiseAJourAnalyseMarginale />,
+        index: UN
+      });
+    }
+    return liste;
+  };
+
+  const handleChange = (newValue: number) => {
+    setOngletSelectionne(newValue);
+  };
 
   return (
     <div className="ApercuRequeteMiseAJourPage">
@@ -108,13 +150,19 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
           listeMentionsEnregistrees,
           setListeMentionsEnregistrees,
           estFormulaireDirty,
-          setEstFormulaireDirty
+          setEstFormulaireDirty,
+          setOngletSelectionne
         }}
       >
         {idActeParam ? (
           <>
             <div className="OngletsApercuCreationEtablissement">
-              <VoletAvecOnglet liste={listeOngletsGauche} />
+              <VoletAvecOnglet
+                liste={getListeOngletsGauche()}
+                ongletSelectionne={ongletSelectionne}
+                checkDirty={true}
+                handleChange={handleChange}
+              />
               <Bouton
                 className="boutonAbandonner"
                 title="Abandonner"
@@ -124,7 +172,10 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
               </Bouton>
             </div>
             <div className="OngletsApercuCreationEtablissement">
-              <VoletAvecOnglet liste={listeOngletsDroit} checkDirty={true} />
+              <VoletAvecOnglet
+                liste={getListeOngletsDroit()}
+                checkDirty={true}
+              />
               {estOfficierHabiliterPourTousLesDroits([
                 Droit.SIGNER_MENTION,
                 Droit.METTRE_A_JOUR_ACTE

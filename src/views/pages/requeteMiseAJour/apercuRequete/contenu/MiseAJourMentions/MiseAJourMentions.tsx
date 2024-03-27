@@ -26,7 +26,8 @@ const MiseAJourMentions: React.FC = () => {
     setListeMentionsEnregistrees,
     numeroOrdreEnModification,
     setNumeroOrdreEnModification,
-    estFormulaireDirty
+    estFormulaireDirty,
+    setOngletSelectionne
   } = useContext(MiseAJourMentionsContext);
   const [estPoppinOuverte, setEstPoppinOuverte] = useState<boolean>(false);
   const [itemASupprimer, setItemASupprimer] = useState<number>();
@@ -91,6 +92,7 @@ const MiseAJourMentions: React.FC = () => {
         }))
       });
     }
+    setOngletSelectionne(UN);
   };
 
   useEffect(() => {

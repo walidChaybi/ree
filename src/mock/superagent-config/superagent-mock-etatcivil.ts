@@ -383,6 +383,24 @@ export const configEtatcivil = [
           }
         };
       }
+      // Donnes pour composition acte texte en mise a jour mentions
+      if (
+        match[1] ===
+          "/acte/d8708d77-a359-4553-be72-1eb5f246d4da/donnees-pour-composition-acte-texte-mis-a-jour" ||
+        match[1] ===
+          "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/donnees-pour-composition-acte-texte-mis-a-jour"
+      ) {
+        return {
+          body: {
+            reference_acte: "RECE",
+            nature_acte: "ACTE DE RECONNAISSANCE",
+            titulaires:
+              "de lolita MICHEL DE LAVANDIÈRE DU GRAND-LARGE\net marie-paulita, zaria, léna GREENWALD",
+            texte_corps_acte: "mon acte en texte",
+            mentions: "Divorce avec Richard."
+          }
+        };
+      }
 
       /////////////////////////////////////////////////////////////////////
       // actes utilisés pour le test de pagination (avec changement de plage)
