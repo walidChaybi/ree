@@ -747,7 +747,9 @@ export const configEtatcivil = [
         match[1] === "/acte/b45079a5-9e8f-488a-b07c-c4c2az613121/alertes" ||
         match[1] === "/acte/b45079a5-9e8f-478a-b07c-c4c2az671123/alertes" ||
         match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/alertes" ||
-        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/alertes"
+        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/alertes" ||
+        match[1] === "/acte/885bdb13-d995-4dbd-93cb-a7a3b2eee5c8/alertes" ||
+        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/alertes"
       ) {
         return { data: ReponseAppelGetAlertesActe.data };
       }

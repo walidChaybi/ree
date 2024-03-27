@@ -7,5 +7,11 @@ test("Doit rendre le composant ApercuProjet de la page création correctement", 
       <ActeRegistre idActeAAfficher={"885bdb13-d995-4dbd-93cb-a7a3b2eee5c8"} />
     );
     expect(container.getElementsByClassName("ActeRegistre").length).toBe(1);
+    expect(container.getElementsByClassName("AlertesActes")).toBeDefined();
+    expect(
+      container.getElementsByClassName("DocumentActeViewer")
+    ).toBeDefined();
+
+
   });
 });

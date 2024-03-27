@@ -12,9 +12,9 @@ import {
 } from "@hook/alertes/GetAlertesActeApiHook";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { getLibelle } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { BoutonAjouterAlerte } from "@widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
 import { IAjouterAlerteFormValue } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
@@ -23,7 +23,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import "./scss/AlertesActes.scss";
 
 export interface AlertesActesProps {
-  detailRequete: IRequeteDelivrance;
+  detailRequete?: IRequeteDelivrance;
   idActeInit?: string;
   addActe?: IGetAlertesActeApiHookParameters;
   ajoutAlerte?: (alerte: Map<string, IAlerte[]>) => void;

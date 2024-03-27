@@ -1,3 +1,4 @@
+import { AlertesActes } from "@composant/alertesActe/AlertesActes";
 import { VisionneuseActe } from "@composant/visionneuseActe/VisionneuseActe";
 import { useActeRecomposerApresSignatureApiHook } from "@hook/acte/ActeRecomposerApresSignatureApiHook";
 import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
@@ -37,7 +38,10 @@ const ActeRegistre: React.FC<ActeRegistreProps> = ({
           contenuBlob={resultat}
         />
       ) : (
-        <VisionneuseActe idActe={idActeAAfficher} />
+        <>
+          <AlertesActes idActeInit={idActeAAfficher} />
+          <VisionneuseActe idActe={idActeAAfficher} />
+        </>
       )}
     </div>
   );
