@@ -31,7 +31,12 @@ export interface ISuccesSignatureEtAppelApi<
 const useComposerEtIntegrerDocumentFinalHook = (
   composerDocumentApresSignature: ISuccesSignatureEtAppelApi<IComposerDocumentFinalApiHookResultat>,
   integrerDocumentApresSignature: ISuccesSignatureEtAppelApi<number>,
-  handleMiseAJourStatutRequeteApresIntegration: () => void,
+  handleMiseAJourStatutRequeteApresIntegration: (
+    // FIXME: Retirer 'setEtatTraitementSignature' une fois RECE-2553 développée.
+    setEtatTraitementSignature?: React.Dispatch<
+      React.SetStateAction<IEtatTraitementSignature>
+    >
+  ) => void,
   miseAJourStatutRequeteApresIntegrationResultat?: IMettreAJourStatutApresSignatureResultat,
   handleRedirectionApresSignature?: () => void
 ): IResultatComposerDocumentFinalHook => {
@@ -70,7 +75,9 @@ const useComposerEtIntegrerDocumentFinalHook = (
   useEffect(() => {
     if (integrerDocumentApresSignature.resultatApiHook) {
       if (integrerDocumentApresSignature.resultatApiHook === HTTP_STATUS_OK) {
-        handleMiseAJourStatutRequeteApresIntegration();
+        handleMiseAJourStatutRequeteApresIntegration(
+          setEtatTraitementSignature
+        );
       } else {
         setEtatTraitementSignature({
           termine: true,

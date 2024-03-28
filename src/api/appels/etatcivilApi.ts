@@ -62,6 +62,7 @@ export const URL_BULLETIN_IDENTIFICATION = "/bulletinIdentification";
 const URL_COMPOSER_DOCUMENT_FINAL = "/composer-document-final";
 const URL_REGISTRE_PAPIER_PROJET_ACTE = "/registre-papier";
 const URL_INTEGRER_ACTE_SIGNE = "/integrer-acte-signe";
+const URL_INTEGRER_DOCUMENT_MENTION_SIGNE = "/integrer-document-mention-signe";
 const URL_ACTE_RECOMPOSER_APRES_SIGNATURE = "/recomposer-document-final";
 const URL_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES =
   "/composer-document-mentions-ulterieures";
@@ -179,6 +180,26 @@ export function composerDocumentMentionsUlterieures(
         issuerCertificat,
         entiteCertificat
       }
+    }
+  });
+}
+
+/**
+ * Intègre le document signé dans RECE.
+ */
+export function integrerDocumentMentionSigne(
+  idActe: string,
+  documentPadesBase64: string,
+  infosCarteSignature: IInfosCarteSignature,
+  modeAuthentification: TModeAuthentification
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_ACTE}/${idActe}${URL_INTEGRER_DOCUMENT_MENTION_SIGNE}`,
+    data: {
+      documentPadesBase64,
+      signature: { infosSignature: infosCarteSignature },
+      modeAuthentification
     }
   });
 }

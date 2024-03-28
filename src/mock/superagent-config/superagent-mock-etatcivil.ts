@@ -594,6 +594,13 @@ export const configEtatcivil = [
         };
       }
 
+      if (
+        match[1] ===
+        "/acte/a5187320-d722-4673-abd7-a73ed41ad8c1/integrer-document-mention-signe"
+      ) {
+        return { status: 200 };
+      }
+
       ////////////////////////////////////////////////////////////////////////
 
       if (match[1] === "/nomenclature/NATURE_RC") {

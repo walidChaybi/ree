@@ -1,5 +1,11 @@
+import {
+  IIntegrerDocumentMentionsUlterieuresParams,
+  useIntegrerDocumentMentionsUlterieuresApiHook
+} from "@hook/acte/mentions/IntegrerDocumentMentionsUlterieuresApiHook";
+import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import messageManager from "@util/messageManager";
+import { storeRece } from "@util/storeRece";
 import { useState } from "react";
 import {
   IComposerDocumentMentionsUlterieuresParams,
@@ -14,55 +20,84 @@ const useSignatureMiseAJourHook = (
   idActe?: string
 ): IResultatComposerDocumentFinalHook => {
   const [
-    composerDocumentMentionFinalParams,
-    setComposerDocumentMentionFinalParams
+    composerDocumentMentionsUlterieuresParams,
+    setComposerDocumentMentionsUlterieuresParams
   ] = useState<IComposerDocumentMentionsUlterieuresParams>();
+  const [
+    integrerDocumentMentionsUlterieuresParams,
+    setIntegrerDocumentMentionsUlterieuresParams
+  ] = useState<IIntegrerDocumentMentionsUlterieuresParams>();
+
   const [
     composerDocumentMentionsUlterieuresResultat,
     reinitialiserComposerDocumentMentionsUlterieuresResultat
   ] = useComposerDocumentMentionsUlterieuresApiHook(
-    composerDocumentMentionFinalParams
+    composerDocumentMentionsUlterieuresParams
+  );
+  const {
+    codeReponseResultat: codeReponseIntegrerDocumentMentionsUlterieures,
+    reinitialiserParamsApiHook:
+      reinitialiserCodeReponseIntegrerDocumentMentionsUlterieures
+  } = useIntegrerDocumentMentionsUlterieuresApiHook(
+    integrerDocumentMentionsUlterieuresParams
   );
 
-  const handleComposerDocumentFinal = (
+  const handleComposerDocumentMentionsUlterieures = (
     document: string,
     informationsCarte: IInfosCarteSignature
   ) => {
-    setComposerDocumentMentionFinalParams({
+    setComposerDocumentMentionsUlterieuresParams({
       idActe,
       issuerCertificat: informationsCarte.issuerCertificat,
       entiteCertificat: informationsCarte.entiteCertificat
     });
   };
 
+  const handleIntegrerDocumentMentionsUlterieures = (
+    document: string,
+    informationsCarte: IInfosCarteSignature
+  ) => {
+    if (idActe && storeRece.utilisateurCourant) {
+      setIntegrerDocumentMentionsUlterieuresParams({
+        idActe,
+        document,
+        infosCarteSignature: informationsCarte,
+        modeAuthentification: storeRece.utilisateurCourant.modeAuthentification
+      });
+    }
+  };
+
+  const handleMiseAJourStatutRequeteApresIntegration = (
+    setEtatTraitementSignature?: React.Dispatch<
+      React.SetStateAction<IEtatTraitementSignature>
+    >
+  ) => {
+    messageManager.showInfo(
+      "Les mentions ont été enregistrées en base. L'affichage du document signé n'est pas disponible, en attente de RECE-2553."
+    );
+    setEtatTraitementSignature && setEtatTraitementSignature({ termine: true });
+  };
+
   const composerDocumentApresSignature: ISuccesSignatureEtAppelApi<
     Exclude<typeof composerDocumentMentionsUlterieuresResultat, undefined>
   > = {
-    onSuccesSignatureAppNative: handleComposerDocumentFinal,
+    onSuccesSignatureAppNative: handleComposerDocumentMentionsUlterieures,
     reinitialiserParamsApiHook:
       reinitialiserComposerDocumentMentionsUlterieuresResultat,
     resultatApiHook: composerDocumentMentionsUlterieuresResultat
   };
 
-  // TODO: A faire avec l'US RECE-2552
   const integrerDocumentApresSignature: ISuccesSignatureEtAppelApi<number> = {
-    onSuccesSignatureAppNative: (
-      document: string,
-      informationCarte: IInfosCarteSignature
-    ): void => {
-      messageManager.showInfo(
-        "Le document recomposé est signé, mais la suite du processus de signature n'est pas implémenté. Voir RECE-2252 et RECE-2553."
-      );
-    },
-    reinitialiserParamsApiHook: (): void => {
-      throw new Error("Function not implemented.");
-    }
+    onSuccesSignatureAppNative: handleIntegrerDocumentMentionsUlterieures,
+    reinitialiserParamsApiHook:
+      reinitialiserCodeReponseIntegrerDocumentMentionsUlterieures,
+    resultatApiHook: codeReponseIntegrerDocumentMentionsUlterieures
   };
 
   return useComposerEtIntegrerDocumentFinalHook(
     composerDocumentApresSignature,
     integrerDocumentApresSignature,
-    () => {}
+    handleMiseAJourStatutRequeteApresIntegration
   );
 };
 

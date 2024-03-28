@@ -40,11 +40,15 @@ test("render PopinSignatureMiseAJourMentions QUAND on ouvre la popin", async () 
 });
 
 describe("Doit signer le document QUAND on valide le code pin.", () => {
-  test("DOIT composer le document final, puis enregistrer le document final signé, puis modifier le statut de la requete et l'avancement du projet d'acte", async () => {
+  test("DOIT composer le document contenant les mentions ultérieures, puis enregistrer le document signé", async () => {
     storeRece.utilisateurCourant = mockConnectedUser as any as IOfficier;
     const composerDocumentMentionsUlterieuresSpy = jest.spyOn(
       EtatCivilApi,
       "composerDocumentMentionsUlterieures"
+    );
+    const integrerDocumentMentionsUlterieuresSpy = jest.spyOn(
+      EtatCivilApi,
+      "integrerDocumentMentionSigne"
     );
 
     const router = createTestingRouter(
@@ -120,6 +124,11 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       )
     );
 
+    await waitFor(() => {
+      expect(integrerDocumentMentionsUlterieuresSpy).toHaveBeenCalledTimes(1);
+    });
+
+    integrerDocumentMentionsUlterieuresSpy.mockClear();
     composerDocumentMentionsUlterieuresSpy.mockClear();
   });
 

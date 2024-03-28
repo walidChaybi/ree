@@ -1,25 +1,24 @@
-import { HTTP_BAD_REQUEST } from "@api/ApiManager";
-import { integrerActeSigne } from "@api/appels/etatcivilApi";
+import { integrerDocumentMentionSigne } from "@api/appels/etatcivilApi";
 import { TModeAuthentification } from "@model/agent/types";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
-export interface IIntegrerActeSigneApiHookParams {
+export interface IIntegrerDocumentMentionsUlterieuresParams {
   idActe: string;
   document: string;
   infosCarteSignature: IInfosCarteSignature;
   modeAuthentification: TModeAuthentification;
 }
 
-interface IIntegrerActeSigneApiHookResultat {
+interface IIntegrerDocumentMentionsUlterieuresApiHookResultat {
   codeReponseResultat?: number;
   reinitialiserParamsApiHook: () => void;
 }
 
-export const useIntegrerActeSigneApiHook = (
-  params?: IIntegrerActeSigneApiHookParams
-): IIntegrerActeSigneApiHookResultat => {
+export const useIntegrerDocumentMentionsUlterieuresApiHook = (
+  params?: IIntegrerDocumentMentionsUlterieuresParams
+): IIntegrerDocumentMentionsUlterieuresApiHookResultat => {
   const [codeReponse, setCodeReponse] = useState<number>();
 
   const reinitialiserCodeReponse = () => {
@@ -28,17 +27,17 @@ export const useIntegrerActeSigneApiHook = (
 
   useEffect(() => {
     if (params) {
-      integrerActeSigne(
+      integrerDocumentMentionSigne(
         params.idActe,
         params.document,
         params.infosCarteSignature,
         params.modeAuthentification
       )
         .then(reponse => setCodeReponse(reponse.status))
-        .catch((errors: any) => {
-          setCodeReponse(HTTP_BAD_REQUEST); // TODO: Revoir la gestion du status code.
+        .catch((error: any) => {
+          setCodeReponse(error.status); // TODO: Revoir la gestion du status code.
           logError({
-            error: errors,
+            error,
             messageUtilisateur:
               "Impossible d'enregistrer le document final signé."
           });

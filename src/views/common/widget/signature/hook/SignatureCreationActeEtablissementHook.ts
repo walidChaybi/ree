@@ -36,10 +36,10 @@ export const useSignatureCreationEtablisementHook = (
     composerDocumentFinalResultat,
     reinitialiserComposerDocumentFinalResultat
   ] = useComposerDocumentFinalApiHook(composerDocumentFinalParams);
-  const [
-    codeReponseIntegrerActeSigne,
-    reinitialiserCodeReponseIntegrerActeSigne
-  ] = useIntegrerActeSigneApiHook(integrerActeSigneParams);
+  const {
+    codeReponseResultat: codeReponseIntegrerActeSigne,
+    reinitialiserParamsApiHook: reinitialiserCodeReponseIntegrerActeSigne
+  } = useIntegrerActeSigneApiHook(integrerActeSigneParams);
   const mettreAJourStatutApresSignatureResultat =
     useMettreAJourStatutApresSignatureApiHook(
       mettreAJourStatutApresSignatureParams
