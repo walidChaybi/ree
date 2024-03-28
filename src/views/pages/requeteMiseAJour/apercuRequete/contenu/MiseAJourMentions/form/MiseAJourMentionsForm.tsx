@@ -10,10 +10,8 @@ import { IMiseAJourMentionsForm } from "@model/form/miseAJour/IMiseAJourMentions
 import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { triListeObjetsSurPropriete, UN } from "@util/Utils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { useContext } from "react";
 import * as Yup from "yup";
-import { CaracteresAutorises } from "../../../../../../../ressources/Regex";
 import AjoutMentionsMiseAJour from "./AjoutMentionsMiseAJour";
 import "./scss/MiseAJourMentionsForm.scss";
 
@@ -42,9 +40,9 @@ const ValidationSchema = Yup.object({
       then: Yup.string().required("Selectionnez le sous-type de la mention")
     })
   }),
-  [TEXTE_MENTION]: Yup.string()
-    .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
-    .required("Veuillez saisir le texte de la mention")
+  [TEXTE_MENTION]: Yup.string().required(
+    "Veuillez saisir le texte de la mention"
+  )
 });
 
 interface IMiseAJourMentionsFormProps {
