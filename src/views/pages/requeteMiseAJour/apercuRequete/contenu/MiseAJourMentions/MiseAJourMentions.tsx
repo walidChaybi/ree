@@ -111,6 +111,8 @@ const MiseAJourMentions: React.FC = () => {
       shallowEgalTableau(listeMentions, listeMentionsEnregistrees)
     ) {
       setEstBoutonTerminerSignerActif(true);
+    } else {
+      setEstBoutonTerminerSignerActif(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
