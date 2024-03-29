@@ -2,7 +2,7 @@ import {
   IEnregistrerMentionsParams,
   useEnregistrerMentionsApiHook
 } from "@hook/acte/EnregistrerMentionsApiHook";
-import { getLibelle, UN, ZERO } from "@util/Utils";
+import { getLibelle, shallowEgalTableau, UN, ZERO } from "@util/Utils";
 import {
   ListeGlisserDeposer,
   ListeItem
@@ -23,11 +23,13 @@ const MiseAJourMentions: React.FC = () => {
   const {
     listeMentions,
     setListeMentions,
+    listeMentionsEnregistrees,
     setListeMentionsEnregistrees,
     numeroOrdreEnModification,
     setNumeroOrdreEnModification,
     estFormulaireDirty,
-    setOngletSelectionne
+    setOngletSelectionne,
+    setEstBoutonTerminerSignerActif
   } = useContext(MiseAJourMentionsContext);
   const [estPoppinOuverte, setEstPoppinOuverte] = useState<boolean>(false);
   const [itemASupprimer, setItemASupprimer] = useState<number>();
@@ -71,6 +73,7 @@ const MiseAJourMentions: React.FC = () => {
       setListeMentions(listeMentionsFiltree);
       setEstPoppinOuverte(false);
       setItemASupprimer(undefined);
+      setEstBoutonTerminerSignerActif(false);
     }
   };
 
@@ -101,6 +104,21 @@ const MiseAJourMentions: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enregistrerMentionsApiHookResultat]);
+
+  useEffect(() => {
+    if (
+      enregistrerMentionsApiHookResultat &&
+      shallowEgalTableau(listeMentions, listeMentionsEnregistrees)
+    ) {
+      setEstBoutonTerminerSignerActif(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    estFormulaireDirty,
+    enregistrerMentionsApiHookResultat,
+    listeMentions,
+    listeMentionsEnregistrees
+  ]);
 
   return (
     <>

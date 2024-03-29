@@ -47,6 +47,9 @@ interface IMiseAJourMentionsContext {
   estFormulaireDirty: boolean;
   setEstFormulaireDirty: React.Dispatch<React.SetStateAction<boolean>>;
   setOngletSelectionne: React.Dispatch<React.SetStateAction<number>>;
+  setEstBoutonTerminerSignerActif: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
 }
 
 export const MiseAJourMentionsContext =
@@ -68,6 +71,9 @@ export const MiseAJourMentionsContext =
     >,
     setOngletSelectionne: ((value: number) => {}) as React.Dispatch<
       React.SetStateAction<number>
+    >,
+    setEstBoutonTerminerSignerActif: ((value: boolean) => {}) as React.Dispatch<
+      React.SetStateAction<boolean>
     >
   });
 
@@ -80,8 +86,11 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   >([]);
   const [listeMentions, setListeMentions] = useState<IMentions[]>([]);
   const [estFormulaireDirty, setEstFormulaireDirty] = useState<boolean>(false);
-  const [estPopinOuverte, setEstPopinOuverte] = useState<boolean>(false);
+  const [estPopinSignatureOuverte, setEstPopinSignatureOuverte] =
+    useState<boolean>(false);
   const [ongletSelectionne, setOngletSelectionne] = useState(0);
+  const [estBoutonTerminerSignerActif, setEstBoutonTerminerSignerActif] =
+    useState(false);
 
   const getListeOngletsGauche = (): ItemListe[] => {
     const liste: ItemListe[] = [
@@ -101,6 +110,13 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
 
     return liste;
   };
+
+  useEffect(() => {
+    if (estFormulaireDirty) {
+      setEstBoutonTerminerSignerActif(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [estFormulaireDirty]);
 
   useEffect(() => {
     if (!listeMentionsEnregistrees.length) {
@@ -151,7 +167,8 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
           setListeMentionsEnregistrees,
           estFormulaireDirty,
           setEstFormulaireDirty,
-          setOngletSelectionne
+          setOngletSelectionne,
+          setEstBoutonTerminerSignerActif
         }}
       >
         {idActeParam ? (
@@ -180,14 +197,17 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
                 Droit.SIGNER_MENTION,
                 Droit.METTRE_A_JOUR_ACTE
               ]) && (
-                <Bouton onClick={() => setEstPopinOuverte(true)}>
+                <Bouton
+                  disabled={!estBoutonTerminerSignerActif}
+                  onClick={() => setEstPopinSignatureOuverte(true)}
+                >
                   {getLibelle("Terminer et Signer")}
                 </Bouton>
               )}
             </div>
             <PopinSignatureMiseAJourMentions
-              estOuvert={estPopinOuverte}
-              setEstOuvert={setEstPopinOuverte}
+              estOuvert={estPopinSignatureOuverte}
+              setEstOuvert={setEstPopinSignatureOuverte}
             />
           </>
         ) : (
