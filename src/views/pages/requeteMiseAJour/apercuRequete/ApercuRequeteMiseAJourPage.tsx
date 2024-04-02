@@ -3,6 +3,7 @@ import { estOfficierHabiliterPourTousLesDroits } from "@model/agent/IOfficier";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import ActeRegistre from "@pages/requeteCreation/commun/composants/ActeRegistre";
+import messageManager from "@util/messageManager";
 import { getLibelle, UN, ZERO } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
@@ -98,6 +99,9 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     // A revoir quand on aura corriger le bug des onglets de VoletAvecOnglet.
     setOngletSelectionne(ZERO);
     setAffichageApresSignature(true);
+    messageManager.showSuccess(
+      getLibelle("L'acte a été mis à jour avec succès.")
+    );
   };
 
   const getListeOngletsGauche = (): ItemListe[] => {

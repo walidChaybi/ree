@@ -9,6 +9,8 @@ type PopinSignatureMiseAJourMentionsProps = Pick<
   "estOuvert" | "setEstOuvert"
 > & { actionApresSignatureReussie: () => void };
 
+const TRAITEMENT_SIGNATURE_TIMEOUT_MS = 45000;
+
 export const PopinSignatureMiseAJourMentions: React.FC<
   PopinSignatureMiseAJourMentionsProps
 > = ({ estOuvert, setEstOuvert, actionApresSignatureReussie }) => {
@@ -37,6 +39,7 @@ export const PopinSignatureMiseAJourMentions: React.FC<
       onSuccesSignature={onSuccesSignatureAppNative}
       etatTraitementSignature={etatTraitementSignature}
       onTraitementSignatureTermine={onTraitementTermine}
+      timeoutTraitementSignature={TRAITEMENT_SIGNATURE_TIMEOUT_MS}
     />
   );
 };
