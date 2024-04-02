@@ -7,11 +7,11 @@ import { PopinSignature, PopinSignatureProps } from "./PopinSignature";
 type PopinSignatureMiseAJourMentionsProps = Pick<
   PopinSignatureProps,
   "estOuvert" | "setEstOuvert"
->;
+> & { actionApresSignatureReussie: () => void };
 
 export const PopinSignatureMiseAJourMentions: React.FC<
   PopinSignatureMiseAJourMentionsProps
-> = ({ estOuvert, setEstOuvert }) => {
+> = ({ estOuvert, setEstOuvert, actionApresSignatureReussie }) => {
   const { idActeParam } = useParams();
   const {
     documentASigner,
@@ -19,6 +19,13 @@ export const PopinSignatureMiseAJourMentions: React.FC<
     etatTraitementSignature,
     onTraitementSignatureTermine
   } = useSignatureMiseAJourHook(idActeParam);
+
+  const onTraitementTermine = () => {
+    onTraitementSignatureTermine();
+    if (etatTraitementSignature.termine && !etatTraitementSignature.erreur) {
+      actionApresSignatureReussie();
+    }
+  };
 
   return (
     <PopinSignature
@@ -29,7 +36,7 @@ export const PopinSignatureMiseAJourMentions: React.FC<
       texte={TypePopinSignature.getTextePopinSignatureMentions() || ""}
       onSuccesSignature={onSuccesSignatureAppNative}
       etatTraitementSignature={etatTraitementSignature}
-      onTraitementSignatureTermine={onTraitementSignatureTermine}
+      onTraitementSignatureTermine={onTraitementTermine}
     />
   );
 };

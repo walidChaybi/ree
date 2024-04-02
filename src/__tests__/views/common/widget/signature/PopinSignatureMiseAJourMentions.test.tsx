@@ -30,6 +30,9 @@ test("render PopinSignatureMiseAJourMentions QUAND on ouvre la popin", async () 
       <PopinSignatureMiseAJourMentions
         estOuvert={true}
         setEstOuvert={() => {}}
+        actionApresSignatureReussie={function (): void {
+          throw new Error("Function not implemented.");
+        }}
       />
     </MemoryRouter>
   );
@@ -59,6 +62,7 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
             <PopinSignatureMiseAJourMentions
               estOuvert={true}
               setEstOuvert={() => {}}
+              actionApresSignatureReussie={() => {}}
             />
           )
         }
@@ -146,6 +150,7 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
             <PopinSignatureMiseAJourMentions
               estOuvert={true}
               setEstOuvert={() => {}}
+              actionApresSignatureReussie={() => {}}
             />
           )
         }
@@ -199,6 +204,7 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
             <PopinSignatureMiseAJourMentions
               estOuvert={true}
               setEstOuvert={() => {}}
+              actionApresSignatureReussie={() => {}}
             />
           )
         }

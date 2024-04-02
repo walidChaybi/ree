@@ -32,7 +32,7 @@ const useComposerEtIntegrerDocumentFinalHook = (
   composerDocumentApresSignature: ISuccesSignatureEtAppelApi<IComposerDocumentFinalApiHookResultat>,
   integrerDocumentApresSignature: ISuccesSignatureEtAppelApi<number>,
   handleMiseAJourStatutRequeteApresIntegration: (
-    // FIXME: Retirer 'setEtatTraitementSignature' une fois RECE-2553 développée.
+    // FIXME: Retirer 'setEtatTraitementSignature' une fois RECE-2604 développée.
     setEtatTraitementSignature?: React.Dispatch<
       React.SetStateAction<IEtatTraitementSignature>
     >

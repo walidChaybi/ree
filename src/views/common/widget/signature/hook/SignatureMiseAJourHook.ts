@@ -4,7 +4,6 @@ import {
 } from "@hook/acte/mentions/IntegrerDocumentMentionsUlterieuresApiHook";
 import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
-import messageManager from "@util/messageManager";
 import { storeRece } from "@util/storeRece";
 import { useState } from "react";
 import {
@@ -72,9 +71,6 @@ const useSignatureMiseAJourHook = (
       React.SetStateAction<IEtatTraitementSignature>
     >
   ) => {
-    messageManager.showInfo(
-      "Les mentions ont été enregistrées en base. L'affichage du document signé n'est pas disponible, en attente de RECE-2553."
-    );
     setEtatTraitementSignature && setEtatTraitementSignature({ termine: true });
   };
 

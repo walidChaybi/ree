@@ -91,16 +91,29 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   const [ongletSelectionne, setOngletSelectionne] = useState(0);
   const [estBoutonTerminerSignerActif, setEstBoutonTerminerSignerActif] =
     useState(false);
+  const [affichageApresSignature, setAffichageApresSignature] = useState(false);
+
+  const handleAffichageActeRecomposeApresSignature = () => {
+    // TODO: [QuickFix] setOngletSelectionne permet de basculer sur le bon onglet.
+    // A revoir quand on aura corriger le bug des onglets de VoletAvecOnglet.
+    setOngletSelectionne(ZERO);
+    setAffichageApresSignature(true);
+  };
 
   const getListeOngletsGauche = (): ItemListe[] => {
     const liste: ItemListe[] = [
       {
         titre: getLibelle("Acte Registre"),
-        component: <ActeRegistre idActeAAfficher={idActeParam} />,
+        component: (
+          <ActeRegistre
+            idActeAAfficher={idActeParam}
+            affichageApresSignature={affichageApresSignature}
+          />
+        ),
         index: ZERO
       }
     ];
-    if (listeMentionsEnregistrees.length > 0) {
+    if (listeMentionsEnregistrees.length > ZERO && !affichageApresSignature) {
       liste.push({
         titre: getLibelle("Apercu acte mis à jour"),
         component: <ApercuActeMisAJour idActeAAfficher={idActeParam} />,
@@ -208,6 +221,9 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
             <PopinSignatureMiseAJourMentions
               estOuvert={estPopinSignatureOuverte}
               setEstOuvert={setEstPopinSignatureOuverte}
+              actionApresSignatureReussie={
+                handleAffichageActeRecomposeApresSignature
+              }
             />
           </>
         ) : (

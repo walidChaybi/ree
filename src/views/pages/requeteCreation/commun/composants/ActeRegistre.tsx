@@ -27,7 +27,7 @@ const ActeRegistre: React.FC<ActeRegistreProps> = ({
       setActeRecomposerApresSignatureParams(idActeAAfficher);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idActeAAfficher]);
+  }, [idActeAAfficher, affichageApresSignature]);
 
   return (
     <div className="ActeRegistre">
