@@ -4,12 +4,12 @@ import { CodePinForm } from "@widget/signature/CodePinForm";
 test("renders form popin, setPinCode function called on validation", async () => {
   const handleClickButton = jest.fn();
 
-  const { getByText } = render(
+  render(
     <CodePinForm
       onClose={() => {
         return;
       }}
-      setCodePin={handleClickButton}
+      onSubmit={handleClickButton}
     />
   );
 
@@ -18,7 +18,7 @@ test("renders form popin, setPinCode function called on validation", async () =>
     fireEvent.change(pinCodeInput, { target: { value: "1234" } });
   }
 
-  const validateButton = getByText("Valider");
+  const validateButton = screen.getByText("Valider");
   fireEvent.click(validateButton);
   await waitFor(() => {
     expect(handleClickButton).toHaveBeenCalledTimes(1);
@@ -28,15 +28,15 @@ test("renders form popin, setPinCode function called on validation", async () =>
 test("renders form popin, close function called on cancel", () => {
   const handleClickButton = jest.fn();
 
-  const { getByText } = render(
+  render(
     <CodePinForm
       onClose={handleClickButton}
-      setCodePin={() => {
+      onSubmit={() => {
         return;
       }}
     />
   );
-  const closeButton = getByText("Annuler");
+  const closeButton = screen.getByText("Annuler");
   fireEvent.click(closeButton);
   expect(handleClickButton).toHaveBeenCalledTimes(1);
 });
@@ -49,7 +49,7 @@ test("DOIT afficher un message d'erreur QUAND le code pin est effacé", async ()
       onClose={() => {
         return;
       }}
-      setCodePin={handleClickButton}
+      onSubmit={handleClickButton}
     />
   );
 
@@ -74,7 +74,7 @@ test("DOIT afficher un message d'erreur QUAND le code pin ne contient pas que de
       onClose={() => {
         return;
       }}
-      setCodePin={handleClickButton}
+      onSubmit={handleClickButton}
     />
   );
 
@@ -97,7 +97,7 @@ test("DOIT afficher un message d'erreur QUAND le code pin est supérieur à 8 ca
       onClose={() => {
         return;
       }}
-      setCodePin={handleClickButton}
+      onSubmit={handleClickButton}
     />
   );
 

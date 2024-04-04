@@ -1,3 +1,4 @@
+import { ITypeErreurSignature } from "@model/signature/ITypeErreurSignature";
 import { TextField } from "@mui/material";
 import { getLibelle, HUIT, QUATRE } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
@@ -6,13 +7,15 @@ import React from "react";
 import { Button } from "reakit/Button";
 import "./scss/FormPinCode.scss";
 
-interface FormPinCodePros {
+interface ICodePinFormProps {
+  // FIXME: Les arguments de onClose ne sont nécessaire que pour la signature de délivrance.
+  // On peut potentiellment les supprimer une fois qu'on aura refacto ce morceau de code.
   onClose: (isOpen: boolean, changePage: boolean) => void;
-  setCodePin: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setSignatureEnCours?: React.Dispatch<React.SetStateAction<boolean>>;
+  onSubmit: (valeurs: CodePinFormValues) => void;
+  erreurSignature?: ITypeErreurSignature;
 }
 
-interface FormValues {
+export interface CodePinFormValues {
   codePin?: string;
 }
 
@@ -20,12 +23,12 @@ interface FormValuesErrors {
   codePin?: string;
 }
 
-export const CodePinForm: React.FC<FormPinCodePros> = ({
+export const CodePinForm: React.FC<ICodePinFormProps> = ({
   onClose,
-  setCodePin,
-  setSignatureEnCours
+  onSubmit,
+  erreurSignature
 }) => {
-  const validate = (values: FormValues) => {
+  const validate = (values: CodePinFormValues) => {
     const errors: FormValuesErrors = {};
     if (!values.codePin) {
       errors.codePin = getLibelle("Le code pin de la carte doit être fourni");
@@ -47,10 +50,7 @@ export const CodePinForm: React.FC<FormPinCodePros> = ({
   const formik = useFormik({
     initialValues: {},
     validate,
-    onSubmit: (values: FormValues) => {
-      setSignatureEnCours && setSignatureEnCours(true);
-      setCodePin(values.codePin);
-    }
+    onSubmit
   });
 
   return (

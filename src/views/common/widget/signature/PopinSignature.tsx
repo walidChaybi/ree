@@ -2,11 +2,11 @@ import { IDetailInfos } from "@model/signature/IDetailInfos";
 import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
-import { logError } from "@util/LogManager";
+import messageManager from "@util/messageManager";
 import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import React, { useEffect, useState } from "react";
-import { CodePinForm } from "./CodePinForm";
+import { CodePinForm, CodePinFormValues } from "./CodePinForm";
 import { useSignatureHook } from "./hook/SignatureHook";
 import { ErreurSignature, SignatureErreur } from "./messages/ErreurSignature";
 import "./scss/PopinSignature.scss";
@@ -31,7 +31,7 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
   const [codePin, setCodePin] = useState<string | undefined>();
   const [signatureEnCours, setSignatureEnCours] = useState(false);
 
-  const resultatWebext = useSignatureHook(
+  const resultatSignature = useSignatureHook(
     props.documentASigner,
     codePin,
     props.informations
@@ -40,6 +40,7 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
   useEffect(() => {
     if (props.estOuvert) {
       setCodePin(undefined);
+      setErreurSignature(undefined);
     }
   }, [props.estOuvert]);
 
@@ -48,19 +49,20 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
   const [erreurSignature, setErreurSignature] = useState<SignatureErreur>();
 
   useEffect(() => {
-    if (resultatWebext) {
-      if (resultatWebext.erreur) {
-        setErreurSignature({ typeErreur: resultatWebext.erreur });
-        resultatWebext.erreur?.code === "FONC_3" && setCodePin(undefined);
+    if (resultatSignature.data) {
+      if (resultatSignature.data.erreur) {
+        setErreurSignature({ typeErreur: resultatSignature.data.erreur });
+        setSignatureEnCours(false);
+        setCodePin(undefined);
       } else {
         props.onSuccesSignature(
-          resultatWebext.document,
-          resultatWebext.infosSignature
+          resultatSignature.data.document,
+          resultatSignature.data.infosSignature
         );
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultatWebext]);
+  }, [resultatSignature.data]);
 
   useEffect(() => {
     if (props.etatTraitementSignature.termine) {
@@ -73,13 +75,25 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.etatTraitementSignature.termine]);
 
+  const onSubmitCodePinForm = (valeurs: CodePinFormValues) => {
+    setSignatureEnCours(true);
+    resultatSignature.reinitialiser();
+    setCodePin(valeurs.codePin);
+  };
+
+  const onClosePopin = () => {
+    props.setEstOuvert(false);
+    setCodePin(undefined);
+  };
+
   const onTimeoutEnd = () => {
     setSignatureEnCours(false);
-    logError({
-      messageUtilisateur: getLibelle(
-        "Une erreur est survenue. Veuillez rafraîchir la page du navigateur et réessayer."
+    setCodePin(undefined);
+    messageManager.showError(
+      getLibelle(
+        "Une erreur inconnue est survenue. Veuillez réessayer ultérieurement. Si le problème persiste, merci de contacter le BIMO."
       )
-    });
+    );
   };
 
   return (
@@ -96,9 +110,9 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
         {erreurSignature && <ErreurSignature erreur={erreurSignature} />}
         <div className="texte-popin-signature">{getLibelle(props.texte)}</div>
         <CodePinForm
-          onClose={() => props.setEstOuvert(false)}
-          setCodePin={setCodePin}
-          setSignatureEnCours={setSignatureEnCours}
+          onClose={onClosePopin}
+          onSubmit={onSubmitCodePinForm}
+          erreurSignature={erreurSignature?.typeErreur}
         />
         <OperationEnCours
           visible={signatureEnCours}

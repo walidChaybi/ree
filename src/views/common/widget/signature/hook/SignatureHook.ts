@@ -6,13 +6,22 @@ import {
   signerDocument
 } from "./SignatureHookUtil";
 
+interface SignatureHookResultat {
+  data?: DetailSignatureToCallApp;
+  reinitialiser: () => void;
+}
+
 export function useSignatureHook(
   document: string,
   codePin?: string,
   informations?: IDetailInfos[]
-): DetailSignatureToCallApp | undefined {
+): SignatureHookResultat {
   const [resultatWebext, setResultatWebext] =
     useState<DetailSignatureToCallApp>();
+
+  const reinitialiserResultatWebext = (): void => {
+    setResultatWebext(undefined);
+  };
 
   const handleBackFromWebExtensionCallback = (event: Event): void => {
     handleBackFromWebExtension(
@@ -48,5 +57,5 @@ export function useSignatureHook(
     };
   }, []);
 
-  return resultatWebext;
+  return { data: resultatWebext, reinitialiser: reinitialiserResultatWebext };
 }

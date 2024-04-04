@@ -6,12 +6,12 @@ import {
 } from "@mui/material";
 import { getLibelle } from "@util/Utils";
 import React from "react";
-import { CodePinForm } from "./CodePinForm";
-import { ProgressSignature } from "./ProgressSignature";
+import { CodePinForm, CodePinFormValues } from "./CodePinForm";
 import { useSignatureDocumentHookDelivrance } from "./hook/SignatureDocumentHookDelivrance";
 import { DocumentsByRequete } from "./hook/SignatureDocumentHookUtilDelivrance";
 import { ErreurSignature } from "./messages/ErreurSignature";
 import { SuccessSignature } from "./messages/SuccessSignature";
+import { ProgressSignature } from "./ProgressSignature";
 import "./scss/PopinSignatureDelivrance.scss";
 
 interface PopinSignatureDelivranceProps {
@@ -32,6 +32,10 @@ export const PopinSignatureDelivrance: React.FC<
   if (pinCode && erreurDeCodePin()) {
     setPinCode(undefined);
   }
+
+  const onSubmitCodePinForm = (valeurs: CodePinFormValues) => {
+    setPinCode(valeurs.codePin);
+  };
 
   return (
     <>
@@ -60,7 +64,7 @@ export const PopinSignatureDelivrance: React.FC<
               />
             </>
           ) : (
-            <CodePinForm onClose={onClose} setCodePin={setPinCode} />
+            <CodePinForm onClose={onClose} onSubmit={onSubmitCodePinForm} />
           )}
         </DialogContent>
         <DialogActions></DialogActions>
