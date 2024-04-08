@@ -104,7 +104,9 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
               validerMentionsPlusieursDocuments
             }
           />
-          {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) && (
+          {gestionnaireFeatureFlag.estActif(
+            FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+          ) && (
             <Bouton
               title={getLibelle("Terminer")}
               onClick={onClickTerminer}
@@ -120,7 +122,9 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
 };
 
 const afficherBoutonValiderTerminer = (requete: IRequeteDelivrance) =>
-  (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) &&
+  (gestionnaireFeatureFlag.estActif(
+    FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+  ) &&
     SousTypeDelivrance.estRDDouRDCouRDDP(requete?.sousType)) ||
   (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
     SousTypeDelivrance.estRDCSDouRDCSC(requete.sousType));
@@ -139,6 +143,6 @@ const estPossibleDeSigner = (
 const possibleDeTransmettreAValideur = (statut: StatutRequete): boolean => {
   return (
     StatutRequete.estASignerOuAValider(statut) &&
-    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)
   );
 };

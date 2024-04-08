@@ -1,11 +1,11 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { requeteCreationEtablissement } from "@mock/data/requeteCreationEtablissement";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { IEchange } from "@model/requete/IEchange";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { SuiviDossier } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/contenu/SuiviDossier";
 import { ApercuRequeteEtablissementSaisieDeProjetPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/ApercuRequeteEtablissementSaisieDeProjetPage";
 import {
@@ -157,7 +157,10 @@ test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le postulant a des u
 });
 
 test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le FF est inactif.", async () => {
-  localStorageFeatureFlagMock.setItem("FF_INTEGRATION_REQUETE_CIBLE", "false");
+  localStorageFeatureFlagMock.setItem(
+    "FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION",
+    "false"
+  );
   render(<HookConsumerSuiviDossier requete={requeteAvecTitulaires} />);
 
   await waitFor(() => {
@@ -185,7 +188,10 @@ test("NE DOIT PAS afficher les actions 'Retour SDANF' QUAND le FF est activé", 
 });
 
 test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le FF est inactif.", async () => {
-  localStorageFeatureFlagMock.setItem("FF_INTEGRATION_REQUETE_CIBLE", "false");
+  localStorageFeatureFlagMock.setItem(
+    "FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION",
+    "false"
+  );
   render(<HookConsumerSuiviDossier requete={requeteAvecTitulaires} />);
 
   await waitFor(() => {
@@ -196,7 +202,10 @@ test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le FF est inactif.",
     expect(screen.queryByText("Date évenement")).not.toBeInTheDocument();
     expect(screen.queryByText("Avancement")).not.toBeInTheDocument();
   });
-  localStorageFeatureFlagMock.setItem("FF_INTEGRATION_REQUETE_CIBLE", "true");
+  localStorageFeatureFlagMock.setItem(
+    "FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION",
+    "true"
+  );
 });
 
 // TODO: Test à restaurer quand les utilisateurs auront besoin de traiter les dossiers d'un postulant avec ses filiations.

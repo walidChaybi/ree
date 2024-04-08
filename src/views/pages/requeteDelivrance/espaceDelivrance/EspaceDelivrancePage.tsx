@@ -5,8 +5,8 @@ import {
   useNavigationApercuRMCAutoDelivrance
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import { IOfficier } from "@model/agent/IOfficier";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_REQUETES_DELIVRANCE_SERVICE
@@ -16,11 +16,11 @@ import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFl
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import React, { useCallback, useState } from "react";
-import { MesRequetesPage } from "./MesRequetesPage";
-import { RequetesServicePage } from "./RequetesServicePage";
 import BoutonPrendreEnChargeAleatoirement from "./contenu/BoutonPrendreEnChargeAleatoirement";
 import { CompteurRequete } from "./contenu/CompteurRequete";
 import MenuSaisirRequete from "./contenu/MenuSaisirRequete";
+import { MesRequetesPage } from "./MesRequetesPage";
+import { RequetesServicePage } from "./RequetesServicePage";
 import "./scss/EspaceDelivrancePage.scss";
 
 interface LocalProps {
@@ -31,7 +31,7 @@ const getElementEntreDeux = (selectedTabState: number, officier: IOfficier) => {
   return (
     <>
       {gestionnaireFeatureFlag.auMoinUnEstActif(
-        FeatureFlag.FF_DELIV_EC_PAC,
+        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES,
         FeatureFlag.FF_DELIV_CS
       ) && (
         <div className="BlocBoutons">

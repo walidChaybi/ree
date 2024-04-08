@@ -114,7 +114,9 @@ export class SousTypeDelivrance extends EnumWithComplete {
     sousType?: SousTypeDelivrance
   ): boolean {
     return (
-      (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) &&
+      (gestionnaireFeatureFlag.estActif(
+        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+      ) &&
         SousTypeDelivrance.estRDDouRDCouRDDP(sousType)) ||
       (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
         SousTypeDelivrance.estRDCSDouRDCSC(sousType))

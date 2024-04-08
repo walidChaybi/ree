@@ -168,7 +168,9 @@ export const routesRece: IRoute[] = [
     url: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
     component: SaisirRDCPage,
     auMoinsUnDesDroits: [Droit.SAISIR_REQUETE],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC),
+    canAccess: gestionnaireFeatureFlag.estActif(
+      FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+    ),
     libelle: getLibelle("Requête de délivrance d'extrait copie Courrier")
   },
   // Aperçu requête ... après saisie de requête RDCSC depuis Mes Requêtes de DELIVRANCE
@@ -192,7 +194,9 @@ export const routesRece: IRoute[] = [
     url: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
     component: EditionExtraitCopiePage,
     auMoinsUnDesDroits: [Droit.DELIVRER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC),
+    canAccess: gestionnaireFeatureFlag.estActif(
+      FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+    ),
     libelle: getLibelle("Édition")
   },
   {
@@ -249,7 +253,9 @@ export const routesRece: IRoute[] = [
     url: URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC,
     component: SaisirRDCPage,
     auMoinsUnDesDroits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC),
+    canAccess: gestionnaireFeatureFlag.estActif(
+      FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+    ),
     libelle: getLibelle("Requête de délivrance d'extrait copie Courrier")
   },
   // Aperçu requête ... après saisie de requête RDCSC depuis Mes Requêtes de SERVICE
@@ -281,7 +287,9 @@ export const routesRece: IRoute[] = [
     url: URL_REQUETES_DELIVRANCE_SERVICE_EDITION_ID,
     component: EditionExtraitCopiePage,
     auMoinsUnDesDroits: [Droit.DELIVRER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC),
+    canAccess: gestionnaireFeatureFlag.estActif(
+      FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+    ),
     libelle: getLibelle("Édition")
   },
   //////////////////////////////////////////
@@ -352,7 +360,9 @@ export const routesRece: IRoute[] = [
     url: URL_RECHERCHE_REQUETE_EDITION_ID,
     component: EditionExtraitCopiePage,
     auMoinsUnDesDroits: [Droit.DELIVRER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC),
+    canAccess: gestionnaireFeatureFlag.estActif(
+      FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+    ),
     libelle: getLibelle("Édition")
   },
   {

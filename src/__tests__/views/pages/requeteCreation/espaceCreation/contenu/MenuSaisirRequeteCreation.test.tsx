@@ -32,7 +32,9 @@ test("DOIT rendre le menu pour saisir une requete de creation transcription.", a
 
   await waitFor(() => {
     expect(
-      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
+      gestionnaireFeatureFlag.estActif(
+        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+      )
     ).toBeTruthy();
   });
 
@@ -74,7 +76,9 @@ test("DOIT rendre le menu pour saisir une requete de creation transcription sur 
 
   await waitFor(() => {
     expect(
-      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
+      gestionnaireFeatureFlag.estActif(
+        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+      )
     ).toBeTruthy();
   });
 

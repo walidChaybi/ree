@@ -140,7 +140,9 @@ function redirectionAValider(
 ) {
   const sousType = requete.sousType;
   if (
-    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) &&
+    gestionnaireFeatureFlag.estActif(
+      FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+    ) &&
     (sousType === SousTypeDelivrance.RDDP.libelleCourt ||
       sousType === SousTypeDelivrance.RDD.libelleCourt ||
       sousType === SousTypeDelivrance.RDC.libelleCourt)

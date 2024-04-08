@@ -396,7 +396,9 @@ function getBandeauAlerteActe(
           !officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(
             acte.registre?.type?.id
           ) &&
-          gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) && (
+          gestionnaireFeatureFlag.estActif(
+            FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+          ) && (
             <BoutonCreationRDD
               label="Demander la délivrance"
               labelPopin={`Vous allez demander la délivrance de cet acte. Souhaitez-vous continuer ?`}

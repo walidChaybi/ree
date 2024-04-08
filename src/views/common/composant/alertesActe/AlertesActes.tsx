@@ -12,9 +12,9 @@ import {
 } from "@hook/alertes/GetAlertesActeApiHook";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { getLibelle } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { BoutonAjouterAlerte } from "@widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
 import { IAjouterAlerteFormValue } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
@@ -180,7 +180,7 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
                 className={`Alertes ${index === 0 ? "" : "SeparateurAlertes"}`}
               >
                 {gestionnaireFeatureFlag.estActif(
-                  FeatureFlag.FF_DELIV_EC_PAC
+                  FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
                 ) && (
                   <BoutonAjouterAlerte
                     key={`bouton-ajouter-alerte-${index}`}

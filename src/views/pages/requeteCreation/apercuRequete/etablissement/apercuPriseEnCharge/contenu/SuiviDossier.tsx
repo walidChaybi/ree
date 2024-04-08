@@ -44,7 +44,7 @@ export const SuiviDossier: React.FC<ISuiviDossierProps> = props => {
   return (
     <>
       {gestionnaireFeatureFlag.estActif(
-        FeatureFlag.FF_INTEGRATION_REQUETE_CIBLE
+        FeatureFlag.FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION
       ) &&
         afficherTableauSuiviDossier && (
           <TableauSuiviDossier requete={props.requete} />

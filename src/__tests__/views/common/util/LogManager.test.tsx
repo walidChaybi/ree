@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify";
 
 beforeEach(() => {
   expect(
-    gestionnaireFeatureFlag.estActif(FeatureFlag.LOG_SERVEUR)
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_LOG_SERVEUR)
   ).toBeTruthy();
 });
 

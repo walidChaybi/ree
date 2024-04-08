@@ -101,7 +101,9 @@ function mapSousTypeDelivrance(sousTypeDelivrance: SousTypeDelivrance): Option {
 function getListeDesRequetesCourrierAsOptions(): Options {
   let listeRequeteCourrier: Options = [];
 
-  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)) {
+  if (
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)
+  ) {
     listeRequeteCourrier = listeRequeteCourrier.concat(
       mapSousTypeDelivrance(SousTypeDelivrance.RDC)
     );
@@ -113,7 +115,9 @@ function getListeDesRequetesCourrierAsOptions(): Options {
     );
   }
 
-  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)) {
+  if (
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)
+  ) {
     listeRequeteCourrier = listeRequeteCourrier.concat(
       mapSousTypeDelivrance(SousTypeDelivrance.RDLFC)
     );

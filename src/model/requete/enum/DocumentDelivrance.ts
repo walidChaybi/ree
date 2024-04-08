@@ -1,12 +1,12 @@
 import { Options } from "@util/Type";
 /* istanbul ignore file */
 import { peupleDocumentDelivrance } from "@api/nomenclature/NomenclatureRequete";
-import { Option } from "@util/Type";
-import { getValeurOuVide } from "@util/Utils";
 import { EnumNomemclature } from "@util/enum/EnumNomenclature";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { Option } from "@util/Type";
+import { getValeurOuVide } from "@util/Utils";
 import { TypeRepertoire } from "../../etatcivil/enum/TypeRepertoire";
 import { ChoixDelivrance } from "./ChoixDelivrance";
 import {
@@ -380,7 +380,9 @@ export class DocumentDelivrance extends EnumNomemclature {
       opt =>
         DocumentDelivrance.getEnumForUUID(opt.cle)
           .categorieDocumentDelivrance === "Certificat de situation demandé" ||
-        (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) &&
+        (gestionnaireFeatureFlag.estActif(
+          FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+        ) &&
           DocumentDelivrance.getEnumForUUID(opt.cle)
             .categorieDocumentDelivrance === "Attestation")
     );

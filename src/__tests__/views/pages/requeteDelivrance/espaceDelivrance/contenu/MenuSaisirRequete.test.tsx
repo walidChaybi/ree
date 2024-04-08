@@ -48,7 +48,7 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Délivrance"
   });
 
   expect(
-    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)
   ).toBeTruthy();
 
   const boutonMenu = screen.getByText(/Saisir requête courrier/i);

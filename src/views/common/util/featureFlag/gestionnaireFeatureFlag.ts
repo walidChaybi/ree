@@ -17,7 +17,7 @@ class GestionnaireFeatureFlag {
   }
 
   positionneFlagsAPartirDuHeader(header: any) {
-    // Exemple canary testing '[{"0123456": ["FF_DELIV_EC_PAC"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]';
+    // Exemple canary testing '[{"0123456": ["FF_DELIVRANCE_EXTRAITS_COPIES"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]';
     const idSSOsEtFeaturesFlags: IdSSOEtFeaturesFlags[] | undefined =
       this.getIdSSOsEtFeaturesFlags(header);
     const idSSOUtilisateurCourant = this.getIdSSOUtilisateur(header);
@@ -25,7 +25,7 @@ class GestionnaireFeatureFlag {
     this.supprimeTousLesFlags([
       FeatureFlag.FF_CONSULT_ACTE_RQT,
       FeatureFlag.FF_DELIV_CS,
-      FeatureFlag.FF_DELIV_EC_PAC,
+      FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES,
       FeatureFlag.FF_RQT_INFORMATION
     ]);
     const props = Object.getOwnPropertyNames(FeatureFlag);
@@ -108,11 +108,7 @@ class GestionnaireFeatureFlag {
   }
 
   private estValeurFlagValide(valeurFlag: string | null): boolean {
-    return (
-      valeurFlag != null &&
-      (valeurFlag.toLocaleLowerCase() === "true" ||
-        valeurFlag.toLocaleLowerCase() === "1")
-    );
+    return valeurFlag != null && valeurFlag.toLocaleLowerCase() === "true";
   }
 }
 

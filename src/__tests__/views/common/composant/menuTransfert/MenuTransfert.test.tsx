@@ -1,11 +1,11 @@
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
 import { idRequeteRDCSC, requeteRDCSC } from "@mock/data/requeteDelivrance";
 import { requeteInformation } from "@mock/data/requeteInformation";
+import { Droit } from "@model/agent/enum/Droit";
+import { TypeEntite } from "@model/agent/enum/TypeEntite";
 import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IEntite } from "@model/agent/IEntiteRattachement";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
-import { Droit } from "@model/agent/enum/Droit";
-import { TypeEntite } from "@model/agent/enum/TypeEntite";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
 import {
@@ -103,7 +103,7 @@ test("renders du bloc Menu Transfert ouvert ", async () => {
   afficheComposant();
 
   expect(
-    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)
   ).toBeTruthy();
 
   const menuTransfert = screen.getByText("Transférer");

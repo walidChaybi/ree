@@ -79,7 +79,7 @@ export const ListeAlertes: React.FC<ListeAlertesProps> = ({
                 ? Alerte.toReferenceString(alerte)
                 : Alerte.toAlertString(alerte)}
               {gestionnaireFeatureFlag.estActif(
-                FeatureFlag.FF_DELIV_EC_PAC
+                FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
               ) && (
                 <FontAwesomeIcon
                   icon={faTrashAlt}

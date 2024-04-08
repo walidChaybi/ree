@@ -25,7 +25,9 @@ export const BandeauAlertesActe: React.FC<BandeauAlertesActeProps> = ({
   function afficherBoutonSelonFeatureFlag() {
     return (
       afficherBouton &&
-      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
+      gestionnaireFeatureFlag.estActif(
+        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+      )
     );
   }
 

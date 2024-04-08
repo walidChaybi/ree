@@ -18,10 +18,10 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { DEUX, UN, ZERO } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { storeRece } from "@util/storeRece";
+import { DEUX, UN, ZERO } from "@util/Utils";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
@@ -33,7 +33,7 @@ beforeAll(() => {
 
 beforeEach(() => {
   expect(
-    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)
   ).toBeTruthy();
 });
 

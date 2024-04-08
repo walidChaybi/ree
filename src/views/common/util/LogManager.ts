@@ -22,7 +22,7 @@ export interface LogErrorMsg {
 }
 
 export function logError(logErrorMgs: LogErrorMsg) {
-  if (gestionnaireFeatureFlag.estActif(FeatureFlag.LOG_SERVEUR)) {
+  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_LOG_SERVEUR)) {
     logErrorOnServer(logErrorMgs);
   }
   /* istanbul ignore next */

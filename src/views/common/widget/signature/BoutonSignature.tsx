@@ -5,6 +5,9 @@ import {
 } from "@hook/acte/ActeApiHook";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import {
   DocumentReponse,
   IDocumentReponse
@@ -14,21 +17,18 @@ import {
   RequeteDelivrance
 } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { checkDirty, getLibelle, getValeurOuVide } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import messageManager from "@util/messageManager";
+import { checkDirty, getLibelle, getValeurOuVide } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
-import { PopinSignatureDelivrance } from "./PopinSignatureDelivrance";
 import {
   DocumentsATraiter,
   DocumentsByRequete
 } from "./hook/SignatureDocumentHookUtilDelivrance";
+import { PopinSignatureDelivrance } from "./PopinSignatureDelivrance";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
@@ -106,7 +106,7 @@ export const BoutonSignature: React.FC<
           acte: requeteASigner.acte
             ? requeteASigner.acte
             : // Pour la gestion de la période où les requête viennent encore de SAGA
-              // À supprimer avec le featureFlag FF_DELIV_EC_PAC
+              // À supprimer avec le featureFlag FF_DELIVRANCE_EXTRAITS_COPIES
               ({ idActe: undefined } as unknown as IFicheActe)
         };
 
@@ -179,7 +179,11 @@ export const BoutonSignature: React.FC<
   }, [acteApiHookResultat]);
 
   const handleClickSignature = () => {
-    if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)) {
+    if (
+      gestionnaireFeatureFlag.estActif(
+        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+      )
+    ) {
       // on considère que si la première requête n'a pas d'acte alors aucune
       // des requêtes suivantes n'a d'acte (cas de la signature par lot)
       if (!props.requetesASigner[0].acte) {
@@ -267,7 +271,9 @@ const signaturePossible = (
   return estSignaturePossible;
 };
 function estUnDocumentASigner(document: IDocumentReponse) {
-  return gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
+  return gestionnaireFeatureFlag.estActif(
+    FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+  )
     ? DocumentDelivrance.estExtraitCopieAsigner(document.typeDocument) &&
         document.avecCtv === true
     : /*Etape 1*/ document.avecCtv === true;
