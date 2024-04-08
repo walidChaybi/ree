@@ -4,8 +4,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getLibelle } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React from "react";
-import { Button } from "reakit/Button";
 import "./scss/BoutonSuivPrec.scss";
 
 export interface BoutonSuivPrecProps {
@@ -28,7 +28,7 @@ export const BoutonSuivPrec: React.FC<BoutonSuivPrecProps> = ({
         changeIndexRequete(index, max, direction, setIndex);
       }}
     >
-      <Button
+      <Bouton
         className="BoutonSuivPrecItem"
         id={`button-navigation-${direction}`}
         disabled={isDisabled(direction, index, max)}
@@ -39,7 +39,7 @@ export const BoutonSuivPrec: React.FC<BoutonSuivPrecProps> = ({
             direction === "left" ? faChevronCircleLeft : faChevronCircleRight
           }
         />
-      </Button>
+      </Bouton>
     </div>
   );
 };

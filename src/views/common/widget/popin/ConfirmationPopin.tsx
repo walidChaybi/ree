@@ -5,8 +5,8 @@ import {
   DialogContentText,
   DialogTitle
 } from "@mui/material";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useEffect, useState } from "react";
-import { Button } from "reakit/Button";
 
 export interface IBoutonPopin {
   label: string;
@@ -61,14 +61,14 @@ export const ConfirmationPopin: React.FC<ConfirmationPopinProps> = ({
         {boutons &&
           boutons.map((bouton: IBoutonPopin, idx: number) => {
             return (
-              <Button
+              <Bouton
                 onClick={bouton.action}
                 color={bouton.color ? bouton.color : "primary"}
                 key={`boutonPopin${idx}`}
                 aria-label={`confirmation ${bouton.label}`}
               >
                 {bouton.label}
-              </Button>
+              </Bouton>
             );
           })}
       </DialogActions>

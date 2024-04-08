@@ -5,8 +5,8 @@ import {
   DialogTitle
 } from "@mui/material";
 import { getLibelle } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React from "react";
-import { Button } from "reakit/Button";
 import "./scss/ConfirmationPopinAvecMessage.scss";
 
 interface IBoutonPopin {
@@ -76,7 +76,7 @@ export const ConfirmationPopinAvecMessage: React.FC<
         {boutons &&
           boutons.map((bouton: IBoutonPopin, idx: number) => {
             return (
-              <Button
+              <Bouton
                 onClick={bouton.action}
                 color={bouton.color ? bouton.color : "primary"}
                 key={`boutonPopin${idx}`}
@@ -84,7 +84,7 @@ export const ConfirmationPopinAvecMessage: React.FC<
                 disabled={bouton.isDisabled && bouton.disabled}
               >
                 {bouton.label}
-              </Button>
+              </Bouton>
             );
           })}
       </DialogActions>

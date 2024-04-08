@@ -4,7 +4,6 @@ import { getLibelle, HUIT, QUATRE } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { useFormik } from "formik";
 import React from "react";
-import { Button } from "reakit/Button";
 import "./scss/FormPinCode.scss";
 
 interface ICodePinFormProps {
@@ -88,9 +87,9 @@ export const CodePinForm: React.FC<ICodePinFormProps> = ({
         >
           {getLibelle("Valider")}
         </Bouton>
-        <Button onClick={() => onClose(false, false)}>
+        <Bouton onClick={() => onClose(false, false)}>
           {getLibelle("Annuler")}
-        </Button>
+        </Bouton>
       </div>
     </form>
   );

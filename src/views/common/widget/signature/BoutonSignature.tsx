@@ -23,14 +23,13 @@ import messageManager from "@util/messageManager";
 import { checkDirty, getLibelle, getValeurOuVide } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { DialogDisclosureHTMLProps } from "reakit/Dialog";
 import {
   DocumentsATraiter,
   DocumentsByRequete
 } from "./hook/SignatureDocumentHookUtilDelivrance";
 import { PopinSignatureDelivrance } from "./PopinSignatureDelivrance";
 
-interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
+interface BoutonSignatureProps {
   libelle: string;
   uniqueSignature?: boolean;
   connectedUser?: IOfficier;

@@ -9,9 +9,9 @@ import {
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
 import { goBack } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
+import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "reakit/Button";
 import "./scss/BoutonARetraiterSaga.scss";
 
 interface BoutonARetraiterSagaProps {
@@ -47,11 +47,11 @@ export const BoutonARetraiterSaga: React.FC<BoutonARetraiterSagaProps> = ({
   };
 
   return (
-    <Button
+    <Bouton
       className="boutonARetraiterSaga"
       onClick={handleClickARetraiterSaga}
     >
       {getLibelle("À retraiter dans SAGA")}
-    </Button>
+    </Bouton>
   );
 };

@@ -1,11 +1,10 @@
-import { TablePagination } from "@mui/material";
+import { Box, TablePagination } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { getLibelle } from "@util/Utils";
 import React, { useCallback, useEffect } from "react";
-import { Box } from "reakit/Box";
 import {
   getItemAriaLabel,
   getPaginatedData,
@@ -187,7 +186,7 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
     <div className="TableauRece">
       <TableContainer component={Paper}>
         <Box
-          as={Table}
+          component={Table}
           role="presentation"
           size="small"
           stickyHeader={props.stickyHeader}
