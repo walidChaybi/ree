@@ -3,6 +3,7 @@ import { estOfficierHabiliterPourTousLesDroits } from "@model/agent/IOfficier";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import ActeRegistre from "@pages/requeteCreation/commun/composants/ActeRegistre";
+import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import messageManager from "@util/messageManager";
 import { getLibelle, UN, ZERO } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
@@ -10,7 +11,7 @@ import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { ApercuActeMisAJour } from "../commun/ApercuActeMisAjour";
 import MiseAJourAnalyseMarginale from "./contenu/MiseAJourAnalyseMarginal/MiseAJourAnalyseMarginal";
 import MiseAJourMentions from "./contenu/MiseAJourMentions/MiseAJourMentions";
@@ -53,8 +54,8 @@ interface IMiseAJourMentionsContext {
   >;
 }
 
-export const MiseAJourMentionsContext =
-  React.createContext<IMiseAJourMentionsContext>({
+export const MiseAJourMentionsContext = React.createContext<IMiseAJourMentionsContext>(
+  {
     listeMentions: [],
     setListeMentions: ((mentions: IMentions[]) => {}) as React.Dispatch<
       React.SetStateAction<IMentions[]>
@@ -76,7 +77,8 @@ export const MiseAJourMentionsContext =
     setEstBoutonTerminerSignerActif: ((value: boolean) => {}) as React.Dispatch<
       React.SetStateAction<boolean>
     >
-  });
+  }
+);
 
 const ApercuRequeteMiseAJourPage: React.FC = () => {
   const { idActeParam } = useParams<TUuidActeParams>();
@@ -93,7 +95,6 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   const [estBoutonTerminerSignerActif, setEstBoutonTerminerSignerActif] =
     useState(false);
   const [affichageApresSignature, setAffichageApresSignature] = useState(false);
-
   const handleAffichageActeRecomposeApresSignature = () => {
     // TODO: [QuickFix] setOngletSelectionne permet de basculer sur le bon onglet.
     // A revoir quand on aura corriger le bug des onglets de VoletAvecOnglet.
@@ -103,6 +104,8 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
       getLibelle("L'acte a été mis à jour avec succès.")
     );
   };
+
+  const navigate = useNavigate();
 
   const getListeOngletsGauche = (): ItemListe[] => {
     const liste: ItemListe[] = [
@@ -172,68 +175,82 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     setOngletSelectionne(newValue);
   };
 
+  const retourRMCActe = () => {
+    navigate(URL_RECHERCHE_ACTE_INSCRIPTION);
+  };
+
   return (
-    <div className="ApercuRequeteMiseAJourPage">
-      <MiseAJourMentionsContext.Provider
-        value={{
-          listeMentions,
-          setListeMentions,
-          numeroOrdreEnModification,
-          setNumeroOrdreEnModification,
-          listeMentionsEnregistrees,
-          setListeMentionsEnregistrees,
-          estFormulaireDirty,
-          setEstFormulaireDirty,
-          setOngletSelectionne,
-          setEstBoutonTerminerSignerActif
-        }}
-      >
-        {idActeParam ? (
-          <>
-            <div className="OngletsApercuCreationEtablissement">
-              <VoletAvecOnglet
-                liste={getListeOngletsGauche()}
-                ongletSelectionne={ongletSelectionne}
-                checkDirty={true}
-                handleChange={handleChange}
+    <div>
+      <div className="ApercuRequeteMiseAJourPage">
+        <MiseAJourMentionsContext.Provider
+          value={{
+            listeMentions,
+            setListeMentions,
+            numeroOrdreEnModification,
+            setNumeroOrdreEnModification,
+            listeMentionsEnregistrees,
+            setListeMentionsEnregistrees,
+            estFormulaireDirty,
+            setEstFormulaireDirty,
+            setOngletSelectionne,
+            setEstBoutonTerminerSignerActif
+          }}
+        >
+          {idActeParam ? (
+            <>
+              <div className="OngletsApercuCreationEtablissement">
+                <VoletAvecOnglet
+                  liste={getListeOngletsGauche()}
+                  ongletSelectionne={ongletSelectionne}
+                  checkDirty={true}
+                  handleChange={handleChange}
+                />
+                {!affichageApresSignature && (
+                  <Bouton
+                    className="boutonAbandonner"
+                    title="Abandonner"
+                    onClick={() => {}}
+                  >
+                    {getLibelle("Abandonner")}
+                  </Bouton>
+                )}
+              </div>
+              <div className="OngletsApercuCreationEtablissement">
+                <VoletAvecOnglet
+                  liste={getListeOngletsDroit()}
+                  checkDirty={true}
+                />
+                {!affichageApresSignature &&
+                  estOfficierHabiliterPourTousLesDroits([
+                    Droit.SIGNER_MENTION,
+                    Droit.METTRE_A_JOUR_ACTE
+                  ]) && (
+                    <Bouton
+                      disabled={!estBoutonTerminerSignerActif}
+                      onClick={() => setEstPopinSignatureOuverte(true)}
+                    >
+                      {getLibelle("Terminer et Signer")}
+                    </Bouton>
+                  )}
+              </div>
+              <PopinSignatureMiseAJourMentions
+                estOuvert={estPopinSignatureOuverte}
+                setEstOuvert={setEstPopinSignatureOuverte}
+                actionApresSignatureReussie={
+                  handleAffichageActeRecomposeApresSignature
+                }
               />
-              <Bouton
-                className="boutonAbandonner"
-                title="Abandonner"
-                onClick={() => {}}
-              >
-                {getLibelle("Abandonner")}
-              </Bouton>
-            </div>
-            <div className="OngletsApercuCreationEtablissement">
-              <VoletAvecOnglet
-                liste={getListeOngletsDroit()}
-                checkDirty={true}
-              />
-              {estOfficierHabiliterPourTousLesDroits([
-                Droit.SIGNER_MENTION,
-                Droit.METTRE_A_JOUR_ACTE
-              ]) && (
-                <Bouton
-                  disabled={!estBoutonTerminerSignerActif}
-                  onClick={() => setEstPopinSignatureOuverte(true)}
-                >
-                  {getLibelle("Terminer et Signer")}
-                </Bouton>
-              )}
-            </div>
-            <PopinSignatureMiseAJourMentions
-              estOuvert={estPopinSignatureOuverte}
-              setEstOuvert={setEstPopinSignatureOuverte}
-              actionApresSignatureReussie={
-                handleAffichageActeRecomposeApresSignature
-              }
-            />
-          </>
-        ) : (
-          <OperationLocaleEnCoursSimple />
-        )}
-      </MiseAJourMentionsContext.Provider>
+            </>
+          ) : (
+            <OperationLocaleEnCoursSimple />
+          )}
+        </MiseAJourMentionsContext.Provider>
+      </div>
+      {affichageApresSignature && (
+        <Bouton onClick={retourRMCActe}>
+          {getLibelle("Retour recherche")}
+        </Bouton>
+      )}
     </div>
   );
 };

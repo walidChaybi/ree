@@ -19,17 +19,13 @@ const LISTE_TYPE_MENTION_NIVEAU_DEUX = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU
 const LISTE_TYPE_MENTION_NIVEAU_TROIS = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_TROIS}`;
 const TEXTE_MENTION_PLACEHOLDER = "Texte mention à ajouter";
 
-export const ajouterUneMention = async () => {
+export const ajouterUneMention = () => {
   fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_UN), {
     target: { value: "0185f3c8-5f4c-4ea9-89e1-fb65fcb7b17f" }
   });
 
   fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_DEUX), {
     target: { value: "7adaa7f8-6228-4e25-87a1-d99f3b98371a" }
-  });
-
-  await waitFor(() => {
-    expect(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_TROIS)).toBeDefined();
   });
 
   fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_TROIS), {

@@ -1,5 +1,8 @@
+import * as EtatCivilApi from "@api/appels/etatcivilApi";
 import {
   LISTES_TYPES_MENTION,
+  MENTION_NIVEAU_DEUX,
+  MENTION_NIVEAU_TROIS,
   MENTION_NIVEAU_UN
 } from "@composant/formulaire/ConstantesNomsForm";
 import { mappingOfficier } from "@core/login/LoginHook";
@@ -8,17 +11,23 @@ import {
   resultatRequeteUtilistateurLeBiannic
 } from "@mock/data/connectedUserAvecDroit";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
+import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import ApercuRequeteMiseAJourPage from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import {
+  URL_RECHERCHE_ACTE_INSCRIPTION,
   URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS,
   URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID
 } from "@router/ReceUrls";
-import { fireEvent, screen, waitFor } from "@testing-library/dom";
-import { render } from "@testing-library/react";
+import {
+  createEvent,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
-import { ajouterUneMention } from "./contenu/MiseAJourMentions/MiseAJourMentions.test";
 
 function renderApercuRequeteMiseAJour() {
   const router = createTestingRouter(
@@ -35,6 +44,33 @@ function renderApercuRequeteMiseAJour() {
 
   render(<RouterProvider router={router} />);
 }
+
+const LISTE_TYPE_MENTION_NIVEAU_UN = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_UN}`;
+const LISTE_TYPE_MENTION_NIVEAU_DEUX = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_DEUX}`;
+const LISTE_TYPE_MENTION_NIVEAU_TROIS = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_TROIS}`;
+const TEXTE_MENTION_PLACEHOLDER = "Texte mention à ajouter";
+
+const ajouterUneMention = () => {
+  fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_UN), {
+    target: { value: "0185f3c8-5f4c-4ea9-89e1-fb65fcb7b17f" }
+  });
+
+  fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_DEUX), {
+    target: { value: "7adaa7f8-6228-4e25-87a1-d99f3b98371a" }
+  });
+
+  fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_TROIS), {
+    target: { value: "b03c54ae-5130-4062-b7e4-34bed2de7989" }
+  });
+
+  fireEvent.change(screen.getByPlaceholderText(TEXTE_MENTION_PLACEHOLDER), {
+    target: {
+      value: "Blablablabla ceci est un texte de mention parfaitement correct"
+    }
+  });
+
+  fireEvent.click(screen.getByText("Ajouter mention"));
+};
 
 beforeEach(() => {
   storeRece.utilisateurCourant = mappingOfficier(
@@ -115,7 +151,7 @@ describe("Test du bouton Terminer et Signer", () => {
     });
   });
 
-  test("le bouton DOIT etre activé QUAND on actualise et visualise APRES avoir ajouter une mention", async () => {
+  test("le bouton 'TERMINER et SIGNER' DOIT etre activé QUAND on actualise et visualise APRES avoir ajouter une mention", async () => {
     renderApercuRequeteMiseAJour();
 
     ajouterUneMention();
@@ -135,7 +171,7 @@ describe("Test du bouton Terminer et Signer", () => {
     });
   });
 
-  test("le bouton DOIT etre desactivé QUAND on commence une action de mise a jour (ajout, modification)", async () => {
+  test("le bouton 'TERMINER et SIGNER' DOIT etre desactivé QUAND on commence une action de mise a jour (ajout, modification)", async () => {
     renderApercuRequeteMiseAJour();
 
     ajouterUneMention();
@@ -166,4 +202,126 @@ describe("Test du bouton Terminer et Signer", () => {
       expect(screen.getByText("Terminer et Signer")).toBeDisabled();
     });
   });
+});
+
+test("le bouton 'RETOUR RECHERCHE' s'affiche et, au clic, redirige l'utilisateur vers la page 'RMC acte' QUAND on termine le parcours de signature", async () => {
+  const composerDocumentMentionsUlterieuresSpy = jest.spyOn(
+    EtatCivilApi,
+    "composerDocumentMentionsUlterieures"
+  );
+  const integrerDocumentMentionsUlterieuresSpy = jest.spyOn(
+    EtatCivilApi,
+    "integrerDocumentMentionSigne"
+  );
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID,
+        element: <ApercuRequeteMiseAJourPage />
+      },
+      {
+        path: URL_RECHERCHE_ACTE_INSCRIPTION,
+        element: (
+          <RMCActeInscriptionPage
+            noAutoScroll={false}
+            dansFenetreExterne={false}
+          />
+        )
+      }
+    ],
+    [
+      `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/er5ez456-354v-461z-c5fd-162md289m74h/b41079a5-9e8d-478c-b04c-c4c4ey86537g`
+    ]
+  );
+
+  render(<RouterProvider router={router} />);
+
+  await waitFor(() => {
+    expect(screen.getByText("Acte Registre")).toBeInTheDocument();
+  });
+
+  ajouterUneMention();
+
+  await waitFor(() => {
+    expect(screen.getByText("Actualiser et visualiser")).toBeInTheDocument();
+  });
+
+  fireEvent.click(screen.getByText("Actualiser et visualiser"));
+
+  await waitFor(() => {
+    expect(screen.getByText("Terminer et Signer")).toBeInTheDocument();
+  });
+
+  fireEvent.click(screen.getByText("Terminer et Signer"));
+
+  await waitFor(() => {
+    expect(screen.getByText("Valider")).toBeInTheDocument();
+  });
+
+  // Simulation d'une signature réussie.
+  fireEvent(
+    window,
+    // @ts-ignore
+    createEvent(
+      "signWebextResponse",
+      window,
+      {
+        detail: {
+          direction: "to-call-app",
+          document: "documentFictif",
+          erreur: null,
+          infosSignature: {
+            issuerCertificat: "issuerCertificat",
+            entiteCertificat: "entiteCertificat",
+            autresInformation: "autresInformation"
+          }
+        }
+      },
+      { EventType: "CustomEvent" }
+    )
+  );
+
+  await waitFor(() => {
+    expect(composerDocumentMentionsUlterieuresSpy).toHaveBeenCalledWith(
+      "b41079a5-9e8d-478c-b04c-c4c4ey86537g",
+      "issuerCertificat",
+      "entiteCertificat"
+    );
+  });
+
+  fireEvent(
+    window,
+    // @ts-ignore
+    createEvent(
+      "signWebextResponse",
+      window,
+      {
+        detail: {
+          direction: "to-call-app",
+          document: "documentFinalCompose",
+          erreur: null,
+          infosSignature: {
+            issuerCertificat: "issuerCertificat",
+            entiteCertificat: "entiteCertificat",
+            autresInformation: "autresInformation"
+          }
+        }
+      },
+      { EventType: "CustomEvent" }
+    )
+  );
+
+  await waitFor(() => {
+    expect(integrerDocumentMentionsUlterieuresSpy).toHaveBeenCalledTimes(1);
+    expect(screen.getByText("Retour recherche")).toBeDefined();
+  });
+
+  fireEvent.click(screen.getByText("Retour recherche"));
+
+  await waitFor(() => {
+    expect(router.state.location.pathname).toBe(URL_RECHERCHE_ACTE_INSCRIPTION);
+  });
+
+  integrerDocumentMentionsUlterieuresSpy.mockClear();
+  composerDocumentMentionsUlterieuresSpy.mockClear();
 });

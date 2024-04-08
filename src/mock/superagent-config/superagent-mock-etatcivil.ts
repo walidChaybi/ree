@@ -565,7 +565,9 @@ export const configEtatcivil = [
       /////////////////
       if (
         match[1] ===
-        "/acte/885bdb13-d995-4dbd-93cb-a7a3b2eee5c8/recomposer-document-final"
+          "/acte/885bdb13-d995-4dbd-93cb-a7a3b2eee5c8/recomposer-document-final" ||
+        match[1] ===
+          "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/recomposer-document-final"
       ) {
         return {
           data: "documentFinalActeSigneResponseTypeBlob"
@@ -586,7 +588,9 @@ export const configEtatcivil = [
 
       if (
         match[1] ===
-        "/acte/a5187320-d722-4673-abd7-a73ed41ad8c1/composer-document-mentions-ulterieures"
+          "/acte/a5187320-d722-4673-abd7-a73ed41ad8c1/composer-document-mentions-ulterieures" ||
+        match[1] ===
+          "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/composer-document-mentions-ulterieures"
       ) {
         return {
           data: "documentMentionsUlterieuresSigneEncodeEnBase64",
@@ -596,7 +600,9 @@ export const configEtatcivil = [
 
       if (
         match[1] ===
-        "/acte/a5187320-d722-4673-abd7-a73ed41ad8c1/integrer-document-mention-signe"
+          "/acte/a5187320-d722-4673-abd7-a73ed41ad8c1/integrer-document-mention-signe" ||
+        match[1] ===
+          "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/integrer-document-mention-signe"
       ) {
         return { status: 200 };
       }
@@ -783,10 +789,13 @@ export const configEtatcivil = [
         match[1] === "/acte/b45079a5-9e8f-478a-b07c-c4c2az671123/alertes" ||
         match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/alertes" ||
         match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/alertes" ||
-        match[1] === "/acte/885bdb13-d995-4dbd-93cb-a7a3b2eee5c8/alertes" ||
-        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/alertes"
+        match[1] === "/acte/885bdb13-d995-4dbd-93cb-a7a3b2eee5c8/alertes"
       ) {
         return { data: ReponseAppelGetAlertesActe.data };
+      }
+
+      if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/alertes") {
+        return { data: [] };
       }
 
       if (match[1] === "/acte/alerte") {
