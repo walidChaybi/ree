@@ -81,7 +81,9 @@ export const MiseAJourMentionsForm: React.FC<IMiseAJourMentionsFormProps> = ({
     setListeMentions([
       ...listeMentions,
       {
-        texte: values.texteMention,
+        texte: values.texteMention.trim().endsWith(".")
+          ? values.texteMention.trim()
+          : `${values.texteMention.trim()}.`,
         typeMention: {
           idMentionNiveauUn: values.listesTypesMention.mentionNiveauUn,
           idMentionNiveauDeux: values.listesTypesMention.mentionNiveauDeux,
@@ -109,7 +111,9 @@ export const MiseAJourMentionsForm: React.FC<IMiseAJourMentionsFormProps> = ({
               idMentionNiveauDeux: values.listesTypesMention.mentionNiveauDeux,
               idMentionNiveauTrois: values.listesTypesMention.mentionNiveauTrois
             },
-            texte: values.texteMention
+            texte: values.texteMention.trim().endsWith(".")
+              ? values.texteMention.trim()
+              : `${values.texteMention.trim()}.`
           }
         ],
         "numeroOrdre"

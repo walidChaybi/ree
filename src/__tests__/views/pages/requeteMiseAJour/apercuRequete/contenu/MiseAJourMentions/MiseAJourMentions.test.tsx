@@ -65,7 +65,7 @@ test("DOIT afficher le tableau de mentions de l'onglet de Mise A Jour QUAND on a
   await waitFor(() => {
     expect(
       screen.getByTitle(
-        "Blablablabla ceci est un texte de mention parfaitement correct"
+        "Blablablabla ceci est un texte de mention parfaitement correct."
       )
     ).toBeDefined();
     expect(screen.getByText("Supprimer la mention")).toBeDefined();
@@ -93,7 +93,7 @@ test("DOIT desafficher la mention du tableau de mentions de l'onglet de Mise A J
   await waitFor(() => {
     expect(
       screen.getByTitle(
-        "Blablablabla ceci est un texte de mention parfaitement correct"
+        "Blablablabla ceci est un texte de mention parfaitement correct."
       )
     ).toBeDefined();
   });
@@ -130,7 +130,7 @@ test("DOIT editer le tableau de mentions QUAND on modifie une mention via la mod
   await waitFor(() => {
     expect(
       screen.getByTitle(
-        "Blablablabla ceci est un texte de mention parfaitement correct"
+        "Blablablabla ceci est un texte de mention parfaitement correct."
       )
     ).toBeDefined();
   });
@@ -149,7 +149,7 @@ test("DOIT editer le tableau de mentions QUAND on modifie une mention via la mod
     expect(screen.getByText("2-1 notarié")).toBeDefined();
     expect(
       screen.getByTitle(
-        "Blablablabla ceci est un texte de mention parfaitement correct"
+        "Blablablabla ceci est un texte de mention parfaitement correct."
       )
     ).toBeDefined();
   });
@@ -173,7 +173,7 @@ test("DOIT editer le tableau de mentions QUAND on modifie une mention via la mod
   // ajout de la mention modifié
   await waitFor(() => {
     expect(
-      screen.getByTitle("Ceci est une mention de mariage de test")
+      screen.getByTitle("Ceci est une mention de mariage de test.")
     ).toBeDefined();
   });
 
@@ -190,7 +190,7 @@ test("DOIT editer le tableau de mentions QUAND on modifie une mention via la mod
     ).toBeDefined();
     expect(screen.getByText("2-2 judiciaire")).toBeDefined();
     expect(
-      screen.getByTitle("Ceci est une mention de mariage de test")
+      screen.getByTitle("Ceci est une mention de mariage de test.")
     ).toBeDefined();
   });
 });
