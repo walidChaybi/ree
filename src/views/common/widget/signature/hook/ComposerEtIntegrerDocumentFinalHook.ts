@@ -1,15 +1,15 @@
 import { HTTP_BAD_REQUEST, HTTP_STATUS_OK } from "@api/ApiManager";
 import { IMettreAJourStatutApresSignatureResultat } from "@hook/requete/MettreAJourStatutApresSignatureApiHook";
 import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
+import { IEtatTraitementApi } from "@model/requete/IEtatTraitementApi";
 import { IComposerDocumentFinalApiHookResultat } from "@model/signature/IComposerDocumentFinalApiHookResultat";
-import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { useEffect, useState } from "react";
 import { DOCUMENT_VIDE_A_SIGNER } from "./SignatureHookUtil";
 
 export interface IResultatComposerDocumentFinalHook {
   documentASigner: string;
-  etatTraitementSignature: IEtatTraitementSignature;
+  etatTraitementSignature: IEtatTraitementApi;
   onSuccesSignatureAppNative: (
     document: string,
     informationsCarte: IInfosCarteSignature
@@ -34,14 +34,14 @@ const useComposerEtIntegrerDocumentFinalHook = (
   handleMiseAJourStatutRequeteApresIntegration: (
     // FIXME: Retirer 'setEtatTraitementSignature' une fois RECE-2604 développée.
     setEtatTraitementSignature?: React.Dispatch<
-      React.SetStateAction<IEtatTraitementSignature>
+      React.SetStateAction<IEtatTraitementApi>
     >
   ) => void,
   miseAJourStatutRequeteApresIntegrationResultat?: IMettreAJourStatutApresSignatureResultat,
   handleRedirectionApresSignature?: () => void
 ): IResultatComposerDocumentFinalHook => {
   const [etatTraitementSignature, setEtatTraitementSignature] =
-    useState<IEtatTraitementSignature>({ termine: false });
+    useState<IEtatTraitementApi>({ termine: false });
 
   // On initialise le state avec un document "vide", dans le but de récupérer
   // les informations de la carte de signature lors d'une première signature "fictive".

@@ -4,27 +4,27 @@ import {
   ITitulaireActe,
   TitulaireActe
 } from "@model/etatcivil/acte/ITitulaireActe";
+import {
+  DocumentReponse,
+  IDocumentReponse
+} from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
-import {
-  DocumentReponse,
-  IDocumentReponse
-} from "@model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { checkDirty, getLibelle, TROIS } from "@util/Utils";
+import { TROIS, checkDirty, getLibelle } from "@util/Utils";
 import { OngletsDynamique } from "@widget/ongletsDynamique/OngletsDynamique";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useEffect, useState } from "react";
 import { DocumentEC } from "../../../../../model/requete/enum/DocumentEC";
 import {
-  genererListeAjoutComplementaire,
-  getTypeDocument,
   INDEX_PLUS,
   ItemListe,
+  genererListeAjoutComplementaire,
+  getTypeDocument,
   listePlus
 } from "./OngletsDocumentsEditesUtils";
 
@@ -199,7 +199,7 @@ export const OngletsDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
       />
 
       <ConfirmationPopin
-        isOpen={openPopinErreur}
+        estOuvert={openPopinErreur}
         messages={[erreurMessagePopin]}
         boutons={boutons}
       />

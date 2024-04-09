@@ -1,9 +1,9 @@
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import messageManager from "@util/messageManager";
 import { getLibelle } from "@util/Utils";
+import messageManager from "@util/messageManager";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ICreationRequeteDelivranceParams,
   useCreationRequeteDelivranceRDD
@@ -81,7 +81,7 @@ export const BoutonCreationRDD = (props: BoutonCreationRDDProps) => {
 
       <ConfirmationPopin
         disablePortal={true}
-        isOpen={popinOpen}
+        estOuvert={popinOpen}
         messages={messagesPopin}
         boutons={boutonsPopin}
       />

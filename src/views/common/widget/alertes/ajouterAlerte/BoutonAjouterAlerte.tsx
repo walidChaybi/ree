@@ -53,7 +53,7 @@ export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({
       />
       <ConfirmationPopin
         disablePortal={true}
-        isOpen={hasMessageBloquant}
+        estOuvert={hasMessageBloquant}
         messages={[
           getLibelle("Vous n'avez pas les droits pour ajouter une alerte.")
         ]}

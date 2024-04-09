@@ -1,18 +1,18 @@
 import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
+import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_ATTESTATION_PACS } from "@model/requete/enum/DocumentDelivranceConstante";
-import { IActionOption } from "@model/requete/IActionOption";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { receUrl } from "@router/ReceUrls";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
-import { replaceUrl } from "@util/route/UrlUtil";
 import {
   estRenseigne,
   getLibelle,
   supprimerNullEtUndefinedDuTableau
 } from "@util/Utils";
+import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
@@ -20,7 +20,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../../mapping/ReqDelivranceToReqTableau";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
-import { useDelivrerCertificatSituationHook } from "./hook/DelivrerCertificatSituationHook";
 import {
   estMemeNombreDeRCModificationEtRadiation,
   estPresentRcTypeModification,
@@ -29,6 +28,7 @@ import {
   menuDelivrerActions,
   triTableauRCRadiationParDate
 } from "./MenuUtilsCS";
+import { useDelivrerCertificatSituationHook } from "./hook/DelivrerCertificatSituationHook";
 
 export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
   const location = useLocation();
@@ -164,7 +164,7 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
         refs={refs}
       />
       <ConfirmationPopin
-        isOpen={estRenseigne(messagesBloquant)}
+        estOuvert={estRenseigne(messagesBloquant)}
         messages={messagesBloquant}
         boutons={[boutonsPopin]}
       />

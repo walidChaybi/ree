@@ -1,10 +1,10 @@
-import { BoutonVerrouillage } from "@composant/formulaire/boutons/BoutonVerrouillage";
-import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import {
   PARENT_ADOPTANT_NAISS1,
   PARENT_ADOPTANT_NAISS2,
   TITULAIRE_EVT_1
 } from "@composant/formulaire/ConstantesNomsForm";
+import { BoutonVerrouillage } from "@composant/formulaire/boutons/BoutonVerrouillage";
+import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import { RECEContext } from "@core/body/RECEContext";
 import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
 import {
@@ -15,32 +15,32 @@ import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";
 import { TitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { ISaisieExtraitForm } from "@model/form/delivrance/ISaisieExtraitForm";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import {
   IRequeteDelivrance,
   RequeteDelivrance
 } from "@model/requete/IRequeteDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getDefaultValuesCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
-import { useReinitialisationComposant } from "@util/form/useReinitialisation";
 import { getLibelle } from "@util/Utils";
-import { StaticField } from "@widget/formulaire/champFixe/StaticField";
+import { useReinitialisationComposant } from "@util/form/useReinitialisation";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import FormikEffect from "@widget/formulaire/utils/FormikEffect";
+import { StaticField } from "@widget/formulaire/champFixe/StaticField";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
+import FormikEffect from "@widget/formulaire/utils/FormikEffect";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { FormikProps, FormikValues } from "formik";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
-import { mappingActeVerFormulaireSaisirExtrait } from "./mapping/mappingActeVerFormulaireSaisirExtrait";
-import { mappingFormulaireSaisirExtraitVersExtraitAEnvoyer } from "./mapping/mappingFormulaireSaisirExtraitVersExtraitAEnvoyer";
 import {
+  IProprietesFormulaire,
   getTitulairesEvenementsEtParentsForm,
   getValidationSchema,
   initProprietesFormulaire,
-  IProprietesFormulaire,
   parentMemeSexeOuIndeterminCasPlurilingue,
   titulairesMemeSexeOuIndeterminCasPlurilingue
 } from "./SaisirExtraitFormUtil";
+import { mappingActeVerFormulaireSaisirExtrait } from "./mapping/mappingActeVerFormulaireSaisirExtrait";
+import { mappingFormulaireSaisirExtraitVersExtraitAEnvoyer } from "./mapping/mappingFormulaireSaisirExtraitVersExtraitAEnvoyer";
 import "./scss/FormulaireSaisirExtrait.scss";
 
 interface ComponentFormProps {
@@ -286,7 +286,7 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         />
       </Formulaire>
       <ConfirmationPopin
-        isOpen={popinMessageErreur?.ouverte}
+        estOuvert={popinMessageErreur?.ouverte}
         messages={[
           getMessageErreur(),
           getLibelle(

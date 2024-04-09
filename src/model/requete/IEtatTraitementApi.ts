@@ -1,6 +1,6 @@
 import { IErreurTraitementApi } from "@api/IErreurTraitementApi";
 
-export interface IEtatTraitementSignature {
+export interface IEtatTraitementApi {
   termine: boolean;
   erreur?: IErreurTraitementApi;
 }

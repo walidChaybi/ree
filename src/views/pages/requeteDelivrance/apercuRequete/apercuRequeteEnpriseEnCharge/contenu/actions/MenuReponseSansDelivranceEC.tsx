@@ -1,6 +1,6 @@
 import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
-import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { IActionOption } from "@model/requete/IActionOption";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
@@ -16,16 +16,16 @@ import { DocumentEC } from "../../../../../../../model/requete/enum/DocumentEC";
 import { IgnoreRequetePopin } from "../IgnoreRequetePopin";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {
-  UpdateChoixDelivranceProps,
-  useUpdateChoixDelivrance
-} from "./hook/UpdateChoixDelivranceApiHook";
-import {
   controleCoherenceEntreDocumentSelectionneEtActionReponseSansDelivrance,
   estChoixActeNonDetenu,
   estChoixIgnorerRequete,
   getOptionsMenuReponseSansDelivrance,
   redirection
 } from "./MenuUtilEC";
+import {
+  UpdateChoixDelivranceProps,
+  useUpdateChoixDelivrance
+} from "./hook/UpdateChoixDelivranceApiHook";
 
 export const MenuReponseSansDelivranceEC: React.FC<
   IChoixActionDelivranceProps
@@ -131,7 +131,7 @@ export const MenuReponseSansDelivranceEC: React.FC<
         refs={refs}
       />
       <ConfirmationPopin
-        isOpen={estRenseigne(messagesBloquant)}
+        estOuvert={estRenseigne(messagesBloquant)}
         messages={messagesBloquant}
         boutons={boutonsPopin}
       />

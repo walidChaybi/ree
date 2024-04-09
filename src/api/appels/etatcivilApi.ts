@@ -38,6 +38,7 @@ const URL_DONNEES_POUR_COMPOSITION_ACTE_AVANT_SIGNATURE_MENTIONS =
 export const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_MENTION = "/mentions";
+export const URL_ABANDONNER_MAJ = "/abandonner-mise-a-jour";
 export const URL_CORPS_TEXTE = "/corpstexte";
 export const URL_ETAT_CIVIL_RMC_AUTO = "/repertoirecivil/rmcauto";
 export const URL_ACTE_RMC_AUTO = "/acte/rmcauto";
@@ -447,6 +448,15 @@ export async function postMentions(
     method: HttpMethod.POST,
     uri: `${URL_ACTE}/${idActe}${URL_MENTION}`,
     data: mentions
+  });
+}
+
+export async function abandonnerMiseAjourActe(
+  idActe: string,
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_ACTE}/${idActe}${URL_ABANDONNER_MAJ}`
   });
 }
 

@@ -6,8 +6,8 @@ import { replaceUrl } from "@util/route/UrlUtil";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSignatureCreationEtablisementHook } from "./hook/SignatureCreationActeEtablissementHook";
 import { PopinSignature, PopinSignatureProps } from "./PopinSignature";
+import { useSignatureCreationEtablisementHook } from "./hook/SignatureCreationActeEtablissementHook";
 import "./scss/PopinSignature.scss";
 
 type PopinSignatureCreationEtablissementProps = {
@@ -86,7 +86,7 @@ export const PopinSignatureCreationEtablissement: React.FC<
             ? [etatTraitementSignature.erreur.message]
             : undefined
         }
-        isOpen={estOuvertPopinConfirmation}
+        estOuvert={estOuvertPopinConfirmation}
         boutons={boutonsPopinConfirmation}
       />
     </>

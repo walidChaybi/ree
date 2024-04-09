@@ -1,12 +1,17 @@
+import { useAbandonnerMajMentionsApiHook } from "@hook/acte/mentions/AbandonnerMiseAJourMentionsApiHook";
+import { useModifierStatutRequeteMajMentionsApiHook } from "@hook/acte/mentions/AbandonnerRequeteMiseAJourMentionsApiHook";
 import { Droit } from "@model/agent/enum/Droit";
 import { estOfficierHabiliterPourTousLesDroits } from "@model/agent/IOfficier";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import ActeRegistre from "@pages/requeteCreation/commun/composants/ActeRegistre";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import messageManager from "@util/messageManager";
+import { replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle, UN, ZERO } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
+import { BlockerNavigation } from "@widget/blocker/BlockerNavigation";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
@@ -54,8 +59,8 @@ interface IMiseAJourMentionsContext {
   >;
 }
 
-export const MiseAJourMentionsContext = React.createContext<IMiseAJourMentionsContext>(
-  {
+export const MiseAJourMentionsContext =
+  React.createContext<IMiseAJourMentionsContext>({
     listeMentions: [],
     setListeMentions: ((mentions: IMentions[]) => {}) as React.Dispatch<
       React.SetStateAction<IMentions[]>
@@ -77,11 +82,11 @@ export const MiseAJourMentionsContext = React.createContext<IMiseAJourMentionsCo
     setEstBoutonTerminerSignerActif: ((value: boolean) => {}) as React.Dispatch<
       React.SetStateAction<boolean>
     >
-  }
-);
+  });
 
 const ApercuRequeteMiseAJourPage: React.FC = () => {
-  const { idActeParam } = useParams<TUuidActeParams>();
+  const { idActeParam, idRequeteParam } = useParams<TUuidActeParams>();
+
   const [numeroOrdreEnModification, setNumeroOrdreEnModification] =
     useState<number>();
   const [listeMentionsEnregistrees, setListeMentionsEnregistrees] = useState<
@@ -95,6 +100,11 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   const [estBoutonTerminerSignerActif, setEstBoutonTerminerSignerActif] =
     useState(false);
   const [affichageApresSignature, setAffichageApresSignature] = useState(false);
+  const [idActeAAbandonner, setIdActeAAbandonner] = useState<string>();
+  const [idRequeteAAbandonner, setIdRequeteAAbandonner] = useState<string>();
+  const [estNavigationBloquee, setEstNavigationBloquee] =
+    useState<boolean>(false);
+
   const handleAffichageActeRecomposeApresSignature = () => {
     // TODO: [QuickFix] setOngletSelectionne permet de basculer sur le bon onglet.
     // A revoir quand on aura corriger le bug des onglets de VoletAvecOnglet.
@@ -103,6 +113,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     messageManager.showSuccess(
       getLibelle("L'acte a été mis à jour avec succès.")
     );
+    setEstNavigationBloquee(false);
   };
 
   const navigate = useNavigate();
@@ -179,6 +190,34 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     navigate(URL_RECHERCHE_ACTE_INSCRIPTION);
   };
 
+  const resultatAbandonMentions =
+    useAbandonnerMajMentionsApiHook(idActeAAbandonner);
+
+  const resultatAbandonRequete = useModifierStatutRequeteMajMentionsApiHook(
+    idRequeteAAbandonner,
+    StatutRequete.ABANDONNEE
+  );
+
+  const onClickBoutonAbandonner = () => {
+    replaceUrl(navigate, URL_RECHERCHE_ACTE_INSCRIPTION);
+  };
+
+  const onConfirmationBlocker = () => {
+    setIdActeAAbandonner(idActeParam);
+  };
+
+  useEffect(() => {
+    if (listeMentionsEnregistrees.length > 0) {
+      setEstNavigationBloquee(true);
+    }
+  }, [listeMentionsEnregistrees]);
+
+  useEffect(() => {
+    if (resultatAbandonMentions.termine) {
+      setIdRequeteAAbandonner(idRequeteParam);
+    }
+  }, [resultatAbandonMentions]);
+
   return (
     <div>
       <div className="ApercuRequeteMiseAJourPage">
@@ -209,7 +248,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
                   <Bouton
                     className="boutonAbandonner"
                     title="Abandonner"
-                    onClick={() => {}}
+                    onClick={onClickBoutonAbandonner}
                   >
                     {getLibelle("Abandonner")}
                   </Bouton>
@@ -245,6 +284,16 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
             <OperationLocaleEnCoursSimple />
           )}
         </MiseAJourMentionsContext.Provider>
+        <BlockerNavigation
+          estNavigationBloquee={estNavigationBloquee}
+          onConfirmation={onConfirmationBlocker}
+          estNavigationDebloquee={resultatAbandonRequete.termine}
+          titre={getLibelle("Abandon du traitement")}
+          messages={[
+            getLibelle("La saisie en cours sera perdue."),
+            getLibelle("Voulez-vous continuer ?")
+          ]}
+        />
       </div>
       {affichageApresSignature && (
         <Bouton onClick={retourRMCActe}>

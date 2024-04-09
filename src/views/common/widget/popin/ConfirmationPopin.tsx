@@ -15,18 +15,18 @@ export interface IBoutonPopin {
 }
 
 export interface ConfirmationPopinProps {
-  isOpen: boolean;
+  estOuvert: boolean;
   messages?: string[];
   boutons?: IBoutonPopin[];
-  title?: string;
+  titre?: string;
   disablePortal?: boolean;
 }
 
 export const ConfirmationPopin: React.FC<ConfirmationPopinProps> = ({
-  isOpen,
+  estOuvert,
   messages,
   boutons,
-  title,
+  titre,
   disablePortal = false
 }) => {
   const [messagesPopin, setMessagesPopin] = useState<string[]>();
@@ -35,16 +35,16 @@ export const ConfirmationPopin: React.FC<ConfirmationPopinProps> = ({
     if (messages?.length) {
       setMessagesPopin(messages);
     }
-  }, [messages, isOpen]);
+  }, [messages, estOuvert]);
 
   return (
     <Dialog
       disablePortal={disablePortal}
-      open={isOpen}
+      open={estOuvert}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      {title && <DialogTitle id="alert-dialog-title">title</DialogTitle>}
+      {titre && <DialogTitle id="alert-dialog-title">{titre}</DialogTitle>}
       <DialogContent>
         {messagesPopin?.map((msg: string, idx: number) => {
           return (

@@ -1,5 +1,5 @@
+import { IEtatTraitementApi } from "@model/requete/IEtatTraitementApi";
 import { IDetailInfos } from "@model/signature/IDetailInfos";
-import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import messageManager from "@util/messageManager";
@@ -22,7 +22,7 @@ export interface PopinSignatureProps {
     infosSignature: IInfosCarteSignature
   ) => void;
   informations?: IDetailInfos[];
-  etatTraitementSignature: IEtatTraitementSignature;
+  etatTraitementSignature: IEtatTraitementApi;
   timeoutTraitementSignature?: number;
   onTraitementSignatureTermine?: () => void;
 }

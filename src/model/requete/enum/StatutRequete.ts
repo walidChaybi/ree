@@ -1,9 +1,9 @@
 /* istanbul ignore file */
+import { Option, Options } from "@util/Type";
 import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { Option, Options } from "@util/Type";
 import { TypeRequete } from "./TypeRequete";
 
 export class StatutRequete extends EnumWithComplete {
@@ -109,6 +109,10 @@ export class StatutRequete extends EnumWithComplete {
   public static readonly BI_A_ENVOYER = new StatutRequete(
     "BI_A_ENVOYER",
     "BI à envoyer"
+  );
+  public static readonly ABANDONNEE = new StatutRequete(
+    "ABANDONNEE",
+    "Abandonnée"
   );
 
   private static readonly StatutsPourTypeRequeteDelivrance = [

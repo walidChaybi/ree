@@ -1,10 +1,10 @@
-import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import {
   ADRESSE,
   CHOIX_COURRIER,
   OPTION,
   REQUERANT
 } from "@composant/formulaire/ConstantesNomsForm";
+import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   ICreerCourrierECParams,
@@ -12,24 +12,24 @@ import {
 } from "@hook/requete/creerCourrierECHook";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import {
   OptionCourrier,
   OptionsCourrier
 } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { RequerantCourrierFormValidationSchema } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/RequerantCourrierForm";
 import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
-import { useReinitialisationComposant } from "@util/form/useReinitialisation";
 import { getLibelle } from "@util/Utils";
+import { useReinitialisationComposant } from "@util/form/useReinitialisation";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { Formulaire } from "@widget/formulaire/Formulaire";
 import {
   AdresseFormValidationSchema,
   AdresseFormValidationSchemaRequired
 } from "@widget/formulaire/adresse/AdresseForm";
-import { Formulaire } from "@widget/formulaire/Formulaire";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
@@ -198,7 +198,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
       </Formulaire>
       {messagesBloquant && (
         <ConfirmationPopin
-          isOpen={true}
+          estOuvert={true}
           messages={[messagesBloquant]}
           boutons={[
             {

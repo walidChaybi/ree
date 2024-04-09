@@ -2,9 +2,9 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE } from "@model/agent/IOfficier";
 import { Alerte, IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { getLibelle } from "@util/Utils";
 import React, { useCallback, useState } from "react";
 import { ConfirmationPopin } from "../../popin/ConfirmationPopin";
 import { PopinSupprimerAlerte } from "./contenu/PopinSupprimerAlerte";
@@ -94,7 +94,7 @@ export const ListeAlertes: React.FC<ListeAlertesProps> = ({
       </div>
       <ConfirmationPopin
         disablePortal={true}
-        isOpen={hasMessageBloquant}
+        estOuvert={hasMessageBloquant}
         messages={[
           getLibelle("Vous n'avez pas les droits pour supprimer une alerte.")
         ]}

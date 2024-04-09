@@ -2,14 +2,14 @@ import { RECEContext } from "@core/body/RECEContext";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { URL_ACCUEIL, URL_CONTEXT_APP } from "@router/ReceUrls";
+import { getLibelle } from "@util/Utils";
 import { IRoute } from "@util/route/IRoute";
 import {
+  URL_SEPARATEUR,
   getUrlWithoutIdParam,
   getUrlWithoutParam,
-  isPathElemId,
-  URL_SEPARATEUR
+  isPathElemId
 } from "@util/route/UrlUtil";
-import { getLibelle } from "@util/Utils";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext } from "react";
 import { useBlocker, useLocation } from "react-router-dom";
@@ -112,9 +112,12 @@ export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
             }
           }
         ]}
-        isOpen={blocker.state === "blocked"}
+        estOuvert={blocker.state === "blocked"}
         messages={[
-          `Vous n'avez pas validé vos modifications. Si vous continuez, celles-ci seront perdues et les données réinitialisées.\n\nVoulez-vous continuer ?`
+          getLibelle(
+            "Vous n'avez pas validé vos modifications. Si vous continuez, celles-ci seront perdues et les données réinitialisées."
+          ),
+          getLibelle("Voulez-vous continuer ?")
         ]}
       />
     </div>

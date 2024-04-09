@@ -2,7 +2,7 @@ import {
   IEnregistrerMentionsParams,
   useEnregistrerMentionsApiHook
 } from "@hook/acte/EnregistrerMentionsApiHook";
-import { getLibelle, shallowEgalTableau, UN, ZERO } from "@util/Utils";
+import { UN, ZERO, getLibelle, shallowEgalTableau } from "@util/Utils";
 import {
   ListeGlisserDeposer,
   ListeItem
@@ -159,7 +159,7 @@ const MiseAJourMentions: React.FC = () => {
             }
           }
         ]}
-        isOpen={estPoppinOuverte}
+        estOuvert={estPoppinOuverte}
         messages={[
           `Vous avez demandé la suppression d'une mention.\n\nVoulez-vous continuer ?`
         ]}

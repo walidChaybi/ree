@@ -13,7 +13,7 @@ import {
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "@util/Utils";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { OfficierContext } from "../contexts/OfficierContext";
 
@@ -30,6 +30,8 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   const [confirmationDeco, setConfirmationDeco] =
     React.useState<boolean>(false);
   const [nbRequetes, setNbRequetes] = React.useState<number>(0);
+  const [onDeconnexion, setOnDeconnexion] = React.useState<boolean>(false);
+
   const navigate = useNavigate();
 
   const handleClickBoutonOfficer = (
@@ -47,9 +49,17 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
 
   function deconnexion() {
     gestionnaireDoubleOuverture.arreterVerification();
-    navigate(URL_DECONNEXION);
-    navigate(0);
+    setOnDeconnexion(true);
   }
+
+  useEffect(() => {
+    if (onDeconnexion) {
+      navigate(URL_DECONNEXION);
+      return () => {
+        navigate(0);
+      };
+    }
+  }, [onDeconnexion]);
 
   const handleClickDeconnexion = () => {
     setMenu(null);
@@ -99,7 +109,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   return (
     <>
       <ConfirmationPopin
-        isOpen={confirmationDeco}
+        estOuvert={confirmationDeco}
         messages={messagePopin}
         boutons={boutonsPopin}
       />

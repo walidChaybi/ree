@@ -38,7 +38,7 @@ const HookConsummerConfirmationPopin: React.FC<HookConsummerConfirmationPopinPro
 
   return (
     <ConfirmationPopin
-      isOpen={display}
+      estOuvert={display}
       messages={["Message de test"]}
       boutons={boutonsPopin}
     />

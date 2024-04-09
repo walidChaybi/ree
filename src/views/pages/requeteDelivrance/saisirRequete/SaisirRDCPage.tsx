@@ -18,27 +18,27 @@ import {
 } from "@hook/requete/DetailRequeteHook";
 import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import {
-  TypeLienRequerant,
-  TYPE_LIEN_REQUERANT_POUR_TITULAIRE
+  TYPE_LIEN_REQUERANT_POUR_TITULAIRE,
+  TypeLienRequerant
 } from "@model/requete/enum/TypeLienRequerant";
 import {
   TypeRequerantRDC,
   UN_TITULAIRE
 } from "@model/requete/enum/TypeRequerantRDC";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { PATH_MODIFIER_RDC } from "@router/ReceUrls";
-import { getPiecesJointesNonVides, PieceJointe } from "@util/FileUtils";
+import { PieceJointe, getPiecesJointesNonVides } from "@util/FileUtils";
 import { Options } from "@util/Type";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { Formulaire } from "@widget/formulaire/Formulaire";
 import {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
 } from "@widget/formulaire/adresse/AdresseForm";
-import { Formulaire } from "@widget/formulaire/Formulaire";
 import {
   RequeteFormDefaultValues,
   RequeteFormValidationSchema
@@ -65,9 +65,9 @@ import {
   getTitulaire1Form,
   getTitulaire2Form
 } from "./contenu/SaisirRDCPageForms";
-import { mappingRequeteDelivranceVersFormulaireRDC } from "./hook/mappingRequeteDelivranceVersFormulaireRDC";
 import { useRedirectionApresSoumissionRDCHook } from "./hook/RedirectionApresSoumissionRDCHook";
 import { useSoumissionFormulaireRDCHook } from "./hook/SoumissionFormulaireRDCHook";
+import { mappingRequeteDelivranceVersFormulaireRDC } from "./hook/mappingRequeteDelivranceVersFormulaireRDC";
 import "./scss/SaisirRequetePage.scss";
 import {
   EvenementFormDefaultValues,
@@ -299,7 +299,7 @@ export const SaisirRDCPage: React.FC = () => {
         />
       </Formulaire>
       <ConfirmationPopin
-        isOpen={donneesIncompletes}
+        estOuvert={donneesIncompletes}
         messages={getMessagesPopin()}
         boutons={getBoutonsPopin(validerSaisie, setDonneesIncompletes)}
       />

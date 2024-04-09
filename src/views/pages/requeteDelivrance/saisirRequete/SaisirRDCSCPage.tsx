@@ -12,23 +12,23 @@ import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJ
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { SaisieRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { PATH_MODIFIER_RDCSC } from "@router/ReceUrls";
 import { PieceJointe } from "@util/FileUtils";
+import { getLibelle } from "@util/Utils";
 import messageManager from "@util/messageManager";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import { goBack } from "@util/route/UrlUtil";
-import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
+import { Formulaire } from "@widget/formulaire/Formulaire";
+import { DOCUMENT_OBLIGATOIRE } from "@widget/formulaire/FormulaireMessages";
 import {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
 } from "@widget/formulaire/adresse/AdresseForm";
-import { Formulaire } from "@widget/formulaire/Formulaire";
-import { DOCUMENT_OBLIGATOIRE } from "@widget/formulaire/FormulaireMessages";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { FormikProps, FormikValues } from "formik";
@@ -51,9 +51,9 @@ import {
   getRequerantForm,
   getTitulairesForm
 } from "./contenu/SaisirRDCSCPageForms";
-import { mappingRequeteDelivranceVersFormulaireRDCSC } from "./hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import { useRedirectionApresSoumissionRDCSCHook } from "./hook/RedirectionApresSoumissionRDCSCHook";
 import { useSoumissionFormulaireRDCSCHook } from "./hook/SoumissionFormulaireRDCSCHook";
+import { mappingRequeteDelivranceVersFormulaireRDCSC } from "./hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import "./scss/SaisirRequetePage.scss";
 import {
   IdentiteFormDefaultValuesRDCSC,
@@ -325,7 +325,7 @@ export const SaisirRDCSCPage: React.FC = () => {
         saisieRequeteRDCSC
       )}
       <ConfirmationPopin
-        isOpen={saisieIncomplete}
+        estOuvert={saisieIncomplete}
         messages={getMessagesPopin()}
         boutons={getBoutonsPopin(validerRefus, setSaisieIncomplete)}
       />
