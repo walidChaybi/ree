@@ -313,10 +313,10 @@ test("le bouton 'RETOUR RECHERCHE' s'affiche et, au clic, redirige l'utilisateur
 
   await waitFor(() => {
     expect(integrerDocumentMentionsUlterieuresSpy).toHaveBeenCalledTimes(1);
-    expect(screen.getByText("Retour recherche")).toBeDefined();
+    expect(screen.getByText("Retour rechercher un acte")).toBeDefined();
   });
 
-  fireEvent.click(screen.getByText("Retour recherche"));
+  fireEvent.click(screen.getByText("Retour rechercher un acte"));
 
   await waitFor(() => {
     expect(router.state.location.pathname).toBe(URL_RECHERCHE_ACTE_INSCRIPTION);

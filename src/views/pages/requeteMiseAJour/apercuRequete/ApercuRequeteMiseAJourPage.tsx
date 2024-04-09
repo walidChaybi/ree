@@ -297,7 +297,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
       </div>
       {affichageApresSignature && (
         <Bouton onClick={retourRMCActe}>
-          {getLibelle("Retour recherche")}
+          {getLibelle("Retour rechercher un acte")}
         </Bouton>
       )}
     </div>
