@@ -11,7 +11,7 @@ import useMettreAJourStatutApresSignatureApiHook, {
 } from "@hook/requete/MettreAJourStatutApresSignatureApiHook";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { storeRece } from "@util/storeRece";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useComposerEtIntegrerDocumentFinalHook, {
   IResultatComposerDocumentFinalHook,
   ISuccesSignatureEtAppelApi
@@ -93,11 +93,26 @@ export const useSignatureCreationEtablisementHook = (
     resultatApiHook: codeReponseIntegrerActeSigne
   };
 
-  return useComposerEtIntegrerDocumentFinalHook(
-    composerDocumentApresSignature,
-    integrerDocumentApresSignature,
-    handleMiseAJourStatutRequeteApresIntegration,
-    mettreAJourStatutApresSignatureResultat,
-    redirectionApresSuccesTraitementSignature
-  );
+  const composerEtIntegrerDocumentFinal =
+    useComposerEtIntegrerDocumentFinalHook(
+      composerDocumentApresSignature,
+      integrerDocumentApresSignature,
+      handleMiseAJourStatutRequeteApresIntegration
+    );
+
+  useEffect(() => {
+    if (mettreAJourStatutApresSignatureResultat) {
+      if (!mettreAJourStatutApresSignatureResultat.erreur) {
+        redirectionApresSuccesTraitementSignature();
+      } else {
+        composerEtIntegrerDocumentFinal.setEtatTraitementSignature({
+          termine: true,
+          erreur: mettreAJourStatutApresSignatureResultat.erreur
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mettreAJourStatutApresSignatureResultat]);
+
+  return composerEtIntegrerDocumentFinal;
 };

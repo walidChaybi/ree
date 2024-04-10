@@ -2,7 +2,7 @@ import {
   IEnregistrerMentionsParams,
   useEnregistrerMentionsApiHook
 } from "@hook/acte/EnregistrerMentionsApiHook";
-import { UN, ZERO, getLibelle, shallowEgalTableau } from "@util/Utils";
+import { getLibelle, shallowEgalTableau, UN, ZERO } from "@util/Utils";
 import {
   ListeGlisserDeposer,
   ListeItem
@@ -77,10 +77,6 @@ const MiseAJourMentions: React.FC = () => {
     }
   };
 
-  const onClickModifierMentions = (id: number) => {
-    setNumeroOrdreEnModification(id);
-  };
-
   const actualiserEtVisualiserCallback = () => {
     if (idActeParam) {
       setEnregistrerMentionsParams({
@@ -122,18 +118,24 @@ const MiseAJourMentions: React.FC = () => {
     listeMentionsEnregistrees
   ]);
 
+  const onClickModifierMention = (id: number) =>
+    setNumeroOrdreEnModification(id);
+
+  const onClickSupprimerMention = (id: number) =>
+    handlePopinSupression(true, id);
+
   return (
     <>
       <ListeGlisserDeposer
         liste={mappingMentionsFormVersTableauMentions(
           listeMentions,
-          estFormulaireDirty
+          !estFormulaireDirty
         )}
         handleReorga={(indexPrec: number, indexCourant: number) =>
           handleReorga(listeMentions, setListeMentions, indexPrec, indexCourant)
         }
-        onClickSupprimer={id => handlePopinSupression(true, id)}
-        onClickModifier={onClickModifierMentions}
+        onClickSupprimer={onClickSupprimerMention}
+        onClickModifier={onClickModifierMention}
         afficheDragHandle={!estFormulaireDirty}
         useDragHandle={false}
         libellesSontTitres={false}
@@ -172,13 +174,13 @@ export default MiseAJourMentions;
 
 const mappingMentionsFormVersTableauMentions = (
   mentions: IMentions[],
-  estFormulaireDirty = false
+  afficheIconesEditionTableauMentions = true
 ): ListeItem[] => {
   return mentions.map((mention, index) => {
     return {
       id: `${index}.${mention.typeMention}`,
-      estSupprimable: !estFormulaireDirty,
-      estModifiable: !estFormulaireDirty,
+      estSupprimable: afficheIconesEditionTableauMentions,
+      estModifiable: afficheIconesEditionTableauMentions,
       checkbox: true,
       libelle: mention.texte
     };

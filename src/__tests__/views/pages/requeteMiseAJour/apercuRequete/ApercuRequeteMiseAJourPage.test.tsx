@@ -204,7 +204,7 @@ describe("Test du bouton Terminer et Signer", () => {
   });
 });
 
-test("le bouton 'RETOUR RECHERCHE' s'affiche et, au clic, redirige l'utilisateur vers la page 'RMC acte' QUAND on termine le parcours de signature", async () => {
+test("Le bouton 'RETOUR RECHERCHE' s'affiche et, au clic, redirige l'utilisateur vers la page 'RMC acte' QUAND on termine le parcours de signature", async () => {
   const composerDocumentMentionsUlterieuresSpy = jest.spyOn(
     EtatCivilApi,
     "composerDocumentMentionsUlterieures"
@@ -324,4 +324,117 @@ test("le bouton 'RETOUR RECHERCHE' s'affiche et, au clic, redirige l'utilisateur
 
   integrerDocumentMentionsUlterieuresSpy.mockClear();
   composerDocumentMentionsUlterieuresSpy.mockClear();
+});
+
+test("L'onglets 'Gérer les mentions' disparaissent après avoir signer la mise à jour d'acte", async () => {
+  const composerDocumentMentionsUlterieuresSpy = jest.spyOn(
+    EtatCivilApi,
+    "composerDocumentMentionsUlterieures"
+  );
+  const integrerDocumentMentionsUlterieuresSpy = jest.spyOn(
+    EtatCivilApi,
+    "integrerDocumentMentionSigne"
+  );
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID,
+        element: <ApercuRequeteMiseAJourPage />
+      },
+      {
+        path: URL_RECHERCHE_ACTE_INSCRIPTION,
+        element: (
+          <RMCActeInscriptionPage
+            noAutoScroll={false}
+            dansFenetreExterne={false}
+          />
+        )
+      }
+    ],
+    [
+      `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/er5ez456-354v-461z-c5fd-162md289m74h/b41079a5-9e8d-478c-b04c-c4c4ey86537g`
+    ]
+  );
+
+  render(<RouterProvider router={router} />);
+
+  await waitFor(() => {
+    expect(screen.getByText("Gérer les mentions")).toBeInTheDocument();
+  });
+
+  ajouterUneMention();
+
+  await waitFor(() => {
+    expect(screen.getByText("Actualiser et visualiser")).toBeInTheDocument();
+  });
+
+  fireEvent.click(screen.getByText("Actualiser et visualiser"));
+
+  await waitFor(() => {
+    expect(screen.getByText("Terminer et Signer")).toBeInTheDocument();
+  });
+
+  fireEvent.click(screen.getByText("Terminer et Signer"));
+
+  await waitFor(() => {
+    expect(screen.getByText("Valider")).toBeInTheDocument();
+  });
+
+  // Simulation d'une signature réussie.
+  fireEvent(
+    window,
+    // @ts-ignore
+    createEvent(
+      "signWebextResponse",
+      window,
+      {
+        detail: {
+          direction: "to-call-app",
+          document: "documentFictif",
+          erreur: null,
+          infosSignature: {
+            issuerCertificat: "issuerCertificat",
+            entiteCertificat: "entiteCertificat",
+            autresInformation: "autresInformation"
+          }
+        }
+      },
+      { EventType: "CustomEvent" }
+    )
+  );
+
+  await waitFor(() => {
+    expect(composerDocumentMentionsUlterieuresSpy).toHaveBeenCalledWith(
+      "b41079a5-9e8d-478c-b04c-c4c4ey86537g",
+      "issuerCertificat",
+      "entiteCertificat"
+    );
+  });
+
+  fireEvent(
+    window,
+    // @ts-ignore
+    createEvent(
+      "signWebextResponse",
+      window,
+      {
+        detail: {
+          direction: "to-call-app",
+          document: "documentFinalCompose",
+          erreur: null,
+          infosSignature: {
+            issuerCertificat: "issuerCertificat",
+            entiteCertificat: "entiteCertificat",
+            autresInformation: "autresInformation"
+          }
+        }
+      },
+      { EventType: "CustomEvent" }
+    )
+  );
+
+  await waitFor(() => {
+    expect(integrerDocumentMentionsUlterieuresSpy).toHaveBeenCalledTimes(1);
+    expect(screen.queryByText("Gérer les mentions")).not.toBeInTheDocument();
+  });
 });

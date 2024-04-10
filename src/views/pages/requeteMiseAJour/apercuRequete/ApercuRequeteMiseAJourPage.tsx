@@ -82,7 +82,8 @@ export const MiseAJourMentionsContext =
     setEstBoutonTerminerSignerActif: ((value: boolean) => {}) as React.Dispatch<
       React.SetStateAction<boolean>
     >
-  });
+  }
+);
 
 const ApercuRequeteMiseAJourPage: React.FC = () => {
   const { idActeParam, idRequeteParam } = useParams<TUuidActeParams>();
@@ -110,7 +111,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     // A revoir quand on aura corriger le bug des onglets de VoletAvecOnglet.
     setOngletSelectionne(ZERO);
     setAffichageApresSignature(true);
-    messageManager.showSuccess(
+    messageManager.showSuccessAndClose(
       getLibelle("L'acte a été mis à jour avec succès.")
     );
     setEstNavigationBloquee(false);
@@ -254,13 +255,13 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
                   </Bouton>
                 )}
               </div>
-              <div className="OngletsApercuCreationEtablissement">
-                <VoletAvecOnglet
-                  liste={getListeOngletsDroit()}
-                  checkDirty={true}
-                />
-                {!affichageApresSignature &&
-                  estOfficierHabiliterPourTousLesDroits([
+              {!affichageApresSignature && (
+                <div className="OngletsApercuCreationEtablissement">
+                  <VoletAvecOnglet
+                    liste={getListeOngletsDroit()}
+                    checkDirty={true}
+                  />
+                  {estOfficierHabiliterPourTousLesDroits([
                     Droit.SIGNER_MENTION,
                     Droit.METTRE_A_JOUR_ACTE
                   ]) && (
@@ -271,7 +272,8 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
                       {getLibelle("Terminer et Signer")}
                     </Bouton>
                   )}
-              </div>
+                </div>
+              )}
               <PopinSignatureMiseAJourMentions
                 estOuvert={estPopinSignatureOuverte}
                 setEstOuvert={setEstPopinSignatureOuverte}

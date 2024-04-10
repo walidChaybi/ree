@@ -2,7 +2,7 @@ import {
   IIntegrerDocumentMentionsUlterieuresParams,
   useIntegrerDocumentMentionsUlterieuresApiHook
 } from "@hook/acte/mentions/IntegrerDocumentMentionsUlterieuresApiHook";
-import { IEtatTraitementApi } from "@model/requete/IEtatTraitementApi";
+import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { storeRece } from "@util/storeRece";
 import { useState } from "react";
@@ -68,7 +68,7 @@ const useSignatureMiseAJourHook = (
 
   const handleMiseAJourStatutRequeteApresIntegration = (
     setEtatTraitementSignature?: React.Dispatch<
-      React.SetStateAction<IEtatTraitementApi>
+      React.SetStateAction<IEtatTraitementSignature>
     >
   ) => {
     setEtatTraitementSignature && setEtatTraitementSignature({ termine: true });
