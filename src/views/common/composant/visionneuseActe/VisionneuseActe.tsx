@@ -15,6 +15,7 @@ import {
 import { TypeActe } from "@model/etatcivil/enum/TypeActe";
 import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
 import { base64ToBlob } from "@util/FileUtils";
+import { getLibelle } from "@util/Utils";
 import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
 import React, { useEffect, useState } from "react";
 import { MimeType } from "../../../../ressources/MimeType";
@@ -25,6 +26,9 @@ interface IVisionneuseActeProps {
   typeActe?: TypeActe;
   estReecrit?: boolean;
 }
+
+const MESSAGE_VISUALISATION_INDISPONIBLE =
+  "La visualisation de l'acte n'est pas disponible.";
 
 export const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({
   idActe,
@@ -82,7 +86,9 @@ export const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({
         recupererActeTexteResultat?.erreur?.code ===
         CodeErreurFonctionnelle.FCT_ACTE_SANS_CORPS_TEXTE
       ) {
-        setErreur(recupererActeTexteResultat.erreur.message);
+        setErreur(
+          `[${CodeErreurFonctionnelle.FCT_ACTE_SANS_CORPS_TEXTE}] ${MESSAGE_VISUALISATION_INDISPONIBLE}`
+        );
       } else if (recupererActeTexteResultat?.acteTexteJson) {
         setCompositionActeTexteParams({
           acteTexteJson: recupererActeTexteResultat.acteTexteJson
@@ -98,10 +104,14 @@ export const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({
 
   useEffect(() => {
     if (estImage) {
-      if (recupererActeImageResultat?.contenuBlob) {
-        setContenuBlob(recupererActeImageResultat.contenuBlob);
+      if (recupererActeImageResultat?.imageActe) {
+        setContenuBlob(
+          base64ToBlob(recupererActeImageResultat.imageActe.contenu)
+        );
       } else if (recupererActeImageResultat?.erreur) {
-        setErreur(recupererActeImageResultat?.erreur);
+        setErreur(
+          `[${CodeErreurFonctionnelle.FCT_AUCUN_ACTE_IMAGE}] ${MESSAGE_VISUALISATION_INDISPONIBLE}`
+        );
       }
     } else {
       if (compositionActeTexteResultat?.donneesComposition) {
@@ -114,21 +124,23 @@ export const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({
     }
   }, [compositionActeTexteResultat, recupererActeImageResultat, estImage]);
 
-  const clickSwitch = () => {
+  const onClickSwitchActeExtraitRepris = () => {
     setContenuBlob(undefined);
     setEstImage(!estImage);
+    setErreur(undefined);
   };
 
   return (
     <div id="docActeViewer" className="DocumentActeViewer">
       {estReecrit && (
-        <button className="ButtonSwitchActe" onClick={() => clickSwitch()}>
-          Texte saisi &lt;-&gt; Image
+        <button
+          className="ButtonSwitchActe"
+          onClick={onClickSwitchActeExtraitRepris}
+        >
+          {getLibelle(estImage ? "Voir extrait repris" : "Voir acte")}
         </button>
       )}
-      {erreur ? (
-        erreur
-      ) : (
+      {erreur ?? (
         <VisionneuseDocument
           infoBulle="Visionneuse PDF"
           contenuBlob={contenuBlob}

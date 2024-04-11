@@ -1,5 +1,6 @@
-import { HTTP_NOT_FOUND } from "@api/ApiManager";
 import { getCorpsActeImage } from "@api/appels/etatcivilApi";
+import { IImageActe } from "@model/etatcivil/commun/IImageActe";
+import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
 import { logError } from "@util/LogManager";
 import { getLibelle, ZERO } from "@util/Utils";
 import { useEffect, useState } from "react";
@@ -9,35 +10,32 @@ export interface IGetCorpsActeImageParams {
 }
 
 export interface IGetCorpsActeImageResultat {
-  contenuBlob?: Blob;
+  imageActe?: IImageActe;
   erreur?: string;
 }
 
-export const useGetCorpsActeImageApiHook = (params?: IGetCorpsActeImageParams) => {
+export const useGetCorpsActeImageApiHook = (
+  params?: IGetCorpsActeImageParams
+) => {
   const [resultat, setResultat] = useState<IGetCorpsActeImageResultat>();
 
   useEffect(() => {
     if (params) {
       getCorpsActeImage(params.idActe)
         .then(reponse => {
-          setResultat(
-            reponse.body.size === ZERO
-              ? {
-                  erreur: getLibelle(
-                    "La visualisation de l'acte image n'est pas disponible"
-                  )
-                }
-              : {
-                  contenuBlob: reponse.body
-                }
-          );
+          setResultat({
+            imageActe: reponse.body.data
+          });
         })
         .catch(error => {
-          if (error?.response.status === HTTP_NOT_FOUND) {
+          const premiereErreur: any | undefined = JSON.parse(error?.message)
+            ?.errors[ZERO];
+          if (
+            premiereErreur?.code ===
+            CodeErreurFonctionnelle.FCT_AUCUN_ACTE_IMAGE
+          ) {
             setResultat({
-              erreur: getLibelle(
-                "La visualisation de l'acte image n'est pas disponible"
-              )
+              erreur: premiereErreur?.message
             });
           } else {
             logError({

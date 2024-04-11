@@ -341,8 +341,7 @@ export function getPersonnesSauvegardees(idPersonnes: string[]): Promise<any> {
 export function getCorpsActeImage(identifiant: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${identifiant}${URL_CORPS_IMAGE}`,
-    responseType: "blob"
+    uri: `${URL_ACTE}/${identifiant}${URL_CORPS_IMAGE}`
   });
 }
 
