@@ -59,6 +59,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
         navigate(0);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onDeconnexion]);
 
   const handleClickDeconnexion = () => {

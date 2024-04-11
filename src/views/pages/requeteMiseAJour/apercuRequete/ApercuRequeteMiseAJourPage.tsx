@@ -217,6 +217,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     if (resultatAbandonMentions.termine) {
       setIdRequeteAAbandonner(idRequeteParam);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatAbandonMentions]);
 
   return (

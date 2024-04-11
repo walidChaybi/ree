@@ -23,6 +23,7 @@ export const BlockerNavigation: React.FC<BlockerNavigationProps> = ({
     if (blocker.state === "blocked" && estNavigationDebloquee) {
       blocker.proceed?.();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estNavigationDebloquee]);
 
   return (
