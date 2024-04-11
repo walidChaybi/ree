@@ -3,14 +3,20 @@ import { IEtatTraitementApi } from "@model/requete/IEtatTraitementApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
-export function useAbandonnerMajMentionsApiHook(idActe: string | undefined) {
+export interface IAbandonnerMajMentionsParams {
+  idActe: string;
+}
+
+export const useAbandonnerMajMentionsApiHook = (
+  params?: IAbandonnerMajMentionsParams
+) => {
   const [resultat, setResultat] = useState<IEtatTraitementApi>({
     termine: false
   });
 
   useEffect(() => {
-    if (idActe) {
-      abandonnerMiseAjourActe(idActe)
+    if (params) {
+      abandonnerMiseAjourActe(params.idActe)
         .then(() => {
           setResultat({ termine: true });
         })
@@ -23,7 +29,7 @@ export function useAbandonnerMajMentionsApiHook(idActe: string | undefined) {
           });
         });
     }
-  }, [idActe]);
+  }, [params]);
 
   return resultat;
-}
+};

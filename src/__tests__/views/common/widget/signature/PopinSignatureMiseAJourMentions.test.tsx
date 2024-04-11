@@ -1,6 +1,8 @@
 import * as EtatCivilApi from "@api/appels/etatcivilApi";
+import * as RequeteApi from "@api/appels/requeteApi";
 import mockConnectedUser from "@mock/data/connectedUser.json";
 import { IOfficier } from "@model/agent/IOfficier";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import {
   URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS,
   URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID
@@ -43,7 +45,7 @@ test("render PopinSignatureMiseAJourMentions QUAND on ouvre la popin", async () 
 });
 
 describe("Doit signer le document QUAND on valide le code pin.", () => {
-  test("DOIT composer le document contenant les mentions ultérieures, puis enregistrer le document signé", async () => {
+  test("DOIT composer le document contenant les mentions ultérieures, puis enregistrer le document signé, et modifier le statut de la requête", async () => {
     storeRece.utilisateurCourant = mockConnectedUser as any as IOfficier;
     const composerDocumentMentionsUlterieuresSpy = jest.spyOn(
       EtatCivilApi,
@@ -52,6 +54,10 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
     const integrerDocumentMentionsUlterieuresSpy = jest.spyOn(
       EtatCivilApi,
       "integrerDocumentMentionSigne"
+    );
+    const modifierStatutRequeteMiseAJourSpy = jest.spyOn(
+      RequeteApi,
+      "modifierStatutRequeteMiseAJour"
     );
 
     const router = createTestingRouter(
@@ -130,10 +136,15 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
 
     await waitFor(() => {
       expect(integrerDocumentMentionsUlterieuresSpy).toHaveBeenCalledTimes(1);
+      expect(modifierStatutRequeteMiseAJourSpy).toHaveBeenCalledWith(
+        "e5fdfe01-655b-44b9-a1fd-86c1169bb2ee",
+        StatutRequete.TRAITEE_MIS_A_JOUR
+      );
     });
 
     integrerDocumentMentionsUlterieuresSpy.mockClear();
     composerDocumentMentionsUlterieuresSpy.mockClear();
+    modifierStatutRequeteMiseAJourSpy.mockClear();
   });
 
   test("NE DOIT PAS composer le document final si l'information 'entiteCertificat' de la carte est manquant", async () => {

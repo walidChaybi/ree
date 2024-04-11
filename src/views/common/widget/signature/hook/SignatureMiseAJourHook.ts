@@ -2,7 +2,7 @@ import {
   IIntegrerDocumentMentionsUlterieuresParams,
   useIntegrerDocumentMentionsUlterieuresApiHook
 } from "@hook/acte/mentions/IntegrerDocumentMentionsUlterieuresApiHook";
-import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { storeRece } from "@util/storeRece";
 import { useState } from "react";
@@ -10,13 +10,19 @@ import {
   IComposerDocumentMentionsUlterieuresParams,
   useComposerDocumentMentionsUlterieuresApiHook
 } from "../../../hook/acte/mentions/ComposerDocumentMentionsUlterieuresApiHook";
+import {
+  IModifierStatutRequeteMiseAJourParams,
+  useModifierStatutRequeteMiseAJourApiHook
+} from "./../../../hook/requete/miseajour/ModifierStatutRequeteMiseAJourApiHook";
 import useComposerEtIntegrerDocumentFinalHook, {
+  IMettreAJourStatutRequeteApresIntegration,
   IResultatComposerDocumentFinalHook,
   ISuccesSignatureEtAppelApi
 } from "./ComposerEtIntegrerDocumentFinalHook";
 
 const useSignatureMiseAJourHook = (
-  idActe?: string
+  idActe?: string,
+  idRequete?: string
 ): IResultatComposerDocumentFinalHook => {
   const [
     composerDocumentMentionsUlterieuresParams,
@@ -26,6 +32,10 @@ const useSignatureMiseAJourHook = (
     integrerDocumentMentionsUlterieuresParams,
     setIntegrerDocumentMentionsUlterieuresParams
   ] = useState<IIntegrerDocumentMentionsUlterieuresParams>();
+  const [
+    modifierStatutRequeteMiseAJourParams,
+    setModifierStatutRequeteMiseAJourParams
+  ] = useState<IModifierStatutRequeteMiseAJourParams>();
 
   const [
     composerDocumentMentionsUlterieuresResultat,
@@ -40,6 +50,10 @@ const useSignatureMiseAJourHook = (
   } = useIntegrerDocumentMentionsUlterieuresApiHook(
     integrerDocumentMentionsUlterieuresParams
   );
+  const mettreAJourStatutApresSignatureResultat =
+    useModifierStatutRequeteMiseAJourApiHook(
+      modifierStatutRequeteMiseAJourParams
+    );
 
   const handleComposerDocumentMentionsUlterieures = (
     document: string,
@@ -66,12 +80,13 @@ const useSignatureMiseAJourHook = (
     }
   };
 
-  const handleMiseAJourStatutRequeteApresIntegration = (
-    setEtatTraitementSignature?: React.Dispatch<
-      React.SetStateAction<IEtatTraitementSignature>
-    >
-  ) => {
-    setEtatTraitementSignature && setEtatTraitementSignature({ termine: true });
+  const handleMiseAJourStatutRequeteApresIntegration = () => {
+    if (idRequete) {
+      setModifierStatutRequeteMiseAJourParams({
+        idRequete,
+        statutRequete: StatutRequete.TRAITEE_MIS_A_JOUR
+      });
+    }
   };
 
   const composerDocumentApresSignature: ISuccesSignatureEtAppelApi<
@@ -90,10 +105,16 @@ const useSignatureMiseAJourHook = (
     resultatApiHook: codeReponseIntegrerDocumentMentionsUlterieures
   };
 
+  const mettreAJourStatutApresIntegration: IMettreAJourStatutRequeteApresIntegration =
+    {
+      resultatApiHook: mettreAJourStatutApresSignatureResultat,
+      handleSetParamsApiHook: handleMiseAJourStatutRequeteApresIntegration
+    };
+
   return useComposerEtIntegrerDocumentFinalHook(
     composerDocumentApresSignature,
     integrerDocumentApresSignature,
-    handleMiseAJourStatutRequeteApresIntegration
+    mettreAJourStatutApresIntegration
   );
 };
 

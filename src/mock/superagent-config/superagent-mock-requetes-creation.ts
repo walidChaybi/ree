@@ -18,8 +18,6 @@ import {
 } from "../data/requetesServiceCreation";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 
-export const NORESULT = "NORESULT";
-
 export const configRequetesCreation = [
   {
     /**

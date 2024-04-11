@@ -78,7 +78,7 @@ const URL_METTRE_AJOUR_STATUT_APRES_SIGNATURE =
   "/mettre-a-jour-statut-apres-signature";
 export const URL_PRENDRE_EN_CHARGE_REQUETE_SUIVANTE =
   "/requetes/creation/requete-a-prendre-en-charge";
-export const URL_MISE_A_JOUR_MENTIONS = "/mise-a-jour";
+const URL_REQUETE_MISE_A_JOUR = "/mise-a-jour";
 
 const URL_REPONSES = "/reponses";
 
@@ -858,20 +858,20 @@ export const postRequeteMiseAJour = (
 ): Promise<any> => {
   return api.fetch({
     method: HttpMethod.POST,
-    uri: `${URL_REQUETES}${URL_MISE_A_JOUR_MENTIONS}`,
+    uri: `${URL_REQUETES}${URL_REQUETE_MISE_A_JOUR}`,
     data: {
       ...params
     }
   });
 };
 
-export const modifierStatutRequeteMiseAJourMentions = (
+export const modifierStatutRequeteMiseAJour = (
   idRequete: string,
   statutDemande: StatutRequete
 ): Promise<any> => {
   return api.fetch({
     method: HttpMethod.PATCH,
-    uri: `${URL_REQUETES}${URL_MISE_A_JOUR_MENTIONS}/${idRequete}/update-statut-requete-mise-a-jour/${StatutRequete.getKey(
+    uri: `${URL_REQUETES}${URL_REQUETE_MISE_A_JOUR}/${idRequete}/update-statut-requete-mise-a-jour/${StatutRequete.getKey(
       statutDemande
     )}`
   });

@@ -1,5 +1,6 @@
 import { mettreAJourStatutApresSignature } from "@api/appels/requeteApi";
 import { IErreurTraitementApi } from "@api/IErreurTraitementApi";
+import { IModifierStatutRequeteApresSignature } from "@model/requete/IModifierStatutRequeteApresSignature";
 import { logError } from "@util/LogManager";
 import { ZERO } from "@util/Utils";
 import { useEffect, useState } from "react";
@@ -9,16 +10,11 @@ export interface IMettreAJourStatutApresSignatureParams {
   idSuiviDossier?: string;
 }
 
-export interface IMettreAJourStatutApresSignatureResultat {
-  codeReponse: number;
-  erreur?: IErreurTraitementApi;
-}
-
 const useMettreAJourStatutApresSignatureApiHook = (
   parametres?: IMettreAJourStatutApresSignatureParams
-): IMettreAJourStatutApresSignatureResultat | undefined => {
+): IModifierStatutRequeteApresSignature | undefined => {
   const [resultat, setResultat] =
-    useState<IMettreAJourStatutApresSignatureResultat>();
+    useState<IModifierStatutRequeteApresSignature>();
 
   useEffect(() => {
     if (parametres?.idRequete && parametres?.idSuiviDossier) {

@@ -67,7 +67,10 @@ export class StatutRequete extends EnumWithComplete {
     "REJET_IMPRESSION",
     "Traité - Rejet impression"
   );
-  // Statut création
+  public static readonly TRAITEE_MIS_A_JOUR = new StatutRequete(
+    "TRAITEE_MIS_A_JOUR",
+    "Traitée - Mis à jour"
+  );
   public static readonly PROJET_VALIDE = new StatutRequete(
     "PROJET_VALIDE",
     "Projet validé"

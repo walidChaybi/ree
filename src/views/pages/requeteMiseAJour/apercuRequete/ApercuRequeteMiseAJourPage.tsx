@@ -1,5 +1,11 @@
-import { useAbandonnerMajMentionsApiHook } from "@hook/acte/mentions/AbandonnerMiseAJourMentionsApiHook";
-import { useModifierStatutRequeteMajMentionsApiHook } from "@hook/acte/mentions/AbandonnerRequeteMiseAJourMentionsApiHook";
+import {
+  IAbandonnerMajMentionsParams,
+  useAbandonnerMajMentionsApiHook
+} from "@hook/acte/mentions/AbandonnerMiseAJourMentionsApiHook";
+import {
+  IModifierStatutRequeteMiseAJourParams,
+  useModifierStatutRequeteMiseAJourApiHook
+} from "@hook/requete/miseajour/ModifierStatutRequeteMiseAJourApiHook";
 import { Droit } from "@model/agent/enum/Droit";
 import { estOfficierHabiliterPourTousLesDroits } from "@model/agent/IOfficier";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
@@ -101,10 +107,22 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   const [estBoutonTerminerSignerActif, setEstBoutonTerminerSignerActif] =
     useState(false);
   const [affichageApresSignature, setAffichageApresSignature] = useState(false);
-  const [idActeAAbandonner, setIdActeAAbandonner] = useState<string>();
-  const [idRequeteAAbandonner, setIdRequeteAAbandonner] = useState<string>();
   const [estNavigationBloquee, setEstNavigationBloquee] =
     useState<boolean>(false);
+
+  const [abandonnerMajMentionsParams, setAbandonnerMajMentionsParams] =
+    useState<IAbandonnerMajMentionsParams>();
+  const resultatAbandonMentions = useAbandonnerMajMentionsApiHook(
+    abandonnerMajMentionsParams
+  );
+
+  const [
+    modifierStatutRequeteMiseAJourParams,
+    setModifierStatutRequeteMiseAJourParams
+  ] = useState<IModifierStatutRequeteMiseAJourParams>();
+  const resultatAbandonRequete = useModifierStatutRequeteMiseAJourApiHook(
+    modifierStatutRequeteMiseAJourParams
+  );
 
   const handleAffichageActeRecomposeApresSignature = () => {
     // TODO: [QuickFix] setOngletSelectionne permet de basculer sur le bon onglet.
@@ -191,20 +209,12 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     navigate(URL_RECHERCHE_ACTE_INSCRIPTION);
   };
 
-  const resultatAbandonMentions =
-    useAbandonnerMajMentionsApiHook(idActeAAbandonner);
-
-  const resultatAbandonRequete = useModifierStatutRequeteMajMentionsApiHook(
-    idRequeteAAbandonner,
-    StatutRequete.ABANDONNEE
-  );
-
   const onClickBoutonAbandonner = () => {
     replaceUrl(navigate, URL_RECHERCHE_ACTE_INSCRIPTION);
   };
 
   const onConfirmationBlocker = () => {
-    setIdActeAAbandonner(idActeParam);
+    idActeParam && setAbandonnerMajMentionsParams({ idActe: idActeParam });
   };
 
   useEffect(() => {
@@ -214,8 +224,11 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   }, [listeMentionsEnregistrees]);
 
   useEffect(() => {
-    if (resultatAbandonMentions.termine) {
-      setIdRequeteAAbandonner(idRequeteParam);
+    if (resultatAbandonMentions.termine && idRequeteParam) {
+      setModifierStatutRequeteMiseAJourParams({
+        idRequete: idRequeteParam,
+        statutRequete: StatutRequete.ABANDONNEE
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatAbandonMentions]);
@@ -290,7 +303,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
         <BlockerNavigation
           estNavigationBloquee={estNavigationBloquee}
           onConfirmation={onConfirmationBlocker}
-          estNavigationDebloquee={resultatAbandonRequete.termine}
+          estNavigationDebloquee={!!resultatAbandonRequete}
           titre={getLibelle("Abandon du traitement")}
           messages={[
             getLibelle("La saisie en cours sera perdue."),

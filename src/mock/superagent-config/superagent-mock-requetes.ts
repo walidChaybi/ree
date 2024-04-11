@@ -69,6 +69,7 @@ import { configFakeUrl } from "./superagent-mock-fake-url";
 import { configRequetesCreation } from "./superagent-mock-requetes-creation";
 import { configRequetesGeneInscription } from "./superagent-mock-requetes-gene-inscription";
 import { configRequetesInformation } from "./superagent-mock-requetes-information";
+import { configRequetesMiseAJour } from "./superagent-mock-requetes-mise-a-jour";
 
 export const NORESULT = "NORESULT";
 let compteur = 0;
@@ -566,33 +567,33 @@ export const configRequetes = [
         match[1] === "/requetes/delivrance?refus=false&futurStatut=A_TRAITER"
       ) {
         return {
-                  data: {
-                    id: "1072bc37-f889-4365-8f75-912166b767dd",
-                    numeroFonctionnel: "U2UN5W",
-                    idSagaDila: null,
-                    dateCreation: 18 / 10 / 2020,
-                    canal: "COURRIER",
-                    type: "DELIVRANCE",
-                    statut: "A_TRAITER",
-                    titulaires: [],
-                    requerant: [],
-                    mandant: null,
-                    idUtilisateur: "id",
-                    idEntite: "id",
-                    actions: [],
-                    observations: [],
-                    piecesJustificatives: [],
-                    sousType: "RDCSC",
-                    documentDemande: [],
-                    nbExemplaireImpression: 1,
-                    provenanceRequete: "COURRIER",
-                    evenement: [],
-                    motif: "Certificat de nationalité française",
-                    complementMotif: null,
-                    choixDelivrance: null,
-                    documentsReponses: []
-                  }
-                };
+          data: {
+            id: "1072bc37-f889-4365-8f75-912166b767dd",
+            numeroFonctionnel: "U2UN5W",
+            idSagaDila: null,
+            dateCreation: 18 / 10 / 2020,
+            canal: "COURRIER",
+            type: "DELIVRANCE",
+            statut: "A_TRAITER",
+            titulaires: [],
+            requerant: [],
+            mandant: null,
+            idUtilisateur: "id",
+            idEntite: "id",
+            actions: [],
+            observations: [],
+            piecesJustificatives: [],
+            sousType: "RDCSC",
+            documentDemande: [],
+            nbExemplaireImpression: 1,
+            provenanceRequete: "COURRIER",
+            evenement: [],
+            motif: "Certificat de nationalité française",
+            complementMotif: null,
+            choixDelivrance: null,
+            documentsReponses: []
+          }
+        };
       }
 
       // Creation Requete Delivrance
@@ -930,18 +931,13 @@ export const configRequetes = [
         return { data: ["9bfa282d-1e66-4538-b242-b9de4f683777"] };
       }
 
-      // requete de mise a jour
-
-      if (match[1] === "/requetes/mise-a-jour" && context.method === "post") {
-        return { data: { id: "6e89c1c1-16c4-4e40-9b72-7b567270b26f" } };
-      }
-
       let otherData = recupereLesDonneesEnTestantLesAutresConfigs(
         { match, params, headers, context },
         [
           configRequetesInformation,
           configRequetesGeneInscription,
           configRequetesCreation,
+          configRequetesMiseAJour,
           configFakeUrl
         ]
       );

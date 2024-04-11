@@ -1,3 +1,4 @@
+import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
 import { getLibelle } from "@util/Utils";
 import { useParams } from "react-router-dom";
@@ -14,13 +15,13 @@ const TRAITEMENT_SIGNATURE_TIMEOUT_MS = 45000;
 export const PopinSignatureMiseAJourMentions: React.FC<
   PopinSignatureMiseAJourMentionsProps
 > = ({ estOuvert, setEstOuvert, actionApresSignatureReussie }) => {
-  const { idActeParam } = useParams();
+  const { idRequeteParam, idActeParam } = useParams<TUuidActeParams>();
   const {
     documentASigner,
     onSuccesSignatureAppNative,
     etatTraitementSignature,
     onTraitementSignatureTermine
-  } = useSignatureMiseAJourHook(idActeParam);
+  } = useSignatureMiseAJourHook(idActeParam, idRequeteParam);
 
   const onTraitementTermine = () => {
     onTraitementSignatureTermine();

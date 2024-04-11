@@ -1,5 +1,6 @@
 import { HTTP_BAD_REQUEST, HTTP_STATUS_OK } from "@api/ApiManager";
 import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
+import { IModifierStatutRequeteApresSignature } from "@model/requete/IModifierStatutRequeteApresSignature";
 import { IComposerDocumentFinalApiHookResultat } from "@model/signature/IComposerDocumentFinalApiHookResultat";
 import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
@@ -9,9 +10,6 @@ import { DOCUMENT_VIDE_A_SIGNER } from "./SignatureHookUtil";
 export interface IResultatComposerDocumentFinalHook {
   documentASigner: string;
   etatTraitementSignature: IEtatTraitementSignature;
-  setEtatTraitementSignature: React.Dispatch<
-    React.SetStateAction<IEtatTraitementSignature>
-  >;
   onSuccesSignatureAppNative: (
     document: string,
     informationsCarte: IInfosCarteSignature
@@ -30,15 +28,16 @@ export interface ISuccesSignatureEtAppelApi<
   resultatApiHook?: TResultat;
 }
 
+export interface IMettreAJourStatutRequeteApresIntegration {
+  handleSetParamsApiHook: () => void;
+  resultatApiHook?: IModifierStatutRequeteApresSignature;
+  handleMiseAJourReussie?: () => void;
+}
+
 const useComposerEtIntegrerDocumentFinalHook = (
   composerDocumentApresSignature: ISuccesSignatureEtAppelApi<IComposerDocumentFinalApiHookResultat>,
   integrerDocumentApresSignature: ISuccesSignatureEtAppelApi<number>,
-  handleIntegrationDocumentReussie: (
-    // FIXME: Retirer 'setEtatTraitementSignature' une fois RECE-2604 développée.
-    setEtatTraitementSignature?: React.Dispatch<
-      React.SetStateAction<IEtatTraitementSignature>
-    >
-  ) => void
+  mettreAJourStatutRequeteApresIntegration: IMettreAJourStatutRequeteApresIntegration
 ): IResultatComposerDocumentFinalHook => {
   const [etatTraitementSignature, setEtatTraitementSignature] =
     useState<IEtatTraitementSignature>({ termine: false });
@@ -75,7 +74,7 @@ const useComposerEtIntegrerDocumentFinalHook = (
   useEffect(() => {
     if (integrerDocumentApresSignature.resultatApiHook) {
       if (integrerDocumentApresSignature.resultatApiHook === HTTP_STATUS_OK) {
-        handleIntegrationDocumentReussie(setEtatTraitementSignature);
+        mettreAJourStatutRequeteApresIntegration.handleSetParamsApiHook();
       } else {
         setEtatTraitementSignature({
           termine: true,
@@ -90,6 +89,22 @@ const useComposerEtIntegrerDocumentFinalHook = (
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [integrerDocumentApresSignature.resultatApiHook]);
+
+  useEffect(() => {
+    if (mettreAJourStatutRequeteApresIntegration.resultatApiHook) {
+      if (
+        !mettreAJourStatutRequeteApresIntegration.resultatApiHook.erreur &&
+        mettreAJourStatutRequeteApresIntegration.handleMiseAJourReussie
+      ) {
+        mettreAJourStatutRequeteApresIntegration.handleMiseAJourReussie();
+      }
+      setEtatTraitementSignature({
+        termine: true,
+        erreur: mettreAJourStatutRequeteApresIntegration.resultatApiHook.erreur
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mettreAJourStatutRequeteApresIntegration.resultatApiHook]);
 
   // Si aucun résultat n'a été reçu de l'appel à la composition du document final,
   // c'est qu'on n'est pas passé par l'étape de composition.
@@ -129,7 +144,6 @@ const useComposerEtIntegrerDocumentFinalHook = (
   return {
     documentASigner,
     etatTraitementSignature,
-    setEtatTraitementSignature,
     onSuccesSignatureAppNative,
     onTraitementSignatureTermine
   };
