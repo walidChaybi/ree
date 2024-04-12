@@ -7,7 +7,7 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
-import { getLibelle, shallowEgal } from "@util/Utils";
+import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import {
   FormikComponentProps,
@@ -19,15 +19,13 @@ import ListesTypesMentionForm from "./ListesTypesMentionForm";
 
 interface IAjoutMentionsMiseAJourProps {
   libelleTitreFormulaire: string;
-  actualiserEtVisualiserCallback: () => void;
 }
 
 const AjoutMentionsMiseAJour: React.FC<
   IAjoutMentionsMiseAJourProps & FormikComponentProps
-> = ({ formik, libelleTitreFormulaire, actualiserEtVisualiserCallback }) => {
+> = ({ formik, libelleTitreFormulaire }) => {
   const {
     listeMentions,
-    listeMentionsEnregistrees,
     numeroOrdreEnModification,
     setNumeroOrdreEnModification,
     setEstFormulaireDirty
@@ -67,35 +65,19 @@ const AjoutMentionsMiseAJour: React.FC<
       ? getLibelle("Modifier mention")
       : getLibelle("Ajouter mention");
 
-  const estVerrouilleActualiserEtVisualiser =
-    shallowEgal(listeMentions, listeMentionsEnregistrees) || formik.dirty;
-
   return (
     <div>
       <h3>{getLibelle(libelleTitreFormulaire)}</h3>
-      <div className="divFormulaire">
-        <ListesTypesMentionForm
-          natureActe={NatureActe.NAISSANCE} // TODO: Pour le moment spécifique aux actes de naissance, à rendre plus générique plus tard.
-          nom={LISTES_TYPES_MENTION}
-        />
-        <div className="boutons-mention">
-          <Bouton
-            disabled={!formik.dirty}
-            onClick={annulerEnAjoutOuModification}
-          >
-            Annuler
-          </Bouton>
-          <Bouton disabled={!formik.dirty || !formik.isValid} type="submit">
-            {boutonAJouterModifier}
-          </Bouton>
-        </div>
-      </div>
-      <div className="boutonActualiserVisualiser">
-        <Bouton
-          disabled={estVerrouilleActualiserEtVisualiser}
-          onClick={actualiserEtVisualiserCallback}
-        >
-          {getLibelle("Actualiser et visualiser")}
+      <ListesTypesMentionForm
+        natureActe={NatureActe.NAISSANCE} // TODO: Pour le moment spécifique aux actes de naissance, à rendre plus générique plus tard.
+        nom={LISTES_TYPES_MENTION}
+      />
+      <div className="boutons-mention">
+        <Bouton disabled={!formik.dirty || !formik.isValid} type="submit">
+          {boutonAJouterModifier}
+        </Bouton>
+        <Bouton disabled={!formik.dirty} onClick={annulerEnAjoutOuModification}>
+          {getLibelle("Annuler")}
         </Bouton>
       </div>
     </div>

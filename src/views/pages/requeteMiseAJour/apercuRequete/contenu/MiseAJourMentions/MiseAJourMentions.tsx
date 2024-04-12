@@ -1,15 +1,10 @@
-import {
-  IEnregistrerMentionsParams,
-  useEnregistrerMentionsApiHook
-} from "@hook/acte/EnregistrerMentionsApiHook";
-import { getLibelle, shallowEgalTableau, UN, ZERO } from "@util/Utils";
+import { getLibelle, UN, ZERO } from "@util/Utils";
 import {
   ListeGlisserDeposer,
   ListeItem
 } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
-import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useState } from "react";
 import {
   IMentions,
   MiseAJourMentionsContext
@@ -19,26 +14,15 @@ import { MiseAJourMentionsForm } from "./form/MiseAJourMentionsForm";
 const CARACTERES_MAXIMUM_LIBELLE_LISTE = 300;
 
 const MiseAJourMentions: React.FC = () => {
-  const { idActeParam } = useParams();
   const {
     listeMentions,
     setListeMentions,
-    listeMentionsEnregistrees,
-    setListeMentionsEnregistrees,
     numeroOrdreEnModification,
     setNumeroOrdreEnModification,
-    estFormulaireDirty,
-    setOngletSelectionne,
-    setEstBoutonTerminerSignerActif
+    estFormulaireDirty
   } = useContext(MiseAJourMentionsContext);
   const [estPoppinOuverte, setEstPoppinOuverte] = useState<boolean>(false);
   const [itemASupprimer, setItemASupprimer] = useState<number>();
-
-  const [enregistrerMentionsParams, setEnregistrerMentionsParams] =
-    useState<IEnregistrerMentionsParams>();
-  const enregistrerMentionsApiHookResultat = useEnregistrerMentionsApiHook(
-    enregistrerMentionsParams
-  );
 
   const getLibelleTitreFormulaire = () => {
     let libelle: string;
@@ -73,50 +57,8 @@ const MiseAJourMentions: React.FC = () => {
       setListeMentions(listeMentionsFiltree);
       setEstPoppinOuverte(false);
       setItemASupprimer(undefined);
-      setEstBoutonTerminerSignerActif(false);
     }
   };
-
-  const actualiserEtVisualiserCallback = () => {
-    if (idActeParam) {
-      setEnregistrerMentionsParams({
-        idActe: idActeParam,
-        mentions: listeMentions.map(mention => ({
-          idTypeMention:
-            mention.typeMention.idMentionNiveauTrois ||
-            mention.typeMention.idMentionNiveauDeux ||
-            mention.typeMention.idMentionNiveauUn,
-          numeroOrdre: mention.numeroOrdre,
-          texteMention: mention.texte
-        }))
-      });
-    }
-    setOngletSelectionne(UN);
-  };
-
-  useEffect(() => {
-    if (enregistrerMentionsApiHookResultat) {
-      setListeMentionsEnregistrees(listeMentions);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [enregistrerMentionsApiHookResultat]);
-
-  useEffect(() => {
-    if (
-      enregistrerMentionsApiHookResultat &&
-      shallowEgalTableau(listeMentions, listeMentionsEnregistrees)
-    ) {
-      setEstBoutonTerminerSignerActif(true);
-    } else {
-      setEstBoutonTerminerSignerActif(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    estFormulaireDirty,
-    enregistrerMentionsApiHookResultat,
-    listeMentions,
-    listeMentionsEnregistrees
-  ]);
 
   const onClickModifierMention = (id: number) =>
     setNumeroOrdreEnModification(id);
@@ -144,7 +86,6 @@ const MiseAJourMentions: React.FC = () => {
       />
       <MiseAJourMentionsForm
         libelleTitreFormulaire={getLibelleTitreFormulaire()}
-        actualiserEtVisualiserCallback={actualiserEtVisualiserCallback}
       />
       <ConfirmationPopin
         boutons={[

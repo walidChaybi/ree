@@ -47,11 +47,10 @@ const ValidationSchema = Yup.object({
 
 interface IMiseAJourMentionsFormProps {
   libelleTitreFormulaire: string;
-  actualiserEtVisualiserCallback: () => void;
 }
 
 export const MiseAJourMentionsForm: React.FC<IMiseAJourMentionsFormProps> = ({
-  libelleTitreFormulaire, actualiserEtVisualiserCallback
+  libelleTitreFormulaire
 }) => {
   const {
     listeMentions,
@@ -131,10 +130,7 @@ export const MiseAJourMentionsForm: React.FC<IMiseAJourMentionsFormProps> = ({
         formik?.resetForm();
       }}
     >
-      <AjoutMentionsMiseAJour
-        libelleTitreFormulaire={libelleTitreFormulaire}
-        actualiserEtVisualiserCallback={actualiserEtVisualiserCallback}
-      />
+      <AjoutMentionsMiseAJour libelleTitreFormulaire={libelleTitreFormulaire} />
     </Formulaire>
   );
 };
