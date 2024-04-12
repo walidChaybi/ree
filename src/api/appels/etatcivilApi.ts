@@ -67,6 +67,7 @@ const URL_INTEGRER_DOCUMENT_MENTION_SIGNE = "/integrer-document-mention-signe";
 const URL_ACTE_RECOMPOSER_APRES_SIGNATURE = "/recomposer-document-final";
 const URL_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES =
   "/composer-document-mentions-ulterieures";
+const URL_DERNIERE_ANALYSE_MARGINALE = "/derniere-analyse-marginale";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -353,14 +354,18 @@ export function getImagesDeLActe(identifiantActe: string): Promise<any> {
   });
 }
 
-export function getDonneesPourCompositionActeTexte(idActe: string): Promise<any> {
+export function getDonneesPourCompositionActeTexte(
+  idActe: string
+): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
     uri: `${URL_ACTE}/${idActe}${URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE}`
   });
 }
 
-export function getDonneesPourCompositionActeRepris(idActe: string): Promise<any> {
+export function getDonneesPourCompositionActeRepris(
+  idActe: string
+): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
     uri: `${URL_ACTE}/${idActe}${URL_DONNEES_POUR_COMPOSITION_ACTE_REPRIS}`
@@ -450,9 +455,7 @@ export async function postMentions(
   });
 }
 
-export async function abandonnerMiseAjourActe(
-  idActe: string,
-): Promise<any> {
+export async function abandonnerMiseAjourActe(idActe: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.PATCH,
     uri: `${URL_ACTE}/${idActe}${URL_ABANDONNER_MAJ}`
@@ -610,3 +613,10 @@ export function getActeRecomposerApresSignature(idActe: string): Promise<any> {
     responseType: "blob"
   });
 }
+
+export function getDerniereAnalyseMarginale(idActe: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_ACTE}/${idActe}${URL_DERNIERE_ANALYSE_MARGINALE}`
+  });
+} 

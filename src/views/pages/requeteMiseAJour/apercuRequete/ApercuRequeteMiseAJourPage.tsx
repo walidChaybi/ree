@@ -7,6 +7,10 @@ import {
   useAbandonnerMajMentionsApiHook
 } from "@hook/acte/mentions/AbandonnerMiseAJourMentionsApiHook";
 import {
+  IDerniereAnalyseMarginalResultat,
+  useDerniereAnalyseMarginaleApiHook
+} from "@hook/requete/miseajour/DerniereAnalyseMarginaleApiHook";
+import {
   IModifierStatutRequeteMiseAJourParams,
   useModifierStatutRequeteMiseAJourApiHook
 } from "@hook/requete/miseajour/ModifierStatutRequeteMiseAJourApiHook";
@@ -28,7 +32,7 @@ import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { ApercuActeMisAJour } from "../commun/ApercuActeMisAjour";
-import MiseAJourAnalyseMarginale from "./contenu/MiseAJourAnalyseMarginal/MiseAJourAnalyseMarginal";
+import MiseAJourAnalyseMarginale from "./contenu/MiseAJourAnalyseMarginale/MiseAJourAnalyseMarginale";
 import MiseAJourMentions from "./contenu/MiseAJourMentions/MiseAJourMentions";
 import "./scss/ApercuRequeteMiseAJourPage.scss";
 
@@ -60,10 +64,13 @@ interface IMiseAJourMentionsContext {
   >;
   estFormulaireDirty: boolean;
   setEstFormulaireDirty: React.Dispatch<React.SetStateAction<boolean>>;
+  derniereAnalyseMarginaleResultat:
+    | IDerniereAnalyseMarginalResultat
+    | undefined;
 }
 
-export const MiseAJourMentionsContext =
-  React.createContext<IMiseAJourMentionsContext>({
+export const MiseAJourMentionsContext = React.createContext<IMiseAJourMentionsContext>(
+  {
     listeMentions: [],
     setListeMentions: ((mentions: IMentions[]) => {}) as React.Dispatch<
       React.SetStateAction<IMentions[]>
@@ -75,8 +82,10 @@ export const MiseAJourMentionsContext =
     estFormulaireDirty: false,
     setEstFormulaireDirty: ((value: boolean) => {}) as React.Dispatch<
       React.SetStateAction<boolean>
-    >
-  });
+    >,
+    derniereAnalyseMarginaleResultat: undefined
+  }
+);
 
 const ApercuRequeteMiseAJourPage: React.FC = () => {
   const { idActeParam, idRequeteParam } = useParams<TUuidActeParams>();
@@ -123,6 +132,13 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     }
   }, [listeMentionsEnregistrees]);
 
+  const [derniereAnalyseMarginaleParams, setDerniereAnalyseMarginaleParams] =
+    useState<string>();
+
+  const derniereAnalyseMarginaleResultat = useDerniereAnalyseMarginaleApiHook(
+    derniereAnalyseMarginaleParams
+  );
+
   useEffect(() => {
     if (resultatAbandonMentions.termine && idRequeteParam) {
       setModifierStatutRequeteMiseAJourParams({
@@ -145,6 +161,19 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
       setEstNavigationBloquee(true);
     }
   }, [listeMentionsEnregistrees]);
+
+  useEffect(() => {
+    const mentionChangeAM = listeMentions.some(mention => {
+      return TypeMention.getTypeMentionById(
+        mention.typeMention.idMentionNiveauTrois ||
+          mention.typeMention.idMentionNiveauDeux ||
+          mention.typeMention.idMentionNiveauUn
+      )?.affecteAnalyseMarginale;
+    });
+    if (mentionChangeAM) {
+      setDerniereAnalyseMarginaleParams(idActeParam);
+    }
+  }, [listeMentions, idActeParam]);
 
   const handleChange = (newValue: number) => {
     setOngletSelectionne(newValue);
@@ -210,7 +239,8 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
             setNumeroOrdreEnModification,
             listeMentionsEnregistrees,
             estFormulaireDirty,
-            setEstFormulaireDirty
+            setEstFormulaireDirty,
+            derniereAnalyseMarginaleResultat
           }}
         >
           {idActeParam ? (

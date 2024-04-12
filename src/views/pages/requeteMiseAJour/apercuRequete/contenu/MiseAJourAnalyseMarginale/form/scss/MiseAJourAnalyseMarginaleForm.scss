@@ -1,0 +1,19 @@
+@import "../../../../../../../../scss/colors";
+
+
+.formWrapper {
+    align-items: center;
+    color: $title-application-color;
+}
+
+.caseACocherWrapper {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    }
+
+.boutonWrapper{
+    display: flex;
+    height: auto;
+    margin: 2vw;
+}

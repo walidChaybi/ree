@@ -1,5 +1,10 @@
 import { ReponseEnregistrementProjetActe } from "@mock/data/ProjetActe";
-import { ActeAnalyseMarginales } from "../data/ActeAnalyseMarginales";
+import {
+  ActeAnalyseMarginales,
+  derniereAnalyseMarginaleAvecDeuxVocableEtNomPartie1,
+  derniereAnalyseMarginaleAvecDeuxVocablesEtNomPartie1Et2,
+  derniereAnalyseMarginaleAvecUneVocableEtNomPartie1
+} from "../data/ActeAnalyseMarginales";
 import {
   ReponseAppelAddAlerteActe,
   ReponseAppelGetAlertesActe
@@ -360,7 +365,9 @@ export const configEtatcivil = [
         [
           "/acte/885bdb13-d995-4dbd-93cb-a7a3b2eee5c8/donnees-pour-composition-acte-texte",
           "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/donnees-pour-composition-acte-texte",
+          "/acte/a5187320-d722-4673-abd7-a73ed41ad8c1/donnees-pour-composition-acte-texte",
           "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/donnees-pour-composition-acte-texte",
+          "/acte/b51079a5-9e8d-478c-b04c-c4c4ey86537g/donnees-pour-composition-acte-texte",
           "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/donnees-pour-composition-acte-texte",
           "/acte/923a10fb-0b15-452d-83c0-d24c76d1de8d/donnees-pour-composition-acte-texte",
           "/acte/b41079a3-9e8d-478c-b04c-c4c2ac47134f/donnees-pour-composition-acte-texte",
@@ -607,6 +614,37 @@ export const configEtatcivil = [
         return { status: 200 };
       }
 
+      /////////////////
+      // derniere analyse marginale pour mise a jours mentions //
+      /////////////////
+
+      if (
+        match[1] ===
+        "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/derniere-analyse-marginale"
+      ) {
+        return {
+          data: derniereAnalyseMarginaleAvecDeuxVocablesEtNomPartie1Et2
+        };
+      }
+
+      if (
+        match[1] ===
+        "/acte/a5187320-d722-4673-abd7-a73ed41ad8c1/derniere-analyse-marginale"
+      ) {
+        return {
+          data: derniereAnalyseMarginaleAvecUneVocableEtNomPartie1
+        };
+      }
+
+      if (
+        match[1] ===
+        "/acte/b51079a5-9e8d-478c-b04c-c4c4ey86537g/derniere-analyse-marginale"
+      ) {
+        return {
+          data: derniereAnalyseMarginaleAvecDeuxVocableEtNomPartie1
+        };
+      }
+
       ////////////////////////////////////////////////////////////////////////
 
       if (match[1] === "/nomenclature/NATURE_RC") {
@@ -789,7 +827,9 @@ export const configEtatcivil = [
         match[1] === "/acte/b45079a5-9e8f-478a-b07c-c4c2az671123/alertes" ||
         match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/alertes" ||
         match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/alertes" ||
-        match[1] === "/acte/885bdb13-d995-4dbd-93cb-a7a3b2eee5c8/alertes"
+        match[1] === "/acte/885bdb13-d995-4dbd-93cb-a7a3b2eee5c8/alertes" ||
+        match[1] === "/acte/a5187320-d722-4673-abd7-a73ed41ad8c1/alertes" ||
+        match[1] === "/acte/b51079a5-9e8d-478c-b04c-c4c4ey86537g/alertes"
       ) {
         return { data: ReponseAppelGetAlertesActe.data };
       }

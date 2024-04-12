@@ -233,3 +233,44 @@ export const ActeAnalyseMarginales = {
     }
   ]
 };
+
+export const derniereAnalyseMarginaleAvecDeuxVocablesEtNomPartie1Et2 = {
+  id: "3740bfbe-5b0b-40a6-a6c1-2b399397c109",
+  dateDebut: 1644334089000,
+  estValide: true,
+  titulaires: [
+    {
+      ordre: 1,
+      nom: "Schlosser Nahed",
+      nomPartie1: "Schlosser",
+      nomPartie2: "Nahed"
+    }
+  ]
+};
+
+export const derniereAnalyseMarginaleAvecDeuxVocableEtNomPartie1 = {
+  id: "3740bfbe-5b0b-40a6-a6c1-2b399397c109",
+  dateDebut: 1644334089000,
+  estValide: true,
+  titulaires: [
+    {
+      ordre: 1,
+      nom: "Schlosser Nahed",
+      nomPartie1: "Schlosser"
+    }
+  ]
+};
+
+export const derniereAnalyseMarginaleAvecUneVocableEtNomPartie1 = {
+  id: "3740bfbe-5b0b-40a6-a6c1-2b399397c109",
+  dateDebut: 1644334089000,
+  estValide: true,
+  titulaires: [
+    {
+      ordre: 1,
+      nom: "Schlosser",
+      nomPartie1: "Schlosser"
+    }
+  ]
+};
+

@@ -1,0 +1,46 @@
+.MiseAJourAnalyseMarginale {
+
+    .Formulaire {
+        margin: 5px;
+    }
+    
+    .blocNomSecable {
+        display: flex;
+        flex-direction: column;
+        width: 700%;
+        align-self: center;
+    }
+    
+    .bandeauSection {
+        background-color: grey;
+        border: 1px solid #c8c8c8;
+        font-weight: bold;
+        display: flex;
+        justify-content: left;
+        margin-bottom: 4vh;
+    
+        > p {
+            margin: 10px;
+        }
+    }
+    
+    .checkboxSecable {
+        margin-bottom: 2vh;
+    }
+    
+     .InputField > .BlockInput {
+        display: flex;
+        flex-direction: row;
+        gap: 2vw;
+    
+        > label {
+            width: 10vw;
+        }
+    
+        > input {
+            width: 30vw;
+        }
+    }
+
+}
+
