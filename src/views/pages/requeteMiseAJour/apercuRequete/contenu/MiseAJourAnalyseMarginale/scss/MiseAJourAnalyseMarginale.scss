@@ -31,16 +31,16 @@
      .InputField > .BlockInput {
         display: flex;
         flex-direction: row;
-        gap: 2vw;
+        gap: 0vw;
     
         > label {
             width: 10vw;
         }
     
         > input {
-            width: 30vw;
+            width: 17vw;
         }
     }
-
+    
 }
 

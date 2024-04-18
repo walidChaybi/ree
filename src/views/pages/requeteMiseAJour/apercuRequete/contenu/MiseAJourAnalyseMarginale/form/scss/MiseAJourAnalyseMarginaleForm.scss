@@ -3,6 +3,14 @@
 
 .formWrapper {
     align-items: center;
+    text-align: left;
+    padding-left:2vw;
+    color: $title-application-color;
+}
+
+.formWrapperNomSecable{
+    align-items: center;
+    text-align: left;
     color: $title-application-color;
 }
 

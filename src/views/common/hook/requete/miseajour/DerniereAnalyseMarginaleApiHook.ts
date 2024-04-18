@@ -8,6 +8,7 @@ export interface IDerniereAnalyseMarginalResultat {
   id: string;
   dateDebut: number;
   estValide: boolean;
+  motif: string;
   titulaire: {
     nom: string;
     prenoms: IPrenomOrdonnes[];
@@ -46,6 +47,7 @@ function mappingDerniereAnalyseMarginal(
     id: data.id,
     dateDebut: data.dateDebut,
     estValide: data.estValide,
+    motif: data.motifModification,
     titulaire: {
       nom: data.titulaires[0].nom,
       ordre: data.titulaires[0].ordre,

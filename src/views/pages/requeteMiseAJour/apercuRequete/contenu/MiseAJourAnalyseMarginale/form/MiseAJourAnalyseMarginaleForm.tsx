@@ -1,11 +1,12 @@
 import {
-  NOM_PARTIE1,
-  NOM_PARTIE2,
+  ANALYSE_MARGINALE,
+  MOTIF,
+  NOM,
   NOM_SECABLE,
+  PRENOMS,
   SECABLE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { Checkbox } from "@mui/material";
-import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
+import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
@@ -14,28 +15,12 @@ import {
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import { useContext } from "react";
+import MiseAJourAnalyseMarginaleNomSecableForm from "./MiseAJourAnalyseMarginaleNomSecableForm";
 import "./scss/MiseAJourAnalyseMarginaleForm.scss";
 
 const MiseAJourAnalyseMarginaleForm: React.FC<FormikComponentProps> = ({
   formik
 }) => {
-  const { derniereAnalyseMarginaleResultat } = useContext(
-    MiseAJourMentionsContext
-  );
-  const checkboxEstDesactive =
-    derniereAnalyseMarginaleResultat &&
-    !(
-      derniereAnalyseMarginaleResultat?.titulaire.nomPartie1 &&
-      derniereAnalyseMarginaleResultat?.titulaire.nomPartie2
-    ) &&
-    derniereAnalyseMarginaleResultat?.titulaire.nom.indexOf(" ") === -1;
-
-  const handleInputReset = () => {
-    formik.setFieldValue(withNamespace(NOM_SECABLE, NOM_PARTIE1), "");
-    formik.setFieldValue(withNamespace(NOM_SECABLE, NOM_PARTIE2), "");
-  };
-
   const onClickCheckboxNomSecable = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -44,37 +29,22 @@ const MiseAJourAnalyseMarginaleForm: React.FC<FormikComponentProps> = ({
 
   return (
     <div className="formWrapper">
-      <div className="caseACocherWrapper">
-        <label htmlFor="">{getLibelle("Nom sécable")}</label>
-        <Checkbox
-          disabled={checkboxEstDesactive}
-          size="medium"
-          checked={
-            formik.getFieldProps(withNamespace(NOM_SECABLE, SECABLE)).value
-          }
-          inputProps={{ "aria-label": getLibelle("Nom sécable") }}
-          name={withNamespace(NOM_SECABLE, SECABLE)}
-          onChange={onClickCheckboxNomSecable}
-        />
-      </div>
+      <InputField label={"Nom"} name={withNamespace(ANALYSE_MARGINALE, NOM)} />
+      <PrenomsForm
+        nom={withNamespace(ANALYSE_MARGINALE, PRENOMS)}
+        nbPrenoms={0}
+      />
+      <InputField
+        label={"Motif"}
+        name={withNamespace(ANALYSE_MARGINALE, MOTIF)}
+      />
 
-      {formik.getFieldProps(withNamespace(NOM_SECABLE, SECABLE)).value && (
-        <>
-          <InputField
-            label={getLibelle("1re partie")}
-            name={withNamespace(NOM_SECABLE, NOM_PARTIE1)}
-          />
-          <InputField
-            label={getLibelle("2nde partie")}
-            name={withNamespace(NOM_SECABLE, NOM_PARTIE2)}
-          />
-          <div className="boutonWrapper">
-            <Bouton onClick={handleInputReset}>
-              {getLibelle("Annuler la saisie en cours")}
-            </Bouton>
-          </div>
-        </>
-      )}
+      <MiseAJourAnalyseMarginaleNomSecableForm />
+      <div className="boutonWrapper">
+        <Bouton disabled={!formik.dirty} onClick={() => formik.resetForm()}>
+          {getLibelle("Annuler la saisie en cours")}
+        </Bouton>
+      </div>
     </div>
   );
 };
