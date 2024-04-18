@@ -1,5 +1,4 @@
 import { HTTP_BAD_REQUEST, HTTP_STATUS_OK } from "@api/ApiManager";
-import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
 import { IModifierStatutRequeteApresSignature } from "@model/requete/IModifierStatutRequeteApresSignature";
 import { IComposerDocumentFinalApiHookResultat } from "@model/signature/IComposerDocumentFinalApiHookResultat";
 import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
@@ -126,15 +125,10 @@ const useComposerEtIntegrerDocumentFinalHook = (
     }
   };
 
-  // Dès que 'etatTraitementSignature.termine' passe à 'true', cette fonction sera appelée
-  // dans PopinSignature. C'est notamment ici qu'on doit gérer les erreurs.
+  // Dès que 'etatTraitementSignature.termine' passe à 'true',
+  // cette fonction sera appelée dans PopinSignature.
   const onTraitementSignatureTermine = () => {
-    if (
-      etatTraitementSignature.erreur?.code !==
-      CodeErreurFonctionnelle.FCT_PLAGE_HORAIRE_SIGNATURE
-    ) {
-      setEtatTraitementSignature({ termine: false });
-    }
+    setEtatTraitementSignature({ termine: false });
     composerDocumentApresSignature.resultatApiHook &&
       composerDocumentApresSignature.reinitialiserParamsApiHook();
     integrerDocumentApresSignature.resultatApiHook &&

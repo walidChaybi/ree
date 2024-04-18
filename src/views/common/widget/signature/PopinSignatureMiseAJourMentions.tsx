@@ -3,6 +3,7 @@ import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
 import { getLibelle } from "@util/Utils";
 import { useParams } from "react-router-dom";
 import useSignatureMiseAJourHook from "./hook/SignatureMiseAJourHook";
+import { PopinPlageHoraireNonAutorisee } from "./messages/PopinPlageHoraireNonAutorisee";
 import { PopinSignature, PopinSignatureProps } from "./PopinSignature";
 
 type PopinSignatureMiseAJourMentionsProps = Pick<
@@ -31,16 +32,21 @@ export const PopinSignatureMiseAJourMentions: React.FC<
   };
 
   return (
-    <PopinSignature
-      titre={getLibelle("Signature des mentions")}
-      estOuvert={estOuvert}
-      setEstOuvert={setEstOuvert}
-      documentASigner={documentASigner}
-      texte={TypePopinSignature.getTextePopinSignatureMentions() || ""}
-      onSuccesSignature={onSuccesSignatureAppNative}
-      etatTraitementSignature={etatTraitementSignature}
-      onTraitementSignatureTermine={onTraitementTermine}
-      timeoutTraitementSignature={TRAITEMENT_SIGNATURE_TIMEOUT_MS}
-    />
+    <>
+      <PopinSignature
+        titre={getLibelle("Signature des mentions")}
+        estOuvert={estOuvert}
+        setEstOuvert={setEstOuvert}
+        documentASigner={documentASigner}
+        texte={TypePopinSignature.getTextePopinSignatureMentions() || ""}
+        onSuccesSignature={onSuccesSignatureAppNative}
+        etatTraitementSignature={etatTraitementSignature}
+        onTraitementSignatureTermine={onTraitementTermine}
+        timeoutTraitementSignature={TRAITEMENT_SIGNATURE_TIMEOUT_MS}
+      />
+      <PopinPlageHoraireNonAutorisee
+        etatTraitementSignature={etatTraitementSignature}
+      />
+    </>
   );
 };
