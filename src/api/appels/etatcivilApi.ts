@@ -67,7 +67,7 @@ const URL_INTEGRER_DOCUMENT_MENTION_SIGNE = "/integrer-document-mention-signe";
 const URL_ACTE_RECOMPOSER_APRES_SIGNATURE = "/recomposer-document-final";
 const URL_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES =
   "/composer-document-mentions-ulterieures";
-const URL_DERNIERE_ANALYSE_MARGINALE = "/derniere-analyse-marginale";
+const URL_DERNIERE_ANALYSE_MARGINALE = "/derniere-analyse-marginale-valide";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)

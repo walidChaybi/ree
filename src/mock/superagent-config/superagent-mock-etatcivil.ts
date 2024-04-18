@@ -620,7 +620,7 @@ export const configEtatcivil = [
 
       if (
         match[1] ===
-        "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/derniere-analyse-marginale"
+        "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/derniere-analyse-marginale-valide"
       ) {
         return {
           data: derniereAnalyseMarginaleAvecDeuxVocablesEtNomPartie1Et2
@@ -629,7 +629,7 @@ export const configEtatcivil = [
 
       if (
         match[1] ===
-        "/acte/a5187320-d722-4673-abd7-a73ed41ad8c1/derniere-analyse-marginale"
+        "/acte/a5187320-d722-4673-abd7-a73ed41ad8c1/derniere-analyse-marginale-valide"
       ) {
         return {
           data: derniereAnalyseMarginaleAvecUneVocableEtNomPartie1
@@ -638,7 +638,7 @@ export const configEtatcivil = [
 
       if (
         match[1] ===
-        "/acte/b51079a5-9e8d-478c-b04c-c4c4ey86537g/derniere-analyse-marginale"
+        "/acte/b51079a5-9e8d-478c-b04c-c4c4ey86537g/derniere-analyse-marginale-valide"
       ) {
         return {
           data: derniereAnalyseMarginaleAvecDeuxVocableEtNomPartie1
