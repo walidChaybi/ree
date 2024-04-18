@@ -2,9 +2,7 @@ import {
   ANALYSE_MARGINALE,
   MOTIF,
   NOM,
-  NOM_SECABLE,
-  PRENOMS,
-  SECABLE
+  PRENOMS
 } from "@composant/formulaire/ConstantesNomsForm";
 import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { getLibelle } from "@util/Utils";
@@ -21,12 +19,6 @@ import "./scss/MiseAJourAnalyseMarginaleForm.scss";
 const MiseAJourAnalyseMarginaleForm: React.FC<FormikComponentProps> = ({
   formik
 }) => {
-  const onClickCheckboxNomSecable = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    formik.setFieldValue(withNamespace(NOM_SECABLE, SECABLE), e.target.value);
-  };
-
   return (
     <div className="formWrapper">
       <InputField label={"Nom"} name={withNamespace(ANALYSE_MARGINALE, NOM)} />
