@@ -1,6 +1,6 @@
 import {
-  IEnregistrerMentionsParams,
-  useEnregistrerMentionsApiHook
+  IEnregistrerMentionsEtAnalyseMarginaleParams,
+  useEnregistrerMentionsEtAnalyseMarginaleApiHook
 } from "@hook/acte/EnregistrerMentionsApiHook";
 import {
   IAbandonnerMajMentionsParams,
@@ -147,11 +147,14 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     modifierStatutRequeteMiseAJourParams
   );
 
-  const [enregistrerMentionsParams, setEnregistrerMentionsParams] =
-    useState<IEnregistrerMentionsParams>();
-  const enregistrerMentionsApiHookResultat = useEnregistrerMentionsApiHook(
-    enregistrerMentionsParams
-  );
+  const [
+    enregistrerMentionsEtAnalyseMarginaleParams,
+    setEnregistrerMentionsEtAnalyseMarginaleParams
+  ] = useState<IEnregistrerMentionsEtAnalyseMarginaleParams>();
+  const enregistrerMentionsApiHookResultat =
+    useEnregistrerMentionsEtAnalyseMarginaleApiHook(
+      enregistrerMentionsEtAnalyseMarginaleParams
+    );
 
   useEffect(() => {
     if (!listeMentionsEnregistrees.length) {
@@ -242,7 +245,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
 
   const actualiserEtVisualiserCallback = () => {
     if (idActeParam) {
-      setEnregistrerMentionsParams({
+      setEnregistrerMentionsEtAnalyseMarginaleParams({
         idActe: idActeParam,
         mentions: listeMentions.map(mention => ({
           idTypeMention:

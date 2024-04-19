@@ -1,0 +1,42 @@
+[
+  {
+    "cle": "manufacturerIDCarte",
+    "valeur": "Oberthur Technologies"
+  },
+  {
+    "cle": "noSerieCarte",
+    "valeur": "7563639784982"
+  },
+  {
+    "cle": "noSerieCertificat",
+    "valeur": "5410108922781184596708194307144502507"
+  },
+  {
+    "cle": "issuerCertificat",
+    "valeur": "CN=Certigna Identity Plus CA, OID.3.4.6.13=NTRFR-50041944718911, OU=0006 50041944718911, O=DHIMYOTIS, C=FR"
+  },
+  {
+    "cle": "algoSignature",
+    "valeur": "RSA_SHA256"
+  },
+  {
+    "cle": "modelCarte",
+    "valeur": "IAS ECC 9-250-99"
+  },
+  {
+    "cle": "entiteCertificat",
+    "valeur": "SERIALNUMBER=I147852369, CN=JOHN DOE ID, GIVENNAME=JOHN, SURNAME=DOE, OU=0006 54978986345126, O=MINISTERE DE L'EUROPE ET DES AFFAIRES ETRANGERES, C=FR"
+  },
+  {
+    "cle": "notAfterCertificat",
+    "valeur": "2024-09-07T14:59:59-07:00"
+  },
+  {
+    "cle": "notBeforeCertificat",
+    "valeur": "2021-09-08T15:00:00-07:00"
+  },
+  {
+    "cle": "flagsCarte",
+    "valeur": "CKF_LOGIN_REQUIRED | CKF_USER_PIN_INITIALIZED | CKF_TOKEN_INITIALIZED"
+  }
+]

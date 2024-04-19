@@ -1,23 +1,23 @@
 import * as EtatCivilApi from "@api/appels/etatcivilApi";
 import { render, screen, waitFor } from "@testing-library/react";
 import {
-  IEnregistrerMentionsParams,
-  useEnregistrerMentionsApiHook
+  IEnregistrerMentionsEtAnalyseMarginaleParams,
+  useEnregistrerMentionsEtAnalyseMarginaleApiHook
 } from "../../../../../views/common/hook/acte/EnregistrerMentionsApiHook";
 
 const EnregistrerMentionsApiHookConsumer: React.FC<
-  IEnregistrerMentionsParams
+  IEnregistrerMentionsEtAnalyseMarginaleParams
 > = props => {
-  const resultat = useEnregistrerMentionsApiHook(props);
+  const resultat = useEnregistrerMentionsEtAnalyseMarginaleApiHook(props);
 
   return <div data-testid="resultat">{resultat?.toString()}</div>;
 };
 
 describe("useEnregistrerMentionsApiHook", () => {
   test("Appel l'endpoint enregistrerMentions", async () => {
-    const enregistrerMentionsSpy = jest.spyOn(
+    const enregistrerMentionsEtAnalyseMarginaleSpy = jest.spyOn(
       EtatCivilApi,
-      "enregistrerMentions"
+      "enregistrerMentionsEtAnalyseMarginale"
     );
     const idActe = "b00ebeb2-8ddc-4928-b99e-b06a248d21ae";
     const mentionsEnregistrees = [
@@ -35,7 +35,7 @@ describe("useEnregistrerMentionsApiHook", () => {
       />
     );
     await waitFor(() => {
-      expect(enregistrerMentionsSpy).toHaveBeenCalledWith(
+      expect(enregistrerMentionsEtAnalyseMarginaleSpy).toHaveBeenCalledWith(
         idActe,
         mentionsEnregistrees
       );

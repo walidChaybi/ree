@@ -1,4 +1,4 @@
-import { enregistrerMentions } from "@api/appels/etatcivilApi";
+import { enregistrerMentionsEtAnalyseMarginale } from "@api/appels/etatcivilApi";
 import { logError } from "@util/LogManager";
 import { getLibelle } from "@util/Utils";
 import { useEffect, useState } from "react";
@@ -9,19 +9,19 @@ export interface IMentionEnregistree {
   numeroOrdre: number;
 }
 
-export interface IEnregistrerMentionsParams {
+export interface IEnregistrerMentionsEtAnalyseMarginaleParams {
   idActe: string;
   mentions: IMentionEnregistree[];
 }
 
-export const useEnregistrerMentionsApiHook = (
-  params?: IEnregistrerMentionsParams
+export const useEnregistrerMentionsEtAnalyseMarginaleApiHook = (
+  params?: IEnregistrerMentionsEtAnalyseMarginaleParams
 ): string | undefined => {
   const [resultat, setResultat] = useState<string>();
 
   useEffect(() => {
     if (params) {
-      enregistrerMentions(params?.idActe, params?.mentions)
+      enregistrerMentionsEtAnalyseMarginale(params?.idActe, params?.mentions)
         .then(reponse => {
           setResultat(reponse.body);
         })

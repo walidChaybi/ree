@@ -1,6 +1,7 @@
 import { DetailSignatureToCallApp } from "@model/signature/DetailSignature";
 import { IDetailInfos } from "@model/signature/IDetailInfos";
 import { useEffect, useState } from "react";
+import INFORMATIONS_CARTE_SIGNATURE from "../../../../../ressources/InformationsCarteSignature.json";
 import {
   handleBackFromWebExtension,
   signerDocument
@@ -35,7 +36,7 @@ export function useSignatureHook(
       signerDocument(
         document,
         handleBackFromWebExtensionCallback,
-        informations,
+        ajouteInformationsCarteSignatureFictive(informations),
         codePin
       );
     }
@@ -59,3 +60,12 @@ export function useSignatureHook(
 
   return { data: resultatWebext, reinitialiser: reinitialiserResultatWebext };
 }
+
+const ajouteInformationsCarteSignatureFictive = (
+  informations: IDetailInfos[] = []
+): IDetailInfos[] => {
+  if (process.env.NODE_ENV === "development") {
+    informations.push(...INFORMATIONS_CARTE_SIGNATURE);
+  }
+  return informations;
+};

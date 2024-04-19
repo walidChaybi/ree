@@ -38,6 +38,8 @@ const URL_DONNEES_POUR_COMPOSITION_ACTE_AVANT_SIGNATURE_MENTIONS =
 export const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_MENTION = "/mentions";
+export const URL_ENREGISTRER_MENTIONS_ET_ANALYSE_MARGINALE =
+  "/mentions-et-analyse-marginale";
 export const URL_ABANDONNER_MAJ = "/abandonner-mise-a-jour";
 export const URL_CORPS_TEXTE = "/corpstexte";
 export const URL_ETAT_CIVIL_RMC_AUTO = "/repertoirecivil/rmcauto";
@@ -462,14 +464,27 @@ export async function abandonnerMiseAjourActe(idActe: string): Promise<any> {
   });
 }
 
-export async function enregistrerMentions(
+export async function enregistrerMentionsEtAnalyseMarginale(
   idActe: string,
   mentions: IMentionEnregistree[]
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.PUT,
-    uri: `${URL_ACTE}/${idActe}${URL_MENTION}`,
-    data: mentions
+    uri: `${URL_ACTE}/${idActe}${URL_ENREGISTRER_MENTIONS_ET_ANALYSE_MARGINALE}`,
+    data: {
+      mentionCreationList: mentions,
+      // TODO: A remplacer lors du développement de la partie front de l'US 2155.
+      analyseMarginale: {
+        motifModification: "motifModification",
+        titulaires: [
+          {
+            nom: "nom",
+            prenoms: ["prenom"],
+            ordre: 1
+          }
+        ]
+      }
+    }
   });
 }
 

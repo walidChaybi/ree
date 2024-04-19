@@ -4,7 +4,8 @@ import { IComposerDocumentFinalApiHookResultat } from "@model/signature/ICompose
 import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { useEffect, useState } from "react";
-import { DOCUMENT_VIDE_A_SIGNER } from "./SignatureHookUtil";
+import DOCUMENT_SIGNE_VALIDE from "../../../../../ressources/DocumentSigneValide";
+import DOCUMENT_VIDE_A_SIGNER from "../../../../../ressources/DocumentVideASigner";
 
 export interface IResultatComposerDocumentFinalHook {
   documentASigner: string;
@@ -119,7 +120,9 @@ const useComposerEtIntegrerDocumentFinalHook = (
       );
     } else {
       integrerDocumentApresSignature.onSuccesSignatureAppNative(
-        document,
+        process.env.NODE_ENV === "development"
+          ? DOCUMENT_SIGNE_VALIDE
+          : document,
         informationsCarte
       );
     }

@@ -316,8 +316,10 @@ export const configEtatcivil = [
       }
 
       if (
-        (match[1] === "/acte/b00ebeb2-8ddc-4928-b99e-b06a248d21ae/mentions" ||
-          match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/mentions") &&
+        (match[1] ===
+          "/acte/b00ebeb2-8ddc-4928-b99e-b06a248d21ae/mentions-et-analyse-marginale" ||
+          match[1] ===
+            "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/mentions-et-analyse-marginale") &&
         context.method === "put"
       ) {
         return EnregistrerMentionsResultat;
