@@ -373,7 +373,10 @@ export function shallowEgalTableau(tab1: Object[], tab2: Object[]) {
   return res;
 }
 
-export function shallowEgal(obj1: Object, obj2: Object): boolean {
+export function shallowEgal(obj1?: Object, obj2?: Object): boolean {
+  if (obj1 === undefined || obj2 === undefined) {
+    return obj1 === undefined && obj2 === undefined;
+  }
   return (
     Object.keys(obj1).length === Object.keys(obj2).length &&
     (Object.keys(obj1) as (keyof typeof obj1)[]).every(key => {

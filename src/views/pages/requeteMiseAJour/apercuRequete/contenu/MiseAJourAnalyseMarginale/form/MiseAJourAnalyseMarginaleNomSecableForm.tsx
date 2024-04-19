@@ -1,4 +1,6 @@
 import {
+  ANALYSE_MARGINALE,
+  NOM,
   NOM_PARTIE1,
   NOM_PARTIE2,
   NOM_SECABLE,
@@ -28,7 +30,9 @@ const MiseAJourAnalyseMarginaleNomSecableForm: React.FC<
       derniereAnalyseMarginaleResultat?.titulaire.nomPartie1 &&
       derniereAnalyseMarginaleResultat?.titulaire.nomPartie2
     ) &&
-    derniereAnalyseMarginaleResultat?.titulaire.nom.indexOf(" ") === -1;
+    formik
+      .getFieldProps(withNamespace(ANALYSE_MARGINALE, NOM))
+      .value.indexOf(" ") === -1;
 
   const onClickCheckboxNomSecable = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -45,7 +49,7 @@ const MiseAJourAnalyseMarginaleNomSecableForm: React.FC<
           </p>
         </div>
       </div>
-      <div className="formWrapper">
+      <div className="formWrapperNomSecable">
         <div className="caseACocherWrapper">
           <label htmlFor="">{getLibelle("Nom sécable")}</label>
           <Checkbox

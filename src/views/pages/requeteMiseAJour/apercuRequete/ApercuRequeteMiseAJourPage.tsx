@@ -23,7 +23,13 @@ import ActeRegistre from "@pages/requeteCreation/commun/composants/ActeRegistre"
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import messageManager from "@util/messageManager";
 import { replaceUrl } from "@util/route/UrlUtil";
-import { getLibelle, shallowEgalTableau, UN, ZERO } from "@util/Utils";
+import {
+  getLibelle,
+  shallowEgal,
+  shallowEgalTableau,
+  UN,
+  ZERO
+} from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { BlockerNavigation } from "@widget/blocker/BlockerNavigation";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
@@ -48,16 +54,24 @@ export interface IMentionsDetail {
   idMentionNiveauTrois?: string;
 }
 
-export interface IMentions {
+export interface IMajMention {
   texte: string;
   typeMention: IMentionsDetail;
   numeroOrdre: number;
 }
 
+export interface IMajAnalyseMarginale {
+  nom: string;
+  prenom: string;
+  nomPartie1?: string;
+  nomPartie2?: string;
+  motif: string;
+}
+
 interface IMiseAJourMentionsContext {
-  listeMentions: IMentions[];
-  setListeMentions: React.Dispatch<React.SetStateAction<IMentions[]>>;
-  listeMentionsEnregistrees: IMentions[];
+  listeMentions: IMajMention[];
+  setListeMentions: React.Dispatch<React.SetStateAction<IMajMention[]>>;
+  listeMentionsEnregistrees: IMajMention[];
   numeroOrdreEnModification?: number;
   setNumeroOrdreEnModification: React.Dispatch<
     React.SetStateAction<number | undefined>
@@ -67,13 +81,17 @@ interface IMiseAJourMentionsContext {
   derniereAnalyseMarginaleResultat:
     | IDerniereAnalyseMarginalResultat
     | undefined;
+  analyseMarginale: IMajAnalyseMarginale | undefined;
+  setAnalyseMarginale: React.Dispatch<
+    React.SetStateAction<IMajAnalyseMarginale | undefined>
+  >;
 }
 
-export const MiseAJourMentionsContext = React.createContext<IMiseAJourMentionsContext>(
-  {
+export const MiseAJourMentionsContext =
+  React.createContext<IMiseAJourMentionsContext>({
     listeMentions: [],
-    setListeMentions: ((mentions: IMentions[]) => {}) as React.Dispatch<
-      React.SetStateAction<IMentions[]>
+    setListeMentions: ((mentions: IMajMention[]) => {}) as React.Dispatch<
+      React.SetStateAction<IMajMention[]>
     >,
     listeMentionsEnregistrees: [],
     setNumeroOrdreEnModification: ((id: number) => {}) as React.Dispatch<
@@ -83,19 +101,29 @@ export const MiseAJourMentionsContext = React.createContext<IMiseAJourMentionsCo
     setEstFormulaireDirty: ((value: boolean) => {}) as React.Dispatch<
       React.SetStateAction<boolean>
     >,
-    derniereAnalyseMarginaleResultat: undefined
-  }
-);
+    derniereAnalyseMarginaleResultat: undefined,
+    analyseMarginale: undefined,
+    setAnalyseMarginale: ((
+      value: IMajAnalyseMarginale | undefined
+    ) => {}) as React.Dispatch<
+      React.SetStateAction<IMajAnalyseMarginale | undefined>
+    >
+  });
 
 const ApercuRequeteMiseAJourPage: React.FC = () => {
   const { idActeParam, idRequeteParam } = useParams<TUuidActeParams>();
 
   const navigate = useNavigate();
 
-  const [listeMentions, setListeMentions] = useState<IMentions[]>([]);
+  const [listeMentions, setListeMentions] = useState<IMajMention[]>([]);
   const [listeMentionsEnregistrees, setListeMentionsEnregistrees] = useState<
-    IMentions[]
+    IMajMention[]
   >([]);
+  const [analyseMarginale, setAnalyseMarginale] = useState<
+    IMajAnalyseMarginale | undefined
+  >();
+  const [analyseMarginaleEnregistree, setAnalyseMarginaleEnregistree] =
+    useState<IMajAnalyseMarginale>();
   const [numeroOrdreEnModification, setNumeroOrdreEnModification] =
     useState<number>();
   const [estFormulaireDirty, setEstFormulaireDirty] = useState<boolean>(false);
@@ -105,7 +133,6 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   const [affichageApresSignature, setAffichageApresSignature] = useState(false);
   const [estNavigationBloquee, setEstNavigationBloquee] =
     useState<boolean>(false);
-
   const [abandonnerMajMentionsParams, setAbandonnerMajMentionsParams] =
     useState<IAbandonnerMajMentionsParams>();
   const resultatAbandonMentions = useAbandonnerMajMentionsApiHook(
@@ -152,6 +179,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   useEffect(() => {
     if (enregistrerMentionsApiHookResultat) {
       setListeMentionsEnregistrees(listeMentions);
+      setAnalyseMarginaleEnregistree(analyseMarginale as IMajAnalyseMarginale);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enregistrerMentionsApiHookResultat]);
@@ -203,7 +231,8 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   };
 
   const estVerrouilleActualiserEtVisualiser =
-    shallowEgalTableau(listeMentions, listeMentionsEnregistrees) ||
+    (shallowEgalTableau(listeMentions, listeMentionsEnregistrees) &&
+      shallowEgal(analyseMarginale, analyseMarginaleEnregistree)) ||
     estFormulaireDirty;
 
   const estVerrouilleTerminerEtSigner =
@@ -240,7 +269,9 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
             listeMentionsEnregistrees,
             estFormulaireDirty,
             setEstFormulaireDirty,
-            derniereAnalyseMarginaleResultat
+            derniereAnalyseMarginaleResultat,
+            analyseMarginale,
+            setAnalyseMarginale
           }}
         >
           {idActeParam ? (
@@ -354,7 +385,7 @@ const getListeOngletsGauche = (
   return liste;
 };
 
-const getListeOngletsDroit = (listeMentions: IMentions[]): ItemListe[] => {
+const getListeOngletsDroit = (listeMentions: IMajMention[]): ItemListe[] => {
   const liste: ItemListe[] = [
     {
       titre: getLibelle("Gérer les mentions"),

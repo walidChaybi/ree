@@ -2,16 +2,15 @@
 
 
 .formWrapper {
-    align-items: center;
     text-align: left;
-    padding-left:2vw;
-    color: $title-application-color;
+    font-weight: bold;
 }
 
 .formWrapperNomSecable{
     align-items: center;
     text-align: left;
     color: $title-application-color;
+    margin-left: 2vh;
 }
 
 .caseACocherWrapper {
@@ -24,4 +23,8 @@
     display: flex;
     height: auto;
     margin: 2vw;
+}
+
+.MiseAJourAnalyseMarginaleNomForm {
+    margin-left: 2vh;
 }

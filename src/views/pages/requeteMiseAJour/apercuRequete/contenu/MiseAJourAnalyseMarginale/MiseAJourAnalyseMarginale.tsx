@@ -17,7 +17,7 @@ import { Formulaire } from "@widget/formulaire/Formulaire";
 import React, { useContext } from "react";
 import * as Yup from "yup";
 import {
-  IMentions,
+  IMajMention,
   MiseAJourMentionsContext
 } from "../../ApercuRequeteMiseAJourPage";
 import MiseAJourAnalyseMarginaleForm from "./form/MiseAJourAnalyseMarginaleForm";
@@ -26,14 +26,15 @@ import "./scss/MiseAJourAnalyseMarginale.scss";
 const ValidationSchema = Yup.object({});
 
 const MiseAJourAnalyseMarginale: React.FC = () => {
-  const { listeMentionsEnregistrees, derniereAnalyseMarginaleResultat } =
-    useContext(MiseAJourMentionsContext);
+  const { derniereAnalyseMarginaleResultat, listeMentions } = useContext(
+    MiseAJourMentionsContext
+  );
 
   return (
     <div className="MiseAJourAnalyseMarginale">
       <Formulaire
         formDefaultValues={getValeursParDefaut(
-          listeMentionsEnregistrees,
+          listeMentions,
           derniereAnalyseMarginaleResultat
         )}
         formValidationSchema={ValidationSchema}
@@ -46,7 +47,7 @@ const MiseAJourAnalyseMarginale: React.FC = () => {
 };
 
 const getValeursParDefaut = (
-  listeMentionsEnregistrees: IMentions[],
+  listeMentions: IMajMention[],
   derniereAnalyseMarginaleEnregistree:
     | IDerniereAnalyseMarginalResultat
     | undefined
@@ -61,10 +62,7 @@ const getValeursParDefaut = (
       [PRENOMS]: getPrenomsOrdonneVersPrenomsDefaultValues(
         derniereAnalyseMarginaleEnregistree?.titulaire.prenoms
       ),
-      [MOTIF]: getMotif(
-        listeMentionsEnregistrees,
-        derniereAnalyseMarginaleEnregistree
-      )
+      [MOTIF]: getMotif(listeMentions, derniereAnalyseMarginaleEnregistree)
     },
     [NOM_SECABLE]: {
       [SECABLE]: secable,
@@ -79,10 +77,19 @@ const getValeursParDefaut = (
 };
 
 const getMotif = (
-  listeMentionsEnregistrees: IMentions[],
+  listeMentions: IMajMention[],
   derniereAnalyseMarginaleEnregistree?: IDerniereAnalyseMarginalResultat
 ) => {
-  const typeMention = listeMentionsEnregistrees[0]?.typeMention;
+  const listeMentionsAffecteAnalyseMarginal: IMajMention[] =
+    listeMentions.filter(mention => {
+      return TypeMention.getTypeMentionById(
+        mention.typeMention.idMentionNiveauTrois ||
+          mention.typeMention.idMentionNiveauDeux ||
+          mention.typeMention.idMentionNiveauUn
+      )?.affecteAnalyseMarginale;
+    });
+
+  const typeMention = listeMentionsAffecteAnalyseMarginal[0]?.typeMention;
   const codeTypeMention = TypeMention.getTypeMentionById(
     typeMention?.idMentionNiveauTrois ||
       typeMention?.idMentionNiveauDeux ||
@@ -92,9 +99,9 @@ const getMotif = (
     .split(" ")[0];
 
   return derniereAnalyseMarginaleEnregistree &&
-    listeMentionsEnregistrees.length === UN
+    listeMentionsAffecteAnalyseMarginal.length === UN
     ? derniereAnalyseMarginaleEnregistree.estValide
-      ? `Suite à apposition de mention ${codeTypeMention} si une seule mention ultérieure est ajoutée`
+      ? `Suite à apposition de mention ${codeTypeMention}`
       : derniereAnalyseMarginaleEnregistree?.motif
     : "";
 };

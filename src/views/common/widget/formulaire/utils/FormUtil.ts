@@ -95,3 +95,10 @@ export function compteNombreDePrenoms(prenoms?: Prenoms): number {
     0
   );
 }
+
+export const getValeurFormik = (
+  formik: FormikProps<FormikValues>,
+  champ: string
+) => {
+  return formik.getFieldProps(champ).value;
+};

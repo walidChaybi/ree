@@ -6,7 +6,7 @@ import {
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useState } from "react";
 import {
-  IMentions,
+  IMajMention,
   MiseAJourMentionsContext
 } from "../../ApercuRequeteMiseAJourPage";
 import { MiseAJourMentionsForm } from "./form/MiseAJourMentionsForm";
@@ -114,7 +114,7 @@ const MiseAJourMentions: React.FC = () => {
 export default MiseAJourMentions;
 
 const mappingMentionsFormVersTableauMentions = (
-  mentions: IMentions[],
+  mentions: IMajMention[],
   afficheIconesEditionTableauMentions = true
 ): ListeItem[] => {
   return mentions.map((mention, index) => {
@@ -129,7 +129,7 @@ const mappingMentionsFormVersTableauMentions = (
 };
 
 const handleReorga = (
-  mentions: IMentions[] | undefined,
+  mentions: IMajMention[] | undefined,
   setMentions: any,
   oldIndex: number,
   newIndex: number

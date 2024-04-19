@@ -72,10 +72,13 @@ test("DOIT afficher le bloc 'Nom Sécable' QUAND on navigue vers l'onglet 'Analy
     "2nde partie"
   ) as HTMLInputElement;
 
+  const inputMotif = screen.getByPlaceholderText("Motif") as HTMLInputElement;
+
   await waitFor(() => {
     expect(
       screen.getByText("Gestion nom sécable pour la délivrance des extraits")
     ).toBeInTheDocument();
+    expect(inputMotif.value).toBe("Suite à apposition de mention 14-1");
     expect(screen.getByRole("checkbox")).toBeInTheDocument();
     expect(screen.getByRole("checkbox")).toBeChecked();
     expect(input1erePartie.value).toBe("Schlosser");
@@ -110,10 +113,13 @@ test("DOIT afficher le bloc 'Nom Sécable' QUAND on navigue vers l'onglet 'Analy
 
   fireEvent.click(screen.getByText("Analyse marginale"));
 
+  const inputMotif = screen.getByPlaceholderText("Motif") as HTMLInputElement;
+
   await waitFor(() => {
     expect(
       screen.getByText("Gestion nom sécable pour la délivrance des extraits")
     ).toBeInTheDocument();
+    expect(inputMotif.value).toBe("Suite à apposition de mention 14-1");
     expect(screen.getByRole("checkbox")).toBeInTheDocument();
     expect(screen.getByRole("checkbox")).not.toBeChecked();
     expect(screen.getByRole("checkbox")).toBeDisabled();
@@ -147,10 +153,13 @@ test("DOIT afficher le bloc 'Nom Sécable' QUAND on navigue vers l'onglet 'Analy
 
   fireEvent.click(screen.getByText("Analyse marginale"));
 
+  const inputMotif = screen.getByPlaceholderText("Motif") as HTMLInputElement;
+
   await waitFor(() => {
     expect(
       screen.getByText("Gestion nom sécable pour la délivrance des extraits")
     ).toBeInTheDocument();
+    expect(inputMotif.value).toBe("Suite à apposition de mention 14-1");
     expect(screen.getByRole("checkbox")).toBeInTheDocument();
     expect(screen.getByRole("checkbox")).not.toBeChecked();
     expect(screen.getByRole("checkbox")).toBeEnabled();

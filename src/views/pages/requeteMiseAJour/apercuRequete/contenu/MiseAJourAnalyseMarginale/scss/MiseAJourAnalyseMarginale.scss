@@ -1,23 +1,22 @@
 .MiseAJourAnalyseMarginale {
 
     .Formulaire {
-        margin: 5px;
+        margin: 1vh;
+        margin-top: 2vh;
     }
     
     .blocNomSecable {
         display: flex;
         flex-direction: column;
-        width: 700%;
-        align-self: center;
     }
     
     .bandeauSection {
         background-color: grey;
-        border: 1px solid #c8c8c8;
         font-weight: bold;
         display: flex;
         justify-content: left;
-        margin-bottom: 4vh;
+        margin-bottom: 2vh;
+        margin-top: 2vh;
     
         > p {
             margin: 10px;
