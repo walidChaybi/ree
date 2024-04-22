@@ -30,8 +30,9 @@ const useGetDonneesPourCompositionActeTexteApiHook = (
             acteTexteJson: reponse.body
           });
         })
-        .catch((error: any) => {
-          const premiereErreur: any | undefined = JSON.parse(error?.message)
+        .catch(errors => {
+          console.log(errors);
+          const premiereErreur: any | undefined = JSON.parse(errors?.message)
             ?.errors[ZERO];
           const erreur: IErreurTraitementApi = {
             code: premiereErreur?.code,
@@ -43,7 +44,7 @@ const useGetDonneesPourCompositionActeTexteApiHook = (
             setResultat({ acteTexteJson: "", erreur });
           } else {
             logError({
-              error,
+              error: errors,
               messageUtilisateur:
                 "Une erreur est survenue lors de la récupération de l'acte texte."
             });
