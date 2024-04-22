@@ -15,7 +15,7 @@ import {
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import "./scss/MiseAJourAnalyseMarginaleForm.scss";
 
 const MiseAJourAnalyseMarginaleNomSecableForm: React.FC<
@@ -24,6 +24,7 @@ const MiseAJourAnalyseMarginaleNomSecableForm: React.FC<
   const { derniereAnalyseMarginaleResultat } = useContext(
     MiseAJourMentionsContext
   );
+
   const checkboxEstDesactive =
     derniereAnalyseMarginaleResultat &&
     !(
@@ -32,12 +33,23 @@ const MiseAJourAnalyseMarginaleNomSecableForm: React.FC<
     ) &&
     formik
       .getFieldProps(withNamespace(ANALYSE_MARGINALE, NOM))
-      .value.indexOf(" ") === -1;
+      .value.trim()
+      .indexOf(" ") === -1;
+
+  useEffect(() => {
+    if (checkboxEstDesactive) {
+      formik.setFieldValue(withNamespace(NOM_SECABLE, SECABLE), false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checkboxEstDesactive]);
 
   const onClickCheckboxNomSecable = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    formik.setFieldValue(withNamespace(NOM_SECABLE, SECABLE), e.target.value);
+    formik.setFieldValue(
+      withNamespace(NOM_SECABLE, SECABLE),
+      !formik.getFieldProps(withNamespace(NOM_SECABLE, SECABLE)).value
+    );
   };
 
   return (
@@ -56,7 +68,8 @@ const MiseAJourAnalyseMarginaleNomSecableForm: React.FC<
             disabled={checkboxEstDesactive}
             size="medium"
             checked={
-              formik.getFieldProps(withNamespace(NOM_SECABLE, SECABLE)).value
+              formik.getFieldProps(withNamespace(NOM_SECABLE, SECABLE))
+                .value === true
             }
             inputProps={{ "aria-label": getLibelle("Nom sécable") }}
             name={withNamespace(NOM_SECABLE, SECABLE)}
@@ -64,18 +77,20 @@ const MiseAJourAnalyseMarginaleNomSecableForm: React.FC<
           />
         </div>
 
-        {formik.getFieldProps(withNamespace(NOM_SECABLE, SECABLE)).value && (
-          <>
-            <InputField
-              label={getLibelle("1re partie")}
-              name={withNamespace(NOM_SECABLE, NOM_PARTIE1)}
-            />
-            <InputField
-              label={getLibelle("2nde partie")}
-              name={withNamespace(NOM_SECABLE, NOM_PARTIE2)}
-            />
-          </>
-        )}
+        {formik.getFieldProps(withNamespace(NOM_SECABLE, SECABLE)).value ===
+          true &&
+          !checkboxEstDesactive && (
+            <>
+              <InputField
+                label={getLibelle("1re partie")}
+                name={withNamespace(NOM_SECABLE, NOM_PARTIE1)}
+              />
+              <InputField
+                label={getLibelle("2nde partie")}
+                name={withNamespace(NOM_SECABLE, NOM_PARTIE2)}
+              />
+            </>
+          )}
       </div>
     </>
   );

@@ -11,7 +11,9 @@ type ApercuActeMisAJourProps = {
 export const ApercuActeMisAJour: React.FC<ApercuActeMisAJourProps> = ({
   idActeAAfficher
 }) => {
-  const { listeMentionsEnregistrees } = useContext(MiseAJourMentionsContext);
+  const { listeMentionsEnregistrees, analyseMarginaleEnregistree } = useContext(
+    MiseAJourMentionsContext
+  );
   const [
     acteRecomposeAvantSignatureMentionsParams,
     setActeRecomposeAvantSignatureMentionsParams
@@ -30,7 +32,7 @@ export const ApercuActeMisAJour: React.FC<ApercuActeMisAJourProps> = ({
     if (idActeAAfficher) {
       setActeRecomposeAvantSignatureMentionsParams(idActeAAfficher);
     }
-  }, [idActeAAfficher, listeMentionsEnregistrees]);
+  }, [idActeAAfficher, listeMentionsEnregistrees, analyseMarginaleEnregistree]);
 
   return (
     <div className="ActeRegistreMisAJour">

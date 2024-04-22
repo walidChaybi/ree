@@ -1,4 +1,7 @@
-import { IMentionEnregistree } from "@hook/acte/EnregistrerMentionsApiHook";
+import {
+  IMajAnalyseMarginale,
+  IMentionEnregistree
+} from "@hook/acte/EnregistrerMentionsApiHook";
 import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
 import { AddAlerteActeApiHookParameters } from "@hook/alertes/AddAlerteActeHookApi";
 import { DeleteAlerteActeApiHookParameters } from "@hook/alertes/DeleteAlerteActeHookApi";
@@ -466,24 +469,28 @@ export async function abandonnerMiseAjourActe(idActe: string): Promise<any> {
 
 export async function enregistrerMentionsEtAnalyseMarginale(
   idActe: string,
-  mentions: IMentionEnregistree[]
+  mentions: IMentionEnregistree[],
+  analyseMarginale?: IMajAnalyseMarginale
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.PUT,
     uri: `${URL_ACTE}/${idActe}${URL_ENREGISTRER_MENTIONS_ET_ANALYSE_MARGINALE}`,
     data: {
       mentionCreationList: mentions,
-      // TODO: A remplacer lors du développement de la partie front de l'US 2155.
-      analyseMarginale: {
-        motifModification: "motifModification",
-        titulaires: [
-          {
-            nom: "nom",
-            prenoms: ["prenom"],
-            ordre: 1
+      analyseMarginale: analyseMarginale
+        ? {
+            motifModification: analyseMarginale?.motif,
+            titulaires: [
+              {
+                nom: analyseMarginale?.nom,
+                prenoms: analyseMarginale?.prenoms,
+                nomPartie1: analyseMarginale?.nomPartie1,
+                nomPartie2: analyseMarginale?.nomPartie2,
+                ordre: 1
+              }
+            ]
           }
-        ]
-      }
+        : null
     }
   });
 }
@@ -634,4 +641,4 @@ export function getDerniereAnalyseMarginale(idActe: string): Promise<any> {
     method: HttpMethod.GET,
     uri: `${URL_ACTE}/${idActe}${URL_DERNIERE_ANALYSE_MARGINALE}`
   });
-} 
+}

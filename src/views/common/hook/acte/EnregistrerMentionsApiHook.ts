@@ -9,9 +9,18 @@ export interface IMentionEnregistree {
   numeroOrdre: number;
 }
 
+export interface IMajAnalyseMarginale {
+  nom: string;
+  prenoms: string[];
+  nomPartie1?: string;
+  nomPartie2?: string;
+  motif: string;
+}
+
 export interface IEnregistrerMentionsEtAnalyseMarginaleParams {
   idActe: string;
   mentions: IMentionEnregistree[];
+  analyseMarginale?: IMajAnalyseMarginale;
 }
 
 export const useEnregistrerMentionsEtAnalyseMarginaleApiHook = (
@@ -21,7 +30,11 @@ export const useEnregistrerMentionsEtAnalyseMarginaleApiHook = (
 
   useEffect(() => {
     if (params) {
-      enregistrerMentionsEtAnalyseMarginale(params?.idActe, params?.mentions)
+      enregistrerMentionsEtAnalyseMarginale(
+        params?.idActe,
+        params?.mentions,
+        params?.analyseMarginale
+      )
         .then(reponse => {
           setResultat(reponse.body);
         })

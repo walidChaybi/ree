@@ -1,4 +1,5 @@
 import { IPrenom } from "@model/etatcivil/fiche/IPrenom";
+import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 
 export const SPC = "SPC";
@@ -409,6 +410,16 @@ export function mapPrenomsVersPrenomsOrdonnes(prenoms?: string[]) {
     prenomsOrdonnes.push({ prenom, numeroOrdre: idx + 1 })
   );
   return prenomsOrdonnes;
+}
+
+export function mapPrenomsVersTableauString(prenoms: Prenoms): string[] {
+  const tableauPrenoms: string[] = [];
+  Object.values(prenoms).forEach(prenom => {
+    if (Boolean(prenom)) {
+      tableauPrenoms.push(prenom);
+    }
+  });
+  return tableauPrenoms;
 }
 
 export function estHeureValide(nbHeure: number, nbMinute: number) {

@@ -242,6 +242,7 @@ export const derniereAnalyseMarginaleAvecDeuxVocablesEtNomPartie1Et2 = {
     {
       ordre: 1,
       nom: "Schlosser Nahed",
+      prenoms: ["Cassandra", "Clara", "Angela"],
       nomPartie1: "Schlosser",
       nomPartie2: "Nahed"
     }
@@ -256,6 +257,7 @@ export const derniereAnalyseMarginaleAvecDeuxVocableEtNomPartie1 = {
     {
       ordre: 1,
       nom: "Schlosser Nahed",
+      prenoms: ["Cassandra", "Clara", "Angela"],
       nomPartie1: "Schlosser"
     }
   ]
@@ -269,6 +271,7 @@ export const derniereAnalyseMarginaleAvecUneVocableEtNomPartie1 = {
     {
       ordre: 1,
       nom: "Schlosser",
+      prenoms: ["Cassandra", "Clara", "Angela"],
       nomPartie1: "Schlosser"
     }
   ]

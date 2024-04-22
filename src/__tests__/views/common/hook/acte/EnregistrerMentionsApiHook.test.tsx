@@ -14,7 +14,7 @@ const EnregistrerMentionsApiHookConsumer: React.FC<
 };
 
 describe("useEnregistrerMentionsApiHook", () => {
-  test("Appel l'endpoint enregistrerMentions", async () => {
+  test("Appel l'endpoint enregistrerMentions avec mention normal", async () => {
     const enregistrerMentionsEtAnalyseMarginaleSpy = jest.spyOn(
       EtatCivilApi,
       "enregistrerMentionsEtAnalyseMarginale"
@@ -37,7 +37,46 @@ describe("useEnregistrerMentionsApiHook", () => {
     await waitFor(() => {
       expect(enregistrerMentionsEtAnalyseMarginaleSpy).toHaveBeenCalledWith(
         idActe,
-        mentionsEnregistrees
+        mentionsEnregistrees,
+        // represente analyseMarginale vide dans le cas d'une mention qui ne modifie pas l'analyse marginale
+        undefined
+      );
+    });
+  });
+
+  test("Appel l'endpoint enregistrerMentions avec mentions qui change l'analyse marginale", async () => {
+    const enregistrerMentionsEtAnalyseMarginaleSpy = jest.spyOn(
+      EtatCivilApi,
+      "enregistrerMentionsEtAnalyseMarginale"
+    );
+    const idActe = "b41079a5-9e8d-478c-b04c-c4c4ey86537g";
+    const mentionsEnregistrees = [
+      {
+        numeroOrdre: 1,
+        texteMention: "texteMention",
+        idTypeMention: "b03c0e14-bad0-40a7-a895-8169e2b7f38e"
+      }
+    ];
+    const analyseMarginale = {
+      nom: "Schlosser Nahed",
+      prenoms: ["Cassandra", "Celia", "Salomé"],
+      nomPartie1: "Schlosser",
+      nomPartie2: "Nahed",
+      motif: "Suite à apposition de mention 14-1"
+    };
+
+    render(
+      <EnregistrerMentionsApiHookConsumer
+        idActe={idActe}
+        mentions={mentionsEnregistrees}
+        analyseMarginale={analyseMarginale}
+      />
+    );
+    await waitFor(() => {
+      expect(enregistrerMentionsEtAnalyseMarginaleSpy).toHaveBeenCalledWith(
+        idActe,
+        mentionsEnregistrees,
+        analyseMarginale
       );
     });
   });

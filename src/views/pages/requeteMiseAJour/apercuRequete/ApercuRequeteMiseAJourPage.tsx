@@ -1,5 +1,6 @@
 import {
   IEnregistrerMentionsEtAnalyseMarginaleParams,
+  IMajAnalyseMarginale,
   useEnregistrerMentionsEtAnalyseMarginaleApiHook
 } from "@hook/acte/EnregistrerMentionsApiHook";
 import {
@@ -60,14 +61,6 @@ export interface IMajMention {
   numeroOrdre: number;
 }
 
-export interface IMajAnalyseMarginale {
-  nom: string;
-  prenom: string;
-  nomPartie1?: string;
-  nomPartie2?: string;
-  motif: string;
-}
-
 interface IMiseAJourMentionsContext {
   listeMentions: IMajMention[];
   setListeMentions: React.Dispatch<React.SetStateAction<IMajMention[]>>;
@@ -85,10 +78,11 @@ interface IMiseAJourMentionsContext {
   setAnalyseMarginale: React.Dispatch<
     React.SetStateAction<IMajAnalyseMarginale | undefined>
   >;
+  analyseMarginaleEnregistree: IMajAnalyseMarginale | undefined;
 }
 
-export const MiseAJourMentionsContext =
-  React.createContext<IMiseAJourMentionsContext>({
+export const MiseAJourMentionsContext = React.createContext<IMiseAJourMentionsContext>(
+  {
     listeMentions: [],
     setListeMentions: ((mentions: IMajMention[]) => {}) as React.Dispatch<
       React.SetStateAction<IMajMention[]>
@@ -107,8 +101,10 @@ export const MiseAJourMentionsContext =
       value: IMajAnalyseMarginale | undefined
     ) => {}) as React.Dispatch<
       React.SetStateAction<IMajAnalyseMarginale | undefined>
-    >
-  });
+    >,
+    analyseMarginaleEnregistree: undefined
+  }
+);
 
 const ApercuRequeteMiseAJourPage: React.FC = () => {
   const { idActeParam, idRequeteParam } = useParams<TUuidActeParams>();
@@ -182,7 +178,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   useEffect(() => {
     if (enregistrerMentionsApiHookResultat) {
       setListeMentionsEnregistrees(listeMentions);
-      setAnalyseMarginaleEnregistree(analyseMarginale as IMajAnalyseMarginale);
+      setAnalyseMarginaleEnregistree(analyseMarginale);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enregistrerMentionsApiHookResultat]);
@@ -203,6 +199,9 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     });
     if (mentionChangeAM) {
       setDerniereAnalyseMarginaleParams(idActeParam);
+    } else {
+      setDerniereAnalyseMarginaleParams(undefined);
+      setAnalyseMarginale(undefined);
     }
   }, [listeMentions, idActeParam]);
 
@@ -254,7 +253,16 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
             mention.typeMention.idMentionNiveauUn,
           numeroOrdre: mention.numeroOrdre,
           texteMention: mention.texte
-        }))
+        })),
+        analyseMarginale: analyseMarginale
+          ? {
+              motif: analyseMarginale?.motif,
+              nom: analyseMarginale?.nom,
+              prenoms: analyseMarginale?.prenoms,
+              nomPartie1: analyseMarginale?.nomPartie1,
+              nomPartie2: analyseMarginale?.nomPartie2
+            }
+          : undefined
       });
     }
     setOngletSelectionne(UN);
@@ -274,7 +282,8 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
             setEstFormulaireDirty,
             derniereAnalyseMarginaleResultat,
             analyseMarginale,
-            setAnalyseMarginale
+            setAnalyseMarginale,
+            analyseMarginaleEnregistree
           }}
         >
           {idActeParam ? (

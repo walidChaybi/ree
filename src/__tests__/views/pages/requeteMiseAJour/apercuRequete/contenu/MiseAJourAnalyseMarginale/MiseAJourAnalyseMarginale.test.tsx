@@ -165,3 +165,80 @@ test("DOIT afficher le bloc 'Nom Sécable' QUAND on navigue vers l'onglet 'Analy
     expect(screen.getByRole("checkbox")).toBeEnabled();
   });
 });
+
+
+test("DOIT enregistrer les mentions et l'analyse marginale et rediriger vers l'onglet 'Apercu acte mis a jour' QUAND on clique sur 'Actualiser et Visualiser' apres saisie d'une mention qui modifie l'analyse marginal", async () => {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID,
+        element: <ApercuRequeteMiseAJourPage />
+      }
+    ],
+    [
+      `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/er5ez456-354v-461z-c5fd-162md289m74h/b41079a5-9e8d-478c-b04c-c4c4ey86537g`
+    ]
+  );
+
+  render(<RouterProvider router={router} />);
+
+  ajouterMentionQuiModifieAnalyseMarginale();
+
+  await waitFor(() => {
+    expect(window.alert).toHaveBeenCalled();
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Analyse marginale")).toBeInTheDocument();
+  });
+
+  fireEvent.click(screen.getByText("Analyse marginale"));
+
+  const inputNom = screen.getByPlaceholderText("Nom") as HTMLInputElement;
+  const inputPrenom1 = screen.getByPlaceholderText(
+    "Prénom 1"
+  ) as HTMLInputElement;
+  const inputPrenom2 = screen.getByPlaceholderText(
+    "Prénom 2"
+  ) as HTMLInputElement;
+  const inputPrenom3 = screen.getByPlaceholderText(
+    "Prénom 3"
+  ) as HTMLInputElement;
+  const inputMotif = screen.getByPlaceholderText("Motif") as HTMLInputElement;
+
+  const input1erePartie = screen.getByPlaceholderText(
+    "1re partie"
+  ) as HTMLInputElement;
+  const input2emePartie = screen.getByPlaceholderText(
+    "2nde partie"
+  ) as HTMLInputElement;
+
+  await waitFor(() => {
+    expect(inputNom.value).toBe("Schlosser Nahed");
+    expect(inputPrenom1.value).toBe("Cassandra");
+    expect(inputPrenom2.value).toBe("Clara");
+    expect(inputPrenom3.value).toBe("Angela");
+    expect(inputMotif.value).toBe("Suite à apposition de mention 14-1");
+    expect(input1erePartie.value).toBe("Schlosser");
+    expect(input2emePartie.value).toBe("Nahed");
+  });
+
+  fireEvent.change(input2emePartie, {
+    target: {
+      value: "Nahedee"
+    }
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Actualiser et visualiser")).toBeInTheDocument();
+  });
+
+  fireEvent.click(screen.getByText("Actualiser et visualiser"));
+
+  await waitFor(() => {
+    expect(screen.getByText("Actualiser et visualiser")).toBeDisabled();
+    expect(
+      screen.getByText("Apercu acte mis à jour").getAttribute("aria-selected")
+    ).toBe("true");
+  });
+});

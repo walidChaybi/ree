@@ -5,11 +5,15 @@ import {
   NOM_PARTIE1,
   NOM_PARTIE2,
   NOM_SECABLE,
-  PRENOM,
+  PRENOMS,
   SECABLE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
-import { getLibelle } from "@util/Utils";
+import {
+  getLibelle,
+  mapPrenomsVersTableauString,
+  shallowEgal
+} from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import {
   FormikComponentProps,
@@ -25,9 +29,16 @@ import "./scss/MiseAJourAnalyseMarginaleForm.scss";
 const MiseAJourAnalyseMarginaleForm: React.FC<FormikComponentProps> = ({
   formik
 }) => {
-  const { derniereAnalyseMarginaleResultat, setAnalyseMarginale } = useContext(
-    MiseAJourMentionsContext
-  );
+  const {
+    derniereAnalyseMarginaleResultat,
+    analyseMarginale,
+    setAnalyseMarginale,
+    analyseMarginaleEnregistree
+  } = useContext(MiseAJourMentionsContext);
+
+  const estBoutonAnnulerSaisieDesactivé =
+    shallowEgal(analyseMarginale, analyseMarginaleEnregistree) && !formik.dirty;
+
   useEffect(() => {
     const secabilite = getValeurFormik(
       formik,
@@ -38,16 +49,15 @@ const MiseAJourAnalyseMarginaleForm: React.FC<FormikComponentProps> = ({
       setAnalyseMarginale({
         motif: getValeurFormik(formik, withNamespace(ANALYSE_MARGINALE, MOTIF)),
         nom: getValeurFormik(formik, withNamespace(ANALYSE_MARGINALE, NOM)),
-        prenom: getValeurFormik(
-          formik,
-          withNamespace(ANALYSE_MARGINALE, PRENOM)
+        prenoms: mapPrenomsVersTableauString(
+          getValeurFormik(formik, withNamespace(ANALYSE_MARGINALE, PRENOMS))
         ),
         nomPartie1: secabilite
           ? getValeurFormik(formik, withNamespace(NOM_SECABLE, NOM_PARTIE1))
-          : undefined,
+          : null,
         nomPartie2: secabilite
           ? getValeurFormik(formik, withNamespace(NOM_SECABLE, NOM_PARTIE2))
-          : undefined
+          : null
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,7 +68,10 @@ const MiseAJourAnalyseMarginaleForm: React.FC<FormikComponentProps> = ({
       <MiseAJourAnalyseMarginaleNomForm />
       <MiseAJourAnalyseMarginaleNomSecableForm />
       <div className="boutonWrapper">
-        <Bouton disabled={!formik.dirty} onClick={() => formik.resetForm()}>
+        <Bouton
+          disabled={estBoutonAnnulerSaisieDesactivé}
+          onClick={() => formik.resetForm()}
+        >
           {getLibelle("Annuler la saisie en cours")}
         </Bouton>
       </div>
