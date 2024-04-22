@@ -10,23 +10,22 @@ import {
   ICreationRequeteMiseAJourApiHookParams,
   useCreationRequeteMiseAJourApiHook
 } from "@hook/requete/miseajour/CreationRequeteMiseAJourApiHook";
-import { Droit } from "@model/agent/enum/Droit";
 import {
   officierDroitConsulterSurLeTypeRegistreOuDroitMEAE,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
 import { TypeMiseAJourMentions } from "@model/etatcivil/enum/ITypeMiseAJourMentions";
 import { OrigineActe } from "@model/etatcivil/enum/OrigineActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
-import { SousTypeMiseAJour } from "@model/requete/enum/SousTypeMiseAJour";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { FenetreExterneUtil } from "@util/FenetreExterne";
 import { UN } from "@util/Utils";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { IAjouterAlerteFormValue } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { OperationLocaleEnCours } from "@widget/attente/OperationLocaleEnCours";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import { BarreNavigationSuivPrec } from "@widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
@@ -36,11 +35,11 @@ import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
 import { mappingTitulaireActeVersTitulaireRequetMaj } from "../../common/mapping/mappingTitulaireRequeteMiseAJour";
 import { BoutonCreationRDD } from "./BoutonCreationRDD/BoutonCreationRDD";
+import { IAccordionReceSection, setFiche } from "./FicheUtils";
 import { BandeauAlertesActe } from "./contenu/BandeauAlertesActe";
 import { BandeauFiche } from "./contenu/BandeauFiche";
 import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
 import { BandeauFicheRcRcaPacsNumero } from "./contenu/BandeauFicheRcRcaPacsNumero";
-import { IAccordionReceSection, setFiche } from "./FicheUtils";
 import { useFichePageApiHook } from "./hook/FichePageApiHook";
 import "./scss/FichePage.scss";
 
@@ -375,22 +374,19 @@ function getBandeauAlerteActe(
           afficherBouton={visuBoutonAlertes}
         />
         {estPresentBoutonMiseAJour && (
-          <>
-            <Bouton
-              onClick={() =>
-                setTypeRequeteMiseAJour(SousTypeMiseAJour.RMAC.nom)
-              }
-            >
-              {TypeMiseAJourMentions.MAJ_SUITE_AVIS.libelle}
-            </Bouton>
-            <Bouton
-              onClick={() =>
-                setTypeRequeteMiseAJour(SousTypeMiseAJour.RMAR.nom)
-              }
-            >
-              {TypeMiseAJourMentions.MAJ_AUTRE.libelle}
-            </Bouton>
-          </>
+          <BoutonMenu
+            boutonLibelle="Mettre à jour"
+            className="menuMettreAJour"
+            options={TypeMiseAJourMentions.getAllEnumsAsOptions()}
+            onClickOption={e =>
+              setTypeRequeteMiseAJour(
+                TypeMiseAJourMentions.getSousTypeRequeteFromTypeMiseAJourLibelle(
+                  e
+                ).nom
+              )
+            }
+            anchorOrigin={{ vertical: "center", horizontal: "left" }}
+          />
         )}
         {acte &&
           !officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(
