@@ -3,6 +3,7 @@ import { CacheProvider } from "@emotion/react";
 import { EmotionCache } from "@emotion/utils";
 import React from "react";
 import ReactDOM from "react-dom";
+import messageManager from "./messageManager";
 
 const ratioWidth = 0.5;
 const ratioHeight = 0.94;
@@ -43,7 +44,7 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
 
     this.cache = createCache({
       key: "external",
-      container: this.htmlDivElement,
+      container: document.head,
       speedy: false
     });
   }
@@ -137,7 +138,7 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
     const windowFeatures = `width=${width},height=${height},left=${
       left + bodyPadding + resumeRequeteWidth
     },top=${top}`;
-    this.fenetreExterne = window.open("", "", windowFeatures);
+    this.fenetreExterne = window.open("", "_blank", windowFeatures);
 
     if (this.fenetreExterne && this.props.setFenetreExterneUtil) {
       this.props.setFenetreExterneUtil({ ref: this.fenetreExterne });
@@ -150,13 +151,41 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
       );
       this.fenetreExterne.document.body.appendChild(this.htmlDivElement);
       this.fenetreExterne.document.title = titre || "";
-      this.fenetreExterne.document.head.innerHTML = document.head.innerHTML;
+
+      Array.from(document.styleSheets).forEach(styleSheet => {
+        try {
+          // pour sonar: as any as CSSStyleSheet
+          const cSSStyleSheet = styleSheet as any as CSSStyleSheet;
+          if (cSSStyleSheet.cssRules) {
+            const newStyleEl = document.createElement("style");
+
+            Array.from(cSSStyleSheet.cssRules).forEach(cssRule => {
+              newStyleEl.appendChild(document.createTextNode(cssRule.cssText));
+            });
+
+            this.fenetreExterne?.document.head.appendChild(newStyleEl);
+          } else {
+            const newLinkEl = document.createElement("link");
+            newLinkEl.rel = "stylesheet";
+            if (cSSStyleSheet.href) {
+              newLinkEl.href = cSSStyleSheet.href;
+              this.fenetreExterne?.document.head.appendChild(newLinkEl);
+            }
+          }
+        } catch (e) {
+          messageManager.showError(
+            "Une erreur est survenue lors de la recopie des styles"
+          );
+        }
+      });
+      // this.fenetreExterne.document.head.innerHTML = document.head.innerHTML;
       document.fonts?.forEach(fontFace => {
         this.fenetreExterne?.document.fonts.add(fontFace);
       });
       this.cache = createCache({
         key: "external",
-        container: this.fenetreExterne.document.head
+        container: this.fenetreExterne.document.head,
+        speedy: false
       });
     }
   }
