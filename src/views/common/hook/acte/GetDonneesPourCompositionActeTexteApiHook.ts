@@ -31,9 +31,8 @@ const useGetDonneesPourCompositionActeTexteApiHook = (
           });
         })
         .catch(errors => {
-          console.log(errors);
-          const premiereErreur: any | undefined = JSON.parse(errors?.message)
-            ?.errors[ZERO];
+          const premiereErreur: any | undefined =
+            errors?.response?.body?.errors[ZERO];
           const erreur: IErreurTraitementApi = {
             code: premiereErreur?.code,
             message: premiereErreur?.message

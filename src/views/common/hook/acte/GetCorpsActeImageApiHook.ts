@@ -28,8 +28,8 @@ export const useGetCorpsActeImageApiHook = (
           });
         })
         .catch(error => {
-          const premiereErreur: any | undefined = JSON.parse(error?.message)
-            ?.errors[ZERO];
+          const premiereErreur: any | undefined =
+            error?.response?.body?.errors[ZERO];
           if (
             premiereErreur?.code ===
             CodeErreurFonctionnelle.FCT_AUCUN_ACTE_IMAGE
