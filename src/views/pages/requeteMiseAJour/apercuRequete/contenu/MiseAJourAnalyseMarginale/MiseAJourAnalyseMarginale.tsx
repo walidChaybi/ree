@@ -23,7 +23,26 @@ import {
 import MiseAJourAnalyseMarginaleForm from "./form/MiseAJourAnalyseMarginaleForm";
 import "./scss/MiseAJourAnalyseMarginale.scss";
 
-const ValidationSchema = Yup.object({});
+const ValidationSchema = Yup.object({
+  [NOM_SECABLE]: Yup.object({
+    [SECABLE]: Yup.boolean(),
+    [NOM_PARTIE1]: Yup.string(),
+    [NOM_PARTIE2]: Yup.string()
+  })
+}).test("nomsConformes", "Le nomSecable ne peut être vide", function (value) {
+  const nom = (value as any)[ANALYSE_MARGINALE][NOM];
+  const { nomPartie1, nomPartie2, secable } = value[NOM_SECABLE];
+
+  if (secable && nom.replace(/\s/g, "") !== `${nomPartie1}${nomPartie2}`) {
+    return this.createError({
+      path: "nomSecable.nomPartie2",
+      message:
+        "Les données saisies dans le nom sont incohérentes avec les données du nom sécable"
+    });
+  }
+
+  return true;
+});
 
 const MiseAJourAnalyseMarginale: React.FC = () => {
   const { derniereAnalyseMarginaleResultat, listeMentions } = useContext(

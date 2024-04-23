@@ -61,6 +61,14 @@ export interface IMajMention {
   numeroOrdre: number;
 }
 
+export interface IMajAnalyseMarginale {
+  nom: string;
+  prenom: string;
+  nomPartie1?: string;
+  nomPartie2?: string;
+  motif: string;
+}
+
 interface IMiseAJourMentionsContext {
   listeMentions: IMajMention[];
   setListeMentions: React.Dispatch<React.SetStateAction<IMajMention[]>>;
@@ -81,8 +89,8 @@ interface IMiseAJourMentionsContext {
   analyseMarginaleEnregistree: IMajAnalyseMarginale | undefined;
 }
 
-export const MiseAJourMentionsContext = React.createContext<IMiseAJourMentionsContext>(
-  {
+export const MiseAJourMentionsContext =
+  React.createContext<IMiseAJourMentionsContext>({
     listeMentions: [],
     setListeMentions: ((mentions: IMajMention[]) => {}) as React.Dispatch<
       React.SetStateAction<IMajMention[]>
