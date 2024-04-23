@@ -3,7 +3,6 @@ import { CacheProvider } from "@emotion/react";
 import { EmotionCache } from "@emotion/utils";
 import React from "react";
 import ReactDOM from "react-dom";
-import messageManager from "./messageManager";
 
 const ratioWidth = 0.5;
 const ratioHeight = 0.94;
@@ -41,15 +40,11 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
     };
     this.htmlDivElement = document.createElement("div");
     this.htmlDivElement.classList.add("App"); // Ajout de la classe CSS de l'application principale
-    this.eventCopyStyles = this.eventCopyStyles.bind(this);
-
-    if (window.top) {
-      window.top.addEventListener("refreshStyles", this.eventCopyStyles);
-    }
 
     this.cache = createCache({
       key: "external",
-      container: document.head
+      container: this.htmlDivElement,
+      speedy: false
     });
   }
   componentDidMount() {
@@ -60,15 +55,6 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
   componentWillUnmount() {
     if (this.fenetreExterne) {
       this.fenetreExterne.close();
-    }
-    if (window.top) {
-      window.top.removeEventListener("refreshStyles", this.eventCopyStyles);
-    }
-  }
-
-  eventCopyStyles() {
-    if (this.fenetreExterne != null) {
-      copyStyles(document, this.fenetreExterne.document);
     }
   }
 
@@ -158,71 +144,20 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
     }
 
     if (this.fenetreExterne) {
-      copyStyles(document, this.fenetreExterne.document);
       this.fenetreExterne.addEventListener(
         "beforeunload",
         this.handleBackBeforUnload
       );
       this.fenetreExterne.document.body.appendChild(this.htmlDivElement);
       this.fenetreExterne.document.title = titre || "";
-      /*this.fenetreExterne.document.head.innerHTML =
-        window.document.head.innerHTML;
+      this.fenetreExterne.document.head.innerHTML = document.head.innerHTML;
       document.fonts?.forEach(fontFace => {
-        this.fenetreExterne?.document.fonts.add(fontFace);///document et pas window.doc ?
-      });*/
+        this.fenetreExterne?.document.fonts.add(fontFace);
+      });
       this.cache = createCache({
         key: "external",
         container: this.fenetreExterne.document.head
       });
-    }
-  }
-}
-
-/** Recopie des syles css d'un document à un autre */
-function copyStyles(sourceDoc: Document, targetDoc: Document) {
-  removeStyles(targetDoc);
-
-  // Copie des fonts dans la nouvelle fenêtre
-  if (sourceDoc.fonts && targetDoc.fonts) {
-    sourceDoc.fonts.forEach(fontFace => {
-      targetDoc.fonts.add(fontFace);
-    });
-  }
-
-  Array.from(sourceDoc.styleSheets).forEach(styleSheet => {
-    try {
-      // pour sonar: as any as CSSStyleSheet
-      const cSSStyleSheet = styleSheet as any as CSSStyleSheet;
-      if (cSSStyleSheet.cssRules) {
-        const newStyleEl = sourceDoc.createElement("style");
-
-        Array.from(cSSStyleSheet.cssRules).forEach(cssRule => {
-          newStyleEl.appendChild(sourceDoc.createTextNode(cssRule.cssText));
-        });
-
-        targetDoc.head.appendChild(newStyleEl);
-      } else {
-        const newLinkEl = sourceDoc.createElement("link");
-        newLinkEl.rel = "stylesheet";
-        if (cSSStyleSheet.href) {
-          newLinkEl.href = cSSStyleSheet.href;
-          targetDoc.head.appendChild(newLinkEl);
-        }
-      }
-    } catch (e) {
-      messageManager.showError(
-        "Une erreur est survenue lors de la recopie des styles"
-      );
-    }
-  });
-}
-
-function removeStyles(targetDoc: Document) {
-  const styles = targetDoc.getElementsByTagName("style");
-  for (const index in styles) {
-    const style = styles[index];
-    if (style && style.parentNode) {
-      style.parentNode.removeChild(style);
     }
   }
 }
