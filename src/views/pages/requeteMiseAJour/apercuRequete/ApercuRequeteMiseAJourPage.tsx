@@ -61,14 +61,6 @@ export interface IMajMention {
   numeroOrdre: number;
 }
 
-export interface IMajAnalyseMarginale {
-  nom: string;
-  prenom: string;
-  nomPartie1?: string;
-  nomPartie2?: string;
-  motif: string;
-}
-
 interface IMiseAJourMentionsContext {
   listeMentions: IMajMention[];
   setListeMentions: React.Dispatch<React.SetStateAction<IMajMention[]>>;
