@@ -24,14 +24,6 @@ export function useRMCRequeteApiHook(criteresRMCRequete?: ICriteresRMCRequete) {
           );
           setDataRMCRequete(requetes);
           setDataTableauRMCRequete(getParamsTableau(result));
-          if (!result?.body) {
-            // TODO: Temporaire, à modifier quand le back renverra le TimeoutException correctement.
-            throw new Error(
-              getLibelle(
-                "La réponse du serveur est trop longue, veuillez affiner les critères de recherche."
-              )
-            );
-          }
         })
         .catch((error: any) => {
           /* istanbul ignore next */
