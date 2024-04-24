@@ -13,6 +13,7 @@ export interface BandeauAlertesActeProps {
   ajouterAlerteCallBack: (value: IAjouterAlerteFormValue) => void;
   supprimerAlerteCallBack: (idAlerteActe: string, idActe: string) => void;
   afficherBouton?: boolean;
+  disableScrollLock?: boolean;
 }
 
 export const BandeauAlertesActe: React.FC<BandeauAlertesActeProps> = ({
@@ -20,7 +21,8 @@ export const BandeauAlertesActe: React.FC<BandeauAlertesActeProps> = ({
   ajouterAlerteCallBack,
   supprimerAlerteCallBack,
   idTypeRegistre,
-  afficherBouton
+  afficherBouton,
+  disableScrollLock
 }) => {
   function afficherBoutonSelonFeatureFlag() {
     return (
@@ -37,6 +39,7 @@ export const BandeauAlertesActe: React.FC<BandeauAlertesActeProps> = ({
         <BoutonAjouterAlerte
           ajouterAlerteCallBack={ajouterAlerteCallBack}
           idTypeRegistre={idTypeRegistre}
+          disableScrollLock={disableScrollLock}
         />
       )}
       {alertes?.length > 0 && (

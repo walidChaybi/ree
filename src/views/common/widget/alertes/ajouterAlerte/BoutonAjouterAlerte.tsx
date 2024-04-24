@@ -12,11 +12,13 @@ import {
 export interface BoutonAjouterAlerteProps {
   ajouterAlerteCallBack: (value: IAjouterAlerteFormValue) => void;
   idTypeRegistre?: string;
+  disableScrollLock?: boolean;
 }
 
 export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({
   ajouterAlerteCallBack,
-  idTypeRegistre
+  idTypeRegistre,
+  disableScrollLock
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
@@ -50,6 +52,7 @@ export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({
         open={isOpen}
         onClosePopin={onClosePopin}
         onSubmit={onSubmit}
+        disableScrollLock={disableScrollLock}
       />
       <ConfirmationPopin
         disablePortal={true}

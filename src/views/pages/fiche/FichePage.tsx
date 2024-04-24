@@ -372,6 +372,7 @@ function getBandeauAlerteActe(
           ajouterAlerteCallBack={ajouterAlerteCallBack}
           supprimerAlerteCallBack={supprimerAlerteCallBack}
           afficherBouton={visuBoutonAlertes}
+          disableScrollLock={true}
         />
         {estPresentBoutonMiseAJour && (
           <BoutonMenu

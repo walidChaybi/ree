@@ -1,11 +1,11 @@
-import { Dialog, DialogContent } from "@mui/material";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
+import { Dialog, DialogContent } from "@mui/material";
 import { getLibelle } from "@util/Utils";
 import React from "react";
 import * as Yup from "yup";
+import { Formulaire } from "../../../formulaire/Formulaire";
 import { InputField } from "../../../formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../formulaire/champsSaisie/SelectField";
-import { Formulaire } from "../../../formulaire/Formulaire";
 import FormBoutons, { FormBoutonsProps } from "../../../popin/FormBoutons";
 import "../../../popin/scss/PopinAjouter.scss";
 
@@ -44,12 +44,14 @@ export interface PopinAjouterAlertesProps {
   open: boolean;
   onClosePopin: () => void;
   onSubmit: (value: IAjouterAlerteFormValue) => void;
+  disableScrollLock?: boolean;
 }
 
 export const PopinAjouterAlertes: React.FC<PopinAjouterAlertesProps> = ({
   open,
   onClosePopin,
-  onSubmit
+  onSubmit,
+  disableScrollLock
 }) => {
   const boutonsProps = {
     onClosePopin
@@ -62,6 +64,7 @@ export const PopinAjouterAlertes: React.FC<PopinAjouterAlertesProps> = ({
         open={open}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        disableScrollLock={disableScrollLock}
       >
         <DialogContent>
           <Formulaire
