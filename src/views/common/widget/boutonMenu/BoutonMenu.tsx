@@ -17,6 +17,7 @@ export interface IBoutonMenuProps {
   anchorOrigin?: PopoverOrigin;
   transformOrigin?: PopoverOrigin;
   openOnMouseClick?: boolean;
+  disableScrollLock?: boolean;
 }
 
 export const BoutonMenu: React.FC<IBoutonMenuProps> = props => {
@@ -57,6 +58,7 @@ export const BoutonMenu: React.FC<IBoutonMenuProps> = props => {
             transitionDuration={DUREE_OUVERTURE_POPIN}
             anchorOrigin={props.anchorOrigin}
             transformOrigin={props.transformOrigin}
+            disableScrollLock={props.disableScrollLock}
             MenuListProps={{
               onMouseLeave: handleCloseMenuFromMenuList,
               onClick: handleCloseMenuFromMenuList

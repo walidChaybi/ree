@@ -386,6 +386,7 @@ function getBandeauAlerteActe(
               )
             }
             anchorOrigin={{ vertical: "center", horizontal: "left" }}
+            disableScrollLock={true}
           />
         )}
         {acte &&
