@@ -32,8 +32,10 @@ const ValidationSchema = Yup.object({
 }).test("nomsConformes", "Le nomSecable ne peut être vide", function (value) {
   const nom = (value as any)[ANALYSE_MARGINALE][NOM];
   const { nomPartie1, nomPartie2, secable } = value[NOM_SECABLE];
-
-  if (secable && nom.replace(/\s/g, "") !== `${nomPartie1}${nomPartie2}`) {
+  if (
+    secable &&
+    nom.replace(/\s/g, "") !== `${nomPartie1}${nomPartie2?.replace(/\s/g, "")}`
+  ) {
     return this.createError({
       path: "nomSecable.nomPartie2",
       message:
