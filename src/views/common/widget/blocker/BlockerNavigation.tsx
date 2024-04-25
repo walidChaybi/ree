@@ -3,28 +3,40 @@ import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { useEffect } from "react";
 import { useBlocker } from "react-router-dom";
 
+export type BlocageNavigationDetail = {
+  estBloquee: boolean;
+  estPopinAffichee: boolean;
+};
+
 type BlockerNavigationProps = {
   messages: string[];
   onConfirmation: () => void;
-  estNavigationBloquee: boolean;
-  estNavigationDebloquee?: boolean;
+  estNavigationBloquee: BlocageNavigationDetail;
   titre?: string;
+  fonctionAExecuterAvantRedirection?: () => void;
 };
 export const BlockerNavigation: React.FC<BlockerNavigationProps> = ({
+  messages,
   onConfirmation,
   estNavigationBloquee,
-  estNavigationDebloquee,
   titre,
-  messages
+  fonctionAExecuterAvantRedirection
 }) => {
-  const blocker = useBlocker(() => estNavigationBloquee);
+  const blocker = useBlocker(() => estNavigationBloquee.estBloquee);
 
   useEffect(() => {
-    if (blocker.state === "blocked" && estNavigationDebloquee) {
+    if (blocker.state === "blocked" && !estNavigationBloquee.estBloquee) {
       blocker.proceed?.();
+    } else if (
+      blocker.state === "blocked" &&
+      !estNavigationBloquee.estPopinAffichee &&
+      fonctionAExecuterAvantRedirection
+    ) {
+      fonctionAExecuterAvantRedirection();
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estNavigationDebloquee]);
+  }, [estNavigationBloquee, blocker]);
 
   return (
     <ConfirmationPopin
@@ -40,7 +52,9 @@ export const BlockerNavigation: React.FC<BlockerNavigationProps> = ({
           }
         }
       ]}
-      estOuvert={blocker.state === "blocked"}
+      estOuvert={
+        blocker.state === "blocked" && estNavigationBloquee.estPopinAffichee
+      }
       messages={messages}
       titre={titre}
     />

@@ -15,24 +15,27 @@ import {
   IModifierStatutRequeteMiseAJourParams,
   useModifierStatutRequeteMiseAJourApiHook
 } from "@hook/requete/miseajour/ModifierStatutRequeteMiseAJourApiHook";
-import { Droit } from "@model/agent/enum/Droit";
 import { estOfficierHabiliterPourTousLesDroits } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import ActeRegistre from "@pages/requeteCreation/commun/composants/ActeRegistre";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
-import messageManager from "@util/messageManager";
-import { replaceUrl } from "@util/route/UrlUtil";
 import {
+  UN,
+  ZERO,
   getLibelle,
   shallowEgal,
-  shallowEgalTableau,
-  UN,
-  ZERO
+  shallowEgalTableau
 } from "@util/Utils";
+import messageManager from "@util/messageManager";
+import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
-import { BlockerNavigation } from "@widget/blocker/BlockerNavigation";
+import {
+  BlocageNavigationDetail,
+  BlockerNavigation
+} from "@widget/blocker/BlockerNavigation";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
@@ -81,8 +84,8 @@ interface IMiseAJourMentionsContext {
   analyseMarginaleEnregistree: IMajAnalyseMarginale | undefined;
 }
 
-export const MiseAJourMentionsContext =
-  React.createContext<IMiseAJourMentionsContext>({
+export const MiseAJourMentionsContext = React.createContext<IMiseAJourMentionsContext>(
+  {
     listeMentions: [],
     setListeMentions: ((mentions: IMajMention[]) => {}) as React.Dispatch<
       React.SetStateAction<IMajMention[]>
@@ -128,7 +131,11 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   const [ongletSelectionne, setOngletSelectionne] = useState(0);
   const [affichageApresSignature, setAffichageApresSignature] = useState(false);
   const [estNavigationBloquee, setEstNavigationBloquee] =
-    useState<boolean>(false);
+    useState<BlocageNavigationDetail>({
+      estBloquee: true,
+      estPopinAffichee: false
+    });
+
   const [abandonnerMajMentionsParams, setAbandonnerMajMentionsParams] =
     useState<IAbandonnerMajMentionsParams>();
   const resultatAbandonMentions = useAbandonnerMajMentionsApiHook(
@@ -142,6 +149,15 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   const resultatAbandonRequete = useModifierStatutRequeteMiseAJourApiHook(
     modifierStatutRequeteMiseAJourParams
   );
+
+  useEffect(() => {
+    if (Boolean(resultatAbandonRequete)) {
+      setEstNavigationBloquee({
+        estBloquee: false,
+        estPopinAffichee: false
+      } as BlocageNavigationDetail);
+    }
+  }, [resultatAbandonRequete]);
 
   const [
     enregistrerMentionsEtAnalyseMarginaleParams,
@@ -185,7 +201,10 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
 
   useEffect(() => {
     if (listeMentionsEnregistrees.length > ZERO) {
-      setEstNavigationBloquee(true);
+      setEstNavigationBloquee({
+        estBloquee: true,
+        estPopinAffichee: true
+      } as BlocageNavigationDetail);
     }
   }, [listeMentionsEnregistrees]);
 
@@ -205,6 +224,15 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     }
   }, [listeMentions, idActeParam]);
 
+  const abandonnerRequete = () => {
+    if (idRequeteParam) {
+      setModifierStatutRequeteMiseAJourParams({
+        idRequete: idRequeteParam,
+        statutRequete: StatutRequete.ABANDONNEE
+      });
+    }
+  };
+
   const handleChange = (newValue: number) => {
     setOngletSelectionne(newValue);
   };
@@ -217,7 +245,10 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     messageManager.showSuccessAndClose(
       getLibelle("L'acte a été mis à jour avec succès.")
     );
-    setEstNavigationBloquee(false);
+    setEstNavigationBloquee({
+      estBloquee: false,
+      estPopinAffichee: false
+    } as BlocageNavigationDetail);
   };
 
   const retourRMCActe = () => {
@@ -352,8 +383,8 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
         <BlockerNavigation
           estNavigationBloquee={estNavigationBloquee}
           onConfirmation={onConfirmationBlocker}
-          estNavigationDebloquee={!!resultatAbandonRequete}
           titre={getLibelle("Abandon du traitement")}
+          fonctionAExecuterAvantRedirection={abandonnerRequete}
           messages={[
             getLibelle("La saisie en cours sera perdue."),
             getLibelle("Voulez-vous continuer ?")

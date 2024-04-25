@@ -5,10 +5,16 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { URL_DECONNEXION, URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
+import {
+  URL_DECONNEXION,
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE,
+  URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS
+} from "@router/ReceUrls";
 import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
 import { logError } from "@util/LogManager";
 import {
+  ZERO,
   getLibelle,
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "@util/Utils";
@@ -27,12 +33,16 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   onClick
 }) => {
   const [menu, setMenu] = React.useState<null | HTMLElement>(null);
-  const [confirmationDeco, setConfirmationDeco] =
+  const [confirmationDeconnexion, setConfirmationDeconnexion] =
     React.useState<boolean>(false);
-  const [nbRequetes, setNbRequetes] = React.useState<number>(0);
-  const [onDeconnexion, setOnDeconnexion] = React.useState<boolean>(false);
+  const [nbRequetes, setNbRequetes] = React.useState<number>(ZERO);
 
   const navigate = useNavigate();
+
+  const listeUrlSansConfirmationDeconnexion = [
+    URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS,
+    URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE
+  ];
 
   const handleClickBoutonOfficer = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -49,38 +59,48 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
 
   function deconnexion() {
     gestionnaireDoubleOuverture.arreterVerification();
-    setOnDeconnexion(true);
+    navigate(URL_DECONNEXION);
   }
 
   useEffect(() => {
-    if (onDeconnexion) {
-      navigate(URL_DECONNEXION);
-      return () => {
-        navigate(0);
-      };
-    }
+    return () => {
+      if (window.location.pathname.includes(URL_DECONNEXION)) {
+        navigate(ZERO);
+      }
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onDeconnexion]);
+  }, []);
 
   const handleClickDeconnexion = () => {
+    const estRouteSansConfirmationDeconnexion = Boolean(
+      listeUrlSansConfirmationDeconnexion.filter(url =>
+        window.location.pathname.includes(url)
+      )[ZERO]
+    );
+
     setMenu(null);
 
-    getCompteurRequetes(StatutRequete.A_SIGNER.nom)
-      .then(result => {
-        const nbReq = result.body.data;
-        setNbRequetes(nbReq);
-        if (nbReq > 0) {
-          setConfirmationDeco(true);
-        } else {
+    if (estRouteSansConfirmationDeconnexion) {
+      deconnexion();
+    } else {
+      getCompteurRequetes(StatutRequete.A_SIGNER.nom)
+        .then(result => {
+          const nbReq = result.body.data;
+          setNbRequetes(nbReq);
+          if (nbReq > ZERO) {
+            setConfirmationDeconnexion(true);
+          } else {
+            deconnexion();
+          }
+        })
+        .catch(error => {
+          logError({
+            error
+          });
+
           deconnexion();
-        }
-      })
-      .catch(error => {
-        logError({
-          error
         });
-        deconnexion();
-      });
+    }
   };
 
   // Eléments Popin Déconnexion
@@ -94,14 +114,14 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
     {
       label: "Non",
       action: () => {
-        setConfirmationDeco(false);
+        setConfirmationDeconnexion(false);
         navigate(URL_MES_REQUETES_DELIVRANCE);
       }
     },
     {
       label: "Oui",
       action: () => {
-        setConfirmationDeco(false);
+        setConfirmationDeconnexion(false);
         deconnexion();
       }
     }
@@ -110,7 +130,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   return (
     <>
       <ConfirmationPopin
-        estOuvert={confirmationDeco}
+        estOuvert={confirmationDeconnexion}
         messages={messagePopin}
         boutons={boutonsPopin}
       />
