@@ -24,6 +24,9 @@ const MiseAJourAnalyseMarginaleNomSecableForm: React.FC<
   const { derniereAnalyseMarginaleResultat } = useContext(
     MiseAJourMentionsContext
   );
+  const nomComplet = formik
+    .getFieldProps(withNamespace(ANALYSE_MARGINALE, NOM))
+    .value.trim();
 
   const checkboxEstDesactive =
     derniereAnalyseMarginaleResultat &&
@@ -46,10 +49,19 @@ const MiseAJourAnalyseMarginaleNomSecableForm: React.FC<
   const onClickCheckboxNomSecable = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
+    const nouveauStatutCheckBox = !formik.getFieldProps(
+      withNamespace(NOM_SECABLE, SECABLE)
+    ).value;
     formik.setFieldValue(
       withNamespace(NOM_SECABLE, SECABLE),
-      !formik.getFieldProps(withNamespace(NOM_SECABLE, SECABLE)).value
+      nouveauStatutCheckBox
     );
+    if (nouveauStatutCheckBox && nomComplet.includes(" ")) {
+      const [nomPartie1, ...resteDeNom] = nomComplet.split(/\s+/);
+      const nomPartie2 = resteDeNom.join(" ");
+      formik.setFieldValue(withNamespace(NOM_SECABLE, NOM_PARTIE1), nomPartie1);
+      formik.setFieldValue(withNamespace(NOM_SECABLE, NOM_PARTIE2), nomPartie2);
+    }
   };
 
   return (
