@@ -10,18 +10,18 @@ import {
   ICreationRequeteMiseAJourApiHookParams,
   useCreationRequeteMiseAJourApiHook
 } from "@hook/requete/miseajour/CreationRequeteMiseAJourApiHook";
+import { Droit } from "@model/agent/enum/Droit";
 import {
   officierDroitConsulterSurLeTypeRegistreOuDroitMEAE,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
-import { Droit } from "@model/agent/enum/Droit";
 import { TypeMiseAJourMentions } from "@model/etatcivil/enum/ITypeMiseAJourMentions";
 import { OrigineActe } from "@model/etatcivil/enum/OrigineActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
-import { FenetreExterneUtil } from "@util/FenetreExterne";
-import { UN } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { FenetreExterneUtil } from "@util/FenetreExterne";
+import { UN } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { IAjouterAlerteFormValue } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { OperationLocaleEnCours } from "@widget/attente/OperationLocaleEnCours";
@@ -35,11 +35,11 @@ import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
 import { mappingTitulaireActeVersTitulaireRequetMaj } from "../../common/mapping/mappingTitulaireRequeteMiseAJour";
 import { BoutonCreationRDD } from "./BoutonCreationRDD/BoutonCreationRDD";
-import { IAccordionReceSection, setFiche } from "./FicheUtils";
 import { BandeauAlertesActe } from "./contenu/BandeauAlertesActe";
 import { BandeauFiche } from "./contenu/BandeauFiche";
 import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
 import { BandeauFicheRcRcaPacsNumero } from "./contenu/BandeauFicheRcRcaPacsNumero";
+import { IAccordionReceSection, setFiche } from "./FicheUtils";
 import { useFichePageApiHook } from "./hook/FichePageApiHook";
 import "./scss/FichePage.scss";
 
@@ -386,7 +386,8 @@ function getBandeauAlerteActe(
                 ).nom
               )
             }
-            anchorOrigin={{ vertical: "center", horizontal: "left" }}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            transformOrigin={{ vertical: "top", horizontal: "right" }}
             disableScrollLock={true}
           />
         )}

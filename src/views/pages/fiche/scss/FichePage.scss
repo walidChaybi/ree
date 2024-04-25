@@ -13,30 +13,13 @@
   .headerFichePage {
     display: flex;
     padding: 0.4rem;
-    justify-content: center;
-    gap: 15px;
+    justify-content: space-around;
 
     .BandeauAlertesActe{
-      display: flex;
       width: 80vw;
-      padding: 0px;
-      margin: 0px;
-      .ListeAlertes {
-        display: flex;
-        overflow: scroll;
-        overflow-wrap: break-word;
-        .CodeCouleurAlerteRouge {
-          flex: 2;
-          overflow: scroll;
-          overflow-wrap: break-word;
-          align-self: center;
-        }
-      }
 
       .BoutonAjouterAlerte {
-        display: flex;
         align-self: center;
-        justify-content: flex-end;
       }
 
     }
