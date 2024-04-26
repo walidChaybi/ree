@@ -15,22 +15,22 @@ import {
   IModifierStatutRequeteMiseAJourParams,
   useModifierStatutRequeteMiseAJourApiHook
 } from "@hook/requete/miseajour/ModifierStatutRequeteMiseAJourApiHook";
-import { estOfficierHabiliterPourTousLesDroits } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
+import { estOfficierHabiliterPourTousLesDroits } from "@model/agent/IOfficier";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import ActeRegistre from "@pages/requeteCreation/commun/composants/ActeRegistre";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
-import {
-  UN,
-  ZERO,
-  getLibelle,
-  shallowEgal,
-  shallowEgalTableau
-} from "@util/Utils";
 import messageManager from "@util/messageManager";
 import { replaceUrl } from "@util/route/UrlUtil";
+import {
+  getLibelle,
+  shallowEgal,
+  shallowEgalTableau,
+  UN,
+  ZERO
+} from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import {
   BlocageNavigationDetail,
@@ -50,6 +50,16 @@ interface ItemListe {
   titre: string;
   index: number;
   component: JSX.Element;
+}
+
+interface IMiseAJourDirty {
+  mentionsFormEstDirty?: boolean;
+  analyseMarginaleFormEstDirty?: boolean;
+}
+
+interface IMiseAJourValide {
+  mentionsFormEstValide?: boolean;
+  analyseMarginaleFormEstValide?: boolean;
 }
 
 export interface IMentionsDetail {
@@ -72,8 +82,12 @@ interface IMiseAJourMentionsContext {
   setNumeroOrdreEnModification: React.Dispatch<
     React.SetStateAction<number | undefined>
   >;
-  estFormulaireDirty: boolean;
-  setEstFormulaireDirty: React.Dispatch<React.SetStateAction<boolean>>;
+  estFormulaireDirty: IMiseAJourDirty;
+  setEstFormulaireDirty: React.Dispatch<React.SetStateAction<IMiseAJourDirty>>;
+  estFormulaireValide: IMiseAJourValide;
+  setEstFormulaireValide: React.Dispatch<
+    React.SetStateAction<IMiseAJourValide>
+  >;
   derniereAnalyseMarginaleResultat:
     | IDerniereAnalyseMarginalResultat
     | undefined;
@@ -94,9 +108,19 @@ export const MiseAJourMentionsContext = React.createContext<IMiseAJourMentionsCo
     setNumeroOrdreEnModification: ((id: number) => {}) as React.Dispatch<
       React.SetStateAction<number | undefined>
     >,
-    estFormulaireDirty: false,
-    setEstFormulaireDirty: ((value: boolean) => {}) as React.Dispatch<
-      React.SetStateAction<boolean>
+    estFormulaireDirty: {
+      mentionsFormEstDirty: false,
+      analyseMarginaleFormEstDirty: false
+    },
+    setEstFormulaireDirty: ((value: IMiseAJourDirty) => {}) as React.Dispatch<
+      React.SetStateAction<IMiseAJourDirty>
+    >,
+    estFormulaireValide: {
+      mentionsFormEstValide: true,
+      analyseMarginaleFormEstValide: true
+    },
+    setEstFormulaireValide: ((value: IMiseAJourValide) => {}) as React.Dispatch<
+      React.SetStateAction<IMiseAJourValide>
     >,
     derniereAnalyseMarginaleResultat: undefined,
     analyseMarginale: undefined,
@@ -125,7 +149,14 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     useState<IMajAnalyseMarginale>();
   const [numeroOrdreEnModification, setNumeroOrdreEnModification] =
     useState<number>();
-  const [estFormulaireDirty, setEstFormulaireDirty] = useState<boolean>(false);
+  const [estFormulaireDirty, setEstFormulaireDirty] = useState<IMiseAJourDirty>(
+    { mentionsFormEstDirty: false, analyseMarginaleFormEstDirty: false }
+  );
+  const [estFormulaireValide, setEstFormulaireValide] =
+    useState<IMiseAJourValide>({
+      mentionsFormEstValide: true,
+      analyseMarginaleFormEstValide: true
+    });
   const [estPopinSignatureOuverte, setEstPopinSignatureOuverte] =
     useState<boolean>(false);
   const [ongletSelectionne, setOngletSelectionne] = useState(0);
@@ -263,14 +294,23 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     idActeParam && setAbandonnerMajMentionsParams({ idActe: idActeParam });
   };
 
+  const miseAJourEstDirty =
+    estFormulaireDirty.analyseMarginaleFormEstDirty ||
+    estFormulaireDirty.mentionsFormEstDirty;
+
+  const miseAJourEstValide =
+    estFormulaireValide.mentionsFormEstValide &&
+    estFormulaireValide.analyseMarginaleFormEstValide;
+
   const estVerrouilleActualiserEtVisualiser =
     (shallowEgalTableau(listeMentions, listeMentionsEnregistrees) &&
       shallowEgal(analyseMarginale, analyseMarginaleEnregistree)) ||
-    estFormulaireDirty;
+    miseAJourEstDirty ||
+    !miseAJourEstValide;
 
   const estVerrouilleTerminerEtSigner =
     !estVerrouilleActualiserEtVisualiser ||
-    estFormulaireDirty ||
+    miseAJourEstDirty ||
     listeMentions.length === ZERO;
 
   const actualiserEtVisualiserCallback = () => {
@@ -290,6 +330,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
               motif: analyseMarginale?.motif,
               nom: analyseMarginale?.nom,
               prenoms: analyseMarginale?.prenoms,
+              secable: analyseMarginale.secable,
               nomPartie1: analyseMarginale?.nomPartie1,
               nomPartie2: analyseMarginale?.nomPartie2
             }
@@ -311,6 +352,8 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
             listeMentionsEnregistrees,
             estFormulaireDirty,
             setEstFormulaireDirty,
+            estFormulaireValide,
+            setEstFormulaireValide,
             derniereAnalyseMarginaleResultat,
             analyseMarginale,
             setAnalyseMarginale,

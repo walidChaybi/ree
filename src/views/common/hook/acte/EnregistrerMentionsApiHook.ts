@@ -12,8 +12,9 @@ export interface IMentionEnregistree {
 export interface IMajAnalyseMarginale {
   nom: string;
   prenoms: string[];
-  nomPartie1?: string;
-  nomPartie2?: string;
+  secable: boolean;
+  nomPartie1: string | null;
+  nomPartie2: string | null;
   motif: string;
 }
 

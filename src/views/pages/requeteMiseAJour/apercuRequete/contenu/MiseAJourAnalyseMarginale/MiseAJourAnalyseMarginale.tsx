@@ -8,11 +8,16 @@ import {
   PRENOMS,
   SECABLE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { IMajAnalyseMarginale } from "@hook/acte/EnregistrerMentionsApiHook";
 import { IDerniereAnalyseMarginalResultat } from "@hook/requete/miseajour/DerniereAnalyseMarginaleApiHook";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { IMajAnalyseMarginaleForm } from "@model/form/miseAJour/IMiseAJourMentionsForm";
 import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
-import { UN } from "@util/Utils";
+import {
+  getPremiereOuSecondeValeur,
+  mapPrenomsVersPrenomsOrdonnes,
+  UN
+} from "@util/Utils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import React, { useContext } from "react";
 import * as Yup from "yup";
@@ -24,17 +29,27 @@ import MiseAJourAnalyseMarginaleForm from "./form/MiseAJourAnalyseMarginaleForm"
 import "./scss/MiseAJourAnalyseMarginale.scss";
 
 const ValidationSchema = Yup.object({
+  [ANALYSE_MARGINALE]: Yup.object({
+    [NOM]: Yup.string().required("La saisie du nom est obligatoire"),
+    [MOTIF]: Yup.string().required("La saisie du motif est obligatoire")
+  }),
   [NOM_SECABLE]: Yup.object({
     [SECABLE]: Yup.boolean(),
-    [NOM_PARTIE1]: Yup.string(),
-    [NOM_PARTIE2]: Yup.string()
+    [NOM_PARTIE1]: Yup.string().when(SECABLE, {
+      is: (secable: boolean) => secable,
+      then: Yup.string().required("La 1re partie est obligatoire")
+    }),
+    [NOM_PARTIE2]: Yup.string().when(SECABLE, {
+      is: (secable: boolean) => secable,
+      then: Yup.string().required("La 2nde partie est obligatoire")
+    })
   })
 }).test("nomsConformes", "Le nomSecable ne peut être vide", function (value) {
   const nom = (value as any)[ANALYSE_MARGINALE][NOM];
   const { nomPartie1, nomPartie2, secable } = value[NOM_SECABLE];
   if (
     secable &&
-    nom.replace(/\s/g, "") !== `${nomPartie1}${nomPartie2?.replace(/\s/g, "")}`
+    nom?.replace(/\s/g, "") !== `${nomPartie1}${nomPartie2?.replace(/\s/g, "")}`
   ) {
     return this.createError({
       path: "nomSecable.nomPartie2",
@@ -47,15 +62,15 @@ const ValidationSchema = Yup.object({
 });
 
 const MiseAJourAnalyseMarginale: React.FC = () => {
-  const { derniereAnalyseMarginaleResultat, listeMentions } = useContext(
-    MiseAJourMentionsContext
-  );
+  const { derniereAnalyseMarginaleResultat, listeMentions, analyseMarginale } =
+    useContext(MiseAJourMentionsContext);
 
   return (
     <div className="MiseAJourAnalyseMarginale">
       <Formulaire
         formDefaultValues={getValeursParDefaut(
           listeMentions,
+          analyseMarginale,
           derniereAnalyseMarginaleResultat
         )}
         formValidationSchema={ValidationSchema}
@@ -67,8 +82,9 @@ const MiseAJourAnalyseMarginale: React.FC = () => {
   );
 };
 
-const getValeursParDefaut = (
+export const getValeursParDefaut = (
   listeMentions: IMajMention[],
+  analyseMarginale: IMajAnalyseMarginale | undefined,
   derniereAnalyseMarginaleEnregistree:
     | IDerniereAnalyseMarginalResultat
     | undefined
@@ -79,23 +95,37 @@ const getValeursParDefaut = (
   );
   return {
     [ANALYSE_MARGINALE]: {
-      [NOM]: derniereAnalyseMarginaleEnregistree?.titulaire.nom || "",
-      [PRENOMS]: getPrenomsOrdonneVersPrenomsDefaultValues(
-        derniereAnalyseMarginaleEnregistree?.titulaire.prenoms
+      [NOM]: getPremiereOuSecondeValeur(
+        analyseMarginale?.nom,
+        derniereAnalyseMarginaleEnregistree?.titulaire.nom
       ),
-      [MOTIF]: getMotif(listeMentions, derniereAnalyseMarginaleEnregistree)
+      [PRENOMS]: analyseMarginale
+        ? getPrenomsOrdonneVersPrenomsDefaultValues(
+            mapPrenomsVersPrenomsOrdonnes(analyseMarginale.prenoms)
+          )
+        : getPrenomsOrdonneVersPrenomsDefaultValues(
+            derniereAnalyseMarginaleEnregistree?.titulaire.prenoms
+          ),
+      [MOTIF]: getPremiereOuSecondeValeur(
+        analyseMarginale?.motif,
+        getMotif(listeMentions, derniereAnalyseMarginaleEnregistree)
+      )
     },
     [NOM_SECABLE]: {
-      [SECABLE]: secable,
-      [NOM_PARTIE1]: derniereAnalyseMarginaleEnregistree
-        ? derniereAnalyseMarginaleEnregistree.titulaire.nomPartie1
-        : "",
-      [NOM_PARTIE2]: derniereAnalyseMarginaleEnregistree
-        ? derniereAnalyseMarginaleEnregistree.titulaire.nomPartie2
-        : ""
+      [SECABLE]: analyseMarginale ? analyseMarginale.secable : secable,
+      [NOM_PARTIE1]: getPremiereOuSecondeValeur(
+        analyseMarginale?.nomPartie1,
+        derniereAnalyseMarginaleEnregistree?.titulaire.nomPartie1
+      ),
+      [NOM_PARTIE2]: getPremiereOuSecondeValeur(
+        analyseMarginale?.nomPartie2,
+        derniereAnalyseMarginaleEnregistree?.titulaire.nomPartie2
+      )
     }
   };
 };
+
+
 
 const getMotif = (
   listeMentions: IMajMention[],

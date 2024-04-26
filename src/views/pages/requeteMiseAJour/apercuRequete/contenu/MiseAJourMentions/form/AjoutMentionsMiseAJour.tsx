@@ -28,12 +28,27 @@ const AjoutMentionsMiseAJour: React.FC<
     listeMentions,
     numeroOrdreEnModification,
     setNumeroOrdreEnModification,
-    setEstFormulaireDirty
+    estFormulaireDirty,
+    setEstFormulaireDirty,
+    estFormulaireValide,
+    setEstFormulaireValide
   } = useContext(MiseAJourMentionsContext);
 
   useEffect(() => {
-    setEstFormulaireDirty(formik.dirty);
-  }, [formik.dirty, setEstFormulaireDirty]);
+    setEstFormulaireDirty({
+      ...estFormulaireDirty,
+      mentionsFormEstDirty: formik.dirty
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formik.dirty]);
+
+  useEffect(() => {
+    setEstFormulaireValide({
+      ...estFormulaireValide,
+      mentionsFormEstValide: formik.isValid
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formik.isValid]);
 
   useEffect(() => {
     if (numeroOrdreEnModification !== undefined) {

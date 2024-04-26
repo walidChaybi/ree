@@ -71,14 +71,14 @@ const MiseAJourMentions: React.FC = () => {
       <ListeGlisserDeposer
         liste={mappingMentionsFormVersTableauMentions(
           listeMentions,
-          !estFormulaireDirty
+          !estFormulaireDirty.mentionsFormEstDirty
         )}
         handleReorga={(indexPrec: number, indexCourant: number) =>
           handleReorga(listeMentions, setListeMentions, indexPrec, indexCourant)
         }
         onClickSupprimer={onClickSupprimerMention}
         onClickModifier={onClickModifierMention}
-        afficheDragHandle={!estFormulaireDirty}
+        afficheDragHandle={!estFormulaireDirty.mentionsFormEstDirty}
         useDragHandle={false}
         libellesSontTitres={false}
         nombreCaracteresMaximum={CARACTERES_MAXIMUM_LIBELLE_LISTE}

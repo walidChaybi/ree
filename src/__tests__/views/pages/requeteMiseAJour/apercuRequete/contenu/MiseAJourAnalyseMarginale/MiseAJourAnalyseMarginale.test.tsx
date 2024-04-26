@@ -223,6 +223,12 @@ test("DOIT enregistrer les mentions et l'analyse marginale et rediriger vers l'o
     expect(input2emePartie.value).toBe("Nahed");
   });
 
+  fireEvent.change(inputNom, {
+    target: {
+      value: "Schlosser Nahedee"
+    }
+  });
+
   fireEvent.change(input2emePartie, {
     target: {
       value: "Nahedee"

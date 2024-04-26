@@ -412,13 +412,15 @@ export function mapPrenomsVersPrenomsOrdonnes(prenoms?: string[]) {
   return prenomsOrdonnes;
 }
 
-export function mapPrenomsVersTableauString(prenoms: Prenoms): string[] {
+export function mapPrenomsVersTableauString(prenoms?: Prenoms): string[] {
   const tableauPrenoms: string[] = [];
-  Object.values(prenoms).forEach(prenom => {
-    if (Boolean(prenom)) {
-      tableauPrenoms.push(prenom);
-    }
-  });
+  if (prenoms) {
+    Object.values(prenoms).forEach(prenom => {
+      if (Boolean(prenom)) {
+        tableauPrenoms.push(prenom);
+      }
+    });
+  }
   return tableauPrenoms;
 }
 
@@ -469,6 +471,13 @@ export function getValeurOuUndefined(valeur?: any): any | undefined {
 export function getValeurOuNull<T>(valeur?: T): T | null {
   return valeur ? valeur : null;
 }
+
+export const getPremiereOuSecondeValeur = (
+  valeur1: string | undefined | null,
+  valeur2: string | undefined | null
+) => {
+  return valeur1 ? valeur1 : valeur2 || "";
+};
 
 export function getTableauAPartirElementsNonVides(...args: any[]) {
   const tableau: any[] = [];
