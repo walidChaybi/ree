@@ -50,8 +50,7 @@ const MiseAJourAnalyseMarginaleForm: React.FC<
     setEstFormulaireDirty,
     estFormulaireValide,
     setEstFormulaireValide,
-    analyseMarginaleEnregistree,
-    derniereAnalyseMarginaleResultat
+    analyseMarginaleEnregistree
   } = useContext(MiseAJourMentionsContext);
 
   useEffect(() => {
@@ -95,7 +94,7 @@ const MiseAJourAnalyseMarginaleForm: React.FC<
       formik,
       withNamespace(NOM_SECABLE, SECABLE)
     );
-    if (derniereAnalyseMarginaleResultat) {
+    if (formik.dirty) {
       setAnalyseMarginale({
         motif: getValeurFormik(formik, withNamespace(ANALYSE_MARGINALE, MOTIF)),
         nom: getValeurFormik(formik, withNamespace(ANALYSE_MARGINALE, NOM)),
@@ -112,7 +111,7 @@ const MiseAJourAnalyseMarginaleForm: React.FC<
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [derniereAnalyseMarginaleResultat, formik.values]);
+  }, [formik.dirty, formik.values]);
 
   const setFormAvecValeursAnalyseMarginaleEnCours = (
     analyseMarginaleEnCoursDeSaisie: IMajAnalyseMarginale | undefined
