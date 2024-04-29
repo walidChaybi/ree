@@ -73,6 +73,8 @@ const URL_ACTE_RECOMPOSER_APRES_SIGNATURE = "/recomposer-document-final";
 const URL_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES =
   "/composer-document-mentions-ulterieures";
 const URL_DERNIERE_ANALYSE_MARGINALE = "/derniere-analyse-marginale-valide";
+const URL_SUPPRIMER_DERNIERE_ANALYSE_MARGINALE_NON_VALIDE =
+  "/supprimer-analyse-marginale-non-valide";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -642,3 +644,12 @@ export function getDerniereAnalyseMarginale(idActe: string): Promise<any> {
     uri: `${URL_ACTE}/${idActe}${URL_DERNIERE_ANALYSE_MARGINALE}`
   });
 }
+
+export function deleteDerniereAnalyseMarginaleNonValide(
+  idActe: string
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_ACTE}/${idActe}${URL_SUPPRIMER_DERNIERE_ANALYSE_MARGINALE_NON_VALIDE}`
+  });
+} 

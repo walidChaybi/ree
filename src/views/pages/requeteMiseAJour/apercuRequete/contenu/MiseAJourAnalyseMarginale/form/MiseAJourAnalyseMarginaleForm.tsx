@@ -8,9 +8,12 @@ import {
   PRENOMS,
   SECABLE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { IMajAnalyseMarginale } from "@hook/acte/EnregistrerMentionsApiHook";
+import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import {
   getLibelle,
+  mapPrenomsVersPrenomsOrdonnes,
   mapPrenomsVersTableauString,
   shallowEgal
 } from "@util/Utils";
@@ -21,13 +24,24 @@ import {
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import { useContext, useEffect } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect } from "react";
 import MiseAJourAnalyseMarginaleNomForm from "./MiseAJourAnalyseMarginaleNomForm";
 import MiseAJourAnalyseMarginaleNomSecableForm from "./MiseAJourAnalyseMarginaleNomSecableForm";
 import "./scss/MiseAJourAnalyseMarginaleForm.scss";
 
-const MiseAJourAnalyseMarginaleForm: React.FC<FormikComponentProps> = ({
-  formik
+type MiseAJourAnalyseMarginaleFormProps = {
+  onClickAbandonnerDerniereAnalyseMarginaleNonValide: () => void;
+  resetForm: boolean;
+  setResetForm: Dispatch<SetStateAction<boolean>>;
+};
+
+const MiseAJourAnalyseMarginaleForm: React.FC<
+  FormikComponentProps & MiseAJourAnalyseMarginaleFormProps
+> = ({
+  formik,
+  onClickAbandonnerDerniereAnalyseMarginaleNonValide,
+  resetForm,
+  setResetForm
 }) => {
   const {
     analyseMarginale,
@@ -40,8 +54,11 @@ const MiseAJourAnalyseMarginaleForm: React.FC<FormikComponentProps> = ({
     derniereAnalyseMarginaleResultat
   } = useContext(MiseAJourMentionsContext);
 
-  const estBoutonAnnulerSaisieDesactivé =
-    shallowEgal(analyseMarginale, analyseMarginaleEnregistree) && !formik.dirty;
+  useEffect(() => {
+    if (!shallowEgal(analyseMarginale, analyseMarginaleEnregistree)) {
+      setFormAvecValeursAnalyseMarginaleEnCours(analyseMarginale);
+    }
+  }, []);
 
   useEffect(() => {
     setEstFormulaireDirty({
@@ -96,20 +113,78 @@ const MiseAJourAnalyseMarginaleForm: React.FC<FormikComponentProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [derniereAnalyseMarginaleResultat, formik.values]);
 
+  const setFormAvecValeursAnalyseMarginaleEnCours = (
+    analyseMarginaleEnCoursDeSaisie: IMajAnalyseMarginale | undefined
+  ) => {
+    formik.setFieldValue(
+      withNamespace(ANALYSE_MARGINALE, NOM),
+      analyseMarginaleEnCoursDeSaisie?.nom,
+      true
+    );
+    formik.setFieldValue(
+      withNamespace(ANALYSE_MARGINALE, PRENOMS),
+      getPrenomsOrdonneVersPrenomsDefaultValues(
+        mapPrenomsVersPrenomsOrdonnes(analyseMarginaleEnCoursDeSaisie?.prenoms)
+      ),
+      true
+    );
+    formik.setFieldValue(
+      withNamespace(ANALYSE_MARGINALE, MOTIF),
+      analyseMarginaleEnCoursDeSaisie?.motif,
+      true
+    );
+    formik.setFieldValue(
+      withNamespace(NOM_SECABLE, NOM_PARTIE1),
+      analyseMarginaleEnCoursDeSaisie?.nomPartie1,
+      true
+    );
+    formik.setFieldValue(
+      withNamespace(NOM_SECABLE, NOM_PARTIE2),
+      analyseMarginaleEnCoursDeSaisie?.nomPartie2,
+      true
+    );
+  };
+
+  useEffect(() => {
+    if (resetForm) {
+      formik.resetForm();
+      setResetForm(false);
+    }
+  }, [resetForm]);
+
   return (
     <div className="formWrapper">
       <MiseAJourAnalyseMarginaleNomForm />
       <MiseAJourAnalyseMarginaleNomSecableForm />
       <div className="boutonWrapper">
         <Bouton
-          disabled={estBoutonAnnulerSaisieDesactivé}
-          onClick={() => formik.resetForm()}
+          disabled={!formik.dirty}
+          onClick={() => {
+            setAnalyseMarginale(undefined);
+            formik.resetForm();
+          }}
         >
-          {getLibelle("Annuler la saisie en cours")}
+          {getLibelle("ANNULER LA SAISIE EN COURS")}
         </Bouton>
+        {analyseMarginaleEnregistree && (
+          <span
+            className="titre"
+            title={
+              "Abandonne toutes les modifications de l'analyse marginale et recharge l’analyse marginale à son état initial avant mise à jour"
+            }
+          >
+            <Bouton
+              onClick={onClickAbandonnerDerniereAnalyseMarginaleNonValide}
+            >
+              {getLibelle("ABANDONNER LA MODIFICATION")}
+            </Bouton>
+          </span>
+        )}
       </div>
     </div>
   );
 };
 
-export default connect<FormikComponentProps>(MiseAJourAnalyseMarginaleForm);
+export default connect<
+  FormikComponentProps & MiseAJourAnalyseMarginaleFormProps
+>(MiseAJourAnalyseMarginaleForm);

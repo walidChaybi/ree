@@ -14,12 +14,12 @@ import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { IMajAnalyseMarginaleForm } from "@model/form/miseAJour/IMiseAJourMentionsForm";
 import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import {
+  UN,
   getPremiereOuSecondeValeur,
-  mapPrenomsVersPrenomsOrdonnes,
-  UN
+  mapPrenomsVersPrenomsOrdonnes
 } from "@util/Utils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import React, { useContext } from "react";
+import React, { Dispatch, SetStateAction, useContext } from "react";
 import * as Yup from "yup";
 import {
   IMajMention,
@@ -27,6 +27,12 @@ import {
 } from "../../ApercuRequeteMiseAJourPage";
 import MiseAJourAnalyseMarginaleForm from "./form/MiseAJourAnalyseMarginaleForm";
 import "./scss/MiseAJourAnalyseMarginale.scss";
+
+type MiseAJourAnalyseMarginaleProps = {
+  onClickAbandonnerDerniereAnalyseMarginaleNonValide: () => void;
+  resetForm: boolean;
+  setResetForm: Dispatch<SetStateAction<boolean>>;
+};
 
 const ValidationSchema = Yup.object({
   [ANALYSE_MARGINALE]: Yup.object({
@@ -61,22 +67,35 @@ const ValidationSchema = Yup.object({
   return true;
 });
 
-const MiseAJourAnalyseMarginale: React.FC = () => {
-  const { derniereAnalyseMarginaleResultat, listeMentions, analyseMarginale } =
-    useContext(MiseAJourMentionsContext);
+const MiseAJourAnalyseMarginale: React.FC<MiseAJourAnalyseMarginaleProps> = ({
+  onClickAbandonnerDerniereAnalyseMarginaleNonValide,
+  resetForm,
+  setResetForm
+}) => {
+  const {
+    derniereAnalyseMarginaleResultat,
+    listeMentions,
+    analyseMarginaleEnregistree
+  } = useContext(MiseAJourMentionsContext);
 
   return (
     <div className="MiseAJourAnalyseMarginale">
       <Formulaire
         formDefaultValues={getValeursParDefaut(
           listeMentions,
-          analyseMarginale,
+          analyseMarginaleEnregistree,
           derniereAnalyseMarginaleResultat
         )}
         formValidationSchema={ValidationSchema}
         onSubmit={() => {}}
       >
-        <MiseAJourAnalyseMarginaleForm />
+        <MiseAJourAnalyseMarginaleForm
+          onClickAbandonnerDerniereAnalyseMarginaleNonValide={
+            onClickAbandonnerDerniereAnalyseMarginaleNonValide
+          }
+          resetForm={resetForm}
+          setResetForm={setResetForm}
+        />
       </Formulaire>
     </div>
   );
@@ -84,7 +103,7 @@ const MiseAJourAnalyseMarginale: React.FC = () => {
 
 export const getValeursParDefaut = (
   listeMentions: IMajMention[],
-  analyseMarginale: IMajAnalyseMarginale | undefined,
+  analyseMarginaleEnregistree: IMajAnalyseMarginale | undefined,
   derniereAnalyseMarginaleEnregistree:
     | IDerniereAnalyseMarginalResultat
     | undefined
@@ -96,29 +115,31 @@ export const getValeursParDefaut = (
   return {
     [ANALYSE_MARGINALE]: {
       [NOM]: getPremiereOuSecondeValeur(
-        analyseMarginale?.nom,
+        analyseMarginaleEnregistree?.nom,
         derniereAnalyseMarginaleEnregistree?.titulaire.nom
       ),
-      [PRENOMS]: analyseMarginale
+      [PRENOMS]: analyseMarginaleEnregistree
         ? getPrenomsOrdonneVersPrenomsDefaultValues(
-            mapPrenomsVersPrenomsOrdonnes(analyseMarginale.prenoms)
+            mapPrenomsVersPrenomsOrdonnes(analyseMarginaleEnregistree.prenoms)
           )
         : getPrenomsOrdonneVersPrenomsDefaultValues(
             derniereAnalyseMarginaleEnregistree?.titulaire.prenoms
           ),
       [MOTIF]: getPremiereOuSecondeValeur(
-        analyseMarginale?.motif,
+        analyseMarginaleEnregistree?.motif,
         getMotif(listeMentions, derniereAnalyseMarginaleEnregistree)
       )
     },
     [NOM_SECABLE]: {
-      [SECABLE]: analyseMarginale ? analyseMarginale.secable : secable,
+      [SECABLE]: analyseMarginaleEnregistree
+        ? analyseMarginaleEnregistree.secable
+        : secable,
       [NOM_PARTIE1]: getPremiereOuSecondeValeur(
-        analyseMarginale?.nomPartie1,
+        analyseMarginaleEnregistree?.nomPartie1,
         derniereAnalyseMarginaleEnregistree?.titulaire.nomPartie1
       ),
       [NOM_PARTIE2]: getPremiereOuSecondeValeur(
-        analyseMarginale?.nomPartie2,
+        analyseMarginaleEnregistree?.nomPartie2,
         derniereAnalyseMarginaleEnregistree?.titulaire.nomPartie2
       )
     }

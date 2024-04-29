@@ -15,22 +15,23 @@ import {
   IModifierStatutRequeteMiseAJourParams,
   useModifierStatutRequeteMiseAJourApiHook
 } from "@hook/requete/miseajour/ModifierStatutRequeteMiseAJourApiHook";
-import { Droit } from "@model/agent/enum/Droit";
+import { useSupprimerDerniereAnalyseMarginaleNonValideApiHook } from "@hook/requete/miseajour/SupprimerDerniereAnalyseMarginaleNonValideApiHook";
 import { estOfficierHabiliterPourTousLesDroits } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import ActeRegistre from "@pages/requeteCreation/commun/composants/ActeRegistre";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
-import messageManager from "@util/messageManager";
-import { replaceUrl } from "@util/route/UrlUtil";
 import {
+  UN,
+  ZERO,
   getLibelle,
   shallowEgal,
-  shallowEgalTableau,
-  UN,
-  ZERO
+  shallowEgalTableau
 } from "@util/Utils";
+import messageManager from "@util/messageManager";
+import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import {
   BlocageNavigationDetail,
@@ -39,7 +40,7 @@ import {
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { ApercuActeMisAJour } from "../commun/ApercuActeMisAjour";
 import MiseAJourAnalyseMarginale from "./contenu/MiseAJourAnalyseMarginale/MiseAJourAnalyseMarginale";
@@ -166,13 +167,18 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
       estBloquee: true,
       estPopinAffichee: false
     });
+  const [resetFormAnalyseMarginale, setResetFormAnalyseMarginale] =
+    useState<boolean>(false);
 
   const [abandonnerMajMentionsParams, setAbandonnerMajMentionsParams] =
     useState<IAbandonnerMajMentionsParams>();
   const resultatAbandonMentions = useAbandonnerMajMentionsApiHook(
     abandonnerMajMentionsParams
   );
-
+  const [
+    idActeAbandonnerDerniereAnalyseMarginaleNonValide,
+    setIdActeAbandonnerDerniereAnalyseMarginaleNonValide
+  ] = useState<string>();
   const [
     modifierStatutRequeteMiseAJourParams,
     setModifierStatutRequeteMiseAJourParams
@@ -194,9 +200,15 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     enregistrerMentionsEtAnalyseMarginaleParams,
     setEnregistrerMentionsEtAnalyseMarginaleParams
   ] = useState<IEnregistrerMentionsEtAnalyseMarginaleParams>();
+
   const enregistrerMentionsApiHookResultat =
     useEnregistrerMentionsEtAnalyseMarginaleApiHook(
       enregistrerMentionsEtAnalyseMarginaleParams
+    );
+
+  const resultatSupressionDerniereAnalyseMarginaleNonValide =
+    useSupprimerDerniereAnalyseMarginaleNonValideApiHook(
+      idActeAbandonnerDerniereAnalyseMarginaleNonValide
     );
 
   useEffect(() => {
@@ -204,6 +216,10 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
       setOngletSelectionne(ZERO);
     }
   }, [listeMentionsEnregistrees]);
+
+  const onClickAbandonnerDerniereAnalyseMarginaleNonValide = () => {
+    setIdActeAbandonnerDerniereAnalyseMarginaleNonValide(idActeParam);
+  };
 
   const [derniereAnalyseMarginaleParams, setDerniereAnalyseMarginaleParams] =
     useState<string>();
@@ -229,6 +245,16 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enregistrerMentionsApiHookResultat]);
+
+  useEffect(() => {
+    if (resultatSupressionDerniereAnalyseMarginaleNonValide) {
+      setAnalyseMarginale(undefined);
+      setAnalyseMarginaleEnregistree(undefined);
+      setIdActeAbandonnerDerniereAnalyseMarginaleNonValide(undefined);
+      setResetFormAnalyseMarginale(true);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+  }, [resultatSupressionDerniereAnalyseMarginaleNonValide]);
 
   useEffect(() => {
     if (listeMentionsEnregistrees.length > ZERO) {
@@ -294,24 +320,20 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     idActeParam && setAbandonnerMajMentionsParams({ idActe: idActeParam });
   };
 
-  const miseAJourEstDirty =
-    estFormulaireDirty.analyseMarginaleFormEstDirty ||
-    estFormulaireDirty.mentionsFormEstDirty;
-
-  const miseAJourEstValide =
-    estFormulaireValide.mentionsFormEstValide &&
-    estFormulaireValide.analyseMarginaleFormEstValide;
+  const estVerouilleCommunActualiserEtSigner =
+    estFormulaireDirty.mentionsFormEstDirty ||
+    !estFormulaireValide.analyseMarginaleFormEstValide;
 
   const estVerrouilleActualiserEtVisualiser =
+    estVerouilleCommunActualiserEtSigner ||
     (shallowEgalTableau(listeMentions, listeMentionsEnregistrees) &&
-      shallowEgal(analyseMarginale, analyseMarginaleEnregistree)) ||
-    miseAJourEstDirty ||
-    !miseAJourEstValide;
+      shallowEgal(analyseMarginale, analyseMarginaleEnregistree));
 
   const estVerrouilleTerminerEtSigner =
-    !estVerrouilleActualiserEtVisualiser ||
-    miseAJourEstDirty ||
-    listeMentions.length === ZERO;
+    listeMentions.length === ZERO ||
+    estVerouilleCommunActualiserEtSigner ||
+    estFormulaireDirty.analyseMarginaleFormEstDirty ||
+    !estVerrouilleActualiserEtVisualiser;
 
   const actualiserEtVisualiserCallback = () => {
     if (idActeParam) {
@@ -387,7 +409,12 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
               {!affichageApresSignature && (
                 <div className="OngletsApercuCreationEtablissement">
                   <VoletAvecOnglet
-                    liste={getListeOngletsDroit(listeMentions)}
+                    liste={getListeOngletsDroit(
+                      listeMentions,
+                      onClickAbandonnerDerniereAnalyseMarginaleNonValide,
+                      resetFormAnalyseMarginale,
+                      setResetFormAnalyseMarginale
+                    )}
                     checkDirty={true}
                   />
                   <div className="ConteneurBoutons">
@@ -471,7 +498,12 @@ const getListeOngletsGauche = (
   return liste;
 };
 
-const getListeOngletsDroit = (listeMentions: IMajMention[]): ItemListe[] => {
+const getListeOngletsDroit = (
+  listeMentions: IMajMention[],
+  onClickAbandonnerDerniereAnalyseMarginaleNonValide: () => void,
+  resetFormAnalyseMarginale: boolean,
+  setResetFormAnalyseMarginale: Dispatch<SetStateAction<boolean>>
+): ItemListe[] => {
   const liste: ItemListe[] = [
     {
       titre: getLibelle("Gérer les mentions"),
@@ -491,7 +523,15 @@ const getListeOngletsDroit = (listeMentions: IMajMention[]): ItemListe[] => {
   if (mentionChangeAM) {
     liste.push({
       titre: getLibelle("Analyse marginale"),
-      component: <MiseAJourAnalyseMarginale />,
+      component: (
+        <MiseAJourAnalyseMarginale
+          onClickAbandonnerDerniereAnalyseMarginaleNonValide={
+            onClickAbandonnerDerniereAnalyseMarginaleNonValide
+          }
+          resetForm={resetFormAnalyseMarginale}
+          setResetForm={setResetFormAnalyseMarginale}
+        />
+      ),
       index: UN
     });
   }

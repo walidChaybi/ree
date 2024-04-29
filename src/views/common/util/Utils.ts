@@ -381,7 +381,16 @@ export function shallowEgal(obj1?: Object, obj2?: Object): boolean {
   return (
     Object.keys(obj1).length === Object.keys(obj2).length &&
     (Object.keys(obj1) as (keyof typeof obj1)[]).every(key => {
-      return obj2.hasOwnProperty(key) && obj1[key] === obj2[key];
+      const valeur1 = obj1[key];
+      let resultat = false;
+      if (obj2.hasOwnProperty(key)) {
+        const valeur2 = obj2[key];
+        resultat =
+          Array.isArray(valeur1) && Array.isArray(valeur2)
+            ? shallowEgalTableau(valeur1, valeur2)
+            : obj1[key] === obj2[key];
+      }
+      return resultat;
     })
   );
 }
