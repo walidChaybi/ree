@@ -58,6 +58,7 @@ const MiseAJourAnalyseMarginaleForm: React.FC<
     if (!shallowEgal(analyseMarginale, analyseMarginaleEnregistree)) {
       setFormAvecValeursAnalyseMarginaleEnCours(analyseMarginale);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -150,6 +151,7 @@ const MiseAJourAnalyseMarginaleForm: React.FC<
       formik.resetForm();
       setResetForm(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resetForm]);
 
   return (

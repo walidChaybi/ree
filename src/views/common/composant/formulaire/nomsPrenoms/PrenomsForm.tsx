@@ -98,7 +98,7 @@ const PrenomsForm: React.FC<PrenomFormProps> = props => {
       setNbPrenomEnregistre(props.nbPrenoms);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.nbPrenoms]);
+  }, [props.nbPrenoms, props.nbPrenomsAffiche]);
 
   const handleAjouterPrenom = () => {
     if (nbPrenoms < MAX_PRENOMS) {
