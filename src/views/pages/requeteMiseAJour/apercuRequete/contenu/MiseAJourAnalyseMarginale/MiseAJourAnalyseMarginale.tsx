@@ -41,14 +41,18 @@ const ValidationSchema = Yup.object({
   }),
   [NOM_SECABLE]: Yup.object({
     [SECABLE]: Yup.boolean(),
-    [NOM_PARTIE1]: Yup.string().when(SECABLE, {
-      is: (secable: boolean) => secable,
-      then: Yup.string().required("La 1re partie est obligatoire")
-    }),
-    [NOM_PARTIE2]: Yup.string().when(SECABLE, {
-      is: (secable: boolean) => secable,
-      then: Yup.string().required("La 2nde partie est obligatoire")
-    })
+    [NOM_PARTIE1]: Yup.string()
+      .nullable()
+      .when(SECABLE, {
+        is: (secable: boolean) => secable,
+        then: Yup.string().required("La 1re partie est obligatoire")
+      }),
+    [NOM_PARTIE2]: Yup.string()
+      .nullable()
+      .when(SECABLE, {
+        is: (secable: boolean) => secable,
+        then: Yup.string().required("La 2nde partie est obligatoire")
+      })
   })
 }).test("nomsConformes", "Le nomSecable ne peut être vide", function (value) {
   const nom = (value as any)[ANALYSE_MARGINALE][NOM];

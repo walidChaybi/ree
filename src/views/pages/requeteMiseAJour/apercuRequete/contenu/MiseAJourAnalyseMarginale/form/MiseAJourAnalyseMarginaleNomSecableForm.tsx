@@ -26,7 +26,7 @@ const MiseAJourAnalyseMarginaleNomSecableForm: React.FC<
   );
   const nomComplet = formik
     .getFieldProps(withNamespace(ANALYSE_MARGINALE, NOM))
-    .value.trim();
+    .value?.trim();
 
   const checkboxEstDesactive =
     derniereAnalyseMarginaleResultat &&
@@ -36,7 +36,7 @@ const MiseAJourAnalyseMarginaleNomSecableForm: React.FC<
     ) &&
     formik
       .getFieldProps(withNamespace(ANALYSE_MARGINALE, NOM))
-      .value.trim()
+      .value?.trim()
       .indexOf(" ") === -1;
 
   useEffect(() => {
@@ -80,8 +80,7 @@ const MiseAJourAnalyseMarginaleNomSecableForm: React.FC<
             disabled={checkboxEstDesactive}
             size="medium"
             checked={
-              formik.getFieldProps(withNamespace(NOM_SECABLE, SECABLE))
-                .value === true
+              formik.getFieldProps(withNamespace(NOM_SECABLE, SECABLE)).value
             }
             inputProps={{ "aria-label": getLibelle("Nom sécable") }}
             name={withNamespace(NOM_SECABLE, SECABLE)}
@@ -89,8 +88,7 @@ const MiseAJourAnalyseMarginaleNomSecableForm: React.FC<
           />
         </div>
 
-        {formik.getFieldProps(withNamespace(NOM_SECABLE, SECABLE)).value ===
-          true &&
+        {formik.getFieldProps(withNamespace(NOM_SECABLE, SECABLE)).value &&
           !checkboxEstDesactive && (
             <>
               <InputField
