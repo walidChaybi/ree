@@ -14,9 +14,9 @@ import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { IMajAnalyseMarginaleForm } from "@model/form/miseAJour/IMiseAJourMentionsForm";
 import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import {
-  UN,
   getPremiereOuSecondeValeur,
-  mapPrenomsVersPrenomsOrdonnes
+  mapPrenomsVersPrenomsOrdonnes,
+  UN
 } from "@util/Utils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import React, { Dispatch, SetStateAction, useContext } from "react";
@@ -59,7 +59,7 @@ const ValidationSchema = Yup.object({
   const { nomPartie1, nomPartie2, secable } = value[NOM_SECABLE];
   if (
     secable &&
-    nom?.replace(/\s/g, "") !== `${nomPartie1}${nomPartie2?.replace(/\s/g, "")}`
+    nom?.trim() !== `${nomPartie1?.trim()} ${nomPartie2?.trim()}`
   ) {
     return this.createError({
       path: "nomSecable.nomPartie2",

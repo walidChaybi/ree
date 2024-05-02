@@ -484,10 +484,10 @@ export async function enregistrerMentionsEtAnalyseMarginale(
             motifModification: analyseMarginale?.motif,
             titulaires: [
               {
-                nom: analyseMarginale?.nom,
+                nom: analyseMarginale?.nom.trim(),
                 prenoms: analyseMarginale?.prenoms,
-                nomPartie1: analyseMarginale?.nomPartie1,
-                nomPartie2: analyseMarginale?.nomPartie2,
+                nomPartie1: analyseMarginale?.nomPartie1?.trim(),
+                nomPartie2: analyseMarginale?.nomPartie2?.trim(),
                 ordre: 1
               }
             ]
