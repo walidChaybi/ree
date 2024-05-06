@@ -56,12 +56,16 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = props => {
       ) : (
         <TableSortLabel
           className={styles}
-          active={props.orderBy === props.column.keys[0]}
+          active={
+            props.column.sortable && props.orderBy === props.column.keys[0]
+          }
           direction={
             props.orderBy === props.column.keys[0] ? orderTableLabel : "asc"
           }
           onClick={e => onClickCell(e, props.column.keys[0])}
-          hideSortIcon={props.orderBy !== props.column.keys[0]}
+          hideSortIcon={
+            !props.column.sortable || props.orderBy !== props.column.keys[0]
+          }
         >
           {getLibelle(props.column.title)}
         </TableSortLabel>
