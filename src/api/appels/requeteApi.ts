@@ -3,10 +3,10 @@ import { ICreationRequeteMiseAJourApiHookParams } from "@hook/requete/miseajour/
 import { IFiltreServiceRequeteCreationDto } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { IFiltreServiceRequeteDelivranceDto } from "@model/form/delivrance/IFiltreServiceRequeteDelivrance";
 import { CLES } from "@model/parametres/clesParametres";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IEchange } from "@model/requete/IEchange";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import {
   ICriteresRMCAutoRequete,
@@ -234,7 +234,8 @@ export function postRequetesServiceCreation(
 
 export function getDetailRequete(
   idRequete: string,
-  estConsultation = false
+  estConsultation = false,
+  estConsultationHistoriqueAction = false
 ): Promise<any> {
   let config: any = {
     method: HttpMethod.GET,
@@ -245,6 +246,14 @@ export function getDetailRequete(
       ...config,
       parameters: {
         isConsultation: estConsultation
+      }
+    };
+  }
+  if (estConsultationHistoriqueAction) {
+    config = {
+      ...config,
+      parameters: {
+        isConsultationHistoriqueAction: estConsultationHistoriqueAction
       }
     };
   }

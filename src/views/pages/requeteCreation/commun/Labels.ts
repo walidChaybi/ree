@@ -21,6 +21,10 @@ const infos = {
   specifiques: getLibelle(`${INFOS} spécifiques`)
 };
 
+const historique = {
+  scecSdanf: "Historique SCEC/SDANF"
+};
+
 const sdanf = {
   statut: getLibelle(`Statut ${SDANF}`),
   decision: getLibelle(`Décision ${SDANF}`)
@@ -48,6 +52,7 @@ export const resume = {
   requete,
   requeteTranscription,
   infos,
+  historique,
   identification: getLibelle("Identification"),
   francisation: getLibelle("Francisation"),
   signale: getLibelle("Signalé"),

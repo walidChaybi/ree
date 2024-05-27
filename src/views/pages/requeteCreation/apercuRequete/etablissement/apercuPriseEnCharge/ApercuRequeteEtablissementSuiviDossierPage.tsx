@@ -57,7 +57,8 @@ export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<
   function rechargerRequete() {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
-      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
+      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE),
+      estConsultationHistoriqueAction: true
     });
   }
 

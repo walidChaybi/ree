@@ -3,7 +3,13 @@ import { requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitulaire
 import ResumeRequeteCreationEtablissement from "@pages/requeteCreation/apercuRequete/etablissement/commun/resumeRequeteCreationEtablissement/ResumeRequeteCreationEtablissement";
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "@pages/requeteCreation/apercuRequete/etablissement/commun/resumeRequeteCreationEtablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
 import { INFOS, resume as Labels } from "@pages/requeteCreation/commun/Labels";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 const renduResumeRequeteCreation = async () => {
   await act(async () => {
     render(
@@ -76,5 +82,22 @@ test("Attendu: les onglets informations spécifiques / requérant / informations
     itemsEnfantMajeur.forEach(itemEnfantMajeur =>
       expect(itemEnfantMajeur.classList.contains("Mui-expanded")).toBeFalsy()
     );
+  });
+});
+
+test("l'onglet 'Informations spécifiques' DOIT afficher l'onglet 'historique SCEC/SDANF' QUAND il y a des actions associés a la requete ", async () => {
+  await renduResumeRequeteCreation();
+
+  const itemHistoriqueScecSdanf = screen.getByText(
+    Labels.historique.scecSdanf
+  ) as HTMLDivElement;
+
+  fireEvent.click(itemHistoriqueScecSdanf);
+
+  await waitFor(() => {
+    expect(
+      screen.getByText("A traiter - 06/07/2022 - Daniel Antoine")
+    ).toBeDefined();
+    expect(screen.getByText("A Transmettre - 06/07/2022")).toBeDefined();
   });
 });

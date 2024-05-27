@@ -1,4 +1,7 @@
+import { estUtilisateurSysteme } from "@model/agent/IOfficier";
+import { IAction } from "@model/requete/IActions";
 import { TagPriorisation } from "@model/requete/enum/TagPriorisation";
+import { getDateFromTimestamp, getDateString } from "@util/DateUtils";
 import { estRenseigne, formatLigne, getValeurOuVide } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
@@ -33,6 +36,7 @@ export interface ItemRequeteProps {
   dossierSignaleInfos?: string;
   campagneInfos?: string;
   nomInstitution?: string;
+  actions: IAction[];
 }
 
 const ItemRequete: React.FC<ItemRequeteProps> = props => {
@@ -66,6 +70,22 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
     [props.natureDANF, specificite],
     " • "
   );
+
+  const actionsTriees = props.actions.sort(
+    (a, b) => a.numeroOrdre - b.numeroOrdre
+  );
+
+  const getFormatLigneHistoriqueSdanf = (
+    libelle: string,
+    date?: string,
+    nomUtilisateur?: string,
+    prenomUtilisateur?: string
+  ) => {
+    if (estUtilisateurSysteme(nomUtilisateur, prenomUtilisateur)) {
+      return `${libelle} - ${date}`;
+    }
+    return `${libelle} - ${date} - ${nomUtilisateur} ${prenomUtilisateur}`;
+  };
 
   const TitreTag = () => {
     return (
@@ -123,6 +143,27 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
           texte={props.SDANF.decision}
         />
       </Item>
+      {actionsTriees.length > 0 ? (
+        <Item
+          titre={Labels.resume.historique.scecSdanf}
+          className={{ title: "bg-clair" }}
+          etendu={false}
+        >
+          <div className="ligneSdanfContainer">
+            {actionsTriees.map(action => (
+              <ItemLigne
+                texte={getFormatLigneHistoriqueSdanf(
+                  action.libelle,
+                  getDateString(getDateFromTimestamp(action.dateAction)),
+                  action.nomUtilisateur,
+                  action.prenomUtilisateur
+                )}
+              />
+            ))}
+          </div>
+        </Item>
+      ) : undefined}
+
       <Item
         titre={Labels.resume.requerant}
         className={{ title: "bg-clair" }}

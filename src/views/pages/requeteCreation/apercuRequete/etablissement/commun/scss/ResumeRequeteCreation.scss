@@ -99,4 +99,9 @@ $height: calc($spacing * 2.5);
       margin-left: auto
     }
   }
+
+  .ligneSdanfContainer {
+    max-height: 8vh;
+    overflow: scroll;
+  }
 }

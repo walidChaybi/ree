@@ -70,7 +70,8 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
     if (idRequeteParam) {
       setDetailRequeteParams({
         idRequete: idRequeteParam,
-        estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
+        estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE),
+        estConsultationHistoriqueAction: true
       });
     }
   }

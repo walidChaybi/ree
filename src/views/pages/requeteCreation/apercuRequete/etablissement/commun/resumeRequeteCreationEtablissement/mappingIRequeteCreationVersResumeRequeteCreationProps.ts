@@ -1,20 +1,19 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { DateCoordonneesType } from "@model/requete/DateCoordonneesType";
-import { IEvenementUnion } from "@model/requete/IEvenementUnion";
-import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
-import { IRequeteCreation } from "@model/requete/IRequeteCreation";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { Residence } from "@model/requete/enum/Residence";
 import { SituationFamiliale } from "@model/requete/enum/SituationFamiliale";
 import { TypeEvenementUnion } from "@model/requete/enum/TypeEvenementUnion";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
+import { IEvenementUnion } from "@model/requete/IEvenementUnion";
+import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import {
   getDateStringFromDateCompose,
   getFormatDateFromTimestamp
 } from "@util/DateUtils";
 import { triPrenoms } from "@util/Utils";
-import { ResumeRequeteCreationEtablissementProps } from "./ResumeRequeteCreationEtablissement";
 import { ItemEnfantMajeurProps } from "./items/ItemEnfantMajeur";
 import { ItemEnfantMineurProps } from "./items/ItemEnfantMineur";
 import { ItemFraterieProps } from "./items/ItemFraterie";
@@ -22,6 +21,7 @@ import { ItemParentProps } from "./items/ItemParent";
 import { ItemRequeteProps } from "./items/ItemRequete";
 import { ItemTitulaireProps } from "./items/ItemTitulaire";
 import { ItemUnionProps } from "./items/ItemUnion";
+import { ResumeRequeteCreationEtablissementProps } from "./ResumeRequeteCreationEtablissement";
 
 const mappingIRequeteCreationVersResumeRequeteCreationProps = (
   requeteCreation?: IRequeteCreation
@@ -62,7 +62,9 @@ const mappingIRequeteCreationVersResumeRequeteCreationProps = (
       : undefined,
     campagneInfos: requeteCreation?.campagne,
     nomInstitution:
-      requeteCreation?.requerant.qualiteRequerant.institutionnel?.nomInstitution
+      requeteCreation?.requerant.qualiteRequerant.institutionnel
+        ?.nomInstitution,
+    actions: requeteCreation?.actions || []
   };
   const {
     titulaire,

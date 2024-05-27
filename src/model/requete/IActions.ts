@@ -13,6 +13,8 @@ export interface IAction {
   dateAction: number;
   idUtilisateur: string;
   trigramme: string;
+  nomUtilisateur?: string;
+  prenomUtilisateur?: string;
 }
 
 const A_SIGNER = "a signer";

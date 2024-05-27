@@ -1,9 +1,7 @@
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { storeRece } from "@util/storeRece";
 import { getValeurOuVide } from "@util/Utils";
+import { storeRece } from "@util/storeRece";
 import { Provenance } from "../requete/enum/Provenance";
-import { Droit } from "./enum/Droit";
-import { Perimetre } from "./enum/Perimetre";
 import { Habilitation } from "./Habilitation";
 import { IEntite } from "./IEntiteRattachement";
 import {
@@ -11,6 +9,8 @@ import {
   utilisateurADroit,
   utilisateurALeDroitSurUnDesPerimetres
 } from "./IUtilisateur";
+import { Droit } from "./enum/Droit";
+import { Perimetre } from "./enum/Perimetre";
 
 export interface IOfficier extends IUtilisateur {
   idSSO: string;
@@ -246,3 +246,7 @@ export function aDroitConsulterRequeteCreation(
 
   return aDroit;
 }
+
+export function estUtilisateurSysteme(nomUtilisateur?: string, prenomUtilisateur?: string) {
+  return nomUtilisateur === "RECE" && prenomUtilisateur === "Système"
+};

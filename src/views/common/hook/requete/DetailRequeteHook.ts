@@ -59,6 +59,7 @@ import { UnionActuelle } from "./../../../../model/requete/enum/UnionActuelle";
 export interface IDetailRequeteParams {
   idRequete?: string;
   estConsultation?: boolean;
+  estConsultationHistoriqueAction?: boolean;
 }
 
 export function useDetailRequeteApiHook(params?: IDetailRequeteParams) {
@@ -71,7 +72,8 @@ export function useDetailRequeteApiHook(params?: IDetailRequeteParams) {
       fetchDetailRequete(
         setDetailRequeteState,
         params.idRequete,
-        params.estConsultation
+        params.estConsultation,
+        params.estConsultationHistoriqueAction
       );
     }
   }, [params]);
@@ -104,11 +106,16 @@ export function useAvecRejeuDetailRequeteApiHook(
 async function fetchDetailRequete(
   setDetailRequeteState: any,
   idRequete?: string,
-  estConsultation = false
+  estConsultation = false,
+  estConsultationHistoriqueAction = false
 ) {
   try {
     if (idRequete) {
-      const result = await getDetailRequete(idRequete, estConsultation);
+      const result = await getDetailRequete(
+        idRequete,
+        estConsultation,
+        estConsultationHistoriqueAction
+      );
       const typeRequete = TypeRequete.getEnumFor(result?.body?.data?.type);
       switch (typeRequete) {
         case TypeRequete.DELIVRANCE:
@@ -202,6 +209,8 @@ function getActions(actions: any): IAction[] {
     const action = a as IAction;
     const trigramme = storeRece.getTrigrammeFromID(action.idUtilisateur);
     action.trigramme = trigramme ? trigramme : "";
+    action.nomUtilisateur = a.nomUtilisateur ? a.nomUtilisateur : "";
+    action.prenomUtilisateur = a.prenomUtilisateur ? a.prenomUtilisateur : "";
     actionsRequete.push(action);
   });
   return actionsRequete;

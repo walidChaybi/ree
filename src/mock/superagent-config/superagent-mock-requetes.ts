@@ -294,7 +294,11 @@ export const configRequetes = [
       }
 
       // Mes requêtes création Etablissement
-      if (match[1] === "/requetes/3ed9aa4e-921b-489f-b8fe-531dd703c60c") {
+      if (
+        match[1] === "/requetes/3ed9aa4e-921b-489f-b8fe-531dd703c60c" ||
+        match[1] ===
+          "/requetes/3ed9aa4e-921b-489f-b8fe-531dd703c60c?isConsultationHistoriqueAction=true"
+      ) {
         return {
           data: deepCopie(requeteCreationEtablissement)
         };
@@ -307,7 +311,11 @@ export const configRequetes = [
           data: deepCopie(reqEtablissement)
         };
       }
-      if (match[1] === "/requetes/er5ez456-354v-461z-c5fd-162md289m74h") {
+      if (
+        match[1] === "/requetes/er5ez456-354v-461z-c5fd-162md289m74h" ||
+        match[1] ===
+          "/requetes/er5ez456-354v-461z-c5fd-162md289m74h?isConsultationHistoriqueAction=true"
+      ) {
         return {
           data: deepCopie(requeteCreationEtablissementSaisieProjet)
         };
