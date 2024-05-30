@@ -71,10 +71,6 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
     " • "
   );
 
-  const actionsTriees = props.actions.sort(
-    (a, b) => a.numeroOrdre - b.numeroOrdre
-  );
-
   const getFormatLigneHistoriqueSdanf = (
     libelle: string,
     date?: string,
@@ -143,14 +139,14 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
           texte={props.SDANF.decision}
         />
       </Item>
-      {actionsTriees.length > 0 ? (
+      {props.actions.length > 0 ? (
         <Item
           titre={Labels.resume.historique.scecSdanf}
           className={{ title: "bg-clair" }}
           etendu={false}
         >
           <div className="ligneSdanfContainer">
-            {actionsTriees.map(action => (
+            {props.actions.map(action => (
               <ItemLigne
                 texte={getFormatLigneHistoriqueSdanf(
                   action.libelle,
