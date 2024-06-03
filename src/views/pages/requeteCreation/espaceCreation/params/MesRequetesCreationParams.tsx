@@ -1,8 +1,10 @@
 import { getLibelle } from "@util/Utils";
+import { getIconeAlerteRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { styleColonne } from "./EspaceCreationParams";
 
 export enum HeaderTableauMesRequetesCreation {
+  Alerte = "alerte",
   NumeroTeledossierOuSDANFOuFonctionnel = "numeroTeledossierOuSDANFOuFonctionnel",
   SousType = "sousType",
   Priorisation = "tagPriorisation",
@@ -14,6 +16,14 @@ export enum HeaderTableauMesRequetesCreation {
 }
 
 export const colonnesTableauMesRequetesCreation = [
+  new TableauTypeColumn({
+    keys: [HeaderTableauMesRequetesCreation.Alerte],
+    title: getLibelle("Alerte"),
+    getElement: getIconeAlerteRequete,
+    align: "center",
+    style: styleColonne,
+    sortable: true
+  }),
   new TableauTypeColumn({
     keys: [
       HeaderTableauMesRequetesCreation.NumeroTeledossierOuSDANFOuFonctionnel

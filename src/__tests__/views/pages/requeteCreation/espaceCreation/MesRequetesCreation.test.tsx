@@ -13,7 +13,7 @@ storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
 
 const queryParametersPourRequetes = {
   statuts: statutsRequetesCreation,
-  tri: "dateCreation",
+  tri: "alerte",
   sens: "ASC",
   range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
 } as IQueryParametersPourRequetes;
@@ -36,6 +36,7 @@ test("Doit rendre le tableau des requêtes création", async () => {
   render(<RouterProvider router={router} />);
 
   await waitFor(() => {
+    expect(screen.getByText("Alerte")).toBeDefined();
     expect(screen.getByText("N°")).toBeDefined();
     expect(screen.getByText("Sous-type")).toBeDefined();
     expect(screen.getByText("Postulant/Déclarant")).toBeDefined();

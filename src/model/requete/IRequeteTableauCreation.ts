@@ -1,16 +1,16 @@
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { getValeurOuUndefined, getValeurOuVide } from "@util/Utils";
-import { SousTypeCreation } from "./enum/SousTypeCreation";
-import { StatutRequete } from "./enum/StatutRequete";
-import { TagPriorisation } from "./enum/TagPriorisation";
-import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
-import { TypeRequete } from "./enum/TypeRequete";
 import { IRequeteTableau } from "./IRequeteTableau";
 import { mapAttribueA } from "./IRequeteTableauDelivrance";
 import {
   ITitulaireRequeteTableau,
   mapTitulaires
 } from "./ITitulaireRequeteTableau";
+import { SousTypeCreation } from "./enum/SousTypeCreation";
+import { StatutRequete } from "./enum/StatutRequete";
+import { TagPriorisation } from "./enum/TagPriorisation";
+import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
+import { TypeRequete } from "./enum/TypeRequete";
 
 export interface IRequeteTableauCreation extends IRequeteTableau {
   numeroFonctionnel: string;
@@ -24,6 +24,7 @@ export interface IRequeteTableauCreation extends IRequeteTableau {
   idEntiteRattachement?: string;
   attribueA?: string;
   tagPriorisation: TagPriorisation;
+  alerte: string;
 }
 
 export function mappingUneRequeteTableauCreation(
@@ -58,7 +59,8 @@ export function mappingUneRequeteTableauCreation(
     idUtilisateur: getValeurOuUndefined(requete?.idUtilisateur),
     idEntiteRattachement: getValeurOuUndefined(requete?.idEntite),
     postulant: getPostulant(titulaires),
-    attribueA: mapAttribueA(requete)
+    attribueA: mapAttribueA(requete),
+    alerte: requete.alerte
   };
 }
 function getPostulant(titulaires: ITitulaireRequeteTableau[]) {

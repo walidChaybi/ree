@@ -1,6 +1,8 @@
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
+import { AlerteRequete } from "@model/requete/enum/AlerteRequete";
 import { Priorite } from "@model/requete/enum/Priorite";
 import ClearIcon from "@mui/icons-material/Clear";
+import ErrorIcon from "@mui/icons-material/Error";
 import LabelIcon from "@mui/icons-material/Label";
 import ReportIcon from "@mui/icons-material/Report";
 import { Box } from "@mui/material";
@@ -151,4 +153,21 @@ export function getCellRequerant(data: any): JSX.Element {
 
 export function getMessageZeroRequete(): JSX.Element {
   return getLigneTableauVide("Aucune requête n'a été trouvée.");
+}
+
+export function getIconeAlerteRequete(data: any): JSX.Element {
+  if (
+    AlerteRequete.getEnumFor(data.alerte) ===
+    AlerteRequete.RECEPTION_MISE_A_JOUR_SDANF
+  ) {
+    return (
+      <Box
+        title={AlerteRequete.RECEPTION_MISE_A_JOUR_SDANF.libelle}
+        aria-label={AlerteRequete.RECEPTION_MISE_A_JOUR_SDANF.libelle}
+        aria-hidden={true}
+      >
+        <ErrorIcon className="alerteSdanfIcone" />
+      </Box>
+    );
+  } else return <></>;
 }

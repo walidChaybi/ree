@@ -11,16 +11,23 @@ import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauP
 import React, { useState } from "react";
 import { BoutonAttribuerRequete } from "./BoutonAttribuerRequete";
 import BoutonPrendreEnChargeRequeteSuivanteCreation from "./BoutonPrendreEnChargeRequeteSuivanteCreation";
-import MenuSaisirRequeteCreation from "./contenu/MenuSaisirRequeteCreation";
 import { MesRequetesCreation } from "./MesRequetesCreation";
-import { statutsRequetesCreation } from "./params/EspaceCreationParams";
 import { RequetesServiceCreation } from "./RequetesServiceCreation";
+import MenuSaisirRequeteCreation from "./contenu/MenuSaisirRequeteCreation";
+import { statutsRequetesCreation } from "./params/EspaceCreationParams";
 
 interface LocalProps {
   selectedTab?: number;
 }
 
-const queryParametersPourRequetes = {
+const queryParametersPourRequetesCreation = {
+  statuts: statutsRequetesCreation,
+  tri: "alerte",
+  sens: "ASC",
+  range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+} as IQueryParametersPourRequetes;
+
+const queryParametersPourRequetesCreationService = {
   statuts: statutsRequetesCreation,
   tri: "dateCreation",
   sens: "ASC",
@@ -61,7 +68,7 @@ const getOnglets = (
       corps: {
         composant: (
           <MesRequetesCreation
-            queryParametersPourRequetes={queryParametersPourRequetes}
+            queryParametersPourRequetes={queryParametersPourRequetesCreation}
           />
         )
       }
@@ -75,7 +82,9 @@ const getOnglets = (
       corps: {
         composant: (
           <RequetesServiceCreation
-            queryParametersPourRequetes={queryParametersPourRequetes}
+            queryParametersPourRequetes={
+              queryParametersPourRequetesCreationService
+            }
             popinAttribuerAOuvert={popinAttribuerAOuvert}
             setPopinAttribuerAOuvert={setPopinAttribuerAOuvert}
           />

@@ -35,6 +35,7 @@ export const requetesCreationAlimentationTableau = [
     dateDerniereAction: 1673967260164,
     statut: "A_TRAITER",
     nomCompletRequerant: "nomFamille prenom",
+    alerte: "RECEPTION_MISE_A_JOUR_SDANF",
     titulaires: [
       {
         nom: "CEBALLOS",
@@ -92,6 +93,7 @@ export const requetesCreationAlimentationTableau = [
     dateDerniereAction: 1673967260778,
     statut: "A_TRAITER",
     nomCompletRequerant: "nomFamille prenom",
+    alerte: "RECEPTION_MISE_A_JOUR_SDANF",
     titulaires: [
       {
         nom: "MERLE",
