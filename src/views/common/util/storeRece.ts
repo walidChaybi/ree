@@ -47,6 +47,10 @@ class StoreRece {
     return this._listeUtilisateurs;
   }
 
+  get listeEntite(): IEntite[] {
+    return this._listeEntite;
+  }
+
   set listeEntite(liste: IEntite[]) {
     this._listeEntite = liste;
   }
@@ -57,10 +61,6 @@ class StoreRece {
 
   set decrets(decrets: IDecret[]) {
     this._decrets = decrets;
-  }
-
-  get listeEntite(): IEntite[] {
-    return this._listeEntite;
   }
 
   public getNomPrenomUtilisateurAPartirId(id: string) {

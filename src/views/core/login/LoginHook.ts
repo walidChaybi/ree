@@ -3,6 +3,7 @@ import { IOfficier } from "@model/agent/IOfficier";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
+import { storeRece } from "@util/storeRece";
 import { formatNom, formatPrenom } from "@util/Utils";
 import { useEffect, useState } from "react";
 
@@ -14,27 +15,32 @@ export interface ILoginApi {
 export function useLoginApi() {
   const [officierDataState, setOfficierDataState] = useState<IOfficier>();
   const [erreurState, setErreurState] = useState<any>(undefined);
-
   useEffect(() => {
-    getLogin()
-      .then(result => {
-        const officier = mappingOfficier(result.headers, result.body.data);
-        gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader(result.headers);
-        officier.habilitations = mapHabilitationsUtilisateur(
-          result.body.data.habilitations
-        );
-        setOfficierDataState(officier);
-        gestionnaireDoubleOuverture.init();
-      })
-      .catch(error => {
-        setErreurState(error);
-      });
+    if (!storeRece.utilisateurCourant) {
+      getLogin()
+        .then(result => {
+          const officier = mappingOfficier(result.headers, result.body.data);
+          gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader(
+            result.headers
+          );
+          officier.habilitations = mapHabilitationsUtilisateur(
+            result.body.data.habilitations
+          );
+          setOfficierDataState(officier);
+          gestionnaireDoubleOuverture.init();
+        })
+        .catch(error => {
+          setErreurState(error);
+        });
+    } else {
+      setOfficierDataState(storeRece.utilisateurCourant);
+    }
   }, []);
 
   return {
     officierDataState,
     erreurState
-  };
+  } as ILoginApi;
 }
 
 export function mappingOfficier(headers: any, body: any): IOfficier {

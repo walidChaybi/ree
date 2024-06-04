@@ -50,7 +50,8 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (login.officierDataState) {
+    if (!storeRece.utilisateurCourant) {
+      storeRece.utilisateurCourant = login.officierDataState;
       Promise.all([
         GestionnaireNomenclature.chargerToutesLesNomenclatures(),
         GestionnaireCacheApi.chargerTousLesUtilisateurs(),
@@ -59,6 +60,8 @@ const App: React.FC = () => {
       ]).then(values => {
         setOperationEnCours(false);
       });
+    } else {
+      setOperationEnCours(false);
     }
   }, [login.officierDataState]);
 
@@ -78,13 +81,6 @@ const App: React.FC = () => {
         <ErrorManager>
           <div className="App">
             <OfficierContext.Provider value={login}>
-              <OfficierContext.Consumer>
-                {officier => {
-                  storeRece.utilisateurCourant = officier?.officierDataState;
-                  return null;
-                }}
-              </OfficierContext.Consumer>
-
               <Header />
               {!operationEnCours && <Body />}
               <ToastContainer
