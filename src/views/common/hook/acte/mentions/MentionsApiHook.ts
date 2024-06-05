@@ -88,7 +88,8 @@ export function mappingTypeMention(typeMention: any): ITypeMention {
           mappingTypeMention(sousTypeMention)
         )
       : undefined,
-    estPresentListeDeroulante: typeMention.estPresentListeDeroulante
+    estPresentListeDeroulante: typeMention.estPresentListeDeroulante,
+    estSousType: typeMention.estSousType
   };
 }
 

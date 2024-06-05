@@ -2,7 +2,7 @@ import { peupleTypeMention } from "@api/nomenclature/NomenclatureEtatcivil";
 import { Options } from "@util/Type";
 import { ZERO } from "@util/Utils";
 import { NatureActe } from "../../enum/NatureActe";
-import { NatureMention } from "../../enum/NatureMention";
+import { NATIONALITE, NatureMention } from "../../enum/NatureMention";
 
 export interface ITypeMention {
   id: string;
@@ -12,6 +12,7 @@ export interface ITypeMention {
   affecteAnalyseMarginale: boolean;
   sousTypes?: ITypeMention[];
   estPresentListeDeroulante: boolean;
+  estSousType: boolean;
 }
 
 export class TypeMention {
@@ -89,5 +90,15 @@ export class TypeMention {
     return this.getTypesMention().find(typeMention =>
       NatureActe.estInconnue(typeMention.natureActe)
     ) as ITypeMention;
+  }
+
+  public static getIdTypeMentionNationalitePourAjoutMentionDelivrance() {
+    return this.getTypesMention().filter(
+      typeMention =>
+        typeMention.natureMention ===
+          NatureMention.getEnumFor(
+            NatureMention.getKeyForCode(NatureMention, NATIONALITE)
+          ) && typeMention.estSousType
+    )?.[ZERO].id;
   }
 }

@@ -2506,7 +2506,8 @@ export const ReponseAppelNomenclatureTypeMention = {
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
-      estPresentListeDeroulante: false
+      estPresentListeDeroulante: false,
+      estSousType: true
     },
     {
       idTypeMention: "b0484ff3-c310-4ed4-8d39-c19ce356e1d3",

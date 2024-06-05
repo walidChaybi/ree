@@ -27,6 +27,7 @@ import { ICorpsImage } from "./imageActe/ICorpsImage";
 import { IRegistre } from "./IRegistre";
 import { ITitulaireActe, TitulaireActe } from "./ITitulaireActe";
 import { IMention, Mention } from "./mention/IMention";
+import { TypeMention } from "./mention/ITypeMention";
 
 export interface IFicheActe {
   id: string;
@@ -245,6 +246,8 @@ export const FicheActe = {
             )
           },
           typeMention: {
+            idTypeMention:
+              TypeMention.getIdTypeMentionNationalitePourAjoutMentionDelivrance(),
             idNatureMention: NatureMention.getKeyForCode(
               NatureMention,
               NATIONALITE
