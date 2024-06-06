@@ -2,6 +2,7 @@ import { HTTP_STATUS_OK } from "@api/ApiManager";
 import { getEnvoyerMail } from "@api/appels/mailApi";
 import { IMail } from "@model/mail/IMail";
 import { IPieceJustificativeMail } from "@model/mail/IPieceJustificativeMail";
+import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { PieceJointe } from "@util/FileUtils";
@@ -58,7 +59,11 @@ function getReponseAEnvoyer(
     mail.champs = {
       champ1: requete.sousType.libelle, // "Sous-type demande"
       champ2: requete.objet.libelle, //  "Objet demande"
-      champ3: requete.complementObjet.libelle, //  "Complément objet demande"
+      champ3: ComplementObjetRequete.estReponseLibreAgent(
+        requete.complementObjet
+      )
+        ? "--"
+        : requete.complementObjet.libelle, //  "Complément objet demande"
       champ4: requete.numero, // "Référence demande"
       champ5: getFormatDateFromTimestamp(requete.dateCreation), //  "Date création demande"
       champ6: reponseSaisie.corpsMail //  "Contenu"
