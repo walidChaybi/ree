@@ -154,7 +154,7 @@ const getStatutLibellePourRequete = (requete: TRequete) => {
       )} ${formatNom(
         storeRece.getNomUtilisateurAPartirID(requete.idUtilisateur)
       )}`
-    : storeRece.getLibelleEntite(requete.idEntite);
+    : storeRece.getLibelleService(requete.idService);
   responsable = responsable ? responsable : "";
 
   return getStatutLibelle(requete, responsable);

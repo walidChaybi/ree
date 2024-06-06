@@ -1,4 +1,7 @@
-import { creationRequeteCreation, creationRequeteCreationEtTransmissionEntite } from "@api/appels/requeteApi";
+import {
+  creationRequeteCreation,
+  creationRequeteCreationEtTransmissionService
+} from "@api/appels/requeteApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import { mappingRequeteCreation } from "./DetailRequeteHook";
@@ -19,7 +22,7 @@ export type ISaisieRequeteAEnvoyer = ISaisieRequeteRCTCAEnvoyer;
 
 export interface ICreationRequeteCreationParams {
   requete?: ISaisieRequeteAEnvoyer;
-  idEntiteRattachement?: string;
+  idService?: string;
 }
 
 export function useCreationRequeteCreation(
@@ -46,16 +49,16 @@ export function useCreationRequeteCreation(
   return resultat;
 }
 
-export function useCreationRequeteCreationEtTransmissionEntite(
+export function useCreationRequeteCreationEtTransmissionService(
   params?: ICreationRequeteCreationParams
 ): string | undefined {
   const [idRequeteCree, setIdRequeteCree] = useState<string>();
 
   useEffect(() => {
-    if (params?.requete && params.idEntiteRattachement) {
-      creationRequeteCreationEtTransmissionEntite(
+    if (params?.requete && params.idService) {
+      creationRequeteCreationEtTransmissionService(
         params.requete,
-        params.idEntiteRattachement
+        params.idService
       )
         .then((result: any) => {
           setIdRequeteCree(result.body.data[0].id);
@@ -72,4 +75,3 @@ export function useCreationRequeteCreationEtTransmissionEntite(
 
   return idRequeteCree;
 }
-

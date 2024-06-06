@@ -12,10 +12,11 @@ import {
   faSync
 } from "@fortawesome/free-solid-svg-icons";
 import { IOfficier } from "@model/agent/IOfficier";
+import { getCodesHierarchieService } from "@model/agent/IUtilisateur";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { getLibelle } from "@util/Utils";
 import React, { useEffect, useState } from "react";
 import logoRece from "../../../img/logo-rece.svg";
 import "../accueil/scss/AccueilPage.scss";
@@ -158,23 +159,11 @@ function getAffectation(officier?: OfficierContextProps): string {
 
 function getHierarchie(officier?: OfficierContextProps): string[] {
   const hierarchie: string[] = [];
-  const officierData = officier?.officierDataState;
+  const serviceOfficier = officier?.officierDataState?.service;
 
-  if (officier !== undefined && officierData !== undefined) {
-    pushIfExists(officierData.ministere, hierarchie);
-    pushIfExists(officierData.poste, hierarchie);
-    pushIfExists(officierData.service, hierarchie);
-    pushIfExists(officierData.departement, hierarchie);
-    pushIfExists(officierData.sectionConsulaire, hierarchie);
-    pushIfExists(officierData.bureau, hierarchie);
-    pushIfExists(officierData.section, hierarchie);
+  if (serviceOfficier) {
+    hierarchie.push(...getCodesHierarchieService(serviceOfficier));
   }
 
   return hierarchie;
-}
-
-function pushIfExists(entite: string, table: string[]) {
-  if (entite) {
-    table.push(entite);
-  }
 }

@@ -6,7 +6,7 @@ import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
-import { appartientAMonServiceOuServicesMeresOuServicesFilles } from "@model/agent/IOfficier";
+import { appartientAMonServiceOuServicesParentsOuServicesFils } from "@model/agent/IOfficier";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Requete, TRequete } from "@model/requete/IRequete";
@@ -140,7 +140,7 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
 function priseEnChargePossible(requete: TRequete) {
   let estPriseEnChargePossible = false;
   const estDansMaStructureDeService =
-    appartientAMonServiceOuServicesMeresOuServicesFilles(requete.idEntite);
+    appartientAMonServiceOuServicesParentsOuServicesFils(requete.idService);
 
   if (
     Requete.estDeTypeInformation(requete) &&

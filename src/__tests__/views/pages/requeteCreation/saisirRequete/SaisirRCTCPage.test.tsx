@@ -4,7 +4,7 @@ import {
   resultatRequeteUtilistateurLeBiannic,
   userDroitCreerActeTranscritPerimetreMEAE
 } from "@mock/data/connectedUserAvecDroit";
-import { entiteRatachementEtablissement } from "@mock/data/entiteRatachementEtablissement";
+import { serviceEtablissement } from "@mock/data/serviceEtablissement";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
 import { SaisirRCTCPage } from "@pages/requeteCreation/saisirRequete/SaisirRCTCPage";
@@ -83,7 +83,7 @@ test("DOIT retirer un parent QUAND on clique sur le bouton 'Retirer un parent'",
   });
 });
 
-test("DOIT afficher la popin de transfert vers les entités fille (triées) du département Etablissement QUAND l'utilisateur clique sur le bouton de transmission", async () => {
+test("DOIT afficher la popin de transfert vers les services fils (triés) du département Etablissement QUAND l'utilisateur clique sur le bouton de transmission", async () => {
   storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
 
   const router = createTestingRouter(
@@ -141,17 +141,17 @@ test("DOIT afficher la popin de transfert vers les entités fille (triées) du d
 
   await waitFor(() => {
     expect(boutonTransmettre).toBeInTheDocument();
-    expect(screen.queryByText("Choisissez une entité")).not.toBeInTheDocument();
+    expect(screen.queryByText("Choisissez un service")).not.toBeInTheDocument();
   });
 
   fireEvent.click(boutonTransmettre!);
 
   await waitFor(() => {
-    expect(screen.queryByText("Choisissez une entité")).toBeInTheDocument();
+    expect(screen.queryByText("Choisissez un service")).toBeInTheDocument();
   });
 
   const selectElement = screen.getByLabelText(
-    "Choix des entités"
+    "Choix des services"
   ) as HTMLSelectElement;
 
   await waitFor(() => {
@@ -159,20 +159,20 @@ test("DOIT afficher la popin de transfert vers les entités fille (triées) du d
   });
 
   const options: HTMLOptionsCollection = selectElement.options;
-  const entiteRatachementEtablissementTriees =
-    entiteRatachementEtablissement.data.sort((entite1: any, entite2: any) =>
-      entite1.libelleEntite.localeCompare(entite2.libelleEntite)
-    );
+  const serviceEtablissementTriees = serviceEtablissement.data.sort(
+    (service1: any, service2: any) =>
+      service1.libelleService.localeCompare(service2.libelleService)
+  );
 
-  // Vérification de la liste des entités
+  // Vérification de la liste des services
   for (let i = 0; i < options.length; i++) {
     const libelleOtion = options.item(i)?.text;
     if (i === 0) {
       // Première option vide (Placeholder)
-      expect(libelleOtion).toEqual("Entités");
+      expect(libelleOtion).toEqual("Services");
     } else {
       expect(libelleOtion).toEqual(
-        entiteRatachementEtablissementTriees[i - 1].libelleEntite
+        serviceEtablissementTriees[i - 1].libelleService
       );
     }
   }
@@ -181,7 +181,7 @@ test("DOIT afficher la popin de transfert vers les entités fille (triées) du d
     expectEstBoutonDisabled("Valider");
   });
 
-  // Choix d'une entité
+  // Choix d'un service
   fireEvent.change(selectElement, {
     target: {
       value: "6737c8a6-9d23-4fd0-97ec-1ebe3d079373"

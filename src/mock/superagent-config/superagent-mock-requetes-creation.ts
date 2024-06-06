@@ -132,7 +132,7 @@ export const configRequetesCreation = [
       /////////////////////////////////
       if (
         url ===
-        "/requetes/action/transfert?idRequete=c9b817ca-1899-450e-9f04-979541946011&idEntite=6737d2f8-f2af-450d-a376-f22f6df6ff1d&idUtilisateur=7a091a3b-6835-4824-94fb-527d68926d56&statutRequete=A_SIGNER&libelleAction=Attribu%C3%A9e%20%C3%A0%20%20Young%20Ashley&attribuer=true"
+        "/requetes/action/transfert?idRequete=c9b817ca-1899-450e-9f04-979541946011&idService=6737d2f8-f2af-450d-a376-f22f6df6ff1d&idUtilisateur=7a091a3b-6835-4824-94fb-527d68926d56&statutRequete=A_SIGNER&libelleAction=Attribu%C3%A9e%20%C3%A0%20%20Young%20Ashley&attribuer=true"
       ) {
         let result = requetesServiceCreationTableauResultatQuery;
         result.data[0].idUtilisateur = "7a091a3b-6835-4824-94fb-527d68926d56";
@@ -149,10 +149,10 @@ export const configRequetesCreation = [
         return { data: creationRequeteRCTCResultat };
       }
 
-      // Création d'une requête de transcription RCTC et transmission a une entité
+      // Création d'une requête de transcription RCTC et transmission a un service
       if (
         match[1] ===
-          "/requetes/creationsTransmissionEntite?idEntiteRattachement=6737c8a6-9d23-4fd0-97ec-1ebe3d079373" &&
+          "/requetes/creationsTransmissionService?idService=6737c8a6-9d23-4fd0-97ec-1ebe3d079373" &&
         context.method === "post"
       ) {
         return { data: creationRequeteRCTCResultat };

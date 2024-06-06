@@ -354,9 +354,9 @@ export const configRequetes = [
       // Transfert requête
       if (
         match[1] ===
-          "/requetes/action/transfert?idRequete=54ddf213-d9b7-4747-8e92-68c220f66de3&idEntite=12345&idUtilisateur=&statutRequete=A_TRAITER&libelleAction=Attribu%C3%A9e%20%C3%A0%20str2&attribuer=true" ||
+          "/requetes/action/transfert?idRequete=54ddf213-d9b7-4747-8e92-68c220f66de3&idService=12345&idUtilisateur=&statutRequete=A_TRAITER&libelleAction=Attribu%C3%A9e%20%C3%A0%20str2&attribuer=true" ||
         match[1] ===
-          "/requetes/action/transfert?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce635d0&idEntite=12345&idUtilisateur=&statutRequete=A_TRAITER&libelleAction=Attribu%C3%A9e%20%C3%A0%20str2&attribuer=true" ||
+          "/requetes/action/transfert?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce635d0&idService=12345&idUtilisateur=&statutRequete=A_TRAITER&libelleAction=Attribu%C3%A9e%20%C3%A0%20str2&attribuer=true" ||
         match[1] === "/requetes/action/retourValideur" ||
         match[1] === "/requetes/action/transfertValideur"
       ) {
@@ -366,11 +366,11 @@ export const configRequetes = [
       if (
         (match[1] === "/requetes/action/transfert" ||
           match[1] ===
-            "/requetes/action/transfert?idRequete=12345&idEntite=12345&idUtilisateur=12345&statutRequete=TRANSFEREE&libelleAction=libelleAction&attribuer=false" ||
+            "/requetes/action/transfert?idRequete=12345&idService=12345&idUtilisateur=12345&statutRequete=TRANSFEREE&libelleAction=libelleAction&attribuer=false" ||
           match[1] ===
-            "/requetes/action/transfert?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&idEntite=123&idUtilisateur=1234&statutRequete=TRANSFEREE&libelleAction=Transf%C3%A9r%C3%A9e%20%C3%A0%20str1%20&attribuer=false" ||
+            "/requetes/action/transfert?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&idService=123&idUtilisateur=1234&statutRequete=TRANSFEREE&libelleAction=Transf%C3%A9r%C3%A9e%20%C3%A0%20str1%20&attribuer=false" ||
           match[1] ===
-            "/requetes/action/transfert?idRequete=bbd05aed-8ea9-45ba-a7d7-b8d55ad1085c&idEntite=1234&idUtilisateur=12345&statutRequete=TRANSFEREE&libelleAction=Transf%C3%A9r%C3%A9e%20%C3%A0%20str3%20&attribuer=false") &&
+            "/requetes/action/transfert?idRequete=bbd05aed-8ea9-45ba-a7d7-b8d55ad1085c&idService=1234&idUtilisateur=12345&statutRequete=TRANSFEREE&libelleAction=Transf%C3%A9r%C3%A9e%20%C3%A0%20str3%20&attribuer=false") &&
         context.method === "post"
       ) {
         return { data: "123456789" };
@@ -587,7 +587,7 @@ export const configRequetes = [
             requerant: [],
             mandant: null,
             idUtilisateur: "id",
-            idEntite: "id",
+            idService: "id",
             actions: [],
             observations: [],
             piecesJustificatives: [],

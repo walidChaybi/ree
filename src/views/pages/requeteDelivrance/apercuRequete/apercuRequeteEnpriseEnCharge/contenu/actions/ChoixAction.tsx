@@ -38,7 +38,7 @@ export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
       props.requete.idUtilisateur;
 
     const utilisateurDansSCEC =
-      storeRece.utilisateurCourant?.entite?.estDansSCEC;
+      storeRece.utilisateurCourant?.service?.estDansSCEC;
 
     return statutPriseEnCharge && mAppartient && utilisateurDansSCEC;
   };

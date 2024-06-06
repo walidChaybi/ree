@@ -1,17 +1,17 @@
 import { TransfertUnitaireParams } from "@hook/requete/TransfertHook";
+import { Droit } from "@model/agent/enum/Droit";
 import {
   IUtilisateur,
   utilisateurADroit,
   utilisateurALeDroitSurUnDesPerimetres
 } from "@model/agent/IUtilisateur";
-import { Droit } from "@model/agent/enum/Droit";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { DoubleClicUtil } from "@util/DoubleClicUtil";
-import { Option, Options } from "@util/Type";
 import { storeRece } from "@util/storeRece";
+import { Option, Options } from "@util/Type";
 import { MutableRefObject } from "react";
 import { Perimetre } from "./../../../../model/agent/enum/Perimetre";
 import { IMenuTransfertProps } from "./MenuTransfert";
@@ -23,19 +23,19 @@ export function onValidateService(
   >,
   props: React.PropsWithChildren<IMenuTransfertProps>,
   setServicePopinOpen: React.Dispatch<React.SetStateAction<boolean>>,
-  entite?: Option
+  service?: Option
 ) {
   setOperationEnCours(true);
-  if (entite) {
+  if (service) {
     setParam({
       idRequete: props.idRequete,
-      idEntite: entite.cle,
+      idService: service.cle,
       idUtilisateur: "",
       statutRequete: props.estTransfert
         ? StatutRequete.TRANSFEREE
         : StatutRequete.A_TRAITER,
       libelleAction: `${props.estTransfert ? "Transférée" : "Attribuée"} à ${
-        entite.libelle
+        service.libelle
       }`,
       estTransfert: props.estTransfert
     });
@@ -62,9 +62,9 @@ export function onValidateAgent(
   if (agent) {
     setParam({
       idRequete: props.idRequete,
-      idEntite: storeRece.listeUtilisateurs.find(
+      idService: storeRece.listeUtilisateurs.find(
         utilisateur => utilisateur.idUtilisateur === agent.cle
-      )?.entite?.idEntite,
+      )?.service?.idService,
       idUtilisateur: agent.cle,
       statutRequete: props.estTransfert
         ? StatutRequete.TRANSFEREE
@@ -78,14 +78,14 @@ export function onValidateAgent(
   }
 }
 
-export function listeEntiteToOptions(): Options {
+export function listeServicesToOptions(): Options {
   return [
     { cle: "", libelle: "" },
-    ...storeRece.listeEntite
-      .filter(entite => entite.estDansSCEC)
-      .sort((a, b) => a.libelleEntite.localeCompare(b.libelleEntite))
-      .map(entite => {
-        return { cle: entite.idEntite, libelle: entite.libelleEntite };
+    ...storeRece.listeServices
+      .filter(service => service.estDansSCEC)
+      .sort((a, b) => a.libelleService.localeCompare(b.libelleService))
+      .map(service => {
+        return { cle: service.idService, libelle: service.libelleService };
       })
   ];
 }
@@ -147,15 +147,15 @@ export function filtreUtilisateurRequeteCreation(
     [Perimetre.MEAE, Perimetre.ETAX],
     utilisateur
   );
-  let estDansMonEntiteOuEntiteFille = false;
-  if (utilisateur.entite) {
-    estDansMonEntiteOuEntiteFille =
-      estDansEntiteFille(utilisateur.entite.idEntite) ||
-      utilisateur.entite.idEntite ===
-        storeRece.utilisateurCourant?.entite?.idEntite;
+  let estDansMonServiceOuServiceFils = false;
+  if (utilisateur.service) {
+    estDansMonServiceOuServiceFils =
+      estDansServiceFils(utilisateur.service.idService) ||
+      utilisateur.service.idService ===
+        storeRece.utilisateurCourant?.service?.idService;
   }
   return Boolean(
-    estDansMonEntiteOuEntiteFille &&
+    estDansMonServiceOuServiceFils &&
       aDroit &&
       idUtilisateurRequete !== utilisateur.idUtilisateur
   );
@@ -166,20 +166,20 @@ export function filtreUtilisateurRequeteInformation(
   idUtilisateurRequete: string,
   estTransfert: boolean
 ): boolean {
-  const estDuSCEC = utilisateur.entite?.estDansSCEC;
+  const estDuSCEC = utilisateur.service?.estDansSCEC;
   const aDroit = utilisateurADroit(Droit.INFORMER_USAGER, utilisateur);
-  let estDansMonEntiteOuEntiteFille = true;
-  if (!estTransfert && utilisateur.entite) {
-    estDansMonEntiteOuEntiteFille =
-      estDansEntiteFille(utilisateur.entite?.idEntite) ||
-      utilisateur.entite.idEntite ===
-        storeRece.utilisateurCourant?.entite?.idEntite;
+  let estDansMonServiceOuServiceFils = true;
+  if (!estTransfert && utilisateur.service) {
+    estDansMonServiceOuServiceFils =
+      estDansServiceFils(utilisateur.service?.idService) ||
+      utilisateur.service.idService ===
+        storeRece.utilisateurCourant?.service?.idService;
   }
   return Boolean(
     estDuSCEC &&
       aDroit &&
       idUtilisateurRequete !== utilisateur.idUtilisateur &&
-      estDansMonEntiteOuEntiteFille
+      estDansMonServiceOuServiceFils
   );
 }
 
@@ -189,23 +189,23 @@ export function filtreUtilisateurRequeteDelivrance(
   idUtilisateurRequete: string,
   estTransfert: boolean
 ): boolean {
-  const estDuSCEC = utilisateur.entite?.estDansSCEC;
+  const estDuSCEC = utilisateur.service?.estDansSCEC;
   const aDroit =
     sousTypeRequete === SousTypeDelivrance.RDDCO
       ? utilisateurADroit(Droit.DELIVRER_COMEDEC, utilisateur)
       : utilisateurADroit(Droit.DELIVRER, utilisateur);
-  let estDansMonEntiteOuEntiteFille = true;
-  if (!estTransfert && utilisateur.entite) {
-    estDansMonEntiteOuEntiteFille =
-      estDansEntiteFille(utilisateur.entite?.idEntite) ||
-      utilisateur.entite.idEntite ===
-        storeRece.utilisateurCourant?.entite?.idEntite;
+  let estDansMonServiceOuServiceFils = true;
+  if (!estTransfert && utilisateur.service) {
+    estDansMonServiceOuServiceFils =
+      estDansServiceFils(utilisateur.service?.idService) ||
+      utilisateur.service.idService ===
+        storeRece.utilisateurCourant?.service?.idService;
   }
   return Boolean(
     estDuSCEC &&
       aDroit &&
       idUtilisateurRequete !== utilisateur.idUtilisateur &&
-      estDansMonEntiteOuEntiteFille
+      estDansMonServiceOuServiceFils
   );
 }
 
@@ -213,7 +213,7 @@ export function filtrerValideur(
   utilisateur: IUtilisateur,
   idUtilisateurRequete?: string
 ): boolean {
-  const estDuSCEC = utilisateur.entite?.estDansSCEC;
+  const estDuSCEC = utilisateur.service?.estDansSCEC;
   const aDroit = utilisateurADroit(Droit.DELIVRER, utilisateur);
 
   return Boolean(
@@ -238,20 +238,20 @@ function mapUtilisateurToOption(utilisateur: IUtilisateur): Option {
   };
 }
 
-function estDansEntiteFille(idEntite: string): boolean {
-  if (storeRece.utilisateurCourant?.entitesFilles) {
-    return storeRece.utilisateurCourant.entitesFilles.some(
-      el => el.idEntite === idEntite
+function estDansServiceFils(idService: string): boolean {
+  if (storeRece.utilisateurCourant?.servicesFils) {
+    return storeRece.utilisateurCourant.servicesFils.some(
+      el => el.idService === idService
     );
   }
   return false;
 }
-export function getEntiteAsOptions(): Options {
+export function getServicesAsOptions(): Options {
   return (
-    storeRece.utilisateurCourant?.entitesFilles?.map(f => {
+    storeRece.utilisateurCourant?.servicesFils?.map(service => {
       return {
-        cle: f.idEntite,
-        libelle: f.libelleEntite
+        cle: service.idService,
+        libelle: service.libelleService
       };
     }) || ([] as Options)
   );

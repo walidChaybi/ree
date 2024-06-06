@@ -14,7 +14,7 @@ export const CreationRDCSC = {
   requerant: [],
   mandant: null,
   idUtilisateur: "id",
-  idEntite: "id",
+  idService: "id",
   actions: [],
   observations: [],
   piecesJustificatives: [],

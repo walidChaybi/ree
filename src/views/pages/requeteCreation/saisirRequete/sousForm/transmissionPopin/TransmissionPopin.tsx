@@ -1,9 +1,9 @@
-import { ChoixEntitePopin } from "@composant/choixEntitesPopin/ChoixEntitesPopin";
+import { ChoixServicesPopin } from "@composant/choixServicesPopin/ChoixServicesPopin";
 import {
   ICreationRequeteCreationParams,
-  useCreationRequeteCreationEtTransmissionEntite
+  useCreationRequeteCreationEtTransmissionService
 } from "@hook/requete/CreationRequeteCreationApiHook";
-import { Entite } from "@model/agent/IEntiteRattachement";
+import { Service } from "@model/agent/IService";
 import { ISaisieRequeteRCTC } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { estRenseigne, executeEnDiffere } from "@util/Utils";
 import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErreur";
@@ -16,7 +16,7 @@ interface TransmissionPopinProps {
   ouverte: boolean;
   onCancel: () => void;
   onTransmissionEffectuee: (
-    idRequeteCreeApresTransmissionEntite: string,
+    idRequeteCreeApresTransmissionService: string,
     formikValues: FormikValues
   ) => void;
   onTransmissionEnCours?: () => void;
@@ -29,32 +29,32 @@ export const TransmissionPopin: React.FC<
   //States
   //////////////////////////////////////////////////////////////////////////
   const [
-    creationRequeteRCTCEtTransmissionEntiteParams,
-    setCreationRequeteRCTCEtTransmissionEntiteParams
+    creationRequeteRCTCEtTransmissionServiceParams,
+    setCreationRequeteRCTCEtTransmissionServiceParams
   ] = useState<ICreationRequeteCreationParams>();
 
   // Hooks
   //////////////////////////////////////////////////////////////////////////
-  const idRequeteCreeApresTransmissionEntite =
-    useCreationRequeteCreationEtTransmissionEntite(
-      creationRequeteRCTCEtTransmissionEntiteParams
+  const idRequeteCreeApresTransmissionService =
+    useCreationRequeteCreationEtTransmissionService(
+      creationRequeteRCTCEtTransmissionServiceParams
     );
 
   // Effects
   //////////////////////////////////////////////////////////////////////////
   useEffect(() => {
-    idRequeteCreeApresTransmissionEntite &&
+    idRequeteCreeApresTransmissionService &&
       props.onTransmissionEffectuee &&
       props.onTransmissionEffectuee(
-        idRequeteCreeApresTransmissionEntite,
+        idRequeteCreeApresTransmissionService,
         props.formik.values
       );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idRequeteCreeApresTransmissionEntite]);
+  }, [idRequeteCreeApresTransmissionService]);
 
   // Evenements
   //////////////////////////////////////////////////////////////////////////
-  function onEntiteChoisiePourTransfert(idEntiteChoisie?: string) {
+  function onServiceChoisiPourTransfert(idServiceChoisi?: string) {
     props.onErrors(props.formik);
     props.formik.validateForm().then(errors => {
       if (estRenseigne(errors)) {
@@ -69,19 +69,19 @@ export const TransmissionPopin: React.FC<
         const requete = mappingSaisieRequeteRCTCVersRequetesAEnvoyer(
           props.formik.values as ISaisieRequeteRCTC
         );
-        setCreationRequeteRCTCEtTransmissionEntiteParams({
+        setCreationRequeteRCTCEtTransmissionServiceParams({
           requete,
-          idEntiteRattachement: idEntiteChoisie
+          idService: idServiceChoisi
         });
       }
     });
   }
 
   return (
-    <ChoixEntitePopin
+    <ChoixServicesPopin
       ouverte={props.ouverte}
-      idEntiteMere={Entite.getEntiteEtablissement()?.idEntite}
-      onEntiteChoisie={onEntiteChoisiePourTransfert}
+      idServiceParent={Service.getServiceEtablissement()?.idService}
+      onServiceChoisi={onServiceChoisiPourTransfert}
       onCancel={props.onCancel}
     />
   );

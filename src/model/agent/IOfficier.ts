@@ -1,28 +1,21 @@
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { getValeurOuVide } from "@util/Utils";
 import { storeRece } from "@util/storeRece";
+import { getValeurOuVide } from "@util/Utils";
 import { Provenance } from "../requete/enum/Provenance";
+import { Droit } from "./enum/Droit";
+import { Perimetre } from "./enum/Perimetre";
 import { Habilitation } from "./Habilitation";
-import { IEntite } from "./IEntiteRattachement";
+import { IService } from "./IService";
 import {
   IUtilisateur,
   utilisateurADroit,
   utilisateurALeDroitSurUnDesPerimetres
 } from "./IUtilisateur";
-import { Droit } from "./enum/Droit";
-import { Perimetre } from "./enum/Perimetre";
 
 export interface IOfficier extends IUtilisateur {
   idSSO: string;
   profils: string[];
   telephone: string;
-  section: string;
-  bureau: string;
-  departement: string;
-  sectionConsulaire: string;
-  service: string;
-  poste: string;
-  ministere: string;
 }
 
 /** Savoir si l'officier connecté à le droit ou le profil demandé en paramètre */
@@ -174,44 +167,44 @@ export const provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer = (
   (provenance !== Provenance.COMEDEC.libelle &&
     officierHabiliterPourLeDroit(Droit.DELIVRER));
 
-export const appartientAMonServiceOuServicesMeresOuServicesFilles = (
-  idEntite?: string
+export const appartientAMonServiceOuServicesParentsOuServicesFils = (
+  idService?: string
 ): boolean => {
   return (
-    idEntite != null &&
-    (storeRece.utilisateurCourant?.entite?.idEntite === idEntite ||
-      contientEntiteFille(idEntite) ||
-      contientEntiteMere(idEntite))
+    idService != null &&
+    (storeRece.utilisateurCourant?.service?.idService === idService ||
+      contientServiceFils(idService) ||
+      contientServiceParent(idService))
   );
 };
 
-export function contientEntiteFille(idEntiteRequete: string) {
-  return storeRece.utilisateurCourant?.entitesFilles?.some(
-    el => el.idEntite === idEntiteRequete
+export function contientServiceFils(idService: string) {
+  return storeRece.utilisateurCourant?.servicesFils?.some(
+    serviceFils => serviceFils.idService === idService
   );
 }
 
-export function contientEntiteMere(idEntiteRequete: string): boolean {
+export function contientServiceParent(idService: string): boolean {
   if (storeRece.utilisateurCourant) {
-    return getIdEntitesMere(storeRece.utilisateurCourant).some(
-      idEntiteMere => idEntiteMere === idEntiteRequete
+    return getIdServicesParent(storeRece.utilisateurCourant).some(
+      idServiceParent => idServiceParent === idService
     );
   }
   return false;
 }
 
-function getIdEntitesMere(utilisateur: IOfficier): string[] {
-  const idEntites: string[] = [];
-  if (utilisateur.entite) {
-    collectIdEntiteMere(utilisateur.entite, idEntites);
+function getIdServicesParent(utilisateur: IOfficier): string[] {
+  const idServices: string[] = [];
+  if (utilisateur.service) {
+    collectIdServiceParent(utilisateur.service, idServices);
   }
-  return idEntites;
+  return idServices;
 }
 
-function collectIdEntiteMere(entite: IEntite, idEntites: string[]) {
-  entite.hierarchieEntite?.forEach(h => {
-    idEntites.push(h.entiteMere.idEntite);
-    collectIdEntiteMere(h.entiteMere, idEntites);
+function collectIdServiceParent(service: IService, idServices: string[]) {
+  service.hierarchieService?.forEach(hierarchie => {
+    idServices.push(hierarchie.serviceParent.idService);
+    collectIdServiceParent(hierarchie.serviceParent, idServices);
   });
 }
 

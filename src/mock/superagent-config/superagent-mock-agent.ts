@@ -1,9 +1,9 @@
 import mockConnectedUser from "../data/connectedUser.json";
-import { entiteRatachementEtablissement } from "../data/entiteRatachementEtablissement";
-import DONNEES_ENTITES from "../data/entitesRattachement.json";
-import DONNEES_ENTITES_PAGE2 from "../data/entitesRattachementPage2.json";
 import { MockHabilitation } from "../data/habilitationMock";
 import INFOS_UTILISATEURS from "../data/infosUtilisateurs.json";
+import { serviceEtablissement } from "../data/serviceEtablissement";
+import DONNEES_SERVICES from "../data/services.json";
+import DONNEES_SERVICES_PAGE2 from "../data/servicesPage2.json";
 import DONNEES_UTILISATEURS from "../data/utilisateurs.json";
 import DONNEES_UTILISATEURS_PAGE2 from "../data/utilisateursPage2.json";
 
@@ -41,16 +41,15 @@ export const configAgent = [
       if (match[1] === "/utilisateurs/all?range=1-100&lite=false") {
         return { ...DONNEES_UTILISATEURS_PAGE2 };
       }
-
       if (
-        match[1] === "/entiterattachement/all" ||
-        match[1].startsWith("/entiterattachement/all?range=0-100")
+        match[1] === "/service/all" ||
+        match[1].startsWith("/service/all?range=0-100")
       ) {
-        return { ...DONNEES_ENTITES };
+        return { ...DONNEES_SERVICES };
       }
 
-      if (match[1].startsWith("/entiterattachement/all?range=1-100")) {
-        return { ...DONNEES_ENTITES_PAGE2 };
+      if (match[1].startsWith("/service/all?range=1-100")) {
+        return { ...DONNEES_SERVICES_PAGE2 };
       }
 
       if (
@@ -62,10 +61,10 @@ export const configAgent = [
 
       if (
         match[1].startsWith(
-          "/entiterattachement?idEntite=6737566d-0f25-45dc-8443-97b444e6753a"
+          "/service?idService=6737566d-0f25-45dc-8443-97b444e6753a"
         )
       ) {
-        return { ...entiteRatachementEtablissement };
+        return { ...serviceEtablissement };
       }
 
       const error = { msg: "url api agent non mockée", url: match[1] };

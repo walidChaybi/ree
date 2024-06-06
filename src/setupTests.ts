@@ -2,7 +2,7 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
-import { IEntite } from "@model/agent/IEntiteRattachement";
+import { IService } from "@model/agent/IService";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
@@ -14,7 +14,7 @@ import "@testing-library/jest-dom/extend-expect";
 import { storeRece } from "@util/storeRece";
 import React from "react";
 import request from "superagent";
-import { entitesRattachementALL } from "./mock/data/entitesRattachementALL";
+import { servicesALL } from "./mock/data/servicesALL";
 import { configAgent } from "./mock/superagent-config/superagent-mock-agent";
 import { configComposition } from "./mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "./mock/superagent-config/superagent-mock-etatcivil";
@@ -103,7 +103,7 @@ if (window.document) {
   });
 }
 
-storeRece.listeEntite = entitesRattachementALL.data as any as IEntite[];
+storeRece.listeServices = servicesALL.data as any as IService[];
 
 window.URL.createObjectURL = jest.fn(() => "url_test");
 

@@ -6,7 +6,7 @@ const params: TransfertParams = {
   libelleAction: "libelleAction",
   statutRequete: StatutRequete.TRANSFEREE,
   idRequete: "12345",
-  idEntite: "12345",
+  idService: "12345",
   idUtilisateur: "12345",
   estTransfert: true
 };

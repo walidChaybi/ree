@@ -432,7 +432,7 @@ export const DataRMCRequeteRechercheViaNumeroDossierNational = {
       nomCompletRequerant: "",
       idCorbeilleAgent: "6ddd44a2-71a2-40bf-9a90-bc6fd7519ac3",
       idUtilisateur: "b67f9d14-cc5e-4002-aa06-e54029ffa073",
-      idEntiteRattachement: "6737dca8-2f96-4086-8288-fd1a136a61df",
+      idService: "6737dca8-2f96-4086-8288-fd1a136a61df",
       dateCreation: 1669717505000,
       dateDernierMAJ: 1670494807000,
       statut: "PROJET_VALIDE",

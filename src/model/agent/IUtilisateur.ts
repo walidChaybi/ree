@@ -1,11 +1,11 @@
-import { estTableauNonVide } from "@util/Utils";
 import { storeRece } from "@util/storeRece";
-import { IDroit, IHabilitation, IProfil } from "./Habilitation";
-import { IEntite } from "./IEntiteRattachement";
-import { IOfficier } from "./IOfficier";
-import { IPerimetre } from "./IPerimetre";
+import { estTableauNonVide, ZERO } from "@util/Utils";
 import { Droit } from "./enum/Droit";
 import { Perimetre, PerimetreEnum } from "./enum/Perimetre";
+import { IDroit, IHabilitation, IProfil } from "./Habilitation";
+import { IOfficier } from "./IOfficier";
+import { IPerimetre } from "./IPerimetre";
+import { IService } from "./IService";
 import { TModeAuthentification } from "./types";
 
 export interface IUtilisateur {
@@ -13,8 +13,8 @@ export interface IUtilisateur {
   dateDebut?: number;
   dateFin?: number;
   dateMaj?: number;
-  entite?: IEntite;
-  entitesFilles?: IEntite[];
+  service?: IService;
+  servicesFils?: IService[];
   fonctionAgent?: {
     idFonctionAgent: string;
     libelleFonction: string;
@@ -117,7 +117,7 @@ export function utilisateurALeDroitSurUnDesPerimetres(
 export const mappingUtilisateurs = (data: any) => {
   const utilisateurs: IUtilisateur[] = [];
   for (const utilisateur of data) {
-    if (!getEntiteParUtilisateurId(utilisateur.idUtilisateur)) {
+    if (!getServiceParUtilisateurId(utilisateur.idUtilisateur)) {
       const creationUtilisateur: IUtilisateur = {
         habilitations: mapHabilitationsUtilisateur(utilisateur.habilitations),
         mail: utilisateur.mel,
@@ -125,7 +125,7 @@ export const mappingUtilisateurs = (data: any) => {
         dateDebut: utilisateur.dateDebut,
         dateFin: utilisateur.dateFin,
         dateMaj: utilisateur.dateMaj,
-        entite: utilisateur.entite,
+        service: utilisateur.service,
         fonctionAgent: utilisateur.fonctionAgent
           ? {
               idFonctionAgent: utilisateur.fonctionAgent.idFonctionAgent,
@@ -142,7 +142,7 @@ export const mappingUtilisateurs = (data: any) => {
         prenom: utilisateur.prenom,
         signatureManuscrite: utilisateur.signatureManuscrite,
         trigramme: utilisateur.trigramme,
-        entitesFilles: utilisateur.entitesFillesDirectes
+        servicesFils: utilisateur.servicesFilsDirects
       } as IUtilisateur;
       utilisateurs.push(creationUtilisateur);
     }
@@ -151,10 +151,27 @@ export const mappingUtilisateurs = (data: any) => {
   return utilisateurs;
 };
 
-export function getEntiteParUtilisateurId(
+export function getServiceParUtilisateurId(
   idUtilisateur: string
-): IEntite | undefined {
+): IService | undefined {
   return storeRece.listeUtilisateurs.find(
     utilisateur => utilisateur.idUtilisateur === idUtilisateur
-  )?.entite;
+  )?.service;
 }
+
+export const getCodesHierarchieService = (
+  service: IService,
+  codesHierarchieService?: string[]
+): string[] => {
+  if (!codesHierarchieService) {
+    codesHierarchieService = [];
+  }
+  codesHierarchieService.push(service.code);
+  const hierarchieService = service.hierarchieService;
+  return hierarchieService && hierarchieService.length > ZERO
+    ? getCodesHierarchieService(
+        hierarchieService[ZERO].serviceParent,
+        codesHierarchieService
+      )
+    : codesHierarchieService.reverse();
+};

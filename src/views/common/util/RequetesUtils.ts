@@ -1,5 +1,5 @@
 import {
-  appartientAMonServiceOuServicesMeresOuServicesFilles,
+  appartientAMonServiceOuServicesParentsOuServicesFils,
   mAppartient,
   mAppartientOuAppartientAPersonne,
   provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer
@@ -77,7 +77,7 @@ export const autorisePrendreEnChargeDelivrance = (
     TypeRequete.estDelivrance(requete.type) &&
     StatutRequete.estATraiterOuTransferee(requete.statutCourant.statut) &&
     mAppartientOuAppartientAPersonne(requete.idUtilisateur) &&
-    appartientAMonServiceOuServicesMeresOuServicesFilles(requete.idEntite) &&
+    appartientAMonServiceOuServicesParentsOuServicesFils(requete.idService) &&
     provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
       requete.provenanceRequete.provenance.libelle
     )
@@ -96,9 +96,7 @@ export const autorisePrendreEnChargeReqTableauDelivrance = (
     SousTypeDelivrance.estPossibleAPrendreEnCharge(sousType) &&
     StatutRequete.estATraiterOuTransferee(statut) &&
     mAppartient(requete.idUtilisateur) &&
-    appartientAMonServiceOuServicesMeresOuServicesFilles(
-      requete.idEntiteRattachement
-    ) &&
+    appartientAMonServiceOuServicesParentsOuServicesFils(requete.idService) &&
     provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
       requete.provenance
     )
@@ -140,7 +138,7 @@ export const autorisePrendreEnChargeDepuisPageCreation = (
         requete.sousType,
         requete.statutCourant.statut
       ) &&
-      appartientAMonServiceOuServicesMeresOuServicesFilles(requete.idEntite)
+      appartientAMonServiceOuServicesParentsOuServicesFils(requete.idService)
     );
   } else {
     return false;

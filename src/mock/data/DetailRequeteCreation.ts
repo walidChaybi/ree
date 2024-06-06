@@ -36,7 +36,7 @@ export const ReponseAppelDetailRequeteCreation = {
     },
     corbeilleService: {
       id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
     },
     piecesJustificatives: [
       {

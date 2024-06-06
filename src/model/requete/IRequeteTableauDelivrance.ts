@@ -37,7 +37,7 @@ export interface IRequeteTableauDelivrance extends IRequeteTableau {
   observations?: string[];
   idCorbeilleAgent?: string;
   nomUtilisateurAttribueA?: string;
-  idEntiteRattachement?: string;
+  idService?: string;
   canal?: TypeCanal;
   documentsReponses?: IDocumentReponse[];
 }
@@ -93,7 +93,7 @@ export function mappingUneRequeteTableauDelivrance(
         : requete?.observations,
     idUtilisateur: getValeurOuUndefined(requete?.idUtilisateur),
     idCorbeilleAgent: getValeurOuUndefined(requete?.idCorbeilleAgent),
-    idEntiteRattachement: getValeurOuUndefined(requete?.idEntiteRattachement),
+    idService: getValeurOuUndefined(requete?.idService),
     canal: TypeCanal.getEnumFor(requete.canal),
     documentsReponses: requete.documentsReponses,
     tagPriorisation: TagPriorisation.getEnumFor(requete.tagPriorisation).libelle
@@ -123,8 +123,8 @@ export function mapAttribueA(requete: any): string | undefined {
     )} ${formatNom(
       storeRece.getNomUtilisateurAPartirID(requete?.idUtilisateur)
     )}`;
-  } else if (requete?.idEntiteRattachement) {
-    attribueA = storeRece.getLibelleEntite(requete.idEntiteRattachement);
+  } else if (requete?.idService) {
+    attribueA = storeRece.getLibelleService(requete.idService);
   }
   return attribueA;
 }

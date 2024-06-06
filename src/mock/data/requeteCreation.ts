@@ -23,7 +23,7 @@ export const requetesCreationAlimentationTableau = [
   {
     id: "b63ebccd-ba5e-443a-8837-c5e1e111e846",
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
-    idEntiteRattachement: "67371a3c-5d2c-477c-8217-3f0041122997",
+    idService: "67371a3c-5d2c-477c-8217-3f0041122997",
     numeroAffichage: "LKI17B / 45648231",
     numeroFonctionnel: "LKI17B",
     numeroNatali: "45648231",
@@ -81,7 +81,7 @@ export const requetesCreationAlimentationTableau = [
   {
     id: "b63e0757-c702-4d14-a99e-7fd84f1d8807",
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
-    idEntiteRattachement: "67371a3c-5d2c-477c-8217-3f0041122997",
+    idService: "67371a3c-5d2c-477c-8217-3f0041122997",
     numeroAffichage: "H1SJ1N / 96135321",
     numeroFonctionnel: "H1SJ1N",
     numeroNatali: "96135321",
@@ -126,7 +126,7 @@ export const requetesCreationAlimentationTableau = [
   {
     id: "b63eccb0-fca0-4a7d-92a7-4d9fb983c0cf",
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
-    idEntiteRattachement: "67371a3c-5d2c-477c-8217-3f0041122997",
+    idService: "67371a3c-5d2c-477c-8217-3f0041122997",
     numeroAffichage: "3GFQGF / 894361894",
     numeroFonctionnel: "3GFQGF",
     numeroNatali: "894361894",
@@ -170,7 +170,7 @@ export const requetesCreationAlimentationTableau = [
   {
     id: "b63e801e-8fe7-4c4b-80bd-76bfad28d58c",
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
-    idEntiteRattachement: "67371a3c-5d2c-477c-8217-3f0041122997",
+    idService: "67371a3c-5d2c-477c-8217-3f0041122997",
     numeroAffichage: "IWSZGB / 589762198",
     numeroFonctionnel: "IWSZGB",
     numeroNatali: "589762198",
@@ -227,7 +227,7 @@ export const requetesCreationAlimentationTableau = [
   {
     id: "b63e801e-8fe7-4c4b-80bd-76bfad28d58c",
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
-    idEntiteRattachement: "67371a3c-5d2c-477c-8217-3f0041122997",
+    idService: "67371a3c-5d2c-477c-8217-3f0041122997",
     numeroAffichage: "IWSZGB / 46478614",
     numeroFonctionnel: "IWSZGB",
     numeroNatali: "589762198",
@@ -658,7 +658,7 @@ export const requeteCreationEtablissement = {
   },
   corbeilleService: {
     id: "8035fb6c-df33-11eb-ba80-0242ac130004",
-    idEntiteRattachement: "6737566d-0f25-45dc-8443-97b444e6753a"
+    idService: "6737566d-0f25-45dc-8443-97b444e6753a"
   },
   piecesJustificatives: [
     {
@@ -1095,7 +1095,7 @@ export const requeteCreationTranscription = {
   },
   corbeilleService: {
     id: "8035fb6c-df33-11eb-ba80-0242ac130004",
-    idEntiteRattachement: "6737566d-0f25-45dc-8443-97b444e6753a"
+    idService: "6737566d-0f25-45dc-8443-97b444e6753a"
   },
   piecesJustificatives: [
     {
@@ -2250,7 +2250,7 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
     corbeilleAgent: null,
     corbeilleService: {
       id: "8035fb6c-df33-11eb-ba80-0242ac130004",
-      idEntiteRattachement: "6737566d-0f25-45dc-8443-97b444e6753a"
+      idService: "6737566d-0f25-45dc-8443-97b444e6753a"
     },
     piecesJustificatives: [],
     requerant: {
@@ -2491,6 +2491,6 @@ export const requeteCreationATraiter = {
     raisonStatut: null
   },
   corbeilleService: {
-    idEntiteRattachement: "6737e047-16cc-4731-9a2e-d2e228f7d75f"
+    idService: "6737e047-16cc-4731-9a2e-d2e228f7d75f"
   }
 };

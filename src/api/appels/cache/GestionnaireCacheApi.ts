@@ -1,13 +1,10 @@
-import { IEntite, getEntiteParId } from "@model/agent/IEntiteRattachement";
+import { getServiceParId, IService } from "@model/agent/IService";
 import { mappingUtilisateurs } from "@model/agent/IUtilisateur";
 import { Decret, IDecret } from "@model/etatcivil/commun/IDecret";
 import { logError } from "@util/LogManager";
-import { triListeObjetsSurPropriete } from "@util/Utils";
 import { storeRece } from "@util/storeRece";
-import {
-  getTousLesUtilisateurs,
-  getToutesLesEntiteRattachement
-} from "../agentApi";
+import { triListeObjetsSurPropriete } from "@util/Utils";
+import { getTousLesServices, getTousLesUtilisateurs } from "../agentApi";
 import { getToutesLesDecrets } from "../etatcivilApi";
 
 const PLAGE_IMPORT = 100;
@@ -18,8 +15,8 @@ export class GestionnaireCacheApi {
     triListeObjetsSurPropriete(storeRece.listeUtilisateurs, "nom");
   }
 
-  static chargerToutesLesEntites() {
-    return GestionnaireCacheApi.chargerToutesLesEntitesPourLaPage(0);
+  static chargerTousLesServices() {
+    return GestionnaireCacheApi.chargerTousLesServicesPourLaPage(0);
   }
 
   private static async chargerTousLesUtilisateursPourLaPage(page: number) {
@@ -48,24 +45,25 @@ export class GestionnaireCacheApi {
     }
   }
 
-  private static async chargerToutesLesEntitesPourLaPage(page: number) {
+  private static async chargerTousLesServicesPourLaPage(page: number) {
     try {
-      const entites = await getToutesLesEntiteRattachement(
-        `${page}-${PLAGE_IMPORT}`
-      );
-      storeRece.listeEntite = [
-        ...storeRece.listeEntite,
-        ...entites.body.data.filter(
-          (entite: IEntite) => !getEntiteParId(entite.idEntite)
+      const services = await getTousLesServices(`${page}-${PLAGE_IMPORT}`);
+      storeRece.listeServices = [
+        ...storeRece.listeServices,
+        ...services.body.data.filter(
+          (service: IService) => !getServiceParId(service.idService)
         )
       ];
-      if (entites.headers && entites.headers.link.indexOf(`rel="next"`) >= 0) {
-        GestionnaireCacheApi.chargerToutesLesEntitesPourLaPage(page + 1);
+      if (
+        services.headers &&
+        services.headers.link.indexOf(`rel="next"`) >= 0
+      ) {
+        GestionnaireCacheApi.chargerTousLesServicesPourLaPage(page + 1);
       }
     } catch (error) {
       GestionnaireCacheApi.gereErreur(
         error,
-        "Impossible de récupérer les entités"
+        "Impossible de récupérer les services"
       );
     }
   }

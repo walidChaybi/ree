@@ -638,7 +638,7 @@ export const requeteCreationEtablissement = {
   },
   corbeilleService: {
     id: "78d8b291-d07b-4d14-9b15-f5f5575f2adb",
-    idEntiteRattachement: "6737dca8-2f96-4086-8288-fd1a136a61df"
+    idService: "6737dca8-2f96-4086-8288-fd1a136a61df"
   },
   piecesJustificatives: [
     {
@@ -1206,7 +1206,7 @@ export const requeteCreationEtablissement = {
     raisonStatut: ""
   },
   idUtilisateur: "b67f9d14-cc5e-4002-aa06-e54029ffa073",
-  idEntite: "6737dca8-2f96-4086-8288-fd1a136a61df",
+  idService: "6737dca8-2f96-4086-8288-fd1a136a61df",
   numeroAncien: "",
   natureActeTranscrit: "",
   personnesSauvegardees: []
@@ -1617,7 +1617,7 @@ export const requeteCreationEtablissementSaisieProjet = {
   },
   corbeilleService: {
     id: "8035fb6c-df33-11eb-ba80-0242ac130004",
-    idEntiteRattachement: "6737566d-0f25-45dc-8443-97b444e6753a"
+    idService: "6737566d-0f25-45dc-8443-97b444e6753a"
   },
   piecesJustificatives: [],
   requerant: {
@@ -2378,7 +2378,7 @@ export const requeteCreationEtablissementPieceJustificative = {
     },
     corbeilleService: {
       id: "78d8b291-d07b-4d14-9b15-f5f5575f2adb",
-      idEntiteRattachement: "6737dca8-2f96-4086-8288-fd1a136a61df"
+      idService: "6737dca8-2f96-4086-8288-fd1a136a61df"
     },
     piecesJustificatives: [
       {

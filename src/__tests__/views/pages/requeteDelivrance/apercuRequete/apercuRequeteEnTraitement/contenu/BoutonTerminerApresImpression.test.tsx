@@ -14,7 +14,7 @@ import { MemoryRouter } from "react-router-dom";
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
-  idEntite: "11",
+  idService: "11",
   sousType: SousTypeDelivrance.RDC,
   dateCreation: 1577836800000,
   statutCourant: {

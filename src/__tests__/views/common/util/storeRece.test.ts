@@ -41,8 +41,8 @@ test("get nom d'un id ", () => {
   ).toStrictEqual("Ashley");
 });
 
-test("get nom d'une entité ", () => {
+test("get nom d'un service ", () => {
   expect(
-    storeRece.getLibelleEntite("6737d2f8-f2af-450d-a376-f22f6df6ff1d")
+    storeRece.getLibelleService("6737d2f8-f2af-450d-a376-f22f6df6ff1d")
   ).toStrictEqual("BAG Assitance Informatique");
 });

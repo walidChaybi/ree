@@ -6,7 +6,7 @@ export interface IFiltreServiceRequeteDelivranceDto {
   sousType: string | null;
   provenance: string | null;
   idAgent: string | null;
-  idEntiteRattachement: string | null;
+  idService: string | null;
   statuts: string[] | null;
 }
 
@@ -43,7 +43,7 @@ export function mappingFiltreServiceRequeteDelivranceVersFiltreDto(
     sousType: filtre.sousType || null,
     provenance: filtre.provenance || null,
     idAgent: filtre.attribueA?.cle || null,
-    idEntiteRattachement: filtre.attribueAuService?.cle || null,
+    idService: filtre.attribueAuService?.cle || null,
     statuts: filtre.statut
       ? [filtre.statut]
       : FILTRES_SERVICE_STATUTS_REQUETE_DELIVRANCE.map(statut => statut.cle)

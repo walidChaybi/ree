@@ -35,8 +35,8 @@ export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
 export const URL_REQUETES_CREATIONS = "/requetes/creations";
 export const URL_REQUETES_CREATION = "/requetes/creation";
-export const URL_REQUETES_CREATION_TRANSMISSION_ENTITE =
-  "/requetes/creationsTransmissionEntite";
+export const URL_REQUETES_CREATION_TRANSMISSION_SERVICE =
+  "/requetes/creationsTransmissionService";
 export const URL_CHOIX_DELIVRANCE = "/choixdelivrance";
 export const URL_COURRIER = "/courrier";
 export const URL_DOCUMENT = "/document";
@@ -387,13 +387,13 @@ export async function mettreAJourStatutApresSignature(
   });
 }
 
-export async function creationRequeteCreationEtTransmissionEntite(
+export async function creationRequeteCreationEtTransmissionService(
   requete: ISaisieRequeteAEnvoyer,
-  idEntiteRattachement: string
+  idService: string
 ) {
   return api.fetch({
     method: HttpMethod.POST,
-    uri: `${URL_REQUETES_CREATION_TRANSMISSION_ENTITE}?idEntiteRattachement=${idEntiteRattachement}`,
+    uri: `${URL_REQUETES_CREATION_TRANSMISSION_SERVICE}?idService=${idService}`,
     data: [requete]
   });
 }
@@ -549,7 +549,7 @@ export function postCreationActionEtMiseAjourStatut(
 
 export function postTransfertRequete(
   idRequete: string,
-  idEntite: string,
+  idService: string,
   idUtilisateur: string,
   libelleAction: string,
   statutRequete: StatutRequete,
@@ -560,7 +560,7 @@ export function postTransfertRequete(
     uri: `${URL_TRANSFERT}`,
     parameters: {
       idRequete,
-      idEntite,
+      idService,
       idUtilisateur,
       statutRequete: StatutRequete.getKey(statutRequete),
       libelleAction,

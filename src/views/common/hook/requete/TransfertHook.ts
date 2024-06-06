@@ -1,12 +1,12 @@
 import { postTransfertRequete } from "@api/appels/requeteApi";
-import { getEntiteParUtilisateurId } from "@model/agent/IUtilisateur";
+import { getServiceParUtilisateurId } from "@model/agent/IUtilisateur";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { logError } from "@util/LogManager";
 import { getValeurOuVide } from "@util/Utils";
 import { useEffect, useState } from "react";
 
 export interface TransfertParams {
-  idEntite?: string;
+  idService?: string;
   idUtilisateur?: string;
   libelleAction: string;
   estTransfert: boolean;
@@ -20,17 +20,17 @@ export interface TransfertUnitaireParams extends TransfertParams {
 export interface TransfertParLotParams extends TransfertParams {
   idRequetes: string[];
   statutRequete: StatutRequete[];
-  idEntite: string;
+  idService: string;
   idUtilisateur: string;
 }
 
 export function useTransfertApi(params?: TransfertUnitaireParams) {
   const [res, setRes] = useState<string | undefined>();
   useEffect(() => {
-    if (params && (params.idEntite || params.idUtilisateur)) {
+    if (params && (params.idService || params.idUtilisateur)) {
       postTransfertRequete(
         params.idRequete,
-        getValeurOuVide(params.idEntite),
+        getValeurOuVide(params.idService),
         getValeurOuVide(params.idUtilisateur),
         params.libelleAction,
         params.statutRequete,
@@ -49,15 +49,15 @@ export function useTransfertApi(params?: TransfertUnitaireParams) {
 export function useTransfertsApi(params?: TransfertParLotParams) {
   const [res, setRes] = useState<string[] | undefined>();
   useEffect(() => {
-    if (params && (params.idEntite || params.idUtilisateur)) {
+    if (params && (params.idService || params.idUtilisateur)) {
       Promise.all(
         params.idRequetes.map((idRequete, idx) =>
           postTransfertRequete(
             idRequete,
-            params.idEntite
-              ? params.idEntite
-              : (getEntiteParUtilisateurId(params.idUtilisateur)
-                  ?.idEntite as string),
+            params.idService
+              ? params.idService
+              : (getServiceParUtilisateurId(params.idUtilisateur)
+                  ?.idService as string),
             params.idUtilisateur,
             params.libelleAction,
             params.statutRequete[idx],

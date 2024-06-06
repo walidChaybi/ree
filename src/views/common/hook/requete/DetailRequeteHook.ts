@@ -161,7 +161,7 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
     requerant: Requerant.mappingRequerant(data.requerant),
     mandant: data.mandant ? getMandant(data.mandant) : undefined,
     idUtilisateur: data.corbeilleAgent?.idUtilisateur,
-    idEntite: data?.corbeilleService?.idEntiteRattachement,
+    idService: data?.corbeilleService?.idService,
     actions: getActions(data?.actions),
     observations: data.observations
       ? getObservations(data.observations)
@@ -289,7 +289,7 @@ function mappingRequete(data: any) {
     titulaires: getTitulaires(data.titulaires),
     requerant: Requerant.mappingRequerant(data.requerant),
     idUtilisateur: data.corbeilleAgent?.idUtilisateur,
-    idEntite: data?.corbeilleService?.idEntiteRattachement,
+    idService: data?.corbeilleService?.idService,
     observations: data.observations
       ? getObservations(data.observations)
       : undefined,

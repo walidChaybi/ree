@@ -8,7 +8,7 @@ import {
 } from "@hook/requete/DetailRequeteHook";
 import { Droit } from "@model/agent/enum/Droit";
 import {
-  appartientAMonServiceOuServicesMeresOuServicesFilles,
+  appartientAMonServiceOuServicesParentsOuServicesFils,
   mAppartientOuAppartientAPersonne,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
@@ -128,7 +128,7 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
         StatutRequete.estATraiterOuTransferee(requete.statutCourant?.statut) &&
         officierHabiliterPourLeDroit(Droit.CREER_ACTE_TRANSCRIT) &&
         mAppartientOuAppartientAPersonne(requete.idUtilisateur) &&
-        appartientAMonServiceOuServicesMeresOuServicesFilles(requete.idEntite)
+        appartientAMonServiceOuServicesParentsOuServicesFils(requete.idService)
       );
     } else {
       return false;

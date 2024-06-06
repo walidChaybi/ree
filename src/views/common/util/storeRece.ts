@@ -1,5 +1,5 @@
-import { IEntite } from "@model/agent/IEntiteRattachement";
 import { IOfficier } from "@model/agent/IOfficier";
+import { IService } from "@model/agent/IService";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
 
@@ -7,7 +7,7 @@ class StoreRece {
   private _utilisateurCourant?: IOfficier;
   private _retourUrl = "";
   private _listeUtilisateurs: IUtilisateur[] = [];
-  private _listeEntite: IEntite[] = [];
+  private _listeServices: IService[] = [];
   private _decrets: IDecret[] = [];
   private _logErrorOff = false;
 
@@ -47,12 +47,12 @@ class StoreRece {
     return this._listeUtilisateurs;
   }
 
-  get listeEntite(): IEntite[] {
-    return this._listeEntite;
+  get listeServices(): IService[] {
+    return this._listeServices;
   }
 
-  set listeEntite(liste: IEntite[]) {
-    this._listeEntite = liste;
+  set listeServices(liste: IService[]) {
+    this._listeServices = liste;
   }
 
   get decrets(): IDecret[] {
@@ -80,9 +80,9 @@ class StoreRece {
     )?.nom;
   }
 
-  public getLibelleEntite(id: string) {
-    return this.listeEntite.find(entite => entite.idEntite === id)
-      ?.libelleEntite;
+  public getLibelleService(id: string) {
+    return this.listeServices.find(service => service.idService === id)
+      ?.libelleService;
   }
 
   public getTrigrammeFromID(id?: string) {

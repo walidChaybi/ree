@@ -1,7 +1,7 @@
 export const requeteTableauCreation = {
   id: "54ddf213-d9b7-4747-8e92-68c220f66de3",
   idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
-  idEntiteRattachement: "6737187f-5a05-4461-b55d-5075c9369a12",
+  idService: "6737187f-5a05-4461-b55d-5075c9369a12",
   numeroAffichage: "YRQFLU / ",
   numeroFonctionnel: "YRQFLU",
   numeroNatali: null,

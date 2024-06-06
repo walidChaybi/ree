@@ -15,7 +15,7 @@ export interface IFiltreServiceRequeteCreationDto {
   sousType: string | null;
   tagPriorisation: string | null;
   idAgent: string | null;
-  idEntiteRattachement: string | null;
+  idService: string | null;
   statuts: string[] | null;
 }
 export type IFiltresServiceRequeteCreation = Omit<
@@ -30,7 +30,7 @@ export function mappingFiltreServiceCreationVersFiltreDto(
     sousType: filtre.sousType || null,
     tagPriorisation: filtre.priorisation || null,
     idAgent: filtre.attribueA?.cle || null,
-    idEntiteRattachement: filtre.attribueAuService?.cle || null,
+    idService: filtre.attribueAuService?.cle || null,
     statuts: filtre.statut
       ? [filtre.statut]
       : StatutRequete.getOptionsAPartirTypeRequete(TypeRequete.CREATION).map(

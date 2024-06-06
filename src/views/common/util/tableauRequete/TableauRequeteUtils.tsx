@@ -1,6 +1,6 @@
-import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { AlerteRequete } from "@model/requete/enum/AlerteRequete";
 import { Priorite } from "@model/requete/enum/Priorite";
+import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import ClearIcon from "@mui/icons-material/Clear";
 import ErrorIcon from "@mui/icons-material/Error";
 import LabelIcon from "@mui/icons-material/Label";
@@ -138,14 +138,14 @@ export function getCellDatesNaissancesTitulaires(data: any): JSX.Element {
 
 export function getCellRequerant(data: any): JSX.Element {
   if (data.idUtilisateurRequerant) {
-    const codeEntite = storeRece.listeEntite?.find(
+    const codeService = storeRece.listeServices?.find(
       el =>
-        el.idEntite ===
+        el.idService ===
         storeRece.listeUtilisateurs?.find(
           ut => ut.idUtilisateur === data.idUtilisateurRequerant
-        )?.entite?.idEntite
+        )?.service?.idService
     )?.code;
-    return <span>{`${data.nomCompletRequerant} (${codeEntite})`}</span>;
+    return <span>{`${data.nomCompletRequerant} (${codeService})`}</span>;
   } else {
     return <span>{data.nomCompletRequerant}</span>;
   }

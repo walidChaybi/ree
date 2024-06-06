@@ -53,16 +53,9 @@ export function mappingOfficier(headers: any, body: any): IOfficier {
     mail: headers.mail,
     profils: setProfilsOfficier(headers.profil),
     telephone: headers.telephone,
-    section: headers.section,
-    bureau: headers.bureau,
-    departement: headers.departement,
-    sectionConsulaire: headers.section_consulaire,
-    service: headers.service,
-    poste: headers.poste,
-    ministere: headers.ministere,
     habilitations: [],
-    entite: body.entite,
-    entitesFilles: body.entitesFillesDirectes,
+    service: body.service,
+    servicesFils: body.servicesFilsDirects,
     fonctionAgent: body.fonctionAgent,
     modeAuthentification: "AROBAS_MDP"
   };

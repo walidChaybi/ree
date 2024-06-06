@@ -2,9 +2,9 @@ import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
 import { idRequeteRDCSC, requeteRDCSC } from "@mock/data/requeteDelivrance";
 import { requeteInformation } from "@mock/data/requeteInformation";
 import { Droit } from "@model/agent/enum/Droit";
-import { TypeEntite } from "@model/agent/enum/TypeEntite";
+import { TypeService } from "@model/agent/enum/TypeService";
 import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
-import { IEntite } from "@model/agent/IEntiteRattachement";
+import { IService } from "@model/agent/IService";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
@@ -30,7 +30,7 @@ import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 const listeUtilisateurs = [
   {
-    entite: { estDansSCEC: true, idEntite: "123" } as IEntite,
+    service: { estDansSCEC: true, idService: "123" } as IService,
     prenom: "",
     nom: "str1",
     habilitations: [
@@ -43,7 +43,7 @@ const listeUtilisateurs = [
     idUtilisateur: "1234"
   } as IUtilisateur,
   {
-    entite: { estDansSCEC: true, idEntite: "1234" } as IEntite,
+    service: { estDansSCEC: true, idService: "1234" } as IService,
     prenom: "",
     nom: "str2",
     habilitations: [
@@ -56,7 +56,7 @@ const listeUtilisateurs = [
     idUtilisateur: "12345"
   } as IUtilisateur,
   {
-    entite: { estDansSCEC: true, idEntite: "1234" } as IEntite,
+    service: { estDansSCEC: true, idService: "1234" } as IService,
     prenom: "",
     nom: "str3",
     habilitations: [
@@ -175,19 +175,19 @@ test("check popin agent", async () => {
 test("check autocomplete service", async () => {
   afficheComposant();
 
-  storeRece.listeEntite = [
+  storeRece.listeServices = [
     {
-      idEntite: "1234",
-      type: TypeEntite.BUREAU,
+      idService: "1234",
+      type: TypeService.BUREAU,
       code: "1234",
-      libelleEntite: "str1",
+      libelleService: "str1",
       estDansSCEC: true
     },
     {
-      idEntite: "12345",
-      type: TypeEntite.DEPARTEMENT,
+      idService: "12345",
+      type: TypeService.DEPARTEMENT,
       code: "12345",
-      libelleEntite: "str2",
+      libelleService: "str2",
       estDansSCEC: true
     }
   ];

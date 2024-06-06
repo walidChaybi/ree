@@ -18,7 +18,7 @@ export const requeteInformation: IRequeteInformation = {
   actions: [],
   titulaires: [],
   idUtilisateur: "3114021b-a908-4725-a237-fc8807441013",
-  idEntite: "67379d0b-ba6a-44eb-900e-a45d1b0264bc",
+  idService: "67379d0b-ba6a-44eb-900e-a45d1b0264bc",
   requerant: {
     id: "bbd0b63b-519e-4443-b80b-f590a3f8cd5b",
     dateCreation: new Date("1634716866000"),
@@ -71,7 +71,7 @@ export const requeteInformationCompletion: IRequeteInformation = {
   actions: [],
   titulaires: [],
   idUtilisateur: "3114021b-a908-4725-a237-fc8807441013",
-  idEntite: "67379d0b-ba6a-44eb-900e-a45d1b0264bc",
+  idService: "67379d0b-ba6a-44eb-900e-a45d1b0264bc",
   requerant: {
     id: "bbd0b63b-519e-4443-b80b-f590a3f8cd5b",
     dateCreation: new Date("1634716866000"),

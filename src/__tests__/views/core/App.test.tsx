@@ -2,9 +2,9 @@ import { GestionnaireCacheApi } from "@api/appels/cache/GestionnaireCacheApi";
 import { decrets } from "@mock/data/NomenclatureEtatCivilDecrets";
 import { storeRece } from "@util/storeRece";
 
-test("set entites cache", async () => {
-  await GestionnaireCacheApi.chargerToutesLesEntites();
-  expect(storeRece.listeEntite.length).toBeGreaterThan(0);
+test("set services cache", async () => {
+  await GestionnaireCacheApi.chargerTousLesServices();
+  expect(storeRece.listeServices.length).toBeGreaterThan(0);
 });
 
 test("set utilisateur cache", async () => {

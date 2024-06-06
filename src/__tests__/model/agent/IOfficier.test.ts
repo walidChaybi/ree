@@ -12,8 +12,8 @@ import {
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import {
-  appartientAMonServiceOuServicesMeresOuServicesFilles,
-  contientEntiteMere,
+  appartientAMonServiceOuServicesParentsOuServicesFils,
+  contientServiceParent,
   estOfficierHabiliterPourTousLesDroits,
   estOfficierHabiliterPourUnDesDroits,
   IOfficier,
@@ -71,46 +71,46 @@ test("Utilisateur autoriser à consulter l'acte dont l'idTypeRegistre est passé
 
 test("La requete appartient au service de l'utilisateur", () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-  const idEntiteRequete = "1";
+  const idService = "1";
   expect(
-    appartientAMonServiceOuServicesMeresOuServicesFilles(idEntiteRequete)
+    appartientAMonServiceOuServicesParentsOuServicesFils(idService)
   ).toBeTruthy();
 });
 
-test("La requete appartient à une entité mère du service de l'utilisateur", () => {
+test("La requete appartient à un service parent du service de l'utilisateur", () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-  const idEntiteRequete = "11";
+  const idService = "11";
   expect(
-    appartientAMonServiceOuServicesMeresOuServicesFilles(idEntiteRequete)
+    appartientAMonServiceOuServicesParentsOuServicesFils(idService)
   ).toBeTruthy();
 });
 
-test("La requete appartient à une entité fille du service de l'utilisateur", () => {
+test("La requete appartient à un service fils du service de l'utilisateur", () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-  const idEntiteRequete = "111";
+  const idService = "111";
   expect(
-    appartientAMonServiceOuServicesMeresOuServicesFilles(idEntiteRequete)
+    appartientAMonServiceOuServicesParentsOuServicesFils(idService)
   ).toBeTruthy();
 });
 
-test("La requete n'appartient ni à  une entité fille, ni une entité mère, ni au service de l'utilisateur", () => {
+test("La requete n'appartient ni à un service fils, ni un service parent, ni au service de l'utilisateur", () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-  const idEntiteRequete = "999";
+  const idService = "999";
   expect(
-    appartientAMonServiceOuServicesMeresOuServicesFilles(idEntiteRequete)
+    appartientAMonServiceOuServicesParentsOuServicesFils(idService)
   ).toBeFalsy();
 });
 
-test("L'entité rattachée à la requete est une entité mère de celle de l'utilisateur", () => {
+test("Le service rattaché à la requete est un service parent de celui de l'utilisateur", () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-  const idEntiteRequete = "11";
-  expect(contientEntiteMere(idEntiteRequete)).toBeTruthy();
+  const idService = "11";
+  expect(contientServiceParent(idService)).toBeTruthy();
 });
 
-test("L'entité rattachée à la requete n'est pas une entité mère de celle de l'utilisateur", () => {
+test("Le service rattaché à la requete n'est pas un service parent de celui de l'utilisateur", () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-  const idEntiteRequete = "9999";
-  expect(contientEntiteMere(idEntiteRequete)).toBeFalsy();
+  const idService = "9999";
+  expect(contientServiceParent(idService)).toBeFalsy();
 });
 
 test("Attendu: estOfficierHabiliterPourUnDesDroits fonctionne correctement", () => {

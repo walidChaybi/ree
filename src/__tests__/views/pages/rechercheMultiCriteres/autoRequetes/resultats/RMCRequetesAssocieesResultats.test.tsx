@@ -94,7 +94,7 @@ describe("RMCRequetesAssocieesResultats", () => {
       prenom: "Ashley",
       nom: "Young",
       trigramme: "FOO",
-      entite: { estDansSCEC: true },
+      service: { estDansSCEC: true },
       habilitations: [
         {
           idHabilitation: "idHabilitation",
@@ -137,7 +137,7 @@ describe("RMCRequetesAssocieesResultats", () => {
       prenom: "Ashley",
       nom: "Young",
       trigramme: "FOO",
-      entite: { estDansSCEC: true },
+      service: { estDansSCEC: true },
       habilitations: [
         {
           idHabilitation: "idHabilitation",
@@ -192,7 +192,7 @@ describe("RMCRequetesAssocieesResultats", () => {
       prenom: "Ashley",
       nom: "Young",
       trigramme: "FOO",
-      entite: { estDansSCEC: true },
+      service: { estDansSCEC: true },
       habilitations: [
         {
           idHabilitation: "idHabilitation",
@@ -239,7 +239,7 @@ describe("RMCRequetesAssocieesResultats", () => {
       prenom: "Ashley",
       nom: "Young",
       trigramme: "FOO",
-      entite: { estDansSCEC: true },
+      service: { estDansSCEC: true },
       habilitations: [
         {
           idHabilitation: "idHabilitation",

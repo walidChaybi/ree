@@ -260,7 +260,7 @@ export const requeteCreationTranscription = {
   },
   corbeilleService: {
     id: "8035fb6c-df33-11eb-ba80-0242ac130004",
-    idEntiteRattachement: "6737566d-0f25-45dc-8443-97b444e6753a"
+    idService: "6737566d-0f25-45dc-8443-97b444e6753a"
   },
   piecesJustificatives: [
     {
@@ -475,7 +475,7 @@ export const requeteCreationTranscriptionStatutATraiter = {
   },
   corbeilleService: {
     id: "8035fb6c-df33-11eb-ba80-0242ac130004",
-    idEntiteRattachement: "6737e047-16cc-4731-9a2e-d2e228f7d75f"
+    idService: "6737e047-16cc-4731-9a2e-d2e228f7d75f"
   }
 } as any as IRequeteCreationTranscription;
 
@@ -643,7 +643,7 @@ export const creationRequeteRCTCResultat = [
     },
     corbeilleService: {
       id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
     },
     piecesJustificatives: [],
     requerant: {

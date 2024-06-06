@@ -1,5 +1,5 @@
 import {
-  getEntiteAsOptions,
+  getServicesAsOptions,
   listeUtilisateursToOptionsBis
 } from "@composant/menuTransfert/MenuTransfertUtil";
 import { faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -82,7 +82,7 @@ export const FiltreServiceRequeteDelivranceForm: React.FC<
               componentName="filtreAttribuerAuService"
               name="attribueAuService"
               label={getLibelle("Attribué à un service")}
-              options={getEntiteAsOptions()}
+              options={getServicesAsOptions()}
             />
             <SelectField
               name="statut"

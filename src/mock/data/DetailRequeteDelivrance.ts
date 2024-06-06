@@ -151,7 +151,7 @@ export const ReponseAppelDetailRequeteDelivrance = {
     },
     corbeilleService: {
       id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
     },
     piecesJustificatives: [
       {
@@ -412,7 +412,7 @@ export const ReponseAppelDetailRequeteDelivranceASigner = {
     },
     corbeilleService: {
       id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
     },
     piecesJustificatives: [
       {
@@ -674,7 +674,7 @@ export const ReponseAppelDetailRequeteDelivrancePriseEnCharge = {
     },
     corbeilleService: {
       id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
     },
     piecesJustificatives: [
       {
@@ -936,7 +936,7 @@ export const ReponseAppelDetailRequeteDelivranceRDC = {
     },
     corbeilleService: {
       id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
     },
     piecesJustificatives: [
       {
@@ -1094,7 +1094,7 @@ export const ReponseAppelDetailRequeteDelivranceBrouillon = {
     },
     corbeilleService: {
       id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
     },
     piecesJustificatives: [
       {
@@ -1244,7 +1244,7 @@ export const ReponseAppelDetailRequeteDelivranceUnTitulaire = {
     },
     corbeilleService: {
       id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
     },
     piecesJustificatives: [],
     requerant: {
@@ -1394,7 +1394,7 @@ export const ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ = {
     },
     corbeilleService: {
       id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
     },
     piecesJustificatives: [
       {
@@ -1571,7 +1571,7 @@ export const requeteRDDPAvecDocs = {
   },
   corbeilleService: {
     id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-    idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
   },
   piecesJustificatives: [],
   requerant: {
@@ -1743,7 +1743,7 @@ export const requeteAvecDocs = {
   },
   corbeilleService: {
     id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-    idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
   },
   piecesJustificatives: [],
   requerant: {
@@ -1935,7 +1935,7 @@ export const requeteAvecDocsPlurilingue = {
   },
   corbeilleService: {
     id: "99c7aab2-6def-48ae-8493-2bd72b6a32db",
-    idEntiteRattachement: "6737f85c-6207-4174-8825-d5f65d757e4f"
+    idService: "6737f85c-6207-4174-8825-d5f65d757e4f"
   },
   piecesJustificatives: [],
   requerant: {
@@ -2176,7 +2176,7 @@ export const requeteAvecCopieIntegraleActeImage = {
   },
   corbeilleService: {
     id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-    idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
   },
   piecesJustificatives: [],
   requerant: {
@@ -2365,7 +2365,7 @@ export const requeteSansDocument = {
   },
   corbeilleService: {
     id: "99c7aab2-6def-48ae-8493-2bd72b6a32db",
-    idEntiteRattachement: "6737f85c-6207-4174-8825-d5f65d757e4f"
+    idService: "6737f85c-6207-4174-8825-d5f65d757e4f"
   },
   piecesJustificatives: [],
   requerant: {
@@ -2590,7 +2590,7 @@ export const detailRequeteDelivranceCopieArchive = {
   },
   corbeilleService: {
     id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-    idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
   },
   piecesJustificatives: [],
   requerant: {
@@ -2762,7 +2762,7 @@ export const detailRequeteDelivranceGenreIndetermine = {
   },
   corbeilleService: {
     id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-    idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
   },
   piecesJustificatives: [],
   requerant: {
@@ -2934,7 +2934,7 @@ export const detailRequeteDelivranceAvecTitulaireMultiple = {
   },
   corbeilleService: {
     id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-    idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
   },
   piecesJustificatives: [],
   requerant: {
@@ -3106,7 +3106,7 @@ export const requeteActeMariageAvecTroisTitulaire = {
   },
   corbeilleService: {
     id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-    idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
   },
   piecesJustificatives: [],
   requerant: {

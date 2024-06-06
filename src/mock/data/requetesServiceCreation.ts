@@ -11,7 +11,7 @@ export const requetesServiceCreationTableauResultatQuery = {
     {
       id: "c9b817ca-1899-450e-9f04-979541946011",
       idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
-      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
+      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
       numeroAffichage: "N7MMP8 / B-2-8GRZFCS3P",
       numeroFonctionnel: "N7MMP8",
       numeroNatali: null,
@@ -39,7 +39,7 @@ export const requetesServiceCreationTableauResultatQuery = {
     {
       id: "54ddf213-d9b7-4747-8e92-68c220f66de3",
       idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
-      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
+      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
       numeroAffichage: "YRQFLU / ",
       numeroFonctionnel: "YRQFLU",
       numeroNatali: null,
@@ -84,7 +84,7 @@ export const requeteServiceCreationRechercheNatali = {
     {
       id: "2d49b4da-74ec-49b7-9be5-0345b66140e3",
       idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
-      idEntiteRattachement: "6737dca8-2f96-4086-8288-fd1a136a61df",
+      idService: "6737dca8-2f96-4086-8288-fd1a136a61df",
       numeroAffichage: "DGEWAA / 2022X 200178",
       numeroFonctionnel: "DGEWAA",
       numeroNatali: "2022X 200178",

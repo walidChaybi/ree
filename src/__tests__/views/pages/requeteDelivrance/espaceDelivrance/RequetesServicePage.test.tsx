@@ -1,4 +1,4 @@
-import { TypeEntite } from "@model/agent/enum/TypeEntite";
+import { TypeService } from "@model/agent/enum/TypeService";
 import { RequetesServicePage } from "@pages/requeteDelivrance/espaceDelivrance/RequetesServicePage";
 import { URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
 import {
@@ -16,19 +16,19 @@ let history: any;
 const setParamsRMCAuto = jest.fn();
 
 beforeAll(() => {
-  storeRece.listeEntite = [
+  storeRece.listeServices = [
     {
-      idEntite: "1234",
-      type: TypeEntite.BUREAU,
+      idService: "1234",
+      type: TypeService.BUREAU,
       code: "1234",
-      libelleEntite: "str1",
+      libelleService: "str1",
       estDansSCEC: true
     },
     {
-      idEntite: "12345",
-      type: TypeEntite.DEPARTEMENT,
+      idService: "12345",
+      type: TypeService.DEPARTEMENT,
       code: "12345",
-      libelleEntite: "str2",
+      libelleService: "str2",
       estDansSCEC: true
     }
   ];
@@ -143,12 +143,12 @@ test("Test Attribuée à", async () => {
     });
   });
 
-  const entite = screen.getByText("str2");
+  const service = screen.getByText("str2");
   await waitFor(() => {
-    expect(entite).toBeDefined();
+    expect(service).toBeDefined();
   });
   await act(async () => {
-    fireEvent.click(entite);
+    fireEvent.click(service);
   });
 
   const valider = screen.getByText("Valider") as HTMLButtonElement;
@@ -207,4 +207,3 @@ test("la page DOIT afficher les requetes filtrées QUAND on selectionne un filtr
     expect(screen.getAllByText("9877")).toBeDefined();
   });
 });
-

@@ -1,10 +1,10 @@
 import { useNavigationApercuDelivrance } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
 import { userDroitCOMEDEC } from "@mock/data/connectedUserAvecDroit";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { act, render, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import React from "react";
@@ -16,7 +16,7 @@ const requete1: IRequeteTableauDelivrance = {
   statut: StatutRequete.A_TRAITER.libelle,
   idUtilisateur: "idUtilisateurConnectedUser",
   provenance: Provenance.COURRIER.libelle,
-  idEntiteRattachement: "1"
+  idService: "1"
 };
 
 storeRece.utilisateurCourant = userDroitCOMEDEC;
@@ -52,7 +52,7 @@ const requete2: IRequeteTableauDelivrance = {
   statut: StatutRequete.A_TRAITER.libelle,
   idUtilisateur: "idUtilisateurConnectedUser",
   provenance: Provenance.COURRIER.libelle,
-  idEntiteRattachement: "1"
+  idService: "1"
 };
 
 storeRece.utilisateurCourant = userDroitCOMEDEC;
@@ -88,7 +88,7 @@ const requete3: IRequeteTableauDelivrance = {
   statut: StatutRequete.BROUILLON.libelle,
   idUtilisateur: "idUtilisateurConnectedUser",
   provenance: Provenance.COURRIER.libelle,
-  idEntiteRattachement: "1"
+  idService: "1"
 };
 
 const HookConsummerNavigation3: React.FC = () => {
@@ -121,7 +121,7 @@ const requete4: IRequeteTableauDelivrance = {
   statut: StatutRequete.DOUBLON.libelle,
   idUtilisateur: "idUtilisateurConnectedUser",
   provenance: Provenance.COURRIER.libelle,
-  idEntiteRattachement: "1",
+  idService: "1",
   sousType: SousTypeDelivrance.RDCSC.libelleCourt!
 };
 
@@ -155,7 +155,7 @@ const requete5: IRequeteTableauDelivrance = {
   statut: StatutRequete.A_VALIDER.libelle,
   idUtilisateur: "idUtilisateurConnectedUser",
   provenance: Provenance.COURRIER.libelle,
-  idEntiteRattachement: "1"
+  idService: "1"
 };
 
 const HookConsummerNavigation5: React.FC = () => {

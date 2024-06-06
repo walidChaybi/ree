@@ -2,11 +2,11 @@ import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import { idRequeteRDCSC } from "@mock/data/requeteDelivrance";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { BoutonModifierTraitement } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/BoutonModifierTraitement";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { act, fireEvent, render, waitFor } from "@testing-library/react";
@@ -16,7 +16,7 @@ import { createTestingRouter } from "../../../../../../__tests__utils__/testsUti
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
-  idEntite: "11",
+  idService: "11",
   type: TypeRequete.DELIVRANCE,
   dateCreation: 1577836800000,
   statutCourant: {

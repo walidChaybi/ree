@@ -44,7 +44,7 @@ export const ReponseAppelDetailRequeteInformation = {
     },
     corbeilleService: {
       id: "99c78b2e-62fa-4794-b504-63b0a4d731d9",
-      idEntiteRattachement: "67379d0b-ba6a-44eb-900e-a45d1b0264bc"
+      idService: "67379d0b-ba6a-44eb-900e-a45d1b0264bc"
     },
     piecesJustificatives: null,
     requerant: {
@@ -138,7 +138,7 @@ export const ReponseAppelDetailRequeteInformationSansCorbeilleAgent = {
     corbeilleAgent: null,
     corbeilleService: {
       id: "99c78b2e-62fa-4794-b504-63b0a4d731d9",
-      idEntiteRattachement: "6737e047-16cc-4731-9a2e-d2e228f7d75f"
+      idService: "6737e047-16cc-4731-9a2e-d2e228f7d75f"
     },
     piecesJustificatives: null,
     requerant: {
@@ -235,7 +235,7 @@ export const ReponseAppelDetailRequeteCompletion = {
     },
     corbeilleService: {
       id: "99c78b2e-62fa-4794-b504-63b0a4d731d9",
-      idEntiteRattachement: "67379d0b-ba6a-44eb-900e-a45d1b0264bc"
+      idService: "67379d0b-ba6a-44eb-900e-a45d1b0264bc"
     },
     piecesJustificatives: null,
     requerant: {

@@ -14,7 +14,7 @@ import { createTestingRouter } from "../../../../../../__tests__utils__/testsUti
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
-  idEntite: "11",
+  idService: "11",
   dateCreation: 1577836800000,
   statutCourant: {
     statut: StatutRequete.A_VALIDER,

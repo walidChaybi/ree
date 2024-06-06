@@ -1,7 +1,7 @@
 import {
   getLogin,
+  getTousLesServices,
   getTousLesUtilisateurs,
-  getToutesLesEntiteRattachement,
   getUtilisateurs
 } from "@api/appels/agentApi";
 
@@ -24,8 +24,8 @@ test("getTousLesUtilisateurs", () => {
   });
 });
 
-test("getToutesLesEntiteRattachement", () => {
-  getToutesLesEntiteRattachement().then((result: any) => {
+test("getTousLesServices", () => {
+  getTousLesServices().then((result: any) => {
     expect(result).toBeDefined();
   });
 });

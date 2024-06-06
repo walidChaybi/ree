@@ -21,7 +21,7 @@ export interface IRequeteTableauCreation extends IRequeteTableau {
   dateDerniereAction: string;
   postulant: string;
   numeroAffichage: string;
-  idEntiteRattachement?: string;
+  idService?: string;
   attribueA?: string;
   tagPriorisation: TagPriorisation;
   alerte: string;
@@ -57,7 +57,7 @@ export function mappingUneRequeteTableauCreation(
     dateDerniereAction: getFormatDateFromTimestamp(requete?.dateDerniereAction),
     statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
     idUtilisateur: getValeurOuUndefined(requete?.idUtilisateur),
-    idEntiteRattachement: getValeurOuUndefined(requete?.idEntite),
+    idService: getValeurOuUndefined(requete?.idService),
     postulant: getPostulant(titulaires),
     attribueA: mapAttribueA(requete),
     alerte: requete.alerte

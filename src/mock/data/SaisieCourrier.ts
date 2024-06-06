@@ -121,7 +121,7 @@ export const RequeteRDDCourrier17 = {
     }
   },
   idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d57",
-  idEntite: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
+  idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
   actions: [
     {
       id: "6dc3be62-7734-4669-8eca-2a676f39b914",

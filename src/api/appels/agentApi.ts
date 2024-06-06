@@ -5,8 +5,8 @@ const URL_UTILISATEURS_LOGIN = "/utilisateurs/login";
 const URL_UTILISATEURS = "/utilisateurs";
 const URL_UTILISATEURS_TOUS = "/utilisateurs/all";
 const URL_UTILISATEURS_INFOS = "/utilisateurs/infos";
-const URL_ENTITE_RATTACHEMENT_TOUTES = "/entiterattachement/all";
-const URL_ENTITE_RATTACHEMENT_FILLES = "/entiterattachement";
+const URL_TOUS_SERVICES = "/service/all";
+const URL_SERVICES_FILS = "/service";
 
 const api = ApiManager.getInstance("rece-agent-api", "v1");
 
@@ -42,22 +42,22 @@ export function getTousLesUtilisateurs(
   });
 }
 
-export function getToutesLesEntiteRattachement(plage?: string): Promise<any> {
+export function getTousLesServices(plage?: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: URL_ENTITE_RATTACHEMENT_TOUTES,
+    uri: URL_TOUS_SERVICES,
     parameters: {
       range: plage
     }
   });
 }
 
-export function getToutesLesEntitesFilles(idEntite?: string): Promise<any> {
+export function getTousLesServicesFils(idService?: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: URL_ENTITE_RATTACHEMENT_FILLES,
+    uri: URL_SERVICES_FILS,
     parameters: {
-      idEntite
+      idService
     }
   });
 }

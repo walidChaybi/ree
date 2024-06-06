@@ -20,7 +20,7 @@ const OPTION_VIDE: Option = {
 interface TransfertPopinProps {
   open: boolean;
   onClose: () => void;
-  onValidate: (entite: Option | undefined, texte?: string) => void;
+  onValidate: (service: Option | undefined, texte?: string) => void;
   options?: Options;
   titre: string;
   libelleAvantTexte?: string;

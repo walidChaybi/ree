@@ -36,7 +36,7 @@ export interface IRequete {
   titulaires?: ITitulaireRequete[];
   requerant: IRequerant;
   idUtilisateur: string;
-  idEntite: string;
+  idService: string;
   observations?: IObservation[];
   actions?: IAction[];
   numeroRequeteOrigine?: string;

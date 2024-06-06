@@ -21,7 +21,7 @@ import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  listeEntiteToOptions,
+  listeServicesToOptions,
   listeUtilisateursToOptionsBis,
   onValidateAgent,
   onValidateService,
@@ -194,16 +194,16 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
       <TransfertPopin
         open={servicePopinOpen}
         onClose={onCloseService}
-        onValidate={(entite?: Option) =>
+        onValidate={(service?: Option) =>
           onValidateService(
             setOperationEnCours,
             setParam,
             props,
             setServicePopinOpen,
-            entite
+            service
           )
         }
-        options={listeEntiteToOptions()}
+        options={listeServicesToOptions()}
         titre={`${props.estTransfert ? "Transfert" : "Attribuer"} à un service`}
       ></TransfertPopin>
       <TransfertPopin
