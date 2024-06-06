@@ -93,6 +93,17 @@ export class TypeMention {
   }
 
   public static getIdTypeMentionNationalitePourAjoutMentionDelivrance() {
+    console.log("this.getTypesMention()", this.getTypesMention());
+    console.log(
+      "getIdTypeMentionNationalitePourAjoutMentionDelivrance",
+      this.getTypesMention().filter(
+        typeMention =>
+          typeMention.natureMention ===
+            NatureMention.getEnumFor(
+              NatureMention.getKeyForCode(NatureMention, NATIONALITE)
+            ) && typeMention.estSousType
+      )?.[ZERO].id
+    );
     return this.getTypesMention().filter(
       typeMention =>
         typeMention.natureMention ===
