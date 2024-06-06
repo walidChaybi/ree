@@ -254,6 +254,7 @@ export function mappingVersMentionApi(mention: IMention) {
       texteMentionDelivrance: mention.textes.texteMentionDelivrance
     },
     typeMention: {
+      idTypeMention: mention.typeMention.id,
       idNatureMention: NatureMention.getUuidFromNature(
         mention.typeMention.natureMention
       )
