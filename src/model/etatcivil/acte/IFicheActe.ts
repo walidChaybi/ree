@@ -233,11 +233,6 @@ export const FicheActe = {
 
   getMentionNationalite(acte: IFicheActe, choixDelivrance?: ChoixDelivrance) {
     if (acte && necessiteMentionNationalite(acte, choixDelivrance)) {
-      console.log("necessiteMentionNationalite = true");
-      console.log(
-        "1",
-        TypeMention.getIdTypeMentionNationalitePourAjoutMentionDelivrance()
-      );
       let max = 0;
       acte.mentions?.forEach(el => {
         max = max < el.numeroOrdreExtrait ? el.numeroOrdreExtrait : max;
