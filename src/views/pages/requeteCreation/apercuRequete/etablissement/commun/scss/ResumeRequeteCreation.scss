@@ -102,6 +102,6 @@ $height: calc($spacing * 2.5);
 
   .ligneSdanfContainer {
     max-height: 8vh;
-    overflow: scroll;
+    overflow: auto;
   }
 }
