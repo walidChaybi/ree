@@ -12,11 +12,14 @@ export interface ILoginApi {
   erreurState?: any;
 }
 
-export function useLoginApi() {
+export const useLoginApi = (): ILoginApi => {
   const [officierDataState, setOfficierDataState] = useState<IOfficier>();
   const [erreurState, setErreurState] = useState<any>(undefined);
+
   useEffect(() => {
-    if (!storeRece.utilisateurCourant) {
+    if (storeRece.utilisateurCourant) {
+      setOfficierDataState(storeRece.utilisateurCourant);
+    } else {
       getLogin()
         .then(result => {
           const officier = mappingOfficier(result.headers, result.body.data);
@@ -32,16 +35,14 @@ export function useLoginApi() {
         .catch(error => {
           setErreurState(error);
         });
-    } else {
-      setOfficierDataState(storeRece.utilisateurCourant);
     }
   }, []);
 
   return {
     officierDataState,
     erreurState
-  } as ILoginApi;
-}
+  };
+};
 
 export function mappingOfficier(headers: any, body: any): IOfficier {
   return {

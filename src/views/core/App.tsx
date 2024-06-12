@@ -50,7 +50,7 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!storeRece.utilisateurCourant) {
+    if (!storeRece.utilisateurCourant && login.officierDataState) {
       storeRece.utilisateurCourant = login.officierDataState;
       Promise.all([
         GestionnaireNomenclature.chargerToutesLesNomenclatures(),
