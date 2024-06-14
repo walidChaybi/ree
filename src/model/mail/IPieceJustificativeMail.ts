@@ -1,5 +1,5 @@
 export interface IPieceJustificativeMail {
   mimeType: string;
   nom: string;
-  contenu: string;
+  contenuBase64: string;
 }

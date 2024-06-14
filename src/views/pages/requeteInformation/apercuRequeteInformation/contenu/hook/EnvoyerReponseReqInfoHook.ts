@@ -2,8 +2,8 @@ import { HTTP_STATUS_OK } from "@api/ApiManager";
 import { getEnvoyerMail } from "@api/appels/mailApi";
 import { IMail } from "@model/mail/IMail";
 import { IPieceJustificativeMail } from "@model/mail/IPieceJustificativeMail";
-import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
+import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { PieceJointe } from "@util/FileUtils";
 import { logError } from "@util/LogManager";
@@ -73,7 +73,7 @@ function getReponseAEnvoyer(
       piecesJointes.forEach((pj: PieceJointe) => {
         mail.listePieceJointe.push({
           nom: pj.base64File.fileName,
-          contenu: pj.base64File.base64String,
+          contenuBase64: pj.base64File.base64String,
           mimeType: pj.base64File.mimeType
         } as IPieceJustificativeMail);
       });
