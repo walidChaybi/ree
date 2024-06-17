@@ -11,6 +11,10 @@ spec:
   strategy:
     type: Recreate
   template:
+    metadata:
+      labels:
+        # Remplacé par la CI, force le POD a être rédemarré (mais pas son éventuelle base de données)
+        commit-sha: $CI_COMMIT_SHA
     spec:
       containers:
         - image: artifactory-registry.forge.diplomatie.gouv.fr/rece-images-docker-snapshot/rece-ui:develop
@@ -22,8 +26,6 @@ spec:
               subPath: rece-ui.conf
           ports:
             - containerPort: 8080
-      imagePullSecrets:
-        - name: pull-docker
       restartPolicy: Always
       volumes:
         - name: config-apache-rece-ui
