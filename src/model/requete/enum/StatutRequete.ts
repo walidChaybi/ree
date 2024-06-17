@@ -13,6 +13,10 @@ export class StatutRequete extends EnumWithComplete {
   );
   public static readonly DOUBLON = new StatutRequete("DOUBLON", "Doublon");
   public static readonly REJET = new StatutRequete("REJET", "Rejet");
+  public static readonly TRAITEE_AUTO = new StatutRequete(
+    "TRAITEE_AUTO",
+    "Traitée - auto"
+  );
   public static readonly A_TRAITER = new StatutRequete(
     "A_TRAITER",
     "À traiter"
@@ -139,7 +143,7 @@ export class StatutRequete extends EnumWithComplete {
     StatutRequete.A_REVOIR
   ];
   private static readonly StatutsPourTypeRequeteInformation = [
-    StatutRequete.REJET,
+    StatutRequete.TRAITEE_AUTO,
     StatutRequete.A_TRAITER,
     StatutRequete.PRISE_EN_CHARGE,
     StatutRequete.TRANSFEREE,
