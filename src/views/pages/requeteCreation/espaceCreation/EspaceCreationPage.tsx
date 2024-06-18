@@ -23,7 +23,7 @@ interface LocalProps {
 const queryParametersPourRequetesCreation = {
   statuts: statutsRequetesCreation,
   tri: "alerte",
-  sens: "ASC",
+  sens: "DESC",
   range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
 } as IQueryParametersPourRequetes;
 
