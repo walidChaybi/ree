@@ -1,4 +1,4 @@
-import { URL_ACCUEIL } from "@router/ReceUrls";
+import { URL_CONTEXT_APP } from "@router/ReceUrls";
 import { logInfoDansLaConsole } from "@util/Console";
 import { getCsrfHeader } from "@util/CsrfUtil";
 import { Generateur } from "@util/generateur/Generateur";
@@ -200,7 +200,7 @@ export class ApiManager {
     ) {
       errorType = "erreurOffLine";
       // Force la reconnexion
-      window.location.replace(URL_ACCUEIL);
+      window.location.replace(URL_CONTEXT_APP);
     } else if (
       process.env.NODE_ENV === "development" &&
       error.status !== HTTP_FORBIDDEN

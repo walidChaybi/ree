@@ -2,7 +2,7 @@ import { Body } from "@core/body/Body";
 import { OfficierContext } from "@core/contexts/OfficierContext";
 import officier from "@mock/data/connectedUser.json";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
-import { URL_ACCUEIL, URL_CONTEXT_APP } from "@router/ReceUrls";
+import { URL_CONTEXT_APP } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
@@ -12,7 +12,7 @@ test("renders BoutonDeconnexion", async () => {
   const router = createTestingRouter(
     [
       {
-        path: `${URL_CONTEXT_APP}/${URL_ACCUEIL}`,
+        path: URL_CONTEXT_APP,
         element: (
           <OfficierContext.Provider
             value={{
@@ -24,7 +24,7 @@ test("renders BoutonDeconnexion", async () => {
         )
       }
     ],
-    [`${URL_CONTEXT_APP}/${URL_ACCUEIL}`]
+    [URL_CONTEXT_APP]
   );
 
   render(<RouterProvider router={router} />);

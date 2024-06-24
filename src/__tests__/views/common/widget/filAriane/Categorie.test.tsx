@@ -1,6 +1,6 @@
 import { URL_REQUETES } from "@api/appels/requeteApi";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
-import { URL_ACCUEIL } from "@router/ReceUrls";
+import { URL_CONTEXT_APP } from "@router/ReceUrls";
 import { act, fireEvent, render, waitFor } from "@testing-library/react";
 import { Categorie } from "@widget/filAriane/Categorie";
 import { RouterProvider } from "react-router-dom";
@@ -13,14 +13,14 @@ test("renders pas la dernière categorie et clic sur fil ariane", async () => {
         path: URL_REQUETES,
         element: (
           <Categorie
-            url={`/${URL_ACCUEIL}`}
+            url={URL_CONTEXT_APP}
             message={"accueil.test"}
             last={false}
           />
         )
       },
       {
-        path: `/${URL_ACCUEIL}`,
+        path: URL_CONTEXT_APP,
         element: <AccueilPage />
       }
     ],
@@ -44,14 +44,14 @@ test("renders pas la dernière categorie et clic sur element message", async () 
         path: URL_REQUETES,
         element: (
           <Categorie
-            url={`/${URL_ACCUEIL}`}
+            url={URL_CONTEXT_APP}
             message={"accueil.test"}
             last={false}
           />
         )
       },
       {
-        path: `/${URL_ACCUEIL}`,
+        path: URL_CONTEXT_APP,
         element: <AccueilPage />
       }
     ],
@@ -74,11 +74,15 @@ test("renders la derniere catégorie", async () => {
       {
         path: URL_REQUETES,
         element: (
-          <Categorie url={URL_ACCUEIL} message={"accueilString"} last={true} />
+          <Categorie
+            url={URL_CONTEXT_APP}
+            message={"accueilString"}
+            last={true}
+          />
         )
       },
       {
-        path: `/${URL_ACCUEIL}`,
+        path: URL_CONTEXT_APP,
         element: <AccueilPage />
       }
     ],
@@ -100,11 +104,11 @@ test("renders pas la dernière categorie et clic sur element Accueil", async () 
       {
         path: URL_REQUETES,
         element: (
-          <Categorie url={`/${URL_ACCUEIL}`} message={"Accueil"} last={false} />
+          <Categorie url={URL_CONTEXT_APP} message={"Accueil"} last={false} />
         )
       },
       {
-        path: `/${URL_ACCUEIL}`,
+        path: URL_CONTEXT_APP,
         element: <AccueilPage />
       }
     ],

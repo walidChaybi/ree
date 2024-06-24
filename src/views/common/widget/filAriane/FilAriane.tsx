@@ -1,7 +1,7 @@
 import { RECEContext } from "@core/body/RECEContext";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import { URL_ACCUEIL, URL_CONTEXT_APP } from "@router/ReceUrls";
+import { URL_CONTEXT_APP } from "@router/ReceUrls";
 import { getLibelle } from "@util/Utils";
 import { IRoute } from "@util/route/IRoute";
 import {
@@ -69,7 +69,7 @@ export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
     routes,
     gestionnaireNavigation
   );
-  const routeAccueil = getRoute(URL_ACCUEIL, routes);
+  const routeAccueil = getRoute("", routes);
 
   return (
     <div>
@@ -79,13 +79,13 @@ export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
           aria-label={fildarianeLabel}
         >
           <Categorie
-            url={URL_ACCUEIL}
+            url={URL_CONTEXT_APP}
             message={routeAccueil ? routeAccueil.libelle : "Accueil"}
             last={pagesInfos.length === 0}
-            key={URL_ACCUEIL}
+            key={URL_CONTEXT_APP}
           />
 
-          {pagesInfos.map((pageInfo: IPageInfo, index: number) => {
+          {pagesInfos.map((pageInfo: IPageInfo) => {
             return (
               <Categorie
                 url={pageInfo.url}
@@ -129,7 +129,7 @@ export function setRetourContextValue(
   setRetourState: (retourUrl: string) => void
 ) {
   if (pagesInfos.length === 1) {
-    setRetourState(URL_ACCUEIL);
+    setRetourState(URL_CONTEXT_APP);
   } else {
     let retourUrl: string = URL_CONTEXT_APP;
     pagesInfos.forEach((pageInfo: IPageInfo, index: number) => {
@@ -206,10 +206,7 @@ export function getPathElements(path: string) {
   // /rece/rece-ui/mesrequetes/apercurequetedelivrance => "mesrequetes/apercurequetedelivrance"
   // /rece/rece-ui/ => "/""
   // /rece/rece-ui => ""
-  // /rece/rece-ui/accueil => ""
-  // /rece/rece-ui/accueil/ => ""
-  let cleanPath = path.replace(`${URL_ACCUEIL}`, "");
-  cleanPath = cleanPath.replace(`${URL_CONTEXT_APP}`, "");
+  let cleanPath = path.replace(`${URL_CONTEXT_APP}`, "");
   let pathElements = cleanPath.split(URL_SEPARATEUR);
   // suppression des éléments vides dûs aux "/" de début et de fin potentiels
   pathElements = pathElements.filter(x => x);

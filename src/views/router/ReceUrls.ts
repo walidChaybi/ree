@@ -50,7 +50,6 @@ export const GO_BACK = "goBack";
 export const URL_DECONNEXION = "/rece/Shibboleth.sso/Logout";
 
 export const URL_CONTEXT_APP = "/rece/rece-ui";
-export const URL_ACCUEIL = `accueil`;
 
 ////////////////////////////////////////////
 ///// MES REQUETES DE DELIVRANCE (MRD) /////

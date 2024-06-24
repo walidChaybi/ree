@@ -1,5 +1,4 @@
 import {
-  URL_ACCUEIL,
   URL_CONTEXT_APP,
   URL_MES_REQUETES_DELIVRANCE,
   URL_RECHERCHE_REQUETE,
@@ -26,8 +25,7 @@ export const BoutonRetour: React.FC = () => {
 export function getLibelleEtUrl(url: string) {
   switch (url) {
     case URL_CONTEXT_APP:
-    case URL_ACCUEIL:
-      return [getLibelle("Accueil"), URL_ACCUEIL];
+      return [getLibelle("Accueil"), URL_CONTEXT_APP];
     case URL_MES_REQUETES_DELIVRANCE:
       return [
         getLibelle("mes requêtes de délivrance"),
@@ -41,6 +39,6 @@ export function getLibelleEtUrl(url: string) {
     case URL_RECHERCHE_REQUETE:
       return [getLibelle("recherche requête"), URL_RECHERCHE_REQUETE];
     default:
-      return [getLibelle(""), URL_ACCUEIL];
+      return [getLibelle(""), URL_CONTEXT_APP];
   }
 }

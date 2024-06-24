@@ -77,7 +77,9 @@ export const receRouter = createBrowserRouter(
           return (
             <Route
               key={index}
-              path={route.url}
+              {...(Boolean(route.url.length)
+                ? { path: route.url }
+                : { index: true })}
               element={
                 <ReceRoute route={route}>
                   <route.component {...route.props} />

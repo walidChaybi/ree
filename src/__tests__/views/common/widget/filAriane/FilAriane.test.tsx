@@ -153,8 +153,6 @@ test("Attendu: getPathElements fonctionne correctement.", () => {
   ).toEqual(["mesrequetes", "apercurequetedelivrance"]);
   expect(getPathElements("/rece/rece-ui/")).toEqual([]);
   expect(getPathElements("/rece/rece-ui")).toEqual([]);
-  expect(getPathElements("/rece/rece-ui/accueil")).toEqual([]);
-  expect(getPathElements("/rece/rece-ui/accueil/")).toEqual([]);
 });
 
 test("Attendu: buildPagesInfos fonctionne correctement.", () => {

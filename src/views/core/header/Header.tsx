@@ -1,10 +1,10 @@
-import { Droit } from "@model/agent/enum/Droit";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
 import { Tooltip } from "@mui/material";
-import { URL_ACCUEIL } from "@router/ReceUrls";
+import { URL_CONTEXT_APP } from "@router/ReceUrls";
+import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { getLibelle } from "@util/Utils";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import logoReceBlanc from "../../../img/logo-rece-blanc.svg";
@@ -21,9 +21,9 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
 
   function onClickLogo(event: React.MouseEvent) {
     if (onClick) {
-      onClick(event, URL_ACCUEIL);
+      onClick(event, URL_CONTEXT_APP);
     }
-    navigate(URL_ACCUEIL);
+    navigate(URL_CONTEXT_APP);
   }
 
   return (
