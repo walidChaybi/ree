@@ -32,9 +32,6 @@ data:
       RewriteEngine On
       Options FollowSymLinks
         
-      # Ajout du slash si besoin. HOSTNAME_SITE est valorisé par gitlab-ci en fonction de l'environnement.
-      RewriteRule ^.*rece-ui$ %{HTTP:X-Forwarded-Proto}://${HOSTNAME_SITE}/rece/rece-ui/ [R=302,L]
-      
       # Si l'URL est index.html, on sort
       RewriteRule ^/rece-ui/index\.html$ - [L]
       
