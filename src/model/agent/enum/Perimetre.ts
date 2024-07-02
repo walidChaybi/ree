@@ -1,6 +1,6 @@
 export enum Perimetre {
   ETAX = "ETA X",
-  MEAE = "MEAE"
+  TOUS_REGISTRES = "TOUS_REGISTRES"
 }
 
 export const PerimetreEnum = {

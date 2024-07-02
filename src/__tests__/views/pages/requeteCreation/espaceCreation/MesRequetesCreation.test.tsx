@@ -1,5 +1,5 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { userDroitCreerActeTranscritPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
+import { userDroitCreerActeTranscritPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
 import { MesRequetesCreation } from "@pages/requeteCreation/espaceCreation/MesRequetesCreation";
 import { statutsRequetesCreation } from "@pages/requeteCreation/espaceCreation/params/EspaceCreationParams";
 import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
@@ -9,7 +9,8 @@ import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauP
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
-storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
+storeRece.utilisateurCourant =
+  userDroitCreerActeTranscritPerimetreTousRegistres;
 
 const queryParametersPourRequetes = {
   statuts: statutsRequetesCreation,

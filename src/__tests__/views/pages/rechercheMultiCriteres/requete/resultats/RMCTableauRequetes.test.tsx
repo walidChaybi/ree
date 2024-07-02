@@ -2,7 +2,7 @@ import {
   DataRMCRequeteAvecResultat,
   DataTableauRequete
 } from "@mock/data/RMCRequete";
-import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
+import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
 import { RMCTableauRequetes } from "@pages/rechercheMultiCriteres/requete/resultats/RMCTableauRequetes";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import {
@@ -157,10 +157,10 @@ test("renders Resultat Requetes Recherche Multi Critères => Sans résultat", ()
 });
 
 test("Clic sur une Requête Délivrance au statut 'Prise en charge'", async () => {
-  userDroitConsulterPerimetreMEAE.idUtilisateur =
+  userDroitConsulterPerimetreTousRegistres.idUtilisateur =
     "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
 
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
 
   const router = createTestingRouter(
     [
@@ -205,10 +205,10 @@ test("Clic sur une Requête Délivrance au statut 'Prise en charge'", async () =
 });
 
 test("Clic sur une Requête avec des titulaire", async () => {
-  userDroitConsulterPerimetreMEAE.idUtilisateur =
+  userDroitConsulterPerimetreTousRegistres.idUtilisateur =
     "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
 
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
 
   const router = createTestingRouter(
     [
@@ -253,10 +253,10 @@ test("Clic sur une Requête avec des titulaire", async () => {
 });
 
 test("Changement de page", async () => {
-  userDroitConsulterPerimetreMEAE.idUtilisateur =
+  userDroitConsulterPerimetreTousRegistres.idUtilisateur =
     "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
 
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
 
   const router = createTestingRouter(
     [

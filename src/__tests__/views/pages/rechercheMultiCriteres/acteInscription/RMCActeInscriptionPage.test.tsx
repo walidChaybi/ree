@@ -1,4 +1,4 @@
-import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
+import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
 import { idFicheActe1 } from "@mock/data/ficheActe";
 import { idFichePacs } from "@mock/data/fichePacs";
 import { titreForm } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
@@ -143,7 +143,7 @@ test("La pagination (avec changement de plage) entre les fiches rc/rca/pacs s'ef
   // @ts-ignore
   TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_ACTE = 2;
 
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
 
   const router = createTestingRouter(
     [
@@ -250,7 +250,7 @@ test("La pagination (avec changement de plage) entre les fiches acte s'effectue 
   // @ts-ignore
   TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_ACTE = 2;
 
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
 
   const router = createTestingRouter(
     [

@@ -742,7 +742,7 @@ export const servicesALL = {
     {
       idService: "427786f4-dbc2-4762-929c-b80d8f48020e",
       type: "MINISTERE",
-      code: "MEAE",
+      code: "TOUS_REGISTRES",
       libelleService: "Ministère de l'Europe et des Affaires Étrangères",
       siteInternet: null,
       hierarchieService: null,

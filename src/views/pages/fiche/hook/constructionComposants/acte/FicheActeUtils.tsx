@@ -1,10 +1,10 @@
 import { VisionneuseActe } from "@composant/visionneuseActe/VisionneuseActe";
-import { Droit } from "@model/agent/enum/Droit";
 import {
   officierDroitConsulterSurLeTypeRegistre,
   officierDroitConsulterSurLeTypeRegistreOuDroitMEAE,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
@@ -90,7 +90,7 @@ export function getParamsAffichageFicheActe(
   };
 
   // Vérification que l'officier à le droit de consulter la visualisation de l'acte
-  // S'il a le droit CONSULTER sur le périmètre MEAE
+  // S'il a le droit CONSULTER sur le périmètre TOUS_REGISTRES
   // ou
   // S'il a le droit CONSULTER sur le périmètre de l'acte et le type de registre est présent dans ce périmètre
   if (

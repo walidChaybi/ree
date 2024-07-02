@@ -25,7 +25,7 @@ export const MockHabilitation = {
         description: "descPérimètre",
         estActif: true,
         listePays: "paysPérimètre",
-        nom: "MEAE",
+        nom: "TOUS_REGISTRES",
         type: ["idlisteIdTypeRegistre"]
       }
     }

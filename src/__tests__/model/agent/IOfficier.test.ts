@@ -5,7 +5,7 @@ import {
   resultatRequeteUtilistateurLaurenceBourdeau,
   userDroitConsulterArchive,
   userDroitConsulterConsulterArchive,
-  userDroitConsulterPerimetreMEAE,
+  userDroitConsulterPerimetreTousRegistres,
   userDroitConsulterPerimetreTUNIS,
   userDroitnonCOMEDEC
 } from "@mock/data/connectedUserAvecDroit";
@@ -63,7 +63,7 @@ test("Utilisateur autoriser à consulter l'acte dont l'idTypeRegistre est passé
     officierDroitConsulterSurLeTypeRegistre(idTypeRegistre);
   expect(autoriserAConsulterActe).toBe(true);
 
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
   autoriserAConsulterActe =
     officierDroitConsulterSurLeTypeRegistre(idTypeRegistre);
   expect(autoriserAConsulterActe).toBe(false);
@@ -153,7 +153,7 @@ test("Attendu: officierALeDroitSurUnDesPerimetres/officierALeDroitSurLePerimetre
 
   expect(
     officierALeDroitSurUnDesPerimetres(Droit.CREER_ACTE_ETABLI, [
-      Perimetre.MEAE
+      Perimetre.TOUS_REGISTRES
     ])
   ).toBeTruthy();
 
@@ -163,7 +163,7 @@ test("Attendu: officierALeDroitSurUnDesPerimetres/officierALeDroitSurLePerimetre
 
   expect(
     officierALeDroitSurUnDesPerimetres(Droit.CREER_ACTE_ETABLI, [
-      Perimetre.MEAE,
+      Perimetre.TOUS_REGISTRES,
       Perimetre.ETAX
     ])
   ).toBeTruthy();

@@ -1,6 +1,6 @@
 import {
   userDroitConsulterArchive,
-  userDroitConsulterPerimetreMEAE,
+  userDroitConsulterPerimetreTousRegistres,
   userDroitConsulterPerimetreTUNIS
 } from "@mock/data/connectedUserAvecDroit";
 import { Droit } from "@model/agent/enum/Droit";
@@ -21,8 +21,8 @@ import { storeRece } from "@util/storeRece";
 import { acte } from "../../../../../../../mock/data/ficheEtBandeau/ficheActe";
 
 const resumeActeLibelle = "Résumé de l'acte";
-test("ficheUtils acte avec utilisateur qui a le droit CONSULTER sur le périmètre MEAE", async () => {
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+test("ficheUtils acte avec utilisateur qui a le droit CONSULTER sur le périmètre TOUS_REGISTRES", async () => {
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
   const panels = getPanelsActe(acte);
   expect(panels.panels).toHaveLength(3);
   expect(panels.panels[1].panelAreas).toHaveLength(2);
@@ -57,45 +57,45 @@ test("ficheUtils acte avec utilisateur qui a le droit CONSULTER sur le périmèt
  *
  *  Cas possible pour le rendu d'un acte:
  *
- * Type d'actes possibles \ | Acte            | Acte            | Acte Archive    | Acte Archive    |
- * Type de droits possibles | Périmètre TUNIS | Périmètre SEOUL | Périmètre TUNIS | Périmètre SEOUL |
- * ==================================================================================================
- * CONS + Périmètre MEAE    | bouton:    TRUE | bouton:     TRUE| bouton:    FALSE| bouton:    FALSE|
- *                          | visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS|
- *                          | personnes: VISIB| personnes: VISIB| personnes: VISIB| personnes: VISIB|
- * --------------------------------------------------------------------------------------------------
- * CONS + Périmètre TUNIS   | bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
- *                          | visuActe:  CLASS| visuActe:  DISAB| visuActe:  CLASS| visuActe:  DISAB|
- *                          | personnes: VISIB| personnes: DISAB| personnes: VISIB| personnes: DISAB|
- * --------------------------------------------------------------------------------------------------
- * CONS + Périmètre SEOUL   | bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
- *                          | visuActe:  DISAB| visuActe:  CLASS| visuActe:  DISAB| visuActe:  CLASS|
- *                          | personnes: DISAB| personnes: VISIB| personnes: DISAB| personnes: VISIB|
- * --------------------------------------------------------------------------------------------------
- * CONS + Périmè TUNIS+SEOUL| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
- *                          | visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS|
- *                          | personnes: VISIB| personnes: VISIB| personnes: VISIB| personnes: VISIB|
- * --------------------------------------------------------------------------------------------------
- * CONS ARCH (+ Périmè MEAE)| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
- *                          | visuActe!: DISAB| visuActe!: DISAB| visuActe:  FILIG| visuActe:  FILIG|
- *                          | personnes!:DISAB| personnes!:DISAB| personnes: NONE | personnes: NONE |
- * --------------------------------------------------------------------------------------------------
- * CONS ARCH (+ Périmè MEAE)| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
- * CONS + Périmètre TUNIS   | visuActe:  CLASS| visuActe:  DISAB| visuActe:  CLASS| visuActe:  FILIG|
- *                          | personnes: VISIB| personnes: DISAB| personnes: VISIB| personnes: NONE |
- * --------------------------------------------------------------------------------------------------
- * CONS ARCH (+ Périmè MEAE)| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
- * CONS + Périmètre SEOUL   | visuActe:  DISAB| visuActe:  CLASS| visuActe:  FILIG| visuActe:  CLASS|
- *                          | personnes: DISAB| personnes: VISIB| personnes: NONE | personnes: VISIB|
- * --------------------------------------------------------------------------------------------------
- * CONS ARCH (+ Périmè MEAE)| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
- * CONS + Périmè TUNIS+SEOUL| visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS|
- *                          | personnes: VISIB| personnes: VISIB| personnes: VISIB| personnes: VISIB|
- * --------------------------------------------------------------------------------------------------
- * CONS ARCH (+ Périmè MEAE)| bouton:    TRUE | bouton:    TRUE | bouton:    FALSE| bouton:    FALSE|
- * CONS + Périmètre MEAE    | visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS|
- *                          | personnes: VISIB| personnes: VISIB| personnes: VISIB| personnes: VISIB|
- * --------------------------------------------------------------------------------------------------*/
+ * Type d'actes possibles \             | Acte            | Acte            | Acte Archive    | Acte Archive    |
+ * Type de droits possibles             | Périmètre TUNIS | Périmètre SEOUL | Périmètre TUNIS | Périmètre SEOUL |
+ * ==============================================================================================================
+ * CONS + Périmètre TOUS_REGISTRES      | bouton:    TRUE | bouton:     TRUE| bouton:    FALSE| bouton:    FALSE|
+ *                                      | visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS|
+ *                                      | personnes: VISIB| personnes: VISIB| personnes: VISIB| personnes: VISIB|
+ * --------------------------------------------------------------------------------------------------------------
+ * CONS + Périmètre TUNIS               | bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
+ *                                      | visuActe:  CLASS| visuActe:  DISAB| visuActe:  CLASS| visuActe:  DISAB|
+ *                                      | personnes: VISIB| personnes: DISAB| personnes: VISIB| personnes: DISAB|
+ * --------------------------------------------------------------------------------------------------------------
+ * CONS + Périmètre SEOUL               | bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
+ *                                      | visuActe:  DISAB| visuActe:  CLASS| visuActe:  DISAB| visuActe:  CLASS|
+ *                                      | personnes: DISAB| personnes: VISIB| personnes: DISAB| personnes: VISIB|
+ * --------------------------------------------------------------------------------------------------------------
+ * CONS + Périmè TUNIS+SEOUL            | bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
+ *                                      | visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS|
+ *                                      | personnes: VISIB| personnes: VISIB| personnes: VISIB| personnes: VISIB|
+ * --------------------------------------------------------------------------------------------------------------
+ * CONS ARCH (+ Périmè TOUS_REGISTRES)  | bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
+ *                                      | visuActe!: DISAB| visuActe!: DISAB| visuActe:  FILIG| visuActe:  FILIG|
+ *                                      | personnes!:DISAB| personnes!:DISAB| personnes: NONE | personnes: NONE |
+ * --------------------------------------------------------------------------------------------------------------
+ * CONS ARCH (+ Périmè TOUS_REGISTRES)  | bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
+ * CONS + Périmètre TUNIS               | visuActe:  CLASS| visuActe:  DISAB| visuActe:  CLASS| visuActe:  FILIG|
+ *                                      | personnes: VISIB| personnes: DISAB| personnes: VISIB| personnes: NONE |
+ * --------------------------------------------------------------------------------------------------------------
+ * CONS ARCH (+ Périmè TOUS_REGISTRES)  | bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
+ * CONS + Périmètre SEOUL               | visuActe:  DISAB| visuActe:  CLASS| visuActe:  FILIG| visuActe:  CLASS|
+ *                                      | personnes: DISAB| personnes: VISIB| personnes: NONE | personnes: VISIB|
+ * --------------------------------------------------------------------------------------------------------------
+ * CONS ARCH (+ Périmè TOUS_REGISTRES)  | bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
+ * CONS + Périmè TUNIS+SEOUL            | visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS|
+ *                                      | personnes: VISIB| personnes: VISIB| personnes: VISIB| personnes: VISIB|
+ * --------------------------------------------------------------------------------------------------------------
+ * CONS ARCH (+ Périmè TOUS_REGISTRES)  | bouton:    TRUE | bouton:    TRUE | bouton:    FALSE| bouton:    FALSE|
+ * CONS + Périmètre TOUS_REGISTRES      | visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS|
+ *                                      | personnes: VISIB| personnes: VISIB| personnes: VISIB| personnes: VISIB|
+ * --------------------------------------------------------------------------------------------------------------*/
 
 // DROITS POSSIBLES
 /////////////////////////////////////
@@ -105,7 +105,7 @@ const perimetreTUNIS: IPerimetre = {
 } as IPerimetre;
 
 const perimetreMEAE: IPerimetre = {
-  nom: Perimetre.MEAE,
+  nom: Perimetre.TOUS_REGISTRES,
   listeIdTypeRegistre: ["meae"]
 } as IPerimetre;
 

@@ -364,7 +364,7 @@ export const routesRece: IRoute[] = [
     component: ApercuRequeteEtablissementSimplePage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+      perimetres: [Perimetre.ETAX, Perimetre.TOUS_REGISTRES]
     },
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
@@ -373,7 +373,7 @@ export const routesRece: IRoute[] = [
     component: ApercuRequeteEtablissementSuiviDossierPage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+      perimetres: [Perimetre.ETAX, Perimetre.TOUS_REGISTRES]
     },
     libelle: getLibelle(LIBELLE_APERCU_SUIVI_DOSSIER)
   },
@@ -382,7 +382,7 @@ export const routesRece: IRoute[] = [
     component: ApercuRequeteEtablissementSaisieDeProjetPage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+      perimetres: [Perimetre.ETAX, Perimetre.TOUS_REGISTRES]
     },
     libelle: getLibelle(LIBELLE_APERCU_SAISIE_PROJET)
   },
@@ -474,7 +474,7 @@ export const routesRece: IRoute[] = [
     component: ApercuRequeteEtablissementSimplePage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+      perimetres: [Perimetre.ETAX, Perimetre.TOUS_REGISTRES]
     },
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
@@ -483,7 +483,7 @@ export const routesRece: IRoute[] = [
     component: ApercuRequeteEtablissementSuiviDossierPage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+      perimetres: [Perimetre.ETAX, Perimetre.TOUS_REGISTRES]
     },
     libelle: getLibelle(LIBELLE_APERCU_SUIVI_DOSSIER)
   },
@@ -492,7 +492,7 @@ export const routesRece: IRoute[] = [
     component: ApercuRequeteEtablissementSaisieDeProjetPage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+      perimetres: [Perimetre.ETAX, Perimetre.TOUS_REGISTRES]
     },
     libelle: getLibelle(LIBELLE_APERCU_SAISIE_PROJET)
   },
@@ -502,7 +502,7 @@ export const routesRece: IRoute[] = [
     droits: [Droit.SIGNER_ACTE],
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+      perimetres: [Perimetre.ETAX, Perimetre.TOUS_REGISTRES]
     },
     libelle: getLibelle(LIBELLE_APERCU_ACTE_REGISTRE)
   },
@@ -561,7 +561,7 @@ export const routesRece: IRoute[] = [
     component: ApercuRequeteEtablissementSimplePage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+      perimetres: [Perimetre.ETAX, Perimetre.TOUS_REGISTRES]
     },
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
@@ -570,7 +570,7 @@ export const routesRece: IRoute[] = [
     component: ApercuRequeteEtablissementSuiviDossierPage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+      perimetres: [Perimetre.ETAX, Perimetre.TOUS_REGISTRES]
     },
     libelle: getLibelle(LIBELLE_APERCU_SUIVI_DOSSIER)
   },
@@ -579,7 +579,7 @@ export const routesRece: IRoute[] = [
     component: ApercuRequeteEtablissementSaisieDeProjetPage,
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+      perimetres: [Perimetre.ETAX, Perimetre.TOUS_REGISTRES]
     },
     libelle: getLibelle(LIBELLE_APERCU_SAISIE_PROJET)
   },
@@ -589,7 +589,7 @@ export const routesRece: IRoute[] = [
     droits: [Droit.SIGNER_ACTE],
     droitPerimetres: {
       droit: Droit.CREER_ACTE_ETABLI,
-      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+      perimetres: [Perimetre.ETAX, Perimetre.TOUS_REGISTRES]
     },
     libelle: getLibelle(LIBELLE_APERCU_ACTE_REGISTRE)
   },

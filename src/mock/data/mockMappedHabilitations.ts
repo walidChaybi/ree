@@ -39,7 +39,7 @@ export const MockMappedHabilitation = {
         description: "descPérimètre",
         estActif: true,
         listePays: ["paysPérimètre"],
-        nom: "MEAE",
+        nom: "TOUS_REGISTRES",
         listeIdTypeRegistre: ["idlisteIdTypeRegistre"]
       } as IPerimetre
     }

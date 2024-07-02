@@ -1,4 +1,4 @@
-import { userDroitCreerActeEtabliPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
+import { userDroitCreerActeEtabliPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
 import { requeteCreationATraiter } from "@mock/data/requeteCreation";
 import { BoutonPrendreEnChargeCreation } from "@pages/requeteCreation/apercuRequete/etablissement/commun/BoutonPrendreEnChargeCreation";
 import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID } from "@router/ReceUrls";
@@ -11,7 +11,7 @@ import { createTestingRouter } from "../../../../../../__tests__utils__/testsUti
 const mockedRedirection = jest.fn();
 
 test("DOIT rediriger sur l'appercu prise en charge QUAND on clique sur le bouton prendre en charge", async () => {
-  storeRece.utilisateurCourant = userDroitCreerActeEtabliPerimetreMEAE;
+  storeRece.utilisateurCourant = userDroitCreerActeEtabliPerimetreTousRegistres;
   const ID = "54ddf213-d9b7-4747-8e92-68c220f66de3";
 
   const router = createTestingRouter(

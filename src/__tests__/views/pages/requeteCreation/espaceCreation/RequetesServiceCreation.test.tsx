@@ -5,9 +5,6 @@ import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic
 } from "@mock/data/connectedUserAvecDroit";
-import { Droit } from "@model/agent/enum/Droit";
-import { Perimetre } from "@model/agent/enum/Perimetre";
-import { TypeService } from "@model/agent/enum/TypeService";
 import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IPerimetre } from "@model/agent/IPerimetre";
 import { IService } from "@model/agent/IService";
@@ -15,9 +12,12 @@ import {
   IUtilisateur,
   mapHabilitationsUtilisateur
 } from "@model/agent/IUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
+import { TypeService } from "@model/agent/enum/TypeService";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
-import { statutsRequetesCreation } from "@pages/requeteCreation/espaceCreation/params/EspaceCreationParams";
 import { RequetesServiceCreation } from "@pages/requeteCreation/espaceCreation/RequetesServiceCreation";
+import { statutsRequetesCreation } from "@pages/requeteCreation/espaceCreation/params/EspaceCreationParams";
 import {
   URL_REQUETES_CREATION_SERVICE,
   URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID
@@ -29,9 +29,9 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { UN } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { UN } from "@util/Utils";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useState } from "react";
 import { RouterProvider } from "react-router-dom";
@@ -59,7 +59,7 @@ beforeAll(() => {
             droits: [{ nom: Droit.CREER_ACTE_ETABLI } as IDroit]
           } as IProfil,
           perimetre: {
-            nom: Perimetre.MEAE,
+            nom: Perimetre.TOUS_REGISTRES,
             listeIdTypeRegistre: ["meae"]
           } as IPerimetre
         } as IHabilitation

@@ -5,12 +5,12 @@ import {
 } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
+import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
 import { TableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonne";
 import { mapDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
@@ -150,7 +150,9 @@ test("Ouverture d'un acte", async () => {
 
   await waitFor(() => {
     const vue = screen.queryByText("Visualisation du RC");
-    if (officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.MEAE)) {
+    if (
+      officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.TOUS_REGISTRES)
+    ) {
       expect(vue).toBeDefined();
     } else {
       expect(vue).toBeNull();

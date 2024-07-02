@@ -1,4 +1,4 @@
-import { userDroitCreerActeTranscritPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
+import { userDroitCreerActeTranscritPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import {
@@ -151,7 +151,8 @@ describe("Test du rendu du composant RMCRequeteAssociees", () => {
   });
 
   test("DOIT afficher le bouton prendre en charge QUAND la requête est au statut 'A_TRAITER'", async () => {
-    storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
+    storeRece.utilisateurCourant =
+      userDroitCreerActeTranscritPerimetreTousRegistres;
     const router = createTestingRouter(
       [
         {

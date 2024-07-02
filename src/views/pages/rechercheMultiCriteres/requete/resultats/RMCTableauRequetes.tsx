@@ -14,20 +14,20 @@ import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import { Droit } from "@model/agent/enum/Droit";
-import { Perimetre } from "@model/agent/enum/Perimetre";
 import {
   officierALeDroitSurUnDesPerimetres,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
 import { TRequeteTableau } from "@model/requete/IRequeteTableau";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { setParamsUseApercuCreation } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
@@ -163,7 +163,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     return (
       SousTypeCreation.estRCEXR(sousType) &&
       officierALeDroitSurUnDesPerimetres(Droit.CREER_ACTE_ETABLI, [
-        Perimetre.MEAE,
+        Perimetre.TOUS_REGISTRES,
         Perimetre.ETAX
       ])
     );

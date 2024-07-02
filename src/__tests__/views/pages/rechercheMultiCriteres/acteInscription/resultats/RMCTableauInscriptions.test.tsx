@@ -1,9 +1,9 @@
-import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
 } from "@mock/data/RMCInscription";
+import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
+import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { RMCTableauInscriptions } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauInscriptions";
 import {
   act,
@@ -61,7 +61,7 @@ test("Navigation dans les pages du tableau Resultat Inscription Recherche Multi 
 });
 
 test("Ouverture d'une inscription", async () => {
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
   const { getByTestId } = render(
     <MemoryRouter>
       <RMCTableauInscriptions

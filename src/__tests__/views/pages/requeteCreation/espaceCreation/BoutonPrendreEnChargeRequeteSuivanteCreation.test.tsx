@@ -1,4 +1,4 @@
-import { userDroitCreerActeEtabliPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
+import { userDroitCreerActeEtabliPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import BoutonPrendreEnChargeRequeteSuivanteCreation from "@pages/requeteCreation/espaceCreation/BoutonPrendreEnChargeRequeteSuivanteCreation";
 import {
@@ -18,7 +18,7 @@ import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l'espace création", async () => {
-  storeRece.utilisateurCourant = userDroitCreerActeEtabliPerimetreMEAE;
+  storeRece.utilisateurCourant = userDroitCreerActeEtabliPerimetreTousRegistres;
 
   await act(async () => {
     const router = createTestingRouter(

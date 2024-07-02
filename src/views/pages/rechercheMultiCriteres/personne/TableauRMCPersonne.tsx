@@ -147,7 +147,10 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
       !dataLigne.estDataPersonne &&
       idActeInscription &&
       (DataTableauRMCPersonne.estActe(dataLigne) ||
-        officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.MEAE))
+        officierALeDroitSurLePerimetre(
+          Droit.CONSULTER,
+          Perimetre.TOUS_REGISTRES
+        ))
     ) {
       const nouvelEtatFenetre: IFenetreFicheActeInscription = {
         index: { value: index },

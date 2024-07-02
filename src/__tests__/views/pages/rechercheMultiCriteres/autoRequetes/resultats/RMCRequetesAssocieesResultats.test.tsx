@@ -1,6 +1,6 @@
 import {
-  userDroitCreerActeEtabliPerimetreMEAE,
-  userDroitCreerActeTranscritPerimetreMEAE,
+  userDroitCreerActeEtabliPerimetreTousRegistres,
+  userDroitCreerActeTranscritPerimetreTousRegistres,
   userDroitDelivrer,
   userDroitInformerUsager
 } from "@mock/data/connectedUserAvecDroit";
@@ -9,17 +9,17 @@ import { requeteInformation } from "@mock/data/requeteInformation";
 import { IDroit } from "@model/agent/Habilitation";
 import { INomenclatureAgentApi } from "@model/agent/INomenclatureAgentApi";
 import {
+  IOfficier,
   aDroitConsulterApercuRequeteInformation,
   aDroitConsulterRequeteCreation,
-  aDroitConsulterRequeteDelivrance,
-  IOfficier
+  aDroitConsulterRequeteDelivrance
 } from "@model/agent/IOfficier";
 import { IPerimetre } from "@model/agent/IPerimetre";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import {
-  getApercuRequeteEtablissementOuTranscription,
   IInfoRequeteSelectionnee,
+  getApercuRequeteEtablissementOuTranscription,
   utilisateurADroitOuvrirRequete
 } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCTableauRequetesAssociees";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
@@ -119,7 +119,7 @@ describe("RMCRequetesAssocieesResultats", () => {
             description: "descPérimètre",
             estActif: true,
             listePays: ["paysPérimètre"],
-            nom: "MEAE",
+            nom: "TOUS_REGISTRES",
             listeIdTypeRegistre: ["idlisteIdTypeRegistre"]
           } as IPerimetre
         }
@@ -162,7 +162,7 @@ describe("RMCRequetesAssocieesResultats", () => {
             description: "descPérimètre",
             estActif: true,
             listePays: ["paysPérimètre"],
-            nom: "MEAE",
+            nom: "TOUS_REGISTRES",
             listeIdTypeRegistre: ["idlisteIdTypeRegistre"]
           } as IPerimetre
         }
@@ -177,7 +177,8 @@ describe("RMCRequetesAssocieesResultats", () => {
   });
 
   test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête de création Transcription", async () => {
-    storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
+    storeRece.utilisateurCourant =
+      userDroitCreerActeTranscritPerimetreTousRegistres;
     const libelleCourtTranscription = "Acte Transcrit (c)";
     const aDroitConsulter = aDroitConsulterRequeteCreation(
       libelleCourtTranscription
@@ -217,7 +218,7 @@ describe("RMCRequetesAssocieesResultats", () => {
             description: "descPérimètre",
             estActif: true,
             listePays: ["paysPérimètre"],
-            nom: "MEAE",
+            nom: "TOUS_REGISTRES",
             listeIdTypeRegistre: ["idlisteIdTypeRegistre"]
           } as IPerimetre
         }
@@ -264,7 +265,7 @@ describe("RMCRequetesAssocieesResultats", () => {
             description: "descPérimètre",
             estActif: true,
             listePays: ["paysPérimètre"],
-            nom: "MEAE",
+            nom: "TOUS_REGISTRES",
             listeIdTypeRegistre: ["idlisteIdTypeRegistre"]
           } as IPerimetre
         }
@@ -278,7 +279,8 @@ describe("RMCRequetesAssocieesResultats", () => {
   });
 
   test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête de création'", async () => {
-    storeRece.utilisateurCourant = userDroitCreerActeEtabliPerimetreMEAE;
+    storeRece.utilisateurCourant =
+      userDroitCreerActeEtabliPerimetreTousRegistres;
     const sousTypeRequete = "Acte Etab X (d)";
 
     const aDroitConsulter = utilisateurADroitOuvrirRequete(
@@ -381,7 +383,8 @@ describe("RMCRequetesAssocieesResultats", () => {
   });
 
   test("DOIT retourner le bon composant d'aperçu simple d'une requête de création de transcription", async () => {
-    storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
+    storeRece.utilisateurCourant =
+      userDroitCreerActeTranscritPerimetreTousRegistres;
     const requeteSelectionnee = {
       idRequete: "7b448d64-add5-4dbd-8041-b7081ea7bc86",
       numeroFonctionnel: "numero",

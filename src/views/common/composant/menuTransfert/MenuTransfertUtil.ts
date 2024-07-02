@@ -1,17 +1,17 @@
 import { TransfertUnitaireParams } from "@hook/requete/TransfertHook";
-import { Droit } from "@model/agent/enum/Droit";
 import {
   IUtilisateur,
   utilisateurADroit,
   utilisateurALeDroitSurUnDesPerimetres
 } from "@model/agent/IUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { DoubleClicUtil } from "@util/DoubleClicUtil";
-import { storeRece } from "@util/storeRece";
 import { Option, Options } from "@util/Type";
+import { storeRece } from "@util/storeRece";
 import { MutableRefObject } from "react";
 import { Perimetre } from "./../../../../model/agent/enum/Perimetre";
 import { IMenuTransfertProps } from "./MenuTransfert";
@@ -144,7 +144,7 @@ export function filtreUtilisateurRequeteCreation(
 ) {
   const aDroit: boolean = utilisateurALeDroitSurUnDesPerimetres(
     Droit.CREER_ACTE_ETABLI,
-    [Perimetre.MEAE, Perimetre.ETAX],
+    [Perimetre.TOUS_REGISTRES, Perimetre.ETAX],
     utilisateur
   );
   let estDansMonServiceOuServiceFils = false;

@@ -1,7 +1,7 @@
 import { ReponseAppelDetailRequeteInformationSansCorbeilleAgent } from "@mock/data/DetailRequeteInformation";
 import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { NOMENCLATURE_REPONSE } from "@mock/data/NomenclatureReponse";
-import { userDroitConsulterPerimetreMEAE } from "@mock/data/connectedUserAvecDroit";
+import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
 import { NORESULT } from "@mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetesInformation } from "@mock/superagent-config/superagent-mock-requetes-information";
 import { IOfficier } from "@model/agent/IOfficier";
@@ -481,7 +481,7 @@ const Labels = {
   ajouterUnePieceJointe: "Ajouter une pièce jointe"
 };
 const renduApercuReqInfoPage = async () => {
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
 
   const router = createTestingRouter(
     [
@@ -550,7 +550,7 @@ test("Attendu: les blocs non présents sur l'aperçu de requête sont bien absen
 });
 
 test("Attendu: le bouton 'prendre en charge' ne s'affiche pas lorsqu'on se trouve sur une fenêtre externe", async () => {
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
 
   const router = createTestingRouter(
     [

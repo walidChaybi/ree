@@ -2,7 +2,7 @@ import { mappingOfficier } from "@core/login/LoginHook";
 import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic,
-  userDroitCreerActeTranscritPerimetreMEAE
+  userDroitCreerActeTranscritPerimetreTousRegistres
 } from "@mock/data/connectedUserAvecDroit";
 import { serviceEtablissement } from "@mock/data/serviceEtablissement";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
@@ -84,7 +84,8 @@ test("DOIT retirer un parent QUAND on clique sur le bouton 'Retirer un parent'",
 });
 
 test("DOIT afficher la popin de transfert vers les services fils (triés) du département Etablissement QUAND l'utilisateur clique sur le bouton de transmission", async () => {
-  storeRece.utilisateurCourant = userDroitCreerActeTranscritPerimetreMEAE;
+  storeRece.utilisateurCourant =
+    userDroitCreerActeTranscritPerimetreTousRegistres;
 
   const router = createTestingRouter(
     [

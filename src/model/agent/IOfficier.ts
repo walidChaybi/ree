@@ -1,9 +1,7 @@
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { storeRece } from "@util/storeRece";
 import { getValeurOuVide } from "@util/Utils";
+import { storeRece } from "@util/storeRece";
 import { Provenance } from "../requete/enum/Provenance";
-import { Droit } from "./enum/Droit";
-import { Perimetre } from "./enum/Perimetre";
 import { Habilitation } from "./Habilitation";
 import { IService } from "./IService";
 import {
@@ -11,6 +9,8 @@ import {
   utilisateurADroit,
   utilisateurALeDroitSurUnDesPerimetres
 } from "./IUtilisateur";
+import { Droit } from "./enum/Droit";
+import { Perimetre } from "./enum/Perimetre";
 
 export interface IOfficier extends IUtilisateur {
   idSSO: string;
@@ -119,7 +119,9 @@ export function officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(
 ) {
   return (
     officierDroitConsulterSurLeTypeRegistre(idTypeRegistre) ||
-    officierALeDroitSurUnDesPerimetres(Droit.CONSULTER, [Perimetre.MEAE])
+    officierALeDroitSurUnDesPerimetres(Droit.CONSULTER, [
+      Perimetre.TOUS_REGISTRES
+    ])
   );
 }
 
@@ -129,9 +131,11 @@ export function officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(
   if (idTypeRegistre) {
     return (
       officierDroitDelivrerSurLeTypeRegistre(getValeurOuVide(idTypeRegistre)) ||
-      officierALeDroitSurUnDesPerimetres(Droit.DELIVRER, [Perimetre.MEAE]) ||
+      officierALeDroitSurUnDesPerimetres(Droit.DELIVRER, [
+        Perimetre.TOUS_REGISTRES
+      ]) ||
       officierALeDroitSurUnDesPerimetres(Droit.DELIVRER_COMEDEC, [
-        Perimetre.MEAE
+        Perimetre.TOUS_REGISTRES
       ])
     );
   } else return false;
@@ -227,7 +231,7 @@ export function aDroitConsulterRequeteCreation(
   if (SousTypeCreation.estRCEXR(sousTypeCreation)) {
     aDroit = utilisateurALeDroitSurUnDesPerimetres(
       Droit.CREER_ACTE_ETABLI,
-      [Perimetre.MEAE, Perimetre.ETAX],
+      [Perimetre.TOUS_REGISTRES, Perimetre.ETAX],
       storeRece.utilisateurCourant
     );
   } else if (SousTypeCreation.estRCTDOuRCTC(sousTypeCreation)) {
@@ -240,6 +244,9 @@ export function aDroitConsulterRequeteCreation(
   return aDroit;
 }
 
-export function estUtilisateurSysteme(nomUtilisateur?: string, prenomUtilisateur?: string) {
-  return nomUtilisateur === "RECE" && prenomUtilisateur === "Système"
-};
+export function estUtilisateurSysteme(
+  nomUtilisateur?: string,
+  prenomUtilisateur?: string
+) {
+  return nomUtilisateur === "RECE" && prenomUtilisateur === "Système";
+}

@@ -78,7 +78,7 @@ export const userDroitConsulterConsulterArchive: IOfficier = {
   ]
 };
 
-export const userDroitConsulterPerimetreMEAE: IOfficier = {
+export const userDroitConsulterPerimetreTousRegistres: IOfficier = {
   idSSO: "idSSOConnectedUser",
   idUtilisateur: "idUtilisateurConnectedUser",
   nom: "nomConnectedUser",
@@ -105,7 +105,7 @@ export const userDroitConsulterPerimetreMEAE: IOfficier = {
       },
       perimetre: {
         idPerimetre: "peri12345",
-        nom: "MEAE",
+        nom: "TOUS_REGISTRES",
         description: "peirDes",
         estActif: true,
         listePays: ["periPays"],
@@ -122,7 +122,7 @@ export const userDroitConsulterPerimetreMEAE: IOfficier = {
   }
 };
 
-export const userDroitCreerActeEtabliPerimetreMEAE: IOfficier = {
+export const userDroitCreerActeEtabliPerimetreTousRegistres: IOfficier = {
   idSSO: "idSSOConnectedUser",
   idUtilisateur: "idUtilisateurConnectedUser",
   nom: "nomConnectedUser",
@@ -149,7 +149,7 @@ export const userDroitCreerActeEtabliPerimetreMEAE: IOfficier = {
       },
       perimetre: {
         idPerimetre: "peri12345",
-        nom: "MEAE",
+        nom: "TOUS_REGISTRES",
         description: "peirDes",
         estActif: true,
         listePays: ["periPays"],
@@ -166,7 +166,7 @@ export const userDroitCreerActeEtabliPerimetreMEAE: IOfficier = {
   }
 };
 
-export const userDroitCreerActeTranscritPerimetreMEAE: IOfficier = {
+export const userDroitCreerActeTranscritPerimetreTousRegistres: IOfficier = {
   idSSO: "idSSOConnectedUser",
   idUtilisateur: "idUtilisateurConnectedUser",
   nom: "nomConnectedUser",
@@ -196,7 +196,7 @@ export const userDroitCreerActeTranscritPerimetreMEAE: IOfficier = {
       },
       perimetre: {
         idPerimetre: "peri12345",
-        nom: "MEAE",
+        nom: "TOUS_REGISTRES",
         description: "peirDes",
         estActif: true,
         listePays: ["periPays"],
@@ -240,7 +240,7 @@ export const userDroitDelivrer: IOfficier = {
       },
       perimetre: {
         idPerimetre: "peri12345",
-        nom: "MEAE",
+        nom: "TOUS_REGISTRES",
         description: "peirDes",
         estActif: true,
         listePays: ["periPays"],
@@ -284,7 +284,7 @@ export const userDroitInformerUsager: IOfficier = {
       },
       perimetre: {
         idPerimetre: "peri12345",
-        nom: "MEAE",
+        nom: "TOUS_REGISTRES",
         description: "peirDes",
         estActif: true,
         listePays: ["periPays"],
@@ -365,7 +365,7 @@ export const userDroitnonCOMEDEC: IOfficier = {
       },
       perimetre: {
         idPerimetre: "peri12345",
-        nom: "MEAE",
+        nom: "TOUS_REGISTRES",
         description: "peirDes",
         estActif: true,
         listePays: ["periPays"],
@@ -430,7 +430,7 @@ export const userDroitCOMEDEC: IOfficier = {
       },
       perimetre: {
         idPerimetre: "peri12345",
-        nom: "MEAE",
+        nom: "TOUS_REGISTRES",
         description: "peirDes",
         estActif: true,
         listePays: ["periPays"],
@@ -452,7 +452,7 @@ export const userDroitCOMEDEC: IOfficier = {
       },
       perimetre: {
         idPerimetre: "peri12345",
-        nom: "MEAE",
+        nom: "TOUS_REGISTRES",
         description: "peirDes",
         estActif: true,
         listePays: ["periPays"],
@@ -4359,8 +4359,8 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
         utilisateurs: null,
         perimetre: {
           id: "4c09fa58-b2df-4c0a-bccb-f2ac62fe7a3c",
-          nom: "MEAE",
-          description: "MEAE",
+          nom: "TOUS_REGISTRES",
+          description: "Tous les registres",
           estActif: true,
           listePays: "Ministère de l'Europe et des Affaires Etrangères",
           listeIdTypeRegistre: []
@@ -4397,8 +4397,8 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
         utilisateurs: null,
         perimetre: {
           id: "4c09fa58-b2df-4c0a-bccb-f2ac62fe7a3c",
-          nom: "MEAE",
-          description: "MEAE",
+          nom: "TOUS_REGISTRES",
+          description: "TOUS_REGISTRES",
           estActif: true,
           listePays: "Ministère de l'Europe et des Affaires Etrangères",
           listeIdTypeRegistre: []
@@ -4435,8 +4435,8 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
         utilisateurs: null,
         perimetre: {
           id: "4c09fa58-b2df-4c0a-bccb-f2ac62fe7a3c",
-          nom: "MEAE",
-          description: "MEAE",
+          nom: "TOUS_REGISTRES",
+          description: "Tous les registres",
           estActif: true,
           listePays: "Ministère de l'Europe et des Affaires Etrangères",
           listeIdTypeRegistre: []
@@ -4481,8 +4481,8 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
         utilisateurs: null,
         perimetre: {
           id: "4c09fa58-b2df-4c0a-bccb-f2ac62fe7a3c",
-          nom: "MEAE",
-          description: "MEAE",
+          nom: "TOUS_REGISTRES",
+          description: "Tous les registres",
           estActif: true,
           listePays: "Ministère de l'Europe et des Affaires Etrangères",
           listeIdTypeRegistre: []
@@ -4519,8 +4519,8 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
         utilisateurs: null,
         perimetre: {
           id: "4c09fa58-b2df-4c0a-bccb-f2ac62fe7a3c",
-          nom: "MEAE",
-          description: "MEAE",
+          nom: "TOUS_REGISTRES",
+          description: "Tous les registres",
           estActif: true,
           listePays: "Ministère de l'Europe et des Affaires Etrangères",
           listeIdTypeRegistre: []
@@ -5016,8 +5016,8 @@ export const resultatRequeteUtilistateurLeBiannic = {
         utilisateurs: null,
         perimetre: {
           id: "4c09fa58-b2df-4c0a-bccb-f2ac62fe7a3c",
-          nom: "MEAE",
-          description: "MEAE",
+          nom: "TOUS_REGISTRES",
+          description: "Tous les registres",
           estActif: true,
           listePays: null,
           listeIdTypeRegistre: []
@@ -5054,8 +5054,8 @@ export const resultatRequeteUtilistateurLeBiannic = {
         utilisateur: null,
         perimetre: {
           id: "4c09fa58-b2df-4c0a-bccb-f2ac62fe7a3c",
-          nom: "MEAE",
-          description: "MEAE",
+          nom: "TOUS_REGISTRES",
+          description: "Tous les registres",
           estActif: true,
           listePays: null,
           listeIdTypeRegistre: [
