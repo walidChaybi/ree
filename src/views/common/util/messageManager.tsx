@@ -1,18 +1,13 @@
 import { Alert, AlertTitle } from "@mui/material";
 import { getLibelle } from "@util/Utils";
-import * as React from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./scss/Message.scss";
 
-const DURATION_BEFORE_CLOSE = 3000;
-const DURATION_BEFORE_CLOSE_ERROR = 5000;
+const DURATION_BEFORE_CLOSE = 10000;
 
 const getDurationForAutoClose = (autoClose?: number) =>
   autoClose ? autoClose : DURATION_BEFORE_CLOSE;
-
-const getDurationErrorForAutoClose = (autoClose?: number) =>
-  autoClose ? autoClose : DURATION_BEFORE_CLOSE_ERROR;
 
 const toString = (messages: string[]) => {
   return messages
@@ -43,7 +38,7 @@ const messageManager = {
       </div>,
 
       {
-        autoClose: getDurationErrorForAutoClose(autoClose),
+        autoClose: getDurationForAutoClose(autoClose),
         closeButton: false,
         hideProgressBar: false,
         className: "error",

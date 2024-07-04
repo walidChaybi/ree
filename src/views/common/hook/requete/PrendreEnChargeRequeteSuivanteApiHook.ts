@@ -1,42 +1,47 @@
 import { getPrendreEnChargeRequeteSuivante } from "@api/appels/requeteApi";
+import { IErreurTraitementApi } from "@api/IErreurTraitementApi";
+import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { TRequeteTableau } from "@model/requete/IRequeteTableau";
-import { mappingUneRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
 export interface IPrendreEnChargeRequeteSuivanteResultat {
-  requete?: TRequeteTableau;
+  idRequete?: string;
+  erreur?: IErreurTraitementApi;
 }
 
 export function usePrendreEnChargeRequeteSuivanteApiHook(
   type: TypeRequete,
   prendreEnCharge: boolean
-): IPrendreEnChargeRequeteSuivanteResultat | undefined {
-  const [requeteAPrendreEnCharge, setRequeteAPrendreEnCharge] = useState<
-    IPrendreEnChargeRequeteSuivanteResultat | undefined
-  >();
+): IPrendreEnChargeRequeteSuivanteResultat {
+  const [idRequete, setIdRequete] = useState<string>();
+  const [erreur, setErreur] = useState<IErreurTraitementApi>();
 
   useEffect(() => {
     if (prendreEnCharge && TypeRequete.estCreation(type)) {
       getPrendreEnChargeRequeteSuivante()
         .then(response => {
-          const requeteResultatCreationMappee =
-            mappingUneRequeteTableauCreation(response.body.data, false);
-          setRequeteAPrendreEnCharge({
-            requete: requeteResultatCreationMappee
-          });
+          setIdRequete(response.body.data);
         })
-        .catch(error => {
-          setRequeteAPrendreEnCharge({ requete: undefined });
-          logError({
-            messageUtilisateur:
-              "Impossible de prendre en charge la requête suivante",
-            error
-          });
+        .catch(({ response }) => {
+          const erreurs: IErreurTraitementApi[] = response.body.errors;
+          const erreurPlusDeRequeteDisponible = erreurs.find(
+            erreur =>
+              erreur.code ===
+              CodeErreurFonctionnelle.FCT_AUCUNE_REQUETE_DISPONIBLE_A_PRENDRE_EN_CHARGE
+          );
+          if (erreurPlusDeRequeteDisponible) {
+            setErreur(erreurPlusDeRequeteDisponible);
+          } else {
+            logError({
+              messageUtilisateur:
+                "Impossible de prendre en charge la requête suivante",
+              error: response.body.errors
+            });
+          }
         });
     }
   }, [type, prendreEnCharge]);
 
-  return requeteAPrendreEnCharge;
+  return { idRequete, erreur };
 }
