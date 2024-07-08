@@ -8,7 +8,7 @@ export const LISTE_UTILISATEURS = [
     nom: "Young",
     trigramme: "FOO",
     habilitations: MockMappedHabilitation.habilitations,
-    service: { estDansSCEC: true }
+    service: { estDansScec: true }
   },
   {
     idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985894",
@@ -16,7 +16,7 @@ export const LISTE_UTILISATEURS = [
     nom: "Lennon",
     trigramme: "APP",
     habilitations: MockMappedHabilitation.habilitations,
-    service: { estDansSCEC: true }
+    service: { estDansScec: true }
   },
   {
     idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985895",
@@ -24,7 +24,7 @@ export const LISTE_UTILISATEURS = [
     nom: "Dylan",
     trigramme: "BOB",
     habilitations: MockMappedHabilitation.habilitations,
-    service: { estDansSCEC: true }
+    service: { estDansScec: true }
   },
   {
     idUtilisateur: "90c6aee1-21be-4ba6-9e55-fc8831252646",
@@ -32,6 +32,6 @@ export const LISTE_UTILISATEURS = [
     nom: "Tanguy",
     trigramme: "BTY",
     habilitations: MockMappedHabilitation.habilitations,
-    service: { estDansSCEC: true }
+    service: { estDansScec: true }
   }
 ] as any as IUtilisateur[];

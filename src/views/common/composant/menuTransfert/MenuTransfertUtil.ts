@@ -82,7 +82,7 @@ export function listeServicesToOptions(): Options {
   return [
     { cle: "", libelle: "" },
     ...storeRece.listeServices
-      .filter(service => service.estDansSCEC)
+      .filter(service => service.estDansScec)
       .sort((a, b) => a.libelleService.localeCompare(b.libelleService))
       .map(service => {
         return { cle: service.idService, libelle: service.libelleService };
@@ -166,7 +166,7 @@ export function filtreUtilisateurRequeteInformation(
   idUtilisateurRequete: string,
   estTransfert: boolean
 ): boolean {
-  const estDuSCEC = utilisateur.service?.estDansSCEC;
+  const estDuSCEC = utilisateur.service?.estDansScec;
   const aDroit = utilisateurADroit(Droit.INFORMER_USAGER, utilisateur);
   let estDansMonServiceOuServiceFils = true;
   if (!estTransfert && utilisateur.service) {
@@ -189,7 +189,7 @@ export function filtreUtilisateurRequeteDelivrance(
   idUtilisateurRequete: string,
   estTransfert: boolean
 ): boolean {
-  const estDuSCEC = utilisateur.service?.estDansSCEC;
+  const estDuSCEC = utilisateur.service?.estDansScec;
   const aDroit =
     sousTypeRequete === SousTypeDelivrance.RDDCO
       ? utilisateurADroit(Droit.DELIVRER_COMEDEC, utilisateur)
@@ -213,7 +213,7 @@ export function filtrerValideur(
   utilisateur: IUtilisateur,
   idUtilisateurRequete?: string
 ): boolean {
-  const estDuSCEC = utilisateur.service?.estDansSCEC;
+  const estDuSCEC = utilisateur.service?.estDansScec;
   const aDroit = utilisateurADroit(Droit.DELIVRER, utilisateur);
 
   return Boolean(

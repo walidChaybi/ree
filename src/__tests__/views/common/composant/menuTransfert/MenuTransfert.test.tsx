@@ -1,11 +1,11 @@
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
 import { idRequeteRDCSC, requeteRDCSC } from "@mock/data/requeteDelivrance";
 import { requeteInformation } from "@mock/data/requeteInformation";
-import { Droit } from "@model/agent/enum/Droit";
-import { TypeService } from "@model/agent/enum/TypeService";
 import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IService } from "@model/agent/IService";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
+import { TypeService } from "@model/agent/enum/TypeService";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
 import {
@@ -30,7 +30,7 @@ import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 const listeUtilisateurs = [
   {
-    service: { estDansSCEC: true, idService: "123" } as IService,
+    service: { estDansScec: true, idService: "123" } as IService,
     prenom: "",
     nom: "str1",
     habilitations: [
@@ -43,7 +43,7 @@ const listeUtilisateurs = [
     idUtilisateur: "1234"
   } as IUtilisateur,
   {
-    service: { estDansSCEC: true, idService: "1234" } as IService,
+    service: { estDansScec: true, idService: "1234" } as IService,
     prenom: "",
     nom: "str2",
     habilitations: [
@@ -56,7 +56,7 @@ const listeUtilisateurs = [
     idUtilisateur: "12345"
   } as IUtilisateur,
   {
-    service: { estDansSCEC: true, idService: "1234" } as IService,
+    service: { estDansScec: true, idService: "1234" } as IService,
     prenom: "",
     nom: "str3",
     habilitations: [
@@ -181,14 +181,14 @@ test("check autocomplete service", async () => {
       type: TypeService.BUREAU,
       code: "1234",
       libelleService: "str1",
-      estDansSCEC: true
+      estDansScec: true
     },
     {
       idService: "12345",
       type: TypeService.DEPARTEMENT,
       code: "12345",
       libelleService: "str2",
-      estDansSCEC: true
+      estDansScec: true
     }
   ];
   const menuTransfert = screen.getByText("Transférer");

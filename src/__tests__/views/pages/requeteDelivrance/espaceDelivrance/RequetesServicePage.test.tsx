@@ -22,14 +22,14 @@ beforeAll(() => {
       type: TypeService.BUREAU,
       code: "1234",
       libelleService: "str1",
-      estDansSCEC: true
+      estDansScec: true
     },
     {
       idService: "12345",
       type: TypeService.DEPARTEMENT,
       code: "12345",
       libelleService: "str2",
-      estDansSCEC: true
+      estDansScec: true
     }
   ];
 });

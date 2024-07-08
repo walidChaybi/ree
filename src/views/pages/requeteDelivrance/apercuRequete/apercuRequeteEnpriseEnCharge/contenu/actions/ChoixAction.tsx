@@ -2,13 +2,13 @@ import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
+import { storeRece } from "@util/storeRece";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import React from "react";
 import { MenuDelivrerCS } from "./MenuDelivrerCS";
@@ -38,7 +38,7 @@ export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
       props.requete.idUtilisateur;
 
     const utilisateurDansSCEC =
-      storeRece.utilisateurCourant?.service?.estDansSCEC;
+      storeRece.utilisateurCourant?.service?.estDansScec;
 
     return statutPriseEnCharge && mAppartient && utilisateurDansSCEC;
   };

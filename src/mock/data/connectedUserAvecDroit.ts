@@ -537,14 +537,14 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
             utilisateur: null,
             memoCourrier: [],
             adresseService: null,
-            estDansSCEC: false
+            estDansScec: false
           }
         }
       ],
       utilisateur: null,
       memoCourrier: [],
       adresseService: null,
-      estDansSCEC: true
+      estDansScec: true
     },
     servicesFilsDirects: [
       {
@@ -576,21 +576,21 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: false
+                    estDansScec: false
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587c724-645c-408c-aa49-9488860c5e44",
@@ -640,35 +640,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587042c-65fd-4d02-8e87-bf19c7e9aa9f",
@@ -708,28 +708,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587aed3-fc8d-4626-9c3a-0802bc331944",
@@ -779,35 +779,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587aaea-c346-457f-84ac-02610970457c",
@@ -857,35 +857,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587fba8-4fc1-4b20-a69e-a27f4bfd5d63",
@@ -935,35 +935,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95874525-2798-4b1c-bc03-c851bbf247ef",
@@ -1013,35 +1013,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95877fce-8cd0-4262-bf62-23e9022c7711",
@@ -1091,35 +1091,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587d4dd-2ea7-46b5-a69a-314ca024adcd",
@@ -1169,35 +1169,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587b969-1ec5-4bb5-8c63-3b263df216f5",
@@ -1237,28 +1237,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587309e-85a3-466b-a77d-5b995b3582b5",
@@ -1298,28 +1298,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95873b97-bdd2-41f5-98f3-27ab2a4c979a",
@@ -1359,28 +1359,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587738b-c406-40f5-a8ae-480843b55753",
@@ -1420,28 +1420,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95871cf7-f5c4-40b4-8627-f81cc901023c",
@@ -1481,28 +1481,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95877d3a-4d07-4276-a549-ebe7a735e07a",
@@ -1552,35 +1552,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95872a79-072b-4813-9d53-9249b0d618da",
@@ -1630,35 +1630,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "958760ac-85ef-40a0-aba9-b3de2fb6f452",
@@ -1698,28 +1698,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587a407-967a-4fcc-9844-97ddff00fd37",
@@ -1769,35 +1769,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587044b-d574-44f9-8713-c752a7bcafc7",
@@ -1837,28 +1837,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95878e36-fd27-4a7f-a154-4d309ccb694e",
@@ -1908,35 +1908,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95871ed1-4a0a-4b2f-9da3-9b0bd6a32991",
@@ -1976,28 +1976,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587cd09-88d6-4c25-837d-582d3af86085",
@@ -2028,21 +2028,21 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: false
+                    estDansScec: false
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587c434-c74e-4740-a613-2e00d6a1cd99",
@@ -2082,28 +2082,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95878165-3f27-4a23-8ad4-51b0fcc3193f",
@@ -2143,28 +2143,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587ac58-468c-4902-b320-071f4c5dd23d",
@@ -2214,35 +2214,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "958784e3-8b21-42c8-aef2-a064d7ab1c67",
@@ -2292,35 +2292,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95870f50-b0a7-48bc-94d7-daf8e367fbe1",
@@ -2360,28 +2360,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95874987-66ba-4fcc-ac99-4327c7964331",
@@ -2412,21 +2412,21 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: false
+                    estDansScec: false
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587b18b-e150-445d-8206-50fb2142d3e5",
@@ -2476,35 +2476,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587470f-f389-4622-a570-2e49e43c3cc2",
@@ -2544,28 +2544,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "958727ef-5ff3-4ff4-94d8-1fffdc107b4b",
@@ -2605,28 +2605,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587b0af-9b19-4a24-b7a3-650e9985ca52",
@@ -2676,35 +2676,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95871586-c2bd-4765-97d7-5cfcf50a3710",
@@ -2754,35 +2754,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587aa6c-8a9a-442b-8a6b-e529c8b005c9",
@@ -2832,35 +2832,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95878060-de19-4d22-b53b-e06c77d5b4c0",
@@ -2910,35 +2910,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587da22-b358-43c9-bff2-dd6f27978c83",
@@ -2978,28 +2978,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587cd7b-9833-4bfb-b6db-0113d8f80cff",
@@ -3049,35 +3049,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587f6cd-5805-4408-845f-24bfcbf935a4",
@@ -3108,21 +3108,21 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: false
+                    estDansScec: false
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587887d-da56-432e-9a26-4d1b59804eda",
@@ -3162,28 +3162,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95878ce0-8cfb-456e-a296-f100685ac064",
@@ -3214,21 +3214,21 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: false
+                    estDansScec: false
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587c2d6-98fd-4a4f-88ea-e676e91d56f5",
@@ -3268,28 +3268,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587cc33-86fb-4ba9-ae16-4278f7bc3d18",
@@ -3339,35 +3339,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587f1bd-6e35-4153-a0f6-f8b80cc57e5a",
@@ -3417,35 +3417,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587ee6f-219d-4cc1-9f4f-4da2055eaf77",
@@ -3476,21 +3476,21 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: false
+                    estDansScec: false
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "958740c1-ed87-4731-9261-dfd074e592b7",
@@ -3530,28 +3530,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95873422-02d3-4f13-8265-660a278d8942",
@@ -3601,35 +3601,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "958779fe-8b26-446c-82e8-e52db38b0a78",
@@ -3679,35 +3679,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95872040-9279-4b64-95af-3dc801e05abe",
@@ -3747,28 +3747,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587baef-7bde-44f7-bf66-298366f56981",
@@ -3808,28 +3808,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95875e54-3adc-413f-acc4-e1a2978abc90",
@@ -3879,35 +3879,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95879274-25fe-43ae-a6c0-7ca39a067716",
@@ -3957,35 +3957,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587cee3-3f8b-4b13-82cc-21ddae941084",
@@ -4025,28 +4025,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "95876ee7-aebf-43ff-8598-b0f7030abbb7",
@@ -4086,28 +4086,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "958774e9-f7d2-41bb-90b0-f627b81abc2d",
@@ -4147,28 +4147,28 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: false
+                          estDansScec: false
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587fb82-59e4-4a8c-a914-173204c163cb",
@@ -4218,35 +4218,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       },
       {
         idService: "9587e220-b5e6-484e-96a5-9c667d636576",
@@ -4296,35 +4296,35 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                                 utilisateur: null,
                                 memoCourrier: [],
                                 adresseService: null,
-                                estDansSCEC: false
+                                estDansScec: false
                               }
                             }
                           ],
                           utilisateur: null,
                           memoCourrier: [],
                           adresseService: null,
-                          estDansSCEC: true
+                          estDansScec: true
                         }
                       }
                     ],
                     utilisateur: null,
                     memoCourrier: [],
                     adresseService: null,
-                    estDansSCEC: true
+                    estDansScec: true
                   }
                 }
               ],
               utilisateur: null,
               memoCourrier: [],
               adresseService: null,
-              estDansSCEC: true
+              estDansScec: true
             }
           }
         ],
         utilisateur: null,
         memoCourrier: [],
         adresseService: null,
-        estDansSCEC: true
+        estDansScec: true
       }
     ],
     habilitations: [
@@ -4608,7 +4608,7 @@ export const resultatRequeteUtilistateurLeBiannic = {
                         utilisateur: null,
                         memoCourrier: [],
                         adresseService: null,
-                        estDansSCEC: false
+                        estDansScec: false
                       }
                     }
                   ],
@@ -4624,21 +4624,21 @@ export const resultatRequeteUtilistateurLeBiannic = {
                     fax: null,
                     adresseInternet: null
                   },
-                  estDansSCEC: true
+                  estDansScec: true
                 }
               }
             ],
             utilisateur: null,
             memoCourrier: [],
             adresseService: null,
-            estDansSCEC: true
+            estDansScec: true
           }
         }
       ],
       utilisateur: null,
       memoCourrier: [],
       adresseService: null,
-      estDansSCEC: true
+      estDansScec: true
     },
     servicesFilsDirects: [],
     habilitations: [

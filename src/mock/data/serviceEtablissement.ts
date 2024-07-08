@@ -11,7 +11,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "67378f2b-2314-4dde-87e4-3af08bc47d57",
@@ -23,7 +23,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "67374fdd-3251-475b-aa31-341f6b2e70ab",
@@ -35,7 +35,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "6737b6b0-238f-494e-a91f-9e611f049699",
@@ -47,7 +47,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "6737982c-f3a0-48a7-ae23-dcdd32c693bc",
@@ -59,7 +59,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "6737c8a6-9d23-4fd0-97ec-1ebe3d079373",
@@ -71,7 +71,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "673721c9-a78a-4f2d-8b5d-27fb8bac0d09",
@@ -83,7 +83,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "6737653d-4761-4bc9-aa1d-e22588859067",
@@ -95,7 +95,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "6737643a-a201-4554-b7c6-a5faa90fa34d",
@@ -107,7 +107,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "6737b968-16fa-4d2f-a7e3-513e97a30bd5",
@@ -119,7 +119,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "6737ae4d-d0c8-4735-881d-24593ee64cfd",
@@ -131,7 +131,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "6737442d-be28-4770-b907-cd57bc85afd2",
@@ -143,7 +143,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "6737b403-664e-4253-9428-287cdb3a55c3",
@@ -155,7 +155,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "6737b335-f7e4-4cb0-bc82-c4c4b5d5be19",
@@ -167,7 +167,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "67371c54-3bce-4fec-88c3-6719d6ae0d77",
@@ -179,7 +179,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "673747d8-7b8a-40a0-8668-c79f17c0e22a",
@@ -191,7 +191,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "67374aee-e8bd-404e-8848-5ea32084c06e",
@@ -203,7 +203,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "673778f4-2437-4314-b50f-640992d73695",
@@ -215,7 +215,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "67377ee8-07d9-474f-acc0-7a2a93018cb0",
@@ -227,7 +227,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "673739e9-11c3-43e3-821c-211d1a76c5be",
@@ -239,7 +239,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "6737b16d-67b9-4c22-8281-893b7e73ba94",
@@ -251,7 +251,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "67377028-8f28-4df4-a913-318a0268ada4",
@@ -263,7 +263,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "6737d36d-eb62-4bfb-a449-f0f5d112bc98",
@@ -275,7 +275,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "6737d259-f62c-4660-a4fd-0c1c5fb47c25",
@@ -287,7 +287,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "673706d4-1e28-4554-b5bd-bdc210989804",
@@ -299,7 +299,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "67373cee-dbd7-446a-9c98-e8cb475b2738",
@@ -311,7 +311,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     },
     {
       idService: "67371a3c-5d2c-477c-8217-3f0041122997",
@@ -323,7 +323,7 @@ export const serviceEtablissement = {
       utilisateur: null,
       memoCourrier: null,
       adresseService: null,
-      estDansSCEC: false
+      estDansScec: false
     }
   ]
 };

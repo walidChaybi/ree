@@ -16,7 +16,7 @@ export interface IService {
   libelleService: string;
   hierarchieService?: IHierarchieService[];
   utilisateur?: any;
-  estDansSCEC?: boolean;
+  estDansScec?: boolean;
 }
 
 export const Service = {
