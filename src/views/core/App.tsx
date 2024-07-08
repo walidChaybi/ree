@@ -3,6 +3,7 @@
 import { GestionnaireCacheApi } from "@api/appels/cache/GestionnaireCacheApi";
 import { GestionnaireNomenclature } from "@api/nomenclature/GestionnaireNomenclature";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { receRouter } from "@router/ReceRouter";
 import "@scss/_colors.scss";
 import "@scss/_library.scss";
 import {
@@ -18,11 +19,10 @@ import { storeRece } from "@util/storeRece";
 import fr from "date-fns/locale/fr";
 import React, { useEffect, useState } from "react";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
+import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "./App.scss";
-import { Body } from "./body/Body";
 import { OfficierContext } from "./contexts/OfficierContext";
-import { Header } from "./header/Header";
 import { useLoginApi } from "./login/LoginHook";
 
 // ReceDatepicker Locale
@@ -57,11 +57,9 @@ const App: React.FC = () => {
         GestionnaireCacheApi.chargerTousLesUtilisateurs(),
         GestionnaireCacheApi.chargerTousLesServices(),
         GestionnaireCacheApi.chargerTousLesDecrets()
-      ]).then(values => {
+      ]).finally(() => {
         setOperationEnCours(false);
       });
-    } else {
-      setOperationEnCours(false);
     }
   }, [login.officierDataState]);
 
@@ -81,8 +79,7 @@ const App: React.FC = () => {
         <ErrorManager>
           <div className="App">
             <OfficierContext.Provider value={login}>
-              <Header />
-              {!operationEnCours && <Body />}
+              {!operationEnCours && <RouterProvider router={receRouter} />}
               <ToastContainer
                 containerId={TOASTCONTAINER_PRINCIPAL}
                 className={"toast-container"}

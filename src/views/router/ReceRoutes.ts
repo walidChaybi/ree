@@ -28,7 +28,6 @@ import ApercuRequeteMiseAJourPage from "@pages/requeteMiseAJour/apercuRequete/Ap
 import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { droitsSaufConsulterArchives } from "@util/habilitation/habilitationsDescription";
 import { IRoute } from "@util/route/IRoute";
 import {
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
@@ -136,7 +135,19 @@ export const routesRece: IRoute[] = [
   {
     url: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
     component: ApercuRequetePage,
-    auMoinsUnDesDroits: droitsSaufConsulterArchives,
+    auMoinsUnDesDroits: [
+      Droit.CREER_ACTE_DRESSE,
+      Droit.CREER_ACTE_ETABLI,
+      Droit.CREER_ACTE_TRANSCRIT,
+      Droit.CREER_PACS,
+      Droit.DELIVRER,
+      Droit.INFORMER_USAGER,
+      Droit.METTRE_A_JOUR_ACTE,
+      Droit.METTRE_A_JOUR_RC_RCA_PACS,
+      Droit.SIGNER,
+      Droit.CONSULTER,
+      Droit.ATTRIBUER
+    ],
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
   {

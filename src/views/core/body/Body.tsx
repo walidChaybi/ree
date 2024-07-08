@@ -3,8 +3,8 @@ import { routesRece } from "@router/ReceRoutes";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
 import {
-  appelRequetesASigner,
   GestionnaireFermeture,
+  appelRequetesASigner,
   traiteAppelRequeteASigner
 } from "@util/GestionnaireFermeture";
 import { logError } from "@util/LogManager";

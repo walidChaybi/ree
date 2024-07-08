@@ -1,4 +1,5 @@
-import App from "@core/App";
+import { Body } from "@core/body/Body";
+import { Header } from "@core/header/Header";
 import { PageMessage } from "@core/login/PageMessage";
 import {
   estOfficierHabiliterPourSeulementLesDroits,
@@ -72,7 +73,15 @@ function estAutoriseDroitPerimetres(droitPerimetres?: IDroitPerimetre) {
 export const receRouter = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path={URL_CONTEXT_APP} element={<App />}>
+      <Route
+        path={URL_CONTEXT_APP}
+        element={
+          <>
+            <Header />
+            <Body />
+          </>
+        }
+      >
         {routesRece.map((route: IRoute, index: number) => {
           return (
             <Route

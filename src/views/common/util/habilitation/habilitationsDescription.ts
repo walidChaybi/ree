@@ -40,7 +40,7 @@ export type NomComposant =
 
 export type NomComposantOuFonction = NomComposant | NomFonction;
 
-export const droitsSaufConsulterArchives = [
+const droitsSaufConsulterArchives = [
   Droit.CREER_ACTE_DRESSE,
   Droit.CREER_ACTE_ETABLI,
   Droit.CREER_ACTE_TRANSCRIT,
