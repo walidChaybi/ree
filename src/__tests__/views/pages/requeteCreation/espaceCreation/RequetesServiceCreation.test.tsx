@@ -180,8 +180,8 @@ test("DOIT correctement afficher l'attribution des requêtes de service QUAND on
   });
 
   const getColonnesOfficierEtCheckbox = (requete: HTMLElement) => ({
-    colonneOfficier: requete.childNodes.item(5) as HTMLElement,
-    colonneCheckbox: requete.childNodes.item(6).firstChild?.firstChild
+    colonneOfficier: requete.childNodes.item(6) as HTMLElement,
+    colonneCheckbox: requete.childNodes.item(7).firstChild?.firstChild
       ?.firstChild as HTMLElement
   });
 

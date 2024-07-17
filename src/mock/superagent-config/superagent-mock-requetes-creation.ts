@@ -114,7 +114,11 @@ export const configRequetesCreation = [
         url ===
           "/requetes/creation/requetesService?tri=dateCreation&sens=ASC&range=0-105" ||
         url ===
-          "/requetes/creation/requetesService?tri=statut&sens=ASC&range=0-105"
+          "/requetes/creation/requetesService?tri=statut&sens=ASC&range=0-105" ||
+        url ===
+          "/requetes/creation/requetesService?tri=alerte&sens=ASC&range=0-105" ||
+        url ===
+          "/requetes/creation/requetesService?tri=alerte&sens=DESC&range=0-105"
       ) {
         return requetesServiceCreationTableauResultatQuery;
       }

@@ -1,11 +1,11 @@
-import { CINQ, getLibelle } from "@util/Utils";
-import {
-  getColonneCasesACocher,
-  IColonneCaseACocherParams
-} from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
+import { SIX, ZERO, getLibelle } from "@util/Utils";
+import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
 import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
-import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
+import {
+  IColonneCaseACocherParams,
+  getColonneCasesACocher
+} from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import { colonnesTableauMesRequetesCreation } from "./MesRequetesCreationParams";
 
 export enum HeaderTableauRequetesServiceCreation {
@@ -24,7 +24,7 @@ export function getColonnesTableauRequetesServiceCreation<TData, TIdentifiant>(
   >
 ) {
   return [
-    ...colonnesTableauMesRequetesCreation.slice(0, CINQ),
+    ...colonnesTableauMesRequetesCreation.slice(ZERO, SIX),
     new TableauTypeColumn({
       keys: [HeaderTableauRequetesServiceCreation.AttribueA],
       title: getLibelle("Attribuée à"),
@@ -35,6 +35,6 @@ export function getColonnesTableauRequetesServiceCreation<TData, TIdentifiant>(
       { size: "small" },
       conteneurCaseACocherAttribueAProps
     ),
-    ...colonnesTableauMesRequetesCreation.slice(CINQ)
+    ...colonnesTableauMesRequetesCreation.slice(SIX)
   ];
 }

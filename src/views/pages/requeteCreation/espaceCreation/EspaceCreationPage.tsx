@@ -29,8 +29,8 @@ const queryParametersPourRequetesCreation = {
 
 const queryParametersPourRequetesCreationService = {
   statuts: statutsRequetesCreation,
-  tri: "dateCreation",
-  sens: "ASC",
+  tri: "alerte",
+  sens: "DESC",
   range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
 } as IQueryParametersPourRequetes;
 
