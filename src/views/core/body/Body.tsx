@@ -8,7 +8,7 @@ import {
   traiteAppelRequeteASigner
 } from "@util/GestionnaireFermeture";
 import { logError } from "@util/LogManager";
-import { getLibelle } from "@util/Utils";
+import { ZERO, getLibelle } from "@util/Utils";
 import { FilAriane } from "@widget/filAriane/FilAriane";
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
@@ -86,6 +86,13 @@ function getMessageLogin(officier: OfficierContextProps) {
       error: officier.erreurState
     });
     return getLibelle("Erreur Système");
+  } else if (
+    officier !== undefined &&
+    officier?.erreurState.response.body.errors[ZERO]
+  ) {
+    return getLibelle(
+      "Votre compte utilisateur n'est pas actif - Veuillez vous adresser à votre administrateur RECE"
+    );
   } else {
     return getLibelle("Connexion en cours ...");
   }
