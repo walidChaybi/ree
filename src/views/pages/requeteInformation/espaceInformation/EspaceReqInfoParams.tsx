@@ -46,7 +46,8 @@ export const requeteInformationMesRequetesColumnHeaders = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.DateCreation],
     title: getLibelle("Date requête"),
-    align: "center"
+    align: "center",
+    sortable: true
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.Statut],
@@ -92,7 +93,8 @@ export const requeteInformationRequetesServiceColumnHeaders = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.DateCreation],
     title: getLibelle("Date requête"),
-    align: "center"
+    align: "center",
+    sortable: true
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.AttribueA],

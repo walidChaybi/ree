@@ -448,7 +448,7 @@ export const routesRece: IRoute[] = [
     url: URL_REQUETES_INFORMATION_SERVICE,
     component: EspaceInformationPage,
     props: { selectedTab: 1 },
-    auMoinsUnDesDroits: [Droit.INFORMER_USAGER],
+    droits: [Droit.INFORMER_USAGER, Droit.ATTRIBUER],
     libelle: getLibelle("Les requêtes d'information de mon service"),
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
   },

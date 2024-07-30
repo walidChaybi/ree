@@ -3,10 +3,10 @@ import { ICreationRequeteMiseAJourApiHookParams } from "@hook/requete/miseajour/
 import { IFiltreServiceRequeteCreationDto } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { IFiltreServiceRequeteDelivranceDto } from "@model/form/delivrance/IFiltreServiceRequeteDelivrance";
 import { CLES } from "@model/parametres/clesParametres";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IEchange } from "@model/requete/IEchange";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import {
   ICriteresRMCAutoRequete,
@@ -18,7 +18,7 @@ import { URL_MENTION } from "./etatcivilApi";
 
 export const URL_REQUETES_DELIVRANCE_SERVICE = "/requetes/requetesService";
 export const URL_REQUETES_INFO_SERVICE =
-  "/requetes/information/requetesService";
+  "/requetes/information/requetes-de-mon-service";
 export const URL_REQUETES_CREATION_SERVICE =
   "/requetes/creation/requetesService";
 export const URL_REQUETES = "/requetes";
@@ -173,15 +173,11 @@ export function postTableauRequetesDelivranceService(
 
 export function getRequetesInformation(
   listeStatuts: string,
-  typeRequete: TypeAppelRequete,
   queryParameters: IQueryParametersPourRequetes
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri:
-      typeRequete === TypeAppelRequete.REQUETE_INFO_SERVICE
-        ? URL_REQUETES_INFO_SERVICE
-        : URL_MES_REQUETES_INFO,
+    uri: URL_MES_REQUETES_INFO,
     parameters: {
       statuts: listeStatuts,
       tri:
@@ -190,6 +186,27 @@ export function getRequetesInformation(
           : "dateStatut",
       sens: queryParameters.sens,
       range: queryParameters.range
+    }
+  });
+}
+
+export function postRequetesInformation(
+  listeStatuts: string[],
+  queryParameters: IQueryParametersPourRequetes
+) {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: URL_REQUETES_INFO_SERVICE,
+    parameters: {
+      tri:
+        queryParameters.tri !== "prioriteRequete"
+          ? queryParameters.tri
+          : "dateStatut",
+      sens: queryParameters.sens,
+      range: queryParameters.range
+    },
+    data: {
+      statuts: listeStatuts
     }
   });
 }

@@ -10,6 +10,7 @@ import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInform
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
@@ -18,7 +19,10 @@ import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
-import { requeteInformationMesRequetesColumnHeaders } from "./EspaceReqInfoParams";
+import {
+  StatutsRequetesInformation,
+  requeteInformationMesRequetesColumnHeaders
+} from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationApiHook";
 import "./scss/RequeteTableau.scss";
 
@@ -52,6 +56,15 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({
     if (queryParametersPourRequetes) {
       setLinkParameters(queryParametersPourRequetes);
     }
+  }, []);
+
+  const handleChangeSort = useCallback((tri: string, sens: SortOrder) => {
+    setLinkParameters({
+      statuts: StatutsRequetesInformation,
+      tri,
+      sens,
+      range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+    });
   }, []);
 
   function onClickOnLine(
@@ -93,6 +106,7 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        handleChangeSort={handleChangeSort}
       ></TableauRece>
       <BoutonRetour />
     </>

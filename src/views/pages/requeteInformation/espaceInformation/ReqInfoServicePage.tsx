@@ -7,12 +7,13 @@ import {
   INavigationApercuReqInfoParams,
   useNavigationApercuInformation
 } from "@hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
+import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
@@ -21,7 +22,10 @@ import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
-import { requeteInformationRequetesServiceColumnHeaders } from "./EspaceReqInfoParams";
+import {
+  StatutsRequetesInformation,
+  requeteInformationRequetesServiceColumnHeaders
+} from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationApiHook";
 import "./scss/RequeteTableau.scss";
 
@@ -78,6 +82,15 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     });
   }
 
+  const handleChangeSort = useCallback((tri: string, sens: SortOrder) => {
+    setLinkParameters({
+      statuts: StatutsRequetesInformation,
+      tri,
+      sens,
+      range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+    });
+  }, []);
+
   const getIcone = (
     idRequete: string,
     sousType: string,
@@ -122,6 +135,7 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        handleChangeSort={handleChangeSort}
       />
       <BoutonRetour />
     </>

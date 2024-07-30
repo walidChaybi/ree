@@ -37,7 +37,9 @@ export const configRequetesInformation = [
       // Mes requetes d'information (espace information)
       if (
         match[1] ===
-        "/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105"
+          "/requetes/information/mesrequetes?statuts=TRAITEE_AUTO%2CPRISE_EN_CHARGE%2CA_TRAITER%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105" ||
+        match[1] ===
+          "/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105"
       ) {
         return {
           data: ReponseMesRequetesInformation,
@@ -51,7 +53,7 @@ export const configRequetesInformation = [
       // Requetes d'information de mon service (espace information)
       if (
         match[1] ===
-        "/requetes/information/requetesService?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105"
+        "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105"
       ) {
         return {
           data: ReponseRequetesInfoService,
