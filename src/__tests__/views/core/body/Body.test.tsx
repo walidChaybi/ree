@@ -71,32 +71,70 @@ test("renders Body", async () => {
 });
 
 // TODO: fix test
-// test("renders Body Connexion en cours", async () => {
-//   const router = createTestingRouter(
-//     [
-//       {
-//         path: URL_CONTEXT_APP,
-//         element: (
-//           <OfficierContext.Provider
-//             value={{
-//               officierDataState: undefined
-//             }}
-//           >
-//             <Body />
-//           </OfficierContext.Provider>
-//         )
-//       }
-//     ],
-//     [URL_CONTEXT_APP]
-//   );
+test("renders Body Connexion en cours", async () => {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_CONTEXT_APP,
+        element: (
+          <OfficierContext.Provider
+            value={{
+              officierDataState: undefined
+            }}
+          >
+            <Body />
+          </OfficierContext.Provider>
+        )
+      }
+    ],
+    [URL_CONTEXT_APP]
+  );
 
-//   render(<RouterProvider router={router} />);
+  render(<RouterProvider router={router} />);
 
-//   await waitFor(() => {
-//     const titre = screen.getByText(/Connexion en cours/i);
-//     expect(titre).toBeInTheDocument();
-//   });
-// });
+  await waitFor(() => {
+    const titre = screen.getByText(/Connexion en cours/i);
+    expect(titre).toBeInTheDocument();
+  });
+});
+
+test("renders Body avec erreur de login", async () => {
+  storeRece.logErrorOff = true;
+  const off = { ...officier };
+  off.profils = [...off.profils];
+  off.profils.push("RECE_ADMIN");
+
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_CONTEXT_APP,
+        element: (
+          <OfficierContext.Provider
+            value={{
+              officierDataState: {
+                ...off
+              },
+              erreurState: {
+                status: "Autre (console.error LogManager)"
+              }
+            }}
+          >
+            <Body />
+          </OfficierContext.Provider>
+        )
+      }
+    ],
+    [URL_CONTEXT_APP]
+  );
+
+  render(<RouterProvider router={router} />);
+
+  await waitFor(() => {
+    const titre = screen.getByText(/Erreur Système/i);
+    expect(titre).toBeDefined();
+  });
+  storeRece.logErrorOff = false;
+});
 
 test("renders Body erreurSysteme", async () => {
   storeRece.logErrorOff = true;
@@ -128,6 +166,8 @@ test("renders Body erreurSysteme", async () => {
   );
 
   render(<RouterProvider router={router} />);
+
+  screen.debug(undefined, Infinity);
 
   await waitFor(() => {
     const titre = screen.getByText(/Erreur Système/i);

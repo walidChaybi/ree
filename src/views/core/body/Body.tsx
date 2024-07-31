@@ -79,6 +79,13 @@ function getMessageLogin(officier: OfficierContextProps) {
     return getLibelle(
       "Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BIMO."
     );
+  } else if (
+    officier !== undefined &&
+    officier?.erreurState?.response?.body?.errors?.[ZERO]
+  ) {
+    return getLibelle(
+      "Votre compte utilisateur n'est pas actif - Veuillez vous adresser à votre administrateur RECE"
+    );
   } else if (officier !== undefined && officier.erreurState !== undefined) {
     logError({
       messageUtilisateur:
@@ -86,13 +93,6 @@ function getMessageLogin(officier: OfficierContextProps) {
       error: officier.erreurState
     });
     return getLibelle("Erreur Système");
-  } else if (
-    officier !== undefined &&
-    officier?.erreurState.response.body.errors[ZERO]
-  ) {
-    return getLibelle(
-      "Votre compte utilisateur n'est pas actif - Veuillez vous adresser à votre administrateur RECE"
-    );
   } else {
     return getLibelle("Connexion en cours ...");
   }
