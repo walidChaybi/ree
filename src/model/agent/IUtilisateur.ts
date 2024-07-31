@@ -11,8 +11,8 @@ import { TModeAuthentification } from "./types";
 export interface IUtilisateur {
   actif?: boolean;
   dateDebut?: number;
-  dateFin?: number;
-  dateMaj?: number;
+  dateActivation?: number;
+  dateExpiration?: number;
   service?: IService;
   servicesFils?: IService[];
   fonctionAgent?: {
@@ -122,8 +122,8 @@ export const mappingUtilisateurs = (data: any) => {
         habilitations: mapHabilitationsUtilisateur(utilisateur.habilitations),
         mail: utilisateur.mel,
         actif: utilisateur.actif,
-        dateDebut: utilisateur.dateDebut,
-        dateFin: utilisateur.dateFin,
+        dateActivation: utilisateur.dateActivation,
+        dateExpiration: utilisateur.dateExpiration,
         dateMaj: utilisateur.dateMaj,
         service: utilisateur.service,
         fonctionAgent: utilisateur.fonctionAgent
@@ -142,7 +142,8 @@ export const mappingUtilisateurs = (data: any) => {
         prenom: utilisateur.prenom,
         signatureManuscrite: utilisateur.signatureManuscrite,
         trigramme: utilisateur.trigramme,
-        servicesFils: utilisateur.servicesFilsDirects
+        servicesFils: utilisateur.servicesFilsDirects,
+        modeAuthentification: "AROBAS_MDP"
       } as IUtilisateur;
       utilisateurs.push(creationUtilisateur);
     }
