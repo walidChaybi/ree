@@ -4,15 +4,16 @@
     gap: 2em;
     margin: 2rem 0;
     justify-content: center;
-}
+    align-items: flex-end;
 
-.InputField {
-    max-width: 20%;
-}
-
-
-.actionButton {
-    height: 2em;
-    width: 2em;
-    flex-grow: 2;
+    .InputField {
+        max-width: 20%;
+    }
+    
+    
+    .actionButton {
+        height: 1.7em;
+        width: 1.7em;
+        flex-grow: 1;
+    }
 }

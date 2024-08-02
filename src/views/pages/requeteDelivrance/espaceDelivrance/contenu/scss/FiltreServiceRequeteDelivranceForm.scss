@@ -4,26 +4,27 @@
     .ChampRecherche {
         width: 15%;
     }
-}
-.container {
-    display: flex;
-    gap: 1em;
-    margin-right: 0;
-    margin-left: 0; 
-    justify-content: space-around;
-    align-items: flex-end;
-}
 
-.inputField {
-    width: 80%;
-    padding: 0;
-    border: 1px solid #c8c8c8;
-    border-radius: 3px;
-    height: 2em;
-}
-
-.actionButton {
-    height: 1.7em;
-    width: 1.7em;
-    flex-grow: 1;
+    .container {
+        display: flex;
+        gap: 1em;
+        margin-right: 0;
+        margin-left: 0; 
+        justify-content: space-around;
+        align-items: flex-end;
+    }
+    
+    .inputField {
+        width: 80%;
+        padding: 0;
+        border: 1px solid #c8c8c8;
+        border-radius: 3px;
+        height: 2em;
+    }
+    
+    .actionButton {
+        height: 1.7em;
+        width: 1.7em;
+        flex-grow: 1;
+    }
 }

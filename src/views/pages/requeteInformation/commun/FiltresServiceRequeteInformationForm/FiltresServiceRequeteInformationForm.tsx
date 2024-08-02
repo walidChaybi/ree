@@ -11,10 +11,10 @@ import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequerantInformation } from "@model/requete/enum/TypeRequerantInformation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { Button } from "@mui/material";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { storeRece } from "@util/storeRece";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import {
   OptionVide,
@@ -126,7 +126,7 @@ const FiltresServiceRequeteInformationForm: React.FC<
             label={getLibelle("Type requérant")}
             options={typeRequerantOptions}
           />
-          <Bouton
+          <Button
             type="submit"
             onClick={() => handleReset()}
             data-testid="resetBouton"
@@ -136,14 +136,14 @@ const FiltresServiceRequeteInformationForm: React.FC<
               className="actionButton"
               icon={faCircleXmark}
             />
-          </Bouton>
-          <Bouton onClick={() => handleSubmit()} data-testid="loupeBouton">
+          </Button>
+          <Button onClick={() => handleSubmit()} data-testid="loupeBouton">
             <FontAwesomeIcon
               size="sm"
               className="actionButton"
               icon={faSearch}
             />
-          </Bouton>
+          </Button>
         </div>
       )}
     </Formik>
