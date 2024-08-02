@@ -4,6 +4,7 @@ import {
   postRequetesInformation,
   TypeAppelRequete
 } from "@api/appels/requeteApi";
+import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
 import {
   IRequeteTableauInformation,
   mappingRequetesTableauInformation
@@ -15,22 +16,19 @@ import { useEffect, useState } from "react";
 export const useRequeteInformationApi = (
   queryParameters: IQueryParametersPourRequetes,
   typeRequete: TypeAppelRequete,
-  setEnChargement: (enChargement: boolean) => void
+  setEnChargement: (enChargement: boolean) => void,
+  filtresRequetes?: IFiltresServiceRequeteInformationFormValues
 ) => {
   const [dataState, setDataState] = useState<IRequeteTableauInformation[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
 
   useEffect(() => {
-    const listeStatuts = queryParameters?.statuts?.join(",");
     const estTypeRequeteInfoService =
-      typeRequete === TypeAppelRequete.REQUETE_INFO_SERVICE;
+      typeRequete === TypeAppelRequete.REQUETE_INFO_SERVICE && filtresRequetes;
     const callRequetesInfo = async (): Promise<any> => {
       return estTypeRequeteInfoService
-        ? await postRequetesInformation(
-            queryParameters.statuts,
-            queryParameters
-          )
-        : await getRequetesInformation(listeStatuts, queryParameters);
+        ? await postRequetesInformation(queryParameters, filtresRequetes)
+        : await getRequetesInformation(queryParameters);
     };
 
     callRequetesInfo()
@@ -50,7 +48,7 @@ export const useRequeteInformationApi = (
           error
         });
       });
-  }, [queryParameters, typeRequete, setEnChargement]);
+  }, [queryParameters, typeRequete, setEnChargement, filtresRequetes]);
 
   return {
     dataState,

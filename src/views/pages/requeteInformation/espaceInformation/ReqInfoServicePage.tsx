@@ -7,6 +7,7 @@ import {
   INavigationApercuReqInfoParams,
   useNavigationApercuInformation
 } from "@hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
+import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -22,6 +23,9 @@ import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
+import FiltresServiceRequeteInformationForm, {
+  VALEUR_FILTRE_INFORMATION_DEFAUT
+} from "../commun/FiltresServiceRequeteInformationForm/FiltresServiceRequeteInformationForm";
 import {
   StatutsRequetesInformation,
   requeteInformationRequetesServiceColumnHeaders
@@ -45,10 +49,15 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
   const [linkParameters, setLinkParameters] =
     React.useState<IQueryParametersPourRequetes>(parametresReqInfo);
   const [enChargement, setEnChargement] = React.useState(true);
+  const [filtresSelectionne, setFiltresSelectionne] =
+    useState<IFiltresServiceRequeteInformationFormValues>(
+      VALEUR_FILTRE_INFORMATION_DEFAUT
+    );
   const { dataState, paramsTableau } = useRequeteInformationApi(
     linkParameters,
     TypeAppelRequete.REQUETE_INFO_SERVICE,
-    setEnChargement
+    setEnChargement,
+    filtresSelectionne
   );
 
   useNavigationApercuInformation(paramsNavReqInfo);
@@ -114,6 +123,10 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     setOperationEnCours(false);
   };
 
+  const onSubmit = (values: IFiltresServiceRequeteInformationFormValues) => {
+    setFiltresSelectionne(values);
+  };
+
   return (
     <>
       <OperationEnCours
@@ -121,6 +134,7 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
         onTimeoutEnd={finOperationEnCours}
         onClick={finOperationEnCours}
       />
+      <FiltresServiceRequeteInformationForm onSubmit={onSubmit} />
       <TableauRece
         idKey={"idRequete"}
         sortOrderByState={linkParameters.tri}

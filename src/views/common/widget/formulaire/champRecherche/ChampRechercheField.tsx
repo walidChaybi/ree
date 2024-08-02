@@ -3,7 +3,7 @@ import { FilterOptionsState } from "@mui/material/useAutocomplete";
 import makeStyles from "@mui/styles/makeStyles";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
-import { connect, ErrorMessage, Field } from "formik";
+import { ErrorMessage, Field, connect } from "formik";
 import React from "react";
 import { IconeCroix } from "../../icones/IconeCroix";
 import { IconErrorMessage } from "../erreur/IconeErreurMessage";

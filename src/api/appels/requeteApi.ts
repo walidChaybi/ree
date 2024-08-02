@@ -5,6 +5,7 @@ import { IFiltreServiceRequeteDelivranceDto } from "@model/form/delivrance/IFilt
 import { CLES } from "@model/parametres/clesParametres";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IEchange } from "@model/requete/IEchange";
+import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
@@ -172,18 +173,14 @@ export function postTableauRequetesDelivranceService(
 }
 
 export function getRequetesInformation(
-  listeStatuts: string,
   queryParameters: IQueryParametersPourRequetes
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
     uri: URL_MES_REQUETES_INFO,
     parameters: {
-      statuts: listeStatuts,
-      tri:
-        queryParameters.tri !== "prioriteRequete"
-          ? queryParameters.tri
-          : "dateStatut",
+      statuts: queryParameters?.statuts?.join(","),
+      tri: queryParameters.tri,
       sens: queryParameters.sens,
       range: queryParameters.range
     }
@@ -191,22 +188,26 @@ export function getRequetesInformation(
 }
 
 export function postRequetesInformation(
-  listeStatuts: string[],
-  queryParameters: IQueryParametersPourRequetes
+  queryParameters: IQueryParametersPourRequetes,
+  filtresRequetes: IFiltresServiceRequeteInformationFormValues
 ) {
   return api.fetch({
     method: HttpMethod.POST,
     uri: URL_REQUETES_INFO_SERVICE,
     parameters: {
-      tri:
-        queryParameters.tri !== "prioriteRequete"
-          ? queryParameters.tri
-          : "dateStatut",
+      tri: queryParameters.tri,
       sens: queryParameters.sens,
       range: queryParameters.range
     },
     data: {
-      statuts: listeStatuts
+      sousType: filtresRequetes.sousType,
+      objet: filtresRequetes.objet,
+      idAgent: filtresRequetes.agent?.cle || "",
+      idService: filtresRequetes.service?.cle || "",
+      typeRequerant: filtresRequetes.typeRequerant,
+      statuts: filtresRequetes.statut
+        ? [filtresRequetes.statut]
+        : queryParameters.statuts
     }
   });
 }

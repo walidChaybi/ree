@@ -5,7 +5,11 @@ import {
 } from "../data/DetailRequeteInformation";
 import {
   ReponseMesRequetesInformation,
-  ReponseRequetesInfoService
+  ReponseRequetesInfoService,
+  ReponseRequetesInfoServiceFiltreObjet,
+  ReponseRequetesInfoServiceFiltreSousType,
+  ReponseRequetesInfoServiceFiltreStatut,
+  ReponseRequetesInfoServiceFiltreTypeRequerant
 } from "../data/EspaceInformation";
 import { NOMENCLATURE_OPTION_COURRIER } from "../data/NomenclatureOptionCourrier";
 import { NOMENCLATURE_REPONSE } from "../data/NomenclatureReponse";
@@ -53,13 +57,74 @@ export const configRequetesInformation = [
       // Requetes d'information de mon service (espace information)
       if (
         match[1] ===
+          "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105" &&
+        params.sousType === "INFORMATION"
+      ) {
+        return {
+          data: ReponseRequetesInfoServiceFiltreSousType,
+          headers: {
+            "content-range":
+              "0-15/" + ReponseRequetesInfoServiceFiltreSousType.length,
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
+          }
+        };
+      }
+
+      if (
+        match[1] ===
+          "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105" &&
+        params.objet === "COMPLETION_REQUETE_EN_COURS"
+      ) {
+        return {
+          data: ReponseRequetesInfoServiceFiltreObjet,
+          headers: {
+            "content-range":
+              "0-15/" + ReponseRequetesInfoServiceFiltreObjet.length,
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
+          }
+        };
+      }
+
+      if (
+        match[1] ===
+          "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105" &&
+        params.typeRequerant === "AVOCAT"
+      ) {
+        return {
+          data: ReponseRequetesInfoServiceFiltreTypeRequerant,
+          headers: {
+            "content-range":
+              "0-15/" + ReponseRequetesInfoServiceFiltreTypeRequerant.length,
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
+          }
+        };
+      }
+
+      if (
+        match[1] ===
+          "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105" &&
+        params.statuts.length === 1 &&
+        params.statuts[0] === "PRISE_EN_CHARGE"
+      ) {
+        return {
+          data: ReponseRequetesInfoServiceFiltreStatut,
+          headers: {
+            "content-range":
+              "0-15/" + ReponseRequetesInfoServiceFiltreStatut.length,
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
+          }
+        };
+      }
+
+      if (
+        match[1] ===
         "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105"
       ) {
         return {
           data: ReponseRequetesInfoService,
           headers: {
             "content-range": "0-15/" + ReponseRequetesInfoService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }

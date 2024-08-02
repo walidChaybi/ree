@@ -1,17 +1,17 @@
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { getValeurOuUndefined, getValeurOuVide } from "@util/Utils";
-import { ObjetRequete } from "./enum/ObjetRequete";
-import { Qualite } from "./enum/Qualite";
-import { SousTypeInformation } from "./enum/SousTypeInformation";
-import { StatutRequete } from "./enum/StatutRequete";
-import { TypeMandataireReq } from "./enum/TypeMandataireReq";
-import { TypeRequete } from "./enum/TypeRequete";
 import { IRequeteTableau } from "./IRequeteTableau";
 import { mapAttribueA } from "./IRequeteTableauDelivrance";
 import {
   ITitulaireRequeteTableau,
   mapTitulaires
 } from "./ITitulaireRequeteTableau";
+import { ObjetRequete } from "./enum/ObjetRequete";
+import { Qualite } from "./enum/Qualite";
+import { SousTypeInformation } from "./enum/SousTypeInformation";
+import { StatutRequete } from "./enum/StatutRequete";
+import { TypeMandataireReq } from "./enum/TypeMandataireReq";
+import { TypeRequete } from "./enum/TypeRequete";
 
 export interface IRequeteTableauInformation extends IRequeteTableau {
   objet?: string;
