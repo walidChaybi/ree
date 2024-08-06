@@ -1,6 +1,6 @@
 import { BesoinUsager } from "@model/requete/enum/BesoinUsager";
 import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
-import { ObjetRequete } from "@model/requete/enum/ObjetRequete";
+import { ObjetRequeteInfo } from "@model/requete/enum/ObjetRequeteInfo";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
@@ -52,7 +52,7 @@ export const requeteInformation: IRequeteInformation = {
     raisonStatut: ""
   },
   sousType: SousTypeInformation.INFORMATION,
-  objet: ObjetRequete.DEMANDE_COPIE_ACTE,
+  objet: ObjetRequeteInfo.DEMANDE_COPIE_ACTE,
   complementObjet: ComplementObjetRequete.COPIE_ACTE_NON_RECUE,
   commentaire: "test commentaire",
   provenanceRequete: Provenance.INTERNET,
@@ -105,7 +105,7 @@ export const requeteInformationCompletion: IRequeteInformation = {
     raisonStatut: ""
   },
   sousType: SousTypeInformation.COMPLETION_REQUETE_EN_COURS,
-  objet: ObjetRequete.COMPLETION_REQUETE_EN_COURS,
+  objet: ObjetRequeteInfo.COMPLETION_REQUETE_EN_COURS,
   complementObjet: ComplementObjetRequete.REPONSE_LIBRE_AGENT,
   commentaire: "test commentaire",
   provenanceRequete: Provenance.INTERNET,

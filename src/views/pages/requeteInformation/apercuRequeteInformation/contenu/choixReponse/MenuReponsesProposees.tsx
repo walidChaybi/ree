@@ -37,8 +37,8 @@ export const MenuReponsesProposees: React.FC<MenuReponsesProposeesProps> = (
     if (props.listeReponse) {
       setReponsesFiltees(
         props.listeReponse.filter(
-          (reponse) =>
-            reponse.objet === props.requete.objet.nom &&
+          reponse =>
+            reponse.objet === props.requete.objet &&
             reponse.complementObjet === props.requete.complementObjet.nom
         )
       );

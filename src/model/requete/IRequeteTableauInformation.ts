@@ -6,7 +6,7 @@ import {
   ITitulaireRequeteTableau,
   mapTitulaires
 } from "./ITitulaireRequeteTableau";
-import { ObjetRequete } from "./enum/ObjetRequete";
+import { getObjetRequeteInfoLibelle } from "./enum/ObjetRequeteInfo";
 import { Qualite } from "./enum/Qualite";
 import { SousTypeInformation } from "./enum/SousTypeInformation";
 import { StatutRequete } from "./enum/StatutRequete";
@@ -43,7 +43,7 @@ export function mappingUneRequeteTableauInformation(
     type: TypeRequete.INFORMATION.libelle,
     numero: getValeurOuVide(requete?.numero),
     sousType: SousTypeInformation.getEnumFor(requete?.sousType).libelle,
-    objet: ObjetRequete.getEnumFor(getValeurOuVide(requete.objet)).libelle,
+    objet: getObjetRequeteInfoLibelle(getValeurOuVide(requete.objet)),
     dateCreation: getFormatDateFromTimestamp(requete?.dateCreation),
     statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
     nomCompletRequerant: getValeurOuVide(requete?.nomCompletRequerant),

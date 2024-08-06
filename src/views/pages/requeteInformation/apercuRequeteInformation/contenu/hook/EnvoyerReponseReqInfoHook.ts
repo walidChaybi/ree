@@ -4,6 +4,7 @@ import { IMail } from "@model/mail/IMail";
 import { IPieceJustificativeMail } from "@model/mail/IPieceJustificativeMail";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
+import { getObjetRequeteInfoLibelle } from "@model/requete/enum/ObjetRequeteInfo";
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { PieceJointe } from "@util/FileUtils";
 import { logError } from "@util/LogManager";
@@ -58,7 +59,7 @@ function getReponseAEnvoyer(
     mail.listeDestinataireCopieCache = [];
     mail.champs = {
       champ1: requete.sousType.libelle, // "Sous-type demande"
-      champ2: requete.objet.libelle, //  "Objet demande"
+      champ2: getObjetRequeteInfoLibelle(requete.objet), //  "Objet demande"
       champ3: ComplementObjetRequete.estReponseLibreAgent(
         requete.complementObjet
       )

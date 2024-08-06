@@ -4,7 +4,7 @@ import {
   ReponseRequeteInfo
 } from "@model/requete/IReponseRequeteInfo";
 import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
-import { ObjetRequete } from "@model/requete/enum/ObjetRequete";
+import { ObjetRequeteInfo } from "@model/requete/enum/ObjetRequeteInfo";
 
 test("Attendu: ReponseRequeteInfo.getLibelleNomenclatureReponseRequeteInfoFromId fonctionne correctement", () => {
   expect(
@@ -21,7 +21,7 @@ test("Attendu: ReponseRequeteInfo.getNomenclatureReponseRequetInfoFromObjetEtCom
   expect(
     ReponseRequeteInfo.getNomenclatureReponseRequetInfoFromObjetEtComplementObjet(
       {
-        objet: ObjetRequete.COMPLETION_REQUETE_EN_COURS.nom,
+        objet: ObjetRequeteInfo.COMPLETION_REQUETE_EN_COURS,
         complementObjet: ComplementObjetRequete.REPONSE_LIBRE_AGENT.nom
       },
       NOMENCLATURE_REPONSE

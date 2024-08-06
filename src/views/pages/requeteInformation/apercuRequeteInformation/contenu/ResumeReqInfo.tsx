@@ -1,9 +1,10 @@
 import { ListePiecesJointes } from "@composant/piecesJointes/ListePiecesJointes";
-import { Qualite } from "@model/requete/enum/Qualite";
 import { Requerant } from "@model/requete/IRequerant";
 import { Requete } from "@model/requete/IRequete";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
+import { getObjetRequeteInfoLibelle } from "@model/requete/enum/ObjetRequeteInfo";
+import { Qualite } from "@model/requete/enum/Qualite";
 import { IPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
 import {
   IPieceJointe,
@@ -109,7 +110,7 @@ function getRequeteInfo(
   ajouterContentPartAuPartUneValeur(
     infosRequete,
     getLibelle(`Objet`),
-    detailRequete.objet.libelle
+    getObjetRequeteInfoLibelle(detailRequete.objet)
   );
   ajouterContentPartAuPartUneValeur(
     infosRequete,

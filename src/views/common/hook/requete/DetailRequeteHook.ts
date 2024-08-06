@@ -1,25 +1,6 @@
 import { getDetailRequete } from "@api/appels/requeteApi";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { CategorieDocument } from "@model/requete/CategorieDocument";
-import { BesoinUsager } from "@model/requete/enum/BesoinUsager";
-import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import { ObjetRequete } from "@model/requete/enum/ObjetRequete";
-import { Provenance } from "@model/requete/enum/Provenance";
-import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TagPriorisation } from "@model/requete/enum/TagPriorisation";
-import { TypeCanal } from "@model/requete/enum/TypeCanal";
-import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
-import { TypeMandant } from "@model/requete/enum/TypeMandant";
-import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IAction } from "@model/requete/IActions";
 import { DocumentPJ, IDocumentPJ } from "@model/requete/IDocumentPj";
 import { IEchange } from "@model/requete/IEchange";
@@ -38,6 +19,24 @@ import { ISuiviDossier } from "@model/requete/ISuiviDossier";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeTranscription } from "@model/requete/NatureActeTranscription";
+import { BesoinUsager } from "@model/requete/enum/BesoinUsager";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { Provenance } from "@model/requete/enum/Provenance";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TagPriorisation } from "@model/requete/enum/TagPriorisation";
+import { TypeCanal } from "@model/requete/enum/TypeCanal";
+import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
+import { TypeMandant } from "@model/requete/enum/TypeMandant";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import {
   IPieceJustificativeCreation,
@@ -48,8 +47,8 @@ import {
   getFormatDateFromTimestamp
 } from "@util/DateUtils";
 import { logError } from "@util/LogManager";
-import { storeRece } from "@util/storeRece";
 import { getValeurOuUndefined } from "@util/Utils";
+import { storeRece } from "@util/storeRece";
 import { useEffect, useState } from "react";
 import { AvancementProjetActe } from "./../../../../model/requete/enum/AvancementProjetActe";
 import { NatureProjetEtablissement } from "./../../../../model/requete/enum/NatureProjetEtablissement";
@@ -304,7 +303,7 @@ export function mappingRequeteInformation(data: any): IRequeteInformation {
     ...mappingRequete(data),
     //Partie Requête Delivrance
     sousType: SousTypeInformation.getEnumFor(data.sousType),
-    objet: ObjetRequete.getEnumFor(data.objet),
+    objet: data.objet,
     complementObjet: ComplementObjetRequete.getEnumFor(data.complementObjet),
     commentaire: data.commentaire,
     reponseChoisie: {

@@ -1,5 +1,8 @@
 import { IReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
-import { ObjetRequete } from "@model/requete/enum/ObjetRequete";
+import {
+  ObjetRequeteInfo,
+  objetsRequeteInfoCommeOptions
+} from "@model/requete/enum/ObjetRequeteInfo";
 import { MenuItem } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import { Option } from "@util/Type";
@@ -60,37 +63,37 @@ export const MenuToutesLesReponses: React.FC<
             }}
             MenuListProps={{ onMouseLeave: handleCloseMenu }}
           >
-            {ObjetRequete.getAllEnumsAsOptionsSaufCompletion().map(
-              (obj: Option) => {
-                let reponsesFiltrees: IReponseRequeteInfo[] = [];
-                if (props.listeReponse) {
-                  reponsesFiltrees = props.listeReponse.filter(
-                    rep => rep.objet === obj.cle
-                  );
-                }
-                return (
-                  <NestedMenuItem
-                    className="BoutonSousMenu"
-                    label={obj.libelle}
-                    parentMenuOpen={Boolean(menuToutesLesReponses)}
-                    key={obj.cle}
-                    openDirection="left"
-                  >
-                    {reponsesFiltrees.map((reponse: IReponseRequeteInfo) => {
-                      return (
-                        <MenuItem
-                          className="SousMenu"
-                          onClick={() => clickMenuItem(reponse)}
-                          key={reponse.id}
-                        >
-                          {libelleSurDeuxLignes(reponse.libelle)}
-                        </MenuItem>
-                      );
-                    })}
-                  </NestedMenuItem>
+            {objetsRequeteInfoCommeOptions([
+              ObjetRequeteInfo.COMPLETION_REQUETE_EN_COURS
+            ]).map((optionObjetRequeteInfo: Option) => {
+              let reponsesFiltrees: IReponseRequeteInfo[] = [];
+              if (props.listeReponse) {
+                reponsesFiltrees = props.listeReponse.filter(
+                  rep => rep.objet === optionObjetRequeteInfo.cle
                 );
               }
-            )}
+              return (
+                <NestedMenuItem
+                  className="BoutonSousMenu"
+                  label={optionObjetRequeteInfo.libelle}
+                  parentMenuOpen={Boolean(menuToutesLesReponses)}
+                  key={optionObjetRequeteInfo.cle}
+                  openDirection="left"
+                >
+                  {reponsesFiltrees.map((reponse: IReponseRequeteInfo) => {
+                    return (
+                      <MenuItem
+                        className="SousMenu"
+                        onClick={() => clickMenuItem(reponse)}
+                        key={reponse.id}
+                      >
+                        {libelleSurDeuxLignes(reponse.libelle)}
+                      </MenuItem>
+                    );
+                  })}
+                </NestedMenuItem>
+              );
+            })}
           </Menu>
         </div>
       )}

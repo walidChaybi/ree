@@ -6,7 +6,7 @@ import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
-import { ObjetRequete } from "@model/requete/enum/ObjetRequete";
+import { objetsRequeteInfoCommeOptions } from "@model/requete/enum/ObjetRequeteInfo";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequerantInformation } from "@model/requete/enum/TypeRequerantInformation";
@@ -64,13 +64,17 @@ const FiltresServiceRequeteInformationForm: React.FC<
       StatutRequete.getOptionsAPartirTypeRequete(
         TypeRequete.INFORMATION
       ).filter(
-        statutRequete => statutRequete.cle !== StatutRequete.TRAITEE_AUTO.nom
+        statutRequete =>
+          ![
+            StatutRequete.TRAITEE_AUTO.nom,
+            StatutRequete.TRAITE_REPONDU.nom
+          ].includes(statutRequete.cle)
       ),
     []
   );
 
   const objetRequeteOptions: Options = useMemo(
-    () => ObjetRequete.getAllEnumsAsOptions(),
+    () => objetsRequeteInfoCommeOptions(),
     []
   );
 

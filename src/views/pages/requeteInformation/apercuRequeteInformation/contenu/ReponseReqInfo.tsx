@@ -1,23 +1,26 @@
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
-import { BesoinUsager } from "@model/requete/enum/BesoinUsager";
-import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
-import { ObjetRequete } from "@model/requete/enum/ObjetRequete";
-import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import {
   IReponseRequeteInfo,
   ReponseRequeteInfo
 } from "@model/requete/IReponseRequeteInfo";
-import { storeRece } from "@util/storeRece";
+import { BesoinUsager } from "@model/requete/enum/BesoinUsager";
+import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
+import {
+  ObjetRequeteInfo,
+  getObjetRequeteInfoLibelle
+} from "@model/requete/enum/ObjetRequeteInfo";
+import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getLibelle } from "@util/Utils";
+import { storeRece } from "@util/storeRece";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import React, { useEffect, useState } from "react";
+import { RequeteInfoProps } from "./ResumeReqInfo";
 import { BoutonReponseLibre } from "./choixReponse/BoutonReponseLibre";
 import { MenuReponsesProposees } from "./choixReponse/MenuReponsesProposees";
 import { MenuToutesLesReponses } from "./choixReponse/MenuToutesLesReponses";
 import { ReponseReqInfoForm } from "./choixReponse/ReponseReqInfoForm";
 import { useReponsesReqInfoApiHook } from "./hook/ReponsesReqInfoHook";
-import { RequeteInfoProps } from "./ResumeReqInfo";
 import "./scss/ReponseReqInfo.scss";
 
 export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
@@ -29,7 +32,7 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
   const SAISIE_LIBRE_REPONSE = {
     id: "",
     libelle: "Réponse libre agent",
-    objet: requete.objet.libelle,
+    objet: getObjetRequeteInfoLibelle(requete.objet),
     complementObjet: requete.complementObjet.libelle,
     corpsMail: ""
   };
@@ -83,7 +86,7 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
       const reponseLibre =
         ReponseRequeteInfo.getNomenclatureReponseRequetInfoFromObjetEtComplementObjet(
           {
-            objet: ObjetRequete.COMPLETION_REQUETE_EN_COURS.nom,
+            objet: ObjetRequeteInfo.COMPLETION_REQUETE_EN_COURS,
             complementObjet: ComplementObjetRequete.REPONSE_LIBRE_AGENT.nom
           },
           reponsesReqInfo
