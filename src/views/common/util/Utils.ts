@@ -34,26 +34,29 @@ export const DIX_MILLE = 10000;
 
 export const CAR_ETOILE = "*";
 
-function triObjetsSurPropriete(o1: any, o2: any, propertyName: string) {
+const triObjetsSurPropriete = (o1: any, o2: any, propertyName: string) => {
   if (o1[propertyName] < o2[propertyName]) {
     return -1;
   } else if (o1[propertyName] > o2[propertyName]) {
     return 1;
   }
   return 0;
-}
+};
 
-export function triListeObjetsSurPropriete(objets: any[], propriete: string) {
+export const triListeObjetsSurPropriete = (
+  objets: any[],
+  propriete: string
+) => {
   return objets
     ? objets.sort((o1, o2) => triObjetsSurPropriete(o1, o2, propriete))
     : [];
-}
+};
 
-export function chiffreEstPair(chiffre: number) {
+export const chiffreEstPair = (chiffre: number) => {
   return chiffre % DEUX === 0;
-}
+};
 
-export function triListeObjetsSurDate(objets: any[], nomPropriete: string) {
+export const triListeObjetsSurDate = (objets: any[], nomPropriete: string) => {
   return objets
     ? objets.sort((o1, o2) => {
         let res = 0;
@@ -66,9 +69,9 @@ export function triListeObjetsSurDate(objets: any[], nomPropriete: string) {
         return res;
       })
     : [];
-}
+};
 
-export function formatMajusculesMinusculesMotCompose(str?: string) {
+export const formatMajusculesMinusculesMotCompose = (str?: string) => {
   let res = "";
   if (str) {
     let espaceOuTiret = true;
@@ -79,9 +82,9 @@ export function formatMajusculesMinusculesMotCompose(str?: string) {
     }
   }
   return res;
-}
+};
 
-export function formatPremieresLettresMajusculesNomCompose(str?: string) {
+export const formatPremieresLettresMajusculesNomCompose = (str?: string) => {
   let res = "";
   if (str) {
     str = str.toLowerCase();
@@ -94,24 +97,24 @@ export function formatPremieresLettresMajusculesNomCompose(str?: string) {
     });
   }
   return res;
-}
+};
 
-export function enMajuscule(str?: string): string {
+export const enMajuscule = (str?: string): string => {
   return str ? str.toLocaleUpperCase() : "";
-}
+};
 
-export function remplaceSPC(prenom: string) {
+export const remplaceSPC = (prenom: string) => {
   if (prenom === SPC) {
     return SANS_PRENOM_CONNU;
   }
   return prenom;
-}
+};
 
-export function formatPrenom(
+export const formatPrenom = (
   prenom?: string,
   prenomParDefaut = SANS_PRENOM_CONNU,
   enMajuscules = true
-): string {
+): string => {
   let prenomFormate = "";
   if (prenom === SPC) {
     prenomFormate = prenomParDefaut;
@@ -124,26 +127,26 @@ export function formatPrenom(
   }
 
   return prenomFormate;
-}
+};
 
-export function triPrenoms(prenoms: IPrenomOrdonnes[]): string[] {
+export const triPrenoms = (prenoms: IPrenomOrdonnes[]): string[] => {
   return [...prenoms]
     .sort((a, b) => a.numeroOrdre - b.numeroOrdre)
     .map(prenom => prenom.prenom);
-}
+};
 
-export function remplaceSNP(nom: string) {
+export const remplaceSNP = (nom: string) => {
   if (nom === SNP) {
     return SANS_NOM_PATRONYMIQUE;
   }
   return nom;
-}
+};
 
-export function formatNom(
+export const formatNom = (
   nom?: string,
   nomParDefaut = SANS_NOM_PATRONYMIQUE,
   enMajuscules = true
-): string {
+): string => {
   let nomFormate = nom || "";
   if (nom === SNP) {
     nomFormate = nomParDefaut;
@@ -152,23 +155,23 @@ export function formatNom(
   }
 
   return nomFormate;
-}
+};
 
-export function formatDe(str: string) {
+export const formatDe = (str: string) => {
   const lettres = ["A", "E", "I", "O", "U", "Y", "H"];
   const premiereLettre = str.charAt(0).toUpperCase();
   return lettres.includes(premiereLettre) ? "d'" : "de ";
-}
+};
 
-export function getValeurOuVide(str?: any) {
+export const getValeurOuVide = (str?: any) => {
   return str ?? "";
-}
+};
 
-export function getPremierElemOuVide(tab?: string[]): string {
+export const getPremierElemOuVide = (tab?: string[]): string => {
   return tab && tab[0] ? tab[0] : "";
-}
+};
 
-export function jointAvec(tab: string[], sep: string) {
+export const jointAvec = (tab: string[], sep: string) => {
   let res = "";
   if (tab) {
     tab.forEach(elem => {
@@ -183,70 +186,70 @@ export function jointAvec(tab: string[], sep: string) {
   }
 
   return res;
-}
+};
 
-export function joint(tab: string[]): string {
+export const joint = (tab: string[]): string => {
   return jointAvec(tab, ", ");
-}
+};
 
-export function jointAvecEspace(tab: string[]): string {
+export const jointAvecEspace = (tab: string[]): string => {
   return jointAvec(tab, " ");
-}
+};
 
-export function jointAvecRetourALaLigne(tab: string[]): string {
+export const jointAvecRetourALaLigne = (tab: string[]): string => {
   return jointAvec(tab, "\n");
-}
+};
 
-export function compareNombre(n1: number, n2: number): number {
+export const compareNombre = (n1: number, n2: number): number => {
   return n1 > n2 ? 1 : n1 === n2 ? 0 : -1;
-}
+};
 
-export function estTableauNonVide(tab?: any[]): boolean {
+export const estTableauNonVide = (tab?: any[]): boolean => {
   return Array.isArray(tab) && tab.length > 0;
-}
+};
 
-export function premiereLettreEnMajusculeLeResteEnMinuscule(str?: string) {
+export const premiereLettreEnMajusculeLeResteEnMinuscule = (str?: string) => {
   let res = "";
   if (str) {
     res = str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
   return res;
-}
+};
 
-export function premiereLettreEnMinuscule(str?: string) {
+export const premiereLettreEnMinuscule = (str?: string) => {
   let res = "";
   if (str) {
     res = str.charAt(0).toLowerCase() + str.slice(1);
   }
   return res;
-}
+};
 
-export function premiereLettreEnMajuscule(str?: string) {
+export const premiereLettreEnMajuscule = (str?: string) => {
   let res = "";
   if (str) {
     res = str.charAt(0).toUpperCase() + str.slice(1);
   }
   return res;
-}
+};
 
 // Tous les autre(s) nom(s) sont affichés en majuscule et sont séparés par une ","
-export function formatNoms(noms?: string[]): string {
+export const formatNoms = (noms?: string[]): string => {
   return noms ? joint(noms.map(n => enMajuscule(n))) : "";
-}
+};
 
 // Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une ","
-export function formatPrenoms(
+export const formatPrenoms = (
   prenoms?: string[],
   prenomParDefaut = SANS_PRENOM_CONNU,
   enMajuscules = true
-): string {
+): string => {
   return prenoms
     ? joint(prenoms.map(p => formatPrenom(p, prenomParDefaut, enMajuscules)))
     : "";
-}
+};
 
 // Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une ","
-export function jointPrenoms(prenoms?: IPrenom[]): string {
+export const jointPrenoms = (prenoms?: IPrenom[]): string => {
   return prenoms
     ? joint(
         prenoms
@@ -254,60 +257,60 @@ export function jointPrenoms(prenoms?: IPrenom[]): string {
           .map(p => formatPrenom(p.valeur))
       )
     : "";
-}
+};
 
-export function numberToString(nb?: number): string {
+export const numberToString = (nb?: number): string => {
   return nb ? nb.toString() : "";
-}
+};
 
-export function rempliAGauche(nb: number | string, c: string, long: number) {
+export const rempliAGauche = (nb: number | string, c: string, long: number) => {
   return nb ? String(nb).padStart(long, c) : "";
-}
+};
 
-export function rempliAGaucheAvecZero(nb: number | string, long = DEUX) {
+export const rempliAGaucheAvecZero = (nb: number | string, long = DEUX) => {
   return rempliAGauche(nb, "0", long);
-}
+};
 
-export function supprimerEspacesInutiles(value: string) {
+export const supprimerEspacesInutiles = (value: string) => {
   return value.trim().replace(new RegExp(/\s{2,}/g), " ");
-}
+};
 
-export function supprimeSautDeLigneEtEspaceInutiles(value?: string) {
+export const supprimeSautDeLigneEtEspaceInutiles = (value?: string) => {
   let res = "";
   if (value) {
     res = value.trim().replace(new RegExp(/\s+/g), " ");
   }
   return res;
-}
+};
 
-export function changeLaPlaceDunElement(
+export const changeLaPlaceDunElement = (
   tab: any[],
   index: number,
   nouvelIndex: number
-) {
+) => {
   if (tab && tab.length > 0 && index >= 0 && nouvelIndex >= 0) {
     const elements = tab.splice(index, 1);
     tab.splice(nouvelIndex, 0, ...elements);
   }
-}
+};
 
-export function finirAvec3petitsPoints(
+export const finirAvec3petitsPoints = (
   texte: string,
   charactereAvantPoints: number
-) {
+) => {
   return texte.length > charactereAvantPoints
     ? `${texte.slice(0, charactereAvantPoints - "...".length)}...`
     : texte;
-}
+};
 
-export function supprimerNullEtUndefinedDuTableau(elements?: any[]) {
+export const supprimerNullEtUndefinedDuTableau = (elements?: any[]) => {
   return elements?.filter((el: any) => el != null);
-}
+};
 
-export function replaceIndexByValue(
+export const replaceIndexByValue = (
   phrase: string,
   values: (string | number)[]
-) {
+) => {
   if (phrase && values) {
     values.forEach((value: string | number, index: number) => {
       const valueToUse = typeof value === "number" ? value.toString() : value;
@@ -315,13 +318,13 @@ export function replaceIndexByValue(
     });
   }
   return phrase;
-}
+};
 
-export function aplatirTableau(tableau: any[]): any[] {
+export const aplatirTableau = (tableau: any[]): any[] => {
   return [].concat(...tableau);
-}
+};
 
-export function compactObject(object: any): any {
+export const compactObject = (object: any): any => {
   for (const property in object) {
     if (
       object[property] === undefined ||
@@ -333,17 +336,17 @@ export function compactObject(object: any): any {
     }
   }
   return object;
-}
+};
 
-export function tousRenseignes(...args: any[]): boolean {
+export const tousRenseignes = (...args: any[]): boolean => {
   return args.length > 0 && args.every(elem => elem);
-}
+};
 
-export function tousNonRenseignes(...args: any[]): boolean {
+export const tousNonRenseignes = (...args: any[]): boolean => {
   return args.length === 0 || args.every(elem => !elem);
-}
+};
 
-export function supprimeElement(tableau: any[], fct: any) {
+export const supprimeElement = (tableau: any[], fct: any) => {
   let nouveauTableau;
   const indexASupprimer = tableau.findIndex(element => fct(element));
   if (indexASupprimer !== -1) {
@@ -355,13 +358,13 @@ export function supprimeElement(tableau: any[], fct: any) {
     nouveauTableau = [...tableau];
   }
   return nouveauTableau;
-}
+};
 
-export function getLibelle(msg?: string) {
+export const getLibelle = (msg?: string) => {
   return msg ?? "";
-}
+};
 
-export function shallowEgalTableau(tab1: Object[], tab2: Object[]) {
+export const shallowEgalTableau = (tab1: Object[], tab2: Object[]) => {
   if (tab1.length !== tab2.length) {
     return false;
   }
@@ -372,9 +375,9 @@ export function shallowEgalTableau(tab1: Object[], tab2: Object[]) {
     }
   });
   return res;
-}
+};
 
-export function shallowEgal(obj1?: Object, obj2?: Object): boolean {
+export const shallowEgal = (obj1?: Object, obj2?: Object): boolean => {
   if (obj1 === undefined || obj2 === undefined) {
     return obj1 === undefined && obj2 === undefined;
   }
@@ -393,9 +396,9 @@ export function shallowEgal(obj1?: Object, obj2?: Object): boolean {
       return resultat;
     })
   );
-}
+};
 
-export function estRenseigne(valeur: any): boolean {
+export const estRenseigne = (valeur: any): boolean => {
   let valeurTrimee = valeur;
   if (valeur instanceof Array) {
     return valeur.length > 0;
@@ -407,21 +410,21 @@ export function estRenseigne(valeur: any): boolean {
     valeurTrimee = valeur.trim();
   }
   return valeur != null && valeur !== "" && valeurTrimee !== "" && valeur !== 0;
-}
+};
 
-export function estNonRenseigne(valeur: any): boolean {
+export const estNonRenseigne = (valeur: any): boolean => {
   return !estRenseigne(valeur);
-}
+};
 
-export function mapPrenomsVersPrenomsOrdonnes(prenoms?: string[]) {
+export const mapPrenomsVersPrenomsOrdonnes = (prenoms?: string[]) => {
   const prenomsOrdonnes: IPrenomOrdonnes[] = [];
   prenoms?.forEach((prenom, idx) =>
     prenomsOrdonnes.push({ prenom, numeroOrdre: idx + 1 })
   );
   return prenomsOrdonnes;
-}
+};
 
-export function mapPrenomsVersTableauString(prenoms?: Prenoms): string[] {
+export const mapPrenomsVersTableauString = (prenoms?: Prenoms): string[] => {
   const tableauPrenoms: string[] = [];
   if (prenoms) {
     Object.values(prenoms).forEach(prenom => {
@@ -431,9 +434,9 @@ export function mapPrenomsVersTableauString(prenoms?: Prenoms): string[] {
     });
   }
   return tableauPrenoms;
-}
+};
 
-export function estHeureValide(nbHeure: number, nbMinute: number) {
+export const estHeureValide = (nbHeure: number, nbMinute: number) => {
   return (
     !Number.isNaN(nbHeure) &&
     !Number.isNaN(nbMinute) &&
@@ -442,9 +445,9 @@ export function estHeureValide(nbHeure: number, nbMinute: number) {
     nbMinute >= ZERO &&
     nbMinute < SOIXANTE
   );
-}
+};
 
-export function checkDirty(isDirty: boolean, setIsDirty: any) {
+export const checkDirty = (isDirty: boolean, setIsDirty: any) => {
   if (isDirty) {
     if (
       window.confirm(
@@ -461,25 +464,27 @@ export function checkDirty(isDirty: boolean, setIsDirty: any) {
   } else {
     return true;
   }
-}
+};
 
-export function getNombreOuUndefined(nombreStr?: string): number | undefined {
+export const getNombreOuUndefined = (
+  nombreStr?: string
+): number | undefined => {
   const nombre = parseInt(nombreStr || "", DIX);
   return isNaN(nombre) ? undefined : nombre;
-}
+};
 
-export function getNombreOuNull(nombreStr?: string): number | null {
+export const getNombreOuNull = (nombreStr?: string): number | null => {
   const nombre = parseInt(nombreStr || "", DIX);
   return isNaN(nombre) ? null : nombre;
-}
+};
 
-export function getValeurOuUndefined(valeur?: any): any | undefined {
+export const getValeurOuUndefined = (valeur?: any): any | undefined => {
   return valeur ? valeur : undefined;
-}
+};
 
-export function getValeurOuNull<T>(valeur?: T): T | null {
+export const getValeurOuNull = <T>(valeur?: T): T | null => {
   return valeur ? valeur : null;
-}
+};
 
 export const getPremiereOuSecondeValeur = (
   valeur1: string | undefined | null,
@@ -488,7 +493,7 @@ export const getPremiereOuSecondeValeur = (
   return valeur1 ? valeur1 : valeur2 || "";
 };
 
-export function getTableauAPartirElementsNonVides(...args: any[]) {
+export const getTableauAPartirElementsNonVides = (...args: any[]) => {
   const tableau: any[] = [];
   args.forEach((element: any) => {
     if (element) {
@@ -496,19 +501,19 @@ export function getTableauAPartirElementsNonVides(...args: any[]) {
     }
   });
   return tableau;
-}
+};
 
 export const executeEnDiffere = (fct: any, tempsMs?: number) => {
   setTimeout(fct, tempsMs ? tempsMs : TIME_OUT_MS);
 };
 
-export function execute(fct?: any) {
+export const execute = (fct?: any) => {
   if (fct) {
     fct();
   }
-}
+};
 
-export function auMoinsUneProprieteEstRenseigne(objet: Object): boolean {
+export const auMoinsUneProprieteEstRenseigne = (objet: Object): boolean => {
   let res = false;
   const proprietes = Object.getOwnPropertyNames(objet);
   for (const propriete of proprietes) {
@@ -525,32 +530,32 @@ export function auMoinsUneProprieteEstRenseigne(objet: Object): boolean {
     }
   }
   return res;
-}
+};
 
-export function estUnObjet(objet: any): boolean {
+export const estUnObjet = (objet: any): boolean => {
   return objet != null && typeof objet === "object" && !Array.isArray(objet);
-}
+};
 
-export function estUnNombre(str?: string): boolean {
+export const estUnNombre = (str?: string): boolean => {
   return str != null && str !== "" && Number.isInteger(+str);
-}
+};
 
-export function getValeurProprieteAPartirChemin(
+export const getValeurProprieteAPartirChemin = (
   chemin: string,
   objet?: Object
-) {
+) => {
   return objet
     ? chemin
         .split(".")
         //@ts-ignore
         .reduce((previous, current) => previous?.[current], objet)
     : undefined;
-}
+};
 
-export function seulementUneProprieteRenseignee(
+export const seulementUneProprieteRenseignee = (
   cheminPropriete: string,
   objet?: Object
-): boolean {
+): boolean => {
   const valeurPropriete = getValeurProprieteAPartirChemin(
     cheminPropriete,
     objet
@@ -563,17 +568,20 @@ export function seulementUneProprieteRenseignee(
       auMoinsUneProprieteEstRenseigne(valeurPropriete as Object)) &&
     seulementUneProprieteRenseigneeAvecCheminCourant(cheminPropriete, objet, "")
   );
-}
+};
 
-export function ajouteCheminCourant(propriete: string, cheminCourant: string) {
+export const ajouteCheminCourant = (
+  propriete: string,
+  cheminCourant: string
+) => {
   return cheminCourant ? `${cheminCourant}.${propriete}` : propriete;
-}
+};
 
-function seulementUneProprieteRenseigneeAvecCheminCourant(
+const seulementUneProprieteRenseigneeAvecCheminCourant = (
   cheminPropriete: string,
   objet: Object,
   cheminCourant: string
-): boolean {
+): boolean => {
   let res = true;
   const proprietes = Object.getOwnPropertyNames(objet);
   for (const propriete of proprietes) {
@@ -600,13 +608,13 @@ function seulementUneProprieteRenseigneeAvecCheminCourant(
     }
   }
   return res;
-}
+};
 
-export function supprimerZerosAGauche(str?: string) {
+export const supprimerZerosAGauche = (str?: string) => {
   return str ? str.replace(/^0+/, "") : "";
-}
+};
 
-export function aucuneProprieteRenseignee(objet?: Object): boolean {
+export const aucuneProprieteRenseignee = (objet?: Object): boolean => {
   if (!objet) {
     return true;
   }
@@ -627,13 +635,13 @@ export function aucuneProprieteRenseignee(objet?: Object): boolean {
     }
   }
   return res;
-}
+};
 
-export function chainesEgales(
+export const chainesEgales = (
   sensitivity: "base" | "accent",
   str1?: string,
   str2?: string
-): boolean {
+): boolean => {
   let res;
   if (str1 === str2) {
     res = true;
@@ -644,25 +652,25 @@ export function chainesEgales(
     res = str1.localeCompare(str2, "fr", { sensitivity }) === 0;
   }
   return res;
-}
+};
 
-export function chainesEgalesIgnoreCasseEtAccent(
+export const chainesEgalesIgnoreCasseEtAccent = (
   str1?: string,
   str2?: string
-): boolean {
+): boolean => {
   return chainesEgales("base", str1, str2);
-}
+};
 
-export function chainesEgalesIgnoreCasse(
+export const chainesEgalesIgnoreCasse = (
   str1?: string,
   str2?: string
-): boolean {
+): boolean => {
   return chainesEgales("accent", str1, str2);
-}
+};
 
-export function getPremiereLettreDunMot(mot: string) {
+export const getPremiereLettreDunMot = (mot: string) => {
   return mot[0];
-}
+};
 
 export type LigneType = string | false | undefined;
 
@@ -673,7 +681,7 @@ export const formatLigne = (tableau?: LigneType[], separateur = ", ") => {
 };
 
 /** Retourne le nombre en fin d'une chaîne de caractère (ex: abc_123 => 123) ou undefined s'il n'y en a pas */
-export function getNombreCommeSuffix(str: string): number | undefined {
+export const getNombreCommeSuffix = (str: string): number | undefined => {
   let nombreStr = "";
   if (str) {
     let index = str.length - 1;
@@ -683,12 +691,12 @@ export function getNombreCommeSuffix(str: string): number | undefined {
     }
   }
   return nombreStr ? Number(nombreStr) : undefined;
-}
+};
 
 // Vérifie si un élément 'obj' est de type 'type', retourne un boolean.
-export function estDeType(obj: any, type: string): boolean {
+export const estDeType = (obj: any, type: string): boolean => {
   return typeof obj === type;
-}
+};
 
 // La propriété initialiement obligatoire d'une interface devient optionnelle.
 // >> PropsPartielles<IInterface, "prop1" | "prop2">
@@ -702,11 +710,11 @@ export const estSuperieurA500Caracteres = (texte: string) => {
     return false;
   }
 };
-export function creerPlageDeNombres(nb: number): number[] {
+export const creerPlageDeNombres = (nb: number): number[] => {
   return Array.from({ length: nb }, (v, index) => index);
-}
+};
 
-export function sontTableauxIdentiques(arr1: any[], arr2: any) {
+export const sontTableauxIdentiques = (arr1: any[], arr2: any) => {
   let bool = true;
   if (arr1 === arr2) {
     bool = true;
@@ -722,9 +730,9 @@ export function sontTableauxIdentiques(arr1: any[], arr2: any) {
     }
   }
   return bool;
-}
+};
 
-export function objectsSontIdentiques(object1: any, object2: any): boolean {
+export const objectsSontIdentiques = (object1: any, object2: any): boolean => {
   const keys1 = Object.keys(object1);
   const keys2 = Object.keys(object2);
 
@@ -745,8 +753,13 @@ export function objectsSontIdentiques(object1: any, object2: any): boolean {
   }
 
   return true;
-}
+};
 
-function isObject(object: any): boolean {
+export const isObject = (object: any): boolean => {
   return object != null && typeof object === "object";
-}
+};
+
+export const triAlphanumerique = (texteA: string, texteB: string) => {
+  return texteA.localeCompare(texteB);
+};
+

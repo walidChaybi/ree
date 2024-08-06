@@ -1,7 +1,4 @@
-import {
-  getServicesAsOptions,
-  listeUtilisateursToOptionsBis
-} from "@composant/menuTransfert/MenuTransfertUtil";
+import { getServicesAsOptions } from "@composant/menuTransfert/MenuTransfertUtil";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,7 +10,11 @@ import { TypeRequerantInformation } from "@model/requete/enum/TypeRequerantInfor
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { Button } from "@mui/material";
 import { Options } from "@util/Type";
-import { getLibelle } from "@util/Utils";
+import {
+  getLibelle,
+  getValeurOuUndefined,
+  triAlphanumerique
+} from "@util/Utils";
 import { storeRece } from "@util/storeRece";
 import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import {
@@ -49,11 +50,6 @@ const FiltresServiceRequeteInformationForm: React.FC<
     }
   };
 
-  const idUtilisateur = useMemo(
-    () => storeRece.utilisateurCourant?.idUtilisateur,
-    []
-  );
-
   const sousTypeInformationOptions: Options = useMemo(
     () => SousTypeInformation.getAllEnumsAsOptions(),
     []
@@ -83,6 +79,32 @@ const FiltresServiceRequeteInformationForm: React.FC<
     []
   );
 
+  const listeAgents: Options = useMemo(() => {
+    const listeServicesEtServicesFils = [storeRece.utilisateurCourant?.service]
+      .concat(storeRece.utilisateurCourant?.servicesFils)
+      .map(service => getValeurOuUndefined(service?.idService));
+    return storeRece.listeUtilisateurs
+      .filter(
+        utilisateur =>
+          listeServicesEtServicesFils.indexOf(
+            getValeurOuUndefined(utilisateur.service?.idService)
+          ) >= 0
+      )
+      .map(utilisateur => ({
+        cle: utilisateur.idUtilisateur,
+        libelle: `${utilisateur.nom} ${utilisateur.prenom}`
+      }))
+      .sort((a, b) => triAlphanumerique(a.libelle, b.libelle));
+  }, []);
+
+  const listeServices = useMemo(
+    () =>
+      getServicesAsOptions().sort((a, b) =>
+        triAlphanumerique(a.libelle, b.libelle)
+      ),
+    []
+  );
+
   return (
     <Formik
       initialValues={VALEUR_FILTRE_INFORMATION_DEFAUT}
@@ -106,18 +128,13 @@ const FiltresServiceRequeteInformationForm: React.FC<
             componentName="filtreAttribuerAAgent"
             name="agent"
             label={getLibelle("Attribué à un agent")}
-            options={listeUtilisateursToOptionsBis(
-              TypeRequete.INFORMATION,
-              SousTypeInformation.getEnumFor(values.sousType),
-              idUtilisateur ?? "",
-              false
-            )}
+            options={listeAgents}
           />
           <ChampRechercheField
             componentName="filtreAttribuerAuService"
             name="service"
             label={getLibelle("Attribué à un service")}
-            options={getServicesAsOptions()}
+            options={listeServices}
           />
           <SelectField
             name="statut"
