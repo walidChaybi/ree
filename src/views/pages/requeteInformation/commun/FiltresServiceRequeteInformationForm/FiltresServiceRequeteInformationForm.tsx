@@ -105,7 +105,7 @@ const FiltresServiceRequeteInformationForm: React.FC<
             options={listeUtilisateursToOptionsBis(
               TypeRequete.INFORMATION,
               SousTypeInformation.getEnumFor(values.sousType),
-              idUtilisateur || "",
+              idUtilisateur ?? "",
               false
             )}
           />

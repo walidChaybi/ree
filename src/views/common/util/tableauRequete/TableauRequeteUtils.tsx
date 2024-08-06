@@ -1,6 +1,6 @@
+import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { AlerteRequete } from "@model/requete/enum/AlerteRequete";
 import { Priorite } from "@model/requete/enum/Priorite";
-import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import ClearIcon from "@mui/icons-material/Clear";
 import ErrorIcon from "@mui/icons-material/Error";
 import LabelIcon from "@mui/icons-material/Label";
@@ -154,6 +154,15 @@ export function getCellRequerant(data: any): JSX.Element {
 export function getMessageZeroRequete(): JSX.Element {
   return getLigneTableauVide("Aucune requête n'a été trouvée.");
 }
+
+export const getMessageSaisirFiltreOuZeroRequete = (
+  rechercheEffectuee: boolean
+): JSX.Element =>
+  getLigneTableauVide(
+    rechercheEffectuee
+      ? "Aucune requête n'a été trouvée."
+      : "Saisir au moins un critère pour afficher des résultats."
+  );
 
 export function getIconeAlerteRequete(data: any): JSX.Element {
   if (

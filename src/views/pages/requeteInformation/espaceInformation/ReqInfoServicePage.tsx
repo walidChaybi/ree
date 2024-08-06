@@ -11,7 +11,7 @@ import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFil
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { getMessageSaisirFiltreOuZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { SortOrder } from "@widget/tableau/TableUtils";
@@ -47,8 +47,9 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
   >();
 
   const [linkParameters, setLinkParameters] =
-    React.useState<IQueryParametersPourRequetes>(parametresReqInfo);
-  const [enChargement, setEnChargement] = React.useState(true);
+    useState<IQueryParametersPourRequetes>(parametresReqInfo);
+  const [enChargement, setEnChargement] = useState<boolean>(false);
+  const [rechercheEffectuee, setRechercheEffectuee] = useState<boolean>(false);
   const [filtresSelectionne, setFiltresSelectionne] =
     useState<IFiltresServiceRequeteInformationFormValues>(
       VALEUR_FILTRE_INFORMATION_DEFAUT
@@ -57,7 +58,8 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     linkParameters,
     TypeAppelRequete.REQUETE_INFO_SERVICE,
     setEnChargement,
-    filtresSelectionne
+    filtresSelectionne,
+    rechercheEffectuee
   );
 
   useNavigationApercuInformation(paramsNavReqInfo);
@@ -76,11 +78,11 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     setLinkParameters({ ...parametresReqInfo });
   }, [parametresReqInfo]);
 
-  function onClickOnLine(
-    idRequete: string,
+  const onClickOnLine = (
+    _: string,
     data: IRequeteTableauInformation[],
     idx: number
-  ) {
+  ) => {
     const requete = data[idx];
     const urlCourante = location.pathname;
     setOperationEnCours(true);
@@ -89,7 +91,7 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
       callback: finOperationEnCours,
       urlCourante
     });
-  }
+  };
 
   const handleChangeSort = useCallback((tri: string, sens: SortOrder) => {
     setLinkParameters({
@@ -104,20 +106,18 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     idRequete: string,
     sousType: string,
     idUtilisateur: string
-  ) => {
-    return (
-      <MenuTransfert
-        idRequete={idRequete}
-        typeRequete={TypeRequete.INFORMATION}
-        sousTypeRequete={SousTypeInformation.getEnumFor(sousType)}
-        estTransfert={false}
-        menuFermer={true}
-        icone={true}
-        idUtilisateurRequete={idUtilisateur}
-        rafraichirParent={rafraichirParent}
-      />
-    );
-  };
+  ) => (
+    <MenuTransfert
+      idRequete={idRequete}
+      typeRequete={TypeRequete.INFORMATION}
+      sousTypeRequete={SousTypeInformation.getEnumFor(sousType)}
+      estTransfert={false}
+      menuFermer={true}
+      icone={true}
+      idUtilisateurRequete={idUtilisateur}
+      rafraichirParent={rafraichirParent}
+    />
+  );
 
   const finOperationEnCours = () => {
     setOperationEnCours(false);
@@ -125,6 +125,8 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
 
   const onSubmit = (values: IFiltresServiceRequeteInformationFormValues) => {
     setFiltresSelectionne(values);
+    setEnChargement(true);
+    setRechercheEffectuee(true);
   };
 
   return (
@@ -145,7 +147,7 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
         icone={{ keyColonne: "iconeAssigne", getIcone }}
         paramsTableau={paramsTableau}
         goToLink={goToLink}
-        noRows={getMessageZeroRequete()}
+        noRows={getMessageSaisirFiltreOuZeroRequete(rechercheEffectuee)}
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}

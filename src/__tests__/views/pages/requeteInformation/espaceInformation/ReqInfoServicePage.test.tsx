@@ -45,6 +45,10 @@ test("renders Requête Service Info, Clic requête au statut TRANSFEREE", async 
 
   render(<RouterProvider router={router} />);
 
+  act(() => {
+    fireEvent.click(screen.getByTestId("loupeBouton"));
+  });
+
   await waitFor(() => {
     expect(screen.getByTitle("Page suivante")).toBeInTheDocument();
     expect(screen.getByText("N° requête")).toBeInTheDocument();
@@ -86,6 +90,10 @@ test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", a
   );
   render(<RouterProvider router={router} />);
 
+  act(() => {
+    fireEvent.click(screen.getByTestId("loupeBouton"));
+  });
+
   await waitFor(() => {
     expect(screen.getByText("EVIPG5")).toBeInTheDocument();
   });
@@ -121,10 +129,6 @@ test("DOIT mettre a jour la liste des requetes QUAND on change le filtre 'Sous-T
     [URL_REQUETES_INFORMATION_SERVICE]
   );
   render(<RouterProvider router={router} />);
-
-  await waitFor(() => {
-    expect(screen.getByText("EVIPG5")).toBeInTheDocument();
-  });
 
   act(() => {
     fireEvent.change(screen.getByTestId("sousType"), {
