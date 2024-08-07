@@ -124,6 +124,10 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
   };
 
   const onSubmit = (values: IFiltresServiceRequeteInformationFormValues) => {
+    if (values === filtresSelectionne && rechercheEffectuee) {
+      return;
+    }
+    
     setFiltresSelectionne(values);
     setEnChargement(true);
     setRechercheEffectuee(true);

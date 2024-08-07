@@ -42,14 +42,6 @@ export const VALEUR_FILTRE_INFORMATION_DEFAUT: IFiltresServiceRequeteInformation
 const FiltresServiceRequeteInformationForm: React.FC<
   IFiltresServiceRequeteInformationFormProps
 > = ({ onSubmit }) => {
-  const onSubmitFiltres = (
-    values: IFiltresServiceRequeteInformationFormValues
-  ) => {
-    if (values) {
-      onSubmit(values);
-    }
-  };
-
   const sousTypeInformationOptions: Options = useMemo(
     () => SousTypeInformation.getAllEnumsAsOptions(),
     []
@@ -108,10 +100,10 @@ const FiltresServiceRequeteInformationForm: React.FC<
   return (
     <Formik
       initialValues={VALEUR_FILTRE_INFORMATION_DEFAUT}
-      onSubmit={onSubmitFiltres}
+      onSubmit={onSubmit}
     >
-      {({ values, handleReset, handleSubmit }) => (
-        <div className="filtre-service-information">
+      {({ handleReset, handleSubmit }) => (
+        <form className="filtre-service-information" onSubmit={handleSubmit}>
           <SelectField
             name="sousType"
             label={getLibelle("Sous-Type")}
@@ -147,25 +139,21 @@ const FiltresServiceRequeteInformationForm: React.FC<
             label={getLibelle("Type requérant")}
             options={typeRequerantOptions}
           />
-          <Button
-            type="submit"
-            onClick={() => handleReset()}
-            data-testid="resetBouton"
-          >
+          <Button onClick={() => handleReset()} data-testid="resetBouton">
             <FontAwesomeIcon
               size="sm"
               className="actionButton"
               icon={faCircleXmark}
             />
           </Button>
-          <Button onClick={() => handleSubmit()} data-testid="loupeBouton">
+          <Button type="submit" data-testid="loupeBouton">
             <FontAwesomeIcon
               size="sm"
               className="actionButton"
               icon={faSearch}
             />
           </Button>
-        </div>
+        </form>
       )}
     </Formik>
   );
