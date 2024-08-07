@@ -1,18 +1,18 @@
 import { useGetDocumentReponseApi } from "@hook/DocumentReponseHook";
 import {
+  DocumentReponse,
+  IDocumentReponse
+} from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import Image from "@mui/icons-material/Image";
+import PictureAsPdf from "@mui/icons-material/PictureAsPdf";
+import {
   Avatar,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText
 } from "@mui/material";
-import Image from "@mui/icons-material/Image";
-import PictureAsPdf from "@mui/icons-material/PictureAsPdf";
-import {
-  DocumentReponse,
-  IDocumentReponse
-} from "@model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { getIdDocumentReponseAAfficher } from "@util/RequetesUtils";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
@@ -81,7 +81,7 @@ export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({
       }
     }
   }, [requete, onClickDocumentAffiche]);
-
+  
   return (
     <div className="documents-reponses">
       <AccordionRece
@@ -92,7 +92,7 @@ export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({
       >
         <List>
           {DocumentReponse.triDocumentsDelivrance(
-            requete.documentsReponses
+            requete.documentsReponses || []
           ).map(el => (
             <ListItem
               key={el.id}

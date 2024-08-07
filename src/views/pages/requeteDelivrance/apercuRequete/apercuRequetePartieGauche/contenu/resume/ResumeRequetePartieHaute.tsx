@@ -61,7 +61,7 @@ export const ResumeRequetePartieHaute: React.FC<
       />
       <ItemLibelle
         label={"Document demandé"}
-        texte={props.requete.documentDemande.libelle}
+        texte={props.requete.documentDemande?.libelle}
       />
       <ItemLibelle
         label={"Motif"}

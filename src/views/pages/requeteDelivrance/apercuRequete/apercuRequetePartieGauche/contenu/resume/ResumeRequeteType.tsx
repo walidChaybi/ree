@@ -1,6 +1,6 @@
+import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React, { useEffect, useState } from "react";
 import { ItemLibelle } from "./item/ItemLibelle";
@@ -32,7 +32,7 @@ export const ResumeRequeteType: React.FC<TypeRequeteProps> = props => {
           />
           <ItemLibelle texte={props.sousType.libelle} />
           <div className="inline">
-            <ItemLibelle texte={props.provenanceRequete?.provenance.libelle} />
+            <ItemLibelle texte={props.provenanceRequete?.provenance?.libelle} />
             <ItemLibelle
               label={"Statut"}
               texte={props.statut.libelle}
