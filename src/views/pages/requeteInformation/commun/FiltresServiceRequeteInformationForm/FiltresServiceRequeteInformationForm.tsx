@@ -3,7 +3,10 @@ import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
-import { objetsRequeteInfoCommeOptions } from "@model/requete/enum/ObjetRequeteInfo";
+import {
+  ObjetRequeteInfo,
+  objetsRequeteInfoCommeOptions
+} from "@model/requete/enum/ObjetRequeteInfo";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequerantInformation } from "@model/requete/enum/TypeRequerantInformation";
@@ -62,7 +65,10 @@ const FiltresServiceRequeteInformationForm: React.FC<
   );
 
   const objetRequeteOptions: Options = useMemo(
-    () => objetsRequeteInfoCommeOptions(),
+    () =>
+      objetsRequeteInfoCommeOptions([
+        ObjetRequeteInfo.COMPLETION_REQUETE_EN_COURS
+      ]),
     []
   );
 

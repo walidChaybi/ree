@@ -73,7 +73,7 @@ export const configRequetesInformation = [
       if (
         match[1] ===
           "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105" &&
-        params.objet === "COMPLETION_REQUETE_EN_COURS"
+        params.objet === "DEMANDE_COPIE_ACTE"
       ) {
         return {
           data: ReponseRequetesInfoServiceFiltreObjet,

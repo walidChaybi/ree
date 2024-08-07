@@ -171,7 +171,7 @@ test("DOIT mettre a jour la liste des requetes QUAND on change le filtre 'Objet'
   act(() => {
     fireEvent.change(screen.getByTestId("objet"), {
       target: {
-        value: "COMPLETION_REQUETE_EN_COURS"
+        value: "DEMANDE_COPIE_ACTE"
       }
     });
   });
