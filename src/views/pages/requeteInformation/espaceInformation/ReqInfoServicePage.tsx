@@ -54,12 +54,14 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     useState<IFiltresServiceRequeteInformationFormValues>(
       VALEUR_FILTRE_INFORMATION_DEFAUT
     );
+  const [tableauDoitReset, setTableauDoitReset] = useState<boolean>(false);
   const { dataState, paramsTableau } = useRequeteInformationApi(
     linkParameters,
     TypeAppelRequete.REQUETE_INFO_SERVICE,
     setEnChargement,
     filtresSelectionne,
-    rechercheEffectuee
+    rechercheEffectuee,
+    setTableauDoitReset
   );
 
   useNavigationApercuInformation(paramsNavReqInfo);
@@ -127,7 +129,7 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     if (values === filtresSelectionne && rechercheEffectuee) {
       return;
     }
-    
+
     setFiltresSelectionne(values);
     setEnChargement(true);
     setRechercheEffectuee(true);
@@ -156,6 +158,7 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
         handleChangeSort={handleChangeSort}
+        resetTableau={tableauDoitReset}
       />
       <BoutonRetour />
     </>
