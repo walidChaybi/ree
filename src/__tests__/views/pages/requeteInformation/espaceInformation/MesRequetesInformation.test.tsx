@@ -1,4 +1,5 @@
-import { OfficierContext } from "@core/contexts/OfficierContext";
+import { ILoginApi } from "@core/login/LoginHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import officier from "@mock/data/connectedUser.json";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
@@ -17,13 +18,16 @@ test("renders Page requete information et clique sur une TRANSFEREE", async () =
       {
         path: URL_MES_REQUETES_INFORMATION,
         element: (
-          <OfficierContext.Provider
-            value={{
-              officierDataState: { idSSO: officier.id_sso, ...officier }
+          <MockRECEContextProvider
+            infosLoginOfficier={{
+              officierDataState: {
+                idSSO: officier.id_sso,
+                ...officier
+              } as ILoginApi
             }}
           >
             <EspaceInformationPage />
-          </OfficierContext.Provider>
+          </MockRECEContextProvider>
         )
       },
       {
@@ -70,13 +74,13 @@ test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", a
       {
         path: URL_MES_REQUETES_INFORMATION,
         element: (
-          <OfficierContext.Provider
-            value={{
+          <MockRECEContextProvider
+            infosLoginOfficier={{
               officierDataState: { idSSO: officier.id_sso, ...officier }
             }}
           >
             <EspaceInformationPage />
-          </OfficierContext.Provider>
+          </MockRECEContextProvider>
         )
       },
 

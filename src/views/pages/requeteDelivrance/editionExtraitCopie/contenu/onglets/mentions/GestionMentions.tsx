@@ -1,5 +1,5 @@
 import { ReinitialiserValiderBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
-import { RECEContext } from "@core/body/RECEContext";
+import { RECEContext } from "@core/contexts/RECEContext";
 import {
   IMentionsParams,
   useMentionsApiHook
@@ -16,21 +16,21 @@ import {
   modificationEffectue
 } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { StatutMention } from "@model/etatcivil/enum/StatutMention";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_COPIE_INTEGRALE } from "@model/requete/enum/DocumentDelivranceConstante";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { estTableauNonVide, getLibelle, getValeurOuVide } from "@util/Utils";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
-import { MentionsCopie } from "./contenu/MentionsCopie";
-import { MentionsExtrait } from "./contenu/MentionsExtrait";
 import {
   boutonReinitialiserEstDisabled,
   getValeurEstdeverrouillerCommencement,
   validerMentions
 } from "./GestionMentionsUtil";
+import { MentionsCopie } from "./contenu/MentionsCopie";
+import { MentionsExtrait } from "./contenu/MentionsExtrait";
 import "./scss/Mention.scss";
 
 export interface GestionMentionsProps {

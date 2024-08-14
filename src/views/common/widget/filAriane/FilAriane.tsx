@@ -1,4 +1,4 @@
-import { RECEContext } from "@core/body/RECEContext";
+import { RECEContext } from "@core/contexts/RECEContext";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { URL_CONTEXT_APP } from "@router/ReceUrls";

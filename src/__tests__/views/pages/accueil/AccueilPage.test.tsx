@@ -1,7 +1,4 @@
-import {
-  OfficierContext,
-  officierContextMock
-} from "@core/contexts/OfficierContext";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -24,9 +21,9 @@ test("renders page d'accueil", async () => {
     render(
       <>
         <Router>
-          <OfficierContext.Provider value={officierContextMock}>
+          <MockRECEContextProvider>
             <AccueilPage />
-          </OfficierContext.Provider>
+          </MockRECEContextProvider>
         </Router>
       </>
     );
@@ -40,5 +37,3 @@ test("renders page d'accueil", async () => {
     expect(badge).toBeInTheDocument();
   });
 });
-
-

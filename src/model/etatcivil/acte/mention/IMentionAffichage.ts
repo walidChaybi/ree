@@ -1,10 +1,10 @@
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   DocumentReponse,
   IDocumentReponse
 } from "@model/requete/IDocumentReponse";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { estNonRenseigne, shallowEgalTableau } from "@util/Utils";
 import { gestionnaireRenumerotationMentions } from "@utilMetier/mention/GestionnaireRenumerotationMentions";
 import { StatutMention } from "./../../enum/StatutMention";
@@ -21,11 +21,11 @@ export interface IMentionAffichage {
   nouveau?: boolean;
 }
 
-export function mappingVersMentionsApi(
+export const mappingVersMentionsApi = (
   mentionsApi: IMention[],
   mentionsAffichage: IMentionAffichage[],
   typeDocument: string
-) {
+) => {
   const mentionsRetirees: string[] = [];
   const mentionsAEnvoyer: any[] = [];
   const mentionsRenumerote =
@@ -68,14 +68,14 @@ export function mappingVersMentionsApi(
   });
 
   return { mentionsAEnvoyer, mentionsRetirees };
-}
+};
 
-export function modificationEffectue(
+export const modificationEffectue = (
   mentions?: IMentionAffichage[],
   mentionsApi?: IMention[],
   document?: IDocumentReponse,
   natureActe?: NatureActe
-) {
+) => {
   if (mentions && mentionsApi && document) {
     if (
       !shallowEgalTableau(
@@ -90,13 +90,13 @@ export function modificationEffectue(
   } else {
     return false;
   }
-}
+};
 
-export function mappingVersMentionAffichage(
+export const mappingVersMentionAffichage = (
   mentionsApi: IMention[],
   document: IDocumentReponse,
   natureActe?: NatureActe
-): IMentionAffichage[] {
+): IMentionAffichage[] => {
   let mentionsPourAffichage: IMentionAffichage[] = [];
 
   if (DocumentDelivrance.estCopieIntegrale(document.typeDocument)) {
@@ -121,12 +121,12 @@ export function mappingVersMentionAffichage(
   }
 
   return mentionsPourAffichage;
-}
+};
 
-export function mappingVersMentionAffichagePourExtraitAvecOuSansFiliation(
+export const mappingVersMentionAffichagePourExtraitAvecOuSansFiliation = (
   mentionsApi: IMention[],
   document: IDocumentReponse
-): IMentionAffichage[] {
+): IMentionAffichage[] => {
   const mentions =
     Mention.filtreAvecTexteMentionEtTexteMentionDelivrance(mentionsApi);
 
@@ -141,13 +141,13 @@ export function mappingVersMentionAffichagePourExtraitAvecOuSansFiliation(
     estSupprimable: estNonRenseigne(mentionApi.textes.texteMention),
     estModifiable: false
   }));
-}
+};
 
-export function mappingVersMentionAffichagePourExtraitPlurilingue(
+export const mappingVersMentionAffichagePourExtraitPlurilingue = (
   mentionsApi: IMention[],
   document: IDocumentReponse,
   natureActe?: NatureActe
-): IMentionAffichage[] {
+): IMentionAffichage[] => {
   const mentions = Mention.filtrerFormaterEtTrierMentionsPlurilingues(
     mentionsApi,
     natureActe
@@ -162,12 +162,12 @@ export function mappingVersMentionAffichagePourExtraitPlurilingue(
     numeroOrdre: mentionApi.numeroOrdreExtrait,
     aPoubelle: estNonRenseigne(mentionApi.textes.texteMention)
   }));
-}
+};
 
-export function mappingVersMentionAffichagePourCopieIntegrale(
+export const mappingVersMentionAffichagePourCopieIntegrale = (
   mentionsApi: IMention[],
   document: IDocumentReponse
-): IMentionAffichage[] {
+): IMentionAffichage[] => {
   const mentions = Mention.trierMentionsNumeroOrdreApposition([...mentionsApi]);
 
   return mentions.map((mentionApi: IMention) => ({
@@ -179,7 +179,7 @@ export function mappingVersMentionAffichagePourCopieIntegrale(
     estSupprimable: mentionApi.textes.texteMention === null,
     estModifiable: false
   }));
-}
+};
 
 export const mappingVersMentionAffichagePourMiseAJour = (
   mentions: IMention[]

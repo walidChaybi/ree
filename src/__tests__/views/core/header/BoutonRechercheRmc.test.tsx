@@ -1,4 +1,4 @@
-import { OfficierContext } from "@core/contexts/OfficierContext";
+import { RECEContextProvider } from "@core/contexts/RECEContext";
 import { BoutonRechercheRmc } from "@core/header/BoutonRechercheRmc";
 import officier from "@mock/data/connectedUser.json";
 import { configFakeUrl } from "@mock/superagent-config/superagent-mock-fake-url";
@@ -15,11 +15,13 @@ beforeAll(async () => {
 beforeEach(async () => {
   render(
     <MemoryRouter>
-      <OfficierContext.Provider
-        value={{ officierDataState: { idSSO: officier.id_sso, ...officier } }}
+      <RECEContextProvider
+        infosLoginOfficier={{
+          officierDataState: { idSSO: officier.id_sso, ...officier }
+        }}
       >
         <BoutonRechercheRmc></BoutonRechercheRmc>
-      </OfficierContext.Provider>
+      </RECEContextProvider>
     </MemoryRouter>
   );
   boutonElement = screen.getByTitle("Recherche acte/inscription");

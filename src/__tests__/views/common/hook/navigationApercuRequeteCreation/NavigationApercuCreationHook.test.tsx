@@ -2,6 +2,7 @@ import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
 } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
@@ -33,6 +34,14 @@ const HookConsumer: React.FC<HookConsumerProps> = props => {
   return <></>;
 };
 
+const routerAvecContexte = (router: any): any => {
+  return (
+    <MockRECEContextProvider>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
+};
+
 describe("Doit rediriger sur le bon aperçu de requête de transcription en fonction du statut et du sousType", () => {
   test("Doit rediriger sur l'aperçu de requête création transcription simple quand le sousType est RCTC et que le statut est A_TRAITER", async () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
@@ -59,7 +68,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
       [URL_MES_REQUETES_CREATION]
     );
 
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
 
     await waitFor(() => {
       expect(router.state.location.pathname).toBe(
@@ -92,7 +101,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
       [URL_MES_REQUETES_CREATION]
     );
 
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
 
     await waitFor(() => {
       expect(router.state.location.pathname).toBe(
@@ -125,7 +134,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
         [URL_MES_REQUETES_CREATION]
       );
 
-      render(<RouterProvider router={router} />);
+      render(routerAvecContexte(router));
 
       await waitFor(() => {
         expect(router.state.location.pathname).toBe(
@@ -165,7 +174,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
       [URL_MES_REQUETES_CREATION]
     );
 
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
 
     await waitFor(() => {
       expect(router.state.location.pathname).toBe(
@@ -204,7 +213,7 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
       [URL_MES_REQUETES_CREATION]
     );
 
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
 
     await waitFor(() => {
       expect(router.state.location.pathname).toBe(
@@ -242,7 +251,7 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
         [URL_MES_REQUETES_CREATION]
       );
 
-      render(<RouterProvider router={router} />);
+      render(routerAvecContexte(router));
 
       await waitFor(() => {
         expect(router.state.location.pathname).toBe(
@@ -280,7 +289,7 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
         [URL_MES_REQUETES_CREATION]
       );
 
-      render(<RouterProvider router={router} />);
+      render(routerAvecContexte(router));
 
       await waitFor(() => {
         expect(router.state.location.pathname).toBe(

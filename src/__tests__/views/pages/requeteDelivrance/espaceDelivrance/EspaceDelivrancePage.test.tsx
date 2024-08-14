@@ -1,4 +1,4 @@
-import { OfficierContext } from "@core/contexts/OfficierContext";
+import { RECEContextProvider } from "@core/contexts/RECEContext";
 import officier from "@mock/data/connectedUser.json";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import {
@@ -22,13 +22,13 @@ test("renders delivrancePage", async () => {
         {
           path: URL_MES_REQUETES_DELIVRANCE,
           element: (
-            <OfficierContext.Provider
-              value={{
+            <RECEContextProvider
+              infosLoginOfficier={{
                 officierDataState: { idSSO: officier.id_sso, ...officier }
               }}
             >
               <EspaceDelivrancePage selectedTab={0} />
-            </OfficierContext.Provider>
+            </RECEContextProvider>
           )
         },
         {

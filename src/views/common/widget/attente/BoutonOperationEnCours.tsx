@@ -1,4 +1,4 @@
-import { RECEContext } from "@core/body/RECEContext";
+import { RECEContext } from "@core/contexts/RECEContext";
 import { checkDirty } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { ReactNode, useContext, useEffect, useState } from "react";

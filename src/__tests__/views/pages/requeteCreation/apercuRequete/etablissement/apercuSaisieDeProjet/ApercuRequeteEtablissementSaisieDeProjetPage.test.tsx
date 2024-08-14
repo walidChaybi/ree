@@ -1,3 +1,4 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { ApercuRequeteEtablissementSaisieDeProjetPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/ApercuRequeteEtablissementSaisieDeProjetPage";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
@@ -65,5 +66,9 @@ function afficherPageRequeteCreationEtablissment() {
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    <MockRECEContextProvider>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
 }

@@ -1,5 +1,5 @@
 import { ReinitialiserValiderBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
-import { RECEContext } from "@core/body/RECEContext";
+import { RECEContext } from "@core/contexts/RECEContext";
 import {
   IModifierCorpsExtraitParams,
   useModifierCorpsExtrait
@@ -11,6 +11,8 @@ import {
 } from "@hook/generation/generationECHook/generationECHook";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   CODE_EXTRAIT_AVEC_FILIATION,
@@ -18,8 +20,6 @@ import {
 } from "@model/requete/enum/DocumentDelivranceConstante";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
-import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import { getLibelle } from "@util/Utils";
 import { StaticField } from "@widget/formulaire/champFixe/StaticField";

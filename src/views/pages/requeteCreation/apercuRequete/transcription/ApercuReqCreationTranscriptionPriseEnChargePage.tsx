@@ -1,4 +1,4 @@
-import { RECEContext } from "@core/body/RECEContext";
+import { RECEContext } from "@core/contexts/RECEContext";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,23 +7,23 @@ import {
 } from "@hook/requete/DetailRequeteHook";
 import { mAppartient } from "@model/agent/IOfficier";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
-import { AnalyseDuDossier } from "@pages/requeteCreation/commun/composants/AnalyseDuDossier";
-import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
-import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import Labels from "@pages/requeteCreation/commun/Labels";
+import { AnalyseDuDossier } from "@pages/requeteCreation/commun/composants/AnalyseDuDossier";
+import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
+import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import {
   URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID,
   URL_RECHERCHE_REQUETE
 } from "@router/ReceUrls";
+import { UN, getLibelle } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { getLibelle, UN } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";

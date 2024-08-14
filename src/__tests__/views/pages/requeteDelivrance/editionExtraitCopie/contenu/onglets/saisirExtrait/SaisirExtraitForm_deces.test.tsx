@@ -1,8 +1,10 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { requeteAvecDocs } from "@mock/data/DetailRequeteDelivrance";
 import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import { ficheActeDeces2 } from "@mock/data/ficheActe";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
@@ -29,70 +31,90 @@ beforeAll(async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
 });
 
-test("Attendu: le formulaire SaisirExtraitForm pour un acte de décès s'affiche correctement", async () => {
-  render(<SaisirExtraitForm acte={acteDeces} requete={requete} />);
 
-  await waitFor(() => {
-    expect(screen.getByTitle("Cliquer pour déverrouiller")).toBeInTheDocument();
-    expect(screen.getByText("Evénement décès")).toBeInTheDocument();
+  const saisirExtraitFormAvecContexte = (
+    acte: IFicheActe,
+    requete: IRequeteDelivrance
+  ): any => {
+    return (
+      <MockRECEContextProvider>
+        <SaisirExtraitForm acte={acte} requete={requete} />
+      </MockRECEContextProvider>
+    );
+  };
 
-    expectEstPresentAvecValeurEtDisabled("evenement.dateEvenement.jour", "13");
-    expectEstPresentAvecValeurEtDisabled("evenement.dateEvenement.mois", "04");
-    expectEstPresentAvecValeurEtDisabled(
-      "evenement.dateEvenement.annee",
-      "2020"
-    );
+  test("Attendu: le formulaire SaisirExtraitForm pour un acte de décès s'affiche correctement", async () => {
+    render(saisirExtraitFormAvecContexte(acteDeces, requete));
 
-    expectEstPresentAvecValeur("evenement.lieuEvenement.ville", "Barcelone");
-    expectEstPresentAvecValeur(
-      "evenement.lieuEvenement.regionDepartement",
-      "Catalogne"
-    );
-    expectEstPresentAvecValeur("evenement.lieuEvenement.pays", "Espagne");
+    await waitFor(() => {
+      expect(
+        screen.getByTitle("Cliquer pour déverrouiller")
+      ).toBeInTheDocument();
+      expect(screen.getByText("Evénement décès")).toBeInTheDocument();
 
-    expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.evenement.dateEvenement.jour",
-      "25"
-    );
-    expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.evenement.dateEvenement.mois",
-      "06"
-    );
-    expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.evenement.dateEvenement.annee",
-      "1990"
-    );
+      expectEstPresentAvecValeurEtDisabled(
+        "evenement.dateEvenement.jour",
+        "13"
+      );
+      expectEstPresentAvecValeurEtDisabled(
+        "evenement.dateEvenement.mois",
+        "04"
+      );
+      expectEstPresentAvecValeurEtDisabled(
+        "evenement.dateEvenement.annee",
+        "2020"
+      );
 
-    // Dernier conjoint
-    expect(screen.getByText("Dernier conjoint")).toBeInTheDocument();
-    expectEstPresentAvecValeur(
-      "dernierConjoint.nomNaissance",
-      "le dernier des "
-    );
-    expectEstPresentAvecValeur("dernierConjoint.prenoms", "mohicans");
+      expectEstPresentAvecValeur("evenement.lieuEvenement.ville", "Barcelone");
+      expectEstPresentAvecValeur(
+        "evenement.lieuEvenement.regionDepartement",
+        "Catalogne"
+      );
+      expectEstPresentAvecValeur("evenement.lieuEvenement.pays", "Espagne");
 
-    // Parent 1: Absence date et lieu de naissance
-    expectEstAbsent(
-      "titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.date.annee"
-    );
-    expectEstAbsent("titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.age");
-    expectEstAbsent("titulaireEvt1.parentNaiss1.lieuNaissance.lieuComplet");
+      expectEstPresentAvecValeurEtDisabled(
+        "titulaireEvt1.evenement.dateEvenement.jour",
+        "25"
+      );
+      expectEstPresentAvecValeurEtDisabled(
+        "titulaireEvt1.evenement.dateEvenement.mois",
+        "06"
+      );
+      expectEstPresentAvecValeurEtDisabled(
+        "titulaireEvt1.evenement.dateEvenement.annee",
+        "1990"
+      );
 
-    // Parent 2: Absence date et lieu de naissance
-    expectEstAbsent(
-      "titulaireEvt1.parentNaiss2.dateNaissanceOuAgeDe.date.annee"
-    );
-    expectEstAbsent("titulaireEvt1.parentNaiss2.dateNaissanceOuAgeDe.age");
-    expectEstAbsent("titulaireEvt1.parentNaiss2.lieuNaissance.lieuComplet");
+      // Dernier conjoint
+      expect(screen.getByText("Dernier conjoint")).toBeInTheDocument();
+      expectEstPresentAvecValeur(
+        "dernierConjoint.nomNaissance",
+        "le dernier des "
+      );
+      expectEstPresentAvecValeur("dernierConjoint.prenoms", "mohicans");
+
+      // Parent 1: Absence date et lieu de naissance
+      expectEstAbsent(
+        "titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.date.annee"
+      );
+      expectEstAbsent("titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.age");
+      expectEstAbsent("titulaireEvt1.parentNaiss1.lieuNaissance.lieuComplet");
+
+      // Parent 2: Absence date et lieu de naissance
+      expectEstAbsent(
+        "titulaireEvt1.parentNaiss2.dateNaissanceOuAgeDe.date.annee"
+      );
+      expectEstAbsent("titulaireEvt1.parentNaiss2.dateNaissanceOuAgeDe.age");
+      expectEstAbsent("titulaireEvt1.parentNaiss2.lieuNaissance.lieuComplet");
+    });
   });
-});
 
 test("Attendu: la validation du formulaire décès fonctionne correctement", async () => {
   render(
-    <SaisirExtraitForm
-      acte={mapActe(ficheActeDeces2.data)}
-      requete={mappingRequeteDelivrance(requeteAvecDocs)}
-    />
+    saisirExtraitFormAvecContexte(
+      mapActe(ficheActeDeces2.data),
+      mappingRequeteDelivrance(requeteAvecDocs)
+    )
   );
 
   await act(async () => {

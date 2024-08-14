@@ -1,5 +1,5 @@
-import { OfficierContext } from "@core/contexts/OfficierContext";
-import { mappingOfficier } from "@core/login/LoginHook";
+import { ILoginApi, mappingOfficier } from "@core/login/LoginHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic
@@ -34,13 +34,15 @@ test("renders creationPage", async () => {
       {
         path: URL_REQUETES_CREATION_SERVICE,
         element: (
-          <OfficierContext.Provider
-            value={{
-              officierDataState: storeRece.utilisateurCourant
-            }}
+          <MockRECEContextProvider
+            infosLoginOfficier={
+              {
+                officierDataState: storeRece.utilisateurCourant
+              } as ILoginApi
+            }
           >
             <EspaceCreationPage selectedTab={0} />
-          </OfficierContext.Provider>
+          </MockRECEContextProvider>
         )
       }
     ],
@@ -48,7 +50,6 @@ test("renders creationPage", async () => {
   );
 
   render(<RouterProvider router={router} />);
-
   const title = "Espace création";
   const mesRequetes = screen.getByText(/Mes requêtes de création/i);
   const requetesService = screen.getByText(

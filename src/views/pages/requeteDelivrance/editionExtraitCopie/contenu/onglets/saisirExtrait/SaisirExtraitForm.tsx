@@ -5,7 +5,7 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { BoutonVerrouillage } from "@composant/formulaire/boutons/BoutonVerrouillage";
 import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
-import { RECEContext } from "@core/body/RECEContext";
+import { RECEContext } from "@core/contexts/RECEContext";
 import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
 import {
   ISauvegardeValidationSaisieExtraitParams,

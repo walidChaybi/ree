@@ -1,3 +1,4 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { userDroitCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import {
@@ -46,11 +47,11 @@ describe("Test onglets documents édites", () => {
       render(<RouterProvider router={router} />);
     });
 
-      await waitFor(() => {
-        expect(
-          screen.getByTitle("Ajout d'un document complémentaire")
-        ).toBeDefined();
-      });
+    await waitFor(() => {
+      expect(
+        screen.getByTitle("Ajout d'un document complémentaire")
+      ).toBeDefined();
+    });
   });
 
   test("Doit rendre le bouton x pour retirer un document complémentaire quand plusieurs documentResponse sont présent dans la requête", async () => {
@@ -119,7 +120,11 @@ describe("Test onglets documents édites", () => {
     );
 
     await act(async () => {
-      render(<RouterProvider router={router} />);
+      render(
+        <MockRECEContextProvider>
+          <RouterProvider router={router} />{" "}
+        </MockRECEContextProvider>
+      );
     });
 
     await waitFor(() => {

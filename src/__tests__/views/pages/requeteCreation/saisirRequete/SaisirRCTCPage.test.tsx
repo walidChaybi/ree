@@ -1,4 +1,5 @@
 import { mappingOfficier } from "@core/login/LoginHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic,
@@ -38,6 +39,14 @@ beforeAll(() => {
   );
 });
 
+const routerAvecContexte = (router: any): any => {
+  return (
+    <MockRECEContextProvider>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
+};
+
 async function afficheSaisirRCTCForm() {
   const router = createTestingRouter(
     [
@@ -50,7 +59,7 @@ async function afficheSaisirRCTCForm() {
   );
 
   await act(async () => {
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
   });
 }
 
@@ -102,7 +111,7 @@ test("DOIT afficher la popin de transfert vers les services fils (triés) du dé
   );
 
   await act(async () => {
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
   });
 
   /////////////////////////Saisie des données///////////////////////////////
@@ -240,7 +249,7 @@ test("DOIT rediriger vers l'apercu requête en prise en charge QUAND je clique s
   );
 
   await act(async () => {
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
   });
 
   const boutonPrendreEnCharge = screen.getByText(/Prendre en charge/i);

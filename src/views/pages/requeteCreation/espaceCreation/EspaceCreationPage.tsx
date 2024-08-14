@@ -1,14 +1,15 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { OfficierContext } from "@core/contexts/OfficierContext";
+import { RECEContext } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import {
   URL_MES_REQUETES_CREATION,
   URL_REQUETES_CREATION_SERVICE
 } from "@router/ReceUrls";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { BoutonAttribuerRequete } from "./BoutonAttribuerRequete";
 import BoutonPrendreEnChargeRequeteSuivanteCreation from "./BoutonPrendreEnChargeRequeteSuivanteCreation";
 import { MesRequetesCreation } from "./MesRequetesCreation";
@@ -100,34 +101,32 @@ const EspaceCreationPage: React.FC<LocalProps> = ({ selectedTab }) => {
   const [popinAttribuerAOuvert, setPopinAttribuerAOuvert] =
     useState<boolean>(false);
 
+  const { infosLoginOfficier, estListeUtilisateursChargee } =
+    useContext(RECEContext);
+
   useTitreDeLaFenetre("Espace création");
 
   return (
     <div>
-      <OfficierContext.Consumer>
-        {officier => (
-          <>
-            {officier && officier.officierDataState && (
-              <>
-                <BoiteAOnglets
-                  selectedTab={selectedTabState}
-                  onglets={getOnglets(
-                    popinAttribuerAOuvert,
-                    setPopinAttribuerAOuvert
-                  )}
-                  elementEntreTitreEtContenu={getBlocBoutons(
-                    selectedTabState,
-                    setPopinAttribuerAOuvert
-                  )}
-                  titre="Menu espace création"
-                  classOnglet="ongletPageEspace"
-                  classOngletPrincipale="headerOngletPageEspace"
-                />
-              </>
+      {infosLoginOfficier?.officierDataState && (
+        <>
+          <OperationEnCours visible={!estListeUtilisateursChargee} />
+          <BoiteAOnglets
+            selectedTab={selectedTabState}
+            onglets={getOnglets(
+              popinAttribuerAOuvert,
+              setPopinAttribuerAOuvert
             )}
-          </>
-        )}
-      </OfficierContext.Consumer>
+            elementEntreTitreEtContenu={getBlocBoutons(
+              selectedTabState,
+              setPopinAttribuerAOuvert
+            )}
+            titre="Menu espace création"
+            classOnglet="ongletPageEspace"
+            classOngletPrincipale="headerOngletPageEspace"
+          />
+        </>
+      )}
     </div>
   );
 };

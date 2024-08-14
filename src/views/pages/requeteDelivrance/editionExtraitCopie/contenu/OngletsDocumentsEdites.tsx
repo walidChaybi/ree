@@ -1,4 +1,4 @@
-import { RECEContext } from "@core/body/RECEContext";
+import { RECEContext } from "@core/contexts/RECEContext";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import {
   ITitulaireActe,
@@ -197,7 +197,6 @@ export const OngletsDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
           StatutRequete.TRANSMISE_A_VALIDEUR !== requete.statutCourant.statut
         }
       />
-
       <ConfirmationPopin
         estOuvert={openPopinErreur}
         messages={[erreurMessagePopin]}

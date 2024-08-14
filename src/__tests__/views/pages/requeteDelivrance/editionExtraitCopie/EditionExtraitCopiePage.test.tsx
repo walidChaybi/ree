@@ -1,13 +1,17 @@
-import { requeteAvecCopieIntegraleActeImage } from "@mock/data/DetailRequeteDelivrance";
-import { imagePngVideBase64 } from "@mock/data/ImagePng";
+import { ILoginApi } from "@core/login/LoginHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import officier from "@mock/data/connectedUser.json";
 import {
   userDroitCOMEDEC,
   userDroitnonCOMEDEC
 } from "@mock/data/connectedUserAvecDroit";
-import { idFicheActeMariage } from "@mock/data/ficheActe";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
+
+import { requeteAvecCopieIntegraleActeImage } from "@mock/data/DetailRequeteDelivrance";
+import { imagePngVideBase64 } from "@mock/data/ImagePng";
+import { idFicheActeMariage } from "@mock/data/ficheActe";
 import {
   PATH_EDITION,
   URL_CONTEXT_APP,
@@ -24,7 +28,6 @@ import {
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
-import { MimeType } from "../../../../../ressources/MimeType";
 import {
   createTestingRouter,
   mockFenetreFicheTestFunctions
@@ -36,8 +39,14 @@ beforeAll(async () => {
 
 beforeEach(async () => {
   storeRece.utilisateurCourant = userDroitCOMEDEC;
-  // history.push(URL_MES_REQUETES_DELIVRANCE);
 });
+const routerAvecContexte = (router: any, infosLoginOfficier?: ILoginApi): any => {
+  return (
+    <MockRECEContextProvider infosLoginOfficier={infosLoginOfficier}>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
+};
 
 test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", async () => {
   const router = createTestingRouter(
@@ -52,7 +61,11 @@ test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", a
     ]
   );
 
-  const { container } = render(<RouterProvider router={router} />);
+  officier.profils.push("RECE_ADMIN");
+  const infosLoginOfficier = { officierDataState: { idSSO: officier.id_sso, ...officier } };
+  const { container } = render(
+    routerAvecContexte(router, infosLoginOfficier as unknown as ILoginApi)
+  );
 
   await waitFor(() => {
     expect(
@@ -82,9 +95,7 @@ test("Test affichage Edition Extrait", async () => {
     ]
   );
 
-  await act(async () => {
-    render(<RouterProvider router={router} />);
-  });
+  render(routerAvecContexte(router));
 
   await waitFor(() => {
     expect(screen.getAllByText("Extrait avec filiation")).toBeDefined();
@@ -142,7 +153,7 @@ test("Test édition mentions Edition Extrait copie", async () => {
   );
 
   await act(async () => {
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
   });
 
   // Gestion des mentions
@@ -205,7 +216,7 @@ test("Ajout mention et réinitialisation", async () => {
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   // Gestion des mentions
   await waitFor(() => {
@@ -278,6 +289,7 @@ test("Ajout mention et réinitialisation", async () => {
 });
 
 test("clic sur mention et sur checkbox et valider", async () => {
+  jest.spyOn(window, "confirm").mockImplementation(() => true);
   const router = createTestingRouter(
     [
       {
@@ -297,11 +309,9 @@ test("clic sur mention et sur checkbox et valider", async () => {
       `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
     ]
   );
-
   await act(async () => {
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
   });
-
   // Gestion des mentions
   act(() => {
     fireEvent.click(screen.getAllByText("Extrait avec filiation")[0]);
@@ -382,7 +392,7 @@ test("clic sur mention et sur checkbox et valider", async () => {
   });
 });
 
-// Copie Intégral
+//Copie Intégral
 test("Test affichage Edition Copie", async () => {
   const router = createTestingRouter(
     [
@@ -397,7 +407,7 @@ test("Test affichage Edition Copie", async () => {
   );
 
   await act(async () => {
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
   });
 
   await waitFor(() => {
@@ -456,6 +466,8 @@ test("Test affichage Edition Copie", async () => {
 });
 
 test("Attendu: la modification d'une copie acte image s'effectue correctement", async () => {
+  jest.spyOn(window, "confirm").mockImplementation(() => true);
+
   const router = createTestingRouter(
     [
       {
@@ -469,7 +481,7 @@ test("Attendu: la modification d'une copie acte image s'effectue correctement", 
   );
 
   await act(async () => {
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
   });
 
   await waitFor(() => {
@@ -515,7 +527,7 @@ async function fireCustomEvent(detail: any) {
   });
 }
 
-// Modifier Corps extrait
+// // Modifier Corps extrait
 test("Test modifier corps extrait", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
   const router = createTestingRouter(
@@ -531,7 +543,7 @@ test("Test modifier corps extrait", async () => {
   );
 
   await act(async () => {
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
   });
 
   await act(async () => {
@@ -597,7 +609,7 @@ test("Test ajout nationalité auto", async () => {
   );
 
   await act(async () => {
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
   });
 
   await act(async () => {
@@ -625,7 +637,7 @@ test("Test création extrait plurilingue", async () => {
   );
 
   await act(async () => {
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
   });
 
   await waitFor(() => {
@@ -672,7 +684,7 @@ test("Test reprendre traitement", async () => {
   );
 
   await act(async () => {
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
   });
 
   await waitFor(() => {

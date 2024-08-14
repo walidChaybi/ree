@@ -1,8 +1,6 @@
-import {
-  OfficierContext,
-  OfficierContextProps
-} from "@core/contexts/OfficierContext";
+import { RECEContext } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
+import { ILoginApi } from "@core/login/LoginHook";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import {
   faChartBar,
@@ -14,10 +12,10 @@ import {
 import { IOfficier } from "@model/agent/IOfficier";
 import { getCodesHierarchieService } from "@model/agent/IUtilisateur";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { getLibelle } from "@util/Utils";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logoRece from "../../../img/logo-rece.svg";
 import "../accueil/scss/AccueilPage.scss";
 import { useCompteurRequeteHook } from "../requeteDelivrance/espaceDelivrance/hook/CompteurRequeteHook";
@@ -36,6 +34,9 @@ import { useNbReqInfoHook } from "./hook/NbReqInfoHook";
 export const AccueilPage: React.FC = () => {
   const [nbReqInfo, setNbReqInfo] = useState<number>();
   const [nbReqTraiteRepondu, setNbReqTraiteRepondu] = useState<number>();
+
+  const { infosLoginOfficier } = useContext(RECEContext);
+
   const nbReqInfoAPI = useNbReqInfoHook(
     [StatutRequete.PRISE_EN_CHARGE.nom, StatutRequete.TRANSFEREE.nom].join(",")
   );
@@ -60,16 +61,10 @@ export const AccueilPage: React.FC = () => {
   return (
     <div className="AccueilPage">
       <img src={logoRece} alt={getLibelle("Logo RECE")} />
-      <OfficierContext.Consumer>
-        {officier => (
-          <>
-            <div className="Titre">
-              {getBienvenueOfficier(officier?.officierDataState)}
-            </div>
-            <div className="Affectation">{getAffectation(officier)}</div>
-          </>
-        )}
-      </OfficierContext.Consumer>
+      <div className="Titre">
+        {getBienvenueOfficier(infosLoginOfficier.officierDataState)}
+      </div>
+      <div className="Affectation">{getAffectation(infosLoginOfficier)}</div>
       <div className="MenuAccueil">
         <BoutonAccueilEspaceDelivrance
           libelle={getLibelle("Délivrance")}
@@ -140,30 +135,30 @@ export const AccueilPage: React.FC = () => {
   );
 };
 
-function getBienvenueOfficier(officier?: IOfficier): string {
+const getBienvenueOfficier = (officier?: IOfficier): string => {
   let msgBienvenue = "Bienvenue";
   if (officier) {
     msgBienvenue = `${msgBienvenue} ${officier.prenom} ${officier.nom}`;
   }
   return getLibelle(msgBienvenue);
-}
+};
 
-function getAffectation(officier?: OfficierContextProps): string {
-  const hierarchie = getHierarchie(officier);
+const getAffectation = (infosLoginOfficier?: ILoginApi): string => {
+  const hierarchie = getHierarchie(infosLoginOfficier);
   let buildHierarchie = "";
   if (hierarchie.length > 0) {
     buildHierarchie = hierarchie.join(" - ");
   }
   return getLibelle(buildHierarchie);
-}
+};
 
-function getHierarchie(officier?: OfficierContextProps): string[] {
+const getHierarchie = (infosLoginOfficier?: ILoginApi): string[] => {
   const hierarchie: string[] = [];
-  const serviceOfficier = officier?.officierDataState?.service;
+  const serviceOfficier = infosLoginOfficier?.officierDataState?.service;
 
   if (serviceOfficier) {
     hierarchie.push(...getCodesHierarchieService(serviceOfficier));
   }
 
   return hierarchie;
-}
+};

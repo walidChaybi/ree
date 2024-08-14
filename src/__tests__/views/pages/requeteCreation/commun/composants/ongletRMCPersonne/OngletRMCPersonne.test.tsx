@@ -1,8 +1,10 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { requeteCreationEtablissement } from "@mock/data/requeteCreation";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
@@ -73,10 +75,20 @@ const HookConsumerOngletRMCPersonne: React.FC<
 
 const REQUETE = mappingRequeteCreation(requeteCreationTranscription);
 
+const hookConsumerOngletRMCPersonneAvecContexte = (
+  requete: IRequeteCreation
+): any => {
+  return (
+    <MockRECEContextProvider>
+      <HookConsumerOngletRMCPersonne requete={requete} />
+    </MockRECEContextProvider>
+  );
+};
+
 describe("Test l'affichage de l'onglet RMC Personne", () => {
   test("DOIT rendre le tableau de résultat la RMC Personne QUAND on ouvre l'onglet.", async () => {
     await act(async () => {
-      render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
+      render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
     });
 
     await waitFor(() => {
@@ -94,7 +106,7 @@ describe("Test l'affichage de l'onglet RMC Personne", () => {
 
   test("DOIT rendre le tableau des personnes sélectionnées pour le projet QUAND on ouvre l'onglet.", async () => {
     await act(async () => {
-      render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
+      render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
     });
 
     await waitFor(() => {
@@ -113,7 +125,7 @@ describe("Test l'affichage de l'onglet RMC Personne", () => {
 
   test("DOIT rendre le tableau des actes/inscriptions sélectionnés pour le projet QUAND on ouvre l'onglet.", async () => {
     await act(async () => {
-      render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
+      render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
     });
 
     await waitFor(() => {
@@ -134,7 +146,7 @@ describe("Test l'affichage de l'onglet RMC Personne", () => {
 
   test("DOIT afficher le bouton-menu pour lancer une nouvelle RMC Auto QUAND on ouvre l'onglet.", async () => {
     await act(async () => {
-      render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
+      render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
     });
 
     await waitFor(() => {
@@ -145,7 +157,7 @@ describe("Test l'affichage de l'onglet RMC Personne", () => {
   });
 
   test("DOIT rafraichir les données du tableau QUAND on sélectionne une nouvelle personne depuis le bouton 'RMC Auto sur autre personne'", async () => {
-    render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
+    render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
 
     await waitFor(() => {
       expect(screen.getByText("DUPONT")).toBeInTheDocument();
@@ -169,7 +181,7 @@ describe("Test l'affichage de l'onglet RMC Personne", () => {
     const requeteEtablissement = mappingRequeteCreation(
       requeteCreationEtablissement
     );
-    render(<HookConsumerOngletRMCPersonne requete={requeteEtablissement} />);
+    render(hookConsumerOngletRMCPersonneAvecContexte(requeteEtablissement));
 
     await waitFor(() => {
       expect(
@@ -204,7 +216,7 @@ describe("Test le fonctionnement de l'ajout / suppression des personnes au proje
 
   test("DOIT ajouter / retirer une personne au tableau des personnes sauvegardées avec le rôle correspondant QUAND on ajoute / retire une personne au projet.", async () => {
     await act(async () => {
-      render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
+      render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
     });
 
     const boutonAjouter = screen.getAllByText("+")[0];
@@ -241,7 +253,7 @@ describe("Test le fonctionnement de l'ajout / suppression des personnes au proje
 
   test("DOIT rendre invisible / visible le bouton d'ajout d'une personne QUAND on ajoute / retire cette personne du projet.", async () => {
     await act(async () => {
-      render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
+      render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
     });
 
     let boutonAjouter = screen.getByTitle("Ajouter cette personne au projet");
@@ -276,7 +288,7 @@ describe("Test le fonctionnement de l'ajout / suppression des personnes au proje
 
   test("DOIT conserver les personnes dans le tableau des personnes sauvegardees QUAND on effectue une RMC sur une autre personne.", async () => {
     await act(async () => {
-      render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
+      render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
     });
 
     // Ajouter personne
@@ -333,7 +345,7 @@ describe("Test le fonctionnement de l'ajout / suppression des actes ou isncripti
 
   test("DOIT ajouter / retirer un acte ou inscription au tableau des acte ou inscriptions sauvegardés avec le type PJ correspondant QUAND on ajoute / retire un acte ou inscription au projet.", async () => {
     await act(async () => {
-      render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
+      render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
     });
 
     const boutonAjouter = screen.getByTitle(
@@ -386,7 +398,7 @@ describe("Test le fonctionnement de l'ajout / suppression des actes ou isncripti
 
   test("DOIT afficher / masquer le bouton d'ajout d'un acte ou inscription QUAND on ajoute / retire cet acte ou inscription du projet.", async () => {
     await act(async () => {
-      render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
+      render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
     });
 
     const boutonAjouter = screen.getByTitle(
@@ -430,7 +442,7 @@ describe("Test le fonctionnement de l'ajout / suppression des actes ou isncripti
 
   test("DOIT conserver les actes ou inscriptions dans le tableau des actes ou inscriptions sauvegardés QUAND on effectue une RMC sur une autre personne.", async () => {
     await act(async () => {
-      render(<HookConsumerOngletRMCPersonne requete={REQUETE} />);
+      render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
     });
 
     // Ajouter acte ou inscription

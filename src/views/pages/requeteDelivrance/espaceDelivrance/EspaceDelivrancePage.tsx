@@ -1,12 +1,12 @@
-import { OfficierContext } from "@core/contexts/OfficierContext";
+import { RECEContext } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAutoDelivrance
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import { IOfficier } from "@model/agent/IOfficier";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_REQUETES_DELIVRANCE_SERVICE
@@ -15,12 +15,12 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
+import { MesRequetesPage } from "./MesRequetesPage";
+import { RequetesServicePage } from "./RequetesServicePage";
 import BoutonPrendreEnChargeAleatoirement from "./contenu/BoutonPrendreEnChargeAleatoirement";
 import { CompteurRequete } from "./contenu/CompteurRequete";
 import MenuSaisirRequete from "./contenu/MenuSaisirRequete";
-import { MesRequetesPage } from "./MesRequetesPage";
-import { RequetesServicePage } from "./RequetesServicePage";
 import "./scss/EspaceDelivrancePage.scss";
 
 interface LocalProps {
@@ -88,6 +88,9 @@ const getOnglets = (
 const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
   const [toggleReloadCompteur, setToggleReloadCompteur] =
     React.useState<boolean>(true);
+
+  const { infosLoginOfficier } = useContext(RECEContext);
+
   const miseAJourCompteur = () => {
     setToggleReloadCompteur(!toggleReloadCompteur);
   };
@@ -119,33 +122,24 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
 
   return (
     <div>
-      <OfficierContext.Consumer>
-        {officier => (
-          <>
-            {officier && officier.officierDataState && (
-              <>
-                {selectedTabState === 0 && (
-                  <CompteurRequete reloadCompteur={toggleReloadCompteur} />
-                )}
-                <BoiteAOnglets
-                  selectedTab={selectedTabState}
-                  onglets={getOnglets(
-                    miseAJourCompteur,
-                    recuperationParamsRMCAuto
-                  )}
-                  elementEntreTitreEtContenu={getElementEntreDeux(
-                    selectedTabState,
-                    officier.officierDataState
-                  )}
-                  titre="Menu espace délivrance"
-                  classOnglet="ongletPageEspace"
-                  classOngletPrincipale="headerOngletPageEspace"
-                />
-              </>
+      {infosLoginOfficier?.officierDataState && (
+        <>
+          {selectedTabState === 0 && (
+            <CompteurRequete reloadCompteur={toggleReloadCompteur} />
+          )}
+          <BoiteAOnglets
+            selectedTab={selectedTabState}
+            onglets={getOnglets(miseAJourCompteur, recuperationParamsRMCAuto)}
+            elementEntreTitreEtContenu={getElementEntreDeux(
+              selectedTabState,
+              infosLoginOfficier.officierDataState
             )}
-          </>
-        )}
-      </OfficierContext.Consumer>
+            titre="Menu espace délivrance"
+            classOnglet="ongletPageEspace"
+            classOngletPrincipale="headerOngletPageEspace"
+          />
+        </>
+      )}
     </div>
   );
 };

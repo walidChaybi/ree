@@ -11,7 +11,7 @@ import {
   TITULAIRE,
   TYPE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { RECEContext } from "@core/body/RECEContext";
+import { RECEContext } from "@core/contexts/RECEContext";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";

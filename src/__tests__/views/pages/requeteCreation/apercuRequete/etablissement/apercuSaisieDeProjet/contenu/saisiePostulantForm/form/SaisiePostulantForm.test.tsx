@@ -1,4 +1,5 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { requeteCreationEtablissementSaisieProjet } from "@mock/data/requeteCreationEtablissement";
 import "@mock/element/IntersectionObserver";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
@@ -44,7 +45,11 @@ function afficheComposantSaisiePostulantForm(
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    <MockRECEContextProvider>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
 }
 
 describe("Test du bloc Postulant de l'onglet Postulant", () => {

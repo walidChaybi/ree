@@ -1,6 +1,6 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { OfficierContext } from "@core/contexts/OfficierContext";
 import { mappingOfficier } from "@core/login/LoginHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic
@@ -158,13 +158,13 @@ test("DOIT correctement afficher l'attribution des requêtes de service QUAND on
       {
         path: URL_REQUETES_CREATION_SERVICE,
         element: (
-          <OfficierContext.Provider
-            value={{
+          <MockRECEContextProvider
+            infosLoginOfficier={{
               officierDataState: storeRece.utilisateurCourant
             }}
           >
             <EspaceCreationPage selectedTab={UN} />
-          </OfficierContext.Provider>
+          </MockRECEContextProvider>
         )
       }
     ],

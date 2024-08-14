@@ -5,6 +5,7 @@
       "type": "node",
       "request": "launch",
       "name": "Jest single run all tests",
+      "runtimeExecutable": "/var/tmp/nodejs-sonarlint/bin/node",
       "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
       "args": ["--verbose", "-i", "--no-cache"],
       "console": "integratedTerminal",
@@ -14,6 +15,7 @@
       "type": "node",
       "request": "launch",
       "name": "Jest watch all tests",
+      "runtimeExecutable": "/var/tmp/nodejs-sonarlint/bin/node",
       "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
       "args": ["--verbose", "-i", "--no-cache", "--watchAll"],
       "console": "integratedTerminal",
@@ -23,7 +25,8 @@
       "type": "node",
       "request": "launch",
       "name": "Jest watch current file",
-      "program": "${workspaceFolder}/node_modules/jest/bin/jest",
+      "runtimeExecutable": "/var/tmp/nodejs-sonarlint/bin/node",
+      "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
       "args": [
         "${fileBasename}",
         "--verbose",
@@ -31,6 +34,16 @@
         "--no-cache",
         "--watchAll"
       ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Jest Tests",
+      "runtimeExecutable": "/var/tmp/nodejs-sonarlint/bin/node",
+      "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
+      "args": ["--verbose", "-i", "--no-cache", "--runInBand"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
     },

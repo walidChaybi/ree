@@ -1,4 +1,4 @@
-import { OfficierContext } from "@core/contexts/OfficierContext";
+import { RECEContextProvider } from "@core/contexts/RECEContext";
 import { BoutonDeconnexion } from "@core/header/BoutonDeconnexion";
 import officier from "@mock/data/connectedUser.json";
 import { configRequetes } from "@mock/superagent-config/superagent-mock-requetes";
@@ -27,7 +27,7 @@ beforeEach(async () => {
 //         {
 //           path: URL_MES_REQUETES_DELIVRANCE,
 //           element: (
-//             <OfficierContext.Provider
+//             <RECEContext.Provider
 //               value={{
 //                 officierDataState: { idSSO: officier.id_sso, ...officier }
 //               }}
@@ -35,7 +35,7 @@ beforeEach(async () => {
 //               <BoutonDeconnexion
 //                 onClick={handleClickButton}
 //               ></BoutonDeconnexion>
-//             </OfficierContext.Provider>
+//             </RECEContext.Provider>
 //           )
 //         }
 //       ],
@@ -73,7 +73,7 @@ beforeEach(async () => {
 //         {
 //           path: URL_MES_REQUETES_DELIVRANCE,
 //           element: (
-//             <OfficierContext.Provider
+//             <RECEContext.Provider
 //               value={{
 //                 officierDataState: { idSSO: officier.id_sso, ...officier }
 //               }}
@@ -81,7 +81,7 @@ beforeEach(async () => {
 //               <BoutonDeconnexion
 //                 onClick={handleClickButton}
 //               ></BoutonDeconnexion>
-//             </OfficierContext.Provider>
+//             </RECEContext.Provider>
 //           )
 //         }
 //       ],
@@ -136,15 +136,15 @@ test("renders click BoutonDeconnexion (nbRequetes = 1) produit une popin de conf
         {
           path: URL_MES_REQUETES_DELIVRANCE,
           element: (
-            <OfficierContext.Provider
-              value={{
+            <RECEContextProvider
+              infosLoginOfficier={{
                 officierDataState: { idSSO: officier.id_sso, ...officier }
               }}
             >
               <BoutonDeconnexion
                 onClick={handleClickButton}
               ></BoutonDeconnexion>
-            </OfficierContext.Provider>
+            </RECEContextProvider>
           )
         }
       ],

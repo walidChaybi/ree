@@ -1,3 +1,5 @@
+import { ILoginApi } from "@core/login/LoginHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
 import { URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID } from "@router/ReceUrls";
 import {
@@ -11,6 +13,16 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
+const routerAvecContexte = (
+  router: any,
+  infosLoginOfficier?: ILoginApi
+): any => {
+  return (
+    <MockRECEContextProvider infosLoginOfficier={infosLoginOfficier}>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
+};
 describe("Test de la page Aperçu requête transcription en prise en charge", () => {
   test("DOIT rendre le composant ApercuReqCreationTranscriptionPriseEnChargePage correctement", async () => {
     await act(async () => {
@@ -29,7 +41,7 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
         ]
       );
 
-      const { container } = render(<RouterProvider router={router} />);
+      const { container } = render(routerAvecContexte(router));
 
       expect(
         container.getElementsByClassName(
@@ -56,7 +68,7 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
         ]
       );
 
-      render(<RouterProvider router={router} />);
+      render(routerAvecContexte(router));
     });
 
     const ongletRMC = screen.getByText("RMC");
@@ -83,7 +95,7 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
         ]
       );
 
-      render(<RouterProvider router={router} />);
+      render(routerAvecContexte(router));
     });
 
     const ongletRMC = screen.getByText("RMC");
@@ -118,7 +130,7 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
         ]
       );
 
-      render(<RouterProvider router={router} />);
+      render(routerAvecContexte(router));
     });
 
     const ongletPJ = screen.getByText("Pièces justificatives / Annexes");
@@ -156,7 +168,7 @@ describe("Test du rendu du composant RMCRequeteAssociees", () => {
         ]
       );
 
-      render(<RouterProvider router={router} />);
+      render(routerAvecContexte(router));
     });
 
     await waitFor(() => {
@@ -184,7 +196,7 @@ describe("Test du rendu du composant RMCRequeteAssociees", () => {
         ]
       );
 
-      render(<RouterProvider router={router} />);
+      render(routerAvecContexte(router));
     });
 
     await waitFor(() => {

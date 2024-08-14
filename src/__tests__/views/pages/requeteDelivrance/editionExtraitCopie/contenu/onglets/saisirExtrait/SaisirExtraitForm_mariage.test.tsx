@@ -1,8 +1,10 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { requeteAvecDocs } from "@mock/data/DetailRequeteDelivrance";
 import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import { ficheActeMariage, ficheActeMariage2 } from "@mock/data/ficheActe";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
@@ -24,7 +26,6 @@ import {
   expectEstTexteAbsent,
   expectEstTextePresent
 } from "../../../../../../../__tests__utils__/expectUtils";
-import React from "react";
 
 const acteMariage = mapActe(ficheActeMariage2.data);
 const requete = {
@@ -36,8 +37,19 @@ beforeAll(async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
 });
 
+const saisirExtraitFormAvecContexte = (
+  acte: IFicheActe,
+  requete: IRequeteDelivrance
+): any => {
+  return (
+    <MockRECEContextProvider>
+      <SaisirExtraitForm acte={acte} requete={requete} />
+    </MockRECEContextProvider>
+  );
+};
+
 test("Attendu: le formulaire SaisirExtraitForm pour un acte de mariage s'affiche correctement", async () => {
-  render(<SaisirExtraitForm acte={acteMariage} requete={requete} />);
+  render(saisirExtraitFormAvecContexte(acteMariage, requete));
 
   await waitFor(() => {
     expect(screen.getByTitle("Cliquer pour déverrouiller")).toBeInTheDocument();
@@ -97,12 +109,11 @@ test("Attendu: le formulaire SaisirExtraitForm pour un acte de mariage s'affiche
 
 test("Attendu: la validation du formulaire mariage fonctionne correctement", async () => {
   render(
-    <SaisirExtraitForm
-      acte={acteMariage}
-      requete={mappingRequeteDelivrance(requeteAvecDocs)}
-    />
+    saisirExtraitFormAvecContexte(
+      acteMariage,
+      mappingRequeteDelivrance(requeteAvecDocs)
+    )
   );
-
   await act(async () => {
     fireEvent.click(screen.getByLabelText("Valider"));
   });
@@ -138,7 +149,7 @@ function expectAbsenceDateLieuSexePourParentTitulaire(numeroTitulaire: number) {
 }
 
 test('Attendu: la case à cocher "Adopté par" fonctionne correctement', async () => {
-  render(<SaisirExtraitForm acte={acteMariage} requete={requete} />);
+  render(saisirExtraitFormAvecContexte(acteMariage, requete));
 
   const caseACocherAdoptePar = expectEstPresentEtNonChecked(
     "titulaireevt1.adoptepar.true"
@@ -178,7 +189,7 @@ test('Attendu: la case à cocher "Adopté par" fonctionne correctement', async (
 });
 
 test("Attendu: le déverrouillage des champs fonctionne correctement.", async () => {
-  render(<SaisirExtraitForm acte={acteMariage} requete={requete} />);
+  render(saisirExtraitFormAvecContexte(acteMariage, requete));
 
   const dateEvenementJour = screen.getByLabelText(
     "evenement.dateEvenement.jour"
@@ -361,10 +372,7 @@ test("Attendu: le déverrouillage des champs fonctionne correctement.", async ()
 
 test("DOIT conserver les prenoms saisies QUAND le bouton 'Adopté par' est coché ou décoché", async () => {
   render(
-    <SaisirExtraitForm
-      acte={mapActe(ficheActeMariage.data)}
-      requete={requete}
-    />
+    saisirExtraitFormAvecContexte(mapActe(ficheActeMariage.data), requete)
   );
   const adoptionTitulaire = screen.getByLabelText("titulaireEvt1.adoptePar");
   const ajouterPrenomParent1 = screen.getAllByText(

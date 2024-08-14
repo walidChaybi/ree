@@ -1,5 +1,5 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { OfficierContext } from "@core/contexts/OfficierContext";
+import { RECEContext } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   URL_MES_REQUETES_INFORMATION,
@@ -8,7 +8,7 @@ import {
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import React from "react";
+import React, { useContext } from "react";
 import { BoutonPrendreEnChargeAleatoirementInformation } from "./BoutonPrendreEnChargeAleatoirementInformation";
 import { StatutsRequetesInformation } from "./EspaceReqInfoParams";
 import { MesRequetesInformationPage } from "./MesRequetesInformation";
@@ -53,37 +53,33 @@ const getOnglets = (): IOngletProps[] => {
 };
 
 const EspaceInformationPage: React.FC<LocalProps> = ({ selectedTab }) => {
+  const { infosLoginOfficier } = useContext(RECEContext);
+
   const selectedTabState = selectedTab || 0;
 
   useTitreDeLaFenetre("Espace information");
 
   return (
     <div>
-      <OfficierContext.Consumer>
-        {officier => (
-          <>
-            {officier && officier.officierDataState && (
-              <>
-                {selectedTabState === 0}
-                <BoiteAOnglets
-                  selectedTab={selectedTabState}
-                  onglets={getOnglets()}
-                  elementEntreTitreEtContenu={
-                    <div className="EspaceInformationPage">
-                      <div className="BoutonPrendreEnChargeAleatoirementRequeteInformation">
-                        <BoutonPrendreEnChargeAleatoirementInformation />
-                      </div>
-                    </div>
-                  }
-                  titre="Menu espace requête d'information"
-                  classOnglet="ongletPageEspace"
-                  classOngletPrincipale="headerOngletPageEspace"
-                />
-              </>
-            )}
-          </>
-        )}
-      </OfficierContext.Consumer>
+      {infosLoginOfficier?.officierDataState && (
+        <>
+          {selectedTabState === 0}
+          <BoiteAOnglets
+            selectedTab={selectedTabState}
+            onglets={getOnglets()}
+            elementEntreTitreEtContenu={
+              <div className="EspaceInformationPage">
+                <div className="BoutonPrendreEnChargeAleatoirementRequeteInformation">
+                  <BoutonPrendreEnChargeAleatoirementInformation />
+                </div>
+              </div>
+            }
+            titre="Menu espace requête d'information"
+            classOnglet="ongletPageEspace"
+            classOngletPrincipale="headerOngletPageEspace"
+          />
+        </>
+      )}
     </div>
   );
 };

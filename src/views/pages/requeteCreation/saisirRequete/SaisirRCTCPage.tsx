@@ -7,34 +7,35 @@ import {
   REQUETE,
   TITULAIRE
 } from "@composant/formulaire/ConstantesNomsForm";
+import { RECEContext } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   IDetailRequeteParams,
   useDetailRequeteApiHook
 } from "@hook/requete/DetailRequeteHook";
-import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import {
   IUpdateRequeteCreationParams,
   useUpdateRequeteCreation
 } from "@hook/requete/UpdateRequeteCreationApiHook";
+import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { ISaisieRequeteRCTC } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import {
   PATH_MODIFIER_RCTC,
-  receUrl,
-  URL_RECHERCHE_REQUETE
+  URL_RECHERCHE_REQUETE,
+  receUrl
 } from "@router/ReceUrls";
-import { getPiecesJointesNonVides, PieceJointe } from "@util/FileUtils";
-import { replaceUrl } from "@util/route/UrlUtil";
+import { PieceJointe, getPiecesJointesNonVides } from "@util/FileUtils";
 import { UN } from "@util/Utils";
+import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { FormikValues } from "formik";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
@@ -133,6 +134,8 @@ export const SaisirRCTCPage: React.FC = () => {
     useState<IUpdateRequeteCreationParams>();
   const [detailRequeteParams, setDetailRequeteParams] =
     useState<IDetailRequeteParams>();
+
+  const { estListeServicesChargee } = useContext(RECEContext);
 
   // Hooks
   //////////////////////////////////////////////////////////////////////////
@@ -260,7 +263,7 @@ export const SaisirRCTCPage: React.FC = () => {
   return (
     <div className="SaisirRCTCPage">
       <OperationEnCours
-        visible={operationEnCours}
+        visible={operationEnCours || !estListeServicesChargee}
         onTimeoutEnd={() => setOperationEnCours(false)}
         onClick={() => setOperationEnCours(false)}
       />

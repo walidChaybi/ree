@@ -1,5 +1,6 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import {
   requeteAvecDocs,
   requeteAvecDocsPlurilingue
@@ -57,8 +58,19 @@ beforeAll(async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
 });
 
+const saisirExtraitFormAvecContexte = (
+  acte: IFicheActe,
+  requete: IRequeteDelivrance
+): any => {
+  return (
+    <MockRECEContextProvider>
+      <SaisirExtraitForm acte={acte} requete={requete} />
+    </MockRECEContextProvider>
+  );
+};
+
 test("Attendu: le formulaire SaisirExtraitForm pour un acte de naissance s'affiche correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(saisirExtraitFormAvecContexte(acte, requete));
 
   await waitFor(() => {
     expect(screen.getByTitle("Cliquer pour déverrouiller")).toBeInTheDocument();
@@ -176,10 +188,7 @@ test("Attendu: la saisie des heures et minutes est possible lorsque les valeurs 
   };
 
   render(
-    <SaisirExtraitForm
-      acte={acteAvecEvenementSansHeureNiMinute}
-      requete={requete}
-    />
+    saisirExtraitFormAvecContexte(acteAvecEvenementSansHeureNiMinute, requete)
   );
 
   await waitFor(() => {
@@ -207,7 +216,7 @@ test("Attendu: la saisie des heures et minutes est possible lorsque les valeurs 
 });
 
 test("Attendu: le sous formulaire DateNaissanceOuAgeDeForm se comporte correctement ", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(saisirExtraitFormAvecContexte(acte, requete));
   const widgetAnnee = expectEstPresentAvecValeur(
     "titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.date.annee",
     ""
@@ -250,7 +259,7 @@ test("Attendu: le sous formulaire DateNaissanceOuAgeDeForm se comporte correctem
 });
 
 test("Attendu: l'alimentation du lieu complet en France s'effectue correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(saisirExtraitFormAvecContexte(acte, requete));
 
   const widgetDecomposer = screen.getByLabelText(
     "décomposer le lieu"
@@ -323,7 +332,7 @@ test("Attendu: l'alimentation du lieu complet en France s'effectue correctement"
 });
 
 test("Attendu: l'alimentation du lieu complet à l'étranger s'effectue correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(saisirExtraitFormAvecContexte(acte, requete));
 
   const widgetEtranger = screen.getByLabelText(
     "titulaireevt1.parentnaiss1.lieunaissance.etrangerfrance.etranger"
@@ -381,7 +390,7 @@ test("Attendu: l'alimentation du lieu complet à l'étranger s'effectue correcte
 });
 
 test("Attendu: l'alimentation du lieu complet en mode 'inconnu' s'effectue correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(saisirExtraitFormAvecContexte(acte, requete));
 
   const widgetEtranger = screen.getByLabelText(
     "titulaireevt1.parentnaiss1.lieunaissance.etrangerfrance.etranger"
@@ -439,7 +448,7 @@ test("Attendu: l'alimentation du lieu complet en mode 'inconnu' s'effectue corre
 });
 
 test("Attendu: la case à cocher 'nom sécable' se comporte correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(saisirExtraitFormAvecContexte(acte, requete));
 
   const caseACocherNomSecable = expectEstPresentEtNonChecked(
     "titulaireevt1.nomsecable.secable.true"
@@ -462,7 +471,7 @@ test("Attendu: la case à cocher 'nom sécable' se comporte correctement", async
 });
 
 test("Attendu: le changement de type de déclaration conjointe s'effectue correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(saisirExtraitFormAvecContexte(acte, requete));
 
   const typeDeclConjointe = expectEstSelectPresentAvecValeur(
     "titulaireEvt1.declarationConjointe.type",
@@ -499,7 +508,8 @@ test("Attendu: le changement de type de déclaration conjointe s'effectue correc
 });
 
 test("Attendu: la réinitialisation du formulaire fonctionne correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} requete={requete} />);
+  render(saisirExtraitFormAvecContexte(acte, requete));
+
   const boutonReinitialiser = expectEstBoutonDisabled("Réinitialiser");
 
   // On effectue un changement dans le formulaire
@@ -523,10 +533,10 @@ test("Attendu: la réinitialisation du formulaire fonctionne correctement", asyn
 
 test("Attendu: la validation du formulaire naissance fonctionne correctement", async () => {
   render(
-    <SaisirExtraitForm
-      acte={mapActe(ficheActe1_avecTitulaireAyantDeuxParents.data)}
-      requete={mappingRequeteDelivrance(requeteAvecDocs)}
-    />
+    saisirExtraitFormAvecContexte(
+      mapActe(ficheActe1_avecTitulaireAyantDeuxParents.data),
+      mappingRequeteDelivrance(requeteAvecDocs)
+    )
   );
 
   await act(async () => {
@@ -540,11 +550,12 @@ test("Attendu: la validation du formulaire naissance fonctionne correctement", a
 
 test("Attendu: controle sexe titulaire et parent de même sexe dans le cas plurilingue fonctionne correctement", async () => {
   render(
-    <SaisirExtraitForm
-      acte={mapActe(ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe.data)}
-      requete={mappingRequeteDelivrance(requeteAvecDocsPlurilingue)}
-    />
+    saisirExtraitFormAvecContexte(
+      mapActe(ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe.data),
+      mappingRequeteDelivrance(requeteAvecDocsPlurilingue)
+    )
   );
+
   await act(async () => {
     fireEvent.click(screen.getByLabelText("Valider"));
   });

@@ -1,5 +1,5 @@
 import { RetoucheImage } from "@composant/retoucheImage/RetoucheImage";
-import { RECEContext } from "@core/body/RECEContext";
+import { RECEContext } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   IActeApiHookParams,

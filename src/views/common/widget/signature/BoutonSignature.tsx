@@ -1,13 +1,10 @@
-import { RECEContext } from "@core/body/RECEContext";
+import { RECEContext } from "@core/contexts/RECEContext";
 import {
   IActeApiHookParams,
   useInformationsActeApiHook
 } from "@hook/acte/ActeApiHook";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import {
   DocumentReponse,
   IDocumentReponse
@@ -17,17 +14,20 @@ import {
   RequeteDelivrance
 } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { checkDirty, getLibelle, getValeurOuVide } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import messageManager from "@util/messageManager";
-import { checkDirty, getLibelle, getValeurOuVide } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useCallback, useContext, useEffect, useState } from "react";
+import { PopinSignatureDelivrance } from "./PopinSignatureDelivrance";
 import {
   DocumentsATraiter,
   DocumentsByRequete
 } from "./hook/SignatureDocumentHookUtilDelivrance";
-import { PopinSignatureDelivrance } from "./PopinSignatureDelivrance";
 
 interface BoutonSignatureProps {
   libelle: string;

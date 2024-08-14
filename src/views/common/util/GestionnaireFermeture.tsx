@@ -1,8 +1,6 @@
 import { HTTP_STATUS_OK } from "@api/ApiManager";
 import { URL_REQUETES_COUNT } from "@api/appels/requeteApi";
-import { RECEContext } from "@core/body/RECEContext";
-import { OfficierContextProps } from "@core/contexts/OfficierContext";
-import { IOfficier } from "@model/agent/IOfficier";
+import { RECEContext } from "@core/contexts/RECEContext";
 import { executeEnDiffere, getLibelle } from "@util/Utils";
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,9 +11,6 @@ import messageManager from "./messageManager";
 const TIME_OUT_MS = 2000;
 
 interface GestionnaireFermetureProps {
-  paramsFctAAppler?: any;
-  fctAAppeler?: (data: any) => any;
-  fctTraitementResultat?: (res: any) => any;
   urlRedirection?: string;
 }
 
@@ -28,11 +23,9 @@ export const GestionnaireFermeture: React.FC<
   useEffect(() => {
     const handleBackBeforUnload = (event: any) => {
       let resTraitement: any = false;
-      if (props.fctAAppeler && !isDirty) {
-        const res = props.fctAAppeler(props.paramsFctAAppler);
-        if (props.fctTraitementResultat) {
-          resTraitement = props.fctTraitementResultat(res);
-        }
+      if (!isDirty) {
+        const res = appelRequetesASigner();
+        resTraitement = traiteAppelRequeteASigner(res);
       }
 
       if (resTraitement) {
@@ -63,9 +56,8 @@ export const GestionnaireFermeture: React.FC<
   return null;
 };
 
-export const appelRequetesASigner = (officier: OfficierContextProps) => {
-  const officierPayload = officier?.officierDataState;
-  const req = appelApi(officierPayload);
+export const appelRequetesASigner = () => {
+  const req = appelApi();
   let response;
   try {
     response = JSON.parse(req.response ? req.response : null);
@@ -77,7 +69,7 @@ export const appelRequetesASigner = (officier: OfficierContextProps) => {
     : 0;
 };
 
-const appelApi = (officierPayload: IOfficier | undefined) => {
+const appelApi = () => {
   const req = new XMLHttpRequest();
   const api = apiResources.apis[0];
   const version = api.usedVersions[1];

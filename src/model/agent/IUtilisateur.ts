@@ -9,6 +9,12 @@ import { IService } from "./IService";
 import { TModeAuthentification } from "./types";
 
 export interface IUtilisateur {
+  idUtilisateur: string;
+  nom: string;
+  prenom: string;
+  trigramme: string;
+  modeAuthentification: TModeAuthentification;
+  habilitations: IHabilitation[];
   actif?: boolean;
   dateDebut?: number;
   dateActivation?: number;
@@ -20,18 +26,12 @@ export interface IUtilisateur {
     libelleFonction: string;
     utilisateur: any;
   };
-  habilitations: IHabilitation[];
   idArobas?: string;
-  idUtilisateur: string;
   identifiantArobas?: string;
   listeTitre?: string;
   mail?: string;
-  nom: string;
   origineMaj?: string;
-  prenom: string;
   signatureManuscrite?: string;
-  trigramme: string;
-  modeAuthentification: TModeAuthentification;
 }
 
 export function mapHabilitationsUtilisateur(

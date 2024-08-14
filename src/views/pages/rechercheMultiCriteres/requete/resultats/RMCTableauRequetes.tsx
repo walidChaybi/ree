@@ -1,3 +1,4 @@
+import { RECEContext } from "@core/contexts/RECEContext";
 import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
@@ -42,7 +43,7 @@ import {
   NB_LIGNES_PAR_PAGE_REQUETE
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { columnsTableauRequete } from "./RMCTableauRequetesParams";
 
@@ -72,6 +73,8 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   const [paramsCreation, setParamsCreation] = useState<
     NavigationApercuReqCreationParams | undefined
   >();
+
+  const { estListeServicesChargee } = useContext(RECEContext);
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
   useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
@@ -195,11 +198,10 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
       }
     }
   };
-
   return (
     <>
       <OperationEnCours
-        visible={operationEnCours}
+        visible={operationEnCours || !estListeServicesChargee}
         onTimeoutEnd={finOperationEnCours}
       />
       <TableauRece

@@ -22,7 +22,7 @@ import { registerLocale, setDefaultLocale } from "react-datepicker";
 import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "./App.scss";
-import { OfficierContext } from "./contexts/OfficierContext";
+import { RECEContextProvider } from "./contexts/RECEContext";
 import { useLoginApi } from "./login/LoginHook";
 
 // ReceDatepicker Locale
@@ -42,6 +42,11 @@ const theme = createTheme({
 
 const App: React.FC = () => {
   const [operationEnCours, setOperationEnCours] = useState<boolean>(true);
+  const [estListeUtilisateursChargee, setEstListeUtilisateursChargee] =
+    useState<boolean>(false);
+  const [estListeServicesChargee, setEstListeServicesChargee] =
+    useState<boolean>(false);
+
   const login = useLoginApi();
 
   useEffect(() => {
@@ -51,15 +56,19 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (!storeRece.utilisateurCourant && login.officierDataState) {
+      //A déplacer dans le contexte
       storeRece.utilisateurCourant = login.officierDataState;
       Promise.all([
         GestionnaireNomenclature.chargerToutesLesNomenclatures(),
-        GestionnaireCacheApi.chargerTousLesUtilisateurs(),
-        GestionnaireCacheApi.chargerTousLesServices(),
         GestionnaireCacheApi.chargerTousLesDecrets()
-      ]).finally(() => {
-        setOperationEnCours(false);
-      });
+      ]).finally(() => setOperationEnCours(false));
+
+      GestionnaireCacheApi.chargerTousLesUtilisateurs().finally(() =>
+        setEstListeUtilisateursChargee(true)
+      );
+      GestionnaireCacheApi.chargerTousLesServices().finally(() =>
+        setEstListeServicesChargee(true)
+      );
     }
   }, [login.officierDataState]);
 
@@ -78,21 +87,29 @@ const App: React.FC = () => {
       >
         <ErrorManager>
           <div className="App">
-            <OfficierContext.Provider value={login}>
-              {!operationEnCours && <RouterProvider router={receRouter} />}
-              <ToastContainer
-                containerId={TOASTCONTAINER_PRINCIPAL}
-                className={"toast-container"}
-                position="top-center"
-                hideProgressBar={false}
-                newestOnTop={true}
-                closeOnClick={true}
-                rtl={false}
-                draggable={true}
-                pauseOnHover={true}
-                enableMultiContainer={true}
-              />
-            </OfficierContext.Provider>
+            {!operationEnCours && (
+              <>
+                <ToastContainer
+                  containerId={TOASTCONTAINER_PRINCIPAL}
+                  className={"toast-container"}
+                  position="top-center"
+                  hideProgressBar={false}
+                  newestOnTop={true}
+                  closeOnClick={true}
+                  rtl={false}
+                  draggable={true}
+                  pauseOnHover={true}
+                  enableMultiContainer={true}
+                />
+                <RECEContextProvider
+                  infosLoginOfficier={login}
+                  estListeUtilisateursChargee={estListeUtilisateursChargee}
+                  estListeServicesChargee={estListeServicesChargee}
+                >
+                  <RouterProvider router={receRouter} />
+                </RECEContextProvider>
+              </>
+            )}
           </div>
         </ErrorManager>
       </SeulementNavigateur>
