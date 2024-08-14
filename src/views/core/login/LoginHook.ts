@@ -24,7 +24,8 @@ export const useLoginApi = (): ILoginApi => {
         .then(result => {
           const officier = mappingOfficier(result.headers, result.body.data);
           gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader(
-            result.headers
+            result.headers,
+            officier.idSSO
           );
           officier.habilitations = mapHabilitationsUtilisateur(
             result.body.data.habilitations
