@@ -13,7 +13,7 @@ export interface IRoute {
   droits?: Droit[];
   auMoinsUnDesDroits?: Droit[];
   uniquementLesdroits?: Droit[];
-  canAccess?: boolean;
+  canAccess?: () => boolean;
   libelle: string;
   droitPerimetres?: IDroitPerimetre;
 }

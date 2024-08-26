@@ -41,7 +41,7 @@ const ReceRoute: React.FC<IReceRoute> = ({ route, children }): any => {
 
 const afficheComposantSiAuthorise = (route: IRoute) => {
   return !(
-    route.canAccess === false ||
+    route.canAccess?.() === false ||
     !estAutorise(route.droits, route.auMoinsUnDesDroits) ||
     !estAutoriseDroitsStricts(route.uniquementLesdroits) ||
     !estAutoriseDroitPerimetres(route.droitPerimetres)
