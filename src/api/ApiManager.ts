@@ -1,3 +1,5 @@
+/* CE FICHIER COEXISTE AVEC GestionnaireApi.ts. UNE FOIS QUE TOUT LES APPELS DE L'APPLICATION PASSENT PAR useFetchApi (ET DONC GestionnaireApi.ts), ALORS SUPPRIMER CE FICHIER */
+
 import { URL_CONTEXT_APP } from "@router/ReceUrls";
 import { logInfoDansLaConsole } from "@util/Console";
 import { getCsrfHeader } from "@util/CsrfUtil";
@@ -121,7 +123,7 @@ export class ApiManager {
       httpRequestConfig.uri
     );
 
-    // Ajout de l'id de corrélation dans l'entête
+    // Ajout de l'id de corrélation dans l'entête => Tester voir si c'est utile
     this.addIdCorrelationToConfigHeader(httpRequestConfig);
 
     // Ajout de la valeur du cookie csrf dans l'entête
@@ -193,9 +195,7 @@ export class ApiManager {
   private manageApiError(error: any): API_ERROR_TYPE {
     let errorType: API_ERROR_TYPE = undefined;
     if (
-      error &&
-      error.message &&
-      error.message.indexOf("offline") !== -1 &&
+      error?.message?.indexOf("offline") !== -1 &&
       error.crossDomain === true
     ) {
       errorType = "erreurOffLine";
