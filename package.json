@@ -111,7 +111,7 @@
     "test:dev": "CI=true node scripts/test.js",
     "test:dev:update": "node scripts/test.js --watchAll -u",
     "test:dev:coverage": "node scripts/test.js --coverage --watchAll=false",
-    "test": "CI=true node scripts/test.js --coverage",
+    "test": "CI=true node scripts/test.js --coverage -w=2 --silent -b",
     "package": "node scripts/build.js",
     "publish:pact": "node pact/publish/publish.js"
   },

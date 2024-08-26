@@ -6,7 +6,7 @@ import {
   TMethodeHttp,
   TReponseApiEchec,
   TReponseApiSucces
-} from "@appTypes/Api";
+} from "@model/api/Api";
 import { CSRF_HEADER_NAME, getCsrfCookieValue } from "@util/CsrfUtil";
 import messageManager from "@util/messageManager";
 import * as superagent from "superagent";
