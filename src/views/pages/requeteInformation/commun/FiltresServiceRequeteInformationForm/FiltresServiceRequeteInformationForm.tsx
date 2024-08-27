@@ -81,6 +81,7 @@ const FiltresServiceRequeteInformationForm: React.FC<
     const listeServicesEtServicesFils = [storeRece.utilisateurCourant?.service]
       .concat(storeRece.utilisateurCourant?.servicesFils)
       .map(service => getValeurOuUndefined(service?.idService));
+
     return storeRece.listeUtilisateurs
       .filter(
         utilisateur =>

@@ -29,7 +29,7 @@ interface ChampRechercheProps {
 
 const useStyles = makeStyles(theme => ({
   option: {
-    fontSize: "14.7px",
+    fontSize: "13px",
     fontFamily: "'NotoSansUI-Regular', sans-serif",
     '&[data-focus="true"]': {
       backgroundColor: "#0579be78"

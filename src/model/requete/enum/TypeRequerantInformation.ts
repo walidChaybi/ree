@@ -7,7 +7,7 @@ type getAllEnumsAsOptionsProps = {
 };
 export class TypeRequerantInformation extends EnumWithLibelle {
   public static readonly PARTICULIER = new TypeRequerantInformation(
-    "Particulier (autre que titulaire)"
+    "Particulier"
   );
   public static readonly AUTRE_PROFESSIONNEL = new TypeRequerantInformation(
     "Autre professionnel"
