@@ -12,11 +12,11 @@ import {
   natureMentionExtraitPlurilingueNaissance
 } from "@model/etatcivil/enum/NatureMention";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import messageManager from "@util/messageManager";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Options } from "@util/Type";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
+import messageManager from "@util/messageManager";
 import { fournisseurDonneesBandeauFactory } from "../../../../../fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 
 export function miseAJourMention(
@@ -446,28 +446,29 @@ export function getOptionsMentions(
   natureActe?: NatureActe
 ): Options {
   if (estExtraitPlurilingue) {
-    if (natureActe === NatureActe.NAISSANCE) {
-      return NatureMention.getEnumsAsOptions(
-        natureMentionExtraitPlurilingueNaissance.map(el =>
-          NatureMention.getEnumFromCode(NatureMention, el)
-        )
-      );
-    } else if (natureActe === NatureActe.MARIAGE) {
-      return NatureMention.getEnumsAsOptions(
-        natureMentionExtraitPlurilingueMariage.map(el =>
-          NatureMention.getEnumFromCode(NatureMention, el)
-        )
-      );
-    }
-    return [];
-  } else {
-    // Un TypeMention est lié à une nature d'acte. Ce qui permet de récuperer les Nature
-    return natureActe
-      ? NatureMention.getEnumsAsOptions(
-          TypeMention.getNatureMention(
-            TypeMention.getTypeMentionParNatureActe(natureActe)
+    switch (natureActe) {
+      case NatureActe.NAISSANCE:
+        return NatureMention.getEnumsAsOptions(
+          natureMentionExtraitPlurilingueNaissance.map(el =>
+            NatureMention.getEnumFromCode(NatureMention, el)
           )
-        )
-      : NatureMention.getAllEnumsAsOptions();
+        );
+      case NatureActe.MARIAGE:
+        return NatureMention.getEnumsAsOptions(
+          natureMentionExtraitPlurilingueMariage.map(el =>
+            NatureMention.getEnumFromCode(NatureMention, el)
+          )
+        );
+      default:
+        return [];
+    }
   }
+  // Un TypeMention est lié à une nature d'acte. Ce qui permet de récuperer les Nature
+  return natureActe
+    ? NatureMention.getEnumsAsOptions(
+        TypeMention.getNatureMention(
+          TypeMention.getTypeMentionParNatureActe(natureActe)
+        )
+      )
+    : NatureMention.getAllEnumsAsOptions();
 }

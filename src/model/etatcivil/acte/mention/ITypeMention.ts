@@ -40,12 +40,66 @@ export class TypeMention {
     this.typesMentions.push(typeMention);
   }
 
-  public static getNatureMention(typeMention: ITypeMention[]): NatureMention[] {
+  public static getNatureMention(
+    typesMention: ITypeMention[]
+  ): NatureMention[] {
     const natures = new Set<NatureMention>();
+    const mapRecursifMentions = (mentions: ITypeMention[]) =>
+      mentions.forEach(mention => {
+        if (mention.natureMention) {
+          natures.add(mention.natureMention);
+          return;
+        }
 
-    // On élimine les natures en doublon
-    typeMention.forEach(el => natures.add(el.natureMention));
+        if (!mention.sousTypes?.length) {
+          return;
+        }
+
+        mapRecursifMentions(mention.sousTypes);
+      });
+
+    mapRecursifMentions(typesMention);
+
     return Array.from(natures);
+  }
+
+  public static getIdTypeMentionDepuisIdNature(
+    idNature: string
+  ): string | undefined {
+    const nature = NatureMention.getEnumFor(idNature);
+
+    let idMention: string;
+    let idMentionTrouve: string | undefined;
+    const mapRecursifMention = (
+      typesMention: ITypeMention[],
+      premierNiveau: boolean = false
+    ) => {
+      typesMention.forEach(typeMention => {
+        if (idMention && idMentionTrouve === idMention) {
+          return;
+        }
+
+        if (premierNiveau) {
+          idMention = typeMention.id;
+        }
+
+        if (typeMention.natureMention === nature) {
+          idMentionTrouve = idMention;
+
+          return;
+        }
+
+        if (!typeMention.sousTypes?.length) {
+          return;
+        }
+
+        mapRecursifMention(typeMention.sousTypes);
+      });
+    };
+
+    mapRecursifMention(this.typesMentions, true);
+
+    return idMentionTrouve;
   }
 
   private static mapArborescenceVersListe(
@@ -81,9 +135,15 @@ export class TypeMention {
   public static getTypeMentionParNatureActe(
     natureActe: NatureActe
   ): ITypeMention[] {
-    return this.getTypesMention().filter(
+    const typesMention = this.getTypesMention().filter(
       typeMention => typeMention.natureActe === natureActe
     );
+
+    if (natureActe === NatureActe.NAISSANCE) {
+      typesMention.push(this.getTypeMentionInconnue());
+    }
+
+    return typesMention;
   }
 
   public static getTypeMentionInconnue(): ITypeMention {

@@ -1,0 +1,18 @@
+.conteneur-type-requete-delivrance {
+    padding: 1rem;
+    text-align: start;
+    font-size: .9rem;
+    display: grid;
+    gap: 1rem;
+
+    .conteneur-provenance-statut {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+
+        .libelle-statut {
+            color: var(--bleu-rece);
+            margin-right: 1rem;
+        }
+    }
+}

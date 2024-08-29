@@ -102,7 +102,7 @@ export function useAvecRejeuDetailRequeteApiHook(
   };
 }
 
-async function fetchDetailRequete(
+export async function fetchDetailRequete(
   setDetailRequeteState: any,
   idRequete?: string,
   estConsultation = false,

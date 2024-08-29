@@ -9,6 +9,7 @@ import { estNonRenseigne, shallowEgalTableau } from "@util/Utils";
 import { gestionnaireRenumerotationMentions } from "@utilMetier/mention/GestionnaireRenumerotationMentions";
 import { StatutMention } from "./../../enum/StatutMention";
 import { IMention, Mention } from "./IMention";
+import { ITypeMention, TypeMention } from "./ITypeMention";
 
 export interface IMentionAffichage {
   texte: string;
@@ -46,6 +47,9 @@ export const mappingVersMentionsApi = (
       typeMention: {
         idNatureMention: NatureMention.getUuidFromNature(
           mR.typeMention.natureMention
+        ),
+        idTypeMention: TypeMention.getIdTypeMentionDepuisIdNature(
+          mR.typeMention["idNatureMention" as keyof ITypeMention] as string
         )
       },
       id: mR.id

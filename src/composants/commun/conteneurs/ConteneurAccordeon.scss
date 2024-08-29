@@ -1,0 +1,45 @@
+.conteneur-accordeon {
+    border: var(--gris-rece) 1px solid;
+    border-radius: .25rem;
+    overflow: hidden;
+
+    button.titre-conteneur-accordeon {
+        width: 100%;
+    }
+
+    .titre-conteneur-accordeon {
+        position: relative;
+        background-color: var(--bleu-rece);
+        margin: 0;
+        border-radius: 0;
+        font-family: "NotoSansUI-Regular", sans-serif;
+        text-transform: none;
+        padding: .5rem 1rem;
+        color: var(--blanc-rece);
+
+        .icon-accordeon {
+            position: absolute;
+            right: .5rem;
+            transition: transform .2s ease-in;
+
+            &.accordeon-ouvert {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    .contenu-conteneur-accordeon {
+        display: grid;
+        grid-template-rows: 0fr;
+        overflow: hidden;
+        transition: grid-template-rows .2s ease-in;
+
+        &.accordeon-ouvert {
+            grid-template-rows: 1fr;
+        }
+
+        .wrapper-contenu-accordeon {
+            min-height: 0;
+        }
+    }
+}

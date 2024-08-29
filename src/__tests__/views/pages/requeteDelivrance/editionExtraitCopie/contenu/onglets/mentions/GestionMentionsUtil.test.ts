@@ -210,7 +210,8 @@ test("mappingVersMentionApi", () => {
           texteMentionPlurilingue: undefined
         },
         typeMention: {
-          idNatureMention: ""
+          idNatureMention: "",
+          idTypeMention: "126ad458-fd77-4c8c-bd88-db0b818f7d91"
         },
         numeroOrdreExtrait: 1
       }

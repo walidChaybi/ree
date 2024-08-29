@@ -1,0 +1,38 @@
+.conteneur-sous-formulaire {
+    .titre-conteneur-sous-formulaire {
+        margin: 0;
+        padding: .25rem 1rem;
+        background-color: var(--gris-rece);
+        font-size: 1rem;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .contenu-conteneur-sous-formulaire {
+        padding: 2rem;
+        text-align: start;
+
+        .affichage-tableau {
+            display: table;
+
+            .affichage-ligne-tableau {
+                display: table-row;
+                gap: 1rem;
+
+                .affichage-cellule-tableau {
+                    display: table-cell;
+
+                    &.tableau-libelle {
+                        min-width: 20rem;
+                        padding: 0 1rem 1rem 0;
+                        color: var(--bleu-sombre-rece)
+                    }
+
+                    &.tableau-champs {
+                        min-width: 25rem;
+                    }
+                }
+            }
+        }
+    }
+}

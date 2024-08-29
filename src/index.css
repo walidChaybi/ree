@@ -7,7 +7,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+:root {
+  --blanc-rece: #ffffff;
+  --bleu-rece: #0579be;
+  --bleu-sombre-rece: #03476e;
+  --gris-rece: #cccccc;
+  --gris-clair-rece: #f5f5f5;
+  --gris-sombre-rece: #888888;
+  --rouge-erreur: #f44336;
 }
