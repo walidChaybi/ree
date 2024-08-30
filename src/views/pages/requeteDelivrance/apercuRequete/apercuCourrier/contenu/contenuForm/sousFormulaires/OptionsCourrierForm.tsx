@@ -2,16 +2,16 @@ import {
   CONTENU,
   LIBELLE_OPTION
 } from "@composant/formulaire/ConstantesNomsForm";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   OptionCourrier,
   OptionsCourrier
 } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SettingsBackupRestore } from "@mui/icons-material";
 import { getLibelle } from "@util/Utils";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
@@ -106,24 +106,26 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
   }, [props.optionsChoisies]);
 
   const ajouterUneOption = (opt: OptionCourrier) => {
-    const { optionsAvecAjout, optionsAvecSuppression } = switchOption(
+    const { disponibles, choisies } = switchOption(
       opt,
+      optionsDisponibles,
       props.optionsChoisies,
-      optionsDisponibles
+      true
     );
-    setOptionsDisponibles(optionsAvecSuppression);
-    props.setOptionsChoisies(optionsAvecAjout);
+    setOptionsDisponibles(disponibles);
+    props.setOptionsChoisies(choisies);
     modifierUneOption(opt);
   };
 
   const supprimerUneOption = (opt: OptionCourrier) => {
-    const { optionsAvecAjout, optionsAvecSuppression } = switchOption(
+    const { disponibles, choisies } = switchOption(
       opt,
       optionsDisponibles,
-      props.optionsChoisies
+      props.optionsChoisies,
+      false
     );
-    setOptionsDisponibles(optionsAvecAjout);
-    props.setOptionsChoisies(optionsAvecSuppression);
+    setOptionsDisponibles(disponibles);
+    props.setOptionsChoisies(choisies);
     modifierUneOption(opt);
   };
 
@@ -152,9 +154,10 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
 
   const reinitialerContenu = () => {
     if (optionSelectionne) {
-      optionSelectionne.texteOptionCourrierModifier =
-        optionSelectionne.texteOptionCourrier;
-      setOptionSelectionne(optionSelectionne);
+      setOptionSelectionne({
+        ...optionSelectionne,
+        texteOptionCourrierModifier: optionSelectionne.texteOptionCourrier
+      });
       props.formik.setFieldValue(
         withNamespace(props.nom, CONTENU),
         optionSelectionne.texteOptionCourrier

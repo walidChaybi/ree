@@ -1,5 +1,3 @@
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import {
   OptionCourrier,
   OptionsCourrier
@@ -7,21 +5,23 @@ import {
 import { IOptionCourrierDocumentReponse } from "@model/requete/IOptionCourrierDocumentReponse";
 import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { getDocumentReponseAModifier } from "../CourrierFonctions";
 import "./scss/OptionsCourrierForm.scss";
 
 export function optionAPuce(option: OptionCourrier | undefined): boolean {
-  return option !== undefined && option.optionAPuce;
+  return Boolean(option?.optionAPuce);
 }
 
 export function optionPresenceVariables(
   option: OptionCourrier | undefined
 ): boolean {
-  return option !== undefined && option.presenceVariables;
+  return Boolean(option?.presenceVariables);
 }
 
 export function optionOptionLibre(option: OptionCourrier | undefined): boolean {
-  return option !== undefined && option.optionLibre;
+  return Boolean(option?.optionLibre);
 }
 
 export function contenuDisabled(
@@ -70,25 +70,26 @@ export function reinitialiserDisabled(
 
 export function switchOption(
   opt: OptionCourrier,
-  tabAvecAjout: OptionsCourrier,
-  tabAvecSuppression: OptionsCourrier
+  optionsDisponibles: OptionsCourrier,
+  optionsChoisies: OptionsCourrier,
+  ajouter: boolean
 ): {
-  optionsAvecAjout: OptionCourrier[];
-  optionsAvecSuppression: OptionCourrier[];
+  disponibles: OptionCourrier[];
+  choisies: OptionCourrier[];
 } {
-  const optionsAvecAjout = [...tabAvecAjout, opt];
-  optionsAvecAjout.sort((a, b) => (a.ordreEdition > b.ordreEdition ? 1 : -1));
+  const disponibles = (
+    ajouter
+      ? optionsDisponibles.filter(
+          optionDisponible => optionDisponible.id !== opt.id
+        )
+      : [...optionsDisponibles, opt]
+  ).sort((a, b) => a.ordreEdition - b.ordreEdition);
 
-  const index = tabAvecSuppression.indexOf(opt);
-  const optionsAvecSuppression = [
-    ...tabAvecSuppression.slice(0, index),
-    ...tabAvecSuppression.slice(index + 1)
-  ];
-  optionsAvecSuppression.sort((a, b) =>
-    a.ordreEdition > b.ordreEdition ? 1 : -1
-  );
+  const choisies = ajouter
+    ? [...optionsChoisies, opt]
+    : optionsChoisies.filter(optionChoisie => optionChoisie.id !== opt.id);
 
-  return { optionsAvecAjout, optionsAvecSuppression };
+  return { disponibles, choisies };
 }
 
 export function initialisationOptions(
@@ -105,12 +106,12 @@ export function initialisationOptions(
       }
     });
   } else {
-    optsDispos = optionsDisponibles;
-    optionsChoisies.forEach((optChoisie: OptionCourrier) => {
-      optsDispos = optsDispos.filter(
-        (_, index: number) => index !== optsDispos.indexOf(optChoisie)
-      );
-    });
+    optsDispos = optionsDisponibles.filter(
+      optionDispo =>
+        !optionsChoisies.find(
+          optionChoisie => optionChoisie.id === optionDispo.id
+        )
+    );
   }
 
   return { optsDispos, optsChoisies: optionsChoisies };
@@ -122,7 +123,7 @@ export function recupererLesOptionsDuCourrier(
 ) {
   const document = getDocumentReponseAModifier(requete as IRequeteDelivrance);
   let optionsDuCourrier: OptionsCourrier = [];
-  if (document && document.optionsCourrier) {
+  if (document?.optionsCourrier) {
     optionsDuCourrier = mappingOptionCourrierDocumentReponse(
       document.optionsCourrier,
       optionsCourrierPossible

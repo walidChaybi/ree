@@ -10,7 +10,7 @@ import { getOngletsVisu } from "../../EditionExtraitCopieUtils";
 
 interface VoletVisualisationProps {
   requete: IRequeteDelivrance;
-  document: IDocumentReponse;
+  document?: IDocumentReponse;
   acte?: IFicheActe;
 }
 

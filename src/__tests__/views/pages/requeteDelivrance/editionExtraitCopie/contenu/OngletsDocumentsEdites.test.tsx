@@ -44,7 +44,11 @@ describe("Test onglets documents édites", () => {
     );
 
     await act(async () => {
-      render(<RouterProvider router={router} />);
+      render(
+        <MockRECEContextProvider>
+          <RouterProvider router={router} />
+        </MockRECEContextProvider>
+      );
     });
 
     await waitFor(() => {
@@ -92,7 +96,11 @@ describe("Test onglets documents édites", () => {
     );
 
     await act(async () => {
-      render(<RouterProvider router={router} />);
+      render(
+        <MockRECEContextProvider>
+          <RouterProvider router={router} />
+        </MockRECEContextProvider>
+      );
     });
 
     await waitFor(() => {
@@ -157,7 +165,11 @@ describe("Test onglets documents édites", () => {
     );
 
     await act(async () => {
-      render(<RouterProvider router={router} />);
+      render(
+        <MockRECEContextProvider>
+          <RouterProvider router={router} />
+        </MockRECEContextProvider>
+      );
     });
 
     await waitFor(() => {
@@ -194,7 +206,11 @@ describe("Test onglets documents édites", () => {
     );
 
     await act(async () => {
-      render(<RouterProvider router={router} />);
+      render(
+        <MockRECEContextProvider>
+          <RouterProvider router={router} />
+        </MockRECEContextProvider>
+      );
     });
 
     await waitFor(() => {

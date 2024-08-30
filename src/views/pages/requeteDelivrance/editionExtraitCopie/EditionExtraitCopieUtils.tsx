@@ -64,25 +64,25 @@ export const getOngletsEdition = (
     liste: [],
     ongletSelectionne: -1
   };
-  if (document) {
-    if (acte) {
-      switch (
-        DocumentDelivrance.getDocumentDelivrance(document.typeDocument).code
-      ) {
-        case CODE_COPIE_INTEGRALE:
-        case CODE_COPIE_NON_SIGNEE:
-          ajoutOngletsCopie(res, document, acte, requete);
-          break;
-        case CODE_EXTRAIT_AVEC_FILIATION:
-        case CODE_EXTRAIT_SANS_FILIATION:
-          ajoutOngletsExtraitFilliation(res, document, acte, requete);
-          break;
-        case CODE_EXTRAIT_PLURILINGUE:
-          ajoutOngletsExtraitPlurilingue(res, document, acte, requete);
-          break;
-      }
+  if (acte && document) {
+    switch (
+      DocumentDelivrance.getDocumentDelivrance(document.typeDocument).code
+    ) {
+      case CODE_COPIE_INTEGRALE:
+      case CODE_COPIE_NON_SIGNEE:
+        ajoutOngletsCopie(res, document, acte, requete);
+        break;
+      case CODE_EXTRAIT_AVEC_FILIATION:
+      case CODE_EXTRAIT_SANS_FILIATION:
+        ajoutOngletsExtraitFilliation(res, document, acte, requete);
+        break;
+      case CODE_EXTRAIT_PLURILINGUE:
+        ajoutOngletsExtraitPlurilingue(res, document, acte, requete);
+        break;
     }
-    ajoutDocumentEditeeOuModifierCourrier(res, requete, acte, document);
+  }
+  ajoutDocumentEditeeOuModifierCourrier(res, requete, acte, document);
+  if (document) {
     if (res.ongletSelectionne === -1) {
       res.ongletSelectionne = res.liste.findIndex(
         onglet => onglet.titre === DOCUMENT_EDITE
@@ -98,16 +98,14 @@ export const getOngletsVisu = (
   acte?: IFicheActe
 ) => {
   const res: OngletProps = { liste: [], ongletSelectionne: -1 };
+  if (acte) {
+    res.liste.push({
+      titre: getLibelle("Acte registre"),
+      component: <VisionneuseActeEdition acte={acte} detailRequete={requete} />
+    });
+  }
+  ajouterOngletRequete(res, requete);
   if (document) {
-    if (acte) {
-      res.liste.push({
-        titre: getLibelle("Acte registre"),
-        component: (
-          <VisionneuseActeEdition acte={acte} detailRequete={requete} />
-        )
-      });
-    }
-    ajouterOngletRequete(res, requete);
     if (
       DocumentDelivrance.estCourrierDelivranceEC(document.typeDocument) &&
       document.nbPages !== 0
@@ -161,7 +159,7 @@ function ajoutDocumentEditeeOuModifierCourrier(
   document?: IDocumentReponse
 ) {
   if (
-    document &&
+    !document ||
     DocumentDelivrance.estCourrierDelivranceEC(document.typeDocument)
   ) {
     res.liste.push({
@@ -342,8 +340,7 @@ export function retoucheImage(
 ) {
   if (
     estTableauNonVide(imagesModifieesBase64) &&
-    requete &&
-    requete.choixDelivrance &&
+    requete?.choixDelivrance &&
     resultatInformationsActeApiHook?.acte &&
     documentEdite
   ) {
@@ -364,7 +361,7 @@ export function retoucheImage(
     setGenerationEcParams({
       acte: { ...resultatInformationsActeApiHook?.acte },
       requete,
-      validation: documentReponseCopieIntegrale?.validation || Validation.O,
+      validation: documentReponseCopieIntegrale?.validation ?? Validation.O,
       mentionsRetirees: [],
       choixDelivrance: requete.choixDelivrance
     });
@@ -438,21 +435,17 @@ export const getContenuEdition = (
 ): JSX.Element | undefined => {
   return (
     <div className="contenu-edition">
-      {documentEdite && (
-        <>
-          <VoletVisualisation
-            requete={requete}
-            document={documentEdite}
-            acte={resultatInformationsActeApiHook?.acte}
-          />
-          <div className="Separateur"></div>
-          <VoletEdition
-            requete={requete}
-            document={documentEdite}
-            acte={resultatInformationsActeApiHook?.acte}
-          />
-        </>
-      )}
+      <VoletVisualisation
+        requete={requete}
+        document={documentEdite}
+        acte={resultatInformationsActeApiHook?.acte}
+      />
+      <div className="Separateur"></div>
+      <VoletEdition
+        requete={requete}
+        document={documentEdite}
+        acte={resultatInformationsActeApiHook?.acte}
+      />
     </div>
   );
 };

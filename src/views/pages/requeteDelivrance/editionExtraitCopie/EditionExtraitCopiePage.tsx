@@ -173,8 +173,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
   }, [detailRequeteState]);
 
   useEffect(() => {
-    requete &&
-      requete.choixDelivrance &&
+    requete?.choixDelivrance &&
       setDocuments(
         DocumentReponse.attribuerOrdreDocuments(
           requete.documentsReponses,
@@ -195,7 +194,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
   }, [documents, idActeParam]);
 
   useEffect(() => {
-    if (documentEdite && documentEdite.idActe) {
+    if (documentEdite?.idActe) {
       setInformationsActeApiHookParams({ idActe: documentEdite.idActe });
     } else if (!documentEdite && idActeParam) {
       setInformationsActeApiHookParams({ idActe: idActeParam });

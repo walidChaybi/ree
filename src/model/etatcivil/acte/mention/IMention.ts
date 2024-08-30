@@ -259,6 +259,6 @@ export function mappingVersMentionApi(mention: IMention) {
         mention.typeMention.natureMention
       )
     },
-    idTypeMention: mention.id
+    id: mention.id
   };
 }

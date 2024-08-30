@@ -10,7 +10,7 @@ import { getOngletsEdition } from "../../EditionExtraitCopieUtils";
 
 interface VoletEditionProps {
   requete: IRequeteDelivrance;
-  document: IDocumentReponse;
+  document?: IDocumentReponse;
   acte?: IFicheActe;
 }
 
