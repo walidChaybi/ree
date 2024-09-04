@@ -254,6 +254,9 @@ export class ApiManager {
     headers?: HttpRequestHeader[]
   ): superagent.SuperAgentRequest {
     let res = httpRequest;
+
+    res = this.desactiverCacheNavigateur(res);
+
     headers?.forEach(element => {
       res = httpRequest.set(element.header, element.value);
     });
@@ -297,6 +300,13 @@ export class ApiManager {
         res = superagent.post(this.getUri() + uri);
         break;
     }
+    return res;
+  }
+
+  private desactiverCacheNavigateur(res: superagent.SuperAgentRequest) {
+    res = res.set("Cache-Control", "no-cache, no-store, max-age=0");
+    res = res.set("Expires", "Thu, 1 Jan 1970 00:00:00 GMT");
+    res = res.set("Pragma", "no-cache");
     return res;
   }
 }
