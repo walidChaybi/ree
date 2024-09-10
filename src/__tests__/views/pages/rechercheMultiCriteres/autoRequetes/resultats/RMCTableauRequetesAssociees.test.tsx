@@ -5,6 +5,7 @@ import {
 import { RMCTableauRequetesAssociees } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCTableauRequetesAssociees";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { expect, test, vi } from "vitest";
 
 test("renders Resultat Recherche requêtes associées aux titulaires => Avec résultat", () => {
   const { getAllByText } = render(
@@ -12,10 +13,10 @@ test("renders Resultat Recherche requêtes associées aux titulaires => Avec ré
       <RMCTableauRequetesAssociees
         dataRMCRequete={DataRMCRequeteAvecResultat}
         dataTableauRMCRequete={DataTableauRequete}
-        setRangeRequete={jest.fn()}
-        setNouvelleRMCRequete={jest.fn()}
-        setValuesRMCRequete={jest.fn()}
-        setCriteresRechercheRequete={jest.fn()}
+        setRangeRequete={vi.fn()}
+        setNouvelleRMCRequete={vi.fn()}
+        setValuesRMCRequete={vi.fn()}
+        setCriteresRechercheRequete={vi.fn()}
         resetTableauRequete={true}
       />
     </MemoryRouter>
@@ -37,10 +38,10 @@ test("renders Resultat Recherche requêtes associées aux titulaires => Sans ré
       <RMCTableauRequetesAssociees
         dataRMCRequete={[]}
         dataTableauRMCRequete={{}}
-        setRangeRequete={jest.fn()}
-        setNouvelleRMCRequete={jest.fn()}
-        setValuesRMCRequete={jest.fn()}
-        setCriteresRechercheRequete={jest.fn()}
+        setRangeRequete={vi.fn()}
+        setNouvelleRMCRequete={vi.fn()}
+        setValuesRMCRequete={vi.fn()}
+        setCriteresRechercheRequete={vi.fn()}
         resetTableauRequete={true}
       />
     </MemoryRouter>

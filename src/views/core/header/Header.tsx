@@ -17,7 +17,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onClick }) => {
   const navigate = useNavigate();
-  const version = `${process.env.VERSION}_${process.env.DATE_BUILD}`;
+  const version = `${process.env.VERSION}_${process.env.VITE_DATE_BUILD}`;
 
   function onClickLogo(event: React.MouseEvent) {
     if (onClick) {

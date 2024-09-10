@@ -1,10 +1,11 @@
 import {
-    A_NE_PAS_DELIVRER,
-    TypeAlerte
+  A_NE_PAS_DELIVRER,
+  TypeAlerte
 } from "@model/etatcivil/enum/TypeAlerte";
+import { beforeEach, expect, test } from "vitest";
 
-beforeEach(async () => {
-  TypeAlerte.init();
+beforeEach(() => {
+  return TypeAlerte.init();
 });
 
 test("Attendu: getEnumsAPartirType de TypeAlerte fonctionne correctement", () => {

@@ -1,14 +1,7 @@
 import { Backdrop, CircularProgress } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
 import gestionnaireTimer from "@util/timer/GestionnaireTimer";
 import React, { useEffect } from "react";
-
-const useStyles = makeStyles((theme) => ({
-  backdrop: {
-    zIndex: 99,
-    color: "#fff"
-  }
-}));
+import "./scss/OperationEnCours.scss";
 
 export interface OperationEnCoursProps {
   visible: boolean;
@@ -21,8 +14,6 @@ const DEFAULT_TIMEOUT_MILI_SEC = 16000;
 const BACKDROP_TIMER_NAME = "BackdropTimer";
 
 export const OperationEnCours: React.FC<OperationEnCoursProps> = props => {
-  const classes = useStyles();
-
   useEffect(() => {
     if (props.visible && props.onTimeoutEnd) {
       gestionnaireTimer.declancheTimer(
@@ -46,7 +37,7 @@ export const OperationEnCours: React.FC<OperationEnCoursProps> = props => {
 
   return (
     <Backdrop
-      className={classes.backdrop}
+      className={"backdrop"}
       open={props.visible}
       onClick={(e: any) => {
         e.stopPropagation();

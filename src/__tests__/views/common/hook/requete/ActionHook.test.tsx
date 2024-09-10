@@ -1,10 +1,11 @@
 import {
-    ICreationActionEtMiseAjourStatutParams,
-    usePostCreationActionEtMiseAjourStatutApi
+  ICreationActionEtMiseAjourStatutParams,
+  usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
+import { expect, test } from "vitest";
 const params: ICreationActionEtMiseAjourStatutParams = {
   libelleAction: "libelleAction",
   statutRequete: StatutRequete.A_VALIDER,
@@ -17,10 +18,10 @@ const HookConsumer: React.FC = () => {
   return <div>{idAction}</div>;
 };
 
-test("Attendu: usePostCreationActionEtMiseAjourStatutApi fonctionne correctement", async () => {
+test("Attendu: usePostCreationActionEtMiseAjourStatutApi fonctionne correctement", () => {
   render(<HookConsumer />);
 
-  await waitFor(() => {
+  waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
     expect(screen.getByText("123456789")).not.toBeNull();
   });

@@ -5,7 +5,7 @@ import { IStatutCourant } from "@model/requete/IStatutCourant";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { render, screen } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import React from "react";
+import { beforeAll, expect, test } from "vitest";
 
 const statutCourantRequete = {
   statut: StatutRequete.A_SIGNER,

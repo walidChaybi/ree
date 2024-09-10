@@ -164,7 +164,7 @@ export const mappingVersMentionAffichagePourExtraitPlurilingue = (
     estPresent: DocumentReponse.nEstPasMentionRetiree(document, mentionApi),
     id: mentionApi.id,
     numeroOrdre: mentionApi.numeroOrdreExtrait,
-    aPoubelle: estNonRenseigne(mentionApi.textes.texteMention)
+    estSupprimable: estNonRenseigne(mentionApi.textes.texteMention)
   }));
 };
 

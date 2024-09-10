@@ -4,15 +4,10 @@ import EvenementReconnaissanceTitulaireForm, {
   EvenementReconnaissanceTitulaireFormValidationSchema,
   EvenementReconnaissanceTitulaireSubFormProps
 } from "@pages/requeteCreation/saisirRequete/sousForm/evenement/EvenementReconnaissanceTitulaireForm";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { expect, test } from "vitest";
 
 const EVENEMENT = "evenement";
 
@@ -48,18 +43,14 @@ const HookEvenementForm: React.FC = () => {
   );
 };
 
-test("DOIT rendre le composant d'évènement de reconnaissance d'un titulaire correctement", async () => {
-  await act(async () => {
-    render(<HookEvenementForm />);
-  });
+test("DOIT rendre le composant d'évènement de reconnaissance d'un titulaire correctement", () => {
+  render(<HookEvenementForm />);
 
   const boutonsRadioTitulaireReconnu = screen.getByText("Oui");
 
-  await act(async () => {
-    fireEvent.click(boutonsRadioTitulaireReconnu);
-  });
+  fireEvent.click(boutonsRadioTitulaireReconnu);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByText("Date de reconnaissance")).toBeDefined();
     expect(screen.getByText("Lieu de l'acte de reconnaissance")).toBeDefined();
   });
@@ -67,11 +58,9 @@ test("DOIT rendre le composant d'évènement de reconnaissance d'un titulaire co
   const boutonsRadioLieuActeReconnaissanceEtranger =
     screen.getByText("Etranger");
 
-  await act(async () => {
-    fireEvent.click(boutonsRadioLieuActeReconnaissanceEtranger);
-  });
+  fireEvent.click(boutonsRadioLieuActeReconnaissanceEtranger);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByText("Ville de la reconnaissance")).toBeDefined();
     expect(screen.getByText("Région/état de la reconnaissance")).toBeDefined();
     expect(screen.getByText("Pays de la reconnaissance")).toBeDefined();
@@ -79,11 +68,9 @@ test("DOIT rendre le composant d'évènement de reconnaissance d'un titulaire co
 
   const boutonsRadioLieuActeReconnaissanceFrance = screen.getByText("France");
 
-  await act(async () => {
-    fireEvent.click(boutonsRadioLieuActeReconnaissanceFrance);
-  });
+  fireEvent.click(boutonsRadioLieuActeReconnaissanceFrance);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByText("Département de la reconnaissance")).toBeDefined();
   });
 });

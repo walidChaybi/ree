@@ -10,6 +10,7 @@ import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
+import { expect, test, vi } from "vitest";
 
 const HookConsummer: React.FC = (props: any) => {
   return <button onClick={() => props.reloadData()}>{"BoutonTest"}</button>;
@@ -35,10 +36,10 @@ const columnsTableau = [
 ];
 
 test("TableauRece can be reload", () => {
-  const handleClickOnLine = jest.fn();
-  const handleChangeSort = jest.fn();
-  const handleClickGoToLink = jest.fn();
-  const handlerelaod = jest.fn();
+  const handleClickOnLine = vi.fn();
+  const handleChangeSort = vi.fn();
+  const handleClickGoToLink = vi.fn();
+  const handlerelaod = vi.fn();
 
   render(
     <MemoryRouter initialEntries={[URL_MES_REQUETES_DELIVRANCE]}>
@@ -67,10 +68,10 @@ test("TableauRece can be reload", () => {
 });
 
 test("TableauRece can be reload with true", () => {
-  const handleClickOnLine = jest.fn();
-  const handleChangeSort = jest.fn();
-  const handleClickGoToLink = jest.fn();
-  const handlerelaod = jest.fn();
+  const handleClickOnLine = vi.fn();
+  const handleChangeSort = vi.fn();
+  const handleClickGoToLink = vi.fn();
+  const handlerelaod = vi.fn();
 
   render(
     <MemoryRouter initialEntries={[URL_MES_REQUETES_DELIVRANCE]}>
@@ -99,10 +100,10 @@ test("TableauRece can be reload with true", () => {
 });
 
 test("TableauRece can be reload with true => go back", () => {
-  const handleClickOnLine = jest.fn();
-  const handleChangeSort = jest.fn();
-  const handleClickGoToLink = jest.fn();
-  const handlerelaod = jest.fn();
+  const handleClickOnLine = vi.fn();
+  const handleChangeSort = vi.fn();
+  const handleClickGoToLink = vi.fn();
+  const handlerelaod = vi.fn();
 
   paramsTableau.rowsNumberState = 200;
 
@@ -138,9 +139,9 @@ test("TableauRece can be reload with true => go back", () => {
 });
 
 test("TableauRece can change page", () => {
-  const handleClickOnLine = jest.fn();
-  const handleChangeSort = jest.fn();
-  const handleClickGoToLink = jest.fn();
+  const handleClickOnLine = vi.fn();
+  const handleChangeSort = vi.fn();
+  const handleClickGoToLink = vi.fn();
 
   paramsTableau.rowsNumberState = 200;
   paramsTableau.nextDataLinkState = "next";
@@ -188,9 +189,9 @@ test("TableauRece can change page", () => {
 });
 
 test("TableauRece can change page", () => {
-  const handleClickOnLine = jest.fn();
-  const handleChangeSort = jest.fn();
-  const handleClickGoToLink = jest.fn();
+  const handleClickOnLine = vi.fn();
+  const handleChangeSort = vi.fn();
+  const handleClickGoToLink = vi.fn();
 
   paramsTableau.rowsNumberState = 200;
   paramsTableau.nextDataLinkState = "next";
@@ -222,9 +223,9 @@ test("TableauRece can change page", () => {
 });
 
 test("TableauRece can't change page bakc and no error'", () => {
-  const handleClickOnLine = jest.fn();
-  const handleChangeSort = jest.fn();
-  const handleClickGoToLink = jest.fn();
+  const handleClickOnLine = vi.fn();
+  const handleChangeSort = vi.fn();
+  const handleClickGoToLink = vi.fn();
 
   paramsTableau.rowsNumberState = 10;
   paramsTableau.nextDataLinkState = "next";
@@ -258,9 +259,9 @@ test("TableauRece can't change page bakc and no error'", () => {
 });
 
 test("TableauRece can't change page next and no error'", () => {
-  const handleClickOnLine = jest.fn();
-  const handleChangeSort = jest.fn();
-  const handleClickGoToLink = jest.fn();
+  const handleClickOnLine = vi.fn();
+  const handleChangeSort = vi.fn();
+  const handleClickGoToLink = vi.fn();
 
   paramsTableau.rowsNumberState = 10;
   paramsTableau.nextDataLinkState = "next";
@@ -294,9 +295,9 @@ test("TableauRece can't change page next and no error'", () => {
 });
 
 test("TableauRece can sort", () => {
-  const handleClickOnLine = jest.fn();
-  const handleChangeSort = jest.fn();
-  const handleClickGoToLink = jest.fn();
+  const handleClickOnLine = vi.fn();
+  const handleChangeSort = vi.fn();
+  const handleClickGoToLink = vi.fn();
 
   paramsTableau.rowsNumberState = 10;
   paramsTableau.nextDataLinkState = "next";

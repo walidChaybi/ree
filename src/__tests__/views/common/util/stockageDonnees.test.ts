@@ -1,6 +1,7 @@
 import { stockageDonnees } from "@util/stockageDonnees";
+import { expect, test } from "vitest";
 
-test("gestion du stockage des critères de RMC Requête", async () => {
+test("gestion du stockage des critères de RMC Requête", () => {
   const localStorageMock = (function () {
     let store: any = {};
     return {
@@ -25,7 +26,7 @@ test("gestion du stockage des critères de RMC Requête", async () => {
   expect(stockageDonnees.recupererCriteresRMCReq()).toEqual(values);
 });
 
-test("gestion du stockage des critères de RMC Acte Inscription", async () => {
+test("gestion du stockage des critères de RMC Acte Inscription", () => {
   const localStorageMock = (function () {
     let store: any = {};
     return {

@@ -1,6 +1,7 @@
 import { useInformationsActeApiHook } from "@hook/acte/ActeApiHook";
-import { act, render, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import React from "react";
+import { expect, test } from "vitest";
 
 const hookParams = {
   idActe: "923a10fb-0b15-452d-83c0-d24c76d1d19d"
@@ -19,15 +20,13 @@ const HookConsummerActe: React.FC = () => {
   );
 };
 
-test("l'appel au WS fonctionne correctement pour une fiche acte", async () => {
-  await act(async () => {
-    const { getByTestId } = render(<HookConsummerActe />);
+test("l'appel au WS fonctionne correctement pour une fiche acte", () => {
+  const { getByTestId } = render(<HookConsummerActe />);
 
-    await waitFor(() => {
-      expect(getByTestId("test-fiche-hook-acte").textContent).toEqual(
-        "923a10fb-0b15-452d-83c0-d24c76d1d19d"
-      );
-    });
+  waitFor(() => {
+    expect(getByTestId("test-fiche-hook-acte").textContent).toEqual(
+      "923a10fb-0b15-452d-83c0-d24c76d1d19d"
+    );
   });
 });
 

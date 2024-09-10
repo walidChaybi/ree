@@ -9,6 +9,7 @@ import {
 import { getLibelle } from "@util/Utils";
 import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
 import { Form, Formik } from "formik";
+import { expect, test, vi } from "vitest";
 import { inputPngFiles } from "../../../../../__tests__utils__/testsUtil";
 
 test("Attendu (composant PiecesJointesForm):  Une une pièce jointe est ajoutée à l'écran puis supprimée", async () => {
@@ -16,7 +17,7 @@ test("Attendu (composant PiecesJointesForm):  Une une pièce jointe est ajoutée
 
   // Utilisation d'enzyme car avec "testing library" pas de déclanchement de l'événement "change"
   render(
-    <Formik initialValues={{ [PIECES_JOINTES]: null }} onSubmit={jest.fn()}>
+    <Formik initialValues={{ [PIECES_JOINTES]: null }} onSubmit={vi.fn()}>
       <Form>
         <PiecesJointesForm
           nom={PIECES_JOINTES}
@@ -48,9 +49,7 @@ test("Attendu (composant PiecesJointesForm):  Une une pièce jointe est ajoutée
     "Supprimer"
   )[1] as HTMLButtonElement;
 
-  act(() => {
-    fireEvent.click(boutonSupprimer);
-  });
+  fireEvent.click(boutonSupprimer);
 
   await waitFor(() => {
     expect(screen.queryByText("hello.png")).toBeNull();

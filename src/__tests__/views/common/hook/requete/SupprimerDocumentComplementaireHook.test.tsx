@@ -1,12 +1,13 @@
 import { useSupprimerDocumentComplementaireApi } from "@hook/requete/SupprimerDocumentComplementaireHook";
-import { userDroitCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import { requeteAvecDocs } from "@mock/data/DetailRequeteDelivrance";
+import { userDroitCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import React from "react";
+import { beforeAll, beforeEach, expect, test } from "vitest";
 import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
-beforeAll(async () => {
+beforeAll(() => {
   mockFenetreFicheTestFunctions();
 });
 const params = {
@@ -20,14 +21,14 @@ const HookConsumer: React.FC = () => {
   return <div>{res ? "28bc3078-7e53-4b8b-8cf8-7f75a2502573" : ""}</div>;
 };
 
-beforeEach(async () => {
+beforeEach(() => {
   storeRece.utilisateurCourant = userDroitCOMEDEC;
 });
 
-test("Attendu: useSupprimerDocumentComplementaireApi fonctionne correctement", async () => {
+test("Attendu: useSupprimerDocumentComplementaireApi fonctionne correctement", () => {
   render(<HookConsumer />);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(
       screen.getByText("28bc3078-7e53-4b8b-8cf8-7f75a2502573")
     ).toBeDefined();

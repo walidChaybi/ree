@@ -11,6 +11,7 @@ import { TypeJuridiction } from "@model/etatcivil/enum/TypeJuridiction";
 import { IAnnulation } from "@model/etatcivil/pacs/IAnnulation";
 import { IDissolution } from "@model/etatcivil/pacs/IDissolution";
 import { IModification } from "@model/etatcivil/pacs/IModification";
+import { expect, test } from "vitest";
 
 test("ajoutParagrapheEnregistrementPACS", () => {
   let temp = {} as ICertificatPACSComposition;

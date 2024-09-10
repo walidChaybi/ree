@@ -2,7 +2,8 @@ import {
   A_NE_PAS_DELIVRER,
   DESCRIPTION_SAGA
 } from "@model/etatcivil/enum/TypeAlerte";
-import { IAlerte, Alerte } from "@model/etatcivil/fiche/IAlerte";
+import { Alerte, IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { expect, test } from "vitest";
 
 test("test estDeTypeANePasDelivrer à true", () => {
   const alerte = {

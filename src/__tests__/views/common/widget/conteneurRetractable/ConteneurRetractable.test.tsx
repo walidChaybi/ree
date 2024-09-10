@@ -1,38 +1,21 @@
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
+import { expect, test } from "vitest";
 
-const renderConteneurRetractable = async () => {
-  const Wrapper = () => {
-    return (
-      <ConteneurRetractable titre="testConteneur" initConteneurFerme={false} />
-    );
-  };
-
-  await act(async () => {
-    render(<Wrapper />);
-  });
-};
-
-test("Attendu: Un clic sur un conteneur retractable fait apparaitre/disparaitre son contenu", async () => {
-  await renderConteneurRetractable();
+test("Attendu: Un clic sur un conteneur retractable fait apparaitre/disparaitre son contenu", () => {
+  render(
+    <ConteneurRetractable titre="testConteneur" initConteneurFerme={false} />
+  );
 
   const conteneurRetractable = screen.getByText("testConteneur");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(conteneurRetractable.classList.contains("vertical")).toBeFalsy();
   });
 
-  act(() => {
-    fireEvent.click(conteneurRetractable);
-  });
+  fireEvent.click(conteneurRetractable);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(conteneurRetractable.classList.contains("vertical")).toBeTruthy();
   });
 });

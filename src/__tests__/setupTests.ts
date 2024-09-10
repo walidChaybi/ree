@@ -10,19 +10,19 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { PaysSecabilite } from "@model/requete/enum/PaysSecabilite";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
-import "@testing-library/jest-dom/extend-expect";
 import { storeRece } from "@util/storeRece";
 import React from "react";
 import request from "superagent";
-import { servicesALL } from "./mock/data/servicesALL";
-import { configAgent } from "./mock/superagent-config/superagent-mock-agent";
-import { configComposition } from "./mock/superagent-config/superagent-mock-composition";
-import { configEtatcivil } from "./mock/superagent-config/superagent-mock-etatcivil";
-import { configMail } from "./mock/superagent-config/superagent-mock-mail";
-import { configOutiltech } from "./mock/superagent-config/superagent-mock-outiltech";
-import { configParamsBaseRequete } from "./mock/superagent-config/superagent-mock-params";
-import { configRequetes } from "./mock/superagent-config/superagent-mock-requetes";
-import { configTeleverification } from "./mock/superagent-config/superagent-mock-televerification";
+import { afterAll, afterEach, beforeAll, beforeEach, vi } from "vitest";
+import { servicesALL } from "../mock/data/servicesALL";
+import { configAgent } from "../mock/superagent-config/superagent-mock-agent";
+import { configComposition } from "../mock/superagent-config/superagent-mock-composition";
+import { configEtatcivil } from "../mock/superagent-config/superagent-mock-etatcivil";
+import { configMail } from "../mock/superagent-config/superagent-mock-mail";
+import { configOutiltech } from "../mock/superagent-config/superagent-mock-outiltech";
+import { configParamsBaseRequete } from "../mock/superagent-config/superagent-mock-params";
+import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
+import { configTeleverification } from "../mock/superagent-config/superagent-mock-televerification";
 
 // Permet d'éviter de devoir importer React inutilement dans les tests
 global.React = React;
@@ -105,13 +105,10 @@ if (window.document) {
 
 storeRece.listeServices = servicesALL.data as any as IService[];
 
-window.URL.createObjectURL = jest.fn(() => "url_test");
+window.URL.createObjectURL = vi.fn(() => "url_test");
 
-window.HTMLElement.prototype.scrollIntoView = jest.fn();
+window.HTMLElement.prototype.scrollIntoView = vi.fn();
 
 window.alert = () => {};
-
-const TIME_OUT_MS = 3000000;
-jest.setTimeout(TIME_OUT_MS);
 
 process.env.DEBUG_PRINT_LIMIT = "1000000"; // Pour debug

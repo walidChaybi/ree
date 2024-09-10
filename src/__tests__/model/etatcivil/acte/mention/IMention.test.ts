@@ -3,9 +3,10 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
-    CODE_EXTRAIT_AVEC_FILIATION,
-    CODE_EXTRAIT_SANS_FILIATION
+  CODE_EXTRAIT_AVEC_FILIATION,
+  CODE_EXTRAIT_SANS_FILIATION
 } from "@model/requete/enum/DocumentDelivranceConstante";
+import { expect, test } from "vitest";
 
 
 

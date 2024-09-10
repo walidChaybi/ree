@@ -1,4 +1,5 @@
 import { Rot18 } from "@util/crypto/Rot18";
+import { expect, test } from "vitest";
 
 test("Attendu: Crypte Rot18 fonctionne correctement", () => {
   expect(Rot18.crypte()).toBe(undefined);

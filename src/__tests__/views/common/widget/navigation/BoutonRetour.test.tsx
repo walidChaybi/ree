@@ -6,9 +6,10 @@ import {
 import { render, screen, waitFor } from "@testing-library/react";
 import { BoutonRetour, getLibelleEtUrl } from "@widget/navigation/BoutonRetour";
 import { RouterProvider } from "react-router-dom";
+import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
-test("Retour accueil", async () => {
+test("Retour accueil", () => {
   const router = createTestingRouter(
     [
       {
@@ -22,7 +23,7 @@ test("Retour accueil", async () => {
   render(<RouterProvider router={router} />);
 
   const linkElement = screen.getByText(/<< RETOUR ACCUEIL/i);
-  await waitFor(() => {
+  waitFor(() => {
     expect(linkElement).toBeDefined();
   });
 });

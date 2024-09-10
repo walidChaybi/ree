@@ -2,8 +2,10 @@ import { ReponseAppelDetailRequeteInformationSansCorbeilleAgent } from "@mock/da
 import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { NOMENCLATURE_REPONSE } from "@mock/data/NomenclatureReponse";
 import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
-import { NORESULT } from "@mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetesInformation } from "@mock/superagent-config/superagent-mock-requetes-information";
+import {
+  NORESULT,
+  configRequetesInformation
+} from "@mock/superagent-config/superagent-mock-requetes-information";
 import { IOfficier } from "@model/agent/IOfficier";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
@@ -65,34 +67,25 @@ test("renders ApercuReqInfoPage", async () => {
     ]
   );
 
-  await act(async () => {
-    render(<RouterProvider router={router} />);
-  });
-
-  const bandeau = screen.getByText(
-    /Requête transférée à Benoît TANGUY - Le : 20\/10\/2021/i
-  );
-
-  const resume = screen.getByText(/Résumé de la requête d'information/i);
-  const choixReponse = screen.getByText(/Choix de la réponse/i);
-  const formReponse = screen.getByText(/Votre réponse/i);
-  const libelleReponse = screen.getByText(/Libellé de la réponse/i);
-  const mailReponse = screen.getByText(/Mail de la réponse/i);
-
-  const boutonRetour = screen.getByText(/Retour espace information/i);
-  const boutonEnvoyer = screen.getByText(/Envoyer la réponse/i);
+  render(<RouterProvider router={router} />);
 
   await waitFor(() => {
     expect(document.title).toBe("Aperçu requête d'information");
-    expect(bandeau).toBeDefined();
-    expect(resume).toBeDefined();
-    expect(choixReponse).toBeDefined();
-    expect(formReponse).toBeDefined();
-    expect(formReponse).toBeDefined();
-    expect(libelleReponse).toBeDefined();
-    expect(mailReponse).toBeDefined();
-    expect(boutonRetour).toBeDefined();
-    expect(boutonEnvoyer).toBeDefined();
+    expect(
+      screen.getByText(
+        /Requête transférée à Benoît TANGUY - Le : 20\/10\/2021/i
+      )
+    ).toBeDefined();
+    expect(
+      screen.getByText(/Résumé de la requête d'information/i)
+    ).toBeDefined();
+    expect(screen.getByText(/Choix de la réponse/i)).toBeDefined();
+    expect(screen.getByText(/Votre réponse/i)).toBeDefined();
+    expect(screen.getByText(/Votre réponse/i)).toBeDefined();
+    expect(screen.getByText(/Libellé de la réponse/i)).toBeDefined();
+    expect(screen.getByText(/Mail de la réponse/i)).toBeDefined();
+    expect(screen.getByText(/Retour espace information/i)).toBeDefined();
+    expect(screen.getByText(/Envoyer la réponse/i)).toBeDefined();
   });
 
   // Alimentation Résumé de la requête d'information
@@ -156,9 +149,7 @@ test("renders ApercuReqInfoPage", async () => {
     expect(boutonReponsesFiltrees).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.click(boutonReponsesFiltrees);
-  });
+  fireEvent.click(boutonReponsesFiltrees);
 
   const boutonReponse1 = screen.getByText(NOMENCLATURE_REPONSE[0].libelle);
   const boutonReponse2 = screen.getByText(NOMENCLATURE_REPONSE[1].libelle);
@@ -168,9 +159,7 @@ test("renders ApercuReqInfoPage", async () => {
     expect(boutonReponse2).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.click(boutonReponse1);
-  });
+  fireEvent.click(boutonReponse1);
 
   const libelleReponseChoisie = screen.getByText(
     NOMENCLATURE_REPONSE[0].libelle
@@ -184,9 +173,8 @@ test("renders ApercuReqInfoPage", async () => {
     expect(mailReponseChoisie).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.click(boutonEnvoyer);
-  });
+  fireEvent.click(screen.getByText(/Envoyer la réponse/i));
+
 
   await waitFor(() => {
     expect(router.state.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
@@ -214,19 +202,15 @@ test("bouton annuler", async () => {
     ]
   );
 
-  await act(async () => {
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 
-  const boutonAnnuler = screen.getByText(/Retour espace information/i);
+  // const boutonAnnuler = screen.getByText(/Retour espace information/i);
 
   await waitFor(() => {
-    expect(boutonAnnuler).toBeDefined();
+    expect(screen.getByText(/Retour espace information/i)).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.click(boutonAnnuler);
-  });
+  fireEvent.click(screen.getByText(/Retour espace information/i));
 
   await waitFor(() => {
     expect(router.state.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
@@ -265,9 +249,7 @@ test("clique requete liée", async () => {
     expect(valeurRequeteLiee).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.click(valeurRequeteLiee);
-  });
+  fireEvent.click(valeurRequeteLiee);
 
   await waitFor(() => {
     expect(nouvelleFenetreSpy).toHaveBeenCalled();
@@ -296,10 +278,8 @@ test("bouton saisie libre", async () => {
     render(<RouterProvider router={router} />);
   });
 
-  act(() => {
-    fireEvent.change(screen.getByPlaceholderText("Mail de la réponse"), {
-      target: { text: "Salut les amies" }
-    });
+  fireEvent.change(screen.getByPlaceholderText("Mail de la réponse"), {
+    target: { text: "Salut les amies" }
   });
 
   const boutonSaisieLibre = screen.getByText(/Réponse libre/i);
@@ -308,9 +288,7 @@ test("bouton saisie libre", async () => {
     expect(boutonSaisieLibre).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.click(boutonSaisieLibre);
-  });
+  fireEvent.click(boutonSaisieLibre);
 
   await waitFor(() => {
     expect(screen.getByPlaceholderText("Mail de la réponse").textContent).toBe(
@@ -370,9 +348,7 @@ test("renders ApercuReqInfoPage Double Menu", async () => {
     expect(boutonReponses).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.click(boutonReponses);
-  });
+  fireEvent.click(boutonReponses);
 
   const boutonSousMenu = screen.getByText(/Problème technique/i);
 
@@ -380,9 +356,7 @@ test("renders ApercuReqInfoPage Double Menu", async () => {
     expect(boutonSousMenu).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.mouseOver(boutonSousMenu);
-  });
+  fireEvent.mouseOver(boutonSousMenu);
 
   const boutonReponse1 = screen.getByText(NOMENCLATURE_REPONSE[2].libelle);
   const boutonReponse2 = screen.getByText(NOMENCLATURE_REPONSE[3].libelle);
@@ -392,9 +366,7 @@ test("renders ApercuReqInfoPage Double Menu", async () => {
     expect(boutonReponse2).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.click(boutonReponse1);
-  });
+  fireEvent.click(boutonReponse1);
 
   const libelleReponseChoisie = screen.getByText(
     NOMENCLATURE_REPONSE[2].libelle
@@ -425,50 +397,50 @@ test("render ApercuReqInfoPage : RMC état civil manuelle ", async () => {
     ]
   );
 
-  await act(async () => {
-    render(<RouterProvider router={router} />);
-  });
-
-  const linkElement = screen.getByText("Nouvelle recherche multi-critères");
-  await waitFor(() => {
-    expect(linkElement).toBeDefined();
-  });
-  fireEvent.click(linkElement);
-
-  const dialog = screen.getByRole("dialog");
-  const nomTitulaire = screen.getByLabelText(
-    "titulaire.nom"
-  ) as HTMLInputElement;
-  const boutonRechercher = screen.getByText("Rechercher") as HTMLButtonElement;
+  render(<RouterProvider router={router} />);
 
   await waitFor(() => {
-    expect(dialog).toBeDefined();
-    expect(nomTitulaire).toBeDefined();
+    expect(screen.getByText("Nouvelle recherche multi-critères")).toBeDefined();
+  });
+  fireEvent.click(screen.getByText("Nouvelle recherche multi-critères"));
+
+  // const nomTitulaire = screen.getByLabelText(
+  //   "titulaire.nom"
+  // ) as HTMLInputElement;
+
+  await waitFor(() => {
+    const boutonRechercher = screen.getByText(
+      "Rechercher"
+    ) as HTMLButtonElement;
+    expect(screen.getByRole("dialog")).toBeDefined();
+    expect(screen.getByLabelText("titulaire.nom")).toBeDefined();
     expect(boutonRechercher).toBeDefined();
     expect(boutonRechercher.disabled).toBeTruthy();
   });
 
-  fireEvent.change(nomTitulaire, {
+  fireEvent.change(screen.getByLabelText("titulaire.nom"), {
     target: { value: NORESULT }
   });
 
   await waitFor(() => {
+    const nomTitulaire = screen.getByLabelText(
+      "titulaire.nom"
+    ) as HTMLInputElement;
+    const boutonRechercher = screen.getByText(
+      "Rechercher"
+    ) as HTMLButtonElement;
     expect(nomTitulaire.value).toEqual(NORESULT);
     expect(boutonRechercher.disabled).toBeFalsy();
   });
 
-  await act(async () => {
-    fireEvent.click(boutonRechercher);
-  });
+  fireEvent.click(screen.getByText("Rechercher"));
 
-  const resultatRMCActe = screen.getByText("Aucun acte n'a été trouvé.");
-  const resultatRMCInscription = screen.getByText(
-    "Aucune inscription n'a été trouvée."
-  );
   await waitFor(() => {
-    expect(dialog).not.toBeInTheDocument();
-    expect(resultatRMCActe).toBeDefined();
-    expect(resultatRMCInscription).toBeDefined();
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(screen.getByText("Aucun acte n'a été trouvé.")).toBeDefined();
+    expect(
+      screen.getByText("Aucune inscription n'a été trouvée.")
+    ).toBeDefined();
   });
 });
 
@@ -520,9 +492,7 @@ test("Attendu: le bouton 'prendre en charge' disparait une fois qu'on a cliqué 
     Labels.prendreEnCharge
   ) as HTMLButtonElement;
 
-  await act(async () => {
-    fireEvent.click(boutonPrendreEnCharge);
-  });
+  fireEvent.click(boutonPrendreEnCharge);
 
   await waitFor(() => expect(boutonPrendreEnCharge).not.toBeInTheDocument());
 });

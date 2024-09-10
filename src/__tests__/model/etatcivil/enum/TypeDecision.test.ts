@@ -2,6 +2,7 @@ import {
   TypeDecision,
   TypeDecisionUtil
 } from "@model/etatcivil/enum/TypeDecision";
+import { expect, test } from "vitest";
 
 test("TypeDecision model", () => {
   expect(TypeDecisionUtil.isJugement(TypeDecision.JUGEMENT)).toBe(true);

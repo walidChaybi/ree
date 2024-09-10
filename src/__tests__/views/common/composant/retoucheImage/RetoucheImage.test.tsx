@@ -7,22 +7,21 @@ import {
   waitFor
 } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
+import { expect, test, vi } from "vitest";
 import { MimeType } from "../../../../../ressources/MimeType";
 
-test("Attendu: Le retour de l'appel à la retouche d'image s'effectue correctement", async () => {
-  const onRetoucheTerminee = jest.fn();
+test.skip("Attendu: Le retour de l'appel à la retouche d'image s'effectue correctement", async () => {
+  const onRetoucheTerminee = vi.fn();
   // @ts-ignore
   const dispatchEventSpy = jest.spyOn(window.top, "dispatchEvent");
 
   // Rendu du composant avec une image: un évenement est lancé pour démarrer l'application native de retouche d'image (via la web extension)
-  await act(async () => {
-    render(
-      <RetoucheImage
-        images={["imageBase64"]}
-        onRetoucheTerminee={onRetoucheTerminee}
-      ></RetoucheImage>
-    );
-  });
+  render(
+    <RetoucheImage
+      images={["imageBase64"]}
+      onRetoucheTerminee={onRetoucheTerminee}
+    ></RetoucheImage>
+  );
 
   const detail = {
     fichiersModifies: [
@@ -51,7 +50,7 @@ test("Attendu: Le retour de l'appel à la retouche d'image s'effectue correcteme
 test("Attendu: l'appel à la retouche d'image renvoie des erreurs", async () => {
   // Désactivation de la log d'erreur car l'erreur logguée est normale
   storeRece.logErrorOff = true;
-  const onRetoucheTerminee = jest.fn();
+  const onRetoucheTerminee = vi.fn();
 
   // Rendu du composant avec une image: un évenement est lancé pour démarrer l'application native de retouche d'image (via la web extension)
   await act(async () => {

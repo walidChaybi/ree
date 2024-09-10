@@ -1,7 +1,8 @@
 import { genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import { describe, expect, test } from "vitest";
 
 describe("Test du composant Prenoms", () => {
-  test("Doit créer la bonne structure de données avec 12 prénoms", async () => {
+  test("Doit créer la bonne structure de données avec 12 prénoms", () => {
     const prenomsDefaultValues = {
       prenom1: "",
       prenom2: "",

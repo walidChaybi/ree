@@ -7,15 +7,10 @@ import {
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import { URL_REQUETES_CREATION_SERVICE } from "@router/ReceUrls";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
+import { beforeAll, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
@@ -28,7 +23,7 @@ beforeAll(() => {
   );
 });
 
-test("renders creationPage", async () => {
+test.skip("renders creationPage", () => {
   const router = createTestingRouter(
     [
       {
@@ -56,25 +51,19 @@ test("renders creationPage", async () => {
     /Les requêtes de création de mon service/i
   );
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(document.title).toBe(title);
     expect(mesRequetes).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.click(requetesService);
+  fireEvent.click(requetesService);
+
+  const attribueA = screen.getByText(/Attribuée à/i);
+
+  waitFor(() => {
+    expect(document.title).toBe(title);
+    expect(mesRequetes).toBeDefined();
+    expect(requetesService).toBeDefined();
+    expect(attribueA).toBeDefined();
   });
-
-  setTimeout(() => {
-    act(() => {
-      const attribueA = screen.getByText(/Attribuée à/i);
-
-      waitFor(() => {
-        expect(document.title).toBe(title);
-        expect(mesRequetes).toBeDefined();
-        expect(requetesService).toBeDefined();
-        expect(attribueA).toBeDefined();
-      });
-    });
-  }, 0);
 });

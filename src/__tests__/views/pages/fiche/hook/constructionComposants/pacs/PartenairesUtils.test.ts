@@ -1,6 +1,7 @@
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { getPartenaires } from "@pages/fiche/hook/constructionComposants/pacs/PartenairesUtils";
+import { expect, test } from "vitest";
 
 test("getPartenaires", () => {
   const partenaires = [

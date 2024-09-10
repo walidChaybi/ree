@@ -4,6 +4,7 @@ import {
   prioriteDeLaRequete
 } from "@util/RequetesUtils";
 import moment from "moment";
+import { expect, test } from "vitest";
 
 test("récupération de la priorité de la requête : Priotité basse", () => {
   const dateRequete = moment();

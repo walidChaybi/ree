@@ -1,8 +1,9 @@
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { useRMCRequeteApiHook } from "@pages/rechercheMultiCriteres/requete/hook/RMCRequeteApiHook";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_REQUETE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
+import { expect, test } from "vitest";
 
 const criteres: ICriteresRMCRequete = {
   valeurs: {
@@ -44,24 +45,23 @@ const HookConsummerRMCRequete: React.FC = () => {
   );
 };
 
-test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères Requete", async () => {
-  await act(async () => {
-    render(<HookConsummerRMCRequete />);
-  });
-  await waitFor(() => {
-    expect(screen.getByTestId("test-rmc-requete-hook").textContent).toEqual(
-      "54ddf213-d9b7-4747-8e92-68c220f66de3"
-    );
-    expect(screen.getByTestId("test-rmc-requete-hook1").textContent).toEqual(
-      "8ef11b8b-652c-4c6a-ad27-a544fce635d0"
-    );
-    expect(screen.getByTestId("test-rmc-requete-hook2").textContent).toEqual(
-      "4578e56c-421c-4e6a-b587-a238a665daf8"
-    );
-    expect(screen.getByTestId("test-rmc-requete-hook3").textContent).toEqual(
-      "532a8a9d-91c0-4405-9f5f-503629405422"
-    );
-  });
+test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères Requete", () => {
+  render(<HookConsummerRMCRequete />);
+
+  waitFor(() => {
+      expect(screen.getByTestId("test-rmc-requete-hook").textContent).toEqual(
+        "54ddf213-d9b7-4747-8e92-68c220f66de3"
+      );
+      expect(screen.getByTestId("test-rmc-requete-hook1").textContent).toEqual(
+        "8ef11b8b-652c-4c6a-ad27-a544fce635d0"
+      );
+      expect(screen.getByTestId("test-rmc-requete-hook2").textContent).toEqual(
+        "4578e56c-421c-4e6a-b587-a238a665daf8"
+      );
+      expect(screen.getByTestId("test-rmc-requete-hook3").textContent).toEqual(
+        "532a8a9d-91c0-4405-9f5f-503629405422"
+      );
+    });
 });
 
 

@@ -25,9 +25,10 @@ import {
   validerMentions
 } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import { waitFor } from "@testing-library/react";
+import { beforeAll, expect, test, vi } from "vitest";
 
-beforeAll(async () => {
-  await waitFor(() => {
+beforeAll(() => {
+  waitFor(() => {
     expect(DocumentDelivrance.length).toBeGreaterThan(0);
   });
 });
@@ -227,7 +228,7 @@ test("aucuneMentionsNationalite", () => {
 test("Attendu: validerMentions fonctionne correctement", () => {
   const sauvegardeFonctionConfirm = window.confirm;
   window.confirm = () => true;
-  const sauvegarderMentions = jest.fn();
+  const sauvegarderMentions = vi.fn();
 
   const mentionsAffichageAvecUnElementdeMoins = mentionsAffichage.slice(1);
   const mentionsApi1 = mentionsApi as any as IMention[];

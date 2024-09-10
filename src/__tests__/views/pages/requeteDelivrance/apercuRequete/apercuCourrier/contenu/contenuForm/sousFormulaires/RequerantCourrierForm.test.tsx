@@ -16,6 +16,7 @@ import { getLibelle } from "@util/Utils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import React from "react";
+import { expect, test, vi } from "vitest";
 
 const HookRequerantCourrierForm: React.FC<{
   qualiteRequerant: IQualiteRequerant;
@@ -39,14 +40,14 @@ const HookRequerantCourrierForm: React.FC<{
     <Formulaire
       formDefaultValues={requerantCourrierFormDefaultValues}
       formValidationSchema={RequerantCourrierFormValidationSchema}
-      onSubmit={jest.fn()}
+      onSubmit={vi.fn()}
     >
       <RequerantCourrierForm {...requerantCourrierFormProps} />
     </Formulaire>
   );
 };
 
-test("DOIT rendre les champs 'Nom' et 'Prenom' QUAND le requerant est de qualite 'PARTICULIER'", async () => {
+test("DOIT rendre les champs 'Nom' et 'Prenom' QUAND le requerant est de qualite 'PARTICULIER'", () => {
   render(
     <HookRequerantCourrierForm
       qualiteRequerant={{
@@ -56,14 +57,14 @@ test("DOIT rendre les champs 'Nom' et 'Prenom' QUAND le requerant est de qualite
     />
   );
 
-  await waitFor(() => {
-    expect(screen.queryByText("Nom")).toBeInTheDocument();
-    expect(screen.queryByText("Prénom")).toBeInTheDocument();
-    expect(screen.queryByText("Raison sociale")).not.toBeInTheDocument();
+  waitFor(() => {
+    expect(screen.queryByText("Nom")).toBeDefined();
+    expect(screen.queryByText("Prénom")).toBeDefined();
+    expect(screen.queryByText("Raison sociale")).not.toBeDefined();
   });
 });
 
-test("DOIT rendre les champs 'Raison sociale', 'Nom' et 'Prenom' QUAND le requerant est de qualite 'MANDATAIRE_HABILITE'", async () => {
+test("DOIT rendre les champs 'Raison sociale', 'Nom' et 'Prenom' QUAND le requerant est de qualite 'MANDATAIRE_HABILITE'", () => {
   render(
     <HookRequerantCourrierForm
       qualiteRequerant={{
@@ -76,14 +77,14 @@ test("DOIT rendre les champs 'Raison sociale', 'Nom' et 'Prenom' QUAND le requer
     />
   );
 
-  await waitFor(() => {
-    expect(screen.queryByText("Nom")).toBeInTheDocument();
-    expect(screen.queryByText("Prénom")).toBeInTheDocument();
-    expect(screen.queryByText("Raison sociale")).toBeInTheDocument();
+  waitFor(() => {
+    expect(screen.queryByText("Nom")).toBeDefined();
+    expect(screen.queryByText("Prénom")).toBeDefined();
+    expect(screen.queryByText("Raison sociale")).toBeDefined();
   });
 });
 
-test("DOIT rendre les champs 'Raison sociale', 'Nom' et 'Prenom' QUAND le requerant est de qualite 'INSTITUTIONNEL'", async () => {
+test("DOIT rendre les champs 'Raison sociale', 'Nom' et 'Prenom' QUAND le requerant est de qualite 'INSTITUTIONNEL'", () => {
   render(
     <HookRequerantCourrierForm
       qualiteRequerant={{
@@ -96,14 +97,14 @@ test("DOIT rendre les champs 'Raison sociale', 'Nom' et 'Prenom' QUAND le requer
     />
   );
 
-  await waitFor(() => {
-    expect(screen.queryByText("Nom")).toBeInTheDocument();
-    expect(screen.queryByText("Prénom")).toBeInTheDocument();
-    expect(screen.queryByText("Raison sociale")).toBeInTheDocument();
+  waitFor(() => {
+    expect(screen.queryByText("Nom")).toBeDefined();
+    expect(screen.queryByText("Prénom")).toBeDefined();
+    expect(screen.queryByText("Raison sociale")).toBeDefined();
   });
 });
 
-test("DOIT rendre les champs 'Raison sociale', 'Nom' et 'Prenom' QUAND le requerant est de qualite 'AUTRE_PROFESSIONNEL'", async () => {
+test("DOIT rendre les champs 'Raison sociale', 'Nom' et 'Prenom' QUAND le requerant est de qualite 'AUTRE_PROFESSIONNEL'", () => {
   render(
     <HookRequerantCourrierForm
       qualiteRequerant={{
@@ -116,9 +117,9 @@ test("DOIT rendre les champs 'Raison sociale', 'Nom' et 'Prenom' QUAND le requer
     />
   );
 
-  await waitFor(() => {
-    expect(screen.queryByText("Nom")).toBeInTheDocument();
-    expect(screen.queryByText("Prénom")).toBeInTheDocument();
-    expect(screen.queryByText("Raison sociale")).toBeInTheDocument();
+  waitFor(() => {
+    expect(screen.queryByText("Nom")).toBeDefined();
+    expect(screen.queryByText("Prénom")).toBeDefined();
+    expect(screen.queryByText("Raison sociale")).toBeDefined();
   });
 });

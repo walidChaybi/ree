@@ -3,8 +3,9 @@ import {
   FicheRcaDecisionAvecInstructionProcureur,
   FicheRcaDecisionJuridictionEtrangere
 } from "@mock/data/ficheRCA";
+import { expect, test } from "vitest";
 
-test("Attendu: getDecisionExequatur AVEC une decision Juridiction étrangère", async () => {
+test("Attendu: getDecisionExequatur AVEC une decision Juridiction étrangère", () => {
   const data = FicheRcaDecisionJuridictionEtrangere;
   const phrase = getDecisionExequatur(data);
   expect(phrase).toBe(
@@ -12,7 +13,7 @@ test("Attendu: getDecisionExequatur AVEC une decision Juridiction étrangère", 
   );
 });
 
-test("Attendu: getDecisionExequatur SANS decision Juridiction étrangère", async () => {
+test("Attendu: getDecisionExequatur SANS decision Juridiction étrangère", () => {
   const data = FicheRcaDecisionAvecInstructionProcureur;
   const phrase = getDecisionExequatur(data);
   expect(phrase).toBeUndefined();

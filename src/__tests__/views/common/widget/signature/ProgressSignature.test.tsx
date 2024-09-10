@@ -1,8 +1,9 @@
 import { fireEvent, render } from "@testing-library/react";
 import { ProgressSignature } from "@widget/signature/ProgressSignature";
+import { expect, test, vi } from "vitest";
 
 test("renders progress bar, close function is called automatically", () => {
-  const handleClickButton = jest.fn();
+  const handleClickButton = vi.fn();
 
   render(
     <ProgressSignature
@@ -33,7 +34,7 @@ test("renders progress bar, close function is called automatically", () => {
 });
 
 test("renders progress bar, close function is called when click on button", () => {
-  const handleClickButton = jest.fn();
+  const handleClickButton = vi.fn();
 
   const { getByText } = render(
     <ProgressSignature
@@ -66,7 +67,7 @@ test("renders progress bar, close function is called when click on button", () =
 });
 
 test("renders progress bar, close function can't be called", () => {
-  const handleClickButton = jest.fn();
+  const handleClickButton = vi.fn();
 
   const { getByText } = render(
     <ProgressSignature
@@ -83,7 +84,7 @@ test("renders progress bar, close function can't be called", () => {
               nomDocument: "",
               conteneurSwift: "",
               idRequete: "",
-              numeroRequete: 1
+              numeroRequete: "1"
             }
           ],
           documentsToSave: []
@@ -97,7 +98,7 @@ test("renders progress bar, close function can't be called", () => {
               nomDocument: "",
               conteneurSwift: "",
               idRequete: "",
-              numeroRequete: 2
+              numeroRequete: "2"
             }
           ],
           documentsToSave: []

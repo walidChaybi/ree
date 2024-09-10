@@ -4,15 +4,10 @@ import ParentForm, {
   ParentFormValidationSchema,
   ParentSubFormProps
 } from "@composant/formulaire/ParentForm";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { expect, test } from "vitest";
 
 const HookParentForm: React.FC = () => {
   const [result, setResult] = useState("");
@@ -43,38 +38,36 @@ const HookParentForm: React.FC = () => {
   );
 };
 
-test("render composant Parent Formulaire", async () => {
-  await act(async () => {
-    render(<HookParentForm />);
-  });
+test("render composant Parent Formulaire", () => {
+  render(<HookParentForm />);
 
   const inputNom = screen.getByLabelText(
     "parent1.nomNaissance"
   ) as HTMLInputElement;
 
-  act(() => {
-    fireEvent.change(inputNom, {
-      target: {
-        value: "mocknom"
-      }
-    });
+  waitFor(() => {
+    expect(inputNom).toBeDefined();
+  });
+
+  fireEvent.change(inputNom, {
+    target: {
+      value: "mocknom"
+    }
   });
 
   const submit = screen.getByText(/Submit/i);
 
-  await act(async () => {
-    fireEvent.blur(inputNom);
-    fireEvent.click(submit);
-  });
+  fireEvent.blur(inputNom);
+  fireEvent.click(submit);
 
-  const titreParent1 = screen.getByText(/Parent 1/i);
+    const titreParent1 = screen.getByText(/Parent 1/i);
 
-  const result = screen.getByTestId("result");
+    const result = screen.getByTestId("result");
 
-  await waitFor(() => {
-    expect(titreParent1).toBeDefined();
-    expect(result.innerHTML).toBe(
-      '{"parent1":{"nomNaissance":"MOCKNOM","prenoms":{"prenom1":"","prenom2":"","prenom3":"","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":"","prenom13":"","prenom14":"","prenom15":""}}}'
-    );
-  });
+    waitFor(() => {
+      expect(titreParent1).toBeDefined();
+      expect(result.innerHTML).toBe(
+        '{"parent1":{"nomNaissance":"MOCKNOM","prenoms":{"prenom1":"","prenom2":"","prenom3":"","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":"","prenom13":"","prenom14":"","prenom15":""}}}'
+      );
+    });
 });

@@ -1,4 +1,5 @@
 import { gestionnaireSignatureFlag } from "@util/signatureFlag/gestionnaireSignatureFlag";
+import { expect, test } from "vitest";
 
 test("gestion signature flag works ", async () => {
   const localStorageMock = (function () {

@@ -14,9 +14,10 @@ import {
 } from "@mock/data/ficheRCA";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "@mock/data/nomenclatures";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { expect, test } from "vitest";
 const nbInscriptionsInfos = {} as INbInscriptionsInfos;
 
-test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_PACS et il n'y a pas de PACS", async () => {
+test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_PACS et il n'y a pas de PACS", () => {
   const phrase = specificationPhraseDelivrer.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[1].id, // CERTIFICAT_SITUATION_PACS
     Sexe.FEMININ,
@@ -32,7 +33,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
   );
 });
 
-test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RC et il n'y a pas de RC", async () => {
+test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RC et il n'y a pas de RC", () => {
   const phrase = specificationPhraseDelivrer.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[5].id, // CERTIFICAT_SITUATION_RC
     Sexe.FEMININ,
@@ -46,7 +47,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
   expect(phrase.phrasesLiees).toBe("- N’est pas inscrite au répertoire civil.");
 });
 
-test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RCA et il n'y a pas de RCA", async () => {
+test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RCA et il n'y a pas de RCA", () => {
   const phrase = specificationPhraseDelivrer.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[7].id, // CERTIFICAT_SITUATION_RCA
     Sexe.FEMININ,
@@ -62,7 +63,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
   );
 });
 
-test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_PACS et il y a au moins un PACS", async () => {
+test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_PACS et il y a au moins un PACS", () => {
   const phrase = specificationPhraseDelivrer.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[1].id, //CERTIFICAT_SITUATION_PACS
     Sexe.FEMININ,
@@ -78,7 +79,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
   );
 });
 
-test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RC et il y a au moins un RC", async () => {
+test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RC et il y a au moins un RC", () => {
   const phrase = specificationPhraseDelivrer.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[5].id, //CERTIFICAT_SITUATION_RC
     Sexe.FEMININ,
@@ -94,7 +95,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
   );
 });
 
-test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RCA et il y a au moins un RC", async () => {
+test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RCA et il y a au moins un RC", () => {
   const phrase = specificationPhraseDelivrer.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[7].id, //CERTIFICAT_SITUATION_RCA
     Sexe.FEMININ,
@@ -113,7 +114,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
   );
 });
 
-test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_PACS_RC_RCA et il y a au moins un PACS, un RC et un RCA", async () => {
+test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_PACS_RC_RCA et il y a au moins un PACS, un RC et un RCA", () => {
   const phrase = specificationPhraseDelivrer.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[4].id, //CERTIFICAT_SITUATION_PACS_RC_RCA
     Sexe.FEMININ,

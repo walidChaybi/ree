@@ -6,9 +6,10 @@ import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import { configEtatcivil } from "@mock/superagent-config/superagent-mock-etatcivil";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
 import request from "superagent";
+import { afterAll, describe, expect, test } from "vitest";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
@@ -54,13 +55,11 @@ const HookConsumerPersonnesSauvegardees: React.FC<
 };
 
 describe("Test du custom hook useRMCAutoPersonneApiAvecCacheHook", () => {
-  test("DOIT obtenir un resultat de la part du web service", async () => {
+  test("DOIT obtenir un resultat de la part du web service", () => {
     const requete = mappingRequeteCreation(requeteCreationTranscription);
-    await act(async () => {
-      render(<HookConsumerPersonnesSauvegardees requete={requete} />);
-    });
+    render(<HookConsumerPersonnesSauvegardees requete={requete} />);
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(
         screen.getByTestId("test-personne-sauvegardee-alpha").textContent
       ).toEqual("e7114c54-d00d-48ad-bbee-af2b01e2da7a");

@@ -24,6 +24,7 @@ import {
 } from "@model/agent/IOfficier";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { storeRece } from "@util/storeRece";
+import { expect, test } from "vitest";
 
 const u: any = mockConnectedUser;
 

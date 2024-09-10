@@ -436,7 +436,11 @@ export const configRequetes = [
       }
 
       // Détail requête Délivrance
-      if (match[1] === "/requetes/7b448d64-add5-4dbd-8041-b7081ea7bc86") {
+      if (
+        match[1] === "/requetes/7b448d64-add5-4dbd-8041-b7081ea7bc86" ||
+        match[1] ===
+          "/requetes/7b448d64-add5-4dbd-8041-b7081ea7bc86?isConsultationHistoriqueAction=true"
+      ) {
         return { data: requeteSansDocument };
       }
       if (
@@ -617,7 +621,11 @@ export const configRequetes = [
           data: CreationRDCSC
         };
       }
-      if (match[1] === `/requetes/b63ebccd-ba5e-443a-8837-c5e1e111e846`) {
+      if (
+        match[1] === `/requetes/b63ebccd-ba5e-443a-8837-c5e1e111e846` ||
+        match[1] ===
+          `/requetes/b63ebccd-ba5e-443a-8837-c5e1e111e846?isConsultationHistoriqueAction=true`
+      ) {
         return {
           data: requetesCreationAlimentationTableau
         };

@@ -4,17 +4,20 @@ import {
   GestionnaireDoubleOuverture,
   gestionnaireDoubleOuverture
 } from "@util/GestionnaireDoubleOuverture";
+import { beforeAll, expect, test, vi } from "vitest";
 
-const mockFunction = jest.fn();
+const mockFunction = vi.fn();
 
 beforeAll(() => {
   Object.defineProperty(window, "localStorage", { value: localStorageMock });
   gestionnaireDoubleOuverture.init();
-  gestionnaireDoubleOuverture.lancerVerification(jest.fn());
+  gestionnaireDoubleOuverture.lancerVerification(vi.fn());
 });
 
 test("check si l'uuid est initialisé", () => {
-  expect(gestionnaireDoubleOuverture.ecouteNouvelleAppli()).toBeFalsy();
+  waitFor(() => {
+    expect(gestionnaireDoubleOuverture.ecouteNouvelleAppli()).toBeFalsy();
+  });
 });
 
 test("check si la nouvelle appli est détecté", async () => {

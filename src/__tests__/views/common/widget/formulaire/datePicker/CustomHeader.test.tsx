@@ -1,5 +1,4 @@
 import {
-  act,
   fireEvent,
   render,
   screen,
@@ -7,18 +6,19 @@ import {
 } from "@testing-library/react";
 import { customHeaderRenderer } from "@widget/formulaire/datePicker/CustomHeader";
 import React from "react";
+import { expect, test, vi } from "vitest";
 
-test("Attendu: customHeaderRenderer fonctionne correctement", async () => {
+test("Attendu: customHeaderRenderer fonctionne correctement", () => {
   const evt = {
-    preventDefault: jest.fn(),
+    preventDefault: vi.fn(),
     value: ""
   };
   const headerParams = {
     date: new Date(),
-    changeYear: jest.fn(),
-    changeMonth: jest.fn(),
-    decreaseMonth: jest.fn(),
-    increaseMonth: jest.fn(),
+    changeYear: vi.fn(),
+    changeMonth: vi.fn(),
+    decreaseMonth: vi.fn(),
+    increaseMonth: vi.fn(),
     prevMonthButtonDisabled: false,
     nextMonthButtonDisabled: false
   };
@@ -26,45 +26,35 @@ test("Attendu: customHeaderRenderer fonctionne correctement", async () => {
     return customHeaderRenderer(headerParams);
   };
 
-  await act(async () => {
     render(<CustomHeaderDatePicker />);
-  });
 
   const buttons = screen.getAllByRole("button");
 
-  await act(async () => {
     fireEvent.click(buttons[0], evt);
-  });
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(headerParams.decreaseMonth).toHaveBeenCalledTimes(1);
   });
 
-  await act(async () => {
     fireEvent.click(buttons[1], evt);
-  });
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(headerParams.increaseMonth).toHaveBeenCalledTimes(1);
   });
 
   evt.value = "6";
 
-  await act(async () => {
     fireEvent.change(screen.getByLabelText("select month"), evt);
-  });
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(headerParams.changeMonth).toHaveBeenCalledTimes(1);
   });
 
   evt.value = "2000";
 
-  await act(async () => {
     fireEvent.change(screen.getByLabelText("select year"), evt);
-  });
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(headerParams.changeYear).toHaveBeenCalledTimes(1);
   });
 });

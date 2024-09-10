@@ -22,6 +22,7 @@ import {
   estOuvertRegistrePapier
 } from "@pages/requeteCreation/apercuRequete/etablissement/commun/ApercuRequeteEtablissementUtils";
 import { getDateActuelle } from "@util/DateUtils";
+import { describe, expect, test } from "vitest";
 
 describe("Test la modification des donnees du BI.", () => {
   const SAISIE_PROJET = {
@@ -69,19 +70,19 @@ describe("Test la modification des donnees du BI.", () => {
     ]
   } as any as IProjetActe;
 
-  test("DOIT renvoyer 'false' QUAND le projet d'acte est undefined.", async () => {
+  test("DOIT renvoyer 'false' QUAND le projet d'acte est undefined.", () => {
     expect(
       estModifieBulletinIdentification(SAISIE_PROJET, undefined)
     ).toBeFalsy();
   });
 
-  test("DOIT renvoyer 'false' QUAND les données de la saisie sont identiques aux données du projet d'acte.", async () => {
+  test("DOIT renvoyer 'false' QUAND les données de la saisie sont identiques aux données du projet d'acte.", () => {
     expect(
       estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
     ).toBeFalsy();
   });
 
-  test("DOIT renvoyer 'true' QUAND la saisie du nom de l'analyse marginale diffère du projet d'acte.", async () => {
+  test("DOIT renvoyer 'true' QUAND la saisie du nom de l'analyse marginale diffère du projet d'acte.", () => {
     SAISIE_PROJET.titulaire.analyseMarginale.nom = "Test";
     expect(
       estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
@@ -92,7 +93,7 @@ describe("Test la modification des donnees du BI.", () => {
     ).toBeFalsy();
   });
 
-  test("DOIT renvoyer 'true' QUAND la saisie des prénoms de l'analyse marginale diffère du projet d'acte.", async () => {
+  test("DOIT renvoyer 'true' QUAND la saisie des prénoms de l'analyse marginale diffère du projet d'acte.", () => {
     SAISIE_PROJET.titulaire.analyseMarginale.prenoms.prenom1 = "Test";
     expect(
       estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
@@ -103,7 +104,7 @@ describe("Test la modification des donnees du BI.", () => {
     ).toBeFalsy();
   });
 
-  test("DOIT renvoyer 'true' QUAND la saisie du sexe diffère du projet d'acte.", async () => {
+  test("DOIT renvoyer 'true' QUAND la saisie du sexe diffère du projet d'acte.", () => {
     SAISIE_PROJET.titulaire.sexe = "FEMININ";
     expect(
       estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
@@ -114,7 +115,7 @@ describe("Test la modification des donnees du BI.", () => {
     ).toBeFalsy();
   });
 
-  test("DOIT renvoyer 'true' QUAND la saisie de la date de naissance diffère du projet d'acte.", async () => {
+  test("DOIT renvoyer 'true' QUAND la saisie de la date de naissance diffère du projet d'acte.", () => {
     SAISIE_PROJET.titulaire.dateNaissance.jour = "02";
     SAISIE_PROJET.titulaire.dateNaissance.mois = "02";
     SAISIE_PROJET.titulaire.dateNaissance.annee = "2002";
@@ -135,7 +136,7 @@ describe("Test la modification des donnees du BI.", () => {
     ).toBeFalsy();
   });
 
-  test("DOIT renvoyer 'true' QUAND la saisie du lieu de naissance diffère du projet d'acte.", async () => {
+  test("DOIT renvoyer 'true' QUAND la saisie du lieu de naissance diffère du projet d'acte.", () => {
     SAISIE_PROJET.titulaire.lieuNaissance.villeNaissance = "Test";
     SAISIE_PROJET.titulaire.lieuNaissance.regionNaissance = "Test";
     SAISIE_PROJET.titulaire.lieuNaissance.paysNaissance = "Test";
@@ -182,7 +183,7 @@ describe("Vérification de l'ouverture du registre", () => {
     decret2017: false
   };
 
-  test("DOIT confirmer que le registre est ouvert en retournant 'true'.", async () => {
+  test("DOIT confirmer que le registre est ouvert en retournant 'true'.", () => {
     expect(
       estOuvertRegistrePapier(DECRET_NATURALISATION, REGISTRE_PAPIER)
     ).toBeTruthy();
@@ -200,7 +201,7 @@ describe("Vérification de l'ouverture du registre", () => {
     { CLE: "support1", VALEUR: "036" }
   ])(
     "DOIT confirmer que le registre est fermé en retournant 'false' après avoir modifié le paramètre $CLE avec la valeur $VALEUR.",
-    async ({ CLE, VALEUR }) => {
+    ({ CLE, VALEUR }) => {
       expect(
         estOuvertRegistrePapier(DECRET_NATURALISATION, {
           ...REGISTRE_PAPIER,
@@ -212,7 +213,7 @@ describe("Vérification de l'ouverture du registre", () => {
 
   test.each([{ CLE: "dateFermeture", VALEUR: undefined }])(
     "DOIT confirmer que le registre est ouvert en retournant 'true' après avoir modifié le paramètre $CLE avec la valeur $VALEUR.",
-    async ({ CLE, VALEUR }) => {
+    ({ CLE, VALEUR }) => {
       expect(
         estOuvertRegistrePapier(DECRET_NATURALISATION, {
           ...REGISTRE_PAPIER,

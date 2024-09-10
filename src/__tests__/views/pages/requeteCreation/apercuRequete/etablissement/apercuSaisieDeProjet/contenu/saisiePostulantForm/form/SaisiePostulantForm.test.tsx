@@ -14,6 +14,7 @@ import {
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { DEUX, UN, ZERO } from "@util/Utils";
 import { RouterProvider } from "react-router-dom";
+import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../../../../__tests__utils__/testsUtil";
 
 function afficheComposantSaisiePostulantForm(
@@ -53,7 +54,7 @@ function afficheComposantSaisiePostulantForm(
 }
 
 describe("Test du bloc Postulant de l'onglet Postulant", () => {
-  test("DOIT afficher et renseigner les champs du bloc postulant QUAND le formulaire est affiché", async () => {
+  test("DOIT afficher et renseigner les champs du bloc postulant QUAND le formulaire est affiché", () => {
     const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
     );
@@ -82,7 +83,7 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     const champPays = screen.getAllByLabelText("Pays")[0] as HTMLInputElement;
     const champNeMariage = screen.getByLabelText("Non") as HTMLInputElement;
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(champNom[0].value).toBe("NOMNAISSANCE");
       expect(screen.getByText("Nom sécable")).toBeDefined();
       expect(screen.queryByText("1re partie")).toBeNull();
@@ -102,22 +103,23 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
       expect(screen.getByText("Adopté par")).toBeDefined();
     });
   });
-  test("DOIT afficher un message d'attention QUAND le sexe est indéterminé", async () => {
+  test("DOIT afficher un message d'attention QUAND le sexe est indéterminé", () => {
     const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
     );
     afficheComposantSaisiePostulantForm(requete.titulaires!);
-    await waitFor(() => {
+
+    waitFor(() => {
       expect(screen.queryByText("Attention, sexe indéterminé")).toBeNull();
     });
 
     fireEvent.click(screen.getAllByLabelText("Indéterminé")[0]);
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(screen.getByText("Attention, sexe indéterminé")).toBeDefined();
     });
   });
-  test("DOIT afficher un message d'attention QUAND le postulant n'a pas de jour et mois de naissance", async () => {
+  test("DOIT afficher un message d'attention QUAND le postulant n'a pas de jour et mois de naissance", () => {
     const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
     );
@@ -128,7 +130,7 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     const champJourNaissance = screen.getAllByText("Date de naissance")[0]
       .nextElementSibling as HTMLInputElement;
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(
         screen.getByText("Jour et mois valorisés par défaut")
       ).toBeDefined();
@@ -140,13 +142,13 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
       }
     });
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(
         screen.queryByText("Jour et mois valorisés par défaut")
       ).toBeNull();
     });
   });
-  test("DOIT rendre la sécabilité du nom sans message d'attention QUAND il y a seulement 2 vocables", async () => {
+  test("DOIT rendre la sécabilité du nom sans message d'attention QUAND il y a seulement 2 vocables", () => {
     const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
     );
@@ -161,13 +163,13 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
       "2nde partie"
     ) as HTMLInputElement;
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(champNomPartie1.value).toBe("TEST1");
       expect(champNomPartie2.value).toBe("TEST2");
       expect(screen.queryByText("Nom avec plus de deux vocables")).toBeNull();
     });
   });
-  test("DOIT afficher un message d'attention QUAND le pays de naissance est sécable et que le nom a plus de 2 vocables", async () => {
+  test("DOIT afficher un message d'attention QUAND le pays de naissance est sécable et que le nom a plus de 2 vocables", () => {
     const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
     );
@@ -182,13 +184,13 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
       "2nde partie"
     ) as HTMLInputElement;
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(champNomPartie1.value).toBe("TEST1");
       expect(champNomPartie2.value).toBe("TEST2 TEST3");
       expect(screen.getByText("Nom avec plus de deux vocables")).toBeDefined();
     });
   });
-  test("DOIT afficher le formulaire d'acquisition QUAND l'avancement est a signer'.", async () => {
+  test("DOIT afficher le formulaire d'acquisition QUAND l'avancement est a signer'.", () => {
     const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
     );
@@ -196,11 +198,11 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
       requete.titulaires!,
       AvancementProjetActe.A_SIGNER
     );
-    await waitFor(() => {
-      expect(screen.queryByTitle("Acquisition")).toBeInTheDocument();
+    waitFor(() => {
+      expect(screen.queryByTitle("Acquisition")).toBeDefined();
     });
   });
-  test("NE DOIT PAS afficher le formulaire d'acquisition QUAND l'avancement est a saisir'.", async () => {
+  test("NE DOIT PAS afficher le formulaire d'acquisition QUAND l'avancement est a saisir'.", () => {
     const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
     );
@@ -208,12 +210,12 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
       requete.titulaires!,
       AvancementProjetActe.A_SAISIR
     );
-    await waitFor(() => {
-      expect(screen.queryByTitle("Acquisition")).not.toBeInTheDocument();
+    waitFor(() => {
+      expect(screen.queryByTitle("Acquisition")).toBeNull();
     });
   });
 
-  test("NE DOIT PAS afficher le formulaire d'acquisition QUAND l'avancement est en cours'.", async () => {
+  test("NE DOIT PAS afficher le formulaire d'acquisition QUAND l'avancement est en cours'.", () => {
     const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
     );
@@ -221,11 +223,11 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
       requete.titulaires!,
       AvancementProjetActe.EN_COURS
     );
-    await waitFor(() => {
-      expect(screen.queryByTitle("Acquisition")).not.toBeInTheDocument();
+    waitFor(() => {
+      expect(screen.queryByTitle("Acquisition")).not.toBeDefined();
     });
   });
-  test("NE DOIT PAS afficher le formulaire d'acquisition QUAND l'avancement est valide'.", async () => {
+  test("NE DOIT PAS afficher le formulaire d'acquisition QUAND l'avancement est valide'.", () => {
     const requete = mappingRequeteCreation(
       requeteCreationEtablissementSaisieProjet
     );
@@ -233,8 +235,8 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
       requete.titulaires!,
       AvancementProjetActe.VALIDE
     );
-    await waitFor(() => {
-      expect(screen.queryByTitle("Acquisition")).not.toBeInTheDocument();
+    waitFor(() => {
+      expect(screen.queryByTitle("Acquisition")).not.toBeDefined();
     });
   });
 });

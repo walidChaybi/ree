@@ -1,59 +1,48 @@
 import { BoutonNouvelleRMCActeInscription } from "@pages/rechercheMultiCriteres/autoActesInscriptions/BoutonNouvelleRMCActeInscription";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React, { useState } from "react";
+import { expect, test, vi } from "vitest";
 
 const ConteneurBouton: React.FC = () => {
   const [popinAffichee, setPopinAffichee] = useState<boolean>(false);
 
   return (
     <BoutonNouvelleRMCActeInscription
-      nouvelleRMCActeInscription={jest.fn()}
+      nouvelleRMCActeInscription={vi.fn()}
       setPopinAffichee={setPopinAffichee}
       popinAffichee={popinAffichee}
     />
   );
 };
 
-test("renders titre bouton ajouter RMC", async () => {
-  await act(async () => {
-    render(<ConteneurBouton />);
-  });
+test("renders titre bouton ajouter RMC", () => {
+  render(<ConteneurBouton />);
 
   const linkElement = screen.getByText("Nouvelle recherche multi-critères");
 
-  await waitFor(() => {
-    expect(linkElement).toBeInTheDocument();
+  waitFor(() => {
+    expect(linkElement).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(linkElement);
-  });
+  fireEvent.click(linkElement);
 
   const dialog = screen.getByRole("dialog");
 
-  await waitFor(() => {
-    expect(dialog).toBeInTheDocument();
+  waitFor(() => {
+    expect(dialog).toBeDefined();
   });
 
   const closeElement = screen.getByLabelText(
     "CloseButtonNouvelleRMCActeInscription"
   );
 
-  await waitFor(() => {
-    expect(closeElement).toBeInTheDocument();
+  waitFor(() => {
+    expect(closeElement).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(closeElement);
-  });
+  fireEvent.click(closeElement);
 
-  await waitFor(() => {
-    expect(dialog).not.toBeInTheDocument();
+  waitFor(() => {
+    expect(dialog).not.toBeDefined();
   });
 });

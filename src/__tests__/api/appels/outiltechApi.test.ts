@@ -1,4 +1,5 @@
 import { postLog } from "@api/appels/outiltechApi";
+import { expect, test } from "vitest";
 
 test("outiltech api postLog", () => {
   postLog([

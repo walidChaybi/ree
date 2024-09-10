@@ -1,8 +1,9 @@
 import { ICriteresRechercheActeInscription } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
 import { useRMCInscriptionApiHook } from "@hook/rmcActeInscription/RMCInscriptionApiHook";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_INSCRIPTION } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
+import { expect, test } from "vitest";
 
 const criteres: ICriteresRechercheActeInscription = {
   valeurs: {
@@ -39,15 +40,14 @@ const HookConsummerRMCInscription: React.FC = () => {
   );
 };
 
-test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères Inscription", async () => {
-  await act(async () => {
-    render(<HookConsummerRMCInscription />);
-  });
-  await waitFor(() => {
-    expect(screen.getByTestId("test-rmc-inscription-hook").textContent).toEqual(
-      "85160d6e-893b-47c2-a9a8-b25573189f0c"
-    );
-  });
+test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères Inscription", () => {
+  render(<HookConsummerRMCInscription />);
+
+  waitFor(() => {
+      expect(
+        screen.getByTestId("test-rmc-inscription-hook").textContent
+      ).toEqual("85160d6e-893b-47c2-a9a8-b25573189f0c");
+    });
 });
 
 const criteresRechecheNonAutorise: ICriteresRechercheActeInscription = {
@@ -87,15 +87,14 @@ const HookConsummerRMCInscriptionRechecheNonAutorise: React.FC = () => {
   );
 };
 
-test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères Acte", async () => {
-  await act(async () => {
-    render(<HookConsummerRMCInscriptionRechecheNonAutorise />);
-  });
-  await waitFor(() => {
-    expect(screen.getByTestId("test-rmc-inscription-hook").textContent).toEqual(
-      "Recherche non autorisée"
-    );
-  });
+test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères Acte", () => {
+  render(<HookConsummerRMCInscriptionRechecheNonAutorise />);
+
+  waitFor(() => {
+  expect(screen.getByTestId("test-rmc-inscription-hook").textContent).toEqual(
+    "Recherche non autorisée"
+  );
+});
 });
 
 

@@ -9,6 +9,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useUpdateRequeteDelivranceRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/UpdateRDCSCApiHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
+import { expect, test } from "vitest";
 
 const saisieInteresse = {
   ...RequeteRDCSCInteresse,
@@ -37,9 +38,9 @@ const HookConsummerInteresse: React.FC = () => {
   );
 };
 
-test("Maj requête délivrance hook intéressé", async () => {
+test("Maj requête délivrance hook intéressé", () => {
   render(<HookConsummerInteresse />);
-  await waitForResultat(StatutRequete.PRISE_EN_CHARGE, false);
+  waitForResultat(StatutRequete.PRISE_EN_CHARGE, false);
 });
 
 const HookConsummerMandataire: React.FC = () => {
@@ -49,9 +50,9 @@ const HookConsummerMandataire: React.FC = () => {
   );
 };
 
-test("Maj requête délivrance hook mandataire", async () => {
+test("Maj requête délivrance hook mandataire", () => {
   render(<HookConsummerMandataire />);
-  await waitForResultat(StatutRequete.PRISE_EN_CHARGE, false);
+  waitForResultat(StatutRequete.PRISE_EN_CHARGE, false);
 });
 
 const HookConsummerInstitutionnel: React.FC = () => {
@@ -61,9 +62,9 @@ const HookConsummerInstitutionnel: React.FC = () => {
   );
 };
 
-test("Maj requête délivrance hook institution", async () => {
+test("Maj requête délivrance hook institution", () => {
   render(<HookConsummerInstitutionnel />);
-  await waitForResultat(StatutRequete.A_TRAITER, true);
+  waitForResultat(StatutRequete.A_TRAITER, true);
 });
 
 const HookConsummerParticulier: React.FC = () => {
@@ -73,13 +74,13 @@ const HookConsummerParticulier: React.FC = () => {
   );
 };
 
-test("Maj requête délivrance hook particuler", async () => {
+test("Maj requête délivrance hook particuler", () => {
   render(<HookConsummerParticulier />);
-  await waitForResultat(StatutRequete.BROUILLON, false);
+  waitForResultat(StatutRequete.BROUILLON, false);
 });
 
-async function waitForResultat(futurStatut: StatutRequete, refus: boolean) {
-  await waitFor(() => {
+function waitForResultat(futurStatut: StatutRequete, refus: boolean) {
+  waitFor(() => {
     expect(
       screen.getByText(
         `1072bc37-f889-4365-8f75-912166b767dd,${futurStatut.libelle},${refus}`

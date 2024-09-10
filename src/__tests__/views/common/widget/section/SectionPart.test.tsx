@@ -1,7 +1,8 @@
 import { render, waitFor } from "@testing-library/react";
 import { SectionPart } from "@widget/section/SectionPart";
+import { expect, test } from "vitest";
 
-test("render composant SectionPart", async () => {
+test("render composant SectionPart", () => {
   const { getByText } = render(
     <SectionPart
       partContent={{
@@ -12,7 +13,7 @@ test("render composant SectionPart", async () => {
     />
   );
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(getByText(/titleTest/i)).toBeDefined();
   });
 });

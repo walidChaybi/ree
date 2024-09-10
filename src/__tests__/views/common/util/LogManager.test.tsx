@@ -4,6 +4,7 @@ import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFl
 import { logError } from "@util/LogManager";
 import { storeRece } from "@util/storeRece";
 import { ToastContainer } from "react-toastify";
+import { beforeEach, expect, test } from "vitest";
 
 beforeEach(() => {
   expect(
@@ -11,7 +12,7 @@ beforeEach(() => {
   ).toBeTruthy();
 });
 
-test("renders error msg", async () => {
+test("renders error msg", () => {
   // Désactivation de la log car l'erreur loguée est normale
   storeRece.logErrorOff = true;
   render(
@@ -33,7 +34,7 @@ test("renders error msg", async () => {
     error: "testeerror (console.error LogManager)",
     errorInfo: "testerrorInfo (console.error LogManager)"
   });
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByText(/testmessageUtilisateur/)).toBeDefined();
   });
 
@@ -45,11 +46,10 @@ test("renders error msg", async () => {
     },
     errorInfo: "testerrorInfo (console.error LogManager)"
   });
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByText(/Message à l'utilisateur/)).toBeDefined();
     expect(screen.getByText(/Message du serveur/)).toBeDefined();
-  });  
-  
+  });
 
   storeRece.logErrorOff = false;
 });

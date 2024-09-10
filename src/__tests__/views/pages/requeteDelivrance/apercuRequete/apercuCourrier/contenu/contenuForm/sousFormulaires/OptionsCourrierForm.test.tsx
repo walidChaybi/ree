@@ -16,6 +16,7 @@ import {
 } from "@testing-library/react";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import React, { useState } from "react";
+import { expect, test, vi } from "vitest";
 
 const HookOptionsCourrierForm: React.FC = () => {
   const [optionsChoisies, setOptionsChoisies] = useState<OptionsCourrier>([]);
@@ -37,7 +38,7 @@ const HookOptionsCourrierForm: React.FC = () => {
     <Formik
       initialValues={OptionCourrierFormDefaultValues}
       validationSchema={ValidationSchemaOptionCourrier}
-      onSubmit={jest.fn()}
+      onSubmit={vi.fn()}
     >
       <Form>
         <OptionsCourrierForm {...optionsCourrierFormProps} />
@@ -47,26 +48,23 @@ const HookOptionsCourrierForm: React.FC = () => {
 };
 
 test("renders OptionsCourrierForm DoubleClick pour ajouter, bouton moins pour supprimer", async () => {
-  await act(async () => {
+  // "await" obligatoire pour attendre que le composant soit rendu avec les options
+  await act(() => {
     render(<HookOptionsCourrierForm />);
   });
 
-  const optionAbsenceFiliation = screen.getByText("Absence de date");
-
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByText("Ajouter un paragraphe")).toBeDefined();
     expect(screen.getByText("Option(s) disponible(s)")).toBeDefined();
     expect(screen.getByText("Option(s) choisie(s)")).toBeDefined();
     // Libellés des options dans le tableau
     expect(screen.getByText("Conciergeries administratives")).toBeDefined();
     expect(screen.getByText("Absence de nom ou de prénom(s)")).toBeDefined();
-    expect(optionAbsenceFiliation).toBeDefined();
+    expect(screen.getByText("Absence de date")).toBeDefined();
   });
 
   // Ajouter une option à puces au courrier (Absence de date)
-  await act(async () => {
-    fireEvent.dblClick(optionAbsenceFiliation);
-  });
+  fireEvent.dblClick(screen.getByText("Absence de date"));
 
   // On vérifie que le libelle et le texte de l'option sont valorisées dans les inputs
   const inputLibelleOption = screen.getByLabelText(
@@ -77,39 +75,33 @@ test("renders OptionsCourrierForm DoubleClick pour ajouter, bouton moins pour su
   ) as HTMLInputElement;
   const optionAPuce = screen.getByText("Option à tiret");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(inputLibelleOption.value).toBe("Absence de date");
     expect(inputContenuOption.value).toBe("- la date de l'événement");
     expect(optionAPuce).toBeDefined();
   });
 
   const boutonsSupprimer = screen.getAllByTitle("Supprimer");
-  await waitFor(() => {
+  waitFor(() => {
     expect(boutonsSupprimer).toBeDefined();
     expect(boutonsSupprimer.length).toEqual(2);
   });
 
   // Supprimer une option libre au courrier
-  await act(async () => {
-    fireEvent.click(boutonsSupprimer[0]);
-  });
+  fireEvent.click(boutonsSupprimer[0]);
 });
 
 test("renders OptionsCourrierForm modifier le contenu d'une option libre", async () => {
-  await act(async () => {
+  await act(() => {
     render(<HookOptionsCourrierForm />);
   });
 
-  const optionLibre = screen.getByText("Ajout option -");
-
-  await waitFor(() => {
-    expect(optionLibre).toBeDefined();
+  waitFor(() => {
+    expect(screen.getByText("Ajout option -")).toBeDefined();
   });
 
   // Ajouter une option libre au courrier (Ajout option -)
-  await act(async () => {
-    fireEvent.dblClick(optionLibre);
-  });
+  fireEvent.dblClick(screen.getByText("Ajout option -"));
 
   // On vérifie que le libelle et le texte de l'option sont valorisées dans les inputs
   const inputLibelleOption = screen.getByLabelText(
@@ -120,68 +112,63 @@ test("renders OptionsCourrierForm modifier le contenu d'une option libre", async
   ) as HTMLInputElement;
   const iconeDanger = screen.getByTitle("Option non modifié");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(inputLibelleOption.value).toBe("Ajout option -");
     expect(inputContenuOption.value).toBe("-");
     expect(iconeDanger).toBeDefined();
   });
 
   // Changement du contenu de l'option libre
-  await act(async () => {
-    fireEvent.click(iconeDanger);
-    fireEvent.input(inputContenuOption, {
-      target: {
-        value: "Changement du contenu de l'option libre"
-      }
-    });
+  fireEvent.click(iconeDanger);
+  fireEvent.input(inputContenuOption, {
+    target: {
+      value: "Changement du contenu de l'option libre"
+    }
   });
-  const iconeValider = screen.getByTitle("Option modifié");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(inputContenuOption.value).toBe(
       "Changement du contenu de l'option libre"
     );
-    expect(iconeValider).toBeDefined();
+    expect(screen.getByTitle("Option modifié")).toBeDefined();
   });
 
   const boutonReinitialiser = screen.getByTitle("Rappel du modèle de l'option");
 
-  await act(async () => {
-    fireEvent.click(boutonReinitialiser);
-  });
+  fireEvent.click(boutonReinitialiser);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(inputContenuOption.value).toBe("-");
   });
 
   const optionLibreBis = screen.getByText("Ajout option -");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(optionLibreBis).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(optionLibreBis);
-  });
+  fireEvent.click(optionLibreBis);
 });
 
 test("renders OptionsCourrierForm sélectionner une option, clique sur le bouton plus, doubleclic supprimer", async () => {
-  await act(async () => {
+  await act(() => {
     render(<HookOptionsCourrierForm />);
   });
 
-  const optionSelectionner = screen.getByText(
-    "Arrondissement d'Alger (événement entre le 24/04/1959 et le 31/12/1962)"
-  );
-
-  await waitFor(() => {
-    expect(optionSelectionner).toBeDefined();
+  waitFor(() => {
+    expect(
+      screen.getByText(
+        "Arrondissement d'Alger (événement entre le 24/04/1959 et le 31/12/1962)"
+      )
+    ).toBeDefined();
   });
 
   // sélectionner une option
-  await act(async () => {
-    fireEvent.click(optionSelectionner);
-  });
+  fireEvent.click(
+    screen.getByText(
+      "Arrondissement d'Alger (événement entre le 24/04/1959 et le 31/12/1962)"
+    )
+  );
 
   // On vérifie que le libelle et le texte de l'option sont valorisées dans les inputs
   const inputLibelleOption = screen.getByLabelText(
@@ -191,7 +178,7 @@ test("renders OptionsCourrierForm sélectionner une option, clique sur le bouton
     "option.contenu"
   ) as HTMLInputElement;
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(inputLibelleOption.value).toBe(
       "Arrondissement d'Alger (événement entre le 24/04/1959 et le 31/12/1962)"
     );
@@ -200,15 +187,11 @@ test("renders OptionsCourrierForm sélectionner une option, clique sur le bouton
     );
   });
 
-  const boutonsAjouter = screen.getAllByTitle("Ajouter");
-
-  await act(async () => {
-    fireEvent.click(boutonsAjouter[0]);
-  });
+  fireEvent.click(screen.getAllByTitle("Ajouter")[0]);
 
   const boutonsSupprimer = screen.getAllByTitle("Supprimer");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(boutonsSupprimer).toBeDefined();
     expect(boutonsSupprimer.length).toEqual(2);
   });
@@ -217,7 +200,5 @@ test("renders OptionsCourrierForm sélectionner une option, clique sur le bouton
     "Arrondissement d'Alger (événement entre le 24/04/1959 et le 31/12/1962)"
   );
 
-  await act(async () => {
-    fireEvent.doubleClick(optionSelectionnerBis);
-  });
+  fireEvent.doubleClick(optionSelectionnerBis);
 });

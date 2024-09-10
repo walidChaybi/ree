@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { BarreNavigationSuivPrec } from "@widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
 import React from "react";
+import { expect, test } from "vitest";
 
 test("Attendu le composant BarreNavigationSuivPrec fonctionne correctement", () => {
   const BarreNavigationSuivPrecConsumer: React.FC = () => {
@@ -19,31 +20,31 @@ test("Attendu le composant BarreNavigationSuivPrec fonctionne correctement", () 
 
   render(<BarreNavigationSuivPrecConsumer />);
 
-  const precedent = screen.getByTitle("Précédent");
-  const suivant = screen.getByTitle("Suivant");
-  expect(precedent).toBeInTheDocument();
-  expect(suivant).toBeInTheDocument();
+  const precedent = screen.getByTitle("Précédent") as HTMLButtonElement;
+  const suivant = screen.getByTitle("Suivant") as HTMLButtonElement;
+  expect(precedent).toBeDefined();
+  expect(suivant).toBeDefined();
 
-  expect(precedent).toBeDisabled();
-  expect(suivant).not.toBeDisabled();
-
-  fireEvent.click(suivant);
-
-  expect(precedent).not.toBeDisabled();
-  expect(suivant).not.toBeDisabled();
+  expect(precedent.disabled).toBeTruthy();
+  expect(suivant.disabled).not.toBeTruthy();
 
   fireEvent.click(suivant);
 
-  expect(precedent).not.toBeDisabled();
-  expect(suivant).toBeDisabled();
+  expect(precedent.disabled).not.toBeTruthy();
+  expect(suivant.disabled).not.toBeTruthy();
+
+  fireEvent.click(suivant);
+
+  expect(precedent.disabled).not.toBeTruthy();
+  expect(suivant.disabled).toBeTruthy();
 
   fireEvent.click(precedent);
 
-  expect(precedent).not.toBeDisabled();
-  expect(suivant).not.toBeDisabled();
+  expect(precedent.disabled).not.toBeTruthy();
+  expect(suivant.disabled).not.toBeTruthy();
 
   fireEvent.click(precedent);
 
-  expect(precedent).toBeDisabled();
-  expect(suivant).not.toBeDisabled();
+  expect(precedent.disabled).toBeTruthy();
+  expect(suivant.disabled).not.toBeTruthy();
 });

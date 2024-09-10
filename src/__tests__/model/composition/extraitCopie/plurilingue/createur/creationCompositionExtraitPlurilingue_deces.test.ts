@@ -4,6 +4,7 @@ import { ficheActeDeces } from "@mock/data/ficheActe";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
+import { describe, expect, test } from "vitest";
 
 const mentionsRetirees: string[] = [];
 

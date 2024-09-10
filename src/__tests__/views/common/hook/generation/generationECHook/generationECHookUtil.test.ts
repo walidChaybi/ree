@@ -8,6 +8,7 @@ import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
+import { expect, test } from "vitest";
 
 test("Attendu: getTypeDocument fonctionne correctement", () => {
   expect(

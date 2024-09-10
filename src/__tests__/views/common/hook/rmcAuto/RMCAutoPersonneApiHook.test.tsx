@@ -7,8 +7,9 @@ import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPers
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
+import { describe, expect, test } from "vitest";
 
 interface HookConsumerRMCAutoPersonneProps {
   requete: IRequeteCreationTranscription;
@@ -50,13 +51,12 @@ const HookConsumerRMCAutoPersonne: React.FC<
 };
 
 describe("Test du custom hook useRMCAutoPersonneApiAvecCacheHook", () => {
-  test("DOIT obtenir un resultat de la part du web service", async () => {
+  test("DOIT obtenir un resultat de la part du web service", () => {
     const requete = mappingRequeteCreation(requeteCreationTranscription);
-    await act(async () => {
-      render(<HookConsumerRMCAutoPersonne requete={requete} />);
-    });
 
-    await waitFor(() => {
+    render(<HookConsumerRMCAutoPersonne requete={requete} />);
+
+    waitFor(() => {
       expect(screen.getByTestId("test-rmc-requete-alpha").textContent).toEqual(
         "e7114c54-d00d-48ad-bbee-af2b01e2da7d"
       );

@@ -3,6 +3,7 @@ import { getIconPrioriteRequete } from "@util/tableauRequete/TableauRequeteUtils
 import { TableauBody } from "@widget/tableau/TableauRece/TableauBody";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { BrowserRouter as Router } from "react-router-dom";
+import { expect, test } from "vitest";
 
 const subData = {
   sousTypeRequete: "RDC",

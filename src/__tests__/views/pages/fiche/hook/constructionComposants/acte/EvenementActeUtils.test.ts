@@ -1,8 +1,9 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { getEvenement } from "@pages/fiche/hook/constructionComposants/acte/EvenementActeUtils";
+import { expect, test } from "vitest";
 import { acte } from "../../../../../../../mock/data/ficheEtBandeau/ficheActe";
 
-test("Acte utils : affichage correcte des infos de l'évènement", async () => {
+test("Acte utils : affichage correcte des infos de l'évènement", () => {
   const dataActe = mapActe(acte);
   const components = getEvenement(dataActe);
 

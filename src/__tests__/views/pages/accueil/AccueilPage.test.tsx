@@ -1,39 +1,25 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-let container: Element | null;
+import { expect, test } from "vitest";
 
-beforeEach(() => {
-  container = document.createElement("div");
-  document.body.appendChild(container);
-});
+test("renders page d'accueil", () => {
+  render(
+    <>
+      <Router>
+        <MockRECEContextProvider>
+          <AccueilPage />
+        </MockRECEContextProvider>
+      </Router>
+    </>
+  );
 
-afterEach(() => {
-  if (container instanceof Element) {
-    document.body.removeChild<Element>(container);
-  }
-  container = null;
-});
-
-test("renders page d'accueil", async () => {
-  act(() => {
-    render(
-      <>
-        <Router>
-          <MockRECEContextProvider>
-            <AccueilPage />
-          </MockRECEContextProvider>
-        </Router>
-      </>
-    );
-  });
-
-  await waitFor(() => {
+  waitFor(() => {
     expect(document.title).toBe("Accueil");
     const textElements = screen.getByText(/Bienvenue*/i);
-    expect(textElements).toBeInTheDocument();
+    expect(textElements).toBeDefined();
     const badge = screen.getByText("2");
-    expect(badge).toBeInTheDocument();
+    expect(badge).toBeDefined();
   });
 });

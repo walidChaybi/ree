@@ -1,6 +1,7 @@
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { FournisseurDonneesBandeau } from "@pages/fiche/contenu/fournisseurDonneesBandeau/FournisseurDonneesBandeau";
 import { fournisseurDonneesBandeauFactory } from "@pages/fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
+import { expect, test } from "vitest";
 import {
   acte,
   acteElectronique

@@ -3,16 +3,11 @@ import AutreProfessionnelForm, {
   AutreProfessionnelFormDefaultValues,
   AutreProfessionnelFormValidationSchema
 } from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/requerant/autreProfessionnel/AutreProfessionnelForm";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { expect, test } from "vitest";
 
 const HookAutreProfessionnelForm: React.FC = () => {
   const [result, setResult] = useState("");
@@ -42,10 +37,9 @@ const HookAutreProfessionnelForm: React.FC = () => {
   );
 };
 
-test("render composant AutreProfessionnel Formulaire", async () => {
-  await act(async () => {
-    render(<HookAutreProfessionnelForm />);
-  });
+test("render composant AutreProfessionnel Formulaire", () => {
+  render(<HookAutreProfessionnelForm />);
+
   const inputNature = screen.getByLabelText(
     "autreProfessionnel.nature"
   ) as HTMLInputElement;
@@ -59,43 +53,39 @@ test("render composant AutreProfessionnel Formulaire", async () => {
     "autreProfessionnel.prenom"
   ) as HTMLInputElement;
 
-  act(() => {
-    fireEvent.change(inputNature, {
-      target: {
-        value: "mockNature"
-      }
-    });
-    fireEvent.change(inputRaisonSociale, {
-      target: {
-        value: "mockRaisonSociale"
-      }
-    });
-    fireEvent.change(inputNom, {
-      target: {
-        value: "mockNom"
-      }
-    });
-    fireEvent.change(inputPrenom, {
-      target: {
-        value: "mockPrenom"
-      }
-    });
+  fireEvent.change(inputNature, {
+    target: {
+      value: "mockNature"
+    }
+  });
+  fireEvent.change(inputRaisonSociale, {
+    target: {
+      value: "mockRaisonSociale"
+    }
+  });
+  fireEvent.change(inputNom, {
+    target: {
+      value: "mockNom"
+    }
+  });
+  fireEvent.change(inputPrenom, {
+    target: {
+      value: "mockPrenom"
+    }
   });
 
   const submit = screen.getByText(/Submit/i);
-  await act(async () => {
-    fireEvent.blur(inputNature);
-    fireEvent.blur(inputRaisonSociale);
-    fireEvent.blur(inputNom);
-    fireEvent.blur(inputPrenom);
-    fireEvent.click(submit);
-  });
+  fireEvent.blur(inputNature);
+  fireEvent.blur(inputRaisonSociale);
+  fireEvent.blur(inputNom);
+  fireEvent.blur(inputPrenom);
+  fireEvent.click(submit);
 
-  const result = screen.getByTestId("result");
+    const result = screen.getByTestId("result");
 
-  await waitFor(() => {
-    expect(result.innerHTML).toBe(
-      '{"autreProfessionnel":{"nature":"mockNature","raisonSociale":"mockRaisonSociale","nom":"mockNom","prenom":"MockPrenom"}}'
-    );
-  });
+    waitFor(() => {
+      expect(result.innerHTML).toBe(
+        '{"autreProfessionnel":{"nature":"mockNature","raisonSociale":"mockRaisonSociale","nom":"mockNom","prenom":"MockPrenom"}}'
+      );
+    });
 });

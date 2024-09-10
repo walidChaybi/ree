@@ -11,6 +11,7 @@ import {
 } from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { render, screen } from "@testing-library/react";
 import { getIconPrioriteRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { expect, test } from "vitest";
 
 test("espace delivrance utils goToLinkRequete", () => {
   const result = goToLinkRequete(

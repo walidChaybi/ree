@@ -1,7 +1,8 @@
 import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { useRMCAutoRequeteApiHook } from "@pages/rechercheMultiCriteres/autoRequetes/hook/RMCAutoRequeteApiHook";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
+import { expect, test } from "vitest";
 
 const params = {
   requete: requeteDelivrance,
@@ -18,11 +19,9 @@ const HookConsummerRequete: React.FC = () => {
   );
 };
 
-test("Test useRMCAutoRequeteApiHook", async () => {
-  await act(async () => {
-    render(<HookConsummerRequete />);
-  });
-  await waitFor(() =>
+test("Test useRMCAutoRequeteApiHook", () => {
+  render(<HookConsummerRequete />);
+  waitFor(() =>
     expect(screen.getByTestId("idRequete").textContent).toBe(
       "54ddf213-d9b7-4747-8e92-68c220f66de3"
     )

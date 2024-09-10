@@ -1,12 +1,13 @@
 import { cleanup, fireEvent, render } from "@testing-library/react";
 import { TableauHeader } from "@widget/tableau/TableauRece/TableauHeader";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
+import { afterEach, expect, test, vi } from "vitest";
 
 const UN = 1;
 const DEUX = 2;
 
 test("renders click sur header tableau des requêtes de l'application", () => {
-  const handleRequestSort = jest.fn();
+  const handleRequestSort = vi.fn();
   const { getByText } = render(
     <table>
       <TableauHeader

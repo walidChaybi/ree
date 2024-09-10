@@ -2,6 +2,7 @@ import {
   AnalyseMarginale,
   IAnalyseMarginale
 } from "@model/etatcivil/acte/IAnalyseMarginale";
+import { expect, test } from "vitest";
 
 test("Atendu: getAnalyseMarginaleLaPlusRecente fonctionne correctement", () => {
   const am1 = {

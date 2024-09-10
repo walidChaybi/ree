@@ -1,5 +1,6 @@
 import { TableauStatut } from "@pages/fiche/hook/constructionComposants/statut/TableauStatut";
 import { render, screen } from "@testing-library/react";
+import { expect, test } from "vitest";
 
 const statuts = [
   {

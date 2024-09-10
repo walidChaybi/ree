@@ -1,7 +1,8 @@
 import { sexeObligatoireValidation } from "@composant/formulaire/validation/SexeObligatoireValidation";
 import { IParentNaissanceForm } from "@model/form/delivrance/ISaisieExtraitForm";
+import { expect, test, vi } from "vitest";
 test("Attendu: sexeObligatoireValidation fonctionne correctement", () => {
-  const createError = jest.fn(() => "erreur");
+  const createError = vi.fn(() => "erreur");
   const mockContext = {
     createError
   };

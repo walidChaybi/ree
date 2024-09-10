@@ -24,6 +24,7 @@ import {
   getMoisEnLettre,
   IDateCompose
 } from "@util/DateUtils";
+import { expect, test } from "vitest";
 
 test("getDateFromDateCompose", () => {
   const dateCompose = {

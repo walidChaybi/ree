@@ -4,16 +4,11 @@ import LienTitulaireForm, {
   LienTitulaireFormDefaultValues,
   LienTitulaireFormValidationSchema
 } from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/lienTitulaire/LienTitulaireForm";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { expect, test } from "vitest";
 
 const HookLienTitulaireForm: React.FC = () => {
   const [result, setResult] = useState("");
@@ -44,40 +39,33 @@ const HookLienTitulaireForm: React.FC = () => {
   );
 };
 
-test("render formulaire LienTitulaire", async () => {
-  await act(async () => {
-    render(<HookLienTitulaireForm />);
-  });
+test("render formulaire LienTitulaire", () => {
+  render(<HookLienTitulaireForm />);
 
   const submit = screen.getByText(/Submit/i);
-  await act(async () => {
-    fireEvent.click(submit);
-  });
+
+  fireEvent.click(submit);
 
   const result = screen.getByTestId("result");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(result.innerHTML).toBe(
       '{"lienTitulaire":{"lien":"TITULAIRE","natureLien":""}}'
     );
   });
 });
 
-test("input Nature du formulaire LienTitulaire", async () => {
-  await act(async () => {
-    render(<HookLienTitulaireForm />);
-  });
+test("input Nature du formulaire LienTitulaire", () => {
+  render(<HookLienTitulaireForm />);
 
   const inputLien = screen.getByTestId(
     "lienTitulaire.lien"
   ) as HTMLSelectElement;
 
-  act(() => {
-    fireEvent.change(inputLien, {
-      target: {
-        value: "AUTRE"
-      }
-    });
+  fireEvent.change(inputLien, {
+    target: {
+      value: "AUTRE"
+    }
   });
 
   const inputNatureLien = screen.getByLabelText(
@@ -85,18 +73,16 @@ test("input Nature du formulaire LienTitulaire", async () => {
   ) as HTMLInputElement;
 
   const submit = screen.getByText(/Submit/i);
-  await act(async () => {
-    fireEvent.change(inputNatureLien, {
-      target: {
-        value: "mockNature"
-      }
-    });
-    fireEvent.click(submit);
+  fireEvent.change(inputNatureLien, {
+    target: {
+      value: "mockNature"
+    }
   });
+  fireEvent.click(submit);
 
   const result = screen.getByTestId("result");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(result.innerHTML).toBe(
       '{"lienTitulaire":{"lien":"AUTRE","natureLien":"mockNature"}}'
     );

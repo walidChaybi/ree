@@ -6,6 +6,7 @@ import {
   ITitulaireRequeteCreation,
   TitulaireRequeteCreation
 } from "@model/requete/ITitulaireRequeteCreation";
+import { describe, expect, test } from "vitest";
 describe("Tests sur le fonctionnement de la fonction TitulaireRequeteCreation.filtreParentParSexeEtOuParPosition().", () => {
   const varParents = {
     nationalite: Nationalite.ETRANGERE,
@@ -57,7 +58,7 @@ describe("Tests sur le fonctionnement de la fonction TitulaireRequeteCreation.fi
     { sexe: "Féminin", position: 2, nomNaissance: "Gamma" }
   ])(
     "DOIT retourner le parent de nom de naissance '$nomNaissance' QUAND on filtre par sexe '$sexe' et position '$position'",
-    async params => {
+    params => {
       const parent = TitulaireRequeteCreation.getParentParSexeEtOuParPosition(
         Sexe.getEnumFromLibelle(params.sexe),
         params.position,

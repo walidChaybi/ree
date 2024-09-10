@@ -15,6 +15,7 @@ import {
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { expect, test } from "vitest";
 import * as Yup from "yup";
 
 const TITULAIRE = "titulaire";
@@ -54,10 +55,8 @@ const HookTitulaireForm: React.FC = () => {
   );
 };
 
-test("DOIT rendre le composant d'identite du titulaire correctement", async () => {
-  await waitFor(() => {
-    render(<HookTitulaireForm />);
-  });
+test("DOIT rendre le composant d'identite du titulaire correctement", () => {
+  render(<HookTitulaireForm />);
 
   const boutonsCheckboxTitulaireNomActeEtranger = screen.getByLabelText(
     "titulaire.noms.pasdenomacteetranger.pasdenomacteetranger"
@@ -67,79 +66,61 @@ test("DOIT rendre le composant d'identite du titulaire correctement", async () =
     name: /titulaire.noms.nomActeEtranger/i
   });
 
-  await waitFor(() => {
-    fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
+  fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
+
+  waitFor(() => {
+    expect(inputNomActeEtranger).not.toBeDefined();
   });
 
-  await waitFor(() => {
-    expect(inputNomActeEtranger).not.toBeInTheDocument();
-  });
+  fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
 
-  await waitFor(() => {
-    fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
-  });
-
-  await waitFor(() => {
+  waitFor(() => {
     expect(inputNomActeEtranger).toBeDefined();
   });
 
-  await waitFor(() => {
-    fireEvent.blur(inputNomActeEtranger, {
-      target: {
-        value: "mockNom"
-      }
-    });
+  fireEvent.blur(inputNomActeEtranger, {
+    target: {
+      value: "mockNom"
+    }
   });
 
   const boutonsCheckboxTitulaireNomActeFrancais = screen.getByLabelText(
     "titulaire.noms.nomSouhaiteActeFR"
   );
 
-  await waitFor(() => {
-    fireEvent.blur(boutonsCheckboxTitulaireNomActeFrancais, {
-      target: {
-        value: "mockNomActeFrancais"
-      }
-    });
+  fireEvent.blur(boutonsCheckboxTitulaireNomActeFrancais, {
+    target: {
+      value: "mockNomActeFrancais"
+    }
   });
 
-  await waitFor(() => {
-    fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
-  });
+  fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
 });
 
-test("DOIT cacher le sous formulaire des prénoms quand la checkbox 'pas de prénom connu' est coché", async () => {
-  await waitFor(async () => {
-    render(<HookTitulaireForm />);
-  });
+test("DOIT cacher le sous formulaire des prénoms quand la checkbox 'pas de prénom connu' est coché", () => {
+  render(<HookTitulaireForm />);
 
   const inputPrenom1 = screen.getByLabelText("Prénom");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(inputPrenom1).toBeDefined();
   });
 
-  await waitFor(() => {
-    fireEvent.blur(inputPrenom1, {
-      target: {
-        value: "mockPrenomTitulaire"
-      }
-    });
+  fireEvent.blur(inputPrenom1, {
+    target: {
+      value: "mockPrenomTitulaire"
+    }
   });
 
   const boutonsCheckboxPasDePrenomConnu = screen.getByLabelText(
     "titulaire.pasdeprenomconnu.pasdeprenomconnu"
   );
 
-  await waitFor(async () => {
-    fireEvent.click(boutonsCheckboxPasDePrenomConnu);
+  fireEvent.click(boutonsCheckboxPasDePrenomConnu);
+
+  waitFor(() => {
+    expect(screen.queryByText("Prénom")).not.toBeDefined();
   });
 
-  await waitFor(() => {
-    expect(screen.queryByText("Prénom")).not.toBeInTheDocument();
-  });
-
-  await waitFor(async () => {
-    fireEvent.click(boutonsCheckboxPasDePrenomConnu);
-  });
+  fireEvent.click(boutonsCheckboxPasDePrenomConnu);
 });

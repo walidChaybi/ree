@@ -5,6 +5,7 @@ import { idPieceComplementInformation } from "@mock/data/PieceComplementInformat
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
+import { expect, test } from "vitest";
 const HookConsumerUseGetPieceJustificativeApi: React.FC = () => {
   const doc = useGetPieceJointeApi(
     TypePieceJointe.PIECE_JUSTIFICATIVE,
@@ -23,20 +24,20 @@ const HookConsumerUseGetPieceComplementInformationApi: React.FC = () => {
   return <div>{doc?.contenu}</div>;
 };
 
-test("Attendu: useGetDocumentReponseApi fonctionne correctement pour une pièce justificative", async () => {
+test("Attendu: useGetDocumentReponseApi fonctionne correctement pour une pièce justificative", () => {
   render(<HookConsumerUseGetPieceJustificativeApi />);
 
-  await waitFor(() => {
+  waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
-    expect(screen.getByText(imagePngVideBase64)).toBeInTheDocument();
+    expect(screen.getByText(imagePngVideBase64)).toBeDefined();
   });
 });
 
-test("Attendu: useGetDocumentReponseApi fonctionne correctement pour une pièce complémentaire", async () => {
+test("Attendu: useGetDocumentReponseApi fonctionne correctement pour une pièce complémentaire", () => {
   render(<HookConsumerUseGetPieceComplementInformationApi />);
 
-  await waitFor(() => {
+  waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
-    expect(screen.getByText(imagePngVideBase64)).toBeInTheDocument();
+    expect(screen.getByText(imagePngVideBase64)).toBeDefined();
   });
 });

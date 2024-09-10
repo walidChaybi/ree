@@ -1,6 +1,7 @@
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { checkURL } from "@util/route/Protection/ProtectionApercu";
+import { expect, test } from "vitest";
 
 test("Protection apercu", () => {
   expect(

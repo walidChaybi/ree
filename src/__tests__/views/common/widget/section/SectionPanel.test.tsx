@@ -1,7 +1,8 @@
 import { render, waitFor } from "@testing-library/react";
 import { SectionPanel } from "@widget/section/SectionPanel";
+import { expect, test } from "vitest";
 
-test("render composant SectionPanel", async () => {
+test("render composant SectionPanel", () => {
   const { getByTestId, getAllByTestId } = render(
     <SectionPanel
       panelAreas={[
@@ -35,7 +36,7 @@ test("render composant SectionPanel", async () => {
     />
   );
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(getByTestId(/section-panel-hr-titleArea-0/i)).toBeDefined();
     expect(getAllByTestId(/section-panel-hr-titleArea/i)).toHaveLength(1);
   });

@@ -2,6 +2,7 @@ import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { BoutonAccueil } from "@pages/accueil/BoutonAccueil";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
+import { expect, test, vi } from "vitest";
 
 test("renders texte du bouton d'accueil", () => {
   render(
@@ -38,7 +39,7 @@ test("renders présence de l'icône du bouton d'accueil", () => {
 });
 
 test("renders click sur le bouton d'accueil Activé/Désactivé", () => {
-  const handleClickButton = jest.fn();
+  const handleClickButton = vi.fn();
   render(
     <>
       <Router>

@@ -17,12 +17,13 @@ import {
 import { storeRece } from "@util/storeRece";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { MemoryRouter, RouterProvider } from "react-router-dom";
+import { describe, expect, test, vi } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
-test("render PopinSignatureMiseAJourMentions QUAND on ouvre la popin", async () => {
+test("render PopinSignatureMiseAJourMentions QUAND on ouvre la popin", () => {
   const message =
     "En cliquant sur VALIDER, vous acceptez de signer électroniquement la ou les mentions apposée(s) qui comporteront les données suivantes insérées automatiquement : lieu et date d’apposition, qualité du signataire, prénom et nom usuels dans le dispositif de création de signature qualifiée.";
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.queryByText("Signature des mentions")).toBeNull();
     expect(screen.queryByText(message)).toBeNull();
   });
@@ -38,24 +39,24 @@ test("render PopinSignatureMiseAJourMentions QUAND on ouvre la popin", async () 
       />
     </MemoryRouter>
   );
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.queryByText("Signature des mentions")).toBeDefined();
     expect(screen.getByText(message)).toBeDefined();
   });
 });
 
 describe("Doit signer le document QUAND on valide le code pin.", () => {
-  test("DOIT composer le document contenant les mentions ultérieures, puis enregistrer le document signé, et modifier le statut de la requête", async () => {
+  test("DOIT composer le document contenant les mentions ultérieures, puis enregistrer le document signé, et modifier le statut de la requête", () => {
     storeRece.utilisateurCourant = mockConnectedUser as any as IOfficier;
-    const composerDocumentMentionsUlterieuresSpy = jest.spyOn(
+    const composerDocumentMentionsUlterieuresSpy = vi.spyOn(
       EtatCivilApi,
       "composerDocumentMentionsUlterieures"
     );
-    const integrerDocumentMentionsUlterieuresSpy = jest.spyOn(
+    const integrerDocumentMentionsUlterieuresSpy = vi.spyOn(
       EtatCivilApi,
       "integrerDocumentMentionSigne"
     );
-    const modifierStatutRequeteMiseAJourSpy = jest.spyOn(
+    const modifierStatutRequeteMiseAJourSpy = vi.spyOn(
       RequeteApi,
       "modifierStatutRequeteMiseAJour"
     );
@@ -104,7 +105,7 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
     );
 
     // Test la composition du document final
-    await waitFor(() => {
+    waitFor(() => {
       expect(composerDocumentMentionsUlterieuresSpy).toHaveBeenCalledWith(
         "a5187320-d722-4673-abd7-a73ed41ad8c1",
         "issuerCertificat",
@@ -134,7 +135,7 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       )
     );
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(integrerDocumentMentionsUlterieuresSpy).toHaveBeenCalledTimes(1);
       expect(modifierStatutRequeteMiseAJourSpy).toHaveBeenCalledWith(
         "e5fdfe01-655b-44b9-a1fd-86c1169bb2ee",
@@ -147,8 +148,8 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
     modifierStatutRequeteMiseAJourSpy.mockClear();
   });
 
-  test("NE DOIT PAS composer le document final si l'information 'entiteCertificat' de la carte est manquant", async () => {
-    const composerDocumentMentionsUlterieuresSpy = jest.spyOn(
+  test("NE DOIT PAS composer le document final si l'information 'entiteCertificat' de la carte est manquant", () => {
+    const composerDocumentMentionsUlterieuresSpy = vi.spyOn(
       EtatCivilApi,
       "composerDocumentMentionsUlterieures"
     );
@@ -195,14 +196,14 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       )
     );
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(composerDocumentMentionsUlterieuresSpy).not.toHaveBeenCalled();
     });
     composerDocumentMentionsUlterieuresSpy.mockClear();
   });
 
-  test("NE DOIT PAS composer le document final si l'information 'issuerCertificat' de la carte est manquant", async () => {
-    const composerDocumentMentionsUlterieuresSpy = jest.spyOn(
+  test("NE DOIT PAS composer le document final si l'information 'issuerCertificat' de la carte est manquant", () => {
+    const composerDocumentMentionsUlterieuresSpy = vi.spyOn(
       EtatCivilApi,
       "composerDocumentMentionsUlterieures"
     );
@@ -249,7 +250,7 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       )
     );
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(composerDocumentMentionsUlterieuresSpy).not.toHaveBeenCalled();
     });
     composerDocumentMentionsUlterieuresSpy.mockClear();

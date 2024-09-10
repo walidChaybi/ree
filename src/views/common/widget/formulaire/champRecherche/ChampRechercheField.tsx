@@ -1,6 +1,5 @@
 import { Autocomplete } from "@mui/material";
 import { FilterOptionsState } from "@mui/material/useAutocomplete";
-import makeStyles from "@mui/styles/makeStyles";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { ErrorMessage, Field, connect } from "formik";
@@ -27,25 +26,11 @@ interface ChampRechercheProps {
   optionsValidesNonAffichees?: Options;
 }
 
-const useStyles = makeStyles(theme => ({
-  option: {
-    fontSize: "13px",
-    fontFamily: "'NotoSansUI-Regular', sans-serif",
-    '&[data-focus="true"]': {
-      backgroundColor: "#0579be78"
-    }
-  }
-}));
-
 export const ChampRecherche: React.FC<ChampRechercheProps> = props => {
-  const classes = useStyles();
   return (
     <Autocomplete
       autoHighlight={true}
       data-testid="autocomplete"
-      classes={{
-        option: classes.option
-      }}
       disablePortal={props.disabledPortal ? props.disabledPortal : false}
       className="Autocomplete"
       disabled={props.disabled}

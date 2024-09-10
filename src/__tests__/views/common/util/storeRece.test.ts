@@ -2,6 +2,7 @@ import officier from "@mock/data/connectedUser.json";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { storeRece } from "@util/storeRece";
+import { expect, test } from "vitest";
 
 test("store rece works ", async () => {
   expect(storeRece.utilisateurCourant).toBeUndefined();

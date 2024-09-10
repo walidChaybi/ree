@@ -7,8 +7,9 @@ import {
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { waitFor } from "@testing-library/react";
+import { expect, test } from "vitest";
 
-test("Attendu: RequeteDelivrance.getDocumentsDeDelivrance fonctionne correctement", async () => {
+test("Attendu: RequeteDelivrance.getDocumentsDeDelivrance fonctionne correctement", () => {
   let documentDelivrance: IDocumentReponse;
   let requete: IRequeteDelivrance;
 
@@ -27,7 +28,7 @@ test("Attendu: RequeteDelivrance.getDocumentsDeDelivrance fonctionne correctemen
     documentsReponses: [autreDocument, documentDelivrance, autreDocument]
   } as IRequeteDelivrance;
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(RequeteDelivrance.getDocumentsDeDelivrance(requete)).toEqual([
       documentDelivrance
     ]);

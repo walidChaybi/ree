@@ -8,6 +8,7 @@ import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseReque
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
+import { expect, test } from "vitest";
 
 
 test("Attendu: creerFormuleSignatureDelivrance fonctionne correctement", () => {

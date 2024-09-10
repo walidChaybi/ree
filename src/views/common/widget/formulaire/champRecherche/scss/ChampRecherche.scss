@@ -1,6 +1,11 @@
 @import "./../../../../../../scss/colors";
 
 .Autocomplete {
+  font-size: 14.7px;
+  font-family: "'NotoSansUI-Regular', sans-serif";
+  .Autocomplete:focus {
+    background-color: "#0579be78"
+  }
   input {
     width: -webkit-fill-available; // Force le champ input à 100% de son parent dans tous les cas (chrome)
     width: -moz-available; // Force le champ input à 100% de son parent dans tous les cas (firefox)

@@ -1,10 +1,11 @@
 import {
-    ICriteresRechercheActeArchive,
-    useRMCActeArchiveApiHook
+  ICriteresRechercheActeArchive,
+  useRMCActeArchiveApiHook
 } from "@pages/rechercheMultiCriteres/acteArchive/hook/RMCActeArchiveApiHook";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_ACTE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
+import { expect, test } from "vitest";
 
 const criteres: ICriteresRechercheActeArchive = {
   valeurs: {
@@ -33,11 +34,10 @@ const HookConsummerRMCActe: React.FC = () => {
   );
 };
 
-test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères Acte", async () => {
-  await act(async () => {
-    render(<HookConsummerRMCActe />);
-  });
-  await waitFor(() => {
+test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères Acte", () => {
+  render(<HookConsummerRMCActe />);
+
+  waitFor(() => {
     expect(screen.getByTestId("test-rmc-acte-hook").textContent).toEqual(
       "d8708d77-a359-4553-be72-1eb5f246d4da"
     );

@@ -6,13 +6,14 @@ import {
   RequeteRDDCourrier17,
   SaisieCourrier17
 } from "@mock/data/SaisieCourrier";
+import { expect, test } from "vitest";
 
 const saisieCourrier = SaisieCourrier17;
 const requete = RequeteRDDCourrier17;
 const optionsChoisies = OptionsChoisiesCourrier17;
 const acte = mapActe(ActeAnalyseMarginales);
 
-test("Attendu: specificationCourrier.getElementsJasper titulaire de la requete", async () => {
+test("Attendu: specificationCourrier.getElementsJasper titulaire de la requete", () => {
   const elementsJasper = specificationCourrier.getElementsJasper(
     saisieCourrier,
     requete,
@@ -49,7 +50,7 @@ test("Attendu: specificationCourrier.getElementsJasper titulaire de la requete",
   expect(elementsJasper.natureActe).toBe("mariage");
 });
 
-test("Attendu: specificationCourrier.getElementsJasper titulaire de l'analyse marginale'", async () => {
+test("Attendu: specificationCourrier.getElementsJasper titulaire de l'analyse marginale'", () => {
   const elementsJasper = specificationCourrier.getElementsJasper(
     saisieCourrier,
     requete,

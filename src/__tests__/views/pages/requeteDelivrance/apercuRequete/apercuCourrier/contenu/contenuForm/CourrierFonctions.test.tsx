@@ -16,6 +16,7 @@ import {
   getDefaultValuesCourrier,
   getTypesCourrier
 } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
+import { expect, test, vi } from "vitest";
 
 test("getDefaultValues", () => {
   expect(getDefaultValuesCourrier(requeteDelivrance)).toStrictEqual({
@@ -165,7 +166,7 @@ test("controle formulaire", () => {
         [CHOIX_COURRIER]: { [COURRIER]: "062526c5-e5a7-48d1-bc22-11938347f0bc" }
       } as SaisieCourrier,
       [{ ordreEdition: 20 } as OptionCourrier],
-      jest.fn()
+      vi.fn()
     )
   ).toBeTruthy();
 
@@ -175,7 +176,7 @@ test("controle formulaire", () => {
         [CHOIX_COURRIER]: { [COURRIER]: "b36f9a2c-64fa-42bb-a3f6-adca6fec28f2" }
       } as SaisieCourrier,
       [],
-      jest.fn()
+      vi.fn()
     )
   ).toBeFalsy();
 
@@ -188,7 +189,7 @@ test("controle formulaire", () => {
         [TEXTE_LIBRE]: { [TEXTE]: "je suis gentil" }
       } as SaisieCourrier,
       [{ ordreEdition: 20 } as OptionCourrier],
-      jest.fn()
+      vi.fn()
     )
   ).toBeTruthy();
   expect(
@@ -197,7 +198,7 @@ test("controle formulaire", () => {
         [CHOIX_COURRIER]: { [COURRIER]: "0296fc7a-fb81-4eb7-a72f-94286b8d8301" }
       } as SaisieCourrier,
       [],
-      jest.fn()
+      vi.fn()
     )
   ).toBeTruthy();
 });

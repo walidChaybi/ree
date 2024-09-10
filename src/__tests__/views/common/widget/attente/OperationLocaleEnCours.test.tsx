@@ -1,8 +1,9 @@
 import { render, waitFor } from "@testing-library/react";
 import { OperationLocaleEnCours } from "@widget/attente/OperationLocaleEnCours";
+import { expect, test, vi } from "vitest";
 
-test("render OperationEnCours", async () => {
-  const fn = jest.fn();
+test("render OperationEnCours", () => {
+  const fn = vi.fn();
   render(
     <OperationLocaleEnCours
       visible={true}
@@ -10,13 +11,15 @@ test("render OperationEnCours", async () => {
       onTimeoutEnd={fn}
     />
   );
-  await waitFor(() => {
+
+  waitFor(() => {
     const circle = document.getElementsByClassName(
       "MuiCircularProgress-circle"
     );
     expect(circle[0]).toBeDefined();
   });
-  await waitFor(() => {
+
+  waitFor(() => {
     expect(fn).toBeCalled();
   });
 });

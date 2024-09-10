@@ -6,7 +6,7 @@ import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID
 } from "@router/ReceUrls";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import {
   FilAriane,
@@ -17,95 +17,88 @@ import {
   getUrlFromNPathElements
 } from "@widget/filAriane/FilAriane";
 import { RouterProvider } from "react-router-dom";
+import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
-test("renders composant FilAriane.", async () => {
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_MES_REQUETES_DELIVRANCE,
-          element: <FilAriane routes={routesRece} />
-        }
-      ],
-      [URL_MES_REQUETES_DELIVRANCE]
-    );
+test("renders composant FilAriane.", () => {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE,
+        element: <FilAriane routes={routesRece} />
+      }
+    ],
+    [URL_MES_REQUETES_DELIVRANCE]
+  );
 
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 
-  expect(screen.getByLabelText(fildarianeLabel)).toBeInTheDocument();
+  expect(screen.getByLabelText(fildarianeLabel)).toBeDefined();
 });
 
-test("renders de 2 éléments du FilAriane.", async () => {
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_MES_REQUETES_DELIVRANCE,
-          element: <FilAriane routes={routesRece} />
-        }
-      ],
-      [URL_MES_REQUETES_DELIVRANCE]
-    );
+test("renders de 2 éléments du FilAriane.", () => {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE,
+        element: <FilAriane routes={routesRece} />
+      }
+    ],
+    [URL_MES_REQUETES_DELIVRANCE]
+  );
 
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 
-  await waitFor(() => {
+  waitFor(() => {
     const linkElement = screen.getByText(/Accueil/i);
     const textElement = screen.getByText(/Mes requêtes/i);
-    expect(linkElement).toBeInTheDocument();
-    expect(textElement).toBeInTheDocument();
+    expect(linkElement).toBeDefined();
+    expect(textElement).toBeDefined();
   });
 });
 
-test("renders d'un uudi en dernier élément du FilAriane.", async () => {
+test("renders d'un uudi en dernier élément du FilAriane.", () => {
   // ici on utilise la creation plutot que la delivrance
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_MES_REQUETES_CREATION,
-          element: <FilAriane routes={routesRece} />
-        },
-        {
-          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-          element: <FilAriane routes={routesRece} />
-        }
-      ],
-      [
-        URL_MES_REQUETES_CREATION,
-        getUrlWithParam(
-          URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-          "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-        )
-      ]
-    );
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_CREATION,
+        element: <FilAriane routes={routesRece} />
+      },
+      {
+        path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        element: <FilAriane routes={routesRece} />
+      }
+    ],
+    [
+      URL_MES_REQUETES_CREATION,
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+        "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+      )
+    ]
+  );
 
-    render(<RouterProvider router={router} />);
+  render(<RouterProvider router={router} />);
 
-    await waitFor(() => {
-      const uuidElement = screen.getAllByText(/Aperçu de requête/i)[0];
-      expect(uuidElement).toBeInTheDocument();
-    });
+  waitFor(() => {
+    const uuidElement = screen.getAllByText(/Aperçu de requête/i)[0];
+    expect(uuidElement).toBeDefined();
   });
 });
 
-test("renders de 2 éléments du FilAriane et mise à jour context.", async () => {
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_MES_REQUETES_DELIVRANCE,
-          element: <FilAriane routes={routesRece} />
-        }
-      ],
-      [URL_MES_REQUETES_DELIVRANCE]
-    );
+test("renders de 2 éléments du FilAriane et mise à jour context.", () => {
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE,
+        element: <FilAriane routes={routesRece} />
+      }
+    ],
+    [URL_MES_REQUETES_DELIVRANCE]
+  );
 
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 });
 test("renders d'un uudi en dernier élément du FilAriane et maj context.", () => {
   const router = createTestingRouter(

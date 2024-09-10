@@ -6,10 +6,12 @@ import { documentReponseExtraitAvecFiliation } from "@mock/data/DocumentReponse"
 import { requeteDelivranceRDC } from "@mock/data/requeteDelivrance";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
+import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
+import { expect, test } from "vitest";
 
 const mentionApi = {
   textes: {
@@ -23,13 +25,14 @@ const mentionApi = {
   id: "1"
 } as IMention;
 
-const mentionOpposable = {
+const mentionOpposable: IMentionAffichage = {
   texte: "texte mention",
   estPresent: true,
   nature: { opposableAuTiers: true } as NatureMention,
   id: "1",
   numeroOrdre: 0,
-  aPoubelle: true
+  estModifiable: false,
+  estSupprimable: true
 };
 
 const params: SauvegarderMentionsParam = {
@@ -49,10 +52,10 @@ const HookConsumer: React.FC = () => {
   return <div>{res?.idDoc}</div>;
 };
 
-test("Attendu: useSauvegarderMentions fonctionne correctement", async () => {
+test("Attendu: useSauvegarderMentions fonctionne correctement", () => {
   render(<HookConsumer />);
 
-  await waitFor(() => {
+  waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
     expect(
       screen.getByText("bbac2335-562c-4b14-96aa-4386814c02a2")

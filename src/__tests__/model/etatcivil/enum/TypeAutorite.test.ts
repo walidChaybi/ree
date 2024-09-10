@@ -2,6 +2,7 @@ import {
   TypeAutorite,
   TypeAutoriteUtil
 } from "@model/etatcivil/enum/TypeAutorite";
+import { expect, test } from "vitest";
 
 test("TypeAutorite model", () => {
   expect(TypeAutoriteUtil.isJuridiction(TypeAutorite.NOTAIRE)).toBe(false);
@@ -32,7 +33,7 @@ test("TypeAutorite model", () => {
 
   expect(TypeAutoriteUtil.getLibelle()).toBe("");
 
-  expect(TypeAutoriteUtil.isOnac("ONAC")).toBe(true);
+  expect(TypeAutoriteUtil.isOnac(TypeAutorite.ONAC)).toBe(true);
 
-  expect(TypeAutoriteUtil.isOnac("NOTAIRE")).toBe(false);
+  expect(TypeAutoriteUtil.isOnac(TypeAutorite.NOTAIRE)).toBe(false);
 });

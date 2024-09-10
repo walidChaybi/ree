@@ -4,6 +4,7 @@ import NumeroActeForm, {
 } from "@widget/formulaire/champNumeroActe/NumeroActeForm";
 import { Field, Form, Formik } from "formik";
 import { useState } from "react";
+import { expect, test } from "vitest";
 
 const HookNumeroActeForm: React.FC = () => {
   const [resultat, setResultat] = useState<string>("");
@@ -23,21 +24,17 @@ const HookNumeroActeForm: React.FC = () => {
   );
 };
 
-test("DOIT afficher les champs du composant NumeroActeForm", async () => {
+test("DOIT afficher les champs du composant NumeroActeForm", () => {
   render(<HookNumeroActeForm />);
 
-  await waitFor(() => {
-    expect(screen.queryByText("N° d'acte / N° d'ordre")).toBeInTheDocument();
-    expect(
-      screen.queryByPlaceholderText("N° d'acte ou d'ordre")
-    ).toBeInTheDocument();
-    expect(screen.queryByPlaceholderText("N° BisTer")).toBeInTheDocument();
-    expect(screen.queryByText("A partir de")).toBeInTheDocument();
+  waitFor(() => {
+    expect(screen.queryByText("N° d'acte / N° d'ordre")).toBeDefined();
+    expect(screen.queryByPlaceholderText("N° d'acte ou d'ordre")).toBeDefined();
+    expect(screen.queryByPlaceholderText("N° BisTer")).toBeDefined();
+    expect(screen.queryByText("A partir de")).toBeDefined();
 
-    expect(
-      screen.queryByLabelText("Numero d'acte ou d'ordre")
-    ).toBeInTheDocument();
-    expect(screen.queryByLabelText("A partir de")).toBeInTheDocument();
+    expect(screen.queryByLabelText("Numero d'acte ou d'ordre")).toBeDefined();
+    expect(screen.queryByLabelText("A partir de")).toBeDefined();
   });
 });
 
@@ -56,24 +53,26 @@ test.each([
   }
 ])(
   "$libelleTestDebut verrouiller la case à cocher 'A partir de' QUAND le champ 'Numero acte ou d'ordre' $libelleTestFin saisie.",
-  async params => {
+  params => {
     render(<HookNumeroActeForm />);
 
     const champNumeroActeOuOrdre = screen.getByLabelText(
       "Numero d'acte ou d'ordre"
     );
-    const caseAPartirDe = screen.getByLabelText("A partir de");
+    const caseAPartirDe = screen.getByLabelText(
+      "A partir de"
+    ) as HTMLInputElement;
 
     fireEvent.change(champNumeroActeOuOrdre, {
       target: { value: params.valeur }
     });
 
-    await waitFor(() => {
-      expect(champNumeroActeOuOrdre).toHaveValue(params.valeur);
+    waitFor(() => {
+      expect(champNumeroActeOuOrdre).toBe(params.valeur);
       if (params.estVerrouille) {
-        expect(caseAPartirDe).toBeDisabled();
+        expect(caseAPartirDe.disabled).toBeTruthy();
       } else {
-        expect(caseAPartirDe).not.toBeDisabled();
+        expect(caseAPartirDe.disabled).not.toBeTruthy();
       }
     });
   }

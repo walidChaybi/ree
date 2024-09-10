@@ -1,11 +1,12 @@
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { setDataBandeau } from "@pages/fiche/contenu/BandeauFicheUtils";
 import { IDataFicheProps } from "@pages/fiche/FichePage";
+import { setDataBandeau } from "@pages/fiche/contenu/BandeauFicheUtils";
+import { expect, test } from "vitest";
 import DATA_FICHE_PACS from "../../../../../mock/data/ficheEtBandeau/bandeauPacs";
 import DATA_FICHE_RC from "../../../../../mock/data/ficheEtBandeau/bandeauRc";
 import { acte } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
 
-test("bandeauFicheUtils setDataBandeau works RC / RCA", async () => {
+test("bandeauFicheUtils setDataBandeau works RC / RCA", () => {
   const dataFiche = {
     identifiant: "d994e5c1-6bcd-44cd-af7a-41da6bab4669",
     categorie: TypeFiche.RC
@@ -29,7 +30,7 @@ test("bandeauFicheUtils setDataBandeau works RC / RCA", async () => {
   ]);
 });
 
-test("bandeauFicheUtils setDataBandeau works PACS", async () => {
+test("bandeauFicheUtils setDataBandeau works PACS", () => {
   const dataFiche = {
     identifiant: "d994e5c1-6bcd-44cd-af7a-41da6bab4669",
     categorie: TypeFiche.PACS
@@ -50,7 +51,7 @@ test("bandeauFicheUtils setDataBandeau works PACS", async () => {
   expect(bandeauFiche.personnes[1].prenom).toBe("Prenom21");
 });
 
-test("bandeauFicheUtils setDataBandeau works Acte", async () => {
+test("bandeauFicheUtils setDataBandeau works Acte", () => {
   const dataFiche = {
     identifiant: "d994e5c1-6bcd-44cd-af7a-41da6bab4669",
     categorie: TypeFiche.ACTE

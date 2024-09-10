@@ -5,6 +5,7 @@ import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation
 import { getPostulantValidationSchema } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/validation/PostulantValidationSchema";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formulaire } from "@widget/formulaire/Formulaire";
+import { expect, test } from "vitest";
 
 function afficheComposantAutresSaisieDeProjet() {
   const titulaires = requeteCreationEtablissementSaisieProjet.titulaires;
@@ -24,7 +25,7 @@ function afficheComposantAutresSaisieDeProjet() {
   );
 }
 
-test("DOIT afficher et renseigner les champs du bloc autres QUAND le formulaire est affiché", async () => {
+test("DOIT afficher et renseigner les champs du bloc autres QUAND le formulaire est affiché", () => {
   afficheComposantAutresSaisieDeProjet();
 
   const champAdresse = screen.getByLabelText("Etranger") as HTMLInputElement;
@@ -37,7 +38,7 @@ test("DOIT afficher et renseigner les champs du bloc autres QUAND le formulaire 
     "Déclarant(s)"
   ) as HTMLInputElement;
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(champAdresse.checked).toBeTruthy();
     expect(champVille.value).toBe("Ville");
     expect(champPays.value).toBe("Pays");
@@ -46,10 +47,10 @@ test("DOIT afficher et renseigner les champs du bloc autres QUAND le formulaire 
   });
 });
 
-test("DOIT afficher le champ département ou arrondissement QUAND le champ France est coché", async () => {
+test("DOIT afficher le champ département ou arrondissement QUAND le champ France est coché", () => {
   afficheComposantAutresSaisieDeProjet();
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.queryByLabelText("Département")).toBeNull();
     expect(screen.queryByLabelText("Arrondissement")).toBeNull();
   });
@@ -58,7 +59,7 @@ test("DOIT afficher le champ département ou arrondissement QUAND le champ Franc
 
   const champVille = screen.getByLabelText("Ville") as HTMLInputElement;
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(champVille.value).toBe("Ville");
     expect(screen.getByLabelText("Département")).toBeDefined();
     expect(screen.queryByLabelText("Arrondissement")).toBeNull();
@@ -70,30 +71,30 @@ test("DOIT afficher le champ département ou arrondissement QUAND le champ Franc
     }
   });
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.queryByLabelText("Département")).toBeNull();
     expect(screen.getByLabelText("Arrondissement")).toBeDefined();
   });
 });
 
-test("DOIT n'afficher aucun champ lié à l'adresse QUAND le champ Inconnu est coché", async () => {
+test("DOIT n'afficher aucun champ lié à l'adresse QUAND le champ Inconnu est coché", () => {
   afficheComposantAutresSaisieDeProjet();
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByLabelText("Ville")).toBeDefined();
   });
 
   fireEvent.click(screen.getByLabelText("Inconnu"));
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.queryByLabelText("Ville")).toBeNull();
   });
 });
 
-test("DOIT afficher le champ autre déclarant QUAND on selectionne Autre", async () => {
+test("DOIT afficher le champ autre déclarant QUAND on selectionne Autre", () => {
   afficheComposantAutresSaisieDeProjet();
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.queryByLabelText("Autre déclarant")).toBeNull();
   });
 
@@ -101,7 +102,7 @@ test("DOIT afficher le champ autre déclarant QUAND on selectionne Autre", async
     target: { value: "AUTRE" }
   });
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByLabelText("Autre déclarant")).toBeDefined();
   });
 });

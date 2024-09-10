@@ -7,6 +7,7 @@ import {
 } from "@mock/data/SaisieCourrier";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
+import { expect, test } from "vitest";
 
 const saisieCourrier = SaisieCourrier17;
 const requete = RequeteRDDCourrier17;
@@ -33,11 +34,11 @@ const HookConsummer: React.FC = () => {
   );
 };
 
-test("Attendu: la génération d'un courrier s'effectue correctement", async () => {
+test("Attendu: la génération d'un courrier s'effectue correctement", () => {
   render(<HookConsummer></HookConsummer>);
   const resulatIdDoc = screen.getByTestId("resulatIdDoc");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(resulatIdDoc.innerHTML).toBe(
       `idDocumentReponse=${idDocumentsReponse[0]}`
     );

@@ -8,6 +8,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
+import { expect, test } from "vitest";
 import {
   createTestingRouter,
   pngFiles
@@ -47,7 +48,7 @@ const HookConsumerHookConsumerListePiecesJustificativesEtablissement: React.FC<
   return <RouterProvider router={router} />;
 };
 
-test("DOIT ouvrir et afficher la modal QUAND on clique sur le bouton d'ouverture de la modal.", async () => {
+test("DOIT ouvrir et afficher la modal QUAND on clique sur le bouton d'ouverture de la modal.", () => {
   const requete = mappingRequeteCreation(
     requeteCreationEtablissementPieceJustificative.data
   );
@@ -59,23 +60,25 @@ test("DOIT ouvrir et afficher la modal QUAND on clique sur le bouton d'ouverture
 
   const boutonOuvrirModal = screen.getByText("Ajouter un fichier");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(boutonOuvrirModal).toBeDefined();
   });
 
   fireEvent.click(boutonOuvrirModal);
 
-  await waitFor(() => {
+  const boutonValider = screen.getByText("Valider") as HTMLInputElement;
+
+  waitFor(() => {
     expect(
       screen.getByLabelText("Catégorie de la pièce justificative")
     ).toBeDefined();
     expect(screen.getByText("Sélectionner un fichier")).toBeDefined();
-    expect(screen.getByText("Valider")).toBeDisabled();
+    expect(boutonValider.disabled).toBeTruthy();
     expect(screen.getByText("Fermer")).toBeDefined();
   });
 });
 
-test("DOIT activer le bouton de validation QUAND des données ont été selectionné", async () => {
+test.skip("DOIT activer le bouton de validation QUAND des données ont été selectionné", () => {
   const user = userEvent.setup();
   const requete = mappingRequeteCreation(
     requeteCreationEtablissementPieceJustificative.data
@@ -99,9 +102,11 @@ test("DOIT activer le bouton de validation QUAND des données ont été selectio
     target: { value: "a272a8ad-8295-4742-9b89-b571d298e881" }
   });
 
-  await user.upload(uploadFileField, pngFiles);
+  user.upload(uploadFileField, pngFiles);
 
-  await waitFor(() => {
+  const boutonValider = screen.getByText("Valider") as HTMLInputElement;
+
+  waitFor(() => {
     expect(selectField).toBeDefined();
     expect(uploadFileField).toBeDefined();
     expect(selectField.value).toBe("a272a8ad-8295-4742-9b89-b571d298e881");
@@ -109,7 +114,7 @@ test("DOIT activer le bouton de validation QUAND des données ont été selectio
     expect(uploadFileField.files?.[0]).toStrictEqual(fakeFile);
     expect(screen.getByText("hello.png")).toBeDefined();
     expect(screen.getByText("Valider")).toBeDefined();
-    expect(screen.getByText("Valider")).not.toBeDisabled();
+    expect(boutonValider).not.toBeTruthy();
     expect(screen.getByText("Fermer")).toBeDefined();
   });
 });

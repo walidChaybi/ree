@@ -121,26 +121,26 @@ const chargerPolices = () => {
   // Ajout des polices dynamiquement pour pouvoir être copié dans fenêtre externe
   const notoSansRegular = new FontFace(
     "NotoSansUI-Regular",
-    `url(${process.env.PUBLIC_URL}/NotoSansUI-Regular.ttf)`
+    `url(./NotoSansUI-Regular.ttf)`
   );
   notoSansRegular
     .load()
-    .then((loadedFace) => {
+    .then(loadedFace => {
       document.fonts.add(loadedFace);
     })
-    .catch((error) => {
+    .catch(error => {
       erreurChargementPolice("Regular");
     });
   const notoSansBold = new FontFace(
     "NotoSansUI-Bold",
-    `url(${process.env.PUBLIC_URL}/NotoSansUI-Bold.ttf)`
+    `url(./NotoSansUI-Bold.ttf)`
   );
   notoSansBold
     .load()
-    .then((loadedFace) => {
+    .then(loadedFace => {
       document.fonts.add(loadedFace);
     })
-    .catch((error) => {
+    .catch(error => {
       erreurChargementPolice("Bold");
     });
 };

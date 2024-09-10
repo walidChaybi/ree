@@ -1,8 +1,9 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { CodePinForm } from "@widget/signature/CodePinForm";
+import { expect, test, vi } from "vitest";
 
-test("renders form popin, setPinCode function called on validation", async () => {
-  const handleClickButton = jest.fn();
+test("renders form popin, setPinCode function called on validation", () => {
+  const handleClickButton = vi.fn();
 
   render(
     <CodePinForm
@@ -20,13 +21,14 @@ test("renders form popin, setPinCode function called on validation", async () =>
 
   const validateButton = screen.getByText("Valider");
   fireEvent.click(validateButton);
-  await waitFor(() => {
+
+  waitFor(() => {
     expect(handleClickButton).toHaveBeenCalledTimes(1);
   });
 });
 
 test("renders form popin, close function called on cancel", () => {
-  const handleClickButton = jest.fn();
+  const handleClickButton = vi.fn();
 
   render(
     <CodePinForm
@@ -38,11 +40,12 @@ test("renders form popin, close function called on cancel", () => {
   );
   const closeButton = screen.getByText("Annuler");
   fireEvent.click(closeButton);
+
   expect(handleClickButton).toHaveBeenCalledTimes(1);
 });
 
-test("DOIT afficher un message d'erreur QUAND le code pin est effacé", async () => {
-  const handleClickButton = jest.fn();
+test("DOIT afficher un message d'erreur QUAND le code pin est effacé", () => {
+  const handleClickButton = vi.fn();
 
   render(
     <CodePinForm
@@ -59,15 +62,15 @@ test("DOIT afficher un message d'erreur QUAND le code pin est effacé", async ()
     fireEvent.change(pinCodeInput, { target: { value: "" } });
   }
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(
       screen.getByText("Le code pin de la carte doit être fourni")
-    ).toBeInTheDocument();
+    ).toBeDefined();
   });
 });
 
-test("DOIT afficher un message d'erreur QUAND le code pin ne contient pas que des nombres", async () => {
-  const handleClickButton = jest.fn();
+test("DOIT afficher un message d'erreur QUAND le code pin ne contient pas que des nombres", () => {
+  const handleClickButton = vi.fn();
 
   render(
     <CodePinForm
@@ -83,14 +86,12 @@ test("DOIT afficher un message d'erreur QUAND le code pin ne contient pas que de
     fireEvent.change(pinCodeInput, { target: { value: "1a2b" } });
   }
 
-  await waitFor(() => {
-    expect(
-      screen.getByText("Le code pin doit être un nombre")
-    ).toBeInTheDocument();
+  waitFor(() => {
+    expect(screen.getByText("Le code pin doit être un nombre")).toBeDefined();
   });
 });
-test("DOIT afficher un message d'erreur QUAND le code pin est supérieur à 8 caractères", async () => {
-  const handleClickButton = jest.fn();
+test("DOIT afficher un message d'erreur QUAND le code pin est supérieur à 8 caractères", () => {
+  const handleClickButton = vi.fn();
 
   render(
     <CodePinForm
@@ -106,9 +107,9 @@ test("DOIT afficher un message d'erreur QUAND le code pin est supérieur à 8 ca
     fireEvent.change(pinCodeInput, { target: { value: "123456789" } });
   }
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(
       screen.getByText("Le code pin ne doit pas dépasser 8 caractères")
-    ).toBeInTheDocument();
+    ).toBeDefined();
   });
 });

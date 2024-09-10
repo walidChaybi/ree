@@ -13,6 +13,7 @@ import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { NatureRca } from "@model/etatcivil/enum/NatureRca";
 import { TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
 import { storeRece } from "@util/storeRece";
+import { beforeAll, beforeEach, expect, test } from "vitest";
 
 beforeAll(() => {
   storeRece.decrets = decrets;
@@ -23,7 +24,7 @@ beforeEach(async () => {
   NatureRca.init();
 });
 
-test("Attendu: specificationRC.getElementsJasper avec une décision Notaire autre que Requete", async () => {
+test("Attendu: specificationRC.getElementsJasper avec une décision Notaire autre que Requete", () => {
   const data = FicheRcDecisionNotaire;
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
@@ -45,7 +46,7 @@ Lieu de naissance: paris 20ème arrondissement`;
   );
 });
 
-test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de type Requete", async () => {
+test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de type Requete", () => {
   const data = FicheRcDecisionNotaireTypeRequete;
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
@@ -69,7 +70,7 @@ Lieu de naissance: paris 20ème arrondissement`;
   );
 });
 
-test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de type Requete 2", async () => {
+test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de type Requete 2", () => {
   const data = FicheRcDecisionNotaireTypeRequete2;
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
@@ -93,7 +94,7 @@ Lieu de naissance: paris 20ème arrondissement`;
   );
 });
 
-test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une décision de type 'Jugement'", async () => {
+test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une décision de type 'Jugement'", () => {
   const data = FicheRcRenouvellementTypeJugement;
 
   const elementsJasper = specificationRC.getElementsJasper(data);
@@ -126,7 +127,7 @@ mariés à Nanning, zhuang du Guangxi (Chine, Pays du soleil levant) le 12 juin 
   );
 });
 
-test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une décision de type 'Jugement' et un type d'inscription 'Modification'", async () => {
+test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une décision de type 'Jugement' et un type d'inscription 'Modification'", () => {
   const data = {
     ...FicheRcRenouvellementTypeJugement
   };
@@ -166,7 +167,7 @@ mariés à Nanning, zhuang du Guangxi (Chine, Pays du soleil levant) le 12 juin 
   );
 });
 
-test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une décision de type 'Ordonnance'", async () => {
+test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une décision de type 'Ordonnance'", () => {
   const data = FicheRcRenouvellementTypeOrdonnance;
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesses = `Pierre-Olivier, Félix-Antoine, François-Xavier LE ROUX

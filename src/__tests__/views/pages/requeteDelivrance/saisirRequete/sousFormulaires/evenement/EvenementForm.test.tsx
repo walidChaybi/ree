@@ -3,15 +3,10 @@ import EvenementForm, {
   EvenementFormValidationSchema,
   EvenementSubFormProps
 } from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/evenement/EvenementForm";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { expect, test } from "vitest";
 
 const EVENEMENT = "evenement";
 
@@ -41,13 +36,11 @@ const HookEvenementForm: React.FC = () => {
         <Field as="textarea" value={result} data-testid="result" />
       </Form>
     </Formik>
-  ); 
+  );
 };
 
-test("render composant Evenement Formulaire", async () => {
-  await act(async () => {
-    render(<HookEvenementForm />);
-  });
+test("render composant Evenement Formulaire", () => {
+  render(<HookEvenementForm />);
 
   const inputVille = screen.getByLabelText(
     "evenement.villeEvenement"
@@ -56,31 +49,28 @@ test("render composant Evenement Formulaire", async () => {
     "evenement.paysEvenement"
   ) as HTMLInputElement;
 
-  act(() => {
-    fireEvent.change(inputVille, {
-      target: {
-        value: "mockVille"
-      }
-    });
-    fireEvent.change(inputPays, {
-      target: {
-        value: "mockPays"
-      }
-    });
+  fireEvent.change(inputVille, {
+    target: {
+      value: "mockVille"
+    }
+  });
+  fireEvent.change(inputPays, {
+    target: {
+      value: "mockPays"
+    }
   });
 
   const submit = screen.getByText(/Submit/i);
-  await act(async () => {
-    fireEvent.blur(inputVille);
-    fireEvent.blur(inputPays);
-    fireEvent.click(submit);
-  });
+
+  fireEvent.blur(inputVille);
+  fireEvent.blur(inputPays);
+  fireEvent.click(submit);
 
   const result = screen.getByTestId("result");
   const libelleDateLieu = screen.getByText(/Date et lieu de libelle/i);
   const libellePays = screen.getByText(/Pays de libelle/i);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(libelleDateLieu).toBeDefined();
     expect(libellePays).toBeDefined();
     expect(result.innerHTML).toBe(

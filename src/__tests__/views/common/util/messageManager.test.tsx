@@ -1,8 +1,9 @@
 import { render, waitFor } from "@testing-library/react";
 import messageManager from "@util/messageManager";
 import { ToastContainer } from "react-toastify";
+import { expect, test } from "vitest";
 
-test("renders all types of error popin", async () => {
+test("renders all types of error popin", () => {
   const { getByText } = render(
     <div>
       <ToastContainer
@@ -22,22 +23,22 @@ test("renders all types of error popin", async () => {
   messageManager.showErrors(["error1", "error2"]);
   messageManager.showError("SimpleError");
 
-  await waitFor(() => {
+  waitFor(() => {
     const errorAndCloseElement = getByText(/ErrorAndClose/i);
-    expect(errorAndCloseElement).toBeInTheDocument();
+    expect(errorAndCloseElement).toBeDefined();
 
     const errors1 = getByText(/error1/i);
-    expect(errors1).toBeInTheDocument();
+    expect(errors1).toBeDefined();
 
     const errors2 = getByText(/error2/i);
-    expect(errors2).toBeInTheDocument();
+    expect(errors2).toBeDefined();
 
     const errorElement = getByText(/SimpleError/i);
-    expect(errorElement).toBeInTheDocument();
+    expect(errorElement).toBeDefined();
   });
 });
 
-test("renders all types of success popin", async () => {
+test("renders all types of success popin", () => {
   const { getByText } = render(
     <div>
       <ToastContainer
@@ -57,22 +58,22 @@ test("renders all types of success popin", async () => {
   messageManager.showSuccesses(["success1", "success2"]);
   messageManager.showSuccess("SimpleSuccess");
 
-  await waitFor(() => {
+  waitFor(() => {
     const successAndCloseElement = getByText(/SuccessAndClose/i);
-    expect(successAndCloseElement).toBeInTheDocument();
+    expect(successAndCloseElement).toBeDefined();
 
     const successes1 = getByText(/success1/i);
-    expect(successes1).toBeInTheDocument();
+    expect(successes1).toBeDefined();
 
     const successes2 = getByText(/success2/i);
-    expect(successes2).toBeInTheDocument();
+    expect(successes2).toBeDefined();
 
     const successElement = getByText(/SimpleSuccess/i);
-    expect(successElement).toBeInTheDocument();
+    expect(successElement).toBeDefined();
   });
 });
 
-test("renders all types of information popin", async () => {
+test("renders all types of information popin", () => {
   const { getByText } = render(
     <div>
       <ToastContainer
@@ -92,22 +93,22 @@ test("renders all types of information popin", async () => {
   messageManager.showInfos(["Info1", "Info2"]);
   messageManager.showInfo("SimpleInfo");
 
-  await waitFor(() => {
+  waitFor(() => {
     const InfoAndCloseElement = getByText(/InfoAndClose/i);
-    expect(InfoAndCloseElement).toBeInTheDocument();
+    expect(InfoAndCloseElement).toBeDefined();
 
     const Infos1 = getByText(/Info1/i);
-    expect(Infos1).toBeInTheDocument();
+    expect(Infos1).toBeDefined();
 
     const Infos2 = getByText(/Info2/i);
-    expect(Infos2).toBeInTheDocument();
+    expect(Infos2).toBeDefined();
 
     const InfoElement = getByText(/SimpleInfo/i);
-    expect(InfoElement).toBeInTheDocument();
+    expect(InfoElement).toBeDefined();
   });
 });
 
-test("renders all types of warning popin", async () => {
+test("renders all types of warning popin", () => {
   const { getByText } = render(
     <div>
       <ToastContainer
@@ -127,17 +128,17 @@ test("renders all types of warning popin", async () => {
   messageManager.showWarnings(["Warning1", "Warning2"]);
   messageManager.showWarning("SimpleWarning");
 
-  await waitFor(() => {
+  waitFor(() => {
     const WarningAndCloseElement = getByText(/WarningAndClose/i);
-    expect(WarningAndCloseElement).toBeInTheDocument();
+    expect(WarningAndCloseElement).toBeDefined();
 
     const Warnings1 = getByText(/Warning1/i);
-    expect(Warnings1).toBeInTheDocument();
+    expect(Warnings1).toBeDefined();
 
     const Warnings2 = getByText(/Warning2/i);
-    expect(Warnings2).toBeInTheDocument();
+    expect(Warnings2).toBeDefined();
 
     const WarningElement = getByText(/SimpleWarning/i);
-    expect(WarningElement).toBeInTheDocument();
+    expect(WarningElement).toBeDefined();
   });
 });

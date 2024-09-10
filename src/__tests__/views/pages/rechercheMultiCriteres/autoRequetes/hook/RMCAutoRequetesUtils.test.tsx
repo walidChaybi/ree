@@ -1,6 +1,7 @@
 import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { goToLinkRMC } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauCommun";
 import { determinerCriteresRMCAuto } from "@pages/rechercheMultiCriteres/autoRequetes/hook/RMCAutoRequetesUtils";
+import { expect, test } from "vitest";
 
 test("determinerCriteresRMCAuto", () => {
   const res = determinerCriteresRMCAuto(requeteDelivrance);

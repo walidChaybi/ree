@@ -1,26 +1,26 @@
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import {
-    A_NE_PAS_DELIVRER,
-    DESCRIPTION_SAGA,
-    TypeAlerte
+  A_NE_PAS_DELIVRER,
+  DESCRIPTION_SAGA,
+  TypeAlerte
 } from "@model/etatcivil/enum/TypeAlerte";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
-    acteAvecAlerteDeTypeANePasDelivrer,
-    aGenreIdentique,
-    aGenreIndetermine,
-    aNombreTitulairesIncoherent,
-    choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero,
-    ErreurResult,
-    estChoixExtraitAvecOuSansFiliation,
-    estChoixExtraitPlurilingue,
-    estChoixIgnorerRequete,
-    IndexAction,
-    nombreActesSelectionnesDifferentDeUn
+  ErreurResult,
+  IndexAction,
+  aGenreIdentique,
+  aGenreIndetermine,
+  aNombreTitulairesIncoherent,
+  acteAvecAlerteDeTypeANePasDelivrer,
+  choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero,
+  estChoixExtraitAvecOuSansFiliation,
+  estChoixExtraitPlurilingue,
+  estChoixIgnorerRequete,
+  nombreActesSelectionnesDifferentDeUn
 } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuUtilEC";
-import { act } from "@testing-library/react";
+import { expect, test } from "vitest";
 
 const testsCasMultiples = <T>({
   casOK,
@@ -210,9 +210,7 @@ test("choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero", () =
 });
 
 test("acteAvecAlerteDeTypeANePasDelivrer OK", async () => {
-  await act(async () => {
-    TypeAlerte.init();
-  });
+  await TypeAlerte.init();
 
   const alertes = [
     {

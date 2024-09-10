@@ -16,11 +16,12 @@ import { ParentSubFormProps } from "@pages/requeteCreation/saisirRequete/sousFor
 import ParentsForm, {
   ParentFormValidationSchema
 } from "@pages/requeteCreation/saisirRequete/sousForm/parent/ParentsForm";
-import { act, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
 import { NationalitesFormDefaultValues } from "@widget/formulaire/nationalites/NationalitesForm";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { test } from "vitest";
 import * as Yup from "yup";
 
 const PARENTS = "parents";
@@ -70,8 +71,6 @@ const HookParentsForm: React.FC = () => {
   );
 };
 
-test("DOIT rendre le composant formulaire des parents correctement", async () => {
-  await act(async () => {
-    render(<HookParentsForm />);
-  });
+test("DOIT rendre le composant formulaire des parents correctement", () => {
+  render(<HookParentsForm />);
 });

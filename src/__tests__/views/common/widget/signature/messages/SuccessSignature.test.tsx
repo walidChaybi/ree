@@ -1,17 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import { SuccessSignature } from "@widget/signature/messages/SuccessSignature";
+import { expect, test } from "vitest";
 
-test("renders Success signature", async () => {
+test("renders Success signature", () => {
   render(
     <SuccessSignature
       successes={[
         {
-          messageId: "signature.success",
           date: "01/01/2020",
           numeroRequete: "numeroreq"
         },
         {
-          messageId: "signature.success",
           date: "02/01/2020",
           numeroRequete: "numeroreq2"
         }

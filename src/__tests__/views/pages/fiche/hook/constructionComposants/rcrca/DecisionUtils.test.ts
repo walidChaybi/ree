@@ -6,8 +6,9 @@ import {
 } from "@mock/data/ficheEtBandeau/divers/DecisionAutoriteMock";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { getDecision } from "@pages/fiche/hook/constructionComposants/rcrca/DecisionUtils";
+import { expect, test } from "vitest";
 
-test("Decision utils get decision : decision de type Juridiction, ", async () => {
+test("Decision utils get decision : decision de type Juridiction, ", () => {
   const components = getDecision(
     ficheAutoriteJuridictionFranceAvecConfirmation as any as IFicheRcRca
   );
@@ -39,7 +40,7 @@ test("Decision utils get decision : decision de type Juridiction, ", async () =>
   expect(idxEntolementRg).toBeLessThan(idxEnrolementPortalis);
 });
 
-test("Decision utils get decision : decision de type Notaire, ", async () => {
+test("Decision utils get decision : decision de type Notaire, ", () => {
   const components = getDecision(
     ficheAutoriteNotaireFranceAvecConfirmation as IFicheRcRca
   );
@@ -69,7 +70,7 @@ test("Decision utils get decision : decision de type Notaire, ", async () => {
   expect(idxEnrolementPortalis).toBe(-1);
 });
 
-test("Decision utils get decision : decision de type ONAC, ", async () => {
+test("Decision utils get decision : decision de type ONAC, ", () => {
   const componentsEtrangere = getDecision(
     ficheAutoriteONACFranceAvecConfirmation as IFicheRcRca
   );
@@ -109,7 +110,7 @@ test("Decision utils get decision : decision de type ONAC, ", async () => {
   expect(idxEnrolementPortalis).toBeGreaterThan(-1);
 });
 
-test("Decision utils get decision fiche RCA : decision de type Juridiction, ", async () => {
+test("Decision utils get decision fiche RCA : decision de type Juridiction, ", () => {
   const components = getDecision(
     ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA as IFicheRcRca
   );
@@ -148,7 +149,7 @@ test("Decision utils get decision fiche RCA : decision de type Juridiction, ", a
   expect(idxEntolementRg).toBeLessThan(idxEnrolementPortalis);
 });
 
-test("Decision utils get decision fiche RCA : decision notaire et confirmation decision de type Juridiction, ", async () => {
+test("Decision utils get decision fiche RCA : decision notaire et confirmation decision de type Juridiction, ", () => {
   const components = getDecision(
     ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA as IFicheRcRca
   );

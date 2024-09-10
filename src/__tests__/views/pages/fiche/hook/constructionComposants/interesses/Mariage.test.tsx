@@ -1,5 +1,6 @@
 import { Mariage } from "@pages/fiche/hook/constructionComposants/interesses/Mariage";
 import { render } from "@testing-library/react";
+import { expect, test } from "vitest";
 
 test("renders mariage : non marié à l'étranger mais avec un pays qui n'est pas la France", () => {
   const { getByText } = render(
@@ -98,6 +99,7 @@ test("renders mariage : il n'y a pas le jour de la date", () => {
       paysMariage={"Allemagne"}
       dateMariage={{ annee: "2020", mois: "12" }}
       aletranger={true}
+      regionMariage={"Allemagne"}
     />
   );
   expect(getByText("12/2020")).toBeDefined();
@@ -112,6 +114,7 @@ test("renders mariage : il n'y a pas le jour et le mois de la date", () => {
       paysMariage={"Allemagne"}
       dateMariage={{ annee: "2020" }}
       aletranger={true}
+      regionMariage={"Allemagne"}
     />
   );
   expect(getByText("2020")).toBeDefined();

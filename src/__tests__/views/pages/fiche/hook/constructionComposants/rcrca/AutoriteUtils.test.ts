@@ -10,8 +10,9 @@ import {
 } from "@mock/data/ficheEtBandeau/divers/DecisionAutoriteMock";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { getAutorite } from "@pages/fiche/hook/constructionComposants/rcrca/AutoriteUtils";
+import { expect, test } from "vitest";
 
-test("Autorite utils get autorite : decision en France, de type Juridiction, la source de confirmation est présente", async () => {
+test("Autorite utils get autorite : decision en France, de type Juridiction, la source de confirmation est présente", () => {
   const components = getAutorite(
     ficheAutoriteJuridictionFranceAvecConfirmation as any as IFicheRcRca
   );
@@ -67,7 +68,7 @@ test("Autorite utils get autorite : decision en France, de type Juridiction, la 
   ).toBe(-1);
 });
 
-test("Autorite utils get autorite : decision à l'étranger, de type Juridiction, la source de confirmation est présente", async () => {
+test("Autorite utils get autorite : decision à l'étranger, de type Juridiction, la source de confirmation est présente", () => {
   const components = getAutorite(
     ficheAutoriteJuridictionEtrangerAvecConfirmation as IFicheRcRca
   );
@@ -119,7 +120,7 @@ test("Autorite utils get autorite : decision à l'étranger, de type Juridiction
   ).toBe(-1);
 });
 
-test("Autorite utils get autorite : decision en France, de type Notaire ", async () => {
+test("Autorite utils get autorite : decision en France, de type Notaire ", () => {
   const components = getAutorite(
     ficheAutoriteNotaireFranceAvecConfirmation as IFicheRcRca
   );
@@ -178,7 +179,7 @@ test("Autorite utils get autorite : decision en France, de type Notaire ", async
   ).toBe(-1);
 });
 
-test("Autorite utils get autorite : decision à l'étranger, de type Notaire ", async () => {
+test("Autorite utils get autorite : decision à l'étranger, de type Notaire ", () => {
   const components = getAutorite(
     ficheAutoriteNotaireEtrangerAvecConfirmation as IFicheRcRca
   );
@@ -231,7 +232,7 @@ test("Autorite utils get autorite : decision à l'étranger, de type Notaire ", 
   ).toBe(-1);
 });
 
-test("Autorite utils get autorite : decision à l'étranger, de type Onac avec confirmation ONAC ", async () => {
+test("Autorite utils get autorite : decision à l'étranger, de type Onac avec confirmation ONAC ", () => {
   const components = getAutorite(
     ficheAutoriteOnaceEtrangerAvecConfirmation as IFicheRcRca
   );
@@ -284,7 +285,7 @@ test("Autorite utils get autorite : decision à l'étranger, de type Onac avec c
   ).toBe(-1);
 });
 
-test("Autorite utils get autorite : la source de confirmation n'est pas présente", async () => {
+test("Autorite utils get autorite : la source de confirmation n'est pas présente", () => {
   const components = getAutorite(ficheAutoriteSansConfirmation as IFicheRcRca);
 
   expect(components).toHaveLength(1);

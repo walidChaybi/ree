@@ -12,7 +12,7 @@ export function valideCompletudeLieu(
   nomChamp: string,
   value: string,
   nomForm: string,
-  modeSaisiLieuInconnu: boolean
+  modeSaisiLieuInconnu: boolean = false
 ) {
   let messageErreur;
 

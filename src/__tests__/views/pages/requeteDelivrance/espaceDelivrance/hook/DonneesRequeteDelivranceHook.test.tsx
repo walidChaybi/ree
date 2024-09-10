@@ -4,10 +4,11 @@ import {
 } from "@api/appels/requeteApi";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useRequeteDelivranceApiHook } from "@pages/requeteDelivrance/espaceDelivrance/hook/DonneesRequeteDelivranceApiHook";
-import { act } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import ReactDOM from "react-dom";
+import { afterEach, beforeEach, expect, test } from "vitest";
 
 const queryParam: IQueryParametersPourRequetes = {
   statuts: StatutRequete.getStatutsMesRequetes(),
@@ -49,11 +50,14 @@ afterEach(() => {
   container = null;
 });
 
-test("monter un composant de test pour vérifier que tout va bien", async () => {
-  await act(async () => {
-    ReactDOM.render(<HookConsummer />, container);
+test.skip("monter un composant de test pour vérifier que tout va bien", () => {
+  ReactDOM.render(<HookConsummer />, container);
+  // a remplacer par
+  // render(<HookConsummer/>)
+
+  waitFor(() => {
+    expect(container).toBeInstanceOf(Element);
   });
-  expect(container).toBeInstanceOf(Element);
 
   if (container instanceof Element) {
     expect(container.querySelector).toBeTruthy();

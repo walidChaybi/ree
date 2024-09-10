@@ -1,11 +1,5 @@
 import { ADRESSE } from "@composant/formulaire/ConstantesNomsForm";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import AdresseForm, {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
@@ -13,6 +7,7 @@ import AdresseForm, {
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { expect, test } from "vitest";
 
 const HookAdresseForm: React.FC = () => {
   const [result, setResult] = useState("");
@@ -42,10 +37,8 @@ const HookAdresseForm: React.FC = () => {
   );
 };
 
-test("render composant Adresse Formulaire", async () => {
-  await act(async () => {
-    render(<HookAdresseForm />);
-  });
+test("render composant Adresse Formulaire", () => {
+  render(<HookAdresseForm />);
 
   const inputVoie = screen.getByLabelText("adresse.voie") as HTMLInputElement;
   const inputLieuDit = screen.getByLabelText(
@@ -71,68 +64,64 @@ test("render composant Adresse Formulaire", async () => {
     "adresse.numeroTelephone"
   ) as HTMLInputElement;
 
-  act(() => {
-    fireEvent.change(inputVoie, {
-      target: {
-        value: "mocklieuDit"
-      }
-    });
-    fireEvent.change(inputLieuDit, {
-      target: {
-        value: "mockcomplementDestinataire"
-      }
-    });
-    fireEvent.change(inputComplementDestinataire, {
-      target: {
-        value: "mockcomplementPointGeo"
-      }
-    });
-    fireEvent.change(inputComplementPointGeo, {
-      target: {
-        value: "mockcomplementPointGeo"
-      }
-    });
-    fireEvent.change(inputCodePostal, {
-      target: {
-        value: "12345"
-      }
-    });
-    fireEvent.change(inputCommune, {
-      target: {
-        value: "mockcommune"
-      }
-    });
-    fireEvent.change(inputPays, {
-      target: {
-        value: "mockpays"
-      }
-    });
-    fireEvent.change(inputAdresseCourriel, {
-      target: {
-        value: "mockadresseCourriel"
-      }
-    });
-    fireEvent.change(inputNumeroTelephone, {
-      target: {
-        value: "mocknumeroTelephone"
-      }
-    });
+  fireEvent.change(inputVoie, {
+    target: {
+      value: "mocklieuDit"
+    }
+  });
+  fireEvent.change(inputLieuDit, {
+    target: {
+      value: "mockcomplementDestinataire"
+    }
+  });
+  fireEvent.change(inputComplementDestinataire, {
+    target: {
+      value: "mockcomplementPointGeo"
+    }
+  });
+  fireEvent.change(inputComplementPointGeo, {
+    target: {
+      value: "mockcomplementPointGeo"
+    }
+  });
+  fireEvent.change(inputCodePostal, {
+    target: {
+      value: "12345"
+    }
+  });
+  fireEvent.change(inputCommune, {
+    target: {
+      value: "mockcommune"
+    }
+  });
+  fireEvent.change(inputPays, {
+    target: {
+      value: "mockpays"
+    }
+  });
+  fireEvent.change(inputAdresseCourriel, {
+    target: {
+      value: "mockadresseCourriel"
+    }
+  });
+  fireEvent.change(inputNumeroTelephone, {
+    target: {
+      value: "mocknumeroTelephone"
+    }
   });
 
   const submit = screen.getByText(/Submit/i);
-  await act(async () => {
-    fireEvent.blur(inputVoie);
-    fireEvent.blur(inputLieuDit);
-    fireEvent.blur(inputComplementDestinataire);
-    fireEvent.blur(inputComplementPointGeo);
-    fireEvent.blur(inputCommune);
-    fireEvent.blur(inputPays);
-    fireEvent.click(submit);
-  });
+  fireEvent.blur(inputVoie);
+  fireEvent.blur(inputLieuDit);
+  fireEvent.blur(inputComplementDestinataire);
+  fireEvent.blur(inputComplementPointGeo);
+  fireEvent.blur(inputCommune);
+  fireEvent.blur(inputPays);
+  fireEvent.click(submit);
 
   const result = screen.getByTestId("result");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(result.innerHTML).toBe(
       '{"adresse":{"voie":"MOCKLIEUDIT","lieuDit":"MOCKCOMPLEMENTDESTINATAIRE","complementDestinataire":"MOCKCOMPLEMENTPOINTGEO","complementPointGeo":"MOCKCOMPLEMENTPOINTGEO","codePostal":"12345","commune":"MOCKCOMMUNE","pays":"MOCKPAYS","adresseCourriel":"mockadresseCourriel","numeroTelephone":"mocknumeroTelephone"}}'
     );

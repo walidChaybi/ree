@@ -32,9 +32,10 @@ import { RequerantFormDefaultValue } from "@pages/requeteCreation/saisirRequete/
 import { AdresseFormDefaultValues } from "@widget/formulaire/adresse/AdresseForm";
 import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
 import { NationalitesFormDefaultValues } from "@widget/formulaire/nationalites/NationalitesForm";
+import { describe, expect, test } from "vitest";
 
 describe("Mapping d'une requête de trancsription vers le formulaire dans le cas d'un update", () => {
-  test("DOIT retourner 'OUI' QUAND l'année est présente et 'NON' QUAND est n'est pas présente", async () => {
+  test("DOIT retourner 'OUI' QUAND l'année est présente et 'NON' QUAND est n'est pas présente", () => {
     let checkboxCochee = estCheckboxCochee(1980);
 
     expect(checkboxCochee).toEqual("OUI");
@@ -44,7 +45,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     expect(checkboxCochee).toEqual("NON");
   });
 
-  test("DOIT retourner l'objet d'évenement de date QUAND il est présent ou les defaults values", async () => {
+  test("DOIT retourner l'objet d'évenement de date QUAND il est présent ou les defaults values", () => {
     const evenement = {
       jour: 1,
       mois: 1,
@@ -66,7 +67,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     expect(dateEvenement).toEqual(DateDefaultValues);
   });
 
-  test("DOIT retourner l'objet d'évenement de date QUAND il est présent ou les defaults values", async () => {
+  test("DOIT retourner l'objet d'évenement de date QUAND il est présent ou les defaults values", () => {
     const titulaire = {
       jourNaissance: 1,
       moisNaissance: null,
@@ -88,7 +89,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     expect(dateNaissance).toEqual(DateDefaultValues);
   });
 
-  test("DOIT retourner le lieu de l'evenement", async () => {
+  test("DOIT retourner le lieu de l'evenement", () => {
     let lieuEvement;
     lieuEvement = getLieuEvenement("FRANCE");
 
@@ -109,7 +110,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     expect(lieuEvement).toEqual(lieuEvenementAttendu);
   });
 
-  test("DOIT retourner les bonnes informations du lieu de naissance", async () => {
+  test("DOIT retourner les bonnes informations du lieu de naissance", () => {
     const titulaire = {
       villeNaissance: "Paris",
       arrondissementNaissance: "5",
@@ -129,7 +130,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     expect(informationsLieuNaissance).toEqual(informationsLieuNaissanceAttendu);
   });
 
-  test("DOIT retourner les nationalités ou defaultValues", async () => {
+  test("DOIT retourner les nationalités ou defaultValues", () => {
     const nationalites = [
       { id: "1", nationalite: "Française" },
       { id: "2", nationalite: "Tunisienne" }
@@ -146,7 +147,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     expect(getNationalites([])).toEqual(NationalitesFormDefaultValues);
   });
 
-  test("DOIT retourner l'objet Formik de saisie de mariage correctement", async () => {
+  test("DOIT retourner l'objet Formik de saisie de mariage correctement", () => {
     const evenement = {
       id: "4b016bb8-171d-4a69-9c38-563cdf808b4d",
       jour: 1,
@@ -172,7 +173,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     expect(saisieEvenementMariage(evenement)).toEqual(evenementAttendu);
   });
 
-  test("DOIT retourner l'objet Formik de saisie d'évenement de reconnaissance correctement", async () => {
+  test("DOIT retourner l'objet Formik de saisie d'évenement de reconnaissance correctement", () => {
     const evenementReconnaissance = {
       id: "cdd2b0e6-3f6e-4c67-8026-f8dd0628d4bd",
       jour: 1,
@@ -203,7 +204,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     );
   });
 
-  test("DOIT retourner l'objet Formik de saisie de requête correctement", async () => {
+  test("DOIT retourner l'objet Formik de saisie de requête correctement", () => {
     const requete = {
       natureActeTranscrit:
         NatureActeTranscription.getEnumFor("NAISSANCE_MINEUR"),
@@ -222,7 +223,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     expect(saisieRequete(requete)).toEqual(saisieRequeteAttendu);
   });
 
-  test("DOIT retourner l'objet Formik de saisie du requerant correctement ou les DefaultValues", async () => {
+  test("DOIT retourner l'objet Formik de saisie du requerant correctement ou les DefaultValues", () => {
     const saisieRequerantAttendu = {
       adresse: {
         complementDestinataire: "ligne2",
@@ -249,7 +250,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     expect(saisieRequerant(undefined)).toEqual(RequerantFormDefaultValue);
   });
 
-  test("DOIT retourner l'objet Formik de saisie du titulaire correctement ou les DefaultValues", async () => {
+  test("DOIT retourner l'objet Formik de saisie du titulaire correctement ou les DefaultValues", () => {
     const saisieTitulaireAttendu = {
       identifiant: "3ed9efe4-c196-4888-8ffe-938f37a5f73f",
       noms: {
@@ -296,7 +297,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     expect(saisieTitulaire(undefined)).toEqual(IdentiteFormDefaultValues);
   });
 
-  test("DOIT retourner l'objet Formik de saisie des parents correctement ou les DefaultValues", async () => {
+  test("DOIT retourner l'objet Formik de saisie des parents correctement ou les DefaultValues", () => {
     const saisieParentAttendu = {
       identifiant: "3ed9efe4-c196-4888-8ffe-938f37a5f73a",
       pasDeNomConnu: "false",
@@ -349,7 +350,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     expect(saisieParent(undefined)).toEqual(ParentFormDefaultValues);
   });
 
-  test("DOIT retourner le titulaire acte transcrit dresse de position 1", async () => {
+  test("DOIT retourner le titulaire acte transcrit dresse de position 1", () => {
     const titulaireActeTranscritDressePositionUn =
       getTitulaireActeTranscitDresseEtDePositionUn(
         requeteCreationTranscription.titulaires
@@ -360,11 +361,11 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     );
   });
 
-  test("DOIT retourner l'adresse ou les DefaultValues QUAND le requerant n'est pas présent", async () => {
+  test("DOIT retourner l'adresse ou les DefaultValues QUAND le requerant n'est pas présent", () => {
     expect(saisieAdresse(undefined)).toEqual(AdresseFormDefaultValues);
   });
 
-  test("DOIT retourner ['pasDePrenomConnu'] QUAND le premier prénom vaut SPC", async () => {
+  test("DOIT retourner ['pasDePrenomConnu'] QUAND le premier prénom vaut SPC", () => {
     const pasDePrenomOuFalseCheckbox = pasDePrenomOuFalse(undefined);
 
     expect(pasDePrenomOuFalseCheckbox).toEqual(["pasDePrenomConnu"]);
@@ -372,11 +373,11 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
     expect(pasDePrenomOuFalse("SPC")).toEqual(["pasDePrenomConnu"]);
   });
 
-  test("DOIT retourner ['pasDeNomConnu'] QUAND le premier prénom vaut SNP", async () => {
+  test("DOIT retourner ['pasDeNomConnu'] QUAND le premier prénom vaut SNP", () => {
     expect(pasDeNomOuFalse("SNP", "pasDeNomConnu")).toEqual(["pasDeNomConnu"]);
   });
 
-  test("DOIT retourner un objet vide QUAND la requête n'est pas présente", async () => {
+  test("DOIT retourner un objet vide QUAND la requête n'est pas présente", () => {
     const mapping = mappingRequeteTranscriptionVersForumlaireRCTC(undefined);
 
     expect(mapping).toEqual({});

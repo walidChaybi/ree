@@ -1,31 +1,31 @@
 import { titreForm } from "@pages/rechercheMultiCriteres/requete/RMCRequeteForm";
 import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
 import {
-  act,
   fireEvent,
   render,
   screen,
   waitFor
 } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
+import { beforeAll, expect, test } from "vitest";
 import {
   createTestingRouter,
   mockFenetreFicheTestFunctions
 } from "../../../../__tests__utils__/testsUtil";
 
-beforeAll(async () => {
+beforeAll(() => {
   mockFenetreFicheTestFunctions();
 });
 
-test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
+test("renders formulaire Recherche Multi Critères Actes et Inscriptions", () => {
   render(<RMCRequetePage />);
-  await waitFor(() => {
+  waitFor(() => {
     expect(document.title).toBe(titreForm);
-    expect(screen.getByText(titreForm)).toBeInTheDocument();
+    expect(screen.getByText(titreForm)).toBeDefined();
   });
 });
 
-test("Bouton réinitialisation des champs", async () => {
+test("Bouton réinitialisation des champs", () => {
   render(<RMCRequetePage />);
 
   const numeroRequete = screen.getByLabelText(
@@ -45,14 +45,13 @@ test("Bouton réinitialisation des champs", async () => {
 
   const reset = screen.getByText(/Réinitialiser les critères/i);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(numeroRequete).toBeDefined();
     expect(typeRequete).toBeDefined();
     expect(sousTypeRequete).toBeDefined();
     expect(statutRequete).toBeDefined();
   });
 
-  act(() => {
     fireEvent.change(numeroRequete, {
       target: {
         value: "1234ABCD"
@@ -63,25 +62,20 @@ test("Bouton réinitialisation des champs", async () => {
         value: "INFORMATION"
       }
     });
-  });
 
-  await act(async () => {
     fireEvent.change(sousTypeRequete, {
       target: {
         value: "COMPLETION_REQUETE_EN_COURS"
       }
     });
-  });
 
-  await act(async () => {
     fireEvent.change(statutRequete, {
       target: {
         value: "A_TRAITER"
       }
     });
-  });
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(numeroRequete.value).toBe("1234ABCD");
     expect(typeRequete.value).toBe("INFORMATION");
     expect(sousTypeRequete.value).toBe("COMPLETION_REQUETE_EN_COURS");
@@ -90,7 +84,7 @@ test("Bouton réinitialisation des champs", async () => {
 
   fireEvent.click(reset);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(numeroRequete.value).toBe("");
     expect(typeRequete.value).toBe("");
     expect(sousTypeRequete.value).toBe("");
@@ -98,7 +92,7 @@ test("Bouton réinitialisation des champs", async () => {
   });
 });
 
-test("DOIT pouvoir rechercher une requete par son N° SDANF / numeroDossierNational", async () => {
+test("DOIT pouvoir rechercher une requete par son N° SDANF / numeroDossierNational", () => {
   const router = createTestingRouter(
     [
       {
@@ -114,15 +108,15 @@ test("DOIT pouvoir rechercher une requete par son N° SDANF / numeroDossierNatio
   const numeroDossierNational = screen.getByLabelText(
     "requete.numeroDossierNational"
   ) as HTMLInputElement;
-  act(() => {
     fireEvent.change(numeroDossierNational, {
       target: {
         value: "2022X 200156"
       }
     });
-  });
-  fireEvent.click(screen.getByText("Rechercher"));
-  await waitFor(() => {
+
+    fireEvent.click(screen.getByText("Rechercher"));
+
+  waitFor(() => {
     expect(numeroDossierNational.value).toBe("2022X 200156");
     expect(screen.getByText("2022X 200156")).toBeDefined();
   });

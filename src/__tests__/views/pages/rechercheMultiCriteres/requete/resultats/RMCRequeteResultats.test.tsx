@@ -6,6 +6,7 @@ import { RMCRequeteResultats } from "@pages/rechercheMultiCriteres/requete/resul
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { render, screen } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
+import { expect, test, vi } from "vitest";
 import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
 test("renders Fielset Recherche Multi Critères Requêtes", () => {
@@ -17,7 +18,7 @@ test("renders Fielset Recherche Multi Critères Requêtes", () => {
           <RMCRequeteResultats
             dataRMCRequete={DataRMCRequeteAvecResultat}
             dataTableauRMCRequete={DataTableauRequete}
-            setRangeRequete={jest.fn()}
+            setRangeRequete={vi.fn()}
             resetRMC={true}
           />
         )

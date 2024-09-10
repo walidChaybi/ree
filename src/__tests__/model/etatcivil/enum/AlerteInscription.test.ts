@@ -2,6 +2,7 @@ import {
   AlerteInscription,
   AlerteInscriptionUtil
 } from "@model/etatcivil/enum/AlerteInscription";
+import { expect, test } from "vitest";
 
 test("AlerteInscription model getLibelle", () => {
   expect(

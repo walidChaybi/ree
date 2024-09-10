@@ -6,13 +6,7 @@ import {
   PRENOM
 } from "@composant/formulaire/ConstantesNomsForm";
 import RequerantForm from "@pages/requeteCreation/saisirRequete/sousForm/requerant/RequerantForm";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import {
   ADRESSE_MAIL_NON_CONFORME,
   CARACTERES_AUTORISES_MESSAGE,
@@ -25,6 +19,7 @@ import {
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { expect, test } from "vitest";
 import * as Yup from "yup";
 import {
   CaracteresAutorises,
@@ -84,10 +79,8 @@ const HookParentsForm: React.FC = () => {
   );
 };
 
-test("DOIT rendre le composant formulaire du requerant correctement", async () => {
-  await act(async () => {
-    render(<HookParentsForm />);
-  });
+test("DOIT rendre le composant formulaire du requerant correctement", () => {
+  render(<HookParentsForm />);
 
   const inputNomRequerant = screen.getByLabelText("requerant.nom");
   const inputPrenomRequerant = screen.getByLabelText("requerant.prenom");
@@ -98,41 +91,39 @@ test("DOIT rendre le composant formulaire du requerant correctement", async () =
     "requerant.autreNumeroTelephone"
   );
 
-  await act(async () => {
-    fireEvent.blur(inputNomRequerant, {
-      target: {
-        value: "mockNomRequerant"
-      }
-    });
+  fireEvent.blur(inputNomRequerant, {
+    target: {
+      value: "mockNomRequerant"
+    }
+  });
 
-    fireEvent.blur(inputPrenomRequerant, {
-      target: {
-        value: "mockPrenomRequerant"
-      }
-    });
+  fireEvent.blur(inputPrenomRequerant, {
+    target: {
+      value: "mockPrenomRequerant"
+    }
+  });
 
-    fireEvent.blur(inputAutreAdresseCourielRequerant, {
-      target: {
-        value: "mockAdresseRequerant"
-      }
-    });
+  fireEvent.blur(inputAutreAdresseCourielRequerant, {
+    target: {
+      value: "mockAdresseRequerant"
+    }
+  });
 
-    fireEvent.blur(inputAutreNumeroTelRequerant, {
-      target: {
-        value: "mockNumeroRequerant"
-      }
-    });
+  fireEvent.blur(inputAutreNumeroTelRequerant, {
+    target: {
+      value: "mockNumeroRequerant"
+    }
   });
 });
 
-test("DOIT ajouter l'input nomUsage au click sur le bouton ajouter", async () => {
+test("DOIT ajouter l'input nomUsage au click sur le bouton ajouter", () => {
   render(<HookParentsForm />);
   const boutonAjouter = screen.getByText("Ajouter un nom d'usage");
 
   fireEvent.click(boutonAjouter);
 
   const inputNomUsage = screen.getByLabelText("Nom d'usage");
-  await waitFor(() => {
+  waitFor(() => {
     expect(inputNomUsage).toBeDefined();
   });
 });

@@ -1,4 +1,5 @@
 import { mapPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
+import { expect, test } from "vitest";
 
 test("DOIT mapper correctement une PJ venant du serveur en IPieceJustificative", () => {
   const pjDuServeur = {

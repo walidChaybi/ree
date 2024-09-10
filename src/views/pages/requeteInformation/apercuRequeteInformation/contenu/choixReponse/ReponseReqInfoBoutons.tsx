@@ -1,6 +1,6 @@
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
-import { goBack } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
+import { goBack } from "@util/route/UrlUtil";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";

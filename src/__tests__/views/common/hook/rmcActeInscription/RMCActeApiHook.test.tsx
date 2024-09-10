@@ -1,10 +1,10 @@
 import { useRMCActeApiHook } from "@hook/rmcActeInscription/RMCActeApiHook";
-import { ICriteresRechercheActeInscription } from "@pages/rechercheMultiCriteres/acteInscription/hook/RMCActeInscriptionUtils";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_ACTE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
+import { expect, test } from "vitest";
 
-const criteres: ICriteresRechercheActeInscription = {
+const criteres = {
   valeurs: {
     titulaire: {
       nom: "Nom",
@@ -32,18 +32,17 @@ const HookConsummerRMCActe: React.FC = () => {
   );
 };
 
-test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères Acte", async () => {
-  await act(async () => {
-    render(<HookConsummerRMCActe />);
-  });
-  await waitFor(() => {
+test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères Acte", () => {
+  render(<HookConsummerRMCActe />);
+
+  waitFor(() => {
     expect(screen.getByTestId("test-rmc-acte-hook").textContent).toEqual(
       "d8708d77-a359-4553-be72-1eb5f246d4da"
     );
   });
 });
 
-const criteresRechecheNonAutorise: ICriteresRechercheActeInscription = {
+const criteresRechecheNonAutorise = {
   valeurs: {
     titulaire: {
       nom: "Nom",
@@ -77,11 +76,10 @@ const HookConsummerRMCActeRechecheNonAutorise: React.FC = () => {
   );
 };
 
-test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères Acte", async () => {
-  await act(async () => {
-    render(<HookConsummerRMCActeRechecheNonAutorise />);
-  });
-  await waitFor(() => {
+test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères Acte", () => {
+  render(<HookConsummerRMCActeRechecheNonAutorise />);
+
+  waitFor(() => {
     expect(screen.getByTestId("test-rmc-acte-hook").textContent).toEqual(
       "Recherche non autorisée"
     );

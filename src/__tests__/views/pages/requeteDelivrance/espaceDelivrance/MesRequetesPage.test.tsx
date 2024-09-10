@@ -1,79 +1,60 @@
 import { MesRequetesPage } from "@pages/requeteDelivrance/espaceDelivrance/MesRequetesPage";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
+import { expect, test, vi } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
-const miseAJourCompteur = jest.fn();
-const setParamsRMCAuto = jest.fn();
+const miseAJourCompteur = vi.fn();
+const setParamsRMCAuto = vi.fn();
 //
 
 test("renders Page requete with all elements", async () => {
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_MES_REQUETES_DELIVRANCE,
-          element: (
-            <MesRequetesPage
-              miseAJourCompteur={miseAJourCompteur}
-              setParamsRMCAuto={setParamsRMCAuto}
-            />
-          )
-        }
-      ],
-      [URL_MES_REQUETES_DELIVRANCE]
-    );
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE,
+        element: (
+          <MesRequetesPage
+            miseAJourCompteur={miseAJourCompteur}
+            setParamsRMCAuto={setParamsRMCAuto}
+          />
+        )
+      }
+    ],
+    [URL_MES_REQUETES_DELIVRANCE]
+  );
 
-    render(<RouterProvider router={router} />);
-  });
+  render(<RouterProvider router={router} />);
 
   const titreNumero = screen.getByText("N°");
   const pageSuivante = screen.getByTitle("Page suivante");
 
-  await waitFor(() => {
+  waitFor(() => {
     const numero = screen.getByText("1234");
     expect(screen.getByText("Fin consultation")).toBeDefined();
     expect(titreNumero).toBeDefined();
     expect(numero).toBeDefined();
-  });
-
-  act(() => {
     fireEvent.click(screen.getByText("Fin consultation"));
   });
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(titreNumero).toBeDefined();
   });
 
-  act(() => {
-    fireEvent.click(pageSuivante);
-  });
+  fireEvent.click(pageSuivante);
 
-  await waitFor(() => {
+  waitFor(() => {
     const numero = screen.getByText("9021");
     expect(numero).toBeDefined();
-  });
-
-  act(() => {
     // Clic sur une ligne
     fireEvent.click(screen.getByText("9021"));
   });
-  await waitFor(() => {
-    expect(screen.getByText("9021")).toBeDefined();
-  });
 
-  act(() => {
-    // Clic sur un titre de colonne
-    fireEvent.click(titreNumero);
-  });
-  await waitFor(() => {
+  // Clic sur un titre de colonne
+  fireEvent.click(titreNumero);
+
+  waitFor(() => {
     expect(screen.getByText("9021")).toBeDefined();
   });
 });

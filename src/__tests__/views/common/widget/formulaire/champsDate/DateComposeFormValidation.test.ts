@@ -7,6 +7,7 @@ import {
   MSG_DATE_MEP_MIN,
   MSG_MIN_YEAR
 } from "@widget/formulaire/FormulaireMessages";
+import { expect, test } from "vitest";
 
 test("Attendu: validateAnnee fonctionne correctement", () => {
   expect(validateAnnee(0, undefined, undefined, true)).toBe(ANNEE_OBLIGATOIRE);

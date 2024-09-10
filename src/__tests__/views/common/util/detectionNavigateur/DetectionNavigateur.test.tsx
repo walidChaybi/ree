@@ -4,8 +4,9 @@ import {
   FIREFOX,
   SeulementNavigateur
 } from "@util/detectionNavigateur/DetectionNavigateur";
+import { expect, test } from "vitest";
 
-test("Attendu: la détection du browser FIREFOX s'effectue correctement", async () => {
+test("Attendu: la détection du browser FIREFOX s'effectue correctement", () => {
   const navigator = { userAgent: "Firefox xxxx" };
 
   Object.defineProperty(window, "navigator", {
@@ -17,12 +18,12 @@ test("Attendu: la détection du browser FIREFOX s'effectue correctement", async 
       Navigateur Firefox
     </SeulementNavigateur>
   );
-  await waitFor(() => {
-    expect(screen.getByText("Navigateur Firefox")).toBeInTheDocument();
+  waitFor(() => {
+    expect(screen.getByText("Navigateur Firefox")).toBeDefined();
   });
 });
 
-test("Attendu: la détection d'un browser non FIREFOX s'effectue correctement", async () => {
+test("Attendu: la détection d'un browser non FIREFOX s'effectue correctement", () => {
   const navigator = { userAgent: "Fake" };
 
   Object.defineProperty(window, "navigator", {
@@ -35,12 +36,12 @@ test("Attendu: la détection d'un browser non FIREFOX s'effectue correctement", 
       Navigateur Firefox
     </SeulementNavigateur>
   );
-  await waitFor(() => {
-    expect(screen.getByText(/Navigateur non autorisé/)).toBeInTheDocument();
+  waitFor(() => {
+    expect(screen.getByText(/Navigateur non autorisé/)).toBeDefined();
   });
 });
 
-test("Attendu: la détection du browser FIREFOX ou CHROME s'effectue correctement", async () => {
+test("Attendu: la détection du browser FIREFOX ou CHROME s'effectue correctement", () => {
   const navigator = { userAgent: "Chrome xxxx" };
 
   Object.defineProperty(window, "navigator", {
@@ -52,12 +53,12 @@ test("Attendu: la détection du browser FIREFOX ou CHROME s'effectue correctemen
       Navigateur Firefox
     </SeulementNavigateur>
   );
-  await waitFor(() => {
-    expect(screen.getByText("Navigateur Firefox")).toBeInTheDocument();
+  waitFor(() => {
+    expect(screen.getByText("Navigateur Firefox")).toBeDefined();
   });
 });
 
-test("Attendu: la détection d'un browser autre que FIREFOX ou CHROME s'effectue correctement", async () => {
+test("Attendu: la détection d'un browser autre que FIREFOX ou CHROME s'effectue correctement", () => {
   const navigator = { userAgent: "Fake" };
 
   Object.defineProperty(window, "navigator", {
@@ -69,7 +70,7 @@ test("Attendu: la détection d'un browser autre que FIREFOX ou CHROME s'effectue
       Navigateur Firefox
     </SeulementNavigateur>
   );
-  await waitFor(() => {
-    expect(screen.getByText(/Navigateur non autorisé/)).toBeInTheDocument();
+  waitFor(() => {
+    expect(screen.getByText(/Navigateur non autorisé/)).toBeDefined();
   });
 });

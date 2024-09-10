@@ -6,16 +6,11 @@ import TitulaireFiltre, {
   TitulaireDefaultValues,
   TitulaireFiltreProps
 } from "@pages/rechercheMultiCriteres/filtres/titulaire/TitulaireFiltre";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { expect, test } from "vitest";
 
 const HookConsummerRMCBoutons: React.FC = () => {
   const rappelCriteres = () => {
@@ -52,22 +47,18 @@ const HookConsummerRMCBoutons: React.FC = () => {
   );
 };
 
-test("render composant RMCBoutons", async () => {
-  await act(async () => {
-    render(<HookConsummerRMCBoutons />);
-  });
+test("render composant RMCBoutons", () => {
+  render(<HookConsummerRMCBoutons />);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByText(/Rappel critères/i)).toBeDefined();
     expect(screen.getByText(/Réinitialiser les critères/i)).toBeDefined();
     expect(screen.getByText(/Rechercher/i)).toBeDefined();
   });
 });
 
-test("Click boutons", async () => {
-  await act(async () => {
-    render(<HookConsummerRMCBoutons />);
-  });
+test("Click boutons", () => {
+  render(<HookConsummerRMCBoutons />);
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
   const inputPrenom = screen.getByLabelText("Prénom") as HTMLInputElement;
@@ -84,51 +75,43 @@ test("Click boutons", async () => {
 
   const boutonSubmit = screen.getByText(/Rechercher/i) as HTMLButtonElement;
 
-  act(() => {
-    fireEvent.change(inputNom, {
-      target: {
-        value: "mockNom"
-      }
-    });
-    fireEvent.change(inputPrenom, {
-      target: {
-        value: "mockPrenom"
-      }
-    });
-    fireEvent.change(inputPays, {
-      target: {
-        value: "mockPays"
-      }
-    });
+  fireEvent.change(inputNom, {
+    target: {
+      value: "mockNom"
+    }
+  });
+  fireEvent.change(inputPrenom, {
+    target: {
+      value: "mockPrenom"
+    }
+  });
+  fireEvent.change(inputPays, {
+    target: {
+      value: "mockPays"
+    }
   });
 
-  await act(async () => {
-    fireEvent.click(boutonSubmit);
-  });
+  fireEvent.click(boutonSubmit);
 
   const result = screen.getByTestId("result");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(result.innerHTML).toBe(
       '{"titulaire":{"nom":"mockNom","prenom":"mockPrenom","dateNaissance":{"jour":"","mois":"","annee":""},"paysNaissance":"mockPays"}}'
     );
   });
 
-  await act(async () => {
-    fireEvent.click(boutonReset);
-  });
+  fireEvent.click(boutonReset);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(inputNom.value).toBe("");
     expect(inputPrenom.value).toBe("");
     expect(inputPays.value).toBe("");
   });
 
-  await act(async () => {
-    fireEvent.click(boutonRappel);
-  });
+  fireEvent.click(boutonRappel);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(inputNom.value).toBe("mockNom");
     expect(inputPrenom.value).toBe("mockPrenom");
     expect(inputPays.value).toBe("mockPays");

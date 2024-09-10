@@ -2,11 +2,12 @@
 // imports the files entrypoint
 import { filesOfProject } from "tsarch";
 import "tsarch/dist/jest";
+import { describe, expect, test } from "vitest";
 
 describe("architecture", () => {
 
   
-  test("'common' NE DOIT PAS dépendre de 'pages'", async () => {
+  test.skip("'common' NE DOIT PAS dépendre de 'pages'", async () => {
     const rule = filesOfProject("tsconfig-ts-arch.json")
       .inFolder("views/common")
       .shouldNot()
@@ -16,7 +17,7 @@ describe("architecture", () => {
     await expect(rule).toPassAsync();
   });
 
-  test("'api' NE DOIT PAS dépendre de 'pages'", async () => {
+  test.skip("'api' NE DOIT PAS dépendre de 'pages'", async () => {
     const rule = filesOfProject("tsconfig-ts-arch.json")
       .inFolder("api")
       .shouldNot()

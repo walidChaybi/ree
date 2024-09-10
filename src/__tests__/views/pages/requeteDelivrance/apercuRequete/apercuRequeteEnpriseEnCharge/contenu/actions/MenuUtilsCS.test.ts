@@ -6,6 +6,7 @@ import {
   getInscriptionsRCDeTypeRadiation,
   triTableauRCRadiationParDate
 } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuUtilsCS";
+import { describe, expect, test } from "vitest";
 
 describe("Test des fonctions MenuUtilsCS", () => {
   test("Doit retourner les inscriptions de type Radiation", () => {

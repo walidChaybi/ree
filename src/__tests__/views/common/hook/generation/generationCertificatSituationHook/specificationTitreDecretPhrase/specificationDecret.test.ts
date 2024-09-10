@@ -4,16 +4,17 @@ import { ReponseAppelNomenclatureDocummentDelivrance } from "@mock/data/nomencla
 import {} from "@mock/superagent-config/superagent-mock-params";
 import { waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
+import { beforeAll, expect, test } from "vitest";
 
 beforeAll(() => {
   storeRece.decrets = decrets;
 });
 
-test("Attendu: specificationDecret.getDecret la demande est CERTIFICAT_SITUATION_PACS", async () => {
+test("Attendu: specificationDecret.getDecret la demande est CERTIFICAT_SITUATION_PACS", () => {
   const decrets = specificationDecret.getDecret(
     ReponseAppelNomenclatureDocummentDelivrance.data[1].id // CERTIFICAT_SITUATION_PACS
   );
-  await waitFor(() => {
+  waitFor(() => {
     expect(decrets.map(d => d.libelle)).toEqual([
       "Article 515-3-1 du Code civil",
       "Article 1 du décret 2006-1806 du 23 décembre 2006 modifié",
@@ -23,33 +24,33 @@ test("Attendu: specificationDecret.getDecret la demande est CERTIFICAT_SITUATION
   });
 });
 
-test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RC et il n'y a pas de RC", async () => {
+test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RC et il n'y a pas de RC", () => {
   const decrets = specificationDecret.getDecret(
     ReponseAppelNomenclatureDocummentDelivrance.data[5].id // CERTIFICAT_SITUATION_RC
   );
-  await waitFor(() => {
+  waitFor(() => {
     expect(decrets.map(d => d.libelle)).toEqual([
       "Article 4 du décret 65-422 du 1er juin 1965 modifié"
     ]);
   });
 });
 
-test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RCA et il n'y a pas de PACS", async () => {
+test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RCA et il n'y a pas de PACS", () => {
   const decrets = specificationDecret.getDecret(
     ReponseAppelNomenclatureDocummentDelivrance.data[7].id // CERTIFICAT_SITUATION_RCA
   );
-  await waitFor(() => {
+  waitFor(() => {
     expect(decrets.map(d => d.libelle)).toEqual([
       "Article 4-1 du décret 65-422 du 1er juin 1965 modifié"
     ]);
   });
 });
 
-test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_PACS_RC_RCA et il y a au moins un PACS, un RC et un RCA", async () => {
+test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_PACS_RC_RCA et il y a au moins un PACS, un RC et un RCA", () => {
   const decrets = specificationDecret.getDecret(
     ReponseAppelNomenclatureDocummentDelivrance.data[4].id //CERTIFICAT_SITUATION_PACS_RC_RCA
   );
-  await waitFor(() => {
+  waitFor(() => {
     expect(decrets.map(d => d.libelle)).toEqual([
       "Article 515-3-1 du Code civil",
       "Article 1 du décret 2006-1806 du 23 décembre 2006 modifié",

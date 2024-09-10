@@ -2,20 +2,15 @@ import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsReq
 import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import { observations0, observations1 } from "@mock/data/Observations";
 import DONNEES_REQUETE from "@mock/data/requete";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
+import { beforeAll, expect, test } from "vitest";
 
 beforeAll(() => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
 });
 
-test("renders suivi des observations requete", async () => {
+test("renders suivi des observations requete", () => {
   render(
     <SuiviObservationsRequete
       observations={DONNEES_REQUETE.observations}
@@ -26,7 +21,7 @@ test("renders suivi des observations requete", async () => {
   let elem1: HTMLElement;
   let elem2: HTMLElement;
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(titre.textContent).toBeDefined();
     elem1 = screen.getByText(/LOS/i);
     expect(elem1).toBeDefined();
@@ -41,7 +36,7 @@ test("renders suivi des observations requete", async () => {
   });
 });
 
-test("ajouter observation", async () => {
+test("ajouter observation", () => {
   render(
     <SuiviObservationsRequete
       observations={DONNEES_REQUETE.observations}
@@ -49,45 +44,37 @@ test("ajouter observation", async () => {
     />
   );
 
-  await act(async () => {
-    fireEvent.click(screen.getByText("Ajouter une observation"));
-  });
+  fireEvent.click(screen.getByText("Ajouter une observation"));
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByText("Saisissez l'observation")).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.change(screen.getByPlaceholderText("Description"), {
-      target: {
-        value: "salut"
-      }
-    });
+  fireEvent.change(screen.getByPlaceholderText("Description"), {
+    target: {
+      value: "salut"
+    }
   });
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByText("salut")).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(screen.getByText("Valider"));
-  });
+  fireEvent.click(screen.getByText("Valider"));
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByText(/salut - /i)).toBeDefined();
   });
 });
 
-test("modifier observation", async () => {
+test("modifier observation", () => {
   render(
     <SuiviObservationsRequete observations={observations0} idRequete="123" />
   );
 
-  await act(async () => {
-    fireEvent.click(screen.getByText(/C'est vraiment dur/i));
-  });
+  fireEvent.click(screen.getByText(/C'est vraiment dur/i));
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(
       screen.getByText(
         "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec"
@@ -95,33 +82,35 @@ test("modifier observation", async () => {
     ).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.change(screen.getByPlaceholderText("Description"), {
-      target: {
-        value: "salut"
-      }
-    });
+  fireEvent.change(screen.getByPlaceholderText("Description"), {
+    target: {
+      value: "salut"
+    }
   });
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByText("salut")).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(screen.getByText("Valider"));
-  });
+  fireEvent.click(screen.getByText("Valider"));
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByText(/salut - /i)).toBeDefined();
   });
 });
 
-test("supprimer observation", async () => {
+test("supprimer observation", () => {
   render(
     <SuiviObservationsRequete observations={observations1} idRequete="123" />
   );
 
-  await act(async () => {
-    fireEvent.click(screen.getByText("Supprimer l'observation"));
+  fireEvent.click(screen.getByText("Supprimer l'observation"));
+
+  waitFor(() => {
+    expect(
+      screen.getByTitle(
+        "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec"
+      )
+    ).not.toBeDefined();
   });
 });

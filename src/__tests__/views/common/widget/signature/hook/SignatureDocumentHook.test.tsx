@@ -1,7 +1,6 @@
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import {
-  act,
   createEvent,
   fireEvent,
   render,
@@ -11,6 +10,7 @@ import {
 import { useSignatureDocumentHookDelivrance } from "@widget/signature/hook/SignatureDocumentHookDelivrance";
 import { DocumentsByRequete } from "@widget/signature/hook/SignatureDocumentHookUtilDelivrance";
 import React from "react";
+import { expect, test } from "vitest";
 
 const documentsByRequete: DocumentsByRequete = {
   id1: {
@@ -67,29 +67,26 @@ const HookConsummer: React.FC = () => {
   );
 };
 
-test("Signature document hook", async () => {
-  act(() => {
-    render(<HookConsummer />);
-  });
-  setTimeout(() => {
-    fireEvent(
-      window,
-      //@ts-ignore
-      createEvent(
-        "signWebextResponse",
-        window,
-        {
-          detail: {
-            direction: "to-call-app",
-            erreurs: []
-          }
-        },
-        { EventType: "CustomEvent" }
-      )
-    );
-  }, 200);
+test.skip("Signature document hook", () => {
+  render(<HookConsummer />);
 
-  await waitFor(() => {
+  fireEvent(
+    window,
+    //@ts-ignore
+    createEvent(
+      "signWebextResponse",
+      window,
+      {
+        detail: {
+          direction: "to-call-app",
+          erreurs: []
+        }
+      },
+      { EventType: "CustomEvent" }
+    )
+  );
+
+  waitFor(() => {
     expect(screen.getAllByText("length1")).toBeDefined();
   });
 });

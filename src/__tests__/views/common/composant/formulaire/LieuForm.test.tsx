@@ -1,28 +1,23 @@
 import LieuForm, { ILieuProps } from "@composant/formulaire/LieuForm";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
+import { expect, test } from "vitest";
 
-test("DOIT afficher aucun champ QUAND le lieu est inconnu", async () => {
+test("DOIT afficher aucun champ QUAND le lieu est inconnu", () => {
   rendreComposantLieuForm(false, false);
   const lieuInconnu = screen.getByLabelText("Inconnu");
-  await waitFor(() => {
+  waitFor(() => {
     expect(lieuInconnu).toBeDefined();
   });
-  await act(async () => {
-    fireEvent.click(lieuInconnu);
-  });
-  await waitFor(() => {
+
+  fireEvent.click(lieuInconnu);
+
+  waitFor(() => {
     expect(screen.queryByLabelText("Ville")).toBeNull();
     expect(screen.queryByLabelText("Arrondissement")).toBeNull();
     expect(screen.queryByLabelText("Département")).toBeNull();
@@ -31,16 +26,16 @@ test("DOIT afficher aucun champ QUAND le lieu est inconnu", async () => {
   });
 });
 
-test("DOIT afficher la ville, région et pays QUAND le lieu est étranger", async () => {
+test("DOIT afficher la ville, région et pays QUAND le lieu est étranger", () => {
   rendreComposantLieuForm(false, false);
   const lieuInconnu = screen.getByLabelText("Etranger");
-  await waitFor(() => {
+  waitFor(() => {
     expect(lieuInconnu).toBeDefined();
   });
-  await act(async () => {
-    fireEvent.click(lieuInconnu);
-  });
-  await waitFor(() => {
+
+  fireEvent.click(lieuInconnu);
+
+  waitFor(() => {
     expect(screen.getByLabelText("Ville")).toBeDefined();
     expect(screen.queryByLabelText("Arrondissement")).toBeNull();
     expect(screen.queryByLabelText("Département")).toBeNull();
@@ -49,16 +44,16 @@ test("DOIT afficher la ville, région et pays QUAND le lieu est étranger", asyn
   });
 });
 
-test("DOIT afficher la ville QUAND le lieu est france et qu'on affiche le minimum de champs", async () => {
+test("DOIT afficher la ville QUAND le lieu est france et qu'on affiche le minimum de champs", () => {
   rendreComposantLieuForm(false, false);
   const lieuInconnu = screen.getByLabelText("France");
-  await waitFor(() => {
+  waitFor(() => {
     expect(lieuInconnu).toBeDefined();
   });
-  await act(async () => {
-    fireEvent.click(lieuInconnu);
-  });
-  await waitFor(() => {
+
+  fireEvent.click(lieuInconnu);
+
+  waitFor(() => {
     expect(screen.getByLabelText("Ville")).toBeDefined();
     expect(screen.queryByLabelText("Arrondissement")).toBeNull();
     expect(screen.queryByLabelText("Département")).toBeNull();
@@ -67,22 +62,22 @@ test("DOIT afficher la ville QUAND le lieu est france et qu'on affiche le minimu
   });
 });
 
-test("DOIT afficher la ville, l'arrondissement et le département QUAND le lieu est france et qu'on affiche le maximum de champs", async () => {
+test("DOIT afficher la ville, l'arrondissement et le département QUAND le lieu est france et qu'on affiche le maximum de champs", () => {
   rendreComposantLieuForm(true, true);
   const lieuInconnu = screen.getByLabelText("France");
-  await waitFor(() => {
+  waitFor(() => {
     expect(lieuInconnu).toBeDefined();
   });
-  await act(async () => {
-    fireEvent.click(lieuInconnu);
-  });
-  await waitFor(() => {
-    expect(screen.getByLabelText("Ville")).toBeDefined();
-    expect(screen.getByLabelText("Arrondissement")).toBeDefined();
-    expect(screen.getByLabelText("Département")).toBeDefined();
-    expect(screen.queryByLabelText("Région")).toBeNull();
-    expect(screen.queryByLabelText("Pays")).toBeNull();
-  });
+
+  fireEvent.click(lieuInconnu);
+
+  waitFor(() => {
+  expect(screen.getByLabelText("Ville")).toBeDefined();
+  expect(screen.getByLabelText("Arrondissement")).toBeDefined();
+  expect(screen.getByLabelText("Département")).toBeDefined();
+  expect(screen.queryByLabelText("Région")).toBeNull();
+  expect(screen.queryByLabelText("Pays")).toBeNull();
+});
 });
 
 function rendreComposantLieuForm(

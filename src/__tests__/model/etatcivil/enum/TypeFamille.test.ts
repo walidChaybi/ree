@@ -1,4 +1,5 @@
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
+import { expect, test } from "vitest";
 
 test("Attendu: estTypeFamilleProjetActe de TypeFamille fonctionne correctement", () => {
   expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.AFF)).toBeTruthy();

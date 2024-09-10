@@ -2,6 +2,7 @@ import {
   getMessageSiVerificationEnErreur,
   IVerificationErreur
 } from "@pages/rechercheMultiCriteres/common/validation/VerificationRestrictionProcesseur";
+import { expect, test } from "vitest";
 
 test("Attendu: getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur fonctionne correctement", () => {
   const verifications1: IVerificationErreur[] = [

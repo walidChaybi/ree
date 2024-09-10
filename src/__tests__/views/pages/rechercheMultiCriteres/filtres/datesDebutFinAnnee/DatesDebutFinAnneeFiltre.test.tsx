@@ -3,9 +3,10 @@ import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
   DatesDebutFinAnneeFiltreProps
 } from "@pages/rechercheMultiCriteres/filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { test } from "vitest";
 
 const HookDatesDebutFinAnneeFiltre: React.FC = () => {
   const [result, setResult] = useState("");
@@ -35,10 +36,8 @@ const HookDatesDebutFinAnneeFiltre: React.FC = () => {
   );
 };
 
-test("render composant DatesDebutFinAnneeFiltre", async () => {
-  await act(async () => {
-    render(<HookDatesDebutFinAnneeFiltre />);
-  });
+test("render composant DatesDebutFinAnneeFiltre", () => {
+  render(<HookDatesDebutFinAnneeFiltre />);
 
   const inputJour = screen.getByLabelText(
     "datesDebutFinAnnee.dateDebut.jour"
@@ -59,41 +58,37 @@ test("render composant DatesDebutFinAnneeFiltre", async () => {
     "datesDebutFinAnnee.dateFin.annee"
   ) as HTMLInputElement;
 
-  act(() => {
-    fireEvent.input(inputJour, {
-      target: {
-        value: "10"
-      }
-    });
-    fireEvent.input(inputMois, {
-      target: {
-        value: "10"
-      }
-    });
-    fireEvent.input(inputAnneeFin, {
-      target: {
-        value: "2020"
-      }
-    });
-    fireEvent.input(inputJourFin, {
-      target: {
-        value: "10"
-      }
-    });
-    fireEvent.input(inputMoisFin, {
-      target: {
-        value: "10"
-      }
-    });
-    fireEvent.input(inputAnnee, {
-      target: {
-        value: "1990"
-      }
-    });
+  fireEvent.input(inputJour, {
+    target: {
+      value: "10"
+    }
+  });
+  fireEvent.input(inputMois, {
+    target: {
+      value: "10"
+    }
+  });
+  fireEvent.input(inputAnneeFin, {
+    target: {
+      value: "2020"
+    }
+  });
+  fireEvent.input(inputJourFin, {
+    target: {
+      value: "10"
+    }
+  });
+  fireEvent.input(inputMoisFin, {
+    target: {
+      value: "10"
+    }
+  });
+  fireEvent.input(inputAnnee, {
+    target: {
+      value: "1990"
+    }
   });
 
   const submit = screen.getByText(/Rechercher/i);
-  await act(async () => {
-    fireEvent.click(submit);
-  });
+  fireEvent.click(submit);
 });

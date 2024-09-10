@@ -1,7 +1,8 @@
 import { personneMock } from "@mock/data/ficheEtBandeau/divers/PersonneMock";
 import { getFichesPersonne } from "@pages/fiche/hook/constructionComposants/personne/FichePersonne";
+import { expect, test } from "vitest";
 
-test("Decision utils get decision : decision de type Juridiction, ", async () => {
+test("Decision utils get decision : decision de type Juridiction, ", () => {
   const components = getFichesPersonne([personneMock]);
 
   expect(components).toHaveLength(1);

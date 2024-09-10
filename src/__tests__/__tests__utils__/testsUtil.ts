@@ -1,7 +1,8 @@
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { act, fireEvent, waitFor } from "@testing-library/react";
-import { createMemoryRouter, RouteObject } from "react-router-dom";
+import { fireEvent, waitFor } from "@testing-library/react";
+import { RouteObject, createMemoryRouter } from "react-router-dom";
+import { expect, vi } from "vitest";
 import { urlImagePngVideBase64 } from "../../mock/data/ImagePng";
 
 function dataURLtoFile(dataurl: string, filename: string): File {
@@ -37,20 +38,20 @@ export function getRequeteWithChoixDelivrance(
 
 export function mockFenetreFicheTestFunctions() {
   const globalAny: any = global;
-  globalAny.URL.createObjectURL = jest.fn();
-  globalAny.scroll = jest.fn();
+  globalAny.URL.createObjectURL = vi.fn();
+  globalAny.scroll = vi.fn();
   globalAny.open = () => {
     return {
       ...window,
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn()
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn()
     };
   };
-  globalAny.close = jest.fn();
+  globalAny.close = vi.fn();
 }
 
-export async function renseigneChampsRecherche(
+export function renseigneChampsRecherche(
   screen: any,
   nomChamp: string,
   valeurChamp: string
@@ -59,19 +60,15 @@ export async function renseigneChampsRecherche(
   const champRecherche = screen.getByLabelText(nomChamp) as HTMLInputElement;
   autocomplete.focus();
 
-  await act(async () => {
-    fireEvent.change(champRecherche, {
-      target: { value: valeurChamp }
-    });
+  fireEvent.change(champRecherche, {
+    target: { value: valeurChamp }
   });
 
-  await waitFor(() => {
-    expect(screen.getByText(valeurChamp)).toBeInTheDocument();
+  waitFor(() => {
+    expect(screen.getByText(valeurChamp)).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(screen.getByText(valeurChamp));
-  });
+  fireEvent.click(screen.getByText(valeurChamp));
 }
 
 export function deepCopie(objet: any) {

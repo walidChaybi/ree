@@ -1,51 +1,39 @@
 import { BoutonNouvelleRMCRequete } from "@pages/rechercheMultiCriteres/autoRequetes/contenu/BoutonNouvelleRMCRequete";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { expect, test, vi } from "vitest";
 
-
-test("render BoutonNouvelleRMCRequete", async () => {
-  await act(async () => {
-    render(
-      <BoutonNouvelleRMCRequete
-        setNouvelleRMCRequete={jest.fn()}
-        setValuesRMCRequete={jest.fn()}
-        setCriteresRechercheRequete={jest.fn()}
-      />
-    );
-  });
+test("render BoutonNouvelleRMCRequete", () => {
+  render(
+    <BoutonNouvelleRMCRequete
+      setNouvelleRMCRequete={vi.fn()}
+      setValuesRMCRequete={vi.fn()}
+      setCriteresRechercheRequete={vi.fn()}
+    />
+  );
 
   const boutonNouvelleRMC = screen.getByRole("button") as HTMLButtonElement;
 
-  await waitFor(() => {
-    expect(boutonNouvelleRMC).toBeInTheDocument();
+  waitFor(() => {
+    expect(boutonNouvelleRMC).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(boutonNouvelleRMC);
-  });
+  fireEvent.click(boutonNouvelleRMC);
 
   const popinNouvelleRMC = screen.getByRole("dialog", {
     hidden: true
   });
 
-  await waitFor(() => {
-    expect(popinNouvelleRMC).toBeInTheDocument();
+  waitFor(() => {
+    expect(popinNouvelleRMC).toBeDefined();
   });
 
   const boutonAnnuler = screen.getByLabelText(
     "CloseButtonNouvelleRMCRequete"
   ) as HTMLButtonElement;
 
-  await act(async () => {
-    fireEvent.click(boutonAnnuler);
-  });
+  fireEvent.click(boutonAnnuler);
 
-  await waitFor(() => {
-    expect(popinNouvelleRMC).not.toBeInTheDocument();
-  });
+    waitFor(() => {
+      expect(popinNouvelleRMC).not.toBeDefined();
+    });
 });

@@ -15,17 +15,12 @@ import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/
 import { TableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonne";
 import { mapDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
 import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
+import { beforeAll, expect, test } from "vitest";
 import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
-beforeAll(async () => {
+beforeAll(() => {
   mockFenetreFicheTestFunctions();
 });
 
@@ -70,31 +65,29 @@ const HookConsumerTableauRMCPersonne: React.FC<
   );
 };
 
-test("Attendu: L'affichage du tableau de la RMC Personne s'affiche correctement.", async () => {
+test("Attendu: L'affichage du tableau de la RMC Personne s'affiche correctement.", () => {
   const requete = mappingRequeteCreation(requeteCreationTranscription);
-  await act(async () => {
-    render(<HookConsumerTableauRMCPersonne requete={requete} />);
-  });
+  render(<HookConsumerTableauRMCPersonne requete={requete} />);
 
-  await waitFor(() => {
+  waitFor(() => {
     // Colonnes tableau
-    expect(screen.getByText("Nom")).toBeInTheDocument();
-    expect(screen.getByText("Autres noms")).toBeInTheDocument();
-    expect(screen.getByText("Prénoms")).toBeInTheDocument();
-    expect(screen.getByText("Sexe")).toBeInTheDocument();
-    expect(screen.getByText("Date de naissance")).toBeInTheDocument();
-    expect(screen.getByText("Lieu de naissance")).toBeInTheDocument();
-    expect(screen.getByText("Nature")).toBeInTheDocument();
-    expect(screen.getByText("Référence")).toBeInTheDocument();
-    expect(screen.getByText("Statut / Type")).toBeInTheDocument();
+    expect(screen.getByText("Nom")).toBeDefined();
+    expect(screen.getByText("Autres noms")).toBeDefined();
+    expect(screen.getByText("Prénoms")).toBeDefined();
+    expect(screen.getByText("Sexe")).toBeDefined();
+    expect(screen.getByText("Date de naissance")).toBeDefined();
+    expect(screen.getByText("Lieu de naissance")).toBeDefined();
+    expect(screen.getByText("Nature")).toBeDefined();
+    expect(screen.getByText("Référence")).toBeDefined();
+    expect(screen.getByText("Statut / Type")).toBeDefined();
 
     // Données tableau
-    expect(screen.getByText("DUPONT")).toBeInTheDocument();
-    expect(screen.getByText("Paul")).toBeInTheDocument();
+    expect(screen.getByText("DUPONT")).toBeDefined();
+    expect(screen.getByText("Paul")).toBeDefined();
     expect(screen.getAllByText("M")).toBeDefined();
     expect(screen.getAllByText("04/03/1963")).toBeDefined();
     expect(screen.getAllByText("Dunkerque")).toBeDefined();
-    expect(screen.getByText("PACS - 2011 - 1234590")).toBeInTheDocument();
+    expect(screen.getByText("PACS - 2011 - 1234590")).toBeDefined();
   });
 });
 
@@ -148,7 +141,7 @@ test("Ouverture d'un acte", async () => {
 
   fireEvent.click(ligne);
 
-  await waitFor(() => {
+  waitFor(() => {
     const vue = screen.queryByText("Visualisation du RC");
     if (
       officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.TOUS_REGISTRES)

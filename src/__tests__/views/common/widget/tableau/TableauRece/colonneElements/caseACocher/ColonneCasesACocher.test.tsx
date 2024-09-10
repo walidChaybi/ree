@@ -1,13 +1,8 @@
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getColonneCasesACocher } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useState } from "react";
+import { describe, expect, test } from "vitest";
 
 const TableauReceWrapper: React.FC<{ contientHeader: boolean }> = props => {
   const [idSelectionnes, setIdSelectionnes] = useState<string[]>([]);
@@ -40,14 +35,13 @@ const TableauReceWrapper: React.FC<{ contientHeader: boolean }> = props => {
 };
 
 describe("Test de la fonction getColonneCheckbox().", () => {
-  test("NE DOIT PAS afficher une case à cocher en tête de colonne QUAND la variable contientHeader={false}.", async () => {
-    await act(async () => {
-      render(<TableauReceWrapper contientHeader={false} />);
-    });
+  test("NE DOIT PAS afficher une case à cocher en tête de colonne QUAND la variable contientHeader={false}.", () => {
+    render(<TableauReceWrapper contientHeader={false} />);
 
     const checkboxs = screen.getAllByRole("checkbox");
     let classList: DOMTokenList;
-    await waitFor(() => {
+
+    waitFor(() => {
       for (const checkbox of checkboxs) {
         classList = checkbox.parentElement?.classList as DOMTokenList;
         expect(classList.contains("case-a-cocher")).toBeTruthy();
@@ -56,14 +50,13 @@ describe("Test de la fonction getColonneCheckbox().", () => {
     });
   });
 
-  test("DOIT afficher une case à cocher en tête de colonne QUAND la variable contientHeader={true}.", async () => {
-    await act(async () => {
-      render(<TableauReceWrapper contientHeader={true} />);
-    });
+  test("DOIT afficher une case à cocher en tête de colonne QUAND la variable contientHeader={true}.", () => {
+    render(<TableauReceWrapper contientHeader={true} />);
 
     const checkboxs = screen.getAllByRole("checkbox");
     let classList: DOMTokenList;
-    await waitFor(() => {
+
+    waitFor(() => {
       classList = checkboxs[0].parentElement?.classList as DOMTokenList;
       expect(classList.contains("case-a-cocher")).toBeFalsy();
       expect(classList.contains("entete-case-a-cocher")).toBeTruthy();
@@ -77,104 +70,86 @@ describe("Test de la fonction getColonneCheckbox().", () => {
 });
 
 describe("Test du fonctionnement d'une colonne de case à cocher avec header.", () => {
-  test("DOIT cocher / decocher une case QUAND on clique dessus.", async () => {
-    await act(async () => {
-      render(<TableauReceWrapper contientHeader={false} />);
+  test("DOIT cocher / decocher une case QUAND on clique dessus.", () => {
+    render(<TableauReceWrapper contientHeader={false} />);
+
+    const checkbox = screen.getAllByRole("checkbox")[0] as HTMLInputElement;
+    waitFor(() => {
+      expect(checkbox.checked).not.toBeTruthy();
     });
 
-    const checkbox = screen.getAllByRole("checkbox")[0];
-    await waitFor(() => {
-      expect(checkbox).not.toBeChecked();
+    fireEvent.click(checkbox);
+
+    waitFor(() => {
+      expect(checkbox.checked).toBeTruthy();
     });
 
-    await act(async () => {
-      fireEvent.click(checkbox);
-    });
+    fireEvent.click(checkbox);
 
-    await waitFor(() => {
-      expect(checkbox).toBeChecked();
-    });
-
-    await act(async () => {
-      fireEvent.click(checkbox);
-    });
-
-    await waitFor(() => {
-      expect(checkbox).not.toBeChecked();
+    waitFor(() => {
+      expect(checkbox.checked).not.toBeTruthy();
     });
   });
 
-  test("DOIT cocher / decocher toutes les cases QUAND on clique sur le header.", async () => {
-    await act(async () => {
-      render(<TableauReceWrapper contientHeader={true} />);
-    });
+  test("DOIT cocher / decocher toutes les cases QUAND on clique sur le header.", () => {
+    render(<TableauReceWrapper contientHeader={true} />);
 
-    const checkboxs = screen.getAllByRole("checkbox");
-    const checkboxHeader = checkboxs.shift() as HTMLElement;
-    await waitFor(() => {
-      expect(checkboxHeader).not.toBeChecked();
+    const checkboxs = screen.getAllByRole("checkbox") as HTMLInputElement[];
+    const checkboxHeader = checkboxs.shift() as HTMLInputElement;
+    waitFor(() => {
+      expect(checkboxHeader.checked).not.toBeTruthy();
       for (const checkbox of checkboxs) {
-        expect(checkbox).not.toBeChecked();
+        expect(checkbox.checked).not.toBeTruthy();
       }
     });
 
-    await act(async () => {
-      fireEvent.click(checkboxHeader);
-    });
+    fireEvent.click(checkboxHeader);
 
-    await waitFor(() => {
-      expect(checkboxHeader).toBeChecked();
+    waitFor(() => {
+      expect(checkboxHeader.checked).toBeTruthy();
       for (const checkbox of checkboxs) {
-        expect(checkbox).toBeChecked();
+        expect(checkbox.checked).toBeTruthy();
       }
     });
 
-    await act(async () => {
-      fireEvent.click(checkboxHeader);
-    });
+    fireEvent.click(checkboxHeader);
 
-    await waitFor(() => {
-      expect(checkboxHeader).not.toBeChecked();
+    waitFor(() => {
+      expect(checkboxHeader.checked).not.toBeTruthy();
       for (const checkbox of checkboxs) {
-        expect(checkbox).not.toBeChecked();
+        expect(checkbox.checked).not.toBeTruthy();
       }
     });
   });
 
-  test("DOIT modifier le statut coche / indetermine de la case du header QUAND on clique sur les cases du body.", async () => {
-    await act(async () => {
-      render(<TableauReceWrapper contientHeader={true} />);
-    });
+  test("DOIT modifier le statut coche / indetermine de la case du header QUAND on clique sur les cases du body.", () => {
+    render(<TableauReceWrapper contientHeader={true} />);
 
-    const checkboxs = screen.getAllByRole("checkbox");
-    const checkboxHeader = checkboxs.shift() as HTMLElement;
-    await waitFor(() => {
-      expect(checkboxHeader).not.toBeChecked();
+    const checkboxs = screen.getAllByRole("checkbox") as HTMLInputElement[];
+    const checkboxHeader = checkboxs.shift() as HTMLInputElement;
+    waitFor(() => {
+      expect(checkboxHeader.checked).not.toBeTruthy();
       expect(checkboxHeader).not.toHaveProperty("data-indeterminate", false);
-      expect(checkboxs[0]).not.toBeChecked();
-      expect(checkboxs[1]).not.toBeChecked();
+      expect(checkboxs[0].checked).not.toBeTruthy();
+      expect(checkboxs[1].checked).not.toBeTruthy();
     });
 
-    await act(async () => {
-      fireEvent.click(checkboxs[0]);
-    });
+    fireEvent.click(checkboxs[0]);
 
-    await waitFor(() => {
-      expect(checkboxHeader).not.toBeChecked();
+    waitFor(() => {
+      expect(checkboxHeader.checked).not.toBeTruthy();
       expect(checkboxHeader).not.toHaveProperty("data-indeterminate", true);
-      expect(checkboxs[0]).toBeChecked();
-      expect(checkboxs[1]).not.toBeChecked();
+      expect(checkboxs[0].checked).toBeTruthy();
+      expect(checkboxs[1].checked).not.toBeTruthy();
     });
 
-    await act(async () => {
-      fireEvent.click(checkboxs[1]);
-    });
+  fireEvent.click(checkboxs[1]);
 
-    await waitFor(() => {
-      expect(checkboxHeader).toBeChecked();
+    waitFor(() => {
+      expect(checkboxHeader.checked).toBeTruthy();
       expect(checkboxHeader).not.toHaveProperty("data-indeterminate", false);
-      expect(checkboxs[0]).toBeChecked();
-      expect(checkboxs[1]).toBeChecked();
+      expect(checkboxs[0].checked).toBeTruthy();
+      expect(checkboxs[1].checked).toBeTruthy();
     });
   });
 });

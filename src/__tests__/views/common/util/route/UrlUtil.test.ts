@@ -5,11 +5,12 @@ import {
 import {
   cleanUrl,
   getLastPathElem,
-  getUrlWithoutIdParam,
   getUrlWithParam,
+  getUrlWithoutIdParam,
   isLastPathElemIsId,
   isPathElemId
 } from "@util/route/UrlUtil";
+import { expect, test } from "vitest";
 
 test("Attendu: getUrlWithParam fonctionne correctement", () => {
   expect(

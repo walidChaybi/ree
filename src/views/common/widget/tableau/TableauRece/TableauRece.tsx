@@ -6,12 +6,12 @@ import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { getLibelle } from "@util/Utils";
 import React, { useCallback, useEffect } from "react";
 import {
+  SortOrder,
   getItemAriaLabel,
   getPaginatedData,
   getSortOrder,
   laPageDAvantEstEnDehors,
-  laProchainePageEstEnDehors,
-  SortOrder
+  laProchainePageEstEnDehors
 } from "../TableUtils";
 import { TableauBody } from "./TableauBody";
 import { TableauHeader } from "./TableauHeader";
@@ -51,7 +51,9 @@ export interface TableauReceProps {
   afficheBoutonsNavigationRapide?: boolean;
 }
 
-export const TableauRece: React.FC<TableauReceProps> = props => {
+export const TableauRece: React.FC<
+  React.PropsWithChildren<TableauReceProps>
+> = props => {
   const paramsTableau = props.paramsTableau;
   const [pageState, setPageState] = React.useState(0);
   const [multiplicateur, setMultiplicateur] = React.useState(1);

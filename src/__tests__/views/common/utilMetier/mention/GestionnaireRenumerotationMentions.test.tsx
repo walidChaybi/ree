@@ -1,6 +1,7 @@
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
 import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { gestionnaireRenumerotationMentions } from "@utilMetier/mention/GestionnaireRenumerotationMentions";
+import { expect, test } from "vitest";
 
 ///////// RG 2
 

@@ -1,6 +1,7 @@
 import { GestionnaireCache } from "@util/GestionnaireCache";
+import { expect, test } from "vitest";
 
-test("Attendu: Le gestionnaire de cache SANS délais d'expiration fonctionne correctement", async () => {
+test("Attendu: Le gestionnaire de cache SANS délais d'expiration fonctionne correctement", () => {
   const cache = GestionnaireCache.addCache("cache1");
   const key = "key1";
   const value = "test cache1";

@@ -1,207 +1,72 @@
 {
   "name": "rece-ui",
   "maeGroup": "fr.gouv.diplomatie.rece",
-  "version": "2.23.0",
+  "version": "2.24.0",
   "private": true,
   "homepage": "rece/rece-ui/",
   "dependencies": {
-    "@babel/plugin-transform-private-property-in-object": "7.24.1",
     "@dnd-kit/core": "6.0.5",
     "@dnd-kit/sortable": "7.0.1",
-    "@emotion/react": "11.10.6",
-    "@emotion/styled": "11.10.4",
+    "@emotion/react": "11.11.4",
+    "@emotion/styled": "11.13.0",
     "@fortawesome/fontawesome-svg-core": "6.2.0",
     "@fortawesome/free-regular-svg-icons": "6.2.0",
     "@fortawesome/free-solid-svg-icons": "6.2.0",
     "@fortawesome/react-fontawesome": "0.2.0",
     "@mui/icons-material": "5.10.6",
     "@mui/lab": "5.0.0-alpha.100",
-    "@mui/material": "5.10.6",
-    "@mui/styles": "5.10.6",
-    "camelcase": "5.3.1",
+    "@mui/material": "5.15.20",
+    "@vitejs/plugin-react": "4.3.1",
     "classnames": "2.2.6",
-    "cross-env": "7.0.2",
-    "dotenv": "8.2.0",
-    "dotenv-expand": "5.1.0",
     "formik": "2.4.2",
     "magic-bytes.js": "1.0.14",
     "moment": "2.29.4",
-    "react": "17.0.2",
-    "react-app-polyfill": "1.0.6",
+    "react": "18.3.1",
     "react-datepicker": "4.8.0",
-    "react-dev-utils": "12.0.1",
-    "react-dom": "17.0.2",
+    "react-dom": "18.3.1",
     "react-router-dom": "6.21.2",
     "react-toastify": "6.0.8",
     "superagent": "6.1.0",
     "uuid": "8.3.2",
+    "vite-plugin-eslint": "1.8.1",
     "yup": "0.32.8"
   },
   "devDependencies": {
-    "@babel/core": "7.17.8",
-    "@babel/plugin-proposal-private-property-in-object": "7.21.0-placeholder-for-preset-env.2",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.5.7",
-    "@svgr/webpack": "6.5.1",
-    "@testing-library/dom": "8.1.0",
-    "@testing-library/jest-dom": "5.16.3",
-    "@testing-library/react": "12.1.4",
+    "@testing-library/dom": "10.4.0",
+    "@testing-library/react": "16.0.0",
     "@testing-library/user-event": "14.5.1",
-    "@types/classnames": "2.2.3",
-    "@types/node": "17.0.23",
-    "@types/react": "17.0.43",
+    "@types/react": "18.3.4",
     "@types/react-datepicker": "4.3.4",
-    "@types/react-dom": "17.0.14",
+    "@types/react-dom": "18.3.0",
     "@types/superagent": "4.1.7",
     "@types/uuid": "8.3.1",
     "@typescript-eslint/eslint-plugin": "5.37.0",
     "@typescript-eslint/parser": "5.18.0",
-    "babel-eslint": "10.1.0",
-    "babel-jest": "27.5.1",
-    "babel-loader": "8.2.4",
-    "babel-preset-react-app": "10.0.1",
-    "bfj": "7.0.2",
-    "browserslist": "4.21.4",
-    "case-sensitive-paths-webpack-plugin": "2.3.0",
-    "css-loader": "6.7.1",
-    "css-minimizer-webpack-plugin": "4.1.0",
-    "eslint": "8.57.0",
+    "@vitest/coverage-v8": "2.0.5",
+    "eslint": "8.23.1",
     "eslint-config-react-app": "7.0.1",
     "eslint-plugin-flowtype": "4.6.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsx-a11y": "6.6.1",
     "eslint-plugin-react": "7.31.8",
     "eslint-plugin-react-hooks": "4.6.0",
-    "eslint-webpack-plugin": "3.2.0",
-    "file-loader": "6.2.0",
-    "fs-extra": "10.1.0",
-    "html-webpack-plugin": "5.5.0",
-    "identity-obj-proxy": "3.0.0",
-    "jest": "27.5.1",
-    "jest-environment-jsdom": "27.5.1",
-    "jest-resolve": "27.5.1",
-    "jest-sonar-reporter": "2.0.0",
-    "mini-css-extract-plugin": "2.6.1",
-    "postcss": "8.4.4",
-    "postcss-flexbugs-fixes": "5.0.2",
-    "postcss-loader": "6.2.1",
-    "postcss-normalize": "10.0.1",
-    "postcss-preset-env": "7.0.1",
-    "prompts": "2.4.2",
-    "resolve": "1.15.0",
-    "resolve-url-loader": "5.0.0",
+    "jsdom": "24.1.1",
     "sass": "1.55.0",
-    "sass-loader": "12.6.0",
-    "semver": "6.3.1",
-    "source-map-loader": "3.0.1",
-    "style-loader": "3.3.1",
     "superagent-mock": "4.0.0",
-    "terser-webpack-plugin": "5.3.6",
-    "tsarch": "^5.3.0",
+    "tsarch": "5.3.0",
     "typescript": "4.6.3",
-    "webpack": "5.94.0",
-    "webpack-cli": "4.10.0",
-    "webpack-dev-server": "4.11.1",
-    "webpack-manifest-plugin": "5.0.0",
-    "workbox-webpack-plugin": "6.5.4"
+    "vite": "5.4.1",
+    "vitest": "2.0.5"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test:devw": "node scripts/test.js --watchAll",
-    "test:dev": "CI=true node scripts/test.js",
-    "test:dev:update": "node scripts/test.js --watchAll -u",
-    "test:dev:coverage": "node scripts/test.js --coverage --watchAll=false",
-    "test": "CI=true node scripts/test.js --coverage -w=2 --silent -b",
-    "package": "node scripts/build.js",
-    "publish:pact": "node pact/publish/publish.js"
-  },
-  "jest": {
-    "testResultsProcessor": "jest-sonar-reporter",
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "collectCoverageFrom": [
-      "!<rootDir>/src/serviceWorker.ts",
-      "**/*.{ts,tsx}",
-      "!**/*.d.ts"
-    ],
-    "setupFiles": [
-      "react-app-polyfill/jsdom"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setupTests.ts"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{spec,test}.{js,jsx,ts,tsx}"
-    ],
-    "testEnvironment": "jest-environment-jsdom",
-    "transform": {
-      "^.+\\.(js|jsx|ts|tsx|cjs)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
-      "^.+\\.module\\.(css|sass|scss)$"
-    ],
-    "modulePaths": [],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
-      "@composant/(.+)$": "<rootDir>/src/views/common/composant/$1",
-      "@hook/(.+)$": "<rootDir>/src/views/common/hook/$1",
-      "@util/(.+)$": "<rootDir>/src/views/common/util/$1",
-      "@utilMetier/(.+)$": "<rootDir>/src/views/common/utilMetier/$1",
-      "@widget/(.+)$": "<rootDir>/src/views/common/widget/$1",
-      "@core/(.+)$": "<rootDir>/src/views/core/$1",
-      "@pages/(.+)$": "<rootDir>/src/views/pages/$1",
-      "@router/(.+)$": "<rootDir>/src/views/router/$1",
-      "@api/(.+)$": "<rootDir>/src/api/$1",
-      "@model/(.+)$": "<rootDir>/src/model/$1",
-      "@scss/(.+)$": "<rootDir>/src/scss/$1",
-      "@mock/(.+)$": "<rootDir>/src/mock/$1",
-      "@pageEtablissement/(.+)$": "<rootDir>/src/views/pages/requeteCreation/apercuRequete/etablissement/$1"
-    },
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "web.ts",
-      "ts",
-      "web.tsx",
-      "tsx",
-      "json",
-      "web.jsx",
-      "jsx",
-      "node"
-    ]
-  },
-  "jestSonar": {
-    "reportPath": "test_report/jest",
-    "reportFile": "test-report.xml"
+    "start": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview --port 3000",
+    "test": "NODE_ENV=test vitest run --coverage --config vite.config.mts --bail 1",
+    "test:nocoverage": "NODE_ENV=test vitest",
+    "package": "npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not ie 11",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version",
-      ">0.2%",
-      "not ie 11",
-      "not dead",
-      "not op_mini all"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
   }
 }

@@ -1,7 +1,7 @@
 import { setProfilsOfficier, useLoginApi } from "@core/login/LoginHook";
-import { act } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import React from "react";
-import ReactDOM from "react-dom";
+import { afterEach, beforeEach, expect, test } from "vitest";
 
 let container: Element | null;
 
@@ -27,10 +27,8 @@ afterEach(() => {
   container = null;
 });
 
-test("monter un composant de test pour vérifier que tout va bien", async () => {
-  await act(async () => {
-    ReactDOM.render(<HookConsummer />, container);
-  });
+test("monter un composant de test pour vérifier que tout va bien", () => {
+  render(<HookConsummer />);
   expect(container).toBeInstanceOf(Element);
   if (container instanceof Element) {
     expect(container.querySelector).toBeTruthy();

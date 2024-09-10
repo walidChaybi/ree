@@ -4,6 +4,7 @@ import {
 } from "@hook/acte/mentions/MentionsApiHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
+import { expect, test } from "vitest";
 const HookConsumer: React.FC = () => {
   const [parametres, setParametres] = useState<IMentionsParams>();
   const mentions = useMentionsApiHook(parametres);
@@ -23,10 +24,10 @@ const HookConsumer: React.FC = () => {
   );
 };
 
-test("Attendu: useMentionsApiHook fonctionne correctement", async () => {
+test("Attendu: useMentionsApiHook fonctionne correctement", () => {
   render(<HookConsumer />);
 
-  await waitFor(() => {
+  waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
     expect(
       screen.getByText("1a0aa3be-8311-465d-b750-d4c19834430e")

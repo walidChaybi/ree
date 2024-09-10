@@ -6,11 +6,12 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
+import { expect, test, vi } from "vitest";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 
-const mockedRedirection = jest.fn();
+const mockedRedirection = vi.fn();
 
-test("DOIT rediriger sur l'appercu prise en charge QUAND on clique sur le bouton prendre en charge", async () => {
+test("DOIT rediriger sur l'appercu prise en charge QUAND on clique sur le bouton prendre en charge", () => {
   storeRece.utilisateurCourant = userDroitCreerActeEtabliPerimetreTousRegistres;
   const ID = "54ddf213-d9b7-4747-8e92-68c220f66de3";
 
@@ -42,13 +43,13 @@ test("DOIT rediriger sur l'appercu prise en charge QUAND on clique sur le bouton
     "Prendre en charge"
   ) as HTMLButtonElement;
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(boutonPrendreEnCharge.disabled).toBeFalsy();
   });
 
   fireEvent.click(boutonPrendreEnCharge);
 
-  await waitFor(() => {
+  waitFor(() => {
     // La redirection se fait dans le composant parent, on test ici que la redirection du parent soit bien appelée
     // TODO: Ce test cause un 'No routes matched location', voir FIXME dans BoutonsApercuCreationEtablissement.tsx.
     expect(mockedRedirection).toBeCalled();

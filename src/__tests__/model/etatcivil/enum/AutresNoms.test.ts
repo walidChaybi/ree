@@ -1,4 +1,5 @@
 import { AutresNoms } from "@model/etatcivil/enum/AutresNoms";
+import { expect, test } from "vitest";
 
 test("enum autre nom", () => {
   expect(AutresNoms.isAutre(AutresNoms.getEnumFor("AUTRE"))).toBeTruthy();

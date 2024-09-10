@@ -1,10 +1,10 @@
 import { ApiManager, HttpMethod } from "@api/ApiManager";
-import { isNullOrUndefined } from "util";
+import { expect, test } from "vitest";
 
 test("instanciation d'une api définie dans le fichier api.json", () => {
   const api = ApiManager.getInstance("rece-requete-api", "v2");
 
-  expect(api).not.toBe(isNullOrUndefined);
+  expect(api).not.toBe(null || undefined);
   expect(api.url).toBe("http://localhost");
   expect(api.domain).toBe("rece");
   expect(api.name).toBe("rece-requete-api");

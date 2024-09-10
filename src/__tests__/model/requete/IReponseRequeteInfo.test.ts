@@ -5,6 +5,7 @@ import {
 } from "@model/requete/IReponseRequeteInfo";
 import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
 import { ObjetRequeteInfo } from "@model/requete/enum/ObjetRequeteInfo";
+import { expect, test } from "vitest";
 
 test("Attendu: ReponseRequeteInfo.getLibelleNomenclatureReponseRequeteInfoFromId fonctionne correctement", () => {
   expect(

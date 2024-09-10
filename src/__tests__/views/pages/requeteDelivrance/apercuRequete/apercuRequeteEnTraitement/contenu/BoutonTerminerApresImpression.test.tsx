@@ -8,9 +8,10 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { BoutonTerminerApresImpression } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/BoutonTerminerApresImpression";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
-import { act, fireEvent, render, waitFor } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { MemoryRouter } from "react-router-dom";
+import { expect, test } from "vitest";
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
@@ -48,7 +49,7 @@ const requeteTestCOURRIER = {
   ]
 } as IRequeteDelivrance;
 
-test("est à A_VALIDER et provient de COURRIER", async () => {
+test("est à A_VALIDER et provient de COURRIER", () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
 
   const { getByText } = render(
@@ -65,11 +66,9 @@ test("est à A_VALIDER et provient de COURRIER", async () => {
     /Terminer après impression locale/i
   ) as HTMLButtonElement;
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(bouttonSigner.disabled).toBeFalsy();
   });
 
-  await act(async () => {
-    fireEvent.click(bouttonSigner);
-  });
+  fireEvent.click(bouttonSigner);
 });

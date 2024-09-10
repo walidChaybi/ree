@@ -6,6 +6,7 @@ import {
   getMessageSiVerificationRestrictionRmcRequeteEnErreur,
   typeRequeteSaisiSansSousTypeOuStatut
 } from "@pages/rechercheMultiCriteres/requete/validation/VerificationRestrictionRmcRequete";
+import { expect, test } from "vitest";
 
 const SOMETHING = "something";
 

@@ -1,6 +1,7 @@
-import { act, render, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import React from "react";
+import { expect, test, vi } from "vitest";
 import * as Yup from "yup";
 
 const HookConsummerFormulaire: React.FC = () => {
@@ -12,7 +13,7 @@ const HookConsummerFormulaire: React.FC = () => {
     [FORMULAIRE]: Yup.string()
   });
 
-  const handleClickButton = jest.fn();
+  const handleClickButton = vi.fn();
 
   return (
     <Formulaire
@@ -24,12 +25,10 @@ const HookConsummerFormulaire: React.FC = () => {
   );
 };
 
-test("render composant Formulaire", async () => {
-  await act(async () => {
-    const { getByText } = render(<HookConsummerFormulaire />);
+test("render composant Formulaire", () => {
+  const { getByText } = render(<HookConsummerFormulaire />);
 
-    await waitFor(() => {
-      expect(getByText(/titreFormulaire/i)).toBeDefined();
-    });
+  waitFor(() => {
+    expect(getByText(/titreFormulaire/i)).toBeDefined();
   });
 });

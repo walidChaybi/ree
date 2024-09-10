@@ -3,14 +3,14 @@ import { IActionOption } from "@model/requete/IActionOption";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { MenuAction } from "@widget/menu/MenuAction";
 import { BrowserRouter as Router } from "react-router-dom";
+import { expect, test } from "vitest";
 
 test("renders d'un menu choix des actions", () => {
   const testOptions: IActionOption[] = [
     {
       value: 0,
       label: "Action de test",
-      sousTypes: [SousTypeDelivrance.RDCSC],
-      ref: undefined
+      sousTypes: [SousTypeDelivrance.RDCSC]
     }
   ];
 
@@ -35,14 +35,12 @@ test("renders d'un menu choix des actions avec filtre", () => {
     {
       value: 0,
       label: "Action de test",
-      sousTypes: [SousTypeDelivrance.RDCSC],
-      ref: undefined
+      sousTypes: [SousTypeDelivrance.RDCSC]
     },
     {
       value: 1,
       label: "Action de test 2",
-      sousTypes: [SousTypeDelivrance.RDC],
-      ref: undefined
+      sousTypes: [SousTypeDelivrance.RDC]
     }
   ];
   const { getByText } = render(

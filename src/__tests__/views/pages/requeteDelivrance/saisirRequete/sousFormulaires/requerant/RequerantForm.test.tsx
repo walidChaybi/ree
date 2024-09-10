@@ -4,16 +4,11 @@ import RequerantForm, {
   RequerantFormDefaultValues,
   RequerantFormValidationSchema
 } from "@pages/requeteDelivrance/saisirRequete/sousFormulaires/requerant/RequerantForm";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { expect, test } from "vitest";
 
 const HookRequerantForm: React.FC = () => {
   const [result, setResult] = useState("");
@@ -44,10 +39,8 @@ const HookRequerantForm: React.FC = () => {
   );
 };
 
-test("Le champ Type Requerant", async () => {
-  await act(async () => {
-    render(<HookRequerantForm />);
-  });
+test("Le champ Type Requerant", () => {
+  render(<HookRequerantForm />);
 
   const typeRequerantInteresse = screen.getByLabelText(
     "requerant.typerequerant.titulaire1"
@@ -62,38 +55,34 @@ test("Le champ Type Requerant", async () => {
     "requerant.typerequerant.particulier"
   ) as HTMLInputElement;
 
-  expect(typeRequerantInteresse).toHaveProperty("checked", true);
-  expect(typeRequerantMandataire).toHaveProperty("checked", false);
-  expect(typeRequerantInstitutionnel).toHaveProperty("checked", false);
-  expect(typeRequerantParticulier).toHaveProperty("checked", false);
-
-  await act(async () => {
-    fireEvent.click(typeRequerantMandataire);
+  waitFor(() => {
+    expect(typeRequerantInteresse).toHaveProperty("checked", true);
+    expect(typeRequerantMandataire).toHaveProperty("checked", false);
+    expect(typeRequerantInstitutionnel).toHaveProperty("checked", false);
+    expect(typeRequerantParticulier).toHaveProperty("checked", false);
   });
 
-  await waitFor(() => {
+  fireEvent.click(typeRequerantMandataire);
+
+  waitFor(() => {
     expect(typeRequerantInteresse).toHaveProperty("checked", false);
     expect(typeRequerantMandataire).toHaveProperty("checked", true);
     expect(typeRequerantInstitutionnel).toHaveProperty("checked", false);
     expect(typeRequerantParticulier).toHaveProperty("checked", false);
   });
 
-  await act(async () => {
-    fireEvent.click(typeRequerantInstitutionnel);
-  });
+  fireEvent.click(typeRequerantInstitutionnel);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(typeRequerantInteresse).toHaveProperty("checked", false);
     expect(typeRequerantMandataire).toHaveProperty("checked", false);
     expect(typeRequerantInstitutionnel).toHaveProperty("checked", true);
     expect(typeRequerantParticulier).toHaveProperty("checked", false);
   });
 
-  await act(async () => {
-    fireEvent.click(typeRequerantParticulier);
-  });
+  fireEvent.click(typeRequerantParticulier);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(typeRequerantInteresse).toHaveProperty("checked", false);
     expect(typeRequerantMandataire).toHaveProperty("checked", false);
     expect(typeRequerantInstitutionnel).toHaveProperty("checked", false);
@@ -101,10 +90,8 @@ test("Le champ Type Requerant", async () => {
   });
 });
 
-test("retour du formulaire Requerant", async () => {
-  await act(async () => {
-    render(<HookRequerantForm />);
-  });
+test("retour du formulaire Requerant", () => {
+  render(<HookRequerantForm />);
 
   const typeRequerantInteresse = screen.getByLabelText(
     "requerant.typerequerant.titulaire1"
@@ -113,11 +100,9 @@ test("retour du formulaire Requerant", async () => {
     "requerant.typerequerant.particulier"
   ) as HTMLInputElement;
 
-  act(() => {
-    fireEvent.click(typeRequerantParticulier);
-  });
+  fireEvent.click(typeRequerantParticulier);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(typeRequerantInteresse).toHaveProperty("checked", false);
     expect(typeRequerantParticulier).toHaveProperty("checked", true);
   });
@@ -126,27 +111,25 @@ test("retour du formulaire Requerant", async () => {
     "requerant.particulier.prenom"
   ) as HTMLInputElement;
 
-  await act(async () => {
-    fireEvent.change(typeRequerantParticulierPrenom, {
-      target: {
-        value: "mockPrenom"
-      }
-    });
+  fireEvent.change(typeRequerantParticulierPrenom, {
+    target: {
+      value: "mockPrenom"
+    }
   });
 
-  await waitFor(() => {
-    fireEvent.blur(typeRequerantParticulierPrenom);
+  fireEvent.blur(typeRequerantParticulierPrenom);
+
+  waitFor(() => {
     expect(typeRequerantParticulierPrenom.value).toEqual("MockPrenom");
   });
 
   const submit = screen.getByText(/Submit/i);
-  await act(async () => {
-    fireEvent.click(submit);
-  });
+
+  fireEvent.click(submit);
 
   const result = screen.getByTestId("result");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(result.innerHTML).toBe(
       '{"requerant":{"typeRequerant":"PARTICULIER","mandataire":{"type":"","nature":"","raisonSociale":"","nom":"","prenom":""},"institutionnel":{"type":"","nature":"","nomInstitution":"","nom":"","prenom":""},"particulier":{"nomNaissance":"","nomUsage":"","prenom":"MockPrenom"},"autreProfessionnel":{"nature":"","raisonSociale":"","nom":"","prenom":""}}}'
     );

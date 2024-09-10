@@ -3,15 +3,10 @@ import EvenementFiltre, {
   EvenementFiltreProps
 } from "@pages/rechercheMultiCriteres/filtres/registreReperoire/EvenementFiltre";
 import { EVENEMENT } from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreRepertoireFiltre";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { expect, test } from "vitest";
 const HookEvenementFiltre: React.FC = () => {
   const [result, setResult] = useState("");
 
@@ -38,10 +33,8 @@ const HookEvenementFiltre: React.FC = () => {
   );
 };
 
-test("render composant EvenementFiltre", async () => {
-  await act(async () => {
-    render(<HookEvenementFiltre />);
-  });
+test("render composant EvenementFiltre", () => {
+  render(<HookEvenementFiltre />);
 
   const inputJour = screen.getByLabelText(
     "evenement.dateEvenement.jour"
@@ -58,41 +51,37 @@ test("render composant EvenementFiltre", async () => {
 
   const allInputEvenement = [inputJour, inputMois, inputAnnee, pays];
 
-  await waitFor(() => {
+  waitFor(() => {
     expectToBeDefined([...allInputEvenement]);
   });
 
-  act(() => {
-    fireEvent.change(inputJour, {
-      target: {
-        value: "20"
-      }
-    });
-    fireEvent.change(inputMois, {
-      target: {
-        value: "12"
-      }
-    });
-    fireEvent.change(inputAnnee, {
-      target: {
-        value: "2020"
-      }
-    });
-    fireEvent.change(pays, {
-      target: {
-        value: "France"
-      }
-    });
+  fireEvent.change(inputJour, {
+    target: {
+      value: "20"
+    }
+  });
+  fireEvent.change(inputMois, {
+    target: {
+      value: "12"
+    }
+  });
+  fireEvent.change(inputAnnee, {
+    target: {
+      value: "2020"
+    }
+  });
+  fireEvent.change(pays, {
+    target: {
+      value: "France"
+    }
   });
 
   const submit = screen.getByText(/Submit/i);
-  await act(async () => {
-    fireEvent.click(submit);
-  });
+  fireEvent.click(submit);
 
   const result = screen.getByTestId("result");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(result.innerHTML).toBe(
       '{"evenement":{"dateEvenement":{"jour":"20","mois":"12","annee":"2020"},"paysEvenement":"France"}}'
     );
@@ -103,32 +92,26 @@ function expectToBeDefined(elements: HTMLElement[]) {
   elements.forEach(el => expect(el).toBeDefined());
 }
 
-test("onBlur input pays", async () => {
-  await act(async () => {
-    render(<HookEvenementFiltre />);
+test("onBlur input pays", () => {
+  render(<HookEvenementFiltre />);
 
-    const inputPays = screen.getByLabelText(
-      "evenement.paysEvenement"
-    ) as HTMLInputElement;
+  const inputPays = screen.getByLabelText(
+    "evenement.paysEvenement"
+  ) as HTMLInputElement;
 
-    act(() => {
-      fireEvent.change(inputPays, {
-        target: {
-          value: "  mock  pays  "
-        }
-      });
-    });
+  fireEvent.change(inputPays, {
+    target: {
+      value: "  mock  pays  "
+    }
+  });
 
-    await waitFor(() => {
-      expect(inputPays.value).toBe("  mock  pays  ");
-    });
+  waitFor(() => {
+    expect(inputPays.value).toBe("  mock  pays  ");
+  });
 
-    await act(async () => {
-      fireEvent.blur(inputPays);
-    });
+  fireEvent.blur(inputPays);
 
-    await waitFor(() => {
-      expect(inputPays.value).toBe("mock pays");
-    });
+  waitFor(() => {
+    expect(inputPays.value).toBe("mock pays");
   });
 });

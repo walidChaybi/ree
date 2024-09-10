@@ -1,5 +1,4 @@
 import {
-  act,
   cleanup,
   fireEvent,
   render,
@@ -9,6 +8,7 @@ import {
 import { ExtensionDocumentTypeMime } from "@util/FileUtils";
 import { Options } from "@util/Type";
 import UploadFileField from "@widget/formulaire/champsSaisie/UploadFileField";
+import { afterEach, expect, test, vi } from "vitest";
 import { inputPngFiles } from "../../../../../__tests__utils__/testsUtil";
 
 const AJOUT_PIECE_JOINTE = "Ajout d'une pièce jointe";
@@ -25,8 +25,8 @@ const FILE_MAX_SIZE_KB = 20;
 
 afterEach(cleanup);
 
-test("Attendu: le composant UploadFileField déclanche la fonction onFileChange lorsqu'un fichier est choisi", async () => {
-  const onFileChange = jest.fn();
+test("Attendu: le composant UploadFileField déclanche la fonction onFileChange lorsqu'un fichier est choisi", () => {
+  const onFileChange = vi.fn();
   const menuItems: Options = [
     { cle: "k1", libelle: "str1" },
     { cle: "k2", libelle: "str2" }
@@ -48,20 +48,19 @@ test("Attendu: le composant UploadFileField déclanche la fonction onFileChange 
   const inputUploadFieldWrapper = screen.getByTestId(
     "piecesJointes"
   ) as HTMLInputElement;
-  act(() => {
-    fireEvent.change(inputUploadFieldWrapper, {
-      target: {
-        files: inputPngFiles
-      }
-    });
+  fireEvent.change(inputUploadFieldWrapper, {
+    target: {
+      files: inputPngFiles
+    }
   });
-  await waitFor(() => {
+
+  waitFor(() => {
     expect(onFileChange).toBeCalledTimes(1);
   });
 });
 
-test("Attendu: le composant UploadFileField ne déclanche pas la fonction onFileChange lorsqu'un fichier du mauvais type est choisi", async () => {
-  const onFileChange = jest.fn();
+test("Attendu: le composant UploadFileField ne déclanche pas la fonction onFileChange lorsqu'un fichier du mauvais type est choisi", () => {
+  const onFileChange = vi.fn();
   const menuItems: Options = [
     { cle: "k1", libelle: "str1" },
     { cle: "k2", libelle: "str2" }
@@ -83,20 +82,18 @@ test("Attendu: le composant UploadFileField ne déclanche pas la fonction onFile
   const inputUploadFieldWrapper = screen.getByTestId(
     "piecesJointes"
   ) as HTMLInputElement;
-  act(() => {
-    fireEvent.change(inputUploadFieldWrapper, {
-      target: {
-        files: inputPngFiles
-      }
-    });
+  fireEvent.change(inputUploadFieldWrapper, {
+    target: {
+      files: inputPngFiles
+    }
   });
-  await waitFor(() => {
+  waitFor(() => {
     expect(onFileChange).not.toBeCalled();
   });
 });
 
-test("Attendu: le composant UploadFileField affiche un menu lorsq'un click sur le bouton principal est effectué", async () => {
-  const onFileChange = jest.fn();
+test("Attendu: le composant UploadFileField affiche un menu lorsq'un click sur le bouton principal est effectué", () => {
+  const onFileChange = vi.fn();
   const menuItems: Options = [
     { cle: "k1", libelle: "str1" },
     { cle: "k2", libelle: "str2" }
@@ -116,12 +113,17 @@ test("Attendu: le composant UploadFileField affiche un menu lorsq'un click sur l
   );
 
   const boutonMenu = screen.getByRole("button") as HTMLButtonElement;
-  expect(boutonMenu).toBeDefined();
+
+  waitFor(() => {
+    expect(boutonMenu).toBeDefined();
+  });
 
   fireEvent.click(boutonMenu);
 
-  expect(screen.getByText("str1")).toBeDefined();
-  expect(screen.getByText("str2")).toBeDefined();
+  waitFor(() => {
+    expect(screen.getByText("str1")).toBeDefined();
+    expect(screen.getByText("str2")).toBeDefined();
+  });
 
   fireEvent.click(screen.getByText("str1")); // Rien à vérifier ensuite
 });

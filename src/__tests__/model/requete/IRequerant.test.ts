@@ -4,7 +4,8 @@ import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
 import { Requerant } from "@model/requete/IRequerant";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
-test("Attendu: Requerant.setRequerant mandataire", async () => {
+import { expect, test } from "vitest";
+test("Attendu: Requerant.setRequerant mandataire", () => {
   const qualiteMandataire = {
     qualite: Qualite.MANDATAIRE_HABILITE,
     mandataireHabilite: {
@@ -230,7 +231,7 @@ test("Attendu: Requerant.setRequerant mandataire", async () => {
   expect(saisieRequeteRdcsc).toEqual(attendu);
 });
 
-test("Attendu: Requerant.setRequerant institutionnel", async () => {
+test("Attendu: Requerant.setRequerant institutionnel", () => {
   const qualiteInstitutionnel = {
     qualite: Qualite.INSTITUTIONNEL,
     institutionnel: {
@@ -456,7 +457,7 @@ test("Attendu: Requerant.setRequerant institutionnel", async () => {
   expect(saisieRequeteRdcsc).toEqual(attendu);
 });
 
-test("Attendu: Requerant.setRequerant interessé", async () => {
+test("Attendu: Requerant.setRequerant interessé", () => {
   const qualiteParticulier = {
     qualite: Qualite.PARTICULIER,
     particulier: {
@@ -680,7 +681,7 @@ test("Attendu: Requerant.setRequerant interessé", async () => {
   expect(saisieRequeteRdcsc).toEqual(attendu);
 });
 
-test("Attendu: Requerant.organiserRequerant autreProfessionnel", async () => {
+test("Attendu: Requerant.organiserRequerant autreProfessionnel", () => {
   const qualiteAutreProfessionnel = {
     qualite: Qualite.AUTRE_PROFESSIONNEL,
     autreProfessionnel: {
@@ -700,7 +701,7 @@ test("Attendu: Requerant.organiserRequerant autreProfessionnel", async () => {
   expect(requerant).toEqual(identiteAttendue);
 });
 
-test("Attendu: Requerant.organiserRequerant autreProfessionnel sans raison sociale", async () => {
+test("Attendu: Requerant.organiserRequerant autreProfessionnel sans raison sociale", () => {
   const qualiteAutreProfessionnel = {
     qualite: Qualite.AUTRE_PROFESSIONNEL,
     autreProfessionnel: {
@@ -719,7 +720,7 @@ test("Attendu: Requerant.organiserRequerant autreProfessionnel sans raison socia
   expect(requerant).toEqual(identiteAttendue);
 });
 
-test("Attendu: Requerant.organiserRequerant mandataireHabilite", async () => {
+test("Attendu: Requerant.organiserRequerant mandataireHabilite", () => {
   const qualiteMandataireHabilite = {
     qualite: Qualite.MANDATAIRE_HABILITE,
     mandataireHabilite: {
@@ -739,7 +740,7 @@ test("Attendu: Requerant.organiserRequerant mandataireHabilite", async () => {
   expect(requerant).toEqual(identiteAttendue);
 });
 
-test("Attendu: Requerant.organiserRequerant mandataireHabilite sans raison sociale", async () => {
+test("Attendu: Requerant.organiserRequerant mandataireHabilite sans raison sociale", () => {
   const qualiteMandataireHabilite = {
     qualite: Qualite.MANDATAIRE_HABILITE,
     mandataireHabilite: {
@@ -758,7 +759,7 @@ test("Attendu: Requerant.organiserRequerant mandataireHabilite sans raison socia
   expect(requerant).toEqual(identiteAttendue);
 });
 
-test("Attendu: Requerant.organiserRequerant institutionnel", async () => {
+test("Attendu: Requerant.organiserRequerant institutionnel", () => {
   const qualiteInstitutionnel = {
     qualite: Qualite.INSTITUTIONNEL,
     institutionnel: {
@@ -778,7 +779,7 @@ test("Attendu: Requerant.organiserRequerant institutionnel", async () => {
   expect(requerant).toEqual(identiteAttendue);
 });
 
-test("Attendu: Requerant.organiserRequerant institutionnel sans nomInstitution", async () => {
+test("Attendu: Requerant.organiserRequerant institutionnel sans nomInstitution", () => {
   const qualiteInstitutionnel = {
     qualite: Qualite.INSTITUTIONNEL,
     institutionnel: {

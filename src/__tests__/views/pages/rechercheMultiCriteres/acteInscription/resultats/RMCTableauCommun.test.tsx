@@ -1,4 +1,5 @@
 import { goToLinkRMC } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauCommun";
+import { expect, test } from "vitest";
 
 test("RMC Utils goToLinkRMC", () => {
   const result = goToLinkRMC(

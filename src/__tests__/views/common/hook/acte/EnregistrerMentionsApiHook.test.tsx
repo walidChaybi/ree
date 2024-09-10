@@ -1,5 +1,6 @@
 import * as EtatCivilApi from "@api/appels/etatcivilApi";
 import { render, screen, waitFor } from "@testing-library/react";
+import { describe, expect, test, vi } from "vitest";
 import {
   IEnregistrerMentionsEtAnalyseMarginaleParams,
   useEnregistrerMentionsEtAnalyseMarginaleApiHook
@@ -14,8 +15,8 @@ const EnregistrerMentionsApiHookConsumer: React.FC<
 };
 
 describe("useEnregistrerMentionsApiHook", () => {
-  test("Appel l'endpoint enregistrerMentions avec mention normal", async () => {
-    const enregistrerMentionsEtAnalyseMarginaleSpy = jest.spyOn(
+  test("Appel l'endpoint enregistrerMentions avec mention normal", () => {
+    const enregistrerMentionsEtAnalyseMarginaleSpy = vi.spyOn(
       EtatCivilApi,
       "enregistrerMentionsEtAnalyseMarginale"
     );
@@ -34,7 +35,7 @@ describe("useEnregistrerMentionsApiHook", () => {
         mentions={mentionsEnregistrees}
       />
     );
-    await waitFor(() => {
+    waitFor(() => {
       expect(enregistrerMentionsEtAnalyseMarginaleSpy).toHaveBeenCalledWith(
         idActe,
         mentionsEnregistrees,
@@ -44,8 +45,8 @@ describe("useEnregistrerMentionsApiHook", () => {
     });
   });
 
-  test("Appel l'endpoint enregistrerMentions avec mentions qui change l'analyse marginale", async () => {
-    const enregistrerMentionsEtAnalyseMarginaleSpy = jest.spyOn(
+  test("Appel l'endpoint enregistrerMentions avec mentions qui change l'analyse marginale", () => {
+    const enregistrerMentionsEtAnalyseMarginaleSpy = vi.spyOn(
       EtatCivilApi,
       "enregistrerMentionsEtAnalyseMarginale"
     );
@@ -62,7 +63,8 @@ describe("useEnregistrerMentionsApiHook", () => {
       prenoms: ["Cassandra", "Celia", "Salomé"],
       nomPartie1: "Schlosser",
       nomPartie2: "Nahed",
-      motif: "Suite à apposition de mention 14-1"
+      motif: "Suite à apposition de mention 14-1",
+      secable: true
     };
 
     render(
@@ -72,7 +74,7 @@ describe("useEnregistrerMentionsApiHook", () => {
         analyseMarginale={analyseMarginale}
       />
     );
-    await waitFor(() => {
+    waitFor(() => {
       expect(enregistrerMentionsEtAnalyseMarginaleSpy).toHaveBeenCalledWith(
         idActe,
         mentionsEnregistrees,
@@ -81,7 +83,7 @@ describe("useEnregistrerMentionsApiHook", () => {
     });
   });
 
-  test("Récupère les informations de composition du document mis à jour.", async () => {
+  test("Récupère les informations de composition du document mis à jour.", () => {
     render(
       <EnregistrerMentionsApiHookConsumer
         idActe={"b00ebeb2-8ddc-4928-b99e-b06a248d21ae"}
@@ -89,7 +91,7 @@ describe("useEnregistrerMentionsApiHook", () => {
       />
     );
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(screen.getByTestId("resultat").textContent).toContain(
         "texteMention"
       );

@@ -4,6 +4,7 @@ import { storeRece } from "@util/storeRece";
 import { estSuperieurA500Caracteres } from "@util/Utils";
 import { ConfirmationPopinAvecMessage } from "@widget/popin/ConfirmationPopinAvecMessage";
 import React, { useEffect, useState } from "react";
+import { beforeAll, describe, expect, test, vi } from "vitest";
 
 beforeAll(() => {
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
@@ -77,16 +78,14 @@ const HookConsummerConfirmationPopin: React.FC<
 };
 
 describe("Popin avec confirmation et message", () => {
-  test("Doit désactiver le bouton d'envoi si le message est vide et activer si le message n'est pas vide", async () => {
-    const valider = jest.fn();
+  test("Doit désactiver le bouton d'envoi si le message est vide et activer si le message n'est pas vide", () => {
+    const valider = vi.fn();
 
     render(<HookConsummerConfirmationPopin valider={valider} message={""} />);
 
-    let boutonValiderMessage;
-    await waitFor(() => {
-      boutonValiderMessage = screen.getByText("Valider");
-
-      expect(boutonValiderMessage).toBeDisabled();
+    let boutonValiderMessage = screen.getByText("Valider") as HTMLButtonElement;
+    waitFor(() => {
+      expect(boutonValiderMessage.disabled).toBeTruthy();
     });
 
     const textArea = screen.getByPlaceholderText("Saisir un message");
@@ -94,147 +93,133 @@ describe("Popin avec confirmation et message", () => {
       target: { value: "Je suis un message" }
     });
 
-    expect(boutonValiderMessage).not.toBeDisabled();
+    expect(boutonValiderMessage.disabled).not.toBeTruthy();
   });
 
-  test("Attendu la popin ConfirmationPopinAvecMessage, le bouton 'Annuler' fonctionne correctement", async () => {
-    const fermerPopin = jest.fn();
+  test("Attendu la popin ConfirmationPopinAvecMessage, le bouton 'Annuler' fonctionne correctement", () => {
+    const fermerPopin = vi.fn();
 
     render(<HookConsummerConfirmationPopin fermerPopin={fermerPopin} />);
 
     let boutonAnnuler: HTMLElement;
-    await waitFor(() => {
+    waitFor(() => {
       boutonAnnuler = screen.getByText("Annuler");
-      expect(boutonAnnuler).toBeInTheDocument();
+      expect(boutonAnnuler).toBeDefined();
     });
 
     fireEvent.click(boutonAnnuler!);
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(fermerPopin).toHaveBeenCalledTimes(1);
     });
 
-    await waitFor(() => {
-      //   expect(setState).toHaveBeenCalledWith(false);
-    });
-
-    await waitFor(() => {
-      expect(boutonAnnuler).not.toBeInTheDocument();
+    waitFor(() => {
+      expect(boutonAnnuler).not.toBeDefined();
     });
   });
 
-  test("Attendu la popin ConfirmationPopinAvecMessage, le bouton 'Valider' fonctionne correctement", async () => {
-    const envoyerMessageRetourSDANF = jest.fn();
+  test("Attendu la popin ConfirmationPopinAvecMessage, le bouton 'Valider' fonctionne correctement", () => {
+    const envoyerMessageRetourSDANF = vi.fn();
 
     render(
       <HookConsummerConfirmationPopin valider={envoyerMessageRetourSDANF} />
     );
 
-    let boutonValider: HTMLElement;
-    await waitFor(() => {
-      boutonValider = screen.getByText("Valider");
-      expect(boutonValider).toBeInTheDocument();
+    let boutonValider = screen.getByText("Valider");
+    waitFor(() => {
+      expect(boutonValider).toBeDefined();
     });
 
-    await waitFor(() => {
       const textArea = screen.getByPlaceholderText("Saisir un message");
       fireEvent.change(textArea, {
         target: { value: "Je suis un message" }
       });
-    });
 
-    fireEvent.click(boutonValider!);
+    fireEvent.click(boutonValider);
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(envoyerMessageRetourSDANF).toHaveBeenCalledTimes(1);
     });
 
-    await waitFor(() => {
-      expect(boutonValider).not.toBeInTheDocument();
+    waitFor(() => {
+      expect(boutonValider).not.toBeDefined();
     });
   });
 
-  test("Doit afficher le titre quand il est présent dans les props", async () => {
+  test("Doit afficher le titre quand il est présent dans les props", () => {
     render(<HookConsummerConfirmationPopin title={"Je suis un titre"} />);
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(screen.getByText("Je suis un titre")).toBeDefined();
     });
   });
 
-  test("Doit afficher le message d'erreur quand il est présent", async () => {
+  test("Doit afficher le message d'erreur quand il est présent", () => {
     render(
       <HookConsummerConfirmationPopin
         messageErreur={"Je suis un message d'erreur"}
       />
     );
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(screen.getByText("Je suis un message d'erreur")).toBeDefined();
     });
   });
 
-  test("Doit afficher un message d'erreur si le message est supérieur à 500 caractères", async () => {
+  test("Doit afficher un message d'erreur si le message est supérieur à 500 caractères", () => {
     render(<HookConsummerConfirmationPopin />);
 
     const message =
       "Lorem Ipsum is simply dummy text of the printing and typesddetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was populardddd";
 
-    await waitFor(() => {
       const textArea = screen.getByPlaceholderText("Saisir un message");
       fireEvent.change(textArea, {
         target: { value: message }
       });
-    });
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(screen.getByText("500 caractères maximum")).toBeDefined();
     });
   });
 
-  test("Doit activer le bouton de soumission si le message SDANF n'est pas vide", async () => {
+  test("Doit activer le bouton de soumission si le message SDANF n'est pas vide", () => {
     render(<HookConsummerConfirmationPopin message={"Message"} />);
 
-    let boutonValiderMessage: HTMLElement;
-    await waitFor(() => {
-      boutonValiderMessage = screen.getByText("Valider");
-    });
+    let boutonValiderMessage = screen.getByText("Valider") as HTMLButtonElement;
 
-    await waitFor(() => {
-      expect(boutonValiderMessage).not.toBeDisabled();
+    waitFor(() => {
+      expect(boutonValiderMessage.disabled).not.toBeTruthy();
     });
   });
 
-  test("Doit vider l'area après l'envoi d'un message", async () => {
-    const envoyerMessageRetourSDANF = jest.fn();
+  test("Doit vider l'area après l'envoi d'un message", () => {
+    const envoyerMessageRetourSDANF = vi.fn();
 
     render(
       <HookConsummerConfirmationPopin valider={envoyerMessageRetourSDANF} />
     );
 
-    let boutonValider: HTMLElement;
+    let boutonValider = screen.getByText("Valider") as HTMLButtonElement;
     let textArea: HTMLAreaElement;
-    await waitFor(() => {
-      boutonValider = screen.getByText("Valider");
-      expect(boutonValider).toBeInTheDocument();
+
+    waitFor(() => {
+      expect(boutonValider).toBeDefined();
     });
 
-    await waitFor(() => {
       textArea = screen.getByPlaceholderText("Saisir un message");
       fireEvent.change(textArea, {
         target: { value: "Je suis un message" }
       });
-    });
 
-    fireEvent.click(boutonValider!);
+    fireEvent.click(boutonValider);
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(envoyerMessageRetourSDANF).toHaveBeenCalledTimes(1);
     });
 
-    await waitFor(() => {
-      expect(textArea).toHaveValue("");
-      expect(boutonValider).toBeDisabled();
+    waitFor(() => {
+      expect(textArea).toBe("");
+      expect(boutonValider.disabled).toBeTruthy();
     });
   });
 });

@@ -2,14 +2,15 @@ import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import { idRequeteRDCSC } from "@mock/data/requeteDelivrance";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { BoutonValiderTerminer } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/BoutonValiderTerminer";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
+import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 
 const requeteTestCOURRIER = {
@@ -47,7 +48,7 @@ const requeteTestCOURRIER = {
   ]
 } as IRequeteDelivrance;
 
-test("est à A_VALIDER et provient de COURRIER", async () => {
+test("est à A_VALIDER et provient de COURRIER", () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
   const router = createTestingRouter(
     [
@@ -72,7 +73,7 @@ test("est à A_VALIDER et provient de COURRIER", async () => {
     /Valider et terminer/i
   ) as HTMLButtonElement;
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(bouttonSigner.disabled).toBeFalsy();
   });
 });

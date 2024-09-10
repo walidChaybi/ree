@@ -1,4 +1,5 @@
 import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
+import { expect, test } from "vitest";
 
 test("ModeSignature model", () => {
   expect(ModeSignatureUtil.estValide(ModeSignature.DRY_RUN)).toBe(true);

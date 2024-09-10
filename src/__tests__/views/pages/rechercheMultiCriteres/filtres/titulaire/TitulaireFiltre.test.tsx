@@ -8,6 +8,7 @@ import TitulaireFiltre, {
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { describe, expect, test } from "vitest";
 
 const titulaire1: ITitulaireRequete = {
   id: "8b549d8d-eda3-4706-9a4f-bb45fde00155",
@@ -85,7 +86,7 @@ const HookConsummerTitulaireForm: React.FC<{
   );
 };
 
-test("DOIT rendre le composant formulaire Titulaire QUAND on l'affiche.", async () => {
+test("DOIT rendre le composant formulaire Titulaire QUAND on l'affiche.", () => {
   render(<HookConsummerTitulaireForm />);
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
   const inputPrenom = screen.getByLabelText("Prénom") as HTMLInputElement;
@@ -114,14 +115,14 @@ test("DOIT rendre le composant formulaire Titulaire QUAND on l'affiche.", async 
 
   const result = screen.getByTestId("result");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(result.innerHTML).toBe(
       '{"titulaire":{"nom":"mockNom","prenom":"mockPrenom","dateNaissance":{"jour":"","mois":"","annee":""},"paysNaissance":"mockPays"}}'
     );
   });
 });
 
-test("DOIT inverser nom et prenom QUAND on clique sur le bouton switch.", async () => {
+test("DOIT inverser nom et prenom QUAND on clique sur le bouton switch.", () => {
   render(<HookConsummerTitulaireForm />);
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
@@ -140,20 +141,20 @@ test("DOIT inverser nom et prenom QUAND on clique sur le bouton switch.", async 
 
   const boutonSwitch = screen.getByLabelText("inverser nom et prénom");
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(inputNom.value).toBe("mockNom");
     expect(inputPrenom.value).toBe("mockPrenom");
   });
 
   fireEvent.click(boutonSwitch);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(inputNom.value).toBe("mockPrenom");
     expect(inputPrenom.value).toBe("mockNom");
   });
 });
 
-test("DOIT reformater le champ 'nom' QUAND on sort du champ.", async () => {
+test("DOIT reformater le champ 'nom' QUAND on sort du champ.", () => {
   render(<HookConsummerTitulaireForm />);
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
@@ -164,103 +165,99 @@ test("DOIT reformater le champ 'nom' QUAND on sort du champ.", async () => {
     }
   });
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(inputNom.value).toBe("  mock  Nom  ");
   });
 
   fireEvent.blur(inputNom);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(inputNom.value).toBe("mock Nom");
   });
 });
 
 describe("Tests des boutons 'Rappel titulaire'", () => {
-  test("DOIT rendre aucun bouton QUAND aucun titulaire n'est présent.", async () => {
+  test("DOIT rendre aucun bouton QUAND aucun titulaire n'est présent.", () => {
     render(<HookConsummerTitulaireForm titulaires={[]} />);
 
-    await waitFor(() => {
-      expect(screen.queryByText("Rappel titulaire")).not.toBeInTheDocument();
-      expect(screen.queryByText("Rappel titulaire 1")).not.toBeInTheDocument();
-      expect(screen.queryByText("Rappel titulaire 2")).not.toBeInTheDocument();
+    waitFor(() => {
+      expect(screen.queryByText("Rappel titulaire")).not.toBeDefined();
+      expect(screen.queryByText("Rappel titulaire 1")).not.toBeDefined();
+      expect(screen.queryByText("Rappel titulaire 2")).not.toBeDefined();
     });
   });
 
-  test("DOIT rendre le bouton 'Rappel titulaire' QUAND un seul titulaire est présent.", async () => {
+  test("DOIT rendre le bouton 'Rappel titulaire' QUAND un seul titulaire est présent.", () => {
     render(<HookConsummerTitulaireForm titulaires={[titulaire1]} />);
 
-    await waitFor(() => {
-      expect(screen.queryByText("Rappel titulaire")).toBeInTheDocument();
-      expect(screen.queryByText("Rappel titulaire 1")).not.toBeInTheDocument();
-      expect(screen.queryByText("Rappel titulaire 2")).not.toBeInTheDocument();
+    waitFor(() => {
+      expect(screen.queryByText("Rappel titulaire")).toBeDefined();
+      expect(screen.queryByText("Rappel titulaire 1")).not.toBeDefined();
+      expect(screen.queryByText("Rappel titulaire 2")).not.toBeDefined();
     });
   });
 
-  test("DOIT rendre les boutons 'Rappel titulaire 1' et 'Rappel titulaire 2' QUAND deux titulaires sont présents.", async () => {
+  test("DOIT rendre les boutons 'Rappel titulaire 1' et 'Rappel titulaire 2' QUAND deux titulaires sont présents.", () => {
     render(
       <HookConsummerTitulaireForm titulaires={[titulaire1, titulaire2]} />
     );
 
-    await waitFor(() => {
-      expect(screen.queryByText("Rappel titulaire")).not.toBeInTheDocument();
-      expect(screen.queryByText("Rappel titulaire 1")).toBeInTheDocument();
-      expect(screen.queryByText("Rappel titulaire 2")).toBeInTheDocument();
+    waitFor(() => {
+      expect(screen.queryByText("Rappel titulaire")).not.toBeDefined();
+      expect(screen.queryByText("Rappel titulaire 1")).toBeDefined();
+      expect(screen.queryByText("Rappel titulaire 2")).toBeDefined();
     });
   });
 
-  test("DOIT remplir les champs avec les informations du titulaire 1 QUAND on clique sur le bouton 'Rappel titulaire 1'.", async () => {
+  test("DOIT remplir les champs avec les informations du titulaire 1 QUAND on clique sur le bouton 'Rappel titulaire 1'.", () => {
     render(
       <HookConsummerTitulaireForm titulaires={[titulaire1, titulaire2]} />
     );
 
-    await waitFor(() => {
-      expect(
-        screen.queryByDisplayValue("nomNaissance1")
-      ).not.toBeInTheDocument();
-      expect(screen.queryByDisplayValue("prenom11")).not.toBeInTheDocument();
-      expect(screen.queryByDisplayValue("01")).not.toBeInTheDocument();
-      expect(screen.queryByDisplayValue("01")).not.toBeInTheDocument();
-      expect(screen.queryByDisplayValue("1990")).not.toBeInTheDocument();
-      expect(screen.queryByDisplayValue("Maroc")).not.toBeInTheDocument();
+    waitFor(() => {
+      expect(screen.queryByDisplayValue("nomNaissance1")).not.toBeDefined();
+      expect(screen.queryByDisplayValue("prenom11")).not.toBeDefined();
+      expect(screen.queryByDisplayValue("01")).not.toBeDefined();
+      expect(screen.queryByDisplayValue("01")).not.toBeDefined();
+      expect(screen.queryByDisplayValue("1990")).not.toBeDefined();
+      expect(screen.queryByDisplayValue("Maroc")).not.toBeDefined();
     });
 
     fireEvent.click(screen.getByText("Rappel titulaire 1"));
 
-    await waitFor(() => {
-      expect(screen.queryByDisplayValue("nomNaissance1")).toBeInTheDocument();
-      expect(screen.queryByDisplayValue("prenom11")).toBeInTheDocument();
-      expect(screen.queryByDisplayValue("01")).toBeInTheDocument();
-      expect(screen.queryByDisplayValue("02")).toBeInTheDocument();
-      expect(screen.queryByDisplayValue("1990")).toBeInTheDocument();
-      expect(screen.queryByDisplayValue("Maroc")).toBeInTheDocument();
+    waitFor(() => {
+      expect(screen.queryByDisplayValue("nomNaissance1")).toBeDefined();
+      expect(screen.queryByDisplayValue("prenom11")).toBeDefined();
+      expect(screen.queryByDisplayValue("01")).toBeDefined();
+      expect(screen.queryByDisplayValue("02")).toBeDefined();
+      expect(screen.queryByDisplayValue("1990")).toBeDefined();
+      expect(screen.queryByDisplayValue("Maroc")).toBeDefined();
     });
   });
 
-  test("DOIT remplir les champs avec les informations du titulaire 2 QUAND on clique sur le bouton 'Rappel titulaire 2'.", async () => {
+  test("DOIT remplir les champs avec les informations du titulaire 2 QUAND on clique sur le bouton 'Rappel titulaire 2'.", () => {
     render(
       <HookConsummerTitulaireForm titulaires={[titulaire1, titulaire2]} />
     );
 
-    await waitFor(() => {
-      expect(
-        screen.queryByDisplayValue("nomNaissance2")
-      ).not.toBeInTheDocument();
-      expect(screen.queryByDisplayValue("prenom21")).not.toBeInTheDocument();
-      expect(screen.queryByDisplayValue("20")).not.toBeInTheDocument();
-      expect(screen.queryByDisplayValue("10")).not.toBeInTheDocument();
-      expect(screen.queryByDisplayValue("2002")).not.toBeInTheDocument();
-      expect(screen.queryByDisplayValue("Argentine")).not.toBeInTheDocument();
+    waitFor(() => {
+      expect(screen.queryByDisplayValue("nomNaissance2")).not.toBeDefined();
+      expect(screen.queryByDisplayValue("prenom21")).not.toBeDefined();
+      expect(screen.queryByDisplayValue("20")).not.toBeDefined();
+      expect(screen.queryByDisplayValue("10")).not.toBeDefined();
+      expect(screen.queryByDisplayValue("2002")).not.toBeDefined();
+      expect(screen.queryByDisplayValue("Argentine")).not.toBeDefined();
     });
 
     fireEvent.click(screen.getByText("Rappel titulaire 2"));
 
-    await waitFor(() => {
-      expect(screen.queryByDisplayValue("nomNaissance2")).toBeInTheDocument();
-      expect(screen.queryByDisplayValue("prenom21")).toBeInTheDocument();
-      expect(screen.queryByDisplayValue("20")).toBeInTheDocument();
-      expect(screen.queryByDisplayValue("10")).toBeInTheDocument();
-      expect(screen.queryByDisplayValue("2002")).toBeInTheDocument();
-      expect(screen.queryByDisplayValue("Argentine")).toBeInTheDocument();
+    waitFor(() => {
+      expect(screen.queryByDisplayValue("nomNaissance2")).toBeDefined();
+      expect(screen.queryByDisplayValue("prenom21")).toBeDefined();
+      expect(screen.queryByDisplayValue("20")).toBeDefined();
+      expect(screen.queryByDisplayValue("10")).toBeDefined();
+      expect(screen.queryByDisplayValue("2002")).toBeDefined();
+      expect(screen.queryByDisplayValue("Argentine")).toBeDefined();
     });
   });
 });

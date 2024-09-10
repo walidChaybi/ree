@@ -1,9 +1,10 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { getTitulairesAM } from "@pages/fiche/hook/constructionComposants/acte/TitulairesActeUtils";
 import { UN, ZERO } from "@util/Utils";
+import { expect, test } from "vitest";
 import { acte } from "../../../../../../../mock/data/ficheEtBandeau/ficheActe";
 
-test("Acte utils : affichage correcte des infos d'un titulaire", async () => {
+test("Acte utils : affichage correcte des infos d'un titulaire", () => {
   const dataActe = mapActe(acte);
   const components = getTitulairesAM(dataActe);
 

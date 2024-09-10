@@ -12,8 +12,9 @@ import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_EDITION_ID
 } from "@router/ReceUrls";
-import { act, render, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
+import { beforeAll, describe, expect, test } from "vitest";
 import {
   createTestingRouter,
   mockFenetreFicheTestFunctions
@@ -58,12 +59,12 @@ const documentResponse = [
   }
 ] as IDocumentReponse[];
 
-beforeAll(async () => {
+beforeAll(() => {
   mockFenetreFicheTestFunctions();
 });
 
 describe("Test onglets documents édites", () => {
-  test("Doit retourner le bon type de document", async () => {
+  test("Doit retourner le bon type de document", () => {
     const router = createTestingRouter(
       [
         {
@@ -78,7 +79,7 @@ describe("Test onglets documents édites", () => {
 
     render(<RouterProvider router={router} />);
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(getTypeDocument(0)).toBe("ff7fe1fa-a2d6-4bc5-8681-deba65d9e2c6");
       expect(getTypeDocument(1)).toBe("318a2726-0d04-4558-8b36-8fe48780def5");
       expect(getTypeDocument(2)).toBe("28580709-06dd-4df2-bf6e-70a9482940a1");
@@ -87,36 +88,34 @@ describe("Test onglets documents édites", () => {
     });
   });
 
-  test("Doit générer la bonne liste complémentaire", async () => {
-    await act(async () => {
-      const router = createTestingRouter(
-        [
-          {
-            path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
-            element: <EditionExtraitCopiePage />
-          }
-        ],
-        [
-          `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f77/19c0d767-64e5-4376-aa1f-6d781a2a235a`
-        ]
-      );
+  test("Doit générer la bonne liste complémentaire", () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+          element: <EditionExtraitCopiePage />
+        }
+      ],
+      [
+        `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f77/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+      ]
+    );
 
-      render(<RouterProvider router={router} />);
-    });
+    render(<RouterProvider router={router} />);
 
     let listePlus: ItemListe[];
     const listePlusAttendu: ItemListe[] = [
       { label: "Copie intégrale", value: 3 }
     ];
 
-    await waitFor(() => {
+    waitFor(() => {
       listePlus = genererListeAjoutComplementaire(
         documentResponse,
         acteDeces as any as IFicheActe
       );
     });
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(listePlus).toStrictEqual(listePlusAttendu);
       //   expect(test).toBe(listePlusAttendu);
     });

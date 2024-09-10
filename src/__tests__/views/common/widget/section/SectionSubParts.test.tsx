@@ -1,7 +1,8 @@
 import { render, waitFor } from "@testing-library/react";
 import { SectionSubParts } from "@widget/section/SectionSubParts";
+import { expect, test } from "vitest";
 
-test("render composant SectionPart", async () => {
+test("render composant SectionSubParts", () => {
   render(
     <SectionSubParts
       subParts={[
@@ -14,7 +15,7 @@ test("render composant SectionPart", async () => {
     />
   );
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(document.getElementsByClassName("wrapper")).toHaveLength(2);
   });
 });

@@ -1,6 +1,7 @@
 import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
+import { expect, test } from "vitest";
 
-test("test visiteur simple", async () => {
+test("test visiteur simple", () => {
   const test11 = {};
   expect(supprimeProprietesVides(test11)).toStrictEqual(null);
 
@@ -16,7 +17,7 @@ test("test visiteur simple", async () => {
   expect(supprimeProprietesVides(test13)).toStrictEqual(test13);
 });
 
-test("test visiteur un vide", async () => {
+test("test visiteur un vide", () => {
   const test21 = {
     "1": "1",
     "2": ""
@@ -36,7 +37,7 @@ test("test visiteur un vide", async () => {
   expect(supprimeProprietesVides(test23)).toStrictEqual({ "1": "1" });
 });
 
-test("test visiteur mix", async () => {
+test("test visiteur mix", () => {
   const test31 = {
     "1": "1",
     "2": [1, 2, 3]
@@ -89,7 +90,7 @@ test("test visiteur mix", async () => {
   expect(supprimeProprietesVides(test36)).toStrictEqual({ "1": "1", "2": [1] });
 });
 
-test("test visiteur ultime", async () => {
+test("test visiteur ultime", () => {
   const test41 = {
     "1": "1",
     "2": [1, {}],
@@ -108,7 +109,7 @@ test("test visiteur ultime", async () => {
   });
 });
 
-test("test visiteur ultime2", async () => {
+test("test visiteur ultime2", () => {
   const test42 = {
     form1: {
       form2: {

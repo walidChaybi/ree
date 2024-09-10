@@ -18,10 +18,11 @@ import {
   IParamsAffichage
 } from "@pages/fiche/hook/constructionComposants/acte/FicheActeUtils";
 import { storeRece } from "@util/storeRece";
+import { expect, test } from "vitest";
 import { acte } from "../../../../../../../mock/data/ficheEtBandeau/ficheActe";
 
 const resumeActeLibelle = "Résumé de l'acte";
-test("ficheUtils acte avec utilisateur qui a le droit CONSULTER sur le périmètre TOUS_REGISTRES", async () => {
+test("ficheUtils acte avec utilisateur qui a le droit CONSULTER sur le périmètre TOUS_REGISTRES", () => {
   storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
   const panels = getPanelsActe(acte);
   expect(panels.panels).toHaveLength(3);
@@ -29,7 +30,7 @@ test("ficheUtils acte avec utilisateur qui a le droit CONSULTER sur le périmèt
   expect(panels.panels[1].title).toBe(resumeActeLibelle);
 });
 
-test("ficheUtils acte avec utilisateur qui a uniquement le droit CONSULTER_ARCHIVES", async () => {
+test("ficheUtils acte avec utilisateur qui a uniquement le droit CONSULTER_ARCHIVES", () => {
   storeRece.utilisateurCourant = userDroitConsulterArchive;
   const panels = getPanelsActe(acte);
   expect(panels.panels).toHaveLength(2);
@@ -37,7 +38,7 @@ test("ficheUtils acte avec utilisateur qui a uniquement le droit CONSULTER_ARCHI
   expect(panels.panels[1].title).toBe(resumeActeLibelle);
 });
 
-test("ficheUtils acte avec utilisateur qui a le droit CONSULTER sur le périmètre TUNIS et un Type Registre", async () => {
+test("ficheUtils acte avec utilisateur qui a le droit CONSULTER sur le périmètre TUNIS et un Type Registre", () => {
   storeRece.utilisateurCourant = userDroitConsulterPerimetreTUNIS;
   const panels = getPanelsActe(acte);
   expect(panels.panels).toHaveLength(3);

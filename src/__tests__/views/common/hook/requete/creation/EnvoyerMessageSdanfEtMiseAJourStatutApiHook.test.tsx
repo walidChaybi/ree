@@ -8,9 +8,10 @@ import { IEchange } from "@model/requete/IEchange";
 import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import React from "react";
+import { beforeAll, beforeEach, expect, test } from "vitest";
 import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 
-beforeAll(async () => {
+beforeAll(() => {
   mockFenetreFicheTestFunctions();
 });
 
@@ -34,14 +35,14 @@ const HookConsumer: React.FC = () => {
   return <div>{res ? res.message : ""}</div>;
 };
 
-beforeEach(async () => {
+beforeEach(() => {
   storeRece.utilisateurCourant = userDroitCOMEDEC;
 });
 
-test("Attendu: useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook fonctionne correctement", async () => {
+test("Attendu: useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook fonctionne correctement", () => {
   render(<HookConsumer />);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(
       screen.getByText(reponseRequeteCreationMessageSdanf.message)
     ).toBeDefined();

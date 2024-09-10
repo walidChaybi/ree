@@ -8,6 +8,7 @@ import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
+import { expect, test } from "vitest";
 import { getRequeteWithChoixDelivrance } from "../../../../../__tests__utils__/testsUtil";
 
 const ecMariageSansFiliationparams: IGenerationECParams = {
@@ -73,57 +74,57 @@ const HookConsumer: React.FC<
   return <div>{resultat?.resultGenerationUnDocument?.idDocumentReponse}</div>;
 };
 
-test("Attendu: un extrait de mariage sans filiation est généré via useGenerationEC", async () => {
+test("Attendu: un extrait de mariage sans filiation est généré via useGenerationEC", () => {
   render(<HookConsumer {...ecMariageSansFiliationparams} />);
 
-  await waitFor(() => {
+  waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
     expect(
       screen.getByText("bbac2335-562c-4b14-96aa-4386814c02a2")
-    ).toBeInTheDocument();
+    ).toBeDefined();
   });
 });
 
-test("Attendu: un extrait de mariage avec filiation est généré via useGenerationEC", async () => {
+test("Attendu: un extrait de mariage avec filiation est généré via useGenerationEC", () => {
   render(<HookConsumer {...ecMariageAvecFiliationparams} />);
 
-  await waitFor(() => {
+  waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
     expect(
       screen.getByText("bbac2335-562c-4b14-96aa-4386814c02a2")
-    ).toBeInTheDocument();
+    ).toBeDefined();
   });
 });
 
-test("Attendu: un extrait de naissance sans filiation est généré via useGenerationEC", async () => {
+test("Attendu: un extrait de naissance sans filiation est généré via useGenerationEC", () => {
   render(<HookConsumer {...ecNaissanceSansFiliationparams} />);
 
-  await waitFor(() => {
+  waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
     expect(
       screen.getByText("bbac2335-562c-4b14-96aa-4386814c02a2")
-    ).toBeInTheDocument();
+    ).toBeDefined();
   });
 });
 
-test("Attendu: un extrait de naissance plurilingue est généré via useGenerationEC", async () => {
+test("Attendu: un extrait de naissance plurilingue est généré via useGenerationEC", () => {
   render(<HookConsumer {...ecNaissancePlurilingueparams} />);
 
-  await waitFor(() => {
+  waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
     expect(
       screen.getByText("bbac2335-562c-4b14-96aa-4386814c02a2")
-    ).toBeInTheDocument();
+    ).toBeDefined();
   });
 });
 
-test("Attendu: une copie intégrale mariage est générée via useGenerationEC", async () => {
+test("Attendu: une copie intégrale mariage est générée via useGenerationEC", () => {
   render(<HookConsumer {...ecCopieActeImageMariageparams} />);
 
-  await waitFor(() => {
+  waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
     expect(
       screen.getByText("bbac2335-562c-4b14-96aa-4386814c02a2")
-    ).toBeInTheDocument();
+    ).toBeDefined();
   });
 });

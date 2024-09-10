@@ -10,12 +10,13 @@ import {
 } from "@widget/formulaire/utils/ControlesUtil";
 import { FormikProps, FormikValues } from "formik";
 import React from "react";
+import { expect, test, vi } from "vitest";
 
-test("traiteCarAutorises", async () => {
+test("traiteCarAutorises", () => {
   const element = {
     value: "1",
     oldValue: "",
-    setSelectionRange: jest.fn()
+    setSelectionRange: vi.fn()
   };
   traiteCarAutorises(element, digitSeulement);
   expect(element.value).toBe("1");
@@ -26,17 +27,17 @@ test("traiteCarAutorises", async () => {
   expect(element.value).toBe("1");
 });
 
-test("traiteCarAutorises", async () => {
+test("traiteCarAutorises", () => {
   const element = {
     value: "1",
     oldValue: "",
-    setSelectionRange: jest.fn()
+    setSelectionRange: vi.fn()
   };
   traiteCarAutorises(element, digitSeulement);
   expect(element.value).toBe("1");
 });
 
-test("traiteDepassement", async () => {
+test("traiteDepassement", () => {
   const element = {
     value: "13"
   };
@@ -44,7 +45,7 @@ test("traiteDepassement", async () => {
   expect(element.value).toBe("12");
 });
 
-test("traiteDepassementJour", async () => {
+test("traiteDepassementJour", () => {
   const element = {
     value: "32"
   };
@@ -52,7 +53,7 @@ test("traiteDepassementJour", async () => {
   expect(element.value).toBe("31");
 });
 
-test("traiteDepassementMois", async () => {
+test("traiteDepassementMois", () => {
   const element = {
     value: "13"
   };
@@ -60,7 +61,7 @@ test("traiteDepassementMois", async () => {
   expect(element.value).toBe("12");
 });
 
-test("focusApresProchainChamps", async () => {
+test("focusApresProchainChamps", () => {
   const element = {
     target: {
       value: "01",
@@ -69,7 +70,7 @@ test("focusApresProchainChamps", async () => {
       },
       nextElementSibling: {
         nextElementSibling: {
-          focus: jest.fn()
+          focus: vi.fn()
         }
       }
     }
@@ -82,7 +83,7 @@ test("focusApresProchainChamps", async () => {
   ).toHaveBeenCalledTimes(1);
 });
 
-test("traiteZeroAGauche", async () => {
+test("traiteZeroAGauche", () => {
   const element = {
     target: {
       value: "1"
@@ -90,8 +91,8 @@ test("traiteZeroAGauche", async () => {
   };
 
   const formik = {
-    handleChange: jest.fn(),
-    handleBlur: jest.fn()
+    handleChange: vi.fn(),
+    handleBlur: vi.fn()
   } as any as FormikProps<FormikValues>;
 
   traiteZeroAGauche(element, formik);
@@ -100,7 +101,7 @@ test("traiteZeroAGauche", async () => {
   expect(formik.handleBlur).toHaveBeenCalledTimes(1);
 });
 
-test("traiteEspace", async () => {
+test("traiteEspace", () => {
   const element = {
     target: {
       value: " te  st "

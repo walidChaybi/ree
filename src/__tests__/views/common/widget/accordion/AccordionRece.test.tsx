@@ -1,7 +1,8 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
+import { expect, test } from "vitest";
 
-test("render composant AccordionRece", async () => {
+test("render composant AccordionRece", () => {
   const { getByText } = render(
     <AccordionRece
       panel={{
@@ -52,13 +53,13 @@ test("render composant AccordionRece", async () => {
     />
   );
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(getByText(/titlePanel/i)).toBeDefined();
     expect(getByText(/titleTest2.1/i)).toBeDefined();
   });
 });
 
-test("render composant AccordionRece can close", async () => {
+test("render composant AccordionRece can close", () => {
   render(
     <AccordionRece
       panel={{
@@ -117,7 +118,7 @@ test("render composant AccordionRece can close", async () => {
       cancelable: true
     })
   );
-  await waitFor(() => {
+  waitFor(() => {
     expect(document.getElementsByClassName("MuiCollapse-hidden")).toHaveLength(
       1
     );

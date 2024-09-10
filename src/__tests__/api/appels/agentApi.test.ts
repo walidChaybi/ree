@@ -4,6 +4,7 @@ import {
   getTousLesUtilisateurs,
   getUtilisateurs
 } from "@api/appels/agentApi";
+import { expect, test } from "vitest";
 
 test("getLogin utilisateur", () => {
   getLogin().then((result: any) => {

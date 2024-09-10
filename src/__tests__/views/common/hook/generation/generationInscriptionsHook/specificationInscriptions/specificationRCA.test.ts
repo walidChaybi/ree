@@ -6,12 +6,13 @@ import {
   FicheRcaDecisionNotaireConvention
 } from "@mock/data/ficheRCA";
 import { storeRece } from "@util/storeRece";
+import { beforeAll, expect, test } from "vitest";
 
 beforeAll(() => {
   storeRece.decrets = decrets;
 });
 
-test("Attendu: specificationRCA.getElementsJasper AVEC une instruction procureur", async () => {
+test("Attendu: specificationRCA.getElementsJasper AVEC une instruction procureur", () => {
   const data = FicheRcaDecisionAvecInstructionProcureur;
   const elementsJasper = specificationRCA.getElementsJasper(data);
   const interesse = `Léo, Jules FLECK
@@ -31,7 +32,7 @@ Lieu de décès: Londres, Grand-Londres (Royaume-Uni)`;
   );
 });
 
-test("Attendu: specificationRCA.getElementsJasper AVEC une decision Juridiction étrangère", async () => {
+test("Attendu: specificationRCA.getElementsJasper AVEC une decision Juridiction étrangère", () => {
   const data = FicheRcaDecisionJuridictionEtrangere;
   const elementsJasper = specificationRCA.getElementsJasper(data);
   const interesse = `Léo, Jules FLECK
@@ -55,7 +56,7 @@ Lieu de naissance: Nantes (Loire-Atlantique)`;
   );
 });
 
-test("Attendu: specificationRCA.getElementsJasper AVEC une decision Notaire type convention", async () => {
+test("Attendu: specificationRCA.getElementsJasper AVEC une decision Notaire type convention", () => {
   const data = FicheRcaDecisionNotaireConvention;
   const elementsJasper = specificationRCA.getElementsJasper(data);
   const interesses = `Julie, Sarah DURANT

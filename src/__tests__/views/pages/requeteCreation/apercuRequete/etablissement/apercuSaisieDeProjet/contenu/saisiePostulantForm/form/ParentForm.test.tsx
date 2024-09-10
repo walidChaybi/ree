@@ -6,6 +6,7 @@ import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation
 import { getPostulantValidationSchema } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/validation/PostulantValidationSchema";
 import { render, screen, waitFor } from "@testing-library/react";
 import { Formulaire } from "@widget/formulaire/Formulaire";
+import { describe, expect, test } from "vitest";
 
 const titulaires = mappingRequeteCreation(
   requeteCreationEtablissementSaisieProjet
@@ -29,7 +30,7 @@ function afficheComposantSaisiePostulantForm(): void {
 }
 
 describe("Test du bloc Parent de l'onglet Postulant", () => {
-  test("DOIT afficher et reseigner les champs des blocs Parent QUAND le formulaire est affiché", async () => {
+  test("DOIT afficher et reseigner les champs des blocs Parent QUAND le formulaire est affiché", () => {
     afficheComposantSaisiePostulantForm();
 
     const champNomParent = screen.getByLabelText("Nom") as HTMLInputElement;
@@ -53,7 +54,7 @@ describe("Test du bloc Parent de l'onglet Postulant", () => {
 
     const champPaysParent = screen.getByLabelText("Pays") as HTMLInputElement;
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(champNomParent.value).toBe("CHAMPNOMNAISSANCEPARENT1");
       expect(champPrenomParent.value).toBe("Champprenomparent1");
       expect(champSexeParent.checked).toBeTruthy();

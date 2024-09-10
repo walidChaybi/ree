@@ -20,6 +20,7 @@ import {
   dateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire,
   prenomSaisiSansNom
 } from "@pages/rechercheMultiCriteres/common/validation/VerificationRestrictionRegles";
+import { expect, test } from "vitest";
 
 const SOMETHING = "something";
 

@@ -6,8 +6,9 @@ import {
 } from "@mock/data/PACS";
 import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
 import { getPanelsPacs } from "@pages/fiche/hook/constructionComposants/pacs/FichePacsUtils";
+import { expect, test } from "vitest";
 
-test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
+test("ficheUtils Pacs fonctionne avec modification notaire", () => {
   const panels = getPanelsPacs(pacsModificationNotaireMap as IFichePacs);
 
   expect(panels.panels.length).toBe(1);
@@ -161,7 +162,7 @@ test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
   ).toBe(4);
 });
 
-test("ficheUtils Pacs fonctionne avec annulation juridiction", async () => {
+test("ficheUtils Pacs fonctionne avec annulation juridiction", () => {
   const panels = getPanelsPacs(annulationJuridictionMap as IFichePacs);
 
   expect(panels.panels.length).toBe(1);
@@ -203,7 +204,7 @@ test("ficheUtils Pacs fonctionne avec annulation juridiction", async () => {
   expect(panels.panels[0].panelAreas[3].title).toBe("Annulation du PACS");
 });
 
-test("ficheUtils Pacs fonctionne avec dissoultion juridiction", async () => {
+test("ficheUtils Pacs fonctionne avec dissoultion juridiction", () => {
   const panels = getPanelsPacs(dissolutionJuridictionMap as IFichePacs);
 
   expect(panels.panels.length).toBe(1);
@@ -215,7 +216,7 @@ test("ficheUtils Pacs fonctionne avec dissoultion juridiction", async () => {
   expect(panels.panels[0].panelAreas[3].title).toBe("Dissolution du PACS");
 });
 
-test("ficheUtils Pacs fonctionne avec dissolution poste", async () => {
+test("ficheUtils Pacs fonctionne avec dissolution poste", () => {
   const panels = getPanelsPacs(dissolutionPosteMap as IFichePacs);
 
   expect(panels.panels.length).toBe(1);

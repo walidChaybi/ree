@@ -10,8 +10,9 @@ import {
 } from "@mock/data/ficheEtBandeau/divers/InteressesMock";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { getInteresse } from "@pages/fiche/hook/constructionComposants/interesses/InteresseUtils";
+import { expect, test } from "vitest";
 
-test("Interesse utils get interesse : affichés suivant leur numero d'ordre ", async () => {
+test("Interesse utils get interesse : affichés suivant leur numero d'ordre ", () => {
   const components = getInteresse(
     ficheDeuxInteresseNumeroOrdreNonOrdonne as any as IFicheRcRca
   );
@@ -21,7 +22,7 @@ test("Interesse utils get interesse : affichés suivant leur numero d'ordre ", a
   expect(components[1].partContent.title).toBe("Intéressé 2");
 });
 
-test("Interesse utils get interesse : affichage correcte d'un interessé  ", async () => {
+test("Interesse utils get interesse : affichage correcte d'un interessé  ", () => {
   const components = getInteresse(
     ficheUnInteressePrenomNonOrdonne as IFicheRcRca
   );
@@ -94,7 +95,7 @@ test("Interesse utils get interesse : affichage correcte d'un interessé  ", asy
   expect(idxNationalite).toBeLessThan(idxSexe);
 });
 
-test("Interesse utils get interesse :  affichage lieu naissance en france dans une ville avec arrondissement ", async () => {
+test("Interesse utils get interesse :  affichage lieu naissance en france dans une ville avec arrondissement ", () => {
   const components = getInteresse(
     ficheUnInteresseVilleNaissanceFranceSansArrondissement as IFicheRcRca
   );
@@ -109,7 +110,7 @@ test("Interesse utils get interesse :  affichage lieu naissance en france dans u
   );
 });
 
-test("Interesse utils get interesse :  affichage lieu naissance en france dans une ville avec arrondissement sauf Paris ", async () => {
+test("Interesse utils get interesse :  affichage lieu naissance en france dans une ville avec arrondissement sauf Paris ", () => {
   const components = getInteresse(
     ficheUnInteresseVilleNaissanceFranceAvecArrondissementNonParis as IFicheRcRca
   );
@@ -124,7 +125,7 @@ test("Interesse utils get interesse :  affichage lieu naissance en france dans u
   );
 });
 
-test("Interesse utils get interesse :  affichage lieu naissance en france à Paris ", async () => {
+test("Interesse utils get interesse :  affichage lieu naissance en france à Paris ", () => {
   const components = getInteresse(
     ficheUnInteresseVilleNaissanceFranceAvecArrondissementParis as IFicheRcRca
   );
@@ -139,7 +140,7 @@ test("Interesse utils get interesse :  affichage lieu naissance en france à Par
   );
 });
 
-test("Interesse utils get interesse :  affichage lieu naissance à l'étranger ", async () => {
+test("Interesse utils get interesse :  affichage lieu naissance à l'étranger ", () => {
   const components = getInteresse(
     ficheUnInteresseVilleNaissanceALEtrangerSansRegion as IFicheRcRca
   );
@@ -154,7 +155,7 @@ test("Interesse utils get interesse :  affichage lieu naissance à l'étranger "
   );
 });
 
-test("Interesse utils get interesse :  affichage lieu naissance à l'étranger ", async () => {
+test("Interesse utils get interesse :  affichage lieu naissance à l'étranger ", () => {
   const components = getInteresse(
     ficheUnInteresseVilleNaissanceALEtrangerAvecRegion as IFicheRcRca
   );
@@ -169,7 +170,7 @@ test("Interesse utils get interesse :  affichage lieu naissance à l'étranger "
   );
 });
 
-test("Interesse utils get interesse :  affichage date désèc et lieu décès rca ", async () => {
+test("Interesse utils get interesse :  affichage date désèc et lieu décès rca ", () => {
   const components = getInteresse(
     ficheUnInteresseLieuDecesDateDeces as IFicheRcRca
   );

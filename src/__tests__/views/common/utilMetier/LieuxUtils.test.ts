@@ -1,4 +1,5 @@
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import { expect, test } from "vitest";
 
 test("Lieux model", () => {
   expect(LieuxUtils.estPaysFrance("france")).toBe(true);

@@ -7,6 +7,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { RouterProvider } from "react-router-dom";
+import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 storeRece.utilisateurCourant =
@@ -19,7 +20,7 @@ const queryParametersPourRequetes = {
   range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
 } as IQueryParametersPourRequetes;
 
-test("Doit rendre le tableau des requêtes création", async () => {
+test("Doit rendre le tableau des requêtes création", () => {
   const router = createTestingRouter(
     [
       {
@@ -36,7 +37,7 @@ test("Doit rendre le tableau des requêtes création", async () => {
 
   render(<RouterProvider router={router} />);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByText("Alerte")).toBeDefined();
     expect(screen.getByText("N°")).toBeDefined();
     expect(screen.getByText("Sous-type")).toBeDefined();

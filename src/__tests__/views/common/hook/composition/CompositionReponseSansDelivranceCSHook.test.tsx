@@ -10,6 +10,7 @@ import { NOM_DOCUMENT_REFUS_FRANCAIS } from "@model/composition/IReponseSansDeli
 import { NOM_DOCUMENT_REFUS_MARIAGE } from "@model/composition/IReponseSansDelivranceCSMariageComposition";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
+import { expect, test } from "vitest";
 const HookConsumerMariage: React.FC = () => {
   const doc = useCompositionReponseSansDelivranceCSApi(
     NOM_DOCUMENT_REFUS_MARIAGE,
@@ -19,10 +20,10 @@ const HookConsumerMariage: React.FC = () => {
   return <div>{doc?.contenu}</div>;
 };
 
-test("Attendu: useCompositionReponseSansDelivranceCSApi avec mariage fonctionne correctement", async () => {
+test("Attendu: useCompositionReponseSansDelivranceCSApi avec mariage fonctionne correctement", () => {
   render(<HookConsumerMariage />);
 
-  await waitFor(() => {
+  waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
     expect(screen.getByText(imagePngVideBase64)).toBeDefined();
   });
@@ -37,10 +38,10 @@ const HookConsumerDemandeIncomplete: React.FC = () => {
   return <div>{doc?.contenu}</div>;
 };
 
-test("Attendu: useCompositionReponseSansDelivranceCSApi avec demande incomplete fonctionne correctement", async () => {
+test("Attendu: useCompositionReponseSansDelivranceCSApi avec demande incomplete fonctionne correctement", () => {
   render(<HookConsumerDemandeIncomplete />);
 
-  await waitFor(() => {
+  waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
     expect(screen.getByText(imagePngVideBase64)).toBeDefined();
   });
@@ -55,10 +56,10 @@ const HookConsumerFrancais: React.FC = () => {
   return <div>{doc?.contenu}</div>;
 };
 
-test("Attendu: useCompositionReponseSansDelivranceCSApi avec francais fonctionne correctement", async () => {
+test("Attendu: useCompositionReponseSansDelivranceCSApi avec francais fonctionne correctement", () => {
   render(<HookConsumerFrancais />);
 
-  await waitFor(() => {
+  waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
     expect(screen.getByText(imagePngVideBase64)).toBeDefined();
   });

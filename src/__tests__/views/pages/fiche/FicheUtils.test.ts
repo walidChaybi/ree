@@ -4,8 +4,9 @@ import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { IDataFicheProps } from "@pages/fiche/FichePage";
 import { getFicheTitle, setFiche } from "@pages/fiche/FicheUtils";
+import { expect, test } from "vitest";
 
-test("ficheUtils getFicheTitle works", async () => {
+test("ficheUtils getFicheTitle works", () => {
   const title = getFicheTitle(
     "categorie",
     "2020",

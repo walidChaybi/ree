@@ -1,5 +1,6 @@
 import { imagePngVideBase64 } from "@mock/data/ImagePng";
 import { base64toBlobUrl, validateFile } from "@util/FileUtils";
+import { expect, test, vi } from "vitest";
 
 test("validateFile : size error", () => {
   expect(() => {
@@ -32,7 +33,7 @@ test("validateFile : cas passant", () => {
 });
 
 test("Attendu: base64toBlob fonctionne correctement", () => {
-  window.URL.createObjectURL = jest.fn(p => p);
+  window.URL.createObjectURL = vi.fn(p => p);
   const blob = base64toBlobUrl(imagePngVideBase64, "image/png");
   expect(blob).toBeDefined();
 });

@@ -5,6 +5,7 @@ import {
 import { ReponseAppelRMCActe } from "@mock/data/RMCActe";
 import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
+import { expect, test } from "vitest";
 
 test("mappingIRMCActeArchive", () => {
   expect(mappingRequeteDelivranceToRMC(requeteDelivrance)).toStrictEqual({

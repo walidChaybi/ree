@@ -1,9 +1,10 @@
 import { cleanup, fireEvent, render, waitFor } from "@testing-library/react";
 import { TableauHeaderCell } from "@widget/tableau/TableauRece/TableauHeaderCell";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
+import { afterEach, expect, test, vi } from "vitest";
 
 test("renders click sur header tableau des requêtes de l'application", () => {
-  const handleRequestSort = jest.fn();
+  const handleRequestSort = vi.fn();
   const { getByText } = render(
     <table>
       <tbody>
@@ -26,6 +27,7 @@ test("renders click sur header tableau des requêtes de l'application", () => {
   const colonneElement = getByText(/N°/i);
   expect(colonneElement).toBeDefined();
   fireEvent.click(colonneElement);
+
   waitFor(() => {
     expect(handleRequestSort).toBeCalled();
   });

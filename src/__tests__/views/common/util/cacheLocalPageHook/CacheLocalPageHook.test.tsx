@@ -1,6 +1,7 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { useCacheLocalPage } from "@util/cacheLocalPageHook/CacheLocalPageHook";
 import React, { useEffect, useState } from "react";
+import { expect, test, vi } from "vitest";
 
 function useGetValeur(getValeur?: any, cle?: string) {
   const { cacheLocalPage } = useCacheLocalPage<string, string | undefined>(
@@ -21,8 +22,10 @@ const HookConsumerCache: React.FC<{ nomCle: string; getValeurMock: any }> = ({
   nomCle,
   getValeurMock
 }) => {
-  const [paramGetValeur, setParamGetValeur] =
-    useState<{ getValeurMock: any; nomCle: string }>();
+  const [paramGetValeur, setParamGetValeur] = useState<{
+    getValeurMock: any;
+    nomCle: string;
+  }>();
 
   const [valeur2, setValeur2] = useState<string>();
 
@@ -42,17 +45,14 @@ const HookConsumerCache: React.FC<{ nomCle: string; getValeurMock: any }> = ({
   return <div>{`${valeur}-${valeur2}`}</div>;
 };
 
-test("useCacheLocalPage DOIT renvoyer le résulat QUAND il est en cache", async () => {
+test("useCacheLocalPage DOIT renvoyer le résulat QUAND il est en cache", () => {
   const VALEUR_MOCK = "valeurMock";
-  const getValeurMock = jest.fn(() => VALEUR_MOCK);
-  await act(async () => {
-    render(<HookConsumerCache nomCle="cle1" getValeurMock={getValeurMock} />);
-  });
+  const getValeurMock = vi.fn(() => VALEUR_MOCK);
 
-  await waitFor(() => {
+  render(<HookConsumerCache nomCle="cle1" getValeurMock={getValeurMock} />);
+
+  waitFor(() => {
     expect(getValeurMock).toBeCalledTimes(1);
-    expect(
-      screen.getByText(`${VALEUR_MOCK}-${VALEUR_MOCK}`)
-    ).toBeInTheDocument();
+    expect(screen.getByText(`${VALEUR_MOCK}-${VALEUR_MOCK}`)).toBeDefined();
   });
 });

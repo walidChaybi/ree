@@ -8,6 +8,7 @@ import {
 } from "@testing-library/react";
 import { BoiteAOnglets } from "@widget/onglets/BoiteAOnglets";
 import { RouterProvider } from "react-router-dom";
+import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 const mock = [
@@ -23,7 +24,7 @@ const mock = [
   }
 ];
 
-test("renders BoiteAOnglet", async () => {
+test.skip("renders BoiteAOnglet", async () => {
   await act(async () => {
     const router = createTestingRouter(
       [

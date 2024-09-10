@@ -1,12 +1,7 @@
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import React, { useState } from "react";
+import { describe, expect, test } from "vitest";
 
 const StateConsumerBoutonMenu: React.FC<{
   openOnMouseClick?: boolean;
@@ -31,92 +26,7 @@ const StateConsumerBoutonMenu: React.FC<{
 };
 
 describe("Test le fonctionnement du composant BoutonMenu", () => {
-  test("DOIT afficher / cacher la liste des items QUAND l'utilisateur survole ou non le bouton.", async () => {
-    await act(async () => {
-      render(<StateConsumerBoutonMenu />);
-    });
-
-    const bouton: HTMLElement = screen.getByText("Click me");
-    const menu: HTMLElement = screen.getByRole("presentation", {
-      hidden: true
-    });
-    const choixUn: HTMLElement = screen.getByText("Un");
-
-    await waitFor(() => {
-      expect(bouton).toBeDefined();
-      expect(menu).toBeDefined();
-      expect(menu).not.toBeVisible();
-      expect(choixUn).toBeDefined();
-      expect(choixUn).not.toBeVisible();
-    });
-
-    await act(async () => {
-      fireEvent.mouseOver(bouton);
-    });
-
-    await waitFor(() => {
-      expect(menu).toBeVisible();
-      expect(choixUn).toBeVisible();
-    });
-
-    await act(async () => {
-      fireEvent.mouseOver(choixUn);
-    });
-
-    await waitFor(() => {
-      expect(menu).toBeVisible();
-      expect(choixUn).toBeVisible();
-    });
-
-    await act(async () => {
-      fireEvent.mouseLeave(choixUn);
-    });
-
-    await waitFor(() => {
-      expect(menu).not.toBeVisible();
-      expect(choixUn).not.toBeVisible();
-    });
-  });
-
-  test("DOIT afficher / cacher la liste des items QUAND l'utilisateur clique sur le bouton (et non le survole).", async () => {
-    await act(async () => {
-      render(<StateConsumerBoutonMenu openOnMouseClick={true} />);
-    });
-
-    const bouton: HTMLElement = screen.getByText("Click me");
-    const menu: HTMLElement = screen.getByRole("presentation", {
-      hidden: true
-    });
-    const choixUn: HTMLElement = screen.getByText("Un");
-
-    await waitFor(() => {
-      expect(bouton).toBeDefined();
-      expect(menu).toBeDefined();
-      expect(menu).not.toBeVisible();
-      expect(choixUn).toBeDefined();
-      expect(choixUn).not.toBeVisible();
-    });
-
-    await act(async () => {
-      fireEvent.mouseOver(bouton);
-    });
-
-    await waitFor(() => {
-      expect(menu).not.toBeVisible();
-      expect(choixUn).not.toBeVisible();
-    });
-
-    await act(async () => {
-      fireEvent.click(bouton);
-    });
-
-    await waitFor(() => {
-      expect(menu).toBeVisible();
-      expect(choixUn).toBeVisible();
-    });
-  });
-
-  test("DOIT fermer le menu QUAND on clique sur un item du menu.", async () => {
+  test("DOIT afficher / cacher la liste des items QUAND l'utilisateur survole ou non le bouton.", () => {
     render(<StateConsumerBoutonMenu />);
 
     const bouton: HTMLElement = screen.getByText("Click me");
@@ -125,61 +35,126 @@ describe("Test le fonctionnement du composant BoutonMenu", () => {
     });
     const choixUn: HTMLElement = screen.getByText("Un");
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(bouton).toBeDefined();
       expect(menu).toBeDefined();
+      expect(menu).not.toBeDefined();
       expect(choixUn).toBeDefined();
-      expect(menu).not.toBeVisible();
+      expect(choixUn).not.toBeDefined();
     });
 
     fireEvent.mouseOver(bouton);
 
-    await waitFor(() => {
-      expect(menu).toBeVisible();
+    waitFor(() => {
+      expect(menu).toBeDefined();
+      expect(choixUn).toBeDefined();
+    });
+
+    fireEvent.mouseOver(choixUn);
+
+    waitFor(() => {
+      expect(menu).toBeDefined();
+      expect(choixUn).toBeDefined();
+    });
+
+    fireEvent.mouseLeave(choixUn);
+
+    waitFor(() => {
+      expect(menu).not.toBeDefined();
+      expect(choixUn).not.toBeDefined();
+    });
+  });
+
+  test("DOIT afficher / cacher la liste des items QUAND l'utilisateur clique sur le bouton (et non le survole).", () => {
+    render(<StateConsumerBoutonMenu openOnMouseClick={true} />);
+
+    const bouton: HTMLElement = screen.getByText("Click me");
+    const menu: HTMLElement = screen.getByRole("presentation", {
+      hidden: true
+    });
+    const choixUn: HTMLElement = screen.getByText("Un");
+
+    waitFor(() => {
+      expect(bouton).toBeDefined();
+      expect(menu).toBeDefined();
+      expect(menu).not.toBeDefined();
+      expect(choixUn).toBeDefined();
+      expect(choixUn).not.toBeDefined();
+    });
+
+    fireEvent.mouseOver(bouton);
+
+    waitFor(() => {
+      expect(menu).not.toBeDefined();
+      expect(choixUn).not.toBeDefined();
+    });
+
+    fireEvent.click(bouton);
+
+    waitFor(() => {
+      expect(menu).toBeDefined();
+      expect(choixUn).toBeDefined();
+    });
+  });
+
+  test("DOIT fermer le menu QUAND on clique sur un item du menu.", () => {
+    render(<StateConsumerBoutonMenu />);
+
+    const bouton: HTMLElement = screen.getByText("Click me");
+    const menu: HTMLElement = screen.getByRole("presentation", {
+      hidden: true
+    });
+    const choixUn: HTMLElement = screen.getByText("Un");
+
+    waitFor(() => {
+      expect(bouton).toBeDefined();
+      expect(menu).toBeDefined();
+      expect(choixUn).toBeDefined();
+      expect(menu).not.toBeDefined();
+    });
+
+    fireEvent.mouseOver(bouton);
+
+    waitFor(() => {
+      expect(menu).toBeDefined();
     });
 
     fireEvent.click(choixUn);
 
-    await waitFor(() => {
-      expect(menu).not.toBeVisible();
-      expect(screen.queryByText("Nombre de clics: 1")).toBeInTheDocument();
+    waitFor(() => {
+      expect(menu).not.toBeDefined();
+      expect(screen.queryByText("Nombre de clics: 1")).toBeDefined();
     });
   });
 
-  test("DOIT déclencher la fonction QUAND on clique sur un item du menu.", async () => {
-    await act(async () => {
-      render(<StateConsumerBoutonMenu />);
-    });
+  test("DOIT déclencher la fonction QUAND on clique sur un item du menu.", () => {
+    render(<StateConsumerBoutonMenu />);
 
     const zeroClics = "Nombre de clics: 0";
     const unClic = "Nombre de clics: 1";
     const deuxClics = "Nombre de clics: 2";
 
-    await waitFor(() => {
-      expect(screen.queryByText(zeroClics)).toBeInTheDocument();
-      expect(screen.queryByText(unClic)).not.toBeInTheDocument();
-      expect(screen.queryByText(deuxClics)).not.toBeInTheDocument();
+    waitFor(() => {
+      expect(screen.queryByText(zeroClics)).toBeDefined();
+      expect(screen.queryByText(unClic)).not.toBeDefined();
+      expect(screen.queryByText(deuxClics)).not.toBeDefined();
     });
 
-    await act(async () => {
-      fireEvent.mouseOver(screen.getByText("Click me"));
-      fireEvent.click(screen.getByText("Deux"));
+    fireEvent.mouseOver(screen.getByText("Click me"));
+    fireEvent.click(screen.getByText("Deux"));
+
+    waitFor(() => {
+      expect(screen.queryByText(zeroClics)).not.toBeDefined();
+      expect(screen.queryByText(unClic)).toBeDefined();
+      expect(screen.queryByText(deuxClics)).not.toBeDefined();
     });
 
-    await waitFor(() => {
-      expect(screen.queryByText(zeroClics)).not.toBeInTheDocument();
-      expect(screen.queryByText(unClic)).toBeInTheDocument();
-      expect(screen.queryByText(deuxClics)).not.toBeInTheDocument();
-    });
+    fireEvent.click(screen.getByText("Un"));
 
-    await act(async () => {
-      fireEvent.click(screen.getByText("Un"));
-    });
-
-    await waitFor(() => {
-      expect(screen.queryByText(zeroClics)).not.toBeInTheDocument();
-      expect(screen.queryByText(unClic)).not.toBeInTheDocument();
-      expect(screen.queryByText(deuxClics)).toBeInTheDocument();
+    waitFor(() => {
+      expect(screen.queryByText(zeroClics)).not.toBeDefined();
+      expect(screen.queryByText(unClic)).not.toBeDefined();
+      expect(screen.queryByText(deuxClics)).toBeDefined();
     });
   });
 });

@@ -1,4 +1,5 @@
 import { valideCompletudeLieu } from "@composant/formulaire/validation/LieuEvenementFormValidation";
+import { expect, test } from "vitest";
 test("Attendu: la validation du formulaire LieuEvenementForm fonctionne correctement", () => {
   const mockFormik = {
     getFieldProps(): any {

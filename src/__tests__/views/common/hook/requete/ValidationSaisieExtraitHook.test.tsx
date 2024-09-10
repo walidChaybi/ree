@@ -10,8 +10,9 @@ import {
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
+import { expect, test, vi } from "vitest";
 
-const callBack = jest.fn();
+const callBack = vi.fn();
 
 const params: ISauvegardeValidationSaisieExtraitParams = {
   callBack,
@@ -27,10 +28,10 @@ const HookConsumer: React.FC = () => {
   return <></>;
 };
 
-test("Attendu: useSauvegardeValidationSaisieExtrait fonctionne correctement", async () => {
+test("Attendu: useSauvegardeValidationSaisieExtrait fonctionne correctement", () => {
   render(<HookConsumer />);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(callBack).toHaveBeenCalled();
   });
 });

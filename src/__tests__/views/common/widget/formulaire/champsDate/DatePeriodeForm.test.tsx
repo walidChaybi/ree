@@ -4,6 +4,7 @@ import { Formulaire } from "@widget/formulaire/Formulaire";
 import DatePeriodeForm, {
   DatePeriodeFormProps
 } from "@widget/formulaire/champsDate/DatePeriodeForm";
+import { expect, test } from "vitest";
 
 const DatePeriodeFormHook: React.FC = () => {
   const valeurFormik = {
@@ -30,32 +31,26 @@ const DatePeriodeFormHook: React.FC = () => {
   );
 };
 
-test("DOIT afficher qu'une seule date QUAND il ne s'agit pas d'une période", async () => {
-  await afficherEtChangerPeriode(Periode.getKey(Periode.EN));
-  await waitFor(() => {
-    expect(
-      screen.queryByLabelText("dateMariage.debut.jour")
-    ).toBeInTheDocument();
-    expect(
-      screen.queryByLabelText("dateMariage.fin.jour")
-    ).not.toBeInTheDocument();
+test("DOIT afficher qu'une seule date QUAND il ne s'agit pas d'une période", () => {
+  afficherEtChangerPeriode(Periode.getKey(Periode.EN));
+  waitFor(() => {
+    expect(screen.queryByLabelText("dateMariage.debut.jour")).toBeDefined();
+    expect(screen.queryByLabelText("dateMariage.fin.jour")).not.toBeDefined();
   });
 });
 
-test("DOIT afficher les deux dates QUAND il s'agit d'une période", async () => {
-  await afficherEtChangerPeriode(Periode.getKey(Periode.ENTRE));
-  await waitFor(() => {
-    expect(
-      screen.queryByLabelText("dateMariage.debut.jour")
-    ).toBeInTheDocument();
-    expect(screen.queryByLabelText("dateMariage.fin.jour")).toBeInTheDocument();
+test("DOIT afficher les deux dates QUAND il s'agit d'une période", () => {
+  afficherEtChangerPeriode(Periode.getKey(Periode.ENTRE));
+  waitFor(() => {
+    expect(screen.queryByLabelText("dateMariage.debut.jour")).toBeDefined();
+    expect(screen.queryByLabelText("dateMariage.fin.jour")).toBeDefined();
   });
 });
 
-async function afficherEtChangerPeriode(valeur: string) {
+function afficherEtChangerPeriode(valeur: string) {
   render(<DatePeriodeFormHook />);
   const selectPeriode = screen.getByLabelText("Date de mariage");
-  await waitFor(() => {
+  waitFor(() => {
     expect(selectPeriode).toBeDefined();
   });
   fireEvent.change(selectPeriode, { target: { value: valeur } });

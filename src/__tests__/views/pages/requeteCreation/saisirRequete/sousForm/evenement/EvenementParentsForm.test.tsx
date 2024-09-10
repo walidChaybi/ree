@@ -3,15 +3,10 @@ import EvenementParentsForm, {
   EvenementParentsFormDefaultValues,
   EvenementParentsFormValidationSchema
 } from "@pages/requeteCreation/saisirRequete/sousForm/evenement/EvenementParentsForm";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { expect, test } from "vitest";
 
 const EVENEMENT = "evenement";
 
@@ -41,18 +36,14 @@ const HookEvenementForm: React.FC = () => {
   );
 };
 
-test("DOIT rendre le composant d'évènement des parents correctement", async () => {
-  await act(async () => {
-    render(<HookEvenementForm />);
-  });
+test("DOIT rendre le composant d'évènement des parents correctement", () => {
+  render(<HookEvenementForm />);
 
   const boutonsRadioLieuNaissanceEtranger = screen.getByText("Etranger");
 
-  await act(async () => {
-    fireEvent.click(boutonsRadioLieuNaissanceEtranger);
-  });
+  fireEvent.click(boutonsRadioLieuNaissanceEtranger);
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(screen.getByText("Ville de naissance")).toBeDefined();
     expect(screen.getByText("Pays de naissance")).toBeDefined();
     expect(screen.getByText("Région/état de naissance")).toBeDefined();
@@ -60,12 +51,10 @@ test("DOIT rendre le composant d'évènement des parents correctement", async ()
 
   const boutonsRadioLieuNaissanceFrance = screen.getByText("France");
 
-  await act(async () => {
-    fireEvent.click(boutonsRadioLieuNaissanceFrance);
-  });
+  fireEvent.click(boutonsRadioLieuNaissanceFrance);
 
-  await waitFor(() => {
-    expect(screen.getByText("Ville de naissance")).toBeDefined();
-    expect(screen.getByText("Département de naissance")).toBeDefined();
-  });
+    waitFor(() => {
+      expect(screen.getByText("Ville de naissance")).toBeDefined();
+      expect(screen.getByText("Département de naissance")).toBeDefined();
+    });
 });

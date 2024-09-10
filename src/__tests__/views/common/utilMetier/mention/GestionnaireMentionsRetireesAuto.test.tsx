@@ -25,9 +25,10 @@ import {
 } from "@model/etatcivil/enum/NatureMention";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import {
-  gestionnaireMentionsRetireesAuto,
-  IMentionAvecRetiree
+  IMentionAvecRetiree,
+  gestionnaireMentionsRetireesAuto
 } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
+import { expect, test } from "vitest";
 
 test("deselectionnerRadieParPaire", () => {
   const deselectionnerRadieParPaire = [

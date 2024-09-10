@@ -3,16 +3,11 @@ import RegistreRepertoireFiltre, {
   RegistreRepertoireDefaultValues,
   RegistreRepertoireFiltreProps
 } from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreRepertoireFiltre";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getLibelle } from "@util/Utils";
 import { Form, Formik } from "formik";
 import React from "react";
+import { expect, test } from "vitest";
 
 const HookRegistreRepertoireFiltre: React.FC = () => {
   const registreRepertoireFiltreFiltreProps = {
@@ -31,11 +26,10 @@ const HookRegistreRepertoireFiltre: React.FC = () => {
   );
 };
 
-test("renders filtre Registre et Repertoire", async () => {
-  await act(async () => {
-    render(<HookRegistreRepertoireFiltre />);
-  });
-  await waitFor(() => {
+test("renders filtre Registre et Repertoire", () => {
+  render(<HookRegistreRepertoireFiltre />);
+
+  waitFor(() => {
     expect(screen.getAllByText(getLibelle("Filtre registre"))).toHaveLength(1);
     expect(screen.getAllByText(getLibelle("Filtre répertoire"))).toHaveLength(
       1
@@ -60,7 +54,7 @@ test("renders filtre Registre et Repertoire", async () => {
     "registreRepertoire.evenement.paysEvenement"
   ) as HTMLInputElement;
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(natureActe).toBeDefined();
     expect(numeroInscription).toBeDefined();
   });
@@ -68,49 +62,49 @@ test("renders filtre Registre et Repertoire", async () => {
   // La partie acte est renseignée alors la partie inscription doit être inactive
   fireEventChange(natureActe, "MARIAGE");
 
-  await waitFor(() => {
-    expect(numeroInscription).toBeDisabled();
+  waitFor(() => {
+    expect(numeroInscription.disabled).toBeTruthy();
   });
 
   // La partie acte est non renseignée alors la partie inscription doit être active
   fireEventChange(natureActe, "");
 
-  await waitFor(() => {
-    expect(numeroInscription).not.toBeDisabled();
+  waitFor(() => {
+    expect(numeroInscription.disabled).not.toBeTruthy();
   });
 
   // La partie inscription est renseignée alors la partie acte doit être inactive
   fireEventChange(numeroInscription, "123456");
 
-  await waitFor(() => {
-    expect(natureActe).toBeDisabled();
+  waitFor(() => {
+    expect(natureActe.disabled).toBeTruthy();
   });
 
   // La partie inscription est non renseignée alors la partie acte doit être active
   fireEventChange(numeroInscription, "");
 
-  await waitFor(() => {
-    expect(natureActe).not.toBeDisabled();
+  waitFor(() => {
+    expect(natureActe.disabled).not.toBeTruthy();
   });
 
   // Le champ typeRepertoire est renseigné alors le champ paysEvenement doit être inactive
   fireEventChange(typeRepertoire, "RC");
 
-  await waitFor(() => {
-    expect(paysEvenement).toBeDisabled();
+  waitFor(() => {
+    expect(paysEvenement.disabled).toBeTruthy();
   });
 
   // Le champ typeRepertoire est non renseigné alors le champ paysEvenement doit être active
   fireEventChange(typeRepertoire, "");
 
-  await waitFor(() => {
-    expect(paysEvenement).not.toBeDisabled();
+  waitFor(() => {
+    expect(paysEvenement.disabled).not.toBeTruthy();
   });
 
   // Le champ paysEvenement est renseigné alors le champ typeRepertoire doit être filtré
   fireEventChange(paysEvenement, "pays");
 
-  await waitFor(() => {
+  waitFor(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     expect(screen.getByText("PACS")).toBeDefined;
     expect(screen.queryByText("RC")).toBeNull();
@@ -120,7 +114,7 @@ test("renders filtre Registre et Repertoire", async () => {
   // Le champ paysEvenement est non renseigné alors le champ typeRepertoire ne doit pas être filtré
   fireEventChange(paysEvenement, "");
 
-  await waitFor(() => {
+  waitFor(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     expect(screen.getByText("PACS")).toBeDefined;
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -131,12 +125,10 @@ test("renders filtre Registre et Repertoire", async () => {
 });
 
 function fireEventChange(component: any, value: any) {
-  act(() => {
-    fireEvent.change(component, {
-      target: {
-        value
-      }
-    });
+  fireEvent.change(component, {
+    target: {
+      value
+    }
   });
 }
 

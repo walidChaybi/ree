@@ -1,18 +1,13 @@
 import { REQUETE } from "@composant/formulaire/ConstantesNomsForm";
-import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import RequeteForm, {
-    RequeteFormDefaultValues,
-    RequeteFormValidationSchema
+  RequeteFormDefaultValues,
+  RequeteFormValidationSchema
 } from "@widget/formulaire/requete/RequeteForm";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { expect, test } from "vitest";
 
 const HookRequeteForm: React.FC = () => {
   const [result, setResult] = useState("");
@@ -42,7 +37,7 @@ const HookRequeteForm: React.FC = () => {
   );
 };
 
-test("render component Requete Formulaire", async () => {
+test("render component Requete Formulaire", () => {
   render(<HookRequeteForm />);
 
   const inputNatureActe = screen.getByTestId(
@@ -58,30 +53,28 @@ test("render component Requete Formulaire", async () => {
 
   const submit = screen.getByText(/Submit/i);
 
-  await act(async () => {
-    fireEvent.change(inputNatureActe, {
-      target: {
-        value: "NAISSANCE"
-      }
-    });
-    fireEvent.change(inputDocumentDemande, {
-      target: {
-        value: "0e1e909f-f74c-4b16-9c03-b3733354c6ce"
-      }
-    });
-    fireEvent.change(inputNbExemplaire, {
-      target: {
-        value: "2"
-      }
-    });
-    fireEvent.change(inputMotif, {
-      target: {
-        value: "AUTRE"
-      }
-    });
+  fireEvent.change(inputNatureActe, {
+    target: {
+      value: "NAISSANCE"
+    }
+  });
+  fireEvent.change(inputDocumentDemande, {
+    target: {
+      value: "0e1e909f-f74c-4b16-9c03-b3733354c6ce"
+    }
+  });
+  fireEvent.change(inputNbExemplaire, {
+    target: {
+      value: "2"
+    }
+  });
+  fireEvent.change(inputMotif, {
+    target: {
+      value: "AUTRE"
+    }
   });
 
-  await waitFor(() => {
+  waitFor(() => {
     expect(inputNatureActe.value).toBe("NAISSANCE");
     expect(inputDocumentDemande.value).toBe(
       "0e1e909f-f74c-4b16-9c03-b3733354c6ce"
@@ -94,18 +87,16 @@ test("render component Requete Formulaire", async () => {
     "requete.complementMotif"
   ) as HTMLInputElement;
 
-  await act(async () => {
-    fireEvent.change(inputComplementMotif, {
-      target: {
-        value: "mockComplementMotif"
-      }
-    });
-    fireEvent.click(submit);
+  fireEvent.change(inputComplementMotif, {
+    target: {
+      value: "mockComplementMotif"
+    }
   });
+  fireEvent.click(submit);
 
-  await waitFor(() => {
-    expect(inputComplementMotif.value).toBe("mockComplementMotif");
-  });
+    waitFor(() => {
+      expect(inputComplementMotif.value).toBe("mockComplementMotif");
+    });
 });
 
 

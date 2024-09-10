@@ -1,6 +1,7 @@
 import { Header } from "@core/header/Header";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
+import { expect, test, vi } from "vitest";
 
 test("renders header", () => {
   render(
@@ -9,11 +10,11 @@ test("renders header", () => {
     </Router>
   );
   const linkElement = screen.getByText(/Registre d'État Civil Électronique/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(linkElement).toBeDefined();
 });
 
 test("renders click sur le logo RECE", () => {
-  const handleClickButton = jest.fn();
+  const handleClickButton = vi.fn();
   render(
     <>
       <Router>

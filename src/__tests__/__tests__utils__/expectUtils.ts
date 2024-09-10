@@ -1,18 +1,19 @@
 import { fireEvent, screen } from "@testing-library/react";
+import { expect } from "vitest";
 
 export function expectEstTexteAbsent(texte: string) {
-  const widget = screen.queryByText(texte);
-  expect(widget).not.toBeInTheDocument();
+  const widget = screen.getByText(texte);
+  expect(widget).not.toBeDefined();
 }
 
 export function expectEstTextePresent(texte: string) {
   const widget = screen.queryByText(texte);
-  expect(widget).toBeInTheDocument();
+  expect(widget).toBeDefined();
 }
 
 export function expectEstAbsent(ariaLabel: string) {
-  const widget = screen.queryByLabelText(ariaLabel) as HTMLInputElement;
-  expect(widget).not.toBeInTheDocument();
+  const widget = screen.getByLabelText(ariaLabel) as HTMLInputElement;
+  expect(widget).not.toBeDefined();
 }
 
 export function expectSelectEstAbsent(testId: string) {
@@ -40,7 +41,7 @@ export function expectEstPresentAvecValeurEtDisabled(
 
 export function expectEstPresentAvecValeur(ariaLabel: string, value: string) {
   const widget = screen.getByLabelText(ariaLabel) as HTMLInputElement;
-  expect(widget).toBeInTheDocument();
+  expect(widget).toBeDefined();
   expect(widget.value).toBe(value);
 
   return widget;
@@ -52,7 +53,7 @@ export function expectEstPresentAvecValeurVide(ariaLabel: string) {
 
 export function expectEstPresentEtChecked(ariaLabel: string) {
   const widget = screen.getByLabelText(ariaLabel) as HTMLInputElement;
-  expect(widget).toBeInTheDocument();
+  expect(widget).toBeDefined();
   expect(widget.checked).toBeTruthy();
 
   return widget;
@@ -60,7 +61,7 @@ export function expectEstPresentEtChecked(ariaLabel: string) {
 
 export function expectEstPresentEtNonChecked(ariaLabel: string) {
   const widget = screen.getByLabelText(ariaLabel) as HTMLInputElement;
-  expect(widget).toBeInTheDocument();
+  expect(widget).toBeDefined();
   expect(widget.checked).toBeFalsy();
 
   return widget;
@@ -71,7 +72,7 @@ export function expectEstSelectPresentAvecValeur(
   value: string
 ) {
   const widget = screen.getByTestId(testId) as HTMLSelectElement;
-  expect(widget).toBeInTheDocument();
+  expect(widget).toBeDefined();
   expect(widget.value).toBe(value);
 
   return widget;

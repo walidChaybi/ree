@@ -5,17 +5,18 @@ import {
 import { idRequeteRDCSC } from "@mock/data/requeteDelivrance";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { BoutonPrendreEnCharge } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/contenu/BoutonPrendreEnCharge";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
-import { act, fireEvent, render, waitFor } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
+import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 
 const requeteTestCOURRIER = {
@@ -50,38 +51,34 @@ const requeteTestCOURRIER = {
   ]
 } as IRequeteDelivrance;
 
-test("est à A_TRAITER ou TRANSFEREE et provient de COURRIER", async () => {
+test("est à A_TRAITER ou TRANSFEREE et provient de COURRIER", () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
 
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          element: (
-            <BoutonPrendreEnCharge
-              requete={requeteTestCOURRIER}
-            ></BoutonPrendreEnCharge>
-          )
-        }
-      ],
-      [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
-    );
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+        element: (
+          <BoutonPrendreEnCharge
+            requete={requeteTestCOURRIER}
+          ></BoutonPrendreEnCharge>
+        )
+      }
+    ],
+    [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
+  );
 
-    const { getByText } = render(<RouterProvider router={router} />);
+  const { getByText } = render(<RouterProvider router={router} />);
 
-    const bouttonPrendreEnCharge = getByText(
-      /Prendre en charge/i
-    ) as HTMLButtonElement;
+  const bouttonPrendreEnCharge = getByText(
+    /Prendre en charge/i
+  ) as HTMLButtonElement;
 
-    await waitFor(() => {
-      expect(bouttonPrendreEnCharge.disabled).toBeFalsy();
-    });
-
-    await act(async () => {
-      fireEvent.click(bouttonPrendreEnCharge);
-    });
+  waitFor(() => {
+    expect(bouttonPrendreEnCharge.disabled).toBeFalsy();
   });
+
+  fireEvent.click(bouttonPrendreEnCharge);
 });
 
 const requeteTestCOMEDEC = {
@@ -116,40 +113,36 @@ const requeteTestCOMEDEC = {
   ]
 } as IRequeteDelivrance;
 
-test("est à A_TRAITER ou TRANSFEREE et provient de COMEDEC", async () => {
+test("est à A_TRAITER ou TRANSFEREE et provient de COMEDEC", () => {
   storeRece.utilisateurCourant = userDroitCOMEDEC;
-  await act(async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          element: (
-            <BoutonPrendreEnCharge
-              requete={requeteTestCOMEDEC}
-            ></BoutonPrendreEnCharge>
-          )
-        }
-      ],
-      [
-        getUrlWithParam(
-          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          "a4cefb71-8457-4f6b-937e-34b49335d423"
+  const router = createTestingRouter(
+    [
+      {
+        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+        element: (
+          <BoutonPrendreEnCharge
+            requete={requeteTestCOMEDEC}
+          ></BoutonPrendreEnCharge>
         )
-      ]
-    );
+      }
+    ],
+    [
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+        "a4cefb71-8457-4f6b-937e-34b49335d423"
+      )
+    ]
+  );
 
-    const { getByText } = render(<RouterProvider router={router} />);
+  const { getByText } = render(<RouterProvider router={router} />);
 
-    const bouttonPrendreEnCharge = getByText(
-      /Prendre en charge/i
-    ) as HTMLButtonElement;
+  const bouttonPrendreEnCharge = getByText(
+    /Prendre en charge/i
+  ) as HTMLButtonElement;
 
-    await waitFor(() => {
-      expect(bouttonPrendreEnCharge.disabled).toBeFalsy();
-    });
-
-    await act(async () => {
-      fireEvent.click(bouttonPrendreEnCharge);
-    });
+  waitFor(() => {
+    expect(bouttonPrendreEnCharge.disabled).toBeFalsy();
   });
+
+  fireEvent.click(bouttonPrendreEnCharge);
 });

@@ -9,9 +9,10 @@ import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTablea
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { waitFor } from "@testing-library/react";
+import { expect, test } from "vitest";
 
-test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionne correctement", async () => {
-  await ParametreBaseRequete.init();
+test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionne correctement", () => {
+  ParametreBaseRequete.init();
   const attendu = certificatSituation;
 
   const titre = "titre";
@@ -55,16 +56,15 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
     requerant: requerant
   } as IRequeteTableauDelivrance;
 
-  const resultat =
-    await CertificatSituationComposition.creerCertificatSituation(
-      titre,
-      decrets,
-      phrase,
-      requete,
-      phrasesPiecesJointes,
-      titulaire
-    );
-  await waitFor(() => {
+  const resultat = CertificatSituationComposition.creerCertificatSituation(
+    titre,
+    decrets,
+    phrase,
+    requete,
+    phrasesPiecesJointes,
+    titulaire
+  );
+  waitFor(() => {
     expect(resultat).toEqual(attendu);
   });
 });

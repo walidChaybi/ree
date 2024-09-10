@@ -5,6 +5,7 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
+import { expect, test } from "vitest";
 
 test("Attendu: corps image correct", () => {
   const acte = ficheActeMariage.data as any as IFicheActe;

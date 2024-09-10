@@ -1,6 +1,7 @@
 import { createEvent, fireEvent, render, screen } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { PopinSignature } from "@widget/signature/PopinSignature";
+import { expect, test, vi } from "vitest";
 
 test("DOIT render de la PopinSignature avec succès", () => {
   render(
@@ -14,13 +15,13 @@ test("DOIT render de la PopinSignature avec succès", () => {
       etatTraitementSignature={{ termine: false }}
     />
   );
-  expect(screen.getByText("Titre Popin")).toBeInTheDocument();
-  expect(screen.getByText("Texte Popin")).toBeInTheDocument();
+  expect(screen.getByText("Titre Popin")).toBeDefined();
+  expect(screen.getByText("Texte Popin")).toBeDefined();
 });
 
 test("DOIT appeller la methode de succès QUAND la signature se fait avec succès", () => {
   storeRece.logErrorOff = true;
-  const onSuccesSignatureMock = jest.fn();
+  const onSuccesSignatureMock = vi.fn();
 
   render(
     <PopinSignature
@@ -54,7 +55,7 @@ test("DOIT appeller la methode de succès QUAND la signature se fait avec succè
 
 test("DOIT afficher un message d'erreur QUAND la signature échoue", () => {
   storeRece.logErrorOff = true;
-  const onSuccesSignatureMock = jest.fn();
+  const onSuccesSignatureMock = vi.fn();
 
   const { getByText } = render(
     <PopinSignature
@@ -94,7 +95,7 @@ test("DOIT afficher un message d'erreur QUAND la signature échoue", () => {
 });
 
 test("DOIT fermer la popin QUAND le bouton Annuler est cliqué", () => {
-  const setEstOuvertMock = jest.fn();
+  const setEstOuvertMock = vi.fn();
 
   render(
     <PopinSignature

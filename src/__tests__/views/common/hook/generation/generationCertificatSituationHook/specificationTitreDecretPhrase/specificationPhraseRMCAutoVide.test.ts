@@ -1,8 +1,9 @@
 import { specificationPhraseRMCAutoVide } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "@mock/data/nomenclatures";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { expect, test } from "vitest";
 
-test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper ne retourne rien car il y a des actes et des inscritptions", async () => {
+test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper ne retourne rien car il y a des actes et des inscritptions", () => {
   // const dataRMCAutoActe: IResultatRMCActe[] = DataRMCActeAvecResultat;
   // const dataRMCAutoInscription: IResultatRMCInscription[] = DataRMCInscriptionAvecResultat;
   const phrase = specificationPhraseRMCAutoVide.getPhrasesJasper(
@@ -18,7 +19,7 @@ test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper ne retourne rien 
   expect(phrase.phrasesLiees).toBeUndefined();
 });
 
-test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper ne retourne rien car il y a des actes", async () => {
+test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper ne retourne rien car il y a des actes", () => {
   const phrase = specificationPhraseRMCAutoVide.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[6].id,
     Sexe.FEMININ,
@@ -32,7 +33,7 @@ test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper ne retourne rien 
   expect(phrase.phrasesLiees).toBeUndefined();
 });
 
-test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper retourne une phrase car pour une demande de cs RC/RCA il n'y a ni actes ni inscriptions", async () => {
+test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper retourne une phrase car pour une demande de cs RC/RCA il n'y a ni actes ni inscriptions", () => {
   const phrase = specificationPhraseRMCAutoVide.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[6].id, // CERTIFICAT_SITUATION_RC_RCA
     Sexe.FEMININ,
@@ -48,7 +49,7 @@ test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper retourne une phra
   );
 });
 
-test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper retourne une phrase car pour une demande de cs RC/RCA il n'y a pas d'actes et que des PACS", async () => {
+test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper retourne une phrase car pour une demande de cs RC/RCA il n'y a pas d'actes et que des PACS", () => {
   const phrase = specificationPhraseRMCAutoVide.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[6].id, // CERTIFICAT_SITUATION_RC_RCA
     Sexe.FEMININ,
@@ -64,7 +65,7 @@ test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper retourne une phra
   );
 });
 
-test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper retourne une phrase car pour une demande de cs PACS il n'y a pas d'actes et que des inscriptions", async () => {
+test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper retourne une phrase car pour une demande de cs PACS il n'y a pas d'actes et que des inscriptions", () => {
   const phrase = specificationPhraseRMCAutoVide.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[1].id, // CERTIFICAT_SITUATION_PACS
     Sexe.MASCULIN,

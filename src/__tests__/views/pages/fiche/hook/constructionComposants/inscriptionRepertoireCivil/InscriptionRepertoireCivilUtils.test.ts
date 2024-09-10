@@ -5,8 +5,9 @@ import {
 } from "@mock/data/ficheEtBandeau/divers/InscriptionRepertoireCivilMock";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { getInscriptionRepertoireCivil } from "@pages/fiche/hook/constructionComposants/inscriptionRepertoireCivil/InscriptionRepertoireCivilUtils";
+import { expect, test } from "vitest";
 
-test("Inscription repertoire civil utils : affichage correcte des infos d'une inscription civile  ", async () => {
+test("Inscription repertoire civil utils : affichage correcte des infos d'une inscription civile  ", () => {
   const component = getInscriptionRepertoireCivil(
     ficheInscriptionRepertoireCivil as IFicheRcRca
   );
@@ -82,7 +83,7 @@ test("Inscription repertoire civil utils : affichage correcte des infos d'une in
   expect(idxDureeInscription).toBeLessThan(idxDateFinMEsure);
 });
 
-test("Inscription repertoire civil utils : affichage correcte des infos d'une inscription civile sans unité de durée d'inscription", async () => {
+test("Inscription repertoire civil utils : affichage correcte des infos d'une inscription civile sans unité de durée d'inscription", () => {
   const component = getInscriptionRepertoireCivil(
     ficheInscriptionRepertoireCivilSansUniteDureeInscription as IFicheRcRca
   );

@@ -3,9 +3,10 @@ import EvenementEtrangerForm, {
   EvenementEtrangerFormDefaultValues,
   EvenementEtrangerFormValidationSchema
 } from "@pages/requeteCreation/saisirRequete/sousForm/evenement/EvenementEtranger";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { expect, test } from "vitest";
 
 const HookEvenementForm: React.FC = () => {
   const [result, setResult] = useState("");
@@ -33,10 +34,8 @@ const HookEvenementForm: React.FC = () => {
   );
 };
 
-test("DOIT rendre le composant d'évènement étranger correctement", async () => {
-  await act(async () => {
-    render(<HookEvenementForm />);
-  });
+test("DOIT rendre le composant d'évènement étranger correctement", () => {
+  render(<HookEvenementForm />);
 
   const inputVilleNaissance = screen.getByRole("textbox", {
     name: /naissance.villeNaissance/i
@@ -50,31 +49,33 @@ test("DOIT rendre le composant d'évènement étranger correctement", async () =
     name: /naissance.paysNaissance/i
   });
 
-  await act(async () => {
-    fireEvent.blur(inputVilleNaissance, {
-      target: {
-        value: "tunis"
-      }
-    });
-
-    fireEvent.blur(inputRegionNaissance, {
-      target: {
-        value: "région"
-      }
-    });
-
-    fireEvent.blur(inputPaysNaissance, {
-      target: {
-        value: "tunisie"
-      }
-    });
+  fireEvent.blur(inputVilleNaissance, {
+    target: {
+      value: "tunis"
+    }
   });
 
-  expect(screen.getByLabelText("Ville de naissance")).toHaveValue("Tunis");
+  fireEvent.blur(inputRegionNaissance, {
+    target: {
+      value: "région"
+    }
+  });
 
-  expect(screen.getByLabelText("Région/état de naissance")).toHaveValue(
-    "Région"
-  );
+  fireEvent.blur(inputPaysNaissance, {
+    target: {
+      value: "Tunisie"
+    }
+  });
 
-  expect(screen.getByLabelText("Pays de naissance")).toHaveValue("Tunisie");
+  const ville = screen.getByLabelText("Ville de naissance") as HTMLInputElement;
+  const region = screen.getByLabelText(
+    "Région/état de naissance"
+  ) as HTMLInputElement;
+  const pays = screen.getByLabelText("Pays de naissance") as HTMLInputElement;
+
+  expect(ville.value).toBe("Tunis");
+
+  expect(region.value).toBe("Région");
+
+  expect(pays.value).toBe("Tunisie");
 });

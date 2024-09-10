@@ -5,9 +5,10 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { act, render, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import React from "react";
+import { expect, test } from "vitest";
 
 const requete1: IRequeteTableauDelivrance = {
   idRequete: "0",
@@ -34,13 +35,11 @@ const HookConsummerNavigation: React.FC = () => {
   );
 };
 
-test("test apercu traitement", async () => {
-  await act(async () => {
-    const { getByTestId } = render(<HookConsummerNavigation />);
-    await waitFor(() =>
-      expect(getByTestId("url").textContent).toBe(
-        "/rece/rece-ui/mesrequetes/apercurequetedelivrance/0"
-      )
+test("test apercu traitement", () => {
+  const { getByTestId } = render(<HookConsummerNavigation />);
+  waitFor(() => {
+    expect(getByTestId("url").textContent).toBe(
+      "/rece/rece-ui/mesrequetes/apercurequetedelivrance/0"
     );
   });
 });
@@ -70,13 +69,11 @@ const HookConsummerNavigation2: React.FC = () => {
   );
 };
 
-test("test apercu traitement", async () => {
-  await act(async () => {
-    const { getByTestId } = render(<HookConsummerNavigation2 />);
-    await waitFor(() =>
-      expect(getByTestId("url").textContent).toBe(
-        "/rece/rece-ui/mesrequetes/apercurequetedelivrance/0"
-      )
+test("test apercu traitement", () => {
+  const { getByTestId } = render(<HookConsummerNavigation2 />);
+  waitFor(() => {
+    expect(getByTestId("url").textContent).toBe(
+      "/rece/rece-ui/mesrequetes/apercurequetedelivrance/0"
     );
   });
 });
@@ -104,13 +101,11 @@ const HookConsummerNavigation3: React.FC = () => {
   );
 };
 
-test("test Brouillon", async () => {
-  await act(async () => {
-    const { getByTestId } = render(<HookConsummerNavigation3 />);
-    await waitFor(() =>
-      expect(getByTestId("url").textContent).toBe(
-        "/rece/rece-ui/mesrequetes/saisircertificatsituation/0"
-      )
+test("test Brouillon", () => {
+  const { getByTestId } = render(<HookConsummerNavigation3 />);
+  waitFor(() => {
+    expect(getByTestId("url").textContent).toBe(
+      "/rece/rece-ui/mesrequetes/saisircertificatsituation/0"
     );
   });
 });
@@ -138,13 +133,11 @@ const HookConsummerNavigation4: React.FC = () => {
   );
 };
 
-test("test Doublon", async () => {
-  await act(async () => {
-    const { getByTestId } = render(<HookConsummerNavigation4 />);
-    await waitFor(() =>
-      expect(getByTestId("url").textContent).toBe(
-        "/rece/rece-ui/mesrequetes/apercurequetedelivrance/0"
-      )
+test("test Doublon", () => {
+  const { getByTestId } = render(<HookConsummerNavigation4 />);
+  waitFor(() => {
+    expect(getByTestId("url").textContent).toBe(
+      "/rece/rece-ui/mesrequetes/apercurequetedelivrance/0"
     );
   });
 });
@@ -171,13 +164,11 @@ const HookConsummerNavigation5: React.FC = () => {
   );
 };
 
-test("test A valider", async () => {
-  await act(async () => {
-    const { getByTestId } = render(<HookConsummerNavigation5 />);
-    await waitFor(() =>
-      expect(getByTestId("url").textContent).toBe(
-        "/rece/rece-ui/mesrequetes/apercurequetetraitement/0"
-      )
+test("test A valider", () => {
+  const { getByTestId } = render(<HookConsummerNavigation5 />);
+  waitFor(() => {
+    expect(getByTestId("url").textContent).toBe(
+      "/rece/rece-ui/mesrequetes/apercurequetetraitement/0"
     );
   });
 });

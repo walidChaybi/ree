@@ -10,9 +10,10 @@ import {
   URL_REQUETES_DELIVRANCE_SERVICE,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "@router/ReceUrls";
-import { act, render, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import React from "react";
+import { expect, test } from "vitest";
 
 const paramsRequete: IRMCAutoParams = {
   requete: {
@@ -79,59 +80,53 @@ const HookConsummerApercuTraitement: React.FC = () => {
   return <div data-testid="urlRedirection">{urlData ? urlData.url : ""}</div>;
 };
 
-test('Test useRMCAutoHook : redirection à partir de "Mes Requêtes"', async () => {
-  await act(async () => {
-    const { getByTestId } = render(<HookConsummerRequete />);
-    await waitFor(() =>
-      expect(getByTestId("urlRedirection").textContent).toBe(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
-      )
+test('Test useRMCAutoHook : redirection à partir de "Mes Requêtes"', () => {
+  const { getByTestId } = render(<HookConsummerRequete />);
+
+  waitFor(() => {
+    expect(getByTestId("urlRedirection").textContent).toBe(
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
     );
   });
 });
 
-test('Test useRMCAutoHook : redirection à partir de "Requêtes Service"', async () => {
-  await act(async () => {
-    const { getByTestId } = render(<HookConsummerRequeteService />);
-    await waitFor(() =>
-      expect(getByTestId("urlRedirection").textContent).toBe(
-        URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
-      )
+test('Test useRMCAutoHook : redirection à partir de "Requêtes Service"', () => {
+  const { getByTestId } = render(<HookConsummerRequeteService />);
+  waitFor(() => {
+    expect(getByTestId("urlRedirection").textContent).toBe(
+      URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
     );
   });
 });
 
-test('Test useRMCAutoHook : redirection à partir de "Recherche Requêtes"', async () => {
-  await act(async () => {
-    const { getByTestId } = render(<HookConsummerRechercheRequete />);
-    await waitFor(() =>
-      expect(getByTestId("urlRedirection").textContent).toBe(
-        URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
-      )
+test('Test useRMCAutoHook : redirection à partir de "Recherche Requêtes"', () => {
+  const { getByTestId } = render(<HookConsummerRechercheRequete />);
+
+  waitFor(() => {
+    expect(getByTestId("urlRedirection").textContent).toBe(
+      URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
     );
   });
 });
 
-test('Test useRMCAutoHook : redirection à partir de "Apercu Requêtes (prise en charge)"', async () => {
-  await act(async () => {
-    const { getByTestId } = render(<HookConsummerApercuRequete />);
-    await waitFor(() =>
-      expect(getByTestId("urlRedirection").textContent).toBe(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
-      )
+test('Test useRMCAutoHook : redirection à partir de "Apercu Requêtes (prise en charge)"', () => {
+  const { getByTestId } = render(<HookConsummerApercuRequete />);
+
+  waitFor(() => {
+    expect(getByTestId("urlRedirection").textContent).toBe(
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
     );
   });
 });
 
-test('Test useRMCAutoHook : redirection à partir de "Apercu Requêtes Traitement" vers "Aperçu requete prise en charge" suite modifictaion traitement', async () => {
-  await act(async () => {
-    const { getByTestId } = render(<HookConsummerApercuTraitement />);
-    await waitFor(() =>
-      expect(getByTestId("urlRedirection").textContent).toBe(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
-      )
-    );
-  });
+test('Test useRMCAutoHook : redirection à partir de "Apercu Requêtes Traitement" vers "Aperçu requete prise en charge" suite modifictaion traitement', () => {
+  const { getByTestId } = render(<HookConsummerApercuTraitement />);
+
+  waitFor(() =>
+    expect(getByTestId("urlRedirection").textContent).toBe(
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+    )
+  );
 });
 
 
