@@ -25,7 +25,9 @@ export interface VoletOngletProps {
   ongletParDefault?: number;
 }
 
-export const VoletAvecOnglet: React.FC<VoletOngletProps> = props => {
+export const VoletAvecOnglet: React.FC<
+  React.PropsWithChildren<VoletOngletProps>
+> = props => {
   const [ongletSelectionne, setOngletSelectionne] = useState(
     props.ongletParDefault || 0
   );

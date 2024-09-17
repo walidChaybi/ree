@@ -6,7 +6,7 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { BoiteAOnglets } from "@widget/onglets/BoiteAOnglets";
+import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
@@ -30,7 +30,15 @@ test.skip("renders BoiteAOnglet", async () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE,
-          element: <BoiteAOnglets selectedTab={0} onglets={mock} />
+          element: (
+            <BoiteAOnglets
+              selectedTab={0}
+              onglets={mock as IOngletProps[]}
+              titre={""}
+              classOngletPrincipale={""}
+              classOnglet={""}
+            />
+          )
         }
       ],
       [URL_MES_REQUETES_DELIVRANCE]

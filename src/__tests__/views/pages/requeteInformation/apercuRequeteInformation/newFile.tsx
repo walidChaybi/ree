@@ -13,7 +13,7 @@ import {
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
-import { expect, test } from "vitest";
+import { expect, test, vi } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 test("clique requete liée", async () => {

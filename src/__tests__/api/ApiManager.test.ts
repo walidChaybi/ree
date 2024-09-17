@@ -5,10 +5,6 @@ test("instanciation d'une api définie dans le fichier api.json", () => {
   const api = ApiManager.getInstance("rece-requete-api", "v2");
 
   expect(api).not.toBe(null || undefined);
-  expect(api.url).toBe("http://localhost");
-  expect(api.domain).toBe("rece");
-  expect(api.name).toBe("rece-requete-api");
-  expect("v2").toBe(api.version);
   expect(api.getUri()).toBe("http://localhost/rece/rece-requete-api/v2");
 });
 

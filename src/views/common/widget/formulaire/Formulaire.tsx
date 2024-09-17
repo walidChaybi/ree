@@ -1,4 +1,4 @@
-import { Form, Formik, FormikHelpers } from "formik";
+import { Form, Formik, FormikHelpers, FormikValues } from "formik";
 import React from "react";
 import { Fieldset } from "../fieldset/Fieldset";
 import "./scss/Formulaire.scss";
@@ -8,7 +8,10 @@ interface IFormulaireProps<T extends any> {
   formDefaultValues: any;
   formValidationSchema: any;
   // TODO: Supprimer l'optionnel pour formikHelpers
-  onSubmit: (values: T, formikHelpers?: FormikHelpers<T>) => void;
+  onSubmit: (
+    values: T & FormikValues,
+    formikHelpers?: FormikHelpers<T & FormikValues>
+  ) => void;
   className?: string;
   disabled?: boolean;
 }
@@ -37,7 +40,10 @@ export const Formulaire = <T,>({
   );
 };
 function getForm<T>(
-  onSubmit: (values: T, formikHelpers?: FormikHelpers<T>) => void,
+  onSubmit: (
+    values: T & FormikValues,
+    formikHelpers?: FormikHelpers<T & FormikValues>
+  ) => void,
   formDefaultValues: any,
   formValidationSchema: any,
   disabled = false,

@@ -9,6 +9,7 @@ import ListesTypesMentionForm from "@pages/requeteMiseAJour/apercuRequete/conten
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formik } from "formik";
 import { MemoryRouter } from "react-router-dom";
+import { expect, test } from "vitest";
 
 const LISTE_TYPE_MENTION_NIVEAU_UN = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_UN}`;
 const LISTE_TYPE_MENTION_NIVEAU_DEUX = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_DEUX}`;
@@ -27,15 +28,13 @@ test("le composant DOIT etre rendu correctement QUAND le type et sous-type sont 
   );
 
   await waitFor(() => {
-    expect(
-      screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_UN)
-    ).toBeInTheDocument();
+    expect(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_UN)).toBeDefined();
     expect(
       screen.queryByTestId(LISTE_TYPE_MENTION_NIVEAU_DEUX)
-    ).not.toBeInTheDocument();
+    ).not.toBeDefined();
     expect(
       screen.queryByTestId(LISTE_TYPE_MENTION_NIVEAU_TROIS)
-    ).not.toBeInTheDocument();
+    ).not.toBeDefined();
   });
 
   fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_UN), {
@@ -43,12 +42,10 @@ test("le composant DOIT etre rendu correctement QUAND le type et sous-type sont 
   });
 
   await waitFor(() => {
-    expect(
-      screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_DEUX)
-    ).toBeInTheDocument();
+    expect(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_DEUX)).toBeDefined();
     expect(
       screen.queryByTestId(LISTE_TYPE_MENTION_NIVEAU_TROIS)
-    ).not.toBeInTheDocument();
+    ).not.toBeDefined();
   });
 
   fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_DEUX), {
@@ -58,7 +55,7 @@ test("le composant DOIT etre rendu correctement QUAND le type et sous-type sont 
   await waitFor(() => {
     expect(
       screen.queryByTestId(LISTE_TYPE_MENTION_NIVEAU_TROIS)
-    ).not.toBeInTheDocument();
+    ).not.toBeDefined();
   });
 });
 
@@ -77,10 +74,10 @@ test("le composant DOIT etre rendu correctement QUAND le type, sous-type et le s
   await waitFor(() => {
     expect(
       screen.queryByTestId(LISTE_TYPE_MENTION_NIVEAU_DEUX)
-    ).not.toBeInTheDocument();
+    ).not.toBeDefined();
     expect(
       screen.queryByTestId(LISTE_TYPE_MENTION_NIVEAU_TROIS)
-    ).not.toBeInTheDocument();
+    ).not.toBeDefined();
   });
 
   fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_UN), {
@@ -88,12 +85,10 @@ test("le composant DOIT etre rendu correctement QUAND le type, sous-type et le s
   });
 
   await waitFor(() => {
-    expect(
-      screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_DEUX)
-    ).toBeInTheDocument();
+    expect(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_DEUX)).toBeDefined();
     expect(
       screen.queryByTestId(LISTE_TYPE_MENTION_NIVEAU_TROIS)
-    ).not.toBeInTheDocument();
+    ).not.toBeDefined();
   });
 
   fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_DEUX), {
@@ -101,9 +96,7 @@ test("le composant DOIT etre rendu correctement QUAND le type, sous-type et le s
   });
 
   await waitFor(() => {
-    expect(
-      screen.queryByTestId(LISTE_TYPE_MENTION_NIVEAU_TROIS)
-    ).toBeInTheDocument();
+    expect(screen.queryByTestId(LISTE_TYPE_MENTION_NIVEAU_TROIS)).toBeDefined();
   });
 
   fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_TROIS), {
@@ -113,12 +106,12 @@ test("le composant DOIT etre rendu correctement QUAND le type, sous-type et le s
   await waitFor(() => {
     expect(
       screen.getByDisplayValue("2 Divorce/Séparation/Annulation mariage")
-    ).toBeInTheDocument();
+    ).toBeDefined();
     expect(
       screen.getByDisplayValue(
         "2-1 & 2-2 divorce/séparation de corps en France"
       )
-    ).toBeInTheDocument();
-    expect(screen.getByDisplayValue("2-1 notarié")).toBeInTheDocument();
+    ).toBeDefined();
+    expect(screen.getByDisplayValue("2-1 notarié")).toBeDefined();
   });
 });

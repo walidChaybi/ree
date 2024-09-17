@@ -26,6 +26,10 @@ export default defineConfig({
       "./src/__tests__/views/pages/requeteInformation/**",
       "./src/__tests__/views/pages/requeteMiseAJour/**"
     ],
+    reporters: ["vitest-sonar-reporter"],
+    outputFile: {
+      "vitest-sonar-reporter": "test_report/jest/test-report.xml"
+    },
     coverage: {
       include: ["src/*"],
       exclude: [

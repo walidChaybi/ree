@@ -23,13 +23,9 @@ interface ProtectionApercuProps {
   forcePass?: boolean;
 }
 
-export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
-  children,
-  statut,
-  type,
-  sousType,
-  forcePass
-}) => {
+export const ProtectionApercu: React.FC<
+  React.PropsWithChildren<ProtectionApercuProps>
+> = ({ children, statut, type, sousType, forcePass }) => {
   const location = useLocation();
   const [estBonStatut, setEstBonStatut] = useState<boolean>(true);
 

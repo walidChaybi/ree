@@ -8,12 +8,9 @@ interface ItemMultiLignesProps {
   visible?: boolean;
 }
 
-export const ItemMultiLignes: React.FC<ItemMultiLignesProps> = ({
-  children,
-  modeColumn = false,
-  visible = true,
-  ...props
-}) => {
+export const ItemMultiLignes: React.FC<
+  React.PropsWithChildren<ItemMultiLignesProps>
+> = ({ children, modeColumn = false, visible = true, ...props }) => {
   const classNameConteneur = formatLigne(
     ["ligne", modeColumn && "column"],
     " "

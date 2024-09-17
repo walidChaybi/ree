@@ -7,7 +7,7 @@ import { ArrowLeft } from "@mui/icons-material";
 import ArrowRight from "@mui/icons-material/ArrowRight";
 import Menu from "@mui/material/Menu";
 import MenuItem, { MenuItemProps } from "@mui/material/MenuItem";
-import React, { useImperativeHandle, useRef, useState } from "react";
+import React, { Ref, useImperativeHandle, useRef, useState } from "react";
 
 export interface NestedMenuItemProps extends Omit<MenuItemProps, "button"> {
   /**
@@ -57,7 +57,10 @@ const NestedMenuItem = React.forwardRef<
   useImperativeHandle(ref, () => menuItemRef.current || new HTMLLIElement());
 
   const containerRef = useRef<HTMLDivElement>(null);
-  useImperativeHandle(containerRefProp, () => containerRef.current);
+  useImperativeHandle(
+    containerRefProp as Ref<HTMLElement | null>,
+    () => containerRef.current
+  );
 
   const menuContainerRef = useRef<HTMLDivElement>(null);
 

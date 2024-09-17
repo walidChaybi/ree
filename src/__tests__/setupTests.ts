@@ -10,6 +10,7 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { PaysSecabilite } from "@model/requete/enum/PaysSecabilite";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
+import { cleanup } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import React from "react";
 import request from "superagent";
@@ -89,6 +90,7 @@ beforeEach(() => {
 afterEach(() => {
   // Réactivation de la log après chaque test (certains tests la désactive car les erreurs logguées sont normales)
   storeRece.logErrorOff = false;
+  cleanup();
 });
 
 if (window.document) {

@@ -25,6 +25,7 @@ import {
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
+import { afterEach, beforeAll, beforeEach, expect, test, vi } from "vitest";
 import {
   createTestingRouter,
   mockFenetreFicheTestFunctions
@@ -175,7 +176,6 @@ test("renders ApercuReqInfoPage", async () => {
 
   fireEvent.click(screen.getByText(/Envoyer la réponse/i));
 
-
   await waitFor(() => {
     expect(router.state.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
   });
@@ -218,7 +218,7 @@ test("bouton annuler", async () => {
 });
 
 test("clique requete liée", async () => {
-  const nouvelleFenetreSpy = jest.spyOn(window, "open");
+  const nouvelleFenetreSpy = vi.spyOn(window, "open");
 
   const router = createTestingRouter(
     [
@@ -436,7 +436,7 @@ test("render ApercuReqInfoPage : RMC état civil manuelle ", async () => {
   fireEvent.click(screen.getByText("Rechercher"));
 
   await waitFor(() => {
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(screen.queryByRole("dialog")).not.toBeDefined();
     expect(screen.getByText("Aucun acte n'a été trouvé.")).toBeDefined();
     expect(
       screen.getByText("Aucune inscription n'a été trouvée.")
@@ -482,7 +482,7 @@ test("Attendu: le bouton 'prendre en charge' est affiché, si la requête n'appa
     Labels.prendreEnCharge
   ) as HTMLButtonElement;
 
-  await waitFor(() => expect(boutonPrendreEnCharge).toBeInTheDocument());
+  await waitFor(() => expect(boutonPrendreEnCharge).toBeDefined());
 });
 
 test("Attendu: le bouton 'prendre en charge' disparait une fois qu'on a cliqué dessus", async () => {
@@ -494,7 +494,7 @@ test("Attendu: le bouton 'prendre en charge' disparait une fois qu'on a cliqué 
 
   fireEvent.click(boutonPrendreEnCharge);
 
-  await waitFor(() => expect(boutonPrendreEnCharge).not.toBeInTheDocument());
+  await waitFor(() => expect(boutonPrendreEnCharge).not.toBeDefined());
 });
 
 test("Attendu: les blocs non présents sur l'aperçu de requête sont bien absents si la requête n'appartient pas à l'utilisateur, mais se trouve dans sa corbeille Service", async () => {
@@ -513,9 +513,9 @@ test("Attendu: les blocs non présents sur l'aperçu de requête sont bien absen
   ) as HTMLButtonElement;
 
   await waitFor(() => {
-    expect(titreAutresRequetesAssocieesAuTitulaire).not.toBeInTheDocument();
-    expect(BoutonNouvelleRMC).not.toBeInTheDocument();
-    expect(BoutonAjouterUnePieceJointe).not.toBeInTheDocument();
+    expect(titreAutresRequetesAssocieesAuTitulaire).not.toBeDefined();
+    expect(BoutonNouvelleRMC).not.toBeDefined();
+    expect(BoutonAjouterUnePieceJointe).not.toBeDefined();
   });
 });
 
@@ -547,6 +547,6 @@ test("Attendu: le bouton 'prendre en charge' ne s'affiche pas lorsqu'on se trouv
   ) as HTMLButtonElement;
 
   await waitFor(() => {
-    expect(boutonPrendreEnCharge).not.toBeInTheDocument();
+    expect(boutonPrendreEnCharge).not.toBeDefined();
   });
 });

@@ -25,7 +25,9 @@ export interface FenetreExterneUtil {
   ref: Window;
 }
 
-export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
+export class FenetreExterne extends React.PureComponent<
+  React.PropsWithChildren<FenetreExterneProps>
+> {
   fenetreExterne: Window | null = null;
   htmlDivElement: HTMLDivElement;
   cache: EmotionCache;

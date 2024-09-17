@@ -4,13 +4,16 @@ import "./scss/Fieldset.scss";
 interface FieldsetProps {
   titre: string;
 }
-export const Fieldset: React.FC<FieldsetProps> = props => {
+export const Fieldset: React.FC<React.PropsWithChildren<FieldsetProps>> = ({
+  titre,
+  children
+}) => {
   return (
     <div className="Fieldset">
       <div className="Titre">
-        <span>{props.titre}</span>
+        <span>{titre}</span>
       </div>
-      {props.children}
+      {children}
     </div>
   );
 };

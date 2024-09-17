@@ -7,7 +7,7 @@ interface IAvertissementMessageProps {
 }
 
 export const MessageAvertissement: React.FC<
-  IAvertissementMessageProps
+  React.PropsWithChildren<IAvertissementMessageProps>
 > = props => {
   return (
     <>

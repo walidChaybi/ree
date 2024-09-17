@@ -10,6 +10,7 @@ import {
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
+import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 test("renders Page requete information et clique sur une TRANSFEREE", async () => {
@@ -19,12 +20,14 @@ test("renders Page requete information et clique sur une TRANSFEREE", async () =
         path: URL_MES_REQUETES_INFORMATION,
         element: (
           <MockRECEContextProvider
-            infosLoginOfficier={{
-              officierDataState: {
-                idSSO: officier.id_sso,
-                ...officier
-              } as ILoginApi
-            }}
+            infosLoginOfficier={
+              {
+                officierDataState: {
+                  idSSO: officier.id_sso,
+                  ...officier
+                }
+              } as unknown as ILoginApi
+            }
           >
             <EspaceInformationPage />
           </MockRECEContextProvider>
@@ -75,9 +78,11 @@ test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", a
         path: URL_MES_REQUETES_INFORMATION,
         element: (
           <MockRECEContextProvider
-            infosLoginOfficier={{
-              officierDataState: { idSSO: officier.id_sso, ...officier }
-            }}
+            infosLoginOfficier={
+              {
+                officierDataState: { idSSO: officier.id_sso, ...officier }
+              } as unknown as ILoginApi
+            }
           >
             <EspaceInformationPage />
           </MockRECEContextProvider>
@@ -95,7 +100,7 @@ test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", a
   render(<RouterProvider router={router} />);
 
   await waitFor(() => {
-    expect(screen.getByText("EVIPG5")).toBeInTheDocument();
+    expect(screen.getByText("EVIPG5")).toBeDefined();
   });
 
   // Clic sur une ligne

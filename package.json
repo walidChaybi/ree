@@ -16,7 +16,6 @@
     "@mui/icons-material": "5.10.6",
     "@mui/lab": "5.0.0-alpha.100",
     "@mui/material": "5.15.20",
-    "@vitejs/plugin-react": "4.3.1",
     "classnames": "2.2.6",
     "formik": "2.4.2",
     "magic-bytes.js": "1.0.14",
@@ -35,6 +34,7 @@
     "@testing-library/dom": "10.4.0",
     "@testing-library/react": "16.0.0",
     "@testing-library/user-event": "14.5.1",
+    "@types/node": "18.0.0",
     "@types/react": "18.3.4",
     "@types/react-datepicker": "4.3.4",
     "@types/react-dom": "18.3.0",
@@ -42,6 +42,7 @@
     "@types/uuid": "8.3.1",
     "@typescript-eslint/eslint-plugin": "5.37.0",
     "@typescript-eslint/parser": "5.18.0",
+    "@vitejs/plugin-react": "4.3.1",
     "@vitest/coverage-v8": "2.0.5",
     "eslint": "8.23.1",
     "eslint-config-react-app": "7.0.1",
@@ -54,16 +55,17 @@
     "sass": "1.55.0",
     "superagent-mock": "4.0.0",
     "tsarch": "5.3.0",
-    "typescript": "4.6.3",
+    "typescript": "4.9.5",
     "vite": "5.4.1",
-    "vitest": "2.0.5"
+    "vitest": "2.0.5",
+    "vitest-sonar-reporter": "2.0.0"
   },
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview --port 3000",
-    "test": "NODE_ENV=test vitest run --coverage --config vite.config.mts --bail 1",
-    "test:nocoverage": "NODE_ENV=test vitest",
+    "test": "NODE_ENV=test vitest run --coverage --config vite.config.mts --silent --maxWorkers 3 --bail 1",
+    "test:nocoverage": "NODE_ENV=test vitest --maxWorkers 3",
     "package": "npm run build"
   },
   "eslintConfig": {

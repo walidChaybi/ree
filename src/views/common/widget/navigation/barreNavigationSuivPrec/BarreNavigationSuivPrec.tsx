@@ -8,12 +8,9 @@ export interface ActionsProps {
   setIndex: (index: number) => void;
 }
 
-export const BarreNavigationSuivPrec: React.FC<ActionsProps> = ({
-  index,
-  max,
-  setIndex,
-  children
-}) => {
+export const BarreNavigationSuivPrec: React.FC<
+  React.PropsWithChildren<ActionsProps>
+> = ({ index, max, setIndex, children }) => {
   return (
     <div className="BarreNavigationSuivPrec">
       <BoutonSuivPrec

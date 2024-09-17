@@ -26,7 +26,10 @@ interface IReceRoute {
   route: IRoute;
 }
 
-const ReceRoute: React.FC<IReceRoute> = ({ route, children }): any => {
+const ReceRoute: React.FC<React.PropsWithChildren<IReceRoute>> = ({
+  route,
+  children
+}): any => {
   const auth = afficheComposantSiAuthorise(route);
   if (!auth) {
     messageManager.showWarningAndClose(

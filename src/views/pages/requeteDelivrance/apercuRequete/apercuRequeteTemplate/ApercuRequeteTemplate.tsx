@@ -22,7 +22,9 @@ interface TemplateProps {
   setDocumentAfficheCallback?: (docReponse: IDocumentReponse) => void;
 }
 
-export const ApercuRequeteTemplate: React.FC<TemplateProps> = props => {
+export const ApercuRequeteTemplate: React.FC<
+  React.PropsWithChildren<TemplateProps>
+> = props => {
   const [idRequete, setIdRequete] = useState<string>();
   const { idRequeteParam } = useParams<TUuidRequeteParams>();
   const location = useLocation();

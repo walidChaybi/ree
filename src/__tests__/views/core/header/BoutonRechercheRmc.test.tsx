@@ -1,7 +1,6 @@
-import { RECEContextProvider } from "@core/contexts/RECEContext";
+import { IRECEContext, RECEContext } from "@core/contexts/RECEContext";
 import { BoutonRechercheRmc } from "@core/header/BoutonRechercheRmc";
 import officier from "@mock/data/connectedUser.json";
-import { configFakeUrl } from "@mock/superagent-config/superagent-mock-fake-url";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { beforeAll, beforeEach, expect, test } from "vitest";
@@ -16,13 +15,15 @@ beforeAll(async () => {
 beforeEach(async () => {
   render(
     <MemoryRouter>
-      <RECEContextProvider
-        infosLoginOfficier={{
-          officierDataState: { idSSO: officier.id_sso, ...officier }
-        }}
+      <RECEContext.Provider
+        value={
+          {
+            officierDataState: { idSSO: officier.id_sso, ...officier }
+          } as unknown as IRECEContext
+        }
       >
         <BoutonRechercheRmc></BoutonRechercheRmc>
-      </RECEContextProvider>
+      </RECEContext.Provider>
     </MemoryRouter>
   );
   boutonElement = screen.getByTitle("Recherche acte/inscription");
@@ -32,7 +33,7 @@ beforeEach(async () => {
 });
 
 test.skip("renders click bouton rmc", async () => {
-  configFakeUrl[0].nbRequetes = 0;
+  // configFakeUrl[0].nbRequetes = 0;
   fireEvent.click(boutonElement);
   await waitFor(() => {
     expect(screen.getByText("Filtre titulaire")).toBeDefined();

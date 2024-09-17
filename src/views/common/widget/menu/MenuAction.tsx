@@ -24,7 +24,9 @@ interface IMenuActionProps {
   actionMoins?: () => void;
 }
 
-export const MenuAction: React.FC<IMenuActionProps> = props => {
+export const MenuAction: React.FC<
+  React.PropsWithChildren<IMenuActionProps>
+> = props => {
   const refs: MutableRefObject<HTMLElement[]> = useRef([]);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 

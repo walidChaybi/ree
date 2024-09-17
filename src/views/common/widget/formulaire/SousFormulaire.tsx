@@ -4,15 +4,17 @@ import "./scss/SousFormulaire.scss";
 interface SousFormulaireProps {
   titre?: string;
 }
-export const SousFormulaire: React.FC<SousFormulaireProps> = props => {
+export const SousFormulaire: React.FC<
+  React.PropsWithChildren<SousFormulaireProps>
+> = ({ titre, children }) => {
   return (
     <div className="SousFormulaire">
-      {props.titre && (
+      {titre && (
         <div className="Titre">
-          <span>{props.titre}</span>
+          <span>{titre}</span>
         </div>
       )}
-      <div className="ElementForm"> {props.children}</div>
+      <div className="ElementForm"> {children}</div>
     </div>
   );
 };

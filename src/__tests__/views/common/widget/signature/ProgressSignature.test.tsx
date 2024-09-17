@@ -1,3 +1,5 @@
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { fireEvent, render } from "@testing-library/react";
 import { ProgressSignature } from "@widget/signature/ProgressSignature";
 import { expect, test, vi } from "vitest";
@@ -20,10 +22,12 @@ test("renders progress bar, close function is called automatically", () => {
               nomDocument: "",
               conteneurSwift: "",
               idRequete: "",
-              numeroRequete: 1
+              numeroRequete: "1"
             }
           ],
-          documentsToSave: []
+          documentsToSave: [],
+          sousTypeRequete: {} as SousTypeDelivrance,
+          acte: {} as IFicheActe
         }
       }}
     />
@@ -51,10 +55,12 @@ test("renders progress bar, close function is called when click on button", () =
               nomDocument: "",
               conteneurSwift: "",
               idRequete: "",
-              numeroRequete: 1
+              numeroRequete: "1"
             }
           ],
-          documentsToSave: []
+          documentsToSave: [],
+          sousTypeRequete: {} as SousTypeDelivrance,
+          acte: {} as IFicheActe
         }
       }}
     />
@@ -87,7 +93,9 @@ test("renders progress bar, close function can't be called", () => {
               numeroRequete: "1"
             }
           ],
-          documentsToSave: []
+          documentsToSave: [],
+          sousTypeRequete: {} as SousTypeDelivrance,
+          acte: {} as IFicheActe
         },
         idRequeteRDC: {
           documentsToSign: [
@@ -101,7 +109,9 @@ test("renders progress bar, close function can't be called", () => {
               numeroRequete: "2"
             }
           ],
-          documentsToSave: []
+          documentsToSave: [],
+          sousTypeRequete: {} as SousTypeDelivrance,
+          acte: {} as IFicheActe
         }
       }}
     />

@@ -32,10 +32,9 @@ interface SeulementNavigateurProps {
   navigateurs: Navigateur[];
 }
 
-export const SeulementNavigateur: React.FC<SeulementNavigateurProps> = ({
-  children,
-  navigateurs
-}) => {
+export const SeulementNavigateur: React.FC<
+  React.PropsWithChildren<SeulementNavigateurProps>
+> = ({ children, navigateurs }) => {
   const navigateurCourant = DetectionNavigateur.getNomNavigateur();
   const estNavigateurAutorise = navigateurs.find(
     navigateur => navigateur === navigateurCourant

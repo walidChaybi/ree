@@ -16,6 +16,7 @@ import {
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { RouterProvider } from "react-router-dom";
+import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 const parametresReqInfo = {
@@ -50,12 +51,12 @@ test("renders Requête Service Info, Clic requête au statut TRANSFEREE", async 
   });
 
   await waitFor(() => {
-    expect(screen.getByTitle("Page suivante")).toBeInTheDocument();
-    expect(screen.getByText("N° requête")).toBeInTheDocument();
-    expect(screen.getByText("EVIPG4")).toBeInTheDocument();
-    expect(screen.getByText("EVIPG5")).toBeInTheDocument();
-    expect(screen.getByText("NOM1 p1")).toBeInTheDocument();
-    expect(screen.getByText("NOM2 p1")).toBeInTheDocument();
+    expect(screen.getByTitle("Page suivante")).toBeDefined();
+    expect(screen.getByText("N° requête")).toBeDefined();
+    expect(screen.getByText("EVIPG4")).toBeDefined();
+    expect(screen.getByText("EVIPG5")).toBeDefined();
+    expect(screen.getByText("NOM1 p1")).toBeDefined();
+    expect(screen.getByText("NOM2 p1")).toBeDefined();
   });
 
   // Clic sur une ligne
@@ -95,7 +96,7 @@ test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", a
   });
 
   await waitFor(() => {
-    expect(screen.getByText("EVIPG5")).toBeInTheDocument();
+    expect(screen.getByText("EVIPG5")).toBeDefined();
   });
 
   // Clic sur une ligne

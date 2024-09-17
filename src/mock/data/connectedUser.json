@@ -1,5 +1,6 @@
 {
   "id_sso": "idSSOConnectedUser",
+  "idUtilisateur": "idConnectedUser",
   "nom": "nomConnectedUser",
   "prenom": "prenomConnectedUser",
   "trigramme": "trigrammeConnectedUser",

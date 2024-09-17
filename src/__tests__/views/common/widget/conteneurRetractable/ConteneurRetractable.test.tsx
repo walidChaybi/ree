@@ -1,21 +1,23 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
-import { expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 
-test("Attendu: Un clic sur un conteneur retractable fait apparaitre/disparaitre son contenu", () => {
-  render(
-    <ConteneurRetractable titre="testConteneur" initConteneurFerme={false} />
-  );
+describe("Test composant conteneur rétractable", () => {
+  test("Attendu: Un clic sur un conteneur retractable fait apparaitre/disparaitre son contenu", () => {
+    const { getByText, queryByText } = render(
+      <ConteneurRetractable titre="testConteneur" initConteneurFerme={false}>
+        <div>{"Test"}</div>
+      </ConteneurRetractable>
+    );
 
-  const conteneurRetractable = screen.getByText("testConteneur");
+    const conteneurRetractable = getByText("testConteneur");
 
-  waitFor(() => {
     expect(conteneurRetractable.classList.contains("vertical")).toBeFalsy();
-  });
+    expect(queryByText("Test")).toBeDefined();
 
-  fireEvent.click(conteneurRetractable);
+    fireEvent.click(conteneurRetractable);
 
-  waitFor(() => {
     expect(conteneurRetractable.classList.contains("vertical")).toBeTruthy();
+    expect(queryByText("Test")).toBeNull();
   });
 });

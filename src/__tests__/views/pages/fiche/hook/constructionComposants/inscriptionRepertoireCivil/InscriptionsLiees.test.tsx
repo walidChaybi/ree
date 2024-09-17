@@ -1,3 +1,4 @@
+import { TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
 import { InscriptionsLiees } from "@pages/fiche/hook/constructionComposants/inscriptionRepertoireCivil/InscriptionsLiees";
 import { render } from "@testing-library/react";
 import { expect, test } from "vitest";
@@ -7,19 +8,25 @@ test("Inscription liees: all rc link are displayed and separated bay coma", () =
     <InscriptionsLiees
       inscriptionsLiees={[
         {
-          typeInscription: "rc",
+          typeInscription: "rc" as TypeInscriptionRc,
           numero: "01",
-          idInscription: "011"
+          id: "011",
+          annee: "",
+          nature: ""
         },
         {
-          typeInscription: "rc",
+          typeInscription: "rc" as TypeInscriptionRc,
           numero: "02",
-          idInscription: "022"
+          id: "022",
+          annee: "",
+          nature: ""
         },
         {
-          typeInscription: "rc",
+          typeInscription: "rc" as TypeInscriptionRc,
           numero: "03",
-          idInscription: "033"
+          id: "033",
+          annee: "",
+          nature: ""
         }
       ]}
     />

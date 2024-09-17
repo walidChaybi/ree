@@ -1,5 +1,5 @@
+import { PIECES_JOINTES } from "@composant/formulaire/ConstantesNomsForm";
 import PiecesJointesReqInfoForm from "@pages/requeteInformation/apercuRequeteInformation/contenu/choixReponse/PiecesJointesReqInfoForm";
-import { PIECES_JOINTES } from "@pages/requeteInformation/apercuRequeteInformation/contenu/choixReponse/ReponseReqInfoForm";
 import {
   act,
   fireEvent,
@@ -9,6 +9,7 @@ import {
 } from "@testing-library/react";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Form, Formik } from "formik";
+import { expect, test, vi } from "vitest";
 
 test("renders PiecesJointesReqInfoForm, bouton activé", async () => {
   const props = {
@@ -19,7 +20,7 @@ test("renders PiecesJointesReqInfoForm, bouton activé", async () => {
   } as SubFormProps;
 
   render(
-    <Formik initialValues={{ piecesJointes: null }} onSubmit={jest.fn()}>
+    <Formik initialValues={{ piecesJointes: null }} onSubmit={vi.fn()}>
       <Form>
         <PiecesJointesReqInfoForm {...props} />
       </Form>
@@ -49,7 +50,7 @@ test("renders PiecesJointesReqInfoForm, bouton désactivé", async () => {
   } as SubFormProps;
 
   render(
-    <Formik initialValues={{ piecesJointes: null }} onSubmit={jest.fn()}>
+    <Formik initialValues={{ piecesJointes: null }} onSubmit={vi.fn()}>
       <Form>
         <PiecesJointesReqInfoForm {...props} />
       </Form>

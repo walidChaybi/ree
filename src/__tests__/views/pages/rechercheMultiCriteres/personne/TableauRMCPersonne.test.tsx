@@ -9,6 +9,7 @@ import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { TypeRedactionActe } from "@model/etatcivil/enum/TypeRedactionActe";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
@@ -61,6 +62,7 @@ const HookConsumerTableauRMCPersonne: React.FC<
       identifiantsActesInscriptionsSelectionnes={[]}
       natureActeRequete={NatureActeRequete.NAISSANCE}
       onClickBoutonAjouterPersonneOuActeInscription={() => {}}
+      typeRedactionActe={"" as TypeRedactionActe}
     />
   );
 };
@@ -131,6 +133,7 @@ test("Ouverture d'un acte", async () => {
       natureActeRequete={NatureActeRequete.NAISSANCE}
       identifiantsActesInscriptionsSelectionnes={[]}
       onClickBoutonAjouterPersonneOuActeInscription={() => {}}
+      typeRedactionActe={"" as TypeRedactionActe}
     />
   );
 

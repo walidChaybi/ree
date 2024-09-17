@@ -1,12 +1,12 @@
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TRequete } from "@model/requete/IRequete";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
-import { storeRece } from "@util/storeRece";
 import {
   formatNom,
   getLibelle,
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "@util/Utils";
+import { storeRece } from "@util/storeRece";
 import classNames from "classnames";
 import React from "react";
 import "./scss/BandeauApercuRequete.scss";
@@ -14,12 +14,12 @@ import "./scss/BandeauApercuRequete.scss";
 interface BandeauRequeteProps {
   requete: TRequete;
 }
-export const BandeauRequete: React.FC<BandeauRequeteProps> = props => {
-  const statut = props.requete.statutCourant.statut;
+export const BandeauRequete: React.FC<BandeauRequeteProps> = ({ requete }) => {
+  const statut = requete.statutCourant.statut;
   const styles = classNames(getClassName(statut));
   return (
     <div className="BandeauRequete">
-      <h2 className={styles}>{getStatutLibellePourRequete(props.requete)}</h2>
+      <h2 className={styles}>{getStatutLibellePourRequete(requete)}</h2>
     </div>
   );
 };
@@ -155,9 +155,8 @@ const getStatutLibellePourRequete = (requete: TRequete) => {
         storeRece.getNomUtilisateurAPartirID(requete.idUtilisateur)
       )}`
     : storeRece.getLibelleService(requete.idService);
-  responsable = responsable ? responsable : "";
 
-  return getStatutLibelle(requete, responsable);
+  return getStatutLibelle(requete, responsable ?? "");
 };
 
 function getStatutLibelle(requete: TRequete, responsable: string) {
@@ -188,7 +187,7 @@ function getStatutLibelle(requete: TRequete, responsable: string) {
       break;
   }
 
-  return libelle ? libelle : getStatutLibelleSuite(requete, responsable);
+  return libelle || getStatutLibelleSuite(requete, responsable);
 }
 function getStatutLibelleSuite(requete: TRequete, responsable: string) {
   let libelle;
@@ -228,36 +227,28 @@ function getStatutLibelleSuite(requete: TRequete, responsable: string) {
       libelle = "";
       break;
   }
+
   return libelle;
 }
-function getClassName(statut: StatutRequete) {
-  return {
-    bleu: estBleu(),
-    gris: estGris(),
-    Entete: true
-  };
 
-  function estGris() {
-    return (
-      statut === StatutRequete.BROUILLON ||
-      statut === StatutRequete.REJET ||
-      statut === StatutRequete.IGNOREE ||
-      statut === StatutRequete.DOUBLON ||
-      statut === StatutRequete.TRAITE_REPONDU ||
-      statut === StatutRequete.TRAITE_A_DELIVRER_DEMAT ||
-      statut === StatutRequete.TRAITE_A_IMPRIMER ||
-      statut === StatutRequete.TRAITE_DELIVRE_DEMAT ||
-      statut === StatutRequete.TRAITE_IMPRIME ||
-      statut === StatutRequete.REJET_IMPRESSION
-    );
-  }
-
-  function estBleu() {
-    return (
-      statut === StatutRequete.A_TRAITER ||
-      statut === StatutRequete.A_VALIDER ||
-      statut === StatutRequete.PRISE_EN_CHARGE ||
-      statut === StatutRequete.TRANSFEREE
-    );
-  }
-}
+const getClassName = (statut: StatutRequete) => ({
+  bleu: [
+    StatutRequete.A_TRAITER,
+    StatutRequete.A_VALIDER,
+    StatutRequete.PRISE_EN_CHARGE,
+    StatutRequete.TRANSFEREE
+  ].includes(statut),
+  gris: [
+    StatutRequete.BROUILLON,
+    StatutRequete.REJET,
+    StatutRequete.IGNOREE,
+    StatutRequete.DOUBLON,
+    StatutRequete.TRAITE_REPONDU,
+    StatutRequete.TRAITE_A_DELIVRER_DEMAT,
+    StatutRequete.TRAITE_A_IMPRIMER,
+    StatutRequete.TRAITE_DELIVRE_DEMAT,
+    StatutRequete.TRAITE_IMPRIME,
+    StatutRequete.REJET_IMPRESSION
+  ].includes(statut),
+  Entete: true
+});

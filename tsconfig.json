@@ -28,7 +28,9 @@
       "@model/*": ["./src/model/*"],
       "@scss/*": ["./src/scss/*"],
       "@mock/*": ["./src/mock/*"],
-      "@pageEtablissement/*": ["./src/views/pages/requeteCreation/apercuRequete/etablissement/*"]
+      "@pageEtablissement/*": [
+        "./src/views/pages/requeteCreation/apercuRequete/etablissement/*"
+      ]
     }
   },
   "include": ["src"]

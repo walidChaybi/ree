@@ -15,7 +15,7 @@ export interface ItemProps {
   parent2Enfant?: boolean;
 }
 
-export const Item: React.FC<ItemProps> = ({
+export const Item: React.FC<React.PropsWithChildren<ItemProps>> = ({
   visible = true,
   etendu = true,
   ...props

@@ -161,7 +161,7 @@ export const ListeGlisserDeposer: React.FC<
   };
 
   const handleSort = useCallback(
-    event => {
+    (event: any) => {
       const { active, over } = event;
 
       if (

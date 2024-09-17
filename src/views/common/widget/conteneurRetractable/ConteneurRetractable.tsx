@@ -1,6 +1,6 @@
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { formatLigne } from "@util/Utils";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import "./scss/ConteneurRetractable.scss";
 
 interface TitreProps {
@@ -10,21 +10,25 @@ interface TitreProps {
   estADroite?: boolean;
 }
 
-const ConteneurRetractable: React.FC<TitreProps> = ({
+const ConteneurRetractable: React.FC<React.PropsWithChildren<TitreProps>> = ({
   initConteneurFerme = true,
   ...props
 }) => {
   const [conteneurFerme, setConteneurFerme] =
     useState<boolean>(initConteneurFerme);
 
-  const className = formatLigne(
-    [
-      props.className,
-      "component",
-      conteneurFerme ? "is-closed" : "is-open",
-      props.estADroite && "a-droite"
-    ],
-    " "
+  const className = useMemo(
+    () =>
+      formatLigne(
+        [
+          props.className,
+          "component",
+          conteneurFerme ? "is-closed" : "is-open",
+          props.estADroite && "a-droite"
+        ],
+        " "
+      ),
+    [props.className, props.estADroite, conteneurFerme]
   );
 
   return (

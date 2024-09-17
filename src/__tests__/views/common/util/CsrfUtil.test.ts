@@ -1,4 +1,5 @@
 import { getCsrfCookieValueFromCookies } from "@util/CsrfUtil";
+import { expect, test } from "vitest";
 
 test("Attendu: getCsrfCookieValue fonctionne correctement", () => {
   let cookies =

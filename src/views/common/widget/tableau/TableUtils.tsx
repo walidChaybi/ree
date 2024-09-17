@@ -1,21 +1,21 @@
 import ReportIcon from "@mui/icons-material/Report";
 import { FormatDate } from "@util/DateUtils";
 import { getLibelle } from "@util/Utils";
-import moment from "moment";
+import moment, { MomentInput } from "moment";
 
 export type SortOrder = "ASC" | "DESC";
 
 export function descendingDateComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (
-    moment(b[orderBy], FormatDate.DDMMYYYY).isBefore(
-      moment(a[orderBy], FormatDate.DDMMYYYY)
+    moment(b[orderBy] as MomentInput, FormatDate.DDMMYYYY).isBefore(
+      moment(a[orderBy] as MomentInput, FormatDate.DDMMYYYY)
     )
   ) {
     return -1;
   }
   if (
-    moment(b[orderBy], FormatDate.DDMMYYYY).isAfter(
-      moment(a[orderBy], FormatDate.DDMMYYYY)
+    moment(b[orderBy] as MomentInput, FormatDate.DDMMYYYY).isAfter(
+      moment(a[orderBy] as MomentInput, FormatDate.DDMMYYYY)
     )
   ) {
     return 1;
@@ -25,8 +25,8 @@ export function descendingDateComparator<T>(a: T, b: T, orderBy: keyof T) {
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   const isDate =
-    moment(a[orderBy], FormatDate.DDMMYYYY).isValid() &&
-    moment(b[orderBy], FormatDate.DDMMYYYY).isValid();
+    moment(a[orderBy] as MomentInput, FormatDate.DDMMYYYY).isValid() &&
+    moment(b[orderBy] as MomentInput, FormatDate.DDMMYYYY).isValid();
   if (isDate) {
     return descendingDateComparator(a, b, orderBy);
   } else {

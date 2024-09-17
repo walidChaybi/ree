@@ -1124,10 +1124,12 @@ describe("Test le comportement des champs du formulaire en fonction des valeurs 
   ])(
     `$libelleTest verrouiller et reinitialiser le champ '$nomChamp' QUAND la clé '$cle' du champ 'Famille de registre' est sélectionné.`,
     params => {
-      render(<HookRegistreActeFiltre />);
+      const { getByLabelText, getByDisplayValue, queryByDisplayValue } = render(
+        <HookRegistreActeFiltre />
+      );
 
-      const champFamilleRegistre = screen.getByLabelText("Famille de registre");
-      const champTeste = screen.getByLabelText(
+      const champFamilleRegistre = getByLabelText("Famille de registre");
+      const champTeste = getByLabelText(
         params.ariaLabelChamp
       ) as HTMLInputElement;
 
@@ -1137,10 +1139,8 @@ describe("Test le comportement des champs du formulaire en fonction des valeurs 
         }
       });
 
-      waitFor(() => {
-        expect(champTeste.disabled).not.toBeTruthy();
-        expect(screen.getByDisplayValue(params.valeurAffichee)).toBeDefined();
-      });
+      expect(champTeste.disabled).not.toBeTruthy();
+      expect(getByDisplayValue(params.valeurAffichee)).toBeDefined();
 
       fireEvent.change(champFamilleRegistre, {
         target: {
@@ -1148,15 +1148,13 @@ describe("Test le comportement des champs du formulaire en fonction des valeurs 
         }
       });
 
-      waitFor(() => {
-        if (params.estVerrouilleEtReinitialise) {
-          expect(champTeste.disabled).toBeTruthy();
-          expect(screen.queryByDisplayValue(params.valeurAffichee)).toBeNull();
-        } else {
-          expect(champTeste.disabled).not.toBeTruthy();
-          expect(screen.getByDisplayValue(params.valeurAffichee)).toBeDefined();
-        }
-      });
+      if (params.estVerrouilleEtReinitialise) {
+        expect(champTeste.disabled).toBeTruthy();
+        expect(queryByDisplayValue(params.valeurAffichee)).toBeNull();
+      } else {
+        expect(champTeste.disabled).not.toBeTruthy();
+        expect(getByDisplayValue(params.valeurAffichee)).toBeDefined();
+      }
     }
   );
 

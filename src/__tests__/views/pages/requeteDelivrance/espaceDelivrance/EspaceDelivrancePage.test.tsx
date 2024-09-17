@@ -1,4 +1,4 @@
-import { RECEContextProvider } from "@core/contexts/RECEContext";
+import { IRECEContext, RECEContext } from "@core/contexts/RECEContext";
 import officier from "@mock/data/connectedUser.json";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import {
@@ -16,13 +16,15 @@ test.skip("renders delivrancePage", () => {
       {
         path: URL_MES_REQUETES_DELIVRANCE,
         element: (
-          <RECEContextProvider
-            infosLoginOfficier={{
-              officierDataState: { idSSO: officier.id_sso, ...officier }
-            }}
+          <RECEContext.Provider
+            value={
+              {
+                officierDataState: { idSSO: officier.id_sso, ...officier }
+              } as unknown as IRECEContext
+            }
           >
             <EspaceDelivrancePage selectedTab={0} />
-          </RECEContextProvider>
+          </RECEContext.Provider>
         )
       },
       {

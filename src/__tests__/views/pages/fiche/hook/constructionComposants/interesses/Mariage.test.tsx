@@ -86,6 +86,7 @@ test("renders mariage : le mariage a lieu à l'étranger mais on ne connais pas 
       paysMariage={"Allemagne"}
       dateMariage={{ annee: "2020", mois: "12", jour: "24" }}
       aletranger={true}
+      regionMariage={""}
     />
   );
   expect(getByText("Berlin (Allemagne)")).toBeDefined();

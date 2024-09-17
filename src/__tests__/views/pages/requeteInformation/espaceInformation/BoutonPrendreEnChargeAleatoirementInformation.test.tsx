@@ -8,6 +8,7 @@ import {
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
+import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l'espace Information", async () => {

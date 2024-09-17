@@ -18,8 +18,8 @@ test("Interesse utils get interesse : affichés suivant leur numero d'ordre ", (
   );
 
   expect(components).toHaveLength(3);
-  expect(components[0].partContent.title).toBe("Intéressé 1");
-  expect(components[1].partContent.title).toBe("Intéressé 2");
+  expect(components[0].partContent?.title).toBe("Intéressé 1");
+  expect(components[1].partContent?.title).toBe("Intéressé 2");
 });
 
 test("Interesse utils get interesse : affichage correcte d'un interessé  ", () => {
@@ -37,11 +37,11 @@ test("Interesse utils get interesse : affichage correcte d'un interessé  ", () 
   );
   expect(idxAutresNom).toBeGreaterThan(-1);
   const valueAutresNom: JSX.Element = components[0].partContent?.contents[
-    idxAutresNom
+    idxAutresNom as number
   ].value as JSX.Element;
 
   expect(valueAutresNom.props.children).toBe("favarotti, favarotti2");
-  expect(idxNom).toBeLessThan(idxAutresNom);
+  expect(idxNom).toBeLessThan(idxAutresNom as number);
 
   const idxPrenoms = components[0].partContent?.contents.findIndex(
     content => content.libelle === "Prénom(s)"
@@ -49,9 +49,12 @@ test("Interesse utils get interesse : affichage correcte d'un interessé  ", () 
   expect(idxPrenoms).toBeGreaterThan(-1);
 
   expect(
-    components[0].partContent?.contents[idxPrenoms].value.props.children
+    (
+      components[0].partContent?.contents[idxPrenoms as number]
+        .value as JSX.Element
+    ).props.children
   ).toBe("Flavio, Enrico, Pablo");
-  expect(idxAutresNom).toBeLessThan(idxPrenoms);
+  expect(idxAutresNom).toBeLessThan(idxPrenoms as number);
 
   const idxAutrePrenoms = components[0].partContent?.contents.findIndex(
     content => content.libelle === "Autre(s) prénom(s)"
@@ -59,40 +62,43 @@ test("Interesse utils get interesse : affichage correcte d'un interessé  ", () 
   expect(idxAutrePrenoms).toBeGreaterThan(-1);
 
   expect(
-    components[0].partContent?.contents[idxAutrePrenoms].value.props.children
+    (
+      components[0].partContent?.contents[idxAutrePrenoms as number]
+        .value as JSX.Element
+    ).props.children
   ).toBe("autreP1, autreP2");
-  expect(idxPrenoms).toBeLessThan(idxAutrePrenoms);
+  expect(idxPrenoms).toBeLessThan(idxAutrePrenoms as number);
 
   const idxDateNaissance = components[0].partContent?.contents.findIndex(
     content => content.libelle === "Date de naissance"
   );
   expect(idxDateNaissance).toBeGreaterThan(-1);
 
-  expect(components[0].partContent?.contents[idxDateNaissance].value).toBe(
-    "25/05/1980"
-  );
-  expect(idxAutrePrenoms).toBeLessThan(idxDateNaissance);
+  expect(
+    components[0].partContent?.contents[idxDateNaissance as number].value
+  ).toBe("25/05/1980");
+  expect(idxAutrePrenoms).toBeLessThan(idxDateNaissance as number);
 
   const idxLieuNaissance = components[0].partContent?.contents.findIndex(
     content => content.libelle === "Lieu de naissance"
   );
   expect(idxLieuNaissance).toBeGreaterThan(-1);
 
-  expect(idxDateNaissance).toBeLessThan(idxLieuNaissance);
+  expect(idxDateNaissance).toBeLessThan(idxLieuNaissance as number);
 
   const idxNationalite = components[0].partContent?.contents.findIndex(
     content => content.libelle === "Nationalité"
   );
   expect(idxNationalite).toBeGreaterThan(-1);
 
-  expect(idxLieuNaissance).toBeLessThan(idxNationalite);
+  expect(idxLieuNaissance).toBeLessThan(idxNationalite as number);
 
   const idxSexe = components[0].partContent?.contents.findIndex(
     content => content.libelle === "Sexe"
   );
   expect(idxSexe).toBeGreaterThan(-1);
 
-  expect(idxNationalite).toBeLessThan(idxSexe);
+  expect(idxNationalite).toBeLessThan(idxSexe as number);
 });
 
 test("Interesse utils get interesse :  affichage lieu naissance en france dans une ville avec arrondissement ", () => {
@@ -105,9 +111,9 @@ test("Interesse utils get interesse :  affichage lieu naissance en france dans u
   );
   expect(idxLieuNaissance).toBeGreaterThan(-1);
 
-  expect(components[0].partContent?.contents[idxLieuNaissance].value).toBe(
-    "Nantes (Pays de la Loire)"
-  );
+  expect(
+    components[0].partContent?.contents[idxLieuNaissance as number].value
+  ).toBe("Nantes (Pays de la Loire)");
 });
 
 test("Interesse utils get interesse :  affichage lieu naissance en france dans une ville avec arrondissement sauf Paris ", () => {
@@ -120,9 +126,9 @@ test("Interesse utils get interesse :  affichage lieu naissance en france dans u
   );
   expect(idxLieuNaissance).toBeGreaterThan(-1);
 
-  expect(components[0].partContent?.contents[idxLieuNaissance].value).toBe(
-    "Lyon 2ème arrondissement (Auvergne-Rhône-Alpes)"
-  );
+  expect(
+    components[0].partContent?.contents[idxLieuNaissance as number].value
+  ).toBe("Lyon 2ème arrondissement (Auvergne-Rhône-Alpes)");
 });
 
 test("Interesse utils get interesse :  affichage lieu naissance en france à Paris ", () => {
@@ -135,9 +141,9 @@ test("Interesse utils get interesse :  affichage lieu naissance en france à Par
   );
   expect(idxLieuNaissance).toBeGreaterThan(-1);
 
-  expect(components[0].partContent?.contents[idxLieuNaissance].value).toBe(
-    "Paris 2ème arrondissement"
-  );
+  expect(
+    components[0].partContent?.contents[idxLieuNaissance as number].value
+  ).toBe("Paris 2ème arrondissement");
 });
 
 test("Interesse utils get interesse :  affichage lieu naissance à l'étranger ", () => {
@@ -150,9 +156,9 @@ test("Interesse utils get interesse :  affichage lieu naissance à l'étranger "
   );
   expect(idxLieuNaissance).toBeGreaterThan(-1);
 
-  expect(components[0].partContent?.contents[idxLieuNaissance].value).toBe(
-    "Berlin (Allemagne)"
-  );
+  expect(
+    components[0].partContent?.contents[idxLieuNaissance as number].value
+  ).toBe("Berlin (Allemagne)");
 });
 
 test("Interesse utils get interesse :  affichage lieu naissance à l'étranger ", () => {
@@ -165,9 +171,9 @@ test("Interesse utils get interesse :  affichage lieu naissance à l'étranger "
   );
   expect(idxLieuNaissance).toBeGreaterThan(-1);
 
-  expect(components[0].partContent?.contents[idxLieuNaissance].value).toBe(
-    "Berlin, RegionBerlin (Allemagne)"
-  );
+  expect(
+    components[0].partContent?.contents[idxLieuNaissance as number].value
+  ).toBe("Berlin, RegionBerlin (Allemagne)");
 });
 
 test("Interesse utils get interesse :  affichage date désèc et lieu décès rca ", () => {
@@ -182,18 +188,18 @@ test("Interesse utils get interesse :  affichage date désèc et lieu décès rc
   const idxDateDeces = components[0].partContent?.contents.findIndex(
     content => content.libelle === "Date de décès"
   );
-  expect(idxDateDeces).toBeGreaterThan(idxSexe);
+  expect(idxDateDeces).toBeGreaterThan(idxSexe as number);
 
-  expect(components[0].partContent?.contents[idxDateDeces].value).toBe(
-    "02/03/2018"
-  );
+  expect(
+    components[0].partContent?.contents[idxDateDeces as number].value
+  ).toBe("02/03/2018");
 
   const idxLieuDeces = components[0].partContent?.contents.findIndex(
     content => content.libelle === "Lieu de décès"
   );
-  expect(idxLieuDeces).toBeGreaterThan(idxDateDeces);
+  expect(idxLieuDeces).toBeGreaterThan(idxDateDeces as number);
 
-  expect(components[0].partContent?.contents[idxLieuDeces].value).toBe(
-    "Berlin, RegionBerlin (Allemagne)"
-  );
+  expect(
+    components[0].partContent?.contents[idxLieuDeces as number].value
+  ).toBe("Berlin, RegionBerlin (Allemagne)");
 });

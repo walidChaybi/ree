@@ -21,17 +21,23 @@ interface ComponentFormProps {
 
 type NomSecableFormProps = ComponentFormProps & FormikComponentProps;
 
-const NomSecableForm: React.FC<NomSecableFormProps> = props => {
+const NomSecableForm: React.FC<NomSecableFormProps> = ({
+  formik,
+  nomComposant,
+  origineTitulaireActe,
+  saisieVerrouillee,
+  afficherAvertissementVocable,
+  nomTitulaire
+}) => {
   const disabled =
     estDisabled(
-      props.formik.getFieldProps(withNamespace(props.nomComposant, NOM_PARTIE1))
-        .value,
-      props.origineTitulaireActe
-    ) && props.saisieVerrouillee;
+      formik.getFieldProps(withNamespace(nomComposant, NOM_PARTIE1)).value,
+      origineTitulaireActe
+    ) && saisieVerrouillee;
 
   const afficherMessageAvertissement =
-    props.afficherAvertissementVocable &&
-    EtatCivilUtil.getVocables(props.nomTitulaire).length > DEUX;
+    afficherAvertissementVocable &&
+    EtatCivilUtil.getVocables(nomTitulaire).length > DEUX;
 
   const onCaseACocherNomSecableChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,48 +48,48 @@ const NomSecableForm: React.FC<NomSecableFormProps> = props => {
 
       // Décompositon du nom du titulaire AM lorsqu'il n'y a deux vocables dans son nom
       if (e.target.checked) {
-        const vocables = EtatCivilUtil.getVocables(props.nomTitulaire);
+        const vocables = EtatCivilUtil.getVocables(nomTitulaire);
         if (vocables.length > UN) {
           nomPartie1 = vocables[ZERO];
           nomPartie2 = vocables.slice(UN).join(" ");
         }
       }
 
-      props.formik.setFieldValue(
-        withNamespace(props.nomComposant, NOM_PARTIE1),
+      formik.setFieldValue(
+        withNamespace(nomComposant, NOM_PARTIE1),
         nomPartie1
       );
-      props.formik.setFieldValue(
-        withNamespace(props.nomComposant, NOM_PARTIE2),
+      formik.setFieldValue(
+        withNamespace(nomComposant, NOM_PARTIE2),
         nomPartie2
       );
 
-      props.formik.handleChange(e);
+      formik.handleChange(e);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.formik, props.nomComposant]
+    [formik, nomComposant]
   );
 
   return (
     <div>
       <CheckboxField
-        name={withNamespace(props.nomComposant, SECABLE)}
+        name={withNamespace(nomComposant, SECABLE)}
         label={getLibelle("Nom sécable")}
         values={[{ libelle: "", cle: "true" }]}
         disabled={disabled}
         onChange={onCaseACocherNomSecableChange}
       />
-      {props.formik.getFieldProps(withNamespace(props.nomComposant, SECABLE))
-        .value.length > 0 && (
+      {formik.getFieldProps(withNamespace(nomComposant, SECABLE)).value.length >
+        0 && (
         <>
           <InputField
-            name={withNamespace(props.nomComposant, NOM_PARTIE1)}
+            name={withNamespace(nomComposant, NOM_PARTIE1)}
             label={getLibelle("1re partie")}
             disabled={disabled}
           />
           <div className="AvertissementConteneur">
             <InputField
-              name={withNamespace(props.nomComposant, NOM_PARTIE2)}
+              name={withNamespace(nomComposant, NOM_PARTIE2)}
               label={getLibelle("2nde partie")}
               disabled={disabled}
             />

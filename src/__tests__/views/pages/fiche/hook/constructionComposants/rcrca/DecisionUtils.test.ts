@@ -25,24 +25,24 @@ test("Decision utils get decision : decision de type Juridiction, ", () => {
   );
   expect(idxDate).toBeGreaterThan(-1);
 
-  expect(idxType).toBeLessThan(idxDate);
+  expect(idxType).toBeLessThan(idxDate as number);
 
   const idxEntolementRg = components[0].partContent?.contents.findIndex(
     content => content.libelle === "Enrôlement RG"
   );
   expect(idxEntolementRg).toBeGreaterThan(-1);
-  expect(idxDate).toBeLessThan(idxEntolementRg);
+  expect(idxDate).toBeLessThan(idxEntolementRg as number);
 
   const idxEnrolementPortalis = components[0].partContent?.contents.findIndex(
     content => content.libelle === "Enrôlement Portalis"
   );
   expect(idxEnrolementPortalis).toBeGreaterThan(-1);
-  expect(idxEntolementRg).toBeLessThan(idxEnrolementPortalis);
+  expect(idxEntolementRg).toBeLessThan(idxEnrolementPortalis as number);
 });
 
 test("Decision utils get decision : decision de type Notaire, ", () => {
   const components = getDecision(
-    ficheAutoriteNotaireFranceAvecConfirmation as IFicheRcRca
+    ficheAutoriteNotaireFranceAvecConfirmation as unknown as IFicheRcRca
   );
 
   expect(components).toHaveLength(2);
@@ -57,7 +57,7 @@ test("Decision utils get decision : decision de type Notaire, ", () => {
   );
   expect(idxDate).toBeGreaterThan(-1);
 
-  expect(idxType).toBeLessThan(idxDate);
+  expect(idxType).toBeLessThan(idxDate as number);
 
   const idxEntolementRg = components[0].partContent?.contents.findIndex(
     content => content.libelle === "Enrôlement RG"
@@ -72,7 +72,7 @@ test("Decision utils get decision : decision de type Notaire, ", () => {
 
 test("Decision utils get decision : decision de type ONAC, ", () => {
   const componentsEtrangere = getDecision(
-    ficheAutoriteONACFranceAvecConfirmation as IFicheRcRca
+    ficheAutoriteONACFranceAvecConfirmation as unknown as IFicheRcRca
   );
 
   expect(componentsEtrangere).toHaveLength(2);
@@ -87,7 +87,7 @@ test("Decision utils get decision : decision de type ONAC, ", () => {
   );
   expect(idxDate).toBeGreaterThan(-1);
 
-  expect(idxType).toBeLessThan(idxDate);
+  expect(idxType).toBeLessThan(idxDate as number);
 
   const idxDateEtrangere =
     componentsEtrangere[1].partContent?.contents.findIndex(
@@ -95,7 +95,7 @@ test("Decision utils get decision : decision de type ONAC, ", () => {
     );
   expect(idxDateEtrangere).toBeGreaterThan(-1);
 
-  expect(idxDate).toBeLessThan(idxDateEtrangere);
+  expect(idxDate).toBeLessThan(idxDateEtrangere as number);
 
   const idxEntolementRg =
     componentsEtrangere[1].partContent?.contents.findIndex(
@@ -112,7 +112,7 @@ test("Decision utils get decision : decision de type ONAC, ", () => {
 
 test("Decision utils get decision fiche RCA : decision de type Juridiction, ", () => {
   const components = getDecision(
-    ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA as IFicheRcRca
+    ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA as unknown as IFicheRcRca
   );
 
   expect(components).toHaveLength(2);
@@ -127,31 +127,31 @@ test("Decision utils get decision fiche RCA : decision de type Juridiction, ", (
   );
   expect(idxDate).toBeGreaterThan(-1);
 
-  expect(idxType).toBeLessThan(idxDate);
+  expect(idxType).toBeLessThan(idxDate as number);
 
   const idxDateEtranegre = components[0].partContent?.contents.findIndex(
     content => content.libelle === "Date décision étrangère"
   );
   expect(idxDateEtranegre).toBeGreaterThan(-1);
 
-  expect(idxDate).toBeLessThan(idxDateEtranegre);
+  expect(idxDate).toBeLessThan(idxDateEtranegre as number);
 
   const idxEntolementRg = components[0].partContent?.contents.findIndex(
     content => content.libelle === "Enrôlement RG"
   );
   expect(idxEntolementRg).toBeGreaterThan(-1);
-  expect(idxDateEtranegre).toBeLessThan(idxEntolementRg);
+  expect(idxDateEtranegre).toBeLessThan(idxEntolementRg as number);
 
   const idxEnrolementPortalis = components[0].partContent?.contents.findIndex(
     content => content.libelle === "Enrôlement Portalis"
   );
   expect(idxEnrolementPortalis).toBeGreaterThan(-1);
-  expect(idxEntolementRg).toBeLessThan(idxEnrolementPortalis);
+  expect(idxEntolementRg).toBeLessThan(idxEnrolementPortalis as number);
 });
 
 test("Decision utils get decision fiche RCA : decision notaire et confirmation decision de type Juridiction, ", () => {
   const components = getDecision(
-    ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA as IFicheRcRca
+    ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA as unknown as IFicheRcRca
   );
 
   expect(components).toHaveLength(2);
@@ -166,24 +166,24 @@ test("Decision utils get decision fiche RCA : decision notaire et confirmation d
   );
   expect(idxDate).toBeGreaterThan(-1);
 
-  expect(idxType).toBeLessThan(idxDate);
+  expect(idxType).toBeLessThan(idxDate as number);
 
   const idxDateEtranegre = components[1].partContent?.contents.findIndex(
     content => content.libelle === "Date décision étrangère"
   );
   expect(idxDateEtranegre).toBeGreaterThan(-1);
 
-  expect(idxDate).toBeLessThan(idxDateEtranegre);
+  expect(idxDate).toBeLessThan(idxDateEtranegre as number);
 
   const idxEntolementRg = components[1].partContent?.contents.findIndex(
     content => content.libelle === "Enrôlement RG"
   );
   expect(idxEntolementRg).toBeGreaterThan(-1);
-  expect(idxDateEtranegre).toBeLessThan(idxEntolementRg);
+  expect(idxDateEtranegre).toBeLessThan(idxEntolementRg as number);
 
   const idxEnrolementPortalis = components[1].partContent?.contents.findIndex(
     content => content.libelle === "Enrôlement Portalis"
   );
   expect(idxEnrolementPortalis).toBeGreaterThan(-1);
-  expect(idxEntolementRg).toBeLessThan(idxEnrolementPortalis);
+  expect(idxEntolementRg).toBeLessThan(idxEnrolementPortalis as number);
 });

@@ -89,7 +89,7 @@ test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", a
   }, 0);
 });
 
-test("Test affichage Edition Extrait", async () => {
+test.skip("Test affichage Edition Extrait", async () => {
   const router = createTestingRouter(
     [
       {

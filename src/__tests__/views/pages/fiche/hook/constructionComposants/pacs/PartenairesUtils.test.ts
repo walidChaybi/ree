@@ -1,5 +1,6 @@
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IPartenaire } from "@model/etatcivil/pacs/IPartenaire";
 import { getPartenaires } from "@pages/fiche/hook/constructionComposants/pacs/PartenairesUtils";
 import { expect, test } from "vitest";
 
@@ -21,7 +22,7 @@ test("getPartenaires", () => {
     },
     null
   ];
-  const res = getPartenaires(partenaires);
+  const res = getPartenaires(partenaires as IPartenaire[]);
 
   expect(res).toStrictEqual([
     {

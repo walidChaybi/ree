@@ -1,11 +1,9 @@
-import React from "react";
-
 interface ProtectionProps {
   peutAfficher: boolean;
   message: string;
 }
 
-export const Protection: React.FC<ProtectionProps> = ({
+export const Protection: React.FC<React.PropsWithChildren<ProtectionProps>> = ({
   children,
   peutAfficher,
   message

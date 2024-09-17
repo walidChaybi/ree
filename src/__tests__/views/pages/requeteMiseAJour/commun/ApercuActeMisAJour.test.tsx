@@ -1,6 +1,7 @@
 import { ApercuActeMisAJour } from "@pages/requeteMiseAJour/commun/ApercuActeMisAjour";
 import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { expect, test } from "vitest";
 
 test("DOIT afficher l'onglet ApercuActeMisAjour correctement", async () => {
   render(
