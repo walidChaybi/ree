@@ -38,7 +38,8 @@ export default defineConfig({
         "src/ressources/*",
         "./src/__tests__/views/pages/requeteInformation/**",
         "./src/__tests__/views/pages/requeteMiseAJour/**"
-      ]
+      ],
+      reporter: "lcov"
     }
   },
   define: {
