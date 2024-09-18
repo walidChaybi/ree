@@ -32,7 +32,7 @@ export const infosLoginOfficier2: ILoginApi = {
             libelle: "",
             estActif: true
           },
-          droits: [{ idDroit: "d12345", nom: Droit.ATTRIBUER }]
+          droits: [{ idDroit: "d12345", nom: Droit.ATTRIBUER_REQUETE }]
         }
       }
     ],

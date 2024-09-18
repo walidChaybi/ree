@@ -139,7 +139,7 @@ export class TypeMention {
       typeMention => typeMention.natureActe === natureActe
     );
 
-    if (natureActe === NatureActe.NAISSANCE) {
+    if ([NatureActe.NAISSANCE, NatureActe.MARIAGE].includes(natureActe)) {
       typesMention.push(this.getTypeMentionInconnue());
     }
 
