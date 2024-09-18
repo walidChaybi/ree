@@ -2,7 +2,7 @@ import {
   DataRMCRequeteAvecResultat,
   DataTableauRequete
 } from "@mock/data/RMCRequete";
-import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
+import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
 import { RMCTableauRequetes } from "@pages/rechercheMultiCriteres/requete/resultats/RMCTableauRequetes";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import {

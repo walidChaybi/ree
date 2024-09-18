@@ -4,7 +4,7 @@ import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic,
   userDroitCreerActeTranscritPerimetreTousRegistres
-} from "@mock/data/connectedUserAvecDroit";
+} from "@mock/data/mockConnectedUserAvecDroit";
 import { serviceEtablissement } from "@mock/data/serviceEtablissement";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";

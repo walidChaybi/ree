@@ -1,7 +1,7 @@
 import {
   userDroitCOMEDEC,
   userDroitnonCOMEDEC
-} from "@mock/data/connectedUserAvecDroit";
+} from "@mock/data/mockConnectedUserAvecDroit";
 import { idRequeteRDCSC } from "@mock/data/requeteDelivrance";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";

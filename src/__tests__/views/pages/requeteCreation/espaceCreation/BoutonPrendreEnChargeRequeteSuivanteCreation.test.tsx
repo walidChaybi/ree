@@ -1,4 +1,4 @@
-import { userDroitCreerActeEtabliPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
+import { userDroitCreerActeEtabliPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import BoutonPrendreEnChargeRequeteSuivanteCreation from "@pages/requeteCreation/espaceCreation/BoutonPrendreEnChargeRequeteSuivanteCreation";
 import {

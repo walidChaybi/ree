@@ -1,6 +1,6 @@
-import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
 import { idFicheActe1 } from "@mock/data/ficheActe";
 import { idFichePacs } from "@mock/data/fichePacs";
+import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
 import { titreForm } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import {

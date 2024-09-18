@@ -3,7 +3,7 @@ import {
   userDroitCreerActeTranscritPerimetreTousRegistres,
   userDroitDelivrer,
   userDroitInformerUsager
-} from "@mock/data/connectedUserAvecDroit";
+} from "@mock/data/mockConnectedUserAvecDroit";
 import { requeteInformation } from "@mock/data/requeteInformation";
 import { IDroit } from "@model/agent/Habilitation";
 import { INomenclatureAgentApi } from "@model/agent/INomenclatureAgentApi";

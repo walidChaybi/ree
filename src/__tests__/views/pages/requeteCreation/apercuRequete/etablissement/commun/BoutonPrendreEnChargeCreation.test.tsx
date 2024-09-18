@@ -1,4 +1,4 @@
-import { userDroitCreerActeEtabliPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
+import { userDroitCreerActeEtabliPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
 import { requeteCreationATraiter } from "@mock/data/requeteCreation";
 import { BoutonPrendreEnChargeCreation } from "@pages/requeteCreation/apercuRequete/etablissement/commun/BoutonPrendreEnChargeCreation";
 import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID } from "@router/ReceUrls";

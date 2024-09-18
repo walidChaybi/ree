@@ -1,6 +1,6 @@
 import { ILoginApi } from "@core/login/LoginHook";
 import { Droit } from "@model/agent/enum/Droit";
-import { userDroitConsulterPerimetreTousRegistres } from "./connectedUserAvecDroit";
+import { userDroitConsulterPerimetreTousRegistres } from "./mockConnectedUserAvecDroit";
 
 export const infosLoginOfficier: ILoginApi = {
   officierDataState: userDroitConsulterPerimetreTousRegistres

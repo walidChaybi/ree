@@ -15,7 +15,7 @@ export const MockHabilitation = {
           {
             droit: {
               idDroit: "idDroit",
-              nom: "ATTRIBUER"
+              nom: "ATTRIBUER_REQUETE"
             }
           }
         ]

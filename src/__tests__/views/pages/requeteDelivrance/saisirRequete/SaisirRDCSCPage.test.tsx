@@ -1,7 +1,7 @@
 import {
   userDroitConsulterArchive,
   userDroitnonCOMEDEC
-} from "@mock/data/connectedUserAvecDroit";
+} from "@mock/data/mockConnectedUserAvecDroit";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
 import {

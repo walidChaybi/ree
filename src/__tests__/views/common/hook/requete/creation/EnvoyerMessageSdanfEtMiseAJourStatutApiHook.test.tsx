@@ -1,5 +1,5 @@
 import { useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook } from "@hook/requete/creation/EnvoyerMessageSdanfEtMiseAJourStatutApiHook";
-import { userDroitCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import { userDroitCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import {
   reponseRequeteCreationMessageSdanf,
   requeteCreationAvecMessagesRetourSDANFAvecMessages

@@ -4,7 +4,7 @@ import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic
-} from "@mock/data/connectedUserAvecDroit";
+} from "@mock/data/mockConnectedUserAvecDroit";
 import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IPerimetre } from "@model/agent/IPerimetre";
 import { IService } from "@model/agent/IService";

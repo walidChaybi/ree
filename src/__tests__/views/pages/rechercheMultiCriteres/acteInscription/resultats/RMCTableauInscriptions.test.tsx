@@ -2,7 +2,7 @@ import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
 } from "@mock/data/RMCInscription";
-import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
+import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
 import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { RMCTableauInscriptions } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauInscriptions";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";

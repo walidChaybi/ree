@@ -1,5 +1,5 @@
 import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
-import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import {

@@ -1,4 +1,4 @@
-import { userDroitCreerActeTranscritPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
+import { userDroitCreerActeTranscritPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import {

@@ -2,7 +2,7 @@ import {
   userDroitConsulterArchive,
   userDroitConsulterPerimetreTousRegistres,
   userDroitConsulterPerimetreTUNIS
-} from "@mock/data/connectedUserAvecDroit";
+} from "@mock/data/mockConnectedUserAvecDroit";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { IDroit, IProfil } from "@model/agent/Habilitation";

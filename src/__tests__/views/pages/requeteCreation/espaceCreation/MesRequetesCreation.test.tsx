@@ -1,5 +1,5 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { userDroitCreerActeTranscritPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
+import { userDroitCreerActeTranscritPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
 import { MesRequetesCreation } from "@pages/requeteCreation/espaceCreation/MesRequetesCreation";
 import { statutsRequetesCreation } from "@pages/requeteCreation/espaceCreation/params/EspaceCreationParams";
 import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";

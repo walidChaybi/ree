@@ -5,12 +5,12 @@ import {
   requeteAvecDocs,
   requeteAvecDocsPlurilingue
 } from "@mock/data/DetailRequeteDelivrance";
-import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
 import {
   ficheActe1,
   ficheActe1_avecTitulaireAyantDeuxParents,
   ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe
 } from "@mock/data/ficheActe";
+import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";

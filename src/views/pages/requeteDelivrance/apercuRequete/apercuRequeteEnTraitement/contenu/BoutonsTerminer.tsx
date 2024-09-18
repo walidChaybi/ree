@@ -134,7 +134,7 @@ const estPossibleDeSigner = (
   sousTypeDelivrance: SousTypeDelivrance
 ): boolean => {
   return (
-    officierHabiliterPourLeDroit(Droit.SIGNER) &&
+    officierHabiliterPourLeDroit(Droit.SIGNER_DELIVRANCE_DEMAT) &&
     StatutRequete.estASigner(statut) &&
     SousTypeDelivrance.estSousTypeSignable(sousTypeDelivrance)
   );

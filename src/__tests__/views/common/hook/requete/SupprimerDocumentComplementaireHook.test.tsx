@@ -1,6 +1,6 @@
 import { useSupprimerDocumentComplementaireApi } from "@hook/requete/SupprimerDocumentComplementaireHook";
 import { requeteAvecDocs } from "@mock/data/DetailRequeteDelivrance";
-import { userDroitCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import { userDroitCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import React from "react";

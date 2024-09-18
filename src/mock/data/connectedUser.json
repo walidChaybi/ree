@@ -17,7 +17,7 @@
       "profil": {
         "idProfil": "p12345",
         "nom": "pNom",
-        "droits": [{ "idDroit": "d12345", "nom": "ATTRIBUER" }]
+        "droits": [{ "idDroit": "d12345", "nom": "ATTRIBUER_REQUETE" }]
       }
     }
   ],

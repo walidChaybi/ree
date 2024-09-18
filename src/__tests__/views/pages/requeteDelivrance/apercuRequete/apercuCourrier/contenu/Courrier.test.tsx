@@ -1,5 +1,5 @@
 import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
-import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { requeteDelivranceRDC } from "@mock/data/requeteDelivrance";
 import { Courrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/Courrier";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";

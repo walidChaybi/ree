@@ -49,25 +49,25 @@ const droitsSaufConsulterArchives = [
   Droit.INFORMER_USAGER,
   Droit.METTRE_A_JOUR_ACTE,
   Droit.METTRE_A_JOUR_RC_RCA_PACS,
-  Droit.SIGNER,
+  Droit.SIGNER_DELIVRANCE_DEMAT,
   Droit.CONSULTER,
-  Droit.ATTRIBUER
+  Droit.ATTRIBUER_REQUETE
 ];
 
 export const habilitationsDescription: IHabiliationDescription[] = [
   {
     nomComposant: "LinkTabRequetesDelivranceService",
-    unDesDroits: [Droit.ATTRIBUER],
+    unDesDroits: [Droit.ATTRIBUER_REQUETE],
     comportementSiNonAutorise: { disabled: true }
   },
   {
     nomComposant: "LinkTabRequetesInfoService",
-    unDesDroits: [Droit.ATTRIBUER],
+    unDesDroits: [Droit.ATTRIBUER_REQUETE],
     comportementSiNonAutorise: { disabled: true }
   },
   {
     nomComposant: "LinkTabRequetesCreationService",
-    unDesDroits: [Droit.ATTRIBUER],
+    unDesDroits: [Droit.ATTRIBUER_REQUETE],
     comportementSiNonAutorise: { disabled: true }
   },
   {
@@ -133,15 +133,15 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "TabPanelRequetesDelivranceService",
-    visiblePourLesDroits: [Droit.ATTRIBUER]
+    visiblePourLesDroits: [Droit.ATTRIBUER_REQUETE]
   },
   {
     nomComposant: "TabPanelRequetesInfoService",
-    visiblePourLesDroits: [Droit.ATTRIBUER]
+    visiblePourLesDroits: [Droit.ATTRIBUER_REQUETE]
   },
   {
     nomComposant: "TabPanelRequetesCreationService",
-    visiblePourLesDroits: [Droit.ATTRIBUER]
+    visiblePourLesDroits: [Droit.ATTRIBUER_REQUETE]
   },
   {
     nomComposant: "BoutonPrendreEnChargeAleatoirement",
@@ -157,7 +157,7 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "BoutonSignerLeLot",
-    unDesDroits: [Droit.SIGNER],
+    unDesDroits: [Droit.SIGNER_DELIVRANCE_DEMAT],
     comportementSiNonAutorise: { disabled: true }
   },
   {

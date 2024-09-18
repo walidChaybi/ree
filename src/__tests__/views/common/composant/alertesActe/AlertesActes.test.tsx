@@ -1,5 +1,5 @@
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
-import { userDroitCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import { userDroitCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";

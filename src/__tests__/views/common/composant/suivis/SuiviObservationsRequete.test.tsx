@@ -1,5 +1,5 @@
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
-import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { observations0, observations1 } from "@mock/data/Observations";
 import DONNEES_REQUETE from "@mock/data/requete";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";

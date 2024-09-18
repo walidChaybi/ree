@@ -1,4 +1,4 @@
-import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import MenuSaisirRequete from "@pages/requeteDelivrance/espaceDelivrance/contenu/MenuSaisirRequete";
 import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
 import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
@@ -266,4 +266,3 @@ describe.skip("MenuSaisirRequete - ", () => {
     });
   });
 });
-

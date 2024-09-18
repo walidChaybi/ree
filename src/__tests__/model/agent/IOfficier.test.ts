@@ -8,7 +8,7 @@ import {
   userDroitConsulterPerimetreTousRegistres,
   userDroitConsulterPerimetreTUNIS,
   userDroitnonCOMEDEC
-} from "@mock/data/connectedUserAvecDroit";
+} from "@mock/data/mockConnectedUserAvecDroit";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import {
@@ -30,7 +30,9 @@ const u: any = mockConnectedUser;
 
 test("Habilitation model", () => {
   storeRece.utilisateurCourant = u as IOfficier;
-  let estAutorise = estOfficierHabiliterPourTousLesDroits([Droit.ATTRIBUER]);
+  let estAutorise = estOfficierHabiliterPourTousLesDroits([
+    Droit.ATTRIBUER_REQUETE
+  ]);
   expect(estAutorise).toBe(true);
 
   estAutorise = estOfficierHabiliterPourTousLesDroits([]);
@@ -133,7 +135,7 @@ test("Attendu: estOfficierHabiliterPourUnDesDroits fonctionne correctement", () 
 
   expect(
     estOfficierHabiliterPourUnDesDroits([
-      Droit.ATTRIBUER,
+      Droit.ATTRIBUER_REQUETE,
       Droit.CREER_ACTE_ETABLI
     ])
   ).toBeTruthy();

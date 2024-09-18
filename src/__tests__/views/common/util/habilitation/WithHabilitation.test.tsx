@@ -28,7 +28,7 @@ const habsDesc: IHabiliationDescription[] = [
   {
     // @ts-ignore
     nomComposant: "BoutonTest",
-    tousLesDroits: [Droit.ATTRIBUER],
+    tousLesDroits: [Droit.ATTRIBUER_REQUETE],
     comportementSiNonAutorise: { disabled: true }
   },
 
@@ -40,7 +40,7 @@ const habsDesc: IHabiliationDescription[] = [
   {
     // @ts-ignore
     nomComposant: "BoutonTest3",
-    unDesDroits: [Droit.ATTRIBUER, Droit.CONSULTER],
+    unDesDroits: [Droit.ATTRIBUER_REQUETE, Droit.CONSULTER],
     comportementSiNonAutorise: { disabled: true }
   },
   {
@@ -80,7 +80,7 @@ const BoutonTest4WithHab = WithHabilitation(
 test.skip("Le bouton ne doit pas être grisé car l'utilisateur à le droit Attribuer", () => {
   storeRece.utilisateurCourant!.habilitations[0].profil.droits[0] = {
     idDroit: "d12345",
-    nom: Droit.ATTRIBUER
+    nom: Droit.ATTRIBUER_REQUETE
   };
   const { getByText, queryByTestId } = render(<BoutonTestWithHab />);
   expect(queryByTestId(/testid/i)).not.toBeNull();
@@ -109,7 +109,7 @@ test("Le bouton doit être invisible car l'utilisateur n'à pas le droit Attribu
     idDroit: "d12346",
     nom: Droit.CONSULTER_ARCHIVES
   };
-  habsDesc[0].visiblePourLesDroits = [Droit.ATTRIBUER];
+  habsDesc[0].visiblePourLesDroits = [Droit.ATTRIBUER_REQUETE];
   const { queryByTestId } = render(<BoutonTestWithHab />);
   expect(queryByTestId(/testid/i)).toBeNull();
 });
@@ -153,12 +153,12 @@ test("Le bouton doit être invisible car l'utilisateur n'a pas seulement le droi
     profil: {
       idProfil: "p12346",
       nom: {
-        code: "ATTRIBUER"
+        code: "ATTRIBUER_REQUETE"
       },
       droits: [
         {
           idDroit: "d12346",
-          nom: Droit.ATTRIBUER
+          nom: Droit.ATTRIBUER_REQUETE
         }
       ]
     }

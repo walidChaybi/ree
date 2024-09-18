@@ -1,10 +1,10 @@
 import { mappingOfficier } from "@core/login/LoginHook";
+import { idFicheActe1 } from "@mock/data/ficheActe";
 import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic,
   userDroitConsulterPerimetreTUNIS
-} from "@mock/data/connectedUserAvecDroit";
-import { idFicheActe1 } from "@mock/data/ficheActe";
+} from "@mock/data/mockConnectedUserAvecDroit";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";

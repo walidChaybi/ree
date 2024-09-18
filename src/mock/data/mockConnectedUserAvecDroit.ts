@@ -1,8 +1,9 @@
 import { Droit } from "@model/agent/enum/Droit";
 import { TypeService } from "@model/agent/enum/TypeService";
 import { IOfficier } from "@model/agent/IOfficier";
+import { IPerimetre } from "@model/agent/IPerimetre";
 
-export const userDroitConsulterArchive: IOfficier = {
+const BASE_UTILISATEUR: Omit<IOfficier, "habilitations"> = {
   idSSO: "idSSOConnectedUser",
   idUtilisateur: "idUtilisateurConnectedUser",
   nom: "nomConnectedUser",
@@ -11,8 +12,20 @@ export const userDroitConsulterArchive: IOfficier = {
   mail: "mailConnectedUser",
   profils: ["profilConnectedUser"],
   telephone: "telephoneConnectedUser",
+  modeAuthentification: "AROBAS_MDP"
+};
 
-  modeAuthentification: "AROBAS_MDP",
+const BASE_PERIMETRE: IPerimetre = {
+  idPerimetre: "peri12345",
+  nom: "TOUS_REGISTRES",
+  description: "peirDes",
+  estActif: true,
+  listePays: ["periPays"],
+  listeIdTypeRegistre: []
+};
+
+export const userDroitConsulterArchive: IOfficier = {
+  ...BASE_UTILISATEUR,
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -27,28 +40,13 @@ export const userDroitConsulterArchive: IOfficier = {
         },
         droits: [{ idDroit: "d12345", nom: Droit.CONSULTER_ARCHIVES }]
       },
-      perimetre: {
-        idPerimetre: "peri12345",
-        nom: "periNom",
-        description: "peirDes",
-        estActif: true,
-        listePays: ["periPays"],
-        listeIdTypeRegistre: ["type1234"]
-      }
+      perimetre: { ...BASE_PERIMETRE }
     }
   ]
 };
 
 export const userDroitConsulterConsulterArchive: IOfficier = {
-  idSSO: "idSSOConnectedUser",
-  idUtilisateur: "idUtilisateurConnectedUser",
-  nom: "nomConnectedUser",
-  prenom: "prenomConnectedUser",
-  trigramme: "trigrammeConnectedUser",
-  mail: "mailConnectedUser",
-  profils: ["profilConnectedUser"],
-  telephone: "telephoneConnectedUser",
-  modeAuthentification: "AROBAS_MDP",
+  ...BASE_UTILISATEUR,
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -66,29 +64,13 @@ export const userDroitConsulterConsulterArchive: IOfficier = {
           { idDroit: "d12345", nom: Droit.CONSULTER }
         ]
       },
-      perimetre: {
-        idPerimetre: "peri12345",
-        nom: "periNom",
-        description: "peirDes",
-        estActif: true,
-        listePays: ["periPays"],
-        listeIdTypeRegistre: ["type1234"]
-      }
+      perimetre: { ...BASE_PERIMETRE }
     }
   ]
 };
 
 export const userDroitConsulterPerimetreTousRegistres: IOfficier = {
-  idSSO: "idSSOConnectedUser",
-  idUtilisateur: "idUtilisateurConnectedUser",
-  nom: "nomConnectedUser",
-  prenom: "prenomConnectedUser",
-  trigramme: "trigrammeConnectedUser",
-  mail: "mailConnectedUser",
-  profils: ["profilConnectedUser"],
-  telephone: "telephoneConnectedUser",
-
-  modeAuthentification: "AROBAS_MDP",
+  ...BASE_UTILISATEUR,
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -103,14 +85,7 @@ export const userDroitConsulterPerimetreTousRegistres: IOfficier = {
         },
         droits: [{ idDroit: "d12345", nom: Droit.CONSULTER }]
       },
-      perimetre: {
-        idPerimetre: "peri12345",
-        nom: "TOUS_REGISTRES",
-        description: "peirDes",
-        estActif: true,
-        listePays: ["periPays"],
-        listeIdTypeRegistre: []
-      }
+      perimetre: { ...BASE_PERIMETRE }
     }
   ],
   service: {
@@ -123,16 +98,7 @@ export const userDroitConsulterPerimetreTousRegistres: IOfficier = {
 };
 
 export const userDroitCreerActeEtabliPerimetreTousRegistres: IOfficier = {
-  idSSO: "idSSOConnectedUser",
-  idUtilisateur: "idUtilisateurConnectedUser",
-  nom: "nomConnectedUser",
-  prenom: "prenomConnectedUser",
-  trigramme: "trigrammeConnectedUser",
-  mail: "mailConnectedUser",
-  profils: ["profilConnectedUser"],
-  telephone: "telephoneConnectedUser",
-
-  modeAuthentification: "AROBAS_MDP",
+  ...BASE_UTILISATEUR,
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -147,14 +113,7 @@ export const userDroitCreerActeEtabliPerimetreTousRegistres: IOfficier = {
         },
         droits: [{ idDroit: "d12345", nom: Droit.CREER_ACTE_ETABLI }]
       },
-      perimetre: {
-        idPerimetre: "peri12345",
-        nom: "TOUS_REGISTRES",
-        description: "peirDes",
-        estActif: true,
-        listePays: ["periPays"],
-        listeIdTypeRegistre: []
-      }
+      perimetre: { ...BASE_PERIMETRE }
     }
   ],
   service: {
@@ -167,16 +126,7 @@ export const userDroitCreerActeEtabliPerimetreTousRegistres: IOfficier = {
 };
 
 export const userDroitCreerActeTranscritPerimetreTousRegistres: IOfficier = {
-  idSSO: "idSSOConnectedUser",
-  idUtilisateur: "idUtilisateurConnectedUser",
-  nom: "nomConnectedUser",
-  prenom: "prenomConnectedUser",
-  trigramme: "trigrammeConnectedUser",
-  mail: "mailConnectedUser",
-  profils: ["profilConnectedUser"],
-  telephone: "telephoneConnectedUser",
-
-  modeAuthentification: "AROBAS_MDP",
+  ...BASE_UTILISATEUR,
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -194,14 +144,7 @@ export const userDroitCreerActeTranscritPerimetreTousRegistres: IOfficier = {
           { idDroit: "d6789", nom: Droit.SAISIR_REQUETE }
         ]
       },
-      perimetre: {
-        idPerimetre: "peri12345",
-        nom: "TOUS_REGISTRES",
-        description: "peirDes",
-        estActif: true,
-        listePays: ["periPays"],
-        listeIdTypeRegistre: []
-      }
+      perimetre: { ...BASE_PERIMETRE }
     }
   ],
   service: {
@@ -214,16 +157,7 @@ export const userDroitCreerActeTranscritPerimetreTousRegistres: IOfficier = {
 };
 
 export const userDroitDelivrer: IOfficier = {
-  idSSO: "idSSOConnectedUser",
-  idUtilisateur: "idUtilisateurConnectedUser",
-  nom: "nomConnectedUser",
-  prenom: "prenomConnectedUser",
-  trigramme: "trigrammeConnectedUser",
-  mail: "mailConnectedUser",
-  profils: ["profilConnectedUser"],
-  telephone: "telephoneConnectedUser",
-
-  modeAuthentification: "AROBAS_MDP",
+  ...BASE_UTILISATEUR,
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -238,14 +172,7 @@ export const userDroitDelivrer: IOfficier = {
         },
         droits: [{ idDroit: "d12345", nom: Droit.DELIVRER }]
       },
-      perimetre: {
-        idPerimetre: "peri12345",
-        nom: "TOUS_REGISTRES",
-        description: "peirDes",
-        estActif: true,
-        listePays: ["periPays"],
-        listeIdTypeRegistre: []
-      }
+      perimetre: { ...BASE_PERIMETRE }
     }
   ],
   service: {
@@ -258,16 +185,7 @@ export const userDroitDelivrer: IOfficier = {
 };
 
 export const userDroitInformerUsager: IOfficier = {
-  idSSO: "idSSOConnectedUser",
-  idUtilisateur: "idUtilisateurConnectedUser",
-  nom: "nomConnectedUser",
-  prenom: "prenomConnectedUser",
-  trigramme: "trigrammeConnectedUser",
-  mail: "mailConnectedUser",
-  profils: ["profilConnectedUser"],
-  telephone: "telephoneConnectedUser",
-
-  modeAuthentification: "AROBAS_MDP",
+  ...BASE_UTILISATEUR,
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -282,14 +200,7 @@ export const userDroitInformerUsager: IOfficier = {
         },
         droits: [{ idDroit: "d12345", nom: Droit.INFORMER_USAGER }]
       },
-      perimetre: {
-        idPerimetre: "peri12345",
-        nom: "TOUS_REGISTRES",
-        description: "peirDes",
-        estActif: true,
-        listePays: ["periPays"],
-        listeIdTypeRegistre: []
-      }
+      perimetre: { ...BASE_PERIMETRE }
     }
   ],
   service: {
@@ -302,16 +213,7 @@ export const userDroitInformerUsager: IOfficier = {
 };
 
 export const userDroitConsulterPerimetreTUNIS: IOfficier = {
-  idSSO: "idSSOConnectedUser",
-  idUtilisateur: "idUtilisateurConnectedUser",
-  nom: "nomConnectedUser",
-  prenom: "prenomConnectedUser",
-  trigramme: "trigrammeConnectedUser",
-  mail: "mailConnectedUser",
-  profils: ["profilConnectedUser"],
-  telephone: "telephoneConnectedUser",
-
-  modeAuthentification: "AROBAS_MDP",
+  ...BASE_UTILISATEUR,
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -339,16 +241,7 @@ export const userDroitConsulterPerimetreTUNIS: IOfficier = {
 };
 
 export const userDroitnonCOMEDEC: IOfficier = {
-  idSSO: "idSSOConnectedUser",
-  idUtilisateur: "idUtilisateurConnectedUser",
-  nom: "nomConnectedUser",
-  prenom: "prenomConnectedUser",
-  trigramme: "trigrammeConnectedUser",
-  mail: "mailConnectedUser",
-  profils: ["profilConnectedUser"],
-  telephone: "telephoneConnectedUser",
-
-  modeAuthentification: "AROBAS_MDP",
+  ...BASE_UTILISATEUR,
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -363,14 +256,7 @@ export const userDroitnonCOMEDEC: IOfficier = {
         },
         droits: [{ idDroit: "d12345", nom: Droit.DELIVRER }]
       },
-      perimetre: {
-        idPerimetre: "peri12345",
-        nom: "TOUS_REGISTRES",
-        description: "peirDes",
-        estActif: true,
-        listePays: ["periPays"],
-        listeIdTypeRegistre: []
-      }
+      perimetre: { ...BASE_PERIMETRE }
     }
   ],
   service: {
@@ -404,16 +290,7 @@ export const userDroitnonCOMEDEC: IOfficier = {
 };
 
 export const userDroitCOMEDEC: IOfficier = {
-  idSSO: "idSSOConnectedUser",
-  idUtilisateur: "idUtilisateurConnectedUser",
-  nom: "nomConnectedUser",
-  prenom: "prenomConnectedUser",
-  trigramme: "trigrammeConnectedUser",
-  mail: "mailConnectedUser",
-  profils: ["profilConnectedUser"],
-  telephone: "telephoneConnectedUser",
-
-  modeAuthentification: "AROBAS_MDP",
+  ...BASE_UTILISATEUR,
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -428,14 +305,7 @@ export const userDroitCOMEDEC: IOfficier = {
         },
         droits: [{ idDroit: "d12345", nom: Droit.DELIVRER_COMEDEC }]
       },
-      perimetre: {
-        idPerimetre: "peri12345",
-        nom: "TOUS_REGISTRES",
-        description: "peirDes",
-        estActif: true,
-        listePays: ["periPays"],
-        listeIdTypeRegistre: []
-      }
+      perimetre: { ...BASE_PERIMETRE }
     },
     {
       idHabilitation: "h12345",
@@ -448,16 +318,9 @@ export const userDroitCOMEDEC: IOfficier = {
           libelle: "libelle",
           estActif: true
         },
-        droits: [{ idDroit: "d12345", nom: Droit.SIGNER }]
+        droits: [{ idDroit: "d12345", nom: Droit.SIGNER_DELIVRANCE_DEMAT }]
       },
-      perimetre: {
-        idPerimetre: "peri12345",
-        nom: "TOUS_REGISTRES",
-        description: "peirDes",
-        estActif: true,
-        listePays: ["periPays"],
-        listeIdTypeRegistre: []
-      }
+      perimetre: { ...BASE_PERIMETRE }
     }
   ],
   service: {
@@ -4471,7 +4334,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
             {
               droit: {
                 idDroit: "95875b98-6f5d-4e14-b349-c463ef10586b",
-                nom: "SIGNER",
+                nom: "SIGNER_DELIVRANCE_DEMAT",
                 profilDroit: null
               },
               profil: null
@@ -4844,7 +4707,7 @@ export const resultatRequeteUtilistateurLeBiannic = {
           nom: {
             idNomenclature: "b776753c-7901-4813-8194-b51baccb573a",
             categorie: "TYPE_PROFIL",
-            code: "DROIT_ATTRIBUER",
+            code: "ATTRIBUER_REQUETE",
             libelle: "Droit attribuer",
             estActif: true
           },
@@ -4853,7 +4716,7 @@ export const resultatRequeteUtilistateurLeBiannic = {
             {
               droit: {
                 idDroit: "6737451d-7c1b-4807-a317-280dea9b8316",
-                nom: "ATTRIBUER",
+                nom: "ATTRIBUER_REQUETE",
                 profilDroit: null
               },
               profil: null

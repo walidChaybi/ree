@@ -1,5 +1,5 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { userDroitCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import { userDroitCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import {
   PATH_EDITION,

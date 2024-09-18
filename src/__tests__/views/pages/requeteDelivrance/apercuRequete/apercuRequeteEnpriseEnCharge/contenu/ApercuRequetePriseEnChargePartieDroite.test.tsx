@@ -1,4 +1,4 @@
-import { userDroitnonCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { DataRMCActeAvecResultat, DataTableauActe } from "@mock/data/RMCActe";
 import {

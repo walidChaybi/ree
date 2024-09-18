@@ -144,9 +144,9 @@ export const routesRece: IRoute[] = [
       Droit.INFORMER_USAGER,
       Droit.METTRE_A_JOUR_ACTE,
       Droit.METTRE_A_JOUR_RC_RCA_PACS,
-      Droit.SIGNER,
+      Droit.SIGNER_DELIVRANCE_DEMAT,
       Droit.CONSULTER,
-      Droit.ATTRIBUER
+      Droit.ATTRIBUER_REQUETE
     ],
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
@@ -234,7 +234,7 @@ export const routesRece: IRoute[] = [
   {
     url: URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_ID,
     component: ApercuRequetePage,
-    auMoinsUnDesDroits: [Droit.ATTRIBUER],
+    auMoinsUnDesDroits: [Droit.ATTRIBUER_REQUETE],
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
   {
@@ -253,13 +253,13 @@ export const routesRece: IRoute[] = [
   {
     url: URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC,
     component: SaisirRDCSCPage,
-    auMoinsUnDesDroits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
+    auMoinsUnDesDroits: [Droit.ATTRIBUER_REQUETE, Droit.SAISIR_REQUETE],
     libelle: getLibelle(`Saisir une requête de délivrance ${Labels.RDCSC}`)
   },
   {
     url: URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC,
     component: SaisirRDCPage,
-    auMoinsUnDesDroits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
+    auMoinsUnDesDroits: [Droit.ATTRIBUER_REQUETE, Droit.SAISIR_REQUETE],
     canAccess: () =>
       gestionnaireFeatureFlag.estActif(
         FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
@@ -272,7 +272,7 @@ export const routesRece: IRoute[] = [
     component: SaisirRDCSCPage,
     auMoinsUnDesDroits: [
       Droit.CONSULTER,
-      Droit.ATTRIBUER,
+      Droit.ATTRIBUER_REQUETE,
       Droit.SAISIR_REQUETE
     ],
     libelle: getLibelle(
@@ -284,7 +284,7 @@ export const routesRece: IRoute[] = [
     component: SaisirRDCSCPage,
     auMoinsUnDesDroits: [
       Droit.CONSULTER,
-      Droit.ATTRIBUER,
+      Droit.ATTRIBUER_REQUETE,
       Droit.SAISIR_REQUETE
     ],
     libelle: getLibelle(
@@ -346,7 +346,7 @@ export const routesRece: IRoute[] = [
     component: SaisirRDCSCPage,
     auMoinsUnDesDroits: [
       Droit.CONSULTER,
-      Droit.ATTRIBUER,
+      Droit.ATTRIBUER_REQUETE,
       Droit.SAISIR_REQUETE
     ],
     libelle: getLibelle(
@@ -358,7 +358,7 @@ export const routesRece: IRoute[] = [
     component: SaisirRDCSCPage,
     auMoinsUnDesDroits: [
       Droit.CONSULTER,
-      Droit.ATTRIBUER,
+      Droit.ATTRIBUER_REQUETE,
       Droit.SAISIR_REQUETE
     ],
     libelle: getLibelle(
@@ -456,7 +456,7 @@ export const routesRece: IRoute[] = [
     url: URL_REQUETES_INFORMATION_SERVICE,
     component: EspaceInformationPage,
     props: { selectedTab: 1 },
-    droits: [Droit.INFORMER_USAGER, Droit.ATTRIBUER],
+    droits: [Droit.INFORMER_USAGER, Droit.ATTRIBUER_REQUETE],
     libelle: getLibelle("Les requêtes d'information de mon service"),
     canAccess: () =>
       gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
@@ -465,7 +465,7 @@ export const routesRece: IRoute[] = [
   {
     url: URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
     component: ApercuReqInfoPage,
-    auMoinsUnDesDroits: [Droit.ATTRIBUER],
+    auMoinsUnDesDroits: [Droit.ATTRIBUER_REQUETE],
     libelle: getLibelle(LIBELLE_APERCU_REQUETE),
     canAccess: () =>
       gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
@@ -563,7 +563,7 @@ export const routesRece: IRoute[] = [
     url: URL_REQUETES_CREATION_SERVICE,
     component: EspaceCreationPage,
     props: { selectedTab: 1 },
-    droits: [Droit.ATTRIBUER],
+    droits: [Droit.ATTRIBUER_REQUETE],
     auMoinsUnDesDroits: [
       Droit.CREER_ACTE_DRESSE,
       Droit.CREER_ACTE_ETABLI,

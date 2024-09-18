@@ -4,7 +4,7 @@ import officier from "@mock/data/connectedUser.json";
 import {
   userDroitCOMEDEC,
   userDroitnonCOMEDEC
-} from "@mock/data/connectedUserAvecDroit";
+} from "@mock/data/mockConnectedUserAvecDroit";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";

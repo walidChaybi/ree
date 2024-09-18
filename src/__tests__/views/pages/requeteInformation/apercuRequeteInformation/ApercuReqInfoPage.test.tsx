@@ -1,7 +1,7 @@
 import { ReponseAppelDetailRequeteInformationSansCorbeilleAgent } from "@mock/data/DetailRequeteInformation";
 import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { NOMENCLATURE_REPONSE } from "@mock/data/NomenclatureReponse";
-import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/connectedUserAvecDroit";
+import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
 import {
   NORESULT,
   configRequetesInformation

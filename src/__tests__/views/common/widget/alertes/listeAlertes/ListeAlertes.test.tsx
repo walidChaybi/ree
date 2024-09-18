@@ -2,7 +2,7 @@ import { Alertes } from "@mock/data/Alertes";
 import {
   userDroitCOMEDEC,
   userDroitConsulterPerimetreTUNIS
-} from "@mock/data/connectedUserAvecDroit";
+} from "@mock/data/mockConnectedUserAvecDroit";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { ListeAlertes } from "@widget/alertes/listeAlertes/ListeAlertes";

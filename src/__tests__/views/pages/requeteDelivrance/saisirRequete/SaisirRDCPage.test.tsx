@@ -3,7 +3,7 @@ import {
   resultatHeaderUtilistateurLaurenceBourdeau,
   resultatRequeteUtilistateurLaurenceBourdeau,
   userDroitnonCOMEDEC
-} from "@mock/data/connectedUserAvecDroit";
+} from "@mock/data/mockConnectedUserAvecDroit";
 import {
   idRequeteRDCPourModification,
   idRequeteRDCPourModificationMaCorbeille

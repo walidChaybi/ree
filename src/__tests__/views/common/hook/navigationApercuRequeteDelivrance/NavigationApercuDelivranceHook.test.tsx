@@ -1,5 +1,5 @@
 import { useNavigationApercuDelivrance } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
-import { userDroitCOMEDEC } from "@mock/data/connectedUserAvecDroit";
+import { userDroitCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
