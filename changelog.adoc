@@ -1,7 +1,0 @@
-* Limite de pièce jointe des requêtes RCT passe de 3 à 34
-* Conserver les prenoms des parents saisies sur l'extrait de naissance quand la case à cocher Adopté par est modifié
-* Corrections liées à la sélection des actes et inscriptions à sauvegarder pour le projet d'acte.
-* Supression des imports React inutilisé dans les tests
-* Corrections apportées lors de la saisie et l'envoie des données à créer et mettre à jour sur le formulaire de saisie d'une requête courrier de transcription.
-* Cinématique du traitement d'une requête de création d'établissement
-* Supression des personnes selectionnées lorsqu'on est sur une requête de type établissement

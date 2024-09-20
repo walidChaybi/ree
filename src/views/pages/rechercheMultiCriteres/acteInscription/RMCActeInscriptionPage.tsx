@@ -14,9 +14,9 @@ import {
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ToastContainer } from "react-toastify";
+import { RMCActeInscriptionForm } from "./RMCActeInscriptionForm";
 import { RMCActeInscriptionResultats } from "./resultats/RMCActeInscriptionResultats";
 import { goToLinkRMC } from "./resultats/RMCTableauCommun";
-import { RMCActeInscriptionForm } from "./RMCActeInscriptionForm";
 import "./scss/RMCActeInscriptionPage.scss";
 import { getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur } from "./validation/VerificationRestrictionRmcActeInscription";
 
@@ -27,25 +27,41 @@ interface RMCActeInscriptionPageProps {
 
 const TOASTCONTAINER_EXTERNE = "toastContainer-externe";
 
-export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({noAutoScroll, dansFenetreExterne}) => {
+export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
+  noAutoScroll,
+  dansFenetreExterne
+}) => {
   // STATEs
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
-  const [valuesRMCActeInscription, setValuesRMCActeInscription] = useState<IRMCActeInscription>({});
-  const [nouvelleRMCActeInscription, setNouvelleRMCActeInscription] = useState<boolean>(false);
-  const [criteresRechercheActe, setCriteresRechercheActe] = useState<ICriteresRechercheActeInscription>();
-  const [criteresRechercheInscription, setCriteresRechercheInscription] = useState<ICriteresRechercheActeInscription>();
+  const [valuesRMCActeInscription, setValuesRMCActeInscription] =
+    useState<IRMCActeInscription>({});
+  const [nouvelleRMCActeInscription, setNouvelleRMCActeInscription] =
+    useState<boolean>(false);
+  const [criteresRechercheActe, setCriteresRechercheActe] =
+    useState<ICriteresRechercheActeInscription>();
+  const [criteresRechercheInscription, setCriteresRechercheInscription] =
+    useState<ICriteresRechercheActeInscription>();
   // Critères de recherche pour alimenter les données des fiches Acte en effet leur pagination/navigation est indépendante du tableau de résultats
-  const [criteresRechercheFicheActe, setCriteresRechercheFicheActe] = useState<ICriteresRechercheActeInscription>();
+  const [criteresRechercheFicheActe, setCriteresRechercheFicheActe] =
+    useState<ICriteresRechercheActeInscription>();
   // Critères de recherche pour alimenter les données des fiches Inscription en effet leur pagination/navigation est indépendante du tableau de résultats
-  const [criteresRechercheFicheInscription,setCriteresRechercheFicheInscription] = useState<ICriteresRechercheActeInscription>();
+  const [
+    criteresRechercheFicheInscription,
+    setCriteresRechercheFicheInscription
+  ] = useState<ICriteresRechercheActeInscription>();
 
   // HOOKs
-  const { dataRMCActe, dataTableauRMCActe } = useRMCActeApiHook(criteresRechercheActe);
-  const { dataRMCInscription, dataTableauRMCInscription } = useRMCInscriptionApiHook(criteresRechercheInscription);
+  const { dataRMCActe, dataTableauRMCActe } = useRMCActeApiHook(
+    criteresRechercheActe
+  );
+  const { dataRMCInscription, dataTableauRMCInscription } =
+    useRMCInscriptionApiHook(criteresRechercheInscription);
   /** Récupération des résultats rmc pour une fiche Acte lors d'une navigation */
   const resultatRMCFicheActe = useRMCActeApiHook(criteresRechercheFicheActe);
   /** Récupération des résultats rmc pour une fiche Inscription lors d'une navigation */
-  const resultatRMCFicheInscription = useRMCInscriptionApiHook(criteresRechercheFicheInscription);
+  const resultatRMCFicheInscription = useRMCInscriptionApiHook(
+    criteresRechercheFicheInscription
+  );
 
   //  Obligatoire pour les styles qui sont chargés dynamiquement lorsque le select est dans une fenetre externe
   useEffect(() => {
@@ -117,7 +133,10 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({n
           values
         );
       if (messageErreur) {
-        messageManager.showErrorAndClose(messageErreur, dansFenetreExterne ? TOASTCONTAINER_EXTERNE : TOASTCONTAINER_PRINCIPAL);
+        messageManager.showErrorAndClose(
+          messageErreur,
+          dansFenetreExterne ? TOASTCONTAINER_EXTERNE : TOASTCONTAINER_PRINCIPAL
+        );
       } else {
         setOpEnCours(true);
         setNouvelleRMCActeInscription(true);
@@ -156,7 +175,10 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({n
         />
       )}
 
-      {dataRMCActe && dataTableauRMCActe && dataRMCInscription && dataTableauRMCInscription && (
+      {dataRMCActe &&
+        dataTableauRMCActe &&
+        dataRMCInscription &&
+        dataTableauRMCInscription && (
           <RMCActeInscriptionResultats
             typeRMC="Classique"
             dataRMCActe={dataRMCActe}
@@ -190,9 +212,17 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({n
         )}
 
       {dansFenetreExterne && (
-        <ToastContainer containerId={TOASTCONTAINER_EXTERNE} className={"toast-container"} position="top-center"
-          hideProgressBar={false} newestOnTop={true} closeOnClick={true} rtl={false} draggable={true}
-          pauseOnHover={true} enableMultiContainer={true}
+        <ToastContainer
+          containerId={TOASTCONTAINER_EXTERNE}
+          className={"toast-container"}
+          position="top-center"
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick={true}
+          rtl={false}
+          draggable={true}
+          pauseOnHover={true}
+          enableMultiContainer={true}
         />
       )}
     </>

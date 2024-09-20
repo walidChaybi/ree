@@ -1,11 +1,11 @@
 import { Orientation } from "@model/composition/enum/Orientation";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
-import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { useCallback, useEffect, useState } from "react";
 import { MimeType } from "../../../../../ressources/MimeType";
 import {
@@ -31,7 +31,8 @@ import {
   estDocumentAvecCTV,
   estPresentActeEtChoixDelivrance,
   estPresentIdActeEtChoixDelivrance,
-  getNomDocument, toutesLesDonneesSontPresentes
+  getNomDocument,
+  toutesLesDonneesSontPresentes
 } from "./generationECHookUtil";
 import { useRecupererCTV } from "./televerification/recupererCtvApiHook";
 import {
@@ -98,10 +99,20 @@ export function useGenerationEC(
 
   useEffect(() => {
     if (acteApiHookResultat) {
-      if (estDocumentAvecCTV(DocumentDelivrance.getTypeDocument(params?.choixDelivrance), params?.requete.sousType)) {
+      if (
+        estDocumentAvecCTV(
+          DocumentDelivrance.getTypeDocument(params?.choixDelivrance),
+          params?.requete.sousType
+        )
+      ) {
         setRecupererCtvApiHookParam({});
       } else {
-        creationECSansCTV(acteApiHookResultat?.acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams);
+        creationECSansCTV(
+          acteApiHookResultat?.acte || acteDejaPresent,
+          params,
+          setValidation,
+          setExtraitCopieApiHookParams
+        );
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -109,10 +120,20 @@ export function useGenerationEC(
 
   useEffect(() => {
     if (acteDejaPresent) {
-      if (estDocumentAvecCTV(DocumentDelivrance.getTypeDocument(params?.choixDelivrance), params?.requete.sousType)) {
+      if (
+        estDocumentAvecCTV(
+          DocumentDelivrance.getTypeDocument(params?.choixDelivrance),
+          params?.requete.sousType
+        )
+      ) {
         setRecupererCtvApiHookParam({});
       } else {
-        creationECSansCTV(acteApiHookResultat?.acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams);
+        creationECSansCTV(
+          acteApiHookResultat?.acte || acteDejaPresent,
+          params,
+          setValidation,
+          setExtraitCopieApiHookParams
+        );
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -120,7 +141,13 @@ export function useGenerationEC(
 
   // 2- Création du bon EC composition suivant le choix de délivrance
   useEffect(() => {
-    creationEC(acteApiHookResultat?.acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams, recupererCtvResultat?.ctv);
+    creationEC(
+      acteApiHookResultat?.acte || acteDejaPresent,
+      params,
+      setValidation,
+      setExtraitCopieApiHookParams,
+      recupererCtvResultat?.ctv
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recupererCtvResultat]);
 
@@ -134,9 +161,13 @@ export function useGenerationEC(
   const creationDocumentReponseOuResultat = useCallback(
     (requete: IRequeteDelivrance, contenu: string, nbPages: number) => {
       if (requete.choixDelivrance && params?.choixDelivrance) {
-        const typeDocument = DocumentDelivrance.getTypeDocument(params.choixDelivrance);
+        const typeDocument = DocumentDelivrance.getTypeDocument(
+          params.choixDelivrance
+        );
         const avecCtv = estDocumentAvecCTV(typeDocument, requete.sousType);
-        const futurStatutRequete = avecCtv ? StatutRequete.A_SIGNER : StatutRequete.A_VALIDER;
+        const futurStatutRequete = avecCtv
+          ? StatutRequete.A_SIGNER
+          : StatutRequete.A_VALIDER;
 
         const documentReponsePourStockage = {
           contenu,
@@ -150,7 +181,7 @@ export function useGenerationEC(
           mentionsRetirees: params?.mentionsRetirees.map(idMention => ({
             idMention
           })),
-          idActe: acteApiHookResultat?.acte?.id || acteDejaPresent?.id
+          idActe: acteApiHookResultat?.acte?.id ?? acteDejaPresent?.id
         } as IDocumentReponse;
 
         if (params?.pasDAction) {
@@ -212,9 +243,7 @@ export function useGenerationEC(
       setStockeCtvApiHookParam({
         ctv: recupererCtvResultat?.ctv ?? "",
         //@ts-ignore
-        idDocument: uuidDocumentReponse
-          ? uuidDocumentReponse
-          : uuidDocumentReponseSansAction
+        idDocument: uuidDocumentReponse ?? uuidDocumentReponseSansAction
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -232,9 +261,8 @@ export function useGenerationEC(
     ) {
       setResultat({
         resultGenerationUnDocument: {
-          idDocumentReponse: uuidDocumentReponse
-            ? uuidDocumentReponse
-            : uuidDocumentReponseSansAction,
+          idDocumentReponse:
+            uuidDocumentReponse ?? uuidDocumentReponseSansAction,
           contenuDocumentReponse:
             //@ts-ignore
             extraitCopieApiHookResultat.donneesComposition.contenu

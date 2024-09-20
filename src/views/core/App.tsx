@@ -12,7 +12,6 @@ import {
   SeulementNavigateur
 } from "@util/detectionNavigateur/DetectionNavigateur";
 import { ErrorManager } from "@util/ErrorManager";
-import { logError } from "@util/LogManager";
 import { TOASTCONTAINER_PRINCIPAL } from "@util/messageManager";
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
 import { storeRece } from "@util/storeRece";
@@ -51,7 +50,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     GestionnaireARetraiterDansSaga.init();
-    chargerPolices();
   }, []);
 
   useEffect(() => {
@@ -115,40 +113,6 @@ const App: React.FC = () => {
       </SeulementNavigateur>
     </ThemeProvider>
   );
-};
-
-const chargerPolices = () => {
-  // Ajout des polices dynamiquement pour pouvoir être copié dans fenêtre externe
-  const notoSansRegular = new FontFace(
-    "NotoSansUI-Regular",
-    `url(./NotoSansUI-Regular.ttf)`
-  );
-  notoSansRegular
-    .load()
-    .then(loadedFace => {
-      document.fonts.add(loadedFace);
-    })
-    .catch(error => {
-      erreurChargementPolice("Regular");
-    });
-  const notoSansBold = new FontFace(
-    "NotoSansUI-Bold",
-    `url(./NotoSansUI-Bold.ttf)`
-  );
-  notoSansBold
-    .load()
-    .then(loadedFace => {
-      document.fonts.add(loadedFace);
-    })
-    .catch(error => {
-      erreurChargementPolice("Bold");
-    });
-};
-
-const erreurChargementPolice = (typePolice: string) => {
-  return logError({
-    messageUtilisateur: "Impossible de charger NotoSansUI-" + typePolice
-  });
 };
 
 export default App;

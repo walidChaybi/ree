@@ -1,15 +1,16 @@
 import { getCompteurRequetes } from "@api/appels/requeteApi";
 import { logError } from "@util/LogManager";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export function useCompteurRequeteHook(
   reloadCompteur: boolean,
   statuts: string[]
 ) {
+  const listeStatus = useMemo(() => statuts.join(""), [statuts]);
   const [nombreRequetesState, setNombreRequetesState] = useState<number>(0);
 
   useEffect(() => {
-    getCompteurRequetes(statuts.join(","))
+    getCompteurRequetes(listeStatus)
       .then(result => {
         setNombreRequetesState(result?.body.data || 0);
       })
@@ -20,7 +21,7 @@ export function useCompteurRequeteHook(
           error
         });
       });
-  }, [reloadCompteur, statuts]);
+  }, [reloadCompteur, listeStatus]);
 
   return {
     nombreRequetesState

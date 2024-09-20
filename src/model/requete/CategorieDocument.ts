@@ -47,7 +47,7 @@ export class CategorieDocument {
 
     return new CategorieDocument(
       CategorieDocument.getLibelleAAfficher(spec, libelleOrigine),
-      spec.ordre + (getNombreCommeSuffix(libelleOrigine) || 0)
+      spec.ordre + (getNombreCommeSuffix(libelleOrigine) ?? 0)
     );
   }
 
@@ -59,7 +59,10 @@ export class CategorieDocument {
     if (libelleAAfficher.endsWith(CAR_ETOILE)) {
       const ordreEnumeration = getNombreCommeSuffix(libelleOrigine);
       if (ordreEnumeration) {
-        libelleAAfficher = libelleAAfficher.replace(CAR_ETOILE,String(ordreEnumeration));
+        libelleAAfficher = libelleAAfficher.replace(
+          CAR_ETOILE,
+          String(ordreEnumeration)
+        );
       }
     }
     return libelleAAfficher;

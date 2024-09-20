@@ -21,15 +21,12 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: ["src/__tests__/setupTests.ts"],
+    maxWorkers: 3,
     include: ["src/__tests__/**/?(*.)test.ts?(x)"],
     exclude: [
       "./src/__tests__/views/pages/requeteInformation/**",
       "./src/__tests__/views/pages/requeteMiseAJour/**"
     ],
-    reporters: ["vitest-sonar-reporter"],
-    outputFile: {
-      "vitest-sonar-reporter": "test_report/jest/test-report.xml"
-    },
     coverage: {
       include: ["src/*"],
       exclude: [
@@ -38,8 +35,7 @@ export default defineConfig({
         "src/ressources/*",
         "./src/__tests__/views/pages/requeteInformation/**",
         "./src/__tests__/views/pages/requeteMiseAJour/**"
-      ],
-      reporter: "lcov"
+      ]
     }
   },
   define: {
@@ -56,7 +52,7 @@ export default defineConfig({
   plugins: [
     react({
       include: "./src/**/*.{js,jsx,ts,tsx}",
-      exclude: "./src/__tests__/**/*.*"
+      exclude: ["./src/__tests__/**/*.*", "./src/mock/**"]
     }),
     eslint()
   ],
