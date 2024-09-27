@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxProps } from "@mui/material";
+import Checkbox, { CheckboxProps } from "@mui/material/Checkbox";
 import React from "react";
 import {
   ConteneurElementContext,

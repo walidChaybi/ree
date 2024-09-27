@@ -1,9 +1,7 @@
-import {
-  ArrowUpward,
-  ChevronLeft,
-  ChevronRight,
-  Report
-} from "@mui/icons-material";
+import ArrowUpward from "@mui/icons-material/ArrowUpward";
+import ChevronLeft from "@mui/icons-material/ChevronLeft";
+import ChevronRight from "@mui/icons-material/ChevronRight";
+import Report from "@mui/icons-material/Report";
 import { UN } from "@util/Utils";
 import React from "react";
 import "./Tableau.scss";

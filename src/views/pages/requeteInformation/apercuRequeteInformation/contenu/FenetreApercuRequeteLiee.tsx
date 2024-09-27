@@ -1,5 +1,5 @@
-import { Link } from "@mui/material";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import Link from "@mui/material/Link";
 import { FenetreExterne } from "@util/FenetreExterne";
 import React, { useState } from "react";
 import { ApercuRequetePage } from "../../../requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
@@ -35,24 +35,27 @@ export const FenetreApercuRequeteLiee: React.FC<
     }
   };
 
-  return <>
-    <Link
-      className={"lienFiche"}
-      href={"#"}
-      onClick={onClickNumero}
-      underline="hover">
-      {props.numeroRequeteLiee}
-    </Link>
-
-    {fenetreExterne && (
-      <FenetreExterne
-        titre={`Aperçu requête : N°${props.numeroRequeteLiee}`}
-        onCloseHandler={onClose}
-        height={height}
-        width={width}
+  return (
+    <>
+      <Link
+        className={"lienFiche"}
+        href={"#"}
+        onClick={onClickNumero}
+        underline="hover"
       >
-        {navigationRequeteLiee(props.typeRequeteLiee, props.idRequeteLiee)}
-      </FenetreExterne>
-    )}
-  </>;
+        {props.numeroRequeteLiee}
+      </Link>
+
+      {fenetreExterne && (
+        <FenetreExterne
+          titre={`Aperçu requête : N°${props.numeroRequeteLiee}`}
+          onCloseHandler={onClose}
+          height={height}
+          width={width}
+        >
+          {navigationRequeteLiee(props.typeRequeteLiee, props.idRequeteLiee)}
+        </FenetreExterne>
+      )}
+    </>
+  );
 };

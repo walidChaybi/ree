@@ -15,7 +15,8 @@ import {
 } from "@model/requete/enum/DocumentDelivranceConstante";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { Add, Clear } from "@mui/icons-material";
+import Add from "@mui/icons-material/Add";
+import Clear from "@mui/icons-material/Clear";
 import { getParamsCreationEC } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { EditionDelivranceContext } from "../../../../contexts/EditionDelivranceContextProvider";

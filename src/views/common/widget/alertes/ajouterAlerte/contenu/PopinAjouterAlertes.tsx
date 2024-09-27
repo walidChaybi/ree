@@ -1,5 +1,6 @@
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
-import { Dialog, DialogContent } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 import { getLibelle } from "@util/Utils";
 import React from "react";
 import * as Yup from "yup";

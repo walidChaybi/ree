@@ -1,5 +1,7 @@
 import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
-import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import { Base64File, FILE_TYPES } from "@util/FileUtils";
 import { Option, Options } from "@util/Type";
 import { DIX_MILLE, getLibelle } from "@util/Utils";

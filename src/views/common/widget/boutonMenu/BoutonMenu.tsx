@@ -1,6 +1,6 @@
-import { PopoverOrigin } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { PopoverOrigin } from "@mui/material/Popover/Popover";
 import { Option, Options } from "@util/Type";
 import React from "react";
 import "./scss/BoutonMenu.scss";

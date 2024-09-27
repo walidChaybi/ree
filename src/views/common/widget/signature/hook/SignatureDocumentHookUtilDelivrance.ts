@@ -1,12 +1,12 @@
 import { getDocumentReponseById } from "@api/appels/requeteApi";
 import { IResultatPatchDocumentReponse } from "@hook/DocumentReponseHook";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
-import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
 import { IDetailInfos } from "@model/signature/IDetailInfos";
 import { gestionnaireSignatureFlag } from "@util/signatureFlag/gestionnaireSignatureFlag";
 import gestionnaireTimer from "@util/timer/GestionnaireTimer";
@@ -119,7 +119,7 @@ function sendDocumentToSignature(
     erreursSimulees: null
   };
 
-  gestionnaireTimer.declancheTimer(
+  gestionnaireTimer.declencherTimer(
     TIMER_SIGNATURE,
     SIGNATURE_TIMEOUT,
     true,

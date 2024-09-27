@@ -1,7 +1,7 @@
 import { VisionneuseActe } from "@composant/visionneuseActe/VisionneuseActe";
 import {
   officierDroitConsulterSurLeTypeRegistre,
-  officierDroitConsulterSurLeTypeRegistreOuDroitMEAE,
+  officierDroitConsulterSurLeTypeRegistreOuDroitMAE,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
@@ -94,7 +94,7 @@ export function getParamsAffichageFicheActe(
   // ou
   // S'il a le droit CONSULTER sur le périmètre de l'acte et le type de registre est présent dans ce périmètre
   if (
-    officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(idTypeRegistre) ||
+    officierDroitConsulterSurLeTypeRegistreOuDroitMAE(idTypeRegistre) ||
     officierHabiliterPourLeDroit(Droit.DELIVRER_COMEDEC)
   ) {
     params.visuBoutonAlertes = true;

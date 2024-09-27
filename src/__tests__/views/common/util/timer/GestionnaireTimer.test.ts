@@ -15,7 +15,7 @@ test("Attendu: le déclanchement d'un timer via l'objet gestionnaireTimer foncti
   const fctTest = function () {
     nbCalled++;
   };
-  gestionnaireTimer.declancheTimer("testTimer", 0, false, fctTest);
+  gestionnaireTimer.declencherTimer("testTimer", 0, false, fctTest);
   vi.runAllTimers();
   expect(nbCalled).toBe(1);
 });
@@ -28,7 +28,7 @@ test("Attendu: l'annulation d'un timer via l'objet gestionnaireTimer fonctionne 
     throw new Error("error");
   };
 
-  gestionnaireTimer.declancheTimer("testTimer2", 0, true, fctTest);
+  gestionnaireTimer.declencherTimer("testTimer2", 0, true, fctTest);
   gestionnaireTimer.annuleTimer("testTimer2");
   vi.runAllTimers();
   expect(nbCalled).toBe(0);

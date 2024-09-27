@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import React, { useState } from "react";
 import { describe, expect, test } from "vitest";
@@ -26,43 +26,23 @@ const StateConsumerBoutonMenu: React.FC<{
 };
 
 describe("Test le fonctionnement du composant BoutonMenu", () => {
-  test("DOIT afficher / cacher la liste des items QUAND l'utilisateur survole ou non le bouton.", () => {
+  test("DOIT afficher / cacher la liste des items QUAND l'utilisateur survole ou non le bouton.", async () => {
     render(<StateConsumerBoutonMenu />);
 
     const bouton: HTMLElement = screen.getByText("Click me");
-    const menu: HTMLElement = screen.getByRole("presentation", {
+    const menu: HTMLElement = await screen.findByRole("presentation", {
       hidden: true
     });
     const choixUn: HTMLElement = screen.getByText("Un");
 
-    waitFor(() => {
-      expect(bouton).toBeDefined();
-      expect(menu).toBeDefined();
-      expect(menu).not.toBeDefined();
-      expect(choixUn).toBeDefined();
-      expect(choixUn).not.toBeDefined();
-    });
+    expect(bouton).toBeDefined();
+    expect(menu).toBeDefined();
+    expect(choixUn).toBeDefined();
+    expect(menu.className.includes("-hidden")).toBeTruthy();
 
     fireEvent.mouseOver(bouton);
 
-    waitFor(() => {
-      expect(menu).toBeDefined();
-      expect(choixUn).toBeDefined();
-    });
-
-    fireEvent.mouseOver(choixUn);
-
-    waitFor(() => {
-      expect(menu).toBeDefined();
-      expect(choixUn).toBeDefined();
-    });
-
-    fireEvent.mouseLeave(choixUn);
-
-    waitFor(() => {
-      expect(menu).not.toBeDefined();
-      expect(choixUn).not.toBeDefined();
-    });
+    expect(menu.className.includes("-hidden")).toBeFalsy();
   });
 
   test("DOIT afficher / cacher la liste des items QUAND l'utilisateur clique sur le bouton (et non le survole).", () => {
@@ -74,27 +54,18 @@ describe("Test le fonctionnement du composant BoutonMenu", () => {
     });
     const choixUn: HTMLElement = screen.getByText("Un");
 
-    waitFor(() => {
-      expect(bouton).toBeDefined();
-      expect(menu).toBeDefined();
-      expect(menu).not.toBeDefined();
-      expect(choixUn).toBeDefined();
-      expect(choixUn).not.toBeDefined();
-    });
+    expect(bouton).toBeDefined();
+    expect(menu).toBeDefined();
+    expect(choixUn).toBeDefined();
+    expect(menu.className.includes("-hidden")).toBeTruthy();
 
     fireEvent.mouseOver(bouton);
 
-    waitFor(() => {
-      expect(menu).not.toBeDefined();
-      expect(choixUn).not.toBeDefined();
-    });
+    expect(menu.className.includes("-hidden")).toBeTruthy();
 
     fireEvent.click(bouton);
 
-    waitFor(() => {
-      expect(menu).toBeDefined();
-      expect(choixUn).toBeDefined();
-    });
+    expect(menu.className.includes("-hidden")).toBeFalsy();
   });
 
   test("DOIT fermer le menu QUAND on clique sur un item du menu.", () => {
@@ -106,25 +77,19 @@ describe("Test le fonctionnement du composant BoutonMenu", () => {
     });
     const choixUn: HTMLElement = screen.getByText("Un");
 
-    waitFor(() => {
-      expect(bouton).toBeDefined();
-      expect(menu).toBeDefined();
-      expect(choixUn).toBeDefined();
-      expect(menu).not.toBeDefined();
-    });
+    expect(bouton).toBeDefined();
+    expect(menu).toBeDefined();
+    expect(choixUn).toBeDefined();
+    expect(menu.className.includes("-hidden")).toBeTruthy();
 
     fireEvent.mouseOver(bouton);
 
-    waitFor(() => {
-      expect(menu).toBeDefined();
-    });
+    expect(menu).toBeDefined();
+    expect(menu.className.includes("-hidden")).toBeFalsy();
 
     fireEvent.click(choixUn);
 
-    waitFor(() => {
-      expect(menu).not.toBeDefined();
-      expect(screen.queryByText("Nombre de clics: 1")).toBeDefined();
-    });
+    expect(screen.queryByText("Nombre de clics: 1")).toBeDefined();
   });
 
   test("DOIT déclencher la fonction QUAND on clique sur un item du menu.", () => {
@@ -134,27 +99,21 @@ describe("Test le fonctionnement du composant BoutonMenu", () => {
     const unClic = "Nombre de clics: 1";
     const deuxClics = "Nombre de clics: 2";
 
-    waitFor(() => {
-      expect(screen.queryByText(zeroClics)).toBeDefined();
-      expect(screen.queryByText(unClic)).not.toBeDefined();
-      expect(screen.queryByText(deuxClics)).not.toBeDefined();
-    });
+    expect(screen.queryByText(zeroClics)).toBeDefined();
+    expect(screen.queryByText(unClic)).toBeNull();
+    expect(screen.queryByText(deuxClics)).toBeNull();
 
     fireEvent.mouseOver(screen.getByText("Click me"));
     fireEvent.click(screen.getByText("Deux"));
 
-    waitFor(() => {
-      expect(screen.queryByText(zeroClics)).not.toBeDefined();
-      expect(screen.queryByText(unClic)).toBeDefined();
-      expect(screen.queryByText(deuxClics)).not.toBeDefined();
-    });
+    expect(screen.queryByText(zeroClics)).toBeNull();
+    expect(screen.queryByText(unClic)).toBeDefined();
+    expect(screen.queryByText(deuxClics)).toBeNull();
 
     fireEvent.click(screen.getByText("Un"));
 
-    waitFor(() => {
-      expect(screen.queryByText(zeroClics)).not.toBeDefined();
-      expect(screen.queryByText(unClic)).not.toBeDefined();
-      expect(screen.queryByText(deuxClics)).toBeDefined();
-    });
+    expect(screen.queryByText(zeroClics)).toBeNull();
+    expect(screen.queryByText(unClic)).toBeNull();
+    expect(screen.queryByText(deuxClics)).toBeDefined();
   });
 });

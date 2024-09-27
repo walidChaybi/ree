@@ -1,17 +1,15 @@
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle
-} from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import { getLibelle } from "@util/Utils";
 import React from "react";
 import { CodePinForm, CodePinFormValues } from "./CodePinForm";
+import { ProgressSignature } from "./ProgressSignature";
 import { useSignatureDocumentHookDelivrance } from "./hook/SignatureDocumentHookDelivrance";
 import { DocumentsByRequete } from "./hook/SignatureDocumentHookUtilDelivrance";
 import { ErreurSignature } from "./messages/ErreurSignature";
 import { SuccessSignature } from "./messages/SuccessSignature";
-import { ProgressSignature } from "./ProgressSignature";
 import "./scss/PopinSignatureDelivrance.scss";
 
 interface PopinSignatureDelivranceProps {

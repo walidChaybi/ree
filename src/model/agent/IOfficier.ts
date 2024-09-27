@@ -114,7 +114,7 @@ export function officierDroitDelivrerSurLeTypeRegistre(idTypeRegistre: string) {
   return estHabilite;
 }
 
-export function officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(
+export function officierDroitConsulterSurLeTypeRegistreOuDroitMAE(
   idTypeRegistre?: string
 ) {
   return (

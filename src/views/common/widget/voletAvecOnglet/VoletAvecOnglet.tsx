@@ -1,7 +1,9 @@
 import { RECEContext } from "@core/contexts/RECEContext";
-import { ErrorOutline } from "@mui/icons-material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Tab } from "@mui/material";
+import ErrorOutline from "@mui/icons-material/ErrorOutline";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+import Tab from "@mui/material/Tab";
 import { checkDirty } from "@util/Utils";
 import React, { useContext, useState } from "react";
 import "./VoletAvecOnglet.scss";

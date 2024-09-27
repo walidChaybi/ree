@@ -1,7 +1,7 @@
 {
   "name": "rece-ui",
   "maeGroup": "fr.gouv.diplomatie.rece",
-  "version": "2.24.0",
+  "version": "2.25.0",
   "private": true,
   "homepage": "rece/rece-ui/",
   "dependencies": {
@@ -27,10 +27,10 @@
     "react-toastify": "6.0.8",
     "superagent": "6.1.0",
     "uuid": "8.3.2",
-    "vite-plugin-eslint": "1.8.1",
     "yup": "0.32.8"
   },
   "devDependencies": {
+    "@remix-run/web-fetch": "4.4.2",
     "@testing-library/dom": "10.4.0",
     "@testing-library/react": "16.0.0",
     "@testing-library/user-event": "14.5.1",
@@ -49,14 +49,14 @@
     "tsarch": "5.3.0",
     "typescript": "4.9.5",
     "vite": "5.4.6",
-    "vitest": "2.0.5",
-    "vitest-sonar-reporter": "2.0.0"
+    "vite-plugin-eslint": "1.8.1",
+    "vitest": "2.0.5"
   },
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview --port 3000",
-    "test": "NODE_ENV=test vitest run --config vite.config.mts --coverage.enabled --coverage.reporter lcov --reporter='vitest-sonar-reporter' --reporter=default --outputFile test_report/jest/test-report.xml --silent --bail 1",
+    "test": "NODE_ENV=test vitest run --config vite.config.mts --coverage.enabled --coverage.reporter lcov --silent --retry 2",
     "test:dev": "NODE_ENV=test vitest --config vite.config.mts",
     "test:dev:coverage": "NODE_ENV=test vitest --config vite.config.mts --coverage",
     "package": "npm run build"

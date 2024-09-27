@@ -5,7 +5,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import ErrorIcon from "@mui/icons-material/Error";
 import LabelIcon from "@mui/icons-material/Label";
 import ReportIcon from "@mui/icons-material/Report";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import { getLibelle, numberToString } from "@util/Utils";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import { getDateStringFromDateCompose } from "../DateUtils";

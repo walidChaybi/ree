@@ -1,9 +1,11 @@
 import { IDetailInfos } from "@model/signature/IDetailInfos";
 import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
-import { Dialog, DialogContent, DialogTitle } from "@mui/material";
-import messageManager from "@util/messageManager";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import { getLibelle } from "@util/Utils";
+import messageManager from "@util/messageManager";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import React, { useEffect, useState } from "react";
 import { CodePinForm, CodePinFormValues } from "./CodePinForm";

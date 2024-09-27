@@ -1,4 +1,4 @@
-import { ExpandMore } from "@mui/icons-material";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import React, { useState } from "react";
 import "./ConteneurAccordeon.scss";
 

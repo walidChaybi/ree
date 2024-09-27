@@ -1,5 +1,5 @@
 import { ITypeErreurSignature } from "@model/signature/ITypeErreurSignature";
-import { TextField } from "@mui/material";
+import TextField from "@mui/material/TextField";
 import { getLibelle, HUIT, QUATRE } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import { useFormik } from "formik";

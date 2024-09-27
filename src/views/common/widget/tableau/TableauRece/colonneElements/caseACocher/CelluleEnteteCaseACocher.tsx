@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxProps } from "@mui/material";
+import Checkbox, { CheckboxProps } from "@mui/material/Checkbox";
 import { ZERO } from "@util/Utils";
 import React, { PropsWithChildren } from "react";
 import { TChangeEventSurHTMLInputElement } from "../IColonneElementsParams";

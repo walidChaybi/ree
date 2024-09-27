@@ -1,7 +1,8 @@
-import { Box, TablePagination } from "@mui/material";
+import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
+import TablePagination from "@mui/material/TablePagination";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { getLibelle } from "@util/Utils";
 import React, { useCallback, useEffect } from "react";

@@ -9,11 +9,12 @@ import {
   ISuppressionObservationParams,
   useSuppressionObservationApi
 } from "@hook/observation/SuppressionObservationApiHook";
-import { List, ListItemText } from "@mui/material";
 import { IObservation, Observation } from "@model/requete/IObservation";
+import List from "@mui/material/List";
+import ListItemText from "@mui/material/ListItemText";
 import { logError } from "@util/LogManager";
-import { storeRece } from "@util/storeRece";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { storeRece } from "@util/storeRece";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { BoutonAccordionTitle } from "@widget/accordion/BoutonAccordionTitle";
 import React, { useEffect, useState } from "react";

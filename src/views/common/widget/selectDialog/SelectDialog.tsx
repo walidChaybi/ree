@@ -1,18 +1,14 @@
-import React from "react";
-import { useFormik } from "formik";
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-} from "@mui/material";
-import Autocomplete, {
-  createFilterOptions,
-} from '@mui/material/Autocomplete';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import TextField from "@mui/material/TextField";
+import { useFormik } from "formik";
+import React from "react";
 
 export interface SelectElements {
   key: string;
@@ -31,19 +27,19 @@ interface SelectDialogProps {
   validate: (values: FormValues) => void;
 }
 
-export const SelectDialog: React.FC<SelectDialogProps> = (props) => {
+export const SelectDialog: React.FC<SelectDialogProps> = props => {
   const [open, setOpen] = React.useState(false);
 
   const formik = useFormik({
     initialValues: {
       selectedItem: props.listOfElements.find(
-        (element) => element.key === props.defaultElementId
-      ),
+        element => element.key === props.defaultElementId
+      )
     },
     onSubmit: (values: FormValues) => {
       props.validate(values);
       setOpen(false);
-    },
+    }
   });
 
   const handleClickOpen = (ev: React.MouseEvent<unknown>) => {
@@ -104,7 +100,7 @@ export const SelectDialog: React.FC<SelectDialogProps> = (props) => {
                   />
                 )}
                 filterOptions={createFilterOptions({
-                  limit: 5,
+                  limit: 5
                 })}
               />
             </DialogContent>

@@ -53,7 +53,7 @@ export function signerDocument(
       erreursSimulees: null
     };
 
-    gestionnaireTimer.declancheTimer(
+    gestionnaireTimer.declencherTimer(
       TIMER_SIGNATURE,
       SIGNATURE_TIMEOUT,
       true,

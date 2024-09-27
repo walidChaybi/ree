@@ -3,8 +3,8 @@ import {
   ObjetRequeteInfo,
   objetsRequeteInfoCommeOptions
 } from "@model/requete/enum/ObjetRequeteInfo";
-import { MenuItem } from "@mui/material";
 import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import { Option } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import NestedMenuItem from "@widget/menu/NestedMenuItem";

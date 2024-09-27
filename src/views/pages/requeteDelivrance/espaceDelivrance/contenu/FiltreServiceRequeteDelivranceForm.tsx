@@ -11,9 +11,9 @@ import {
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { Button } from "@mui/material";
-import { storeRece } from "@util/storeRece";
+import Button from "@mui/material/Button";
 import { getLibelle } from "@util/Utils";
+import { storeRece } from "@util/storeRece";
 import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { Formik } from "formik";

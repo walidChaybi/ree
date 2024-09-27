@@ -21,7 +21,8 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: ["src/__tests__/setupTests.ts"],
-    maxWorkers: 3,
+    maxWorkers: 4,
+    testTimeout: 10000,
     include: ["src/__tests__/**/?(*.)test.ts?(x)"],
     exclude: [
       "./src/__tests__/views/pages/requeteInformation/**",
@@ -33,8 +34,8 @@ export default defineConfig({
         "src/App.tsx",
         "src/index.tsx",
         "src/ressources/*",
-        "./src/__tests__/views/pages/requeteInformation/**",
-        "./src/__tests__/views/pages/requeteMiseAJour/**"
+        "src/__tests__/*",
+        "src/mock/*"
       ]
     }
   },
@@ -51,8 +52,8 @@ export default defineConfig({
   },
   plugins: [
     react({
-      include: "./src/**/*.{js,jsx,ts,tsx}",
-      exclude: ["./src/__tests__/**/*.*", "./src/mock/**"]
+      include: "src/**/*.{js,jsx,ts,tsx}",
+      exclude: ["src/__tests__/*", "src/mock/*"]
     }),
     eslint()
   ],

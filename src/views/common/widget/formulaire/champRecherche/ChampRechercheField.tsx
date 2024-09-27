@@ -1,4 +1,4 @@
-import { Autocomplete } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
 import { FilterOptionsState } from "@mui/material/useAutocomplete";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";

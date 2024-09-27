@@ -11,7 +11,7 @@ import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequerantInformation } from "@model/requete/enum/TypeRequerantInformation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import { Options } from "@util/Type";
 import {
   getLibelle,

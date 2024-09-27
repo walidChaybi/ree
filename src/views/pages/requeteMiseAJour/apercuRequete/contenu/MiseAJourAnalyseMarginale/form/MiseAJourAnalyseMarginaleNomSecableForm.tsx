@@ -6,7 +6,7 @@ import {
   NOM_SECABLE,
   SECABLE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { Checkbox } from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
 import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";

@@ -1,4 +1,4 @@
-import { InfoRounded } from "@mui/icons-material";
+import InfoRounded from "@mui/icons-material/InfoRounded";
 import React from "react";
 
 interface InfoBulleProps {

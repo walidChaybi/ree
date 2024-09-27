@@ -1,5 +1,5 @@
-import { List } from "@mui/material";
 import { IAction } from "@model/requete/IActions";
+import List from "@mui/material/List";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
 import { ActionRequete } from "./ActionRequete";
@@ -9,7 +9,9 @@ interface SuiviActionsRequeteProps {
   actions?: IAction[];
 }
 
-export const SuiviActionsRequete: React.FC<SuiviActionsRequeteProps> = props => {
+export const SuiviActionsRequete: React.FC<
+  SuiviActionsRequeteProps
+> = props => {
   return (
     <div className="suivis-requete">
       <AccordionRece titre={"Suivi requête"} disabled={false} expanded={false}>

@@ -13,8 +13,11 @@ import {
   verticalListSortingStrategy
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { DeleteOutlined, DragHandle, EditOutlined } from "@mui/icons-material";
-import { Checkbox, Tooltip } from "@mui/material";
+import DeleteOutlined from "@mui/icons-material/DeleteOutlined";
+import DragHandle from "@mui/icons-material/DragHandle";
+import EditOutlined from "@mui/icons-material/EditOutlined";
+import Checkbox from "@mui/material/Checkbox";
+import Tooltip from "@mui/material/Tooltip";
 import { finirAvec3petitsPoints, getLibelle } from "@util/Utils";
 import React, { useCallback } from "react";
 import "./scss/ListeGlisserDeposer.scss";

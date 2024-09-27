@@ -1,7 +1,9 @@
 import { deleteObservation, postObservation } from "@api/appels/requeteApi";
 import { IObservation } from "@model/requete/IObservation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { AddCircleOutline, DeleteOutline, Edit } from "@mui/icons-material";
+import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
+import DeleteOutline from "@mui/icons-material/DeleteOutline";
+import Edit from "@mui/icons-material/Edit";
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { UN, ZERO } from "@util/Utils";
 import { storeRece } from "@util/storeRece";

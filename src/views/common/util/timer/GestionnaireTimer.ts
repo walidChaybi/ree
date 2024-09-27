@@ -15,7 +15,7 @@ class GestionnaireTimer {
     }
   }
 
-  declancheTimer(
+  declencherTimer(
     nomTimer: string,
     timeout: number,
     curseurDAttente: boolean,

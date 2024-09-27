@@ -1,5 +1,6 @@
-import { Warning } from "@mui/icons-material";
-import { FormControlLabel, Switch } from "@mui/material";
+import Warning from "@mui/icons-material/Warning";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import { getLibelle } from "@util/Utils";
 import React from "react";
 import "./scss/BoutonVerrouillage.scss";

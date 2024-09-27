@@ -8,7 +8,7 @@ import {
 } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { SettingsBackupRestore } from "@mui/icons-material";
+import SettingsBackupRestore from "@mui/icons-material/SettingsBackupRestore";
 import { getLibelle } from "@util/Utils";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";

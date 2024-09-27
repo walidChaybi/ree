@@ -1,3 +1,4 @@
+import { CONFIG_POST_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/miseAJour/PostRequeteMiseAJourApiConfig";
 import {
   AddAlerteActeApiHookParameters,
   useAddAlerteActeApiHook
@@ -7,21 +8,28 @@ import {
   useDeleteAlerteActeApiHook
 } from "@hook/alertes/DeleteAlerteActeHookApi";
 import {
-  ICreationRequeteMiseAJourApiHookParams,
-  useCreationRequeteMiseAJourApiHook
-} from "@hook/requete/miseajour/CreationRequeteMiseAJourApiHook";
-import { Droit } from "@model/agent/enum/Droit";
-import {
-  officierDroitConsulterSurLeTypeRegistreOuDroitMEAE,
+  officierDroitConsulterSurLeTypeRegistreOuDroitMAE,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
-import { TypeMiseAJourMentions } from "@model/etatcivil/enum/ITypeMiseAJourMentions";
+import { Droit } from "@model/agent/enum/Droit";
+import {
+  EOptionMiseAJourActe,
+  OptionMiseAJourActe
+} from "@model/etatcivil/enum/OptionMiseAJourActe";
 import { OrigineActe } from "@model/etatcivil/enum/OrigineActe";
-import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { TitulaireRequeteMiseAJour } from "@model/requete/ITitulaireRequeteMiseAJour";
+import { SousTypeMiseAJour } from "@model/requete/enum/SousTypeMiseAJour";
+import {
+  ID,
+  ID_ACTE,
+  URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID,
+  URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID
+} from "@router/ReceUrls";
+import { FenetreExterneUtil } from "@util/FenetreExterne";
+import { logError } from "@util/LogManager";
+import { UN } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { FenetreExterneUtil } from "@util/FenetreExterne";
-import { UN } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { IAjouterAlerteFormValue } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { OperationLocaleEnCours } from "@widget/attente/OperationLocaleEnCours";
@@ -29,17 +37,16 @@ import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import { BarreNavigationSuivPrec } from "@widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
-import React, { useCallback, useEffect, useState } from "react";
-import { IFicheActe } from "../../../model/etatcivil/acte/IFicheActe";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useFetchApi from "../../../hooks/FetchApiHook";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
-import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
-import { mappingTitulaireActeVersTitulaireRequetMaj } from "../../common/mapping/mappingTitulaireRequeteMiseAJour";
 import { BoutonCreationRDD } from "./BoutonCreationRDD/BoutonCreationRDD";
+import { setFiche } from "./FicheUtils";
 import { BandeauAlertesActe } from "./contenu/BandeauAlertesActe";
 import { BandeauFiche } from "./contenu/BandeauFiche";
 import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
 import { BandeauFicheRcRcaPacsNumero } from "./contenu/BandeauFicheRcRcaPacsNumero";
-import { IAccordionReceSection, setFiche } from "./FicheUtils";
 import { useFichePageApiHook } from "./hook/FichePageApiHook";
 import "./scss/FichePage.scss";
 
@@ -80,22 +87,25 @@ export const FichePage: React.FC<FichePageProps> = ({
   nbLignesParAppel,
   getLignesSuivantesOuPrecedentes
 }) => {
+  const navigate = useNavigate();
   const [actualisationInfosFiche, setActualisationInfosFiche] =
     useState<boolean>(false);
   const [dataFicheCourante, setDataFicheCourante] = useState<
     IDataFicheProps | undefined
   >(datasFiches[getIndexLocal(index.value, nbLignesParAppel)]);
-  const [typeRequeteMiseAJour, setTypeRequeteMiseAJour] = useState<string>();
-  const [requeteMaJParams, setRequeteMaJParams] =
-    useState<ICreationRequeteMiseAJourApiHookParams>();
+  const [optionMiseAJour, setOptionMiseAJour] =
+    useState<EOptionMiseAJourActe | null>(null);
   // index courant sur la totalité des données
   const [indexCourant, setIndexCourant] = useState<number>(index.value);
+
+  const { appelApi: appelPostRequeteMiseAJour } = useFetchApi(
+    CONFIG_POST_REQUETE_MISE_A_JOUR
+  );
 
   useEffect(() => {
     setDataFicheCourante(
       datasFiches[getIndexLocal(indexCourant, nbLignesParAppel)]
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [datasFiches]);
 
   // (*) Permet de résoudre le pb de la fenêtre fiche déjà ouverte
@@ -107,7 +117,6 @@ export const FichePage: React.FC<FichePageProps> = ({
     setDataFicheCourante(
       datasFiches[getIndexLocal(index.value, nbLignesParAppel)]
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
 
   const { dataFicheState } = useFichePageApiHook(
@@ -122,20 +131,69 @@ export const FichePage: React.FC<FichePageProps> = ({
     dataFicheState.data
   );
 
-  useEffect(() => {
-    if (typeRequeteMiseAJour) {
-      setRequeteMaJParams({
-        idActeMAJ: dataFicheState?.data?.id,
-        sousType: typeRequeteMiseAJour,
-        titulaires: mappingTitulaireActeVersTitulaireRequetMaj(
-          dataFicheState.data.titulaires
-        )
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataFicheState, typeRequeteMiseAJour]);
+  const droitsMiseAJour = useMemo(() => {
+    const droitMentions = officierHabiliterPourLeDroit(
+      Droit.METTRE_A_JOUR_ACTE
+    );
+    const droitAnalyseMarginale = officierHabiliterPourLeDroit(
+      Droit.METTRE_A_JOUR_ACTE
+    );
 
-  useCreationRequeteMiseAJourApiHook(requeteMaJParams);
+    return {
+      autorise:
+        OrigineActe.estRece(
+          OrigineActe.getEnumFor(dataFicheState?.data?.origine)
+        ) &&
+        (droitMentions || droitAnalyseMarginale),
+      mentions: droitMentions,
+      AnalyseMarginale: droitAnalyseMarginale
+    };
+  }, [dataFicheState]);
+
+  useEffect(() => {
+    const idActe = dataFicheState?.data?.id;
+    if (!(optionMiseAJour && idActe)) {
+      return;
+    }
+
+    const sousTypeOptionMiseAJour =
+      OptionMiseAJourActe.getSousType(optionMiseAJour);
+
+    appelPostRequeteMiseAJour({
+      parametres: {
+        body: {
+          idActeMAJ: idActe,
+          choixMAJ:
+            optionMiseAJour === EOptionMiseAJourActe.ANALYSE_MARGINALE
+              ? "MAJ_ACTE_ANALYSE_MARGINALE"
+              : "MAJ_ACTE_APPOSER_MENTION",
+          sousType: sousTypeOptionMiseAJour.nom,
+          titulaires: TitulaireRequeteMiseAJour.listeDepuisDonneesFiche(
+            dataFicheState.data.titulaires
+          )
+        }
+      },
+      apresSucces: reponse => {
+        const urlNavigation = (
+          SousTypeMiseAJour.estRMAC(sousTypeOptionMiseAJour)
+            ? URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID
+            : URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID
+        )
+          .replace(ID, reponse.id)
+          .replace(ID_ACTE, idActe);
+
+        navigate(urlNavigation);
+      },
+      apresErreur: erreur => {
+        logError({
+          error: erreur,
+          messageUtilisateur:
+            "Impossible d'accéder à la requete de mise a jour de l'acte"
+        });
+      },
+      finalement: () => setOptionMiseAJour(null)
+    });
+  }, [optionMiseAJour]);
 
   // Obligatoire pour les styles qui sont chargés dynamiquement
   useEffect(() => {
@@ -258,7 +316,6 @@ export const FichePage: React.FC<FichePageProps> = ({
     if (alerte) {
       setActualisationInfosFiche(!actualisationInfosFiche);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alerte]);
 
   /* Suppression d'une alerte */
@@ -284,31 +341,92 @@ export const FichePage: React.FC<FichePageProps> = ({
     if (resultatSuppressionAlerte) {
       setActualisationInfosFiche(!actualisationInfosFiche);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatSuppressionAlerte]);
 
   return (
     <div className="FichePage">
       {bandeauFiche && panelsFiche && dataFicheState && dataFicheCourante ? (
         <>
-          {getBandeauFiche(bandeauFiche, dataFicheCourante.categorie)}
-          {getBarreNavigationSuivPrec(
-            datasFiches,
-            indexCourant,
-            nbLignesTotales,
-            setIndexFiche
+          <BandeauFiche
+            dataBandeau={bandeauFiche}
+            elementNumeroLigne={
+              FicheUtil.isActe(dataFicheCourante.categorie) ? (
+                <BandeauFicheActeNumero dataBandeau={bandeauFiche} />
+              ) : (
+                <BandeauFicheRcRcaPacsNumero dataBandeau={bandeauFiche} />
+              )
+            }
+          />
+
+          {datasFiches.length > UN && (
+            <div className="barreNavigationSuivPrec">
+              <BarreNavigationSuivPrec
+                index={indexCourant}
+                max={nbLignesTotales}
+                setIndex={setIndexFiche}
+              />
+            </div>
           )}
-          {getBandeauAlerteActe(
-            dataFicheCourante.categorie,
-            alertes,
-            dataFicheState.data,
-            ajouterAlerteCallBack,
-            supprimerAlerteCallBack,
-            visuBoutonAlertes,
-            numeroRequete,
-            setTypeRequeteMiseAJour
+
+          {dataFicheCourante.categorie === TypeFiche.ACTE && (
+            <div className="headerFichePage">
+              <BandeauAlertesActe
+                alertes={alertes}
+                idTypeRegistre={dataFicheState.data?.registre?.type?.id}
+                ajouterAlerteCallBack={ajouterAlerteCallBack}
+                supprimerAlerteCallBack={supprimerAlerteCallBack}
+                afficherBouton={visuBoutonAlertes}
+                disableScrollLock={true}
+              />
+              {droitsMiseAJour.autorise && (
+                <BoutonMenu
+                  boutonLibelle="Mettre à jour"
+                  className="menuMettreAJour"
+                  options={OptionMiseAJourActe.commeOptions({
+                    mentions: droitsMiseAJour.mentions,
+                    analyseMarginale: droitsMiseAJour.AnalyseMarginale
+                  })}
+                  onClickOption={option =>
+                    setOptionMiseAJour(option as EOptionMiseAJourActe)
+                  }
+                  anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                  transformOrigin={{ vertical: "top", horizontal: "right" }}
+                  disableScrollLock={true}
+                />
+              )}
+              {dataFicheState.data &&
+                !officierDroitConsulterSurLeTypeRegistreOuDroitMAE(
+                  dataFicheState.data.registre?.type?.id
+                ) &&
+                gestionnaireFeatureFlag.estActif(
+                  FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
+                ) && (
+                  <BoutonCreationRDD
+                    label="Demander la délivrance"
+                    labelPopin={`Vous allez demander la délivrance de cet acte. Souhaitez-vous continuer ?`}
+                    acte={dataFicheState.data}
+                    numeroFonctionnel={numeroRequete}
+                  />
+                )}
+            </div>
           )}
-          {getAccordionListe(panelsFiche?.panels, panelsFiche)}
+
+          {panelsFiche?.panels.map((panel: SectionPanelProps, idx: number) => (
+            <AccordionRece
+              key={`accordion-rece-${idx}`}
+              panel={panel}
+              index={idx}
+              expanded={
+                panelsFiche.panelParDefaut
+                  ? idx === panelsFiche.panelParDefaut
+                  : idx === 0
+              }
+              titre={panel?.title}
+              disabled={panel?.panelAreas.every(
+                (pa: SectionPanelAreaProps) => !pa.value && !pa.parts
+              )}
+            />
+          ))}
         </>
       ) : (
         <OperationLocaleEnCours visible={true} />
@@ -316,116 +434,6 @@ export const FichePage: React.FC<FichePageProps> = ({
     </div>
   );
 };
-
-function getBandeauFiche(bandeauFiche: IBandeauFiche, categorie: TypeFiche) {
-  return (
-    <BandeauFiche
-      dataBandeau={bandeauFiche}
-      elementNumeroLigne={getElementNumeroLigne(bandeauFiche, categorie)}
-    />
-  );
-}
-
-function getAccordionListe(
-  liste: SectionPanelProps[],
-  panelsFiche: IAccordionReceSection
-) {
-  return liste.map((panel: SectionPanelProps, idx: number) => (
-    <AccordionRece
-      key={`accordion-rece-${idx}`}
-      panel={panel}
-      index={idx}
-      expanded={
-        panelsFiche.panelParDefaut
-          ? idx === panelsFiche.panelParDefaut
-          : idx === 0
-      }
-      titre={panel?.title}
-      disabled={panel?.panelAreas.every(
-        (pa: SectionPanelAreaProps) => !pa.value && !pa.parts
-      )}
-    />
-  ));
-}
-
-function getBandeauAlerteActe(
-  categorie: TypeFiche,
-  alertes: IAlerte[],
-  acte: IFicheActe,
-  ajouterAlerteCallBack: (value: IAjouterAlerteFormValue) => void,
-  supprimerAlerteCallBack: (idAlerteActe: string, idActe: string) => void,
-  visuBoutonAlertes: boolean,
-  numeroRequete: string | undefined,
-  setTypeRequeteMiseAJour: React.Dispatch<
-    React.SetStateAction<string | undefined>
-  >
-) {
-  const estPresentBoutonMiseAJour =
-    officierHabiliterPourLeDroit(Droit.METTRE_A_JOUR_ACTE) &&
-    OrigineActe.estRece(OrigineActe.getEnumFor(acte.origine));
-  return (
-    categorie === TypeFiche.ACTE && (
-      <div className="headerFichePage">
-        <BandeauAlertesActe
-          alertes={alertes}
-          idTypeRegistre={acte?.registre?.type?.id}
-          ajouterAlerteCallBack={ajouterAlerteCallBack}
-          supprimerAlerteCallBack={supprimerAlerteCallBack}
-          afficherBouton={visuBoutonAlertes}
-          disableScrollLock={true}
-        />
-        {estPresentBoutonMiseAJour && (
-          <BoutonMenu
-            boutonLibelle="Mettre à jour"
-            className="menuMettreAJour"
-            options={TypeMiseAJourMentions.getAllEnumsAsOptions()}
-            onClickOption={e =>
-              setTypeRequeteMiseAJour(
-                TypeMiseAJourMentions.getSousTypeRequeteFromTypeMiseAJourLibelle(
-                  e
-                ).nom
-              )
-            }
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            transformOrigin={{ vertical: "top", horizontal: "right" }}
-            disableScrollLock={true}
-          />
-        )}
-        {acte &&
-          !officierDroitConsulterSurLeTypeRegistreOuDroitMEAE(
-            acte.registre?.type?.id
-          ) &&
-          gestionnaireFeatureFlag.estActif(
-            FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-          ) && (
-            <BoutonCreationRDD
-              label="Demander la délivrance"
-              labelPopin={`Vous allez demander la délivrance de cet acte. Souhaitez-vous continuer ?`}
-              acte={acte}
-              numeroFonctionnel={numeroRequete}
-            />
-          )}
-      </div>
-    )
-  );
-}
-
-function getBarreNavigationSuivPrec(
-  datasFiches: IDataFicheProps[],
-  indexCourant: number,
-  nbLignesTotales: number,
-  setIndexFiche: (idx: number) => void
-) {
-  return datasFiches.length > UN ? (
-    <div className="barreNavigationSuivPrec">
-      <BarreNavigationSuivPrec
-        index={indexCourant}
-        max={nbLignesTotales}
-        setIndex={setIndexFiche}
-      />
-    </div>
-  ) : undefined;
-}
 
 /**
  * Passage à la plage suivante si le prochain index local est 0 et que ce n'est pas le 0 du tout début
@@ -450,12 +458,4 @@ function passageALaPlagePrecedente(
  */
 function getIndexLocal(index: number, nbLignesParAppel: number) {
   return index % nbLignesParAppel;
-}
-
-function getElementNumeroLigne(bandeau: IBandeauFiche, categorie: TypeFiche) {
-  return FicheUtil.isActe(categorie) ? (
-    <BandeauFicheActeNumero dataBandeau={bandeau} />
-  ) : (
-    <BandeauFicheRcRcaPacsNumero dataBandeau={bandeau} />
-  );
 }

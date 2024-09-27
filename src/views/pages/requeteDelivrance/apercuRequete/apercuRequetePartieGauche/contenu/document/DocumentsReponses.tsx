@@ -6,13 +6,11 @@ import {
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import Image from "@mui/icons-material/Image";
 import PictureAsPdf from "@mui/icons-material/PictureAsPdf";
-import {
-  Avatar,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText
-} from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemText from "@mui/material/ListItemText";
 import { getIdDocumentReponseAAfficher } from "@util/RequetesUtils";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";

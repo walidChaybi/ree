@@ -1,5 +1,5 @@
-import { ListItemText } from "@mui/material";
 import { Action, IAction } from "@model/requete/IActions";
+import ListItemText from "@mui/material/ListItemText";
 import React from "react";
 import "./scss/Suivis.scss";
 

@@ -3,7 +3,7 @@
 /* Lien GitHub du composant https://github.com/azmenak/material-ui-nested-menu-item */
 /********************************************************************************** */
 
-import { ArrowLeft } from "@mui/icons-material";
+import ArrowLeft from "@mui/icons-material/ArrowLeft";
 import ArrowRight from "@mui/icons-material/ArrowRight";
 import Menu from "@mui/material/Menu";
 import MenuItem, { MenuItemProps } from "@mui/material/MenuItem";

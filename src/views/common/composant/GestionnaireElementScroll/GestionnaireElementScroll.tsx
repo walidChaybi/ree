@@ -1,4 +1,6 @@
-import { Step, StepButton, Stepper } from "@mui/material";
+import Step from "@mui/material/Step";
+import StepButton from "@mui/material/StepButton";
+import Stepper from "@mui/material/Stepper";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./scss/GestionnaireElementScroll.scss";
 

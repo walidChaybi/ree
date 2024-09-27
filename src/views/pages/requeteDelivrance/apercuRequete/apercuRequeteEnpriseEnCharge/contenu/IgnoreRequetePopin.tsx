@@ -1,23 +1,21 @@
 import { IgnorerParams, useIgnorerApi } from "@hook/requete/IgnorerHook";
 import { IRequete } from "@model/requete/IRequete";
-import {
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle
-} from "@mui/material";
-import { getUrlPrecedente } from "@util/route/UrlUtil";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
+import { getUrlPrecedente } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import {
   ALERTE_AUTRE,
   ALERTE_OBLIGATOIRE,
   COMPLEMENT_DESCRIPTION_LIMITE_TAILLE
 } from "@widget/formulaire/FormulaireMessages";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import FormBoutons, { FormBoutonsProps } from "@widget/popin/FormBoutons";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";

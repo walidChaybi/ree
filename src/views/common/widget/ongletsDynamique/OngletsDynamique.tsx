@@ -1,7 +1,8 @@
-import { DocumentEC } from "@model/requete/enum/DocumentEC";
 import { IActionOption } from "@model/requete/IActionOption";
-import { Add, ErrorOutline } from "@mui/icons-material";
+import { DocumentEC } from "@model/requete/enum/DocumentEC";
+import Add from "@mui/icons-material/Add";
 import Clear from "@mui/icons-material/Clear";
+import ErrorOutline from "@mui/icons-material/ErrorOutline";
 import { getLibelle } from "@util/Utils";
 import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
 import React, { useState } from "react";

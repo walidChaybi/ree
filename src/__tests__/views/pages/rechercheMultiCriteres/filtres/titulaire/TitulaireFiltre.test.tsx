@@ -5,8 +5,14 @@ import TitulaireFiltre, {
   TitulaireDefaultValues,
   TitulaireFiltreProps
 } from "@pages/rechercheMultiCriteres/filtres/titulaire/TitulaireFiltre";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { Field, Form, Formik } from "formik";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
+import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { describe, expect, test } from "vitest";
 
@@ -69,24 +75,22 @@ const HookConsummerTitulaireForm: React.FC<{
   };
 
   return (
-    <>
-      <Formik
-        initialValues={{
-          [TITULAIRE]: { ...TitulaireDefaultValues }
-        }}
-        onSubmit={handleClickButton}
-      >
-        <Form>
-          <TitulaireFiltre {...titulaireFiltreProps} />
-          <button type="submit">Submit</button>
-          <Field as="textarea" value={result} data-testid="result" />
-        </Form>
-      </Formik>
-    </>
+    <Formik
+      initialValues={{
+        [TITULAIRE]: { ...TitulaireDefaultValues }
+      }}
+      onSubmit={handleClickButton}
+    >
+      <Form>
+        <TitulaireFiltre {...titulaireFiltreProps} />
+        <button type="submit">Submit</button>
+        <div data-testid="result">{result || "error"}</div>
+      </Form>
+    </Formik>
   );
 };
 
-test("DOIT rendre le composant formulaire Titulaire QUAND on l'affiche.", () => {
+test("DOIT rendre le composant formulaire Titulaire QUAND on l'affiche.", async () => {
   render(<HookConsummerTitulaireForm />);
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
   const inputPrenom = screen.getByLabelText("Prénom") as HTMLInputElement;
@@ -111,15 +115,11 @@ test("DOIT rendre le composant formulaire Titulaire QUAND on l'affiche.", () => 
   });
 
   const submit = screen.getByText(/Submit/i);
-  fireEvent.click(submit);
+  await act(() => fireEvent.click(submit));
 
-  const result = screen.getByTestId("result");
-
-  waitFor(() => {
-    expect(result.innerHTML).toBe(
-      '{"titulaire":{"nom":"mockNom","prenom":"mockPrenom","dateNaissance":{"jour":"","mois":"","annee":""},"paysNaissance":"mockPays"}}'
-    );
-  });
+  expect(screen.getByTestId("result").innerHTML).toBe(
+    '{"titulaire":{"nom":"mockNom","prenom":"mockPrenom","dateNaissance":{"jour":"","mois":"","annee":""},"paysNaissance":"mockPays"}}'
+  );
 });
 
 test("DOIT inverser nom et prenom QUAND on clique sur le bouton switch.", () => {

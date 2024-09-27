@@ -1,5 +1,5 @@
 import { useAjoutPieceJustificativeToRequete } from "@hook/requete/piecesJointes/AjoutPieceJustificativeToRequeteApiHook";
-import { Dialog } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
 import { PieceJointe } from "@util/FileUtils";
 import { Options } from "@util/Type";
 import { Formulaire } from "@widget/formulaire/Formulaire";

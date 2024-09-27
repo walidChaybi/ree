@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import "./PageChargeur.scss";
 
 const PageChargeur: React.FC = () => (

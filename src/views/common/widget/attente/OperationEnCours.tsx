@@ -1,4 +1,5 @@
-import { Backdrop, CircularProgress } from "@mui/material";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import gestionnaireTimer from "@util/timer/GestionnaireTimer";
 import React, { useEffect } from "react";
 import "./scss/OperationEnCours.scss";
@@ -16,7 +17,7 @@ const BACKDROP_TIMER_NAME = "BackdropTimer";
 export const OperationEnCours: React.FC<OperationEnCoursProps> = props => {
   useEffect(() => {
     if (props.visible && props.onTimeoutEnd) {
-      gestionnaireTimer.declancheTimer(
+      gestionnaireTimer.declencherTimer(
         BACKDROP_TIMER_NAME,
         props.timeoutInMiliSec
           ? props.timeoutInMiliSec

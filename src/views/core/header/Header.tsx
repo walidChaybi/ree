@@ -1,6 +1,6 @@
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
-import { Tooltip } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
 import { URL_CONTEXT_APP } from "@router/ReceUrls";
 import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";

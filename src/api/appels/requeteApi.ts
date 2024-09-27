@@ -1,5 +1,4 @@
 import { ISaisieRequeteAEnvoyer } from "@hook/requete/CreationRequeteCreationApiHook";
-import { ICreationRequeteMiseAJourApiHookParams } from "@hook/requete/miseajour/CreationRequeteMiseAJourApiHook";
 import { IFiltreServiceRequeteCreationDto } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { IFiltreServiceRequeteDelivranceDto } from "@model/form/delivrance/IFiltreServiceRequeteDelivrance";
 import { CLES } from "@model/parametres/clesParametres";
@@ -877,18 +876,6 @@ export const postValiderProjetActe = (
   return api.fetch({
     method: HttpMethod.POST,
     uri: `${URL_CREATION}${idRequete}${URL_SUIVI_DOSSIER}/${idSuiviDossier}/valider-projet`
-  });
-};
-
-export const postRequeteMiseAJour = (
-  params: ICreationRequeteMiseAJourApiHookParams
-): Promise<any> => {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_REQUETES}${URL_REQUETE_MISE_A_JOUR}`,
-    data: {
-      ...params
-    }
   });
 };
 
