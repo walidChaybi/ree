@@ -136,7 +136,7 @@ export const FichePage: React.FC<FichePageProps> = ({
       Droit.METTRE_A_JOUR_ACTE
     );
     const droitAnalyseMarginale = officierHabiliterPourLeDroit(
-      Droit.METTRE_A_JOUR_ACTE
+      Droit.MODIFIER_ANALYSE_MARGINALE
     );
 
     return {
