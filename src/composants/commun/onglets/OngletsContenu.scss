@@ -1,0 +1,10 @@
+
+.contenu-onglet {
+    display: none;
+    padding: 1rem 0;
+    gap: .5rem;
+
+    &.volet-actif {
+        display: grid;
+    }
+}

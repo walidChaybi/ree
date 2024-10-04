@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ConteneurFormulaire from "../../../commun/conteneurs/ConteneurFormulaire";
+import ConteneurFormulaire from "../../../commun/conteneurs/formulaire/ConteneurFormulaire";
 import BlocEvenement from "./BlocEvenement";
 import BlocPiecesJustificatives from "./BlocPiecesJustificatives";
 import BlocRequete from "./BlocRequete";

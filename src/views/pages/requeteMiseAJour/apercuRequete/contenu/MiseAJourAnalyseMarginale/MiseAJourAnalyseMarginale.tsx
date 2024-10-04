@@ -14,9 +14,9 @@ import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { IMajAnalyseMarginaleForm } from "@model/form/miseAJour/IMiseAJourMentionsForm";
 import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import {
+  UN,
   getPremiereOuSecondeValeur,
-  mapPrenomsVersPrenomsOrdonnes,
-  UN
+  mapPrenomsVersPrenomsOrdonnes
 } from "@util/Utils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import React, { Dispatch, SetStateAction, useContext } from "react";
@@ -149,8 +149,6 @@ export const getValeursParDefaut = (
     }
   };
 };
-
-
 
 const getMotif = (
   listeMentions: IMajMention[],

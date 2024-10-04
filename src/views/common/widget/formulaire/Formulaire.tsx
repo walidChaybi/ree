@@ -3,7 +3,7 @@ import React from "react";
 import { Fieldset } from "../fieldset/Fieldset";
 import "./scss/Formulaire.scss";
 
-interface IFormulaireProps<T extends any> {
+interface IFormulaireProps<T> {
   titre?: string;
   formDefaultValues: any;
   formValidationSchema: any;

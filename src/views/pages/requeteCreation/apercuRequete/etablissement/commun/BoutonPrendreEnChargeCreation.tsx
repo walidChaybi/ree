@@ -10,7 +10,7 @@ import "@pages/requeteDelivrance/apercuRequete/apercuRequete/contenu/scss/Bouton
 import { getUrlPrecedente } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -55,13 +55,13 @@ export const BoutonPrendreEnChargeCreation: React.FC<
         onTimeoutEnd={() => setOperationEnCours(false)}
         onClick={() => setOperationEnCours(false)}
       />
-      <Bouton
+      <BoutonDoubleSubmit
         onClick={setActionEtUpdateStatut}
         className="BoutonPrendreEnChargeCreation"
         disabled={props.disabled}
       >
         {getLibelle("Prendre en charge")}
-      </Bouton>
+      </BoutonDoubleSubmit>
     </>
   );
 };

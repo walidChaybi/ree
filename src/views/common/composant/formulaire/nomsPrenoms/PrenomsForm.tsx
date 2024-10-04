@@ -30,10 +30,18 @@ export interface IPrenomsFormProps {
   ) => void;
 }
 
-export function genererDefaultValuesPrenoms() {
+export enum TypeDeValeursParDefaut {
+  UNDEFINED = "UNDEFINED",
+  VIDE = "VIDE"
+}
+
+export function genererDefaultValuesPrenoms(typeDeValeurParDefaut?: string) {
   const prenomsObj: any = {};
   for (let i = 1; i <= MAX_PRENOMS; i++) {
-    prenomsObj[`prenom${i}`] = "";
+    prenomsObj[`prenom${i}`] =
+      typeDeValeurParDefaut === TypeDeValeursParDefaut.UNDEFINED
+        ? undefined
+        : "";
   }
   return prenomsObj;
 }
@@ -138,8 +146,8 @@ const PrenomsForm: React.FC<PrenomFormProps> = props => {
             }
             maxLength={NB_CARACT_MAX_SAISIE}
             name={construireNomChamp(index)}
-            onChange={e => props.formik.handleChange(e)}
-            onBlur={e =>
+            onChange={(e: any) => props.formik.handleChange(e)}
+            onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
               props.onPrenomBlur &&
               props.onPrenomBlur(Number(`${index + 1}`), e)
             }

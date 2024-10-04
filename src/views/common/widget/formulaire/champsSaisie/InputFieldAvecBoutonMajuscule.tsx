@@ -1,7 +1,7 @@
 import { faTextHeight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { enMajuscule } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import {
   InputField,
   InputFieldProps
@@ -27,13 +27,13 @@ const BoutonChampEnMajuscule: React.FC<BoutonChampEnMajusculeProps> = props => {
   };
 
   return (
-    <Bouton
+    <BoutonDoubleSubmit
       data-testid="BoutonChampEnMajuscule"
       onClick={champEnMajuscule}
       aria-label="Bouton passer le champ en majuscule"
     >
       <FontAwesomeIcon icon={faTextHeight} />
-    </Bouton>
+    </BoutonDoubleSubmit>
   );
 };
 

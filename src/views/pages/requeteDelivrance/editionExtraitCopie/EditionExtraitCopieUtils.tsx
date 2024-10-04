@@ -34,7 +34,7 @@ import {
 } from "@util/Utils";
 import { gestionnaireMentionsRetireesAuto } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { OngletProps } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React from "react";
 import { DocumentEC } from "../../../../model/requete/enum/DocumentEC";
@@ -395,7 +395,7 @@ export function getBoutonsEdition(
           resultatInformationsActeApiHook?.acte,
           documentEdite
         ) && (
-          <Bouton
+          <BoutonDoubleSubmit
             title={getLibelle("Modifier la copie à délivrer")}
             onClick={() => {
               setOperationEnCours(true);
@@ -409,7 +409,7 @@ export function getBoutonsEdition(
             }}
           >
             Modifier la copie à délivrer
-          </Bouton>
+          </BoutonDoubleSubmit>
         )}
         <BoutonsTerminerOuRelecture
           requete={requete}

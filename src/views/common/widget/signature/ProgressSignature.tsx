@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useCallback, useEffect } from "react";
 import { DocumentsByRequete } from "./hook/SignatureDocumentHookUtilDelivrance";
 import "./scss/PopinSignatureDelivrance.scss";
@@ -56,7 +56,7 @@ export const ProgressSignature: React.FC<ProgressSignatureProps> = ({
           )}%`}</Typography>
         </Box>
       </Box>
-      <Bouton
+      <BoutonDoubleSubmit
         onClick={() => {
           onClose(false, error !== true);
         }}
@@ -67,7 +67,7 @@ export const ProgressSignature: React.FC<ProgressSignatureProps> = ({
         className={"CloseButtonSignature"}
       >
         {getLibelle("Fermer")}
-      </Bouton>
+      </BoutonDoubleSubmit>
     </>
   );
 };

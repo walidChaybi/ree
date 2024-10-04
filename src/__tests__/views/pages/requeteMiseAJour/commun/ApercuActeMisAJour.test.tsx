@@ -1,4 +1,4 @@
-import { ApercuActeMisAJour } from "@pages/requeteMiseAJour/commun/ApercuActeMisAjour";
+import { ApercuActeMisAJour } from "@pages/requeteMiseAJour/apercuRequete/commun/ApercuActeMisAjour";
 import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { expect, test } from "vitest";

@@ -17,7 +17,7 @@ import { Option } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -147,12 +147,12 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
               <AssignmentInd onClick={e => handleClickBoutonReponse(e)} />
             </span>
           ) : (
-            <Bouton
+            <BoutonDoubleSubmit
               disabled={props.disabled}
               onClick={e => handleClickBoutonReponse(e)}
             >
               {getLibelle("Transférer")}
-            </Bouton>
+            </BoutonDoubleSubmit>
           )}
 
           <Menu

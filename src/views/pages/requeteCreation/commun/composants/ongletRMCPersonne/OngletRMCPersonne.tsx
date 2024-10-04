@@ -12,7 +12,7 @@ import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/
 import { TableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonne";
 import { mapDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import {
   TMouseEventSurHTMLButtonElement,
@@ -216,9 +216,9 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
         }
         enChargement={props.tableauActesInscriptionsSelectionnesEnChargement}
       />
-      <Bouton disabled={!isDirty} onClick={sauvegardePersonneEtActeSelectionne}>
+      <BoutonDoubleSubmit disabled={!isDirty} onClick={sauvegardePersonneEtActeSelectionne}>
         {getLibelle("Sauvegarder")}
-      </Bouton>
+      </BoutonDoubleSubmit>
     </>
   );
 };

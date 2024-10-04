@@ -1,7 +1,7 @@
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { getLibelle } from "@util/Utils";
 import { goBack } from "@util/route/UrlUtil";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
@@ -38,7 +38,7 @@ const ReponseReqInfoBoutons: React.FC<BoutonsReponseReqInfoProps> = props => {
     <>
       <div className="Boutons">
         {props.retourVisible && (
-          <Bouton
+          <BoutonDoubleSubmit
             type="button"
             aria-label={libelleRetour}
             id="boutonAnnuler"
@@ -47,10 +47,10 @@ const ReponseReqInfoBoutons: React.FC<BoutonsReponseReqInfoProps> = props => {
             }}
           >
             {libelleRetour}
-          </Bouton>
+          </BoutonDoubleSubmit>
         )}
         {!props.affichageBoutonPrendreEnCharge && (
-          <Bouton
+          <BoutonDoubleSubmit
             disabled={props.formulaireDisabled || !props.formik.isValid}
             aria-label={getLibelle("Envoyer la réponse")}
             type="button"
@@ -60,17 +60,17 @@ const ReponseReqInfoBoutons: React.FC<BoutonsReponseReqInfoProps> = props => {
             }}
           >
             {getLibelle("Envoyer la réponse")}
-          </Bouton>
+          </BoutonDoubleSubmit>
         )}
         {props.affichageBoutonPrendreEnCharge && (
-          <Bouton
+          <BoutonDoubleSubmit
             type="button"
             id="boutonPrendreEnCharge"
             aria-label={getLibelle("Prendre en charge")}
             onClick={props.onclickPrendreEnCharge}
           >
             {getLibelle("Prendre en charge")}
-          </Bouton>
+          </BoutonDoubleSubmit>
         )}
       </div>
     </>

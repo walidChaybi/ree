@@ -17,7 +17,7 @@ import {
   mapPrenomsVersTableauString,
   shallowEgal
 } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import {
   FormikComponentProps,
   getValeurFormik,
@@ -158,7 +158,7 @@ const MiseAJourAnalyseMarginaleForm: React.FC<
       <MiseAJourAnalyseMarginaleNomForm />
       <MiseAJourAnalyseMarginaleNomSecableForm />
       <div className="boutonWrapper">
-        <Bouton
+        <BoutonDoubleSubmit
           disabled={!formik.dirty}
           onClick={() => {
             setAnalyseMarginale(undefined);
@@ -166,7 +166,7 @@ const MiseAJourAnalyseMarginaleForm: React.FC<
           }}
         >
           {getLibelle("ANNULER LA SAISIE EN COURS")}
-        </Bouton>
+        </BoutonDoubleSubmit>
         {analyseMarginaleEnregistree && (
           <span
             className="titre"
@@ -174,11 +174,11 @@ const MiseAJourAnalyseMarginaleForm: React.FC<
               "Abandonne toutes les modifications de l'analyse marginale et recharge l’analyse marginale à son état initial avant mise à jour"
             }
           >
-            <Bouton
+            <BoutonDoubleSubmit
               onClick={onClickAbandonnerDerniereAnalyseMarginaleNonValide}
             >
               {getLibelle("ABANDONNER LA MODIFICATION")}
-            </Bouton>
+            </BoutonDoubleSubmit>
           </span>
         )}
       </div>

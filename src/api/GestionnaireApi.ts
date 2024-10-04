@@ -8,6 +8,7 @@ import {
   TReponseApiSucces
 } from "@model/api/Api";
 import { CSRF_HEADER_NAME, getCsrfCookieValue } from "@util/CsrfUtil";
+import { Generateur } from "@util/generateur/Generateur";
 import messageManager from "@util/messageManager";
 import * as superagent from "superagent";
 
@@ -130,6 +131,9 @@ export class GestionnaireApi {
       Object.entries(headers).forEach(([header, value]) => {
         httpRequest.set(header, value);
       });
+      httpRequest = this.desactiverCacheNavigateur(httpRequest);
+      httpRequest.set("Content-Type", "application/json");
+      httpRequest.set(ID_CORRELATION_HEADER_NAME, Generateur.genereCleUnique());
     }
   }
 
@@ -197,4 +201,13 @@ export class GestionnaireApi {
         return superagent.post(this.getUri() + uri);
     }
   }
+
+  private desactiverCacheNavigateur(res: superagent.SuperAgentRequest) {
+    res = res.set("Cache-Control", "no-cache, no-store, max-age=0");
+    res = res.set("Expires", "Thu, 1 Jan 1970 00:00:00 GMT");
+    res = res.set("Pragma", "no-cache");
+    return res;
+  }
 }
+
+

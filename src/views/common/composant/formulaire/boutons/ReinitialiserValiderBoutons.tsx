@@ -1,7 +1,7 @@
-import { Droit } from "@model/agent/enum/Droit";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErreur";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
@@ -24,15 +24,15 @@ export const ReinitialiserValiderBoutons: React.FC<
     <>
       {props.afficherBouton && (
         <div className="ReinitialiserValiderBoutons">
-          <Bouton
+          <BoutonDoubleSubmit
             type="reset"
             onClick={props.onClickReInitialiser}
             disabled={props.reInitialiserDisabled}
             aria-label="Réinitialiser"
           >
             {getLibelle("Réinitialiser")}
-          </Bouton>
-          <Bouton
+          </BoutonDoubleSubmit>
+          <BoutonDoubleSubmit
             type="button"
             onClick={props.onClickValider}
             disabled={
@@ -42,7 +42,7 @@ export const ReinitialiserValiderBoutons: React.FC<
             aria-label="Valider"
           >
             {getLibelle("Valider")}
-          </Bouton>
+          </BoutonDoubleSubmit>
         </div>
       )}
     </>

@@ -1,4 +1,4 @@
-import ConteneurSousFormulaire from "../../../commun/conteneurs/ConteneurSousFormulaire";
+import ConteneurSousFormulaire from "../../../commun/conteneurs/sousFormulaire/ConteneurSousFormulaire";
 
 const BlocPiecesJustificatives = () => {
   return (

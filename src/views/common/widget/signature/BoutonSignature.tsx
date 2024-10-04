@@ -21,7 +21,7 @@ import { checkDirty, getLibelle, getValeurOuVide } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import messageManager from "@util/messageManager";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { PopinSignatureDelivrance } from "./PopinSignatureDelivrance";
 import {
@@ -218,7 +218,7 @@ export const BoutonSignature: React.FC<
 
   return (
     <>
-      <Bouton
+      <BoutonDoubleSubmit
         disabled={
           !signaturePossible(
             props.uniqueSignature,
@@ -236,7 +236,7 @@ export const BoutonSignature: React.FC<
         }}
       >
         {props.libelle}
-      </Bouton>
+      </BoutonDoubleSubmit>
 
       <PopinSignatureDelivrance
         documentsByRequete={documentsByRequeteToSign}

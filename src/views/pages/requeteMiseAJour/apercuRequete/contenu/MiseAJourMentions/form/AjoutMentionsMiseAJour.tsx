@@ -8,7 +8,7 @@ import {
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import {
   FormikComponentProps,
   withNamespace
@@ -88,12 +88,12 @@ const AjoutMentionsMiseAJour: React.FC<
         nom={LISTES_TYPES_MENTION}
       />
       <div className="boutons-mention">
-        <Bouton disabled={!formik.dirty || !formik.isValid} type="submit">
+        <BoutonDoubleSubmit disabled={!formik.dirty || !formik.isValid} type="submit">
           {boutonAJouterModifier}
-        </Bouton>
-        <Bouton disabled={!formik.dirty} onClick={annulerEnAjoutOuModification}>
+        </BoutonDoubleSubmit>
+        <BoutonDoubleSubmit disabled={!formik.dirty} onClick={annulerEnAjoutOuModification}>
           {getLibelle("Annuler")}
-        </Bouton>
+        </BoutonDoubleSubmit>
       </div>
     </div>
   );

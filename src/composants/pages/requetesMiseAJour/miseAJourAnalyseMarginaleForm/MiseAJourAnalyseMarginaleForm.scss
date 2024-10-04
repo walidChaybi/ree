@@ -1,0 +1,22 @@
+
+.contneur-bouton {
+    display: flex;
+    height: auto;
+    margin: 2vw;
+}
+
+
+.bouton-prenom {
+    width:12rem;
+    margin:0 0.5rem;
+}
+
+
+.input-analyse-marginale { 
+    min-width: 90%;
+    padding: 0.15rem;
+}
+
+.sans-padding-top {
+    padding-top:0 !important // A retirer dans le sprint 75 (En attente tailwind ou meilleur sélecteur css)
+}

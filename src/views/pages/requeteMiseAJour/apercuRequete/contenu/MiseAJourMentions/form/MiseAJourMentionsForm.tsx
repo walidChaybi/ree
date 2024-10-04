@@ -8,7 +8,7 @@ import {
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { IMiseAJourMentionsForm } from "@model/form/miseAJour/IMiseAJourMentionsForm";
 import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
-import { triListeObjetsSurPropriete, UN } from "@util/Utils";
+import { UN, triListeObjetsSurPropriete } from "@util/Utils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { useContext } from "react";
 import * as Yup from "yup";

@@ -4,7 +4,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Option } from "@util/Type";
 import { estNonRenseigne } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { SelectRece } from "@widget/formulaire/champsSaisie/SelectField";
 import React, { useState } from "react";
 import { getLibelle } from "./../../../util/Utils";
@@ -48,15 +48,15 @@ export const ListChoixPopin: React.FunctionComponent<
           />
         </DialogContent>
         <DialogActions>
-          <Bouton type="button" onClick={props.onCancel}>
+          <BoutonDoubleSubmit type="button" onClick={props.onCancel}>
             {getLibelle("Annuler")}
-          </Bouton>
-          <Bouton
+          </BoutonDoubleSubmit>
+          <BoutonDoubleSubmit
             onClick={() => props.onValidation(optionSelectionnee)}
             disabled={estNonRenseigne(optionSelectionnee)}
           >
             {getLibelle("Valider")}
-          </Bouton>
+          </BoutonDoubleSubmit>
         </DialogActions>
       </Dialog>
     </>

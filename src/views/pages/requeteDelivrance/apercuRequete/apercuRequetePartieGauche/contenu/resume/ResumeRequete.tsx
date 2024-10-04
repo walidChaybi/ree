@@ -2,9 +2,9 @@ import { ListePiecesJointes } from "@composant/piecesJointes/ListePiecesJointes"
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { mAppartient } from "@model/agent/IOfficier";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import {
   IPieceJointe,
   TypePieceJointe
@@ -15,9 +15,9 @@ import {
   URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID
 } from "@router/ReceUrls";
 import { FenetreExterne } from "@util/FenetreExterne";
-import { getUrlWithParam } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { getUrlWithParam } from "@util/route/UrlUtil";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DetailRequetePage } from "../../../../detailRequete/DetailRequetePage";
@@ -93,7 +93,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
             />
 
             {afficherBoutonModifierRequete && (
-              <Bouton
+              <BoutonDoubleSubmit
                 type="button"
                 onClick={onModificationRequete}
                 aria-label="Modifier"
@@ -103,7 +103,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
                   className="iconModifierRequete"
                 />
                 {getLibelle("Modifier la requête")}
-              </Bouton>
+              </BoutonDoubleSubmit>
             )}
           </div>
         )}

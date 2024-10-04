@@ -8,7 +8,7 @@ import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
 import { Option } from "@util/Type";
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -52,9 +52,9 @@ export const BoutonTransmettreAValideur: React.FC<
 
   return (
     <>
-      <Bouton onClick={() => setOpen(true)}>
+      <BoutonDoubleSubmit onClick={() => setOpen(true)}>
         {getLibelle("Transmettre à valideur")}
-      </Bouton>{" "}
+      </BoutonDoubleSubmit>{" "}
       <TransfertPopin
         onValidate={(optionUtilisateur?: Option, texte?: string) =>
           onValidate(optionUtilisateur, texte)

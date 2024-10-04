@@ -9,7 +9,7 @@ type BoutonProps = React.DetailedHTMLProps<
 const TIME_OUT_MS = 1000;
 const ARIA_LABEL = "aria-label";
 
-export const Bouton: React.FC<BoutonProps> = props => {
+export const BoutonDoubleSubmit: React.FC<BoutonProps> = props => {
   const boutonRef = useRef<HTMLButtonElement>(null);
 
   function onClickEmpecheDoubleSubmit(event: any) {

@@ -1,10 +1,9 @@
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentEC } from "@model/requete/enum/DocumentEC";
-import Add from "@mui/icons-material/Add";
+import { Add, ErrorOutline } from "@mui/icons-material";
 import Clear from "@mui/icons-material/Clear";
-import ErrorOutline from "@mui/icons-material/ErrorOutline";
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useState } from "react";
 import { MenuAction } from "../menu/MenuAction";
 import "./scss/OngletsDynamique.scss";
@@ -65,7 +64,7 @@ export const OngletsDynamique: React.FC<OngletsDynamiqueProps> = props => {
           )}
 
           {props.afficherMoins && (
-            <Bouton
+            <BoutonDoubleSubmit
               onClick={props.actionMoins}
               title={getLibelle("Suppression du document complémentaire")}
               className={`retirerDocument ${
@@ -76,7 +75,7 @@ export const OngletsDynamique: React.FC<OngletsDynamiqueProps> = props => {
               }`}
             >
               <Clear />
-            </Bouton>
+            </BoutonDoubleSubmit>
           )}
         </>
       )}

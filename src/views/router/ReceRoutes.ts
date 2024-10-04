@@ -29,6 +29,7 @@ import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { IRoute } from "@util/route/IRoute";
+import { PageApercuRequeteMiseAJourAnalyseMarginale } from "../../pages/requetesMiseAJour/analyseMarginale/PageApercuRequeteMiseAJourAnalyseMarginale";
 import {
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
   URL_MES_REQUETES_CREATION,
@@ -87,6 +88,7 @@ import {
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC_ID,
   URL_REQUETES_INFORMATION_SERVICE,
   URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
+  URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID,
   URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID,
   URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID,
   URL_SAISIR_RDCSC_RMC,
@@ -646,6 +648,15 @@ export const routesRece: IRoute[] = [
     url: URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID,
     component: ApercuRequeteMiseAJourPage,
     auMoinsUnDesDroits: [Droit.METTRE_A_JOUR_ACTE],
+    libelle: getLibelle(LIBELLE_APERCU_MISE_A_JOUR_)
+  },
+  {
+    url: URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID,
+    component: PageApercuRequeteMiseAJourAnalyseMarginale,
+    auMoinsUnDesDroits: [
+      Droit.METTRE_A_JOUR_ACTE,
+      Droit.MODIFIER_ANALYSE_MARGINALE
+    ],
     libelle: getLibelle(LIBELLE_APERCU_MISE_A_JOUR_)
   }
 ];

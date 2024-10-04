@@ -3,7 +3,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React from "react";
 import {
   IDataBulletinIdentificationResultat,
@@ -69,7 +69,7 @@ const ModalBulletinIdentification: React.FC<
         </div>
       </DialogContent>
       <DialogActions>
-        <Bouton onClick={props.onClose}>{getLibelle("Fermer")}</Bouton>
+        <BoutonDoubleSubmit onClick={props.onClose}>{getLibelle("Fermer")}</BoutonDoubleSubmit>
       </DialogActions>
     </Dialog>
   );

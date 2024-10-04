@@ -1,6 +1,6 @@
 import { RECEContext } from "@core/contexts/RECEContext";
 import { checkDirty } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { ReactNode, useContext, useEffect, useState } from "react";
 import { OperationEnCours } from "./OperationEnCours";
 
@@ -47,7 +47,7 @@ export const BoutonOperationEnCours: React.FC<
         onClick={() => setOpEnCours(false)}
         timeoutInMiliSec={props.timeoutInMiliSec}
       ></OperationEnCours>
-      <Bouton
+      <BoutonDoubleSubmit
         title={props.title}
         id={props.id}
         className={props.class}
@@ -56,7 +56,7 @@ export const BoutonOperationEnCours: React.FC<
         onClick={handleClick}
       >
         {props.children}
-      </Bouton>
+      </BoutonDoubleSubmit>
     </>
   );
 };

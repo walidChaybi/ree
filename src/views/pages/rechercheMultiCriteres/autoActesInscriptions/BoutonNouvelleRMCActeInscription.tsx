@@ -2,7 +2,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React from "react";
 import { PopinNouvelleRMCActeInscription } from "./PopinNouvelleRMCActeInscription";
 import "./scss/BoutonNouvelleRMCActeInscription.scss";
@@ -23,10 +23,10 @@ export const BoutonNouvelleRMCActeInscription: React.FC<
 
   return (
     <>
-      <Bouton onClick={handleClickNouvelleRMC}>
+      <BoutonDoubleSubmit onClick={handleClickNouvelleRMC}>
         <FontAwesomeIcon className="loupeChampsRecherche" icon={faSearch} />
         {getLibelle("Nouvelle recherche multi-critères")}
-      </Bouton>
+      </BoutonDoubleSubmit>
 
       <PopinNouvelleRMCActeInscription
         open={props.popinAffichee}

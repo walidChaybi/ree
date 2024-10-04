@@ -1,5 +1,5 @@
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
@@ -23,12 +23,12 @@ const RMCBoutons: React.FC<RMCBoutonsProps> = props => {
     <>
       <div className="BoutonsRechercheMulti">
         <div className="rechercher">
-          <Bouton
+          <BoutonDoubleSubmit
             disabled={!props.formik.isValid || !props.formik.dirty}
             type="submit"
           >
             {getLibelle("Rechercher")}
-          </Bouton>
+          </BoutonDoubleSubmit>
         </div>
         <div className="rappelEtReinitialiser">
           {props.rappelCriteres && (

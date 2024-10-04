@@ -6,10 +6,10 @@ import {
   ICreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
+import { getLibelle } from "@util/Utils";
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
 import { goBack } from "@util/route/UrlUtil";
-import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./scss/BoutonARetraiterSaga.scss";
@@ -47,11 +47,11 @@ export const BoutonARetraiterSaga: React.FC<BoutonARetraiterSagaProps> = ({
   };
 
   return (
-    <Bouton
+    <BoutonDoubleSubmit
       className="boutonARetraiterSaga"
       onClick={handleClickARetraiterSaga}
     >
       {getLibelle("À retraiter dans SAGA")}
-    </Bouton>
+    </BoutonDoubleSubmit>
   );
 };

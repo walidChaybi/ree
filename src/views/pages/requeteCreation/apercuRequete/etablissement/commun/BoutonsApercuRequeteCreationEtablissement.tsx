@@ -1,6 +1,6 @@
 import { TUuidSuiviDossierParams } from "@model/params/TUuidSuiviDossierParams";
-import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
   PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,
@@ -9,12 +9,12 @@ import {
   URL_RECHERCHE_REQUETE,
   URL_REQUETES_CREATION_SERVICE
 } from "@router/ReceUrls";
+import { autorisePrendreEnChargeDepuisPageCreation } from "@util/RequetesUtils";
+import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { autorisePrendreEnChargeDepuisPageCreation } from "@util/RequetesUtils";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
-import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { BlocInformatif } from "../../../../../common/composant/BlocInformatif/BlocInformatif";
@@ -119,7 +119,7 @@ export const BoutonsApercuCreationEtablissement: React.FC<
 
   return (
     <div className="BoutonsApercu">
-      <Bouton onClick={onClickBoutonRetour}>{boutonRetour.libelle}</Bouton>
+      <BoutonDoubleSubmit onClick={onClickBoutonRetour}>{boutonRetour.libelle}</BoutonDoubleSubmit>
       {estPresentBoutonPriseEnCharge && (
         <BoutonPrendreEnChargeCreation
           requete={props.requete}
@@ -142,7 +142,7 @@ export const BoutonsApercuCreationEtablissement: React.FC<
         <>
           <div>
             {AvancementProjetActe.estProjetCree(props.avancement) && (
-              <Bouton
+              <BoutonDoubleSubmit
                 title={getLibelle("Valider le projet d'acte")}
                 onClick={() =>
                   props.validerProjetActe &&
@@ -152,19 +152,19 @@ export const BoutonsApercuCreationEtablissement: React.FC<
                 }
               >
                 {getLibelle("Valider le projet d'acte")}
-              </Bouton>
+              </BoutonDoubleSubmit>
             )}
             {gestionnaireFeatureFlag.estActif(
               FeatureFlag.FF_SIGNER_ACTE_ETABLISSEMENT
             ) &&
               AvancementProjetActe.estASigner(props.avancement) && (
-                <Bouton
+                <BoutonDoubleSubmit
                   disabled={estBoutonSignatureDesactive}
                   title={getLibelle("SIGNER")}
                   onClick={ouvrePopinSignature}
                 >
                   {getLibelle("SIGNER")}
-                </Bouton>
+                </BoutonDoubleSubmit>
               )}
           </div>
           {renderBlocInformatif()}

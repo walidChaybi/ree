@@ -3,7 +3,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useEffect, useState } from "react";
 
 export interface IBoutonPopin {
@@ -59,14 +59,14 @@ export const ConfirmationPopin: React.FC<ConfirmationPopinProps> = ({
         {boutons &&
           boutons.map((bouton: IBoutonPopin, idx: number) => {
             return (
-              <Bouton
+              <BoutonDoubleSubmit
                 onClick={bouton.action}
                 color={bouton.color ? bouton.color : "primary"}
                 key={`boutonPopin${idx}`}
                 aria-label={`confirmation ${bouton.label}`}
               >
                 {bouton.label}
-              </Bouton>
+              </BoutonDoubleSubmit>
             );
           })}
       </DialogActions>

@@ -35,7 +35,8 @@ export default defineConfig({
         "src/index.tsx",
         "src/ressources/*",
         "src/__tests__/*",
-        "src/mock/*"
+        "src/mock/*",
+        "src/api/configuration/*"
       ]
     }
   },

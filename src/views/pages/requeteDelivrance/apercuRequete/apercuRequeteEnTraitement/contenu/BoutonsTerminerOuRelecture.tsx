@@ -19,7 +19,7 @@ import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/edition
 import { Option } from "@util/Type";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getDefaultValuesCourrier } from "../../apercuCourrier/contenu/contenuForm/CourrierFonctions";
@@ -97,7 +97,7 @@ export const BoutonsTerminerOuRelecture: React.FC<
       StatutRequete.TRANSMISE_A_VALIDEUR ? (
         <>
           {!SousTypeDelivrance.estRDCSDouRDCSC(props.requete.sousType) && (
-            <Bouton
+            <BoutonDoubleSubmit
               onClick={() =>
                 onClickReprise(
                   props.requete.documentsReponses.some(
@@ -109,9 +109,9 @@ export const BoutonsTerminerOuRelecture: React.FC<
               }
             >
               {getLibelle("Reprendre le traitement")}
-            </Bouton>
+            </BoutonDoubleSubmit>
           )}
-          <Bouton
+          <BoutonDoubleSubmit
             onClick={() =>
               onClickValidate(
                 props.requete.documentsReponses.some(
@@ -123,10 +123,10 @@ export const BoutonsTerminerOuRelecture: React.FC<
             }
           >
             {getLibelle("Relecture approuvée")}
-          </Bouton>
-          <Bouton onClick={() => setOpen(true)}>
+          </BoutonDoubleSubmit>
+          <BoutonDoubleSubmit onClick={() => setOpen(true)}>
             {getLibelle("Relecture commentée")}
-          </Bouton>
+          </BoutonDoubleSubmit>
         </>
       ) : (
         <BoutonsTerminer requete={props.requete} acte={props.acte} />

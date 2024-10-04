@@ -3,7 +3,7 @@ import { ResumeRequetePartieHaute } from "@pages/requeteDelivrance/apercuRequete
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { UN } from "@util/Utils";
 import React from "react";
-import ConteneurAccordeon from "../../../commun/conteneurs/ConteneurAccordeon";
+import ConteneurAccordeon from "../../../commun/conteneurs/accordeon/ConteneurAccordeon";
 import ObservationsRequete from "../commun/requete/ObservationsRequete";
 import TypeRequete from "../commun/requete/TypeRequete";
 

@@ -44,6 +44,8 @@ export const PATH_MODIFIER_RCTC = "modifiercreation";
 export const PATH_APERCU_REQ_MISE_A_JOUR_SUITE_AVIS =
   "requetemiseajoursuiteavis";
 export const PATH_APERCU_REQ_MISE_A_JOUR_AUTRE = "requetemiseajourautre";
+export const PATH_APERCU_REQ_MISE_A_JOUR_ANALYSE_MARGINALE =
+  "requete-mise-a-jour-analyse-marginale";
 
 ///////////// URLs    //////////////
 export const GO_BACK = "goBack";
@@ -194,9 +196,11 @@ export const URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_P
 ////////////////////////////////////////////////////////
 export const URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS = `${URL_CONTEXT_APP}/${PATH_APERCU_REQ_MISE_A_JOUR_SUITE_AVIS}`;
 export const URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE = `${URL_CONTEXT_APP}/${PATH_APERCU_REQ_MISE_A_JOUR_AUTRE}`;
+export const URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE = `${URL_CONTEXT_APP}/${PATH_APERCU_REQ_MISE_A_JOUR_ANALYSE_MARGINALE}`;
 
 export const URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID = `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/${ID}/${ID_ACTE}`;
 export const URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID = `${URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE}/${ID}/${ID_ACTE}`;
+export const URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID = `${URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE}/${ID}/${ID_ACTE}`;
 
 function estUrlApercuRequete(url: string) {
   return url.indexOf(`/${PATH_APERCU_REQ_DEL}/`) > 0;

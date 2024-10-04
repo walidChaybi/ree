@@ -1,6 +1,6 @@
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { getLibelle, UN } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 
 interface IBoutonsRappelTitulaireProps {
   onClickRappelCriteresTitulaire: (
@@ -16,7 +16,7 @@ export const BoutonsRappelTitulaire: React.FC<
   return (
     <div className="containerRappelTitulaire">
       {props.titulaires?.map(titulaire => (
-        <Bouton
+        <BoutonDoubleSubmit
           key={titulaire.id}
           onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
             props.onClickRappelCriteresTitulaire(event, titulaire)
@@ -26,7 +26,7 @@ export const BoutonsRappelTitulaire: React.FC<
             titulaire.position,
             props.titulaires
           )}`}
-        </Bouton>
+        </BoutonDoubleSubmit>
       ))}
     </div>
   );

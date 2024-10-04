@@ -2,7 +2,7 @@ import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Badge from "@mui/material/Badge";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../accueil/scss/BoutonAccueil.scss";
@@ -53,9 +53,9 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
             aria-labelledby={title}
           />
         )}
-        <Bouton disabled={disabled} title={title}>
+        <BoutonDoubleSubmit disabled={disabled} title={title}>
           {libelle}
-        </Bouton>
+        </BoutonDoubleSubmit>
       </Badge>
     </div>
   );

@@ -7,7 +7,7 @@ import { Options } from "@util/Type";
 import { estRenseigne, getLibelle } from "@util/Utils";
 import { AccordionVisionneuse } from "@widget/accordion/AccordionVisionneuse";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { IconePlus } from "@widget/icones/IconePlus";
 import {
   ListeGlisserDeposer,
@@ -128,14 +128,14 @@ export const ListePiecesJustificativesEtablissement: React.FC<
   return (
     <span className="PiecesJustificativesContainer">
       <div className="IconePlusContainer">
-        <Bouton onClick={ouvrirModal} className="BoutonPlus">
+        <BoutonDoubleSubmit onClick={ouvrirModal} className="BoutonPlus">
           {getLibelle("Ajouter un fichier")}
           <IconePlus
             size={"2x"}
             title={getLibelle("Ajouter une pièce justificatives")}
             onClick={ouvrirModal}
           />
-        </Bouton>
+        </BoutonDoubleSubmit>
       </div>
 
       {props.requete?.documentsPj && documentPJTries ? (

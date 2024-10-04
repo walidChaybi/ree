@@ -96,6 +96,12 @@ export function compteNombreDePrenoms(prenoms?: Prenoms): number {
   );
 }
 
+export function compteNombreDeChampsPrenoms(prenoms: Prenoms): number {
+  return Object.values(prenoms).filter(
+    prenom => prenom === "" || Boolean(prenom)
+  ).length;
+}
+
 export const getValeurFormik = (
   formik: FormikProps<FormikValues>,
   champ: string

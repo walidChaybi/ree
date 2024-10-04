@@ -36,6 +36,7 @@ import {
   VOIE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { ParentFormDefaultValues } from "@composant/formulaire/ParentForm";
+
 import { genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import {
   ISaisieAdresse,
@@ -85,9 +86,13 @@ export function getPrenomsTableauStringVersPrenomsOrdonnes(
 }
 
 export function getPrenomsOrdonneVersPrenomsDefaultValues(
-  prenomsOrdonne?: IPrenomOrdonnes[]
+  prenomsOrdonne?: IPrenomOrdonnes[],
+  typeDeValeurParDefaut?: string
 ): Prenoms {
-  const prenomsDefaultValues: Prenoms = genererDefaultValuesPrenoms();
+  const prenomsDefaultValues: Prenoms = genererDefaultValuesPrenoms(
+    typeDeValeurParDefaut
+  );
+
   if (prenomsOrdonne) {
     for (const prenomOrdonne of prenomsOrdonne) {
       const prenom = prenomOrdonne.prenom;
@@ -100,6 +105,7 @@ export function getPrenomsOrdonneVersPrenomsDefaultValues(
 
   return prenomsDefaultValues;
 }
+
 
 export function saisiePJ(requete: IRequeteDelivrance) {
   return requete.piecesJustificatives.map(PJ => {

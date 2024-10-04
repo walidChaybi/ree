@@ -37,12 +37,12 @@ import {
   BlocageNavigationDetail,
   BlockerNavigation
 } from "@widget/blocker/BlockerNavigation";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { ApercuActeMisAJour } from "../commun/ApercuActeMisAjour";
+import { ApercuActeMisAJour } from "./commun/ApercuActeMisAjour";
 import MiseAJourAnalyseMarginale from "./contenu/MiseAJourAnalyseMarginale/MiseAJourAnalyseMarginale";
 import MiseAJourMentions from "./contenu/MiseAJourMentions/MiseAJourMentions";
 import "./scss/ApercuRequeteMiseAJourPage.scss";
@@ -99,8 +99,8 @@ interface IMiseAJourMentionsContext {
   analyseMarginaleEnregistree: IMajAnalyseMarginale | undefined;
 }
 
-export const MiseAJourMentionsContext = React.createContext<IMiseAJourMentionsContext>(
-  {
+export const MiseAJourMentionsContext =
+  React.createContext<IMiseAJourMentionsContext>({
     listeMentions: [],
     setListeMentions: ((mentions: IMajMention[]) => {}) as React.Dispatch<
       React.SetStateAction<IMajMention[]>
@@ -131,8 +131,7 @@ export const MiseAJourMentionsContext = React.createContext<IMiseAJourMentionsCo
       React.SetStateAction<IMajAnalyseMarginale | undefined>
     >,
     analyseMarginaleEnregistree: undefined
-  }
-);
+  });
 
 const ApercuRequeteMiseAJourPage: React.FC = () => {
   const { idActeParam, idRequeteParam } = useParams<TUuidActeParams>();
@@ -397,13 +396,13 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
                   handleChange={handleChange}
                 />
                 {!affichageApresSignature && (
-                  <Bouton
+                  <BoutonDoubleSubmit
                     className="boutonAbandonner"
                     title="Abandonner"
                     onClick={onClickBoutonAbandonner}
                   >
                     {getLibelle("Abandonner")}
-                  </Bouton>
+                  </BoutonDoubleSubmit>
                 )}
               </div>
               {!affichageApresSignature && (
@@ -418,22 +417,22 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
                     checkDirty={true}
                   />
                   <div className="ConteneurBoutons">
-                    <Bouton
+                    <BoutonDoubleSubmit
                       disabled={estVerrouilleActualiserEtVisualiser}
                       onClick={actualiserEtVisualiserCallback}
                     >
                       {getLibelle("Actualiser et visualiser")}
-                    </Bouton>
+                    </BoutonDoubleSubmit>
                     {estOfficierHabiliterPourTousLesDroits([
                       Droit.SIGNER_MENTION,
                       Droit.METTRE_A_JOUR_ACTE
                     ]) && (
-                      <Bouton
+                      <BoutonDoubleSubmit
                         disabled={estVerrouilleTerminerEtSigner}
                         onClick={() => setEstPopinSignatureOuverte(true)}
                       >
                         {getLibelle("Terminer et Signer")}
-                      </Bouton>
+                      </BoutonDoubleSubmit>
                     )}
                   </div>
                 </div>
@@ -462,9 +461,9 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
         />
       </div>
       {affichageApresSignature && (
-        <Bouton onClick={retourRMCActe}>
+        <BoutonDoubleSubmit onClick={retourRMCActe}>
           {getLibelle("Retour rechercher un acte")}
-        </Bouton>
+        </BoutonDoubleSubmit>
       )}
     </div>
   );

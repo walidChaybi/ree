@@ -1,6 +1,6 @@
 import { DEUX, SEPT, UN } from "@util/Utils";
 import React, { useState } from "react";
-import ConteneurSousFormulaire from "../../../commun/conteneurs/ConteneurSousFormulaire";
+import ConteneurSousFormulaire from "../../../commun/conteneurs/sousFormulaire/ConteneurSousFormulaire";
 import SousBlocParent from "./SousBlocParent";
 
 interface IBlocTitulaireProps {

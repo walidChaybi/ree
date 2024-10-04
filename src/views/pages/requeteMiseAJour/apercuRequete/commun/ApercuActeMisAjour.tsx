@@ -1,8 +1,7 @@
 import { useApercuActeRecomposerAvantSignatureMentions } from "@hook/acte/mentions/ActeRecomposerAvantSignatureMentionsApiHook";
 import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
-import { useContext, useEffect, useState } from "react";
-import { MimeType } from "../../../../ressources/MimeType";
-import { MiseAJourMentionsContext } from "../apercuRequete/ApercuRequeteMiseAJourPage";
+import { useEffect, useState } from "react";
+import { MimeType } from "../../../../../ressources/MimeType";
 
 type ApercuActeMisAJourProps = {
   idActeAAfficher?: string;
@@ -11,9 +10,6 @@ type ApercuActeMisAJourProps = {
 export const ApercuActeMisAJour: React.FC<ApercuActeMisAJourProps> = ({
   idActeAAfficher
 }) => {
-  const { listeMentionsEnregistrees, analyseMarginaleEnregistree } = useContext(
-    MiseAJourMentionsContext
-  );
   const [
     acteRecomposeAvantSignatureMentionsParams,
     setActeRecomposeAvantSignatureMentionsParams
@@ -32,7 +28,7 @@ export const ApercuActeMisAJour: React.FC<ApercuActeMisAJourProps> = ({
     if (idActeAAfficher) {
       setActeRecomposeAvantSignatureMentionsParams(idActeAAfficher);
     }
-  }, [idActeAAfficher, listeMentionsEnregistrees, analyseMarginaleEnregistree]);
+  }, [idActeAAfficher]);
 
   return (
     <div className="ActeRegistreMisAJour">

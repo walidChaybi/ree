@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useCallback, useState } from "react";
 import "./../scss/BoutonNouvelleRMCRequete.scss";
 import { PopinNouvelleRMCRequete } from "./PopinNouvelleRMCRequete";
@@ -39,7 +39,7 @@ export const BoutonNouvelleRMCRequete: React.FC<
 
   return (
     <>
-      <Bouton
+      <BoutonDoubleSubmit
         onClick={handleClickNouvelleRMC}
         aria-label={getLibelle("Nouvelle recherche multi critères")}
       >
@@ -48,7 +48,7 @@ export const BoutonNouvelleRMCRequete: React.FC<
           className="loupeChampsRecherche"
           icon={faSearch}
         />
-      </Bouton>
+      </BoutonDoubleSubmit>
       <PopinNouvelleRMCRequete
         open={showWaitState}
         onClose={closePopin}

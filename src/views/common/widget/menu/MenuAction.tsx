@@ -7,7 +7,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { DoubleClicUtil } from "@util/DoubleClicUtil";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { MutableRefObject, useRef } from "react";
 import "./scss/MenuAction.scss";
 
@@ -59,14 +59,14 @@ export const MenuAction: React.FC<
       title={props.infoBulle}
       className={`MenuAction ${props.className ? props.className : ""}`}
     >
-      <Bouton
+      <BoutonDoubleSubmit
         className={`${props.classNameBouton}`}
         onClick={props.actionMoins ? props.actionMoins : handleClick}
       >
         <span>{props.titre}</span>
         {props.afficheChevron && afficheFleche()}
         {props.children}
-      </Bouton>
+      </BoutonDoubleSubmit>
       <Menu
         className="Menu"
         anchorEl={anchorEl}

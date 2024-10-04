@@ -2,14 +2,14 @@ import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { getLibelle } from "@util/Utils";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { storeRece } from "@util/storeRece";
-import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAvecTitre";
 import React, { useCallback, useState } from "react";
@@ -86,9 +86,9 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
             requete.statutCourant.statut,
             requete.idUtilisateur
           ) && (
-            <Bouton onClick={finDeConsultation}>
+            <BoutonDoubleSubmit onClick={finDeConsultation}>
               {getLibelle("Fin consultation")}
-            </Bouton>
+            </BoutonDoubleSubmit>
           )}
           {!idRequeteAAfficher && <BoutonRetour />}
           {estPresentBoutonPriseEnCharge && (

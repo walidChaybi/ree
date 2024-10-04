@@ -4,7 +4,9 @@ import { TCodesTech } from "@api/TCodesTech";
 export type TApiAutorisee =
   | "rece-agent-api"
   | "rece-requete-api"
-  | "rece-outiltech-api";
+  | "rece-outiltech-api"
+  | "rece-etatcivil-api"
+  | "rece-composition-api";
 export type TMethodeHttp = "GET" | "DELETE" | "PATCH" | "POST" | "PUT";
 
 type TErreurApiTech = {

@@ -12,7 +12,7 @@ import { checkDirty, getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { storeRece } from "@util/storeRece";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { BoutonSignature } from "@widget/signature/BoutonSignature";
 import React, { useCallback, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -107,13 +107,13 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
           {gestionnaireFeatureFlag.estActif(
             FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
           ) && (
-            <Bouton
+            <BoutonDoubleSubmit
               title={getLibelle("Terminer")}
               onClick={onClickTerminer}
               disabled={estDisabled}
             >
               Terminer
-            </Bouton>
+            </BoutonDoubleSubmit>
           )}
         </>
       )}

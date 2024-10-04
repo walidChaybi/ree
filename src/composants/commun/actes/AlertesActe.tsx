@@ -1,4 +1,4 @@
-import ConteneurAccordeon from "../conteneurs/ConteneurAccordeon";
+import ConteneurAccordeon from "../conteneurs/accordeon/ConteneurAccordeon";
 
 const AlertesActe: React.FC = () => {
   return (

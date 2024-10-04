@@ -4,7 +4,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React from "react";
 import "./scss/BoutonSuivPrec.scss";
 
@@ -28,7 +28,7 @@ export const BoutonSuivPrec: React.FC<BoutonSuivPrecProps> = ({
         changeIndexRequete(index, max, direction, setIndex);
       }}
     >
-      <Bouton
+      <BoutonDoubleSubmit
         className="BoutonSuivPrecItem"
         id={`button-navigation-${direction}`}
         disabled={isDisabled(direction, index, max)}
@@ -39,7 +39,7 @@ export const BoutonSuivPrec: React.FC<BoutonSuivPrecProps> = ({
             direction === "left" ? faChevronCircleLeft : faChevronCircleRight
           }
         />
-      </Bouton>
+      </BoutonDoubleSubmit>
     </div>
   );
 };

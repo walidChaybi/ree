@@ -1,5 +1,5 @@
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { connect } from "formik";
 import React from "react";
 import { FormikComponentProps } from "../formulaire/utils/FormUtil";
@@ -13,12 +13,12 @@ export type FormBoutonsProps = IFormBoutonsProps & FormikComponentProps;
 const FormBoutons: React.FC<FormBoutonsProps> = ({ formik, onClosePopin }) => {
   return (
     <div className="FormAjouterBoutons">
-      <Bouton type="button" onClick={onClosePopin}>
+      <BoutonDoubleSubmit type="button" onClick={onClosePopin}>
         {getLibelle("Annuler")}
-      </Bouton>
-      <Bouton type="submit" disabled={!formik.dirty || !formik.isValid}>
+      </BoutonDoubleSubmit>
+      <BoutonDoubleSubmit type="submit" disabled={!formik.dirty || !formik.isValid}>
         {getLibelle("Valider")}
-      </Bouton>
+      </BoutonDoubleSubmit>
     </div>
   );
 };

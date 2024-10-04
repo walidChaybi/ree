@@ -6,26 +6,26 @@ import {
 } from "@hook/requete/DetailRequeteHook";
 import { mAppartient } from "@model/agent/IOfficier";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { ApercuProjet } from "@pages/requeteCreation/commun/composants/ApercuProjet";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { GestionMentions } from "@pages/requeteCreation/commun/composants/GestionMentions";
-import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
-import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { PiecesAnnexes } from "@pages/requeteCreation/commun/composants/PiecesAnnexes";
 import { SaisieProjet } from "@pages/requeteCreation/commun/composants/SaisieProjet";
+import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
+import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import {
   URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID,
   URL_RECHERCHE_REQUETE
 } from "@router/ReceUrls";
-import { getUrlWithParam } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { getUrlWithParam } from "@util/route/UrlUtil";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -87,14 +87,14 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
         {getComposantResumeRequeteEnFonctionNatureActe(requete)}
 
         {afficherBoutonModifierRequete && (
-          <Bouton
+          <BoutonDoubleSubmit
             type="button"
             onClick={onModificationRequete}
             aria-label="Modifier"
           >
             <FontAwesomeIcon icon={faEdit} className="iconModifierRequete" />
             {getLibelle("Modifier la requête")}
-          </Bouton>
+          </BoutonDoubleSubmit>
         )}
 
         {!estModeConsultation && (

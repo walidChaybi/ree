@@ -2,7 +2,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React from "react";
 import "../scss/PopinSupprimerAlerte.scss";
 
@@ -29,15 +29,15 @@ export const PopinSupprimerAlerte: React.FC<PopinSupprimerAlerteProps> = ({
       aria-describedby="alert-dialog-description"
     >
       <DialogContent>
-        {getLibelle("Etes-vous sur de vouloir supprimer cette alerte ?")}
+        {getLibelle("Etes-vous sûr de vouloir supprimer cette alerte ?")}
       </DialogContent>
       <DialogActions>
-        <Bouton type="button" onClick={onCancelClick}>
+        <BoutonDoubleSubmit type="button" onClick={onCancelClick}>
           {getLibelle("Annuler")}
-        </Bouton>
-        <Bouton type="button" onClick={onSubmit}>
+        </BoutonDoubleSubmit>
+        <BoutonDoubleSubmit type="button" onClick={onSubmit}>
           {getLibelle("Valider")}
-        </Bouton>
+        </BoutonDoubleSubmit>
       </DialogActions>
     </Dialog>
   );

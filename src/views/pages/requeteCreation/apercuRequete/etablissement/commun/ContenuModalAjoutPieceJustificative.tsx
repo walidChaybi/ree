@@ -5,7 +5,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Base64File, FILE_TYPES } from "@util/FileUtils";
 import { Option, Options } from "@util/Type";
 import { DIX_MILLE, getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import UploadFileField from "@widget/formulaire/champsSaisie/UploadFileField";
 import { getTableauPiecesJointes } from "@widget/formulaire/piecesJointes/PiecesJointes";
@@ -86,7 +86,7 @@ const ContenuModalAjoutPieceJustificative: React.FC<
             {fileFieldValue &&
               getTableauPiecesJointes([fileFieldValue], supprimePieceJointe)}
           </div>
-          <Bouton
+          <BoutonDoubleSubmit
             className="boutonValider"
             type="submit"
             aria-label="submitButton"
@@ -94,11 +94,11 @@ const ContenuModalAjoutPieceJustificative: React.FC<
             disabled={!formulaireEstChange}
           >
             {getLibelle("Valider")}
-          </Bouton>
+          </BoutonDoubleSubmit>
         </div>
       </DialogContent>
       <DialogActions>
-        <Bouton onClick={onClose}>{getLibelle("Fermer")}</Bouton>
+        <BoutonDoubleSubmit onClick={onClose}>{getLibelle("Fermer")}</BoutonDoubleSubmit>
       </DialogActions>
     </div>
   );

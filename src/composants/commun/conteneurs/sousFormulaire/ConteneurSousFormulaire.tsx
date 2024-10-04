@@ -2,20 +2,30 @@ import React from "react";
 import "./ConteneurSousFormulaire.scss";
 
 interface IConteneurSousFormulaireProps {
-  titreSousFormulaire: string;
+  titreSousFormulaire?: string;
   champsSousFormulaire?: {
     libelle: string;
     element: JSX.Element;
     boutons?: JSX.Element;
   }[];
+  className?: string;
 }
 
 const ConteneurSousFormulaire: React.FC<
   React.PropsWithChildren<IConteneurSousFormulaireProps>
-> = ({ titreSousFormulaire, champsSousFormulaire = [], children }) => (
+> = ({
+  titreSousFormulaire,
+  champsSousFormulaire = [],
+  className,
+  children
+}) => (
   <div className="conteneur-sous-formulaire">
-    <h2 className="titre-conteneur-sous-formulaire">{titreSousFormulaire}</h2>
-    <div className="contenu-conteneur-sous-formulaire">
+    {titreSousFormulaire && (
+      <h2 className="titre-conteneur-sous-formulaire">{titreSousFormulaire}</h2>
+    )}
+    <div
+      className={`contenu-conteneur-sous-formulaire ${className ?? ""}`.trim()}
+    >
       {Boolean(champsSousFormulaire.length) && (
         <div className="affichage-tableau">
           {champsSousFormulaire.map(champs => (

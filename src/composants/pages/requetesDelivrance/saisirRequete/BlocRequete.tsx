@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ConteneurSousFormulaire from "../../../commun/conteneurs/ConteneurSousFormulaire";
+import ConteneurSousFormulaire from "../../../commun/conteneurs/sousFormulaire/ConteneurSousFormulaire";
 
 const BlocRequete = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

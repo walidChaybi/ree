@@ -6,34 +6,34 @@ import {
   IDetailRequeteParams,
   useDetailRequeteApiHook
 } from "@hook/requete/DetailRequeteHook";
-import { Droit } from "@model/agent/enum/Droit";
 import {
   appartientAMonServiceOuServicesParentsOuServicesFils,
   mAppartientOuAppartientAPersonne,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { mappingUneRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import {
   URL_RECHERCHE_REQUETE,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID
 } from "@router/ReceUrls";
-import { getUrlPrecedente, getUrlWithParam } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { getUrlPrecedente, getUrlWithParam } from "@util/route/UrlUtil";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { OngletPiecesJustificatives } from "../../commun/composants/OngletPiecesJustificatives";
 import Labels from "../../commun/Labels";
+import { OngletPiecesJustificatives } from "../../commun/composants/OngletPiecesJustificatives";
 import "../../commun/scss/ApercuReqCreationPage.scss";
 import {
   getComposantResumeRequeteEnFonctionNatureActe,
@@ -172,7 +172,7 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
               {pagePrecedenteEstRechercherUneRequete() && <BoutonRetour />}
 
               {estPresentBoutonPrendreEnCharge() && (
-                <Bouton
+                <BoutonDoubleSubmit
                   type="button"
                   aria-label={"Prendre en charge"}
                   id="boutonAnnuler"
@@ -181,7 +181,7 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
                   }}
                 >
                   {getLibelle("Prendre en charge")}
-                </Bouton>
+                </BoutonDoubleSubmit>
               )}
             </div>
           </VoletAvecOnglet>

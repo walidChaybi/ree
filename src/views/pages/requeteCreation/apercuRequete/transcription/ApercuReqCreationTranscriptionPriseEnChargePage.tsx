@@ -24,7 +24,7 @@ import {
 } from "@router/ReceUrls";
 import { UN, getLibelle } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useContext, useEffect, useState } from "react";
@@ -184,14 +184,14 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
           {getComposantResumeRequeteEnFonctionNatureActe(requete)}
 
           {afficherBoutonModifierRequete && (
-            <Bouton
+            <BoutonDoubleSubmit
               type="button"
               onClick={onModificationRequete}
               aria-label="Modifier"
             >
               <FontAwesomeIcon icon={faEdit} className="iconModifierRequete" />
               {getLibelle("Modifier la requête")}
-            </Bouton>
+            </BoutonDoubleSubmit>
           )}
 
           {!estModeConsultation && (

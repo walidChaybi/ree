@@ -1,7 +1,7 @@
 import { ITypeErreurSignature } from "@model/signature/ITypeErreurSignature";
 import TextField from "@mui/material/TextField";
 import { getLibelle, HUIT, QUATRE } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { useFormik } from "formik";
 import React from "react";
 import "./scss/FormPinCode.scss";
@@ -76,7 +76,7 @@ export const CodePinForm: React.FC<ICodePinFormProps> = ({
         <div className={"ErrorField"}>{formik.errors.codePin}</div>
       ) : null}
       <div className="PopinSignaturePinCodeActions">
-        <Bouton
+        <BoutonDoubleSubmit
           color="primary"
           type="submit"
           name={"validate"}
@@ -86,10 +86,10 @@ export const CodePinForm: React.FC<ICodePinFormProps> = ({
           }}
         >
           {getLibelle("Valider")}
-        </Bouton>
-        <Bouton onClick={() => onClose(false, false)}>
+        </BoutonDoubleSubmit>
+        <BoutonDoubleSubmit onClick={() => onClose(false, false)}>
           {getLibelle("Annuler")}
-        </Bouton>
+        </BoutonDoubleSubmit>
       </div>
     </form>
   );

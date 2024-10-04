@@ -11,7 +11,7 @@ import { Formulaire } from "@widget/formulaire/Formulaire";
 import { useMemo, useState } from "react";
 import * as Yup from "yup";
 import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
-import ConteneurModale from "../../../../commun/conteneurs/ConteneurModale";
+import ConteneurModale from "../../../../commun/conteneurs/modale/ConteneurModale";
 import "./ObservationsRequete.scss";
 import ObservationsRequeteForm, {
   IObservationsRequeteForm

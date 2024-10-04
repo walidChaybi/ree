@@ -16,7 +16,7 @@ import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/I
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { DEUX, UN, getLibelle } from "@util/Utils";
-import { Bouton } from "@widget/boutonAntiDoubleSubmit/Bouton";
+import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import {
@@ -142,9 +142,9 @@ export const SaisiePostulantForm: React.FC<
           />
         </div>
         <GestionnaireElementScroll elementListe={elementListe} />
-        <Bouton type="submit" disabled={!isDirty && props.estProjetExistant}>
+        <BoutonDoubleSubmit type="submit" disabled={!isDirty && props.estProjetExistant}>
           {getLibelle("Actualiser et visualiser")}
-        </Bouton>
+        </BoutonDoubleSubmit>
       </Formulaire>
     </div>
   );
