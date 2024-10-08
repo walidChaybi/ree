@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
@@ -21,7 +22,7 @@ import {
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { IFenetreFicheActeInscription } from "../common/IFenetreFicheActeInscription";
 import {
   DataTableauRMCPersonne,
@@ -52,6 +53,7 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
   const [etatFenetres, setEtatFenetres] = useState<
     IFenetreFicheActeInscription[]
   >([]);
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   function getBoutonMenuElement(data: IDataTableauRMCPersonne): JSX.Element {
     return (
@@ -149,7 +151,8 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
       (DataTableauRMCPersonne.estActe(dataLigne) ||
         officierALeDroitSurLePerimetre(
           Droit.CONSULTER,
-          Perimetre.TOUS_REGISTRES
+          Perimetre.TOUS_REGISTRES,
+          utilisateurConnecte
         ))
     ) {
       const nouvelEtatFenetre: IFenetreFicheActeInscription = {

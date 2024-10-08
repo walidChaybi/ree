@@ -1,5 +1,5 @@
 import { mappingInscriptionsRC } from "@hook/acte/InscriptionsRcHook";
-import { specificationRC } from "@hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRC";
+import { SpecificationRC } from "@hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRC";
 import { decrets } from "@mock/data/NomenclatureEtatCivilDecrets";
 import {
   FicheRcDecisionNotaire,
@@ -12,12 +12,7 @@ import {
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { NatureRca } from "@model/etatcivil/enum/NatureRca";
 import { TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
-import { storeRece } from "@util/storeRece";
-import { beforeAll, beforeEach, expect, test } from "vitest";
-
-beforeAll(() => {
-  storeRece.decrets = decrets;
-});
+import { beforeEach, expect, test } from "vitest";
 
 beforeEach(async () => {
   NatureRc.init();
@@ -26,7 +21,7 @@ beforeEach(async () => {
 
 test("Attendu: specificationRC.getElementsJasper avec une décision Notaire autre que Requete", () => {
   const data = FicheRcDecisionNotaire;
-  const elementsJasper = specificationRC.getElementsJasper(data);
+  const elementsJasper = SpecificationRC.getElementsJasper(data, decrets);
   const interesse = `Mathieu SLAOUI
 Date de naissance: 1er septembre 1983
 Lieu de naissance: paris 20ème arrondissement`;
@@ -48,7 +43,7 @@ Lieu de naissance: paris 20ème arrondissement`;
 
 test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de type Requete", () => {
   const data = FicheRcDecisionNotaireTypeRequete;
-  const elementsJasper = specificationRC.getElementsJasper(data);
+  const elementsJasper = SpecificationRC.getElementsJasper(data, decrets);
   const interesse = `Mathieu SLAOUI
 Date de naissance: 1er septembre 1983
 Lieu de naissance: paris 20ème arrondissement`;
@@ -72,7 +67,7 @@ Lieu de naissance: paris 20ème arrondissement`;
 
 test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de type Requete 2", () => {
   const data = FicheRcDecisionNotaireTypeRequete2;
-  const elementsJasper = specificationRC.getElementsJasper(data);
+  const elementsJasper = SpecificationRC.getElementsJasper(data, decrets);
   const interesse = `Mathieu SLAOUI
 Date de naissance: 1er septembre 1983
 Lieu de naissance: paris 20ème arrondissement`;
@@ -97,7 +92,7 @@ Lieu de naissance: paris 20ème arrondissement`;
 test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une décision de type 'Jugement'", () => {
   const data = FicheRcRenouvellementTypeJugement;
 
-  const elementsJasper = specificationRC.getElementsJasper(data);
+  const elementsJasper = SpecificationRC.getElementsJasper(data, decrets);
   const interesses = `Marie-Charlotte, Anne-Claire, Lily-Rose, Abby-Gaëlle SLAOUI
 Date de naissance: 1er septembre 1983
 Lieu de naissance: Brest (Finistère)
@@ -133,8 +128,9 @@ test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une dé
   };
   data.typeInscription = TypeInscriptionRc.MODIFICATION;
 
-  const elementsJasper = specificationRC.getElementsJasper(
+  const elementsJasper = SpecificationRC.getElementsJasper(
     data,
+    decrets,
     mappingInscriptionsRC(FicheRcRadiation)[0]
   );
 
@@ -169,7 +165,7 @@ mariés à Nanning, zhuang du Guangxi (Chine, Pays du soleil levant) le 12 juin 
 
 test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une décision de type 'Ordonnance'", () => {
   const data = FicheRcRenouvellementTypeOrdonnance;
-  const elementsJasper = specificationRC.getElementsJasper(data);
+  const elementsJasper = SpecificationRC.getElementsJasper(data, decrets);
   const interesses = `Pierre-Olivier, Félix-Antoine, François-Xavier LE ROUX
 Date de naissance: 24 décembre 1987
 Lieu de naissance: Châteauneuf-du-Faou (Finistère, Bretagne)

@@ -1,9 +1,10 @@
 import { postTransfertRequete } from "@api/appels/requeteApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { getServiceParUtilisateurId } from "@model/agent/IUtilisateur";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { logError } from "@util/LogManager";
 import { getValeurOuVide } from "@util/Utils";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export interface TransfertParams {
   idService?: string;
@@ -48,6 +49,8 @@ export function useTransfertApi(params?: TransfertUnitaireParams) {
 
 export function useTransfertsApi(params?: TransfertParLotParams) {
   const [res, setRes] = useState<string[] | undefined>();
+  const { utilisateurs } = useContext(RECEContextData);
+
   useEffect(() => {
     if (params && (params.idService || params.idUtilisateur)) {
       Promise.all(
@@ -56,7 +59,7 @@ export function useTransfertsApi(params?: TransfertParLotParams) {
             idRequete,
             params.idService
               ? params.idService
-              : (getServiceParUtilisateurId(params.idUtilisateur)
+              : (getServiceParUtilisateurId(params.idUtilisateur, utilisateurs)
                   ?.idService as string),
             params.idUtilisateur,
             params.libelleAction,

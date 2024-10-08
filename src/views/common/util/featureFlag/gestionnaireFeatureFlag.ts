@@ -36,13 +36,13 @@ class GestionnaireFeatureFlag {
       }
     });
 
-    const featuresFlagsUtilisateurCourant = this.getFeatureFlagsAPartirIdSSO(
+    const featuresFlagsUtilisateurConnecte = this.getFeatureFlagsAPartirIdSSO(
       idSSOsEtFeaturesFlags,
       idSSOUtilisateur
     );
 
-    if (featuresFlagsUtilisateurCourant) {
-      featuresFlagsUtilisateurCourant.forEach((featureFlag: string) => {
+    if (featuresFlagsUtilisateurConnecte) {
+      featuresFlagsUtilisateurConnecte.forEach((featureFlag: string) => {
         window.localStorage.setItem(featureFlag, "true");
       });
     }

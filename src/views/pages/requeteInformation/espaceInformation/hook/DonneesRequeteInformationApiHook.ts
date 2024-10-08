@@ -4,6 +4,7 @@ import {
   postRequetesInformation,
   TypeAppelRequete
 } from "@api/appels/requeteApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
 import {
   IRequeteTableauInformation,
@@ -12,7 +13,7 @@ import {
 import { VALEUR_FILTRE_INFORMATION_DEFAUT } from "@pages/requeteInformation/commun/FiltresServiceRequeteInformationForm/FiltresServiceRequeteInformationForm";
 import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export const useRequeteInformationApi = (
   queryParameters: IQueryParametersPourRequetes,
@@ -24,7 +25,7 @@ export const useRequeteInformationApi = (
 ) => {
   const [dataState, setDataState] = useState<IRequeteTableauInformation[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
-
+  const { utilisateurs, services } = useContext(RECEContextData);
   useEffect(() => {
     const estTypeRequeteInfoService =
       typeRequete === TypeAppelRequete.REQUETE_INFO_SERVICE;
@@ -46,7 +47,9 @@ export const useRequeteInformationApi = (
       .then(result => {
         const mesRequetes = mappingRequetesTableauInformation(
           result?.body?.data,
-          false
+          false,
+          utilisateurs,
+          services
         );
         setDataState(mesRequetes);
         setParamsTableau(getParamsTableau(result));

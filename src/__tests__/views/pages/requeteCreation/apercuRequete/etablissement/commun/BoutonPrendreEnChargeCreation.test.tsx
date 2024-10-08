@@ -4,15 +4,16 @@ import { BoutonPrendreEnChargeCreation } from "@pages/requeteCreation/apercuRequ
 import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { expect, test, vi } from "vitest";
-import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../../../__tests__utils__/testsUtil";
 
 const mockedRedirection = vi.fn();
 
 test("DOIT rediriger sur l'appercu prise en charge QUAND on clique sur le bouton prendre en charge", () => {
-  storeRece.utilisateurCourant = userDroitCreerActeEtabliPerimetreTousRegistres;
   const ID = "54ddf213-d9b7-4747-8e92-68c220f66de3";
 
   const router = createTestingRouter(
@@ -37,7 +38,12 @@ test("DOIT rediriger sur l'appercu prise en charge QUAND on clique sur le bouton
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      userDroitCreerActeEtabliPerimetreTousRegistres
+    )
+  );
 
   const boutonPrendreEnCharge = screen.getByText(
     "Prendre en charge"

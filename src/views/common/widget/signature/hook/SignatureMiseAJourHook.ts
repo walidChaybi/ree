@@ -2,9 +2,9 @@ import {
   IIntegrerDocumentMentionsUlterieuresParams,
   useIntegrerDocumentMentionsUlterieuresApiHook
 } from "@hook/acte/mentions/IntegrerDocumentMentionsUlterieuresApiHook";
+import { IOfficier } from "@model/agent/IOfficier";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
-import { storeRece } from "@util/storeRece";
 import { useState } from "react";
 import {
   IComposerDocumentMentionsUlterieuresParams,
@@ -68,14 +68,15 @@ const useSignatureMiseAJourHook = (
 
   const handleIntegrerDocumentMentionsUlterieures = (
     document: string,
-    informationsCarte: IInfosCarteSignature
+    informationsCarte: IInfosCarteSignature,
+    utilisateurConnecte: IOfficier
   ) => {
-    if (idActe && storeRece.utilisateurCourant) {
+    if (idActe && utilisateurConnecte) {
       setIntegrerDocumentMentionsUlterieuresParams({
         idActe,
         document,
         infosCarteSignature: informationsCarte,
-        modeAuthentification: storeRece.utilisateurCourant.modeAuthentification
+        modeAuthentification: utilisateurConnecte.modeAuthentification
       });
     }
   };

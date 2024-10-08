@@ -1,4 +1,5 @@
 import { CONFIG_POST_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/miseAJour/PostRequeteMiseAJourApiConfig";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   AddAlerteActeApiHookParameters,
   useAddAlerteActeApiHook
@@ -37,7 +38,7 @@ import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import { BarreNavigationSuivPrec } from "@widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useFetchApi from "../../../hooks/FetchApiHook";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
@@ -119,6 +120,8 @@ export const FichePage: React.FC<FichePageProps> = ({
     );
   }, [index]);
 
+  const { utilisateurConnecte } = useContext(RECEContextData);
+
   const { dataFicheState } = useFichePageApiHook(
     actualisationInfosFiche,
     dataFicheCourante?.categorie,
@@ -127,15 +130,18 @@ export const FichePage: React.FC<FichePageProps> = ({
   );
 
   const { bandeauFiche, panelsFiche, alertes, visuBoutonAlertes } = setFiche(
+    utilisateurConnecte,
     dataFicheCourante,
     dataFicheState.data
   );
 
   const droitsMiseAJour = useMemo(() => {
     const droitMentions = officierHabiliterPourLeDroit(
+      utilisateurConnecte,
       Droit.METTRE_A_JOUR_ACTE
     );
     const droitAnalyseMarginale = officierHabiliterPourLeDroit(
+      utilisateurConnecte,
       Droit.MODIFIER_ANALYSE_MARGINALE
     );
 
@@ -396,6 +402,7 @@ export const FichePage: React.FC<FichePageProps> = ({
               )}
               {dataFicheState.data &&
                 !officierDroitConsulterSurLeTypeRegistreOuDroitMAE(
+                  utilisateurConnecte,
                   dataFicheState.data.registre?.type?.id
                 ) &&
                 gestionnaireFeatureFlag.estActif(

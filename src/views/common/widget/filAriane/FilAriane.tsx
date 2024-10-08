@@ -1,4 +1,4 @@
-import { RECEContext } from "@core/contexts/RECEContext";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { URL_CONTEXT_APP } from "@router/ReceUrls";
@@ -60,7 +60,7 @@ export const fildarianeLabel = getLibelle("Navigation par fil d'ariane");
 
 export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
   const location = useLocation();
-  const { isDirty } = useContext(RECEContext);
+  const { isDirty } = useContext(RECEContextData);
   const blocker = useBlocker(() => isDirty);
 
   gestionnaireNavigation.addUrl(location.pathname);
@@ -123,23 +123,6 @@ export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
     </div>
   );
 };
-
-export function setRetourContextValue(
-  pagesInfos: IPageInfo[],
-  setRetourState: (retourUrl: string) => void
-) {
-  if (pagesInfos.length === 1) {
-    setRetourState(URL_CONTEXT_APP);
-  } else {
-    let retourUrl: string = URL_CONTEXT_APP;
-    pagesInfos.forEach((pageInfo: IPageInfo, index: number) => {
-      if (index !== pagesInfos.length - 1) {
-        retourUrl = pageInfo.url;
-      }
-    });
-    setRetourState(retourUrl);
-  }
-}
 
 function estUnCheminReceUi(path: string) {
   // certains chemins ne commence pas par /rece/rece-ui (par exemple lors de la déconnexion: /rece/Shibboleth.sso/Logout) alors on retourne un tableau vide

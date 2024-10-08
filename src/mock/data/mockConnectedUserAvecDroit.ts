@@ -1,5 +1,5 @@
 import { Droit } from "@model/agent/enum/Droit";
-import { TypeService } from "@model/agent/enum/TypeService";
+import { ETypeService } from "@model/agent/enum/ETypeService";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IPerimetre } from "@model/agent/IPerimetre";
 
@@ -92,7 +92,7 @@ export const userDroitConsulterPerimetreTousRegistres: IOfficier = {
     code: "E 1/3",
     idService: "6737e047-16cc-4731-9a2e-d2e228f7d75f",
     libelleService: "Exploitation 1 Section 3",
-    type: TypeService.SECTION,
+    type: ETypeService.SECTION,
     utilisateur: null
   }
 };
@@ -120,7 +120,7 @@ export const userDroitCreerActeEtabliPerimetreTousRegistres: IOfficier = {
     code: "E 1/3",
     idService: "6737e047-16cc-4731-9a2e-d2e228f7d75f",
     libelleService: "Exploitation 1 Section 3",
-    type: TypeService.SECTION,
+    type: ETypeService.SECTION,
     utilisateur: null
   }
 };
@@ -151,7 +151,7 @@ export const userDroitCreerActeTranscritPerimetreTousRegistres: IOfficier = {
     code: "E 1/3",
     idService: "6737e047-16cc-4731-9a2e-d2e228f7d75f",
     libelleService: "Exploitation 1 Section 3",
-    type: TypeService.SECTION,
+    type: ETypeService.SECTION,
     utilisateur: null
   }
 };
@@ -179,7 +179,7 @@ export const userDroitDelivrer: IOfficier = {
     code: "E 1/3",
     idService: "6737e047-16cc-4731-9a2e-d2e228f7d75f",
     libelleService: "Exploitation 1 Section 3",
-    type: TypeService.SECTION,
+    type: ETypeService.SECTION,
     utilisateur: null
   }
 };
@@ -207,7 +207,7 @@ export const userDroitInformerUsager: IOfficier = {
     code: "E 1/3",
     idService: "6737e047-16cc-4731-9a2e-d2e228f7d75f",
     libelleService: "Exploitation 1 Section 3",
-    type: TypeService.SECTION,
+    type: ETypeService.SECTION,
     utilisateur: null
   }
 };
@@ -263,7 +263,7 @@ export const userDroitnonCOMEDEC: IOfficier = {
     code: "E 1/3",
     idService: "1",
     libelleService: "Exploitation 1 Section 3",
-    type: TypeService.SECTION,
+    type: ETypeService.SECTION,
     utilisateur: null,
     hierarchieService: [
       {
@@ -272,7 +272,7 @@ export const userDroitnonCOMEDEC: IOfficier = {
           code: "E 1/3",
           idService: "11",
           libelleService: "Exploitation 1 Section 3",
-          type: TypeService.SECTION,
+          type: ETypeService.SECTION,
           utilisateur: null
         }
       }
@@ -283,7 +283,7 @@ export const userDroitnonCOMEDEC: IOfficier = {
       code: "E 1/3",
       idService: "111",
       libelleService: "Exploitation 1 Section 3",
-      type: TypeService.SECTION,
+      type: ETypeService.SECTION,
       utilisateur: null
     }
   ]
@@ -327,7 +327,7 @@ export const userDroitCOMEDEC: IOfficier = {
     code: "E 1/3",
     idService: "1",
     libelleService: "Exploitation 1 Section 3",
-    type: TypeService.SECTION,
+    type: ETypeService.SECTION,
     utilisateur: null,
     hierarchieService: [
       {
@@ -336,7 +336,7 @@ export const userDroitCOMEDEC: IOfficier = {
           code: "E 1/3",
           idService: "11",
           libelleService: "Exploitation 1 Section 3",
-          type: TypeService.SECTION,
+          type: ETypeService.SECTION,
           utilisateur: null
         }
       }
@@ -347,7 +347,7 @@ export const userDroitCOMEDEC: IOfficier = {
       code: "E 1/3",
       idService: "111",
       libelleService: "Exploitation 1 Section 3",
-      type: TypeService.SECTION,
+      type: ETypeService.SECTION,
       utilisateur: null
     }
   ]

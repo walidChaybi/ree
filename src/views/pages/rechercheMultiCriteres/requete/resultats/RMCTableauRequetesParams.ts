@@ -1,9 +1,9 @@
 import {
-  getCellDatesNaissancesTitulaires,
-  getCellRequerant,
-  getCellTitulaires,
-  getIconPrioriteRequete,
-  getObservationsNumeroRequete
+  RenderCellDatesNaissancesTitulaires,
+  RenderCellRequerant,
+  RenderCellTitulaires,
+  RenderIconPrioriteRequete,
+  RenderObservationsNumeroRequete
 } from "@util/tableauRequete/TableauRequeteUtils";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 
@@ -31,7 +31,7 @@ export const columnsTableauRequete = [
     keys: [HeaderTableauRequete.Observations],
     title: "",
     align: "center",
-    getElement: getObservationsNumeroRequete,
+    getElement: RenderObservationsNumeroRequete,
     style: { width: "16px" }
   }),
   new TableauTypeColumn({
@@ -71,7 +71,7 @@ export const columnsTableauRequete = [
     title: "Titulaire(s)",
     align: "center",
     dataIsArray: true,
-    getElement: getCellTitulaires,
+    getElement: RenderCellTitulaires,
     style: { width: "150px" }
   }),
   new TableauTypeColumn({
@@ -79,11 +79,11 @@ export const columnsTableauRequete = [
     title: "Date(s) naissance(s)",
     align: "center",
     dataIsArray: true,
-    getElement: getCellDatesNaissancesTitulaires
+    getElement: RenderCellDatesNaissancesTitulaires
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.Requerant],
-    getElement: getCellRequerant,
+    getElement: RenderCellRequerant,
     title: "Requérant",
     align: "center"
   }),
@@ -111,7 +111,7 @@ export const columnsTableauRequete = [
     keys: [HeaderTableauRequete.Priorite],
     title: "Priorité",
     align: "center",
-    getElement: getIconPrioriteRequete,
+    getElement: RenderIconPrioriteRequete,
     style: { width: "100px" }
   })
 ];

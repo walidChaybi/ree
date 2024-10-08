@@ -7,7 +7,7 @@ import {
   useNavigationApercuInformation
 } from "@hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
-import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { SortOrder } from "@widget/tableau/TableUtils";
@@ -102,7 +102,7 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({
         dataState={dataState}
         paramsTableau={paramsTableau}
         goToLink={goToLink}
-        noRows={getMessageZeroRequete()}
+        noRows={RenderMessageZeroRequete()}
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}

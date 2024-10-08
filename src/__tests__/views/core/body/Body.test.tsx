@@ -1,25 +1,17 @@
 import { Body } from "@core/body/Body";
-import { ILoginApi } from "@core/login/LoginHook";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import officier from "@mock/data/connectedUser.json";
+import { IOfficier } from "@model/agent/IOfficier";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { URL_CONTEXT_APP } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
-import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../__tests__utils__/testsUtil";
 
-const routerAvecContexte = (
-  router: any,
-  infosLoginOfficier?: ILoginApi
-): any => {
-  return (
-    <MockRECEContextProvider infosLoginOfficier={infosLoginOfficier}>
-      <RouterProvider router={router} />
-    </MockRECEContextProvider>
-  );
-};
 test("renders BoutonDeconnexion", () => {
   const router = createTestingRouter(
     [
@@ -34,10 +26,12 @@ test("renders BoutonDeconnexion", () => {
   const off = { idSSO: officier.id_sso, ...officier };
   off.profils = [...off.profils];
   off.profils.push("RECE_ADMIN");
-  const infosLoginOfficier = { officierDataState: off };
 
   render(
-    routerAvecContexte(router, infosLoginOfficier as unknown as ILoginApi)
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      off as unknown as IOfficier
+    )
   );
 
   waitFor(() => {
@@ -50,9 +44,6 @@ test("renders BoutonDeconnexion", () => {
 
 test("renders Body", () => {
   officier.profils.push("RECE_ADMIN");
-  const infosLoginOfficier = {
-    officierDataState: { idSSO: officier.id_sso, ...officier }
-  };
 
   const router = createTestingRouter(
     [
@@ -65,7 +56,10 @@ test("renders Body", () => {
   );
 
   render(
-    routerAvecContexte(router, infosLoginOfficier as unknown as ILoginApi)
+    elementAvecContexte(<RouterProvider router={router} />, {
+      idSSO: officier.id_sso,
+      ...officier
+    } as unknown as IOfficier)
   );
 
   waitFor(() => {
@@ -86,11 +80,7 @@ test("renders Body Connexion en cours", () => {
     [URL_CONTEXT_APP]
   );
 
-  render(
-    <MockRECEContextProvider>
-      <RouterProvider router={router} />
-    </MockRECEContextProvider>
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />));
 
   waitFor(() => {
     const titre = screen.getByText(/Connexion en cours/i);
@@ -99,15 +89,9 @@ test("renders Body Connexion en cours", () => {
 });
 
 test("renders Body avec erreur de login", () => {
-  storeRece.logErrorOff = true;
+  storeRece.logErrorDesactive = true;
   officier.profils.push("RECE_ADMIN");
 
-  const infosLoginOfficier = {
-    officierDataState: { ...officier },
-    erreurState: {
-      status: "Autre (console.error LogManager)"
-    }
-  };
   const router = createTestingRouter(
     [
       {
@@ -119,24 +103,26 @@ test("renders Body avec erreur de login", () => {
   );
 
   render(
-    routerAvecContexte(router, infosLoginOfficier as unknown as ILoginApi)
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      officier as unknown as IOfficier,
+      undefined,
+      undefined,
+      undefined,
+      {
+        status: "Autre (console.error LogManager)"
+      }
+    )
   );
 
   waitFor(() => {
     const titre = screen.getByText(/Erreur Système/i);
     expect(titre).toBeDefined();
   });
-
-  storeRece.logErrorOff = false;
+  storeRece.logErrorDesactive = false;
 });
 
 test("renders Body 403", () => {
-  const infosLoginOfficier = {
-    officierDataState: { ...officier },
-    erreurState: {
-      status: 403
-    }
-  };
   const router = createTestingRouter(
     [
       {
@@ -148,7 +134,16 @@ test("renders Body 403", () => {
   );
 
   render(
-    routerAvecContexte(router, infosLoginOfficier as unknown as ILoginApi)
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      officier as unknown as IOfficier,
+      undefined,
+      undefined,
+      undefined,
+      {
+        status: 403
+      }
+    )
   );
 
   const titre = screen.getByText(

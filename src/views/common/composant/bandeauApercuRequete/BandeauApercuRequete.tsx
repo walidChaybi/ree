@@ -1,3 +1,10 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
+import { IService, Service } from "@model/agent/IService";
+import {
+  IUtilisateur,
+  getNomUtilisateurAPartirID,
+  getPrenomUtilisateurAPartirID
+} from "@model/agent/IUtilisateur";
 import { TRequete } from "@model/requete/IRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
@@ -6,20 +13,22 @@ import {
   getLibelle,
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "@util/Utils";
-import { storeRece } from "@util/storeRece";
 import classNames from "classnames";
-import React from "react";
+import React, { useContext } from "react";
 import "./scss/BandeauApercuRequete.scss";
 
 interface BandeauRequeteProps {
   requete: TRequete;
 }
 export const BandeauRequete: React.FC<BandeauRequeteProps> = ({ requete }) => {
+  const { utilisateurs, services } = useContext(RECEContextData);
   const statut = requete.statutCourant.statut;
   const styles = classNames(getClassName(statut));
   return (
     <div className="BandeauRequete">
-      <h2 className={styles}>{getStatutLibellePourRequete(requete)}</h2>
+      <h2 className={styles}>
+        {getStatutLibellePourRequete(requete, utilisateurs, services)}
+      </h2>
     </div>
   );
 };
@@ -147,14 +156,18 @@ const getRequeteRejetImpression = (responsable: string, requete: TRequete) => {
   );
 };
 
-const getStatutLibellePourRequete = (requete: TRequete) => {
+const getStatutLibellePourRequete = (
+  requete: TRequete,
+  utilisateurs: IUtilisateur[],
+  services: IService[]
+) => {
   let responsable = requete.idUtilisateur
     ? `${premiereLettreEnMajusculeLeResteEnMinuscule(
-        storeRece.getPrenomUtilisateurAPartirID(requete.idUtilisateur)
+        getPrenomUtilisateurAPartirID(requete.idUtilisateur, utilisateurs)
       )} ${formatNom(
-        storeRece.getNomUtilisateurAPartirID(requete.idUtilisateur)
+        getNomUtilisateurAPartirID(requete.idUtilisateur, utilisateurs)
       )}`
-    : storeRece.getLibelleService(requete.idService);
+    : Service.libelleDepuisId(requete.idService, services);
 
   return getStatutLibelle(requete, responsable ?? "");
 };

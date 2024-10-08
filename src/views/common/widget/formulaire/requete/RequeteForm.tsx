@@ -130,53 +130,51 @@ const RequeteForm: React.FC<SubFormProps> = props => {
   }, []);
 
   return (
-    <>
-      <SousFormulaire titre={props.titre}>
-        <div className="RequeteForm">
-          {!props.formulaireReduit && (
-            <>
-              <SelectField
-                name={withNamespace(props.nom, NATURE_ACTE)}
-                label={getLibelle("Nature d'acte concerné")}
-                options={NatureActeRequete.getAllEnumsAsOptions()}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  onChangeNatureActeRequete(e);
-                }}
-                optionVide={OptionVide.NON_PRESENTE}
-              />
-              <SelectField
-                name={withNamespace(props.nom, DOCUMENT_DEMANDE)}
-                label={getLibelle("Document demandé")}
-                options={documentDemandeOptions}
-                optionVide={OptionVide.NON_PRESENTE}
-              />
-            </>
-          )}
-          <InputField
-            name={withNamespace(props.nom, NB_EXEMPLAIRE)}
-            label={getLibelle("Nombre d'exemplaires")}
-            typeInput={{ type: "number", min: 1, max: 5 }}
-          />
-          <SelectField
-            name={withNamespace(props.nom, MOTIF)}
-            label={getLibelle("Motif")}
-            options={MotifDelivrance.getAllEnumsAsOptions()}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              onChangeMotif(e);
-            }}
-            optionVide={OptionVide.NON_PRESENTE}
-          />
-          {!complementMotifInactif && (
-            <InputField
-              name={withNamespace(props.nom, COMPLEMENT_MOTIF)}
-              label={getLibelle("Complément motif")}
-              maxLength={NB_CARACT_MAX_SAISIE}
-              disabled={complementMotifInactif}
+    <SousFormulaire titre={props.titre}>
+      <div className="RequeteForm">
+        {!props.formulaireReduit && (
+          <>
+            <SelectField
+              name={withNamespace(props.nom, NATURE_ACTE)}
+              label={getLibelle("Nature d'acte concerné")}
+              options={NatureActeRequete.getAllEnumsAsOptions()}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onChangeNatureActeRequete(e);
+              }}
+              optionVide={OptionVide.NON_PRESENTE}
             />
-          )}
-        </div>
-      </SousFormulaire>
-    </>
+            <SelectField
+              name={withNamespace(props.nom, DOCUMENT_DEMANDE)}
+              label={getLibelle("Document demandé")}
+              options={documentDemandeOptions}
+              optionVide={OptionVide.NON_PRESENTE}
+            />
+          </>
+        )}
+        <InputField
+          name={withNamespace(props.nom, NB_EXEMPLAIRE)}
+          label={getLibelle("Nombre d'exemplaires")}
+          typeInput={{ type: "number", min: 1, max: 5 }}
+        />
+        <SelectField
+          name={withNamespace(props.nom, MOTIF)}
+          label={getLibelle("Motif")}
+          options={MotifDelivrance.getAllEnumsAsOptions()}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            onChangeMotif(e);
+          }}
+          optionVide={OptionVide.NON_PRESENTE}
+        />
+        {!complementMotifInactif && (
+          <InputField
+            name={withNamespace(props.nom, COMPLEMENT_MOTIF)}
+            label={getLibelle("Complément motif")}
+            maxLength={NB_CARACT_MAX_SAISIE}
+            disabled={complementMotifInactif}
+          />
+        )}
+      </div>
+    </SousFormulaire>
   );
 };
 

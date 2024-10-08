@@ -2,6 +2,7 @@ import {
   getServicesAsOptions,
   listeUtilisateursToOptionsBis
 } from "@composant/menuTransfert/MenuTransfertUtil";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IFiltreServiceRequeteCreationFormValues } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
@@ -12,12 +13,11 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import Button from "@mui/material/Button";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
-import { storeRece } from "@util/storeRece";
 import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { Formik } from "formik";
-import React from "react";
+import React, { useContext } from "react";
 import "./FiltreServiceRequeteCreationForm.scss";
 
 export interface FiltreServiceRequeteCreationFormProps {
@@ -37,12 +37,13 @@ export const FiltreServiceRequeteCreationFormDefaultValues: IFiltreServiceRequet
 export const FiltreServiceRequeteCreationForm: React.FC<
   FiltreServiceRequeteCreationFormProps
 > = props => {
-  const idUtilisateur = storeRece.utilisateurCourant?.idUtilisateur;
+  const { utilisateurs, utilisateurConnecte } = useContext(RECEContextData);
   const optionsUtilisateurs = listeUtilisateursToOptionsBis(
     TypeRequete.CREATION,
     SousTypeCreation.RCEDXC,
-    idUtilisateur || "",
-    false
+    utilisateurConnecte,
+    false,
+    utilisateurs
   );
 
   const filtreSousTypeCreation: Options =
@@ -104,7 +105,7 @@ export const FiltreServiceRequeteCreationForm: React.FC<
               componentName="filtreAttribuerAuService"
               name="attribueAuService"
               label={getLibelle("Attribué à un service")}
-              options={getServicesAsOptions()}
+              options={getServicesAsOptions(utilisateurConnecte)}
               disabled={Boolean(values.numeroRequete)}
             />
             <SelectField

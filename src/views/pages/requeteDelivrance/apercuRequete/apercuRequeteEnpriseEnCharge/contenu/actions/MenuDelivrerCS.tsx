@@ -1,4 +1,5 @@
 import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -16,7 +17,7 @@ import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../../mapping/ReqDelivranceToReqTableau";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
@@ -34,6 +35,7 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
   const location = useLocation();
   const navigate = useNavigate();
   const refs = useRef([]);
+  const { decrets } = useContext(RECEContextData);
 
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
@@ -144,13 +146,14 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
       });
       replaceUrl(navigate, url);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultDeliverCertificatSituation, location, navigate]);
 
   return (
     <>
       <OperationEnCours
-        visible={operationEnCours}
+        visible={operationEnCours || !decrets}
         onTimeoutEnd={() => setOperationEnCours(false)}
         onClick={() => setOperationEnCours(false)}
       />

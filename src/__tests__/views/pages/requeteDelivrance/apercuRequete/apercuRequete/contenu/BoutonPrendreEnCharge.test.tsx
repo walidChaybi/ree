@@ -14,10 +14,12 @@ import { BoutonPrendreEnCharge } from "@pages/requeteDelivrance/apercuRequete/ap
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
-import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../../../__tests__utils__/testsUtil";
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
@@ -52,8 +54,6 @@ const requeteTestCOURRIER = {
 } as IRequeteDelivrance;
 
 test("est à A_TRAITER ou TRANSFEREE et provient de COURRIER", () => {
-  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-
   const router = createTestingRouter(
     [
       {
@@ -68,7 +68,9 @@ test("est à A_TRAITER ou TRANSFEREE et provient de COURRIER", () => {
     [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
   );
 
-  const { getByText } = render(<RouterProvider router={router} />);
+  const { getByText } = render(
+    elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC)
+  );
 
   const bouttonPrendreEnCharge = getByText(
     /Prendre en charge/i
@@ -114,7 +116,6 @@ const requeteTestCOMEDEC = {
 } as IRequeteDelivrance;
 
 test("est à A_TRAITER ou TRANSFEREE et provient de COMEDEC", () => {
-  storeRece.utilisateurCourant = userDroitCOMEDEC;
   const router = createTestingRouter(
     [
       {
@@ -134,7 +135,9 @@ test("est à A_TRAITER ou TRANSFEREE et provient de COMEDEC", () => {
     ]
   );
 
-  const { getByText } = render(<RouterProvider router={router} />);
+  const { getByText } = render(
+    elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC)
+  );
 
   const bouttonPrendreEnCharge = getByText(
     /Prendre en charge/i

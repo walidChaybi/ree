@@ -1,4 +1,5 @@
 import { deleteObservation, postObservation } from "@api/appels/requeteApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { IObservation } from "@model/requete/IObservation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
@@ -6,9 +7,8 @@ import DeleteOutline from "@mui/icons-material/DeleteOutline";
 import Edit from "@mui/icons-material/Edit";
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { UN, ZERO } from "@util/Utils";
-import { storeRece } from "@util/storeRece";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import * as Yup from "yup";
 import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
 import ConteneurModale from "../../../../commun/conteneurs/modale/ConteneurModale";
@@ -24,8 +24,9 @@ interface IObservationsRequeteProps {
 const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({
   requete
 }) => {
+  const { utilisateurConnecte } = useContext(RECEContextData);
   const idOfficier: string | undefined = useMemo(
-    () => storeRece.utilisateurCourant?.idUtilisateur,
+    () => utilisateurConnecte?.idUtilisateur,
     []
   );
   const [observations, setObservations] = useState<IObservation[]>(

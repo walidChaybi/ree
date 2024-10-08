@@ -10,10 +10,12 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { BoutonModifierTraitement } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/BoutonModifierTraitement";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { fireEvent, render, waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
-import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../../../__tests__utils__/testsUtil";
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
@@ -49,8 +51,6 @@ const requeteTestCOURRIER = {
 
 describe.skip("BoutonModifierTraitement - ", () => {
   test("est à A_SIGNER", () => {
-    storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-
     const router = createTestingRouter(
       [
         {
@@ -69,7 +69,12 @@ describe.skip("BoutonModifierTraitement - ", () => {
       [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
     );
 
-    const { getByText } = render(<RouterProvider router={router} />);
+    const { getByText } = render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        userDroitnonCOMEDEC
+      )
+    );
 
     const bouttonModifierTraitement = getByText(
       /Modifier le traitement/i
@@ -83,7 +88,6 @@ describe.skip("BoutonModifierTraitement - ", () => {
   });
 
   test("est à A_VALIDER", () => {
-    storeRece.utilisateurCourant = userDroitnonCOMEDEC;
     requeteTestCOURRIER.statutCourant.statut = StatutRequete.A_VALIDER;
 
     const router = createTestingRouter(
@@ -104,7 +108,12 @@ describe.skip("BoutonModifierTraitement - ", () => {
       [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
     );
 
-    const { getByText } = render(<RouterProvider router={router} />);
+    const { getByText } = render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        userDroitnonCOMEDEC
+      )
+    );
 
     const bouttonModifierTraitement = getByText(
       /Modifier le traitement/i

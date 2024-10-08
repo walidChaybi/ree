@@ -1,5 +1,6 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
 import { ICreationActionMiseAjourStatutEtRmcAutoHookParams } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { IOfficier } from "@model/agent/IOfficier";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -43,7 +44,8 @@ export function goToLinkRequete(
   return queryParameters;
 }
 
-export function miseAjourOuRedirection(
+/* v8 ignore start */
+export const miseAjourOuRedirection = (
   requeteSelect: IRequeteTableauDelivrance,
   setParamsMiseAJour: React.Dispatch<
     React.SetStateAction<
@@ -54,11 +56,14 @@ export function miseAjourOuRedirection(
   idRequete: string,
   data: IRequeteTableauDelivrance[],
   idx: number,
-  url: string
-) {
+  url: string,
+  utilisateurConnecte: IOfficier
+) => {
   let pasDeTraitementAuto;
-  const aPrendreEnCharge =
-    autorisePrendreEnChargeReqTableauDelivrance(requeteSelect);
+  const aPrendreEnCharge = autorisePrendreEnChargeReqTableauDelivrance(
+    utilisateurConnecte,
+    requeteSelect
+  );
   const statutARevoir = requeteSelect.statut === StatutRequete.A_REVOIR.libelle;
   const aDocumentASigner = requeteSelect.documentsReponses?.some(
     document => document.avecCtv
@@ -90,7 +95,8 @@ export function miseAjourOuRedirection(
   } else {
     props.setParamsRMCAuto(idRequete, data[idx], url, pasDeTraitementAuto);
   }
-}
+};
+/* v8 ignore end */
 
 export function ADonneesTitulaireRequeteAbsentes(
   requete: IRequeteTableauDelivrance | IRequeteDelivrance

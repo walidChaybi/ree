@@ -1,9 +1,10 @@
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { PATH_APERCU_REQ_INFO } from "@router/ReceUrls";
 import { autorisePrendreEnChargeReqTableauInformation } from "@util/RequetesUtils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ICreationActionMiseAjourStatutHookParams,
@@ -24,6 +25,7 @@ export function useNavigationApercuInformation(
   >();
 
   const navigate = useNavigate();
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   useCreationActionMiseAjourStatut(paramsMAJReqInfo);
 
@@ -36,7 +38,12 @@ export function useNavigationApercuInformation(
 
   useEffect(() => {
     if (params?.requete) {
-      if (autorisePrendreEnChargeReqTableauInformation(params.requete)) {
+      if (
+        autorisePrendreEnChargeReqTableauInformation(
+          utilisateurConnecte,
+          params.requete
+        )
+      ) {
         setParamsMAJReqInfo({
           libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
           statutRequete: StatutRequete.PRISE_EN_CHARGE,
@@ -49,6 +56,5 @@ export function useNavigationApercuInformation(
         redirectionVersApercu();
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 }

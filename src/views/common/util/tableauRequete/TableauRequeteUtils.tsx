@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { AlerteRequete } from "@model/requete/enum/AlerteRequete";
 import { Priorite } from "@model/requete/enum/Priorite";
@@ -8,8 +9,8 @@ import ReportIcon from "@mui/icons-material/Report";
 import Box from "@mui/material/Box";
 import { getLibelle, numberToString } from "@util/Utils";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
+import { useContext } from "react";
 import { getDateStringFromDateCompose } from "../DateUtils";
-import { storeRece } from "../storeRece";
 import "./scss/RequeteUtils.scss";
 
 export function prioriteDeLaRequete(priorite: string): string {
@@ -25,7 +26,7 @@ export function prioriteDeLaRequete(priorite: string): string {
   }
 }
 
-export function getIconPrioriteRequete(data: any): JSX.Element {
+export const RenderIconPrioriteRequete = (data: any): JSX.Element => {
   const priorite = data.priorite;
   if (priorite && priorite !== "") {
     return (
@@ -48,9 +49,9 @@ export function getIconPrioriteRequete(data: any): JSX.Element {
       </Box>
     );
   }
-}
+};
 
-export function getObservationsNumeroRequete(data: any): JSX.Element {
+export const RenderObservationsNumeroRequete = (data: any): JSX.Element => {
   const observations = data.observations;
   let titleObservations = "";
 
@@ -73,9 +74,9 @@ export function getObservationsNumeroRequete(data: any): JSX.Element {
       )}
     </>
   );
-}
+};
 
-export function getCellTitulaires(data: any): JSX.Element {
+export const RenderCellTitulaires = (data: any): JSX.Element => {
   const titulaires = data.titulaires;
   let titleTitulaires = "";
   const celluleTitulaires: string[] = [];
@@ -107,9 +108,9 @@ export function getCellTitulaires(data: any): JSX.Element {
       })}
     </div>
   );
-}
+};
 
-export function getCellDatesNaissancesTitulaires(data: any): JSX.Element {
+export const RenderCellDatesNaissancesTitulaires = (data: any): JSX.Element => {
   const titulaires = data.titulaires;
   let titleDatesNaissances = "";
   const celluleDatesNaissances: string[] = [];
@@ -134,14 +135,15 @@ export function getCellDatesNaissancesTitulaires(data: any): JSX.Element {
       })}
     </div>
   );
-}
+};
 
-export function getCellRequerant(data: any): JSX.Element {
+export const RenderCellRequerant = (data: any): JSX.Element => {
+  const { services, utilisateurs } = useContext(RECEContextData);
   if (data.idUtilisateurRequerant) {
-    const codeService = storeRece.listeServices?.find(
+    const codeService = services?.find(
       el =>
         el.idService ===
-        storeRece.listeUtilisateurs?.find(
+        utilisateurs?.find(
           ut => ut.idUtilisateur === data.idUtilisateurRequerant
         )?.service?.idService
     )?.code;
@@ -149,13 +151,13 @@ export function getCellRequerant(data: any): JSX.Element {
   } else {
     return <span>{data.nomCompletRequerant}</span>;
   }
-}
+};
 
-export function getMessageZeroRequete(): JSX.Element {
+export const RenderMessageZeroRequete = (): JSX.Element => {
   return getLigneTableauVide("Aucune requête n'a été trouvée.");
-}
+};
 
-export const getMessageSaisirFiltreOuZeroRequete = (
+export const RenderMessageSaisirFiltreOuZeroRequete = (
   rechercheEffectuee: boolean
 ): JSX.Element =>
   getLigneTableauVide(
@@ -164,7 +166,7 @@ export const getMessageSaisirFiltreOuZeroRequete = (
       : "Saisir au moins un critère pour afficher des résultats."
   );
 
-export function getIconeAlerteRequete(data: any): JSX.Element {
+export const RenderIconeAlerteRequete = (data: any): JSX.Element => {
   if (
     AlerteRequete.getEnumFor(data.alerte) ===
     AlerteRequete.RECEPTION_MISE_A_JOUR_SDANF
@@ -179,4 +181,4 @@ export function getIconeAlerteRequete(data: any): JSX.Element {
       </Box>
     );
   } else return <></>;
-}
+};

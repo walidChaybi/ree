@@ -1,5 +1,5 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { RECEContext } from "@core/contexts/RECEContext";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import {
@@ -101,16 +101,15 @@ const EspaceCreationPage: React.FC<LocalProps> = ({ selectedTab }) => {
   const [popinAttribuerAOuvert, setPopinAttribuerAOuvert] =
     useState<boolean>(false);
 
-  const { infosLoginOfficier, estListeUtilisateursChargee } =
-    useContext(RECEContext);
+  const { utilisateurConnecte, utilisateurs } = useContext(RECEContextData);
 
   useTitreDeLaFenetre("Espace création");
 
   return (
     <div>
-      {infosLoginOfficier?.officierDataState && (
+      {utilisateurConnecte && (
         <>
-          <OperationEnCours visible={!estListeUtilisateursChargee} />
+          <OperationEnCours visible={!utilisateurs} />
           <BoiteAOnglets
             selectedTab={selectedTabState}
             onglets={getOnglets(

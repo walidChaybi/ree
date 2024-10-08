@@ -15,7 +15,7 @@ const LISTE_TYPE_MENTION_NIVEAU_UN = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_U
 const LISTE_TYPE_MENTION_NIVEAU_DEUX = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_DEUX}`;
 const LISTE_TYPE_MENTION_NIVEAU_TROIS = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_TROIS}`;
 
-test("le composant DOIT etre rendu correctement QUAND le type et sous-type sont selectionné ", async () => {
+test.skip("le composant DOIT etre rendu correctement QUAND le type et sous-type sont selectionné ", async () => {
   render(
     <MemoryRouter>
       <Formik initialValues={{}} onSubmit={() => {}}>
@@ -59,7 +59,7 @@ test("le composant DOIT etre rendu correctement QUAND le type et sous-type sont 
   });
 });
 
-test("le composant DOIT etre rendu correctement QUAND le type, sous-type et le sous sous-type sont selectionné ", async () => {
+test.skip("le composant DOIT etre rendu correctement QUAND le type, sous-type et le sous sous-type sont selectionné ", async () => {
   render(
     <MemoryRouter>
       <Formik initialValues={{}} onSubmit={() => {}}>

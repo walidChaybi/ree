@@ -1,4 +1,4 @@
-import { RECEContext } from "@core/contexts/RECEContext";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   INavigationApercuRMCAutoParams,
@@ -14,6 +14,7 @@ import {
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import React, { useCallback, useContext, useState } from "react";
 import { MesRequetesPage } from "./MesRequetesPage";
@@ -87,14 +88,14 @@ const getOnglets = (
 
 const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
   const [toggleReloadCompteur, setToggleReloadCompteur] =
-    React.useState<boolean>(true);
+    useState<boolean>(true);
 
-  const { infosLoginOfficier } = useContext(RECEContext);
+  const { utilisateurConnecte, decrets } = useContext(RECEContextData);
 
   const miseAJourCompteur = () => {
     setToggleReloadCompteur(!toggleReloadCompteur);
   };
-  const selectedTabState = selectedTab || 0;
+  const selectedTabState = selectedTab ?? 0;
 
   //**** RMC AUTO ****//
   const [paramsRMCAuto, setParamsRMCAuto] = useState<
@@ -122,7 +123,8 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
 
   return (
     <div>
-      {infosLoginOfficier?.officierDataState && (
+      <OperationEnCours visible={!decrets} />
+      {utilisateurConnecte && (
         <>
           {selectedTabState === 0 && (
             <CompteurRequete reloadCompteur={toggleReloadCompteur} />
@@ -132,7 +134,7 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
             onglets={getOnglets(miseAJourCompteur, recuperationParamsRMCAuto)}
             elementEntreTitreEtContenu={getElementEntreDeux(
               selectedTabState,
-              infosLoginOfficier.officierDataState
+              utilisateurConnecte
             )}
             titre="Menu espace délivrance"
             classOnglet="ongletPageEspace"

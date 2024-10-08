@@ -1,3 +1,5 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
+import { IOfficier } from "@model/agent/IOfficier";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -13,9 +15,8 @@ import messageManager from "@util/messageManager";
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
 import { autorisePrendreEnChargeReqTableauDelivrance } from "@util/RequetesUtils";
 import { getUrlPrecedente, getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export interface INavigationApercuDelivrance {
   isRmcAuto?: boolean;
@@ -29,21 +30,21 @@ export function useNavigationApercuDelivrance(
   const [redirection, setRedirection] = useState<
     INavigationApercuDelivrance | undefined
   >();
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   useEffect(() => {
     if (requete && urlWithoutParam) {
-      const officier = storeRece.utilisateurCourant;
-
       // Si la requete est dans sa corbeille
       if (
-        officier &&
-        officier?.idUtilisateur === requete.idUtilisateur &&
+        utilisateurConnecte &&
+        utilisateurConnecte?.idUtilisateur === requete.idUtilisateur &&
         requete.type &&
         requete.statut
       ) {
         // US 207 et de type RDC au statut "Traité - A imprimer" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
         // US 207 et de type RDD au statut "Traiter - A Délivrer démat" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
         redirectionEnFonctionMaRequete(
+          utilisateurConnecte,
           requete,
           setRedirection,
           urlWithoutParam
@@ -59,6 +60,7 @@ export function useNavigationApercuDelivrance(
 }
 
 const redirectionEnFonctionMaRequete = (
+  utilisateurConnecte: IOfficier,
   requete: IRequeteTableauDelivrance,
   setRedirection: (
     value: React.SetStateAction<INavigationApercuDelivrance | undefined>
@@ -70,7 +72,12 @@ const redirectionEnFonctionMaRequete = (
       case StatutRequete.TRANSFEREE.libelle:
       case StatutRequete.A_TRAITER.libelle:
         // US 210 et au statut "À traiter" ou "Transférée", on lance la "RMC Auto" et redirection suivant le résultat
-        redirectionATraiterTransferee(requete, setRedirection, urlWithoutParam);
+        redirectionATraiterTransferee(
+          utilisateurConnecte,
+          requete,
+          setRedirection,
+          urlWithoutParam
+        );
         break;
       case StatutRequete.PRISE_EN_CHARGE.libelle:
         // US 211 ... et au statut "Prise en charge", on lance la "RMC Auto" et redirection suivant le résultat
@@ -174,13 +181,16 @@ function redirectionApercuRequete(
 }
 
 function redirectionATraiterTransferee(
+  utilisateurConnecte: IOfficier,
   requete: IRequeteTableauDelivrance,
   setRedirection: (
     value: React.SetStateAction<INavigationApercuDelivrance | undefined>
   ) => void,
   urlWithoutParam: string
 ) {
-  if (autorisePrendreEnChargeReqTableauDelivrance(requete)) {
+  if (
+    autorisePrendreEnChargeReqTableauDelivrance(utilisateurConnecte, requete)
+  ) {
     setRedirection({ isRmcAuto: true });
   } else {
     redirectionApercuRequete(setRedirection, urlWithoutParam, requete);

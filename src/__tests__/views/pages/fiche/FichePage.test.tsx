@@ -1,10 +1,11 @@
-import { mappingOfficier } from "@core/login/LoginHook";
 import { idFicheActe1 } from "@mock/data/ficheActe";
 import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic,
+  userDroitCOMEDEC,
   userDroitConsulterPerimetreTUNIS
 } from "@mock/data/mockConnectedUserAvecDroit";
+import { mappingOfficier } from "@model/agent/IOfficier";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
@@ -21,18 +22,13 @@ import {
 import { DEUX, UN, ZERO } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
+import { beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
+import IHabilitationDto from "../../../../dto/etatcivil/agent/IHabilitationDto";
 import {
-  afterEach,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  test,
-  vi
-} from "vitest";
-import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../__tests__utils__/testsUtil";
 
 describe("Test du composant Fiche page", () => {
   const fct = vi.fn();
@@ -80,13 +76,14 @@ describe("Test du composant Fiche page", () => {
   });
 
   test("Le render d'un ACTE via fichePage se fait correctement", async () => {
-    storeRece.utilisateurCourant = mappingOfficier(
+    const utilisateurConnecte = mappingOfficier(
       resultatHeaderUtilistateurLeBiannic,
       resultatRequeteUtilistateurLeBiannic.data
     );
 
-    storeRece.utilisateurCourant.habilitations = mapHabilitationsUtilisateur(
-      resultatRequeteUtilistateurLeBiannic.data.habilitations
+    utilisateurConnecte.habilitations = mapHabilitationsUtilisateur(
+      resultatRequeteUtilistateurLeBiannic.data
+        .habilitations as unknown as IHabilitationDto[]
     );
 
     await TypeAlerte.init();
@@ -117,7 +114,12 @@ describe("Test du composant Fiche page", () => {
       ["/"]
     );
 
-    render(<RouterProvider router={router} />);
+    render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        utilisateurConnecte
+      )
+    );
 
     await waitFor(() => {
       // fct est appelé une fois quand le test est lancé tt seul
@@ -139,6 +141,7 @@ describe("Test du composant Fiche page", () => {
   });
 
   test("Attendu: le bouton 'demander la délivrance' est affiché et au clique effectue le traitement demandé'", async () => {
+    const utilisateurConnecte = userDroitCOMEDEC;
     const router = createTestingRouter(
       [
         {
@@ -162,11 +165,16 @@ describe("Test du composant Fiche page", () => {
       ["/"]
     );
 
-    render(<RouterProvider router={router} />);
+    render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        utilisateurConnecte
+      )
+    );
 
-    await waitFor(() => {
-      expect(screen.getByText("Demander la délivrance")).toBeDefined();
-    });
+    await expect
+      .poll(() => screen.getByLabelText("Demander la délivrance"))
+      .toBeDefined();
     fireEvent.click(screen.getByLabelText("Demander la délivrance"));
 
     let okButton: HTMLElement | null;
@@ -184,7 +192,7 @@ describe("Test du composant Fiche page", () => {
   });
 
   test("Attendu: le bouton 'demander la délivrance' n'est pas affiché lorsque l'utilisateur est habilité", () => {
-    storeRece.utilisateurCourant = userDroitConsulterPerimetreTUNIS;
+    const utilisateurConnecte = userDroitConsulterPerimetreTUNIS;
 
     const router = createTestingRouter(
       [
@@ -209,7 +217,12 @@ describe("Test du composant Fiche page", () => {
       ["/"]
     );
 
-    render(<RouterProvider router={router} />);
+    render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        utilisateurConnecte
+      )
+    );
 
     const boutonDemanderDelivrance = screen.queryByLabelText(
       "Demander la délivrance"
@@ -218,9 +231,5 @@ describe("Test du composant Fiche page", () => {
     waitFor(() => {
       expect(boutonDemanderDelivrance).toBeNull();
     });
-  });
-
-  afterEach(() => {
-    storeRece.utilisateurCourant = undefined;
   });
 });

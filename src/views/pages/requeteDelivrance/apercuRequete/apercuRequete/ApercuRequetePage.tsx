@@ -1,18 +1,19 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
+import { IOfficier } from "@model/agent/IOfficier";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getLibelle } from "@util/Utils";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAvecTitre";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
 import { mappingRequeteDelivranceToRequeteTableau } from "../mapping/ReqDelivranceToReqTableau";
@@ -27,6 +28,7 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { utilisateurConnecte } = useContext(RECEContextData);
   const [documentAffiche, setDocumentAffiche] = useState<IDocumentReponse>();
 
   const [requete, setRequete] = useState<IRequeteDelivrance>();
@@ -84,7 +86,8 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
           )}
           {afficherBoutonFinConsultation(
             requete.statutCourant.statut,
-            requete.idUtilisateur
+            requete.idUtilisateur,
+            utilisateurConnecte
           ) && (
             <BoutonDoubleSubmit onClick={finDeConsultation}>
               {getLibelle("Fin consultation")}
@@ -105,10 +108,11 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
 
 function afficherBoutonFinConsultation(
   statut: StatutRequete,
-  idUtilisateur: string
+  idUtilisateur: string,
+  utilisateurConnecte: IOfficier
 ) {
   return (
     statut === StatutRequete.TRAITE_REPONDU &&
-    storeRece.utilisateurCourant?.idUtilisateur === idUtilisateur
+    utilisateurConnecte?.idUtilisateur === idUtilisateur
   );
 }

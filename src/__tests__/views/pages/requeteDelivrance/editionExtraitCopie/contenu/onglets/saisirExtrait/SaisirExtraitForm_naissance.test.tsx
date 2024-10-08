@@ -1,6 +1,5 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import {
   requeteAvecDocs,
   requeteAvecDocsPlurilingue
@@ -30,8 +29,7 @@ import {
 } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/mapping/mappingActeVerFormulaireSaisirExtrait";
 import { mapTitulaireNaissanceEtParents } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/mapping/mappingFormulaireSaisirExtraitVersExtraitAEnvoyer";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
-import { beforeAll, expect, test } from "vitest";
+import { expect, test } from "vitest";
 import {
   changeInput,
   expectEstAbsent,
@@ -43,24 +41,20 @@ import {
   expectEstSelectPresentAvecValeur,
   expectSelectEstAbsent
 } from "../../../../../../../__tests__utils__/expectUtils";
+import { elementAvecContexte } from "../../../../../../../__tests__utils__/testsUtil";
 
 const acte = mapActe(ficheActe1.data);
 const requete = {
   statutCourant: { statut: StatutRequete.A_SIGNER }
 } as IRequeteDelivrance;
 
-beforeAll(() => {
-  storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
-});
-
 const saisirExtraitFormAvecContexte = (
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ): any => {
-  return (
-    <MockRECEContextProvider>
-      <SaisirExtraitForm acte={acte} requete={requete} />
-    </MockRECEContextProvider>
+  return elementAvecContexte(
+    <SaisirExtraitForm acte={acte} requete={requete} />,
+    userDroitnonCOMEDEC
   );
 };
 

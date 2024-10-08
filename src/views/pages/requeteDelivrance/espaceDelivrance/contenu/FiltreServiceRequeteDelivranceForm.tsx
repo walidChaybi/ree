@@ -2,6 +2,7 @@ import {
   getServicesAsOptions,
   listeUtilisateursToOptionsBis
 } from "@composant/menuTransfert/MenuTransfertUtil";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,11 +14,10 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import Button from "@mui/material/Button";
 import { getLibelle } from "@util/Utils";
-import { storeRece } from "@util/storeRece";
 import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { Formik } from "formik";
-import React from "react";
+import React, { useContext } from "react";
 import "./scss/FiltreServiceRequeteDelivranceForm.scss";
 
 export interface IFiltreServiceRequeteDelivranceFormProps {
@@ -36,6 +36,8 @@ export const FiltreServiceRequeteDelivranceFormDefaultValues: IFiltreServiceRequ
 export const FiltreServiceRequeteDelivranceForm: React.FC<
   IFiltreServiceRequeteDelivranceFormProps
 > = props => {
+  const { utilisateurs, utilisateurConnecte } = useContext(RECEContextData);
+
   function onSubmitFiltresDelivrance(
     values: IFiltreServiceRequeteDelivranceFormValues
   ) {
@@ -74,15 +76,16 @@ export const FiltreServiceRequeteDelivranceForm: React.FC<
               options={listeUtilisateursToOptionsBis(
                 TypeRequete.DELIVRANCE,
                 SousTypeDelivrance.RDC,
-                storeRece.utilisateurCourant?.idUtilisateur || "",
-                false
+                utilisateurConnecte,
+                false,
+                utilisateurs
               )}
             />
             <ChampRechercheField
               componentName="filtreAttribuerAuService"
               name="attribueAuService"
               label={getLibelle("Attribué à un service")}
-              options={getServicesAsOptions()}
+              options={getServicesAsOptions(utilisateurConnecte)}
             />
             <SelectField
               name="statut"

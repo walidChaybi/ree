@@ -1,9 +1,11 @@
 import { HTTP_BAD_REQUEST, HTTP_STATUS_OK } from "@api/ApiManager";
+import { RECEContextData } from "@core/contexts/RECEContext";
+import { IOfficier } from "@model/agent/IOfficier";
 import { IModifierStatutRequeteApresSignature } from "@model/requete/IModifierStatutRequeteApresSignature";
 import { IComposerDocumentFinalApiHookResultat } from "@model/signature/IComposerDocumentFinalApiHookResultat";
 import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DOCUMENT_SIGNE_VALIDE from "../../../../../ressources/DocumentSigneValide";
 import DOCUMENT_VIDE_A_SIGNER from "../../../../../ressources/DocumentVideASigner";
 
@@ -22,7 +24,8 @@ export interface ISuccesSignatureEtAppelApi<
 > {
   onSuccesSignatureAppNative: (
     document: string,
-    informationCarte: IInfosCarteSignature
+    informationCarte: IInfosCarteSignature,
+    utilisateurConnecte: IOfficier
   ) => void;
   reinitialiserParamsApiHook: () => void;
   resultatApiHook?: TResultat;
@@ -47,6 +50,8 @@ const useComposerEtIntegrerDocumentFinalHook = (
   const [documentASigner, setDocumentASigner] = useState<string>(
     DOCUMENT_VIDE_A_SIGNER
   );
+
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   // Une fois le document final recomposé, on met à jour le state "documentASigner"
   // afin de signer notre document final.
@@ -116,14 +121,16 @@ const useComposerEtIntegrerDocumentFinalHook = (
     if (!composerDocumentApresSignature.resultatApiHook) {
       composerDocumentApresSignature.onSuccesSignatureAppNative(
         document,
-        informationsCarte
+        informationsCarte,
+        utilisateurConnecte
       );
     } else {
       integrerDocumentApresSignature.onSuccesSignatureAppNative(
         process.env.NODE_ENV === "development"
           ? DOCUMENT_SIGNE_VALIDE
           : document,
-        informationsCarte
+        informationsCarte,
+        utilisateurConnecte
       );
     }
   };

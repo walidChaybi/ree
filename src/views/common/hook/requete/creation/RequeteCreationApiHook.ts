@@ -5,6 +5,9 @@ import {
   postRequetesServiceCreation,
   TypeAppelRequete
 } from "@api/appels/requeteApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
+import { IService } from "@model/agent/IService";
+import { IUtilisateur } from "@model/agent/IUtilisateur";
 import {
   IFiltreServiceRequeteCreationFormValues,
   IFiltresServiceRequeteCreation,
@@ -17,7 +20,7 @@ import {
 import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export function useRequeteCreationApiHook(
   typeRequete: TypeAppelRequete,
@@ -27,6 +30,7 @@ export function useRequeteCreationApiHook(
     React.SetStateAction<IQueryParametersPourRequetes | undefined>
   >
 ) {
+  const { utilisateurs, services } = useContext(RECEContextData);
   const [dataState, setDataState] = useState<IRequeteTableauCreation[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
   const [numeroReqNatali, setNumeroReqNatali] = useState<string>();
@@ -48,7 +52,9 @@ export function useRequeteCreationApiHook(
                 );
           const mesRequetes = mappingRequetesTableauCreation(
             result?.body?.data,
-            false
+            false,
+            utilisateurs,
+            services
           );
           setDataState(mesRequetes);
           setParamsTableau(getParamsTableau(result));
@@ -71,7 +77,14 @@ export function useRequeteCreationApiHook(
       getReqNataliById(numeroReqNatali)
         .then(res => {
           if (res) {
-            setDataState(mappingRequetesTableauCreation(res.body.data, false));
+            setDataState(
+              mappingRequetesTableauCreation(
+                res.body.data,
+                false,
+                utilisateurs,
+                services
+              )
+            );
             setParamsTableau(getParamsTableau(res));
           }
         })
@@ -106,9 +119,16 @@ export function useRequeteCreationApiHook(
 
 function mappingRequetesTableauCreation(
   resultatsRecherche: any,
-  mappingSupplementaire: boolean
+  mappingSupplementaire: boolean,
+  utilisateurs: IUtilisateur[],
+  services: IService[]
 ): IRequeteTableauCreation[] {
   return resultatsRecherche?.map((requete: any) => {
-    return mappingUneRequeteTableauCreation(requete, mappingSupplementaire);
+    return mappingUneRequeteTableauCreation(
+      requete,
+      mappingSupplementaire,
+      utilisateurs,
+      services
+    );
   });
 }

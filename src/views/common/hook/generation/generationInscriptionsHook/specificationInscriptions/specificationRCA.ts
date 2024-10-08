@@ -1,4 +1,5 @@
 import { IElementsJasperCertificatRCA } from "@model/composition/ICertificatRCAComposition";
+import { IDecret } from "@model/etatcivil/commun/IDecret";
 import { TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
 import { TypeDecision } from "@model/etatcivil/enum/TypeDecision";
 import { TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
@@ -77,7 +78,7 @@ function getDecisionONACInscription(
 
 /////////////////////////////////////////////////////////////////////
 class SpecificationRCA {
-  getElementsJasper(infosRCA: IFicheRcRca) {
+  getElementsJasper(infosRCA: IFicheRcRca, decrets: IDecret[]) {
     const elementsJasper = {} as IElementsJasperCertificatRCA;
 
     if (infosRCA) {
@@ -86,7 +87,7 @@ class SpecificationRCA {
       elementsJasper.decisionRecue = getParagrapheDecisionRecue(infosRCA);
       elementsJasper.interesseDecision = getInteressesDecision(infosRCA);
       elementsJasper.decisionExequatur = getDecisionExequatur(infosRCA);
-      elementsJasper.paragrapheFin = getParagrapheFin(infosRCA);
+      elementsJasper.paragrapheFin = getParagrapheFin(infosRCA, decrets);
     }
     return elementsJasper;
   }

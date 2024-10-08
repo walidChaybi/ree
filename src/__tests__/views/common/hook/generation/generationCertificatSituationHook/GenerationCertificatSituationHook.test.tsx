@@ -16,6 +16,7 @@ import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTablea
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { expect, test } from "vitest";
+import { elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 
 const titulaire = {
   nom: "nom",
@@ -62,7 +63,7 @@ const HookConsummer: React.FC = () => {
 };
 
 test("Attendu: la génération d'un certificat de situation pour une recherche RMC auto vide et une demande PACS et titulaire Masculin fonctionne correctement", () => {
-  render(<HookConsummer></HookConsummer>);
+  render(elementAvecContexte(<HookConsummer />));
   const resulatIdDoc = screen.getByTestId("resulatIdDoc");
   const resulatContenu = screen.getByTestId("resulatContenu");
 

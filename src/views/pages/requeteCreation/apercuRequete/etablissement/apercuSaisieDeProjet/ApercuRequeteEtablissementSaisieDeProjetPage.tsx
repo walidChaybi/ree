@@ -1,4 +1,7 @@
-import { RECEContext } from "@core/contexts/RECEContext";
+import {
+  RECEContextActions,
+  RECEContextData
+} from "@core/contexts/RECEContext";
 import {
   IRecupererRegistrePapierParIdActeParams,
   useRecupererRegistrePapierParIdActeApiHook
@@ -78,7 +81,9 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
     useParams<TUuidSuiviDossierParams>();
   const navigate = useNavigate();
   const location = useLocation();
-  const { isDirty, setIsDirty } = useContext(RECEContext);
+  const { isDirty } = useContext(RECEContextData);
+  const { setIsDirty } = useContext(RECEContextActions);
+
   const [rafraichirForm, setRafraichirForm] = useState<
     (() => void) | undefined
   >();

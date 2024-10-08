@@ -1,11 +1,11 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { mappingOfficier } from "@core/login/LoginHook";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic
 } from "@mock/data/mockConnectedUserAvecDroit";
 import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
+import { mappingOfficier } from "@model/agent/IOfficier";
 import { IPerimetre } from "@model/agent/IPerimetre";
 import { IService } from "@model/agent/IService";
 import {
@@ -13,8 +13,8 @@ import {
   mapHabilitationsUtilisateur
 } from "@model/agent/IUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
+import { ETypeService } from "@model/agent/enum/ETypeService";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { TypeService } from "@model/agent/enum/TypeService";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import { RequetesServiceCreation } from "@pages/requeteCreation/espaceCreation/RequetesServiceCreation";
 import { statutsRequetesCreation } from "@pages/requeteCreation/espaceCreation/params/EspaceCreationParams";
@@ -25,49 +25,59 @@ import {
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { UN } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import React, { useState } from "react";
+import React, { act, useState } from "react";
 import { RouterProvider } from "react-router-dom";
-import { beforeAll, expect, test } from "vitest";
+import { expect, test } from "vitest";
+import IHabilitationDto from "../../../../../dto/etatcivil/agent/IHabilitationDto";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
-beforeAll(() => {
-  storeRece.utilisateurCourant = mappingOfficier(
-    resultatHeaderUtilistateurLeBiannic,
-    resultatRequeteUtilistateurLeBiannic.data
-  );
-  storeRece.utilisateurCourant.habilitations = mapHabilitationsUtilisateur(
-    resultatRequeteUtilistateurLeBiannic.data.habilitations
-  );
+const utilisateurs = [
+  {
+    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+    prenom: "Ashley",
+    nom: "Young",
+    trigramme: "FOO",
+    habilitations: [
+      {
+        idHabilitation: "123",
+        profil: {
+          droits: [{ nom: Droit.CREER_ACTE_ETABLI } as IDroit]
+        } as IProfil,
+        perimetre: {
+          nom: Perimetre.TOUS_REGISTRES,
+          listeIdTypeRegistre: ["meae"]
+        } as IPerimetre
+      } as IHabilitation
+    ],
+    service: {
+      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
+      type: ETypeService.SECTION,
+      code: "Assistance Informatique",
+      libelleService: "BAG Assitance Informatique"
+    } as IService
+  } as IUtilisateur
+] as IUtilisateur[];
 
-  storeRece.listeUtilisateurs = [
-    {
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
-      prenom: "Ashley",
-      nom: "Young",
-      trigramme: "FOO",
-      habilitations: [
-        {
-          idHabilitation: "123",
-          profil: {
-            droits: [{ nom: Droit.CREER_ACTE_ETABLI } as IDroit]
-          } as IProfil,
-          perimetre: {
-            nom: Perimetre.TOUS_REGISTRES,
-            listeIdTypeRegistre: ["meae"]
-          } as IPerimetre
-        } as IHabilitation
-      ],
-      service: {
-        idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
-        type: TypeService.SECTION,
-        code: "Assistance Informatique",
-        libelleService: "BAG Assitance Informatique"
-      } as IService
-    } as IUtilisateur
-  ] as IUtilisateur[];
-});
+const utilisateurConnecte = mappingOfficier(
+  resultatHeaderUtilistateurLeBiannic,
+  resultatRequeteUtilistateurLeBiannic.data
+);
+utilisateurConnecte.habilitations = mapHabilitationsUtilisateur(
+  resultatRequeteUtilistateurLeBiannic.data
+    .habilitations as unknown as IHabilitationDto[]
+);
+
+const routerAvecContexte = (router: any): any => {
+  return (
+    <MockRECEContextProvider
+      utilisateurConnecte={utilisateurConnecte}
+      utilisateurs={utilisateurs}
+    >
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
+};
 
 const queryParametersPourRequetes = {
   statuts: statutsRequetesCreation,
@@ -102,7 +112,7 @@ const HookConsummer: React.FC = () => {
     [URL_REQUETES_CREATION_SERVICE]
   );
 
-  return <RouterProvider router={router} />;
+  return routerAvecContexte(router);
 };
 
 test.skip("DOIT afficher le tableau des requêtes de service à vide QUAND on arrive sur la page", () => {
@@ -152,21 +162,14 @@ test.skip("DOIT correctement afficher l'attribution des requêtes de service QUA
     [
       {
         path: URL_REQUETES_CREATION_SERVICE,
-        element: (
-          <MockRECEContextProvider
-            infosLoginOfficier={{
-              officierDataState: storeRece.utilisateurCourant
-            }}
-          >
-            <EspaceCreationPage selectedTab={UN} />
-          </MockRECEContextProvider>
-        )
+        element: <EspaceCreationPage selectedTab={UN} />
       }
     ],
     [URL_REQUETES_CREATION_SERVICE]
   );
-
-  render(<RouterProvider router={router} />);
+  act(async () => {
+    render(routerAvecContexte(router));
+  });
 
   fireEvent.click(screen.getByTestId("loupeButton"));
 

@@ -1,9 +1,10 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE } from "@model/agent/IOfficier";
 import { getLibelle } from "@util/Utils";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   IAjouterAlerteFormValue,
   PopinAjouterAlertes
@@ -22,9 +23,15 @@ export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   const onClick = (): void => {
-    if (officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(idTypeRegistre)) {
+    if (
+      officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(
+        utilisateurConnecte,
+        idTypeRegistre
+      )
+    ) {
       setIsOpen(true);
     } else {
       setHasMessageBloquant(true);

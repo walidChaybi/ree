@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   TransfertUnitaireParams,
   useTransfertApi
@@ -19,7 +20,7 @@ import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   listeServicesToOptions,
@@ -106,6 +107,9 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
   const [agentPopinOpen, setAgentPopinOpen] = useState<boolean>(false);
   const [param, setParam] = useState<TransfertUnitaireParams>();
 
+  const { utilisateurs, services, utilisateurConnecte } =
+    useContext(RECEContextData);
+
   const onCloseService = () => {
     setServicePopinOpen(false);
     reinitialiserOnClick(refs);
@@ -136,7 +140,9 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
   return (
     <>
       <OperationEnCours
-        visible={operationEnCours}
+        visible={
+          operationEnCours || !utilisateurs || !services || !utilisateurConnecte
+        }
         onTimeoutEnd={() => setOperationEnCours(false)}
         onClick={() => setOperationEnCours(false)}
       />
@@ -204,7 +210,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
             service
           )
         }
-        options={listeServicesToOptions()}
+        options={listeServicesToOptions(services)}
         titre={`${props.estTransfert ? "Transfert" : "Attribuer"} à un service`}
       ></TransfertPopin>
       <TransfertPopin
@@ -216,14 +222,16 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
             props,
             setAgentPopinOpen,
             setOperationEnCours,
+            utilisateurs,
             agent
           )
         }
         options={listeUtilisateursToOptionsBis(
           props.typeRequete,
           props.sousTypeRequete,
-          props.idUtilisateurRequete,
-          props.estTransfert
+          utilisateurConnecte,
+          props.estTransfert,
+          utilisateurs
         )}
         titre={`${
           props.estTransfert ? "Transfert" : "Attribuer"

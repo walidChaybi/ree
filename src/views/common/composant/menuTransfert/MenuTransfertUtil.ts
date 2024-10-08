@@ -1,4 +1,6 @@
 import { TransfertUnitaireParams } from "@hook/requete/TransfertHook";
+import { IOfficier } from "@model/agent/IOfficier";
+import { IService } from "@model/agent/IService";
 import {
   IUtilisateur,
   utilisateurADroit,
@@ -11,7 +13,6 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { DoubleClicUtil } from "@util/DoubleClicUtil";
 import { Option, Options } from "@util/Type";
-import { storeRece } from "@util/storeRece";
 import { MutableRefObject } from "react";
 import { Perimetre } from "./../../../../model/agent/enum/Perimetre";
 import { IMenuTransfertProps } from "./MenuTransfert";
@@ -56,13 +57,14 @@ export function onValidateAgent(
   props: React.PropsWithChildren<IMenuTransfertProps>,
   setAgentPopinOpen: React.Dispatch<React.SetStateAction<boolean>>,
   setOperationEnCours: (operation: boolean) => void,
+  utilisateurs: IUtilisateur[],
   agent?: Option
 ) {
   setOperationEnCours(true);
   if (agent) {
     setParam({
       idRequete: props.idRequete,
-      idService: storeRece.listeUtilisateurs.find(
+      idService: utilisateurs.find(
         utilisateur => utilisateur.idUtilisateur === agent.cle
       )?.service?.idService,
       idUtilisateur: agent.cle,
@@ -78,10 +80,10 @@ export function onValidateAgent(
   }
 }
 
-export function listeServicesToOptions(): Options {
+export function listeServicesToOptions(services: IService[]): Options {
   return [
     { cle: "", libelle: "" },
-    ...storeRece.listeServices
+    ...services
       .filter(service => service.estDansScec)
       .sort((a, b) => a.libelleService.localeCompare(b.libelleService))
       .map(service => {
@@ -93,18 +95,19 @@ export function listeServicesToOptions(): Options {
 export function listeUtilisateursToOptionsBis(
   typeRequete: TypeRequete,
   sousTypeRequete: SousTypeRequete,
-  idUtilisateurRequete: string,
-  estTransfert: boolean
+  utilisateurConnecte: IOfficier,
+  estTransfert: boolean,
+  utilisateurs: IUtilisateur[]
 ): Options {
   return [
     { cle: "", libelle: "" },
-    ...storeRece.listeUtilisateurs
+    ...utilisateurs
       .filter(utilisateur =>
         filterUtilisateur(
           utilisateur,
           typeRequete,
           sousTypeRequete,
-          idUtilisateurRequete,
+          utilisateurConnecte,
           estTransfert
         )
       )
@@ -117,30 +120,30 @@ export function filterUtilisateur(
   utilisateur: IUtilisateur,
   typeRequete: TypeRequete,
   sousTypeRequete: SousTypeRequete,
-  idUtilisateurRequete: string,
+  utilisateurConnecte: IOfficier,
   estTransfert: boolean
 ) {
   if (typeRequete === TypeRequete.CREATION) {
-    return filtreUtilisateurRequeteCreation(utilisateur, idUtilisateurRequete);
+    return filtreUtilisateurRequeteCreation(utilisateur, utilisateurConnecte);
   } else if (typeRequete === TypeRequete.DELIVRANCE) {
     return filtreUtilisateurRequeteDelivrance(
       utilisateur,
       sousTypeRequete,
-      idUtilisateurRequete,
-      estTransfert
+      estTransfert,
+      utilisateurConnecte
     );
   } else {
     return filtreUtilisateurRequeteInformation(
       utilisateur,
-      idUtilisateurRequete,
-      estTransfert
+      estTransfert,
+      utilisateurConnecte
     );
   }
 }
 
 export function filtreUtilisateurRequeteCreation(
   utilisateur: IUtilisateur,
-  idUtilisateurRequete: string
+  utilisateurConnecte: IOfficier
 ) {
   const aDroit: boolean = utilisateurALeDroitSurUnDesPerimetres(
     Droit.CREER_ACTE_ETABLI,
@@ -150,35 +153,33 @@ export function filtreUtilisateurRequeteCreation(
   let estDansMonServiceOuServiceFils = false;
   if (utilisateur.service) {
     estDansMonServiceOuServiceFils =
-      estDansServiceFils(utilisateur.service.idService) ||
-      utilisateur.service.idService ===
-        storeRece.utilisateurCourant?.service?.idService;
+      estDansServiceFils(utilisateur.service.idService, utilisateurConnecte) ||
+      utilisateur.service.idService === utilisateurConnecte?.service?.idService;
   }
   return Boolean(
     estDansMonServiceOuServiceFils &&
       aDroit &&
-      idUtilisateurRequete !== utilisateur.idUtilisateur
+      utilisateurConnecte?.idUtilisateur !== utilisateur.idUtilisateur
   );
 }
 
 export function filtreUtilisateurRequeteInformation(
   utilisateur: IUtilisateur,
-  idUtilisateurRequete: string,
-  estTransfert: boolean
+  estTransfert: boolean,
+  utilisateurConnecte: IOfficier
 ): boolean {
   const estDuSCEC = utilisateur.service?.estDansScec;
   const aDroit = utilisateurADroit(Droit.INFORMER_USAGER, utilisateur);
   let estDansMonServiceOuServiceFils = true;
   if (!estTransfert && utilisateur.service) {
     estDansMonServiceOuServiceFils =
-      estDansServiceFils(utilisateur.service?.idService) ||
-      utilisateur.service.idService ===
-        storeRece.utilisateurCourant?.service?.idService;
+      estDansServiceFils(utilisateur.service?.idService, utilisateurConnecte) ||
+      utilisateur.service.idService === utilisateurConnecte?.service?.idService;
   }
   return Boolean(
     estDuSCEC &&
       aDroit &&
-      idUtilisateurRequete !== utilisateur.idUtilisateur &&
+      utilisateurConnecte?.idUtilisateur !== utilisateur.idUtilisateur &&
       estDansMonServiceOuServiceFils
   );
 }
@@ -186,8 +187,8 @@ export function filtreUtilisateurRequeteInformation(
 export function filtreUtilisateurRequeteDelivrance(
   utilisateur: IUtilisateur,
   sousTypeRequete: SousTypeRequete,
-  idUtilisateurRequete: string,
-  estTransfert: boolean
+  estTransfert: boolean,
+  utilisateurConnecte: IOfficier
 ): boolean {
   const estDuSCEC = utilisateur.service?.estDansScec;
   const aDroit =
@@ -197,14 +198,13 @@ export function filtreUtilisateurRequeteDelivrance(
   let estDansMonServiceOuServiceFils = true;
   if (!estTransfert && utilisateur.service) {
     estDansMonServiceOuServiceFils =
-      estDansServiceFils(utilisateur.service?.idService) ||
-      utilisateur.service.idService ===
-        storeRece.utilisateurCourant?.service?.idService;
+      estDansServiceFils(utilisateur.service?.idService, utilisateurConnecte) ||
+      utilisateur.service.idService === utilisateurConnecte?.service?.idService;
   }
   return Boolean(
     estDuSCEC &&
       aDroit &&
-      idUtilisateurRequete !== utilisateur.idUtilisateur &&
+      utilisateurConnecte?.idUtilisateur !== utilisateur.idUtilisateur &&
       estDansMonServiceOuServiceFils
   );
 }
@@ -221,10 +221,13 @@ export function filtrerValideur(
   );
 }
 
-export function listeValideurToOptions(idUtilisateurRequete?: string): Options {
+export function listeValideurToOptions(
+  utilisateurs: IUtilisateur[],
+  idUtilisateurRequete?: string
+): Options {
   return [
     { cle: "", libelle: "" },
-    ...storeRece.listeUtilisateurs
+    ...utilisateurs
       .filter(utilisateur => filtrerValideur(utilisateur, idUtilisateurRequete))
       .sort((a, b) => a.nom.localeCompare(b.nom))
       .map(utilisateur => mapUtilisateurToOption(utilisateur))
@@ -238,17 +241,17 @@ function mapUtilisateurToOption(utilisateur: IUtilisateur): Option {
   };
 }
 
-function estDansServiceFils(idService: string): boolean {
-  if (storeRece.utilisateurCourant?.servicesFils) {
-    return storeRece.utilisateurCourant.servicesFils.some(
-      el => el.idService === idService
-    );
-  }
-  return false;
+function estDansServiceFils(
+  idService: string,
+  utilisateurConnecte: IOfficier
+): boolean {
+  return Boolean(
+    utilisateurConnecte?.servicesFils?.some(el => el.idService === idService)
+  );
 }
-export function getServicesAsOptions(): Options {
+export function getServicesAsOptions(utilisateurConnecte: IOfficier): Options {
   return (
-    storeRece.utilisateurCourant?.servicesFils?.map(service => {
+    utilisateurConnecte?.servicesFils?.map(service => {
       return {
         cle: service.idService,
         libelle: service.libelleService

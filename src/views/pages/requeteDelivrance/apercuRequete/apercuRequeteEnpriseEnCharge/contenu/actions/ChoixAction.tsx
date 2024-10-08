@@ -1,4 +1,5 @@
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
@@ -8,9 +9,8 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { getLibelle } from "@util/Utils";
-import { storeRece } from "@util/storeRece";
 import { Fieldset } from "@widget/fieldset/Fieldset";
-import React from "react";
+import React, { useContext } from "react";
 import { MenuDelivrerCS } from "./MenuDelivrerCS";
 import { MenuDelivrerEC } from "./MenuDelivrerEC";
 import { MenuReponseSansDelivranceCS } from "./MenuReponseSansDelivranceCS";
@@ -30,15 +30,14 @@ export interface IChoixActionDelivranceProps {
 }
 
 export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
+  const { utilisateurConnecte } = useContext(RECEContextData);
   const checkSiMenuTransferer = () => {
     const statutPriseEnCharge =
       props.requete.statutCourant.statut === StatutRequete.PRISE_EN_CHARGE;
     const mAppartient =
-      storeRece.utilisateurCourant?.idUtilisateur ===
-      props.requete.idUtilisateur;
+      utilisateurConnecte?.idUtilisateur === props.requete.idUtilisateur;
 
-    const utilisateurDansSCEC =
-      storeRece.utilisateurCourant?.service?.estDansScec;
+    const utilisateurDansSCEC = utilisateurConnecte?.service?.estDansScec;
 
     return statutPriseEnCharge && mAppartient && utilisateurDansSCEC;
   };

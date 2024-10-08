@@ -1,5 +1,6 @@
 import { VisionneuseActe } from "@composant/visionneuseActe/VisionneuseActe";
 import {
+  IOfficier,
   officierDroitConsulterSurLeTypeRegistre,
   officierDroitConsulterSurLeTypeRegistreOuDroitMAE,
   officierHabiliterPourLeDroit
@@ -14,11 +15,12 @@ import { getFichesPersonneActe } from "../personne/FichePersonne";
 import { getEvenement } from "./EvenementActeUtils";
 import { getTitulairesAM } from "./TitulairesActeUtils";
 
-export function getPanelsActe(acte: IFicheActe): IAccordionReceSection {
+export function getPanelsActe(acte: IFicheActe, utilisateurConnecte: IOfficier): IAccordionReceSection {
   const idTypeRegistre = acte?.registre?.type?.id;
   const paramsAffichage = getParamsAffichageFicheActe(
     idTypeRegistre,
-    acte.visibiliteArchiviste
+    acte.visibiliteArchiviste,
+    utilisateurConnecte
   );
   const fichesPersonne: SectionPanelProps[] = getFichesPersonneActe(
     acte?.personnes,
@@ -81,7 +83,8 @@ export interface IParamsAffichage {
 
 export function getParamsAffichageFicheActe(
   idTypeRegistre: string | undefined,
-  typeVisibiliteArchiviste: TypeVisibiliteArchiviste
+  typeVisibiliteArchiviste: TypeVisibiliteArchiviste,
+  utilisateurConnecte: IOfficier
 ): IParamsAffichage {
   const params: IParamsAffichage = {
     visuBoutonAlertes: false,
@@ -94,8 +97,8 @@ export function getParamsAffichageFicheActe(
   // ou
   // S'il a le droit CONSULTER sur le périmètre de l'acte et le type de registre est présent dans ce périmètre
   if (
-    officierDroitConsulterSurLeTypeRegistreOuDroitMAE(idTypeRegistre) ||
-    officierHabiliterPourLeDroit(Droit.DELIVRER_COMEDEC)
+    officierDroitConsulterSurLeTypeRegistreOuDroitMAE(utilisateurConnecte, idTypeRegistre) ||
+    officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER_COMEDEC)
   ) {
     params.visuBoutonAlertes = true;
     params.visuActe = "classique";
@@ -105,7 +108,7 @@ export function getParamsAffichageFicheActe(
   // Si c'est un acte archive et qu'il a le droit CONSULTER_ARCHIVE
   else if (
     typeVisibiliteArchiviste !== TypeVisibiliteArchiviste.NON &&
-    officierHabiliterPourLeDroit(Droit.CONSULTER_ARCHIVES)
+    officierHabiliterPourLeDroit(utilisateurConnecte, Droit.CONSULTER_ARCHIVES)
   ) {
     params.visuBoutonAlertes = false;
     params.visuActe = "filigrane";
@@ -114,7 +117,12 @@ export function getParamsAffichageFicheActe(
 
   // S'il a un droit CONSULTER mais pas sur le périmètre de l'acte
   // ou Si le type de registre n'est présent dans le périmètre de l'acte
-  else if (!officierDroitConsulterSurLeTypeRegistre(idTypeRegistre)) {
+  else if (
+    !officierDroitConsulterSurLeTypeRegistre(
+      utilisateurConnecte,
+      idTypeRegistre
+    )
+  ) {
     params.visuBoutonAlertes = false;
     params.visuActe = "disabled";
     params.personnes = "disabled";

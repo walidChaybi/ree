@@ -1,9 +1,9 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { beforeAll, expect, test } from "vitest";
 import {
@@ -15,9 +15,13 @@ beforeAll(() => {
   mockFenetreFicheTestFunctions();
 });
 
-beforeAll(() => {
-  storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
-});
+const routerAvecContexte = (router: any): any => {
+  return (
+    <MockRECEContextProvider utilisateurs={LISTE_UTILISATEURS}>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
+};
 
 test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", () => {
   const router = createTestingRouter(
@@ -35,7 +39,7 @@ test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", (
     ]
   );
 
-  const { container } = render(<RouterProvider router={router} />);
+  const { container } = render(routerAvecContexte(router));
 
   waitFor(() => {
     expect(
@@ -67,7 +71,7 @@ test("renders ApercuRequetePage", async () => {
   );
   // "await act..." obligatoire pour reussir a rendre l'ui
   await act(() => {
-    render(<RouterProvider router={router} />);
+    render(routerAvecContexte(router));
   });
 
   const bandeau = screen.getByText(

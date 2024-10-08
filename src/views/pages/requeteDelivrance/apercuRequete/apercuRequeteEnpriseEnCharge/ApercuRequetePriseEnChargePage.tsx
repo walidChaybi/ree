@@ -27,7 +27,6 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
     },
     [setRequete]
   );
-
   return (
     <ApercuRequeteTemplate
       title={getLibelle("Aperçu de la requête en prise en charge")}

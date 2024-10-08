@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import Tooltip from "@mui/material/Tooltip";
@@ -5,7 +6,7 @@ import { URL_CONTEXT_APP } from "@router/ReceUrls";
 import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import logoReceBlanc from "../../../img/logo-rece-blanc.svg";
 import { BoutonDeconnexion } from "./BoutonDeconnexion";
@@ -17,6 +18,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onClick }) => {
   const navigate = useNavigate();
+  const { utilisateurConnecte } = useContext(RECEContextData);
   const version = `${process.env.VERSION}_${process.env.VITE_DATE_BUILD}`;
 
   function onClickLogo(event: React.MouseEvent) {
@@ -42,7 +44,7 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
       </Tooltip>
 
       <div className="coteDroit">
-        {officierHabiliterPourLeDroit(Droit.CONSULTER) && (
+        {officierHabiliterPourLeDroit(utilisateurConnecte, Droit.CONSULTER) && (
           <>
             {gestionnaireFeatureFlag.estActif(
               FeatureFlag.FF_CONSULT_ACTE_RQT

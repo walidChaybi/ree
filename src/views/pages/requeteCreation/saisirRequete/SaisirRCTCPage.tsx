@@ -7,7 +7,7 @@ import {
   REQUETE,
   TITULAIRE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { RECEContext } from "@core/contexts/RECEContext";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   IDetailRequeteParams,
@@ -135,7 +135,7 @@ export const SaisirRCTCPage: React.FC = () => {
   const [detailRequeteParams, setDetailRequeteParams] =
     useState<IDetailRequeteParams>();
 
-  const { estListeServicesChargee } = useContext(RECEContext);
+  const { services } = useContext(RECEContextData);
 
   // Hooks
   //////////////////////////////////////////////////////////////////////////
@@ -263,7 +263,7 @@ export const SaisirRCTCPage: React.FC = () => {
   return (
     <div className="SaisirRCTCPage">
       <OperationEnCours
-        visible={operationEnCours || !estListeServicesChargee}
+        visible={operationEnCours || !services}
         onTimeoutEnd={() => setOperationEnCours(false)}
         onClick={() => setOperationEnCours(false)}
       />

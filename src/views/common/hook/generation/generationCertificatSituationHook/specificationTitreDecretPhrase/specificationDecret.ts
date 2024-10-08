@@ -9,7 +9,6 @@ import {
   CODE_CERTIFICAT_SITUATION_RCA,
   CODE_CERTIFICAT_SITUATION_RC_RCA
 } from "@model/requete/enum/DocumentDelivranceConstante";
-import { storeRece } from "@util/storeRece";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Specifications pour les décrêts à renvoyer en fonction du document demandé
@@ -17,16 +16,10 @@ import { storeRece } from "@util/storeRece";
 
 class SpecificationDecret {
   MAP_SPECIFICATION: Map<string, IDecret[]> = new Map();
-  private init() {
-    const DECRETS_PACS = Decret.getDecretsCertificatSituationPacs(
-      storeRece.decrets
-    );
-    const DECRETS_RC = Decret.getDecretsCertificatSituationRC(
-      storeRece.decrets
-    );
-    const DECRETS_RCA = Decret.getDecretsCertificatSituationRCA(
-      storeRece.decrets
-    );
+  private init(decrets: IDecret[]) {
+    const DECRETS_PACS = Decret.getDecretsCertificatSituationPacs(decrets);
+    const DECRETS_RC = Decret.getDecretsCertificatSituationRC(decrets);
+    const DECRETS_RCA = Decret.getDecretsCertificatSituationRCA(decrets);
     this.MAP_SPECIFICATION.set(
       DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS),
       DECRETS_PACS
@@ -61,9 +54,9 @@ class SpecificationDecret {
       DECRETS_RCA
     );
   }
-  getDecret(idDocumentDemande: string): IDecret[] {
+  getDecret(idDocumentDemande: string, decrets: IDecret[]): IDecret[] {
     if (this.MAP_SPECIFICATION.size === 0) {
-      this.init();
+      this.init(decrets);
     }
     return this.MAP_SPECIFICATION.get(idDocumentDemande) || [];
   }

@@ -1,5 +1,3 @@
-import { ILoginApi } from "@core/login/LoginHook";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
 import { URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID } from "@router/ReceUrls";
 import {
@@ -12,18 +10,11 @@ import {
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
-import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../../__tests__utils__/testsUtil";
 
-const routerAvecContexte = (
-  router: any,
-  infosLoginOfficier?: ILoginApi
-): any => {
-  return (
-    <MockRECEContextProvider infosLoginOfficier={infosLoginOfficier}>
-      <RouterProvider router={router} />
-    </MockRECEContextProvider>
-  );
-};
 describe.skip("Test de la page Aperçu requête transcription en prise en charge", () => {
   test("DOIT rendre le composant ApercuReqCreationTranscriptionPriseEnChargePage correctement", async () => {
     await act(async () => {
@@ -42,7 +33,9 @@ describe.skip("Test de la page Aperçu requête transcription en prise en charge
         ]
       );
 
-      const { container } = render(routerAvecContexte(router));
+      const { container } = render(
+        elementAvecContexte(<RouterProvider router={router} />)
+      );
 
       expect(
         container.getElementsByClassName(
@@ -69,7 +62,7 @@ describe.skip("Test de la page Aperçu requête transcription en prise en charge
         ]
       );
 
-      render(routerAvecContexte(router));
+      render(elementAvecContexte(<RouterProvider router={router} />));
     });
 
     const ongletRMC = screen.getByText("RMC");
@@ -96,7 +89,7 @@ describe.skip("Test de la page Aperçu requête transcription en prise en charge
         ]
       );
 
-      render(routerAvecContexte(router));
+      render(elementAvecContexte(<RouterProvider router={router} />));
     });
 
     const ongletRMC = screen.getByText("RMC");
@@ -131,7 +124,7 @@ describe.skip("Test de la page Aperçu requête transcription en prise en charge
         ]
       );
 
-      render(routerAvecContexte(router));
+      render(elementAvecContexte(<RouterProvider router={router} />));
     });
 
     const ongletPJ = screen.getByText("Pièces justificatives / Annexes");
@@ -169,7 +162,7 @@ describe.skip("Test du rendu du composant RMCRequeteAssociees", () => {
         ]
       );
 
-      render(routerAvecContexte(router));
+      render(elementAvecContexte(<RouterProvider router={router} />));
     });
 
     await waitFor(() => {
@@ -197,7 +190,7 @@ describe.skip("Test du rendu du composant RMCRequeteAssociees", () => {
         ]
       );
 
-      render(routerAvecContexte(router));
+      render(elementAvecContexte(<RouterProvider router={router} />));
     });
 
     await waitFor(() => {

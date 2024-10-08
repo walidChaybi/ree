@@ -10,9 +10,9 @@ import {
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { CODE_ATTESTATION_PACS } from "@model/requete/enum/DocumentDelivranceConstante";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { useEffect, useState } from "react";

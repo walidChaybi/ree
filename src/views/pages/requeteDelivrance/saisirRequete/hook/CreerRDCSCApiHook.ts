@@ -1,10 +1,11 @@
 import { creationRequeteDelivrance } from "@api/appels/requeteApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { CreationRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { logError } from "@util/LogManager";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { mappingFormulaireRDCSCVersRequeteDelivrance } from "./mappingFormulaireRDCSCVersRequeteDelivrance";
 
 export interface ICreationRequeteDelivranceRDCSCResultat {
@@ -20,6 +21,8 @@ export function useCreationRequeteDelivranceRDCSC(
   const [resultat, setResultat] = useState<
     ICreationRequeteDelivranceRDCSCResultat | undefined
   >();
+
+  const { utilisateurs } = useContext(RECEContextData);
   useEffect(() => {
     if (requeteRDCSC?.saisie) {
       const requete = mappingFormulaireRDCSCVersRequeteDelivrance(
@@ -33,7 +36,7 @@ export function useCreationRequeteDelivranceRDCSC(
       })
         .then((result: any) => {
           setResultat({
-            requete: mappingRequeteDelivrance(result.body.data),
+            requete: mappingRequeteDelivrance(result.body.data, utilisateurs),
             futurStatut: requeteRDCSC.futurStatut,
             refus: requeteRDCSC.refus
           });

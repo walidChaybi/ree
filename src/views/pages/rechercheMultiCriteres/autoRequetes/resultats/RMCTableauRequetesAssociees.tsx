@@ -1,11 +1,13 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
+  IOfficier,
   aDroitConsulterApercuRequeteInformation,
   aDroitConsulterRequeteCreation,
   aDroitConsulterRequeteDelivrance
 } from "@model/agent/IOfficier";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
 import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
@@ -14,14 +16,13 @@ import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercu
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import { FenetreExterne } from "@util/FenetreExterne";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
-import { storeRece } from "@util/storeRece";
-import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import {
   NB_LIGNES_PAR_APPEL_REQUETE_ASSOCIEES,
   NB_LIGNES_PAR_PAGE_REQUETE_ASSOCIEES
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { BoutonNouvelleRMCRequete } from "../contenu/BoutonNouvelleRMCRequete";
 import { columnsTableauRequeteAssociees } from "./RMCTableauRequetesAssocieesParams";
@@ -58,6 +59,7 @@ export const RMCTableauRequetesAssociees: React.FC<
   setCriteresRechercheRequete,
   resetTableauRequete
 }) => {
+  const { utilisateurConnecte } = useContext(RECEContextData);
   // Gestion du tableau
   const [requeteSelectionnee, setRequeteSelectionnee] =
     useState<IInfoRequeteSelectionnee>();
@@ -84,7 +86,8 @@ export const RMCTableauRequetesAssociees: React.FC<
     const requeteCliquee = data[idx];
     const utilisateurPeutOuvrirLaRequete = utilisateurADroitOuvrirRequete(
       requeteCliquee.type,
-      requeteCliquee.sousType
+      requeteCliquee.sousType,
+      utilisateurConnecte
     );
     if (utilisateurPeutOuvrirLaRequete) {
       setRequeteSelectionnee({
@@ -106,7 +109,7 @@ export const RMCTableauRequetesAssociees: React.FC<
         paramsTableau={dataTableauRMCRequete}
         goToLink={goToLink}
         resetTableau={resetTableauRequete}
-        noRows={getMessageZeroRequete()}
+        noRows={RenderMessageZeroRequete()}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_REQUETE_ASSOCIEES}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_REQUETE_ASSOCIEES}
       >
@@ -132,19 +135,23 @@ export const RMCTableauRequetesAssociees: React.FC<
 
 export const utilisateurADroitOuvrirRequete = (
   typeRequete: string,
-  sousTypeRequete: string
+  sousTypeRequete: string,
+  utilisateurConnecte: IOfficier
 ) => {
   let aLeDroit = false;
-  if (storeRece.utilisateurCourant) {
+  if (utilisateurConnecte) {
     switch (typeRequete) {
       case TypeRequete.DELIVRANCE.libelle:
-        aLeDroit = aDroitConsulterRequeteDelivrance();
+        aLeDroit = aDroitConsulterRequeteDelivrance(utilisateurConnecte);
         break;
       case TypeRequete.CREATION.libelle:
-        aLeDroit = aDroitConsulterRequeteCreation(sousTypeRequete);
+        aLeDroit = aDroitConsulterRequeteCreation(
+          sousTypeRequete,
+          utilisateurConnecte
+        );
         break;
       case TypeRequete.INFORMATION.libelle:
-        aLeDroit = aDroitConsulterApercuRequeteInformation();
+        aLeDroit = aDroitConsulterApercuRequeteInformation(utilisateurConnecte);
         break;
       default:
         break;

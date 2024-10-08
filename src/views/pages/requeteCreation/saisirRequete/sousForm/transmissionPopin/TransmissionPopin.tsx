@@ -1,4 +1,5 @@
 import { ChoixServicesPopin } from "@composant/choixServicesPopin/ChoixServicesPopin";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   ICreationRequeteCreationParams,
   useCreationRequeteCreationEtTransmissionService
@@ -8,8 +9,8 @@ import { ISaisieRequeteRCTC } from "@model/form/creation/transcription/ISaisirRe
 import { estRenseigne, executeEnDiffere } from "@util/Utils";
 import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErreur";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
-import { connect, FormikValues } from "formik";
-import React, { useEffect, useState } from "react";
+import { FormikValues, connect } from "formik";
+import React, { useContext, useEffect, useState } from "react";
 import { mappingSaisieRequeteRCTCVersRequetesAEnvoyer } from "./../../mapping/mappingFormulaireSaisirRCTCVersRequeteTranscription";
 
 interface TransmissionPopinProps {
@@ -26,22 +27,18 @@ interface TransmissionPopinProps {
 export const TransmissionPopin: React.FC<
   TransmissionPopinProps & FormikComponentProps
 > = props => {
-  //States
-  //////////////////////////////////////////////////////////////////////////
   const [
     creationRequeteRCTCEtTransmissionServiceParams,
     setCreationRequeteRCTCEtTransmissionServiceParams
   ] = useState<ICreationRequeteCreationParams>();
 
-  // Hooks
-  //////////////////////////////////////////////////////////////////////////
   const idRequeteCreeApresTransmissionService =
     useCreationRequeteCreationEtTransmissionService(
       creationRequeteRCTCEtTransmissionServiceParams
     );
 
-  // Effects
-  //////////////////////////////////////////////////////////////////////////
+  const { services } = useContext(RECEContextData);
+
   useEffect(() => {
     idRequeteCreeApresTransmissionService &&
       props.onTransmissionEffectuee &&
@@ -52,8 +49,6 @@ export const TransmissionPopin: React.FC<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idRequeteCreeApresTransmissionService]);
 
-  // Evenements
-  //////////////////////////////////////////////////////////////////////////
   function onServiceChoisiPourTransfert(idServiceChoisi?: string) {
     props.onErrors(props.formik);
     props.formik.validateForm().then(errors => {
@@ -80,7 +75,7 @@ export const TransmissionPopin: React.FC<
   return (
     <ChoixServicesPopin
       ouverte={props.ouverte}
-      idServiceParent={Service.getServiceEtablissement()?.idService}
+      idServiceParent={Service.trouverEtablissement(services)?.idService}
       onServiceChoisi={onServiceChoisiPourTransfert}
       onCancel={props.onCancel}
     />

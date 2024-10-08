@@ -1,11 +1,12 @@
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { idRequeteRDCSC, requeteRDCSC } from "@mock/data/requeteDelivrance";
 import { requeteInformation } from "@mock/data/requeteInformation";
 import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IService } from "@model/agent/IService";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
-import { TypeService } from "@model/agent/enum/TypeService";
+import { ETypeService } from "@model/agent/enum/ETypeService";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
 import {
@@ -18,7 +19,6 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
@@ -65,7 +65,39 @@ const listeUtilisateurs = [
   } as IUtilisateur
 ];
 
-function afficheComposant() {
+const listeServices = [
+  {
+    idService: "1234",
+    type: ETypeService.BUREAU,
+    code: "1234",
+    libelleService: "str1",
+    estDansScec: true
+  },
+  {
+    idService: "12345",
+    type: ETypeService.DEPARTEMENT,
+    code: "12345",
+    libelleService: "str2",
+    estDansScec: true
+  }
+];
+
+const routerAvecContexte = (
+  router: any,
+  utilisateurs?: IUtilisateur[],
+  services?: IService[]
+): any => {
+  return (
+    <MockRECEContextProvider utilisateurs={utilisateurs} services={services}>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
+};
+
+function afficheComposant(
+  utilisateurs?: IUtilisateur[],
+  services?: IService[]
+) {
   const router = createTestingRouter(
     [
       {
@@ -89,13 +121,11 @@ function afficheComposant() {
     ]
   );
 
-  render(<RouterProvider router={router} />);
-
-  storeRece.listeUtilisateurs = listeUtilisateurs;
+  render(routerAvecContexte(router, utilisateurs, services));
 }
 
 test.skip("renders du bloc Menu Transfert ouvert ", () => {
-  afficheComposant();
+  afficheComposant(listeUtilisateurs);
 
   waitFor(() => {
     expect(
@@ -117,7 +147,7 @@ test.skip("renders du bloc Menu Transfert ouvert ", () => {
 });
 
 test.skip("check popin service", () => {
-  afficheComposant();
+  afficheComposant(listeUtilisateurs);
 
   let choixService: HTMLElement;
 
@@ -149,7 +179,7 @@ test.skip("check popin service", () => {
 });
 
 test.skip("check popin agent", () => {
-  afficheComposant();
+  afficheComposant(listeUtilisateurs);
 
   let choixService: HTMLElement;
 
@@ -178,24 +208,7 @@ test.skip("check popin agent", () => {
 });
 
 test.skip("check autocomplete service", () => {
-  afficheComposant();
-
-  storeRece.listeServices = [
-    {
-      idService: "1234",
-      type: TypeService.BUREAU,
-      code: "1234",
-      libelleService: "str1",
-      estDansScec: true
-    },
-    {
-      idService: "12345",
-      type: TypeService.DEPARTEMENT,
-      code: "12345",
-      libelleService: "str2",
-      estDansScec: true
-    }
-  ];
+  afficheComposant(undefined, listeServices);
   const menuTransfert = screen.getByText("Transférer");
 
   waitFor(() => {
@@ -258,7 +271,6 @@ test.skip("check autocomplete service", () => {
 });
 
 test.skip("check autocomplete agent", () => {
-  storeRece.listeUtilisateurs = listeUtilisateurs;
   const router = createTestingRouter(
     [
       {
@@ -286,7 +298,7 @@ test.skip("check autocomplete agent", () => {
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router, listeUtilisateurs));
 
   const menuTransfert = screen.getByText("Transférer");
 
@@ -344,7 +356,6 @@ test.skip("check autocomplete agent", () => {
 });
 
 test.skip("renders du bloc Menu Transfert fermer ", () => {
-  storeRece.listeUtilisateurs = listeUtilisateurs;
   const router = createTestingRouter(
     [
       {
@@ -373,7 +384,7 @@ test.skip("renders du bloc Menu Transfert fermer ", () => {
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router, listeUtilisateurs));
 
   let menuTransfert = screen.getByText("Transférer");
 

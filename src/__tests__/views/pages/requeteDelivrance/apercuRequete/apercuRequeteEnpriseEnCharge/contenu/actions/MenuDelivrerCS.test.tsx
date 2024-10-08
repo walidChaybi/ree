@@ -1,3 +1,4 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { DataRMCActeAvecResultat } from "@mock/data/RMCActe";
 import { DataRMCInscriptionAvecUnRCA } from "@mock/data/RMCInscription";
 import {
@@ -19,7 +20,14 @@ import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../../__tests__utils__/testsUtil";
 
-test.skip("renders du bloc Menu Delivrer Certificat de Situation", () => {
+const routerAvecContexte = (router: any): any => {
+  return (
+    <MockRECEContextProvider>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
+};
+test.skip("renders du bloc Menu Delivrer Certificat de Situation", async () => {
   requeteRDCSC.documentDemande = DocumentDelivrance.getDocumentDelivrance(
     "ec161aa5-5c0c-429d-abdf-f9017e8e26b4"
   );
@@ -51,7 +59,7 @@ test.skip("renders du bloc Menu Delivrer Certificat de Situation", () => {
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   let menuDelivrer = screen.getByText("Délivrer");
   let certificatSituation = screen.getByText(/Certificat de situation/i);
@@ -106,7 +114,7 @@ test.skip("renders du bloc Menu Delivrer Attestation PACS", () => {
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   let menuDelivrer = screen.getByText("Délivrer");
   let attestation = screen.getByText(/Attestation PACS/i);
@@ -151,7 +159,7 @@ test("attestationPACS sans inscription", () => {
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   let menuDelivrer = screen.getByText("Délivrer");
   let attestation = screen.getByText(/Attestation PACS/i);
@@ -199,7 +207,7 @@ test("attestation pacs acte séléctionné", () => {
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   let menuDelivrer = screen.getByText("Délivrer");
   let attestation = screen.getByText(/Attestation PACS/i);

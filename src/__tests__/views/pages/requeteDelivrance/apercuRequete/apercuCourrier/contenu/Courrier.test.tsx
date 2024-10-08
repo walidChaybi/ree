@@ -3,16 +3,17 @@ import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { requeteDelivranceRDC } from "@mock/data/requeteDelivrance";
 import { Courrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/Courrier";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
-import { beforeAll, expect, test } from "vitest";
-
-beforeAll(() => {
-  storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
-  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-});
+import { expect, test } from "vitest";
+import { elementAvecContexte } from "../../../../../../__tests__utils__/testsUtil";
 
 test.skip("renders courrier", () => {
-  render(<Courrier requete={requeteDelivranceRDC} />);
+  render(
+    elementAvecContexte(
+      <Courrier requete={requeteDelivranceRDC} />,
+      userDroitnonCOMEDEC,
+      LISTE_UTILISATEURS
+    )
+  );
 
   const boutonValider = screen.getByText(/Valider/i) as HTMLButtonElement;
   const inputCourrier = screen.getByTestId(
@@ -43,7 +44,13 @@ test.skip("renders courrier", () => {
 });
 
 test.skip("créer courrier", () => {
-  render(<Courrier requete={requeteDelivranceRDC} />);
+  render(
+    elementAvecContexte(
+      <Courrier requete={requeteDelivranceRDC} />,
+      userDroitnonCOMEDEC,
+      LISTE_UTILISATEURS
+    )
+  );
 
   fireEvent.doubleClick(
     screen.getByText(

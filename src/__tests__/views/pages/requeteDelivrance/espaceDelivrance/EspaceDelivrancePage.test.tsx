@@ -1,41 +1,47 @@
-import { IRECEContext, RECEContext } from "@core/contexts/RECEContext";
 import officier from "@mock/data/connectedUser.json";
+import { IOfficier } from "@model/agent/IOfficier";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_REQUETES_DELIVRANCE_SERVICE
 } from "@router/ReceUrls";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
-import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../__tests__utils__/testsUtil";
 
-test.skip("renders delivrancePage", () => {
-  const router = createTestingRouter(
-    [
-      {
-        path: URL_MES_REQUETES_DELIVRANCE,
-        element: (
-          <RECEContext.Provider
-            value={
-              {
-                officierDataState: { idSSO: officier.id_sso, ...officier }
-              } as unknown as IRECEContext
-            }
-          >
-            <EspaceDelivrancePage selectedTab={0} />
-          </RECEContext.Provider>
-        )
-      },
-      {
-        path: URL_REQUETES_DELIVRANCE_SERVICE,
-        element: <EspaceDelivrancePage />
-      }
-    ],
-    [URL_MES_REQUETES_DELIVRANCE]
-  );
+test.skip("renders delivrancePage", async () => {
+  await act(async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE,
+          element: <EspaceDelivrancePage selectedTab={0} />
+        },
+        {
+          path: URL_REQUETES_DELIVRANCE_SERVICE,
+          element: <EspaceDelivrancePage />
+        }
+      ],
+      [URL_MES_REQUETES_DELIVRANCE]
+    );
 
-  render(<RouterProvider router={router} />);
+    render(
+      elementAvecContexte(<RouterProvider router={router} />, {
+        idSSO: officier.id_sso,
+        ...officier
+      } as unknown as IOfficier)
+    );
+  });
 
   const title = "Délivrance";
   const mesRequetes = screen.getByText(/Mes requêtes de délivrance/i);

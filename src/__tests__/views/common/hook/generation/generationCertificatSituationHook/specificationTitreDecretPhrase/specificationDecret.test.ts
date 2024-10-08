@@ -1,18 +1,14 @@
 import { specificationDecret } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationDecret";
-import { decrets } from "@mock/data/NomenclatureEtatCivilDecrets";
+import { decrets as decretsMock } from "@mock/data/NomenclatureEtatCivilDecrets";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "@mock/data/nomenclatures";
-import {} from "@mock/superagent-config/superagent-mock-params";
+import { } from "@mock/superagent-config/superagent-mock-params";
 import { waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
-import { beforeAll, expect, test } from "vitest";
-
-beforeAll(() => {
-  storeRece.decrets = decrets;
-});
+import { expect, test } from "vitest";
 
 test("Attendu: specificationDecret.getDecret la demande est CERTIFICAT_SITUATION_PACS", () => {
   const decrets = specificationDecret.getDecret(
-    ReponseAppelNomenclatureDocummentDelivrance.data[1].id // CERTIFICAT_SITUATION_PACS
+    ReponseAppelNomenclatureDocummentDelivrance.data[1].id,
+    decretsMock // CERTIFICAT_SITUATION_PACS
   );
   waitFor(() => {
     expect(decrets.map(d => d.libelle)).toEqual([
@@ -26,7 +22,8 @@ test("Attendu: specificationDecret.getDecret la demande est CERTIFICAT_SITUATION
 
 test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RC et il n'y a pas de RC", () => {
   const decrets = specificationDecret.getDecret(
-    ReponseAppelNomenclatureDocummentDelivrance.data[5].id // CERTIFICAT_SITUATION_RC
+    ReponseAppelNomenclatureDocummentDelivrance.data[5].id,
+    decretsMock // CERTIFICAT_SITUATION_RC
   );
   waitFor(() => {
     expect(decrets.map(d => d.libelle)).toEqual([
@@ -37,7 +34,8 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
 
 test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RCA et il n'y a pas de PACS", () => {
   const decrets = specificationDecret.getDecret(
-    ReponseAppelNomenclatureDocummentDelivrance.data[7].id // CERTIFICAT_SITUATION_RCA
+    ReponseAppelNomenclatureDocummentDelivrance.data[7].id,
+    decretsMock // CERTIFICAT_SITUATION_RCA
   );
   waitFor(() => {
     expect(decrets.map(d => d.libelle)).toEqual([
@@ -48,7 +46,8 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
 
 test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_PACS_RC_RCA et il y a au moins un PACS, un RC et un RCA", () => {
   const decrets = specificationDecret.getDecret(
-    ReponseAppelNomenclatureDocummentDelivrance.data[4].id //CERTIFICAT_SITUATION_PACS_RC_RCA
+    ReponseAppelNomenclatureDocummentDelivrance.data[4].id,
+    decretsMock //CERTIFICAT_SITUATION_PACS_RC_RCA
   );
   waitFor(() => {
     expect(decrets.map(d => d.libelle)).toEqual([

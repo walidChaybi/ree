@@ -1,11 +1,7 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { titreForm } from "@pages/rechercheMultiCriteres/requete/RMCRequeteForm";
 import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { beforeAll, expect, test } from "vitest";
 import {
@@ -52,28 +48,28 @@ test("Bouton réinitialisation des champs", () => {
     expect(statutRequete).toBeDefined();
   });
 
-    fireEvent.change(numeroRequete, {
-      target: {
-        value: "1234ABCD"
-      }
-    });
-    fireEvent.change(typeRequete, {
-      target: {
-        value: "INFORMATION"
-      }
-    });
+  fireEvent.change(numeroRequete, {
+    target: {
+      value: "1234ABCD"
+    }
+  });
+  fireEvent.change(typeRequete, {
+    target: {
+      value: "INFORMATION"
+    }
+  });
 
-    fireEvent.change(sousTypeRequete, {
-      target: {
-        value: "COMPLETION_REQUETE_EN_COURS"
-      }
-    });
+  fireEvent.change(sousTypeRequete, {
+    target: {
+      value: "COMPLETION_REQUETE_EN_COURS"
+    }
+  });
 
-    fireEvent.change(statutRequete, {
-      target: {
-        value: "A_TRAITER"
-      }
-    });
+  fireEvent.change(statutRequete, {
+    target: {
+      value: "A_TRAITER"
+    }
+  });
 
   waitFor(() => {
     expect(numeroRequete.value).toBe("1234ABCD");
@@ -103,18 +99,22 @@ test("DOIT pouvoir rechercher une requete par son N° SDANF / numeroDossierNatio
     ["/"]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    <MockRECEContextProvider>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
 
   const numeroDossierNational = screen.getByLabelText(
     "requete.numeroDossierNational"
   ) as HTMLInputElement;
-    fireEvent.change(numeroDossierNational, {
-      target: {
-        value: "2022X 200156"
-      }
-    });
+  fireEvent.change(numeroDossierNational, {
+    target: {
+      value: "2022X 200156"
+    }
+  });
 
-    fireEvent.click(screen.getByText("Rechercher"));
+  fireEvent.click(screen.getByText("Rechercher"));
 
   waitFor(() => {
     expect(numeroDossierNational.value).toBe("2022X 200156");

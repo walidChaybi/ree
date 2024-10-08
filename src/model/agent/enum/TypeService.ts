@@ -1,9 +1,0 @@
-export enum TypeService {
-  MINISTERE,
-  SERVICE,
-  DEPARTEMENT,
-  BUREAU,
-  SECTION,
-  POSTE,
-  SECTION_CONSULAIRE
-}

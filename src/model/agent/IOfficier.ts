@@ -1,11 +1,11 @@
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { getValeurOuVide } from "@util/Utils";
-import { storeRece } from "@util/storeRece";
+import { formatNom, formatPrenom, getValeurOuVide } from "@util/Utils";
 import { Provenance } from "../requete/enum/Provenance";
 import { Habilitation } from "./Habilitation";
 import { IService } from "./IService";
 import {
   IUtilisateur,
+  mapHabilitationsUtilisateur,
   utilisateurADroit,
   utilisateurALeDroitSurUnDesPerimetres
 } from "./IUtilisateur";
@@ -19,63 +19,83 @@ export interface IOfficier extends IUtilisateur {
 }
 
 /** Savoir si l'officier connecté à le droit ou le profil demandé en paramètre */
-export function officierHabiliterPourLeDroit(droit: Droit) {
-  return storeRece.utilisateurCourant
-    ? utilisateurADroit(droit, storeRece.utilisateurCourant)
+export function officierHabiliterPourLeDroit(
+  utilisateurConnecte: IOfficier,
+  droit: Droit
+) {
+  return utilisateurConnecte
+    ? utilisateurADroit(droit, utilisateurConnecte)
     : false;
 }
 
-export function estOfficierHabiliterPourTousLesDroits(droits?: Droit[]) {
+export function estOfficierHabiliterPourTousLesDroits(
+  utilisateurConnecte: IOfficier,
+  droits?: Droit[]
+) {
   if (!droits || droits.length === 0) {
     return true;
   }
-  return droits.every(droit => officierHabiliterPourLeDroit(droit));
+  return droits.every(droit =>
+    officierHabiliterPourLeDroit(utilisateurConnecte, droit)
+  );
 }
 
-export function estOfficierHabiliterPourUnDesDroits(droits?: Droit[]) {
+export function estOfficierHabiliterPourUnDesDroits(
+  utilisateurConnecte: IOfficier,
+  droits?: Droit[]
+) {
   if (!droits || droits.length === 0) {
     return true;
   }
-  return droits.some(droit => officierHabiliterPourLeDroit(droit));
+  return droits.some(droit =>
+    officierHabiliterPourLeDroit(utilisateurConnecte, droit)
+  );
 }
 
-export function estOfficierHabiliterPourSeulementLesDroits(droits?: Droit[]) {
-  const officier = storeRece.utilisateurCourant;
+export function estOfficierHabiliterPourSeulementLesDroits(
+  utilisateurConnecte: IOfficier,
+  droits?: Droit[]
+) {
+  const officier = utilisateurConnecte;
 
   if (!droits || droits.length === 0) {
     return true;
   }
   return (
     droits.length === officier?.habilitations?.length &&
-    droits.every(droit => officierHabiliterPourLeDroit(droit))
+    droits.every(droit =>
+      officierHabiliterPourLeDroit(utilisateurConnecte, droit)
+    )
   );
 }
 
-export function officierHabiliterUniquementPourLeDroit(droit: Droit): boolean {
-  const officier = storeRece.utilisateurCourant;
+export function officierHabiliterUniquementPourLeDroit(
+  droit: Droit,
+  utilisateurConnecte: IOfficier
+): boolean {
   let droitTrouve = false;
 
   if (
-    officier &&
-    officier?.habilitations?.length === 1 &&
-    officier?.habilitations[0].profil.droits.length === 1
+    utilisateurConnecte?.habilitations?.length === 1 &&
+    utilisateurConnecte?.habilitations[0].profil.droits.length === 1
   ) {
-    droitTrouve = officier.habilitations[0].profil.droits[0].nom === droit;
+    droitTrouve =
+      utilisateurConnecte.habilitations[0].profil.droits[0].nom === droit;
   }
 
   return droitTrouve;
 }
 
 export function officierDroitConsulterSurLeTypeRegistre(
+  utilisateurConnecte: IOfficier,
   idTypeRegistre?: string
 ): boolean {
-  const officier = storeRece.utilisateurCourant;
   let res = false;
 
-  if (officier) {
+  if (utilisateurConnecte) {
     let i = 0;
-    while (!res && i < officier.habilitations.length) {
-      const habilitationOfficier = officier.habilitations[i];
+    while (!res && i < utilisateurConnecte.habilitations.length) {
+      const habilitationOfficier = utilisateurConnecte.habilitations[i];
       if (
         Habilitation.aDroitConsulterSurPerimetre(
           habilitationOfficier,
@@ -91,14 +111,16 @@ export function officierDroitConsulterSurLeTypeRegistre(
   return res;
 }
 
-export function officierDroitDelivrerSurLeTypeRegistre(idTypeRegistre: string) {
-  const officier = storeRece.utilisateurCourant;
+export function officierDroitDelivrerSurLeTypeRegistre(
+  idTypeRegistre: string,
+  utilisateurConnecte: IOfficier
+) {
   let estHabilite = false;
 
-  if (officier) {
+  if (utilisateurConnecte) {
     let i = 0;
-    while (!estHabilite && i < officier.habilitations.length) {
-      const habilitationOfficier = officier.habilitations[i];
+    while (!estHabilite && i < utilisateurConnecte.habilitations.length) {
+      const habilitationOfficier = utilisateurConnecte.habilitations[i];
       if (
         Habilitation.aDroitDelivrerEtDelivrerComedecSurPerimetre(
           habilitationOfficier,
@@ -115,82 +137,119 @@ export function officierDroitDelivrerSurLeTypeRegistre(idTypeRegistre: string) {
 }
 
 export function officierDroitConsulterSurLeTypeRegistreOuDroitMAE(
+  utilisateurConnecte: IOfficier,
   idTypeRegistre?: string
 ) {
   return (
-    officierDroitConsulterSurLeTypeRegistre(idTypeRegistre) ||
-    officierALeDroitSurUnDesPerimetres(Droit.CONSULTER, [
-      Perimetre.TOUS_REGISTRES
-    ])
+    officierDroitConsulterSurLeTypeRegistre(
+      utilisateurConnecte,
+      idTypeRegistre
+    ) ||
+    officierALeDroitSurUnDesPerimetres(
+      Droit.CONSULTER,
+      [Perimetre.TOUS_REGISTRES],
+      utilisateurConnecte
+    )
   );
 }
 
 export function officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(
+  utilisateurConnecte: IOfficier,
   idTypeRegistre?: string
 ) {
   if (idTypeRegistre) {
     return (
-      officierDroitDelivrerSurLeTypeRegistre(getValeurOuVide(idTypeRegistre)) ||
-      officierALeDroitSurUnDesPerimetres(Droit.DELIVRER, [
-        Perimetre.TOUS_REGISTRES
-      ]) ||
-      officierALeDroitSurUnDesPerimetres(Droit.DELIVRER_COMEDEC, [
-        Perimetre.TOUS_REGISTRES
-      ])
+      officierDroitDelivrerSurLeTypeRegistre(
+        getValeurOuVide(idTypeRegistre),
+        utilisateurConnecte
+      ) ||
+      officierALeDroitSurUnDesPerimetres(
+        Droit.DELIVRER,
+        [Perimetre.TOUS_REGISTRES],
+        utilisateurConnecte
+      ) ||
+      officierALeDroitSurUnDesPerimetres(
+        Droit.DELIVRER_COMEDEC,
+        [Perimetre.TOUS_REGISTRES],
+        utilisateurConnecte
+      )
     );
   } else return false;
 }
 
 export function officierALeDroitSurLePerimetre(
   droit: Droit,
-  refPerimetre: Perimetre
+  refPerimetre: Perimetre,
+  utilisateurConnecte: IOfficier
 ) {
-  return officierALeDroitSurUnDesPerimetres(droit, [refPerimetre]);
+  return officierALeDroitSurUnDesPerimetres(
+    droit,
+    [refPerimetre],
+    utilisateurConnecte
+  );
 }
 export const officierALeDroitSurUnDesPerimetres = (
   droit: Droit,
-  refPerimetres: Perimetre[]
+  refPerimetres: Perimetre[],
+  utilisateurConnecte: IOfficier
 ): boolean =>
   utilisateurALeDroitSurUnDesPerimetres(
     droit,
     refPerimetres,
-    storeRece.utilisateurCourant
+    utilisateurConnecte
   );
 
-export const mAppartient = (idUtilisateur?: string): boolean =>
-  idUtilisateur === storeRece.utilisateurCourant?.idUtilisateur;
+export const appartientAUtilisateurConnecte = (
+  utilisateurConnecte: IOfficier,
+  idUtilisateur?: string
+): boolean => idUtilisateur === utilisateurConnecte.idUtilisateur;
 
-export const mAppartientOuAppartientAPersonne = (idUtilisateur: string) =>
-  !idUtilisateur || mAppartient(idUtilisateur);
+export const appartientAUtilisateurConnecteOuPersonne = (
+  utilisateurConnecte: IOfficier,
+  idUtilisateur: string
+) =>
+  !idUtilisateur ||
+  appartientAUtilisateurConnecte(utilisateurConnecte, idUtilisateur);
 
 export const provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer = (
+  utilisateurConnecte: IOfficier,
   provenance?: string
 ): boolean =>
   (provenance === Provenance.COMEDEC.libelle &&
-    officierHabiliterPourLeDroit(Droit.DELIVRER_COMEDEC)) ||
+    officierHabiliterPourLeDroit(
+      utilisateurConnecte,
+      Droit.DELIVRER_COMEDEC
+    )) ||
   (provenance !== Provenance.COMEDEC.libelle &&
-    officierHabiliterPourLeDroit(Droit.DELIVRER));
+    officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER));
 
 export const appartientAMonServiceOuServicesParentsOuServicesFils = (
+  utilisateurConnecte: IOfficier,
   idService?: string
 ): boolean => {
   return (
     idService != null &&
-    (storeRece.utilisateurCourant?.service?.idService === idService ||
-      contientServiceFils(idService) ||
-      contientServiceParent(idService))
+    (utilisateurConnecte.service?.idService === idService ||
+      contientServiceFils(idService, utilisateurConnecte) ||
+      contientServiceParent(idService, utilisateurConnecte))
   );
 };
 
-export function contientServiceFils(idService: string) {
-  return storeRece.utilisateurCourant?.servicesFils?.some(
+export function contientServiceFils(
+  idService: string,
+  utilisateurConnecte: IOfficier
+) {
+  return utilisateurConnecte?.servicesFils?.some(
     serviceFils => serviceFils.idService === idService
   );
 }
 
-export function contientServiceParent(idService: string): boolean {
-  if (storeRece.utilisateurCourant) {
-    return getIdServicesParent(storeRece.utilisateurCourant).some(
+export function contientServiceParent(
+  idService: string,
+  utilisateurConnecte: IOfficier
+): boolean {
+  if (utilisateurConnecte) {
+    return getIdServicesParent(utilisateurConnecte).some(
       idServiceParent => idServiceParent === idService
     );
   }
@@ -212,16 +271,21 @@ function collectIdServiceParent(service: IService, idServices: string[]) {
   });
 }
 
-export function aDroitConsulterRequeteDelivrance(): boolean {
-  return utilisateurADroit(Droit.DELIVRER, storeRece.utilisateurCourant);
+export function aDroitConsulterRequeteDelivrance(
+  utilisateurConnecte: IOfficier
+): boolean {
+  return utilisateurADroit(Droit.DELIVRER, utilisateurConnecte);
 }
 
-export function aDroitConsulterApercuRequeteInformation(): boolean {
-  return utilisateurADroit(Droit.INFORMER_USAGER, storeRece.utilisateurCourant);
+export function aDroitConsulterApercuRequeteInformation(
+  utilisateurConnecte: IOfficier
+): boolean {
+  return utilisateurADroit(Droit.INFORMER_USAGER, utilisateurConnecte);
 }
 
 export function aDroitConsulterRequeteCreation(
-  sousTypeRequete: string
+  sousTypeRequete: string,
+  utilisateurConnecte: IOfficier
 ): boolean {
   let aDroit = false;
 
@@ -232,13 +296,10 @@ export function aDroitConsulterRequeteCreation(
     aDroit = utilisateurALeDroitSurUnDesPerimetres(
       Droit.CREER_ACTE_ETABLI,
       [Perimetre.TOUS_REGISTRES, Perimetre.ETAX],
-      storeRece.utilisateurCourant
+      utilisateurConnecte
     );
   } else if (SousTypeCreation.estRCTDOuRCTC(sousTypeCreation)) {
-    return utilisateurADroit(
-      Droit.CREER_ACTE_TRANSCRIT,
-      storeRece.utilisateurCourant
-    );
+    return utilisateurADroit(Droit.CREER_ACTE_TRANSCRIT, utilisateurConnecte);
   }
 
   return aDroit;
@@ -250,3 +311,30 @@ export function estUtilisateurSysteme(
 ) {
   return nomUtilisateur === "RECE" && prenomUtilisateur === "Système";
 }
+
+export function mappingOfficier(headers: any, body: any): IOfficier {
+  return {
+    idUtilisateur: body.idUtilisateur,
+    idSSO: body.idArobas,
+    nom: formatNom(body.nom),
+    prenom: formatPrenom(body.prenom),
+    trigramme: body.trigramme,
+    mail: body.mel,
+    profils: setProfilsOfficier(headers.profil),
+    telephone: body.telephone || "",
+    habilitations: mapHabilitationsUtilisateur(body.habilitations),
+    service: body.service,
+    servicesFils: body.servicesFilsDirects,
+    fonctionAgent: body.fonctionAgent,
+    modeAuthentification: "AROBAS_MDP"
+  };
+}
+
+export function setProfilsOfficier(profils: string): string[] {
+  let profilsUtilisateur: string[] = [];
+  if (profils) {
+    profilsUtilisateur = profils.split("\\; ").filter(x => x);
+  }
+  return profilsUtilisateur;
+}
+

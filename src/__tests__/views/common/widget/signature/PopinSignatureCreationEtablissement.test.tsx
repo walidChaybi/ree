@@ -16,11 +16,13 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
 import { PopinSignatureCreationEtablissement } from "@widget/signature/PopinSignatureCreationEtablissement";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
-import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../__tests__utils__/testsUtil";
 
 describe("Doit afficher la popin de signature lors de la création d'un acte", () => {
   test("DOIT afficher la popin de signature basique", () => {
@@ -110,7 +112,7 @@ describe("Doit afficher la popin de signature lors de la création d'un acte", (
 
 describe("Doit signer le document QUAND on valide le code pin.", () => {
   test.skip("DOIT composer le document final, puis enregistrer le document final signé, puis modifier le statut de la requete et l'avancement du projet d'acte", () => {
-    storeRece.utilisateurCourant = mockConnectedUser as any as IOfficier;
+    const utilisateurCourant = mockConnectedUser as any as IOfficier;
     const composerDocumentFinalSpy = vi.spyOn(
       EtatCivilApi,
       "composerDocumentFinal"
@@ -143,7 +145,12 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       ]
     );
 
-    render(<RouterProvider router={router} />);
+    render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        utilisateurCourant
+      )
+    );
 
     // Simulation d'une signature réussie.
     fireEvent(
@@ -296,7 +303,7 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       ]
     );
 
-  render(<RouterProvider router={router} />);
+    render(<RouterProvider router={router} />);
 
     // Simulation d'une signature réussie.
     fireEvent(

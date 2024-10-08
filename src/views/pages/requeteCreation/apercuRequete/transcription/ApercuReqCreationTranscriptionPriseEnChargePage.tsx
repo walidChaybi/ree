@@ -1,11 +1,14 @@
-import { RECEContext } from "@core/contexts/RECEContext";
+import {
+  RECEContextActions,
+  RECEContextData
+} from "@core/contexts/RECEContext";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   IDetailRequeteParams,
   useAvecRejeuDetailRequeteApiHook
 } from "@hook/requete/DetailRequeteHook";
-import { mAppartient } from "@model/agent/IOfficier";
+import { appartientAUtilisateurConnecte } from "@model/agent/IOfficier";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
@@ -52,7 +55,8 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
   const [requete, setRequete] = useState<IRequeteCreation>();
   const [detailRequeteParams, setDetailRequeteParams] =
     useState<IDetailRequeteParams>();
-  const { setIsDirty } = useContext(RECEContext);
+  const { utilisateurConnecte } = useContext(RECEContextData);
+  const { setIsDirty } = useContext(RECEContextActions);
 
   // Hooks
   const { detailRequeteState } =
@@ -160,7 +164,7 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<
 
   const afficherBoutonModifierRequete =
     SousTypeCreation.estRCTC(requete?.sousType) &&
-    mAppartient(requete?.idUtilisateur);
+    appartientAUtilisateurConnecte(utilisateurConnecte, requete?.idUtilisateur);
 
   function onModificationRequete() {
     if (requete) {

@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
@@ -14,7 +15,7 @@ import { getLibelle, getValeurOuVide, supprimeElement } from "@util/Utils";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { IDataFicheProps, IIndex } from "../../../fiche/FichePage";
 import { TypeRMC, goToLinkRMC } from "./RMCTableauCommun";
@@ -65,6 +66,7 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   dataRMCFicheInscription,
   dataTableauRMCFicheInscription
 }) => {
+  const { utilisateurConnecte } = useContext(RECEContextData);
   const goToLink = useCallback(
     (link: string) => {
       const range = goToLinkRMC(link);
@@ -95,7 +97,11 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
 
   const onClickOnLine = (idInscription: string, data: any, index: number) => {
     if (
-      officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.TOUS_REGISTRES)
+      officierALeDroitSurLePerimetre(
+        Droit.CONSULTER,
+        Perimetre.TOUS_REGISTRES,
+        utilisateurConnecte
+      )
     ) {
       const etatFenetreTrouve = etatFenetres.find(
         etatFenetre => etatFenetre.idInscription === idInscription

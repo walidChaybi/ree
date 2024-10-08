@@ -1,4 +1,5 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import { StatutsRequetesInformation } from "@pages/requeteInformation/espaceInformation/EspaceReqInfoParams";
 import { ReqInfoServicePage } from "@pages/requeteInformation/espaceInformation/ReqInfoServicePage";
@@ -26,6 +27,14 @@ const parametresReqInfo = {
   range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
 } as IQueryParametersPourRequetes;
 
+const routerAvecContexte = (router: any): any => {
+  return (
+    <MockRECEContextProvider>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
+};
+
 test("renders Requête Service Info, Clic requête au statut TRANSFEREE", async () => {
   const router = createTestingRouter(
     [
@@ -44,7 +53,7 @@ test("renders Requête Service Info, Clic requête au statut TRANSFEREE", async 
     [URL_REQUETES_INFORMATION_SERVICE]
   );
 
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   act(() => {
     fireEvent.click(screen.getByTestId("loupeBouton"));
@@ -89,7 +98,7 @@ test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", a
     ],
     [URL_REQUETES_INFORMATION_SERVICE]
   );
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   act(() => {
     fireEvent.click(screen.getByTestId("loupeBouton"));
@@ -129,7 +138,7 @@ test("DOIT mettre a jour la liste des requetes QUAND on change le filtre 'Sous-T
     ],
     [URL_REQUETES_INFORMATION_SERVICE]
   );
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   act(() => {
     fireEvent.change(screen.getByTestId("sousType"), {
@@ -167,7 +176,7 @@ test("DOIT mettre a jour la liste des requetes QUAND on change le filtre 'Objet'
     ],
     [URL_REQUETES_INFORMATION_SERVICE]
   );
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   act(() => {
     fireEvent.change(screen.getByTestId("objet"), {
@@ -206,7 +215,7 @@ test("DOIT mettre a jour la liste des requetes QUAND on change le filtre 'Statut
     ],
     [URL_REQUETES_INFORMATION_SERVICE]
   );
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   act(() => {
     fireEvent.change(screen.getByTestId("statut"), {
@@ -245,7 +254,7 @@ test("DOIT mettre a jour la liste des requetes QUAND on change le filtre 'typeRe
     ],
     [URL_REQUETES_INFORMATION_SERVICE]
   );
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   act(() => {
     fireEvent.change(screen.getByTestId("typeRequerant"), {

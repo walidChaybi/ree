@@ -10,7 +10,7 @@ import {
   goToLinkRequete
 } from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { render, screen } from "@testing-library/react";
-import { getIconPrioriteRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { RenderIconPrioriteRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { expect, test } from "vitest";
 
 test("espace delivrance utils goToLinkRequete", () => {
@@ -25,7 +25,7 @@ test("espace delivrance utils goToLinkRequete", () => {
 });
 
 test("espace delivrance utils getIconPrioriteRequete ", () => {
-  const result = getIconPrioriteRequete({
+  const result = RenderIconPrioriteRequete({
     priorite: "HAUTE"
   });
   render(result);
@@ -35,7 +35,9 @@ test("espace delivrance utils getIconPrioriteRequete ", () => {
 test("Doit retourer true quand une des conditions n'est pas remplie (ex: NATIONALITE = FRANCAISE)", () => {
   const requete = mappingRequetesTableauDelivrance(
     [requeteRDCSC],
-    false
+    false,
+    [],
+    []
   ) as unknown as IRequeteDelivrance[];
 
   const result = ADonneesTitulaireRequeteAbsentes(requete[0]);
@@ -46,7 +48,9 @@ test("Doit retourer true quand une des conditions n'est pas remplie (ex: NATIONA
 test("Doit retourer false quand toutes les données sont présente", () => {
   const requete = mappingRequetesTableauDelivrance(
     [requeteRDCSCCertificatSituationRCA],
-    false
+    false,
+    [],
+    []
   ) as unknown as IRequeteDelivrance[];
 
   const result = ADonneesTitulaireRequeteAbsentes(requete[0]);

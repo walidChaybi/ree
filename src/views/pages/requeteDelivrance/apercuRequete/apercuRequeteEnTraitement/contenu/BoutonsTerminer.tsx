@@ -1,5 +1,11 @@
-import { RECEContext } from "@core/contexts/RECEContext";
-import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
+import {
+  RECEContextActions,
+  RECEContextData
+} from "@core/contexts/RECEContext";
+import {
+  IOfficier,
+  officierHabiliterPourLeDroit
+} from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
@@ -11,7 +17,6 @@ import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { checkDirty, getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { storeRece } from "@util/storeRece";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { BoutonSignature } from "@widget/signature/BoutonSignature";
 import React, { useCallback, useContext, useState } from "react";
@@ -32,11 +37,13 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
 }) => {
   const navigate = useNavigate();
   const [estDisabled, setEstDisabled] = useState(true);
-  const { isDirty, setIsDirty } = useContext(RECEContext);
+  const { isDirty, utilisateurConnecte } = useContext(RECEContextData);
+  const { setIsDirty } = useContext(RECEContextActions);
 
   const aDroitSignerEtStatutSigner = estPossibleDeSigner(
     requete.statutCourant.statut,
-    requete.sousType
+    requete.sousType,
+    utilisateurConnecte
   );
 
   const afficheBoutonTransmettreAValideur = possibleDeTransmettreAValideur(
@@ -44,7 +51,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
   );
 
   const mAppartient =
-    requete.idUtilisateur === storeRece.utilisateurCourant?.idUtilisateur;
+    requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
 
   if (
     mAppartient &&
@@ -99,7 +106,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
             ]}
             reloadData={actionApresSignature}
             uniqueSignature={true}
-            connectedUser={storeRece.utilisateurCourant}
+            connectedUser={utilisateurConnecte}
             validerMentionsPlusieursDocuments={
               validerMentionsPlusieursDocuments
             }
@@ -131,10 +138,14 @@ const afficherBoutonValiderTerminer = (requete: IRequeteDelivrance) =>
 
 const estPossibleDeSigner = (
   statut: StatutRequete,
-  sousTypeDelivrance: SousTypeDelivrance
+  sousTypeDelivrance: SousTypeDelivrance,
+  utilisateurConnecte: IOfficier
 ): boolean => {
   return (
-    officierHabiliterPourLeDroit(Droit.SIGNER_DELIVRANCE_DEMAT) &&
+    officierHabiliterPourLeDroit(
+      utilisateurConnecte,
+      Droit.SIGNER_DELIVRANCE_DEMAT
+    ) &&
     StatutRequete.estASigner(statut) &&
     SousTypeDelivrance.estSousTypeSignable(sousTypeDelivrance)
   );

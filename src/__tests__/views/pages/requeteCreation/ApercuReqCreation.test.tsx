@@ -1,8 +1,8 @@
-import { mappingOfficier } from "@core/login/LoginHook";
 import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic
 } from "@mock/data/mockConnectedUserAvecDroit";
+import { IOfficier, mappingOfficier } from "@model/agent/IOfficier";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
@@ -19,18 +19,21 @@ import {
   waitFor
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { beforeAll, beforeEach, expect, test } from "vitest";
+import IHabilitationDto from "../../../../dto/etatcivil/agent/IHabilitationDto";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
+let utilisateurConnecte = {} as IOfficier;
+
 beforeAll(() => {
-  storeRece.utilisateurCourant = mappingOfficier(
+  utilisateurConnecte = mappingOfficier(
     resultatHeaderUtilistateurLeBiannic,
     resultatRequeteUtilistateurLeBiannic.data
   );
-  storeRece.utilisateurCourant.habilitations = mapHabilitationsUtilisateur(
-    resultatRequeteUtilistateurLeBiannic.data.habilitations
+  utilisateurConnecte.habilitations = mapHabilitationsUtilisateur(
+    resultatRequeteUtilistateurLeBiannic.data
+      .habilitations as unknown as IHabilitationDto[]
   );
 });
 

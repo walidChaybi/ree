@@ -1,14 +1,14 @@
 import { useNavigationApercuDelivrance } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
 import { userDroitCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { render, waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
 import React from "react";
 import { expect, test } from "vitest";
+import { elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
 
 const requete1: IRequeteTableauDelivrance = {
   idRequete: "0",
@@ -19,8 +19,6 @@ const requete1: IRequeteTableauDelivrance = {
   provenance: Provenance.COURRIER.libelle,
   idService: "1"
 };
-
-storeRece.utilisateurCourant = userDroitCOMEDEC;
 
 const HookConsummerNavigation: React.FC = () => {
   const res = useNavigationApercuDelivrance(
@@ -36,7 +34,9 @@ const HookConsummerNavigation: React.FC = () => {
 };
 
 test("test apercu traitement", () => {
-  const { getByTestId } = render(<HookConsummerNavigation />);
+  const { getByTestId } = render(
+    elementAvecContexte(<HookConsummerNavigation />, userDroitCOMEDEC)
+  );
   waitFor(() => {
     expect(getByTestId("url").textContent).toBe(
       "/rece/rece-ui/mesrequetes/apercurequetedelivrance/0"
@@ -54,8 +54,6 @@ const requete2: IRequeteTableauDelivrance = {
   idService: "1"
 };
 
-storeRece.utilisateurCourant = userDroitCOMEDEC;
-
 const HookConsummerNavigation2: React.FC = () => {
   const res = useNavigationApercuDelivrance(
     "/rece/rece-ui/mesrequetes",
@@ -70,7 +68,9 @@ const HookConsummerNavigation2: React.FC = () => {
 };
 
 test("test apercu traitement", () => {
-  const { getByTestId } = render(<HookConsummerNavigation2 />);
+  const { getByTestId } = render(
+    elementAvecContexte(<HookConsummerNavigation2 />, userDroitCOMEDEC)
+  );
   waitFor(() => {
     expect(getByTestId("url").textContent).toBe(
       "/rece/rece-ui/mesrequetes/apercurequetedelivrance/0"
@@ -102,7 +102,9 @@ const HookConsummerNavigation3: React.FC = () => {
 };
 
 test("test Brouillon", () => {
-  const { getByTestId } = render(<HookConsummerNavigation3 />);
+  const { getByTestId } = render(
+    elementAvecContexte(<HookConsummerNavigation3 />, userDroitCOMEDEC)
+  );
   waitFor(() => {
     expect(getByTestId("url").textContent).toBe(
       "/rece/rece-ui/mesrequetes/saisircertificatsituation/0"
@@ -134,7 +136,9 @@ const HookConsummerNavigation4: React.FC = () => {
 };
 
 test("test Doublon", () => {
-  const { getByTestId } = render(<HookConsummerNavigation4 />);
+  const { getByTestId } = render(
+    elementAvecContexte(<HookConsummerNavigation4 />, userDroitCOMEDEC)
+  );
   waitFor(() => {
     expect(getByTestId("url").textContent).toBe(
       "/rece/rece-ui/mesrequetes/apercurequetedelivrance/0"
@@ -165,7 +169,9 @@ const HookConsummerNavigation5: React.FC = () => {
 };
 
 test("test A valider", () => {
-  const { getByTestId } = render(<HookConsummerNavigation5 />);
+  const { getByTestId } = render(
+    elementAvecContexte(<HookConsummerNavigation5 />, userDroitCOMEDEC)
+  );
   waitFor(() => {
     expect(getByTestId("url").textContent).toBe(
       "/rece/rece-ui/mesrequetes/apercurequetetraitement/0"

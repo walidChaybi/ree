@@ -1,4 +1,4 @@
-import { Decret } from "@model/etatcivil/commun/IDecret";
+import { Decret, IDecret } from "@model/etatcivil/commun/IDecret";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import {
   TypeDecision,
@@ -14,7 +14,6 @@ import {
   getDateFormatJasperFromCompose,
   getDateFromTimestamp
 } from "@util/DateUtils";
-import { storeRece } from "@util/storeRece";
 import {
   compareNombre,
   formatNom,
@@ -107,14 +106,14 @@ export function getDecisionNotaire(
   return decisionRecue;
 }
 
-export function getParagrapheFin(infosRcRca: IFicheRcRca) {
+export function getParagrapheFin(infosRcRca: IFicheRcRca, decrets: IDecret[]) {
   let paragrapheFin = `Conformément à l'`;
 
   if (infosRcRca.categorie === TypeFiche.RCA) {
-    const decret = Decret.getDecretInscriptionRCA(storeRece.decrets)?.libelle;
+    const decret = Decret.getDecretInscriptionRCA(decrets)?.libelle;
     paragrapheFin += `${decret},`;
   } else if (infosRcRca.categorie === TypeFiche.RC) {
-    const decret = Decret.getDecretInscriptionRC(storeRece.decrets)?.libelle;
+    const decret = Decret.getDecretInscriptionRC(decrets)?.libelle;
     paragrapheFin += `${decret},`;
   }
 

@@ -20,7 +20,7 @@ test("DOIT render de la PopinSignature avec succès", () => {
 });
 
 test("DOIT appeller la methode de succès QUAND la signature se fait avec succès", () => {
-  storeRece.logErrorOff = true;
+  storeRece.logErrorDesactive = true;
   const onSuccesSignatureMock = vi.fn();
 
   render(
@@ -54,7 +54,7 @@ test("DOIT appeller la methode de succès QUAND la signature se fait avec succè
 });
 
 test("DOIT afficher un message d'erreur QUAND la signature échoue", () => {
-  storeRece.logErrorOff = true;
+  storeRece.logErrorDesactive = true;
   const onSuccesSignatureMock = vi.fn();
 
   const { getByText } = render(
@@ -91,7 +91,7 @@ test("DOIT afficher un message d'erreur QUAND la signature échoue", () => {
   expect(errorMsg).toBeDefined();
   expect(onSuccesSignatureMock).not.toHaveBeenCalled();
 
-  storeRece.logErrorOff = false;
+  storeRece.logErrorDesactive = false;
 });
 
 test("DOIT fermer la popin QUAND le bouton Annuler est cliqué", () => {

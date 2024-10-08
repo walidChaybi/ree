@@ -72,7 +72,7 @@ function logErrorOnScreen(errorMessage: string) {
 
 /* istanbul ignore next */
 export function logErrorOnConsole(logErrorMgs: LogErrorMsg) {
-  if (!storeRece.logErrorOff) {
+  if (!storeRece.logErrorDesactive) {
     if (logErrorMgs) {
       console.error("Erreur inattendue: ", logErrorMgs.error);
       if (logErrorMgs.errorInfo) {

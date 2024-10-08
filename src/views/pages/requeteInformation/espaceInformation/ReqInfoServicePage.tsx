@@ -11,7 +11,7 @@ import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFil
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { getMessageSaisirFiltreOuZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { RenderMessageSaisirFiltreOuZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { SortOrder } from "@widget/tableau/TableUtils";
@@ -153,7 +153,7 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
         icone={{ keyColonne: "iconeAssigne", getIcone }}
         paramsTableau={paramsTableau}
         goToLink={goToLink}
-        noRows={getMessageSaisirFiltreOuZeroRequete(rechercheEffectuee)}
+        noRows={RenderMessageSaisirFiltreOuZeroRequete(rechercheEffectuee)}
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}

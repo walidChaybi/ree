@@ -5,6 +5,7 @@ import {
   REQUERANT,
   TITULAIRES
 } from "@composant/formulaire/ConstantesNomsForm";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { useReponseSansDelivranceCS } from "@hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
@@ -32,7 +33,7 @@ import {
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { FormikProps, FormikValues } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
@@ -124,6 +125,8 @@ export const SaisirRDCSCPage: React.FC = () => {
     titulaires: [creerTitulaire()],
     maxTitulaires: limitesTitulaires.MIN // Le nb max de titulaires autorisés à l'instant T, en fonction du type de document demandé
   });
+
+  const { decrets } = useContext(RECEContextData);
 
   const {
     creationRDCSCParams,
@@ -313,7 +316,7 @@ export const SaisirRDCSCPage: React.FC = () => {
       type={detailRequeteState?.type}
     >
       <OperationEnCours
-        visible={operationEnCours}
+        visible={operationEnCours || !decrets}
         onTimeoutEnd={() => setOperationEnCours(false)}
         onClick={() => setOperationEnCours(false)}
       />

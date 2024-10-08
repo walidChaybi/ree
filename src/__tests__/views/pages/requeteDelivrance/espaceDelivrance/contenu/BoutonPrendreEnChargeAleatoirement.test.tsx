@@ -1,9 +1,10 @@
-import { mappingOfficier } from "@core/login/LoginHook";
 import { ReponseAppelMesRequetes } from "@mock/data/EspaceDelivrance";
 import {
   resultatHeaderUtilistateurLaurenceBourdeau,
   resultatRequeteUtilistateurLaurenceBourdeau
 } from "@mock/data/mockConnectedUserAvecDroit";
+import { mappingOfficier } from "@model/agent/IOfficier";
+
 import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
 import { BoutonPrendreEnChargeAleatoirement } from "@pages/requeteDelivrance/espaceDelivrance/contenu/BoutonPrendreEnChargeAleatoirement";
 import {
@@ -12,13 +13,15 @@ import {
 } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
-import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../../__tests__utils__/testsUtil";
 
 test.skip("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l'espace Délivrance", () => {
-  storeRece.utilisateurCourant = mappingOfficier(
+  const utilisateurConnecte = mappingOfficier(
     resultatHeaderUtilistateurLaurenceBourdeau,
     resultatRequeteUtilistateurLaurenceBourdeau.data
   );
@@ -40,7 +43,9 @@ test.skip("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement d
     [URL_MES_REQUETES_DELIVRANCE]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte)
+  );
 
   const bouttonPrendreEnCharge = screen.getByText(
     /Prendre en charge/i

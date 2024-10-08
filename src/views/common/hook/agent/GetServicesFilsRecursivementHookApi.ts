@@ -1,7 +1,8 @@
-import { getTousLesServicesFils } from "@api/appels/agentApi";
+import { CONFIG_GET_TOUS_SERVICES_FILS } from "@api/configurations/agent/services/GetServicesFilsConfigApi";
 import { IService } from "@model/agent/IService";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import useFetchApi from "../../../../hooks/FetchApiHook";
 
 export interface IGetServicesFilsParams {
   idServiceParent?: string;
@@ -15,24 +16,35 @@ export function useGetServicesFilsRecursivementHookApi(
 ) {
   const [resultat, setResultat] = useState<IGetServicesFilsResultat>();
 
+  const { appelApi: appelApiServicesFils } = useFetchApi(
+    CONFIG_GET_TOUS_SERVICES_FILS
+  );
+
   useEffect(() => {
     if (params?.idServiceParent) {
-      getTousLesServicesFils(params.idServiceParent)
-        .then(res => {
-          setResultat({ servicesFils: mapServices(res.body.data) });
-        })
-        .catch((error: any) => {
+      appelApiServicesFils({
+        parametres: {
+          query: {
+            idService: params.idServiceParent
+          }
+        },
+        apresSucces: services => {
+          setResultat({ servicesFils: mapServices(services) });
+        },
+        apresErreur: erreurs => {
           logError({
             messageUtilisateur:
               "Une erreur est survenu lors de la récupération des services",
-            error
+            error: erreurs[0]
           });
-        });
+        }
+      });
     }
   }, [params]);
 
   return resultat;
 }
+
 function mapServices(services: any): IService[] {
   return services.sort((service1: IService, service2: IService) =>
     service1.libelleService.localeCompare(service2.libelleService)

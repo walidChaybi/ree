@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   IDerniereDelivranceRcRcaPacsParams,
   useDerniereDelivranceRcRcaPacsApiHook
@@ -13,10 +14,9 @@ import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface BoutonValiderTerminerProps {
@@ -29,6 +29,7 @@ export const BoutonValiderTerminer: React.FC<
   const requeteDelivrance = props.requete;
   const location = useLocation();
   const navigate = useNavigate();
+  const { utilisateurConnecte } = useContext(RECEContextData);
   const [estDisabled, setEstDisabled] = useState(true);
 
   const [majStatutParams, setMajStatutParams] = useState<
@@ -97,11 +98,12 @@ export const BoutonValiderTerminer: React.FC<
     props.requete.statutCourant.statut === StatutRequete.A_VALIDER;
 
   const mAppartient =
-    props.requete.idUtilisateur === storeRece.utilisateurCourant?.idUtilisateur;
+    props.requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
 
   if (
     mAppartient &&
     provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
+      utilisateurConnecte,
       requeteDelivrance.provenanceRequete.provenance.libelle
     ) &&
     DocumentReponse.verifierDocumentsValides(props.requete.documentsReponses) &&

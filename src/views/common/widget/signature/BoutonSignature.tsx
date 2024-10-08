@@ -1,4 +1,7 @@
-import { RECEContext } from "@core/contexts/RECEContext";
+import {
+  RECEContextActions,
+  RECEContextData
+} from "@core/contexts/RECEContext";
 import {
   IActeApiHookParams,
   useInformationsActeApiHook
@@ -54,7 +57,8 @@ export interface TableauDataToUse {
 export const BoutonSignature: React.FC<
   BoutonSignatureProps & TableauDataToUse
 > = props => {
-  const { isDirty, setIsDirty } = useContext(RECEContext);
+  const { isDirty } = useContext(RECEContextData);
+  const { setIsDirty } = useContext(RECEContextActions);
 
   const [showWaitState, setShowWaitState] = useState<boolean>(false);
   const [requetesASigner, setRequetesASigner] = useState<RequeteASigner[]>([]);

@@ -104,5 +104,18 @@ export const Decret = {
     }
 
     return documentDecret;
+  },
+
+  mapDecrets(decrets: any): IDecret[] {
+    return decrets.map(
+      (d: any) =>
+        ({
+          ...d,
+          type: Decret.getEnumTypeDecretFrom(d.type),
+          document: Decret.getEnumDocumentDecretFrom(d.document)
+        } as IDecret)
+    );
   }
 };
+
+

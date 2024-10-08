@@ -14,11 +14,13 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { MemoryRouter, RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
-import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../__tests__utils__/testsUtil";
 
 test("render PopinSignatureMiseAJourMentions QUAND on ouvre la popin", () => {
   const message =
@@ -47,7 +49,7 @@ test("render PopinSignatureMiseAJourMentions QUAND on ouvre la popin", () => {
 
 describe("Doit signer le document QUAND on valide le code pin.", () => {
   test("DOIT composer le document contenant les mentions ultérieures, puis enregistrer le document signé, et modifier le statut de la requête", () => {
-    storeRece.utilisateurCourant = mockConnectedUser as any as IOfficier;
+    const utilisateurConnecte = mockConnectedUser as any as IOfficier;
     const composerDocumentMentionsUlterieuresSpy = vi.spyOn(
       EtatCivilApi,
       "composerDocumentMentionsUlterieures"
@@ -79,7 +81,12 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       ]
     );
 
-    render(<RouterProvider router={router} />);
+    render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        utilisateurConnecte
+      )
+    );
 
     // Simulation d'une signature réussie.
     fireEvent(

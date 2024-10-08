@@ -1,5 +1,6 @@
 import { NavigationApercuReqCreationParams } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
 import { ICreationActionMiseAjourStatutEtRmcAutoHookParams } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { IOfficier } from "@model/agent/IOfficier";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -16,16 +17,18 @@ export function getOnClickSurLigneTableauEspaceCreation(
   >,
   setParamsCreation: React.Dispatch<
     React.SetStateAction<NavigationApercuReqCreationParams | undefined>
-  >
+  >,
+  utilisateurConnecte: IOfficier
 ) {
-  return function (
-    idRequete: string,
-    data: IRequeteTableauCreation[],
-    idx: number
-  ) {
+  return (idRequete: string, data: IRequeteTableauCreation[], idx: number) => {
     setOperationEnCours(true);
     const requeteSelect = data[idx];
-    if (autorisePrendreEnChargeReqTableauCreation(requeteSelect)) {
+    if (
+      autorisePrendreEnChargeReqTableauCreation(
+        requeteSelect,
+        utilisateurConnecte
+      )
+    ) {
       setParamsMiseAJour({
         libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
         statutRequete: StatutRequete.PRISE_EN_CHARGE,

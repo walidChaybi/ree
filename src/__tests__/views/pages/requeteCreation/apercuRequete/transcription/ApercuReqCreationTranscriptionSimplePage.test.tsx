@@ -9,10 +9,12 @@ import {
 } from "@router/ReceUrls";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
-import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../../__tests__utils__/testsUtil";
 
 describe.skip("Test de la page Aperçu requête transcription simple", () => {
   test("DOIT rendre le composant ApercuReqCreationTranscriptionSimplePage correctement", async () => {
@@ -152,8 +154,6 @@ describe.skip("Test du rendu du composant RMCRequeteAssociees", () => {
   });
 
   test("DOIT afficher le bouton prendre en charge QUAND la requête est au statut 'A_TRAITER'", async () => {
-    storeRece.utilisateurCourant =
-      userDroitCreerActeTranscritPerimetreTousRegistres;
     const router = createTestingRouter(
       [
         {
@@ -178,7 +178,12 @@ describe.skip("Test du rendu du composant RMCRequeteAssociees", () => {
       ]
     );
 
-    render(<RouterProvider router={router} />);
+    render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        userDroitCreerActeTranscritPerimetreTousRegistres
+      )
+    );
 
     await waitFor(() => {
       expect(screen.queryByText("Prendre en charge")).toBeDefined();

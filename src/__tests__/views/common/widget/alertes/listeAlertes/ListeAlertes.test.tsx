@@ -4,24 +4,29 @@ import {
   userDroitConsulterPerimetreTUNIS
 } from "@mock/data/mockConnectedUserAvecDroit";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
 import { ListeAlertes } from "@widget/alertes/listeAlertes/ListeAlertes";
 import { expect, test, vi } from "vitest";
+import { elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 
-storeRece.utilisateurCourant = userDroitCOMEDEC;
-
-test("render ListeAlertes avec droit suppression alerte : test ouverture / fermeture popin", () => {
+test("render ListeAlertes avec droit suppression alerte : test ouverture / fermeture popin", async () => {
   render(
-    <ListeAlertes
-      alertes={Alertes}
-      displayReference={false}
-      supprimerAlerteCallBack={vi.fn()}
-      idTypeRegistre={"salut"}
-    />
+    elementAvecContexte(
+      <ListeAlertes
+        idTypeRegistre="salut"
+        alertes={Alertes}
+        displayReference={false}
+        supprimerAlerteCallBack={vi.fn()}
+      />,
+      userDroitCOMEDEC
+    )
   );
 
-  waitFor(() => {
-    expect(screen.getAllByTitle("Supprimer l'alerte")).toHaveLength(2);
+  const boutonsSupprimerAlerte = screen.getAllByTitle(
+    "Supprimer l'alerte"
+  ) as HTMLButtonElement[];
+
+  await waitFor(() => {
+    expect(boutonsSupprimerAlerte).toHaveLength(2);
   });
 
   fireEvent.click(screen.getAllByTitle("Supprimer l'alerte")[0]);
@@ -44,17 +49,20 @@ test("render ListeAlertes avec droit suppression alerte : test ouverture / ferme
   });
 });
 
-test("render ListeAlertes avec droit suppression alerte : test soumission formulaire", () => {
+test("render ListeAlertes avec droit suppression alerte : test soumission formulaire", async () => {
   render(
-    <ListeAlertes
-      idTypeRegistre="salut"
-      alertes={Alertes}
-      displayReference={false}
-      supprimerAlerteCallBack={vi.fn()}
-    />
+    elementAvecContexte(
+      <ListeAlertes
+        idTypeRegistre="salut"
+        alertes={Alertes}
+        displayReference={false}
+        supprimerAlerteCallBack={vi.fn()}
+      />,
+      userDroitCOMEDEC
+    )
   );
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(screen.getAllByTitle("Supprimer l'alerte")).toHaveLength(2);
   });
 
@@ -78,18 +86,20 @@ test("render ListeAlertes avec droit suppression alerte : test soumission formul
   });
 });
 
-test("render ListeAlertes sans droit suppression alerte", () => {
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreTUNIS;
+test("render ListeAlertes sans droit suppression alerte", async () => {
   render(
-    <ListeAlertes
-      idTypeRegistre="saluts"
-      alertes={Alertes}
-      displayReference={false}
-      supprimerAlerteCallBack={vi.fn()}
-    />
+    elementAvecContexte(
+      <ListeAlertes
+        idTypeRegistre="salut"
+        alertes={Alertes}
+        displayReference={false}
+        supprimerAlerteCallBack={vi.fn()}
+      />,
+      userDroitConsulterPerimetreTUNIS
+    )
   );
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(screen.getAllByTitle("Supprimer l'alerte")).toHaveLength(2);
   });
 

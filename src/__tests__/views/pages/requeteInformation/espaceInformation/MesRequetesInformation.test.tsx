@@ -1,6 +1,5 @@
-import { ILoginApi } from "@core/login/LoginHook";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import officier from "@mock/data/connectedUser.json";
+import { IOfficier } from "@model/agent/IOfficier";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
 import {
@@ -11,27 +10,17 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
-import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../__tests__utils__/testsUtil";
 
 test("renders Page requete information et clique sur une TRANSFEREE", async () => {
   const router = createTestingRouter(
     [
       {
         path: URL_MES_REQUETES_INFORMATION,
-        element: (
-          <MockRECEContextProvider
-            infosLoginOfficier={
-              {
-                officierDataState: {
-                  idSSO: officier.id_sso,
-                  ...officier
-                }
-              } as unknown as ILoginApi
-            }
-          >
-            <EspaceInformationPage />
-          </MockRECEContextProvider>
-        )
+        element: <EspaceInformationPage />
       },
       {
         path: getUrlWithParam(
@@ -44,8 +33,12 @@ test("renders Page requete information et clique sur une TRANSFEREE", async () =
     [URL_MES_REQUETES_INFORMATION]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(<RouterProvider router={router} />, {
+      idSSO: officier.id_sso,
+      ...officier
+    } as unknown as IOfficier)
+  );
   const titreNumero = screen.getByText("N° requête");
   const pageSuivante = screen.getByTitle("Page suivante");
 
@@ -76,17 +69,7 @@ test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", a
     [
       {
         path: URL_MES_REQUETES_INFORMATION,
-        element: (
-          <MockRECEContextProvider
-            infosLoginOfficier={
-              {
-                officierDataState: { idSSO: officier.id_sso, ...officier }
-              } as unknown as ILoginApi
-            }
-          >
-            <EspaceInformationPage />
-          </MockRECEContextProvider>
-        )
+        element: <EspaceInformationPage />
       },
 
       {
@@ -97,7 +80,12 @@ test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", a
     [URL_MES_REQUETES_INFORMATION]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(<RouterProvider router={router} />, {
+      idSSO: officier.id_sso,
+      ...officier
+    } as unknown as IOfficier)
+  );
 
   await waitFor(() => {
     expect(screen.getByText("EVIPG5")).toBeDefined();

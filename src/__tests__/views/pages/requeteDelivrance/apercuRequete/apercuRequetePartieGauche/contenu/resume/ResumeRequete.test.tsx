@@ -13,6 +13,7 @@ import { RouterProvider } from "react-router-dom";
 import { beforeAll, describe, expect, test } from "vitest";
 import {
   createTestingRouter,
+  elementAvecContexte,
   mockFenetreFicheTestFunctions
 } from "../../../../../../../__tests__utils__/testsUtil";
 
@@ -33,7 +34,8 @@ describe("ResumeRequetePartieHaute", () => {
           element: (
             <ResumeRequete
               requete={mappingRequeteDelivrance(
-                ReponseAppelDetailRequeteDelivrance.data
+                ReponseAppelDetailRequeteDelivrance.data,
+                []
               )}
             />
           )
@@ -47,7 +49,7 @@ describe("ResumeRequetePartieHaute", () => {
       ]
     );
 
-    render(<RouterProvider router={router} />);
+    render(elementAvecContexte(<RouterProvider router={router} />));
 
     waitFor(() => {
       expect(screen.getByText("Description requête")).toBeDefined();
@@ -64,7 +66,8 @@ describe("ResumeRequetePartieHaute", () => {
           element: (
             <ResumeRequete
               requete={mappingRequeteDelivrance(
-                detailRequeteDelivranceAvecRequerantQualiteInstitutionnel.data
+                detailRequeteDelivranceAvecRequerantQualiteInstitutionnel.data,
+                []
               )}
             />
           )
@@ -78,7 +81,7 @@ describe("ResumeRequetePartieHaute", () => {
       ]
     );
 
-    render(<RouterProvider router={router} />);
+    render(elementAvecContexte(<RouterProvider router={router} />));
 
     waitFor(() => {
       expect(screen.getByText("Description requête")).toBeDefined();
@@ -95,7 +98,8 @@ describe("ResumeRequetePartieHaute", () => {
           element: (
             <ResumeRequete
               requete={mappingRequeteDelivrance(
-                detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel.data
+                detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel.data,
+                []
               )}
             />
           )
@@ -109,7 +113,7 @@ describe("ResumeRequetePartieHaute", () => {
       ]
     );
 
-    render(<RouterProvider router={router} />);
+    render(elementAvecContexte(<RouterProvider router={router} />));
 
     waitFor(() => {
       expect(screen.getByText("Description requête")).toBeDefined();
@@ -126,7 +130,8 @@ describe("ResumeRequetePartieHaute", () => {
           element: (
             <ResumeRequete
               requete={mappingRequeteDelivrance(
-                detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece.data
+                detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece.data,
+                []
               )}
             />
           )
@@ -140,7 +145,7 @@ describe("ResumeRequetePartieHaute", () => {
       ]
     );
 
-    render(<RouterProvider router={router} />);
+    render(elementAvecContexte(<RouterProvider router={router} />));
 
     waitFor(() => {
       expect(screen.getByText("Description requête")).toBeDefined();

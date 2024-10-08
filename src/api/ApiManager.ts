@@ -123,7 +123,7 @@ export class ApiManager {
       httpRequestConfig.uri
     );
 
-    // Ajout de l'id de corrélation dans l'entête => Tester voir si c'est utile
+    // Ajout de l'id de corrélation dans l'entête
     this.addIdCorrelationToConfigHeader(httpRequestConfig);
 
     // Ajout de la valeur du cookie csrf dans l'entête

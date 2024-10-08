@@ -1,5 +1,10 @@
+import { IService, Service } from "@model/agent/IService";
+import {
+  IUtilisateur,
+  getNomUtilisateurAPartirID,
+  getPrenomUtilisateurAPartirID
+} from "@model/agent/IUtilisateur";
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
-import { storeRece } from "@util/storeRece";
 import {
   formatNom,
   formatPrenom,
@@ -7,6 +12,10 @@ import {
   getValeurOuVide
 } from "@util/Utils";
 import { NatureActe } from "../etatcivil/enum/NatureActe";
+import { IDocumentReponse } from "./IDocumentReponse";
+import { IRequerant, Requerant } from "./IRequerant";
+import { IRequeteTableau } from "./IRequeteTableau";
+import { mapTitulaires } from "./ITitulaireRequeteTableau";
 import { DocumentDelivrance } from "./enum/DocumentDelivrance";
 import { Provenance } from "./enum/Provenance";
 import { SousTypeCreation } from "./enum/SousTypeCreation";
@@ -17,10 +26,6 @@ import { StatutRequete } from "./enum/StatutRequete";
 import { TagPriorisation } from "./enum/TagPriorisation";
 import { TypeCanal } from "./enum/TypeCanal";
 import { TypeRequete } from "./enum/TypeRequete";
-import { IDocumentReponse } from "./IDocumentReponse";
-import { IRequerant, Requerant } from "./IRequerant";
-import { IRequeteTableau } from "./IRequeteTableau";
-import { mapTitulaires } from "./ITitulaireRequeteTableau";
 
 export interface IRequeteTableauDelivrance extends IRequeteTableau {
   numeroTeledossier?: string;
@@ -48,16 +53,25 @@ export interface IRequeteTableauDelivrance extends IRequeteTableau {
 
 export function mappingRequetesTableauDelivrance(
   resultatsRecherche: any,
-  mappingSupplementaire: boolean
+  mappingSupplementaire: boolean,
+  utilisateurs: IUtilisateur[],
+  services: IService[]
 ): IRequeteTableauDelivrance[] {
   return resultatsRecherche?.map((requete: any) => {
-    return mappingUneRequeteTableauDelivrance(requete, mappingSupplementaire);
+    return mappingUneRequeteTableauDelivrance(
+      requete,
+      mappingSupplementaire,
+      utilisateurs,
+      services
+    );
   });
 }
 
 export function mappingUneRequeteTableauDelivrance(
   requete: any,
-  mappingSupplementaire: boolean
+  mappingSupplementaire: boolean,
+  utilisateurs: IUtilisateur[],
+  services: IService[]
 ): IRequeteTableauDelivrance {
   const requerant = requete?.requerant
     ? Requerant.mappingRequerant(requete?.requerant)
@@ -82,7 +96,7 @@ export function mappingUneRequeteTableauDelivrance(
       ? requete?.nomCompletRequerant
       : requerant,
     idUtilisateurRequerant: requete?.idUtilisateurRequerant,
-    attribueA: mapAttribueA(requete),
+    attribueA: mapAttribueA(requete, utilisateurs, services) ?? undefined,
     dateCreation: getFormatDateFromTimestamp(requete?.dateCreation),
     dateDerniereMaj: getFormatDateFromTimestamp(requete?.dateDernierMAJ),
     statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
@@ -115,16 +129,20 @@ function getSousType(type: string, sousType: string) {
   }
 }
 
-export function mapAttribueA(requete: any): string | undefined {
-  let attribueA: string | undefined;
+export function mapAttribueA(
+  requete: any,
+  utilisateurs: IUtilisateur[],
+  services: IService[]
+): string | null {
+  let attribueA: string | null = null;
   if (requete?.idUtilisateur) {
     attribueA = `${formatPrenom(
-      storeRece.getPrenomUtilisateurAPartirID(requete?.idUtilisateur)
+      getPrenomUtilisateurAPartirID(requete?.idUtilisateur, utilisateurs)
     )} ${formatNom(
-      storeRece.getNomUtilisateurAPartirID(requete?.idUtilisateur)
+      getNomUtilisateurAPartirID(requete?.idUtilisateur, utilisateurs)
     )}`;
   } else if (requete?.idService) {
-    attribueA = storeRece.getLibelleService(requete.idService);
+    attribueA = Service.libelleDepuisId(requete.idService, services);
   }
   return attribueA;
 }

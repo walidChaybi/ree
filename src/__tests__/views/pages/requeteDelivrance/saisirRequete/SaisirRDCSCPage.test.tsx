@@ -16,14 +16,12 @@ import {
   waitFor
 } from "@testing-library/react";
 import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
-import { beforeAll, expect, test } from "vitest";
-import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
-
-beforeAll(() => {
-  storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
-});
+import { expect, test } from "vitest";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../__tests__utils__/testsUtil";
 
 test("renders formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", () => {
   const router = createTestingRouter(
@@ -36,7 +34,9 @@ test("renders formulaire de saisie d'une Requête de Délivrance Certificat de S
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC)
+  );
 
   const titre = SousTypeDelivrance.getEnumFor("RDCSC").libelle;
   waitFor(() => {
@@ -63,8 +63,9 @@ test.skip("test du Prendre en charge du formulaire de saisie d'une Requête de D
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC)
+  );
   const inputDocumentDemande = screen.getByTestId(
     "document"
   ) as HTMLSelectElement;
@@ -129,8 +130,9 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC)
+  );
   const inputDocumentDemande = screen.getByTestId(
     "document"
   ) as HTMLSelectElement;
@@ -191,8 +193,9 @@ test.skip("test du Prendre en charge du formulaire de saisie d'une Requête de D
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC)
+  );
   const inputDocumentDemande = screen.getByTestId(
     "document"
   ) as HTMLSelectElement;
@@ -241,8 +244,6 @@ test.skip("test du Prendre en charge du formulaire de saisie d'une Requête de D
 });
 
 test("test du Sauvegarder du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", () => {
-  storeRece.utilisateurCourant = userDroitConsulterArchive; // Droit DELIVRER
-
   const router = createTestingRouter(
     [
       {
@@ -253,8 +254,12 @@ test("test du Sauvegarder du formulaire de saisie d'une Requête de Délivrance 
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      userDroitConsulterArchive
+    )
+  );
   const inputDocumentDemande = screen.getByTestId(
     "document"
   ) as HTMLSelectElement;
@@ -324,11 +329,13 @@ test.skip("Remplissage du formulaire avec requete", () => {
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC)
+  );
 
-    const inputDocumentDemande = screen.getByTestId(
-      "document"
-    ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId(
+    "document"
+  ) as HTMLSelectElement;
   const inputPaysNaissance = screen.getByLabelText(
     "titulaires.titulaire1.naissance.paysEvenement"
   ) as HTMLInputElement;
@@ -385,8 +392,9 @@ test(`Document demandé = "Attestation PACS" => bouton "ajouter un titulaire" vi
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC)
+  );
   const inputDocumentDemande: ChildNode = screen.getByTestId(
     Labels.documentDemande
   );
@@ -426,8 +434,9 @@ test(`Document demandé != "Attestation PACS" => bouton "ajouter un titulaire" &
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC)
+  );
   const inputDocumentDemande: ChildNode = screen.getByTestId(
     Labels.documentDemande
   );
@@ -472,8 +481,9 @@ test(`Clic sur "ajouter un titulaire" => bloc titulaire2 & bouton "supprimer un 
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC)
+  );
   const inputDocumentDemande: ChildNode = screen.getByTestId(
     Labels.documentDemande
   );
@@ -529,8 +539,9 @@ test.skip(`Clic sur "supprimer un titulaire" => bloc titulaire2 & bouton "suppri
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC)
+  );
   let boutonAjoutTitulaire: HTMLElement | null = screen.queryByLabelText(
     Labels.titulaire.ajout
   );

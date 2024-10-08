@@ -1,4 +1,7 @@
-import { RECEContext } from "@core/contexts/RECEContext";
+import {
+  RECEContextActions,
+  RECEContextData
+} from "@core/contexts/RECEContext";
 import { checkDirty } from "@util/Utils";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { ReactNode, useContext, useEffect, useState } from "react";
@@ -21,7 +24,8 @@ export const BoutonOperationEnCours: React.FC<
   BoutonOperationEnCoursProps
 > = props => {
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
-  const { isDirty, setIsDirty } = useContext(RECEContext);
+  const { decrets, isDirty } = useContext(RECEContextData);
+  const { setIsDirty } = useContext(RECEContextActions);
 
   const handleClick = () => {
     if (
@@ -42,7 +46,7 @@ export const BoutonOperationEnCours: React.FC<
   return (
     <>
       <OperationEnCours
-        visible={opEnCours}
+        visible={opEnCours || !decrets}
         onTimeoutEnd={() => setOpEnCours(false)}
         onClick={() => setOpEnCours(false)}
         timeoutInMiliSec={props.timeoutInMiliSec}

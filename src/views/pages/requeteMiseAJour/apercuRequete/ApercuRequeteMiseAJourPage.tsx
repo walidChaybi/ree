@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   IEnregistrerMentionsEtAnalyseMarginaleParams,
   IMajAnalyseMarginale,
@@ -40,7 +41,13 @@ import {
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState
+} from "react";
 import { useNavigate, useParams } from "react-router";
 import { ApercuActeMisAJour } from "./commun/ApercuActeMisAjour";
 import MiseAJourAnalyseMarginale from "./contenu/MiseAJourAnalyseMarginale/MiseAJourAnalyseMarginale";
@@ -137,6 +144,8 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
   const { idActeParam, idRequeteParam } = useParams<TUuidActeParams>();
 
   const navigate = useNavigate();
+
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   const [listeMentions, setListeMentions] = useState<IMajMention[]>([]);
   const [listeMentionsEnregistrees, setListeMentionsEnregistrees] = useState<
@@ -423,10 +432,10 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
                     >
                       {getLibelle("Actualiser et visualiser")}
                     </BoutonDoubleSubmit>
-                    {estOfficierHabiliterPourTousLesDroits([
-                      Droit.SIGNER_MENTION,
-                      Droit.METTRE_A_JOUR_ACTE
-                    ]) && (
+                    {estOfficierHabiliterPourTousLesDroits(
+                      utilisateurConnecte,
+                      [Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE]
+                    ) && (
                       <BoutonDoubleSubmit
                         disabled={estVerrouilleTerminerEtSigner}
                         onClick={() => setEstPopinSignatureOuverte(true)}

@@ -10,12 +10,12 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
 import * as TableauPaginationConstantes from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { RouterProvider } from "react-router-dom";
 import { afterEach, beforeAll, expect, test } from "vitest";
 import {
   createTestingRouter,
+  elementAvecContexte,
   mockFenetreFicheTestFunctions
 } from "../../../../__tests__utils__/testsUtil";
 
@@ -144,8 +144,6 @@ test.skip("La pagination (avec changement de plage) entre les fiches rc/rca/pacs
   // @ts-ignore
   TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_ACTE = 2;
 
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
-
   const router = createTestingRouter(
     [
       {
@@ -161,7 +159,12 @@ test.skip("La pagination (avec changement de plage) entre les fiches rc/rca/pacs
     ["/"]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      userDroitConsulterPerimetreTousRegistres
+    )
+  );
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
 
@@ -251,8 +254,6 @@ test.skip("La pagination (avec changement de plage) entre les fiches acte s'effe
   // @ts-ignore
   TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_ACTE = 2;
 
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
-
   const router = createTestingRouter(
     [
       {
@@ -268,7 +269,12 @@ test.skip("La pagination (avec changement de plage) entre les fiches acte s'effe
     ["/"]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      userDroitConsulterPerimetreTousRegistres
+    )
+  );
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
 

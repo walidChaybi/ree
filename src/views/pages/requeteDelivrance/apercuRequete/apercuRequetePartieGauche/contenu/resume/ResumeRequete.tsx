@@ -1,7 +1,8 @@
 import { ListePiecesJointes } from "@composant/piecesJointes/ListePiecesJointes";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { mAppartient } from "@model/agent/IOfficier";
+import { appartientAUtilisateurConnecte } from "@model/agent/IOfficier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -18,7 +19,7 @@ import { FenetreExterne } from "@util/FenetreExterne";
 import { getLibelle } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DetailRequetePage } from "../../../../detailRequete/DetailRequetePage";
 import { ResumeRequetePartieHaute } from "./ResumeRequetePartieHaute";
@@ -38,6 +39,7 @@ const height = 600;
 export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
   const navigate = useNavigate();
   const [fenetreExterne, setFenetreExterne] = useState<boolean>(false);
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   const onClickNumero = () => {
     setFenetreExterne(true);
@@ -62,7 +64,10 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
   };
 
   const afficherBoutonModifierRequete =
-    mAppartient(props.requete.idUtilisateur) &&
+    appartientAUtilisateurConnecte(
+      utilisateurConnecte,
+      props.requete.idUtilisateur
+    ) &&
     SousTypeDelivrance.estRDCouRDCSC(props.requete.sousType) &&
     StatutRequete.estPriseEnCharge(props.requete.statutCourant.statut) &&
     !props.disabledActions;

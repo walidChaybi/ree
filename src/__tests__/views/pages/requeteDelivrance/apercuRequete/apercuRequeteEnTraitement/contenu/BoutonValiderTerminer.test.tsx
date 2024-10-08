@@ -8,10 +8,12 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { BoutonValiderTerminer } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/BoutonValiderTerminer";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
-import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../../../__tests__utils__/testsUtil";
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
@@ -49,7 +51,6 @@ const requeteTestCOURRIER = {
 } as IRequeteDelivrance;
 
 test("est à A_VALIDER et provient de COURRIER", () => {
-  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
   const router = createTestingRouter(
     [
       {
@@ -68,7 +69,9 @@ test("est à A_VALIDER et provient de COURRIER", () => {
     [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC)
+  );
   const bouttonSigner = screen.getByText(
     /Valider et terminer/i
   ) as HTMLButtonElement;

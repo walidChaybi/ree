@@ -1,10 +1,11 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   IDetailRequeteParams,
   useDetailRequeteApiHook
 } from "@hook/requete/DetailRequeteHook";
-import { mAppartient } from "@model/agent/IOfficier";
+import { appartientAUtilisateurConnecte } from "@model/agent/IOfficier";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
@@ -27,7 +28,7 @@ import { getLibelle } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "../../commun/scss/ApercuReqCreationPage.scss";
 import { getComposantResumeRequeteEnFonctionNatureActe } from "./ApercuReqCreationTranscriptionUtils";
@@ -43,6 +44,7 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
   const { idRequeteParam } = useParams<TUuidRequeteParams>();
   const navigate = useNavigate();
   const location = useLocation();
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   // States
   const [requete, setRequete] = useState<IRequeteCreationTranscription>();
@@ -73,7 +75,7 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<
 
   const afficherBoutonModifierRequete =
     SousTypeCreation.estRCTC(requete?.sousType) &&
-    mAppartient(requete?.idUtilisateur);
+    appartientAUtilisateurConnecte(utilisateurConnecte, requete?.idUtilisateur);
 
   useEffect(() => {
     if (detailRequeteState) {

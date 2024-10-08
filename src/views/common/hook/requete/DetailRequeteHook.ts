@@ -1,4 +1,6 @@
 import { getDetailRequete } from "@api/appels/requeteApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
+import { IUtilisateur, getTrigrammeFromID } from "@model/agent/IUtilisateur";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { CategorieDocument } from "@model/requete/CategorieDocument";
 import { IAction } from "@model/requete/IActions";
@@ -48,8 +50,7 @@ import {
 } from "@util/DateUtils";
 import { logError } from "@util/LogManager";
 import { getValeurOuUndefined } from "@util/Utils";
-import { storeRece } from "@util/storeRece";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AvancementProjetActe } from "./../../../../model/requete/enum/AvancementProjetActe";
 import { NatureProjetEtablissement } from "./../../../../model/requete/enum/NatureProjetEtablissement";
 import { RolePersonneSauvegardee } from "./../../../../model/requete/enum/RolePersonneSauvegardee";
@@ -66,13 +67,16 @@ export function useDetailRequeteApiHook(params?: IDetailRequeteParams) {
     TRequete | undefined
   >();
 
+  const { utilisateurs } = useContext(RECEContextData);
+
   useEffect(() => {
     if (params?.idRequete) {
       fetchDetailRequete(
         setDetailRequeteState,
-        params.idRequete,
         params.estConsultation,
-        params.estConsultationHistoriqueAction
+        params.estConsultationHistoriqueAction,
+        utilisateurs,
+        params.idRequete
       );
     }
   }, [params]);
@@ -89,11 +93,15 @@ export function useAvecRejeuDetailRequeteApiHook(
     TRequete | undefined
   >();
 
+  const { utilisateurs } = useContext(RECEContextData);
+
   useEffect(() => {
     fetchDetailRequete(
       setDetailRequeteState,
-      params?.idRequete,
-      params?.estConsultation
+      params?.estConsultation,
+      undefined,
+      utilisateurs,
+      params?.idRequete
     );
   }, [params]);
 
@@ -104,9 +112,10 @@ export function useAvecRejeuDetailRequeteApiHook(
 
 export async function fetchDetailRequete(
   setDetailRequeteState: any,
-  idRequete?: string,
   estConsultation = false,
-  estConsultationHistoriqueAction = false
+  estConsultationHistoriqueAction = false,
+  utilisateurs?: IUtilisateur[],
+  idRequete?: string
 ) {
   try {
     if (idRequete) {
@@ -117,24 +126,30 @@ export async function fetchDetailRequete(
       );
       const typeRequete = TypeRequete.getEnumFor(result?.body?.data?.type);
       switch (typeRequete) {
-        case TypeRequete.DELIVRANCE:
+        case TypeRequete.DELIVRANCE: {
           const detailRequeteDelivrance = mappingRequeteDelivrance(
-            result?.body?.data
+            result?.body?.data,
+            utilisateurs
           );
           setDetailRequeteState(detailRequeteDelivrance);
           break;
-        case TypeRequete.INFORMATION:
+        }
+        case TypeRequete.INFORMATION: {
           const detailRequeteInformation = mappingRequeteInformation(
-            result?.body?.data
+            result?.body?.data,
+            utilisateurs
           );
           setDetailRequeteState(detailRequeteInformation);
           break;
-        case TypeRequete.CREATION:
+        }
+        case TypeRequete.CREATION: {
           const detailRequeteCreation = mappingRequeteCreation(
-            result?.body?.data
+            result?.body?.data,
+            utilisateurs
           );
           setDetailRequeteState(detailRequeteCreation);
           break;
+        }
       }
     }
   } catch (error) {
@@ -145,7 +160,10 @@ export async function fetchDetailRequete(
   }
 }
 
-export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
+export function mappingRequeteDelivrance(
+  data: any,
+  utilisateurs?: IUtilisateur[]
+): IRequeteDelivrance {
   return {
     // Partie Requête
     id: data.id,
@@ -161,9 +179,9 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
     mandant: data.mandant ? getMandant(data.mandant) : undefined,
     idUtilisateur: data.corbeilleAgent?.idUtilisateur,
     idService: data?.corbeilleService?.idService,
-    actions: getActions(data?.actions),
+    actions: getActions(data?.actions, utilisateurs),
     observations: data.observations
-      ? getObservations(data.observations)
+      ? getObservations(data.observations, utilisateurs)
       : undefined,
     piecesJustificatives: mapPiecesJustificatives(data.piecesJustificatives),
     numeroRequeteOrigine: data.numeroRequeteOrigine,
@@ -202,12 +220,12 @@ function mapPiecesJustificatives(pieces?: any): IPieceJustificative[] {
   return pieces?.map((pj: any) => mapUnePieceJustificative(pj));
 }
 
-function getActions(actions: any): IAction[] {
+function getActions(actions: any, utilisateurs?: IUtilisateur[]): IAction[] {
   const actionsRequete: IAction[] = [];
   actions.forEach((a: any) => {
     const action = a as IAction;
-    const trigramme = storeRece.getTrigrammeFromID(action.idUtilisateur);
-    action.trigramme = trigramme ? trigramme : "";
+    const trigramme = getTrigrammeFromID(action.idUtilisateur, utilisateurs);
+    action.trigramme = trigramme ?? "";
     action.nomUtilisateur = a.nomUtilisateur ? a.nomUtilisateur : "";
     action.prenomUtilisateur = a.prenomUtilisateur ? a.prenomUtilisateur : "";
     actionsRequete.push(action);
@@ -215,12 +233,18 @@ function getActions(actions: any): IAction[] {
   return actionsRequete;
 }
 
-function getObservations(observations: any): IObservation[] {
+function getObservations(
+  observations: any,
+  utilisateurs?: IUtilisateur[]
+): IObservation[] {
   const observationsRequete: IObservation[] = [];
   observations.forEach((a: any) => {
     const observation = a as IObservation;
-    const trigramme = storeRece.getTrigrammeFromID(observation.idUtilisateur);
-    observation.trigramme = trigramme ? trigramme : "RECE";
+    const trigramme = getTrigrammeFromID(
+      observation.idUtilisateur,
+      utilisateurs
+    );
+    observation.trigramme = trigramme ?? "RECE";
     observationsRequete.push(observation);
   });
   return observationsRequete;
@@ -277,7 +301,7 @@ function getEvenement(evenement: any): IEvenementRequete {
   };
 }
 
-function mappingRequete(data: any) {
+function mappingRequete(data: any, utilisateurs?: IUtilisateur[]) {
   return {
     // Partie Requête
     id: data.id,
@@ -290,17 +314,20 @@ function mappingRequete(data: any) {
     idUtilisateur: data.corbeilleAgent?.idUtilisateur,
     idService: data?.corbeilleService?.idService,
     observations: data.observations
-      ? getObservations(data.observations)
+      ? getObservations(data.observations, utilisateurs)
       : undefined,
     canal: TypeCanal.getEnumFor(data.canal),
-    actions: getActions(data?.actions),
+    actions: getActions(data?.actions, utilisateurs),
     numeroRequeteOrigine: data.numeroRequeteOrigine
   };
 }
 
-export function mappingRequeteInformation(data: any): IRequeteInformation {
+export function mappingRequeteInformation(
+  data: any,
+  utilisateurs?: IUtilisateur[]
+): IRequeteInformation {
   return {
-    ...mappingRequete(data),
+    ...mappingRequete(data, utilisateurs),
     //Partie Requête Delivrance
     sousType: SousTypeInformation.getEnumFor(data.sousType),
     objet: data.objet,
@@ -389,8 +416,11 @@ function mapDocumentPJ(documents?: any): IDocumentPJ[] {
   );
 }
 
-export function mappingRequeteCreation(data: any): IRequeteCreation {
-  const requete = mappingRequete(data);
+export function mappingRequeteCreation(
+  data: any,
+  utilisateurs?: IUtilisateur[]
+): IRequeteCreation {
+  const requete = mappingRequete(data, utilisateurs);
   const natureActeTranscrit = NatureActeTranscription.getEnumFor(
     data.natureActeTranscrit
   );
@@ -426,7 +456,9 @@ export function mappingRequeteCreation(data: any): IRequeteCreation {
   };
 }
 
-export function mapTitulairesCreation(titulaires: any[]): ITitulaireRequeteCreation[] {
+export function mapTitulairesCreation(
+  titulaires: any[]
+): ITitulaireRequeteCreation[] {
   return titulaires.map(titulaire => ({
     ...titulaire,
     qualite: QualiteFamille.getEnumFor(titulaire.qualite),
@@ -485,3 +517,4 @@ function mapSuiviDossiers(suiviDossiers?: any[]): ISuiviDossier[] | undefined {
     )
   }));
 }
+

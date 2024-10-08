@@ -167,6 +167,10 @@ export const getValeurOuVide = (str?: any) => {
   return str ?? "";
 };
 
+export const getTableauOuVide = (arr?: any[]) => {
+  return arr?.length ? arr : [];
+};
+
 export const getPremierElemOuVide = (tab?: string[]): string => {
   return tab && tab[0] ? tab[0] : "";
 };

@@ -1,43 +1,93 @@
-/* istanbul ignore file */
-
-import { ILoginApi } from "@core/login/LoginHook";
-import React, { useState } from "react";
+/* v8 ignore start */
+import { CONFIG_GET_UTILISATEUR_LOGIN } from "@api/configurations/agent/utilisateur/GetLoginConfigApi";
+import { IOfficier, mappingOfficier } from "@model/agent/IOfficier";
+import { IService } from "@model/agent/IService";
+import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { IDecret } from "@model/etatcivil/commun/IDecret";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import React, { useEffect, useMemo, useState } from "react";
+import useFetchApi from "../../../hooks/FetchApiHook";
+import { useChargerDonneesApplicatives } from "../../../hooks/useChargerDonneesApplicatives";
+import useChargerDonneesContexte from "../../../hooks/useChargerDonneesContexte";
 
 export interface IRECEContext {
-  infosLoginOfficier: ILoginApi;
-  estListeUtilisateursChargee: boolean;
-  estListeServicesChargee: boolean;
+  utilisateurConnecte: IOfficier;
+  utilisateurs: IUtilisateur[];
+  services: IService[];
+  decrets: IDecret[];
   isDirty: boolean;
   setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
+  erreurLogin: any;
 }
 
-type RECEContextProviderProps = Omit<IRECEContext, "isDirty" | "setIsDirty">;
+const RECEContextData = React.createContext<Omit<IRECEContext, "setIsDirty">>(
+  {} as IRECEContext
+);
+const RECEContextActions = React.createContext<
+  Pick<IRECEContext, "setIsDirty">
+>({} as IRECEContext);
 
-const RECEContext = React.createContext<IRECEContext>({} as IRECEContext);
-
-const RECEContextProvider: React.FC<
-  React.PropsWithChildren<RECEContextProviderProps>
-> = ({
-  infosLoginOfficier,
-  estListeUtilisateursChargee,
-  estListeServicesChargee,
+const RECEContextProvider: React.FC<React.PropsWithChildren> = ({
   children
 }) => {
+  const [utilisateurConnecte, setUtilisateurConnecte] = useState<IOfficier>(
+    {} as IOfficier
+  );
+  const [erreurLogin, setErreurLogin] = useState<any>();
+
   const [isDirty, setIsDirty] = useState<boolean>(false);
 
+  const { utilisateurs, services, decrets } = useChargerDonneesContexte(
+    !!utilisateurConnecte
+  );
+
+  useChargerDonneesApplicatives();
+
+  const contextValue = useMemo(
+    () => ({
+      utilisateurConnecte,
+      utilisateurs,
+      services,
+      decrets,
+      isDirty,
+      erreurLogin
+    }),
+    [utilisateurConnecte, utilisateurs, services, decrets, isDirty, erreurLogin]
+  );
+
+  const contextActions = useMemo(
+    () => ({
+      setIsDirty
+    }),
+    []
+  );
+
+  const { appelApi: appelApiLogin } = useFetchApi(CONFIG_GET_UTILISATEUR_LOGIN);
+
+  useEffect(() => {
+    appelApiLogin({
+      apresSucces: (officierLogin, headers) => {
+        const officier = mappingOfficier(headers, officierLogin);
+        gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader(
+          headers,
+          officier.idSSO
+        );
+        setUtilisateurConnecte(officier);
+      },
+      apresErreur: erreurs => {
+        setErreurLogin(erreurs);
+      }
+    });
+  }, []);
+
   return (
-    <RECEContext.Provider
-      value={{
-        infosLoginOfficier,
-        estListeUtilisateursChargee,
-        estListeServicesChargee,
-        isDirty,
-        setIsDirty
-      }}
-    >
-      {children}
-    </RECEContext.Provider>
+    <RECEContextData.Provider value={contextValue}>
+      <RECEContextActions.Provider value={contextActions}>
+        {utilisateurConnecte && children}
+      </RECEContextActions.Provider>
+    </RECEContextData.Provider>
   );
 };
 
-export { RECEContext, RECEContextProvider };
+export { RECEContextActions, RECEContextData, RECEContextProvider };
+/* v8 ignore end */

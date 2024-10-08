@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { utilisateurADroit } from "@model/agent/IUtilisateur";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -12,11 +13,10 @@ import {
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
-import { storeRece } from "@util/storeRece";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 interface MenuSaisirRequeteProps {
   indexTabPanel: number;
@@ -25,14 +25,14 @@ interface MenuSaisirRequeteProps {
 
 const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
   const navigate = useNavigate();
-
+  const { utilisateurConnecte } = useContext(RECEContextData);
   const clickMenuItem = (nomRequete: string) => {
     if (props.indexTabPanel === 1) {
       switch (nomRequete) {
         case "RDCSC":
           if (
-            storeRece.utilisateurCourant &&
-            utilisateurADroit(Droit.DELIVRER, storeRece.utilisateurCourant)
+            utilisateurConnecte &&
+            utilisateurADroit(Droit.DELIVRER, utilisateurConnecte)
           ) {
             navigate(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC);
           } else {

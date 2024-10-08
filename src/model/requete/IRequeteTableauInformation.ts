@@ -1,3 +1,5 @@
+import { IService } from "@model/agent/IService";
+import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { getValeurOuUndefined, getValeurOuVide } from "@util/Utils";
 import { IRequeteTableau } from "./IRequeteTableau";
@@ -27,16 +29,25 @@ export interface IRequeteTableauInformation extends IRequeteTableau {
 
 export function mappingRequetesTableauInformation(
   resultatsRecherche: any,
-  mappingSupplementaire: boolean
+  mappingSupplementaire: boolean,
+  utilisateurs: IUtilisateur[],
+  services: IService[]
 ): IRequeteTableauInformation[] {
   return resultatsRecherche?.map((requete: any) => {
-    return mappingUneRequeteTableauInformation(requete, mappingSupplementaire);
+    return mappingUneRequeteTableauInformation(
+      requete,
+      mappingSupplementaire,
+      utilisateurs,
+      services
+    );
   });
 }
 
 export function mappingUneRequeteTableauInformation(
   requete: any,
-  mappingSupplementaire: boolean
+  mappingSupplementaire: boolean,
+  utilisateurs: IUtilisateur[],
+  services: IService[]
 ): IRequeteTableauInformation {
   return {
     idRequete: getValeurOuUndefined(requete?.id),
@@ -54,7 +65,7 @@ export function mappingUneRequeteTableauInformation(
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
     nomsTitulaires: getNomsTitulaires(requete?.titulaires),
     idUtilisateur: getValeurOuUndefined(requete?.idUtilisateur),
-    attribueA: mapAttribueA(requete)
+    attribueA: mapAttribueA(requete, utilisateurs, services)
   } as IRequeteTableauInformation;
 }
 

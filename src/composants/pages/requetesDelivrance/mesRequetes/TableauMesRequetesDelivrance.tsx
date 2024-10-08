@@ -2,6 +2,7 @@ import {
   TypeAppelRequete,
   getTableauRequetesDelivrance
 } from "@api/appels/requeteApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   IRequeteTableauDelivrance,
   mappingRequetesTableauDelivrance
@@ -9,7 +10,7 @@ import {
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import Label from "@mui/icons-material/Label";
 import { CENT, QUATRE, UN, ZERO } from "@util/Utils";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PageChargeur from "../../../commun/chargeurs/PageChargeur";
 import Tableau, {
   IEnTeteTableau,
@@ -117,12 +118,12 @@ const mapResultatCommeLignesTableau = (
     titulaires: (
       <>
         {(requete.titulaires || []).map((titulaire: any) => (
-          <>
+          <span key={`${titulaire.nom} ${titulaire.prenoms[0] ?? ""}`.trim()}>
             {`${titulaire.nom.toUpperCase()} ${
               titulaire.prenoms[0] || ""
             }`.trim()}
             <br />
-          </>
+          </span>
         ))}
       </>
     ),
@@ -148,6 +149,7 @@ const getPortionTableau = (tableau: TLigneTableau[], pageActuelle: number) => {
 };
 
 const TableauMesRequetesDelivrance: React.FC = () => {
+  const { utilisateurs, services } = useContext(RECEContextData);
   const [parametresTableau, setParametresTableau] = useState<IParamtresTableau>(
     {
       statuts: [
@@ -160,7 +162,7 @@ const TableauMesRequetesDelivrance: React.FC = () => {
         StatutRequete.A_REVOIR.nom,
         StatutRequete.TRANSMISE_A_VALIDEUR.nom
       ],
-      tri: "dateCreation",
+      tri: "dateStatut",
       sens: "ASC",
       range: `0-${CENT}`
     }
@@ -195,13 +197,18 @@ const TableauMesRequetesDelivrance: React.FC = () => {
   useEffect(() => {
     setEnRecuperation(true);
     getTableauRequetesDelivrance(
-      TypeAppelRequete.MES_REQUETES_CREATION,
+      TypeAppelRequete.MES_REQUETES_DELIVRANCE,
       parametresTableau.statuts.join(","),
       parametresTableau
     )
       .then(res => {
         const requetes: IRequeteTableauDelivrance[] =
-          mappingRequetesTableauDelivrance(res.body.data, false);
+          mappingRequetesTableauDelivrance(
+            res.body.data,
+            false,
+            utilisateurs,
+            services
+          );
         setLignesTableau(mapResultatCommeLignesTableau(requetes));
 
         const totalLignes = parseInt(

@@ -1,5 +1,8 @@
 import { RetoucheImage } from "@composant/retoucheImage/RetoucheImage";
-import { RECEContext } from "@core/contexts/RECEContext";
+import {
+  RECEContextActions,
+  RECEContextData
+} from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   IActeApiHookParams,
@@ -58,7 +61,9 @@ export const EditionExtraitCopiePage: React.FC = () => {
   // Params
   useTitreDeLaFenetre("Édition extrait copie");
   const location = useLocation();
-  const { isDirty, setIsDirty } = useContext(RECEContext);
+  const { isDirty } = useContext(RECEContextData);
+  const { setIsDirty } = useContext(RECEContextActions);
+
   const { idRequeteParam, idActeParam } = useParams<TUuidActeParams>();
 
   // States

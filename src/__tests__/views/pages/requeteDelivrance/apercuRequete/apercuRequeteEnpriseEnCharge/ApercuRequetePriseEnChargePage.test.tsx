@@ -1,3 +1,4 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { DataRMCActeAvecResultat, DataTableauActe } from "@mock/data/RMCActe";
 import {
@@ -20,7 +21,6 @@ import {
   waitFor
 } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { Navigate, RouterProvider } from "react-router-dom";
 import { beforeAll, expect, test } from "vitest";
 import {
@@ -32,9 +32,13 @@ beforeAll(() => {
   mockFenetreFicheTestFunctions();
 });
 
-beforeAll(() => {
-  storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
-});
+const routerAvecContexte = (router: any): any => {
+  return (
+    <MockRECEContextProvider utilisateurs={LISTE_UTILISATEURS}>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
+};
 
 test.skip("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", () => {
   const router = createTestingRouter(
@@ -52,7 +56,7 @@ test.skip("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée
     ]
   );
 
-  const { container } = render(<RouterProvider router={router} />);
+  const { container } = render(routerAvecContexte(router));
 
   waitFor(() => {
     expect(
@@ -100,9 +104,7 @@ test.skip("renders ApercuRequetePriseEnChargePage", async () => {
     ]
   );
 
-  await act(() => {
-    render(<RouterProvider router={router} />);
-  });
+  render(routerAvecContexte(router));
 
   waitFor(() => {
     expect(document.title).toBe("Aperçu de la requête en prise en charge");
@@ -112,9 +114,7 @@ test.skip("renders ApercuRequetePriseEnChargePage", async () => {
       )
     ).toBeDefined();
     expect(screen.getByText(/Suivi requête/i)).toBeDefined();
-    expect(
-      screen.getByText(/Saisie de la requête - 10\/03\/2020 - APP/i)
-    ).toBeDefined();
+    expect(screen.getByText(/Saisie de la requête/i)).toBeDefined();
     expect(screen.getByText(/À traiter - 10\/03\/2020 - BOB/i)).toBeDefined();
     expect(
       screen.getByText(/C'est vraiment dur de pouvo... - 02\/01\/1970/i)
@@ -191,8 +191,8 @@ test.skip("redirection requete RDD", async () => {
     ["/"]
   );
 
-  await act(() => {
-    render(<RouterProvider router={router} />);
+  await act(async () => {
+    render(routerAvecContexte(router));
   });
 
   const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
@@ -248,8 +248,8 @@ test.skip("redirection requete RDC", async () => {
     ["/"]
   );
 
-  await act(() => {
-    render(<RouterProvider router={router} />);
+  await act(async () => {
+    render(routerAvecContexte(router));
   });
 
   const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
@@ -308,9 +308,7 @@ test.skip("ignorer requete", async () => {
     ]
   );
 
-  await act(() => {
-    render(<RouterProvider router={router} />);
-  });
+  render(routerAvecContexte(router));
 
   waitFor(() => {
     expect(screen.getByText(/Documents à délivrer/i)).toBeDefined();

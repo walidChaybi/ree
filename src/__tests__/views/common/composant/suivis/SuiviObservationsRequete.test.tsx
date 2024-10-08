@@ -1,21 +1,20 @@
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
-import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { observations0, observations1 } from "@mock/data/Observations";
+import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import DONNEES_REQUETE from "@mock/data/requete";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
-import { beforeAll, expect, test } from "vitest";
-
-beforeAll(() => {
-  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-});
+import { expect, test } from "vitest";
+import { elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
 
 test("renders suivi des observations requete", () => {
   render(
-    <SuiviObservationsRequete
-      observations={DONNEES_REQUETE.observations}
-      idRequete="123"
-    />
+    elementAvecContexte(
+      <SuiviObservationsRequete
+        observations={DONNEES_REQUETE.observations}
+        idRequete="123"
+      />,
+      userDroitnonCOMEDEC
+    )
   );
   const titre = screen.getByText(/Observations requête/i);
   let elem1: HTMLElement;
@@ -38,10 +37,13 @@ test("renders suivi des observations requete", () => {
 
 test("ajouter observation", () => {
   render(
-    <SuiviObservationsRequete
-      observations={DONNEES_REQUETE.observations}
-      idRequete="123"
-    />
+    elementAvecContexte(
+      <SuiviObservationsRequete
+        observations={DONNEES_REQUETE.observations}
+        idRequete="123"
+      />,
+      userDroitnonCOMEDEC
+    )
   );
 
   fireEvent.click(screen.getByText("Ajouter une observation"));
@@ -69,7 +71,10 @@ test("ajouter observation", () => {
 
 test("modifier observation", () => {
   render(
-    <SuiviObservationsRequete observations={observations0} idRequete="123" />
+    elementAvecContexte(
+      <SuiviObservationsRequete observations={observations0} idRequete="123" />,
+      userDroitnonCOMEDEC
+    )
   );
 
   fireEvent.click(screen.getByText(/C'est vraiment dur/i));
@@ -101,7 +106,10 @@ test("modifier observation", () => {
 
 test("supprimer observation", () => {
   render(
-    <SuiviObservationsRequete observations={observations1} idRequete="123" />
+    elementAvecContexte(
+      <SuiviObservationsRequete observations={observations1} idRequete="123" />,
+      userDroitnonCOMEDEC
+    )
   );
 
   fireEvent.click(screen.getByText("Supprimer l'observation"));

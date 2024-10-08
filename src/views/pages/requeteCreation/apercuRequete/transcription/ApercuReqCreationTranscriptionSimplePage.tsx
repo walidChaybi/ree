@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
@@ -7,10 +8,13 @@ import {
   useDetailRequeteApiHook
 } from "@hook/requete/DetailRequeteHook";
 import {
+  IOfficier,
   appartientAMonServiceOuServicesParentsOuServicesFils,
-  mAppartientOuAppartientAPersonne,
+  appartientAUtilisateurConnecteOuPersonne,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
+import { IService } from "@model/agent/IService";
+import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequete } from "@model/requete/IRequete";
@@ -26,11 +30,12 @@ import {
 } from "@router/ReceUrls";
 import { getLibelle } from "@util/Utils";
 import { getUrlPrecedente, getUrlWithParam } from "@util/route/UrlUtil";
+import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Labels from "../../commun/Labels";
 import { OngletPiecesJustificatives } from "../../commun/composants/OngletPiecesJustificatives";
@@ -121,39 +126,62 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
       : [];
   }
 
-  function estPresentBoutonPrendreEnCharge(): boolean {
+  const estPresentBoutonPrendreEnCharge = (
+    utilisateurConnecte: IOfficier
+  ): boolean => {
     if (requete) {
       return (
         SousTypeCreation.estRCTDOuRCTC(requete.sousType) &&
         StatutRequete.estATraiterOuTransferee(requete.statutCourant?.statut) &&
-        officierHabiliterPourLeDroit(Droit.CREER_ACTE_TRANSCRIT) &&
-        mAppartientOuAppartientAPersonne(requete.idUtilisateur) &&
-        appartientAMonServiceOuServicesParentsOuServicesFils(requete.idService)
+        officierHabiliterPourLeDroit(
+          utilisateurConnecte,
+          Droit.CREER_ACTE_TRANSCRIT
+        ) &&
+        appartientAUtilisateurConnecteOuPersonne(
+          utilisateurConnecte,
+          requete.idUtilisateur
+        ) &&
+        appartientAMonServiceOuServicesParentsOuServicesFils(
+          utilisateurConnecte,
+          requete.idService
+        )
       );
     } else {
       return false;
     }
-  }
+  };
 
-  function handlePrendreEnCharge() {
+  function handlePrendreEnCharge(
+    utilisateurs: IUtilisateur[],
+    services: IService[]
+  ) {
     setCreationActionMiseAjourStatut({
       libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
       statutRequete: StatutRequete.PRISE_EN_CHARGE,
-      requete: mappingUneRequeteTableauCreation(requete, false),
+      requete: mappingUneRequeteTableauCreation(
+        requete,
+        false,
+        utilisateurs,
+        services
+      ),
       callback: redirectApercuRequetePriseEnCharge
     });
   }
 
   function pagePrecedenteEstRechercherUneRequete(): boolean {
-    return getUrlPrecedente(location.pathname) === URL_RECHERCHE_REQUETE
-      ? true
-      : false;
+    return getUrlPrecedente(location.pathname) === URL_RECHERCHE_REQUETE;
   }
+
+  const { utilisateurs, services, utilisateurConnecte } =
+    useContext(RECEContextData);
 
   return (
     <div className="ApercuReqCreationTranscriptionSimplePage">
       {requete && (
         <>
+          <OperationEnCours
+            visible={!utilisateurConnecte || !utilisateurs || !services}
+          />
           <ConteneurRetractable
             titre={Labels.resume.requete.description}
             className="ResumeRequeteCreation"
@@ -171,13 +199,13 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<
             <div className="boutons">
               {pagePrecedenteEstRechercherUneRequete() && <BoutonRetour />}
 
-              {estPresentBoutonPrendreEnCharge() && (
+              {estPresentBoutonPrendreEnCharge(utilisateurConnecte) && (
                 <BoutonDoubleSubmit
                   type="button"
                   aria-label={"Prendre en charge"}
                   id="boutonAnnuler"
                   onClick={() => {
-                    handlePrendreEnCharge();
+                    handlePrendreEnCharge(utilisateurs, services);
                   }}
                 >
                   {getLibelle("Prendre en charge")}

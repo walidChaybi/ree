@@ -1,10 +1,11 @@
 import { rechercheMultiCriteresAutoRequetes } from "@api/appels/requeteApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { TRequete } from "@model/requete/IRequete";
 import { TRequeteTableau } from "@model/requete/IRequeteTableau";
 import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { mappingRequetesTableau } from "@util/RequetesUtils";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { determinerCriteresRMCAuto } from "./RMCAutoRequetesUtils";
 
 export function useRMCAutoRequeteApiHook(requete: TRequete, range: string) {
@@ -13,6 +14,8 @@ export function useRMCAutoRequeteApiHook(requete: TRequete, range: string) {
 
   const [dataTableauRMCAutoRequete, setDataTableauRMCAutoRequete] =
     useState<IParamsTableau>();
+
+  const { utilisateurs, services } = useContext(RECEContextData);
 
   useEffect(() => {
     async function fetchRequetes() {
@@ -25,7 +28,9 @@ export function useRMCAutoRequeteApiHook(requete: TRequete, range: string) {
           );
           const requetes = mappingRequetesTableau(
             result?.body?.data?.resultatsRecherche,
-            true
+            true,
+            utilisateurs,
+            services
           );
           setDataRMCAutoRequete(requetes);
           setDataTableauRMCAutoRequete(getParamsTableau(result));

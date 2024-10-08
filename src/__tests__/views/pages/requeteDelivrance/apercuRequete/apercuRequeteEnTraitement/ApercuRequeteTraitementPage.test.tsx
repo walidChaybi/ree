@@ -1,6 +1,5 @@
 import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import {
   URL_MES_REQUETES_DELIVRANCE,
@@ -9,11 +8,11 @@ import {
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { afterAll, beforeAll, beforeEach, expect, test } from "vitest";
 import {
   createTestingRouter,
+  elementAvecContexte,
   mockFenetreFicheTestFunctions
 } from "../../../../../__tests__utils__/testsUtil";
 
@@ -24,9 +23,6 @@ beforeAll(() => {
 const sauvFonctionEstActive = gestionnaireFeatureFlag.estActif;
 
 beforeEach(() => {
-  storeRece.listeUtilisateurs = LISTE_UTILISATEURS as IUtilisateur[];
-  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-
   gestionnaireFeatureFlag.estActif = function () {
     return true;
   };
@@ -52,7 +48,13 @@ test.skip("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée
     ]
   );
 
-  const { container } = render(<RouterProvider router={router} />);
+  const { container } = render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      userDroitnonCOMEDEC,
+      LISTE_UTILISATEURS
+    )
+  );
 
   waitFor(() => {
     expect(
@@ -83,7 +85,13 @@ test.skip("renders ApercuRequeteTraitementPage", () => {
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      userDroitnonCOMEDEC,
+      LISTE_UTILISATEURS
+    )
+  );
 
   const bandeau = screen.getByText(
     "Requête à signer le 14/07/2020 par Ashley YOUNG"
@@ -129,7 +137,13 @@ test.skip("renders document réponses", () => {
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      userDroitnonCOMEDEC,
+      LISTE_UTILISATEURS
+    )
+  );
 
   const title = screen.getByText(/Documents à délivrer/i);
   const doc1 = screen.getByText(/^Courrier$/);
@@ -163,7 +177,13 @@ test.skip("transmettre à valideur", () => {
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      userDroitnonCOMEDEC,
+      LISTE_UTILISATEURS
+    )
+  );
 
   waitFor(() => {
     expect(screen.getByText("Transmettre à valideur")).toBeDefined();
@@ -227,7 +247,13 @@ test.skip("retour approuvé", () => {
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      userDroitnonCOMEDEC,
+      LISTE_UTILISATEURS
+    )
+  );
 
   waitFor(() => {
     expect(screen.getByText("Relecture commentée")).toBeDefined();
@@ -272,7 +298,13 @@ test.skip("reprendre traitement", () => {
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      userDroitnonCOMEDEC,
+      LISTE_UTILISATEURS
+    )
+  );
 
   waitFor(() => {
     expect(screen.getByText("Reprendre le traitement")).toBeDefined();

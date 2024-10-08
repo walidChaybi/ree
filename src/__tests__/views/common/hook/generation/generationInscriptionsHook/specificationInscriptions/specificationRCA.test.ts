@@ -1,20 +1,28 @@
 import { specificationRCA } from "@hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRCA";
-import { decrets } from "@mock/data/NomenclatureEtatCivilDecrets";
 import {
   FicheRcaDecisionAvecInstructionProcureur,
   FicheRcaDecisionJuridictionEtrangere,
   FicheRcaDecisionNotaireConvention
 } from "@mock/data/ficheRCA";
-import { storeRece } from "@util/storeRece";
-import { beforeAll, expect, test } from "vitest";
+import { DocumentDecret, IDecret } from "@model/etatcivil/commun/IDecret";
+import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
+import { expect, test } from "vitest";
 
-beforeAll(() => {
-  storeRece.decrets = decrets;
-});
+const decret = [
+  {
+    libelle: "Article 4-1 du décret 65-422 du 1er juin 1965",
+    id: "",
+    document: DocumentDecret.CERTIFICAT_INSCRIPTION_RCA,
+    ordre: 1,
+    principal: true,
+    type: TypePacsRcRca.RCA
+  } as IDecret
+];
+
 
 test("Attendu: specificationRCA.getElementsJasper AVEC une instruction procureur", () => {
   const data = FicheRcaDecisionAvecInstructionProcureur;
-  const elementsJasper = specificationRCA.getElementsJasper(data);
+  const elementsJasper = specificationRCA.getElementsJasper(data, decret);
   const interesse = `Léo, Jules FLECK
 Date de naissance: 2 septembre 1983
 Lieu de naissance: Lyon 8ème arrondissement (Rhône)
@@ -34,7 +42,7 @@ Lieu de décès: Londres, Grand-Londres (Royaume-Uni)`;
 
 test("Attendu: specificationRCA.getElementsJasper AVEC une decision Juridiction étrangère", () => {
   const data = FicheRcaDecisionJuridictionEtrangere;
-  const elementsJasper = specificationRCA.getElementsJasper(data);
+  const elementsJasper = specificationRCA.getElementsJasper(data, decret);
   const interesse = `Léo, Jules FLECK
 Date de naissance: 1er septembre 1983
 Lieu de naissance: Lyon 8ème arrondissement (Rhône)
@@ -58,7 +66,7 @@ Lieu de naissance: Nantes (Loire-Atlantique)`;
 
 test("Attendu: specificationRCA.getElementsJasper AVEC une decision Notaire type convention", () => {
   const data = FicheRcaDecisionNotaireConvention;
-  const elementsJasper = specificationRCA.getElementsJasper(data);
+  const elementsJasper = specificationRCA.getElementsJasper(data, decret);
   const interesses = `Julie, Sarah DURANT
 Date de naissance: octobre 1960
 Lieu de naissance: Brooklyn, New-York (États-unis d'Amériques)

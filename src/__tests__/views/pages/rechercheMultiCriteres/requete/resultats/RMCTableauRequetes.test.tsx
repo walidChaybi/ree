@@ -13,10 +13,12 @@ import {
 } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
-import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../../__tests__utils__/testsUtil";
 
 describe.skip("RMCTableauRequetes - ", () => {
   test("renders Resultat Requetes Recherche Multi Critères => Avec résultat", () => {
@@ -152,8 +154,6 @@ describe.skip("RMCTableauRequetes - ", () => {
     userDroitConsulterPerimetreTousRegistres.idUtilisateur =
       "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
 
-    storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
-
     const router = createTestingRouter(
       [
         {
@@ -178,7 +178,12 @@ describe.skip("RMCTableauRequetes - ", () => {
       [URL_RECHERCHE_REQUETE]
     );
 
-    const { getByTestId } = render(<RouterProvider router={router} />);
+    const { getByTestId } = render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        userDroitConsulterPerimetreTousRegistres
+      )
+    );
 
     const ligne = getByTestId("8ef11b8b-652c-4c6a-ad27-a544fce635d1");
 
@@ -197,8 +202,6 @@ describe.skip("RMCTableauRequetes - ", () => {
   test("Clic sur une Requête avec des titulaire", () => {
     userDroitConsulterPerimetreTousRegistres.idUtilisateur =
       "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
-
-    storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
 
     const router = createTestingRouter(
       [
@@ -224,7 +227,12 @@ describe.skip("RMCTableauRequetes - ", () => {
       [URL_RECHERCHE_REQUETE]
     );
 
-    const { getByTestId } = render(<RouterProvider router={router} />);
+    const { getByTestId } = render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        userDroitConsulterPerimetreTousRegistres
+      )
+    );
 
     const ligne = getByTestId("4578e56c-421c-4e6a-b587-a238a665daf9");
 
@@ -244,8 +252,6 @@ describe.skip("RMCTableauRequetes - ", () => {
     userDroitConsulterPerimetreTousRegistres.idUtilisateur =
       "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
 
-    storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
-
     const router = createTestingRouter(
       [
         {
@@ -263,7 +269,12 @@ describe.skip("RMCTableauRequetes - ", () => {
       [URL_RECHERCHE_REQUETE]
     );
 
-    const { getByTestId } = render(<RouterProvider router={router} />);
+    const { getByTestId } = render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        userDroitConsulterPerimetreTousRegistres
+      )
+    );
 
     const pageSuivante = screen.getByTitle("Page suivante");
 

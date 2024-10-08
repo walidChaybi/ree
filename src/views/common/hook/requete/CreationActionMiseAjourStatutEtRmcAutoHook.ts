@@ -48,7 +48,7 @@ export function useCreationActionMiseAjourStatutEtRmcAuto(
   useNavigationApercuCreation(paramsCreation);
 
   useEffect(() => {
-    if (params && params.requete) {
+    if (params?.requete) {
       setParamsMiseAjourStatut({
         ...params,
         callback

@@ -7,14 +7,14 @@ import {
 } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
-import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../__tests__utils__/testsUtil";
 
 test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l'espace création", () => {
-  storeRece.utilisateurCourant = userDroitCreerActeEtabliPerimetreTousRegistres;
-
   const router = createTestingRouter(
     [
       {
@@ -29,7 +29,12 @@ test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l
     [URL_MES_REQUETES_CREATION]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      userDroitCreerActeEtabliPerimetreTousRegistres
+    )
+  );
 
   const bouttonPrendreEnCharge = screen.getByText(
     "Prendre en charge requête suivante"

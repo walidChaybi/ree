@@ -1,4 +1,4 @@
-import { getCellTitulaires } from "@util/tableauRequete/TableauRequeteUtils";
+import { RenderCellTitulaires } from "@util/tableauRequete/TableauRequeteUtils";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 
 export enum HeaderTableauRequetesAssociees {
@@ -14,7 +14,7 @@ export const columnsTableauRequeteAssociees = [
     title: "Titulaire(s)",
     align: "center",
     dataIsArray: true,
-    getElement: getCellTitulaires
+    getElement: RenderCellTitulaires
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequetesAssociees.SousType],

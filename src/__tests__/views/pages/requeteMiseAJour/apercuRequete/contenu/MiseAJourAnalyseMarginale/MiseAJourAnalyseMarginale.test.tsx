@@ -3,6 +3,8 @@ import {
   MENTION_NIVEAU_DEUX,
   MENTION_NIVEAU_UN
 } from "@composant/formulaire/ConstantesNomsForm";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import { IUtilisateur } from "@model/agent/IUtilisateur";
 import ApercuRequeteMiseAJourPage from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import {
   URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS,
@@ -16,6 +18,17 @@ import { createTestingRouter } from "../../../../../../__tests__utils__/testsUti
 const LISTE_TYPE_MENTION_NIVEAU_UN = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_UN}`;
 const LISTE_TYPE_MENTION_NIVEAU_DEUX = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_DEUX}`;
 const TEXTE_MENTION_PLACEHOLDER = "Texte mention à ajouter";
+
+const routerAvecContexte = (
+  router: any,
+  utilisateurs?: IUtilisateur[]
+): any => {
+  return (
+    <MockRECEContextProvider>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
+};
 
 const ajouterMentionQuiModifieAnalyseMarginale = () => {
   fireEvent.change(screen.getByTestId(LISTE_TYPE_MENTION_NIVEAU_UN), {
@@ -52,7 +65,7 @@ test("DOIT afficher le bloc 'Nom Sécable' QUAND on navigue vers l'onglet 'Analy
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   ajouterMentionQuiModifieAnalyseMarginale();
 
@@ -100,7 +113,7 @@ test("DOIT afficher le bloc 'Nom Sécable' QUAND on navigue vers l'onglet 'Analy
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   ajouterMentionQuiModifieAnalyseMarginale();
 
@@ -140,7 +153,7 @@ test("DOIT afficher le bloc 'Nom Sécable' QUAND on navigue vers l'onglet 'Analy
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   ajouterMentionQuiModifieAnalyseMarginale();
 
@@ -180,7 +193,7 @@ test("DOIT enregistrer les mentions et l'analyse marginale et rediriger vers l'o
     ]
   );
 
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   ajouterMentionQuiModifieAnalyseMarginale();
 

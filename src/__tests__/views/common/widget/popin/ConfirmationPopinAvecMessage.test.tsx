@@ -1,14 +1,8 @@
-import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
 import { estSuperieurA500Caracteres } from "@util/Utils";
 import { ConfirmationPopinAvecMessage } from "@widget/popin/ConfirmationPopinAvecMessage";
 import React, { useEffect, useState } from "react";
-import { beforeAll, describe, expect, test, vi } from "vitest";
-
-beforeAll(() => {
-  storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
-});
+import { describe, expect, test, vi } from "vitest";
 
 interface HookConsummerConfirmationPopinAvecMessageProps {
   valider?: any;
@@ -130,10 +124,10 @@ describe("Popin avec confirmation et message", () => {
       expect(boutonValider).toBeDefined();
     });
 
-      const textArea = screen.getByPlaceholderText("Saisir un message");
-      fireEvent.change(textArea, {
-        target: { value: "Je suis un message" }
-      });
+    const textArea = screen.getByPlaceholderText("Saisir un message");
+    fireEvent.change(textArea, {
+      target: { value: "Je suis un message" }
+    });
 
     fireEvent.click(boutonValider);
 
@@ -172,10 +166,10 @@ describe("Popin avec confirmation et message", () => {
     const message =
       "Lorem Ipsum is simply dummy text of the printing and typesddetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was populardddd";
 
-      const textArea = screen.getByPlaceholderText("Saisir un message");
-      fireEvent.change(textArea, {
-        target: { value: message }
-      });
+    const textArea = screen.getByPlaceholderText("Saisir un message");
+    fireEvent.change(textArea, {
+      target: { value: message }
+    });
 
     waitFor(() => {
       expect(screen.getByText("500 caractères maximum")).toBeDefined();
@@ -206,10 +200,10 @@ describe("Popin avec confirmation et message", () => {
       expect(boutonValider).toBeDefined();
     });
 
-      textArea = screen.getByPlaceholderText("Saisir un message");
-      fireEvent.change(textArea, {
-        target: { value: "Je suis un message" }
-      });
+    textArea = screen.getByPlaceholderText("Saisir un message");
+    fireEvent.change(textArea, {
+      target: { value: "Je suis un message" }
+    });
 
     fireEvent.click(boutonValider);
 

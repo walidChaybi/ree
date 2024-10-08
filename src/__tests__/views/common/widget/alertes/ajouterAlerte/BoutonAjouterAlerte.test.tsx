@@ -1,26 +1,27 @@
 import { userDroitCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
 import { BoutonAjouterAlerte } from "@widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
 import {
   COMPLEMENT_DESCRIPTION,
   ID_TYPE_ALERTE
 } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { beforeEach, expect, test, vi } from "vitest";
+import { elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 
 beforeEach(() => {
-  storeRece.utilisateurCourant = userDroitCOMEDEC;
-
   TypeAlerte.init();
 });
 
 test("render BoutonAjouterAlerte avec ajout alerte possible : test ouverture / fermeture popin", () => {
   render(
-    <BoutonAjouterAlerte
-      ajouterAlerteCallBack={vi.fn()}
-      idTypeRegistre="salut"
-    />
+    elementAvecContexte(
+      <BoutonAjouterAlerte
+        ajouterAlerteCallBack={vi.fn()}
+        idTypeRegistre="salut"
+      />,
+      userDroitCOMEDEC
+    )
   );
 
   waitFor(() => {
@@ -46,10 +47,13 @@ test("render BoutonAjouterAlerte avec ajout alerte possible : test ouverture / f
 
 test("render BoutonAjouterAlerte avec ajout alerte possible : test soumission formulaire", () => {
   render(
-    <BoutonAjouterAlerte
-      ajouterAlerteCallBack={vi.fn()}
-      idTypeRegistre="salut"
-    />
+    elementAvecContexte(
+      <BoutonAjouterAlerte
+        ajouterAlerteCallBack={vi.fn()}
+        idTypeRegistre="salut"
+      />,
+      userDroitCOMEDEC
+    )
   );
 
   waitFor(() => {

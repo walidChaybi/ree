@@ -64,7 +64,7 @@ test("renders PopinSignatureDelivrance, signature event is received and success 
 
 test("renders PopinSignatureDelivrance, signature event is received and error displayed", () => {
   // Désactivation de la log car l'erreur loguée est normale
-  storeRece.logErrorOff = true;
+  storeRece.logErrorDesactive = true;
   const { getByText } = render(
     <PopinSignatureDelivrance
       documentsByRequete={{
@@ -116,12 +116,12 @@ test("renders PopinSignatureDelivrance, signature event is received and error di
     expect(errorCode).toBeDefined();
     expect(errorMsg).toBeDefined();
   });
-  storeRece.logErrorOff = false;
+  storeRece.logErrorDesactive = false;
 });
 
 test("renders PopinSignatureDelivrance, code erroné", () => {
   // Désactivation de la log car l'erreur loguée est normale
-  storeRece.logErrorOff = true;
+  storeRece.logErrorDesactive = true;
   const { getByText } = render(
     <PopinSignatureDelivrance
       documentsByRequete={{
@@ -171,5 +171,5 @@ test("renders PopinSignatureDelivrance, code erroné", () => {
     const errorMsg = getByText("Code PIN invalide");
     expect(errorMsg).toBeDefined();
   });
-  storeRece.logErrorOff = false;
+  storeRece.logErrorDesactive = false;
 });

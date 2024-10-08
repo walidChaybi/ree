@@ -4,6 +4,7 @@ import {
   useRMCAutoPersonneApiAvecCacheHook
 } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
+import { userDroitConsulterArchive } from "@mock/data/mockConnectedUserAvecDroit";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
@@ -147,7 +148,11 @@ test("Ouverture d'un acte", async () => {
   waitFor(() => {
     const vue = screen.queryByText("Visualisation du RC");
     if (
-      officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.TOUS_REGISTRES)
+      officierALeDroitSurLePerimetre(
+        Droit.CONSULTER,
+        Perimetre.TOUS_REGISTRES,
+        userDroitConsulterArchive
+      )
     ) {
       expect(vue).toBeDefined();
     } else {

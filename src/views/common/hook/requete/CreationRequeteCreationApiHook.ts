@@ -2,8 +2,9 @@ import {
   creationRequeteCreation,
   creationRequeteCreationEtTransmissionService
 } from "@api/appels/requeteApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { logError } from "@util/LogManager";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { mappingRequeteCreation } from "./DetailRequeteHook";
 
 export interface ISaisieRequeteRCTCAEnvoyer {
@@ -30,11 +31,15 @@ export function useCreationRequeteCreation(
 ): string | undefined {
   const [resultat, setResultat] = useState<string>();
 
+  const { utilisateurs } = useContext(RECEContextData);
+
   useEffect(() => {
     if (params?.requete) {
       creationRequeteCreation(params.requete)
         .then((result: any) => {
-          setResultat(mappingRequeteCreation(result.body.data[0]).id);
+          setResultat(
+            mappingRequeteCreation(result.body.data[0], utilisateurs).id
+          );
         })
         .catch((error: any) => {
           logError({

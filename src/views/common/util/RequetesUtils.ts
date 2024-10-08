@@ -1,13 +1,12 @@
 import {
+  IOfficier,
   appartientAMonServiceOuServicesParentsOuServicesFils,
-  mAppartient,
-  mAppartientOuAppartientAPersonne,
+  appartientAUtilisateurConnecte,
+  appartientAUtilisateurConnecteOuPersonne,
   provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer
 } from "@model/agent/IOfficier";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IService } from "@model/agent/IService";
+import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
@@ -28,6 +27,10 @@ import {
   IRequeteTableauInformation,
   mappingUneRequeteTableauInformation
 } from "@model/requete/IRequeteTableauInformation";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { getLibelle } from "@util/Utils";
 import classNames from "classnames";
 import moment from "moment";
@@ -71,20 +74,29 @@ export function getMessagePrioriteDeLaRequete(dateStatut: string): string {
 }
 
 export const autorisePrendreEnChargeDelivrance = (
+  utilisateurConnecte: IOfficier,
   requete: IRequeteDelivrance
 ) => {
   return (
     TypeRequete.estDelivrance(requete.type) &&
     StatutRequete.estATraiterOuTransferee(requete.statutCourant.statut) &&
-    mAppartientOuAppartientAPersonne(requete.idUtilisateur) &&
-    appartientAMonServiceOuServicesParentsOuServicesFils(requete.idService) &&
+    appartientAUtilisateurConnecteOuPersonne(
+      utilisateurConnecte,
+      requete.idUtilisateur
+    ) &&
+    appartientAMonServiceOuServicesParentsOuServicesFils(
+      utilisateurConnecte,
+      requete.idService
+    ) &&
     provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
+      utilisateurConnecte,
       requete.provenanceRequete.provenance.libelle
     )
   );
 };
 
 export const autorisePrendreEnChargeReqTableauDelivrance = (
+  utilisateurConnecte: IOfficier,
   requete: IRequeteTableauDelivrance
 ): boolean => {
   const type = TypeRequete.getEnumFromLibelle(requete.type);
@@ -95,15 +107,23 @@ export const autorisePrendreEnChargeReqTableauDelivrance = (
     TypeRequete.estDelivrance(type) &&
     SousTypeDelivrance.estPossibleAPrendreEnCharge(sousType) &&
     StatutRequete.estATraiterOuTransferee(statut) &&
-    mAppartient(requete.idUtilisateur) &&
-    appartientAMonServiceOuServicesParentsOuServicesFils(requete.idService) &&
+    appartientAUtilisateurConnecte(
+      utilisateurConnecte,
+      requete.idUtilisateur
+    ) &&
+    appartientAMonServiceOuServicesParentsOuServicesFils(
+      utilisateurConnecte,
+      requete.idService
+    ) &&
     provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
+      utilisateurConnecte,
       requete.provenance
     )
   );
 };
 
 export const autorisePrendreEnChargeReqTableauInformation = (
+  utilisateurConnecte: IOfficier,
   requete: IRequeteTableauInformation
 ) => {
   const type = TypeRequete.getEnumFromLibelle(requete.type);
@@ -112,7 +132,7 @@ export const autorisePrendreEnChargeReqTableauInformation = (
   return (
     TypeRequete.estInformation(type) &&
     StatutRequete.estATraiterOuTransferee(statut) &&
-    mAppartient(requete.idUtilisateur)
+    appartientAUtilisateurConnecte(utilisateurConnecte, requete.idUtilisateur)
   );
 };
 
@@ -129,6 +149,7 @@ export const estRequeteCreationAuStatutATraiter = (
 };
 
 export const autorisePrendreEnChargeDepuisPageCreation = (
+  utilisateurConnecte: IOfficier,
   requete?: IRequeteCreation
 ): boolean => {
   if (requete) {
@@ -138,7 +159,10 @@ export const autorisePrendreEnChargeDepuisPageCreation = (
         requete.sousType,
         requete.statutCourant.statut
       ) &&
-      appartientAMonServiceOuServicesParentsOuServicesFils(requete.idService)
+      appartientAMonServiceOuServicesParentsOuServicesFils(
+        utilisateurConnecte,
+        requete.idService
+      )
     );
   } else {
     return false;
@@ -146,7 +170,8 @@ export const autorisePrendreEnChargeDepuisPageCreation = (
 };
 
 export const autorisePrendreEnChargeReqTableauCreation = (
-  requete: IRequeteTableauCreation
+  requete: IRequeteTableauCreation,
+  utilisateurConnecte: IOfficier
 ): boolean => {
   const type = TypeRequete.getEnumFromLibelle(requete.type);
   const sousType = SousTypeCreation.getEnumFromLibelleCourt(requete.sousType);
@@ -154,7 +179,7 @@ export const autorisePrendreEnChargeReqTableauCreation = (
 
   return (
     estRequeteCreationAuStatutATraiter(type, sousType, statut) &&
-    mAppartient(requete.idUtilisateur)
+    appartientAUtilisateurConnecte(utilisateurConnecte, requete.idUtilisateur)
   );
 };
 
@@ -195,21 +220,35 @@ export function getIdDocumentReponseAAfficher(
 
 export function mappingRequetesTableau(
   resultatsRecherche: any,
-  mappingSupplementaire: boolean
+  mappingSupplementaire: boolean,
+  utilisateurs: IUtilisateur[],
+  services: IService[]
 ): TRequeteTableau[] {
   return resultatsRecherche?.map((requete: TRequeteTableau) => {
     if (TypeRequete.getEnumFor(requete.type) === TypeRequete.DELIVRANCE) {
-      return mappingUneRequeteTableauDelivrance(requete, mappingSupplementaire);
+      return mappingUneRequeteTableauDelivrance(
+        requete,
+        mappingSupplementaire,
+        utilisateurs,
+        services
+      );
     } else if (
       TypeRequete.getEnumFor(requete.type) === TypeRequete.INFORMATION
     ) {
       return mappingUneRequeteTableauInformation(
         requete,
-        mappingSupplementaire
+        mappingSupplementaire,
+        utilisateurs,
+        services
       );
     } else {
       // TODO Mapping provisoire pour les autres Type Requete ( CREATION et MISE_A_JOUR )
-      return mappingUneRequeteTableauCreation(requete, mappingSupplementaire);
+      return mappingUneRequeteTableauCreation(
+        requete,
+        mappingSupplementaire,
+        utilisateurs,
+        services
+      );
     }
   });
 }

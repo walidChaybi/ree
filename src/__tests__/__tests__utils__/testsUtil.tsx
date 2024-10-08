@@ -1,4 +1,9 @@
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import { IOfficier } from "@model/agent/IOfficier";
+import { IService } from "@model/agent/IService";
+import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { IDecret } from "@model/etatcivil/commun/IDecret";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { fireEvent, waitFor } from "@testing-library/react";
 import { RouteObject, createMemoryRouter } from "react-router-dom";
@@ -88,3 +93,24 @@ export function createTestingRouter(
     }
   );
 }
+
+export const elementAvecContexte = (
+  children: React.ReactElement,
+  utilisateurConnecte?: IOfficier,
+  utilisateurs?: IUtilisateur[],
+  services?: IService[],
+  decrets?: IDecret[],
+  erreurLogin?: any
+): any => {
+  return (
+    <MockRECEContextProvider
+      utilisateurConnecte={utilisateurConnecte}
+      utilisateurs={utilisateurs}
+      services={services}
+      decrets={decrets}
+      erreurLogin={erreurLogin}
+    >
+      {children}
+    </MockRECEContextProvider>
+  );
+};

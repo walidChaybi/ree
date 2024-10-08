@@ -9,8 +9,8 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { useEffect, useState } from "react";
 import { MimeType } from "../../../../../../ressources/MimeType";
-import { useCertificatPacsRcRcaApiHook } from "../../../composition/CompositionCertificatPacsRcRca";
 import { usePostDocumentsReponseApi } from "../../../DocumentReponseHook";
+import { useCertificatPacsRcRcaApiHook } from "../../../composition/CompositionCertificatPacsRcRca";
 import { TFiche } from "../../../repertoires/MappingRepertoires";
 import { useInformationsRepertoireApiHook } from "../../../repertoires/RepertoireApiHook";
 import {
@@ -19,10 +19,10 @@ import {
 } from "../../generationUtils";
 import { useGestionCertificatCourant as useGestionPacsRcRcaCourant } from "./GenerationCertificatGestionPacsRcRcaCourantHook";
 import {
-  construitCertificatPacsRcRca,
   getNomDocument,
   getTypeDocument,
-  getTypeFiche
+  getTypeFiche,
+  useConstructionCertificatPacsRcRca
 } from "./GenerationCertificatGestionTypeCertificat";
 
 export function useGenerationCertificatPACSOuRCOuRCAHook(
@@ -67,21 +67,20 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
     pacsRcRcaCourant?.idInscription
   ) as IFichePacs | IFicheRcRca;
 
+  const certificatPacsRcRca = useConstructionCertificatPacsRcRca(
+    typeCertificat,
+    informationsPacsRcRca,
+    requete,
+    inscriptionsRcRadiation
+  );
+
   useEffect(() => {
     if (
-      requete &&
-      requete.titulaires &&
-      requete.titulaires.length > 0 &&
+      requete?.titulaires &&
+      requete.titulaires?.length > 0 &&
       informationsPacsRcRca
     ) {
-      setCertificatComposition(
-        construitCertificatPacsRcRca(
-          typeCertificat,
-          requete,
-          informationsPacsRcRca,
-          inscriptionsRcRadiation
-        )
-      );
+      setCertificatComposition(certificatPacsRcRca);
     } else if (informationsPacsRcRca !== undefined) {
       setResultGenerationCertificat(RESULTAT_VIDE);
     }

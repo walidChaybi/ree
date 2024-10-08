@@ -31,10 +31,12 @@ import {
 } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
-import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../../__tests__utils__/testsUtil";
 
 describe("RMCRequetesAssocieesResultats", () => {
   test.skip("DOIT rendre le titre du tableau des requêtes associées aux titulaires d'une requêtes d'information", () => {
@@ -65,7 +67,7 @@ describe("RMCRequetesAssocieesResultats", () => {
   });
 
   test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête de délivrance", () => {
-    storeRece.utilisateurCourant = {
+    const utilisateurConnecteMock = {
       idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
       prenom: "Ashley",
       nom: "Young",
@@ -102,13 +104,15 @@ describe("RMCRequetesAssocieesResultats", () => {
       ]
     } as IOfficier;
 
-    const aDroitConsulter = aDroitConsulterRequeteDelivrance();
+    const aDroitConsulter = aDroitConsulterRequeteDelivrance(
+      utilisateurConnecteMock
+    );
 
     expect(aDroitConsulter).toBe(true);
   });
 
   test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête de création Etablissement", () => {
-    storeRece.utilisateurCourant = {
+    const utilisateurConnecteMock = {
       idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
       prenom: "Ashley",
       nom: "Young",
@@ -146,25 +150,27 @@ describe("RMCRequetesAssocieesResultats", () => {
     } as IOfficier;
     const libelleCourtEtablissement = "Acte Etab X (d)";
     const aDroitConsulter = aDroitConsulterRequeteCreation(
-      libelleCourtEtablissement
+      libelleCourtEtablissement,
+      utilisateurConnecteMock
     );
 
     expect(aDroitConsulter).toBe(true);
   });
 
   test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête de création Transcription", () => {
-    storeRece.utilisateurCourant =
+    const utilisateurConnecteMock =
       userDroitCreerActeTranscritPerimetreTousRegistres;
     const libelleCourtTranscription = "Acte Transcrit (c)";
     const aDroitConsulter = aDroitConsulterRequeteCreation(
-      libelleCourtTranscription
+      libelleCourtTranscription,
+      utilisateurConnecteMock
     );
 
     expect(aDroitConsulter).toBe(true);
   });
 
   test("DOIT retourner false QUAND l'utilisateur n'a le droit de consulter une requête de création Transcription", () => {
-    const utilisateurSansDroitTranscrit = {
+    const utilisateurConnecteSansDroitTranscritMock = {
       idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
       prenom: "Ashley",
       nom: "Young",
@@ -201,17 +207,17 @@ describe("RMCRequetesAssocieesResultats", () => {
       ]
     } as IOfficier;
 
-    storeRece.utilisateurCourant = utilisateurSansDroitTranscrit;
     const libelleCourtTranscription = "Acte Transcrit (c)";
     const aDroitConsulter = aDroitConsulterRequeteCreation(
-      libelleCourtTranscription
+      libelleCourtTranscription,
+      utilisateurConnecteSansDroitTranscritMock
     );
 
     expect(aDroitConsulter).toBe(false);
   });
 
   test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête d'information'", () => {
-    const utilisateurAvecDroitInformerUsager = {
+    const utilisateurConnecteAvecDroitInformerUsagerMock = {
       idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
       prenom: "Ashley",
       nom: "Young",
@@ -248,42 +254,40 @@ describe("RMCRequetesAssocieesResultats", () => {
       ]
     } as IOfficier;
 
-    storeRece.utilisateurCourant = utilisateurAvecDroitInformerUsager;
-    const aDroitConsulter = aDroitConsulterApercuRequeteInformation();
+    const aDroitConsulter = aDroitConsulterApercuRequeteInformation(
+      utilisateurConnecteAvecDroitInformerUsagerMock
+    );
 
     expect(aDroitConsulter).toBe(true);
   });
 
   test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête de création'", () => {
-    storeRece.utilisateurCourant =
-      userDroitCreerActeEtabliPerimetreTousRegistres;
     const sousTypeRequete = "Acte Etab X (d)";
 
     const aDroitConsulter = utilisateurADroitOuvrirRequete(
       TypeRequete.CREATION.libelle,
-      sousTypeRequete
+      sousTypeRequete,
+      userDroitCreerActeEtabliPerimetreTousRegistres
     );
 
     expect(aDroitConsulter).toBe(true);
   });
 
   test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête de délivrance'", () => {
-    storeRece.utilisateurCourant = userDroitDelivrer;
-
     const aDroitConsulter = utilisateurADroitOuvrirRequete(
       TypeRequete.DELIVRANCE.libelle,
-      ""
+      "",
+      userDroitDelivrer
     );
 
     expect(aDroitConsulter).toBe(true);
   });
 
   test("DOIT retourner true QUAND l'utilisateur à pas le droit de consulter une requête d'information'", () => {
-    storeRece.utilisateurCourant = userDroitInformerUsager;
-
     const aDroitConsulter = utilisateurADroitOuvrirRequete(
       TypeRequete.INFORMATION.libelle,
-      ""
+      "",
+      userDroitInformerUsager
     );
 
     expect(aDroitConsulter).toBe(true);
@@ -316,11 +320,16 @@ describe("RMCRequetesAssocieesResultats", () => {
       ]
     );
 
-    const { container } = render(<RouterProvider router={router} />);
+    const { container } = render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        userDroitInformerUsager
+      )
+    );
 
     expect(container.getElementsByClassName("ApercuRequete").length).toBe(1);
   });
-
+  // ADRIEN
   test("DOIT retourner le bon composant d'aperçu simple d'une requête de création d'établissement", () => {
     const requeteSelectionnee = {
       idRequete: "7b448d64-add5-4dbd-8041-b7081ea7bc86",
@@ -345,7 +354,12 @@ describe("RMCRequetesAssocieesResultats", () => {
       ]
     );
 
-    const { container } = render(<RouterProvider router={router} />);
+    const { container } = render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        userDroitInformerUsager
+      )
+    );
 
     expect(
       container.getElementsByClassName(
@@ -355,8 +369,6 @@ describe("RMCRequetesAssocieesResultats", () => {
   });
 
   test("DOIT retourner le bon composant d'aperçu simple d'une requête de création de transcription", () => {
-    storeRece.utilisateurCourant =
-      userDroitCreerActeTranscritPerimetreTousRegistres;
     const requeteSelectionnee = {
       idRequete: "7b448d64-add5-4dbd-8041-b7081ea7bc86",
       numeroFonctionnel: "numero",
@@ -380,7 +392,12 @@ describe("RMCRequetesAssocieesResultats", () => {
       ]
     );
 
-    const { container } = render(<RouterProvider router={router} />);
+    const { container } = render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        userDroitCreerActeTranscritPerimetreTousRegistres
+      )
+    );
 
     expect(
       container.getElementsByClassName(
@@ -416,8 +433,12 @@ describe("RMCRequetesAssocieesResultats", () => {
       ]
     );
 
-    const { container } = render(<RouterProvider router={router} />);
-
+    const { container } = render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        userDroitInformerUsager
+      )
+    );
     expect(container.getElementsByClassName("ApercuRequete").length).toBe(1);
   });
 });

@@ -1,8 +1,8 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { ICreationActionParams } from "@hook/requete/ActionHook";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
-import { storeRece } from "@util/storeRece";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigation } from "react-router-dom";
 import { usePostCreationActionApi } from "./CreationActionHook";
 
@@ -20,6 +20,8 @@ export function useCreationAction(
     ICreationActionParams | undefined
   >();
 
+  const { utilisateurConnecte } = useContext(RECEContextData);
+
   useEffect(() => {
     if (params) {
       setCreationActionParams({
@@ -34,8 +36,7 @@ export function useCreationAction(
   useEffect(() => {
     if (idAction && params?.requete) {
       // Mise à jour de l'id utilisateur
-      params.requete.idUtilisateur =
-        storeRece.utilisateurCourant?.idUtilisateur;
+      params.requete.idUtilisateur = utilisateurConnecte?.idUtilisateur;
       if (params.callback) {
         params.callback();
       }

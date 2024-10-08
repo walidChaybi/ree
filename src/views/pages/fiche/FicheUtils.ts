@@ -1,4 +1,5 @@
 import { mapAlertesActe } from "@hook/alertes/MappingAlertesActe";
+import { IOfficier } from "@model/agent/IOfficier";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
@@ -6,15 +7,15 @@ import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
 import { SimplePersonne } from "@model/etatcivil/fiche/SimplePersonne";
 import { jointAvec } from "@util/Utils";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
-import { setDataBandeau } from "./contenu/BandeauFicheUtils";
 import { IDataFicheProps } from "./FichePage";
+import { setDataBandeau } from "./contenu/BandeauFicheUtils";
 import {
   getPanelsActe,
   getParamsAffichageFicheActe
 } from "./hook/constructionComposants/acte/FicheActeUtils";
 import { getPanelsPacs } from "./hook/constructionComposants/pacs/FichePacsUtils";
-import { getPanelsRca } from "./hook/constructionComposants/rcrca/FicheRcaUtils";
 import { getPanelsRc } from "./hook/constructionComposants/rcrca/FicheRcUtils";
+import { getPanelsRca } from "./hook/constructionComposants/rcrca/FicheRcaUtils";
 
 export function getFicheTitle(
   categorie: string,
@@ -45,7 +46,11 @@ export interface IFiche {
   visuBoutonAlertes: boolean;
 }
 
-export function setFiche(dataFiche?: IDataFicheProps, data?: any): IFiche {
+export function setFiche(
+  utilisateurConnecte: IOfficier,
+  dataFiche?: IDataFicheProps,
+  data?: any
+): IFiche {
   const fiche = {} as IFiche;
 
   if (
@@ -71,11 +76,12 @@ export function setFiche(dataFiche?: IDataFicheProps, data?: any): IFiche {
 
       case TypeFiche.ACTE:
         const ficheActe = data as IFicheActe;
-        fiche.panelsFiche = getPanelsActe(ficheActe);
+        fiche.panelsFiche = getPanelsActe(ficheActe, utilisateurConnecte);
         fiche.alertes = mapAlertesActe(data?.alerteActes);
         fiche.visuBoutonAlertes = getParamsAffichageFicheActe(
           ficheActe.registre?.type?.id,
-          ficheActe.visibiliteArchiviste
+          ficheActe.visibiliteArchiviste,
+          utilisateurConnecte
         ).visuBoutonAlertes;
         break;
 

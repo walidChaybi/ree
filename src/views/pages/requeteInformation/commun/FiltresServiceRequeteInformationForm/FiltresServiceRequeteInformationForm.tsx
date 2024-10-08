@@ -1,4 +1,5 @@
 import { getServicesAsOptions } from "@composant/menuTransfert/MenuTransfertUtil";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,14 +19,13 @@ import {
   getValeurOuUndefined,
   triAlphanumerique
 } from "@util/Utils";
-import { storeRece } from "@util/storeRece";
 import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import {
   OptionVide,
   SelectField
 } from "@widget/formulaire/champsSaisie/SelectField";
 import { Formik } from "formik";
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import "../scss/FiltresServiceRequeteInformationForm.scss";
 
 interface IFiltresServiceRequeteInformationFormProps {
@@ -45,6 +45,7 @@ export const VALEUR_FILTRE_INFORMATION_DEFAUT: IFiltresServiceRequeteInformation
 const FiltresServiceRequeteInformationForm: React.FC<
   IFiltresServiceRequeteInformationFormProps
 > = ({ onSubmit }) => {
+  const { utilisateurs, utilisateurConnecte } = useContext(RECEContextData);
   const sousTypeInformationOptions: Options = useMemo(
     () => SousTypeInformation.getAllEnumsAsOptions(),
     []
@@ -78,11 +79,10 @@ const FiltresServiceRequeteInformationForm: React.FC<
   );
 
   const listeAgents: Options = useMemo(() => {
-    const listeServicesEtServicesFils = [storeRece.utilisateurCourant?.service]
-      .concat(storeRece.utilisateurCourant?.servicesFils)
+    const listeServicesEtServicesFils = [utilisateurConnecte?.service]
+      .concat(utilisateurConnecte?.servicesFils)
       .map(service => getValeurOuUndefined(service?.idService));
-
-    return storeRece.listeUtilisateurs
+    return utilisateurs
       .filter(
         utilisateur =>
           listeServicesEtServicesFils.indexOf(
@@ -98,7 +98,7 @@ const FiltresServiceRequeteInformationForm: React.FC<
 
   const listeServices = useMemo(
     () =>
-      getServicesAsOptions().sort((a, b) =>
+      getServicesAsOptions(utilisateurConnecte).sort((a, b) =>
         triAlphanumerique(a.libelle, b.libelle)
       ),
     []

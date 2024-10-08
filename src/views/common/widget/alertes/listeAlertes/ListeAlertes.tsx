@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE } from "@model/agent/IOfficier";
@@ -5,7 +6,7 @@ import { Alerte, IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { ConfirmationPopin } from "../../popin/ConfirmationPopin";
 import { PopinSupprimerAlerte } from "./contenu/PopinSupprimerAlerte";
 import "./scss/ListeAlertes.scss";
@@ -36,9 +37,15 @@ export const ListeAlertes: React.FC<ListeAlertesProps> = ({
       isOpen: false
     });
   const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
+  const { utilisateurs, utilisateurConnecte } = useContext(RECEContextData);
 
   const onClick = (alerte: IAlerte): void => {
-    if (officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(idTypeRegistre)) {
+    if (
+      officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(
+        utilisateurConnecte,
+        idTypeRegistre
+      )
+    ) {
       setPopinSupprimerAlerteState({
         idAlerteActe: alerte?.id || "",
         idActe: alerte?.idActe || "",
@@ -76,8 +83,8 @@ export const ListeAlertes: React.FC<ListeAlertesProps> = ({
               title={alerte?.complementDescription}
             >
               {displayReference
-                ? Alerte.toReferenceString(alerte)
-                : Alerte.toAlertString(alerte)}
+                ? Alerte.toReferenceString(alerte, utilisateurs)
+                : Alerte.toAlertString(alerte, utilisateurs)}
               {gestionnaireFeatureFlag.estActif(
                 FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
               ) && (

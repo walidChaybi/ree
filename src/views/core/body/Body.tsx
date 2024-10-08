@@ -1,6 +1,5 @@
 import { HTTP_FORBIDDEN, HTTP_UNAUTHORIZED } from "@api/ApiManager";
-import { RECEContext } from "@core/contexts/RECEContext";
-import { ILoginApi } from "@core/login/LoginHook";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { routesRece } from "@router/ReceRoutes";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
@@ -15,7 +14,7 @@ import { PageMessage } from "../login/PageMessage";
 export const Body: React.FC = () => {
   const [appliDejaOuverte, setAppliDejaOuverte] = useState<boolean>(false);
 
-  const { infosLoginOfficier } = useContext(RECEContext);
+  const { utilisateurConnecte, erreurLogin } = useContext(RECEContextData);
   useEffect(() => {
     gestionnaireDoubleOuverture.lancerVerification(() => {
       setAppliDejaOuverte(true);
@@ -24,49 +23,44 @@ export const Body: React.FC = () => {
 
   return (
     <main className="AppBody">
-      {infosLoginOfficier.officierDataState?.idSSO !== undefined ? (
-        appliDejaOuverte ? (
-          <PageMessage
-            message={getLibelle(
-              "L'application est déjà ouverte sur cet ordinateur"
-            )}
-          />
-        ) : (
-          <>
-            <GestionnaireFermeture
-              urlRedirection={URL_MES_REQUETES_DELIVRANCE}
-            ></GestionnaireFermeture>
-
-            <FilAriane routes={routesRece} />
-            <Outlet />
-          </>
-        )
+      {erreurLogin || !utilisateurConnecte?.idSSO || appliDejaOuverte ? (
+        <PageMessage
+          message={
+            erreurLogin || !utilisateurConnecte?.idSSO
+              ? getMessageLogin(erreurLogin)
+              : getLibelle("L'application est déjà ouverte sur cet ordinateur")
+          }
+        />
       ) : (
-        <PageMessage message={getMessageLogin(infosLoginOfficier)} />
+        <>
+          <GestionnaireFermeture
+            urlRedirection={URL_MES_REQUETES_DELIVRANCE}
+          ></GestionnaireFermeture>
+          <FilAriane routes={routesRece} />
+          <Outlet />
+        </>
       )}
     </main>
   );
 };
 
-function getMessageLogin(infosLoginOfficier: ILoginApi) {
+function getMessageLogin(erreurLogin: any) {
   if (
-    infosLoginOfficier !== undefined &&
-    infosLoginOfficier.erreurState !== undefined &&
-    (infosLoginOfficier.erreurState.status === HTTP_UNAUTHORIZED ||
-      infosLoginOfficier.erreurState.status === HTTP_FORBIDDEN)
+    erreurLogin?.status === HTTP_UNAUTHORIZED ||
+    erreurLogin?.status === HTTP_FORBIDDEN
   ) {
     return getLibelle(
       "Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BIMO."
     );
-  } else if (infosLoginOfficier?.erreurState?.response?.body?.errors[ZERO]) {
+  } else if (erreurLogin?.response?.body?.errors[ZERO]) {
     return getLibelle(
       "Votre compte utilisateur n'est pas actif - Veuillez vous adresser à votre administrateur RECE"
     );
-  } else if (infosLoginOfficier.erreurState !== undefined) {
+  } else if (erreurLogin) {
     logError({
       messageUtilisateur:
         "Impossible de récupérer les informations utilisateur via le service de login",
-      error: infosLoginOfficier.erreurState
+      error: erreurLogin
     });
     return getLibelle("Erreur Système");
   } else {

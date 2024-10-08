@@ -1,6 +1,6 @@
 import { HTTP_STATUS_OK } from "@api/ApiManager";
 import { URL_REQUETES_COUNT } from "@api/appels/requeteApi";
-import { RECEContext } from "@core/contexts/RECEContext";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { executeEnDiffere, getLibelle } from "@util/Utils";
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ export const GestionnaireFermeture: React.FC<
   GestionnaireFermetureProps
 > = props => {
   const navigate = useNavigate();
-  const { isDirty } = useContext(RECEContext);
+  const { isDirty } = useContext(RECEContextData);
 
   useEffect(() => {
     const handleBackBeforUnload = (event: any) => {

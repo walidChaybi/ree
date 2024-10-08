@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   ICreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
@@ -9,10 +10,9 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface BoutonTerminerApresImpressionProps {
@@ -24,6 +24,7 @@ export const BoutonTerminerApresImpression: React.FC<
 > = props => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   const [majStatutParams, setMajStatutParams] = useState<
     ICreationActionEtMiseAjourStatutParams | undefined
@@ -58,11 +59,10 @@ export const BoutonTerminerApresImpression: React.FC<
 
   function estActif() {
     const mAppartient =
-      props.requete.idUtilisateur ===
-      storeRece.utilisateurCourant?.idUtilisateur;
+      props.requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
     return (
       mAppartient &&
-      officierHabiliterPourLeDroit(Droit.DELIVRER) &&
+      officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER) &&
       DocumentReponse.verifierDocumentsValides(props.requete.documentsReponses)
     );
   }

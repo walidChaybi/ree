@@ -1,5 +1,5 @@
 import { ReinitialiserValiderBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
-import { RECEContext } from "@core/contexts/RECEContext";
+import { RECEContextActions } from "@core/contexts/RECEContext";
 import {
   IModifierCorpsExtraitParams,
   useModifierCorpsExtrait
@@ -35,7 +35,7 @@ export interface ModifierCorpsExtraitProps {
 export const ModifierCorpsExtrait: React.FC<
   ModifierCorpsExtraitProps
 > = props => {
-  const { setIsDirty } = useContext(RECEContext);
+  const { setIsDirty } = useContext(RECEContextActions);
   const { rafraichirRequete } = useContext(EditionExtraitCopiePageContext);
 
   const [corpsTexte] = useState<string | undefined>(

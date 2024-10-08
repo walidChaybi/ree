@@ -29,12 +29,12 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
   const navigate = useNavigate();
 
   function onClickDefaultHandler(event: React.MouseEvent, paramURL: string) {
-    if (!disabled) {
-      if (onClickHandler) {
-        onClickHandler(event, paramURL);
-      }
-      navigate(`${paramURL}`);
-    }
+        if (!disabled) {
+          if (onClickHandler) {
+            onClickHandler(event, paramURL);
+          }
+          navigate(`${paramURL}`);
+        }
   }
 
   return (

@@ -1,5 +1,5 @@
 import { ReinitialiserValiderBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
-import { RECEContext } from "@core/contexts/RECEContext";
+import { RECEContextActions } from "@core/contexts/RECEContext";
 import {
   IMentionsParams,
   useMentionsApiHook
@@ -40,7 +40,7 @@ export interface GestionMentionsProps {
 }
 
 export const GestionMentions: React.FC<GestionMentionsProps> = props => {
-  const { setIsDirty } = useContext(RECEContext);
+  const { setIsDirty } = useContext(RECEContextActions);
 
   const { setOperationEnCours, rafraichirRequete } = useContext(
     EditionExtraitCopiePageContext

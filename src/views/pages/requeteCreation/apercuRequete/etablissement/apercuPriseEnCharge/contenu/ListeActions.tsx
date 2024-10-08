@@ -1,14 +1,15 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   RetourSDANFParams,
   useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook
 } from "@hook/requete/creation/EnvoyerMessageSdanfEtMiseAJourStatutApiHook";
+import { IOfficier } from "@model/agent/IOfficier";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IEchange } from "@model/requete/IEchange";
-import { storeRece } from "@util/storeRece";
 import { estSuperieurA500Caracteres, getLibelle } from "@util/Utils";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopinAvecMessage } from "@widget/popin/ConfirmationPopinAvecMessage";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 interface ListeActionsRetourSDANFProps {
   statusRequete: any;
   idRequeteCorbeilleAgent?: string;
@@ -18,10 +19,10 @@ interface ListeActionsRetourSDANFProps {
   modeConsultation?: boolean;
 }
 
-export const getPrenomEtNom = () => {
+export const getPrenomEtNom = (utilisateurConnecte: IOfficier) => {
   let nomPrenom;
-  const prenom = storeRece.utilisateurCourant?.prenom || "";
-  const nom = storeRece.utilisateurCourant?.nom || "";
+  const prenom = utilisateurConnecte?.prenom || "";
+  const nom = utilisateurConnecte?.nom || "";
   nomPrenom = `${prenom} ${nom}`;
   return nomPrenom;
 };
@@ -32,7 +33,7 @@ export const ListeActionsRetourSDANF: React.FC<
   const [param, setParam] = useState<RetourSDANFParams>();
   const messageRetourSDANFAPI: IEchange =
     useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook(param);
-
+  const { utilisateurConnecte } = useContext(RECEContextData);
   const [isOpen, setIsOpen] = React.useState(false);
   const [title, setTitle] = React.useState("");
   const [buttonValidateDisabled, setButtonValidateDisabled] = useState(true);
@@ -83,8 +84,7 @@ export const ListeActionsRetourSDANF: React.FC<
     return (
       StatutRequete.getEnumFor(props.statusRequete) !==
         StatutRequete.PRISE_EN_CHARGE ||
-      props.idRequeteCorbeilleAgent !==
-        storeRece.utilisateurCourant?.idUtilisateur ||
+      props.idRequeteCorbeilleAgent !== utilisateurConnecte?.idUtilisateur ||
       props.modeConsultation
     );
   }
@@ -125,7 +125,9 @@ export const ListeActionsRetourSDANF: React.FC<
   };
 
   const envoyerMessageRetourSDANF = () => {
-    const message = `${title} - ${messageSDANF} - ${getPrenomEtNom()}`;
+    const message = `${title} - ${messageSDANF} - ${getPrenomEtNom(
+      utilisateurConnecte
+    )}`;
     setParam({
       idRequete: props.idRequeteParam,
       message: {

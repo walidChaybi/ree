@@ -11,7 +11,10 @@ import {
   TITULAIRE,
   TYPE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { RECEContext } from "@core/contexts/RECEContext";
+import {
+  RECEContextActions,
+  RECEContextData
+} from "@core/contexts/RECEContext";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
@@ -49,7 +52,9 @@ interface ISaisiePostulantFormProps {
 export const SaisiePostulantForm: React.FC<
   ISaisiePostulantFormProps
 > = props => {
-  const { isDirty, setIsDirty } = useContext(RECEContext);
+  const { isDirty } = useContext(RECEContextData);
+  const { setIsDirty } = useContext(RECEContextActions);
+
 
   const libelleParent1 = getLibelleParentFromSexe(
     UN,

@@ -1,8 +1,11 @@
-import { storeRece } from "@util/storeRece";
+import {
+  IUtilisateur,
+  getNomPrenomUtilisateurAPartirId
+} from "@model/agent/IUtilisateur";
 import { compactObject } from "@util/Utils";
 import {
-  DESCRIPTION_SAGA,
   A_NE_PAS_DELIVRER,
+  DESCRIPTION_SAGA,
   TypeAlerte,
   TypeCodeCouleur
 } from "../enum/TypeAlerte";
@@ -32,7 +35,7 @@ const dotCharacter = "\u2022";
 const RECE = "RECE";
 
 export const Alerte = {
-  toReferenceString(alerte: IAlerte): string {
+  toReferenceString(alerte: IAlerte, utilisateurs: IUtilisateur[]): string {
     const registre: any = {
       famille: alerte?.famille,
       pocopa: alerte?.pocopa,
@@ -44,8 +47,9 @@ export const Alerte = {
     };
     const trigramme =
       alerte.idUtilisateur && alerte.trigrammeUtilisateur !== RECE
-        ? ` - ${storeRece.getNomPrenomUtilisateurAPartirId(
-            alerte?.idUtilisateur
+        ? ` - ${getNomPrenomUtilisateurAPartirId(
+            alerte?.idUtilisateur,
+            utilisateurs
           )}`
         : "";
     const complementDescription = alerte.complementDescription
@@ -58,11 +62,12 @@ export const Alerte = {
     }`;
   },
 
-  toAlertString(alerte: IAlerte): string {
+  toAlertString(alerte: IAlerte, utilisateurs: IUtilisateur[]): string {
     const trigramme =
       alerte.idUtilisateur && alerte.trigrammeUtilisateur !== RECE
-        ? ` - ${storeRece.getNomPrenomUtilisateurAPartirId(
-            alerte?.idUtilisateur
+        ? ` - ${getNomPrenomUtilisateurAPartirId(
+            alerte?.idUtilisateur,
+            utilisateurs
           )}`
         : "";
     const complementDescription = alerte.complementDescription

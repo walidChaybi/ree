@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { TUuidSuiviDossierParams } from "@model/params/TUuidSuiviDossierParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
@@ -15,7 +16,7 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { BlocInformatif } from "../../../../../common/composant/BlocInformatif/BlocInformatif";
 import { BoutonPrendreEnChargeCreation } from "./BoutonPrendreEnChargeCreation";
@@ -54,9 +55,13 @@ export const BoutonsApercuCreationEtablissement: React.FC<
     useParams<TUuidSuiviDossierParams>();
   const navigate = useNavigate();
   const location = useLocation();
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   const estPresentBoutonPriseEnCharge =
-    autorisePrendreEnChargeDepuisPageCreation(props.requete);
+    autorisePrendreEnChargeDepuisPageCreation(
+      utilisateurConnecte,
+      props.requete
+    );
 
   const estProjetActeASigner =
     props.avancement && AvancementProjetActe.estASigner(props.avancement);

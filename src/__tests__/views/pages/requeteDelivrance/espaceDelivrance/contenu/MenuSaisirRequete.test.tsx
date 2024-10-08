@@ -15,10 +15,12 @@ import {
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
-import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../../__tests__utils__/testsUtil";
 
 window.alert = vi.fn();
 
@@ -163,9 +165,12 @@ describe.skip("MenuSaisirRequete - ", () => {
       [URL_REQUETES_DELIVRANCE_SERVICE]
     );
 
-    render(<RouterProvider router={router} />);
-
-    storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+    render(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        userDroitnonCOMEDEC
+      )
+    );
 
     const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 

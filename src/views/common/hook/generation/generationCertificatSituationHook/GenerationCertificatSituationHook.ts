@@ -1,17 +1,18 @@
-import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
-import { Orientation } from "@model/composition/enum/Orientation";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   CertificatSituationComposition,
   ICertificatSituationComposition,
   NOM_DOCUMENT_CERTIFICAT_SITUATION
 } from "@model/composition/ICertificatSituationComposition";
+import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
+import { Orientation } from "@model/composition/enum/Orientation";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
-import { useEffect, useState } from "react";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { useContext, useEffect, useState } from "react";
 import { MimeType } from "../../../../../ressources/MimeType";
 import { useCertificatSituationApiHook } from "../../composition/CompositionCertificatSituationHook";
 import {
@@ -51,12 +52,12 @@ export function useGenerationCertificatSituationHook(
     setStockerDocumentCreerActionMajStatutRequeteParams
   ] = useState<IStockerDocumentCreerActionMajStatutRequeteParams>();
 
+  const { decrets } = useContext(RECEContextData);
+
   // 1 - Construction du Certificat de situation
   useEffect(() => {
     if (
-      params &&
-      params.requete &&
-      params.requete.document &&
+      params?.requete?.document &&
       (params.nbInscriptionsInfos || params.infosInscription)
     ) {
       if (params?.requete.titulaires && params.requete.titulaires.length > 0) {
@@ -72,14 +73,15 @@ export function useGenerationCertificatSituationHook(
           params.requete,
           setCertificatSituationComposition,
           setResultGenerationCertificatSituation,
-          phrases.phrasesPiecesJointes
+          phrases.phrasesPiecesJointes,
+          decrets
         );
       } else {
         setResultGenerationCertificatSituation(RESULTAT_VIDE);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params]);
+  }, [params, decrets]);
 
   // 2 - Création du certificat de situation: appel api composition
   // récupération du document en base64
@@ -133,15 +135,16 @@ function construitCertificatSituation(
   requete: IRequeteTableauDelivrance,
   setCertificatSituationComposition: any,
   setResultGenerationCertificatSituation: any,
-  phrasesPiecesJointes: string | undefined
+  phrasesPiecesJointes: string | undefined,
+  decrets: IDecret[]
 ) {
-  if (phrasesLiees && requete && requete.document) {
+  if (phrasesLiees && requete?.document) {
     const titre = getTitre(requete.document ? requete.document : "");
-    const decrets = getDecrets(requete.document);
+    const decretsCertificat = getDecrets(requete.document, decrets);
 
     const composition = creerCertificatSituationComposition(
       titre,
-      decrets,
+      decretsCertificat,
       phrasesLiees,
       phrasesPiecesJointes,
       requete
@@ -156,8 +159,8 @@ function getTitre(idDocumentDemande: string): string {
   return specificationTitre.getTitre(idDocumentDemande);
 }
 
-function getDecrets(idDocumentDemande: string): IDecret[] {
-  return specificationDecret.getDecret(idDocumentDemande);
+function getDecrets(idDocumentDemande: string, decrets: IDecret[]): IDecret[] {
+  return specificationDecret.getDecret(idDocumentDemande, decrets);
 }
 
 function creerCertificatSituationComposition(

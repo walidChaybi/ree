@@ -1,4 +1,5 @@
 import { pacsModificationNotaireMap } from "@mock/data/PACS";
+import { IOfficier } from "@model/agent/IOfficier";
 import { NatureRca } from "@model/etatcivil/enum/NatureRca";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
@@ -35,7 +36,11 @@ test("ficheUtils setFiche PACS works", () => {
     categorie: TypeFiche.PACS
   };
 
-  const fiche = setFiche(dataFiche, pacsModificationNotaireMap);
+  const fiche = setFiche(
+    {} as IOfficier,
+    dataFiche,
+    pacsModificationNotaireMap
+  );
 
   expect(fiche.bandeauFiche.titreFenetre).toBe(
     "PACS - DUREL Marie Charlotte et DUPE Louis-Philippe - N° 2018 - 123456"
@@ -77,7 +82,7 @@ test("ficheUtils setFiche RCA works", () => {
     personnes: []
   };
 
-  const fiche = setFiche(dataFiche, data);
+  const fiche = setFiche({} as IOfficier, dataFiche, data);
 
   expect(fiche.bandeauFiche.titreFenetre).toBe("RCA -  - N° 1992 - 1");
   expect(fiche.bandeauFiche.annee).toBe("1992");

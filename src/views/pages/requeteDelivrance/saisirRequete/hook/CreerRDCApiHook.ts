@@ -1,10 +1,11 @@
 import { creationRequeteDelivrance } from "@api/appels/requeteApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { logError } from "@util/LogManager";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CreationRequeteRDC } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
-import { mappingFormulaireRDCVersRequeteDelivrance } from "./mappingFormulaireRDCVersRequeteDelivrance";
 import { ICreationOuMiseAJourRDCResultat } from "./SoumissionFormulaireRDCHook";
+import { mappingFormulaireRDCVersRequeteDelivrance } from "./mappingFormulaireRDCVersRequeteDelivrance";
 
 type ICreationRequeteDelivranceRDCResultat = ICreationOuMiseAJourRDCResultat;
 
@@ -14,6 +15,9 @@ export function useCreationRequeteDelivranceRDC(
   const [resultat, setResultat] = useState<
     ICreationRequeteDelivranceRDCResultat | undefined
   >();
+
+  const { utilisateurs } = useContext(RECEContextData);
+
   useEffect(() => {
     if (requeteRDC?.saisie) {
       const requete = mappingFormulaireRDCVersRequeteDelivrance(requeteRDC);
@@ -25,7 +29,7 @@ export function useCreationRequeteDelivranceRDC(
       })
         .then((result: any) => {
           setResultat({
-            requete: mappingRequeteDelivrance(result.body.data),
+            requete: mappingRequeteDelivrance(result.body.data, utilisateurs),
             futurStatut: requeteRDC.futurStatut,
             refus: requeteRDC.refus
           });
@@ -41,3 +45,4 @@ export function useCreationRequeteDelivranceRDC(
   }, [requeteRDC]);
   return resultat;
 }
+

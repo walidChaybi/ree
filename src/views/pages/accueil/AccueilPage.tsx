@@ -1,6 +1,5 @@
-import { RECEContext } from "@core/contexts/RECEContext";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
-import { ILoginApi } from "@core/login/LoginHook";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import {
   faChartBar,
@@ -35,7 +34,7 @@ export const AccueilPage: React.FC = () => {
   const [nbReqInfo, setNbReqInfo] = useState<number>();
   const [nbReqTraiteRepondu, setNbReqTraiteRepondu] = useState<number>();
 
-  const { infosLoginOfficier } = useContext(RECEContext);
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   const nbReqInfoAPI = useNbReqInfoHook(
     [StatutRequete.PRISE_EN_CHARGE.nom, StatutRequete.TRANSFEREE.nom].join(",")
@@ -61,10 +60,8 @@ export const AccueilPage: React.FC = () => {
   return (
     <div className="AccueilPage">
       <img src={logoRece} alt={getLibelle("Logo RECE")} />
-      <div className="Titre">
-        {getBienvenueOfficier(infosLoginOfficier.officierDataState)}
-      </div>
-      <div className="Affectation">{getAffectation(infosLoginOfficier)}</div>
+      <div className="Titre">{getBienvenueOfficier(utilisateurConnecte)}</div>
+      <div className="Affectation">{getAffectation(utilisateurConnecte)}</div>
       <div className="MenuAccueil">
         <BoutonAccueilEspaceDelivrance
           libelle={getLibelle("Délivrance")}
@@ -143,8 +140,8 @@ const getBienvenueOfficier = (officier?: IOfficier): string => {
   return getLibelle(msgBienvenue);
 };
 
-const getAffectation = (infosLoginOfficier?: ILoginApi): string => {
-  const hierarchie = getHierarchie(infosLoginOfficier);
+const getAffectation = (utilisateurConnecte?: IOfficier): string => {
+  const hierarchie = getHierarchie(utilisateurConnecte);
   let buildHierarchie = "";
   if (hierarchie.length > 0) {
     buildHierarchie = hierarchie.join(" - ");
@@ -152,9 +149,9 @@ const getAffectation = (infosLoginOfficier?: ILoginApi): string => {
   return getLibelle(buildHierarchie);
 };
 
-const getHierarchie = (infosLoginOfficier?: ILoginApi): string[] => {
+const getHierarchie = (utilisateurConnecte?: IOfficier): string[] => {
   const hierarchie: string[] = [];
-  const serviceOfficier = infosLoginOfficier?.officierDataState?.service;
+  const serviceOfficier = utilisateurConnecte?.service;
 
   if (serviceOfficier) {
     hierarchie.push(...getCodesHierarchieService(serviceOfficier));

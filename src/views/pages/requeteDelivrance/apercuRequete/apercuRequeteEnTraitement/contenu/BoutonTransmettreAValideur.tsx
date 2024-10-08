@@ -1,15 +1,15 @@
 import { listeValideurToOptions } from "@composant/menuTransfert/MenuTransfertUtil";
 import { TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   ITransmettreAValideurParams,
   useTransmettreAValideurApiHook
 } from "@hook/requete/TransmettreAValideur";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { Option } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface BoutonTransmettreAValideurProps {
@@ -22,6 +22,7 @@ export const BoutonTransmettreAValideur: React.FC<
   const [open, setOpen] = useState<boolean>(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { utilisateurs, utilisateurConnecte } = useContext(RECEContextData);
   const [params, setParams] = useState<ITransmettreAValideurParams>();
 
   const onValidate = useCallback(
@@ -62,7 +63,8 @@ export const BoutonTransmettreAValideur: React.FC<
         open={open}
         onClose={() => setOpen(false)}
         options={listeValideurToOptions(
-          storeRece.utilisateurCourant?.idUtilisateur
+          utilisateurs,
+          utilisateurConnecte?.idUtilisateur
         )}
         titre={getLibelle("Transmettre à valideur")}
         placeholder={getLibelle("Pour vérification")}

@@ -1,32 +1,38 @@
-import { TypeService } from "@model/agent/enum/TypeService";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import { ETypeService } from "@model/agent/enum/ETypeService";
 import { RequetesServicePage } from "@pages/requeteDelivrance/espaceDelivrance/RequetesServicePage";
 import { URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
-import { beforeAll, expect, test, vi } from "vitest";
+import { expect, test, vi } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 const setParamsRMCAuto = vi.fn();
 
-beforeAll(() => {
-  storeRece.listeServices = [
-    {
-      idService: "1234",
-      type: TypeService.BUREAU,
-      code: "1234",
-      libelleService: "str1",
-      estDansScec: true
-    },
-    {
-      idService: "12345",
-      type: TypeService.DEPARTEMENT,
-      code: "12345",
-      libelleService: "str2",
-      estDansScec: true
-    }
-  ];
-});
+const services = [
+  {
+    idService: "1234",
+    type: ETypeService.BUREAU,
+    code: "1234",
+    libelleService: "str1",
+    estDansScec: true
+  },
+  {
+    idService: "12345",
+    type: ETypeService.DEPARTEMENT,
+    code: "12345",
+    libelleService: "str2",
+    estDansScec: true
+  }
+];
+
+const routerAvecContexte = (router: any): any => {
+  return (
+    <MockRECEContextProvider services={services}>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
+};
 
 test.skip("renders Page requete interactions works, no errors returned", () => {
   const router = createTestingRouter(
@@ -39,7 +45,7 @@ test.skip("renders Page requete interactions works, no errors returned", () => {
     [URL_REQUETES_DELIVRANCE_SERVICE]
   );
 
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   const titreNumero = screen.getByText("N°");
   const pageSuivante = screen.getByTitle("Page suivante");
@@ -85,7 +91,7 @@ test.skip("Test Attribuée à", () => {
     [URL_REQUETES_DELIVRANCE_SERVICE]
   );
 
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   fireEvent.click(screen.getByTestId("loupeButton"));
 
@@ -152,7 +158,7 @@ test.skip("la page DOIT afficher les requetes filtrées QUAND on selectionne un 
     [URL_REQUETES_DELIVRANCE_SERVICE]
   );
 
-  render(<RouterProvider router={router} />);
+  render(routerAvecContexte(router));
 
   fireEvent.click(screen.getByTestId("loupeButton"));
 

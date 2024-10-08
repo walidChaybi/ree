@@ -41,11 +41,14 @@ test("DOIT mettre à jour les features flags dans le localstorage QUAND le heade
   ).toBeFalsy();
   expect(gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS)).toBeFalsy();
 
-  gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader({
-    CANARY_TESTING:
-      '[{"0123456": ["FF_DELIVRANCE_EXTRAITS_COPIES"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]'
-  }, "0123456");
-
+  gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader(
+    {
+        id_sso: "0123456",
+        CANARY_TESTING:
+        '[{"0123456": ["FF_DELIVRANCE_EXTRAITS_COPIES"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]'
+    },
+    "0123456"
+  );
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)
   ).toBeTruthy();
@@ -54,11 +57,14 @@ test("DOIT mettre à jour les features flags dans le localstorage QUAND le heade
   ).toBeFalsy();
   expect(gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS)).toBeFalsy();
 
-  gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader({
-    CANARY_TESTING:
-      '[{"0123456": ["FF_DELIVRANCE_EXTRAITS_COPIES"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]'
-  },"0456255");
-
+  gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader(
+    {
+      id_sso: "0456255",
+      CANARY_TESTING:
+        '[{"0123456": ["FF_DELIVRANCE_EXTRAITS_COPIES"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]'
+    },
+    "0456255"
+  );
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)
   ).toBeFalsy();
@@ -69,11 +75,14 @@ test("DOIT mettre à jour les features flags dans le localstorage QUAND le heade
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS)
   ).toBeTruthy();
 
-  gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader({
-    CANARY_TESTING:
-      '[{"0123456": ["FF_DELIVRANCE_EXTRAITS_COPIES"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]'
-  },"xxx");
-
+  gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader(
+    {
+      id_sso: "xxx",
+      CANARY_TESTING:
+        '[{"0123456": ["FF_DELIVRANCE_EXTRAITS_COPIES"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]'
+    },
+    "xxx"
+  );
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)
   ).toBeFalsy();
@@ -85,6 +94,7 @@ test("DOIT mettre à jour les features flags dans le localstorage QUAND le heade
 
 test("DOIT gérer l'erreur de parsing du JSON QUAND la valeur de la clé CANARY_TESTING du header est incorrecte", () => {
   gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader({
+    id_sso: "0123456",
     CANARY_TESTING:
       '[{0123456: "FF_DELIVRANCE_EXTRAITS_COPIES"]} {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]]'
   }, "0123456");

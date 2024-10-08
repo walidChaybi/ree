@@ -17,7 +17,7 @@ import {
   URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_EN_TRAITEMENT_ID
 } from "@router/ReceUrls";
-import { render, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import React from "react";
 import { RouterProvider } from "react-router-dom";
@@ -43,7 +43,7 @@ const routerAvecContexte = (router: any): any => {
   );
 };
 
-describe.skip("Doit rediriger sur le bon aperçu de requête de transcription en fonction du statut et du sousType", () => {
+describe("Doit rediriger sur le bon aperçu de requête de transcription en fonction du statut et du sousType", () => {
   test("Doit rediriger sur l'aperçu de requête création transcription simple quand le sousType est RCTC et que le statut est A_TRAITER", () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
       idRequete: ID_REQUETE,
@@ -71,14 +71,12 @@ describe.skip("Doit rediriger sur le bon aperçu de requête de transcription en
 
     render(routerAvecContexte(router));
 
-    waitFor(() => {
-      expect(router.state.location.pathname).toBe(
-        apercuRequeteURL(
-          "apercurequetetranscriptionenpriseencharge",
-          paramsCreation.idRequete
-        )
-      );
-    });
+    expect(router.state.location.pathname).toBe(
+      apercuRequeteURL(
+        "apercurequetetranscriptionenpriseencharge",
+        paramsCreation.idRequete
+      )
+    );
   });
 
   test("Doit rediriger sur l'aperçu de requête création transcription prise en charge quand le sousType est RCTC et que le statut est A_TRAITER", () => {
@@ -104,14 +102,12 @@ describe.skip("Doit rediriger sur le bon aperçu de requête de transcription en
 
     render(routerAvecContexte(router));
 
-    waitFor(() => {
-      expect(router.state.location.pathname).toBe(
-        apercuRequeteURL(
-          "apercurequetetranscriptionenpriseencharge",
-          paramsCreation.idRequete
-        )
-      );
-    });
+    expect(router.state.location.pathname).toBe(
+      apercuRequeteURL(
+        "apercurequetetranscriptionenpriseencharge",
+        paramsCreation.idRequete
+      )
+    );
   });
 
   test("Doit rediriger sur l'aperçu de requête création transcription prise en charge quand le sousType est RCTD et que le statut est PRISE_EN_CHARGE", () => {
@@ -136,14 +132,12 @@ describe.skip("Doit rediriger sur le bon aperçu de requête de transcription en
 
     render(routerAvecContexte(router));
 
-    waitFor(() => {
-      expect(router.state.location.pathname).toBe(
-        apercuRequeteURL(
-          "apercurequetetranscriptionenpriseencharge",
-          paramsCreation.idRequete
-        )
-      );
-    });
+    expect(router.state.location.pathname).toBe(
+      apercuRequeteURL(
+        "apercurequetetranscriptionenpriseencharge",
+        paramsCreation.idRequete
+      )
+    );
   });
 
   test("Doit rediriger sur l'aperçu de requête création transcription en traitement quand le sousType est RCTD et que le statut est EN_TRAITEMENT", () => {
@@ -175,18 +169,16 @@ describe.skip("Doit rediriger sur le bon aperçu de requête de transcription en
 
     render(routerAvecContexte(router));
 
-    waitFor(() => {
-      expect(router.state.location.pathname).toBe(
-        apercuRequeteURL(
-          "apercurequetetranscriptionensaisieprojet",
-          paramsCreation.idRequete
-        )
-      );
-    });
+    expect(router.state.location.pathname).toBe(
+      apercuRequeteURL(
+        "apercurequetetranscriptionensaisieprojet",
+        paramsCreation.idRequete
+      )
+    );
   });
 });
 
-describe.skip("Doit rediriger sur le bon aperçu de requête d'établissement en fonction du statut et du sousType", () => {
+describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonction du statut et du sousType", () => {
   test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut À traiter", () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
       idRequete: ID_REQUETE,
@@ -214,14 +206,12 @@ describe.skip("Doit rediriger sur le bon aperçu de requête d'établissement en
 
     render(routerAvecContexte(router));
 
-    waitFor(() => {
-      expect(router.state.location.pathname).toBe(
-        apercuRequeteURL(
-          "apercurequetecreationetablissementsuividossier",
-          paramsCreation.idRequete
-        )
-      );
-    });
+    expect(router.state.location.pathname).toBe(
+      apercuRequeteURL(
+        "apercurequetecreationetablissementsuividossier",
+        paramsCreation.idRequete
+      )
+    );
   });
 
   test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut Prise en charge", () => {
@@ -251,14 +241,12 @@ describe.skip("Doit rediriger sur le bon aperçu de requête d'établissement en
 
     render(routerAvecContexte(router));
 
-    waitFor(() => {
-      expect(router.state.location.pathname).toBe(
-        apercuRequeteURL(
-          "apercurequetecreationetablissementsuividossier",
-          paramsCreation.idRequete
-        )
-      );
-    });
+    expect(router.state.location.pathname).toBe(
+      apercuRequeteURL(
+        "apercurequetecreationetablissementsuividossier",
+        paramsCreation.idRequete
+      )
+    );
   });
 
   test("Doit rediriger sur l'aperçu de requête de création simple QUAND le sousType est RCEXR et au statut Traité", () => {
@@ -287,14 +275,12 @@ describe.skip("Doit rediriger sur le bon aperçu de requête d'établissement en
 
     render(routerAvecContexte(router));
 
-    waitFor(() => {
-      expect(router.state.location.pathname).toBe(
-        apercuRequeteURL(
-          "apercurequetecreationetablissementsimple",
-          paramsCreation.idRequete
-        )
-      );
-    });
+    expect(router.state.location.pathname).toBe(
+      apercuRequeteURL(
+        "apercurequetecreationetablissementsimple",
+        paramsCreation.idRequete
+      )
+    );
   });
 });
 

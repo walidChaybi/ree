@@ -11,6 +11,7 @@ import {
   TITULAIRE2,
   TYPE_REQUERANT
 } from "@composant/formulaire/ConstantesNomsForm";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   IDetailRequeteParams,
@@ -44,7 +45,7 @@ import {
   RequeteFormValidationSchema
 } from "@widget/formulaire/requete/RequeteForm";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import { SaisieRequeteRDC } from "../../../../model/form/delivrance/ISaisirRDCPageForm";
@@ -149,6 +150,8 @@ export const SaisirRDCPage: React.FC = () => {
 
   const [piecesjointesAMettreAJour, setPiecesjointesAMettreAJour] =
     useState<PieceJointe[]>();
+
+  const { decrets } = useContext(RECEContextData);
 
   const {
     creationRDCParams,
@@ -281,7 +284,7 @@ export const SaisirRDCPage: React.FC = () => {
   return (
     <>
       <OperationEnCours
-        visible={operationEnCours}
+        visible={operationEnCours || !decrets}
         onTimeoutEnd={() => setOperationEnCours(false)}
         onClick={() => setOperationEnCours(false)}
       />

@@ -1,14 +1,12 @@
 import { useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook } from "@hook/requete/creation/EnvoyerMessageSdanfEtMiseAJourStatutApiHook";
-import { userDroitCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import {
   reponseRequeteCreationMessageSdanf,
   requeteCreationAvecMessagesRetourSDANFAvecMessages
 } from "@mock/data/requeteCreation";
 import { IEchange } from "@model/requete/IEchange";
 import { render, screen, waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
 import React from "react";
-import { beforeAll, beforeEach, expect, test } from "vitest";
+import { beforeAll, expect, test } from "vitest";
 import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
@@ -34,10 +32,6 @@ const HookConsumer: React.FC = () => {
 
   return <div>{res ? res.message : ""}</div>;
 };
-
-beforeEach(() => {
-  storeRece.utilisateurCourant = userDroitCOMEDEC;
-});
 
 test("Attendu: useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook fonctionne correctement", () => {
   render(<HookConsumer />);

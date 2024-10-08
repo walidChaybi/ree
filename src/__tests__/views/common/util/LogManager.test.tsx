@@ -14,7 +14,7 @@ beforeEach(() => {
 
 test("renders error msg", () => {
   // Désactivation de la log car l'erreur loguée est normale
-  storeRece.logErrorOff = true;
+  storeRece.logErrorDesactive = true;
   render(
     <div>
       <ToastContainer
@@ -51,5 +51,5 @@ test("renders error msg", () => {
     expect(screen.getByText(/Message du serveur/)).toBeDefined();
   });
 
-  storeRece.logErrorOff = false;
+  storeRece.logErrorDesactive = false;
 });

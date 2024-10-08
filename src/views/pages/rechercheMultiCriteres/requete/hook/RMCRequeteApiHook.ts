@@ -1,26 +1,30 @@
 import { rechercheMultiCriteresRequetes } from "@api/appels/requeteApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { TRequeteTableau } from "@model/requete/IRequeteTableau";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { mappingRequetesTableau } from "@util/RequetesUtils";
 import { execute, getLibelle } from "@util/Utils";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { mappingCriteresRequete } from "./RMCRequeteMapping";
 
 export function useRMCRequeteApiHook(criteresRMCRequete?: ICriteresRMCRequete) {
   const [dataRMCRequete, setDataRMCRequete] = useState<TRequeteTableau[]>();
   const [dataTableauRMCRequete, setDataTableauRMCRequete] =
     useState<IParamsTableau>();
+  const { utilisateurs, services } = useContext(RECEContextData);
 
   useEffect(() => {
-    if (criteresRMCRequete && criteresRMCRequete.valeurs) {
+    if (criteresRMCRequete?.valeurs) {
       const criteres = mappingCriteresRequete(criteresRMCRequete.valeurs);
       rechercheMultiCriteresRequetes(criteres, criteresRMCRequete.range)
         .then((result: any) => {
           const requetes = mappingRequetesTableau(
             result?.body?.data?.resultatsRecherche,
-            true
+            true,
+            utilisateurs,
+            services
           );
           setDataRMCRequete(requetes);
           setDataTableauRMCRequete(getParamsTableau(result));

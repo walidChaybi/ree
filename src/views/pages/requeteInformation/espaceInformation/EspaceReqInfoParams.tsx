@@ -1,5 +1,5 @@
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { getCellTitulaires } from "@util/tableauRequete/TableauRequeteUtils";
+import { RenderCellTitulaires } from "@util/tableauRequete/TableauRequeteUtils";
 import { getLibelle } from "@util/Utils";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 
@@ -69,7 +69,7 @@ export const requeteInformationMesRequetesColumnHeaders = [
     title: getLibelle("Prénom / Nom de naissance titulaire"),
     align: "center",
     dataIsArray: true,
-    getElement: getCellTitulaires
+    getElement: RenderCellTitulaires
   })
 ];
 
@@ -126,6 +126,6 @@ export const requeteInformationRequetesServiceColumnHeaders = [
     title: getLibelle("Prénom / Nom de naissance titulaire"),
     align: "center",
     dataIsArray: true,
-    getElement: getCellTitulaires
+    getElement: RenderCellTitulaires
   })
 ];

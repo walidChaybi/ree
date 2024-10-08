@@ -4,6 +4,7 @@ import {
 } from "@api/appels/requeteApi";
 import { listeUtilisateursToOptionsBis } from "@composant/menuTransfert/MenuTransfertUtil";
 import { TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
@@ -16,23 +17,24 @@ import {
   TransfertParLotParams,
   useTransfertsApi
 } from "@hook/requete/TransfertHook";
+import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { IFiltreServiceRequeteCreationFormValues } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
-import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
+import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import { SortOrder } from "@widget/tableau/TableUtils";
-import React, { useCallback, useEffect, useState } from "react";
+import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { FiltreServiceRequeteCreationForm } from "../commun/composants/FiltreServiceRequeteCreationForm/FiltreServiceRequeteCreationForm";
@@ -68,6 +70,8 @@ export const RequetesServiceCreation: React.FC<
   ] = useState<string[]>([]);
   const [estTableauARafraichir, setEstTableauARafraichir] =
     useState<boolean>(false);
+
+  const { decrets } = useContext(RECEContextData);
 
   const { dataState, paramsTableau, onSubmit } = useRequeteCreationApiHook(
     TypeAppelRequete.REQUETE_CREATION_SERVICE,
@@ -156,15 +160,17 @@ export const RequetesServiceCreation: React.FC<
   };
 
   const getUtilisateursAsOptions = (
-    requetes: IRequeteTableauCreation[]
+    requetes: IRequeteTableauCreation[],
+    utilisateurs: IUtilisateur[]
   ): Options => {
     return filtrerRequetesChecked(requetes).reduce(
       (listeUtilisateurs, requete) => {
         const options = listeUtilisateursToOptionsBis(
           TypeRequete.CREATION,
           SousTypeCreation.getEnumFor(requete.sousType),
-          requete.idUtilisateur || "",
-          false
+          utilisateurConnecte,
+          false,
+          utilisateurs
         ).filter(
           option =>
             !listeUtilisateurs
@@ -188,6 +194,8 @@ export const RequetesServiceCreation: React.FC<
     contientHeader: true
   };
 
+  const { utilisateurs, utilisateurConnecte } = useContext(RECEContextData);
+
   const columnHeaders = getColonnesTableauRequetesServiceCreation(
     colonneCaseACocherAttribueAParams
   );
@@ -203,7 +211,7 @@ export const RequetesServiceCreation: React.FC<
   return (
     <>
       <OperationEnCours
-        visible={opEnCours}
+        visible={opEnCours || !decrets || !utilisateurConnecte}
         onTimeoutEnd={finOpEnCours}
         onClick={finOpEnCours}
       />
@@ -215,14 +223,15 @@ export const RequetesServiceCreation: React.FC<
         onClickOnLine={getOnClickSurLigneTableauEspaceCreation(
           setOpEnCours,
           setParamsMiseAJour,
-          setParamsCreation
+          setParamsCreation,
+          utilisateurConnecte
         )}
         columnHeaders={columnHeaders}
         dataState={dataState}
         paramsTableau={paramsTableau}
         goToLink={changementDePage}
         handleChangeSort={handleChangeSortTableau}
-        noRows={getMessageZeroRequete()}
+        noRows={RenderMessageZeroRequete()}
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
@@ -234,7 +243,7 @@ export const RequetesServiceCreation: React.FC<
         open={props.popinAttribuerAOuvert}
         onClose={onClosePopinAttribuerA}
         titre={getLibelle("Attribuer à un officier de l'état civil")}
-        options={getUtilisateursAsOptions(dataState)}
+        options={getUtilisateursAsOptions(dataState, utilisateurs)}
         onValidate={(agent?: Option) => onValidateAttribuerA(dataState, agent)}
       />
     </>

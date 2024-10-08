@@ -1,22 +1,22 @@
-import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { DataRMCActeAvecResultat, DataTableauActe } from "@mock/data/RMCActe";
 import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
 } from "@mock/data/RMCInscription";
+import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
+import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { NORESULT } from "@mock/superagent-config/superagent-mock-etatcivil";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { DataRMCAuto } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { ApercuRequetePriseEnChargePartieDroite } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/ApercuRequetePriseEnChargePartieDroite";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
 import {
   COMPLEMENT_DESCRIPTION,
   ID_TYPE_ALERTE
 } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, expect, test } from "vitest";
+import { elementAvecContexte } from "../../../../../../__tests__utils__/testsUtil";
 
 const dataHistory: DataRMCAuto = {
   dataRMCAutoActe: DataRMCActeAvecResultat,
@@ -81,15 +81,16 @@ test.skip("render ApercuRequetePriseEnChargePartieDroite : RMC état civil manue
 });
 
 test.skip("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes acte", () => {
-  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-
   render(
-    <MemoryRouter>
-      <ApercuRequetePriseEnChargePartieDroite
-        detailRequete={requeteDelivrance}
-        dataHistory={dataHistory}
-      />
-    </MemoryRouter>
+    elementAvecContexte(
+      <MemoryRouter>
+        <ApercuRequetePriseEnChargePartieDroite
+          detailRequete={requeteDelivrance}
+          dataHistory={dataHistory}
+        />
+      </MemoryRouter>,
+      userDroitnonCOMEDEC
+    )
   );
 
   const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");

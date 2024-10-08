@@ -2,6 +2,7 @@ import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "@api/appels/requeteApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   ICreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
@@ -15,7 +16,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { getLibelle } from "@util/Utils";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
-import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
@@ -26,7 +27,7 @@ import {
   NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { validerMentionsPlusieursDocuments } from "../editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import {
   dateStatutColumnHeaders,
@@ -62,6 +63,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
   const [lancerMajRequeteBouton, setLancerMajRequeteBouton] =
     useState<ICreationActionEtMiseAjourStatutParams>();
 
+  const { decrets, utilisateurConnecte } = useContext(RECEContextData);
   const idAction = usePostCreationActionEtMiseAjourStatutApi(
     lancerMajRequeteBouton
   );
@@ -125,7 +127,8 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
       idRequete,
       data,
       idx,
-      URL_MES_REQUETES_DELIVRANCE
+      URL_MES_REQUETES_DELIVRANCE,
+      utilisateurConnecte
     );
   }
 
@@ -176,7 +179,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
   return (
     <>
       <OperationEnCours
-        visible={operationEnCours}
+        visible={operationEnCours || !decrets}
         onTimeoutEnd={finOperationEnCours}
         onClick={finOperationEnCours}
       />
@@ -191,7 +194,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
         goToLink={goToLink}
         handleChangeSort={handleChangeSort}
         handleReload={handleReload}
-        noRows={getMessageZeroRequete()}
+        noRows={RenderMessageZeroRequete()}
         enChargement={enChargement}
         icone={{ keyColonne: "actions", getIcone: getBoutonFinConsultation }}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE}

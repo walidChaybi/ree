@@ -21,7 +21,7 @@ import {
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { RECEContext } from "../contexts/RECEContext";
+import { RECEContextData } from "../contexts/RECEContext";
 
 interface BoutonDeconnexionProps {
   onClick?: (event: React.MouseEvent) => void;
@@ -38,7 +38,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   const [nbRequetes, setNbRequetes] = React.useState<number>(ZERO);
 
   const navigate = useNavigate();
-  const { infosLoginOfficier } = useContext(RECEContext);
+  const { utilisateurConnecte, erreurLogin } = useContext(RECEContextData);
 
   const listeUrlSansConfirmationDeconnexion = [
     URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS,
@@ -136,47 +136,45 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
         boutons={boutonsPopin}
       />
       <div id="simple-menu" className="UtilisateurBouton">
-        {infosLoginOfficier !== undefined &&
-          (infosLoginOfficier.officierDataState !== undefined ||
-            infosLoginOfficier.erreurState?.status === codeErreurForbidden) && (
-            <>
-              <Button
-                aria-controls="simple-menu"
-                aria-haspopup="true"
-                onClick={event => handleClickBoutonOfficer(event)}
-              >
-                {infosLoginOfficier.officierDataState !== undefined
-                  ? `${infosLoginOfficier.officierDataState.prenom} ${
-                      infosLoginOfficier.officierDataState.nom
-                    }${getFonction(
-                      infosLoginOfficier.officierDataState.fonctionAgent
-                        ?.libelleFonction
-                    )}`
-                  : "Déconnexion"}
-              </Button>
+        {(utilisateurConnecte !== undefined ||
+          erreurLogin?.status === codeErreurForbidden) && (
+          <>
+            <Button
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={event => handleClickBoutonOfficer(event)}
+            >
+              {utilisateurConnecte !== undefined
+                ? `${utilisateurConnecte.prenom} ${
+                    utilisateurConnecte.nom
+                  }${getFonction(
+                    utilisateurConnecte.fonctionAgent?.libelleFonction
+                  )}`
+                : "Déconnexion"}
+            </Button>
 
-              <Menu
-                className="Menu"
-                anchorEl={menu}
-                keepMounted
-                open={Boolean(menu)}
-                onClose={handleCloseMenu}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "center"
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "center"
-                }}
-              >
-                <MenuItem onClick={handleClickDeconnexion}>
-                  <FontAwesomeIcon icon={faTimes} />
-                  {getLibelle("Déconnexion")}
-                </MenuItem>
-              </Menu>
-            </>
-          )}
+            <Menu
+              className="Menu"
+              anchorEl={menu}
+              keepMounted
+              open={Boolean(menu)}
+              onClose={handleCloseMenu}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center"
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "center"
+              }}
+            >
+              <MenuItem onClick={handleClickDeconnexion}>
+                <FontAwesomeIcon icon={faTimes} />
+                {getLibelle("Déconnexion")}
+              </MenuItem>
+            </Menu>
+          </>
+        )}
       </div>
     </>
   );

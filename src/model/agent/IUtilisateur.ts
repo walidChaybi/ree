@@ -1,15 +1,23 @@
-import { storeRece } from "@util/storeRece";
-import { estTableauNonVide, ZERO } from "@util/Utils";
+import {
+  estTableauNonVide,
+  getTableauOuVide,
+  getValeurOuVide,
+  ZERO
+} from "@util/Utils";
+import IHabilitationDto from "../../dto/etatcivil/agent/IHabilitationDto";
+import IUtilisateurDto from "../../dto/etatcivil/agent/IUtilisateurDto";
 import { Droit } from "./enum/Droit";
 import { Perimetre, PerimetreEnum } from "./enum/Perimetre";
 import { IDroit, IHabilitation, IProfil } from "./Habilitation";
+import { INomenclatureAgentApi } from "./INomenclatureAgentApi";
 import { IOfficier } from "./IOfficier";
 import { IPerimetre } from "./IPerimetre";
-import { IService } from "./IService";
+import { IService, Service } from "./IService";
 import { TModeAuthentification } from "./types";
 
 export interface IUtilisateur {
   idUtilisateur: string;
+  idArobas?: string;
   nom: string;
   prenom: string;
   trigramme: string;
@@ -26,7 +34,6 @@ export interface IUtilisateur {
     libelleFonction: string;
     utilisateur: any;
   };
-  idArobas?: string;
   identifiantArobas?: string;
   listeTitre?: string;
   mail?: string;
@@ -34,45 +41,89 @@ export interface IUtilisateur {
   signatureManuscrite?: string;
 }
 
-export function mapHabilitationsUtilisateur(
-  habilitations: any[]
-): IHabilitation[] {
+export const Utilisateur = {
+  depuiDto: (utilisateurDto: IUtilisateurDto): IUtilisateur =>
+    ({
+      idUtilisateur: utilisateurDto.idUtilisateur ?? "",
+      idArobas: utilisateurDto.idArobas,
+      nom: utilisateurDto.nom,
+      prenom: utilisateurDto.prenom,
+      trigramme: utilisateurDto.trigramme,
+      modeAuthentification: "AROBAS_MDP",
+      habilitations: mapHabilitationsUtilisateur(
+        getTableauOuVide(utilisateurDto.habilitations)
+      ),
+      mail: utilisateurDto.mel,
+      actif: utilisateurDto.actif,
+      dateActivation: utilisateurDto.dateActivation,
+      dateExpiration: utilisateurDto.dateExpiration,
+      dateMaj: utilisateurDto.dateMaj,
+      service: utilisateurDto.service
+        ? Service.depuisDto(utilisateurDto.service)
+        : undefined,
+      servicesFils: utilisateurDto.servicesFilsDirects
+        ? utilisateurDto.servicesFilsDirects.map(serviceFils =>
+            Service.depuisDto(serviceFils)
+          )
+        : undefined,
+      fonctionAgent: utilisateurDto.fonctionAgent
+        ? {
+            idFonctionAgent: utilisateurDto.fonctionAgent.idFonctionAgent,
+            libelleFonction: utilisateurDto.fonctionAgent.libelleFonction,
+            utilisateur: utilisateurDto.fonctionAgent.utilisateur
+          }
+        : {},
+
+      identifiantArobas: utilisateurDto.identifiantArobas,
+      listeTitre: utilisateurDto.listeTitre,
+      origineMaj: utilisateurDto.origineMaj,
+      signatureManuscrite: utilisateurDto.signatureManuscrite
+    } as IUtilisateur)
+} as const;
+
+export const mapHabilitationsUtilisateur = (
+  habilitations: IHabilitationDto[]
+): IHabilitation[] => {
   const habilitationsUtilisateur: IHabilitation[] = [];
 
   if (habilitations) {
     habilitations.forEach(h => {
       const habilitation: IHabilitation = {} as IHabilitation;
-      habilitation.idHabilitation = h.idHabilitation;
+      habilitation.idHabilitation = getValeurOuVide(h.idHabilitation);
       habilitation.profil = {} as IProfil;
-      habilitation.profil.idProfil = h.profil.idProfil;
-      habilitation.profil.nom = h.profil.nom;
+      habilitation.profil.idProfil = getValeurOuVide(h.profil?.idProfil);
+      habilitation.profil.nom = h.profil?.nom as INomenclatureAgentApi;
       habilitation.profil.droits =
-        habilitation.profil &&
-        h.profil.profilDroit.map(
-          (profilDroit: any) =>
-            ({
-              idDroit: profilDroit.droit.idDroit,
-              nom: profilDroit.droit.nom
-            } as IDroit)
-        );
+        (habilitation.profil &&
+          h.profil?.profilDroit?.map(
+            (profilDroit: any) =>
+              ({
+                idDroit: profilDroit.droit.idDroit,
+                nom: profilDroit.droit.nom
+              } as IDroit)
+          )) ??
+        [];
       if (h.perimetre != null) {
         habilitation.perimetre = {} as IPerimetre;
-        habilitation.perimetre.idPerimetre = h.perimetre.id;
-        habilitation.perimetre.nom = h.perimetre.nom;
-        habilitation.perimetre.description = h.perimetre.description;
-        habilitation.perimetre.estActif = h.perimetre.estActif;
-        habilitation.perimetre.listePays = h.perimetre.listePays
-          ?.toUpperCase()
-          .split(" ET ");
-        habilitation.perimetre.listeIdTypeRegistre =
-          h.perimetre.listeIdTypeRegistre;
+        habilitation.perimetre.idPerimetre = getValeurOuVide(h.perimetre.id);
+        habilitation.perimetre.nom = getValeurOuVide(h.perimetre.nom);
+        habilitation.perimetre.description = getValeurOuVide(
+          h.perimetre.description
+        );
+        habilitation.perimetre.estActif = !!h.perimetre.estActif;
+        habilitation.perimetre.listePays = getTableauOuVide(
+          h.perimetre.listePays?.toUpperCase().split(" ET ")
+        );
+        habilitation.perimetre.listeIdTypeRegistre = getTableauOuVide(
+          h.perimetre.listeIdTypeRegistre
+        );
       }
       habilitationsUtilisateur.push(habilitation);
     });
   }
 
   return habilitationsUtilisateur;
-}
+};
 
 export const utilisateurADroit = (
   droit: Droit,
@@ -87,11 +138,11 @@ export const utilisateurADroit = (
   return droitTrouve != null;
 };
 
-export function utilisateurALeDroitSurUnDesPerimetres(
+export const utilisateurALeDroitSurUnDesPerimetres = (
   droit: Droit,
   refPerimetres: Perimetre[],
   utilisateur: IUtilisateur | undefined
-) {
+) => {
   let res = false;
 
   if (estTableauNonVide(refPerimetres)) {
@@ -112,53 +163,67 @@ export function utilisateurALeDroitSurUnDesPerimetres(
   }
 
   return res;
-}
+};
 
-export const mappingUtilisateurs = (data: any) => {
+export const estUtilisateurDejaPresent = (
+  utilisateurDto: IUtilisateurDto,
+  utilisateurs: IUtilisateur[]
+) => {
+  return utilisateurs.find(
+    utilisateur => utilisateurDto.idUtilisateur === utilisateur.idUtilisateur
+  );
+};
+
+export const mappingUtilisateurs = (utilisateursDto: IUtilisateurDto[]) => {
   const utilisateurs: IUtilisateur[] = [];
-  for (const utilisateur of data) {
-    if (!getServiceParUtilisateurId(utilisateur.idUtilisateur)) {
-      const creationUtilisateur: IUtilisateur = {
-        habilitations: mapHabilitationsUtilisateur(utilisateur.habilitations),
-        mail: utilisateur.mel,
-        actif: utilisateur.actif,
-        dateActivation: utilisateur.dateActivation,
-        dateExpiration: utilisateur.dateExpiration,
-        dateMaj: utilisateur.dateMaj,
-        service: utilisateur.service,
-        fonctionAgent: utilisateur.fonctionAgent
-          ? {
-              idFonctionAgent: utilisateur.fonctionAgent.idFonctionAgent,
-              libelleFonction: utilisateur.fonctionAgent.libelleFonction,
-              utilisateur: utilisateur.fonctionAgent.utilisateur
-            }
-          : {},
-        idArobas: utilisateur.idArobas,
-        idUtilisateur: utilisateur.idUtilisateur,
-        identifiantArobas: utilisateur.identifiantArobas,
-        listeTitre: utilisateur.listeTitre,
-        nom: utilisateur.nom,
-        origineMaj: utilisateur.origineMaj,
-        prenom: utilisateur.prenom,
-        signatureManuscrite: utilisateur.signatureManuscrite,
-        trigramme: utilisateur.trigramme,
-        servicesFils: utilisateur.servicesFilsDirects,
-        modeAuthentification: "AROBAS_MDP"
-      } as IUtilisateur;
-      utilisateurs.push(creationUtilisateur);
-    }
+  for (const utilisateur of utilisateursDto) {
+    utilisateurs.push(mappingUtilisateur(utilisateur));
   }
-
   return utilisateurs;
 };
 
-export function getServiceParUtilisateurId(
-  idUtilisateur: string
-): IService | undefined {
-  return storeRece.listeUtilisateurs.find(
+export const mappingUtilisateur = (
+  utilisateurDto: IUtilisateurDto
+): IUtilisateur => {
+  return {
+    habilitations: mapHabilitationsUtilisateur(
+      getTableauOuVide(utilisateurDto.habilitations)
+    ),
+    mail: utilisateurDto.mel,
+    actif: utilisateurDto.actif,
+    dateActivation: utilisateurDto.dateActivation,
+    dateExpiration: utilisateurDto.dateExpiration,
+    dateMaj: utilisateurDto.dateMaj,
+    service: utilisateurDto.service,
+    fonctionAgent: utilisateurDto.fonctionAgent
+      ? {
+          idFonctionAgent: utilisateurDto.fonctionAgent.idFonctionAgent,
+          libelleFonction: utilisateurDto.fonctionAgent.libelleFonction,
+          utilisateur: utilisateurDto.fonctionAgent.utilisateur
+        }
+      : {},
+    idArobas: utilisateurDto.idArobas,
+    idUtilisateur: utilisateurDto.idUtilisateur,
+    identifiantArobas: utilisateurDto.identifiantArobas,
+    listeTitre: utilisateurDto.listeTitre,
+    nom: utilisateurDto.nom,
+    origineMaj: utilisateurDto.origineMaj,
+    prenom: utilisateurDto.prenom,
+    signatureManuscrite: utilisateurDto.signatureManuscrite,
+    trigramme: utilisateurDto.trigramme,
+    servicesFils: utilisateurDto.servicesFilsDirects,
+    modeAuthentification: "AROBAS_MDP"
+  } as IUtilisateur;
+};
+
+export const getServiceParUtilisateurId = (
+  idUtilisateur: string,
+  utilisateurs: IUtilisateur[]
+): IService | undefined => {
+  return utilisateurs.find(
     utilisateur => utilisateur.idUtilisateur === idUtilisateur
   )?.service;
-}
+};
 
 export const getCodesHierarchieService = (
   service: IService,
@@ -175,4 +240,38 @@ export const getCodesHierarchieService = (
         codesHierarchieService
       )
     : codesHierarchieService.reverse();
+};
+
+/** UTILITAIRES */
+export const getNomPrenomUtilisateurAPartirId = (
+  id: string,
+  utilisateurs: IUtilisateur[]
+) => {
+  return `${getNomUtilisateurAPartirID(
+    id,
+    utilisateurs
+  )} ${getPrenomUtilisateurAPartirID(id, utilisateurs)}`;
+};
+
+export const getPrenomUtilisateurAPartirID = (
+  id: string,
+  utilisateurs: IUtilisateur[]
+) => {
+  return utilisateurs.find(utilisateur => utilisateur.idUtilisateur === id)
+    ?.prenom;
+};
+export const getNomUtilisateurAPartirID = (
+  id: string,
+  utilisateurs: IUtilisateur[]
+) => {
+  return utilisateurs.find(utilisateur => utilisateur.idUtilisateur === id)
+    ?.nom;
+};
+
+export const getTrigrammeFromID = (
+  id: string,
+  utilisateurs?: IUtilisateur[]
+) => {
+  return utilisateurs?.find(utilisateur => utilisateur.idUtilisateur === id)
+    ?.trigramme;
 };

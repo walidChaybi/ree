@@ -4,14 +4,13 @@ import { MesRequetesCreation } from "@pages/requeteCreation/espaceCreation/MesRe
 import { statutsRequetesCreation } from "@pages/requeteCreation/espaceCreation/params/EspaceCreationParams";
 import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
-import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
-
-storeRece.utilisateurCourant =
-  userDroitCreerActeTranscritPerimetreTousRegistres;
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../__tests__utils__/testsUtil";
 
 const queryParametersPourRequetes = {
   statuts: statutsRequetesCreation,
@@ -35,7 +34,14 @@ test("Doit rendre le tableau des requêtes création", () => {
     [URL_MES_REQUETES_CREATION]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        userDroitCreerActeTranscritPerimetreTousRegistres
+      )
+    )
+  );
 
   waitFor(() => {
     expect(screen.getByText("Alerte")).toBeDefined();

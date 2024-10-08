@@ -1,4 +1,4 @@
-import { RECEContext } from "@core/contexts/RECEContext";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
@@ -16,6 +16,7 @@ import {
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
 import {
+  IOfficier,
   officierALeDroitSurUnDesPerimetres,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
@@ -36,7 +37,7 @@ import {
   autorisePrendreEnChargeReqTableauCreation,
   autorisePrendreEnChargeReqTableauDelivrance
 } from "@util/RequetesUtils";
-import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import {
   NB_LIGNES_PAR_APPEL_REQUETE,
@@ -74,7 +75,8 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     NavigationApercuReqCreationParams | undefined
   >();
 
-  const { estListeServicesChargee } = useContext(RECEContext);
+  const { services, decrets, utilisateurConnecte } =
+    useContext(RECEContextData);
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
   useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
@@ -115,7 +117,10 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
         onClickReqInformation(requeteSelect as IRequeteTableauInformation);
         break;
       case TypeRequete.CREATION.libelle:
-        onClickReqCreation(requeteSelect as IRequeteTableauCreation);
+        onClickReqCreation(
+          requeteSelect as IRequeteTableauCreation,
+          utilisateurConnecte
+        );
         break;
     }
   };
@@ -124,7 +129,9 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
 
   const onClickReqDelivrance = (requete: IRequeteTableauDelivrance) => {
     setOperationEnCours(true);
-    if (autorisePrendreEnChargeReqTableauDelivrance(requete)) {
+    if (
+      autorisePrendreEnChargeReqTableauDelivrance(utilisateurConnecte, requete)
+    ) {
       setParamsMiseAJour({
         libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
@@ -158,28 +165,37 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   ) {
     return (
       SousTypeCreation.estRCTDOuRCTC(sousType) &&
-      officierHabiliterPourLeDroit(Droit.CREER_ACTE_TRANSCRIT)
+      officierHabiliterPourLeDroit(
+        utilisateurConnecte,
+        Droit.CREER_ACTE_TRANSCRIT
+      )
     );
   }
 
   function estRequeteRCEXREtALeDroitActeEtabli(sousType: SousTypeCreation) {
     return (
       SousTypeCreation.estRCEXR(sousType) &&
-      officierALeDroitSurUnDesPerimetres(Droit.CREER_ACTE_ETABLI, [
-        Perimetre.TOUS_REGISTRES,
-        Perimetre.ETAX
-      ])
+      officierALeDroitSurUnDesPerimetres(
+        Droit.CREER_ACTE_ETABLI,
+        [Perimetre.TOUS_REGISTRES, Perimetre.ETAX],
+        utilisateurConnecte
+      )
     );
   }
 
-  const onClickReqCreation = (requete: IRequeteTableauCreation) => {
+  const onClickReqCreation = (
+    requete: IRequeteTableauCreation,
+    utilisateurConnecte: IOfficier
+  ) => {
     const sousType = SousTypeCreation.getEnumFromLibelleCourt(requete.sousType);
     if (
       estRequeteRCTDOuRCTCEtALeDroitActeTranscrit(sousType) ||
       estRequeteRCEXREtALeDroitActeEtabli(sousType)
     ) {
       setOperationEnCours(true);
-      if (autorisePrendreEnChargeReqTableauCreation(requete)) {
+      if (
+        autorisePrendreEnChargeReqTableauCreation(requete, utilisateurConnecte)
+      ) {
         setParamsMiseAJour({
           libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
           statutRequete: StatutRequete.PRISE_EN_CHARGE,
@@ -201,7 +217,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   return (
     <>
       <OperationEnCours
-        visible={operationEnCours || !estListeServicesChargee}
+        visible={operationEnCours || !services || !decrets}
         onTimeoutEnd={finOperationEnCours}
       />
       <TableauRece
@@ -212,7 +228,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
         paramsTableau={dataTableauRMCRequete}
         goToLink={goToLink}
         resetTableau={resetTableauRequete}
-        noRows={getMessageZeroRequete()}
+        noRows={RenderMessageZeroRequete()}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_REQUETE}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_REQUETE}
       />

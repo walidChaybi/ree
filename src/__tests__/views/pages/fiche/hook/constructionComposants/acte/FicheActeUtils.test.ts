@@ -17,30 +17,29 @@ import {
   getParamsAffichageFicheActe,
   IParamsAffichage
 } from "@pages/fiche/hook/constructionComposants/acte/FicheActeUtils";
-import { storeRece } from "@util/storeRece";
 import { expect, test } from "vitest";
 import { acte } from "../../../../../../../mock/data/ficheEtBandeau/ficheActe";
 
 const resumeActeLibelle = "Résumé de l'acte";
 test("ficheUtils acte avec utilisateur qui a le droit CONSULTER sur le périmètre TOUS_REGISTRES", () => {
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreTousRegistres;
-  const panels = getPanelsActe(acte);
+  const utilisateurConnecte = userDroitConsulterPerimetreTousRegistres;
+  const panels = getPanelsActe(acte, utilisateurConnecte);
   expect(panels.panels).toHaveLength(3);
   expect(panels.panels[1].panelAreas).toHaveLength(2);
   expect(panels.panels[1].title).toBe(resumeActeLibelle);
 });
 
 test("ficheUtils acte avec utilisateur qui a uniquement le droit CONSULTER_ARCHIVES", () => {
-  storeRece.utilisateurCourant = userDroitConsulterArchive;
-  const panels = getPanelsActe(acte);
+  const utilisateurConnecte = userDroitConsulterArchive;
+  const panels = getPanelsActe(acte, utilisateurConnecte);
   expect(panels.panels).toHaveLength(2);
   expect(panels.panels[1].panelAreas).toHaveLength(2);
   expect(panels.panels[1].title).toBe(resumeActeLibelle);
 });
 
 test("ficheUtils acte avec utilisateur qui a le droit CONSULTER sur le périmètre TUNIS et un Type Registre", () => {
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreTUNIS;
-  const panels = getPanelsActe(acte);
+  const utilisateurConnecte = userDroitConsulterPerimetreTUNIS;
+  const panels = getPanelsActe(acte, utilisateurConnecte);
   expect(panels.panels).toHaveLength(3);
   expect(panels.panels[1].panelAreas).toHaveLength(2);
   expect(panels.panels[1].title).toBe(resumeActeLibelle);
@@ -205,98 +204,142 @@ const restraintArchive = {
 
 // UTILS
 ////////////////////////////////////
-function getComportement(ficheActe: IFicheActe) {
+function getComportement(
+  ficheActe: IFicheActe,
+  utilisateurConnecte: IOfficier
+) {
   return getParamsAffichageFicheActe(
     ficheActe.registre.type?.id,
-    ficheActe.visibiliteArchiviste
+    ficheActe.visibiliteArchiviste,
+    utilisateurConnecte
   );
 }
 
 test("Attendu: getParamsAffichageFicheActe fonctionne correctement pour habilitationCONSULTER_MEAE", () => {
-  storeRece.utilisateurCourant = {
+  const utilisateurConnecte = {
     habilitations: [HABILITATION_CONSULTER_MEAE]
   } as IOfficier;
 
-  expect(getComportement(ActeTUNIS)).toEqual(tousLesAcces);
-  expect(getComportement(ActeSEOUL)).toEqual(tousLesAcces);
-  expect(getComportement(ActeArchiveTUNIS)).toEqual(tousLesAcces);
-  expect(getComportement(ActeArchiveSEOUL)).toEqual(tousLesAcces);
+  expect(getComportement(ActeTUNIS, utilisateurConnecte)).toEqual(tousLesAcces);
+  expect(getComportement(ActeSEOUL, utilisateurConnecte)).toEqual(tousLesAcces);
+  expect(getComportement(ActeArchiveTUNIS, utilisateurConnecte)).toEqual(
+    tousLesAcces
+  );
+  expect(getComportement(ActeArchiveSEOUL, utilisateurConnecte)).toEqual(
+    tousLesAcces
+  );
 });
 
 test("Attendu: getParamsAffichageFicheActe fonctionne correctement pour habilitationCONSULTER_TUNIS", () => {
-  storeRece.utilisateurCourant = {
+  const utilisateurConnecte = {
     habilitations: [HABILITATION_CONSULTER_TUNIS]
   } as IOfficier;
 
-  expect(getComportement(ActeTUNIS)).toEqual(tousLesAcces);
-  expect(getComportement(ActeSEOUL)).toEqual(pasLeBonPerimetre);
-  expect(getComportement(ActeArchiveTUNIS)).toEqual(tousLesAcces);
-  expect(getComportement(ActeArchiveSEOUL)).toEqual(pasLeBonPerimetre);
+  expect(getComportement(ActeTUNIS, utilisateurConnecte)).toEqual(tousLesAcces);
+  expect(getComportement(ActeSEOUL, utilisateurConnecte)).toEqual(
+    pasLeBonPerimetre
+  );
+  expect(getComportement(ActeArchiveTUNIS, utilisateurConnecte)).toEqual(
+    tousLesAcces
+  );
+  expect(getComportement(ActeArchiveSEOUL, utilisateurConnecte)).toEqual(
+    pasLeBonPerimetre
+  );
 });
 
 test("Attendu: getParamsAffichageFicheActe fonctionne correctement pour habilitationCONSULTER_TUNIS", () => {
-  storeRece.utilisateurCourant = {
+  const utilisateurConnecte = {
     habilitations: [HABILITATION_CONSULTER_SEOUL]
   } as IOfficier;
 
-  expect(getComportement(ActeTUNIS)).toEqual(pasLeBonPerimetre);
-  expect(getComportement(ActeSEOUL)).toEqual(tousLesAcces);
-  expect(getComportement(ActeArchiveTUNIS)).toEqual(pasLeBonPerimetre);
-  expect(getComportement(ActeArchiveSEOUL)).toEqual(tousLesAcces);
+  expect(getComportement(ActeTUNIS, utilisateurConnecte)).toEqual(
+    pasLeBonPerimetre
+  );
+  expect(getComportement(ActeSEOUL, utilisateurConnecte)).toEqual(tousLesAcces);
+  expect(getComportement(ActeArchiveTUNIS, utilisateurConnecte)).toEqual(
+    pasLeBonPerimetre
+  );
+  expect(getComportement(ActeArchiveSEOUL, utilisateurConnecte)).toEqual(
+    tousLesAcces
+  );
 });
 
 test("Attendu: getParamsAffichageFicheActe fonctionne correctement pour habilitationCONSULTER_TUNIS_SEOUL", () => {
-  storeRece.utilisateurCourant = {
+  const utilisateurConnecte = {
     habilitations: [HABILITATION_CONSULTER_TUNIS_SEOUL]
   } as IOfficier;
 
-  expect(getComportement(ActeTUNIS)).toEqual(tousLesAcces);
-  expect(getComportement(ActeSEOUL)).toEqual(tousLesAcces);
-  expect(getComportement(ActeArchiveTUNIS)).toEqual(tousLesAcces);
-  expect(getComportement(ActeArchiveSEOUL)).toEqual(tousLesAcces);
+  expect(getComportement(ActeTUNIS, utilisateurConnecte)).toEqual(tousLesAcces);
+  expect(getComportement(ActeSEOUL, utilisateurConnecte)).toEqual(tousLesAcces);
+  expect(getComportement(ActeArchiveTUNIS, utilisateurConnecte)).toEqual(
+    tousLesAcces
+  );
+  expect(getComportement(ActeArchiveSEOUL, utilisateurConnecte)).toEqual(
+    tousLesAcces
+  );
 });
 
 test("Attendu: getParamsAffichageFicheActe fonctionne correctement pour habilitationCONSULTER_ARCHIVE_MEAE", () => {
-  storeRece.utilisateurCourant = {
+  const utilisateurConnecte = {
     habilitations: [HABILITATION_CONSULTER_ARCHIVE_MEAE]
   } as IOfficier;
 
-  expect(getComportement(ActeTUNIS)).toEqual(pasLeBonPerimetre); // cas qui ne devrait pas arriver car seuls les actes archives sont remontés dans le cas d'un archiviste
-  expect(getComportement(ActeSEOUL)).toEqual(pasLeBonPerimetre); // cas qui ne devrait pas arriver car seuls les actes archives sont remontés dans le cas d'un archiviste
-  expect(getComportement(ActeArchiveTUNIS)).toEqual(restraintArchive);
-  expect(getComportement(ActeArchiveSEOUL)).toEqual(restraintArchive);
+  expect(getComportement(ActeTUNIS, utilisateurConnecte)).toEqual(
+    pasLeBonPerimetre
+  ); // cas qui ne devrait pas arriver car seuls les actes archives sont remontés dans le cas d'un archiviste
+  expect(getComportement(ActeSEOUL, utilisateurConnecte)).toEqual(
+    pasLeBonPerimetre
+  ); // cas qui ne devrait pas arriver car seuls les actes archives sont remontés dans le cas d'un archiviste
+  expect(getComportement(ActeArchiveTUNIS, utilisateurConnecte)).toEqual(
+    restraintArchive
+  );
+  expect(getComportement(ActeArchiveSEOUL, utilisateurConnecte)).toEqual(
+    restraintArchive
+  );
 });
 
 test("Attendu: getParamsAffichageFicheActe fonctionne correctement pour habilitationCONSULTER_TUNIS, habilitationCONSULTER_ARCHIVE_MEAE", () => {
-  storeRece.utilisateurCourant = {
+  const utilisateurConnecte = {
     habilitations: [
       HABILITATION_CONSULTER_TUNIS,
       HABILITATION_CONSULTER_ARCHIVE_MEAE
     ]
   } as IOfficier;
 
-  expect(getComportement(ActeTUNIS)).toEqual(tousLesAcces);
-  expect(getComportement(ActeSEOUL)).toEqual(pasLeBonPerimetre);
-  expect(getComportement(ActeArchiveTUNIS)).toEqual(tousLesAcces);
-  expect(getComportement(ActeArchiveSEOUL)).toEqual(restraintArchive);
+  expect(getComportement(ActeTUNIS, utilisateurConnecte)).toEqual(tousLesAcces);
+  expect(getComportement(ActeSEOUL, utilisateurConnecte)).toEqual(
+    pasLeBonPerimetre
+  );
+  expect(getComportement(ActeArchiveTUNIS, utilisateurConnecte)).toEqual(
+    tousLesAcces
+  );
+  expect(getComportement(ActeArchiveSEOUL, utilisateurConnecte)).toEqual(
+    restraintArchive
+  );
 });
 
 test("Attendu: getParamsAffichageFicheActe fonctionne correctement pour habilitationCONSULTER_SEOUL, habilitationCONSULTER_ARCHIVE_MEAE", () => {
-  storeRece.utilisateurCourant = {
+  const utilisateurConnecte = {
     habilitations: [
       HABILITATION_CONSULTER_SEOUL,
       HABILITATION_CONSULTER_ARCHIVE_MEAE
     ]
   } as IOfficier;
 
-  expect(getComportement(ActeTUNIS)).toEqual(pasLeBonPerimetre);
-  expect(getComportement(ActeSEOUL)).toEqual(tousLesAcces);
-  expect(getComportement(ActeArchiveTUNIS)).toEqual(restraintArchive);
-  expect(getComportement(ActeArchiveSEOUL)).toEqual(tousLesAcces);
+  expect(getComportement(ActeTUNIS, utilisateurConnecte)).toEqual(
+    pasLeBonPerimetre
+  );
+  expect(getComportement(ActeSEOUL, utilisateurConnecte)).toEqual(tousLesAcces);
+  expect(getComportement(ActeArchiveTUNIS, utilisateurConnecte)).toEqual(
+    restraintArchive
+  );
+  expect(getComportement(ActeArchiveSEOUL, utilisateurConnecte)).toEqual(
+    tousLesAcces
+  );
 });
 
 test("Attendu: getParamsAffichageFicheActe fonctionne correctement pour habilitationCONSULTER_TUNIS, habilitationCONSULTER_SEOUL, habilitationCONSULTER_ARCHIVE_MEAE", () => {
-  storeRece.utilisateurCourant = {
+  const utilisateurConnecte = {
     habilitations: [
       HABILITATION_CONSULTER_TUNIS,
       HABILITATION_CONSULTER_SEOUL,
@@ -304,22 +347,30 @@ test("Attendu: getParamsAffichageFicheActe fonctionne correctement pour habilita
     ]
   } as IOfficier;
 
-  expect(getComportement(ActeTUNIS)).toEqual(tousLesAcces);
-  expect(getComportement(ActeSEOUL)).toEqual(tousLesAcces);
-  expect(getComportement(ActeArchiveTUNIS)).toEqual(tousLesAcces);
-  expect(getComportement(ActeArchiveSEOUL)).toEqual(tousLesAcces);
+  expect(getComportement(ActeTUNIS, utilisateurConnecte)).toEqual(tousLesAcces);
+  expect(getComportement(ActeSEOUL, utilisateurConnecte)).toEqual(tousLesAcces);
+  expect(getComportement(ActeArchiveTUNIS, utilisateurConnecte)).toEqual(
+    tousLesAcces
+  );
+  expect(getComportement(ActeArchiveSEOUL, utilisateurConnecte)).toEqual(
+    tousLesAcces
+  );
 });
 
 test("Attendu: getParamsAffichageFicheActe fonctionne correctement pour habilitationCONSULTER_MEAE, habilitationCONSULTER_ARCHIVE_MEAE", () => {
-  storeRece.utilisateurCourant = {
+  const utilisateurConnecte = {
     habilitations: [
       HABILITATION_CONSULTER_MEAE,
       HABILITATION_CONSULTER_ARCHIVE_MEAE
     ]
   } as IOfficier;
 
-  expect(getComportement(ActeTUNIS)).toEqual(tousLesAcces);
-  expect(getComportement(ActeSEOUL)).toEqual(tousLesAcces);
-  expect(getComportement(ActeArchiveTUNIS)).toEqual(tousLesAcces);
-  expect(getComportement(ActeArchiveSEOUL)).toEqual(tousLesAcces);
+  expect(getComportement(ActeTUNIS, utilisateurConnecte)).toEqual(tousLesAcces);
+  expect(getComportement(ActeSEOUL, utilisateurConnecte)).toEqual(tousLesAcces);
+  expect(getComportement(ActeArchiveTUNIS, utilisateurConnecte)).toEqual(
+    tousLesAcces
+  );
+  expect(getComportement(ActeArchiveSEOUL, utilisateurConnecte)).toEqual(
+    tousLesAcces
+  );
 });

@@ -1,15 +1,16 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   estOfficierHabiliterPourTousLesDroits,
   officierHabiliterPourLeDroit
 } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { UN, getLibelle } from "@util/Utils";
-import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErreur";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import Bouton from "../../../../../composants/commun/bouton/Bouton";
 import "./scss/SaisirRequeteBoutons.scss";
 
 export interface ComponentProps {
@@ -22,6 +23,7 @@ export type SaisirRequeteBoutonsProps = ComponentProps & FormikComponentProps;
 
 const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
   const navigate = useNavigate();
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   const annuler = () => {
     navigate(-UN);
@@ -34,63 +36,58 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
   };
 
   const prendreEnCharge = () => {
-    props.setIsBrouillon && props.setIsBrouillon(false);
+    props.setIsBrouillon?.(false);
     valider();
   };
   const sauvegarder = () => {
-    props.setIsBrouillon && props.setIsBrouillon(true);
+    props.setIsBrouillon?.(true);
     valider();
   };
 
   return (
-    <>
-      <div className="Boutons">
-        {props.modeModification ? (
-          <div>
-            <BoutonDoubleSubmit id="boutonAnnulerModif" onClick={annuler}>
-              {getLibelle("Annuler")}
-            </BoutonDoubleSubmit>
-            <BoutonDoubleSubmit
-              disabled={!props.formik.dirty}
-              id="boutonValiderModif"
-              onClick={valider}
-            >
-              {getLibelle("Valider")}
-            </BoutonDoubleSubmit>
-          </div>
-        ) : officierHabiliterPourLeDroit(Droit.DELIVRER) ||
-          estOfficierHabiliterPourTousLesDroits([
-            Droit.SAISIR_REQUETE,
-            Droit.CREER_ACTE_TRANSCRIT
-          ]) ? (
-          <>
-            <BoutonDoubleSubmit
-              disabled={!props.formik.dirty}
-              id="boutonPrendreEnCharge"
-              onClick={prendreEnCharge}
-            >
-              {getLibelle("Prendre en charge")}
-            </BoutonDoubleSubmit>
-            {props.onTransferer && (
-              <BoutonDoubleSubmit
-                onClick={props.onTransferer}
-                disabled={!props.formik.dirty}
-              >
-                {getLibelle("Transmettre au service compétent")}
-              </BoutonDoubleSubmit>
-            )}
-          </>
-        ) : (
-          <BoutonDoubleSubmit
+    <div className="Boutons">
+      {props.modeModification ? (
+        <div>
+          <Bouton id="boutonAnnulerModif" onClick={annuler}>
+            {getLibelle("Annuler")}
+          </Bouton>
+          <Bouton
             disabled={!props.formik.dirty}
-            id="boutonSauvegarder"
-            onClick={sauvegarder}
+            id="boutonValiderModif"
+            onClick={valider}
           >
-            {getLibelle("Sauvegarder")}
-          </BoutonDoubleSubmit>
-        )}
-      </div>
-    </>
+            {getLibelle("Valider")}
+          </Bouton>
+        </div>
+      ) : officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER) ||
+        estOfficierHabiliterPourTousLesDroits(utilisateurConnecte, [
+          Droit.SAISIR_REQUETE,
+          Droit.CREER_ACTE_TRANSCRIT
+        ]) ? (
+        <>
+          <Bouton
+            disabled={!props.formik.dirty}
+            id="boutonPrendreEnCharge"
+            onClick={prendreEnCharge}
+          >
+            {getLibelle("Prendre en charge")}
+          </Bouton>
+          {props.onTransferer && (
+            <Bouton onClick={props.onTransferer} disabled={!props.formik.dirty}>
+              {getLibelle("Transmettre au service compétent")}
+            </Bouton>
+          )}
+        </>
+      ) : (
+        <Bouton
+          disabled={!props.formik.dirty}
+          id="boutonSauvegarder"
+          onClick={sauvegarder}
+        >
+          {getLibelle("Sauvegarder")}
+        </Bouton>
+      )}
+    </div>
   );
 };
 

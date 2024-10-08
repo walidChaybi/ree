@@ -1,8 +1,9 @@
-import { IRECEContext, RECEContext } from "@core/contexts/RECEContext";
+import { IRECEContext, RECEContextData } from "@core/contexts/RECEContext";
 import { BoutonDeconnexion } from "@core/header/BoutonDeconnexion";
 import officier from "@mock/data/connectedUser.json";
 import { configRequetes } from "@mock/superagent-config/superagent-mock-requetes";
 import { IHabilitation } from "@model/agent/Habilitation";
+import { IOfficier } from "@model/agent/IOfficier";
 import { IService } from "@model/agent/IService";
 import { URL_DECONNEXION, URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import {
@@ -14,7 +15,10 @@ import {
 } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { expect, test, vi } from "vitest";
-import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../__tests__utils__/testsUtil";
 
 let handleClickButton = vi.fn();
 let boutonElement: HTMLElement;
@@ -30,33 +34,22 @@ test.skip("renders click BoutonDeconnexion (nbRequetes = 0)", async () => {
         {
           path: URL_MES_REQUETES_DELIVRANCE,
           element: (
-            <RECEContext.Provider
-              value={
-                {
-                  infosLoginOfficier: {
-                    officierDataState: {
-                      idSSO: officier.id_sso,
-                      ...officier,
-                      modeAuthentification: "AROBAS_MDP",
-                      habilitations:
-                        officier.habilitations as unknown as IHabilitation[],
-                      service: officier.service as unknown as IService
-                    }
-                  }
-                } as unknown as IRECEContext
-              }
-            >
-              <BoutonDeconnexion
-                onClick={handleClickButton}
-              ></BoutonDeconnexion>
-            </RECEContext.Provider>
+            <BoutonDeconnexion onClick={handleClickButton}></BoutonDeconnexion>
           )
         }
       ],
       [URL_MES_REQUETES_DELIVRANCE]
     );
 
-    render(<RouterProvider router={router} />);
+    render(
+      elementAvecContexte(<RouterProvider router={router} />, {
+        idSSO: officier.id_sso,
+        ...officier,
+        modeAuthentification: "AROBAS_MDP",
+        habilitations: officier.habilitations as unknown as IHabilitation[],
+        service: officier.service as unknown as IService
+      })
+    );
 
     boutonElement = screen.getByText(/prenomConnectedUser nomConnectedUser/i);
     await waitFor(() => {
@@ -87,25 +80,19 @@ test.skip("renders click BoutonDeconnexion (nbRequetes = 1) produit une popin de
         {
           path: URL_MES_REQUETES_DELIVRANCE,
           element: (
-            <RECEContext.Provider
-              value={
-                {
-                  officierDataState: { idSSO: officier.id_sso, ...officier }
-                } as unknown as IRECEContext
-              }
-            >
-              <BoutonDeconnexion
-                onClick={handleClickButton}
-              ></BoutonDeconnexion>
-            </RECEContext.Provider>
+            <BoutonDeconnexion onClick={handleClickButton}></BoutonDeconnexion>
           )
         }
       ],
       [URL_MES_REQUETES_DELIVRANCE]
     );
 
-    render(<RouterProvider router={router} />);
-
+    render(
+      elementAvecContexte(<RouterProvider router={router} />, {
+        idSSO: officier.id_sso,
+        ...officier
+      } as unknown as IOfficier)
+    );
     boutonElement = screen.getByText(/prenomConnectedUser nomConnectedUser/i);
     await waitFor(() => {
       expect(boutonElement).toBeDefined();
@@ -152,7 +139,7 @@ test.skip("renders click BoutonDeconnexion (nbRequetes = 1) produit une popin de
         {
           path: URL_MES_REQUETES_DELIVRANCE,
           element: (
-            <RECEContext.Provider
+            <RECEContextData.Provider
               value={
                 {
                   officierDataState: { idSSO: officier.id_sso, ...officier }
@@ -162,7 +149,7 @@ test.skip("renders click BoutonDeconnexion (nbRequetes = 1) produit une popin de
               <BoutonDeconnexion
                 onClick={handleClickButton}
               ></BoutonDeconnexion>
-            </RECEContext.Provider>
+            </RECEContextData.Provider>
           )
         }
       ],

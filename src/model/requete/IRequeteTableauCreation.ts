@@ -1,3 +1,5 @@
+import { IService } from "@model/agent/IService";
+import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { getFormatDateFromTimestamp } from "@util/DateUtils";
 import { getValeurOuUndefined, getValeurOuVide } from "@util/Utils";
 import { IRequeteTableau } from "./IRequeteTableau";
@@ -29,7 +31,9 @@ export interface IRequeteTableauCreation extends IRequeteTableau {
 
 export function mappingUneRequeteTableauCreation(
   requete: any,
-  mappingSupplementaire: boolean
+  mappingSupplementaire: boolean,
+  utilisateurs: IUtilisateur[],
+  services: IService[]
 ): IRequeteTableauCreation {
   const titulaires = mapTitulaires(
     filtrerUniquementTitulairesHorsFamille(requete?.titulaires),
@@ -59,7 +63,7 @@ export function mappingUneRequeteTableauCreation(
     idUtilisateur: getValeurOuUndefined(requete?.idUtilisateur),
     idService: getValeurOuUndefined(requete?.idService),
     postulant: getPostulant(titulaires),
-    attribueA: mapAttribueA(requete),
+    attribueA: mapAttribueA(requete, utilisateurs, services) ?? undefined,
     alerte: requete.alerte
   };
 }

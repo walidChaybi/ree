@@ -1,25 +1,18 @@
-import { IOfficier } from "@model/agent/IOfficier";
-import { IService } from "@model/agent/IService";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
-import { IDecret } from "@model/etatcivil/commun/IDecret";
 
 class StoreRece {
-  private _utilisateurCourant?: IOfficier;
   private _retourUrl = "";
-  private _listeUtilisateurs: IUtilisateur[] = [];
-  private _listeServices: IService[] = [];
-  private _decrets: IDecret[] = [];
   private _logErrorOff = false;
 
-  set logErrorOff(estOff: boolean) {
+  set logErrorDesactive(estDesactive: boolean) {
     if (process.env.NODE_ENV === "test") {
-      this._logErrorOff = estOff;
+      this._logErrorOff = estDesactive;
     } else {
       throw new Error("Pas de désactivation de la log en dehors des tests");
     }
   }
 
-  get logErrorOff() {
+  get logErrorDesactive() {
     return this._logErrorOff;
   }
 
@@ -31,64 +24,10 @@ class StoreRece {
     return this._retourUrl;
   }
 
-  set utilisateurCourant(uc: IOfficier | undefined) {
-    this._utilisateurCourant = uc;
-  }
-
-  get utilisateurCourant() {
-    return this._utilisateurCourant;
-  }
-
-  set listeUtilisateurs(liste: IUtilisateur[]) {
-    this._listeUtilisateurs = liste;
-  }
-
-  get listeUtilisateurs(): IUtilisateur[] {
-    return this._listeUtilisateurs;
-  }
-
-  get listeServices(): IService[] {
-    return this._listeServices;
-  }
-
-  set listeServices(liste: IService[]) {
-    this._listeServices = liste;
-  }
-
-  get decrets(): IDecret[] {
-    return this._decrets;
-  }
-
-  set decrets(decrets: IDecret[]) {
-    this._decrets = decrets;
-  }
-
-  public getNomPrenomUtilisateurAPartirId(id: string) {
-    return `${this.getNomUtilisateurAPartirID(
-      id
-    )} ${this.getPrenomUtilisateurAPartirID(id)}`;
-  }
-
-  public getPrenomUtilisateurAPartirID(id: string) {
-    return this.listeUtilisateurs.find(
-      utilisateur => utilisateur.idUtilisateur === id
-    )?.prenom;
-  }
-  public getNomUtilisateurAPartirID(id: string) {
-    return this.listeUtilisateurs.find(
-      utilisateur => utilisateur.idUtilisateur === id
-    )?.nom;
-  }
-
-  public getLibelleService(id: string) {
-    return this.listeServices.find(service => service.idService === id)
-      ?.libelleService;
-  }
-
-  public getTrigrammeFromID(id?: string) {
-    return this.listeUtilisateurs.find(
-      utilisateur => utilisateur.idUtilisateur === id
-    )?.trigramme;
+  // Laissé ici car va être retire lors de la prochaine itération lorsque les TRIGRAMMES OEC seront remplacés partout par Nom et Prenom
+  public getTrigrammeFromID(utilisateurs?: IUtilisateur[], id?: string) {
+    return utilisateurs?.find(utilisateur => utilisateur.idUtilisateur === id)
+      ?.trigramme;
   }
 }
 

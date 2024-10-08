@@ -1,12 +1,16 @@
 import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuRequete";
 import { SuiviActionsRequete } from "@composant/suivis/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
-import { appartientAMonServiceOuServicesParentsOuServicesFils } from "@model/agent/IOfficier";
+import {
+  IOfficier,
+  appartientAMonServiceOuServicesParentsOuServicesFils
+} from "@model/agent/IOfficier";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { Requete, TRequete } from "@model/requete/IRequete";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
@@ -14,7 +18,7 @@ import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInform
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import {
   IDetailRequeteParams,
@@ -47,6 +51,8 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
 
   const location = useLocation();
 
+  const { utilisateurConnecte } = useContext(RECEContextData);
+
   const { detailRequeteState } =
     useAvecRejeuDetailRequeteApiHook(detailRequeteParams);
 
@@ -68,7 +74,7 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
       if (props.idRequeteAAfficher === undefined) {
         // Si l'id de la requête n'est pas fourni par les props (on n'est pas dans une fenêtre externe)
         setAffichageBoutonPrendreEnCharge(
-          priseEnChargePossible(detailRequeteState)
+          priseEnChargePossible(utilisateurConnecte, detailRequeteState)
         );
       }
     }
@@ -137,10 +143,16 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
   );
 };
 
-function priseEnChargePossible(requete: TRequete) {
+function priseEnChargePossible(
+  utilisateurConnecte: IOfficier,
+  requete: TRequete
+) {
   let estPriseEnChargePossible = false;
   const estDansMaStructureDeService =
-    appartientAMonServiceOuServicesParentsOuServicesFils(requete.idService);
+    appartientAMonServiceOuServicesParentsOuServicesFils(
+      utilisateurConnecte,
+      requete.idService
+    );
 
   if (
     Requete.estDeTypeInformation(requete) &&

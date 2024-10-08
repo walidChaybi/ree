@@ -17,19 +17,14 @@ interface IChoixServicesPopinProps {
 export const ChoixServicesPopin: React.FunctionComponent<
   IChoixServicesPopinProps
 > = props => {
-  // States
-  //////////////////////////////////////////////////////////////////////////
+
   const [paramsGetServicesFils, setParamsGetServicesFils] =
     useState<IGetServicesFilsParams>();
 
-  // Hooks
-  //////////////////////////////////////////////////////////////////////////
   const servicesFilsTrouves = useGetServicesFilsRecursivementHookApi(
     paramsGetServicesFils
   );
 
-  // UseEffects
-  //////////////////////////////////////////////////////////////////////////
   useEffect(() => {
     if (
       props.ouverte &&
@@ -46,7 +41,7 @@ export const ChoixServicesPopin: React.FunctionComponent<
       placeholder={getLibelle("Services")}
       ariaLabel={getLibelle("Choix des services")}
       ouverte={props.ouverte}
-      options={Service.mapCommeOptions(servicesFilsTrouves?.servicesFils)}
+      options={Service.commeOptions(servicesFilsTrouves?.servicesFils)}
       onValidation={props.onServiceChoisi}
       onCancel={props.onCancel}
     />

@@ -5,7 +5,7 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { BoutonVerrouillage } from "@composant/formulaire/boutons/BoutonVerrouillage";
 import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
-import { RECEContext } from "@core/contexts/RECEContext";
+import { RECEContextActions } from "@core/contexts/RECEContext";
 import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
 import {
   ISauvegardeValidationSaisieExtraitParams,
@@ -70,7 +70,7 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
   const { setOperationEnCours, rafraichirRequete } = useContext(
     EditionExtraitCopiePageContext
   );
-  const { setIsDirty } = useContext(RECEContext);
+  const { setIsDirty } = useContext(RECEContextActions);
   const { mapPrenomAffiche } = useContext(SaisirExtraitFormContext);
 
   const [proprietesFormulaire, setProprietesFormulaire] =

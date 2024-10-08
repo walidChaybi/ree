@@ -6,9 +6,9 @@ import { Droit } from "@model/agent/enum/Droit";
 import { render } from "@testing-library/react";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { IHabiliationDescription } from "@util/habilitation/habilitationsDescription";
-import { storeRece } from "@util/storeRece";
 import React from "react";
 import { expect, test } from "vitest";
+import { elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
 
 interface BoutonTestProps {
   disabled?: boolean;
@@ -22,7 +22,7 @@ const BoutonTest: React.FC<BoutonTestProps> = props => {
   );
 };
 const u: any = mockConnectedUser;
-storeRece.utilisateurCourant = u as IOfficier;
+const utilisateurConnecte = u as IOfficier;
 
 const habsDesc: IHabiliationDescription[] = [
   {
@@ -78,55 +78,85 @@ const BoutonTest4WithHab = WithHabilitation(
 );
 
 test.skip("Le bouton ne doit pas être grisé car l'utilisateur à le droit Attribuer", () => {
-  storeRece.utilisateurCourant!.habilitations[0].profil.droits[0] = {
+  let utilisateurConnecteMock = {
+    ...utilisateurConnecte
+  };
+  utilisateurConnecteMock.habilitations[0].profil.droits[0] = {
     idDroit: "d12345",
     nom: Droit.ATTRIBUER_REQUETE
   };
-  const { getByText, queryByTestId } = render(<BoutonTestWithHab />);
+  const { getByText, queryByTestId } = render(
+    elementAvecContexte(<BoutonTestWithHab />, utilisateurConnecteMock)
+  );
   expect(queryByTestId(/testid/i)).not.toBeNull();
   expect(getByText(/Click me/i).closest("button")?.disabled).not.toBeTruthy();
 });
 
 test("Le bouton ne doit pas être grisé car l'utilisateur à un de ces droit à Attribuer ou Consulter", () => {
-  storeRece.utilisateurCourant!.habilitations[0].profil.droits[0] = {
+  let utilisateurConnecteMock = {
+    ...utilisateurConnecte
+  };
+  utilisateurConnecteMock.habilitations[0].profil.droits[0] = {
     idDroit: "d12345",
     nom: Droit.CONSULTER
   };
-  const { getByText, queryByTestId } = render(<BoutonTest3WithHab />);
+  const { getByText, queryByTestId } = render(
+    elementAvecContexte(<BoutonTest3WithHab />, utilisateurConnecteMock)
+  );
   expect(queryByTestId(/testid/i)).not.toBeNull();
   expect(getByText(/Click me/i).closest("button")?.disabled).not.toBeTruthy();
 });
 
 test("Le bouton doit être grisé car l'utilisateur n'à pas le droit Attribuer", () => {
-  storeRece.utilisateurCourant!.habilitations[0].profil.droits = [];
-  const { getByText, queryByTestId } = render(<BoutonTestWithHab />);
+  let utilisateurConnecteMock = {
+    ...utilisateurConnecte
+  };
+  utilisateurConnecteMock.habilitations[0].profil.droits = [];
+  const { getByText, queryByTestId } = render(
+    elementAvecContexte(<BoutonTestWithHab />, utilisateurConnecteMock)
+  );
   expect(queryByTestId(/testid/i)).not.toBeNull();
   expect(getByText(/Click me/i).closest("button")?.disabled).toBeTruthy();
 });
 
 test("Le bouton doit être invisible car l'utilisateur n'à pas le droit Attribuer", () => {
-  storeRece.utilisateurCourant!.habilitations[0].profil.droits[0] = {
+  let utilisateurConnecteMock = {
+    ...utilisateurConnecte
+  };
+  utilisateurConnecteMock.habilitations[0].profil.droits[0] = {
     idDroit: "d12346",
     nom: Droit.CONSULTER_ARCHIVES
   };
   habsDesc[0].visiblePourLesDroits = [Droit.ATTRIBUER_REQUETE];
-  const { queryByTestId } = render(<BoutonTestWithHab />);
+  const { queryByTestId } = render(
+    elementAvecContexte(<BoutonTestWithHab />, utilisateurConnecteMock)
+  );
   expect(queryByTestId(/testid/i)).toBeNull();
 });
 
 test("Le bouton ne doit pas être grisé car il n'a aucun droit associé", () => {
-  storeRece.utilisateurCourant!.habilitations[0].profil.droits = [];
-  const { getByText, queryByTestId } = render(<BoutonTest2WithHab />);
+  let utilisateurConnecteMock = {
+    ...utilisateurConnecte
+  };
+  utilisateurConnecteMock.habilitations[0].profil.droits = [];
+  const { getByText, queryByTestId } = render(
+    elementAvecContexte(<BoutonTest2WithHab />, utilisateurConnecteMock)
+  );
   expect(queryByTestId(/testid/i)).not.toBeNull();
   expect(getByText(/Click me/i).closest("button")?.disabled).not.toBeTruthy();
 });
 
 test("Le bouton ne doit être ni grisé ni invisible car l'utilisateur à seulement le droit CONSULTER_ARCHIVES", () => {
-  storeRece.utilisateurCourant!.habilitations[0].profil.droits[0] = {
+  let utilisateurConnecteMock = {
+    ...utilisateurConnecte
+  };
+  utilisateurConnecteMock.habilitations[0].profil.droits[0] = {
     idDroit: "d12345",
     nom: Droit.CONSULTER_ARCHIVES
   };
-  const { getByText, queryByTestId } = render(<BoutonTest4WithHab />);
+  const { getByText, queryByTestId } = render(
+    elementAvecContexte(<BoutonTest4WithHab />, utilisateurConnecteMock)
+  );
   expect(queryByTestId(/testid/i)).not.toBeNull();
   expect(getByText(/Click me/i).closest("button")?.disabled).not.toBeTruthy();
 });
@@ -163,7 +193,12 @@ test("Le bouton doit être invisible car l'utilisateur n'a pas seulement le droi
       ]
     }
   } as IHabilitation;
-  storeRece.utilisateurCourant!.habilitations = [hab1, hab2];
-  const { queryByTestId } = render(<BoutonTest4WithHab />);
+  let utilisateurConnecteMock = {
+    ...utilisateurConnecte
+  };
+  utilisateurConnecteMock.habilitations = [hab1, hab2];
+  const { queryByTestId } = render(
+    elementAvecContexte(<BoutonTest4WithHab />, utilisateurConnecteMock)
+  );
   expect(queryByTestId(/testid/i)).toBeNull();
 });

@@ -9,8 +9,8 @@ import {
 import useMettreAJourStatutApresSignatureApiHook, {
   IMettreAJourStatutApresSignatureParams
 } from "@hook/requete/MettreAJourStatutApresSignatureApiHook";
+import { IOfficier } from "@model/agent/IOfficier";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
-import { storeRece } from "@util/storeRece";
 import { useState } from "react";
 import useComposerEtIntegrerDocumentFinalHook, {
   IMettreAJourStatutRequeteApresIntegration,
@@ -59,14 +59,15 @@ export const useSignatureCreationEtablisementHook = (
 
   const handleIntegrerDocumentSigne = (
     document: string,
-    informationsCarte: IInfosCarteSignature
+    informationsCarte: IInfosCarteSignature,
+    utilisateurConnecte: IOfficier
   ) => {
-    if (idActe && storeRece.utilisateurCourant) {
+    if (idActe && utilisateurConnecte) {
       setIntegrerActeSigneParams({
         idActe,
         document,
         infosCarteSignature: informationsCarte,
-        modeAuthentification: storeRece.utilisateurCourant.modeAuthentification
+        modeAuthentification: utilisateurConnecte.modeAuthentification
       });
     }
   };

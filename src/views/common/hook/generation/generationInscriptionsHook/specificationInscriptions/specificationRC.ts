@@ -1,4 +1,5 @@
 import { IElementsJasperCertificatRC } from "@model/composition/ICertificatRCComposition";
+import { IDecret } from "@model/etatcivil/commun/IDecret";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
 import {
@@ -147,11 +148,12 @@ export function getDuree(data: IFicheRcRca) {
 }
 
 /////////////////////////////////////////////////////////////////////
-class SpecificationRC {
-  getElementsJasper(
+export const SpecificationRC = {
+  getElementsJasper: (
     infosRC: IFicheRcRca,
+    decrets: IDecret[],
     inscriptionsRcRadiation?: IInscriptionRc
-  ) {
+  ) => {
     const elementsJasper = {} as IElementsJasperCertificatRC;
 
     if (infosRC) {
@@ -167,11 +169,10 @@ class SpecificationRC {
       );
       elementsJasper.decisionExequatur = getDecisionExequatur(infosRC);
       elementsJasper.duree = getDuree(infosRC);
-      elementsJasper.paragrapheFin = getParagrapheFin(infosRC);
+      elementsJasper.paragrapheFin = getParagrapheFin(infosRC, decrets);
     }
 
     return elementsJasper;
   }
-}
+};
 
-export const specificationRC = new SpecificationRC();

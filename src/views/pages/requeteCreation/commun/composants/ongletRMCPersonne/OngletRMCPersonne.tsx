@@ -1,4 +1,7 @@
-import { RECEContext } from "@core/contexts/RECEContext";
+import {
+  RECEContextActions,
+  RECEContextData
+} from "@core/contexts/RECEContext";
 import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
 import { IRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
@@ -59,7 +62,9 @@ interface OngletRMCPersonneProps {
 }
 
 export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
-  const { isDirty, setIsDirty } = useContext(RECEContext);
+  const { isDirty } = useContext(RECEContextData);
+  const { setIsDirty } = useContext(RECEContextActions);
+
   const [sauvegardeRMCApiHookParams, setSauvegardeRMCApiHookParams] =
     useState<ISauvegardeRMCApiHookParams>();
 

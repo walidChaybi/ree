@@ -1,11 +1,12 @@
 import { HTTP_NOT_FOUND } from "@api/ApiManager";
 import { getRequeteAleatoire } from "@api/appels/requeteApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequeteTableau } from "@model/requete/IRequeteTableau";
 import { mappingUneRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { mappingUneRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { logError } from "@util/LogManager";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export interface IRequeteAleatoireResultat {
   requete: TRequeteTableau;
@@ -15,6 +16,7 @@ export function useGetRequeteAleatoire(
   type: TypeRequete,
   prendreEnCharge: boolean
 ) {
+  const { utilisateurs, services } = useContext(RECEContextData);
   const [requeteAleatoireResultat, setRequeteAleatoireResultat] = useState<
     IRequeteAleatoireResultat | undefined
   >();
@@ -30,7 +32,9 @@ export function useGetRequeteAleatoire(
               const requeteResultatDelMappee =
                 mappingUneRequeteTableauDelivrance(
                   resultatDel.body.data,
-                  false
+                  false,
+                  utilisateurs,
+                  services
                 );
               setRequeteAleatoireResultat({
                 requete: requeteResultatDelMappee
@@ -43,7 +47,9 @@ export function useGetRequeteAleatoire(
               const requeteResultatInfoMappee =
                 mappingUneRequeteTableauInformation(
                   resultatInfo.body.data,
-                  false
+                  false,
+                  utilisateurs,
+                  services
                 );
               setRequeteAleatoireResultat({
                 requete: requeteResultatInfoMappee

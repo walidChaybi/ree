@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { getLibelle } from "@util/Utils";
@@ -5,7 +6,7 @@ import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleS
 import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErreur";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React from "react";
+import React, { useContext } from "react";
 import "./scss/ReinitialiserValiderBoutons.scss";
 
 interface ReinitialiserValiderBoutonsProps {
@@ -20,6 +21,7 @@ interface ReinitialiserValiderBoutonsProps {
 export const ReinitialiserValiderBoutons: React.FC<
   ReinitialiserValiderBoutonsProps
 > = props => {
+  const { utilisateurConnecte } = useContext(RECEContextData);
   return (
     <>
       {props.afficherBouton && (
@@ -37,7 +39,7 @@ export const ReinitialiserValiderBoutons: React.FC<
             onClick={props.onClickValider}
             disabled={
               props.validerDisabled ||
-              !officierHabiliterPourLeDroit(Droit.DELIVRER)
+              !officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER)
             }
             aria-label="Valider"
           >

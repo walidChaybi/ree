@@ -24,10 +24,6 @@ export default defineConfig({
     maxWorkers: 4,
     testTimeout: 10000,
     include: ["src/__tests__/**/?(*.)test.ts?(x)"],
-    exclude: [
-      "./src/__tests__/views/pages/requeteInformation/**",
-      "./src/__tests__/views/pages/requeteMiseAJour/**"
-    ],
     coverage: {
       include: ["src/*"],
       exclude: [

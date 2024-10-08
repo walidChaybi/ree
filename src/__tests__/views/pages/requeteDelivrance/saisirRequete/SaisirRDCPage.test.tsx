@@ -1,4 +1,3 @@
-import { mappingOfficier } from "@core/login/LoginHook";
 import {
   resultatHeaderUtilistateurLaurenceBourdeau,
   resultatRequeteUtilistateurLaurenceBourdeau,
@@ -8,6 +7,7 @@ import {
   idRequeteRDCPourModification,
   idRequeteRDCPourModificationMaCorbeille
 } from "@mock/data/requeteDelivrance";
+import { mappingOfficier } from "@model/agent/IOfficier";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
@@ -18,26 +18,19 @@ import {
 } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
-import { beforeEach, expect, test } from "vitest";
-import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
+import { expect, test } from "vitest";
+import {
+  createTestingRouter,
+  elementAvecContexte
+} from "../../../../__tests__utils__/testsUtil";
 
-const saisieRDC = () => {
-  storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
-};
+const utilisateurConnecteSaisie = userDroitnonCOMEDEC; // Droit DELIVRER
 
-const modificationRDC = () => {
-  storeRece.utilisateurCourant = mappingOfficier(
-    resultatHeaderUtilistateurLaurenceBourdeau,
-    resultatRequeteUtilistateurLaurenceBourdeau.data
-  );
-};
-
-const contextes = {
-  saisieRDC,
-  modificationRDC
-};
+const utilisateurConnecteModification = mappingOfficier(
+  resultatHeaderUtilistateurLaurenceBourdeau,
+  resultatRequeteUtilistateurLaurenceBourdeau.data
+);
 
 const getInput = (label: string): HTMLInputElement =>
   screen.getByLabelText(label) as HTMLInputElement;
@@ -52,10 +45,6 @@ const changeInput = (
     }
   });
 
-beforeEach(() => {
-  contextes.saisieRDC();
-});
-
 test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie", () => {
   const router = createTestingRouter(
     [
@@ -67,7 +56,12 @@ test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie",
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
   );
 
-  render(<RouterProvider router={router} />);
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      utilisateurConnecteSaisie
+    )
+  );
 
   const titre = SousTypeDelivrance.getEnumFor("RDC").libelle;
 
@@ -78,8 +72,6 @@ test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie",
 });
 
 test("renders formulaire de modification d'une Requête de Délivrance Extrait Copie", async () => {
-  contextes.modificationRDC();
-
   const router = createTestingRouter(
     [
       {
@@ -95,8 +87,12 @@ test("renders formulaire de modification d'une Requête de Délivrance Extrait C
     ]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      utilisateurConnecteModification
+    )
+  );
   const inputNomNaissance = getInput("titulaire1.noms.nomNaissance");
   const inputPrenomNaissance = getInput("titulaire1.prenoms.prenom1");
 
@@ -107,8 +103,6 @@ test("renders formulaire de modification d'une Requête de Délivrance Extrait C
 });
 
 test(`test du bouton "mettre en majuscule" pour le nom d'une Requête de Délivrance Extrait Copie`, async () => {
-  contextes.modificationRDC();
-
   const router = createTestingRouter(
     [
       {
@@ -124,8 +118,12 @@ test(`test du bouton "mettre en majuscule" pour le nom d'une Requête de Délivr
     ]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      utilisateurConnecteModification
+    )
+  );
   const inputNomNaissance = getInput("titulaire1.noms.nomNaissance");
   const buttonChampEnMajuscule = screen.getAllByTestId(
     "BoutonChampEnMajuscule"
@@ -143,8 +141,6 @@ test(`test du bouton "mettre en majuscule" pour le nom d'une Requête de Délivr
 });
 
 test("Validation d'une modification de Requête de Délivrance Extrait Copie", async () => {
-  contextes.modificationRDC();
-
   const router = createTestingRouter(
     [
       {
@@ -168,8 +164,12 @@ test("Validation d'une modification de Requête de Délivrance Extrait Copie", a
     ]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      utilisateurConnecteModification
+    )
+  );
   const inputNomNaissance = getInput("titulaire1.noms.nomNaissance");
   const buttonValider = screen.getByText(/Valider/i) as HTMLButtonElement;
 
@@ -204,8 +204,12 @@ test("test onChangeNature", () => {
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      utilisateurConnecteSaisie
+    )
+  );
   const inputNatureActe = screen.getByTestId(
     "requete.natureActe"
   ) as HTMLSelectElement;
@@ -238,8 +242,12 @@ test("test onChangeRequerant", () => {
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      utilisateurConnecteSaisie
+    )
+  );
   // Mandataire
   const inputMandataire = getInput("requerant.typerequerant.mandataire");
 
@@ -306,8 +314,12 @@ test.skip("test du Prendre en charge du formulaire de saisie d'une Requête de D
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      utilisateurConnecteSaisie
+    )
+  );
   // Champs Requete
   const inputNatureActe = screen.getByTestId(
     "requete.natureActe"
@@ -398,8 +410,12 @@ test.skip("test du Prendre en charge du formulaire de saisie d'une Requête de D
     [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
   );
 
-  render(<RouterProvider router={router} />);
-
+  render(
+    elementAvecContexte(
+      <RouterProvider router={router} />,
+      utilisateurConnecteSaisie
+    )
+  );
   const submit = screen.getByText(/Prendre en charge/i);
 
   // Champs Requete

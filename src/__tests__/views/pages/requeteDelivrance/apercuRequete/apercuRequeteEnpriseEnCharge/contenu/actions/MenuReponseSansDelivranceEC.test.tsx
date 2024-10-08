@@ -68,7 +68,7 @@ test.skip("Réponse requête incomplète", () => {
   });
 });
 
-test("Réponse acte non détenu", () => {
+test("Réponse acte non détenu", async () => {
   const router = createTestingRouter(
     [
       {
@@ -91,7 +91,7 @@ test("Réponse acte non détenu", () => {
   render(<RouterProvider router={router} />);
   fireEvent.click(screen.getByText(/Acte non détenu+/));
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(router.state.location.pathname).toBe(
       `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${idRequeteRDC}/`
     );

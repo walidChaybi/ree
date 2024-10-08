@@ -100,12 +100,7 @@ export class GestionnaireApi {
               (erreur: { message: any }) => `[DEV] ${erreur.message}`
             )
           ]);
-          /*          messageManager.showErrorAndClose([
-            `[DEV] Une erreur ${erreur.status} est survenue`,
-            ...erreur.erreurs.map(
-              (erreur: { message: any }) => `[DEV] ${erreur.message}`
-            )
-          ]); */
+
         }
 
         return Promise.reject<TReponseApiEchec>(erreur);

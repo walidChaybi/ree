@@ -1,16 +1,17 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { autorisePrendreEnChargeDelivrance } from "@util/RequetesUtils";
-import { getUrlWithParam } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
+import { getUrlWithParam } from "@util/route/UrlUtil";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import "./scss/BoutonPrendreEnCharge.scss";
@@ -24,6 +25,7 @@ export const BoutonPrendreEnCharge: React.FC<
   BoutonPrendreEnChargeProps
 > = props => {
   const location = useLocation();
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   const [params, setParams] = useState<
     ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
@@ -46,7 +48,10 @@ export const BoutonPrendreEnCharge: React.FC<
       onClick={setActionEtUpdateStatut}
       class="BoutonPrendreEnCharge"
       estDesactive={
-        !autorisePrendreEnChargeDelivrance(props.requete) || props.disabled
+        !autorisePrendreEnChargeDelivrance(
+          utilisateurConnecte,
+          props.requete
+        ) || props.disabled
       }
     >
       {getLibelle("Prendre en charge")}

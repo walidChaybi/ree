@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
@@ -11,7 +12,7 @@ import { getUrlPrecedente } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 interface BoutonPrendreEnChargeCreationProps {
@@ -24,6 +25,7 @@ export const BoutonPrendreEnChargeCreation: React.FC<
   BoutonPrendreEnChargeCreationProps
 > = props => {
   const location = useLocation();
+  const { utilisateurs, services, decrets } = useContext(RECEContextData);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [params, setParams] = useState<
     ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
@@ -34,7 +36,12 @@ export const BoutonPrendreEnChargeCreation: React.FC<
     setParams({
       libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
       statutRequete: StatutRequete.PRISE_EN_CHARGE,
-      requete: mappingUneRequeteTableauCreation(props.requete, false),
+      requete: mappingUneRequeteTableauCreation(
+        props.requete,
+        false,
+        utilisateurs,
+        services
+      ),
       urlCourante: getUrlPrecedente(location.pathname),
       typeRequete: TypeRequete.CREATION,
       handleTraitementTermine: () => {
@@ -51,7 +58,7 @@ export const BoutonPrendreEnChargeCreation: React.FC<
   return (
     <>
       <OperationEnCours
-        visible={operationEnCours}
+        visible={operationEnCours || !utilisateurs || !services || !decrets}
         onTimeoutEnd={() => setOperationEnCours(false)}
         onClick={() => setOperationEnCours(false)}
       />

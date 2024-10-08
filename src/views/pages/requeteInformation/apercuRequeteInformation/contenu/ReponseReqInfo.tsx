@@ -1,4 +1,5 @@
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   IReponseRequeteInfo,
   ReponseRequeteInfo
@@ -12,9 +13,8 @@ import {
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getLibelle } from "@util/Utils";
-import { storeRece } from "@util/storeRece";
 import { Fieldset } from "@widget/fieldset/Fieldset";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { RequeteInfoProps } from "./ResumeReqInfo";
 import { BoutonReponseLibre } from "./choixReponse/BoutonReponseLibre";
 import { MenuReponsesProposees } from "./choixReponse/MenuReponsesProposees";
@@ -37,6 +37,7 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
     corpsMail: ""
   };
 
+  const { utilisateurConnecte } = useContext(RECEContextData);
   const [reponseChoisie, setReponseChoisie] =
     useState<IReponseRequeteInfo>(SAISIE_LIBRE_REPONSE);
 
@@ -49,7 +50,7 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
 
   useEffect(() => {
     const mauvaisUtilisateur =
-      requete.idUtilisateur !== storeRece.utilisateurCourant?.idUtilisateur;
+      requete.idUtilisateur !== utilisateurConnecte?.idUtilisateur;
 
     const rejetOuTraiteRepondu =
       requete.statutCourant.statut === StatutRequete.REJET ||
@@ -101,7 +102,7 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
   }, [reponsesReqInfo]);
 
   useEffect(() => {
-    if (requete.idUtilisateur !== storeRece.utilisateurCourant?.idUtilisateur) {
+    if (requete.idUtilisateur !== utilisateurConnecte?.idUtilisateur) {
       setLesBoutonsDisabled(true);
     }
   }, [requete.idUtilisateur]);

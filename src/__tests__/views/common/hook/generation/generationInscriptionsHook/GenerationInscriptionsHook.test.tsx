@@ -13,6 +13,7 @@ import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTablea
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { expect, test } from "vitest";
+import { elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 
 const titulaire = {
   nom: "nom",
@@ -55,7 +56,7 @@ const HookConsummer: React.FC = () => {
 };
 
 test("Attendu: la génération d'un certificat d'inscription RC", () => {
-  render(<HookConsummer></HookConsummer>);
+  render(elementAvecContexte(<HookConsummer></HookConsummer>));
   const resulatIdDoc = screen.getByTestId("resulatIdDoc");
 
   waitFor(() => {

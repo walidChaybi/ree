@@ -49,7 +49,7 @@ test.skip("Attendu: Le retour de l'appel à la retouche d'image s'effectue corre
 
 test("Attendu: l'appel à la retouche d'image renvoie des erreurs", async () => {
   // Désactivation de la log d'erreur car l'erreur logguée est normale
-  storeRece.logErrorOff = true;
+  storeRece.logErrorDesactive = true;
   const onRetoucheTerminee = vi.fn();
 
   // Rendu du composant avec une image: un évenement est lancé pour démarrer l'application native de retouche d'image (via la web extension)
@@ -80,7 +80,7 @@ test("Attendu: l'appel à la retouche d'image renvoie des erreurs", async () => 
     expect(onRetoucheTerminee).toHaveBeenCalledWith(undefined);
   });
 
-  storeRece.logErrorOff = false;
+  storeRece.logErrorDesactive = false;
 });
 
 function fireCustomEvent(detail: any) {

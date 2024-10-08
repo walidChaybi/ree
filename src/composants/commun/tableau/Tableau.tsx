@@ -78,6 +78,7 @@ const Tableau: React.FC<ITableauProps> = ({
               <th key={enTete.cle}>
                 {enTete.triable && parametresTri ? (
                   <button
+                    key={enTete.cle}
                     type="button"
                     title={`Trier par ${enTete.libelle.toLowerCase()}`}
                     onClick={() => {
@@ -104,7 +105,7 @@ const Tableau: React.FC<ITableauProps> = ({
                     )}
                   </button>
                 ) : (
-                  <span>{enTete.libelle}</span>
+                  <span key={enTete.cle}>{enTete.libelle}</span>
                 )}
               </th>
             ))}

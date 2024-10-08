@@ -4,6 +4,7 @@ import {
   postTableauRequetesDelivranceService,
   TypeAppelRequete
 } from "@api/appels/requeteApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   IFiltreServiceRequeteDelivranceFormValues,
   mappingFiltreServiceRequeteDelivranceVersFiltreDto
@@ -15,7 +16,7 @@ import {
 import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export function useRequeteDelivranceApiHook(
   parametresLienRequete: IQueryParametersPourRequetes | undefined,
@@ -25,6 +26,7 @@ export function useRequeteDelivranceApiHook(
     React.SetStateAction<IQueryParametersPourRequetes | undefined>
   >
 ) {
+  const { utilisateurs, services } = useContext(RECEContextData);
   const [dataState, setDataState] = useState<IRequeteTableauDelivrance[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
   const [filtresReq, setFiltresReq] =
@@ -51,7 +53,9 @@ export function useRequeteDelivranceApiHook(
                 );
           const mesRequetes = mappingRequetesTableauDelivrance(
             result?.body?.data,
-            false
+            false,
+            utilisateurs,
+            services
           );
           setDataState(mesRequetes);
           setParamsTableau(getParamsTableau(result));

@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   estOfficierHabiliterPourSeulementLesDroits,
   estOfficierHabiliterPourTousLesDroits,
@@ -5,7 +6,7 @@ import {
   IOfficier
 } from "@model/agent/IOfficier";
 import * as React from "react";
-import { storeRece } from "../storeRece";
+import { useContext } from "react";
 import {
   habilitationsDescription,
   IHabiliationDescription,
@@ -21,14 +22,16 @@ function getHabilitationPourLeComposant(
 
 function getComportement(
   habilitationPourLeComposant: IHabiliationDescription,
-  utilisateurCourant: IOfficier
+  utilisateurConnecte: IOfficier
 ) {
   const authorise = habilitationPourLeComposant.tousLesDroits
     ? estOfficierHabiliterPourTousLesDroits(
+        utilisateurConnecte,
         habilitationPourLeComposant.tousLesDroits
       )
     : habilitationPourLeComposant.unDesDroits
     ? estOfficierHabiliterPourUnDesDroits(
+        utilisateurConnecte,
         habilitationPourLeComposant.unDesDroits
       )
     : true;
@@ -49,50 +52,50 @@ const WithHabilitation = (
   composantId: NomComposant,
   specifiquesHabilitationsDescription?: IHabiliationDescription[]
 ) => {
-  class Habilitation extends React.Component<any> {
-    public render() {
-      let comportementComposant = {};
-      let composantEstVisible = true;
-      if (storeRece.utilisateurCourant) {
-        const habilitationPourLeComposant = getHabilitationPourLeComposant(
-          composantId,
-          specifiquesHabilitationsDescription
-            ? specifiquesHabilitationsDescription
-            : habilitationsDescription
-        );
-        if (habilitationPourLeComposant) {
-          comportementComposant = getComportement(
-            habilitationPourLeComposant,
-            storeRece.utilisateurCourant
-          );
-          composantEstVisible = visibiliteComposant(
-            habilitationPourLeComposant,
-            storeRece.utilisateurCourant
-          );
-        }
-      }
-
-      return (
-        <>
-          {composantEstVisible && (
-            <ComponentToWrap {...comportementComposant} {...this.props} />
-          )}
-        </>
+  const Habilitation: React.FC<any> = props => {
+    const { utilisateurConnecte } = useContext(RECEContextData);
+    let comportementComposant = {};
+    let composantEstVisible = true;
+    if (utilisateurConnecte) {
+      const habilitationPourLeComposant = getHabilitationPourLeComposant(
+        composantId,
+        specifiquesHabilitationsDescription
+          ? specifiquesHabilitationsDescription
+          : habilitationsDescription
       );
+      if (habilitationPourLeComposant) {
+        comportementComposant = getComportement(
+          habilitationPourLeComposant,
+          utilisateurConnecte
+        );
+        composantEstVisible = visibiliteComposant(
+          habilitationPourLeComposant,
+          utilisateurConnecte
+        );
+      }
     }
-  }
 
+    return (
+      <>
+        {composantEstVisible && (
+          <ComponentToWrap {...comportementComposant} {...props} />
+        )}
+      </>
+    );
+  };
   return Habilitation;
 };
+
 export default WithHabilitation;
 
 function visibiliteComposant(
   habilitationPourLeComposant: IHabiliationDescription,
-  utilisateurCourant: IOfficier
+  utilisateurConnecte: IOfficier
 ): boolean {
   if (
     habilitationPourLeComposant.visiblePourLesDroits &&
     !estOfficierHabiliterPourUnDesDroits(
+      utilisateurConnecte,
       habilitationPourLeComposant.visiblePourLesDroits
     )
   ) {
@@ -101,6 +104,7 @@ function visibiliteComposant(
   if (
     habilitationPourLeComposant.visibleSeulementPourLesDroits &&
     !estOfficierHabiliterPourSeulementLesDroits(
+      utilisateurConnecte,
       habilitationPourLeComposant.visibleSeulementPourLesDroits
     )
   ) {

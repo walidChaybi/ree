@@ -2,6 +2,7 @@ import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "@api/appels/requeteApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
@@ -10,16 +11,16 @@ import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import { getMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
+import { SortOrder } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import { SortOrder } from "@widget/tableau/TableUtils";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { getOnClickSurLigneTableauEspaceCreation } from "./EspaceCreationUtils";
@@ -43,7 +44,10 @@ export const MesRequetesCreation: React.FC<
 
   const [linkParameters, setLinkParameters] =
     useState<IQueryParametersPourRequetes>(props.queryParametersPourRequetes);
-  const [enChargement, setEnChargement] = React.useState(true);
+  const [enChargement, setEnChargement] = useState(true);
+
+  const { decrets, utilisateurConnecte } = useContext(RECEContextData);
+
   const { dataState, paramsTableau } = useRequeteCreationApiHook(
     TypeAppelRequete.MES_REQUETES_CREATION,
     setEnChargement,
@@ -78,7 +82,7 @@ export const MesRequetesCreation: React.FC<
   return (
     <>
       <OperationEnCours
-        visible={operationEnCours}
+        visible={operationEnCours || !decrets || !utilisateurConnecte}
         onTimeoutEnd={finOperationEnCours}
         onClick={finOperationEnCours}
       />
@@ -89,14 +93,15 @@ export const MesRequetesCreation: React.FC<
         onClickOnLine={getOnClickSurLigneTableauEspaceCreation(
           setOperationEnCours,
           setParamsMiseAJour,
-          setParamsCreation
+          setParamsCreation,
+          utilisateurConnecte
         )}
         columnHeaders={colonnesTableauMesRequetesCreation}
         dataState={dataState}
         paramsTableau={paramsTableau}
         goToLink={goToLink}
         handleChangeSort={handleChangeSort}
-        noRows={getMessageZeroRequete()}
+        noRows={RenderMessageZeroRequete()}
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}

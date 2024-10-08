@@ -1,4 +1,3 @@
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { userDroitCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import {
@@ -7,20 +6,16 @@ import {
   URL_MES_REQUETES_DELIVRANCE_EDITION_ID
 } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
-import { beforeAll, beforeEach, describe, expect, test } from "vitest";
+import { beforeAll, describe, expect, test } from "vitest";
 import {
   createTestingRouter,
+  elementAvecContexte,
   mockFenetreFicheTestFunctions
 } from "../../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();
-});
-
-beforeEach(() => {
-  storeRece.utilisateurCourant = userDroitCOMEDEC;
 });
 
 describe("Test onglets documents édites", () => {
@@ -38,7 +33,9 @@ describe("Test onglets documents édites", () => {
       ]
     );
 
-    render(<RouterProvider router={router} />);
+    render(
+      elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC)
+    );
 
     waitFor(() => {
       expect(
@@ -60,7 +57,9 @@ describe("Test onglets documents édites", () => {
       ]
     );
 
-    render(<RouterProvider router={router} />);
+    render(
+      elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC)
+    );
 
     waitFor(() => {
       expect(
@@ -82,7 +81,9 @@ describe("Test onglets documents édites", () => {
       ]
     );
 
-    render(<RouterProvider router={router} />);
+    render(
+      elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC)
+    );
 
     waitFor(() => {
       expect(
@@ -113,9 +114,7 @@ describe("Test onglets documents édites", () => {
     );
 
     render(
-      <MockRECEContextProvider>
-        <RouterProvider router={router} />{" "}
-      </MockRECEContextProvider>
+      elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC)
     );
 
     waitFor(() => {
@@ -154,7 +153,9 @@ describe("Test onglets documents édites", () => {
       ]
     );
 
-    render(<RouterProvider router={router} />);
+    render(
+      elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC)
+    );
 
     waitFor(() => {
       expect(
@@ -196,7 +197,9 @@ describe("Test onglets documents édites", () => {
       ]
     );
 
-    render(<RouterProvider router={router} />);
+    render(
+      elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC)
+    );
 
     waitFor(() => {
       expect(

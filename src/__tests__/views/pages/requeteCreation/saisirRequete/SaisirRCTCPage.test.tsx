@@ -1,5 +1,5 @@
-import { mappingOfficier } from "@core/login/LoginHook";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import { mappingOfficier } from "@model/agent/IOfficier";
+
 import {
   resultatHeaderUtilistateurLeBiannic,
   resultatRequeteUtilistateurLeBiannic,
@@ -15,32 +15,24 @@ import {
 } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
-import { beforeAll, expect, test } from "vitest";
+import { expect, test } from "vitest";
+import IHabilitationDto from "../../../../../dto/etatcivil/agent/IHabilitationDto";
 import { expectEstBoutonDisabled } from "../../../../__tests__utils__/expectUtils";
 import {
   createTestingRouter,
+  elementAvecContexte,
   renseigneChampsRecherche
 } from "../../../../__tests__utils__/testsUtil";
 
-beforeAll(() => {
-  storeRece.utilisateurCourant = mappingOfficier(
-    resultatHeaderUtilistateurLeBiannic,
-    resultatRequeteUtilistateurLeBiannic.data
-  );
-  storeRece.utilisateurCourant.habilitations = mapHabilitationsUtilisateur(
-    resultatRequeteUtilistateurLeBiannic.data.habilitations
-  );
-});
-
-const routerAvecContexte = (router: any): any => {
-  return (
-    <MockRECEContextProvider>
-      <RouterProvider router={router} />
-    </MockRECEContextProvider>
-  );
-};
+const utilisateurConnecte = mappingOfficier(
+  resultatHeaderUtilistateurLeBiannic,
+  resultatRequeteUtilistateurLeBiannic.data
+);
+utilisateurConnecte.habilitations = mapHabilitationsUtilisateur(
+  resultatRequeteUtilistateurLeBiannic.data
+    .habilitations as unknown as IHabilitationDto[]
+);
 
 async function afficheSaisirRCTCForm() {
   const router = createTestingRouter(
@@ -53,7 +45,9 @@ async function afficheSaisirRCTCForm() {
     [URL_MES_REQUETES_CREATION_SAISIR_RCTC]
   );
 
-  render(routerAvecContexte(router));
+  render(
+    elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte)
+  );
 }
 
 const getInput = (label: string): HTMLInputElement =>
@@ -86,9 +80,6 @@ test("DOIT retirer un parent QUAND on clique sur le bouton 'Retirer un parent'",
 });
 
 test.skip("DOIT afficher la popin de transfert vers les services fils (triés) du département Etablissement QUAND l'utilisateur clique sur le bouton de transmission", () => {
-  storeRece.utilisateurCourant =
-    userDroitCreerActeTranscritPerimetreTousRegistres;
-
   const router = createTestingRouter(
     [
       {
@@ -103,7 +94,14 @@ test.skip("DOIT afficher la popin de transfert vers les services fils (triés) d
     ["/page1", URL_MES_REQUETES_CREATION_SAISIR_RCTC]
   );
 
-  render(routerAvecContexte(router));
+  render(
+    elementAvecContexte(
+      elementAvecContexte(
+        <RouterProvider router={router} />,
+        userDroitCreerActeTranscritPerimetreTousRegistres
+      )
+    )
+  );
 
   /////////////////////////Saisie des données///////////////////////////////
   // Nature acte et lien requérant
@@ -133,8 +131,6 @@ test.skip("DOIT afficher la popin de transfert vers les services fils (triés) d
   fireEvent.click(
     getInput("parents.parent1.pasdeprenomconnu.pasdeprenomconnu")
   );
-
-  /////////////////////////////////////////////////////////////////////////
 
   const boutonTransmettre = screen.queryByText(
     "Transmettre au service compétent"
@@ -182,7 +178,7 @@ test.skip("DOIT afficher la popin de transfert vers les services fils (triés) d
     expectEstBoutonDisabled("Valider");
   });
 
-  // Choix d'un service
+  // // Choix d'un service
   fireEvent.change(selectElement, {
     target: {
       value: "6737c8a6-9d23-4fd0-97ec-1ebe3d079373"
@@ -239,7 +235,9 @@ test.skip("DOIT rediriger vers l'apercu requête en prise en charge QUAND je cli
     [URL_MES_REQUETES_CREATION_SAISIR_RCTC]
   );
 
-  render(routerAvecContexte(router));
+  render(
+    elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte)
+  );
 
   const boutonPrendreEnCharge = screen.getByText(/Prendre en charge/i);
 

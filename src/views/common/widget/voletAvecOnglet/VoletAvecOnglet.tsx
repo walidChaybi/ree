@@ -1,4 +1,4 @@
-import { RECEContext } from "@core/contexts/RECEContext";
+import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import ErrorOutline from "@mui/icons-material/ErrorOutline";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -33,7 +33,8 @@ export const VoletAvecOnglet: React.FC<
   const [ongletSelectionne, setOngletSelectionne] = useState(
     props.ongletParDefault || 0
   );
-  const { isDirty, setIsDirty } = useContext(RECEContext);
+  const { isDirty } = useContext(RECEContextData);
+  const { setIsDirty } = useContext(RECEContextActions);
 
   const handleChangeLocalOnglet = (valeur: number) => {
     const estDirty = props.checkDirty && checkDirty(isDirty, setIsDirty);

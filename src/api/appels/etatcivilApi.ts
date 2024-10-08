@@ -17,10 +17,13 @@ import {
 import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { IActeInscriptionSauvegardeDto } from "../../dto/etatcivil/acte/actesInscriptionsSauvegardes/IActeInscriptionSauvegardeDto";
-import { ApiManager, HttpMethod } from "../ApiManager";
+import { HttpMethod } from "../ApiManager";
 import { StatutMention } from "./../../model/etatcivil/enum/StatutMention";
 
-const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
+async function getApiManager() {
+  const { ApiManager } = await import("../ApiManager");
+  return ApiManager.getInstance("rece-etatcivil-api", "v1");
+}
 
 export const URL_ACTE = "/acte";
 export const URL_TITULAIRE = "/titulaire";
@@ -94,43 +97,51 @@ export function getInformationsFiche(
 export function getActesInscriptionsSauvegardes(
   actesInscriptionsSauvegardes: IActeInscriptionSauvegardeDto[]
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_PROJET_ACTE_INSCRIPTION_LISTE}`,
-    data: actesInscriptionsSauvegardes
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_PROJET_ACTE_INSCRIPTION_LISTE}`,
+      data: actesInscriptionsSauvegardes
+    })
+  );
 }
 
 /**
  * Recuperation d'un projet d'acte'
  */
 export function getProjetActe(idActe: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_PROJET_ACTE}/${idActe}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_PROJET_ACTE}/${idActe}`
+    })
+  );
 }
 
 /**
  * Envoi d'un projet d'acte pour enregistrement'
  */
 export function postProjetActe(acte: IProjetActe): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_PROJET_ACTE}`,
-    data: acte
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_PROJET_ACTE}`,
+      data: acte
+    })
+  );
 }
 
 /**
  * Envoi d'un projet d'acte pour modification'
  */
 export function patchProjetActe(acte: IProjetActe): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_PROJET_ACTE}`,
-    data: acte
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_PROJET_ACTE}`,
+      data: acte
+    })
+  );
 }
 
 /**
@@ -141,16 +152,18 @@ export function composerDocumentFinal(
   issuerCertificat: string,
   entiteCertificat: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_PROJET_ACTE}/${idActe}${URL_COMPOSER_DOCUMENT_FINAL}`,
-    data: {
-      infosSignature: {
-        issuerCertificat,
-        entiteCertificat
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_PROJET_ACTE}/${idActe}${URL_COMPOSER_DOCUMENT_FINAL}`,
+      data: {
+        infosSignature: {
+          issuerCertificat,
+          entiteCertificat
+        }
       }
-    }
-  });
+    })
+  );
 }
 
 /**
@@ -162,15 +175,17 @@ export function integrerActeSigne(
   infosCarteSignature: IInfosCarteSignature,
   modeAuthentification: TModeAuthentification
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_PROJET_ACTE}/${idActe}${URL_INTEGRER_ACTE_SIGNE}`,
-    data: {
-      documentPadesBase64: document,
-      signature: { infosSignature: infosCarteSignature },
-      modeAuthentification
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_PROJET_ACTE}/${idActe}${URL_INTEGRER_ACTE_SIGNE}`,
+      data: {
+        documentPadesBase64: document,
+        signature: { infosSignature: infosCarteSignature },
+        modeAuthentification
+      }
+    })
+  );
 }
 
 /**
@@ -181,16 +196,18 @@ export function composerDocumentMentionsUlterieures(
   issuerCertificat: string,
   entiteCertificat: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_ACTE}/${idActe}${URL_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES}`,
-    data: {
-      infosSignature: {
-        issuerCertificat,
-        entiteCertificat
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_ACTE}/${idActe}${URL_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES}`,
+      data: {
+        infosSignature: {
+          issuerCertificat,
+          entiteCertificat
+        }
       }
-    }
-  });
+    })
+  );
 }
 
 /**
@@ -202,25 +219,29 @@ export function integrerDocumentMentionSigne(
   infosCarteSignature: IInfosCarteSignature,
   modeAuthentification: TModeAuthentification
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_ACTE}/${idActe}${URL_INTEGRER_DOCUMENT_MENTION_SIGNE}`,
-    data: {
-      documentPadesBase64,
-      signature: { infosSignature: infosCarteSignature },
-      modeAuthentification
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_ACTE}/${idActe}${URL_INTEGRER_DOCUMENT_MENTION_SIGNE}`,
+      data: {
+        documentPadesBase64,
+        signature: { infosSignature: infosCarteSignature },
+        modeAuthentification
+      }
+    })
+  );
 }
 
 /**
  * Récupérer le registre papier qui sera associé à un projet d'acte.
  */
 export function getRegistrePapierParIdProjetActe(idActe: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_PROJET_ACTE}/${idActe}${URL_REGISTRE_PAPIER_PROJET_ACTE}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_PROJET_ACTE}/${idActe}${URL_REGISTRE_PAPIER_PROJET_ACTE}`
+    })
+  );
 }
 
 /**
@@ -230,10 +251,12 @@ export function getInformationsFicheRepertoire(
   typeFiche: TypeFiche,
   identifiant: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_ETAT_CIVIL}/${typeFiche.toLowerCase()}/${identifiant}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_ETAT_CIVIL}/${typeFiche.toLowerCase()}/${identifiant}`
+    })
+  );
 }
 
 /**
@@ -265,127 +288,151 @@ export function getInformationsFicheActe(
     };
   }
 
-  return api.fetch(config);
+  return getApiManager().then(api => api.fetch(config));
 }
 
 /**
  * Récupération des titulaires d'un ACTE
  */
 export function getTitulairesActe(identifiant: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${identifiant}${URL_TITULAIRE}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_ACTE}/${identifiant}${URL_TITULAIRE}`
+    })
+  );
 }
 
 /**
  * Récupération du nombre de titulaire d'un ACTE
  */
 export function getNbrTitulairesActe(identifiant: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${identifiant}${URL_COUNT_TITULAIRE}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_ACTE}/${identifiant}${URL_COUNT_TITULAIRE}`
+    })
+  );
 }
 
 export function getInscriptionsRC(identifiant: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_PERSONNE}/${identifiant}${URL_RC}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_PERSONNE}/${identifiant}${URL_RC}`
+    })
+  );
 }
 
 export function rechercheMultiCriteresActes(
   criteres: IRMCRequestActesInscriptions,
   range?: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_ACTE_RMC}`,
-    data: criteres,
-    parameters: {
-      range
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_ACTE_RMC}`,
+      data: criteres,
+      parameters: {
+        range
+      }
+    })
+  );
 }
 
 export function rechercheMultiCriteresInscriptions(
   criteres: IRMCRequestActesInscriptions,
   range?: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_ETAT_CIVIL_RMC}`,
-    data: criteres,
-    parameters: {
-      range
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_ETAT_CIVIL_RMC}`,
+      data: criteres,
+      parameters: {
+        range
+      }
+    })
+  );
 }
 
 export function rechercheMultiCriteresPersonne(
   criteres: IRMCAutoPersonneRequest,
   range?: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_PERSONNE_RMC_AUTO}`,
-    data: criteres,
-    parameters: {
-      range
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_PERSONNE_RMC_AUTO}`,
+      data: criteres,
+      parameters: {
+        range
+      }
+    })
+  );
 }
 
 export function getPersonnesSauvegardees(idPersonnes: string[]): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_LISTE_PERSONNE}`,
-    parameters: { ids: idPersonnes }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_LISTE_PERSONNE}`,
+      parameters: { ids: idPersonnes }
+    })
+  );
 }
 
 /** Utilisé pour visualiser les images de l'acte dans la fiche Acte (renvoie un "InputStreamResource")*/
 export function getCorpsActeImage(identifiant: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${identifiant}${URL_CORPS_IMAGE}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_ACTE}/${identifiant}${URL_CORPS_IMAGE}`
+    })
+  );
 }
 
 /** Récupère les images d'un acte sous forme de tableau d'images base64 */
 export function getImagesDeLActe(identifiantActe: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_ACTE_IMAGES}/${identifiantActe}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_ACTE_IMAGES}/${identifiantActe}`
+    })
+  );
 }
 
 export function getDonneesPourCompositionActeTexte(
   idActe: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${idActe}${URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_ACTE}/${idActe}${URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE}`
+    })
+  );
 }
 
 export function getDonneesPourCompositionActeRepris(
   idActe: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${idActe}${URL_DONNEES_POUR_COMPOSITION_ACTE_REPRIS}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_ACTE}/${idActe}${URL_DONNEES_POUR_COMPOSITION_ACTE_REPRIS}`
+    })
+  );
 }
 
 export function getDonneesPourCompositionActeAvantSignatureMentions(
   idActe: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${idActe}${URL_DONNEES_POUR_COMPOSITION_ACTE_AVANT_SIGNATURE_MENTIONS}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_ACTE}/${idActe}${URL_DONNEES_POUR_COMPOSITION_ACTE_AVANT_SIGNATURE_MENTIONS}`
+    })
+  );
 }
 
 export function getPocopasParFamille(
@@ -393,15 +440,17 @@ export function getPocopasParFamille(
   familleRegistre: string,
   nombreResultatsMax: number
 ): Promise<any> {
-  return api.fetchCache({
-    method: HttpMethod.GET,
-    uri: URL_POCOPAS_DEBUTENT_PAR,
-    parameters: {
-      debutPocopa,
-      familleRegistre,
-      nombreResultatsMax
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetchCache({
+      method: HttpMethod.GET,
+      uri: URL_POCOPAS_DEBUTENT_PAR,
+      parameters: {
+        debutPocopa,
+        familleRegistre,
+        nombreResultatsMax
+      }
+    })
+  );
 }
 
 export function getPocopasOuvertsOuFermerParFamille(
@@ -410,30 +459,36 @@ export function getPocopasOuvertsOuFermerParFamille(
   nombreResultatsMax: number,
   estOuvert?: boolean
 ): Promise<any> {
-  return api.fetchCache({
-    method: HttpMethod.GET,
-    uri: URL_POCOPAS_DEBUTENT_PAR,
-    parameters: {
-      debutPocopa,
-      familleRegistre,
-      nombreResultatsMax,
-      estOuvert
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetchCache({
+      method: HttpMethod.GET,
+      uri: URL_POCOPAS_DEBUTENT_PAR,
+      parameters: {
+        debutPocopa,
+        familleRegistre,
+        nombreResultatsMax,
+        estOuvert
+      }
+    })
+  );
 }
 
 export async function getNomenclatureEtatCivil(nom: string): Promise<any> {
-  return api.fetchCache({
-    method: HttpMethod.GET,
-    uri: `${URL_NOMENCLATURE}/${nom}`
-  });
+  return getApiManager().then(api =>
+    api.fetchCache({
+      method: HttpMethod.GET,
+      uri: `${URL_NOMENCLATURE}/${nom}`
+    })
+  );
 }
 
 export async function getTypesMention(): Promise<any> {
-  return api.fetchCache({
-    method: HttpMethod.GET,
-    uri: `${URL_NOMENCLATURE}${URL_TYPE_MENTION}`
-  });
+  return getApiManager().then(api =>
+    api.fetchCache({
+      method: HttpMethod.GET,
+      uri: `${URL_NOMENCLATURE}${URL_TYPE_MENTION}`
+    })
+  );
 }
 
 export async function getMentions(
@@ -444,29 +499,35 @@ export async function getMentions(
     statutMention !== undefined
       ? { statut: StatutMention[statutMention] }
       : undefined;
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${idActe}${URL_MENTION}`,
-    parameters: queryParams
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_ACTE}/${idActe}${URL_MENTION}`,
+      parameters: queryParams
+    })
+  );
 }
 
 export async function postMentions(
   idActe: string,
   mentions: any[]
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_ACTE}/${idActe}${URL_MENTION}`,
-    data: mentions
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_ACTE}/${idActe}${URL_MENTION}`,
+      data: mentions
+    })
+  );
 }
 
 export async function abandonnerMiseAjourActe(idActe: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_ACTE}/${idActe}${URL_ABANDONNER_MAJ}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_ACTE}/${idActe}${URL_ABANDONNER_MAJ}`
+    })
+  );
 }
 
 export async function enregistrerMentionsEtAnalyseMarginale(
@@ -474,27 +535,29 @@ export async function enregistrerMentionsEtAnalyseMarginale(
   mentions: IMentionEnregistree[],
   analyseMarginale?: IMajAnalyseMarginale
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PUT,
-    uri: `${URL_ACTE}/${idActe}${URL_ENREGISTRER_MENTIONS_ET_ANALYSE_MARGINALE}`,
-    data: {
-      mentionCreationList: mentions,
-      analyseMarginale: analyseMarginale
-        ? {
-            motifModification: analyseMarginale?.motif,
-            titulaires: [
-              {
-                nom: analyseMarginale?.nom.trim(),
-                prenoms: analyseMarginale?.prenoms,
-                nomPartie1: analyseMarginale?.nomPartie1?.trim(),
-                nomPartie2: analyseMarginale?.nomPartie2?.trim(),
-                ordre: 1
-              }
-            ]
-          }
-        : null
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PUT,
+      uri: `${URL_ACTE}/${idActe}${URL_ENREGISTRER_MENTIONS_ET_ANALYSE_MARGINALE}`,
+      data: {
+        mentionCreationList: mentions,
+        analyseMarginale: analyseMarginale
+          ? {
+              motifModification: analyseMarginale?.motif,
+              titulaires: [
+                {
+                  nom: analyseMarginale?.nom.trim(),
+                  prenoms: analyseMarginale?.prenoms,
+                  nomPartie1: analyseMarginale?.nomPartie1?.trim(),
+                  nomPartie2: analyseMarginale?.nomPartie2?.trim(),
+                  ordre: 1
+                }
+              ]
+            }
+          : null
+      }
+    })
+  );
 }
 
 export async function postCorpsTexte(
@@ -502,105 +565,125 @@ export async function postCorpsTexte(
   corpsExtrait: string,
   type: TypeExtrait
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_ACTE}/${idActe}${URL_CORPS_TEXTE}`,
-    parameters: { type: type.nom },
-    data: { corpsExtrait }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_ACTE}/${idActe}${URL_CORPS_TEXTE}`,
+      parameters: { type: type.nom },
+      data: { corpsExtrait }
+    })
+  );
 }
 
 export function rechercheMultiCriteresAutoActes(
   criteres: ICriteresRMCAutoActeInscription,
   range?: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_ACTE_RMC_AUTO}`,
-    data: criteres,
-    parameters: {
-      range
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_ACTE_RMC_AUTO}`,
+      data: criteres,
+      parameters: {
+        range
+      }
+    })
+  );
 }
 
 export function rechercheMultiCriteresAutoInscription(
   criteres: ICriteresRMCAutoActeInscription,
   range?: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_ETAT_CIVIL_RMC_AUTO}`,
-    data: criteres,
-    parameters: {
-      range
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_ETAT_CIVIL_RMC_AUTO}`,
+      data: criteres,
+      parameters: {
+        range
+      }
+    })
+  );
 }
 
 export function getAlertesActe(idActe: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${idActe}${URL_ALERTES_ACTE}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_ACTE}/${idActe}${URL_ALERTES_ACTE}`
+    })
+  );
 }
 
 export function addAlerteActe(
   parameters: AddAlerteActeApiHookParameters
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_ACTE}${URL_ALERTE_ACTE}`,
-    data: {
-      idActe: parameters?.idActe,
-      idTypeAlerte: parameters?.idTypeAlerte,
-      complementDescription: parameters?.complementDescription
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_ACTE}${URL_ALERTE_ACTE}`,
+      data: {
+        idActe: parameters?.idActe,
+        idTypeAlerte: parameters?.idTypeAlerte,
+        complementDescription: parameters?.complementDescription
+      }
+    })
+  );
 }
 
 export function deleteAlerteActe(
   parameters: DeleteAlerteActeApiHookParameters
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.DELETE,
-    uri: `${URL_ACTE}${URL_ALERTE_ACTE}/${parameters?.idAlerteActe}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.DELETE,
+      uri: `${URL_ACTE}${URL_ALERTE_ACTE}/${parameters?.idAlerteActe}`
+    })
+  );
 }
 
-export function getToutesLesDecrets(): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_DECRETS}`
-  });
-}
+// export function getToutesLesDecrets(): Promise<any> {
+//   return getApiManager().then(api =>
+//     api.fetch({
+//       method: HttpMethod.GET,
+//       uri: `${URL_DECRETS}`
+//     })
+//   );
+// }
 
 export function updateDateDerniereDelivranceActe(idActe: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_ACTE}/${idActe}${URL_DERNIERE_DELIVRANCE}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_ACTE}/${idActe}${URL_DERNIERE_DELIVRANCE}`
+    })
+  );
 }
 
 export function updateDateDerniereDelivranceRcRcaPacs(
   body: IDerniereDelivranceRcRcaPacsParams[]
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_DERNIERE_DELIVRANCE_RC_RCA_PACS}`,
-    data: body
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_DERNIERE_DELIVRANCE_RC_RCA_PACS}`,
+      data: body
+    })
+  );
 }
 
 export function majEtatCivilSuiteSaisieExtrait(
   idActe: string,
   extraitSaisiAEnvoyer: IExtraitSaisiAEnvoyer
 ) {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_ACTE}/${idActe}${URL_SAISIE_EXTRAIT}`,
-    data: extraitSaisiAEnvoyer
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_ACTE}/${idActe}${URL_SAISIE_EXTRAIT}`,
+      data: extraitSaisiAEnvoyer
+    })
+  );
 }
 
 export function getPocopasAgent(): Promise<any> {
@@ -608,48 +691,58 @@ export function getPocopasAgent(): Promise<any> {
     method: HttpMethod.GET,
     uri: `${URL_ACTE}${URL_POCOPAS}`
   };
-  return api.fetch(config);
+  return getApiManager().then(api => api.fetch(config));
 }
 
 export function getTitulaireAnalyseMarginalByIdActe(
   identifiantsActes: string[]
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_ACTE}${URL_ANALYSE_MARGINALE}`,
-    data: identifiantsActes
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_ACTE}${URL_ANALYSE_MARGINALE}`,
+      data: identifiantsActes
+    })
+  );
 }
 
 export function getBulletinIdentificationByIdActe(
   idActe: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_ACTE}${URL_BULLETIN_IDENTIFICATION}/${idActe}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_ACTE}${URL_BULLETIN_IDENTIFICATION}/${idActe}`
+    })
+  );
 }
 
 export function getActeRecomposerApresSignature(idActe: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${idActe}${URL_ACTE_RECOMPOSER_APRES_SIGNATURE}`,
-    responseType: "blob"
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_ACTE}/${idActe}${URL_ACTE_RECOMPOSER_APRES_SIGNATURE}`,
+      responseType: "blob"
+    })
+  );
 }
 
 export function getDerniereAnalyseMarginale(idActe: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${idActe}${URL_DERNIERE_ANALYSE_MARGINALE}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_ACTE}/${idActe}${URL_DERNIERE_ANALYSE_MARGINALE}`
+    })
+  );
 }
 
 export function deleteDerniereAnalyseMarginaleNonValide(
   idActe: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_ACTE}/${idActe}${URL_SUPPRIMER_DERNIERE_ANALYSE_MARGINALE_NON_VALIDE}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_ACTE}/${idActe}${URL_SUPPRIMER_DERNIERE_ANALYSE_MARGINALE_NON_VALIDE}`
+    })
+  );
 } 

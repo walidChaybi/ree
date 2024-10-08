@@ -1,3 +1,4 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,7 +18,7 @@ import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { storeRece } from "@util/storeRece";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { BoutonAccordionTitle } from "@widget/accordion/BoutonAccordionTitle";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   IAjouterObservationFormValue,
   OBSERVATION,
@@ -47,6 +48,10 @@ export const SuiviObservationsRequete: React.FC<
     useState<ICreationObservationParams>();
   const [expanded, setIsExpanded] = useState(true);
 
+  const { utilisateurConnecte, utilisateurs } = useContext(RECEContextData);
+
+  const idUtilisateurConnecte = utilisateurConnecte?.idUtilisateur;
+
   const resultatSuppression = useSuppressionObservationApi(
     observationASupprimer
   );
@@ -65,7 +70,7 @@ export const SuiviObservationsRequete: React.FC<
   };
 
   useEffect(() => {
-    if (props.observations && props.observations.length) {
+    if (props.observations?.length) {
       setIsExpanded(true);
     } else {
       setIsExpanded(false);
@@ -81,11 +86,7 @@ export const SuiviObservationsRequete: React.FC<
   };
 
   useEffect(() => {
-    if (
-      resultatCreation &&
-      creationObservation &&
-      creationObservation.texteObservation
-    ) {
+    if (resultatCreation && creationObservation?.texteObservation) {
       if (idObservationAModifier) {
         const indexObservation = observations.findIndex(
           el => el.id === resultatCreation.id
@@ -102,9 +103,10 @@ export const SuiviObservationsRequete: React.FC<
           {
             id: resultatCreation.id,
             trigramme: storeRece.getTrigrammeFromID(
-              getValeurOuVide(storeRece.utilisateurCourant?.idUtilisateur)
+              utilisateurs,
+              getValeurOuVide(idUtilisateurConnecte)
             ),
-            idUtilisateur: storeRece.utilisateurCourant?.idUtilisateur,
+            idUtilisateur: idUtilisateurConnecte,
             texte: creationObservation?.texteObservation,
             numeroOrdre: getNumeroOrdreMax(observations) + 1,
             dateObservation: Date.now()
@@ -136,10 +138,7 @@ export const SuiviObservationsRequete: React.FC<
   }, [resultatSuppression]);
 
   const onClickSupprimer = (ob: IObservation) => {
-    if (
-      storeRece.utilisateurCourant?.idUtilisateur === ob.idUtilisateur &&
-      !props.disabled
-    ) {
+    if (idUtilisateurConnecte === ob.idUtilisateur && !props.disabled) {
       setObservationASupprimer({ idObservation: ob.id });
     } else {
       logError({
@@ -150,10 +149,7 @@ export const SuiviObservationsRequete: React.FC<
   };
 
   const onClickModifier = (ob: IObservation) => {
-    if (
-      storeRece.utilisateurCourant?.idUtilisateur === ob.idUtilisateur &&
-      !props.disabled
-    ) {
+    if (idUtilisateurConnecte === ob.idUtilisateur && !props.disabled) {
       setIdObservationAModifier(ob.id);
       setTexteObservation(ob.texte);
       setIsOpen(true);

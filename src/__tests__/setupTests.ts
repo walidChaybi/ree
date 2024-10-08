@@ -2,7 +2,6 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
-import { IService } from "@model/agent/IService";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
@@ -15,7 +14,6 @@ import { storeRece } from "@util/storeRece";
 import React from "react";
 import request from "superagent";
 import { afterAll, afterEach, beforeAll, beforeEach, vi } from "vitest";
-import { servicesALL } from "../mock/data/servicesALL";
 import { configAgent } from "../mock/superagent-config/superagent-mock-agent";
 import { configComposition } from "../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../mock/superagent-config/superagent-mock-etatcivil";
@@ -78,8 +76,6 @@ if (!globalThis.testSetuped) {
     });
   }
 
-  storeRece.listeServices = servicesALL.data as any as IService[];
-
   window.URL.createObjectURL = vi.fn(() => "url_test");
 
   window.HTMLElement.prototype.scrollIntoView = vi.fn();
@@ -114,7 +110,6 @@ beforeAll(async () => {
   await TypePieceJustificative.init();
   await PaysSecabilite.init();
   await ParametreBaseRequete.init();
-  storeRece.listeServices = servicesALL.data as any as IService[];
 });
 
 afterAll(() => {
@@ -130,5 +125,5 @@ beforeEach(() => {
 
 afterEach(() => {
   // Réactivation de la log après chaque test (certains tests la désactive car les erreurs logguées sont normales)
-  storeRece.logErrorOff = false;
+  storeRece.logErrorDesactive = false;
 });

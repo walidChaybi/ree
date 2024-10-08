@@ -1,4 +1,7 @@
-import { RECEContext } from "@core/contexts/RECEContext";
+import {
+  RECEContextActions,
+  RECEContextData
+} from "@core/contexts/RECEContext";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import {
   ITitulaireActe,
@@ -74,7 +77,8 @@ export const OngletsDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
   const messageErreurGenreIndetermineMariage =
     "Pas de délivrance d'extrait plurilingue de mariage pour des personnes de même sexe ou de genre indéterminé.";
 
-  const { isDirty, setIsDirty } = useContext(RECEContext);
+  const { isDirty } = useContext(RECEContextData);
+  const { setIsDirty } = useContext(RECEContextActions);
   const [liste, setListe] = useState<ItemListe[]>(listePlus);
   const [openPopinErreur, setOpenPopinErreur] = useState(false);
   const [erreurMessagePopin, setErreurMessagePopin] = useState("");

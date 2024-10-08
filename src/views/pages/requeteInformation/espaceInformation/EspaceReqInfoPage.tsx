@@ -1,5 +1,5 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { RECEContext } from "@core/contexts/RECEContext";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   URL_MES_REQUETES_INFORMATION,
@@ -53,7 +53,7 @@ const getOnglets = (): IOngletProps[] => {
 };
 
 const EspaceInformationPage: React.FC<LocalProps> = ({ selectedTab }) => {
-  const { infosLoginOfficier } = useContext(RECEContext);
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   const selectedTabState = selectedTab || 0;
 
@@ -61,7 +61,7 @@ const EspaceInformationPage: React.FC<LocalProps> = ({ selectedTab }) => {
 
   return (
     <div>
-      {infosLoginOfficier?.officierDataState && (
+      {utilisateurConnecte && (
         <>
           {selectedTabState === 0}
           <BoiteAOnglets
