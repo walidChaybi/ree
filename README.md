@@ -2,6 +2,6 @@ IHM full SPA de gestion du Registre électronique de l'état civil
 
 Features flags: cf. src/views/common/util/featureFlag/FeatureFlag.ts 
 
-04/10/24
+08/10/24
 
 
