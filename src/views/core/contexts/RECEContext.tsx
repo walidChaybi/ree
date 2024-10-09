@@ -6,8 +6,8 @@ import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useEffect, useMemo, useState } from "react";
+import { useChargerDonneesApplicatives } from "../../../hooks/ChargerDonneesApplicativesHook";
 import useFetchApi from "../../../hooks/FetchApiHook";
-import { useChargerDonneesApplicatives } from "../../../hooks/useChargerDonneesApplicatives";
 import useChargerDonneesContexte from "../../../hooks/useChargerDonneesContexte";
 
 export interface IRECEContext {
@@ -41,7 +41,7 @@ const RECEContextProvider: React.FC<React.PropsWithChildren> = ({
     !!utilisateurConnecte
   );
 
-  useChargerDonneesApplicatives();
+  const { donneesChargees } = useChargerDonneesApplicatives();
 
   const contextValue = useMemo(
     () => ({
@@ -80,12 +80,14 @@ const RECEContextProvider: React.FC<React.PropsWithChildren> = ({
     });
   }, []);
 
-  return (
+  return donneesChargees ? (
     <RECEContextData.Provider value={contextValue}>
       <RECEContextActions.Provider value={contextActions}>
         {utilisateurConnecte && children}
       </RECEContextActions.Provider>
     </RECEContextData.Provider>
+  ) : (
+    <></>
   );
 };
 

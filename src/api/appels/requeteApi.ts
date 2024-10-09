@@ -13,7 +13,7 @@ import {
   IRMCRequestRequete
 } from "@model/rmc/requete/IRMCRequestRequete";
 import { SortOrder } from "@widget/tableau/TableUtils";
-import { ApiManager, HttpMethod } from "../ApiManager";
+import { HttpMethod } from "../ApiManager";
 import { URL_MENTION } from "./etatcivilApi";
 
 export const URL_REQUETES_DELIVRANCE_SERVICE = "/requetes/requetesService";
@@ -116,17 +116,22 @@ export interface IQueryParametersPourRequete {
   idRequete: string;
 }
 
-const api = ApiManager.getInstance("rece-requete-api", "v2");
+async function getApiManager() {
+  const { ApiManager } = await import("../ApiManager");
+  return ApiManager.getInstance("rece-requete-api", "v2");
+}
 
 ////////////////////////
 /*** API REQUETE V2 ***/
 ////////////////////////
 export function getParametresBaseRequete(): Promise<any> {
-  return api.fetchCache({
-    method: HttpMethod.POST,
-    uri: `${URL_PARAMETRE}`,
-    data: CLES
-  });
+  return getApiManager().then(api =>
+    api.fetchCache({
+      method: HttpMethod.POST,
+      uri: `${URL_PARAMETRE}`,
+      data: CLES
+    })
+  );
 }
 
 export function getTableauRequetesDelivrance(
@@ -134,119 +139,131 @@ export function getTableauRequetesDelivrance(
   listeStatuts: string,
   queryParameters: IQueryParametersPourRequetes
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri:
-      typeRequete === TypeAppelRequete.REQUETE_DELIVRANCE_SERVICE
-        ? URL_REQUETES_DELIVRANCE_SERVICE
-        : URL_MES_REQUETES_DELIVRANCE,
-    parameters: {
-      statuts: listeStatuts,
-      tri:
-        queryParameters.tri !== "prioriteRequete"
-          ? queryParameters.tri
-          : "dateStatut",
-      sens: queryParameters.sens,
-      range: queryParameters.range
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri:
+        typeRequete === TypeAppelRequete.REQUETE_DELIVRANCE_SERVICE
+          ? URL_REQUETES_DELIVRANCE_SERVICE
+          : URL_MES_REQUETES_DELIVRANCE,
+      parameters: {
+        statuts: listeStatuts,
+        tri:
+          queryParameters.tri !== "prioriteRequete"
+            ? queryParameters.tri
+            : "dateStatut",
+        sens: queryParameters.sens,
+        range: queryParameters.range
+      }
+    })
+  );
 }
 
 export function postTableauRequetesDelivranceService(
   queryParameters: IQueryParametersPourRequetes,
   filtresReq: IFiltreServiceRequeteDelivranceDto
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: URL_REQUETES_DELIVRANCE_SERVICE,
-    parameters: {
-      tri:
-        queryParameters.tri !== "prioriteRequete"
-          ? queryParameters.tri
-          : "dateStatut",
-      sens: queryParameters.sens,
-      range: queryParameters.range
-    },
-    data: filtresReq
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: URL_REQUETES_DELIVRANCE_SERVICE,
+      parameters: {
+        tri:
+          queryParameters.tri !== "prioriteRequete"
+            ? queryParameters.tri
+            : "dateStatut",
+        sens: queryParameters.sens,
+        range: queryParameters.range
+      },
+      data: filtresReq
+    })
+  );
 }
 
 export function getRequetesInformation(
   queryParameters: IQueryParametersPourRequetes
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: URL_MES_REQUETES_INFO,
-    parameters: {
-      statuts: queryParameters?.statuts?.join(","),
-      tri: queryParameters.tri,
-      sens: queryParameters.sens,
-      range: queryParameters.range
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: URL_MES_REQUETES_INFO,
+      parameters: {
+        statuts: queryParameters?.statuts?.join(","),
+        tri: queryParameters.tri,
+        sens: queryParameters.sens,
+        range: queryParameters.range
+      }
+    })
+  );
 }
 
 export function postRequetesInformation(
   queryParameters: IQueryParametersPourRequetes,
   filtresRequetes: IFiltresServiceRequeteInformationFormValues
 ) {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: URL_REQUETES_INFO_SERVICE,
-    parameters: {
-      tri: queryParameters.tri,
-      sens: queryParameters.sens,
-      range: queryParameters.range
-    },
-    data: {
-      sousType: filtresRequetes.sousType,
-      objet: filtresRequetes.objet,
-      idAgent: filtresRequetes.agent?.cle || "",
-      idService: filtresRequetes.service?.cle || "",
-      typeRequerant: filtresRequetes.typeRequerant,
-      statuts: filtresRequetes.statut
-        ? [filtresRequetes.statut]
-        : queryParameters.statuts
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: URL_REQUETES_INFO_SERVICE,
+      parameters: {
+        tri: queryParameters.tri,
+        sens: queryParameters.sens,
+        range: queryParameters.range
+      },
+      data: {
+        sousType: filtresRequetes.sousType,
+        objet: filtresRequetes.objet,
+        idAgent: filtresRequetes.agent?.cle || "",
+        idService: filtresRequetes.service?.cle || "",
+        typeRequerant: filtresRequetes.typeRequerant,
+        statuts: filtresRequetes.statut
+          ? [filtresRequetes.statut]
+          : queryParameters.statuts
+      }
+    })
+  );
 }
 
 export function getRequetesCreation(
   listeStatuts: string,
   queryParameters: IQueryParametersPourRequetes
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: URL_MES_REQUETES_CREATION,
-    parameters: {
-      statuts: listeStatuts,
-      tri:
-        queryParameters.tri !== "prioriteRequete"
-          ? queryParameters.tri
-          : "dateStatut",
-      sens: queryParameters.sens,
-      range: queryParameters.range
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: URL_MES_REQUETES_CREATION,
+      parameters: {
+        statuts: listeStatuts,
+        tri:
+          queryParameters.tri !== "prioriteRequete"
+            ? queryParameters.tri
+            : "dateStatut",
+        sens: queryParameters.sens,
+        range: queryParameters.range
+      }
+    })
+  );
 }
 
 export function postRequetesServiceCreation(
   queryParameters: IQueryParametersPourRequetes,
   filtresReq: IFiltreServiceRequeteCreationDto
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: URL_REQUETES_CREATION_SERVICE,
-    parameters: {
-      tri:
-        queryParameters.tri !== "prioriteRequete"
-          ? queryParameters.tri
-          : "dateStatut",
-      sens: queryParameters.sens,
-      range: queryParameters.range
-    },
-    data: filtresReq
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: URL_REQUETES_CREATION_SERVICE,
+      parameters: {
+        tri:
+          queryParameters.tri !== "prioriteRequete"
+            ? queryParameters.tri
+            : "dateStatut",
+        sens: queryParameters.sens,
+        range: queryParameters.range
+      },
+      data: filtresReq
+    })
+  );
 }
 
 export function getDetailRequete(
@@ -274,52 +291,60 @@ export function getDetailRequete(
       }
     };
   }
-  return api.fetch(config);
+  return getApiManager().then(api => api.fetch(config));
 }
 
 export async function getNomenclatureRequete(nom: string): Promise<any> {
-  return api.fetchCache({
-    method: HttpMethod.GET,
-    uri: `${URL_NOMENCLATURE}/${nom}`
-  });
+  return getApiManager().then(api =>
+    api.fetchCache({
+      method: HttpMethod.GET,
+      uri: `${URL_NOMENCLATURE}/${nom}`
+    })
+  );
 }
 
 export function rechercheMultiCriteresRequetes(
   criteres: IRMCRequestRequete,
   range?: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_REQUETES_RMC}`,
-    data: criteres,
-    parameters: {
-      range
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_REQUETES_RMC}`,
+      data: criteres,
+      parameters: {
+        range
+      }
+    })
+  );
 }
 
 export function patchUtilisateurAssigneRequete(
   queryParameters: IQueryParametersAssigneRequetes
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_REPONSES}/${queryParameters.idReponse}`,
-    parameters: {
-      nomOec: queryParameters.nomOec,
-      prenomOec: queryParameters.prenomOec
-    },
-    headers: []
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_REPONSES}/${queryParameters.idReponse}`,
+      parameters: {
+        nomOec: queryParameters.nomOec,
+        prenomOec: queryParameters.prenomOec
+      },
+      headers: []
+    })
+  );
 }
 
 export function getCompteurRequetes(statuts: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: URL_REQUETES_COUNT,
-    parameters: {
-      statuts
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: URL_REQUETES_COUNT,
+      parameters: {
+        statuts
+      }
+    })
+  );
 }
 
 export async function creationRequeteDelivrance({
@@ -331,15 +356,17 @@ export async function creationRequeteDelivrance({
   futurStatut: StatutRequete;
   refus?: boolean;
 }): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_REQUETES_DELIVRANCE}`,
-    data: requete,
-    parameters: {
-      refus,
-      futurStatut: StatutRequete.getKey(futurStatut)
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_REQUETES_DELIVRANCE}`,
+      data: requete,
+      parameters: {
+        refus,
+        futurStatut: StatutRequete.getKey(futurStatut)
+      }
+    })
+  );
 }
 
 export async function updateRequeteDelivrance({
@@ -353,66 +380,78 @@ export async function updateRequeteDelivrance({
   futurStatut: StatutRequete;
   refus?: boolean;
 }): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}`,
-    data: requete,
-    parameters: {
-      refus,
-      futurStatut: StatutRequete.getKey(futurStatut)
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}`,
+      data: requete,
+      parameters: {
+        refus,
+        futurStatut: StatutRequete.getKey(futurStatut)
+      }
+    })
+  );
 }
 
 export async function updateChoixDelivrance(
   idRequete: string,
   choixDelivrance: string | null
 ) {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_CHOIX_DELIVRANCE}`,
-    parameters: { choixDelivrance }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_CHOIX_DELIVRANCE}`,
+      parameters: { choixDelivrance }
+    })
+  );
 }
 
 export async function creationRequeteCreation(requete: ISaisieRequeteAEnvoyer) {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_REQUETES_CREATIONS}`,
-    data: [requete]
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_REQUETES_CREATIONS}`,
+      data: [requete]
+    })
+  );
 }
 
 export async function updateRequeteCreation(
   idRequete: string,
   requete: ISaisieRequeteAEnvoyer
 ) {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_REQUETES_CREATION}/${idRequete}`,
-    data: requete
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_REQUETES_CREATION}/${idRequete}`,
+      data: requete
+    })
+  );
 }
 
 export async function mettreAJourStatutApresSignature(
   idRequete: string,
   idSuiviDossier: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_REQUETES_CREATION}/${idRequete}${URL_SUIVI_DOSSIER}/${idSuiviDossier}${URL_METTRE_AJOUR_STATUT_APRES_SIGNATURE}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_REQUETES_CREATION}/${idRequete}${URL_SUIVI_DOSSIER}/${idSuiviDossier}${URL_METTRE_AJOUR_STATUT_APRES_SIGNATURE}`
+    })
+  );
 }
 
 export async function creationRequeteCreationEtTransmissionService(
   requete: ISaisieRequeteAEnvoyer,
   idService: string
 ) {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_REQUETES_CREATION_TRANSMISSION_SERVICE}?idService=${idService}`,
-    data: [requete]
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_REQUETES_CREATION_TRANSMISSION_SERVICE}?idService=${idService}`,
+      data: [requete]
+    })
+  );
 }
 
 export async function postSauvCourrierCreerActionMajStatutRequete(
@@ -421,16 +460,18 @@ export async function postSauvCourrierCreerActionMajStatutRequete(
   requete: Object,
   libelleAction?: string
 ) {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_COURRIER}`,
-    parameters: {
-      idRequete,
-      libelleAction,
-      statutRequete: StatutRequete.getKey(statutRequete)
-    },
-    data: requete
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_COURRIER}`,
+      parameters: {
+        idRequete,
+        libelleAction,
+        statutRequete: StatutRequete.getKey(statutRequete)
+      },
+      data: requete
+    })
+  );
 }
 
 export async function postSauvDocumentCreerActionMajStatutRequete(
@@ -439,113 +480,135 @@ export async function postSauvDocumentCreerActionMajStatutRequete(
   statutRequete: StatutRequete,
   document: Object
 ) {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_DOCUMENT}`,
-    parameters: {
-      libelleAction,
-      statutRequete: StatutRequete.getKey(statutRequete)
-    },
-    data: document
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_DOCUMENT}`,
+      parameters: {
+        libelleAction,
+        statutRequete: StatutRequete.getKey(statutRequete)
+      },
+      data: document
+    })
+  );
 }
 
 export async function postSauvegarderDocument(
   idRequete: string,
   documents: IDocumentReponse[]
 ) {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_DOCUMENT_REPONSE}/update/${idRequete}`,
-    data: documents
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_DOCUMENT_REPONSE}/update/${idRequete}`,
+      data: documents
+    })
+  );
 }
 
 export function patchDocumentsReponsesAvecSignature(
   miseAJourDocumentParams: IMiseAJourDocumentParams[]
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: URL_DOCUMENT_REPONSE,
-    data: miseAJourDocumentParams,
-    headers: []
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: URL_DOCUMENT_REPONSE,
+      data: miseAJourDocumentParams,
+      headers: []
+    })
+  );
 }
 
 export function deleteDocumentsReponseApi(idRequete: string) {
-  return api.fetch({
-    method: HttpMethod.DELETE,
-    uri: `${URL_DOCUMENT_REPONSE}/${idRequete}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.DELETE,
+      uri: `${URL_DOCUMENT_REPONSE}/${idRequete}`
+    })
+  );
 }
 
 export function getDocumentReponseById(idDcumentReponse: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_DOCUMENT_REPONSE}/${idDcumentReponse}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_DOCUMENT_REPONSE}/${idDcumentReponse}`
+    })
+  );
 }
 
 export function postDocumentReponseApi(
   idRequete: string,
   documentsReponse: IDocumentReponse[]
 ) {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_DOCUMENT_REPONSE}`,
-    data: {
-      idRequete,
-      documentsReponse
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_DOCUMENT_REPONSE}`,
+      data: {
+        idRequete,
+        documentsReponse
+      }
+    })
+  );
 }
 export function getPieceComplementInformationById(
   idPiece: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_REQUETES}${URL_PIECES_COMPLEMENT_INFORMATION}/${idPiece}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_REQUETES}${URL_PIECES_COMPLEMENT_INFORMATION}/${idPiece}`
+    })
+  );
 }
 
 export function postPieceComplementInformationApi(
   idRequete: string,
   pieceComplementInformation: any
 ) {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_REQUETES}/${idRequete}${URL_PIECE_COMPLEMENT_INFORMATION}`,
-    data: pieceComplementInformation
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_REQUETES}/${idRequete}${URL_PIECE_COMPLEMENT_INFORMATION}`,
+      data: pieceComplementInformation
+    })
+  );
 }
 
 export function getPieceJustificativeById(idPiece: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_REQUETES}${URL_PIECES_JUSTIFICATIVES}/${idPiece}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_REQUETES}${URL_PIECES_JUSTIFICATIVES}/${idPiece}`
+    })
+  );
 }
 
 export function postPieceJustificative(
   idRequete: string,
   pieceJustificative: IPieceJustificative
 ) {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_REQUETES}/${idRequete}${URL_PIECE_JUSTIFICATIVE}`,
-    data: pieceJustificative
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_REQUETES}/${idRequete}${URL_PIECE_JUSTIFICATIVE}`,
+      data: pieceJustificative
+    })
+  );
 }
 
 export function postCreationAction(idRequete: string, libelleAction: string) {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_ACTION}`,
-    parameters: {
-      idRequete,
-      libelleAction
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_ACTION}`,
+      parameters: {
+        idRequete,
+        libelleAction
+      }
+    })
+  );
 }
 
 export function postCreationActionEtMiseAjourStatut(
@@ -553,15 +616,17 @@ export function postCreationActionEtMiseAjourStatut(
   libelleAction: string,
   statutRequete: StatutRequete
 ) {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_ACTION_MAJ_STATUT}`,
-    parameters: {
-      idRequete,
-      libelleAction,
-      statutRequete: StatutRequete.getKey(statutRequete)
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_ACTION_MAJ_STATUT}`,
+      parameters: {
+        idRequete,
+        libelleAction,
+        statutRequete: StatutRequete.getKey(statutRequete)
+      }
+    })
+  );
 }
 
 export function postTransfertRequete(
@@ -572,18 +637,20 @@ export function postTransfertRequete(
   statutRequete: StatutRequete,
   estTransfert: boolean
 ) {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_TRANSFERT}`,
-    parameters: {
-      idRequete,
-      idService,
-      idUtilisateur,
-      statutRequete: StatutRequete.getKey(statutRequete),
-      libelleAction,
-      attribuer: !estTransfert
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_TRANSFERT}`,
+      parameters: {
+        idRequete,
+        idService,
+        idUtilisateur,
+        statutRequete: StatutRequete.getKey(statutRequete),
+        libelleAction,
+        attribuer: !estTransfert
+      }
+    })
+  );
 }
 
 export function postTransfertValideur(
@@ -592,16 +659,18 @@ export function postTransfertValideur(
   libelleAction: string,
   texteObservation: string
 ) {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_TRANSFERT_VALIDEUR}`,
-    data: {
-      idRequete,
-      idUtilisateurValideur,
-      libelleAction,
-      texteObservation
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_TRANSFERT_VALIDEUR}`,
+      data: {
+        idRequete,
+        idUtilisateurValideur,
+        libelleAction,
+        texteObservation
+      }
+    })
+  );
 }
 
 export function postRetourValideur(
@@ -610,75 +679,89 @@ export function postRetourValideur(
   libelleAction: string,
   texteObservation: string
 ) {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_RETOUR_VALIDEUR}`,
-    data: {
-      idRequete,
-      statutDemande,
-      libelleAction,
-      texteObservation
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_RETOUR_VALIDEUR}`,
+      data: {
+        idRequete,
+        statutDemande,
+        libelleAction,
+        texteObservation
+      }
+    })
+  );
 }
 
 export function postIgnorerRequete(
   idRequete: string,
   texteObservation: string
 ) {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: URL_IGNORER,
-    parameters: {
-      idRequete,
-      texteObservation
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: URL_IGNORER,
+      parameters: {
+        idRequete,
+        texteObservation
+      }
+    })
+  );
 }
 
 export function rechercheMultiCriteresAutoRequetes(
   criteres: ICriteresRMCAutoRequete,
   range?: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_REQUETES_RMC_AUTO}`,
-    data: criteres,
-    parameters: {
-      range
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_REQUETES_RMC_AUTO}`,
+      data: criteres,
+      parameters: {
+        range
+      }
+    })
+  );
 }
 
 export function getRequeteAleatoire(type: string) {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: URL_REQUETE_ALEATOIRE,
-    parameters: {
-      type
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: URL_REQUETE_ALEATOIRE,
+      parameters: {
+        type
+      }
+    })
+  );
 }
 
 export function getPrendreEnChargeRequeteSuivante(): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: URL_PRENDRE_EN_CHARGE_REQUETE_SUIVANTE
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: URL_PRENDRE_EN_CHARGE_REQUETE_SUIVANTE
+    })
+  );
 }
 
 export async function getOptionsCourriers(): Promise<any> {
-  return api.fetchCache({
-    method: HttpMethod.GET,
-    uri: `${URL_NOMENCLATURE}${URL_OPTION_COURRIER}`
-  });
+  return getApiManager().then(api =>
+    api.fetchCache({
+      method: HttpMethod.GET,
+      uri: `${URL_NOMENCLATURE}${URL_OPTION_COURRIER}`
+    })
+  );
 }
 
 export async function getReponsesReqInfo(): Promise<any> {
-  return api.fetchCache({
-    method: HttpMethod.GET,
-    uri: `${URL_NOMENCLATURE}${URL_REPONSE_REQ_INFO}`
-  });
+  return getApiManager().then(api =>
+    api.fetchCache({
+      method: HttpMethod.GET,
+      uri: `${URL_NOMENCLATURE}${URL_REPONSE_REQ_INFO}`
+    })
+  );
 }
 
 export async function sauvegarderReponseReqInfo(
@@ -686,47 +769,55 @@ export async function sauvegarderReponseReqInfo(
   corpsMailReponse: string,
   idReponse?: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_SAUVEGARDER_REPONSE_REQINFO}/${idRequete}`,
-    data: { corpsMail: corpsMailReponse, idReponse }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_SAUVEGARDER_REPONSE_REQINFO}/${idRequete}`,
+      data: { corpsMail: corpsMailReponse, idReponse }
+    })
+  );
 }
 
 export async function updateStatutRequeteInformation(
   idRequete: string,
   statutDemande: StatutRequete
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_INFORMATION_STATUT}/${idRequete}`,
-    parameters: {
-      statut: statutDemande.nom
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_INFORMATION_STATUT}/${idRequete}`,
+      parameters: {
+        statut: statutDemande.nom
+      }
+    })
+  );
 }
 
 export async function updateStatutRequeteCreation(
   idRequete: string,
   statutDemande: StatutRequete
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_CREATION}${idRequete}/statut`,
-    parameters: {
-      statut: statutDemande.nom
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_CREATION}${idRequete}/statut`,
+      parameters: {
+        statut: statutDemande.nom
+      }
+    })
+  );
 }
 
 export function getNbReqInfo(listeStatuts: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: URL_NB_REQ_INFO,
-    parameters: {
-      statuts: listeStatuts
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: URL_NB_REQ_INFO,
+      parameters: {
+        statuts: listeStatuts
+      }
+    })
+  );
 }
 
 export function postObservation(
@@ -734,159 +825,187 @@ export function postObservation(
   texteObservation: string,
   idObservation?: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: URL_OBSERVATION,
-    parameters: {
-      idRequete,
-      texteObservation,
-      idObservation
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: URL_OBSERVATION,
+      parameters: {
+        idRequete,
+        texteObservation,
+        idObservation
+      }
+    })
+  );
 }
 
 export function deleteObservation(idObservation: string): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.DELETE,
-    uri: URL_OBSERVATION,
-    parameters: {
-      idObservation
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.DELETE,
+      uri: URL_OBSERVATION,
+      parameters: {
+        idObservation
+      }
+    })
+  );
 }
 
 export function updateDocumentMention(
   id: string,
   mentionsRetirees?: string[]
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_DOCUMENT_REPONSE}/${id}${URL_MENTION}`,
-    data: mentionsRetirees ? mentionsRetirees : []
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_DOCUMENT_REPONSE}/${id}${URL_MENTION}`,
+      data: mentionsRetirees ? mentionsRetirees : []
+    })
+  );
 }
 
 export function deleteDocumentComplementaire(
   idDocumentReponse: string,
   idRequete: string
 ): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.DELETE,
-    uri: `${URL_DOCUMENT_COMPLEMENTAIRE}/${idDocumentReponse}`,
-    parameters: {
-      idRequete
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.DELETE,
+      uri: `${URL_DOCUMENT_COMPLEMENTAIRE}/${idDocumentReponse}`,
+      parameters: {
+        idRequete
+      }
+    })
+  );
 }
 
 export function postMessageRetourSDANF(idRequete: string, message: IEchange) {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_CREATION}${idRequete}${URL_ECHANGE}`,
-    data: message
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_CREATION}${idRequete}${URL_ECHANGE}`,
+      data: message
+    })
+  );
 }
 
 export function postMessageRetourSDANFEtUpdateStatutRequete(
   idRequete: string,
   message: IEchange
 ) {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_ECHANGE_STATUT}`,
-    parameters: {
-      idRequete
-    },
-    data: message
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_ECHANGE_STATUT}`,
+      parameters: {
+        idRequete
+      },
+      data: message
+    })
+  );
 }
 
 export const patchMiseAJourLibellePJ = (
   idPJ: string,
   nouveauLibelle: string
 ): Promise<any> =>
-  api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_FICHIER_PIECE_JUSTIFICATIVE}${idPJ}${URL_LIBELLE}`,
-    parameters: {
-      nouveauLibelle
-    }
-  });
+  getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_FICHIER_PIECE_JUSTIFICATIVE}${idPJ}${URL_LIBELLE}`,
+      parameters: {
+        nouveauLibelle
+      }
+    })
+  );
 
 export const getReqNataliById = (id: string): Promise<any> => {
-  return api.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_RECHERCHE_REQ_NATALI}/${id}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: `${URL_RECHERCHE_REQ_NATALI}/${id}`
+    })
+  );
 };
 
 export const postSauvegardePersonneEtActeSelectionne = (
   id: string,
   data: any
 ): Promise<any> => {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_SAUVEGARDE_PERSONNE_ACTE_RMC}/${id}`,
-    data: data
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_SAUVEGARDE_PERSONNE_ACTE_RMC}/${id}`,
+      data: data
+    })
+  );
 };
 
 export const patchModificationAvancementProjet = (
   id: string,
   data: any
 ): Promise<any> => {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_MISE_A_JOUR_SUIVI_DOSSIER}/${id}${URL_AVANCEMENT_PROJET}`,
-    parameters: {
-      avancement: data
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_MISE_A_JOUR_SUIVI_DOSSIER}/${id}${URL_AVANCEMENT_PROJET}`,
+      parameters: {
+        avancement: data
+      }
+    })
+  );
 };
 
 export const postAjoutPieceJustificativeAUneRequeteCreation = (
   idRequete: string,
   data: any
 ): Promise<any> => {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_CREATION}${idRequete}${URL_PIECE_JUSTIFICATIVES_CREATION}`,
-    data
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_CREATION}${idRequete}${URL_PIECE_JUSTIFICATIVES_CREATION}`,
+      data
+    })
+  );
 };
 
 export const patchMiseAJourIdSuiviDossier = (
   idSuiviDossier: string,
   idActe: string
 ): Promise<any> => {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_MISE_A_JOUR_SUIVI_DOSSIER}/${idSuiviDossier}/acte/${idActe}`,
-    data: {
-      idSuiviDossier,
-      idActe
-    }
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_MISE_A_JOUR_SUIVI_DOSSIER}/${idSuiviDossier}/acte/${idActe}`,
+      data: {
+        idSuiviDossier,
+        idActe
+      }
+    })
+  );
 };
 
 export const postValiderProjetActe = (
   idRequete: string,
   idSuiviDossier: string
 ) => {
-  return api.fetch({
-    method: HttpMethod.POST,
-    uri: `${URL_CREATION}${idRequete}${URL_SUIVI_DOSSIER}/${idSuiviDossier}/valider-projet`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.POST,
+      uri: `${URL_CREATION}${idRequete}${URL_SUIVI_DOSSIER}/${idSuiviDossier}/valider-projet`
+    })
+  );
 };
 
 export const modifierStatutRequeteMiseAJour = (
   idRequete: string,
   statutDemande: StatutRequete
 ): Promise<any> => {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: `${URL_REQUETES}${URL_REQUETE_MISE_A_JOUR}/${idRequete}/update-statut-requete-mise-a-jour/${StatutRequete.getKey(
-      statutDemande
-    )}`
-  });
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.PATCH,
+      uri: `${URL_REQUETES}${URL_REQUETE_MISE_A_JOUR}/${idRequete}/update-statut-requete-mise-a-jour/${StatutRequete.getKey(
+        statutDemande
+      )}`
+    })
+  );
 };

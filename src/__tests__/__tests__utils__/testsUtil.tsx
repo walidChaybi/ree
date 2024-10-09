@@ -10,6 +10,9 @@ import { RouteObject, createMemoryRouter } from "react-router-dom";
 import { expect, vi } from "vitest";
 import { urlImagePngVideBase64 } from "../../mock/data/ImagePng";
 
+export const attendre = async (apresAttente: void | Promise<void>) =>
+  await waitFor(() => apresAttente, { timeout: 500 }); 
+
 function dataURLtoFile(dataurl: string, filename: string): File {
   const arr = dataurl.split(",");
   const mime = arr[0]!.match(/:(.*?);/)![1]; // NOSONAR fichier non présent en PROD
