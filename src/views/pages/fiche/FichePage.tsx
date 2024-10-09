@@ -23,6 +23,7 @@ import { SousTypeMiseAJour } from "@model/requete/enum/SousTypeMiseAJour";
 import {
   ID,
   ID_ACTE,
+  URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID,
   URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID,
   URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID
 } from "@router/ReceUrls";
@@ -38,7 +39,13 @@ import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import { BarreNavigationSuivPrec } from "@widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
-import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from "react";
 import { useNavigate } from "react-router-dom";
 import useFetchApi from "../../../hooks/FetchApiHook";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
@@ -162,6 +169,8 @@ export const FichePage: React.FC<FichePageProps> = ({
       return;
     }
 
+    const estAnalyseMarginale =
+      optionMiseAJour === EOptionMiseAJourActe.ANALYSE_MARGINALE;
     const sousTypeOptionMiseAJour =
       OptionMiseAJourActe.getSousType(optionMiseAJour);
 
@@ -169,10 +178,9 @@ export const FichePage: React.FC<FichePageProps> = ({
       parametres: {
         body: {
           idActeMAJ: idActe,
-          choixMAJ:
-            optionMiseAJour === EOptionMiseAJourActe.ANALYSE_MARGINALE
-              ? "MAJ_ACTE_ANALYSE_MARGINALE"
-              : "MAJ_ACTE_APPOSER_MENTION",
+          choixMAJ: estAnalyseMarginale
+            ? "MAJ_ACTE_ANALYSE_MARGINALE"
+            : "MAJ_ACTE_APPOSER_MENTION",
           sousType: sousTypeOptionMiseAJour.nom,
           titulaires: TitulaireRequeteMiseAJour.listeDepuisDonneesFiche(
             dataFicheState.data.titulaires
@@ -180,11 +188,16 @@ export const FichePage: React.FC<FichePageProps> = ({
         }
       },
       apresSucces: reponse => {
-        const urlNavigation = (
-          SousTypeMiseAJour.estRMAC(sousTypeOptionMiseAJour)
-            ? URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID
-            : URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID
-        )
+        const urlNavigation = (() => {
+          switch (true) {
+            case estAnalyseMarginale:
+              return URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID;
+            case SousTypeMiseAJour.estRMAC(sousTypeOptionMiseAJour):
+              return URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID;
+            default:
+              return URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID;
+          }
+        })()
           .replace(ID, reponse.id)
           .replace(ID_ACTE, idActe);
 

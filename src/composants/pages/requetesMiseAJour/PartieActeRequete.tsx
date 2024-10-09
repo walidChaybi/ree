@@ -2,15 +2,15 @@ import { compositionApi } from "@api/appels/compositionApi";
 import { getDonneesPourCompositionActeTexte } from "@api/appels/etatcivilApi";
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
-import { getLibelle } from "@util/Utils";
 import { replaceUrl } from "@util/route/UrlUtil";
-import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AffichagePDF from "../../commun/affichageDocument/AffichagePDF";
+import Bouton from "../../commun/bouton/Bouton";
 import OngletsBouton from "../../commun/onglets/OngletsBouton";
 import OngletsContenu from "../../commun/onglets/OngletsContenu";
 import "./PartieActeRequete.scss";
+
 enum ECleOngletRequete {
   ACTE = "acte",
   MAJ = "mise-a-jour"
@@ -95,17 +95,19 @@ export const PartieActeRequete: React.FC<IPartieRequete> = ({ idActe }) => {
         cleOngletActif={ongletActif}
         changerOnglet={(valeur: string) => setOngletActif(valeur)}
       />
+
       <OngletsContenu estActif={ongletActif === ECleOngletRequete.ACTE}>
         <AlertesActes />
         <AffichagePDF contenuBase64={contenuActe} />
       </OngletsContenu>
-      <BoutonDoubleSubmit
+
+      <Bouton
         className="bouton-abandonner"
         title="Abandonner"
         onClick={() => replaceUrl(navigate, URL_RECHERCHE_ACTE_INSCRIPTION)}
       >
-        {getLibelle("Abandonner")}
-      </BoutonDoubleSubmit>
+        {"Abandonner"}
+      </Bouton>
     </div>
   );
 };

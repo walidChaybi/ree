@@ -8,23 +8,24 @@ import {
   SECABLE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { DEUX, QUINZE, TROIS, UN, getLibelle } from "@util/Utils";
-import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import {
   FormikComponentProps,
   compteNombreDeChampsPrenoms,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
+import Bouton from "../../../commun/bouton/Bouton";
 import ConteneurSousFormulaire from "../../../commun/conteneurs/sousFormulaire/ConteneurSousFormulaire";
 import Checkbox from "../../../commun/formulaire/Checkbox";
 import Input from "../../../commun/formulaire/Input";
 import "./MiseAJourAnalyseMarginaleForm.scss";
+import "./ModificationAnalyseMarginale.scss";
+
+const MAX_PRENOMS = QUINZE;
 
 const ModificationAnalyseMarginale: React.FC<FormikComponentProps> = ({
   formik
 }) => {
-  const MAX_PRENOMS = QUINZE;
-
   const nombrePrenoms = compteNombreDeChampsPrenoms(
     formik.values.analyseMarginale.prenoms
   );
@@ -72,7 +73,7 @@ const ModificationAnalyseMarginale: React.FC<FormikComponentProps> = ({
   };
 
   return (
-    <>
+    <div className="formulaire-mise-a-jour-analyse-marginale">
       <ConteneurSousFormulaire
         champsSousFormulaire={[
           {
@@ -209,16 +210,26 @@ const ModificationAnalyseMarginale: React.FC<FormikComponentProps> = ({
         )}
 
       <div className="contneur-bouton">
-        <BoutonDoubleSubmit
+        <Bouton
+          title="Annuler la saisie en cours"
           disabled={!formik.dirty}
           onClick={() => {
             formik.resetForm();
           }}
         >
-          {getLibelle("ANNULER LA SAISIE EN COURS")}
-        </BoutonDoubleSubmit>
+          {"Annuler la saisie en cours"}
+        </Bouton>
       </div>
-    </>
+
+      <div className="boutons-actions-form">
+        <Bouton title="Actualiser et visualiser" disabled>
+          {"Actualiser et visualiser"}
+        </Bouton>
+        <Bouton title="Valider et terminer" disabled>
+          {"Valider et terminer"}
+        </Bouton>
+      </div>
+    </div>
   );
 };
 

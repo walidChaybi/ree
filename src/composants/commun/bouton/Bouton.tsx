@@ -1,12 +1,22 @@
-import Button, { ButtonProps } from "@mui/material/Button";
+import "./Bouton.scss";
 
-type BoutonProps = ButtonProps;
+type BoutonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Bouton = ({
   children,
+  className,
+  role,
   ...props
 }: React.PropsWithChildren<BoutonProps>) => {
-  return <Button {...props}>{children}</Button>;
+  return (
+    <button
+      className={`bouton-rece ${className ?? ""}`.trim()}
+      role={role ?? "button"}
+      {...props}
+    >
+      {children}
+    </button>
+  );
 };
 
 export default Bouton;
