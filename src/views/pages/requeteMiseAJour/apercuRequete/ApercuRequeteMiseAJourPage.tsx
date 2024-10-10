@@ -34,10 +34,6 @@ import {
 import messageManager from "@util/messageManager";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
-import {
-  BlocageNavigationDetail,
-  BlockerNavigation
-} from "@widget/blocker/BlockerNavigation";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
@@ -49,6 +45,10 @@ import React, {
   useState
 } from "react";
 import { useNavigate, useParams } from "react-router";
+import {
+  BlocageNavigationDetail,
+  BlockerNavigation
+} from "../../../../composants/commun/blocker/BlockerNavigation";
 import { ApercuActeMisAJour } from "./commun/ApercuActeMisAjour";
 import MiseAJourAnalyseMarginale from "./contenu/MiseAJourAnalyseMarginale/MiseAJourAnalyseMarginale";
 import MiseAJourMentions from "./contenu/MiseAJourMentions/MiseAJourMentions";

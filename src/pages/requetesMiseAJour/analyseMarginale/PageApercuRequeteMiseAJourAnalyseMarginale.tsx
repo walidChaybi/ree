@@ -6,16 +6,16 @@ import PartieFormulaire from "../../../composants/pages/requetesMiseAJour/Partie
 import "./scss/PageApercuRequeteMiseAJourAnalyseMarginale.scss";
 
 export const PageApercuRequeteMiseAJourAnalyseMarginale: React.FC = () => {
-  const { idActeParam } = useParams<TUuidActeParams>();
+  const { idActeParam, idRequeteParam } = useParams<TUuidActeParams>();
 
-  if (!idActeParam) {
+  if (!idActeParam || !idRequeteParam) {
     return <Navigate to={URL_CONTEXT_APP} replace />;
   }
 
   return (
     <div className="page-apercu-requete-mise-a-jour">
       <PartieActeRequete idActe={idActeParam} />
-      <PartieFormulaire idActe={idActeParam} />
+      <PartieFormulaire idActe={idActeParam} idRequete={idRequeteParam} />
     </div>
   );
 };

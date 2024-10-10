@@ -78,7 +78,7 @@ const URL_METTRE_AJOUR_STATUT_APRES_SIGNATURE =
   "/mettre-a-jour-statut-apres-signature";
 export const URL_PRENDRE_EN_CHARGE_REQUETE_SUIVANTE =
   "/requetes/creation/requete-a-prendre-en-charge";
-const URL_REQUETE_MISE_A_JOUR = "/mise-a-jour";
+export const URL_REQUETE_MISE_A_JOUR = "/mise-a-jour";
 
 const URL_REPONSES = "/reponses";
 

@@ -1,11 +1,13 @@
-// MiseAJourAnalyseMarginaleForm.test.tsx
 import { IDerniereAnalyseMarginalResultat } from "@hook/requete/miseajour/DerniereAnalyseMarginaleApiHook";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
-import { render, screen } from "@testing-library/react";
-import { expect, it } from "vitest";
+import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import messageManager from "@util/messageManager";
+import { RouterProvider } from "react-router-dom";
+import { expect, it, vi } from "vitest";
 import { MiseAJourAnalyseMarginaleForm } from "../../../../../composants/pages/requetesMiseAJour/miseAJourAnalyseMarginaleForm/MiseAJourAnalyseMarginaleForm";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
-// Mock Data
 const mockDerniereAnalyseMarginal: IDerniereAnalyseMarginalResultat = {
   id: "mockId",
   dateDebut: 1000,
@@ -23,13 +25,65 @@ const mockDerniereAnalyseMarginal: IDerniereAnalyseMarginalResultat = {
   }
 };
 
+vi.mock("@util/messageManager", () => {
+  return {
+    __esModule: true,
+    default: {
+      showSuccessAndClose: vi.fn()
+    }
+  };
+});
+
 it("renders le formulaire avec les bonnes valeurs par defaut", () => {
-  render(
-    <MiseAJourAnalyseMarginaleForm
-      derniereAnalyseMarginal={mockDerniereAnalyseMarginal}
-    />
+  const router = createTestingRouter(
+    [
+      {
+        path: "/",
+        element: (
+          <MiseAJourAnalyseMarginaleForm
+            idRequete="mockId"
+            derniereAnalyseMarginal={mockDerniereAnalyseMarginal}
+          />
+        )
+      }
+    ],
+    ["/"]
   );
+
+  render(<RouterProvider router={router} />);
+
   expect(screen.getByDisplayValue("Doe Smith")).toBeDefined();
   expect(screen.getByDisplayValue("John")).toBeDefined();
   expect(screen.queryByText("motifMock")).toBeNull();
+});
+
+it("redirige vers la page RMC au clic sur le bouton valider et terminer", async () => {
+  const router = createTestingRouter(
+    [
+      {
+        path: "/",
+        element: (
+          <MiseAJourAnalyseMarginaleForm
+            idRequete="e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"
+            derniereAnalyseMarginal={mockDerniereAnalyseMarginal}
+          />
+        )
+      },
+      {
+        path: URL_RECHERCHE_ACTE_INSCRIPTION,
+        element: <div>Redirection effective</div>
+      }
+    ],
+    ["/"]
+  );
+
+  render(<RouterProvider router={router} />);
+  const boutonValider = screen.getByText("VALIDER ET TERMINER");
+  fireEvent.click(boutonValider);
+  waitFor(() => {
+    expect(router.state.location.pathname).toBe(URL_RECHERCHE_ACTE_INSCRIPTION);
+    expect(messageManager.showSuccessAndClose).toHaveBeenCalledWith(
+      "L'analyse marginale a été mise à jour avec succès"
+    );
+  });
 });

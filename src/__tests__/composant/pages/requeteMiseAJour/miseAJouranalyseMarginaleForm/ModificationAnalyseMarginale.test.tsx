@@ -65,14 +65,14 @@ it("ajoute et retire un prénom", () => {
 
   expect(screen.getByText("Prénom")).toBeDefined();
 
-  const addButton = screen.getByText("Ajouter prénom");
-  fireEvent.click(addButton);
+  const boutonAjouterPrenom = screen.getByText("Ajouter prénom");
+  fireEvent.click(boutonAjouterPrenom);
 
   expect(screen.getByText("Prénom 1")).toBeDefined();
   expect(screen.getByText("Prénom 2")).toBeDefined();
 
-  const removeButton = screen.getByText("Annuler la saisie");
-  fireEvent.click(removeButton);
+  const boutonRetirerPrenom = screen.getByText("Annuler la saisie");
+  fireEvent.click(boutonRetirerPrenom);
 
   expect(screen.getByText("Prénom")).toBeDefined();
 });

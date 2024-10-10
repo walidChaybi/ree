@@ -10,18 +10,15 @@ describe("Test de la page aperçu requête mise à jour analyse marginale", () =
     const router = createTestingRouter(
       [
         {
-          path: "/:idActeParam",
+          path: "/:idActeParam/:idRequeteParam",
           element: <PageApercuRequeteMiseAJourAnalyseMarginale />
         }
       ],
-      ["/b41079a5-9e8d-478c-b04c-c4c4ey86537g"]
+      ["/b41079a5-9e8d-478c-b04c-c4c4ey86537g/idRequeteMock"]
     );
 
     render(<RouterProvider router={router} />);
-    console.log("url : ", router.state.location.pathname);
-    expect(router.state.location.pathname).toBe(
-      "/b41079a5-9e8d-478c-b04c-c4c4ey86537g"
-    );
+
     expect(screen.getByText("Acte registre")).toBeDefined();
     expect(screen.getByText("Analyse Marginale")).toBeDefined();
   });

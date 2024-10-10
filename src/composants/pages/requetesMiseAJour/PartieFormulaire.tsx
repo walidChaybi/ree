@@ -10,10 +10,12 @@ enum ECleOngletFormulaire {
 
 interface IPartieFormulaireProps {
   idActe: string;
+  idRequete: string;
 }
 
 export const PartieFormulaire: React.FC<IPartieFormulaireProps> = ({
-  idActe
+  idActe,
+  idRequete
 }) => {
   const [ongletActif, setOngletActif] = useState<ECleOngletFormulaire>(
     ECleOngletFormulaire.ANALYSE_MARGINALE
@@ -41,6 +43,7 @@ export const PartieFormulaire: React.FC<IPartieFormulaireProps> = ({
         estActif={ongletActif === ECleOngletFormulaire.ANALYSE_MARGINALE}
       >
         <MiseAJourAnalyseMarginaleForm
+          idRequete={idRequete}
           derniereAnalyseMarginal={derniereAnalyseMarginaleResultat}
         />
       </OngletsContenu>
