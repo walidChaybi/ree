@@ -1,7 +1,6 @@
 .conteneur-formulaire {
     border: var(--bleu-sombre-rece) 1px solid;
     border-radius: .25rem;
-    overflow: hidden;
     background-color: var(--gris-clair-rece);
     width:100%;
 
@@ -12,11 +11,5 @@
         color: var(--blanc-rece);
         background-color: var(--bleu-sombre-rece);
         font-weight: bold;
-    }
-
-    .contenu-conteneur-formulaire {
-        padding: 1.5rem 0;
-        width: 90%;
-        margin: 0 auto;
     }
 }

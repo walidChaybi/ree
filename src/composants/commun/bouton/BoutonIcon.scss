@@ -1,0 +1,31 @@
+.bouton-icon-rece {
+    min-width: unset;
+    width: fit-content;
+    margin: 0;
+    border-radius: 4px;
+    padding: .3rem;
+    text-transform: uppercase;
+    transition: background-color .2s ease;
+    display: grid;
+    place-content: center;
+    background-color: var(--bleu-sombre-rece);
+    color: var(--blanc-rece);
+
+    &.bouton-danger {
+        background-color: var(--rouge-erreur);
+    }
+
+    &:hover {
+        &:not(.bouton-danger) {
+            background-color: var(--bleu-rece);
+        }
+
+        &.bouton-danger {
+            background-color: rgba($color: #f44336, $alpha: .7)
+        }
+    }
+
+    &:disabled {
+        background-color: var(--gris-inactif);
+    }
+}

@@ -5,15 +5,10 @@ type BoutonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 const Bouton = ({
   children,
   className,
-  role,
   ...props
 }: React.PropsWithChildren<BoutonProps>) => {
   return (
-    <button
-      className={`bouton-rece ${className ?? ""}`.trim()}
-      role={role ?? "button"}
-      {...props}
-    >
+    <button className={`bouton-rece ${className ?? ""}`.trim()} {...props}>
       {children}
     </button>
   );
