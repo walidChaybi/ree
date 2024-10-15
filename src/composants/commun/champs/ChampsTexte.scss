@@ -26,4 +26,10 @@
             background-color: var(--gris-clair-rece);
         }
     }
+
+    .message-erreur-texte {
+    color: var(--rouge-erreur);
+    font-size: .9rem;
+    text-align: start;
+}
 }

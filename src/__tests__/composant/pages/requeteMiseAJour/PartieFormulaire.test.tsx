@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import PartieFormulaire from "../../../../composants/pages/requetesMiseAJour/PartieFormulaire";
+import EditionMiseAJourContextProvider from "../../../../contexts/EditionMiseAJourContextProvider";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
 const idActe = "b41079a5-9e8d-478c-b04c-c4c4ey86537g";
@@ -12,7 +13,14 @@ describe("PartieFormulaire", () => {
       [
         {
           path: "/",
-          element: <PartieFormulaire idActe={idActe} idRequete={idRequete} />
+          element: (
+            <EditionMiseAJourContextProvider
+              idActe={idActe}
+              idRequete={idRequete}
+            >
+              <PartieFormulaire />
+            </EditionMiseAJourContextProvider>
+          )
         }
       ],
       ["/"]
@@ -25,6 +33,6 @@ describe("PartieFormulaire", () => {
     );
 
     expect(screen.getByText("Analyse Marginale")).toBeDefined();
-    expect(screen.getByText("Nom")).toBeDefined();
+    await waitFor(() => expect(screen.getByText("Nom")).toBeDefined());
   });
 });

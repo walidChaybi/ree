@@ -61,6 +61,7 @@ export const useCreateBlocker = ({
           label: getLibelle("OK"),
           action: () => {
             executerApresConfirmation();
+            blocker.proceed?.();
           }
         },
         {

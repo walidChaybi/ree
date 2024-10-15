@@ -1,110 +1,56 @@
-import { compositionApi } from "@api/appels/compositionApi";
-import { getDonneesPourCompositionActeTexte } from "@api/appels/etatcivilApi";
-import { AlertesActes } from "@composant/alertesActe/AlertesActes";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
-import { replaceUrl } from "@util/route/UrlUtil";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import AffichagePDF from "../../commun/affichageDocument/AffichagePDF";
+import {
+  ECleOngletsMiseAJour,
+  EditionMiseAJourContext
+} from "../../../contexts/EditionMiseAJourContextProvider";
 import Bouton from "../../commun/bouton/Bouton";
 import OngletsBouton from "../../commun/onglets/OngletsBouton";
-import OngletsContenu from "../../commun/onglets/OngletsContenu";
 import "./PartieActeRequete.scss";
+import OngletActe from "./onglets/OngletActe";
+import OngletActeMisAJour from "./onglets/OngletActeMisAJour";
 
-enum ECleOngletRequete {
-  ACTE = "acte",
-  MAJ = "mise-a-jour"
-}
-
-interface IPartieRequete {
-  idActe: string;
-}
-
-export const PartieActeRequete: React.FC<IPartieRequete> = ({ idActe }) => {
+export const PartieActeRequete: React.FC = () => {
   const navigate = useNavigate();
 
-  // const { appelApi: appelApiDonneesPourComposition } = useFetchApi(
-  //   CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE
-  // );
-  // const { appelApi: appelApicompositionActeTexte } = useFetchApi(
-  //   CONFIG_POST_COMPOSITION_ACTE_TEXTE
-  // );
-
-  const [ongletActif, setOngletActif] = useState<string>(
-    ECleOngletRequete.ACTE
+  const { ongletsActifs, miseAJourEffectuee } = useContext(
+    EditionMiseAJourContext.Valeurs
   );
-  const [contenuActe, setContenuActe] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!idActe) {
-      return;
-    }
-
-    // appelApiDonneesPourComposition({
-    //   parametres: {
-    //     path: {
-    //       idActe: idActe
-    //     }
-    //   },
-    //   apresSucces: donneesComposition => {
-
-    //     appelApicompositionActeTexte({
-    //       parametres: {
-    //         body: {
-    //           donneesComposition: donneesComposition
-    //         }
-    //       },
-    //       apresSucces: acteCompose => {
-    //         //setContenuActe(acteCompose.contenu ?? "");
-    //       },
-    //       apresErreur: erreurs => {
-    //         logError({
-    //           messageUtilisateur:
-    //             "Impossible de récupérer les données pour la composition de l'acte",
-    //           error: erreurs[0]
-    //         });
-    //       }
-    //     });
-    //   },
-    //   apresErreur: erreurs => {
-    //     logError({
-    //       messageUtilisateur: "Impossible de récupérer l'acte recomposé'",
-    //       error: erreurs[0]
-    //     });
-    //   }
-    // });
-
-    getDonneesPourCompositionActeTexte(idActe).then(data =>
-      compositionApi
-        .getCompositionActeTexte(data.body)
-        .then(dataComposition =>
-          setContenuActe(dataComposition.body.data.contenu ?? "")
-        )
-    );
-  }, [idActe]);
+  const { changerOnglet } = useContext(EditionMiseAJourContext.Actions);
 
   return (
     <div className="partie-acte-requete">
       <OngletsBouton
         onglets={[
           {
-            cle: ECleOngletRequete.ACTE,
+            cle: ECleOngletsMiseAJour.ACTE,
             libelle: "Acte registre"
+          },
+          {
+            cle: ECleOngletsMiseAJour.ACTE_MIS_A_JOUR,
+            libelle: "Acte mis à jour",
+            inactif: !miseAJourEffectuee
           }
         ]}
-        cleOngletActif={ongletActif}
-        changerOnglet={(valeur: string) => setOngletActif(valeur)}
+        cleOngletActif={ongletsActifs.actes}
+        changerOnglet={(valeur: string) =>
+          changerOnglet(valeur as ECleOngletsMiseAJour, null)
+        }
       />
 
-      <OngletsContenu estActif={ongletActif === ECleOngletRequete.ACTE}>
-        <AlertesActes />
-        <AffichagePDF contenuBase64={contenuActe} />
-      </OngletsContenu>
+      <OngletActe
+        estActif={ongletsActifs.actes === ECleOngletsMiseAJour.ACTE}
+      />
+
+      <OngletActeMisAJour
+        estActif={ongletsActifs.actes === ECleOngletsMiseAJour.ACTE_MIS_A_JOUR}
+      />
 
       <Bouton
         className="bouton-abandonner"
         title="Abandonner"
-        onClick={() => replaceUrl(navigate, URL_RECHERCHE_ACTE_INSCRIPTION)}
+        onClick={() => navigate(URL_RECHERCHE_ACTE_INSCRIPTION)}
       >
         {"Abandonner"}
       </Bouton>

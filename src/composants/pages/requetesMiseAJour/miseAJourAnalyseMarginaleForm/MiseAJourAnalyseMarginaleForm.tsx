@@ -1,82 +1,110 @@
-import { CONFIG_PATCH_MISE_A_JOUR_STATUT_REQUETE } from "@api/configurations/requete/miseAJour/PatchMiseAJourStatutRequeteApiConfig";
-import { TypeDeValeursParDefaut } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import { CONFIG_PATCH_VALIDATION_ANALYSE_MARGINALE } from "@api/configurations/etatCivil/PatchValidationAnalyseMarginaleConfigApi";
+import { CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
+import { CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/miseAJour/PatchStatutRequeteMiseAjour";
+import {
+  IMiseAJourAnalyseMarginaleValeursForm,
+  MiseAJourAnalyseMarginaleValeursForm,
+  SCHEMA_VALIDATION_MISE_A_JOUR_ANALYSE_MARGINALE
+} from "@api/validations/requeteMiseAJour/MiseAJourAnalyseMarginaleValidation";
 import { IDerniereAnalyseMarginalResultat } from "@hook/requete/miseajour/DerniereAnalyseMarginaleApiHook";
-import { IMajAnalyseMarginaleForm } from "@model/form/miseAJour/IMiseAJourMentionsForm";
-import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import { logError } from "@util/LogManager";
-import { getValeurOuVide } from "@util/Utils";
 import messageManager from "@util/messageManager";
 import { Formulaire } from "@widget/formulaire/Formulaire";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  ECleOngletsMiseAJour,
+  EditionMiseAJourContext
+} from "../../../../contexts/EditionMiseAJourContextProvider";
 import useFetchApi from "../../../../hooks/FetchApiHook";
+import PageChargeur from "../../../commun/chargeurs/PageChargeur";
 import ModificationAnalyseMarginale from "./ModificationAnalyseMarginale";
 
 interface IMiseAJourAnalyseMarginaleForm {
-  idRequete: string;
   derniereAnalyseMarginal?: IDerniereAnalyseMarginalResultat;
-  gestionBlocker?: {
-    activerBlockerSansConfirmation: () => void;
-    activerBlockerAvecConfirmation: () => void;
-    desactiverBlocker: () => void;
-  };
 }
-
-const getValeurParDefaut = (
-  derniereAM?: IDerniereAnalyseMarginalResultat
-): IMajAnalyseMarginaleForm => {
-  const secable = Boolean(
-    derniereAM?.titulaire.nomPartie1 && derniereAM?.titulaire.nomPartie2
-  );
-  return {
-    analyseMarginale: {
-      nom: derniereAM?.titulaire.nom ?? "",
-      prenoms: getPrenomsOrdonneVersPrenomsDefaultValues(
-        derniereAM?.titulaire.prenoms,
-        TypeDeValeursParDefaut.UNDEFINED
-      ),
-      motif: ""
-    },
-    nomSecable: {
-      nomPartie1: secable
-        ? getValeurOuVide(derniereAM?.titulaire.nomPartie1)
-        : "",
-      nomPartie2: secable
-        ? getValeurOuVide(derniereAM?.titulaire.nomPartie2)
-        : "",
-      secable: secable
-    }
-  };
-};
 
 export const MiseAJourAnalyseMarginaleForm: React.FC<
   IMiseAJourAnalyseMarginaleForm
-> = ({ idRequete, derniereAnalyseMarginal, gestionBlocker }) => {
-  const navigate = useNavigate();
-  const { appelApi: appelPatchMiseAJourStatutRequete } = useFetchApi(
-    CONFIG_PATCH_MISE_A_JOUR_STATUT_REQUETE
-  );
+> = ({ derniereAnalyseMarginal }) => {
+  const { idActe, idRequete } = useContext(EditionMiseAJourContext.Valeurs);
+  const {
+    activerOngletActeMisAJour,
+    setComposerActeMisAJour,
+    changerOnglet,
+    desactiverBlocker
+  } = useContext(EditionMiseAJourContext.Actions);
 
-  const onActualiserEtVisualiser = () => {
-    gestionBlocker?.activerBlockerAvecConfirmation();
+  const navigate = useNavigate();
+
+  const {
+    appelApi: appelPatchValidationAnalyseMarginale,
+    enAttenteDeReponseApi: enAttenteValidationAnalyseMarginale
+  } = useFetchApi(CONFIG_PATCH_VALIDATION_ANALYSE_MARGINALE);
+  const {
+    appelApi: appelApiMisAJourAnalyseMarginale,
+    enAttenteDeReponseApi: enAttenteMiseAJourAnalyseMarginale
+  } = useFetchApi(CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE);
+  const {
+    appelApi: appelApiModifierStatutRequeteMiseAJour,
+    enAttenteDeReponseApi: enAttenteClotureRequete
+  } = useFetchApi(CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR);
+
+  const [valeursParDefaut, setValeursParDefaut] =
+    useState<IMiseAJourAnalyseMarginaleValeursForm>(
+      MiseAJourAnalyseMarginaleValeursForm.valeurParDefaut(
+        derniereAnalyseMarginal
+      )
+    );
+
+  const onSubmit = (valeurs: IMiseAJourAnalyseMarginaleValeursForm) => {
+    appelApiMisAJourAnalyseMarginale({
+      parametres: {
+        path: { idActe: idActe },
+        body: MiseAJourAnalyseMarginaleValeursForm.versDto(valeurs)
+      },
+      apresSucces: () => {
+        setValeursParDefaut(valeurs);
+        activerOngletActeMisAJour();
+        setComposerActeMisAJour(true);
+        changerOnglet(ECleOngletsMiseAJour.ACTE_MIS_A_JOUR, null);
+      },
+      apresErreur: () =>
+        messageManager.showError(
+          "Impossible de mettre à jour l'analyse marginale"
+        )
+    });
   };
 
   const onClickValiderEtTerminer = () => {
-    appelPatchMiseAJourStatutRequete({
+    appelPatchValidationAnalyseMarginale({
       parametres: {
         path: {
-          idRequete: idRequete
-        },
-        query: {
-          estMiseAjourAnalyseMarginale: true
+          idActe: idActe
         }
       },
       apresSucces: () => {
-        gestionBlocker?.desactiverBlocker();
-        navigate(URL_RECHERCHE_ACTE_INSCRIPTION);
-        messageManager.showSuccessAndClose(
-          "L'analyse marginale a été mise à jour avec succès"
-        );
+        appelApiModifierStatutRequeteMiseAJour({
+          parametres: {
+            path: {
+              idRequete: idRequete,
+              statut: StatutRequete.getKey(StatutRequete.TRAITEE_MIS_A_JOUR)
+            }
+          },
+          apresErreur: () =>
+            messageManager.showWarningAndClose(
+              "Erreur lors de la clôture de la requête de mise à jour."
+            ),
+          finalement: () => {
+            desactiverBlocker();
+            navigate(URL_RECHERCHE_ACTE_INSCRIPTION);
+            messageManager.showSuccessAndClose(
+              "L'analyse marginale a été mise à jour avec succès"
+            );
+          }
+        });
       },
       apresErreur: erreur => {
         logError({
@@ -88,16 +116,23 @@ export const MiseAJourAnalyseMarginaleForm: React.FC<
   };
 
   return (
-    <Formulaire
-      formDefaultValues={getValeurParDefaut(derniereAnalyseMarginal)}
-      formValidationSchema={undefined}
-      onSubmit={() => console.log("Soumission implémentée dans STRECE-3846")}
-      className="sans-marge"
-    >
-      <ModificationAnalyseMarginale
-        onValiderEtTerminer={onClickValiderEtTerminer}
-        onActualiserEtVisualiser={onActualiserEtVisualiser}
-      />
-    </Formulaire>
+    <>
+      {(enAttenteValidationAnalyseMarginale ||
+        enAttenteMiseAJourAnalyseMarginale ||
+        enAttenteClotureRequete) && <PageChargeur />}
+
+      <Formulaire
+        formDefaultValues={valeursParDefaut}
+        formValidationSchema={SCHEMA_VALIDATION_MISE_A_JOUR_ANALYSE_MARGINALE}
+        onSubmit={valeurs =>
+          onSubmit(valeurs as IMiseAJourAnalyseMarginaleValeursForm)
+        }
+        className="sans-marge"
+      >
+        <ModificationAnalyseMarginale
+          onValiderEtTerminer={onClickValiderEtTerminer}
+        />
+      </Formulaire>
+    </>
   );
 };

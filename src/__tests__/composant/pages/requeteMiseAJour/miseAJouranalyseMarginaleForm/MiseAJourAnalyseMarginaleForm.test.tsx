@@ -2,10 +2,12 @@ import { IDerniereAnalyseMarginalResultat } from "@hook/requete/miseajour/Dernie
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import messageManager from "@util/messageManager";
 import { RouterProvider } from "react-router-dom";
 import { expect, test, vi } from "vitest";
 import { MiseAJourAnalyseMarginaleForm } from "../../../../../composants/pages/requetesMiseAJour/miseAJourAnalyseMarginaleForm/MiseAJourAnalyseMarginaleForm";
+import EditionMiseAJourContextProvider from "../../../../../contexts/EditionMiseAJourContextProvider";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 const mockDerniereAnalyseMarginal: IDerniereAnalyseMarginalResultat = {
@@ -40,10 +42,14 @@ test("renders le formulaire avec les bonnes valeurs par defaut", () => {
       {
         path: "/",
         element: (
-          <MiseAJourAnalyseMarginaleForm
-            idRequete="mockId"
-            derniereAnalyseMarginal={mockDerniereAnalyseMarginal}
-          />
+          <EditionMiseAJourContextProvider
+            idActe="e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"
+            idRequete={""}
+          >
+            <MiseAJourAnalyseMarginaleForm
+              derniereAnalyseMarginal={mockDerniereAnalyseMarginal}
+            />
+          </EditionMiseAJourContextProvider>
         )
       }
     ],
@@ -63,10 +69,14 @@ test("redirige vers la page RMC au clic sur le bouton valider et terminer", asyn
       {
         path: "/",
         element: (
-          <MiseAJourAnalyseMarginaleForm
-            idRequete="e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"
-            derniereAnalyseMarginal={mockDerniereAnalyseMarginal}
-          />
+          <EditionMiseAJourContextProvider
+            idActe="e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"
+            idRequete={"e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"}
+          >
+            <MiseAJourAnalyseMarginaleForm
+              derniereAnalyseMarginal={mockDerniereAnalyseMarginal}
+            />
+          </EditionMiseAJourContextProvider>
         )
       },
       {
@@ -78,6 +88,16 @@ test("redirige vers la page RMC au clic sur le bouton valider et terminer", asyn
   );
 
   render(<RouterProvider router={router} />);
+
+  await userEvent.type(screen.getByLabelText("Motif"), "Test");
+  await userEvent.type(screen.getByLabelText("Nom"), "test");
+
+  fireEvent.click(screen.getByTitle("Actualiser et visualiser"));
+
+  await waitFor(() =>
+    expect(screen.getByDisplayValue("Doe Smithtest")).toBeDefined()
+  );
+
   const boutonValider = screen.getByText("Valider et terminer");
   fireEvent.click(boutonValider);
   waitFor(() => {

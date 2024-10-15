@@ -1,9 +1,9 @@
-import * as EtatCivilApi from "@api/appels/etatcivilApi";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, it as test, vi } from "vitest";
 import { PartieActeRequete } from "../../../../composants/pages/requetesMiseAJour/PartieActeRequete";
+import EditionMiseAJourContextProvider from "../../../../contexts/EditionMiseAJourContextProvider";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
 const mockedUseNavigate = vi.fn();
@@ -25,7 +25,11 @@ describe("PartieActeRequete", () => {
       [
         {
           path: "/:idActeParam",
-          element: <PartieActeRequete idActe={idActe} />
+          element: (
+            <EditionMiseAJourContextProvider idActe={idActe} idRequete={""}>
+              <PartieActeRequete />
+            </EditionMiseAJourContextProvider>
+          )
         }
       ],
       ["/b41079a5-9e8d-478c-b04c-c4c4ey86537g"]
@@ -35,7 +39,6 @@ describe("PartieActeRequete", () => {
 
     expect(screen.getByText("Acte registre")).toBeDefined();
     expect(screen.getByText("Alertes et informations")).toBeDefined();
-    expect(screen.getByText("Aucun document à afficher")).toBeDefined();
   });
 
   test("Redirection lorsque le bouton Abandonner est cliqué", async () => {
@@ -43,7 +46,11 @@ describe("PartieActeRequete", () => {
       [
         {
           path: "/:idActeParam",
-          element: <PartieActeRequete idActe={idActe} />
+          element: (
+            <EditionMiseAJourContextProvider idActe={idActe} idRequete={""}>
+              <PartieActeRequete />
+            </EditionMiseAJourContextProvider>
+          )
         },
         {
           path: URL_RECHERCHE_ACTE_INSCRIPTION,
@@ -57,21 +64,5 @@ describe("PartieActeRequete", () => {
     fireEvent.click(screen.getByText("Abandonner"));
 
     expect(mockedUseNavigate).toHaveBeenCalled();
-  });
-
-  test("N'appel pas la récupération des données de composition si aucun id n'est fourni", () => {
-    const composerDocumentFinalSpy = vi.spyOn(
-      EtatCivilApi,
-      "getDonneesPourCompositionActeTexte"
-    );
-    const { rerender } = render(<PartieActeRequete idActe={""} />);
-
-    expect(composerDocumentFinalSpy).not.toHaveBeenCalled();
-
-    rerender(
-      <PartieActeRequete idActe="b41079a5-9e8d-478c-b04c-c4c4ey86537g" />
-    );
-
-    expect(composerDocumentFinalSpy).toHaveBeenCalled();
   });
 });

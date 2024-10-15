@@ -1,17 +1,21 @@
 import { useFormikContext } from "formik";
+import { useContext } from "react";
+import { EditionMiseAJourContext } from "../../../../contexts/EditionMiseAJourContextProvider";
 import Bouton from "../../../commun/bouton/Bouton";
 import ChampsNomSecable from "../../../commun/champs/ChampsNomSecable";
 import ChampsPrenoms from "../../../commun/champs/ChampsPrenoms";
 import ChampsTexte from "../../../commun/champs/ChampsTexte";
 import "./MiseAJourAnalyseMarginaleForm.scss";
 import "./ModificationAnalyseMarginale.scss";
+
 interface IModificationAnalyseMarginaleProps {
   onValiderEtTerminer: () => void;
-  onActualiserEtVisualiser: () => void;
 }
+
 const ModificationAnalyseMarginale: React.FC<
   IModificationAnalyseMarginaleProps
-> = ({ onValiderEtTerminer, onActualiserEtVisualiser }) => {
+> = ({ onValiderEtTerminer }) => {
+  const { miseAJourEffectuee } = useContext(EditionMiseAJourContext.Valeurs);
   const { dirty, resetForm } = useFormikContext();
 
   return (
@@ -21,8 +25,14 @@ const ModificationAnalyseMarginale: React.FC<
           <ChampsNomSecable
             nom={{ name: "analyseMarginale.nom", libelle: "Nom" }}
             secable={{ name: "nomSecable.secable", libelle: "Nom sécable" }}
-            nomPartie1={{ name: "nomPartie1", libelle: "Nom 1ère partie" }}
-            nomPartie2={{ name: "nomPartie2", libelle: "Nom 2ème partie" }}
+            nomPartie1={{
+              name: "nomSecable.nomPartie1",
+              libelle: "Nom 1ère partie"
+            }}
+            nomPartie2={{
+              name: "nomSecable.nomPartie2",
+              libelle: "Nom 2ème partie"
+            }}
           />
         </div>
 
@@ -35,7 +45,7 @@ const ModificationAnalyseMarginale: React.FC<
 
         <ChampsTexte
           className="champs-motif"
-          name="motif"
+          name="analyseMarginale.motif"
           libelle="Motif"
           type="text"
         />
@@ -57,11 +67,17 @@ const ModificationAnalyseMarginale: React.FC<
       <div className="boutons-actions-form">
         <Bouton
           title="Actualiser et visualiser"
-          onClick={onActualiserEtVisualiser}
+          type="submit"
+          disabled={!dirty}
         >
           {"Actualiser et visualiser"}
         </Bouton>
-        <Bouton title="Valider et terminer" onClick={onValiderEtTerminer}>
+        <Bouton
+          title="Valider et terminer"
+          onClick={onValiderEtTerminer}
+          disabled={!miseAJourEffectuee}
+          type="button"
+        >
           {"Valider et terminer"}
         </Bouton>
       </div>
