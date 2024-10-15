@@ -1,26 +1,23 @@
 import { render, screen } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
-import { describe, expect, it } from "vitest";
+import { describe, expect, test } from "vitest";
 import PartieFormulaire from "../../../../composants/pages/requetesMiseAJour/PartieFormulaire";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
 const idActe = "b41079a5-9e8d-478c-b04c-c4c4ey86537g";
+const idRequete = "931c715b-ede1-4895-ad70-931f2ac4e43d";
 describe("PartieFormulaire", () => {
-  it("render correctement avec un id", async () => {
+  test("render correctement avec un id", async () => {
     const router = createTestingRouter(
       [
         {
-          path: "/:idActeParam",
-          element: (
-            <PartieFormulaire
-              idActe={"b41079a5-9e8d-478c-b04c-c4c4ey86537g"}
-              idRequete="idMock"
-            />
-          )
+          path: "/",
+          element: <PartieFormulaire idActe={idActe} idRequete={idRequete} />
         }
       ],
-      ["/b41079a5-9e8d-478c-b04c-c4c4ey86537g"]
+      ["/"]
     );
+
     const { container } = render(<RouterProvider router={router} />);
 
     expect(container.firstElementChild?.classList).toContain(
@@ -28,7 +25,6 @@ describe("PartieFormulaire", () => {
     );
 
     expect(screen.getByText("Analyse Marginale")).toBeDefined();
-
     expect(screen.getByText("Nom")).toBeDefined();
   });
 });

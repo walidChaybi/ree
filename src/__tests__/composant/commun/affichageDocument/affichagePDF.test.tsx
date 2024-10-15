@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { base64toBlobUrl } from "@util/FileUtils";
-import { expect, it, vi } from "vitest";
+import { expect, it as test, vi } from "vitest";
 import AffichagePDF from "../../../../composants/commun/affichageDocument/AffichagePDF";
 
 vi.mock("@util/FileUtils", () => {
@@ -12,7 +12,7 @@ vi.mock("@util/FileUtils", () => {
   };
 });
 
-it("renders un PDF  dans l'iframe quand un contenuBase64 est fourni", () => {
+test("renders un PDF  dans l'iframe quand un contenuBase64 est fourni", () => {
   const contenuBase64 = "sampleBase64String";
 
   render(<AffichagePDF contenuBase64={contenuBase64} />);
@@ -25,14 +25,14 @@ it("renders un PDF  dans l'iframe quand un contenuBase64 est fourni", () => {
   );
 });
 
-it("renders un message informatif quand le contenuBase64 est null", () => {
+test("renders un message informatif quand le contenuBase64 est null", () => {
   render(<AffichagePDF contenuBase64={null} />);
 
   const fallbackText = screen.getByText("Aucun document à afficher");
   expect(fallbackText).toBeDefined();
 });
 
-it("doit mémoiser le blob pour ne pas re-calculer lorsque le contenuBase64 reste inchangé", () => {
+test("doit mémoiser le blob pour ne pas re-calculer lorsque le contenuBase64 reste inchangé", () => {
   let contenuBase64 = "mockDocBase64";
   const { rerender } = render(<AffichagePDF contenuBase64={contenuBase64} />);
 

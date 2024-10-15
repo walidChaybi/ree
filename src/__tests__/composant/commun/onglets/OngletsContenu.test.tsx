@@ -1,10 +1,10 @@
 // OngletContenu.test.tsx
 import { render } from "@testing-library/react"; // You can also use React Testing Library if needed
-import { describe, expect, it } from "vitest";
+import { describe, expect, it as test } from "vitest";
 import OngletsContenu from "../../../../composants/commun/onglets/OngletsContenu";
 
 describe("OngletContenu", () => {
-  it("render le composant child correctement", () => {
+  test("render le composant child correctement", () => {
     const { container } = render(
       <OngletsContenu estActif={false}>Hello World</OngletsContenu>
     );
@@ -12,7 +12,7 @@ describe("OngletContenu", () => {
     expect(container.textContent).toContain("Hello World");
   });
 
-  it('doit avoir "volet-actif" quand estActif est true', () => {
+  test('doit avoir "volet-actif" quand estActif est true', () => {
     const { container } = render(
       <OngletsContenu estActif={true}>Active Tab</OngletsContenu>
     );
@@ -20,7 +20,7 @@ describe("OngletContenu", () => {
     expect(container.firstElementChild?.classList).toContain("volet-actif");
   });
 
-  it('ne doit pas avoir "volet-actif" quand estActif est false', () => {
+  test('ne doit pas avoir "volet-actif" quand estActif est false', () => {
     const { container } = render(
       <OngletsContenu estActif={false}>Inactive Tab</OngletsContenu>
     );

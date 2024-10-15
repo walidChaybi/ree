@@ -7,7 +7,6 @@ import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import { logError } from "@util/LogManager";
 import { getValeurOuVide } from "@util/Utils";
 import messageManager from "@util/messageManager";
-import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { useNavigate } from "react-router-dom";
 import useFetchApi from "../../../../hooks/FetchApiHook";
@@ -16,6 +15,11 @@ import ModificationAnalyseMarginale from "./ModificationAnalyseMarginale";
 interface IMiseAJourAnalyseMarginaleForm {
   idRequete: string;
   derniereAnalyseMarginal?: IDerniereAnalyseMarginalResultat;
+  gestionBlocker?: {
+    activerBlockerSansConfirmation: () => void;
+    activerBlockerAvecConfirmation: () => void;
+    desactiverBlocker: () => void;
+  };
 }
 
 const getValeurParDefaut = (
@@ -47,20 +51,28 @@ const getValeurParDefaut = (
 
 export const MiseAJourAnalyseMarginaleForm: React.FC<
   IMiseAJourAnalyseMarginaleForm
-> = ({ idRequete, derniereAnalyseMarginal }) => {
+> = ({ idRequete, derniereAnalyseMarginal, gestionBlocker }) => {
   const navigate = useNavigate();
   const { appelApi: appelPatchMiseAJourStatutRequete } = useFetchApi(
     CONFIG_PATCH_MISE_A_JOUR_STATUT_REQUETE
   );
+
+  const onActualiserEtVisualiser = () => {
+    gestionBlocker?.activerBlockerAvecConfirmation();
+  };
 
   const onClickValiderEtTerminer = () => {
     appelPatchMiseAJourStatutRequete({
       parametres: {
         path: {
           idRequete: idRequete
+        },
+        query: {
+          estMiseAjourAnalyseMarginale: true
         }
       },
       apresSucces: () => {
+        gestionBlocker?.desactiverBlocker();
         navigate(URL_RECHERCHE_ACTE_INSCRIPTION);
         messageManager.showSuccessAndClose(
           "L'analyse marginale a été mise à jour avec succès"
@@ -82,12 +94,10 @@ export const MiseAJourAnalyseMarginaleForm: React.FC<
       onSubmit={() => console.log("Soumission implémentée dans STRECE-3846")}
       className="sans-marge"
     >
-      <ModificationAnalyseMarginale />
-      <div className="conteneur-bouton flex-end">
-        <BoutonDoubleSubmit onClick={onClickValiderEtTerminer}>
-          {"VALIDER ET TERMINER"}
-        </BoutonDoubleSubmit>
-      </div>
+      <ModificationAnalyseMarginale
+        onValiderEtTerminer={onClickValiderEtTerminer}
+        onActualiserEtVisualiser={onActualiserEtVisualiser}
+      />
     </Formulaire>
   );
 };

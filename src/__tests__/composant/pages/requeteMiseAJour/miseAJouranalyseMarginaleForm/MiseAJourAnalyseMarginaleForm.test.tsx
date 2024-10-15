@@ -4,7 +4,7 @@ import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import messageManager from "@util/messageManager";
 import { RouterProvider } from "react-router-dom";
-import { expect, it, vi } from "vitest";
+import { expect, test, vi } from "vitest";
 import { MiseAJourAnalyseMarginaleForm } from "../../../../../composants/pages/requetesMiseAJour/miseAJourAnalyseMarginaleForm/MiseAJourAnalyseMarginaleForm";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
@@ -34,7 +34,7 @@ vi.mock("@util/messageManager", () => {
   };
 });
 
-it("renders le formulaire avec les bonnes valeurs par defaut", () => {
+test("renders le formulaire avec les bonnes valeurs par defaut", () => {
   const router = createTestingRouter(
     [
       {
@@ -57,7 +57,7 @@ it("renders le formulaire avec les bonnes valeurs par defaut", () => {
   expect(screen.queryByText("motifMock")).toBeNull();
 });
 
-it("redirige vers la page RMC au clic sur le bouton valider et terminer", async () => {
+test("redirige vers la page RMC au clic sur le bouton valider et terminer", async () => {
   const router = createTestingRouter(
     [
       {
@@ -78,7 +78,7 @@ it("redirige vers la page RMC au clic sur le bouton valider et terminer", async 
   );
 
   render(<RouterProvider router={router} />);
-  const boutonValider = screen.getByText("VALIDER ET TERMINER");
+  const boutonValider = screen.getByText("Valider et terminer");
   fireEvent.click(boutonValider);
   waitFor(() => {
     expect(router.state.location.pathname).toBe(URL_RECHERCHE_ACTE_INSCRIPTION);

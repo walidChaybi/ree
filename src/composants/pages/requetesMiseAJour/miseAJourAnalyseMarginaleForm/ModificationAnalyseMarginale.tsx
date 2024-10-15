@@ -5,8 +5,13 @@ import ChampsPrenoms from "../../../commun/champs/ChampsPrenoms";
 import ChampsTexte from "../../../commun/champs/ChampsTexte";
 import "./MiseAJourAnalyseMarginaleForm.scss";
 import "./ModificationAnalyseMarginale.scss";
-
-const ModificationAnalyseMarginale: React.FC = () => {
+interface IModificationAnalyseMarginaleProps {
+  onValiderEtTerminer: () => void;
+  onActualiserEtVisualiser: () => void;
+}
+const ModificationAnalyseMarginale: React.FC<
+  IModificationAnalyseMarginaleProps
+> = ({ onValiderEtTerminer, onActualiserEtVisualiser }) => {
   const { dirty, resetForm } = useFormikContext();
 
   return (
@@ -50,10 +55,13 @@ const ModificationAnalyseMarginale: React.FC = () => {
       </div>
 
       <div className="boutons-actions-form">
-        <Bouton title="Actualiser et visualiser" disabled>
+        <Bouton
+          title="Actualiser et visualiser"
+          onClick={onActualiserEtVisualiser}
+        >
           {"Actualiser et visualiser"}
         </Bouton>
-        <Bouton title="Valider et terminer" disabled>
+        <Bouton title="Valider et terminer" onClick={onValiderEtTerminer}>
           {"Valider et terminer"}
         </Bouton>
       </div>

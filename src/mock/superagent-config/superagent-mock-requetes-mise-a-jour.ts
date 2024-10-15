@@ -1,7 +1,9 @@
 const getMockUrlMethodePatch = (uri: string) => {
   switch (uri) {
     case "/requetes/mise-a-jour/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/update-statut-requete-mise-a-jour/TRAITEE_MIS_A_JOUR":
+    case "/requetes/mise-a-jour/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee/update-statut-requete-mise-a-jour/TRAITEE_MIS_A_JOUR?estMiseAjourAnalyseMarginale=true":
     case "/requetes/mise-a-jour/er5ez456-354v-461z-c5fd-162md289m74h/update-statut-requete-mise-a-jour/TRAITEE_MIS_A_JOUR":
+    case "/requetes/mise-a-jour/931c715b-ede1-4895-ad70-931f2ac4e43d/update-statut-requete-mise-a-jour/ABANDONNEE":
       return { status: 200 };
   }
 };

@@ -2,7 +2,7 @@ import * as EtatCivilApi from "@api/appels/etatcivilApi";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it as test, vi } from "vitest";
 import { PartieActeRequete } from "../../../../composants/pages/requetesMiseAJour/PartieActeRequete";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
@@ -20,7 +20,7 @@ vi.mock("react-router-dom", async () => {
 const idActe = "b41079a5-9e8d-478c-b04c-c4c4ey86537g";
 
 describe("PartieActeRequete", () => {
-  it("render correctement avec un id", async () => {
+  test("render correctement avec un id", async () => {
     const router = createTestingRouter(
       [
         {
@@ -38,7 +38,7 @@ describe("PartieActeRequete", () => {
     expect(screen.getByText("Aucun document à afficher")).toBeDefined();
   });
 
-  it("Redirection lorsque le bouton Abandonner est cliqué", async () => {
+  test("Redirection lorsque le bouton Abandonner est cliqué", async () => {
     const router = createTestingRouter(
       [
         {
@@ -59,7 +59,7 @@ describe("PartieActeRequete", () => {
     expect(mockedUseNavigate).toHaveBeenCalled();
   });
 
-  it("N'appel pas la récupération des données de composition si aucun id n'est fourni", () => {
+  test("N'appel pas la récupération des données de composition si aucun id n'est fourni", () => {
     const composerDocumentFinalSpy = vi.spyOn(
       EtatCivilApi,
       "getDonneesPourCompositionActeTexte"

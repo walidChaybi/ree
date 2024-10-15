@@ -7,11 +7,14 @@ const URI =
 interface IResultat {
   id: string;
 }
+export interface IMiseAJourStatutRequete {
+  estMiseAjourAnalyseMarginale?: boolean;
+}
 
 export const CONFIG_PATCH_MISE_A_JOUR_STATUT_REQUETE: TConfigurationApi<
   typeof URI,
   undefined,
-  undefined,
+  IMiseAJourStatutRequete,
   IResultat
 > = {
   api: REQUETE_API,

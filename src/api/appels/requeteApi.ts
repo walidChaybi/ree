@@ -996,6 +996,7 @@ export const postValiderProjetActe = (
   );
 };
 
+// A remplacer par PatchStatutRequereMiseAJour (useFetch)
 export const modifierStatutRequeteMiseAJour = (
   idRequete: string,
   statutDemande: StatutRequete
