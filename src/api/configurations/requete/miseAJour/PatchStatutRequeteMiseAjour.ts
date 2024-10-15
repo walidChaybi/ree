@@ -1,8 +1,8 @@
 import { REQUETE_API } from "@api/ApiDisponibles";
-import { URL_REQUETES, URL_REQUETE_MISE_A_JOUR } from "@api/appels/requeteApi";
 import { TConfigurationApi } from "@model/api/Api";
 
-const URI = `${URL_REQUETES}${URL_REQUETE_MISE_A_JOUR}/:idRequete/update-statut-requete-mise-a-jour/:statut`;
+const URI =
+  "/requetes/mise-a-jour/:idRequete/update-statut-requete-mise-a-jour/:statut";
 
 interface IQuery {
   estMiseAjourAnalyseMarginale?: boolean;

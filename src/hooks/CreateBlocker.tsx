@@ -28,7 +28,7 @@ export const useCreateBlocker = ({
       case blocker.state !== "blocked":
         break;
       case !estNavigationBloquee.estBloquee:
-        blocker.proceed();
+        blocker.proceed?.();
         break;
       case !estNavigationBloquee.estPopinAffichee:
         executerSiRedirectionAvecBlocageSansPopin?.();

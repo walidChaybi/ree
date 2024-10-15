@@ -19,8 +19,8 @@ export const PageApercuRequeteMiseAJourAnalyseMarginale: React.FC = () => {
       idRequete={idRequeteParam}
     >
       <div className="page-apercu-requete-mise-a-jour">
-        <PartieActeRequete idActe={idActeParam} />
-        <PartieFormulaire idActe={idActeParam} idRequete={idRequeteParam} />
+        <PartieActeRequete />
+        <PartieFormulaire />
       </div>
     </EditionMiseAJourContextProvider>
   );

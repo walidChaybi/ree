@@ -19,10 +19,7 @@ const titulaireNonSecable = {
 test("render les input du formulaire correctement", () => {
   render(
     <Formik initialValues={titulaireNonSecable} onSubmit={vi.fn()}>
-      <ModificationAnalyseMarginale
-        onValiderEtTerminer={() => {}}
-        onActualiserEtVisualiser={() => {}}
-      />
+      <ModificationAnalyseMarginale onValiderEtTerminer={() => {}} />
     </Formik>
   );
 
