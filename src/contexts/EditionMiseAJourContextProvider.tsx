@@ -4,7 +4,7 @@ import messageManager from "@util/messageManager";
 import { createContext, useEffect, useMemo, useState } from "react";
 import PageChargeur from "../composants/commun/chargeurs/PageChargeur";
 import { useCreateBlocker } from "../hooks/CreateBlocker";
-import useFetchApi from "../hooks/FetchApiHook";
+import useFetchApi from "../hooks/api/FetchApiHook";
 
 export enum ECleOngletsMiseAJour {
   ACTE = "acte",

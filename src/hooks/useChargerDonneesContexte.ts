@@ -13,7 +13,7 @@ import IServiceDto, { ServiceDto } from "../dto/etatcivil/agent/IServiceDto";
 import IUtilisateurDto, {
   UtilisateurDto
 } from "../dto/etatcivil/agent/IUtilisateurDto";
-import useFetchApi from "./FetchApiHook";
+import useFetchApi from "./api/FetchApiHook";
 
 const PLAGE_IMPORT = 100;
 

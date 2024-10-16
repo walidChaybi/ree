@@ -8,12 +8,7 @@ interface IQuery {
   estMiseAjourAnalyseMarginale?: boolean;
 }
 
-export const CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR: TConfigurationApi<
-  typeof URI,
-  undefined,
-  IQuery,
-  undefined
-> = {
+export const CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR: TConfigurationApi<typeof URI, undefined, IQuery> = {
   api: REQUETE_API,
   methode: "PATCH",
   uri: URI

@@ -2,7 +2,7 @@ import { CONFIG_GET_TOUS_SERVICES_FILS } from "@api/configurations/agent/service
 import { IService } from "@model/agent/IService";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import useFetchApi from "../../../../hooks/FetchApiHook";
+import useFetchApi from "../../../../hooks/api/FetchApiHook";
 
 export interface IGetServicesFilsParams {
   idServiceParent?: string;

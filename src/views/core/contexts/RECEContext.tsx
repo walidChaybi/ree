@@ -7,7 +7,7 @@ import { IDecret } from "@model/etatcivil/commun/IDecret";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useEffect, useMemo, useState } from "react";
 import { useChargerDonneesApplicatives } from "../../../hooks/ChargerDonneesApplicativesHook";
-import useFetchApi from "../../../hooks/FetchApiHook";
+import useFetchApi from "../../../hooks/api/FetchApiHook";
 import useChargerDonneesContexte from "../../../hooks/useChargerDonneesContexte";
 
 export interface IRECEContext {

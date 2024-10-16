@@ -47,7 +47,7 @@ import React, {
   useState
 } from "react";
 import { useNavigate } from "react-router-dom";
-import useFetchApi from "../../../hooks/FetchApiHook";
+import useFetchApi from "../../../hooks/api/FetchApiHook";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import { BoutonCreationRDD } from "./BoutonCreationRDD/BoutonCreationRDD";
 import { setFiche } from "./FicheUtils";
