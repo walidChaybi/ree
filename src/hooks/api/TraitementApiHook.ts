@@ -9,7 +9,7 @@ const useTraitementApi = <TParam extends object | undefined, TReponseSucces>(
 
   const lancerTraitement = (
     parametres?: TParam,
-    apresSucces?: (reponse: TReponseSucces) => void,
+    apresSucces?: (reponse: TReponseSucces | undefined) => void,
     apresErreur?: (messageErreur: string) => void
   ): void => {
     if (traitementEnCours) {
