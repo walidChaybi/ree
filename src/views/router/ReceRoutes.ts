@@ -29,7 +29,7 @@ import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { IRoute } from "@util/route/IRoute";
-import { PageApercuRequeteMiseAJourAnalyseMarginale } from "../../pages/requetesMiseAJour/analyseMarginale/PageApercuRequeteMiseAJourAnalyseMarginale";
+import PageEditionRequeteMiseAJour from "../../pages/requetesMiseAJour/PageEditionRequeteMiseAJour";
 import {
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
   URL_MES_REQUETES_CREATION,
@@ -126,11 +126,7 @@ export const routesRece: IRoute[] = [
     url: URL_MES_REQUETES_DELIVRANCE,
     component: EspaceDelivrancePage,
     props: { selectedTab: 0 },
-    auMoinsUnDesDroits: [
-      Droit.DELIVRER,
-      Droit.DELIVRER_COMEDEC,
-      Droit.CONSULTER
-    ],
+    auMoinsUnDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC, Droit.CONSULTER],
     libelle: getLibelle("Mes requêtes de délivrance")
   },
   // Aperçu requête ... depuis Mes Requêtes de DELIVRANCE
@@ -175,10 +171,7 @@ export const routesRece: IRoute[] = [
     url: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
     component: SaisirRDCPage,
     auMoinsUnDesDroits: [Droit.SAISIR_REQUETE],
-    canAccess: () =>
-      gestionnaireFeatureFlag.estActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-      ),
+    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES),
     libelle: getLibelle("Requête de délivrance d'extrait copie Courrier")
   },
   // Aperçu requête ... après saisie de requête RDCSC depuis Mes Requêtes de DELIVRANCE
@@ -186,35 +179,26 @@ export const routesRece: IRoute[] = [
     url: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC_ID,
     component: SaisirRDCSCPage,
     auMoinsUnDesDroits: [Droit.CONSULTER, Droit.SAISIR_REQUETE],
-    libelle: getLibelle(
-      "Modifier un brouillon d'une requête de délivrance certificat de situation depuis mes requêtes"
-    )
+    libelle: getLibelle("Modifier un brouillon d'une requête de délivrance certificat de situation depuis mes requêtes")
   },
   {
     url: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC_ID,
     component: SaisirRDCSCPage,
     auMoinsUnDesDroits: [Droit.CONSULTER, Droit.SAISIR_REQUETE],
-    libelle: getLibelle(
-      "Modifier un brouillon d'une requête de délivrance extrait/copie depuis mes requêtes"
-    )
+    libelle: getLibelle("Modifier un brouillon d'une requête de délivrance extrait/copie depuis mes requêtes")
   },
   {
     url: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
     component: EditionExtraitCopiePage,
     auMoinsUnDesDroits: [Droit.DELIVRER],
-    canAccess: () =>
-      gestionnaireFeatureFlag.estActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-      ),
+    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES),
     libelle: getLibelle("Édition")
   },
   {
     url: URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID,
     component: SaisirRDCPage,
     auMoinsUnDesDroits: [Droit.CONSULTER, Droit.SAISIR_REQUETE],
-    libelle: getLibelle(
-      "Modification requête de délivrance d'extrait copie Courrier"
-    )
+    libelle: getLibelle("Modification requête de délivrance d'extrait copie Courrier")
   },
   {
     url: URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDCSC_ID,
@@ -262,45 +246,27 @@ export const routesRece: IRoute[] = [
     url: URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC,
     component: SaisirRDCPage,
     auMoinsUnDesDroits: [Droit.ATTRIBUER_REQUETE, Droit.SAISIR_REQUETE],
-    canAccess: () =>
-      gestionnaireFeatureFlag.estActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-      ),
+    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES),
     libelle: getLibelle("Requête de délivrance d'extrait copie Courrier")
   },
   // Aperçu requête ... après saisie de requête RDCSC depuis Mes Requêtes de SERVICE
   {
     url: URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC_ID,
     component: SaisirRDCSCPage,
-    auMoinsUnDesDroits: [
-      Droit.CONSULTER,
-      Droit.ATTRIBUER_REQUETE,
-      Droit.SAISIR_REQUETE
-    ],
-    libelle: getLibelle(
-      "Modifier un brouillon d'une requête de délivrance certificat de situation depuis mes requêtes de service"
-    )
+    auMoinsUnDesDroits: [Droit.CONSULTER, Droit.ATTRIBUER_REQUETE, Droit.SAISIR_REQUETE],
+    libelle: getLibelle("Modifier un brouillon d'une requête de délivrance certificat de situation depuis mes requêtes de service")
   },
   {
     url: URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC_ID,
     component: SaisirRDCSCPage,
-    auMoinsUnDesDroits: [
-      Droit.CONSULTER,
-      Droit.ATTRIBUER_REQUETE,
-      Droit.SAISIR_REQUETE
-    ],
-    libelle: getLibelle(
-      "Modifier un brouillon d'une requête de délivrance extrait/copie depuis mes requêtes de service"
-    )
+    auMoinsUnDesDroits: [Droit.CONSULTER, Droit.ATTRIBUER_REQUETE, Droit.SAISIR_REQUETE],
+    libelle: getLibelle("Modifier un brouillon d'une requête de délivrance extrait/copie depuis mes requêtes de service")
   },
   {
     url: URL_REQUETES_DELIVRANCE_SERVICE_EDITION_ID,
     component: EditionExtraitCopiePage,
     auMoinsUnDesDroits: [Droit.DELIVRER],
-    canAccess: () =>
-      gestionnaireFeatureFlag.estActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-      ),
+    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES),
     libelle: getLibelle("Édition")
   },
   //////////////////////////////////////////
@@ -346,35 +312,20 @@ export const routesRece: IRoute[] = [
   {
     url: URL_SAISIR_RDCSC_RMC,
     component: SaisirRDCSCPage,
-    auMoinsUnDesDroits: [
-      Droit.CONSULTER,
-      Droit.ATTRIBUER_REQUETE,
-      Droit.SAISIR_REQUETE
-    ],
-    libelle: getLibelle(
-      "Modifier un brouillon d'une requête de délivrance certificat de situation depuis la RMC"
-    )
+    auMoinsUnDesDroits: [Droit.CONSULTER, Droit.ATTRIBUER_REQUETE, Droit.SAISIR_REQUETE],
+    libelle: getLibelle("Modifier un brouillon d'une requête de délivrance certificat de situation depuis la RMC")
   },
   {
     url: URL_SAISIR_RDC_RMC,
     component: SaisirRDCSCPage,
-    auMoinsUnDesDroits: [
-      Droit.CONSULTER,
-      Droit.ATTRIBUER_REQUETE,
-      Droit.SAISIR_REQUETE
-    ],
-    libelle: getLibelle(
-      "Modifier un brouillon d'une requête de délivrance certificat de situation depuis la RMC"
-    )
+    auMoinsUnDesDroits: [Droit.CONSULTER, Droit.ATTRIBUER_REQUETE, Droit.SAISIR_REQUETE],
+    libelle: getLibelle("Modifier un brouillon d'une requête de délivrance certificat de situation depuis la RMC")
   },
   {
     url: URL_RECHERCHE_REQUETE_EDITION_ID,
     component: EditionExtraitCopiePage,
     auMoinsUnDesDroits: [Droit.DELIVRER],
-    canAccess: () =>
-      gestionnaireFeatureFlag.estActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-      ),
+    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES),
     libelle: getLibelle("Édition")
   },
   {
@@ -431,24 +382,21 @@ export const routesRece: IRoute[] = [
     props: { selectedTab: 0 },
     auMoinsUnDesDroits: [Droit.INFORMER_USAGER],
     libelle: getLibelle("Mes requêtes d'information"),
-    canAccess: () =>
-      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
+    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
   },
   {
     url: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
     component: ApercuReqInfoPage,
     auMoinsUnDesDroits: [Droit.INFORMER_USAGER],
     libelle: getLibelle("Aperçu de la requête"),
-    canAccess: () =>
-      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
+    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
   },
   {
     url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_INFORMATION_ID,
     component: ApercuReqInfoPage,
     auMoinsUnDesDroits: [Droit.INFORMER_USAGER],
     libelle: getLibelle("Aperçu de la requête"),
-    canAccess: () =>
-      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
+    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
   },
 
   ////////////////////////////////////////////////////////
@@ -460,8 +408,7 @@ export const routesRece: IRoute[] = [
     props: { selectedTab: 1 },
     droits: [Droit.INFORMER_USAGER, Droit.ATTRIBUER_REQUETE],
     libelle: getLibelle("Les requêtes d'information de mon service"),
-    canAccess: () =>
-      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
+    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
   },
   // Aperçu requête ... depuis le tableau Requêtes d'Information de mon SERVICE
   {
@@ -469,8 +416,7 @@ export const routesRece: IRoute[] = [
     component: ApercuReqInfoPage,
     auMoinsUnDesDroits: [Droit.ATTRIBUER_REQUETE],
     libelle: getLibelle(LIBELLE_APERCU_REQUETE),
-    canAccess: () =>
-      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
+    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
   },
   ////////////////////////////////////////////////////////
   ///////////// MES REQUETES DE CRÉATION /////////////////
@@ -479,11 +425,7 @@ export const routesRece: IRoute[] = [
     url: URL_MES_REQUETES_CREATION,
     component: EspaceCreationPage,
     props: { selectedTab: 0 },
-    auMoinsUnDesDroits: [
-      Droit.CREER_ACTE_DRESSE,
-      Droit.CREER_ACTE_ETABLI,
-      Droit.CREER_ACTE_TRANSCRIT
-    ],
+    auMoinsUnDesDroits: [Droit.CREER_ACTE_DRESSE, Droit.CREER_ACTE_ETABLI, Droit.CREER_ACTE_TRANSCRIT],
     libelle: getLibelle("Mes requêtes de création")
   },
   {
@@ -551,11 +493,7 @@ export const routesRece: IRoute[] = [
     url: URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID,
     component: SaisirRCTCPage,
     droits: [Droit.SAISIR_REQUETE],
-    auMoinsUnDesDroits: [
-      Droit.CREER_ACTE_DRESSE,
-      Droit.CREER_ACTE_ETABLI,
-      Droit.CREER_ACTE_TRANSCRIT
-    ],
+    auMoinsUnDesDroits: [Droit.CREER_ACTE_DRESSE, Droit.CREER_ACTE_ETABLI, Droit.CREER_ACTE_TRANSCRIT],
     libelle: getLibelle("Modifier une requête de transcription")
   },
   ////////////////////////////////////////////////////////
@@ -566,11 +504,7 @@ export const routesRece: IRoute[] = [
     component: EspaceCreationPage,
     props: { selectedTab: 1 },
     droits: [Droit.ATTRIBUER_REQUETE],
-    auMoinsUnDesDroits: [
-      Droit.CREER_ACTE_DRESSE,
-      Droit.CREER_ACTE_ETABLI,
-      Droit.CREER_ACTE_TRANSCRIT
-    ],
+    auMoinsUnDesDroits: [Droit.CREER_ACTE_DRESSE, Droit.CREER_ACTE_ETABLI, Droit.CREER_ACTE_TRANSCRIT],
     libelle: getLibelle("Les requêtes de création de mon service")
   },
   {
@@ -652,11 +586,8 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID,
-    component: PageApercuRequeteMiseAJourAnalyseMarginale,
-    auMoinsUnDesDroits: [
-      Droit.METTRE_A_JOUR_ACTE,
-      Droit.MODIFIER_ANALYSE_MARGINALE
-    ],
+    component: PageEditionRequeteMiseAJour,
+    auMoinsUnDesDroits: [Droit.METTRE_A_JOUR_ACTE, Droit.MODIFIER_ANALYSE_MARGINALE],
     libelle: getLibelle(LIBELLE_APERCU_MISE_A_JOUR_)
   }
 ];

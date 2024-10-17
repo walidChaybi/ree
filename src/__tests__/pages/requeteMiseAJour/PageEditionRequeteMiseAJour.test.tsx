@@ -1,32 +1,23 @@
-import {
-  ID,
-  ID_ACTE,
-  URL_CONTEXT_APP,
-  URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID
-} from "@router/ReceUrls";
+import { ID, ID_ACTE, URL_CONTEXT_APP, URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID } from "@router/ReceUrls";
 import { render, screen } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
-import { PageApercuRequeteMiseAJourAnalyseMarginale } from "../../../../pages/requetesMiseAJour/analyseMarginale/PageApercuRequeteMiseAJourAnalyseMarginale";
-import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
+import PageEditionRequeteMiseAJour from "../../../pages/requetesMiseAJour/PageEditionRequeteMiseAJour";
+import { createTestingRouter } from "../../__tests__utils__/testsUtil";
 
 const idActe = "b41079a5-9e8d-478c-b04c-c4c4ey86537g";
 const idRequete = "931c715b-ede1-4895-ad70-931f2ac4e43d";
+
 describe("Test de la page aperçu requête mise à jour analyse marginale", () => {
   test("La page s'affiche correctement", () => {
     const router = createTestingRouter(
       [
         {
           path: URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID,
-          element: <PageApercuRequeteMiseAJourAnalyseMarginale />
+          element: <PageEditionRequeteMiseAJour />
         }
       ],
-      [
-        URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID.replace(
-          ID,
-          idRequete
-        ).replace(ID_ACTE, idActe)
-      ]
+      [URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID.replace(ID, idRequete).replace(ID_ACTE, idActe)]
     );
 
     render(<RouterProvider router={router} />);
@@ -39,7 +30,7 @@ describe("Test de la page aperçu requête mise à jour analyse marginale", () =
       [
         {
           path: "/",
-          element: <PageApercuRequeteMiseAJourAnalyseMarginale />
+          element: <PageEditionRequeteMiseAJour />
         },
         {
           path: URL_CONTEXT_APP,

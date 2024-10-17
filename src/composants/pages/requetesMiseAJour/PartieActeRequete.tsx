@@ -13,10 +13,7 @@ import OngletActeMisAJour from "./onglets/OngletActeMisAJour";
 
 export const PartieActeRequete: React.FC = () => {
   const navigate = useNavigate();
-
-  const { ongletsActifs, miseAJourEffectuee } = useContext(
-    EditionMiseAJourContext.Valeurs
-  );
+  const { ongletsActifs, miseAJourEffectuee } = useContext(EditionMiseAJourContext.Valeurs);
   const { changerOnglet } = useContext(EditionMiseAJourContext.Actions);
 
   return (
@@ -34,24 +31,14 @@ export const PartieActeRequete: React.FC = () => {
           }
         ]}
         cleOngletActif={ongletsActifs.actes}
-        changerOnglet={(valeur: string) =>
-          changerOnglet(valeur as ECleOngletsMiseAJour, null)
-        }
+        changerOnglet={(valeur: string) => changerOnglet(valeur as ECleOngletsMiseAJour, null)}
       />
 
-      <OngletActe
-        estActif={ongletsActifs.actes === ECleOngletsMiseAJour.ACTE}
-      />
+      <OngletActe estActif={ongletsActifs.actes === ECleOngletsMiseAJour.ACTE} />
 
-      <OngletActeMisAJour
-        estActif={ongletsActifs.actes === ECleOngletsMiseAJour.ACTE_MIS_A_JOUR}
-      />
+      <OngletActeMisAJour estActif={ongletsActifs.actes === ECleOngletsMiseAJour.ACTE_MIS_A_JOUR} />
 
-      <Bouton
-        className="bouton-abandonner"
-        title="Abandonner"
-        onClick={() => navigate(URL_RECHERCHE_ACTE_INSCRIPTION)}
-      >
+      <Bouton className="bouton-abandonner" title="Abandonner" type="button" onClick={() => navigate(URL_RECHERCHE_ACTE_INSCRIPTION)}>
         {"Abandonner"}
       </Bouton>
     </div>

@@ -15,13 +15,12 @@ export interface IMiseAJourAnalyseMarginaleValeursForm {
   };
 }
 
-export const SCHEMA_VALIDATION_MISE_A_JOUR_ANALYSE_MARGINALE =
-  Yup.object().shape({
-    analyseMarginale: Yup.object().shape({
-      nom: Yup.string().required("Le nom est obligatoire"),
-      motif: Yup.string().required("Le motif est obligatoire")
-    })
-  });
+export const SCHEMA_VALIDATION_MISE_A_JOUR_ANALYSE_MARGINALE = Yup.object().shape({
+  analyseMarginale: Yup.object().shape({
+    nom: Yup.string().required("⚠ La saisie du nom est obligatoire"),
+    motif: Yup.string().required("⚠ La saisie du motif est obligatoire")
+  })
+});
 
 export const MiseAJourAnalyseMarginaleValeursForm = {
   valeurParDefaut: (
@@ -65,18 +64,18 @@ export const MiseAJourAnalyseMarginaleValeursForm = {
         valeur: prenomsFormulaire[clePrenom]
       }))
       .sort((prenomA, prenomB) => (prenomA.ordre > prenomB.ordre ? 1 : -1))
-      .filter(prenom => Boolean(prenom.valeur))
-      .map(prenom => prenom.valeur);
+      .map(prenom => prenom.valeur.trim())
+      .filter(prenom => Boolean(prenom));
 
     return {
       motifModification: valeurs.analyseMarginale.motif,
       titulaires: [
         {
           ordre: 1,
-          nom: valeurs.analyseMarginale.nom,
+          nom: valeurs.analyseMarginale.nom.trim(),
           prenoms: prenoms,
-          nomPartie1: nomPartie1 ?? null,
-          nomPartie2: nomPartie2 ?? null
+          nomPartie1: nomPartie1?.trim() ?? null,
+          nomPartie2: nomPartie2?.trim() ?? null
         }
       ]
     };

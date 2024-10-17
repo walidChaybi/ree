@@ -11,19 +11,36 @@
 
     input {
         display: block;
-        padding: .25rem .5rem;
-        outline-color: var(--bleu-sombre-rece);
+        padding: .3rem .5rem;
         border: var(--gris-sombre-rece) 1px solid;
         border-radius: 4px;
         transition: border-color .2s ease;
 
-        &:focus:not(:read-only) {
+        &:focus-within, &:focus-visible {
             border-color: var(--bleu-rece);
+            outline: 2px ridge var(--bleu-rece);
         }
 
         &:read-only {
             outline: none;
             background-color: var(--gris-clair-rece);
+        }
+    }
+
+    &.champs-en-erreur {
+        label {
+            color: var(--rouge-erreur);
+        }
+
+        input {
+            border-color: var(--rouge-erreur);
+            &:focus-within, &:focus-visible {
+                outline: 2px ridge var(--rouge-erreur);
+            }
+
+            &:focus:not(:read-only) {
+                border-color: var(--rouge-erreur);
+            }
         }
     }
 

@@ -1,19 +1,11 @@
-import { useDerniereAnalyseMarginaleApiHook } from "@hook/requete/miseajour/DerniereAnalyseMarginaleApiHook";
 import { useContext } from "react";
-import {
-  ECleOngletsMiseAJour,
-  EditionMiseAJourContext
-} from "../../../contexts/EditionMiseAJourContextProvider";
+import { ECleOngletsMiseAJour, EditionMiseAJourContext } from "../../../contexts/EditionMiseAJourContextProvider";
 import OngletsBouton from "../../commun/onglets/OngletsBouton";
-import OngletsContenu from "../../commun/onglets/OngletsContenu";
-import { MiseAJourAnalyseMarginaleForm } from "./miseAJourAnalyseMarginaleForm/MiseAJourAnalyseMarginaleForm";
+import OngletAnalyseMarginale from "./onglets/OngletAnalyseMarginale";
 
 export const PartieFormulaire: React.FC = () => {
-  const { idActe, ongletsActifs } = useContext(EditionMiseAJourContext.Valeurs);
+  const { ongletsActifs } = useContext(EditionMiseAJourContext.Valeurs);
   const { changerOnglet } = useContext(EditionMiseAJourContext.Actions);
-
-  const derniereAnalyseMarginaleResultat =
-    useDerniereAnalyseMarginaleApiHook(idActe);
 
   return (
     <div className="partie-formulaire">
@@ -25,22 +17,10 @@ export const PartieFormulaire: React.FC = () => {
           }
         ]}
         cleOngletActif={ongletsActifs.formulaires}
-        changerOnglet={(valeur: string) =>
-          changerOnglet(null, valeur as ECleOngletsMiseAJour)
-        }
+        changerOnglet={(valeur: string) => changerOnglet(null, valeur as ECleOngletsMiseAJour)}
       />
 
-      <OngletsContenu
-        estActif={
-          ongletsActifs.formulaires === ECleOngletsMiseAJour.ANALYSE_MARGINALE
-        }
-      >
-        {derniereAnalyseMarginaleResultat && (
-          <MiseAJourAnalyseMarginaleForm
-            derniereAnalyseMarginal={derniereAnalyseMarginaleResultat}
-          />
-        )}
-      </OngletsContenu>
+      <OngletAnalyseMarginale estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.ANALYSE_MARGINALE} />
     </div>
   );
 };

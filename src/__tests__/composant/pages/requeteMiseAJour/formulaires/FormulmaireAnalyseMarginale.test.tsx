@@ -6,7 +6,7 @@ import userEvent from "@testing-library/user-event";
 import messageManager from "@util/messageManager";
 import { RouterProvider } from "react-router-dom";
 import { expect, test, vi } from "vitest";
-import { MiseAJourAnalyseMarginaleForm } from "../../../../../composants/pages/requetesMiseAJour/miseAJourAnalyseMarginaleForm/MiseAJourAnalyseMarginaleForm";
+import FormulaireAnalyseMarginale from "../../../../../composants/pages/requetesMiseAJour/formulaires/FormulaireAnalyseMarginale";
 import EditionMiseAJourContextProvider from "../../../../../contexts/EditionMiseAJourContextProvider";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
@@ -42,13 +42,8 @@ test("renders le formulaire avec les bonnes valeurs par defaut", () => {
       {
         path: "/",
         element: (
-          <EditionMiseAJourContextProvider
-            idActe="e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"
-            idRequete={""}
-          >
-            <MiseAJourAnalyseMarginaleForm
-              derniereAnalyseMarginal={mockDerniereAnalyseMarginal}
-            />
+          <EditionMiseAJourContextProvider idActe="e5fdfe01-655b-44b9-a1fd-86c1169bb2ee" idRequete={""}>
+            <FormulaireAnalyseMarginale derniereAnalyseMarginale={mockDerniereAnalyseMarginal} />
           </EditionMiseAJourContextProvider>
         )
       }
@@ -69,13 +64,8 @@ test("redirige vers la page RMC au clic sur le bouton valider et terminer", asyn
       {
         path: "/",
         element: (
-          <EditionMiseAJourContextProvider
-            idActe="e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"
-            idRequete={"e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"}
-          >
-            <MiseAJourAnalyseMarginaleForm
-              derniereAnalyseMarginal={mockDerniereAnalyseMarginal}
-            />
+          <EditionMiseAJourContextProvider idActe="e5fdfe01-655b-44b9-a1fd-86c1169bb2ee" idRequete={"e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"}>
+            <FormulaireAnalyseMarginale derniereAnalyseMarginale={mockDerniereAnalyseMarginal} />
           </EditionMiseAJourContextProvider>
         )
       },

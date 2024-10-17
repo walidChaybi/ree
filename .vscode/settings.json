@@ -6,7 +6,7 @@
   "prettier.trailingComma": "none",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "editor.wordWrapColumn": 80,
+  "editor.wordWrapColumn": 140,
   "prettier.arrowParens": "avoid",
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"

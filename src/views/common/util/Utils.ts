@@ -364,6 +364,7 @@ export const supprimeElement = (tableau: any[], fct: any) => {
   return nouveauTableau;
 };
 
+/** @deprecated méthode inutile (surtout lors du passage en paramètre d'un CDC statique) */
 export const getLibelle = (msg?: string) => {
   return msg ?? "";
 };
