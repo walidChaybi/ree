@@ -13,7 +13,7 @@ const useFetchApi = <
   TUri extends TBaseUri,
   TBody extends object | undefined = undefined,
   TQuery extends object | undefined = undefined,
-  TResultat extends object | unknown = unknown
+  TResultat = unknown
 >(
   configuration: TConfigurationApi<TUri, TBody, TQuery, TResultat>
 ) => {

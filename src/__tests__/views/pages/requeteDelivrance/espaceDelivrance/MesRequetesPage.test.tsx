@@ -7,7 +7,6 @@ import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 const miseAJourCompteur = vi.fn();
 const setParamsRMCAuto = vi.fn();
-//
 
 test("renders Page requete with all elements", async () => {
   const router = createTestingRouter(
@@ -30,7 +29,7 @@ test("renders Page requete with all elements", async () => {
   const titreNumero = screen.getByText("N°");
   const pageSuivante = screen.getByTitle("Page suivante");
 
-  waitFor(() => {
+  await waitFor(() => {
     const numero = screen.getByText("1234");
     expect(screen.getByText("Fin consultation")).toBeDefined();
     expect(titreNumero).toBeDefined();
@@ -38,13 +37,9 @@ test("renders Page requete with all elements", async () => {
     fireEvent.click(screen.getByText("Fin consultation"));
   });
 
-  waitFor(() => {
-    expect(titreNumero).toBeDefined();
-  });
-
   fireEvent.click(pageSuivante);
 
-  waitFor(() => {
+  await waitFor(() => {
     const numero = screen.getByText("9021");
     expect(numero).toBeDefined();
     // Clic sur une ligne
@@ -54,7 +49,7 @@ test("renders Page requete with all elements", async () => {
   // Clic sur un titre de colonne
   fireEvent.click(titreNumero);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(screen.getByText("9021")).toBeDefined();
   });
 });

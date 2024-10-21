@@ -37,7 +37,7 @@ const HookRequeteFiltre: React.FC = () => {
       <Form>
         <RequeteFiltre {...requeteFiltreProps} />
         <button type="submit" disabled={estDisabled()}>
-          Submit
+          {"Submit"}
         </button>
         <Field as="textarea" value={result} data-testid="result" />
       </Form>
@@ -45,21 +45,13 @@ const HookRequeteFiltre: React.FC = () => {
   );
 };
 
-test.skip("Le champ Type requete est conditionné par le choix de l'utilisateur à la valeur DELIVRANCE", () => {
+test("Le champ Type requete est conditionné par le choix de l'utilisateur à la valeur DELIVRANCE", async () => {
   render(<HookRequeteFiltre />);
 
-  const numeroRequete = screen.getByLabelText(
-    "requete.numeroRequete"
-  ) as HTMLInputElement;
-  const typeRequete = screen.getByTestId(
-    "requete.typeRequete"
-  ) as HTMLSelectElement;
-  const sousTypeRequete = screen.getByTestId(
-    "requete.sousTypeRequete"
-  ) as HTMLSelectElement;
-  const statutRequete = screen.getByTestId(
-    "requete.statutRequete"
-  ) as HTMLSelectElement;
+  const numeroRequete = screen.getByLabelText("requete.numeroRequete");
+  const typeRequete = screen.getByTestId("requete.typeRequete");
+  const sousTypeRequete = screen.getByTestId("requete.sousTypeRequete");
+  const statutRequete = screen.getByTestId("requete.statutRequete");
 
   const submit = screen.getByText(/Submit/i);
 
@@ -89,29 +81,21 @@ test.skip("Le champ Type requete est conditionné par le choix de l'utilisateur 
   fireEvent.click(submit);
 
   const result = screen.getByTestId("result");
-  waitFor(() => {
-    expect(sousTypeRequete.disabled).toBeFalsy();
+  await waitFor(() => {
+    expect((sousTypeRequete as HTMLSelectElement).disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
       '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","numeroDossierNational":"","typeRequete":"DELIVRANCE","sousTypeRequete":"RDD","statutRequete":"A_SIGNER"}}'
     );
   });
 });
 
-test("Le champ Type requete est conditionné par le choix de l'utilisateur à la valeur CREATION", () => {
+test("Le champ Type requete est conditionné par le choix de l'utilisateur à la valeur CREATION", async () => {
   render(<HookRequeteFiltre />);
 
-  const numeroRequete = screen.getByLabelText(
-    "requete.numeroRequete"
-  ) as HTMLInputElement;
-  const typeRequete = screen.getByTestId(
-    "requete.typeRequete"
-  ) as HTMLSelectElement;
-  const sousTypeRequete = screen.getByTestId(
-    "requete.sousTypeRequete"
-  ) as HTMLSelectElement;
-  const statutRequete = screen.getByTestId(
-    "requete.statutRequete"
-  ) as HTMLSelectElement;
+  const numeroRequete = screen.getByLabelText("requete.numeroRequete");
+  const typeRequete = screen.getByTestId("requete.typeRequete");
+  const sousTypeRequete = screen.getByTestId("requete.sousTypeRequete");
+  const statutRequete = screen.getByTestId("requete.statutRequete");
 
   const submit = screen.getByText(/Submit/i);
 
@@ -139,30 +123,22 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   });
 
   fireEvent.click(submit);
-  const result = screen.getByTestId("result");
-  waitFor(() => {
-    expect(sousTypeRequete.disabled).toBeFalsy();
-    expect(result.innerHTML).toBe(
+
+  await waitFor(() => {
+    expect((sousTypeRequete as HTMLSelectElement).disabled).toBeFalsy();
+    expect(screen.getByTestId("result").innerHTML).toBe(
       '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","numeroDossierNational":"","typeRequete":"CREATION","sousTypeRequete":"RCTC","statutRequete":"RETOUR_SDANF"}}'
     );
   });
 });
 
-test("Le champ Type requete est conditionné par le choix de l'utilisateur à la valeur MISE_A_JOUR", () => {
+test("Le champ Type requete est conditionné par le choix de l'utilisateur à la valeur MISE_A_JOUR", async () => {
   render(<HookRequeteFiltre />);
 
-  const numeroRequete = screen.getByLabelText(
-    "requete.numeroRequete"
-  ) as HTMLInputElement;
-  const typeRequete = screen.getByTestId(
-    "requete.typeRequete"
-  ) as HTMLSelectElement;
-  const sousTypeRequete = screen.getByTestId(
-    "requete.sousTypeRequete"
-  ) as HTMLSelectElement;
-  const statutRequete = screen.getByTestId(
-    "requete.statutRequete"
-  ) as HTMLSelectElement;
+  const numeroRequete = screen.getByLabelText("requete.numeroRequete");
+  const typeRequete = screen.getByTestId("requete.typeRequete");
+  const sousTypeRequete = screen.getByTestId("requete.sousTypeRequete");
+  const statutRequete = screen.getByTestId("requete.statutRequete");
 
   const submit = screen.getByText(/Submit/i);
 
@@ -190,30 +166,21 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   });
 
   fireEvent.click(submit);
-  const result = screen.getByTestId("result");
-  waitFor(() => {
-    expect(sousTypeRequete.disabled).toBeFalsy();
-    expect(result.innerHTML).toBe(
+  await waitFor(() => {
+    expect((sousTypeRequete as HTMLSelectElement).disabled).toBeFalsy();
+    expect(screen.getByTestId("result").innerHTML).toBe(
       '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","numeroDossierNational":"","typeRequete":"MISE_A_JOUR","sousTypeRequete":"RMPR","statutRequete":"DOUBLON"}}'
     );
   });
 });
 
-test("Le champ Type requete est conditionné par le choix de l'utilisateur à la valeur INFORMATION", () => {
+test("Le champ Type requete est conditionné par le choix de l'utilisateur à la valeur INFORMATION", async () => {
   render(<HookRequeteFiltre />);
 
-  const numeroRequete = screen.getByLabelText(
-    "requete.numeroRequete"
-  ) as HTMLInputElement;
-  const typeRequete = screen.getByTestId(
-    "requete.typeRequete"
-  ) as HTMLSelectElement;
-  const sousTypeRequete = screen.getByTestId(
-    "requete.sousTypeRequete"
-  ) as HTMLSelectElement;
-  const statutRequete = screen.getByTestId(
-    "requete.statutRequete"
-  ) as HTMLSelectElement;
+  const numeroRequete = screen.getByLabelText("requete.numeroRequete");
+  const typeRequete = screen.getByTestId("requete.typeRequete");
+  const sousTypeRequete = screen.getByTestId("requete.sousTypeRequete");
+  const statutRequete = screen.getByTestId("requete.statutRequete");
 
   const submit = screen.getByText(/Submit/i);
 
@@ -241,31 +208,21 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   });
 
   fireEvent.click(submit);
-  const result = screen.getByTestId("result");
-  waitFor(() => {
-    expect(sousTypeRequete.disabled).toBeFalsy();
-    expect(result.innerHTML).toBe(
+  await waitFor(() => {
+    expect((sousTypeRequete as HTMLSelectElement).disabled).toBeFalsy();
+    expect(screen.getByTestId("result").innerHTML).toBe(
       '{"requete":{"numeroRequete":"1234ABCD","numeroTeledossier":"","numeroDossierNational":"","typeRequete":"INFORMATION","sousTypeRequete":"COMPLETION_REQUETE_EN_COURS","statutRequete":"A_TRAITER"}}'
     );
   });
 });
 
-test("Sous Type Requete : Disabled / message d'erreur CARACTERES_ALPHANUMERIQUE ", () => {
+test("Sous Type Requete : Disabled / message d'erreur CARACTERES_ALPHANUMERIQUE ", async () => {
   render(<HookRequeteFiltre />);
 
-  const typeRequete = screen.getByTestId(
-    "requete.typeRequete"
-  ) as HTMLSelectElement;
-  const numeroRequete = screen.getByLabelText(
-    "requete.numeroRequete"
-  ) as HTMLInputElement;
-  const sousTypeRequete = screen.getByTestId(
-    "requete.sousTypeRequete"
-  ) as HTMLSelectElement;
-  const statutRequete = screen.getByTestId(
-    "requete.statutRequete"
-  ) as HTMLSelectElement;
-  //const submit: HTMLButtonElement = screen.getByText(/Submit/i);
+  const typeRequete: HTMLSelectElement = screen.getByTestId("requete.typeRequete");
+  const numeroRequete: HTMLInputElement = screen.getByLabelText("requete.numeroRequete");
+  const sousTypeRequete: HTMLSelectElement = screen.getByTestId("requete.sousTypeRequete");
+  const statutRequete: HTMLSelectElement = screen.getByTestId("requete.statutRequete");
 
   fireEvent.change(numeroRequete, {
     target: {
@@ -273,9 +230,8 @@ test("Sous Type Requete : Disabled / message d'erreur CARACTERES_ALPHANUMERIQUE 
     }
   });
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(numeroRequete.value).toBe("1234-");
-    // expect(submit.disabled).toBeTruthy(); ne fonctionne pas (pas compris pourquoi)
     expect(sousTypeRequete.disabled).toBeTruthy();
     expect(statutRequete.disabled).toBeTruthy();
   });
@@ -286,7 +242,7 @@ test("Sous Type Requete : Disabled / message d'erreur CARACTERES_ALPHANUMERIQUE 
     }
   });
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(sousTypeRequete.disabled).toBeFalsy();
     expect(statutRequete.disabled).toBeTruthy();
   });
@@ -297,7 +253,7 @@ test("Sous Type Requete : Disabled / message d'erreur CARACTERES_ALPHANUMERIQUE 
     }
   });
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(sousTypeRequete.disabled).toBeFalsy();
     expect(statutRequete.disabled).toBeFalsy();
   });
@@ -308,8 +264,8 @@ test("Sous Type Requete : Disabled / message d'erreur CARACTERES_ALPHANUMERIQUE 
     }
   });
 
-    waitFor(() => {
-      expect(sousTypeRequete.disabled).toBeFalsy();
-      expect(statutRequete.disabled).toBeFalsy();
-    });
+  await waitFor(() => {
+    expect(sousTypeRequete.disabled).toBeFalsy();
+    expect(statutRequete.disabled).toBeFalsy();
+  });
 });

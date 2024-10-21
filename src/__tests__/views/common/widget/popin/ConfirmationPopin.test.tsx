@@ -46,46 +46,33 @@ const HookConsummerConfirmationPopin: React.FC<
   );
 };
 
-test("Attendu la popin ConfirmationPopin, le bouton 'Oui' fonctionne correctement", () => {
+test("Attendu la popin ConfirmationPopin, le bouton 'Oui' fonctionne correctement", async () => {
   const ok = vi.fn();
 
   render(<HookConsummerConfirmationPopin ok={ok} />);
 
-  let okButton: HTMLElement;
-  waitFor(() => {
-    okButton = screen.getByText(/Oui/);
-    expect(okButton).toBeDefined();
-  });
+  const okButton = screen.getByText(/Oui/);
+  expect(okButton).toBeDefined();
+  fireEvent.click(okButton);
 
-  fireEvent.click(okButton!);
-
-  waitFor(() => {
+  await waitFor(() => {
     expect(ok).toHaveBeenCalledTimes(1);
-  });
-
-  waitFor(() => {
-    expect(okButton).not.toBeDefined();
+    expect(screen.queryByText(/Oui/)).toBeNull();
   });
 });
 
-test("Attendu la popin ConfirmationPopin, le bouton 'Non' fonctionne correctement", () => {
+test("Attendu la popin ConfirmationPopin, le bouton 'Non' fonctionne correctement", async () => {
   const cancel = vi.fn();
 
   render(<HookConsummerConfirmationPopin cancel={cancel} />);
 
-  let cancelButton: HTMLElement;
-  waitFor(() => {
-    cancelButton = screen.getByText(/Non/);
-    expect(cancelButton).toBeDefined();
-  });
+  const cancelButton = screen.getByText(/Non/);
+  expect(cancelButton).toBeDefined();
 
-  fireEvent.click(cancelButton!);
+  fireEvent.click(cancelButton);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(cancel).toHaveBeenCalledTimes(1);
-  });
-
-  waitFor(() => {
-    expect(cancelButton).not.toBeDefined();
+    expect(screen.queryByText(/Non/)).toBeNull();
   });
 });

@@ -7,16 +7,19 @@ export type TApiAutorisee =
   | "rece-outiltech-api"
   | "rece-etatcivil-api"
   | "rece-composition-api";
+  
 export type TMethodeHttp = "GET" | "DELETE" | "PATCH" | "POST" | "PUT";
 
 type TErreurApiTech = {
   type: "TechnicalException";
   code: TCodesTech;
 };
+
 type TErreurApiFct = {
   type: "BusinessException";
   code: TCodesFct;
 };
+
 export type TErreurApi = {
   message: string;
 } & (TErreurApiFct | TErreurApiTech);
@@ -39,11 +42,7 @@ export type TReponseApiEchec = TReponseApi & {
   erreurs: TErreurApi[];
 };
 
-export type TConfigurationRequeteHttp<
-  TUri extends TBaseUri,
-  TBody extends object | undefined,
-  TQuery extends object | undefined
-> = {
+export type TConfigurationRequeteHttp<TUri extends TBaseUri, TBody extends object | undefined, TQuery extends object | undefined> = {
   uri: TUri;
   methode: TMethodeHttp;
   query?: TQuery;
@@ -63,7 +62,7 @@ export type TConfigurationApi<
   TUri extends TBaseUri,
   TBody extends object | undefined = undefined,
   TQuery extends object | undefined = undefined,
-  TResultat extends object | unknown = unknown
+  TResultat = unknown
 > = {
   api: TApi;
   methode: TMethodeHttp;
@@ -74,11 +73,8 @@ export type TAppelApi<
   TUri extends TBaseUri,
   TBody extends object | undefined,
   TQuery extends object | undefined,
-  TResultat extends object | unknown
-> = Omit<
-  TConfigurationRequeteHttp<TUri, TBody, TQuery>,
-  "uri" | "methode" | "path" | "body" | "query"
-> & {
+  TResultat = unknown
+> = Omit<TConfigurationRequeteHttp<TUri, TBody, TQuery>, "uri" | "methode" | "path" | "body" | "query"> & {
   parametres?: TParametres<TUri, TBody, TQuery>;
   apresSucces?: (data: TResultat, headers: THeader) => void;
   apresErreur?: (erreurs: TErreurApi[]) => void;
