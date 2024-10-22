@@ -20,32 +20,22 @@ export interface IRECEContext {
   erreurLogin: any;
 }
 
-const RECEContextData = React.createContext<Omit<IRECEContext, "setIsDirty">>(
-  {} as IRECEContext
-);
-const RECEContextActions = React.createContext<
-  Pick<IRECEContext, "setIsDirty">
->({} as IRECEContext);
+const RECEContextData = React.createContext<Omit<IRECEContext, "setIsDirty">>({} as IRECEContext);
+const RECEContextActions = React.createContext<Pick<IRECEContext, "setIsDirty">>({} as IRECEContext);
 
-const RECEContextProvider: React.FC<React.PropsWithChildren> = ({
-  children
-}) => {
-  const [utilisateurConnecte, setUtilisateurConnecte] = useState<IOfficier>(
-    {} as IOfficier
-  );
+const RECEContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+  const [utilisateurConnecte, setUtilisateurConnecte] = useState<IOfficier | null>(null);
   const [erreurLogin, setErreurLogin] = useState<any>();
 
   const [isDirty, setIsDirty] = useState<boolean>(false);
 
-  const { utilisateurs, services, decrets } = useChargerDonneesContexte(
-    !!utilisateurConnecte
-  );
+  const { utilisateurs, services, decrets } = useChargerDonneesContexte(!!utilisateurConnecte);
 
   const { donneesChargees } = useChargerDonneesApplicatives();
 
   const contextValue = useMemo(
     () => ({
-      utilisateurConnecte,
+      utilisateurConnecte: utilisateurConnecte ?? ({} as IOfficier),
       utilisateurs,
       services,
       decrets,
@@ -68,10 +58,7 @@ const RECEContextProvider: React.FC<React.PropsWithChildren> = ({
     appelApiLogin({
       apresSucces: (officierLogin, headers) => {
         const officier = mappingOfficier(headers, officierLogin);
-        gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader(
-          headers,
-          officier.idSSO
-        );
+        gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader(headers, officier.idSSO);
         setUtilisateurConnecte(officier);
       },
       apresErreur: erreurs => {
@@ -82,9 +69,7 @@ const RECEContextProvider: React.FC<React.PropsWithChildren> = ({
 
   return donneesChargees ? (
     <RECEContextData.Provider value={contextValue}>
-      <RECEContextActions.Provider value={contextActions}>
-        {utilisateurConnecte && children}
-      </RECEContextActions.Provider>
+      <RECEContextActions.Provider value={contextActions}>{utilisateurConnecte && children}</RECEContextActions.Provider>
     </RECEContextData.Provider>
   ) : (
     <></>
