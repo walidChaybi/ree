@@ -1,4 +1,4 @@
-import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { IActionDatee } from "../commun/IActionDatee";
 import { IAutorite } from "../commun/IAutorite";
 
@@ -9,10 +9,10 @@ export interface IDissolution extends IActionDatee {
 
 export const Dissolution = {
   getDate(dissolution: IDissolution) {
-    return getFormatDateFromTimestamp(dissolution.date);
+    return DateUtils.getFormatDateFromTimestamp(dissolution.date);
   },
   getDateEffet(dissolution: IDissolution) {
-    return getFormatDateFromTimestamp(dissolution.dateEffet);
+    return DateUtils.getFormatDateFromTimestamp(dissolution.dateEffet);
   },
   getMotif(dissolution: IDissolution) {
     return dissolution.motif;

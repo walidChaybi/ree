@@ -6,7 +6,7 @@ import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { InscriptionRcUtil } from "@model/etatcivil/enum/TypeInscriptionRc";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
-import { IDateCompose, getDateStringFromDateCompose } from "@util/DateUtils";
+import DateUtils, { IDateCompose } from "@util/DateUtils";
 import {
   UN,
   getValeurOuUndefined,
@@ -84,16 +84,12 @@ function mapPersonne(personne: any): IPersonneRMCPersonne {
     autresNoms: getValeurOuVide(personne.autresNoms),
     prenoms: getValeurOuVide(personne.prenoms),
     sexe: Sexe.getEnumFor(getValeurOuVide(personne.sexe)),
-    dateNaissance: getDateStringFromDateCompose({
+    dateNaissance: DateUtils.getDateStringFromDateCompose({
       annee: getValeurOuVide(personne.anneeNaissance),
       mois: getValeurOuVide(personne.moisNaissance),
       jour: getValeurOuVide(personne.jourNaissance)
     } as IDateCompose),
-    lieuNaissance: LieuxUtils.getLieu(
-      personne.villeNaissance,
-      undefined,
-      personne.paysNaissance
-    )
+    lieuNaissance: LieuxUtils.getLieu(personne.villeNaissance, undefined, personne.paysNaissance)
   };
 }
 

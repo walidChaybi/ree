@@ -7,10 +7,10 @@ import { NatureActeTranscription } from "@model/requete/NatureActeTranscription"
 import { ResumeRequeteCreationTranscriptionNaissanceMineureMajeure } from "@pages/requeteCreation/apercuRequete/transcription/composants/ResumeReqCreationTranscriptionNaissanceMineureMajeure";
 import { AccordionTranscriptionMineureMajeure } from "@pages/requeteCreation/apercuRequete/transcription/composants/resumesRequete/AccordionTranscriptionMineureMajeure";
 import { act, render, screen } from "@testing-library/react";
-import { formatDateStringIso } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { describe, expect, test } from "vitest";
 
-const dateCreation = formatDateStringIso("1999-02-21");
+const dateCreation = DateUtils.formatDateStringIso("1999-02-21");
 const numeroTeledossier = "B-2-8GRZFCS3P";
 const sousType = SousTypeCreation.getEnumFor("RCTC");
 const natureActe = NatureActeTranscription.getEnumFor("NAISSANCE_MAJEURE");

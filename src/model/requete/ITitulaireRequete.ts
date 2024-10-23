@@ -1,13 +1,7 @@
 /* istanbul ignore file */
 
-import { getDateStringFromDateCompose } from "@util/DateUtils";
-import {
-  DEUX,
-  formatNom,
-  getValeurOuVide,
-  numberToString,
-  UN
-} from "@util/Utils";
+import DateUtils from "@util/DateUtils";
+import { DEUX, formatNom, getValeurOuVide, numberToString, UN } from "@util/Utils";
 import { Nationalite } from "../etatcivil/enum/Nationalite";
 import { Sexe } from "../etatcivil/enum/Sexe";
 import { INationalite } from "./INationalite";
@@ -45,10 +39,8 @@ export const TitulaireRequete = {
   },
   getPrenom(numero: number, titulaire: ITitulaireRequete): string {
     let res = "";
-    if (titulaire && titulaire.prenoms) {
-      const prenom = titulaire.prenoms.find(
-        element => element.numeroOrdre === numero
-      );
+    if (titulaire?.prenoms) {
+      const prenom = titulaire.prenoms.find(element => element.numeroOrdre === numero);
       res = prenom?.prenom ?? "";
     }
     return res;
@@ -65,9 +57,7 @@ export const TitulaireRequete = {
     return this.getPrenom(indexPrenom, titulaire);
   },
   getPrenoms(titulaire: ITitulaireRequete): string {
-    return `${this.getPrenom1(titulaire)}${
-      this.getPrenom2(titulaire) ? " " : ""
-    }${this.getPrenom2(titulaire)}${
+    return `${this.getPrenom1(titulaire)}${this.getPrenom2(titulaire) ? " " : ""}${this.getPrenom2(titulaire)}${
       this.getPrenom3(titulaire) ? " " : ""
     }${this.getPrenom3(titulaire)}`;
   },
@@ -80,8 +70,8 @@ export const TitulaireRequete = {
     return prenoms;
   },
   getDateNaissance(titulaire?: ITitulaireRequete): string {
-    return titulaire && titulaire.anneeNaissance
-      ? getDateStringFromDateCompose({
+    return titulaire?.anneeNaissance
+      ? DateUtils.getDateStringFromDateCompose({
           jour: numberToString(titulaire.jourNaissance),
           mois: numberToString(titulaire.moisNaissance),
           annee: numberToString(titulaire.anneeNaissance)
@@ -89,9 +79,7 @@ export const TitulaireRequete = {
       : "";
   },
   getSexe(titulaire?: ITitulaireRequete): string {
-    return titulaire && titulaire.sexe
-      ? Sexe.getEnumFor(titulaire.sexe).libelle
-      : "";
+    return titulaire?.sexe ? Sexe.getEnumFor(titulaire.sexe).libelle : "";
   },
   getVille(titulaire?: ITitulaireRequete): string {
     return getValeurOuVide(titulaire?.villeNaissance);
@@ -100,38 +88,30 @@ export const TitulaireRequete = {
     return getValeurOuVide(titulaire?.paysNaissance);
   },
   getLieuNaissance(titulaire?: ITitulaireRequete): string {
-    let lieuNissance = "";
+    let lieuNaissance = "";
 
-    if (titulaire && titulaire.villeNaissance) {
-      lieuNissance = this.getVille(titulaire);
+    if (titulaire?.villeNaissance) {
+      lieuNaissance = this.getVille(titulaire);
     }
 
-    if (titulaire && titulaire.paysNaissance) {
-      lieuNissance += lieuNissance !== "" ? ", " : "";
-      lieuNissance += this.getPays(titulaire);
+    if (titulaire?.paysNaissance) {
+      lieuNaissance += lieuNaissance !== "" ? ", " : "";
+      lieuNaissance += this.getPays(titulaire);
     }
 
-    return lieuNissance;
+    return lieuNaissance;
   },
   getParentsTries(parents?: IParent[]) {
     return parents?.sort((a, b) => a.position - b.position);
   },
-  getTitulaireParPosition(
-    titulaires: ITitulaireRequete[],
-    position: number
-  ): ITitulaireRequete | undefined {
+  getTitulaireParPosition(titulaires: ITitulaireRequete[], position: number): ITitulaireRequete | undefined {
     return titulaires.find(titulaire => titulaire.position === position);
   },
-  getParent(
-    titulaire: ITitulaireRequete | undefined,
-    position: number
-  ): IParent | undefined {
+  getParent(titulaire: ITitulaireRequete | undefined, position: number): IParent | undefined {
     let parent: IParent | undefined;
 
     if (titulaire) {
-      parent = titulaire.parentsTitulaire?.find(
-        parentTitulaire => parentTitulaire.position === position
-      );
+      parent = titulaire.parentsTitulaire?.find(parentTitulaire => parentTitulaire.position === position);
     }
 
     return parent;

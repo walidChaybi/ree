@@ -1,47 +1,33 @@
 import { IStatutFiche } from "@model/etatcivil/fiche/IStatutFiche";
-import {
-  getDateFromTimestamp,
-  getDateString,
-  getDateStringFromDateCompose
-} from "@util/DateUtils";
-import { getLibelle } from "@util/Utils";
+import DateUtils from "@util/DateUtils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
-import {
-  TableauSimple,
-  TableauSimpleProps
-} from "@widget/tableau/TableauSimple/TableauSimple";
 import { processDataStorting } from "@widget/tableau/TableUtils";
+import { TableauSimple, TableauSimpleProps } from "@widget/tableau/TableauSimple/TableauSimple";
 import React from "react";
 import "./scss/TableauStatut.scss";
 interface TableauStatutProps {
   statutsFiche: IStatutFiche[];
 }
 
-export const TableauStatut: React.FC<TableauStatutProps> = ({
-  statutsFiche
-}) => {
-  return (
-    <div className="TableauStatut">
-      {statutsFiche.length > 0 && getTableauStatut(statutsFiche)}
-    </div>
-  );
+export const TableauStatut: React.FC<TableauStatutProps> = ({ statutsFiche }) => {
+  return <div className="TableauStatut">{statutsFiche.length > 0 && getTableauStatut(statutsFiche)}</div>;
 };
 
 /** Construction du tableau des pièces jointes */
 function getTableauStatut(statuts: IStatutFiche[]): JSX.Element {
   const tableauSimpleProps: TableauSimpleProps = {
     entetes: [
-      { className: "EnteteStatut", libelle: getLibelle("Statut") },
-      { className: "EnteteDateStatut", libelle: getLibelle("Date statut") },
+      { className: "EnteteStatut", libelle: "Statut" },
+      { className: "EnteteDateStatut", libelle: "Date statut" },
       {
         className: "EnteteDateEvenement",
-        libelle: getLibelle("Date événement")
+        libelle: "Date événement"
       },
-      { className: "EnteteMotif", libelle: getLibelle("Motif") },
-      { className: "EnteteLieu", libelle: getLibelle("Lieu") },
+      { className: "EnteteMotif", libelle: "Motif" },
+      { className: "EnteteLieu", libelle: "Lieu" },
       {
         className: "EnteteComplementMotif",
-        libelle: getLibelle("Complément motif")
+        libelle: "Complément motif"
       }
     ],
     lignes: processDataStorting(statuts, "DESC", "dateStatut").map(statut => ({
@@ -72,13 +58,11 @@ function getTableauStatut(statuts: IStatutFiche[]): JSX.Element {
 }
 
 function getColonneDateStatut(statut: IStatutFiche): string | JSX.Element {
-  return getDateString(getDateFromTimestamp(statut.dateStatut));
+  return DateUtils.getDateString(DateUtils.getDateFromTimestamp(statut.dateStatut));
 }
 
 function getColonneDateEvenement(statut: IStatutFiche): string | JSX.Element {
-  return statut.statutFicheEvenement
-    ? getDateStringFromDateCompose(statut.statutFicheEvenement.date)
-    : "";
+  return statut.statutFicheEvenement ? DateUtils.getDateStringFromDateCompose(statut.statutFicheEvenement.date) : "";
 }
 
 function getColonneLieu(statut: IStatutFiche): string | JSX.Element {

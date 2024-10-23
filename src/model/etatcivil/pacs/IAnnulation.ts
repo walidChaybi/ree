@@ -1,11 +1,8 @@
-import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { getValeurOuVide } from "@util/Utils";
 import { IActionDatee } from "../commun/IActionDatee";
 import { IAutorite } from "../commun/IAutorite";
-import {
-  DecisionAnnulation,
-  DecisionAnnulationUtil
-} from "../enum/DecisionAnnulation";
+import { DecisionAnnulation, DecisionAnnulationUtil } from "../enum/DecisionAnnulation";
 
 export interface IAnnulation extends IActionDatee {
   type: DecisionAnnulation;
@@ -19,15 +16,13 @@ export const Annulation = {
     return DecisionAnnulationUtil.getLibelle(annulation.type);
   },
   getDate(annulation: IAnnulation): string {
-    return getFormatDateFromTimestamp(annulation.date);
+    return DateUtils.getFormatDateFromTimestamp(annulation.date);
   },
   getDateEffet(annulation: IAnnulation): string {
-    return getFormatDateFromTimestamp(annulation.dateEffet);
+    return DateUtils.getFormatDateFromTimestamp(annulation.dateEffet);
   },
   getJuridiction(annulation: IAnnulation): string {
-    return annulation.autorite && annulation.autorite.typeJuridiction
-      ? annulation.autorite.typeJuridiction
-      : "";
+    return annulation.autorite?.typeJuridiction ? annulation.autorite.typeJuridiction : "";
   },
   getEnrolementRG(annulation: IAnnulation): string {
     return getValeurOuVide(annulation.enrolementRG);

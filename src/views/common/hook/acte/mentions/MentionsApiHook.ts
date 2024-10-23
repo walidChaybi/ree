@@ -3,7 +3,7 @@ import { IMention } from "@model/etatcivil/acte/mention/IMention";
 import { ITypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
-import { getDateFromTimestamp } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import { StatutMention } from "./../../../../../model/etatcivil/enum/StatutMention";
@@ -42,12 +42,9 @@ export function useMentionsApiHook(params?: IMentionsParams) {
 }
 
 export function mappingMentions(mentions: any[]): IMention[] | undefined {
-  return (
-    mentions &&
-    mentions.map(mention => {
-      return mention && mappingMention(mention);
-    })
-  );
+  return mentions?.map(mention => {
+    return mention && mappingMention(mention);
+  });
 }
 
 function mappingMention(mention: any): IMention {
@@ -57,17 +54,14 @@ function mappingMention(mention: any): IMention {
     numeroOrdreExtrait: mention.numeroOrdreExtrait,
     villeApposition: mention.villeApposition,
     regionApposition: mention.regionApposition,
-    dateApposition: getDateFromTimestamp(mention.dateApposition),
-    dateCreation: getDateFromTimestamp(mention.dateCreation),
+    dateApposition: DateUtils.getDateFromTimestamp(mention.dateApposition),
+    dateCreation: DateUtils.getDateFromTimestamp(mention.dateCreation),
     statut: mappingStatutMention(mention.statut),
-    dateStatut: getDateFromTimestamp(mention.dateStatut),
-    titulaires: mention.titulaires
-      ? mappingTitulairesMention(mention.titulaires)
-      : [],
+    dateStatut: DateUtils.getDateFromTimestamp(mention.dateStatut),
+    titulaires: mention.titulaires ? mappingTitulairesMention(mention.titulaires) : [],
     typeMention: mappingTypeMention(mention.typeMention),
     autoriteEtatCivil: {
-      libelleTypeAutoriteEtatCivil:
-        mention.autoriteEtatCivil.libelleTypeAutoriteEtatCivil,
+      libelleTypeAutoriteEtatCivil: mention.autoriteEtatCivil.libelleTypeAutoriteEtatCivil,
       nomOEC: mention.autoriteEtatCivil.nomOEC,
       prenomOEC: mention.autoriteEtatCivil.prenomOEC
     },

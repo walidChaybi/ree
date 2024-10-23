@@ -28,7 +28,7 @@ export const PartenaireComposition = {
     if (partenaire) {
       obj.prenoms_partenaire_1 = Partenaire.getPrenoms(partenaire);
       obj.nom_partenaire_1 = Partenaire.getNomFamille(partenaire);
-      obj.jour_naissance_partenaire_1 = Partenaire.getJour(partenaire);
+      obj.jour_naissance_partenaire_1 = Partenaire.getJourNaissance(partenaire);
       obj.mois_naissance_partenaire_1 = Partenaire.getMoisNaissance(partenaire);
       obj.annee_naissance_partenaire_1 = Partenaire.getAnneeNaissance(
         partenaire
@@ -45,7 +45,7 @@ export const PartenaireComposition = {
     if (partenaire) {
       obj.prenoms_partenaire_2 = Partenaire.getPrenoms(partenaire);
       obj.nom_partenaire_2 = Partenaire.getNomFamille(partenaire);
-      obj.jour_naissance_partenaire_2 = Partenaire.getJour(partenaire);
+      obj.jour_naissance_partenaire_2 = Partenaire.getJourNaissance(partenaire);
       obj.mois_naissance_partenaire_2 = Partenaire.getMoisNaissance(partenaire);
       obj.annee_naissance_partenaire_2 = Partenaire.getAnneeNaissance(
         partenaire

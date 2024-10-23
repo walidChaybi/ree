@@ -4,7 +4,7 @@ import {
   getNomUtilisateurAPartirID,
   getPrenomUtilisateurAPartirID
 } from "@model/agent/IUtilisateur";
-import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import {
   formatNom,
   formatPrenom,
@@ -84,27 +84,19 @@ export function mappingUneRequeteTableauDelivrance(
     type: TypeRequete.getEnumFor(requete?.type)?.libelle,
     sousType: getSousType(requete?.type, requete?.sousType),
     provenance: Provenance.getEnumFor(requete?.provenance)?.libelle,
-    nature: requete?.nature
-      ? NatureActe.getEnumFor(requete?.nature)?.libelle
-      : "",
+    nature: requete?.nature ? NatureActe.getEnumFor(requete?.nature)?.libelle : "",
     document: requete?.document, // id du type de document demandé
-    documentLibelle: DocumentDelivrance.getDocumentDelivrance(requete?.document)
-      .libelle, // libellé du type de document demandé
+    documentLibelle: DocumentDelivrance.getDocumentDelivrance(requete?.document).libelle, // libellé du type de document demandé
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
     requerant,
-    nomCompletRequerant: requete?.nomCompletRequerant
-      ? requete?.nomCompletRequerant
-      : requerant,
+    nomCompletRequerant: requete?.nomCompletRequerant ? requete?.nomCompletRequerant : requerant,
     idUtilisateurRequerant: requete?.idUtilisateurRequerant,
     attribueA: mapAttribueA(requete, utilisateurs, services) ?? undefined,
-    dateCreation: getFormatDateFromTimestamp(requete?.dateCreation),
-    dateDerniereMaj: getFormatDateFromTimestamp(requete?.dateDernierMAJ),
+    dateCreation: DateUtils.getFormatDateFromTimestamp(requete?.dateCreation),
+    dateDerniereMaj: DateUtils.getFormatDateFromTimestamp(requete?.dateDernierMAJ),
     statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
     priorite: getValeurOuVide(requete?.priorite),
-    observations:
-      mappingSupplementaire === true
-        ? mapObservations(requete?.observations)
-        : requete?.observations,
+    observations: mappingSupplementaire === true ? mapObservations(requete?.observations) : requete?.observations,
     idUtilisateur: getValeurOuUndefined(requete?.idUtilisateur),
     idCorbeilleAgent: getValeurOuUndefined(requete?.idCorbeilleAgent),
     idService: getValeurOuUndefined(requete?.idService),

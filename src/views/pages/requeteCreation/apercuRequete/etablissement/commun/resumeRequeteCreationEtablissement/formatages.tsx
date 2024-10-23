@@ -1,21 +1,13 @@
 import { DateCoordonneesType } from "@model/requete/DateCoordonneesType";
 import { DomiciliationType } from "@model/requete/DomiciliationType";
 import { NationaliteType } from "@model/requete/NationaliteType";
-import { getDateStringFromDateCompose } from "@util/DateUtils";
-import {
-  chainesEgalesIgnoreCasse,
-  estRenseigne,
-  formatLigne,
-  LigneType
-} from "@util/Utils";
+import DateUtils from "@util/DateUtils";
+import { chainesEgalesIgnoreCasse, estRenseigne, formatLigne, LigneType } from "@util/Utils";
 import React from "react";
 import Labels from "../../../../commun/Labels";
 
 // Même utilité que formatLigne(), mais traite également les éléments JSX en plus des string dans tab[]
-export const formatLigneSpecificite = (
-  tab?: (LigneType | JSX.Element | JSX.Element[])[],
-  separateur = ", "
-) => {
+export const formatLigneSpecificite = (tab?: (LigneType | JSX.Element | JSX.Element[])[], separateur = ", ") => {
   const resultat = tab?.filter(Boolean).map((elt, pos) => {
     const separation = pos < tab.filter(Boolean).length - 1 ? separateur : null;
     return (
@@ -29,9 +21,7 @@ export const formatLigneSpecificite = (
   return estRenseigne(resultat) ? resultat : "";
 };
 
-export const formatLigneDateCoordonnees = (
-  dateCoordonnees?: DateCoordonneesType
-) =>
+export const formatLigneDateCoordonnees = (dateCoordonnees?: DateCoordonneesType) =>
   formatLigne([
     dateCoordonnees?.date,
     dateCoordonnees?.ville,
@@ -41,23 +31,13 @@ export const formatLigneDateCoordonnees = (
   ]);
 
 export const formatLigneAdresse = (adresse?: DomiciliationType) =>
-  formatLigne([
-    adresse?.codePostal,
-    adresse?.ville ?? adresse?.lieuVilleEtranger,
-    adresse?.pays
-  ]);
+  formatLigne([adresse?.codePostal, adresse?.ville ?? adresse?.lieuVilleEtranger, adresse?.pays]);
 
 export const formatLigneNationalites = (nationalites?: NationaliteType[]) =>
   formatLigne(nationalites?.map(nationalite => nationalite.nationalite));
 
-export const presenceCorrectionSdanf = (
-  champAControlerSdanf?: string,
-  champAControlerTitulaire?: string
-): boolean => {
-  return (
-    estRenseigne(champAControlerSdanf) &&
-    !chainesEgalesIgnoreCasse(champAControlerSdanf, champAControlerTitulaire)
-  );
+export const presenceCorrectionSdanf = (champAControlerSdanf?: string, champAControlerTitulaire?: string): boolean => {
+  return estRenseigne(champAControlerSdanf) && !chainesEgalesIgnoreCasse(champAControlerSdanf, champAControlerTitulaire);
 };
 
 export const formatageDateNaissanceRetenueSdanf = (
@@ -65,7 +45,7 @@ export const formatageDateNaissanceRetenueSdanf = (
   moisNaissance: string | undefined,
   anneeNaissance: string | undefined
 ): string =>
-  getDateStringFromDateCompose(
+  DateUtils.getDateStringFromDateCompose(
     anneeNaissance
       ? {
           jour: jourNaissance?.toString(),

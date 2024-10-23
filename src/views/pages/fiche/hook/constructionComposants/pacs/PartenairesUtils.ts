@@ -1,5 +1,5 @@
 import { IPartenaire } from "@model/etatcivil/pacs/IPartenaire";
-import { getDateStringFromDateCompose } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import {
   formatNom,
   formatNoms,
@@ -34,16 +34,11 @@ export function getPartenaires(partenaires: IPartenaire[]): SectionPartProps[] {
             },
             {
               libelle: "Date de naissance",
-              value: getDateStringFromDateCompose(p.dateNaissance)
+              value: DateUtils.getDateStringFromDateCompose(p.dateNaissance)
             },
             {
               libelle: "Lieu de naissance",
-              value: LieuxUtils.getLieu(
-                p.villeNaissance,
-                p.regionNaissance,
-                p.paysNaissance,
-                p.arrondissementNaissance
-              )
+              value: LieuxUtils.getLieu(p.villeNaissance, p.regionNaissance, p.paysNaissance, p.arrondissementNaissance)
             },
             {
               libelle: "Nationalité",

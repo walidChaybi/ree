@@ -26,50 +26,33 @@ import {
   ISaisieProjetPostulantForm
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
-import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
-import {
-  IRequeteCreationEtablissement,
-  RequeteCreationEtablissement
-} from "@model/requete/IRequeteCreationEtablissement";
-import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
+import { IRequeteCreationEtablissement, RequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import Labels from "@pages/requeteCreation/commun/Labels";
-import { getDateActuelle } from "@util/DateUtils";
-import {
-  getLibelle,
-  getValeurOuVide,
-  jointAvec,
-  rempliAGaucheAvecZero, UN
-} from "@util/Utils";
+import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
+import DateUtils from "@util/DateUtils";
+import { UN, getValeurOuVide, jointAvec, rempliAGaucheAvecZero } from "@util/Utils";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { FormikHelpers } from "formik";
-import mappingIRequeteCreationVersResumeRequeteCreationProps from "./resumeRequeteCreationEtablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
 import ResumeRequeteCreationEtablissement from "./resumeRequeteCreationEtablissement/ResumeRequeteCreationEtablissement";
+import mappingIRequeteCreationVersResumeRequeteCreationProps from "./resumeRequeteCreationEtablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
 
 export function onRenommePieceJustificativeEtablissement(
   requete: IRequeteCreationEtablissement | undefined,
-  setRequete: React.Dispatch<
-    React.SetStateAction<IRequeteCreationEtablissement | undefined>
-  >,
+  setRequete: React.Dispatch<React.SetStateAction<IRequeteCreationEtablissement | undefined>>,
   idPieceJustificative: string,
   nouveauLibelle: string,
   idDocumentPJ?: string
 ) {
-  const pjARenommer = RequeteCreationEtablissement.getPieceJustificative(
-    requete,
-    idDocumentPJ,
-    idPieceJustificative
-  );
+  const pjARenommer = RequeteCreationEtablissement.getPieceJustificative(requete, idDocumentPJ, idPieceJustificative);
   if (pjARenommer) {
     pjARenommer.libelle = nouveauLibelle;
     setRequete({ ...requete } as IRequeteCreationEtablissement);
   }
 }
 
-export function getConteneurResumeRequete(
-  requete: IRequeteCreation,
-  conteneurFerme = false
-): JSX.Element {
+export function getConteneurResumeRequete(requete: IRequeteCreation, conteneurFerme = false): JSX.Element {
   return (
     <ConteneurRetractable
       titre={Labels.resume.requete.description}
@@ -77,28 +60,18 @@ export function getConteneurResumeRequete(
       initConteneurFerme={conteneurFerme}
       estADroite={false}
     >
-      <ResumeRequeteCreationEtablissement
-        {...mappingIRequeteCreationVersResumeRequeteCreationProps(requete)}
-      />
+      <ResumeRequeteCreationEtablissement {...mappingIRequeteCreationVersResumeRequeteCreationProps(requete)} />
     </ConteneurRetractable>
   );
 }
 
 export function getConteneurPieceJustificative(
   requete: IRequeteCreation,
-  onRenommePieceJustificative: (
-    idPieceJustificative: string,
-    nouveauLibelle: string,
-    idDocumentPJ?: string
-  ) => void,
+  onRenommePieceJustificative: (idPieceJustificative: string, nouveauLibelle: string, idDocumentPJ?: string) => void,
   rechargerRequete: () => void
 ): JSX.Element {
   return (
-    <ConteneurRetractable
-      titre={getLibelle("Pièces justificatives")}
-      className="FocusPieceJustificative"
-      estADroite={true}
-    >
+    <ConteneurRetractable titre={"Pièces justificatives"} className="FocusPieceJustificative" estADroite={true}>
       <OngletPiecesJustificatives
         requete={requete}
         onRenommePieceJustificative={onRenommePieceJustificative}
@@ -108,20 +81,15 @@ export function getConteneurPieceJustificative(
   );
 }
 
-export const estOuvertRegistrePapier = (
-  decretNaturalisaton?: IDecretNaturalisation | null,
-  registrePapier?: IRegistre
-): boolean => {
+export const estOuvertRegistrePapier = (decretNaturalisaton?: IDecretNaturalisation | null, registrePapier?: IRegistre): boolean => {
   let estOuvert = false;
 
   if (decretNaturalisaton && registrePapier) {
-    const [support1, annee] = decretNaturalisaton?.numeroDecret.split("/");
-    const dateActuelle = getDateActuelle();
+    const [support1, annee] = decretNaturalisaton?.numeroDecret.split("/") ?? [undefined, undefined];
+    const dateActuelle = DateUtils.getDateActuelle();
     estOuvert =
       registrePapier.dateOuverture <= dateActuelle &&
-      (registrePapier.dateFermeture
-        ? registrePapier.dateFermeture > dateActuelle
-        : true) &&
+      (registrePapier.dateFermeture ? registrePapier.dateFermeture > dateActuelle : true) &&
       TypeFamille.estACQ(TypeFamille.getEnumFor(registrePapier.famille)) &&
       registrePapier.pocopa === "X" &&
       Number(registrePapier.annee) === Number(annee) &&
@@ -131,16 +99,8 @@ export const estOuvertRegistrePapier = (
   return estOuvert;
 };
 
-export function estModifieBulletinIdentification(
-  saisieProjetPostulant: ISaisieProjetPostulantForm,
-  projetActe?: IProjetActe
-): boolean {
-  return projetActe
-    ? estModifieBulletinIdentificationCompareAvecProjetActe(
-        saisieProjetPostulant,
-        projetActe
-      )
-    : false;
+export function estModifieBulletinIdentification(saisieProjetPostulant: ISaisieProjetPostulantForm, projetActe?: IProjetActe): boolean {
+  return projetActe ? estModifieBulletinIdentificationCompareAvecProjetActe(saisieProjetPostulant, projetActe) : false;
 }
 
 function estModifieBulletinIdentificationCompareAvecProjetActe(
@@ -148,9 +108,7 @@ function estModifieBulletinIdentificationCompareAvecProjetActe(
   projetActe: IProjetActe
 ): boolean {
   const postulantProjetActe = getPostulantProjetActe(projetActe);
-  const analyseMarginalePostulant = getPostulantAnalyseMarginale(
-    projetActe.analyseMarginales
-  );
+  const analyseMarginalePostulant = getPostulantAnalyseMarginale(projetActe.analyseMarginales);
 
   return (
     estModifieAnalyseMarginale(
@@ -158,10 +116,7 @@ function estModifieBulletinIdentificationCompareAvecProjetActe(
       analyseMarginalePostulant?.nom,
       analyseMarginalePostulant?.prenoms
     ) ||
-    estModifieSexe(
-      saisieProjetPostulant.titulaire.sexe,
-      postulantProjetActe?.sexe
-    ) ||
+    estModifieSexe(saisieProjetPostulant.titulaire.sexe, postulantProjetActe?.sexe) ||
     estModifieDateDeNaissance(
       saisieProjetPostulant.titulaire.dateNaissance,
       postulantProjetActe.naissance?.jour,
@@ -181,37 +136,21 @@ function getPostulantProjetActe(projetActe: IProjetActe): ITitulaireProjetActe {
   return projetActe.titulaires[0];
 }
 
-function getPostulantAnalyseMarginale(
-  analysesMarginales?: IProjetAnalyseMarginale[]
-): ITitulaireProjetActe | undefined {
-  return analysesMarginales?.find(analyseMarginale => !analyseMarginale.dateFin)
-    ?.titulaires[0];
+function getPostulantAnalyseMarginale(analysesMarginales?: IProjetAnalyseMarginale[]): ITitulaireProjetActe | undefined {
+  return analysesMarginales?.find(analyseMarginale => !analyseMarginale.dateFin)?.titulaires[0];
 }
 
-function estModifieAnalyseMarginale(
-  valeurs: ISaisieAnalyseMarginale,
-  nomBI?: string,
-  prenomBI?: string[]
-): boolean {
-  const saisiePrenoms = Object.values(valeurs.prenoms).filter(
-    prenom => prenom !== ""
-  );
+function estModifieAnalyseMarginale(valeurs: ISaisieAnalyseMarginale, nomBI?: string, prenomBI?: string[]): boolean {
+  const saisiePrenoms = Object.values(valeurs.prenoms).filter(prenom => prenom !== "");
 
-  return Boolean(
-    valeurs.nom !== nomBI || saisiePrenoms.toString() !== prenomBI?.toString()
-  );
+  return Boolean(valeurs.nom !== nomBI || saisiePrenoms.toString() !== prenomBI?.toString());
 }
 
 function estModifieSexe(sexeSaisie: string, sexeBI?: string): boolean {
   return sexeSaisie !== sexeBI;
 }
 
-function estModifieDateDeNaissance(
-  saisieDate: ISaisieDate,
-  jourBI?: number,
-  moisBI?: number,
-  anneeBI?: number
-): boolean {
+function estModifieDateDeNaissance(saisieDate: ISaisieDate, jourBI?: number, moisBI?: number, anneeBI?: number): boolean {
   return (
     Boolean(saisieDate.annee && anneeBI !== Number(saisieDate.annee)) ||
     Boolean(saisieDate.mois && moisBI !== Number(saisieDate.mois)) ||
@@ -225,15 +164,11 @@ function estModifieLieuDeNaissance(
   regionSaisie?: string,
   villeSaisie?: string
 ): boolean {
-  const { paysNaissance, villeNaissance, regionNaissance } =
-    saisieLieuNaissance;
+  const { paysNaissance, villeNaissance, regionNaissance } = saisieLieuNaissance;
   return (
-    getValeurOuVide(paysNaissance.toUpperCase()) !==
-      getValeurOuVide(paysSaisie?.toUpperCase()) ||
-    getValeurOuVide(villeNaissance?.toUpperCase()) !==
-      getValeurOuVide(villeSaisie?.toUpperCase()) ||
-    getValeurOuVide(regionNaissance?.toUpperCase()) !==
-      getValeurOuVide(regionSaisie?.toUpperCase())
+    getValeurOuVide(paysNaissance.toUpperCase()) !== getValeurOuVide(paysSaisie?.toUpperCase()) ||
+    getValeurOuVide(villeNaissance?.toUpperCase()) !== getValeurOuVide(villeSaisie?.toUpperCase()) ||
+    getValeurOuVide(regionNaissance?.toUpperCase()) !== getValeurOuVide(regionSaisie?.toUpperCase())
   );
 }
 
@@ -243,13 +178,10 @@ export function estModificationsDonneesBIAAnnuler(
   saisieProjetPostulant: ISaisieProjetPostulantForm
 ): boolean {
   return (
-    (AvancementProjetActe.estProjetValide(avancement) ||
-      AvancementProjetActe.estASigner(avancement)) &&
+    (AvancementProjetActe.estProjetValide(avancement) || AvancementProjetActe.estASigner(avancement)) &&
     estModifieBulletinIdentification(saisieProjetPostulant, projetActe) &&
     !window.confirm(
-      getLibelle(
-        `Attention ! Vous avez modifié des données des cinq items après validation du BI ou après publication du décret.\n\nVoulez-vous continuer ?`
-      )
+      `Attention ! Vous avez modifié des données des cinq items après validation du BI ou après publication du décret.\n\nVoulez-vous continuer ?`
     )
   );
 }

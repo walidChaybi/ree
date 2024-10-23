@@ -63,7 +63,7 @@ interface ITitulairesActe {
 
 export const FicheActe = {
   getNature(acte?: IFicheActe): string {
-    return acte && acte.nature ? acte.nature.libelle : "";
+    return acte?.nature ? acte.nature.libelle : "";
   },
 
   estActeNaissance(acte?: IFicheActe): boolean {
@@ -91,12 +91,7 @@ export const FicheActe = {
   },
 
   estActeImage(acte: IFicheActe) {
-    return (
-      acte.type === TypeActe.IMAGE ||
-      (acte.corpsImage &&
-        acte.corpsImage.images &&
-        acte.corpsImage.images.length > 0)
-    );
+    return acte.type === TypeActe.IMAGE || (acte.corpsImage?.images && acte.corpsImage.images.length > 0);
   },
 
   estActeTexte(acte: IFicheActe): boolean {
@@ -261,7 +256,7 @@ export const FicheActe = {
 
   estNombreDeTitulaireErrone(acte: IFicheActe): boolean | undefined {
     let error;
-    if (acte && acte.titulaires) {
+    if (acte?.titulaires) {
       const nombreTitulaire = acte.titulaires?.length;
       switch (acte.nature) {
         case NatureActe.DECES:

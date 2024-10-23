@@ -21,7 +21,7 @@ import {
   estModifieBulletinIdentification,
   estOuvertRegistrePapier
 } from "@pages/requeteCreation/apercuRequete/etablissement/commun/ApercuRequeteEtablissementUtils";
-import { getDateActuelle } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { describe, expect, test } from "vitest";
 
 describe("Test la modification des donnees du BI.", () => {
@@ -71,90 +71,58 @@ describe("Test la modification des donnees du BI.", () => {
   } as any as IProjetActe;
 
   test("DOIT renvoyer 'false' QUAND le projet d'acte est undefined.", () => {
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, undefined)
-    ).toBeFalsy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, undefined)).toBeFalsy();
   });
 
   test("DOIT renvoyer 'false' QUAND les données de la saisie sont identiques aux données du projet d'acte.", () => {
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
-    ).toBeFalsy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeFalsy();
   });
 
   test("DOIT renvoyer 'true' QUAND la saisie du nom de l'analyse marginale diffère du projet d'acte.", () => {
     SAISIE_PROJET.titulaire.analyseMarginale.nom = "Test";
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
-    ).toBeTruthy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeTruthy();
     SAISIE_PROJET.titulaire.analyseMarginale.nom = "Nom";
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
-    ).toBeFalsy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeFalsy();
   });
 
   test("DOIT renvoyer 'true' QUAND la saisie des prénoms de l'analyse marginale diffère du projet d'acte.", () => {
     SAISIE_PROJET.titulaire.analyseMarginale.prenoms.prenom1 = "Test";
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
-    ).toBeTruthy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeTruthy();
     SAISIE_PROJET.titulaire.analyseMarginale.prenoms.prenom1 = "Prenom1";
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
-    ).toBeFalsy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeFalsy();
   });
 
   test("DOIT renvoyer 'true' QUAND la saisie du sexe diffère du projet d'acte.", () => {
     SAISIE_PROJET.titulaire.sexe = "FEMININ";
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
-    ).toBeTruthy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeTruthy();
     SAISIE_PROJET.titulaire.sexe = "MASCULIN";
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
-    ).toBeFalsy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeFalsy();
   });
 
   test("DOIT renvoyer 'true' QUAND la saisie de la date de naissance diffère du projet d'acte.", () => {
     SAISIE_PROJET.titulaire.dateNaissance.jour = "02";
     SAISIE_PROJET.titulaire.dateNaissance.mois = "02";
     SAISIE_PROJET.titulaire.dateNaissance.annee = "2002";
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
-    ).toBeTruthy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeTruthy();
     SAISIE_PROJET.titulaire.dateNaissance.jour = "01";
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
-    ).toBeTruthy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeTruthy();
     SAISIE_PROJET.titulaire.dateNaissance.mois = "01";
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
-    ).toBeTruthy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeTruthy();
     SAISIE_PROJET.titulaire.dateNaissance.annee = "2000";
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
-    ).toBeFalsy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeFalsy();
   });
 
   test("DOIT renvoyer 'true' QUAND la saisie du lieu de naissance diffère du projet d'acte.", () => {
     SAISIE_PROJET.titulaire.lieuNaissance.villeNaissance = "Test";
     SAISIE_PROJET.titulaire.lieuNaissance.regionNaissance = "Test";
     SAISIE_PROJET.titulaire.lieuNaissance.paysNaissance = "Test";
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
-    ).toBeTruthy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeTruthy();
     SAISIE_PROJET.titulaire.lieuNaissance.villeNaissance = "Ville";
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
-    ).toBeTruthy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeTruthy();
     SAISIE_PROJET.titulaire.lieuNaissance.regionNaissance = "Region";
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
-    ).toBeTruthy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeTruthy();
     SAISIE_PROJET.titulaire.lieuNaissance.paysNaissance = "Pays";
-    expect(
-      estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)
-    ).toBeFalsy();
+    expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeFalsy();
   });
 });
 
@@ -167,7 +135,7 @@ describe("Vérification de l'ouverture du registre", () => {
     dateSignature: new Date()
   };
 
-  const dateActuelle = getDateActuelle();
+  const dateActuelle = DateUtils.getDateActuelle();
   const REGISTRE_PAPIER: IRegistre = {
     id: "846236f3-8438-4f11-8347-6fe5aadff663",
     famille: "ACQ",
@@ -184,9 +152,7 @@ describe("Vérification de l'ouverture du registre", () => {
   };
 
   test("DOIT confirmer que le registre est ouvert en retournant 'true'.", () => {
-    expect(
-      estOuvertRegistrePapier(DECRET_NATURALISATION, REGISTRE_PAPIER)
-    ).toBeTruthy();
+    expect(estOuvertRegistrePapier(DECRET_NATURALISATION, REGISTRE_PAPIER)).toBeTruthy();
   });
 
   test.each([

@@ -1,4 +1,4 @@
-import { dateCourrier } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import {
   ADRESSE_INTERNET_MINISTERE,
   BLOC_MARQUES_MINISTERE,
@@ -38,33 +38,24 @@ export const ParametresComposition = {
   ajoutParametres(obj: IParametresComposition, oec = false) {
     obj = obj || {};
 
-    obj.image_bloc_marques = ParametreBaseRequete.getEnumFor(
-      BLOC_MARQUES_MINISTERE
-    )?.libelle;
+    obj.image_bloc_marques = ParametreBaseRequete.getEnumFor(BLOC_MARQUES_MINISTERE)?.libelle;
     obj.nom_direction = {
       ligne1: ParametreBaseRequete.getEnumFor(NOM_DIRECTION)?.libelle,
       ligne2: ParametreBaseRequete.getEnumFor(DIRECTION_LIGNE_2)?.libelle,
       ligne3: ParametreBaseRequete.getEnumFor(DIRECTION_LIGNE_3)?.libelle
     };
-    obj.adresse_internet = ParametreBaseRequete.getEnumFor(
-      ADRESSE_INTERNET_MINISTERE
-    )?.libelle;
+    obj.adresse_internet = ParametreBaseRequete.getEnumFor(ADRESSE_INTERNET_MINISTERE)?.libelle;
     obj.adr_service_delivreur = {
       ligne4: ParametreBaseRequete.getEnumFor(SERVICE_DELIVREUR_RUE)?.libelle,
       ligne6: ParametreBaseRequete.getEnumFor(SERVICE_DELIVREUR_VILLE)?.libelle
     };
-    obj.tel_service_delivreur = ParametreBaseRequete.getEnumFor(
-      SERVICE_DELIVREUR_SERVICE_TELEPHONE
-    )?.libelle;
-    obj.ville_delivrance = ParametreBaseRequete.getEnumFor(
-      SERVICE_DELIVREUR_SERVICE_VILLE
-    )?.libelle;
-    obj.date_delivrance = dateCourrier();
+    obj.tel_service_delivreur = ParametreBaseRequete.getEnumFor(SERVICE_DELIVREUR_SERVICE_TELEPHONE)?.libelle;
+    obj.ville_delivrance = ParametreBaseRequete.getEnumFor(SERVICE_DELIVREUR_SERVICE_VILLE)?.libelle;
+    obj.date_delivrance = DateUtils.dateCourrier();
     obj.cachet_signature = oec
       ? ParametreBaseRequete.getEnumFor(LIBELLE_FONCTION_AGENT_1)?.libelle
       : ParametreBaseRequete.getEnumFor(LIBELLE_FONCTION_AGENT_2)?.libelle;
-    obj.sceau_ministere =
-      ParametreBaseRequete.getEnumFor(SCEAU_MINISTERE)?.libelle;
+    obj.sceau_ministere = ParametreBaseRequete.getEnumFor(SCEAU_MINISTERE)?.libelle;
 
     return obj;
   }

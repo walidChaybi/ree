@@ -37,9 +37,7 @@ test("render ListeAlertes avec droit suppression alerte : test ouverture / ferme
 
   waitFor(() => {
     expect(popinSupprimerAlerte).toBeDefined();
-    expect(popinSupprimerAlerte.textContent).toContain(
-      "Etes-vous sur de vouloir supprimer cette alerte ?"
-    );
+    expect(popinSupprimerAlerte.textContent).toContain("Etes-vous sûr de vouloir supprimer cette alerte ?");
   });
 
   fireEvent.click(screen.getByText("Annuler"));
@@ -74,9 +72,7 @@ test("render ListeAlertes avec droit suppression alerte : test soumission formul
 
   waitFor(() => {
     expect(popinSupprimerAlerte).toBeDefined();
-    expect(popinSupprimerAlerte.textContent).toContain(
-      "Etes-vous sur de vouloir supprimer cette alerte ?"
-    );
+    expect(popinSupprimerAlerte.textContent).toContain("Etes-vous sûr de vouloir supprimer cette alerte ?");
   });
 
   fireEvent.click(screen.getByText("Valider"));

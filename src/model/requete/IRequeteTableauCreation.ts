@@ -1,6 +1,6 @@
 import { IService } from "@model/agent/IService";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
-import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { getValeurOuUndefined, getValeurOuVide } from "@util/Utils";
 import { IRequeteTableau } from "./IRequeteTableau";
 import { mapAttribueA } from "./IRequeteTableauDelivrance";
@@ -44,21 +44,18 @@ export function mappingUneRequeteTableauCreation(
     numeroFonctionnel: getValeurOuVide(requete?.numeroFonctionnel),
     numeroTeledossierOuSDANFOuFonctionnel: requete?.numeroDossierNational
       ? getValeurOuVide(requete?.numeroDossierNational)
-      : getValeurOuVide(requete?.numeroNatali) ||
-        getValeurOuVide(requete.numeroDila) ||
-        getValeurOuVide(requete.numeroFonctionnel),
+      : getValeurOuVide(requete?.numeroNatali) || getValeurOuVide(requete.numeroDila) || getValeurOuVide(requete.numeroFonctionnel),
     numero: getValeurOuVide(requete.numero),
     numeroDila: getValeurOuVide(requete?.numeroDila),
     numeroAffichage: getValeurOuVide(requete?.numeroAffichage),
     type: TypeRequete.getEnumFor("CREATION")?.libelle,
     sousType: SousTypeCreation.getEnumFor(requete?.sousType).libelleCourt,
-    tagPriorisation: TagPriorisation.getEnumFor(requete?.tagPriorisation)
-      .libelle,
+    tagPriorisation: TagPriorisation.getEnumFor(requete?.tagPriorisation).libelle,
     numeroAncien: requete?.numeroAncien,
     titulaires,
     nomCompletRequerant: requete?.nomCompletRequerant,
-    dateCreation: getFormatDateFromTimestamp(requete?.dateCreation),
-    dateDerniereAction: getFormatDateFromTimestamp(requete?.dateDerniereAction),
+    dateCreation: DateUtils.getFormatDateFromTimestamp(requete?.dateCreation),
+    dateDerniereAction: DateUtils.getFormatDateFromTimestamp(requete?.dateDerniereAction),
     statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
     idUtilisateur: getValeurOuUndefined(requete?.idUtilisateur),
     idService: getValeurOuUndefined(requete?.idService),

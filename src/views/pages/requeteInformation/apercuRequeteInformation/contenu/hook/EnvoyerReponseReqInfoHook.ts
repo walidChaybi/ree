@@ -5,7 +5,7 @@ import { IPieceJustificativeMail } from "@model/mail/IPieceJustificativeMail";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
 import { getObjetRequeteInfoLibelle } from "@model/requete/enum/ObjetRequeteInfo";
-import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { PieceJointe } from "@util/FileUtils";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
@@ -60,13 +60,9 @@ function getReponseAEnvoyer(
     mail.champs = {
       champ1: requete.sousType.libelle, // "Sous-type demande"
       champ2: getObjetRequeteInfoLibelle(requete.objet), //  "Objet demande"
-      champ3: ComplementObjetRequete.estReponseLibreAgent(
-        requete.complementObjet
-      )
-        ? "--"
-        : requete.complementObjet.libelle, //  "Complément objet demande"
+      champ3: ComplementObjetRequete.estReponseLibreAgent(requete.complementObjet) ? "--" : requete.complementObjet.libelle, //  "Complément objet demande"
       champ4: requete.numero, // "Référence demande"
-      champ5: getFormatDateFromTimestamp(requete.dateCreation), //  "Date création demande"
+      champ5: DateUtils.getFormatDateFromTimestamp(requete.dateCreation), //  "Date création demande"
       champ6: reponseSaisie.corpsMail //  "Contenu"
     };
     mail.listePieceJointe = [];

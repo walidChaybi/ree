@@ -44,10 +44,7 @@ import {
   IPieceJustificativeCreation,
   PieceJustificativeCreation
 } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
-import {
-  getDateComposeFromTimestamp,
-  getFormatDateFromTimestamp
-} from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { logError } from "@util/LogManager";
 import { getValeurOuUndefined } from "@util/Utils";
 import { useContext, useEffect, useState } from "react";
@@ -63,9 +60,7 @@ export interface IDetailRequeteParams {
 }
 
 export function useDetailRequeteApiHook(params?: IDetailRequeteParams) {
-  const [detailRequeteState, setDetailRequeteState] = useState<
-    TRequete | undefined
-  >();
+  const [detailRequeteState, setDetailRequeteState] = useState<TRequete | undefined>();
 
   const { utilisateurs } = useContext(RECEContextData);
 
@@ -86,23 +81,13 @@ export function useDetailRequeteApiHook(params?: IDetailRequeteParams) {
   };
 }
 
-export function useAvecRejeuDetailRequeteApiHook(
-  params?: IDetailRequeteParams
-) {
-  const [detailRequeteState, setDetailRequeteState] = useState<
-    TRequete | undefined
-  >();
+export function useAvecRejeuDetailRequeteApiHook(params?: IDetailRequeteParams) {
+  const [detailRequeteState, setDetailRequeteState] = useState<TRequete | undefined>();
 
   const { utilisateurs } = useContext(RECEContextData);
 
   useEffect(() => {
-    fetchDetailRequete(
-      setDetailRequeteState,
-      params?.estConsultation,
-      undefined,
-      utilisateurs,
-      params?.idRequete
-    );
+    fetchDetailRequete(setDetailRequeteState, params?.estConsultation, undefined, utilisateurs, params?.idRequete);
   }, [params]);
 
   return {
@@ -119,34 +104,21 @@ export async function fetchDetailRequete(
 ) {
   try {
     if (idRequete) {
-      const result = await getDetailRequete(
-        idRequete,
-        estConsultation,
-        estConsultationHistoriqueAction
-      );
+      const result = await getDetailRequete(idRequete, estConsultation, estConsultationHistoriqueAction);
       const typeRequete = TypeRequete.getEnumFor(result?.body?.data?.type);
       switch (typeRequete) {
         case TypeRequete.DELIVRANCE: {
-          const detailRequeteDelivrance = mappingRequeteDelivrance(
-            result?.body?.data,
-            utilisateurs
-          );
+          const detailRequeteDelivrance = mappingRequeteDelivrance(result?.body?.data, utilisateurs);
           setDetailRequeteState(detailRequeteDelivrance);
           break;
         }
         case TypeRequete.INFORMATION: {
-          const detailRequeteInformation = mappingRequeteInformation(
-            result?.body?.data,
-            utilisateurs
-          );
+          const detailRequeteInformation = mappingRequeteInformation(result?.body?.data, utilisateurs);
           setDetailRequeteState(detailRequeteInformation);
           break;
         }
         case TypeRequete.CREATION: {
-          const detailRequeteCreation = mappingRequeteCreation(
-            result?.body?.data,
-            utilisateurs
-          );
+          const detailRequeteCreation = mappingRequeteCreation(result?.body?.data, utilisateurs);
           setDetailRequeteState(detailRequeteCreation);
           break;
         }
@@ -160,10 +132,7 @@ export async function fetchDetailRequete(
   }
 }
 
-export function mappingRequeteDelivrance(
-  data: any,
-  utilisateurs?: IUtilisateur[]
-): IRequeteDelivrance {
+export function mappingRequeteDelivrance(data: any, utilisateurs?: IUtilisateur[]): IRequeteDelivrance {
   return {
     // Partie Requête
     id: data.id,
@@ -180,9 +149,7 @@ export function mappingRequeteDelivrance(
     idUtilisateur: data.corbeilleAgent?.idUtilisateur,
     idService: data?.corbeilleService?.idService,
     actions: getActions(data?.actions, utilisateurs),
-    observations: data.observations
-      ? getObservations(data.observations, utilisateurs)
-      : undefined,
+    observations: data.observations ? getObservations(data.observations, utilisateurs) : undefined,
     piecesJustificatives: mapPiecesJustificatives(data.piecesJustificatives),
     numeroRequeteOrigine: data.numeroRequeteOrigine,
 
@@ -210,9 +177,7 @@ function mapUnePieceJustificative(piece?: any): IPieceJustificative {
     referenceSwift: getValeurOuUndefined(piece.referenceSwift),
     conteneurSwift: getValeurOuUndefined(piece.conteneurSwift),
     contenu: getValeurOuUndefined(piece.contenu),
-    typePieceJustificative: TypePieceJustificative?.getEnumFor(
-      piece.typePieceJustificative
-    ) // pj.typePieceJustificative est un UUID car il vient du back,
+    typePieceJustificative: TypePieceJustificative?.getEnumFor(piece.typePieceJustificative) // pj.typePieceJustificative est un UUID car il vient du back,
   };
 }
 
@@ -233,17 +198,11 @@ function getActions(actions: any, utilisateurs?: IUtilisateur[]): IAction[] {
   return actionsRequete;
 }
 
-function getObservations(
-  observations: any,
-  utilisateurs?: IUtilisateur[]
-): IObservation[] {
+function getObservations(observations: any, utilisateurs?: IUtilisateur[]): IObservation[] {
   const observationsRequete: IObservation[] = [];
   observations.forEach((a: any) => {
     const observation = a as IObservation;
-    const trigramme = getTrigrammeFromID(
-      observation.idUtilisateur,
-      utilisateurs
-    );
+    const trigramme = getTrigrammeFromID(observation.idUtilisateur, utilisateurs);
     observation.trigramme = trigramme ?? "RECE";
     observationsRequete.push(observation);
   });
@@ -313,19 +272,14 @@ function mappingRequete(data: any, utilisateurs?: IUtilisateur[]) {
     requerant: Requerant.mappingRequerant(data.requerant),
     idUtilisateur: data.corbeilleAgent?.idUtilisateur,
     idService: data?.corbeilleService?.idService,
-    observations: data.observations
-      ? getObservations(data.observations, utilisateurs)
-      : undefined,
+    observations: data.observations ? getObservations(data.observations, utilisateurs) : undefined,
     canal: TypeCanal.getEnumFor(data.canal),
     actions: getActions(data?.actions, utilisateurs),
     numeroRequeteOrigine: data.numeroRequeteOrigine
   };
 }
 
-export function mappingRequeteInformation(
-  data: any,
-  utilisateurs?: IUtilisateur[]
-): IRequeteInformation {
+export function mappingRequeteInformation(data: any, utilisateurs?: IUtilisateur[]): IRequeteInformation {
   return {
     ...mappingRequete(data, utilisateurs),
     //Partie Requête Delivrance
@@ -346,9 +300,7 @@ export function mappingRequeteInformation(
   };
 }
 
-function mapUnePieceJustificativeCreation(
-  piece?: any
-): IPieceJustificativeCreation {
+function mapUnePieceJustificativeCreation(piece?: any): IPieceJustificativeCreation {
   return {
     ...mapUnePieceJustificative(piece),
     idFichierNatali: getValeurOuUndefined(piece.idFichierNatali),
@@ -365,12 +317,8 @@ function mapUnePieceJustificativeCreation(
   };
 }
 
-function mapPiecesJustificativesCreation(
-  pieces?: any
-): IPieceJustificativeCreation[] {
-  const piecesJustificatives: IPieceJustificativeCreation[] = pieces
-    ? pieces?.map((pj: any) => mapUnePieceJustificativeCreation(pj))
-    : [];
+function mapPiecesJustificativesCreation(pieces?: any): IPieceJustificativeCreation[] {
+  const piecesJustificatives: IPieceJustificativeCreation[] = pieces ? pieces?.map((pj: any) => mapUnePieceJustificativeCreation(pj)) : [];
 
   PieceJustificativeCreation.setOrdre(piecesJustificatives);
 
@@ -391,7 +339,7 @@ export function mapEchangeRetourSDANF(echangeServeur?: any): IEchange {
   const { dateMessage, ...reste } = echangeServeur;
 
   return {
-    date: getFormatDateFromTimestamp(dateMessage),
+    date: DateUtils.getFormatDateFromTimestamp(dateMessage),
     ...reste
   };
 }
@@ -464,16 +412,10 @@ export function mapTitulairesCreation(
     qualite: QualiteFamille.getEnumFor(titulaire.qualite),
     decret: titulaire.decret && {
       numeroDecret: titulaire.decret.numeroDecret,
-      dateSignature: getDateComposeFromTimestamp(
-        titulaire.decret.dateSignature
-      ),
-      datePublication: getDateComposeFromTimestamp(
-        titulaire.decret.datePublication
-      )
+      dateSignature: DateUtils.getDateComposeFromTimestamp(titulaire.decret.dateSignature),
+      datePublication: DateUtils.getDateComposeFromTimestamp(titulaire.decret.datePublication)
     },
-    suiviDossiers: mapSuiviDossiers(
-      getValeurOuUndefined(titulaire.suiviDossiers)
-    )
+    suiviDossiers: mapSuiviDossiers(getValeurOuUndefined(titulaire.suiviDossiers))
   }));
 }
 

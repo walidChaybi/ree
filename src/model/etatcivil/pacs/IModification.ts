@@ -1,4 +1,4 @@
-import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { IActionDatee } from "../commun/IActionDatee";
 import { IAutorite } from "../commun/IAutorite";
 
@@ -8,9 +8,9 @@ export interface IModification extends IActionDatee {
 
 export const Modification = {
   getDate(modification: IModification) {
-    return getFormatDateFromTimestamp(modification.date);
+    return DateUtils.getFormatDateFromTimestamp(modification.date);
   },
   getDateEffet(modification: IModification) {
-    return getFormatDateFromTimestamp(modification.dateEffet);
+    return DateUtils.getFormatDateFromTimestamp(modification.dateEffet);
   }
 };

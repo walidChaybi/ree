@@ -1,8 +1,8 @@
 import { FicheUtil } from "@model/etatcivil/enum/TypeFiche";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { IInteresse } from "@model/etatcivil/rcrca/IInteresse";
-import { getDateStringFromDateCompose } from "@util/DateUtils";
-import { getLibelle, triListeObjetsSurPropriete } from "@util/Utils";
+import DateUtils from "@util/DateUtils";
+import { triListeObjetsSurPropriete } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPartProps } from "@widget/section/SectionPart";
@@ -17,10 +17,8 @@ export function getInteresse(rcrca: IFicheRcRca): SectionPartProps[] {
   const interessePart: SectionPartProps[] = sortedInteresses.map(interesse => {
     return {
       partContent: {
-        contents: FicheUtil.isFicheRca(rcrca.categorie)
-          ? getInteresseInfoRca(interesse)
-          : getInteresseInfo(interesse),
-        title: getLibelle(`Intéressé ${interesse.numeroOrdreSaisi}`)
+        contents: FicheUtil.isFicheRca(rcrca.categorie) ? getInteresseInfoRca(interesse) : getInteresseInfo(interesse),
+        title: `Intéressé ${interesse.numeroOrdreSaisi}`
       }
     };
   });
@@ -47,19 +45,12 @@ function getInteresseInfoRca(interesse: IInteresse): SectionContentProps[] {
   if (interesse.dateDeces != null) {
     interesseIno = interesseIno.concat([
       {
-        libelle: getLibelle("Date de décès"),
-        value: interesse.dateDeces
-          ? getDateStringFromDateCompose(interesse.dateDeces)
-          : ""
+        libelle: "Date de décès",
+        value: interesse.dateDeces ? DateUtils.getDateStringFromDateCompose(interesse.dateDeces) : ""
       },
       {
-        libelle: getLibelle("Lieu de décès"),
-        value: LieuxUtils.getLieu(
-          interesse.villeDeces,
-          interesse.regionDeces,
-          interesse.paysDeces,
-          interesse.arrondissementDeces
-        )
+        libelle: "Lieu de décès",
+        value: LieuxUtils.getLieu(interesse.villeDeces, interesse.regionDeces, interesse.paysDeces, interesse.arrondissementDeces)
       }
     ]);
   }
@@ -70,19 +61,15 @@ function getInteresseInfoRca(interesse: IInteresse): SectionContentProps[] {
 function getInteresseInfo(interesse: IInteresse): SectionContentProps[] {
   return [
     {
-      libelle: getLibelle("Nom"),
+      libelle: "Nom",
       value: <span className="nom">{interesse.nomFamille || ""}</span>
     },
     {
-      libelle: getLibelle("Autre(s) nom(s)"),
-      value: (
-        <span className="nom">
-          {interesse.autreNoms ? interesse.autreNoms.join(", ") : ""}
-        </span>
-      )
+      libelle: "Autre(s) nom(s)",
+      value: <span className="nom">{interesse.autreNoms ? interesse.autreNoms.join(", ") : ""}</span>
     },
     {
-      libelle: getLibelle("Prénom(s)"),
+      libelle: "Prénom(s)",
       value: (
         <span className="prenom">
           {interesse.prenoms
@@ -94,21 +81,15 @@ function getInteresseInfo(interesse: IInteresse): SectionContentProps[] {
       )
     },
     {
-      libelle: getLibelle("Autre(s) prénom(s)"),
-      value: (
-        <span className="prenom">
-          {interesse.autrePrenoms ? interesse.autrePrenoms.join(", ") : ""}
-        </span>
-      )
+      libelle: "Autre(s) prénom(s)",
+      value: <span className="prenom">{interesse.autrePrenoms ? interesse.autrePrenoms.join(", ") : ""}</span>
     },
     {
-      libelle: getLibelle("Date de naissance"),
-      value: interesse.dateNaissance
-        ? getDateStringFromDateCompose(interesse.dateNaissance)
-        : ""
+      libelle: "Date de naissance",
+      value: interesse.dateNaissance ? DateUtils.getDateStringFromDateCompose(interesse.dateNaissance) : ""
     },
     {
-      libelle: getLibelle("Lieu de naissance"),
+      libelle: "Lieu de naissance",
       value: LieuxUtils.getLieu(
         interesse.villeNaissance,
         interesse.regionNaissance,
@@ -117,11 +98,11 @@ function getInteresseInfo(interesse: IInteresse): SectionContentProps[] {
       )
     },
     {
-      libelle: getLibelle("Nationalité"),
+      libelle: "Nationalité",
       value: interesse.nationalite || ""
     },
     {
-      libelle: getLibelle("Sexe"),
+      libelle: "Sexe",
       value: interesse.sexe || ""
     }
   ];

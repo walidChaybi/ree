@@ -7,10 +7,10 @@ import ErrorIcon from "@mui/icons-material/Error";
 import LabelIcon from "@mui/icons-material/Label";
 import ReportIcon from "@mui/icons-material/Report";
 import Box from "@mui/material/Box";
-import { getLibelle, numberToString } from "@util/Utils";
+import { numberToString } from "@util/Utils";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import { useContext } from "react";
-import { getDateStringFromDateCompose } from "../DateUtils";
+import DateUtils from "../DateUtils";
 import "./scss/RequeteUtils.scss";
 
 export function prioriteDeLaRequete(priorite: string): string {
@@ -30,21 +30,13 @@ export const RenderIconPrioriteRequete = (data: any): JSX.Element => {
   const priorite = data.priorite;
   if (priorite && priorite !== "") {
     return (
-      <Box
-        title={Priorite.getEnumFor(priorite).libelle}
-        aria-label={Priorite.getEnumFor(priorite).libelle}
-        aria-hidden={true}
-      >
+      <Box title={Priorite.getEnumFor(priorite).libelle} aria-label={Priorite.getEnumFor(priorite).libelle} aria-hidden={true}>
         <LabelIcon className={prioriteDeLaRequete(priorite)} />
       </Box>
     );
   } else {
     return (
-      <Box
-        title={getLibelle("Erreur priorité")}
-        aria-label={getLibelle("Erreur priorité")}
-        aria-hidden={true}
-      >
+      <Box title={"Erreur priorité"} aria-label={"Erreur priorité"} aria-hidden={true}>
         <ClearIcon className="ClearIcon" />
       </Box>
     );
@@ -64,11 +56,7 @@ export const RenderObservationsNumeroRequete = (data: any): JSX.Element => {
   return (
     <>
       {titleObservations !== "" && (
-        <Box
-          title={titleObservations}
-          aria-label={titleObservations}
-          aria-hidden={true}
-        >
+        <Box title={titleObservations} aria-label={titleObservations} aria-hidden={true}>
           <ReportIcon className="ReportIcon" />
         </Box>
       )}
@@ -83,11 +71,7 @@ export const RenderCellTitulaires = (data: any): JSX.Element => {
 
   if (titulaires != null && titulaires.length >= 1) {
     titulaires.forEach((titulaire: ITitulaireRequeteTableau) => {
-      celluleTitulaires.push(
-        `${titulaire.nom} ${
-          titulaire.prenoms[0] != null ? titulaire.prenoms[0] : ""
-        }`
-      );
+      celluleTitulaires.push(`${titulaire.nom} ${titulaire.prenoms[0] ?? ""}`);
       titleTitulaires += `${titulaire.nom}`;
       titulaire.prenoms.forEach((p: string) => {
         const prenom = p != null ? ` ${p}` : "";
@@ -100,11 +84,7 @@ export const RenderCellTitulaires = (data: any): JSX.Element => {
   return (
     <div title={titleTitulaires}>
       {celluleTitulaires.map((titulaire: string, index: number) => {
-        return (
-          <div key={`${titulaire}${index}`.replace(/\s+/g, "")}>
-            {titulaire}
-          </div>
-        );
+        return <div key={`${titulaire}${index}`.replace(/\s+/g, "")}>{titulaire}</div>;
       })}
     </div>
   );
@@ -117,7 +97,7 @@ export const RenderCellDatesNaissancesTitulaires = (data: any): JSX.Element => {
 
   if (titulaires != null && titulaires.length >= 1) {
     titulaires.forEach((t: ITitulaireRequeteTableau) => {
-      const date = getDateStringFromDateCompose({
+      const date = DateUtils.getDateStringFromDateCompose({
         jour: numberToString(t.jourNaissance),
         mois: numberToString(t.moisNaissance),
         annee: numberToString(t.anneeNaissance)

@@ -6,7 +6,7 @@ import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtabl
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { getDateStringFromDateCompose } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { getValeurOuUndefined, joint } from "@util/Utils";
 import { useEffect, useMemo, useState } from "react";
 
@@ -30,36 +30,21 @@ interface ITableauSuiviDossierResultat {
   dataTableau: ILigneTableauSuiviDossier[];
 }
 
-export function useTableauSuiviDossierHook(
-  titulaires?: ITitulaireRequeteCreation[]
-): ITableauSuiviDossierResultat {
+export function useTableauSuiviDossierHook(titulaires?: ITitulaireRequeteCreation[]): ITableauSuiviDossierResultat {
   const [resultat, setResultat] = useState<ILigneTableauSuiviDossier[]>([]);
 
-  const titulairesAAfficher = useMemo(
-    () => getTitulairesAAfficher(titulaires),
-    [titulaires]
-  );
+  const titulairesAAfficher = useMemo(() => getTitulairesAAfficher(titulaires), [titulaires]);
 
-  const idActes = useMemo(
-    () => titulairesAAfficher.reduce(getIdentifiantsActeFromTitulaires, []),
-    [titulairesAAfficher]
-  );
+  const idActes = useMemo(() => titulairesAAfficher.reduce(getIdentifiantsActeFromTitulaires, []), [titulairesAAfficher]);
 
-  const titulaireAnalyseMarginaleResultat =
-    useTitulaireAnalyseMarginaleApiHook(idActes);
+  const titulaireAnalyseMarginaleResultat = useTitulaireAnalyseMarginaleApiHook(idActes);
 
   useEffect(() => {
     if (titulairesAAfficher && titulaireAnalyseMarginaleResultat) {
       const lignesTableauSuiviDossier = titulairesAAfficher.reduce(
-        (
-          lignesTableau: ILigneTableauSuiviDossier[],
-          titulaireCourant: ITitulaireRequeteCreation
-        ) => {
-          const dataAnalyseMarginale = titulaireAnalyseMarginaleResultat.find(
-            analyseMarginale =>
-              titulaireCourant.suiviDossiers?.some(
-                suiviDossier => suiviDossier.idActe === analyseMarginale.idActe
-              )
+        (lignesTableau: ILigneTableauSuiviDossier[], titulaireCourant: ITitulaireRequeteCreation) => {
+          const dataAnalyseMarginale = titulaireAnalyseMarginaleResultat.find(analyseMarginale =>
+            titulaireCourant.suiviDossiers?.some(suiviDossier => suiviDossier.idActe === analyseMarginale.idActe)
           );
 
           const ligneTitulaire: ILigneTableauSuiviDossier = {
@@ -67,10 +52,7 @@ export function useTableauSuiviDossierHook(
             idSuiviDossier: "",
             prenoms: getPrenomTitulaire(titulaireCourant, dataAnalyseMarginale),
             nom: getNomTitulaire(titulaireCourant, dataAnalyseMarginale),
-            qualite:
-              QualiteFamille.afficheLibelleEnfantSiEstEnfant(
-                QualiteFamille.getEnumFromTitulaire(titulaireCourant)
-              ) || "",
+            qualite: QualiteFamille.afficheLibelleEnfantSiEstEnfant(QualiteFamille.getEnumFromTitulaire(titulaireCourant)) ?? "",
             decret: "",
             evenement: "",
             dateEvenement: "",
@@ -87,7 +69,7 @@ export function useTableauSuiviDossierHook(
                 qualite: "",
                 decret: "",
                 evenement: suiviDossier.natureProjet?.libelle ?? "",
-                dateEvenement: getDateStringFromDateCompose({
+                dateEvenement: DateUtils.getDateStringFromDateCompose({
                   jour: suiviDossier.jourEvenement,
                   mois: suiviDossier.moisEvenement,
                   annee: suiviDossier.anneeEvenement
@@ -98,11 +80,7 @@ export function useTableauSuiviDossierHook(
 
           const lignesSupplementaires = [ligneTitulaire, ...lignesDossiers];
 
-          if (
-            QualiteFamille.estPostulant(
-              QualiteFamille.getEnumFromLibelle(ligneTitulaire.qualite)
-            )
-          ) {
+          if (QualiteFamille.estPostulant(QualiteFamille.getEnumFromLibelle(ligneTitulaire.qualite))) {
             lignesTableau.unshift(...lignesSupplementaires);
           } else {
             lignesTableau.push(...lignesSupplementaires);

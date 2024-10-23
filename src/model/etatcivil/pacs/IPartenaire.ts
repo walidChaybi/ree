@@ -1,4 +1,4 @@
-import { formatJour, formatMois, IDateCompose } from "@util/DateUtils";
+import DateUtils, { IDateCompose } from "@util/DateUtils";
 import { formatNom, getValeurOuVide, jointPrenoms } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { Nationalite } from "../enum/Nationalite";
@@ -24,8 +24,8 @@ export const Partenaire = {
   getAnneeNaissance(partenaire: IPartenaire): string {
     return getValeurOuVide(partenaire.dateNaissance?.annee);
   },
-  getJour(partenaire: IPartenaire): string {
-    return formatJour(partenaire.dateNaissance?.jour);
+  getJourNaissance(partenaire: IPartenaire): string {
+    return DateUtils.formatJour(partenaire.dateNaissance?.jour);
   },
   getPrenoms(partenaire: IPartenaire): string {
     return jointPrenoms(partenaire.prenoms);
@@ -34,7 +34,7 @@ export const Partenaire = {
     return formatNom(partenaire.nomFamille);
   },
   getMoisNaissance(partenaire: IPartenaire): string {
-    return formatMois(partenaire.dateNaissance.mois);
+    return DateUtils.formatMois(partenaire.dateNaissance?.mois);
   },
   getLieuNaissance(partenaire: IPartenaire): string {
     return LieuxUtils.getLieu(

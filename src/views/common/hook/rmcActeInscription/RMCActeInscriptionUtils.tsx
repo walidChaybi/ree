@@ -7,11 +7,7 @@ import { IRMCRequestActesInscriptions } from "@model/rmc/acteInscription/envoi/I
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { RMCRepertoire } from "@model/rmc/acteInscription/rechercheForm/IRMCRepertoire";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import {
-  getDateDebutFromDateCompose,
-  getDateFinFromDateCompose,
-  getDateStringFromDateCompose
-} from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import {
   formatNom,
   formatNoms,
@@ -38,62 +34,26 @@ export function mappingCriteres(
     // Filtre Titulaire
     ...getCriteresTitulaire(criteres),
     // Filtre Date de création
-    dateCreationDebut: getDateDebutFromDateCompose(
-      criteres.datesDebutFinAnnee?.dateDebut
-    ),
-    dateCreationFin: getDateFinFromDateCompose(
-      criteres.datesDebutFinAnnee?.dateFin
-    ),
+    dateCreationDebut: DateUtils.getDateDebutFromDateCompose(criteres.datesDebutFinAnnee?.dateDebut),
+    dateCreationFin: DateUtils.getDateFinFromDateCompose(criteres.datesDebutFinAnnee?.dateFin),
 
     // Filtre Registre & Réppertoire Civile
-    natureActe: getValeurOuUndefined(
-      criteres.registreRepertoire?.registre?.natureActe
-    ),
-    familleRegistre: getValeurOuUndefined(
-      criteres.registreRepertoire?.registre?.familleRegistre
-    ),
-    posteOuPocopa: getValeurOuUndefined(
-      criteres.registreRepertoire?.registre?.pocopa?.cle
-    ),
-    numeroActe: getValeurOuUndefined(
-      criteres.registreRepertoire?.registre?.numeroActe?.numeroActeOuOrdre
-    ),
-    anneeRegistre: getValeurOuUndefined(
-      criteres.registreRepertoire?.registre?.anneeRegistre
-    ),
-    numeroBisTer: getValeurOuUndefined(
-      criteres.registreRepertoire?.registre?.numeroActe?.numeroBisTer
-    ),
-    aPartirDeNumeroActe: getValeurOuUndefined(
-      criteres.registreRepertoire?.registre?.numeroActe?.aPartirDe
-    ),
-    support1: getValeurOuUndefined(
-      criteres.registreRepertoire?.registre?.registreSupport?.supportUn
-    ),
-    support2: getValeurOuUndefined(
-      criteres.registreRepertoire?.registre?.registreSupport?.supportDeux
-    ),
-    numeroInscription: getValeurOuUndefined(
-      criteres.registreRepertoire?.repertoire?.numeroInscription
-    ),
-    typeRepertoire: getValeurOuUndefined(
-      criteres.registreRepertoire?.repertoire?.typeRepertoire
-    ),
-    natureRcRca: RMCRepertoire.getNatureRcRca(
-      criteres.registreRepertoire?.repertoire
-    ),
-    jourDateEvenement: getValeurOuUndefined(
-      criteres.registreRepertoire?.evenement?.dateEvenement?.jour
-    ),
-    moisDateEvenement: getValeurOuUndefined(
-      criteres.registreRepertoire?.evenement?.dateEvenement?.mois
-    ),
-    anneeDateEvenement: getValeurOuUndefined(
-      criteres.registreRepertoire?.evenement?.dateEvenement?.annee
-    ),
-    paysEvenement: getValeurOuUndefined(
-      criteres.registreRepertoire?.evenement?.paysEvenement
-    )
+    natureActe: getValeurOuUndefined(criteres.registreRepertoire?.registre?.natureActe),
+    familleRegistre: getValeurOuUndefined(criteres.registreRepertoire?.registre?.familleRegistre),
+    posteOuPocopa: getValeurOuUndefined(criteres.registreRepertoire?.registre?.pocopa?.cle),
+    numeroActe: getValeurOuUndefined(criteres.registreRepertoire?.registre?.numeroActe?.numeroActeOuOrdre),
+    anneeRegistre: getValeurOuUndefined(criteres.registreRepertoire?.registre?.anneeRegistre),
+    numeroBisTer: getValeurOuUndefined(criteres.registreRepertoire?.registre?.numeroActe?.numeroBisTer),
+    aPartirDeNumeroActe: getValeurOuUndefined(criteres.registreRepertoire?.registre?.numeroActe?.aPartirDe),
+    support1: getValeurOuUndefined(criteres.registreRepertoire?.registre?.registreSupport?.supportUn),
+    support2: getValeurOuUndefined(criteres.registreRepertoire?.registre?.registreSupport?.supportDeux),
+    numeroInscription: getValeurOuUndefined(criteres.registreRepertoire?.repertoire?.numeroInscription),
+    typeRepertoire: getValeurOuUndefined(criteres.registreRepertoire?.repertoire?.typeRepertoire),
+    natureRcRca: RMCRepertoire.getNatureRcRca(criteres.registreRepertoire?.repertoire),
+    jourDateEvenement: getValeurOuUndefined(criteres.registreRepertoire?.evenement?.dateEvenement?.jour),
+    moisDateEvenement: getValeurOuUndefined(criteres.registreRepertoire?.evenement?.dateEvenement?.mois),
+    anneeDateEvenement: getValeurOuUndefined(criteres.registreRepertoire?.evenement?.dateEvenement?.annee),
+    paysEvenement: getValeurOuUndefined(criteres.registreRepertoire?.evenement?.paysEvenement)
   };
 }
 
@@ -106,7 +66,7 @@ export function mappingInscriptions(data: any): IResultatRMCInscription[] {
       nom: formatNom(inscription?.nom),
       autresNoms: formatNoms(inscription?.autresNoms),
       prenoms: formatPrenoms(inscription?.prenoms),
-      dateNaissance: getDateStringFromDateCompose({
+      dateNaissance: DateUtils.getDateStringFromDateCompose({
         jour: inscription?.jourNaissance,
         mois: inscription?.moisNaissance,
         annee: inscription?.anneeNaissance
@@ -114,12 +74,8 @@ export function mappingInscriptions(data: any): IResultatRMCInscription[] {
       paysNaissance: getValeurOuVide(inscription?.paysNaissance),
       numeroInscription: getValeurOuVide(inscription?.numero),
       nature: getNatureInscription(inscription?.categorie, inscription?.nature),
-      typeInscription: InscriptionRcUtil.getLibelle(
-        inscription?.typeInscription
-      ),
-      statutInscription: getValeurOuVide(
-        StatutFiche.getEnumFor(inscription?.statut)?.libelle
-      ),
+      typeInscription: InscriptionRcUtil.getLibelle(inscription?.typeInscription),
+      statutInscription: getValeurOuVide(StatutFiche.getEnumFor(inscription?.statut)?.libelle),
       categorie: getValeurOuVide(inscription?.categorie),
       anneeInscription: getValeurOuVide(inscription?.anneeInscription),
       dateInscription: getValeurOuVide(inscription?.dateInscription)

@@ -1,23 +1,16 @@
 import ReportIcon from "@mui/icons-material/Report";
-import { FormatDate } from "@util/DateUtils";
-import { getLibelle } from "@util/Utils";
-import moment, { MomentInput } from "moment";
+import DateUtils, { FormatDate } from "@util/DateUtils";
+import { Dayjs } from "dayjs";
 
 export type SortOrder = "ASC" | "DESC";
 
+type DayJsInput = string | number | Date | Dayjs;
+
 export function descendingDateComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (
-    moment(b[orderBy] as MomentInput, FormatDate.DDMMYYYY).isBefore(
-      moment(a[orderBy] as MomentInput, FormatDate.DDMMYYYY)
-    )
-  ) {
+  if (DateUtils.dayjsAvecFormat(b[orderBy] as DayJsInput, FormatDate.DDMMYYYY).isBefore(DateUtils.dayjsAvecFormat(a[orderBy] as DayJsInput, FormatDate.DDMMYYYY))) {
     return -1;
   }
-  if (
-    moment(b[orderBy] as MomentInput, FormatDate.DDMMYYYY).isAfter(
-      moment(a[orderBy] as MomentInput, FormatDate.DDMMYYYY)
-    )
-  ) {
+  if (DateUtils.dayjsAvecFormat(b[orderBy] as DayJsInput, FormatDate.DDMMYYYY).isAfter(DateUtils.dayjsAvecFormat(a[orderBy] as DayJsInput, FormatDate.DDMMYYYY))) {
     return 1;
   }
   return 0;
@@ -25,8 +18,7 @@ export function descendingDateComparator<T>(a: T, b: T, orderBy: keyof T) {
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   const isDate =
-    moment(a[orderBy] as MomentInput, FormatDate.DDMMYYYY).isValid() &&
-    moment(b[orderBy] as MomentInput, FormatDate.DDMMYYYY).isValid();
+    DateUtils.dayjsAvecFormat(a[orderBy] as DayJsInput, FormatDate.DDMMYYYY).isValid() && DateUtils.dayjsAvecFormat(b[orderBy] as DayJsInput, FormatDate.DDMMYYYY).isValid();
   if (isDate) {
     return descendingDateComparator(a, b, orderBy);
   } else {
@@ -43,19 +35,11 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 export function getComparator<Key extends keyof any>(
   order: SortOrder,
   orderBy: Key
-): (
-  a: { [key in Key]: number | Date | string },
-  b: { [key in Key]: number | Date | string }
-) => number {
-  return order === "DESC"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+): (a: { [key in Key]: number | Date | string }, b: { [key in Key]: number | Date | string }) => number {
+  return order === "DESC" ? (a, b) => descendingComparator(a, b, orderBy) : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-export function stableSort<T>(
-  array: T[],
-  comparator: (a: T, b: T) => number
-): T[] {
+export function stableSort<T>(array: T[], comparator: (a: T, b: T) => number): T[] {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -64,11 +48,7 @@ export function stableSort<T>(
   return stabilizedThis.map(el => el[0]);
 }
 
-export function processDataStorting<Key extends keyof any>(
-  array: any[],
-  sortOrder: SortOrder,
-  sortOrderBy: Key
-): any[] {
+export function processDataStorting<Key extends keyof any>(array: any[], sortOrder: SortOrder, sortOrderBy: Key): any[] {
   return stableSort(array, getComparator<Key>(sortOrder, sortOrderBy));
 }
 
@@ -87,7 +67,7 @@ export function getPaginatedData<T>(
 }
 
 /**
- * Regarde si la page d'après qui va s'afficher est en dehors des données stockée actuellement dans props.dataState
+ * Regarde si la page d'après qui va s'afficher est en dehors des données stockées actuellement dans props.dataState
  * Si c'est le cas il faudra refaire un appel serveur
  */
 export function laProchainePageEstEnDehors(
@@ -100,12 +80,12 @@ export function laProchainePageEstEnDehors(
   return (
     newPage > pageState &&
     newPage * nbLignesParPage >= nbLignesParAppel * multiplicateur &&
-    !(pageState * nbLignesParPage > nbLignesParAppel * multiplicateur)
+    pageState * nbLignesParPage <= nbLignesParAppel * multiplicateur
   );
 }
 
 /**
- * Regarde si la page d'avant qui va s'afficher est en dehors des données stockée actuellement dans props.dataState
+ * Regarde si la page d'avant qui va s'afficher est en dehors des données stockées actuellement dans props.dataState
  * Si c'est le cas il faudra refaire un appel serveur
  */
 export function laPageDAvantEstEnDehors(
@@ -123,11 +103,8 @@ export function laPageDAvantEstEnDehors(
   );
 }
 
-export function getSortOrder(
-  columnKey: string,
-  sortOrderBy: string,
-  sortOrder: SortOrder
-): SortOrder {
+// TOREFACTO
+export function getSortOrder(columnKey: string, sortOrderBy: string, sortOrder: SortOrder): SortOrder {
   let result: SortOrder = "ASC";
   if (sortOrderBy !== columnKey) {
     result = "ASC";
@@ -143,31 +120,22 @@ export function getLigneTableauVide(message: string): JSX.Element {
   return (
     <>
       <ReportIcon />
-      <div>{getLibelle(message)}</div>
+      <div>{message}</div>
     </>
   );
 }
 
-export const getItemAriaLabel = (
-  type: string,
-  nombreResultats?: number
-): string => {
-  let ariaLabel = "";
+export const getItemAriaLabel = (type: string, nombreResultats?: number): string => {
   switch (type) {
     case "first":
-      ariaLabel = `Retourner au début de la précédente plage de ${nombreResultats} résultats`;
-      break;
+      return `Retourner au début de la précédente plage de ${nombreResultats} résultats`;
     case "previous":
-      ariaLabel = "Page précédente";
-      break;
+      return "Page précédente";
     case "next":
-      ariaLabel = "Page suivante";
-      break;
+      return "Page suivante";
     case "last":
-      ariaLabel = `Avancer au début de la prochaine plage de ${nombreResultats} résultats`;
-      break;
+      return `Avancer au début de la prochaine plage de ${nombreResultats} résultats`;
     default:
-      ariaLabel = "";
+      return "";
   }
-  return ariaLabel;
 };

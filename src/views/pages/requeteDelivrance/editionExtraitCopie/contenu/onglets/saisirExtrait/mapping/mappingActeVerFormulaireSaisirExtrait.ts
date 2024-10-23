@@ -64,7 +64,7 @@ import {
   ITitulaireEvtForm
 } from "@model/form/delivrance/ISaisieExtraitForm";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
-import { IDateCompose, getDateComposeFromDate } from "@util/DateUtils";
+import DateUtils, { IDateCompose } from "@util/DateUtils";
 import {
   ABSENCE_VALIDEE,
   QUINZE,
@@ -329,9 +329,7 @@ function saisieNomSecable(titulaire?: ITitulaireActe) {
 }
 
 function saisieDeclarationConjointe(titulaire?: ITitulaireActe) {
-  const dateDeclarationConjointeCompose: IDateCompose = getDateComposeFromDate(
-    titulaire?.dateDeclarationConjointe
-  );
+  const dateDeclarationConjointeCompose: IDateCompose = DateUtils.getDateComposeFromDate(titulaire?.dateDeclarationConjointe);
   return {
     [TYPE]: titulaire?.typeDeclarationConjointe
       ? TypeDeclarationConjointe.getKey(titulaire.typeDeclarationConjointe)

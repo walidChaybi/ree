@@ -5,7 +5,7 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
 import DeleteOutline from "@mui/icons-material/DeleteOutline";
 import Edit from "@mui/icons-material/Edit";
-import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { UN, ZERO } from "@util/Utils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { useContext, useMemo, useState } from "react";
@@ -141,9 +141,7 @@ const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({
                 <span className="texte-observation" title={observation.texte}>
                   {observation.texte}
                 </span>
-                <span className="date-observation">{`- ${getFormatDateFromTimestamp(
-                  observation.dateObservation
-                )}`}</span>
+                <span className="date-observation">{`- ${DateUtils.getFormatDateFromTimestamp(observation.dateObservation)}`}</span>
                 {observation.idUtilisateur === idOfficier && (
                   <div className="boutons-observation">
                     <button
@@ -171,12 +169,7 @@ const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({
           )}
         </div>
         <div>
-          <button
-            className="bouton-ajouter"
-            type="button"
-            title="Ajouter une observation"
-            onClick={() => ouvrirModaleObservation()}
-          >
+          <button className="bouton-ajouter" type="button" title="Ajouter une observation" onClick={() => ouvrirModaleObservation()}>
             <AddCircleOutline fontSize="large" />
           </button>
         </div>
@@ -207,19 +200,13 @@ const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({
       {modaleSuppressionOuverte && (
         <ConteneurModale fermerModale={fermerModaleSuppression}>
           <div className="conteneur-modale-observation">
-            <div className="label-suppression-observation">
-              {"Voulez-vous vraiment supprimer cette observation?"}
-            </div>
+            <div className="label-suppression-observation">{"Voulez-vous vraiment supprimer cette observation?"}</div>
 
             <div className="boutons-modale-observation">
               <button type="button" onClick={fermerModaleSuppression}>
                 {"Annuler"}
               </button>
-              <button
-                type="button"
-                onClick={supprimerObservation}
-                disabled={operationEnCours}
-              >
+              <button type="button" onClick={supprimerObservation} disabled={operationEnCours}>
                 {"Valider"}
               </button>
             </div>

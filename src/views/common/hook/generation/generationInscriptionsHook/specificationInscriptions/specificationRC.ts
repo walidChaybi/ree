@@ -8,7 +8,7 @@ import {
 } from "@model/etatcivil/enum/TypeInscriptionRc";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
-import { getDateFormatJasper, getDateFromTimestamp } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { formatDe } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
@@ -23,9 +23,7 @@ function getParagrapheDecisionRecue1(infosRC: IFicheRcRca) {
   let decisionRecue = "";
 
   if (infosRC.decision) {
-    const dateDecision = getDateFormatJasper(
-      getDateFromTimestamp(infosRC.decision?.dateDecision)
-    );
+    const dateDecision = DateUtils.getDateFormatJasper(DateUtils.getDateFromTimestamp(infosRC.decision?.dateDecision));
     const localite = LieuxUtils.getLocalisationAutorite(
       infosRC.decision?.autorite.ville,
       infosRC.decision?.autorite.libelleDepartement,

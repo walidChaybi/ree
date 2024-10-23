@@ -1,12 +1,12 @@
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
-import { getDateFromDateCompose } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 
 export const FicheRcDecisionNotaire = {
   id: "135e4dfe-9757-4d5d-8715-359c6e73289b",
   categorie: "RC",
   annee: "2020",
   numero: "11",
-  dateInscription: getDateFromDateCompose({
+  dateInscription: DateUtils.getDateFromDateCompose({
     jour: "18",
     mois: "11",
     annee: "2020"
@@ -112,7 +112,7 @@ export const FicheRcDecisionNotaireTypeRequete = {
   categorie: "RC",
   annee: "2020",
   numero: "11",
-  dateInscription: getDateFromDateCompose({
+  dateInscription: DateUtils.getDateFromDateCompose({
     jour: "18",
     mois: "11",
     annee: "2020"
@@ -226,7 +226,7 @@ export const FicheRcDecisionNotaireTypeRequete2 = {
   categorie: "RC",
   annee: "2020",
   numero: "11",
-  dateInscription: getDateFromDateCompose({
+  dateInscription: DateUtils.getDateFromDateCompose({
     jour: "18",
     mois: "11",
     annee: "2020"
@@ -360,7 +360,7 @@ export const FicheRcRenouvellementTypeJugement = {
   categorie: "RC",
   annee: "2020",
   numero: "2",
-  dateInscription: getDateFromDateCompose({
+  dateInscription: DateUtils.getDateFromDateCompose({
     jour: "22",
     mois: "11",
     annee: "2020"
@@ -611,7 +611,7 @@ export const FicheRcRenouvellementTypeOrdonnance = {
   categorie: "RC",
   annee: "2020",
   numero: "2",
-  dateInscription: getDateFromDateCompose({
+  dateInscription: DateUtils.getDateFromDateCompose({
     jour: "22",
     mois: "11",
     annee: "2020"
@@ -861,7 +861,7 @@ export const FicheRcModification = {
   categorie: "RC",
   annee: "2020",
   numero: "2",
-  dateInscription: getDateFromDateCompose({
+  dateInscription: DateUtils.getDateFromDateCompose({
     jour: "22",
     mois: "11",
     annee: "2020"

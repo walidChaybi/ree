@@ -8,36 +8,19 @@ import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { HeaderTableauRMCPersonne } from "@model/rmc/headerTableau/HeaderTableauRMCPersonne";
 import ReportIcon from "@mui/icons-material/Report";
-import { getDateStringFromDateCompose } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { Options } from "@util/Type";
-import {
-  CINQ,
-  enMajuscule,
-  formatNoms,
-  formatPrenoms,
-  getValeurOuVide,
-  TROIS
-} from "@util/Utils";
-import {
-  getColonneBoutonMenu,
-  IColonneBoutonMenuParams
-} from "@widget/tableau/TableauRece/colonneElements/boutonMenu/ColonneBoutonMenu";
+import { CINQ, enMajuscule, formatNoms, formatPrenoms, getValeurOuVide, TROIS } from "@util/Utils";
+import { getColonneBoutonMenu, IColonneBoutonMenuParams } from "@widget/tableau/TableauRece/colonneElements/boutonMenu/ColonneBoutonMenu";
 import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
 import { TMouseEventSurHTMLButtonElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
-import {
-  IActeInscriptionRMCPersonne,
-  IPersonneRMCPersonne,
-  IRMCPersonneResultat
-} from "../../../common/hook/rmcAuto/IRMCPersonneResultat";
+import { IActeInscriptionRMCPersonne, IPersonneRMCPersonne, IRMCPersonneResultat } from "../../../common/hook/rmcAuto/IRMCPersonneResultat";
 import { commonHeadersTableauRMC } from "../acteInscription/resultats/RMCTableauCommun";
 import { IDataTableauRMCPersonne } from "./IDataTableauRMCPersonne";
 
 export function getColonnesTableauRMCAutoPersonne<TData, TIdentifiant>(
-  colonneBoutonAjouterPersonneOuActeInscriptionParams: IColonneBoutonMenuParams<
-    TData,
-    TIdentifiant
-  >,
+  colonneBoutonAjouterPersonneOuActeInscriptionParams: IColonneBoutonMenuParams<TData, TIdentifiant>,
   conteneurBoutonAjouterPersonneOuActeInscriptionProps: IConteneurElementPropsPartielles<
     TData,
     TIdentifiant,
@@ -105,17 +88,11 @@ export function getLigneTableauVide(message: string): JSX.Element {
   );
 }
 
-export function getLibelleMenuItemPersonne(
-  titulaire: ITitulaireRequeteCreation,
-  sousTypeRequete?: SousTypeCreation
-) {
+export function getLibelleMenuItemPersonne(titulaire: ITitulaireRequeteCreation, sousTypeRequete?: SousTypeCreation) {
   let libelle = "";
 
   // Qualite
-  const qualite: string | undefined = getLibelleQualiteTitulaire(
-    titulaire,
-    sousTypeRequete
-  );
+  const qualite: string | undefined = getLibelleQualiteTitulaire(titulaire, sousTypeRequete);
   if (qualite) {
     libelle = qualite.concat(` - `);
   }
@@ -131,7 +108,7 @@ export function getLibelleMenuItemPersonne(
   // Date de naissance
   if (titulaire.anneeNaissance) {
     libelle = libelle.concat(
-      `, ${getDateStringFromDateCompose({
+      `, ${DateUtils.getDateStringFromDateCompose({
         jour: titulaire.jourNaissance?.toString(),
         mois: titulaire.moisNaissance?.toString(),
         annee: titulaire.anneeNaissance.toString()

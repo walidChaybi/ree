@@ -3,7 +3,7 @@ import { TypeDecisionUtil } from "@model/etatcivil/enum/TypeDecision";
 import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IDecisionRcRca } from "@model/etatcivil/rcrca/IDecisionRcRca";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
-import { getDateFromTimestamp, getDateString } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPartProps } from "@widget/section/SectionPart";
 
@@ -33,16 +33,10 @@ export function getDecision(rcrca: IFicheRcRca): SectionPartProps[] {
     }
   ];
 
-  if (
-    rcrca.decision &&
-    rcrca.decision.sourceConfirmation != null &&
-    rcrca.decision.type != null
-  ) {
+  if (rcrca.decision?.sourceConfirmation != null && rcrca.decision.type != null) {
     decision.push({
       partContent: {
-        contents: [
-          ...getContentConfirmationDecision(rcrca.decision, rcrca.categorie)
-        ],
+        contents: [...getContentConfirmationDecision(rcrca.decision, rcrca.categorie)],
         title: "Confirmée par la décision"
       }
     });
@@ -61,10 +55,7 @@ function getContentJuridiction(
     },
     {
       libelle: "Date",
-      value:
-        decision.dateDecision != null
-          ? getDateString(getDateFromTimestamp(decision.dateDecision))
-          : ""
+      value: decision.dateDecision != null ? DateUtils.getDateString(DateUtils.getDateFromTimestamp(decision.dateDecision)) : ""
     }
   ];
 
@@ -74,9 +65,7 @@ function getContentJuridiction(
   ) {
     result.push({
       libelle: "Date décision étrangère",
-      value: decision.dateDecisionEtrangere
-        ? getDateString(getDateFromTimestamp(decision.dateDecisionEtrangere))
-        : ""
+      value: decision.dateDecisionEtrangere ? DateUtils.getDateString(DateUtils.getDateFromTimestamp(decision.dateDecisionEtrangere)) : ""
     });
   }
 
@@ -100,10 +89,7 @@ function getContentNotaire(decision: IDecisionRcRca): SectionContentProps[] {
     },
     {
       libelle: "Date",
-      value:
-        decision.dateDecision != null
-          ? getDateString(getDateFromTimestamp(decision.dateDecision))
-          : ""
+      value: decision.dateDecision != null ? DateUtils.getDateString(DateUtils.getDateFromTimestamp(decision.dateDecision)) : ""
     }
   ];
 }
@@ -125,9 +111,7 @@ function getContentConfirmationDecision(
       {
         libelle: "Date",
         value: decision.sourceConfirmation.dateDecision
-          ? getDateString(
-              getDateFromTimestamp(decision.sourceConfirmation.dateDecision)
-            )
+          ? DateUtils.getDateString(DateUtils.getDateFromTimestamp(decision.sourceConfirmation.dateDecision))
           : ""
       }
     ];
@@ -142,11 +126,7 @@ function getContentConfirmationDecision(
       confirmationDecision.push({
         libelle: "Date décision étrangère",
         value: decision.sourceConfirmation.dateDecisionEtrangere
-          ? getDateString(
-              getDateFromTimestamp(
-                decision.sourceConfirmation.dateDecisionEtrangere
-              )
-            )
+          ? DateUtils.getDateString(DateUtils.getDateFromTimestamp(decision.sourceConfirmation.dateDecisionEtrangere))
           : ""
       });
     }

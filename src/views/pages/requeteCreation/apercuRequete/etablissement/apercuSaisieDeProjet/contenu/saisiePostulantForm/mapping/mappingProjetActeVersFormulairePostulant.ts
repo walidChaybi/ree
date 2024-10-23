@@ -74,7 +74,7 @@ import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { TypeNature } from "@model/requete/enum/TypeNature";
 import { TypeReconnaissance } from "@model/requete/enum/TypeReconnaissance";
-import { getDateComposeFromDate } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import {
   DEUX,
   SPC,
@@ -93,16 +93,10 @@ export const mappingProjetActeVersFormulairePostulant = (
   titulaireRequete: ITitulaireRequeteCreation,
   projetActe?: IProjetActe
 ): ISaisieProjetPostulantForm => {
-  const titulaireProjetActe = projetActe?.titulaires.find(
-    titulaire => titulaire.ordre === UN
-  );
+  const titulaireProjetActe = projetActe?.titulaires.find(titulaire => titulaire.ordre === UN);
 
-  const parentUn = titulaireProjetActe?.filiations.find(
-    parent => parent.ordre === UN
-  );
-  const parentDeux = titulaireProjetActe?.filiations.find(
-    parent => parent.ordre === DEUX
-  );
+  const parentUn = titulaireProjetActe?.filiations.find(parent => parent.ordre === UN);
+  const parentDeux = titulaireProjetActe?.filiations.find(parent => parent.ordre === DEUX);
 
   const estOrdreInverseParentsFormulaire =
     !(parentUn && parentDeux) &&
@@ -114,28 +108,14 @@ export const mappingProjetActeVersFormulairePostulant = (
       [TYPE]: QualiteFamille.POSTULANT.libelle,
       [NATURE_ACTE]: projetActe?.nature || NatureActe.NAISSANCE.libelle
     },
-    [TITULAIRE]: mapSaisiePostulant(
-      titulaireProjetActe,
-      projetActe?.analyseMarginales,
-      projetActe?.evenement
-    ),
+    [TITULAIRE]: mapSaisiePostulant(titulaireProjetActe, projetActe?.analyseMarginales, projetActe?.evenement),
     [FRANCISATION_POSTULANT]: mapFrancisationPostulant(titulaireRequete),
     [PARENTS]: {
-      [PARENT1]: mapSaisieParent(
-        estOrdreInverseParentsFormulaire ? parentDeux : parentUn
-      ),
-      [PARENT2]: mapSaisieParent(
-        estOrdreInverseParentsFormulaire ? parentUn : parentDeux
-      )
+      [PARENT1]: mapSaisieParent(estOrdreInverseParentsFormulaire ? parentDeux : parentUn),
+      [PARENT2]: mapSaisieParent(estOrdreInverseParentsFormulaire ? parentUn : parentDeux)
     },
-    [AUTRES]: mapSaisieAutres(
-      titulaireProjetActe?.domicile,
-      projetActe?.declarant,
-      projetActe?.titulaires[0].reconnuPar
-    ),
-    [ACQUISITION]: mapSaisieAcquisition(
-      titulaireProjetActe?.decretNaturalisation
-    )
+    [AUTRES]: mapSaisieAutres(titulaireProjetActe?.domicile, projetActe?.declarant, projetActe?.titulaires[0].reconnuPar),
+    [ACQUISITION]: mapSaisieAcquisition(titulaireProjetActe?.decretNaturalisation)
   };
 };
 
@@ -145,43 +125,30 @@ function mapSaisiePostulant(
   evenement?: IEvenement
 ): ISaisiePostulantSousForm {
   return {
-    [NOM]: titulaire?.nom?.toUpperCase() || "",
+    [NOM]: titulaire?.nom?.toUpperCase() ?? "",
     [NOM_SECABLE]: {
       [SECABLE]: titulaire?.nomPartie1 || titulaire?.nomPartie2 ? ["true"] : [],
-      [NOM_PARTIE1]: titulaire?.nomPartie1 || "",
-      [NOM_PARTIE2]: titulaire?.nomPartie2 || ""
+      [NOM_PARTIE1]: titulaire?.nomPartie1 ?? "",
+      [NOM_PARTIE2]: titulaire?.nomPartie2 ?? ""
     },
     [PRENOMS]: mapSaisiePrenoms(titulaire?.prenoms || []),
     [ANALYSE_MARGINALE]: mapAnalyseMarginale(analysesMarginales),
-    [IDENTITE]: titulaire?.identiteAvantDecret || "",
-    [SEXE]: titulaire?.sexe || "",
+    [IDENTITE]: titulaire?.identiteAvantDecret ?? "",
+    [SEXE]: titulaire?.sexe ?? "",
     [DATE_NAISSANCE]: mapSaisieDateNaissance(evenement),
-    [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissance(
-      evenement,
-      titulaire?.naissance?.neDansLeMariage
-    ),
-    [ADOPTE_PAR]:
-      titulaire?.filiations.find(
-        filiation => filiation.naissance?.neDansLeMariage
-      )?.naissance?.neDansLeMariage || false
+    [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissance(evenement, titulaire?.naissance?.neDansLeMariage),
+    [ADOPTE_PAR]: titulaire?.filiations.find(filiation => filiation.naissance?.neDansLeMariage)?.naissance?.neDansLeMariage || false
   };
 }
 
-function mapSaisieParent(
-  parent?: IProjetFiliation
-): ISaisieParentSousForm | undefined {
+function mapSaisieParent(parent?: IProjetFiliation): ISaisieParentSousForm | undefined {
   return parent
     ? {
         [NOM]: getValeurOuVide(parent.nom).toUpperCase(),
         [PRENOM]: mapSaisiePrenoms(parent.prenoms || []),
         [SEXE]: parent.sexe,
-        [DATE_NAISSANCE]: mapSaisieDateNaissanceEtAgeDe(
-          parent.naissance || ({} as IEvenement),
-          parent.age || undefined
-        ),
-        [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissanceParent(
-          parent.naissance || ({} as IEvenement)
-        )
+        [DATE_NAISSANCE]: mapSaisieDateNaissanceEtAgeDe(parent.naissance || ({} as IEvenement), parent.age || undefined),
+        [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissanceParent(parent.naissance || ({} as IEvenement))
       }
     : {
         [NOM]: "",
@@ -192,57 +159,35 @@ function mapSaisieParent(
       };
 }
 
-function mapSaisieAutres(
-  domicile?: IAdresse,
-  declarant?: IDeclarant | null,
-  reconnuPar?: string
-): ISaisieAutresSousForm {
+function mapSaisieAutres(domicile?: IAdresse, declarant?: IDeclarant | null, reconnuPar?: string): ISaisieAutresSousForm {
   return {
-    [ADRESSE]: EtrangerFrance.getKey(
-      EtrangerFrance.getEnumFromPays(domicile?.pays)
-    ),
+    [ADRESSE]: EtrangerFrance.getKey(EtrangerFrance.getEnumFromPays(domicile?.pays)),
     [VILLE]: formatPremieresLettresMajusculesNomCompose(domicile?.ville),
-    [ARRONDISSEMENT]: domicile?.arrondissement || "",
-    [DEPARTEMENT]: domicile?.region || "",
+    [ARRONDISSEMENT]: domicile?.arrondissement ?? "",
+    [DEPARTEMENT]: domicile?.region ?? "",
     [PAYS]: formatPremieresLettresMajusculesNomCompose(domicile?.pays),
-    [RECONNAISSANCE]: TypeReconnaissance.getKey(
-      TypeReconnaissance.getEnumFor(reconnuPar || "")
-    ),
-    [DECLARANT]: TypeDeclarant.getKey(
-      TypeDeclarant.getEnumFor(declarant?.identiteDeclarant || "")
-    ),
-    [AUTRE_DECLARANT]: declarant?.complementDeclarant || ""
+    [RECONNAISSANCE]: TypeReconnaissance.getKey(TypeReconnaissance.getEnumFor(reconnuPar ?? "")),
+    [DECLARANT]: TypeDeclarant.getKey(TypeDeclarant.getEnumFor(declarant?.identiteDeclarant ?? "")),
+    [AUTRE_DECLARANT]: declarant?.complementDeclarant ?? ""
   };
 }
 
-function mapSaisieAcquisition(
-  decretNaturalisation?: IDecretNaturalisation | null
-): ISaisieAcquisitionSousForm {
-  const dateCompose = getDateComposeFromDate(
-    decretNaturalisation?.dateSignature
-  );
+function mapSaisieAcquisition(decretNaturalisation?: IDecretNaturalisation | null): ISaisieAcquisitionSousForm {
+  const dateCompose = DateUtils.getDateComposeFromDate(decretNaturalisation?.dateSignature);
 
   return {
-    [NATURE]:
-      decretNaturalisation && decretNaturalisation.natureDecret
-        ? TypeNature.getKey(
-            TypeNature.getEnumFor(decretNaturalisation.natureDecret)
-          )
-        : "",
+    [NATURE]: decretNaturalisation?.natureDecret ? TypeNature.getKey(TypeNature.getEnumFor(decretNaturalisation.natureDecret)) : "",
     [DATE]: {
-      [JOUR]: dateCompose.jour || "",
-      [MOIS]: dateCompose.mois || "",
-      [ANNEE]: dateCompose.annee || ""
+      [JOUR]: dateCompose.jour ?? "",
+      [MOIS]: dateCompose.mois ?? "",
+      [ANNEE]: dateCompose.annee ?? ""
     }
   };
 }
 
 function mapSaisiePrenoms(prenoms: string[]): ISaisiePrenoms {
   return {
-    [PAS_DE_PRENOM_CONNU]:
-      prenoms.length === ZERO || prenoms[ZERO] === SPC
-        ? [PAS_DE_PRENOM_CONNU]
-        : "false",
+    [PAS_DE_PRENOM_CONNU]: prenoms.length === ZERO || prenoms[ZERO] === SPC ? [PAS_DE_PRENOM_CONNU] : "false",
     [PRENOMS]: mapPrenoms(prenoms) || {}
   };
 }
@@ -257,15 +202,13 @@ function mapPrenoms(prenoms?: string[]): Prenoms | undefined {
   );
 }
 
-function mapAnalyseMarginale(
-  analysesMarginales?: IProjetAnalyseMarginale[]
-): ISaisieAnalyseMarginale {
+function mapAnalyseMarginale(analysesMarginales?: IProjetAnalyseMarginale[]): ISaisieAnalyseMarginale {
   let titulaire: ITitulaireProjetActe | undefined = undefined;
-  if (analysesMarginales && analysesMarginales[0]?.titulaires) {
+  if (analysesMarginales?.[0]?.titulaires) {
     titulaire = analysesMarginales[ZERO].titulaires[ZERO];
   }
   return {
-    [NOM]: titulaire?.nom?.toUpperCase() || "",
+    [NOM]: titulaire?.nom?.toUpperCase() ?? "",
     [PRENOMS]: mapPrenoms(titulaire?.prenoms) || {}
   };
 }
@@ -278,10 +221,7 @@ function mapSaisieDateNaissance(naissance?: IEvenement): ISaisieDate {
   };
 }
 
-function mapSaisieDateNaissanceEtAgeDe(
-  evenement?: IEvenement,
-  age?: number
-): ISaisieDateNaissanceOuAgeDe {
+function mapSaisieDateNaissanceEtAgeDe(evenement?: IEvenement, age?: number): ISaisieDateNaissanceOuAgeDe {
   const mapSaisieNaissance = mapSaisieDateNaissance(evenement);
   return {
     [DATE]: mapSaisieNaissance
@@ -293,56 +233,34 @@ function mapSaisieDateNaissanceEtAgeDe(
   };
 }
 
-function mapSaisieLieuNaissance(
-  naissance?: IEvenement,
-  neDansLeMariage = false
-): ISaisieLieuNaissance {
+function mapSaisieLieuNaissance(naissance?: IEvenement, neDansLeMariage = false): ISaisieLieuNaissance {
   return {
-    [VILLE_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(
-      naissance?.ville
-    ),
-    [ETAT_CANTON_PROVINCE]: formatPremieresLettresMajusculesNomCompose(
-      naissance?.region
-    ),
-    [PAYS_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(
-      naissance?.pays
-    ),
+    [VILLE_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(naissance?.ville),
+    [ETAT_CANTON_PROVINCE]: formatPremieresLettresMajusculesNomCompose(naissance?.region),
+    [PAYS_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(naissance?.pays),
     [NE_DANS_MARIAGE]: neDansLeMariage ? "OUI" : "NON"
   };
 }
 
-function mapSaisieLieuNaissanceParent(
-  naissance?: IEvenement
-): ISaisieLieuNaissanceParent {
+function mapSaisieLieuNaissanceParent(naissance?: IEvenement): ISaisieLieuNaissanceParent {
   const saisieLieuNaissanceParent = {
     [LIEU_DE_NAISSANCE]: "",
-    [VILLE_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(
-      naissance?.ville
-    ),
+    [VILLE_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(naissance?.ville),
     [REGION_NAISSANCE]: "",
     [DEPARTEMENT_NAISSANCE]: "",
     [ARRONDISSEMENT_NAISSANCE]: "",
-    [PAYS_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(
-      naissance?.pays
-    )
+    [PAYS_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(naissance?.pays)
   };
 
   if (LieuxUtils.estPaysFrance(naissance?.pays)) {
-    saisieLieuNaissanceParent[LIEU_DE_NAISSANCE] = EtrangerFrance.getKey(
-      EtrangerFrance.FRANCE
-    );
-    saisieLieuNaissanceParent[DEPARTEMENT_NAISSANCE] = naissance?.region || "";
-    saisieLieuNaissanceParent[ARRONDISSEMENT_NAISSANCE] =
-      naissance?.arrondissement || "";
+    saisieLieuNaissanceParent[LIEU_DE_NAISSANCE] = EtrangerFrance.getKey(EtrangerFrance.FRANCE);
+    saisieLieuNaissanceParent[DEPARTEMENT_NAISSANCE] = naissance?.region ?? "";
+    saisieLieuNaissanceParent[ARRONDISSEMENT_NAISSANCE] = naissance?.arrondissement ?? "";
   } else if (LieuxUtils.estPaysEtranger(naissance?.pays)) {
-    saisieLieuNaissanceParent[LIEU_DE_NAISSANCE] = EtrangerFrance.getKey(
-      EtrangerFrance.ETRANGER
-    );
-    saisieLieuNaissanceParent[REGION_NAISSANCE] = naissance?.region || "";
+    saisieLieuNaissanceParent[LIEU_DE_NAISSANCE] = EtrangerFrance.getKey(EtrangerFrance.ETRANGER);
+    saisieLieuNaissanceParent[REGION_NAISSANCE] = naissance?.region ?? "";
   } else {
-    saisieLieuNaissanceParent[LIEU_DE_NAISSANCE] = EtrangerFrance.getKey(
-      EtrangerFrance.INCONNU
-    );
+    saisieLieuNaissanceParent[LIEU_DE_NAISSANCE] = EtrangerFrance.getKey(EtrangerFrance.INCONNU);
   }
 
   return saisieLieuNaissanceParent;

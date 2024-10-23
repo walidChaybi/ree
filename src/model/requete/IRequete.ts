@@ -1,10 +1,6 @@
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 /* istanbul ignore file */
-import { getFormatDateFromTimestamp } from "@util/DateUtils";
-import { StatutRequete } from "./enum/StatutRequete";
-import { TypeCanal } from "./enum/TypeCanal";
-import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
-import { TypeRequete } from "./enum/TypeRequete";
+import DateUtils from "@util/DateUtils";
 import { IAction } from "./IActions";
 import { IEvenementRequete } from "./IEvenementRequete";
 import { IObservation } from "./IObservation";
@@ -14,16 +10,13 @@ import { IRequeteDelivrance } from "./IRequeteDelivrance";
 import { IRequeteInformation } from "./IRequeteInformation";
 import { IRequeteMiseAjour } from "./IRequeteMiseAjour";
 import { IStatutCourant } from "./IStatutCourant";
-import {
-  IPieceJustificative,
-  PieceJustificative
-} from "./pieceJointe/IPieceJustificative";
+import { StatutRequete } from "./enum/StatutRequete";
+import { TypeCanal } from "./enum/TypeCanal";
+import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
+import { TypeRequete } from "./enum/TypeRequete";
+import { IPieceJustificative, PieceJustificative } from "./pieceJointe/IPieceJustificative";
 
-export type TRequete =
-  | IRequeteDelivrance
-  | IRequeteCreationEtablissement
-  | IRequeteMiseAjour
-  | IRequeteInformation;
+export type TRequete = IRequeteDelivrance | IRequeteCreationEtablissement | IRequeteMiseAjour | IRequeteInformation;
 
 export interface IRequete {
   id: string;
@@ -45,7 +38,7 @@ export interface IRequete {
 
 export const Requete = {
   getDateCreation(requete?: IRequete): string {
-    return requete ? getFormatDateFromTimestamp(requete.dateCreation) : "";
+    return requete ? DateUtils.getFormatDateFromTimestamp(requete.dateCreation) : "";
   },
   nAppartientAPersonne(requete?: IRequete) {
     return requete?.idUtilisateur == null;
@@ -62,41 +55,24 @@ export const Requete = {
   estATraiterOuEstATransferer(requete?: IRequete) {
     return this.estATraiter(requete) || this.estATransferer(requete);
   },
-  getTitulairesTriesParPosition(
-    titulaires?: ITitulaireRequete[]
-  ): ITitulaireRequete[] | undefined {
+  getTitulairesTriesParPosition(titulaires?: ITitulaireRequete[]): ITitulaireRequete[] | undefined {
     return titulaires
       ? titulaires.sort((titulaire1, titulaire2) => {
           return titulaire1.position - titulaire2.position;
         })
       : undefined;
   },
-  getTitulaireAvecTypeObjet(
-    requete: IRequeteCreationEtablissement,
-    typeObjet: TypeObjetTitulaire
-  ): ITitulaireRequete | undefined {
-    return requete?.titulaires
-      ?.filter(t => t.typeObjetTitulaire === typeObjet)
-      .pop();
+  getTitulaireAvecTypeObjet(requete: IRequeteCreationEtablissement, typeObjet: TypeObjetTitulaire): ITitulaireRequete | undefined {
+    return requete?.titulaires?.filter(t => t.typeObjetTitulaire === typeObjet).pop();
   },
   getTitulaireAvecTypeObjetEnPosition(
     requete: IRequeteCreationEtablissement,
     typeObjet: TypeObjetTitulaire,
     position: number
   ): ITitulaireRequete | undefined {
-    return requete?.titulaires
-      ?.filter(
-        t => t.position === position && t.typeObjetTitulaire === typeObjet
-      )
-      .pop();
+    return requete?.titulaires?.filter(t => t.position === position && t.typeObjetTitulaire === typeObjet).pop();
   },
-  getPieceJustificative(
-    requete: IRequete | undefined,
-    idPieceJustificative: string
-  ): IPieceJustificative | undefined {
-    return PieceJustificative.getPieceJustificative(
-      requete?.piecesJustificatives,
-      idPieceJustificative
-    );
+  getPieceJustificative(requete: IRequete | undefined, idPieceJustificative: string): IPieceJustificative | undefined {
+    return PieceJustificative.getPieceJustificative(requete?.piecesJustificatives, idPieceJustificative);
   }
 };

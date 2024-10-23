@@ -19,16 +19,8 @@ import {
   ITitulaireEvtForm
 } from "@model/form/delivrance/ISaisieExtraitForm";
 import { retirePrenomVide } from "@pages/requeteCreation/saisirRequete/mapping/mappingFormulaireSaisirRCTCVersRequeteTranscription";
-import { getDateDebutFromDateCompose } from "@util/DateUtils";
-import {
-  DEUX,
-  estNonRenseigne,
-  estRenseigne,
-  getNombreOuUndefined,
-  getValeurOuUndefined,
-  getValeurOuVide,
-  UN
-} from "@util/Utils";
+import DateUtils from "@util/DateUtils";
+import { DEUX, UN, estNonRenseigne, estRenseigne, getNombreOuUndefined, getValeurOuUndefined, getValeurOuVide } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export function mappingFormulaireSaisirExtraitVersExtraitAEnvoyer(
@@ -323,14 +315,10 @@ function mapTitulaire(titulaireSaisi: ITitulaireEvtForm) {
     nomPartie1: titulaireSaisi.nomSecable?.nomPartie1,
     nomPartie2: titulaireSaisi.nomSecable?.nomPartie2,
     typeDeclarationConjointe: titulaireSaisi.declarationConjointe?.type,
-    dateDeclarationConjointe: getDateDebutFromDateCompose(
-      titulaireSaisi.declarationConjointe?.date
-    ),
+    dateDeclarationConjointe: DateUtils.getDateDebutFromDateCompose(titulaireSaisi.declarationConjointe?.date),
     prenoms: retirePrenomVide(titulaireSaisi.prenoms),
     sexe: mapSexe(titulaireSaisi.sexe),
-    age: getValeurOuUndefined(
-      titulaireSaisi.evenement?.dateNaissanceOuAgeDe?.age
-    )
+    age: getValeurOuUndefined(titulaireSaisi.evenement?.dateNaissanceOuAgeDe?.age)
   } as any as ITitulaireActe;
 }
 

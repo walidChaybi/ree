@@ -9,39 +9,20 @@ import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { IInteresse } from "@model/etatcivil/rcrca/IInteresse";
 import { IMariageInteresse } from "@model/etatcivil/rcrca/IMariageInteresse";
 import { IParent } from "@model/etatcivil/rcrca/IParent";
-import {
-  getDateFormatJasper,
-  getDateFormatJasperFromCompose,
-  getDateFromTimestamp
-} from "@util/DateUtils";
-import {
-  compareNombre,
-  formatNom,
-  triListeObjetsSurPropriete
-} from "@util/Utils";
+import DateUtils from "@util/DateUtils";
+import { compareNombre, formatNom, triListeObjetsSurPropriete } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export function getDecisionExequatur(data: IFicheRcRca) {
   let decision = undefined;
-  if (
-    TypeDecisionUtil.isDecisionJuridiction(
-      data.decision?.type as TypeDecision
-    ) &&
-    data.decision?.dateDecisionEtrangere
-  ) {
-    const dateDecisionEtrangere = getDateFormatJasper(
-      getDateFromTimestamp(data.decision?.dateDecisionEtrangere)
-    );
+  if (TypeDecisionUtil.isDecisionJuridiction(data.decision?.type as TypeDecision) && data.decision?.dateDecisionEtrangere) {
+    const dateDecisionEtrangere = DateUtils.getDateFormatJasper(DateUtils.getDateFromTimestamp(data.decision?.dateDecisionEtrangere));
     decision = `prise en exequatur de la décision étrangère en date du ${dateDecisionEtrangere}`;
   }
   return decision;
 }
 
-export function getDecisionJuridiction(
-  infos: IFicheRcRca,
-  dateDecision: string,
-  localite: string
-) {
+export function getDecisionJuridiction(infos: IFicheRcRca, dateDecision: string, localite: string) {
   let decisionRecue = "";
   let typeDecision = "";
 
@@ -67,11 +48,7 @@ export function getDecisionJuridiction(
   return decisionRecue;
 }
 
-export function getDecisionNotaire(
-  infos: IFicheRcRca,
-  dateDecision: string,
-  localite: string
-) {
+export function getDecisionNotaire(infos: IFicheRcRca, dateDecision: string, localite: string) {
   let decisionRecue = "";
   // décision de Notaire de type "Convention"
   if (infos.decision?.type === TypeDecision.CONVENTION) {
@@ -121,21 +98,15 @@ export function getParagrapheFin(infosRcRca: IFicheRcRca, decrets: IDecret[]) {
     const procureur = infosRcRca.decision?.instructionProcureur;
 
     paragrapheFin += ` et sur instruction du procureur de la République de ${procureur.ville}`;
-    paragrapheFin += procureur.arrondissement
-      ? ` ${LieuxUtils.formateArrondissement(procureur.arrondissement, true)}`
-      : "";
+    paragrapheFin += procureur.arrondissement ? ` ${LieuxUtils.formateArrondissement(procureur.arrondissement, true)}` : "";
     paragrapheFin += procureur.departement ? ` (${procureur.departement})` : "";
 
-    const dateInstruction = getDateFormatJasper(
-      getDateFromTimestamp(procureur.dateInstruction)
-    );
+    const dateInstruction = DateUtils.getDateFormatJasper(DateUtils.getDateFromTimestamp(procureur.dateInstruction));
 
     paragrapheFin += ` (N° réf. ${procureur.numeroRef}) du ${dateInstruction},`;
   }
 
-  const dateInscription = infosRcRca.dateInscription
-    ? getDateFormatJasper(infosRcRca.dateInscription)
-    : "";
+  const dateInscription = infosRcRca.dateInscription ? DateUtils.getDateFormatJasper(infosRcRca.dateInscription) : "";
 
   if (infosRcRca.categorie === TypeFiche.RCA) {
     paragrapheFin += ` une inscription a été prise au répertoire civil annexe le ${dateInscription} sous la référence : RCA n°${infosRcRca.annee} - ${infosRcRca.numero}.`;
@@ -158,10 +129,7 @@ function getPrenomsParents(data: IParent) {
   let prenoms = "";
 
   if (data.prenomsParents) {
-    prenoms = triListeObjetsSurPropriete(
-      [...data.prenomsParents],
-      "numeroOrdre"
-    )
+    prenoms = triListeObjetsSurPropriete([...data.prenomsParents], "numeroOrdre")
       .map(prenom => prenom.valeur)
       .join(", ");
     prenoms += " ";
@@ -181,30 +149,17 @@ function getPrenomsInteresse(data: IInteresse) {
   return prenoms;
 }
 
-function getLignesPrenomsNomNaissance(
-  data: IInteresse | IParent,
-  isParent: boolean
-) {
+function getLignesPrenomsNomNaissance(data: IInteresse | IParent, isParent: boolean) {
   // Partie Prenoms/Nom
-  const prenoms = isParent
-    ? getPrenomsParents(data as IParent)
-    : getPrenomsInteresse(data as IInteresse);
+  const prenoms = isParent ? getPrenomsParents(data as IParent) : getPrenomsInteresse(data as IInteresse);
 
   let result = `${prenoms}${formatNom(data.nomFamille)}`;
 
   // Partie Naissance
+  result = addPhrase(result, `Date de naissance: ${DateUtils.getDateFormatJasperFromCompose(data.dateNaissance)}`);
   result = addPhrase(
     result,
-    `Date de naissance: ${getDateFormatJasperFromCompose(data.dateNaissance)}`
-  );
-  result = addPhrase(
-    result,
-    `Lieu de naissance: ${LieuxUtils.getLieu(
-      data.villeNaissance,
-      data.regionNaissance,
-      data.paysNaissance,
-      data.arrondissementNaissance
-    )}`
+    `Lieu de naissance: ${LieuxUtils.getLieu(data.villeNaissance, data.regionNaissance, data.paysNaissance, data.arrondissementNaissance)}`
   );
   return result;
 }
@@ -226,28 +181,17 @@ function getLignesInteresseDecision(data: IInteresse, showDeces: boolean) {
 
   // Partie Deces
   if (showDeces && data.dateDeces) {
+    interesse = addPhrase(interesse, `Date de décès: ${DateUtils.getDateFormatJasperFromCompose(data.dateDeces)}`);
     interesse = addPhrase(
       interesse,
-      `Date de décès: ${getDateFormatJasperFromCompose(data.dateDeces)}`
-    );
-    interesse = addPhrase(
-      interesse,
-      `Lieu de décès: ${LieuxUtils.getLieu(
-        data.villeDeces,
-        data.regionDeces,
-        data.paysDeces,
-        data.arrondissementDeces
-      )}`
+      `Lieu de décès: ${LieuxUtils.getLieu(data.villeDeces, data.regionDeces, data.paysDeces, data.arrondissementDeces)}`
     );
   }
 
   // Partie Parents
   // Filtre pour n'afficher que les parents "adoptant" ou "adoptant conjoint du parent"
   const parents = data.parents?.filter(el => {
-    return (
-      el.lienParente === LienParente.PARENT_ADOPTANT ||
-      el.lienParente === LienParente.ADOPTANT_CONJOINT_DU_PARENT
-    );
+    return el.lienParente === LienParente.PARENT_ADOPTANT || el.lienParente === LienParente.ADOPTANT_CONJOINT_DU_PARENT;
   });
   if (parents && parents?.length > 0) {
     interesse = addPhrase(interesse, "par");
@@ -262,17 +206,9 @@ function getLignesMariageInteresses(data: IMariageInteresse) {
   mariageInteresses +=
     !data.aletranger && !LieuxUtils.estPaysFrance(data.paysMariage)
       ? ` devant les autorités consulaires de ${data.paysMariage} en France`
-      : ` à ${LieuxUtils.getLieu(
-          data.villeMariage,
-          data.regionMariage,
-          data.paysMariage,
-          data.arrondissementMariage
-        )}`;
-  mariageInteresses +=
-    data.dateMariage.jour && data.dateMariage.mois && data.dateMariage.annee
-      ? " le"
-      : " en";
-  mariageInteresses += ` ${getDateFormatJasperFromCompose(data.dateMariage)}`;
+      : ` à ${LieuxUtils.getLieu(data.villeMariage, data.regionMariage, data.paysMariage, data.arrondissementMariage)}`;
+  mariageInteresses += data.dateMariage.jour && data.dateMariage.mois && data.dateMariage.annee ? " le" : " en";
+  mariageInteresses += ` ${DateUtils.getDateFormatJasperFromCompose(data.dateMariage)}`;
   return mariageInteresses;
 }
 

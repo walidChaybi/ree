@@ -4,7 +4,7 @@ import { IReponseSansDelivranceCSDemandeIncompleteComposition } from "@model/com
 import { IReponseSansDelivranceCSFrancaisComposition } from "@model/composition/IReponseSansDelivranceCSFrancaisComposition";
 import { IReponseSansDelivranceCSMariageComposition } from "@model/composition/IReponseSansDelivranceCSMariageComposition";
 import { IReponseSansDelivranceCSPACSNonInscritComposition } from "@model/composition/IReponseSansDelivranceCSPACSNonInscritComposition";
-import { dateCourrier } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { imagePngVideBase64 } from "./ImagePng";
 
 const baseReponseSansDelivranceCS = {
@@ -20,7 +20,7 @@ const baseReponseSansDelivranceCS = {
     ligne6: "44941 Nantes CEDEX 9"
   },
   tel_service_delivreur: "01.41.86.42.47",
-  date_delivrance: dateCourrier(),
+  date_delivrance: DateUtils.dateCourrier(),
   ville_delivrance: "Nantes",
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
   sceau_ministere: imagePngVideBase64,
@@ -54,7 +54,7 @@ const baseReponseSansDelivranceCSInstitutionnel = {
   },
   tel_service_delivreur: "01.41.86.42.47",
   ville_delivrance: "Nantes",
-  date_delivrance: dateCourrier(),
+  date_delivrance: DateUtils.dateCourrier(),
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
   sceau_ministere: imagePngVideBase64,
   identite_requerant: {
@@ -73,52 +73,47 @@ const baseReponseSansDelivranceCSInstitutionnel = {
   titre: undefined
 };
 
-export const reponseSansDelivranceCSDemandeIncomplete: IReponseSansDelivranceCSDemandeIncompleteComposition =
-  {
-    ...baseReponseSansDelivranceCSInstitutionnel,
-    nom_titulaire: "Prodesk",
-    prenom_titulaire: "Elodie",
-    objet_courrier:
-      "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil"
-  };
+export const reponseSansDelivranceCSDemandeIncomplete: IReponseSansDelivranceCSDemandeIncompleteComposition = {
+  ...baseReponseSansDelivranceCSInstitutionnel,
+  nom_titulaire: "Prodesk",
+  prenom_titulaire: "Elodie",
+  objet_courrier:
+    "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil"
+};
 
-export const reponseSansDelivranceCSPACSNonInscrit: IReponseSansDelivranceCSPACSNonInscritComposition =
-  {
-    ...baseReponseSansDelivranceCSInstitutionnel,
-    objet_courrier:
-      "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil",
-    nom_titulaire1: "PRODESK",
-    prenoms_titulaire1: "Elodie"
-  };
+export const reponseSansDelivranceCSPACSNonInscrit: IReponseSansDelivranceCSPACSNonInscritComposition = {
+  ...baseReponseSansDelivranceCSInstitutionnel,
+  objet_courrier:
+    "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil",
+  nom_titulaire1: "PRODESK",
+  prenoms_titulaire1: "Elodie"
+};
 
-export const reponseSansDelivranceCSMariage: IReponseSansDelivranceCSMariageComposition =
-  {
-    ...baseReponseSansDelivranceCS,
-    objet_courrier: undefined,
-    nom_titulaire1: "Greenwald",
-    prenoms_titulaire1: "Paulita, Zaria",
-    nom_titulaire2: "DUPe",
-    prenoms_titulaire2: "Laurent",
-    prenom_titulaire: "Elodie",
-    nom_titulaire: "Prodesk",
-    reference_acte: "CSL.DX.NA.T.410.681"
-  };
+export const reponseSansDelivranceCSMariage: IReponseSansDelivranceCSMariageComposition = {
+  ...baseReponseSansDelivranceCS,
+  objet_courrier: undefined,
+  nom_titulaire1: "Greenwald",
+  prenoms_titulaire1: "Paulita, Zaria",
+  nom_titulaire2: "DUPe",
+  prenoms_titulaire2: "Laurent",
+  prenom_titulaire: "Elodie",
+  nom_titulaire: "Prodesk",
+  reference_acte: "CSL.DX.NA.T.410.681"
+};
 
-  export const reponseSansDelivranceCSMariageElectronique: IReponseSansDelivranceCSMariageComposition =
-    {
-      ...reponseSansDelivranceCSMariage,
-      reference_acte: "RECE.1234.2024"
-    };
+export const reponseSansDelivranceCSMariageElectronique: IReponseSansDelivranceCSMariageComposition = {
+  ...reponseSansDelivranceCSMariage,
+  reference_acte: "RECE.1234.2024"
+};
 
-export const reponseSansDelivranceCSFrancais: IReponseSansDelivranceCSFrancaisComposition =
-  {
-    ...baseReponseSansDelivranceCS,
-    prenom_titulaire: "Elodie",
-    nom_titulaire: "Prodesk",
-    objet_courrier:
-      "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil",
-    url: "https://www.service-public.fr"
-  };
+export const reponseSansDelivranceCSFrancais: IReponseSansDelivranceCSFrancaisComposition = {
+  ...baseReponseSansDelivranceCS,
+  prenom_titulaire: "Elodie",
+  nom_titulaire: "Prodesk",
+  objet_courrier:
+    "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil",
+  url: "https://www.service-public.fr"
+};
 
 export const certificatSituation: ICertificatSituationComposition = {
   numero_requete: "012345",
@@ -160,7 +155,7 @@ export const certificatSituation: ICertificatSituationComposition = {
   tel_service_delivreur: "01.41.86.42.47",
   titre: "titre",
   ville_delivrance: "Nantes",
-  date_delivrance: dateCourrier(),
+  date_delivrance: DateUtils.dateCourrier(),
   ville_naissance: "villeNaissance"
 } as ICertificatSituationComposition;
 
@@ -205,6 +200,6 @@ export const certificatRCA: ICertificatRCAComposition = {
   sexe: "masculin",
   tel_service_delivreur: "01.41.86.42.47",
   ville_delivrance: "Nantes",
-  date_delivrance: dateCourrier(),
+  date_delivrance: DateUtils.dateCourrier(),
   ville_naissance: "villeNaissance"
 } as ICertificatRCAComposition;

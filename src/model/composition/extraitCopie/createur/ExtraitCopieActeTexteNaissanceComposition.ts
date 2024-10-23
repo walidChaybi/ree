@@ -1,6 +1,6 @@
 import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationConjointe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { getDateFormatJasper } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { getValeurOuVide } from "@util/Utils";
 import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";
 import { IFicheActe } from "../../../etatcivil/acte/IFicheActe";
@@ -165,9 +165,7 @@ et de ${parent2}`;
         declarationConjointe = `suivant déclaration conjointe ${titulaireAMCompositionEC1?.typeDeclarationConjointe.libelle}`;
 
         if (titulaireAMCompositionEC1.dateDeclarationConjointe) {
-          const dateFormatJJMoisAAAA = getDateFormatJasper(
-            titulaireAMCompositionEC1.dateDeclarationConjointe
-          );
+          const dateFormatJJMoisAAAA = DateUtils.getDateFormatJasper(titulaireAMCompositionEC1.dateDeclarationConjointe);
           declarationConjointe = `${declarationConjointe} en date du ${dateFormatJJMoisAAAA}`;
         }
       }

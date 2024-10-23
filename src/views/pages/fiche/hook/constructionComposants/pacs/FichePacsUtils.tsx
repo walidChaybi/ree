@@ -7,8 +7,7 @@ import {
   IModification,
   Modification
 } from "@model/etatcivil/pacs/IModification";
-import { getDateString } from "@util/DateUtils";
-import { getLibelle } from "@util/Utils";
+import DateUtils from "@util/DateUtils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
@@ -35,52 +34,17 @@ export function getPanelsPacs(pacs: IFichePacs): IAccordionReceSection {
     1
   );
 
-  AjoutePartAuPanelAreas(
-    panelAreas,
-    pacs.partenaires,
-    getPartenaires,
-    "2",
-    "",
-    deuxColonnes
-  );
-  AjoutePartAuPanelAreas(
-    panelAreas,
-    pacs,
-    getEnregistrementPacs,
-    "3",
-    "Enregistrement du PACS",
-    deuxColonnes
-  );
+  AjoutePartAuPanelAreas(panelAreas, pacs.partenaires, getPartenaires, "2", "", deuxColonnes);
+  AjoutePartAuPanelAreas(panelAreas, pacs, getEnregistrementPacs, "3", "Enregistrement du PACS", deuxColonnes);
   if (pacs.modifications) {
-    AjoutePartAuPanelAreas(
-      panelAreas,
-      pacs.modifications[0],
-      getModificationPacs,
-      "4",
-      "Modification du PACS",
-      deuxColonnes
-    );
+    AjoutePartAuPanelAreas(panelAreas, pacs.modifications[0], getModificationPacs, "4", "Modification du PACS", deuxColonnes);
   }
-  AjoutePartAuPanelAreas(
-    panelAreas,
-    pacs.dissolution,
-    getDissolutionPacs,
-    "5",
-    "Dissolution du PACS",
-    deuxColonnes
-  );
-  AjoutePartAuPanelAreas(
-    panelAreas,
-    pacs.annulation,
-    getAnnulationPacs,
-    "6",
-    "Annulation du PACS",
-    deuxColonnes
-  );
+  AjoutePartAuPanelAreas(panelAreas, pacs.dissolution, getDissolutionPacs, "5", "Dissolution du PACS", deuxColonnes);
+  AjoutePartAuPanelAreas(panelAreas, pacs.annulation, getAnnulationPacs, "6", "Annulation du PACS", deuxColonnes);
 
   panelAreas.push({
     parts: getStatuts(pacs.statutsFiche),
-    title: getLibelle("Historique des statuts de la fiche")
+    title: "Historique des statuts de la fiche"
   });
 
   const fichesPersonne: SectionPanelProps[] = getFichesPersonne(pacs.personnes);
@@ -107,12 +71,12 @@ function getInscriptionRegistrePacs(pacs: IFichePacs): SectionPartProps[] {
         },
         {
           libelle: "Date d'enregistrement (par l'autorité)",
-          value: getDateString(pacs.dateEnregistrementParAutorite)
+          value: DateUtils.getDateString(pacs.dateEnregistrementParAutorite)
         },
 
         {
           libelle: "Date d'inscription au registre",
-          value: getDateString(pacs.dateInscription)
+          value: DateUtils.getDateString(pacs.dateInscription)
         }
       ]
     }
@@ -129,7 +93,7 @@ function getEnregistrementPacs(pacs: IFichePacs): SectionPartProps[] {
         ...getContentNotaire(pacs.autorite),
         {
           libelle: "Date",
-          value: getDateString(pacs.dateEnregistrementParAutorite)
+          value: DateUtils.getDateString(pacs.dateEnregistrementParAutorite)
         }
       ]
     }

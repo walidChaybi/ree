@@ -1,4 +1,4 @@
-import { getDateFormatJasper, getDateFromTimestamp } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { IAutorite } from "../../etatcivil/commun/IAutorite";
 import { TypeAutorite } from "../../etatcivil/enum/TypeAutorite";
@@ -14,10 +14,10 @@ export const ParagrapheComposition = {
     obj: ICertificatPACSComposition,
     fiche: IFichePacs
   ) {
-    const dateEnregistrement = getDateFormatJasper(
+    const dateEnregistrement = DateUtils.getDateFormatJasper(
       fiche.dateEnregistrementParAutorite
     );
-    const dateInscription = getDateFormatJasper(fiche.dateInscription);
+    const dateInscription = DateUtils.getDateFormatJasper(fiche.dateInscription);
 
     obj.paragraphe_enregistrement = `Enregistrée ${ParagrapheComposition.getAutoriteEtLocalisation(
       fiche.autorite
@@ -28,11 +28,11 @@ export const ParagrapheComposition = {
     obj: ICertificatPACSComposition,
     modifications: IModification[]
   ) {
-    const dateConvention = getDateFormatJasper(
-      getDateFromTimestamp(modifications[0].date)
+    const dateConvention = DateUtils.getDateFormatJasper(
+      DateUtils.getDateFromTimestamp(modifications[0].date)
     );
-    const dateModif = getDateFormatJasper(
-      getDateFromTimestamp(modifications[0].dateEffet)
+    const dateModif = DateUtils.getDateFormatJasper(
+      DateUtils.getDateFromTimestamp(modifications[0].dateEffet)
     );
     obj.paragraphe_modification = `Modifiée ${ParagrapheComposition.getAutoriteEtLocalisation(
       modifications[0].autorite
@@ -43,11 +43,11 @@ export const ParagrapheComposition = {
     obj: ICertificatPACSComposition,
     dissolution: IDissolution
   ) {
-    const dateDissolution = getDateFormatJasper(
-      getDateFromTimestamp(dissolution.date)
+    const dateDissolution = DateUtils.getDateFormatJasper(
+      DateUtils.getDateFromTimestamp(dissolution.date)
     );
-    const dateEffet = getDateFormatJasper(
-      getDateFromTimestamp(dissolution.dateEffet)
+    const dateEffet = DateUtils.getDateFormatJasper(
+      DateUtils.getDateFromTimestamp(dissolution.dateEffet)
     );
     obj.paragraphe_dissolution = `Dissoute ${ParagrapheComposition.getAutoriteEtLocalisation(
       dissolution.autorite
@@ -58,11 +58,11 @@ export const ParagrapheComposition = {
     obj: ICertificatPACSComposition,
     annulation: IAnnulation
   ) {
-    const dateAnnulation = getDateFormatJasper(
-      getDateFromTimestamp(annulation.date)
+    const dateAnnulation = DateUtils.getDateFormatJasper(
+      DateUtils.getDateFromTimestamp(annulation.date)
     );
-    const dateEffet = getDateFormatJasper(
-      getDateFromTimestamp(annulation.dateEffet)
+    const dateEffet = DateUtils.getDateFormatJasper(
+      DateUtils.getDateFromTimestamp(annulation.dateEffet)
     );
 
     obj.paragraphe_annulation = `Annulée ${ParagrapheComposition.getAutoriteEtLocalisation(

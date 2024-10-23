@@ -13,11 +13,7 @@ import {
 } from "@router/ReceUrls";
 import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
 import { logError } from "@util/LogManager";
-import {
-  ZERO,
-  getLibelle,
-  premiereLettreEnMajusculeLeResteEnMinuscule
-} from "@util/Utils";
+import { ZERO, premiereLettreEnMajusculeLeResteEnMinuscule } from "@util/Utils";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -105,11 +101,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   };
 
   // Eléments Popin Déconnexion
-  const messagePopin = [
-    getLibelle(
-      `Il vous reste ${nbRequetes} requête(s) à signer, êtes-vous sûr de vouloir vous déconnecter ?`
-    )
-  ];
+  const messagePopin = [`Il vous reste ${nbRequetes} requête(s) à signer, êtes-vous sûr de vouloir vous déconnecter ?`];
 
   const boutonsPopin = [
     {
@@ -130,24 +122,13 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
 
   return (
     <>
-      <ConfirmationPopin
-        estOuvert={confirmationDeconnexion}
-        messages={messagePopin}
-        boutons={boutonsPopin}
-      />
+      <ConfirmationPopin estOuvert={confirmationDeconnexion} messages={messagePopin} boutons={boutonsPopin} />
       <div id="simple-menu" className="UtilisateurBouton">
-        {(utilisateurConnecte !== undefined ||
-          erreurLogin?.status === codeErreurForbidden) && (
+        {(utilisateurConnecte !== undefined || erreurLogin?.status === codeErreurForbidden) && (
           <>
-            <Button
-              aria-controls="simple-menu"
-              aria-haspopup="true"
-              onClick={event => handleClickBoutonOfficer(event)}
-            >
+            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={event => handleClickBoutonOfficer(event)}>
               {utilisateurConnecte !== undefined
-                ? `${utilisateurConnecte.prenom} ${
-                    utilisateurConnecte.nom
-                  }${getFonction(
+                ? `${utilisateurConnecte.prenom} ${utilisateurConnecte.nom}${getFonction(
                     utilisateurConnecte.fonctionAgent?.libelleFonction
                   )}`
                 : "Déconnexion"}
@@ -170,7 +151,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
             >
               <MenuItem onClick={handleClickDeconnexion}>
                 <FontAwesomeIcon icon={faTimes} />
-                {getLibelle("Déconnexion")}
+                {"Déconnexion"}
               </MenuItem>
             </Menu>
           </>

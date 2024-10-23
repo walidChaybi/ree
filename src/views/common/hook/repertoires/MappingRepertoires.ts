@@ -25,7 +25,7 @@ import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
 import { IPartenaire } from "@model/etatcivil/pacs/IPartenaire";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { IInteresse, Interesse } from "@model/etatcivil/rcrca/IInteresse";
-import { getDateFromTimestamp, IDateCompose } from "@util/DateUtils";
+import DateUtils, { IDateCompose } from "@util/DateUtils";
 import { formatNom, formatPrenom } from "@util/Utils";
 import { mappingMentions } from "../acte/mentions/MentionsApiHook";
 
@@ -39,20 +39,13 @@ export function mapRcRca(data: any): IFicheRcRca {
       harmoniserSexeEtNationalite(interesse);
     });
   }
-  dataRcRca.dateDerniereDelivrance = data.dateDerniereDelivrance
-    ? getDateFromTimestamp(data.dateDerniereDelivrance)
-    : undefined;
-  dataRcRca.dateDerniereMaj = data.dateDerniereMaj
-    ? getDateFromTimestamp(data.dateDerniereMaj)
-    : undefined;
-  dataRcRca.dateInscription = getDateFromTimestamp(data.dateInscription);
+  dataRcRca.dateDerniereDelivrance = data.dateDerniereDelivrance ? DateUtils.getDateFromTimestamp(data.dateDerniereDelivrance) : undefined;
+  dataRcRca.dateDerniereMaj = data.dateDerniereMaj ? DateUtils.getDateFromTimestamp(data.dateDerniereMaj) : undefined;
+  dataRcRca.dateInscription = DateUtils.getDateFromTimestamp(data.dateInscription);
 
   dataRcRca.personnes = mapPersonnes(data.personnes, data.numero);
 
-  dataRcRca.nature =
-    data.categorie === "rc"
-      ? NatureRc.getEnumFor(data.nature)
-      : NatureRca.getEnumFor(data.nature);
+  dataRcRca.nature = data.categorie === "rc" ? NatureRc.getEnumFor(data.nature) : NatureRca.getEnumFor(data.nature);
 
   dataRcRca.statutsFiche = mapStatutFiche(data);
 
@@ -68,16 +61,10 @@ export function mapPacs(data: any): IFichePacs {
       (p as IPartenaire).sexe = Sexe.getEnumFor(p.sexe);
     });
   }
-  dataPacs.dateDerniereDelivrance = data.dateDerniereDelivrance
-    ? getDateFromTimestamp(data.dateDerniereDelivrance)
-    : undefined;
-  dataPacs.dateDerniereMaj = data.dateDerniereMaj
-    ? getDateFromTimestamp(data.dateDerniereMaj)
-    : undefined;
-  dataPacs.dateEnregistrementParAutorite = getDateFromTimestamp(
-    data.dateEnregistrementParAutorite
-  );
-  dataPacs.dateInscription = getDateFromTimestamp(data.dateInscription);
+  dataPacs.dateDerniereDelivrance = data.dateDerniereDelivrance ? DateUtils.getDateFromTimestamp(data.dateDerniereDelivrance) : undefined;
+  dataPacs.dateDerniereMaj = data.dateDerniereMaj ? DateUtils.getDateFromTimestamp(data.dateDerniereMaj) : undefined;
+  dataPacs.dateEnregistrementParAutorite = DateUtils.getDateFromTimestamp(data.dateEnregistrementParAutorite);
+  dataPacs.dateInscription = DateUtils.getDateFromTimestamp(data.dateInscription);
 
   dataPacs.personnes = mapPersonnes(data.personnes, data.numero);
 
@@ -97,27 +84,19 @@ export function mapActe(data: any): IFicheActe {
   const dataActe: IFicheActe = { ...data };
   dataActe.nature = NatureActe.getEnumFor(data.nature);
   dataActe.registre = mapRegistre(data.registre);
-  dataActe.dateDerniereDelivrance = data.dateDerniereDelivrance
-    ? getDateFromTimestamp(data.dateDerniereDelivrance)
-    : undefined;
-  dataActe.dateDerniereMaj = data.dateDerniereMaj
-    ? getDateFromTimestamp(data.dateDerniereMaj)
-    : undefined;
+  dataActe.dateDerniereDelivrance = data.dateDerniereDelivrance ? DateUtils.getDateFromTimestamp(data.dateDerniereDelivrance) : undefined;
+  dataActe.dateDerniereMaj = data.dateDerniereMaj ? DateUtils.getDateFromTimestamp(data.dateDerniereMaj) : undefined;
 
   dataActe.personnes = mapPersonnes(data.personnes, data.numero);
   dataActe.mentions = mappingMentions(data.mentions);
 
-  dataActe.visibiliteArchiviste = TypeVisibiliteArchiviste.getEnumFor(
-    data.visibiliteArchiviste
-  );
+  dataActe.visibiliteArchiviste = TypeVisibiliteArchiviste.getEnumFor(data.visibiliteArchiviste);
 
   dataActe.detailMariage = mapDetailMariage(data.detailMariage);
 
   dataActe.type = TypeActe.getEnumFor(data.type);
 
-  dataActe.corpsExtraitRectifications = mapCorpsRectifications(
-    data.corpsExtraitRectifications
-  );
+  dataActe.corpsExtraitRectifications = mapCorpsRectifications(data.corpsExtraitRectifications);
 
   dataActe.analyseMarginales = mapAnalysesMarginales(data.analyseMarginales);
   dataActe.titulaires = mapTitulaires(data.titulaires);
@@ -125,13 +104,11 @@ export function mapActe(data: any): IFicheActe {
   return dataActe;
 }
 
-function mapAnalysesMarginales(
-  ams: IAnalyseMarginale[]
-): IAnalyseMarginale[] | undefined {
+function mapAnalysesMarginales(ams: IAnalyseMarginale[]): IAnalyseMarginale[] | undefined {
   return ams?.map((am: any) => ({
     ...am,
-    dateDebut: am.dateDebut ? getDateFromTimestamp(am.dateDebut) : undefined,
-    dateFin: am.dateFin ? getDateFromTimestamp(am.dateFin) : undefined,
+    dateDebut: am.dateDebut ? DateUtils.getDateFromTimestamp(am.dateDebut) : undefined,
+    dateFin: am.dateFin ? DateUtils.getDateFromTimestamp(am.dateFin) : undefined,
     titulaires: mapTitulaires(am.titulaires)
   }));
 }
@@ -142,12 +119,10 @@ export function mapTitulaires(titulaires: any[]): ITitulaireActe[] {
       ...titulaire,
       sexe: titulaire.sexe ? Sexe.getEnumFor(titulaire.sexe) : Sexe.INCONNU,
       typeDeclarationConjointe: titulaire.typeDeclarationConjointe
-        ? TypeDeclarationConjointe.getEnumFor(
-            titulaire.typeDeclarationConjointe
-          )
+        ? TypeDeclarationConjointe.getEnumFor(titulaire.typeDeclarationConjointe)
         : TypeDeclarationConjointe.ABSENCE_DECLARATION,
       dateDeclarationConjointe: titulaire.dateDeclarationConjointe
-        ? getDateFromTimestamp(titulaire.dateDeclarationConjointe)
+        ? DateUtils.getDateFromTimestamp(titulaire.dateDeclarationConjointe)
         : undefined,
       filiations: mapFiliation(titulaire.filiations)
     }))

@@ -27,13 +27,9 @@ export interface IInteresse {
 
 export const Interesse = {
   getSexe(interesse?: IInteresse): string {
-    return interesse && interesse.sexe
-      ? Sexe.getEnumFor(interesse.sexe).libelle
-      : "";
+    return interesse?.sexe ? Sexe.getEnumFor(interesse.sexe).libelle : "";
   },
   getNationalite(interesse?: IInteresse): string {
-    return interesse && interesse.nationalite
-      ? Nationalite.getEnumFor(interesse.nationalite).libelle
-      : "";
+    return interesse?.nationalite ? Nationalite.getEnumFor(interesse.nationalite).libelle : "";
   }
 };

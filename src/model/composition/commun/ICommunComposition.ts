@@ -1,5 +1,5 @@
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
-import { getDateDuJour, getDateFormatJasper } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { getValeurOuVide } from "@util/Utils";
 
 export interface ICommunComposition {
@@ -28,32 +28,19 @@ export const CommunComposition = {
     objJson.titre = titre;
     objJson.numero_requete = getValeurOuVide(numero);
     if (dateDujour) {
-      objJson.date_jour = getDateDuJour();
+      objJson.date_jour = DateUtils.getDateDuJour();
     }
     if (dateDelivrance) {
-      objJson.date_delivrance = getDateFormatJasper(new Date());
+      objJson.date_delivrance = DateUtils.getDateFormatJasper(new Date());
     }
     return objJson;
   },
 
   ajoutDateDeDelivrance(objJson: ICommunComposition) {
-    return this.ajoutParamCommuns(
-      objJson,
-      undefined,
-      undefined,
-      undefined,
-      false,
-      true
-    );
+    return this.ajoutParamCommuns(objJson, undefined, undefined, undefined, false, true);
   },
 
   ajoutDateDujour(objJson: ICommunComposition) {
-    return this.ajoutParamCommuns(
-      objJson,
-      undefined,
-      undefined,
-      undefined,
-      true
-    );
+    return this.ajoutParamCommuns(objJson, undefined, undefined, undefined, true);
   }
 };

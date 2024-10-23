@@ -1,8 +1,4 @@
-import {
-  formatAHeure,
-  getDateStringFromDateCompose,
-  IDateCompose
-} from "@util/DateUtils";
+import DateUtils, { IDateCompose } from "@util/DateUtils";
 import { estRenseigne, getValeurOuVide, numberToString } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
@@ -26,11 +22,11 @@ export interface IEvenement {
 export const Evenement = {
   getDate(evenement?: IEvenement): string {
     return evenement
-      ? `${getDateStringFromDateCompose({
+      ? `${DateUtils.getDateStringFromDateCompose({
           jour: numberToString(evenement.jour),
           mois: numberToString(evenement.mois),
           annee: numberToString(evenement.annee)
-        })} ${formatAHeure(evenement.heure, evenement.minute)}`
+        })} ${DateUtils.formatAHeure(evenement.heure, evenement.minute)}`
       : "";
   },
 
@@ -42,30 +38,16 @@ export const Evenement = {
     if (evenement?.lieuReprise) {
       return evenement.lieuReprise;
     } else {
-      return evenement
-        ? LieuxUtils.getLocalisationEtrangere(
-            evenement.ville,
-            evenement.region,
-            evenement.pays
-          )
-        : "";
+      return evenement ? LieuxUtils.getLocalisationEtrangere(evenement.ville, evenement.region, evenement.pays) : "";
     }
   },
 
   estPartiellementRenseigne(evenement?: IEvenement): boolean {
-    return (
-      estRenseigne(evenement?.jour) ||
-      estRenseigne(evenement?.mois) ||
-      estRenseigne(evenement?.annee)
-    );
+    return estRenseigne(evenement?.jour) || estRenseigne(evenement?.mois) || estRenseigne(evenement?.annee);
   },
 
   estTotalementRenseigne(evenement?: IEvenement): boolean {
-    return (
-      estRenseigne(evenement?.jour) &&
-      estRenseigne(evenement?.mois) &&
-      estRenseigne(evenement?.annee)
-    );
+    return estRenseigne(evenement?.jour) && estRenseigne(evenement?.mois) && estRenseigne(evenement?.annee);
   },
 
   estNonRenseigne(evenement?: IEvenement): boolean {
@@ -77,18 +59,10 @@ export const Evenement = {
   },
 
   aucuneDonneeDuLieuRenseignee(evenement?: IEvenement): boolean {
-    return (
-      !evenement?.lieuReprise &&
-      !evenement?.pays &&
-      !evenement?.ville &&
-      !evenement?.region &&
-      !evenement?.arrondissement
-    );
+    return !evenement?.lieuReprise && !evenement?.pays && !evenement?.ville && !evenement?.region && !evenement?.arrondissement;
   },
 
-  formatageDateCompositionExtraitPlurilingue(
-    evenement?: IEvenement
-  ): IDateCompose {
+  formatageDateCompositionExtraitPlurilingue(evenement?: IEvenement): IDateCompose {
     return {
       jour: getValeurOuVide(evenement?.jour),
       mois: getValeurOuVide(evenement?.mois),

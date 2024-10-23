@@ -1,11 +1,5 @@
-import { getDateStringFromDateCompose } from "@util/DateUtils";
-import {
-  DEUX,
-  mapPrenomsVersPrenomsOrdonnes,
-  numberToString,
-  SNP,
-  SPC
-} from "@util/Utils";
+import DateUtils from "@util/DateUtils";
+import { DEUX, mapPrenomsVersPrenomsOrdonnes, numberToString, SNP, SPC } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { IPrenomOrdonnes } from "../../requete/IPrenomOrdonnes";
 import { LienParente } from "../enum/LienParente";
@@ -56,9 +50,7 @@ export const TitulaireActe = {
     return this.getPrenom(deux, titulaire);
   },
   getPrenoms(titulaire?: ITitulaireActe): string {
-    return `${this.getPrenom1(titulaire)}${
-      this.getPrenom2(titulaire) ? " " : ""
-    }${this.getPrenom2(titulaire)}${
+    return `${this.getPrenom1(titulaire)}${this.getPrenom2(titulaire) ? " " : ""}${this.getPrenom2(titulaire)}${
       this.getPrenom3(titulaire) ? " " : ""
     }${this.getPrenom3(titulaire)}`;
   },
@@ -71,8 +63,8 @@ export const TitulaireActe = {
     return prenom;
   },
   getDateNaissance(titulaire?: ITitulaireActe): string {
-    return titulaire && titulaire.naissance
-      ? getDateStringFromDateCompose({
+    return titulaire?.naissance
+      ? DateUtils.getDateStringFromDateCompose({
           jour: numberToString(titulaire.naissance.jour),
           mois: numberToString(titulaire.naissance.mois),
           annee: numberToString(titulaire.naissance.annee)
@@ -80,22 +72,19 @@ export const TitulaireActe = {
       : "";
   },
   getSexeOuVide(titulaire?: ITitulaireActe): string {
-    return titulaire && titulaire.sexe ? titulaire.sexe.libelle : "";
+    return titulaire?.sexe ? titulaire.sexe.libelle : "";
   },
   getSexeOuInconnu(titulaire?: ITitulaireActe | IFiliation): Sexe {
-    return titulaire && titulaire.sexe ? titulaire.sexe : Sexe.INCONNU;
+    return titulaire?.sexe ? titulaire.sexe : Sexe.INCONNU;
   },
   getLieuNaissance(titulaire?: ITitulaireActe): string {
     return titulaire?.naissance?.lieuFormate ?? "";
   },
 
-  getLieuDeRepriseOuLieuNaissance(
-    titulaire?: ITitulaireActe,
-    paysInconnu = false
-  ): string {
+  getLieuDeRepriseOuLieuNaissance(titulaire?: ITitulaireActe, paysInconnu = false): string {
     const paysParDefaut = paysInconnu ? "" : titulaire?.naissance?.pays;
 
-    if (titulaire && titulaire?.naissance?.lieuReprise) {
+    if (titulaire?.naissance?.lieuReprise) {
       return titulaire.naissance.lieuReprise;
     } else if (paysInconnu) {
       return LieuxUtils.getLocalisationEtrangerOuFrance(
@@ -114,10 +103,7 @@ export const TitulaireActe = {
     }
   },
   getParentsDirects(titulaire?: ITitulaireActe): IFiliation[] {
-    return this.getParents(
-      (filiation: IFiliation) => filiation.lienParente === LienParente.PARENT,
-      titulaire
-    );
+    return this.getParents((filiation: IFiliation) => filiation.lienParente === LienParente.PARENT, titulaire);
   },
 
   getParentDirectMasculin(titulaire?: ITitulaireActe): IFiliation | undefined {
@@ -135,11 +121,7 @@ export const TitulaireActe = {
   getTousLesParents(titulaire?: ITitulaireActe): IFiliation[] {
     return this.getParents(
       (filiation: IFiliation) =>
-        [
-          LienParente.PARENT,
-          LienParente.PARENT_ADOPTANT,
-          LienParente.ADOPTANT_CONJOINT_DU_PARENT
-        ].includes(filiation.lienParente),
+        [LienParente.PARENT, LienParente.PARENT_ADOPTANT, LienParente.ADOPTANT_CONJOINT_DU_PARENT].includes(filiation.lienParente),
 
       titulaire
     );
@@ -148,13 +130,8 @@ export const TitulaireActe = {
     let parentsAdoptants: IFiliation[] = [];
     if (titulaire?.filiations) {
       parentsAdoptants = titulaire.filiations
-        .filter(
-          filiation => filiation.lienParente === LienParente.PARENT_ADOPTANT
-        )
-        .sort(
-          (parent1: IFiliation, parent2: IFiliation) =>
-            parent1.ordre - parent2.ordre
-        );
+        .filter(filiation => filiation.lienParente === LienParente.PARENT_ADOPTANT)
+        .sort((parent1: IFiliation, parent2: IFiliation) => parent1.ordre - parent2.ordre);
     }
     return parentsAdoptants;
   },
@@ -165,21 +142,12 @@ export const TitulaireActe = {
 
   ilExisteUnParentAdoptant(titulaire?: ITitulaireActe): boolean {
     return titulaire?.filiations
-      ? titulaire.filiations.find(
-          filiation => filiation.lienParente === LienParente.PARENT_ADOPTANT
-        ) != null
+      ? titulaire.filiations.find(filiation => filiation.lienParente === LienParente.PARENT_ADOPTANT) != null
       : false;
   },
 
-  getParents(
-    filtre: (filiation: IFiliation) => boolean,
-    titulaire?: ITitulaireActe
-  ): IFiliation[] {
-    return titulaire && titulaire.filiations
-      ? titulaire.filiations
-          .filter(filiation => filtre(filiation))
-          .sort((a, b) => a.ordre - b.ordre)
-      : [];
+  getParents(filtre: (filiation: IFiliation) => boolean, titulaire?: ITitulaireActe): IFiliation[] {
+    return titulaire?.filiations ? titulaire.filiations.filter(filiation => filtre(filiation)).sort((a, b) => a.ordre - b.ordre) : [];
   },
 
   /* Renvoit les parents directs:
@@ -222,18 +190,13 @@ export const TitulaireActe = {
     return (
       Sexe.estIndetermine(titulaire.sexe) ||
       TitulaireActe.parentsSontDeMemeSexe(titulaire) ||
-      TitulaireActe.getParentsDirects(titulaire).some(titul =>
-        Sexe.estIndetermine(titul.sexe)
-      )
+      TitulaireActe.getParentsDirects(titulaire).some(titul => Sexe.estIndetermine(titul.sexe))
     );
   },
 
   genreIndetermineOuMemeSexe(titulaires: ITitulaireActe[]) {
     const sexe = titulaires[0].sexe;
-    return (
-      titulaires.some(titulaire => Sexe.estIndetermine(titulaire.sexe)) ||
-      titulaires.every(titulaire => titulaire.sexe === sexe)
-    );
+    return titulaires.some(titulaire => Sexe.estIndetermine(titulaire.sexe)) || titulaires.every(titulaire => titulaire.sexe === sexe);
   },
 
   parentsSontDeMemeSexe(titulaire: ITitulaireActe) {

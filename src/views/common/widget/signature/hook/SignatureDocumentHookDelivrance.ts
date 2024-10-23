@@ -13,9 +13,9 @@ import {
   usePostCreationActionEtMiseAjourStatutApi
 } from "@hook/requete/ActionHook";
 import { FormatDate } from "@util/DateUtils";
-import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { getValeurOuVide } from "@util/Utils";
 import messageManager from "@util/messageManager";
-import moment from "moment";
+import dayjs from "dayjs";
 import { useCallback, useEffect, useState } from "react";
 import { SignatureErreur } from "../messages/ErreurSignature";
 import { SuccessSignatureType } from "../messages/SuccessSignature";
@@ -28,47 +28,25 @@ import {
   handleResultatPatch
 } from "./SignatureDocumentHookUtilDelivrance";
 
-export function useSignatureDocumentHookDelivrance(
-  documentsByRequete: DocumentsByRequete,
-  pinCode?: string
-) {
-  const [documentsToSignWating, setDocumentsToSignWating] =
-    useState<DocumentsByRequete>(documentsByRequete);
+export function useSignatureDocumentHookDelivrance(documentsByRequete: DocumentsByRequete, pinCode?: string) {
+  const [documentsToSignWating, setDocumentsToSignWating] = useState<DocumentsByRequete>(documentsByRequete);
   const [idRequetesToSign, setIdRequetesToSign] = useState<string[]>(
     documentsByRequete !== undefined ? Object.keys(documentsByRequete) : []
   );
   const [documentsToSave, setDocumentsToSave] = useState<DocumentToSave[]>([]);
-  const [successSignature, setSuccessSignature] = useState<
-    SuccessSignatureType[]
-  >([]);
+  const [successSignature, setSuccessSignature] = useState<SuccessSignatureType[]>([]);
   const [errorSignature, setErrorSignature] = useState<SignatureErreur>();
-  const [miseAJourDocumentParams, setMiseAJourDocumentParams] = useState<
-    IMiseAJourDocumentParams[]
-  >([]);
-  const [
-    creationActionEtMiseAjourStatutParams,
-    setCreationActionEtMiseAjourStatutParams
-  ] = useState<ICreationActionEtMiseAjourStatutParams>();
-  const [
-    dateDerniereDelivranceActeParams,
-    setDateDerniereDelivranceActeParams
-  ] = useState<IDerniereDelivranceActeParams>();
-  const [stockerTeleverificationParams, setStockerTeleverificationParams] =
-    useState<IStockerDocumentsTeleverifParams>();
+  const [miseAJourDocumentParams, setMiseAJourDocumentParams] = useState<IMiseAJourDocumentParams[]>([]);
+  const [creationActionEtMiseAjourStatutParams, setCreationActionEtMiseAjourStatutParams] =
+    useState<ICreationActionEtMiseAjourStatutParams>();
+  const [dateDerniereDelivranceActeParams, setDateDerniereDelivranceActeParams] = useState<IDerniereDelivranceActeParams>();
+  const [stockerTeleverificationParams, setStockerTeleverificationParams] = useState<IStockerDocumentsTeleverifParams>();
 
   // Custom Hooks
-  const resultatCreationActionEtMajStatut =
-    usePostCreationActionEtMiseAjourStatutApi(
-      creationActionEtMiseAjourStatutParams
-    );
-  const resultatMajDateDerniereDelivranceActe =
-    useDerniereDelivranceActeApiHook(dateDerniereDelivranceActeParams);
-  const resultatPatchDocumentReponse = usePatchDocumentsReponseAvecSignatureApi(
-    miseAJourDocumentParams
-  );
-  const resultatStockageTeleverif = useStockerDocumentTeleverif(
-    stockerTeleverificationParams
-  );
+  const resultatCreationActionEtMajStatut = usePostCreationActionEtMiseAjourStatutApi(creationActionEtMiseAjourStatutParams);
+  const resultatMajDateDerniereDelivranceActe = useDerniereDelivranceActeApiHook(dateDerniereDelivranceActeParams);
+  const resultatPatchDocumentReponse = usePatchDocumentsReponseAvecSignatureApi(miseAJourDocumentParams);
+  const resultatStockageTeleverif = useStockerDocumentTeleverif(stockerTeleverificationParams);
 
   const getDocumentEnAttenteDeSignature = useCallback(() => {
     return documentsToSignWating[idRequetesToSign[0]];
@@ -78,10 +56,7 @@ export function useSignatureDocumentHookDelivrance(
   const majStatusRequete = useCallback(() => {
     setMiseAJourDocumentParams([]);
     const documentsEnAttenteDeSignature = getDocumentEnAttenteDeSignature();
-    const nouveauStatut = getNewStatusRequete(
-      documentsEnAttenteDeSignature?.sousTypeRequete,
-      documentsEnAttenteDeSignature?.canal
-    );
+    const nouveauStatut = getNewStatusRequete(documentsEnAttenteDeSignature?.sousTypeRequete, documentsEnAttenteDeSignature?.canal);
     setCreationActionEtMiseAjourStatutParams({
       requeteId: idRequetesToSign[0],
       statutRequete: nouveauStatut,
@@ -100,46 +75,37 @@ export function useSignatureDocumentHookDelivrance(
   const envoiATeleverification = useCallback(() => {
     const documentsEnAttenteDeSignature = getDocumentEnAttenteDeSignature();
     setStockerTeleverificationParams({
-      documents: documentsEnAttenteDeSignature?.documentsToSave.map(
-        document => ({
-          id: document.id,
-          contenu: document.contenu
-        })
-      ),
+      documents: documentsEnAttenteDeSignature?.documentsToSave.map(document => ({
+        id: document.id,
+        contenu: document.contenu
+      })),
       idRequete: idRequetesToSign[0],
       acte: documentsEnAttenteDeSignature?.acte
     });
   }, [idRequetesToSign, getDocumentEnAttenteDeSignature]);
 
   // Etape 4.3 (la maj du tableau des requêtes signées (idRequetesToSign) ne se fait qu'après la maj du statut et la maj de la date de délivrance,
-  //   ceci empêche de recharger la page avant que les maj statut et date délivrance ne soit effectuées)
+  //   ceci empêche de recharger la page avant que les maj statut et date délivrance ne soient effectuées)
   const majRequetesSignees = useCallback(() => {
     const newSuccesses: SuccessSignatureType[] = [
       ...successSignature,
       {
-        date: moment().format(FormatDate.DDMMYYYYHHmm),
-        numeroRequete: `${
-          getDocumentEnAttenteDeSignature()?.documentsToSave[0]?.numeroRequete
-        }`
+        date: dayjs().format(FormatDate.DDMMYYYYHHmm),
+        numeroRequete: `${getDocumentEnAttenteDeSignature()?.documentsToSave[0]?.numeroRequete}`
       }
     ];
 
     const newRequetesId = [...idRequetesToSign];
     newRequetesId.shift();
     setIdRequetesToSign(newRequetesId);
-    newRequetesId.length === 0 &&
-      messageManager.showSuccessAndClose(
-        getLibelle("Signature des documents effectuée avec succès")
-      );
+    newRequetesId.length === 0 && messageManager.showSuccessAndClose("Signature des documents effectuée avec succès");
 
     setSuccessSignature(newSuccesses);
   }, [idRequetesToSign, successSignature, getDocumentEnAttenteDeSignature]);
 
   useEffect(() => {
     if (resultatCreationActionEtMajStatut) {
-      getDocumentEnAttenteDeSignature()?.acte?.id
-        ? majDateDerniereDelivrance()
-        : majRequetesSignees();
+      getDocumentEnAttenteDeSignature()?.acte?.id ? majDateDerniereDelivrance() : majRequetesSignees();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatCreationActionEtMajStatut]);
@@ -155,16 +121,10 @@ export function useSignatureDocumentHookDelivrance(
   }, [resultatStockageTeleverif]);
 
   useEffect(() => {
-    handleResultatPatch(
-      resultatPatchDocumentReponse,
-      setErrorSignature,
-      documentsByRequete,
-      idRequetesToSign,
-      majStatusRequete
-    );
-    // Attention ne pas dépendre de "documentsByRequete" ni de "idRequetesToSign" car si une erreur ce produit (plantage API maj)
+    handleResultatPatch(resultatPatchDocumentReponse, setErrorSignature, documentsByRequete, idRequetesToSign, majStatusRequete);
+    // Attention ne pas dépendre de "documentsByRequete" ni de "idRequetesToSign" car si une erreur se produit (plantage API maj)
     //   alors "documentsByRequete" et "idRequetesToSign" sont remis à jour donc on repasse dans ce code
-    //   alors que updateDocumentQueryParamState et errorUpdateDocument n'ont pas bougés et documentsByRequete[idRequetesToSign[0]].documentsToSave = [].
+    //   alors que updateDocumentQueryParamState et errorUpdateDocument n'ont pas bougé et documentsByRequete[idRequetesToSign[0]].documentsToSave = [].
     //   => ceci provoque un plantage car documentsByRequete[idRequetesToSign[0]].documentsToSave[0] = undefined
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatPatchDocumentReponse]);
@@ -221,25 +181,12 @@ export function useSignatureDocumentHookDelivrance(
       setDocumentsToSave,
       pinCode
     );
-  }, [
-    pinCode,
-    idRequetesToSign,
-    documentsToSignWating,
-    handleBackFromWebExtensionCallback
-  ]);
+  }, [pinCode, idRequetesToSign, documentsToSignWating, handleBackFromWebExtensionCallback]);
 
   useEffect(() => {
-    window.top &&
-      window.top.addEventListener(
-        "signWebextResponse",
-        handleBackFromWebExtensionCallback
-      );
+    window.top && window.top.addEventListener("signWebextResponse", handleBackFromWebExtensionCallback);
     return () => {
-      window.top &&
-        window.top.removeEventListener(
-          "signWebextResponse",
-          handleBackFromWebExtensionCallback
-        );
+      window.top && window.top.removeEventListener("signWebextResponse", handleBackFromWebExtensionCallback);
     };
   }, [handleBackFromWebExtensionCallback]);
 

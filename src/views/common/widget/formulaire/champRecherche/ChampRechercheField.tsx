@@ -1,7 +1,6 @@
 import Autocomplete from "@mui/material/Autocomplete";
 import { FilterOptionsState } from "@mui/material/useAutocomplete";
 import { Option, Options } from "@util/Type";
-import { getLibelle } from "@util/Utils";
 import { ErrorMessage, Field, connect } from "formik";
 import React from "react";
 import { IconeCroix } from "../../icones/IconeCroix";
@@ -18,10 +17,7 @@ interface ChampRechercheProps {
   onChange?: (option?: Option) => void;
   value?: any;
   onClickClear?: (e: any) => void;
-  filterOptions?: (
-    options: Options,
-    state: FilterOptionsState<Option>
-  ) => Options;
+  filterOptions?: (options: Options, state: FilterOptionsState<Option>) => Options;
   disabledPortal?: boolean;
   optionsValidesNonAffichees?: Options;
 }
@@ -36,18 +32,12 @@ export const ChampRecherche: React.FC<ChampRechercheProps> = props => {
       disabled={props.disabled}
       filterOptions={props.filterOptions}
       noOptionsText={
-        props.noOptionsText
-          ? props.noOptionsText
-          : getLibelle("Aucun résultats")
+        props.noOptionsText ? props.noOptionsText : "Aucun résultats" // TOREFACTO : Orthographe ?
       }
       getOptionLabel={(option: Option) => option.libelle || ""}
       isOptionEqualToValue={(option, val) => {
         return (
-          option.cle === val.cle ||
-          props.optionsValidesNonAffichees?.some(
-            optionNonAffichee => optionNonAffichee.cle === val.cle
-          ) ||
-          false
+          option.cle === val.cle || props.optionsValidesNonAffichees?.some(optionNonAffichee => optionNonAffichee.cle === val.cle) || false
         );
       }}
       options={props.options}
@@ -65,23 +55,13 @@ export const ChampRecherche: React.FC<ChampRechercheProps> = props => {
       }}
       onInputChange={(event, newInputValue) => {
         if (props.onInput) {
-          props.onInput(newInputValue ? newInputValue : null);
+          props.onInput(newInputValue || null);
         }
       }}
       renderInput={params => (
         <div ref={params.InputProps.ref}>
-          <input
-            type="text"
-            placeholder={"Recherche..."}
-            {...params.inputProps}
-            aria-label={props.componentName}
-          />
-          {!props.disabled && (
-            <IconeCroix
-              onClick={props.onClickClear}
-              title={getLibelle("Vider le champ")}
-            />
-          )}
+          <input type="text" placeholder={"Recherche..."} {...params.inputProps} aria-label={props.componentName} />
+          {!props.disabled && <IconeCroix onClick={props.onClickClear} title={"Vider le champ"} />}
         </div>
       )}
       renderOption={(renderProps, option: Option, { inputValue, selected }) => {

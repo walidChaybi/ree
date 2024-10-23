@@ -1,20 +1,8 @@
-import {
-  compareDatesCompose,
-  estDateVide,
-  IDateCompose
-} from "@util/DateUtils";
-import { getLibelle } from "@util/Utils";
+import DateUtils, { IDateCompose } from "@util/DateUtils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
-import DateComposeForm, {
-  DateComposeFormProps,
-  DateDefaultValues
-} from "@widget/formulaire/champsDate/DateComposeForm";
+import DateComposeForm, { DateComposeFormProps, DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
 import { DateValidationSchema } from "@widget/formulaire/champsDate/DateComposeFormValidation";
-import {
-  ComponentFiltreProps,
-  FormikComponentProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { ComponentFiltreProps, FormikComponentProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
@@ -39,28 +27,22 @@ export const DatesDebutFinAnneeValidationSchema = Yup.object()
     [DATE_FIN]: DateValidationSchema
   })
   .test("dateFinInferieur", function (value, error) {
-    const res = compareDatesCompose(
-      value[DATE_FIN] as any as IDateCompose,
-      value[DATE_DEBUT] as any as IDateCompose
-    );
+    const res = DateUtils.compareDatesCompose(value[DATE_FIN] as any as IDateCompose, value[DATE_DEBUT] as any as IDateCompose);
 
     const paramsError = {
       path: `${error.path}.dateFin`,
-      message: getLibelle(
-        "La date de fin doit être supérieure ou égale à la date de début"
-      )
+      message: "La date de fin doit être supérieure ou égale à la date de début"
     };
 
     return res < 0 ? this.createError(paramsError) : true;
   })
   .test("dateDebutnonRenseignee", function (value, error) {
     const res =
-      !estDateVide(value[DATE_DEBUT] as any as IDateCompose) ||
-      estDateVide(value[DATE_FIN] as any as IDateCompose);
+      !DateUtils.estDateVide(value[DATE_DEBUT] as any as IDateCompose) || DateUtils.estDateVide(value[DATE_FIN] as any as IDateCompose);
 
     const paramsError = {
       path: `${error.path}.dateDebut`,
-      message: getLibelle("La date de début doit être renseignée")
+      message: "La date de début doit être renseignée"
     };
 
     return !res ? this.createError(paramsError) : true;
@@ -70,22 +52,18 @@ interface AnneeInputProps {
   anneeMin?: number;
 }
 
-export type DatesDebutFinAnneeFiltreProps = AnneeInputProps &
-  ComponentFiltreProps &
-  FormikComponentProps;
+export type DatesDebutFinAnneeFiltreProps = AnneeInputProps & ComponentFiltreProps & FormikComponentProps;
 
-const DatesDebutFinAnneeFiltre: React.FC<
-  DatesDebutFinAnneeFiltreProps
-> = props => {
+const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props => {
   const dateDebutComposeFormProps = {
-    labelDate: getLibelle("De "),
+    labelDate: "De ",
     nomDate: withNamespace(props.nomFiltre, DATE_DEBUT),
     showDatePicker: true,
     anneeMin: props.anneeMin
   } as DateComposeFormProps;
 
   const dateFinComposeFormProps = {
-    labelDate: getLibelle("À "),
+    labelDate: "À ",
     nomDate: withNamespace(props.nomFiltre, DATE_FIN),
     showDatePicker: true,
     anneeMin: props.anneeMin

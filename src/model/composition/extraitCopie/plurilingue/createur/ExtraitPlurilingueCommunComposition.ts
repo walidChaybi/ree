@@ -14,14 +14,8 @@ import { SCEAU_MINISTERE } from "@model/parametres/clesParametres";
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
-import { getDateComposeFromDate } from "@util/DateUtils";
-import {
-  DEUX,
-  TROIS,
-  UN,
-  getPremiereLettreDunMot,
-  getValeurOuVide
-} from "@util/Utils";
+import DateUtils from "@util/DateUtils";
+import { DEUX, TROIS, UN, getPremiereLettreDunMot, getValeurOuVide } from "@util/Utils";
 import { IExtraitPlurilingueComposition } from "../IExtraitPlurilingueComposition";
 
 export interface IMentionsExtraitPlurilingue {
@@ -49,56 +43,29 @@ export class ExtraitPlurilingueCommunComposition {
     composition.etat = ETAT;
     composition.service_etat_civil = ETAT_CIVIL;
     composition.reference_acte = FicheActe.getReference(acte);
-    composition.date_acte =
-      Evenement.formatageDateCompositionExtraitPlurilingue(acte.evenement);
+    composition.date_acte = Evenement.formatageDateCompositionExtraitPlurilingue(acte.evenement);
 
-    composition.date_delivrance = getDateComposeFromDate(new Date());
+    composition.date_delivrance = DateUtils.getDateComposeFromDate(new Date());
 
-    composition.autres_enonciations_acte =
-      ExtraitPlurilingueCommunComposition.mappingMentionsExtraitPlurilingue(
-        ExtraitPlurilingueCommunComposition.getMentionsAAfficher(
-          mentionsRetirees,
-          acte.mentions
-        )
-      );
-
-    composition.filigrane_erreur =
-      FicheActe.estEnErreur(acte) ||
-      this.nombreMentionsMax(acte, mentionsRetirees);
-    composition.filigrane_incomplet = FicheActe.estIncomplet(acte);
-    ExtraitPlurilingueCommunComposition.ajouteCTV(
-      sousTypeRequete,
-      composition,
-      ctv
+    composition.autres_enonciations_acte = ExtraitPlurilingueCommunComposition.mappingMentionsExtraitPlurilingue(
+      ExtraitPlurilingueCommunComposition.getMentionsAAfficher(mentionsRetirees, acte.mentions)
     );
-    composition.pas_de_bloc_signature =
-      ExtraitPlurilingueCommunComposition.pasDeBlocSignature(validation);
-    composition.sceau_ministere =
-      ParametreBaseRequete.getEnumFor(SCEAU_MINISTERE)?.libelle;
+
+    composition.filigrane_erreur = FicheActe.estEnErreur(acte) || this.nombreMentionsMax(acte, mentionsRetirees);
+    composition.filigrane_incomplet = FicheActe.estIncomplet(acte);
+    ExtraitPlurilingueCommunComposition.ajouteCTV(sousTypeRequete, composition, ctv);
+    composition.pas_de_bloc_signature = ExtraitPlurilingueCommunComposition.pasDeBlocSignature(validation);
+    composition.sceau_ministere = ParametreBaseRequete.getEnumFor(SCEAU_MINISTERE)?.libelle;
   }
 
-  public static composerTitulairePlurilingue(
-    compositionTitulaire: ITitulaireComposition,
-    acte: IFicheActe,
-    titulaire: ITitulaireActe
-  ) {
+  public static composerTitulairePlurilingue(compositionTitulaire: ITitulaireComposition, acte: IFicheActe, titulaire: ITitulaireActe) {
     compositionTitulaire.nom = this.getNomOuVide(acte, titulaire);
     compositionTitulaire.prenoms = this.getPrenomOuVide(acte, titulaire);
-    compositionTitulaire.sexe = getPremiereLettreDunMot(
-      ExtraitPlurilingueCommunComposition.getSexeOuVideOuTiret(titulaire)
-    );
-    compositionTitulaire.nom_pere = this.getNomOuVideFiliation(
-      TitulaireActe.getParentDirectMasculin(titulaire)
-    );
-    compositionTitulaire.prenoms_pere = this.getPrenomOuVideFiliation(
-      TitulaireActe.getParentDirectMasculin(titulaire)
-    );
-    compositionTitulaire.nom_mere = this.getNomOuVideFiliation(
-      TitulaireActe.getParentDirectFeminin(titulaire)
-    );
-    compositionTitulaire.prenoms_mere = this.getPrenomOuVideFiliation(
-      TitulaireActe.getParentDirectFeminin(titulaire)
-    );
+    compositionTitulaire.sexe = getPremiereLettreDunMot(ExtraitPlurilingueCommunComposition.getSexeOuVideOuTiret(titulaire));
+    compositionTitulaire.nom_pere = this.getNomOuVideFiliation(TitulaireActe.getParentDirectMasculin(titulaire));
+    compositionTitulaire.prenoms_pere = this.getPrenomOuVideFiliation(TitulaireActe.getParentDirectMasculin(titulaire));
+    compositionTitulaire.nom_mere = this.getNomOuVideFiliation(TitulaireActe.getParentDirectFeminin(titulaire));
+    compositionTitulaire.prenoms_mere = this.getPrenomOuVideFiliation(TitulaireActe.getParentDirectFeminin(titulaire));
   }
 
   public static pasDeBlocSignature(validation: Validation): boolean {
@@ -109,9 +76,7 @@ export class ExtraitPlurilingueCommunComposition {
     }
   }
 
-  public static mappingMentionsExtraitPlurilingue(
-    mentions?: IMention[]
-  ): IMentionsExtraitPlurilingue {
+  public static mappingMentionsExtraitPlurilingue(mentions?: IMention[]): IMentionsExtraitPlurilingue {
     let i = 0;
     const mentionExtraitPlurilingue: IMentionsExtraitPlurilingue = {
       enonciations: [],
@@ -120,16 +85,12 @@ export class ExtraitPlurilingueCommunComposition {
 
     if (mentions?.length) {
       for (i; i < mentions.length; i++) {
-        if (
-          mentionExtraitPlurilingue.nombre_enonciations === NOMBRE_MAX_MENTIONS
-        ) {
+        if (mentionExtraitPlurilingue.nombre_enonciations === NOMBRE_MAX_MENTIONS) {
           break;
         }
 
         const textMention = mentions[i].textes.texteMentionPlurilingue;
-        mentionExtraitPlurilingue.enonciations.push(
-          getValeurOuVide(textMention)
-        );
+        mentionExtraitPlurilingue.enonciations.push(getValeurOuVide(textMention));
         mentionExtraitPlurilingue.nombre_enonciations = i + 1;
       }
     } else {
@@ -140,62 +101,37 @@ export class ExtraitPlurilingueCommunComposition {
     return mentionExtraitPlurilingue;
   }
 
-  public static getMentionsAAfficher(
-    idMentionsRetirees: string[],
-    mentions: IMention[] | undefined
-  ): IMention[] {
+  public static getMentionsAAfficher(idMentionsRetirees: string[], mentions: IMention[] | undefined): IMention[] {
     let mentionsFiltrees = Mention.filtreAvecTexteMentionPlurilingue(mentions);
 
     mentionsFiltrees = mentionsFiltrees
       .filter(mention => {
-        return !idMentionsRetirees.some(
-          idMentionRetiree => idMentionRetiree === mention.id
-        );
+        return !idMentionsRetirees.some(idMentionRetiree => idMentionRetiree === mention.id);
       })
-      .sort(
-        (mention1, mentions2) =>
-          mention1.numeroOrdreExtrait - mentions2.numeroOrdreExtrait
-      );
+      .sort((mention1, mentions2) => mention1.numeroOrdreExtrait - mentions2.numeroOrdreExtrait);
 
     return mentionsFiltrees;
   }
 
-  public static ajouteCTV(
-    sousTypeRequete: SousTypeDelivrance,
-    composition: IExtraitPlurilingueComposition,
-    ctv?: string
-  ) {
+  public static ajouteCTV(sousTypeRequete: SousTypeDelivrance, composition: IExtraitPlurilingueComposition, ctv?: string) {
     if (SousTypeDelivrance.estRDD(sousTypeRequete)) {
-      composition.code_CTV = ctv ? ctv : "";
+      composition.code_CTV = ctv ?? "";
     }
   }
 
-  public static nombreMentionsMax(
-    acte: IFicheActe,
-    idMentionsRetirees: string[]
-  ): boolean {
-    return (
-      this.getMentionsAAfficher(idMentionsRetirees, acte.mentions).length >
-      NOMBRE_MAX_MENTIONS
-    );
+  public static nombreMentionsMax(acte: IFicheActe, idMentionsRetirees: string[]): boolean {
+    return this.getMentionsAAfficher(idMentionsRetirees, acte.mentions).length > NOMBRE_MAX_MENTIONS;
   }
 
-  public static getNomDerniereAnalyseMarginale(
-    acte: IFicheActe,
-    titulaire: ITitulaireActe
-  ): string | undefined {
-    const titulaires =
-      FicheActe.getAnalyseMarginaleLaPlusRecente(acte)?.titulaires;
+  public static getNomDerniereAnalyseMarginale(acte: IFicheActe, titulaire: ITitulaireActe): string | undefined {
+    const titulaires = FicheActe.getAnalyseMarginaleLaPlusRecente(acte)?.titulaires;
 
     return titulaires?.find(titulaireAnalyseMarginale => {
       return titulaireAnalyseMarginale.ordre === titulaire.ordre;
     })?.nom;
   }
 
-  public static getPrenomOuVide(
-    acte: IFicheActe,
-    titulaire: ITitulaireActe
-  ): string {
+  public static getPrenomOuVide(acte: IFicheActe, titulaire: ITitulaireActe): string {
     let prenom = "";
     const titulaireAM = this.getTitulaireAM(acte, titulaire);
 
@@ -209,10 +145,7 @@ export class ExtraitPlurilingueCommunComposition {
     return prenom;
   }
 
-  public static getNomOuVide(
-    acte: IFicheActe,
-    titulaire: ITitulaireActe
-  ): string {
+  public static getNomOuVide(acte: IFicheActe, titulaire: ITitulaireActe): string {
     const titulaireAM = this.getTitulaireAM(acte, titulaire);
 
     if (titulaireAM) {
@@ -226,24 +159,13 @@ export class ExtraitPlurilingueCommunComposition {
     }
   }
 
-  public static getTitulaireAM(
-    acte: IFicheActe,
-    titulaire: ITitulaireActe
-  ): ITitulaireActe | undefined {
-    const titulairesAnalyseMarginale = AnalyseMarginale.getTitulairesAM(
-      acte.analyseMarginales
-    );
+  public static getTitulaireAM(acte: IFicheActe, titulaire: ITitulaireActe): ITitulaireActe | undefined {
+    const titulairesAnalyseMarginale = AnalyseMarginale.getTitulairesAM(acte.analyseMarginales);
 
-    return this.getTitulaireParOrdre(
-      titulairesAnalyseMarginale,
-      titulaire.ordre
-    );
+    return this.getTitulaireParOrdre(titulairesAnalyseMarginale, titulaire.ordre);
   }
 
-  public static getTitulaireParOrdre(
-    titulaires: ITitulaireActe[] | undefined,
-    ordre: number
-  ): ITitulaireActe | undefined {
+  public static getTitulaireParOrdre(titulaires: ITitulaireActe[] | undefined, ordre: number): ITitulaireActe | undefined {
     return titulaires?.find(titulaire => {
       return titulaire.ordre === ordre;
     });
@@ -274,7 +196,7 @@ export class ExtraitPlurilingueCommunComposition {
 
   public static getSexeOuVideOuTiret(titulaire?: ITitulaireActe): string {
     let sexe = "";
-    if (titulaire && titulaire.sexe) {
+    if (titulaire?.sexe) {
       if (titulaire.sexe === Sexe.FEMININ || titulaire.sexe === Sexe.MASCULIN) {
         sexe = titulaire.sexe.libelle;
       } else {

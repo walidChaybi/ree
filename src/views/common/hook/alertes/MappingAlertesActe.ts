@@ -1,6 +1,6 @@
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
-import { getDateFromTimestamp, getDateString } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { triListeObjetsSurPropriete } from "@util/Utils";
 
 export function mapAlerteActe(data: any): IAlerte {
@@ -19,9 +19,7 @@ export function mapAlerteActe(data: any): IAlerte {
     complementDescription: data?.complementDescription,
     idUtilisateur: data?.idUtilisateur,
     trigrammeUtilisateur: data?.trigrammeUtilisateur,
-    dateCreationStr: data?.dateCreation
-      ? getDateString(getDateFromTimestamp(data?.dateCreation))
-      : "",
+    dateCreationStr: data?.dateCreation ? DateUtils.getDateString(DateUtils.getDateFromTimestamp(data?.dateCreation)) : "",
     codeCouleur: TypeAlerte.getCodeCouleurAlerte(typeAlerte?.type),
     type: typeAlerte
   } as IAlerte;

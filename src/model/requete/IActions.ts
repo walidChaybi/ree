@@ -1,10 +1,6 @@
 /* istanbul ignore file */
-import { getFormatDateFromTimestamp } from "@util/DateUtils";
-import {
-  chainesEgalesIgnoreCasseEtAccent,
-  enMajuscule,
-  premiereLettreEnMajuscule
-} from "@util/Utils";
+import DateUtils from "@util/DateUtils";
+import { chainesEgalesIgnoreCasseEtAccent, enMajuscule, premiereLettreEnMajuscule } from "@util/Utils";
 
 export interface IAction {
   id: string;
@@ -28,7 +24,7 @@ export const Action = {
     return action ? enMajuscule(action.trigramme) : "";
   },
   getDateAction(action?: IAction): string {
-    return action ? getFormatDateFromTimestamp(action.dateAction) : "";
+    return action ? DateUtils.getFormatDateFromTimestamp(action.dateAction) : "";
   },
   estASigner(action?: IAction): boolean {
     return chainesEgalesIgnoreCasseEtAccent(action?.libelle, A_SIGNER);
@@ -45,10 +41,6 @@ export const Action = {
     return actionCourante;
   },
   getActionsDansLOrdre(actions?: IAction[]) {
-    return actions
-      ? [...actions].sort(
-          (action1, action2) => action1.numeroOrdre - action2.numeroOrdre
-        )
-      : [];
+    return actions ? [...actions].sort((action1, action2) => action1.numeroOrdre - action2.numeroOrdre) : [];
   }
 };

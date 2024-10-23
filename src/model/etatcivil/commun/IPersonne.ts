@@ -1,4 +1,4 @@
-import { getDateStringFromDateCompose, IDateCompose } from "@util/DateUtils";
+import DateUtils, { IDateCompose } from "@util/DateUtils";
 import { getValeurOuVide } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { AutresNoms } from "../enum/AutresNoms";
@@ -67,25 +67,16 @@ export const Personne = {
 
   getLieuDeces(personne: IPersonne): string {
     return personne.lieuDeces
-      ? LieuxUtils.getLieu(
-          personne.lieuDeces.ville,
-          personne.lieuDeces.region,
-          personne.lieuDeces.pays,
-          personne.lieuDeces.arrondissement
-        )
+      ? LieuxUtils.getLieu(personne.lieuDeces.ville, personne.lieuDeces.region, personne.lieuDeces.pays, personne.lieuDeces.arrondissement)
       : "";
   },
 
   getDateNaissance(personne: IPersonne): string {
-    return personne.dateNaissance
-      ? getDateStringFromDateCompose(personne.dateNaissance)
-      : "";
+    return personne.dateNaissance ? DateUtils.getDateStringFromDateCompose(personne.dateNaissance) : "";
   },
 
   getDateDeces(personne: IPersonne): string {
-    return personne.dateDeces
-      ? getDateStringFromDateCompose(personne.dateDeces)
-      : "";
+    return personne.dateDeces ? DateUtils.getDateStringFromDateCompose(personne.dateDeces) : "";
   },
 
   getNationalite(personne: IPersonne): string {

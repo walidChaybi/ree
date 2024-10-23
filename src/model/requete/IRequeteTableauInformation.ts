@@ -1,6 +1,6 @@
 import { IService } from "@model/agent/IService";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
-import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { getValeurOuUndefined, getValeurOuVide } from "@util/Utils";
 import { IRequeteTableau } from "./IRequeteTableau";
 import { mapAttribueA } from "./IRequeteTableauDelivrance";
@@ -55,13 +55,10 @@ export function mappingUneRequeteTableauInformation(
     numero: getValeurOuVide(requete?.numero),
     sousType: SousTypeInformation.getEnumFor(requete?.sousType).libelle,
     objet: getObjetRequeteInfoLibelle(getValeurOuVide(requete.objet)),
-    dateCreation: getFormatDateFromTimestamp(requete?.dateCreation),
+    dateCreation: DateUtils.getFormatDateFromTimestamp(requete?.dateCreation),
     statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
     nomCompletRequerant: getValeurOuVide(requete?.nomCompletRequerant),
-    typeRequerant: getTypeRequerant(
-      requete?.qualiteRequerant,
-      requete?.typeMandataire
-    ),
+    typeRequerant: getTypeRequerant(requete?.qualiteRequerant, requete?.typeMandataire),
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
     nomsTitulaires: getNomsTitulaires(requete?.titulaires),
     idUtilisateur: getValeurOuUndefined(requete?.idUtilisateur),

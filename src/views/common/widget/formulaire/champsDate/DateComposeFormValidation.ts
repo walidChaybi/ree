@@ -5,14 +5,8 @@ import {
   NB_HEURE,
   NB_MINUTE
 } from "@composant/formulaire/ConstantesNomsForm";
-import {
-  IDateCompose,
-  MEP_YEAR,
-  MIN_LENGTH_ANNEE,
-  MIN_YEAR,
-  estDateReceValide
-} from "@util/DateUtils";
-import { estHeureValide, getLibelle } from "@util/Utils";
+import DateUtils, { IDateCompose, MEP_YEAR, MIN_LENGTH_ANNEE, MIN_YEAR } from "@util/DateUtils";
+import { estHeureValide } from "@util/Utils";
 import * as Yup from "yup";
 import {
   ANNEE_OBLIGATOIRE,
@@ -22,12 +16,7 @@ import {
   MSG_DATE_MEP_MIN,
   MSG_MIN_YEAR
 } from "../FormulaireMessages";
-export function validateAnnee(
-  value: number,
-  anneeMin?: number,
-  anneeMax?: number,
-  anneeObligatoire = false
-) {
+export function validateAnnee(value: number, anneeMin?: number, anneeMax?: number, anneeObligatoire = false) {
   let messageErreur;
   if (value) {
     messageErreur = valideBornesAnnee(value, anneeMin, anneeMax);
@@ -38,11 +27,7 @@ export function validateAnnee(
   return messageErreur;
 }
 
-function valideBornesAnnee(
-  value: number,
-  anneeMin?: number,
-  anneeMax?: number
-) {
+function valideBornesAnnee(value: number, anneeMin?: number, anneeMax?: number) {
   let messageErreur;
   if (value.toString().length < MIN_LENGTH_ANNEE) {
     messageErreur = MIN_LENGTH_ANNEE_MESSAGE;
@@ -53,11 +38,7 @@ function valideBornesAnnee(
     } else if (anneeMin === MEP_YEAR) {
       messageErreur = MSG_DATE_MEP_MIN;
     }
-  } else if (
-    anneeMax &&
-    anneeMax === new Date().getFullYear() &&
-    value > anneeMax
-  ) {
+  } else if (anneeMax && anneeMax === new Date().getFullYear() && value > anneeMax) {
     messageErreur = MSG_CURRENT_YEAR_MAX;
   }
   return messageErreur;
@@ -81,14 +62,10 @@ export const DateValidationSchema = Yup.object()
 
     const paramsError = {
       path: `${error.path}.annee`,
-      message: getLibelle(
-        "Date ou format invalide (formats autorisés: JJ/MM/AAAA, MM/AAAA, AAAA)"
-      )
+      message: "Date ou format invalide (formats autorisés: JJ/MM/AAAA, MM/AAAA, AAAA)"
     };
 
-    return !estDateReceValide(dateCompose)
-      ? this.createError(paramsError)
-      : true;
+    return !DateUtils.estDateReceValide(dateCompose) ? this.createError(paramsError) : true;
   })
   .test("heureInvalide", function (value: any, error: any) {
     const nbHeureStr = value[NB_HEURE] as string;
@@ -106,7 +83,7 @@ export const DateValidationSchema = Yup.object()
 
     const paramsError = {
       path: `${error.path}.nbHeure`,
-      message: getLibelle("Heure invalide")
+      message: "Heure invalide"
     };
 
     return this.createError(paramsError);
@@ -122,7 +99,7 @@ export const DateValidationSchema = Yup.object()
 
     const paramsError = {
       path: `${error.path}.nbHeure`,
-      message: getLibelle("Le jour n'est pas renseigné")
+      message: "Le jour n'est pas renseigné"
     };
     return this.createError(paramsError);
   });
@@ -136,9 +113,7 @@ export const DateValidationSchemaSansTestFormat = Yup.object().shape({
 export const DateValidationSchemaSansTestFormatRequired = Yup.object().shape({
   [JOUR]: Yup.number(),
   [MOIS]: Yup.number(),
-  [ANNEE]: Yup.number().required(
-    "La saisie de l'année de naissance est obligatoire"
-  )
+  [ANNEE]: Yup.number().required("La saisie de l'année de naissance est obligatoire")
 });
 
 export const DateValidationCompleteSchemaSansTestFormatRequired = Yup.object()
@@ -150,9 +125,7 @@ export const DateValidationCompleteSchemaSansTestFormatRequired = Yup.object()
   .test("dateCompleteObligatoire", function (date, error) {
     const paramsError = {
       path: `${error.path}.annee`,
-      message: getLibelle(DATE_OBLIGATOIRE)
+      message: DATE_OBLIGATOIRE ?? ""
     };
-    return !(date.jour && date.mois && date.annee)
-      ? this.createError(paramsError)
-      : true;
+    return !(date.jour && date.mois && date.annee) ? this.createError(paramsError) : true;
   });

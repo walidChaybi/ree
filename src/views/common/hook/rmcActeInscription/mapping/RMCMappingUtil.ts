@@ -5,30 +5,16 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { getDateStringFromDateCompose } from "@util/DateUtils";
-import {
-  formatNom,
-  formatNoms,
-  formatPrenoms,
-  getValeurOuUndefined,
-  getValeurOuVide
-} from "@util/Utils";
+import DateUtils from "@util/DateUtils";
+import { formatNom, formatNoms, formatPrenoms, getValeurOuUndefined, getValeurOuVide } from "@util/Utils";
 
-export function getCriteresTitulaire(
-  criteres: IRMCActeInscription | IRMCActeArchive
-) {
+export function getCriteresTitulaire(criteres: IRMCActeInscription | IRMCActeArchive) {
   return {
     nomTitulaire: getValeurOuUndefined(criteres.titulaire?.nom),
     prenomTitulaire: getValeurOuUndefined(criteres.titulaire?.prenom),
-    jourNaissance: getValeurOuUndefined(
-      criteres.titulaire?.dateNaissance?.jour
-    ),
-    moisNaissance: getValeurOuUndefined(
-      criteres.titulaire?.dateNaissance?.mois
-    ),
-    anneeNaissance: getValeurOuUndefined(
-      criteres.titulaire?.dateNaissance?.annee
-    ),
+    jourNaissance: getValeurOuUndefined(criteres.titulaire?.dateNaissance?.jour),
+    moisNaissance: getValeurOuUndefined(criteres.titulaire?.dateNaissance?.mois),
+    anneeNaissance: getValeurOuUndefined(criteres.titulaire?.dateNaissance?.annee),
     paysNaissance: getValeurOuUndefined(criteres.titulaire?.paysNaissance)
   };
 }
@@ -42,12 +28,12 @@ export function mappingActes(data: any): IResultatRMCActe[] {
       nom: formatNom(acte.nom),
       autresNoms: formatNoms(acte.autresNoms),
       prenoms: formatPrenoms(acte.prenoms),
-      dateNaissance: getDateStringFromDateCompose({
+      dateNaissance: DateUtils.getDateStringFromDateCompose({
         jour: acte.jourNaissance,
         mois: acte.moisNaissance,
         annee: acte.anneeNaissance
       }),
-      dateEvenement: getDateStringFromDateCompose({
+      dateEvenement: DateUtils.getDateStringFromDateCompose({
         jour: acte.jourEvenement,
         mois: acte.moisEvenement,
         annee: acte.anneeEvenement

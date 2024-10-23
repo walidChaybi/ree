@@ -1,5 +1,5 @@
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { getDateStringFromDateCompose } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { DEUX, getValeurOuVide, UN } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
@@ -43,12 +43,8 @@ export const Mention = {
     if (mention.textes) {
       if (mention.textes.texteMentionDelivrance) {
         texte = mention.textes.texteMentionDelivrance;
-      } else if (
-        NatureMention.estOpposableAuTiers(mention.typeMention.natureMention)
-      ) {
-        const texteApposition = mention.textes.texteApposition
-          ? ` ${mention.textes.texteApposition}`
-          : "";
+      } else if (NatureMention.estOpposableAuTiers(mention.typeMention.natureMention)) {
+        const texteApposition = mention.textes.texteApposition ? ` ${mention.textes.texteApposition}` : "";
         texte = `${texteMention}${texteApposition}`;
       } else {
         texte = texteMention;
@@ -60,15 +56,9 @@ export const Mention = {
   getTexteCopie(mention: IMention): string {
     let texte = "";
     if (mention.textes) {
-      const texteMention = mention.textes.texteMention
-        ? `${mention.textes.texteMention} `
-        : "";
-      const texteApposition = mention.textes.texteApposition
-        ? `${mention.textes.texteApposition} `
-        : "";
-      const texteOEC = mention.textes.texteOEC
-        ? `${mention.textes.texteOEC} `
-        : "";
+      const texteMention = mention.textes.texteMention ? `${mention.textes.texteMention} ` : "";
+      const texteApposition = mention.textes.texteApposition ? `${mention.textes.texteApposition} ` : "";
+      const texteOEC = mention.textes.texteOEC ? `${mention.textes.texteOEC} ` : "";
       texte = `${texteMention}${texteApposition}${texteOEC}`;
     }
     return texte;
@@ -87,59 +77,32 @@ export const Mention = {
     return `${NatureMention.getCodePourNature(nature?.code)} ${texte}`;
   },
   trierMentionsNumeroOrdreApposition(mentions: IMention[]) {
-    mentions.sort(
-      (mention1, mentions2) => mention1.numeroOrdre - mentions2.numeroOrdre
-    );
+    mentions.sort((mention1, mentions2) => mention1.numeroOrdre - mentions2.numeroOrdre);
 
     return mentions;
   },
   mentionNationalitePresente(mentions: IMention[] | undefined): boolean {
-    return Boolean(
-      mentions?.find(mention => mention.typeMention.natureMention.code === NATIONALITE)
-    );
+    return Boolean(mentions?.find(mention => mention.typeMention.natureMention.code === NATIONALITE));
   },
   trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions: IMention[]) {
-    const toutesLesMentionsOntUnNumeroOrdreExtrait: boolean = mentions.every(
-      mention => mention.numeroOrdreExtrait != null
-    );
+    const toutesLesMentionsOntUnNumeroOrdreExtrait: boolean = mentions.every(mention => mention.numeroOrdreExtrait != null);
     return toutesLesMentionsOntUnNumeroOrdreExtrait
-      ? mentions.sort(
-          (mention1, mentions2) =>
-            mention1.numeroOrdreExtrait - mentions2.numeroOrdreExtrait
-        )
+      ? mentions.sort((mention1, mentions2) => mention1.numeroOrdreExtrait - mentions2.numeroOrdreExtrait)
       : this.trierMentionsNumeroOrdreApposition(mentions);
   },
-  filtreAvecTexteMentionEtTexteMentionDelivrance(
-    mentions?: IMention[]
-  ): IMention[] {
-    return mentions
-      ? mentions.filter(
-          mention =>
-            mention.textes?.texteMention ||
-            mention.textes?.texteMentionDelivrance
-        )
-      : [];
+  filtreAvecTexteMentionEtTexteMentionDelivrance(mentions?: IMention[]): IMention[] {
+    return mentions ? mentions.filter(mention => mention.textes?.texteMention ?? mention.textes?.texteMentionDelivrance) : [];
   },
   filtreAvecTexteMentionPlurilingue(mentions?: IMention[]): IMention[] {
-    return mentions
-      ? mentions.filter(mention => mention.textes?.texteMentionPlurilingue)
-      : [];
+    return mentions ? mentions.filter(mention => mention.textes?.texteMentionPlurilingue) : [];
   },
-  filtrerTexteMentionPlurilingueEtNatureAdequat(
-    natureActe?: NatureActe,
-    mentions?: IMention[]
-  ): IMention[] {
+  filtrerTexteMentionPlurilingueEtNatureAdequat(natureActe?: NatureActe, mentions?: IMention[]): IMention[] {
     const tableauNatureFiltrer =
-      natureActe === NatureActe.NAISSANCE
-        ? natureMentionExtraitPlurilingueNaissance
-        : natureMentionExtraitPlurilingueMariage;
+      natureActe === NatureActe.NAISSANCE ? natureMentionExtraitPlurilingueNaissance : natureMentionExtraitPlurilingueMariage;
     return mentions
       ? mentions.filter(
           mention =>
-            Boolean(mention.textes?.texteMentionPlurilingue) ||
-            tableauNatureFiltrer.includes(
-              mention.typeMention.natureMention.code
-            )
+            Boolean(mention.textes?.texteMentionPlurilingue) || tableauNatureFiltrer.includes(mention.typeMention.natureMention.code)
         )
       : [];
   },
@@ -155,15 +118,13 @@ export const Mention = {
     );
   },
   getTextePlurilingueAPartirMention(mention: IMention): string {
-    const nature = NatureMention.getCodePourNature(
-      mention.typeMention.natureMention.code
-    );
+    const nature = NatureMention.getCodePourNature(mention.typeMention.natureMention.code);
 
     let lieu;
     let date;
     if (mention.evenement) {
       date = mention.evenement.annee
-        ? getDateStringFromDateCompose(
+        ? DateUtils.getDateStringFromDateCompose(
             {
               annee: mention.evenement.annee.toString(),
               mois: mention.evenement.mois?.toString(),
@@ -173,22 +134,12 @@ export const Mention = {
           )
         : REMPLACEMENT_SI_INTROUVABLE;
 
-      if (
-        !mention.evenement.ville &&
-        !mention.evenement.region &&
-        !mention.evenement.pays &&
-        !mention.evenement.lieuReprise
-      ) {
+      if (!mention.evenement.ville && !mention.evenement.region && !mention.evenement.pays && !mention.evenement.lieuReprise) {
         lieu = REMPLACEMENT_SI_INTROUVABLE;
       } else {
         lieu = mention.evenement.lieuReprise
           ? mention.evenement.lieuReprise
-          : LieuxUtils.getLieu(
-              mention.evenement.ville,
-              mention.evenement.region,
-              mention.evenement.pays,
-              mention.evenement.arrondissement
-            );
+          : LieuxUtils.getLieu(mention.evenement.ville, mention.evenement.region, mention.evenement.pays, mention.evenement.arrondissement);
       }
     } else {
       lieu = REMPLACEMENT_SI_INTROUVABLE;
@@ -196,10 +147,7 @@ export const Mention = {
     }
 
     let texteMention = `${nature} ${date} ${lieu}`;
-    if (
-      mention.typeMention.natureMention ===
-      NatureMention.getEnumFromCode(NatureMention, MARIAGE)
-    ) {
+    if (mention.typeMention.natureMention === NatureMention.getEnumFromCode(NatureMention, MARIAGE)) {
       const conjoint = getConjoint(mention);
       if (conjoint) {
         texteMention += ` ${conjoint}`;
@@ -207,15 +155,9 @@ export const Mention = {
     }
     return texteMention;
   },
-  filtrerFormaterEtTrierMentionsPlurilingues(
-    mentions: IMention[],
-    natureActe?: NatureActe
-  ): IMention[] {
+  filtrerFormaterEtTrierMentionsPlurilingues(mentions: IMention[], natureActe?: NatureActe): IMention[] {
     let mentionsMapped: IMention[] = [];
-    mentionsMapped = Mention.filtrerTexteMentionPlurilingueEtNatureAdequat(
-      natureActe,
-      mentions
-    );
+    mentionsMapped = Mention.filtrerTexteMentionPlurilingueEtNatureAdequat(natureActe, mentions);
     Mention.formaterMentionsPlurilingue(mentionsMapped);
     Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentionsMapped);
 

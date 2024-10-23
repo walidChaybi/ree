@@ -4,7 +4,7 @@ import {
   ID_CORRELATION_HEADER_NAME
 } from "@api/ApiManager";
 import { IQueryParameterPostLog, postLog } from "@api/appels/outiltechApi";
-import moment from "moment";
+import dayjs from "dayjs";
 import { FeatureFlag } from "./featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "./featureFlag/gestionnaireFeatureFlag";
 import messageManager from "./messageManager";
@@ -26,10 +26,7 @@ export function logError(logErrorMgs: LogErrorMsg) {
     logErrorOnServer(logErrorMgs);
   }
   /* istanbul ignore next */
-  if (
-    process.env.NODE_ENV === "development" ||
-    process.env.NODE_ENV === "test"
-  ) {
+  if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
     logErrorOnConsole(logErrorMgs);
   }
   if (logErrorMgs.error?.status === HTTP_PAYLOAD_TOO_LARGE) {
@@ -37,17 +34,11 @@ export function logError(logErrorMgs: LogErrorMsg) {
       `La recherche multi-critères ramène trop de résultats, veuillez affiner vos critères.\n(${logErrorMgs.messageUtilisateur})`
     );
   } else if (logErrorMgs.error?.status === HTTP_REQUEST_TIME_OUT) {
-    logErrorOnScreen(
-      `Le service est momentanément indisponible, veuillez réessayer ultérieurement\n(${logErrorMgs.messageUtilisateur})`
-    );
+    logErrorOnScreen(`Le service est momentanément indisponible, veuillez réessayer ultérieurement\n(${logErrorMgs.messageUtilisateur})`);
   } else if (logErrorMgs.messageUtilisateur) {
     const messageDuServeur = getMessageDuServeur(logErrorMgs);
 
-    logErrorOnScreen(
-      messageDuServeur
-        ? `${logErrorMgs.messageUtilisateur}\n(${messageDuServeur})`
-        : logErrorMgs.messageUtilisateur
-    );
+    logErrorOnScreen(messageDuServeur ? `${logErrorMgs.messageUtilisateur}\n(${messageDuServeur})` : logErrorMgs.messageUtilisateur);
   }
 }
 
@@ -89,13 +80,9 @@ export function logErrorOnConsole(logErrorMgs: LogErrorMsg) {
 
 function logErrorOnServer(logErrorMgs: LogErrorMsg) {
   listLog.push({
-    date: moment().unix(),
-    idCorrelation:
-      logErrorMgs.error.response?.req?.header?.[ID_CORRELATION_HEADER_NAME],
-    message:
-      logErrorMgs.error.response?.error?.message ??
-      logErrorMgs.error?.message ??
-      logErrorMgs.messageUtilisateur
+    date: dayjs().unix(),
+    idCorrelation: logErrorMgs.error.response?.req?.header?.[ID_CORRELATION_HEADER_NAME],
+    message: logErrorMgs.error.response?.error?.message ?? logErrorMgs.error?.message ?? logErrorMgs.messageUtilisateur
   });
 
   // Attente de quelques secondes afin de regrouper les logs

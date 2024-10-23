@@ -1,12 +1,12 @@
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
-import { getDateFromDateCompose } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 
 export const FicheRcaDecisionJuridictionEtrangere = {
   id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61d",
   categorie: "RCA",
   annee: "2020",
   numero: "4013",
-  dateInscription: getDateFromDateCompose({
+  dateInscription: DateUtils.getDateFromDateCompose({
     jour: "23",
     mois: "02",
     annee: "2020"
@@ -124,8 +124,7 @@ export const FicheRcaDecisionJuridictionEtrangere = {
     id: "488a436b-330d-4c3c-83e0-e49d2739013a",
     nom: "NATURE_RCA",
     code: "CHANGEMENT_REGIME_MATRIMONIAL_ACTE_NOTARIE_ETRANGER_INSTRUCTION_PROCUREUR",
-    libelle:
-      "changement de régime matrimonial par acte notarié étranger / instruction du Procureur",
+    libelle: "changement de régime matrimonial par acte notarié étranger / instruction du Procureur",
     estActif: true,
     decisionCouple: true,
     article: "le",
@@ -139,7 +138,7 @@ export const FicheRcaDecisionAvecInstructionProcureur = {
   categorie: "RCA",
   annee: "2020",
   numero: "4012",
-  dateInscription: getDateFromDateCompose({
+  dateInscription: DateUtils.getDateFromDateCompose({
     jour: "23",
     mois: "02",
     annee: "2020"
@@ -253,7 +252,7 @@ export const FicheRcaDecisionNotaireConvention = {
   categorie: "RCA",
   annee: "1998",
   numero: "4094",
-  dateInscription: getDateFromDateCompose({
+  dateInscription: DateUtils.getDateFromDateCompose({
     jour: "1998",
     mois: "11",
     annee: "23"

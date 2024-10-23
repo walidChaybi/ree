@@ -7,7 +7,7 @@ import {
 } from "@model/agent/IUtilisateur";
 import { TRequete } from "@model/requete/IRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { getFormatDateFromTimestamp } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import {
   formatNom,
   getLibelle,
@@ -35,7 +35,7 @@ export const BandeauRequete: React.FC<BandeauRequeteProps> = ({ requete }) => {
 
 const getRequeteTraiteeLibelle = (responsable: string, requete: TRequete) => {
   return getLibelle(
-    `Requête traitée par : ${responsable} - Le : ${getFormatDateFromTimestamp(
+    `Requête traitée par : ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(
       requete.statutCourant.dateEffet
     )}`
   );
@@ -44,7 +44,7 @@ const getRequeteTraiteeLibelle = (responsable: string, requete: TRequete) => {
 const getRequetePriseEnCharge = (responsable: string, requete: TRequete) => {
   if (requete && responsable) {
     return getLibelle(
-      `Requête prise en charge par : ${responsable} - Le : ${getFormatDateFromTimestamp(
+      `Requête prise en charge par : ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(
         requete.statutCourant.dateEffet
       )}`
     );
@@ -56,13 +56,13 @@ const getRequetePriseEnCharge = (responsable: string, requete: TRequete) => {
 const getRequeteATraiter = (responsable: string, requete: TRequete) => {
   if (requete && responsable) {
     return getLibelle(
-      `Requête à traiter, attribuée à ${responsable} - Le : ${getFormatDateFromTimestamp(
+      `Requête à traiter, attribuée à ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(
         requete.statutCourant.dateEffet
       )}`
     );
   } else {
     return getLibelle(
-      `Requête à traiter non attribuée - Créée le ${getFormatDateFromTimestamp(
+      `Requête à traiter non attribuée - Créée le ${DateUtils.getFormatDateFromTimestamp(
         requete.dateCreation
       )}`
     );
@@ -72,13 +72,13 @@ const getRequeteATraiter = (responsable: string, requete: TRequete) => {
 const getRequeteAValider = (responsable: string, requete: TRequete) => {
   if (requete && responsable) {
     return getLibelle(
-      `Requête à valider, attribuée à ${responsable} - Le : ${getFormatDateFromTimestamp(
+      `Requête à valider, attribuée à ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(
         requete.statutCourant.dateEffet
       )}`
     );
   } else {
     return getLibelle(
-      `Requête à valider non attribuée - Créée le ${getFormatDateFromTimestamp(
+      `Requête à valider non attribuée - Créée le ${DateUtils.getFormatDateFromTimestamp(
         requete.dateCreation
       )}`
     );
@@ -90,7 +90,7 @@ const getRequeteDoublon = (requete: TRequete) => {
     return getLibelle(
       `Requête en doublon, requête déjà en cours avec le N° suivant : ${
         requete.numeroRequeteOrigine
-      } - Le : ${getFormatDateFromTimestamp(requete.dateCreation)}`
+      } - Le : ${DateUtils.getFormatDateFromTimestamp(requete.dateCreation)}`
     );
   } else {
     return "WARN ! Non spécifié";
@@ -99,7 +99,7 @@ const getRequeteDoublon = (requete: TRequete) => {
 
 const getRequeteTransferee = (responsable: string, requete: TRequete) => {
   return getLibelle(
-    `Requête transférée à ${responsable} - Le : ${getFormatDateFromTimestamp(
+    `Requête transférée à ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(
       requete.statutCourant.dateEffet
     )}`
   );
@@ -107,7 +107,7 @@ const getRequeteTransferee = (responsable: string, requete: TRequete) => {
 
 const getRequeteASigner = (responsable: string, requete: TRequete) => {
   return getLibelle(
-    `Requête à signer le ${getFormatDateFromTimestamp(
+    `Requête à signer le ${DateUtils.getFormatDateFromTimestamp(
       requete.statutCourant.dateEffet
     )} par ${responsable}`
   );
@@ -118,7 +118,7 @@ const getRequeteTransmiseAValideur = (
   requete: TRequete
 ) => {
   return getLibelle(
-    `Requête transmise à valideur le ${getFormatDateFromTimestamp(
+    `Requête transmise à valideur le ${DateUtils.getFormatDateFromTimestamp(
       requete.statutCourant.dateEffet
     )} par ${responsable}`
   );
@@ -126,7 +126,7 @@ const getRequeteTransmiseAValideur = (
 
 const getRequeteBrouillon = (responsable: string, requete: TRequete) => {
   return getLibelle(
-    `Requête au statut brouillon initiée par ${responsable} - Le : ${getFormatDateFromTimestamp(
+    `Requête au statut brouillon initiée par ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(
       requete.statutCourant.dateEffet
     )}`
   );
@@ -134,7 +134,7 @@ const getRequeteBrouillon = (responsable: string, requete: TRequete) => {
 
 const getRequeteIgnoree = (responsable: string, requete: TRequete) => {
   return getLibelle(
-    `Requête ignorée le ${getFormatDateFromTimestamp(
+    `Requête ignorée le ${DateUtils.getFormatDateFromTimestamp(
       requete.statutCourant.dateEffet
     )} par ${responsable}`
   );
@@ -142,7 +142,7 @@ const getRequeteIgnoree = (responsable: string, requete: TRequete) => {
 
 const getRequeteRejet = (responsable: string, requete: TRequete) => {
   return getLibelle(
-    `Requête rejetée le ${getFormatDateFromTimestamp(
+    `Requête rejetée le ${DateUtils.getFormatDateFromTimestamp(
       requete.statutCourant.dateEffet
     )} par ${responsable}`
   );
@@ -150,7 +150,7 @@ const getRequeteRejet = (responsable: string, requete: TRequete) => {
 
 const getRequeteRejetImpression = (responsable: string, requete: TRequete) => {
   return getLibelle(
-    `Requête en rejet impression - Le ${getFormatDateFromTimestamp(
+    `Requête en rejet impression - Le ${DateUtils.getFormatDateFromTimestamp(
       requete.statutCourant.dateEffet
     )}`
   );

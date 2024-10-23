@@ -31,10 +31,9 @@ import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { getLibelle } from "@util/Utils";
 import classNames from "classnames";
-import moment from "moment";
-import { FormatDate } from "./DateUtils";
+import dayjs from "dayjs";
+import DateUtils, { FormatDate } from "./DateUtils";
 
 export const indexParamsReq = {
   Statut: 0,
@@ -47,10 +46,7 @@ const limiteBasse = 2;
 const limiteHaute = 5;
 
 export function prioriteDeLaRequete(dateStatut: string): string {
-  const ecartEnJours = moment().diff(
-    moment(dateStatut, FormatDate.DDMMYYYY),
-    "days"
-  );
+  const ecartEnJours = dayjs().diff(DateUtils.dayjsAvecFormat(dateStatut, FormatDate.DDMMYYYY), "day");
 
   return classNames({
     PrioriteBasse: ecartEnJours <= limiteBasse,
@@ -60,38 +56,23 @@ export function prioriteDeLaRequete(dateStatut: string): string {
 }
 
 export function getMessagePrioriteDeLaRequete(dateStatut: string): string {
-  const ecartEnJours = moment().diff(
-    moment(dateStatut, FormatDate.DDMMYYYY),
-    "days"
-  );
+  const ecartEnJours = dayjs().diff(DateUtils.dayjsAvecFormat(dateStatut, FormatDate.DDMMYYYY), "day");
   if (ecartEnJours <= limiteBasse) {
-    return getLibelle("Priorité basse");
+    return "Priorité basse";
   } else if (ecartEnJours > limiteBasse && ecartEnJours <= limiteHaute) {
-    return getLibelle("Priorité moyenne");
+    return "Priorité moyenne";
   } else {
-    return getLibelle("Priorité haute");
+    return "Priorité haute";
   }
 }
 
-export const autorisePrendreEnChargeDelivrance = (
-  utilisateurConnecte: IOfficier,
-  requete: IRequeteDelivrance
-) => {
+export const autorisePrendreEnChargeDelivrance = (utilisateurConnecte: IOfficier, requete: IRequeteDelivrance) => {
   return (
     TypeRequete.estDelivrance(requete.type) &&
     StatutRequete.estATraiterOuTransferee(requete.statutCourant.statut) &&
-    appartientAUtilisateurConnecteOuPersonne(
-      utilisateurConnecte,
-      requete.idUtilisateur
-    ) &&
-    appartientAMonServiceOuServicesParentsOuServicesFils(
-      utilisateurConnecte,
-      requete.idService
-    ) &&
-    provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
-      utilisateurConnecte,
-      requete.provenanceRequete.provenance.libelle
-    )
+    appartientAUtilisateurConnecteOuPersonne(utilisateurConnecte, requete.idUtilisateur) &&
+    appartientAMonServiceOuServicesParentsOuServicesFils(utilisateurConnecte, requete.idService) &&
+    provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(utilisateurConnecte, requete.provenanceRequete.provenance.libelle)
   );
 };
 
@@ -107,25 +88,13 @@ export const autorisePrendreEnChargeReqTableauDelivrance = (
     TypeRequete.estDelivrance(type) &&
     SousTypeDelivrance.estPossibleAPrendreEnCharge(sousType) &&
     StatutRequete.estATraiterOuTransferee(statut) &&
-    appartientAUtilisateurConnecte(
-      utilisateurConnecte,
-      requete.idUtilisateur
-    ) &&
-    appartientAMonServiceOuServicesParentsOuServicesFils(
-      utilisateurConnecte,
-      requete.idService
-    ) &&
-    provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
-      utilisateurConnecte,
-      requete.provenance
-    )
+    appartientAUtilisateurConnecte(utilisateurConnecte, requete.idUtilisateur) &&
+    appartientAMonServiceOuServicesParentsOuServicesFils(utilisateurConnecte, requete.idService) &&
+    provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(utilisateurConnecte, requete.provenance)
   );
 };
 
-export const autorisePrendreEnChargeReqTableauInformation = (
-  utilisateurConnecte: IOfficier,
-  requete: IRequeteTableauInformation
-) => {
+export const autorisePrendreEnChargeReqTableauInformation = (utilisateurConnecte: IOfficier, requete: IRequeteTableauInformation) => {
   const type = TypeRequete.getEnumFromLibelle(requete.type);
   const statut = StatutRequete.getEnumFromLibelle(requete.statut);
 
@@ -136,83 +105,48 @@ export const autorisePrendreEnChargeReqTableauInformation = (
   );
 };
 
-export const estRequeteCreationAuStatutATraiter = (
-  type: TypeRequete,
-  sousType: SousTypeCreation,
-  statut: StatutRequete
-) => {
-  return (
-    TypeRequete.estCreation(type) &&
-    SousTypeCreation.estRCEXROuRCTDOuRCTC(sousType) &&
-    StatutRequete.estATraiter(statut)
-  );
+export const estRequeteCreationAuStatutATraiter = (type: TypeRequete, sousType: SousTypeCreation, statut: StatutRequete) => {
+  return TypeRequete.estCreation(type) && SousTypeCreation.estRCEXROuRCTDOuRCTC(sousType) && StatutRequete.estATraiter(statut);
 };
 
-export const autorisePrendreEnChargeDepuisPageCreation = (
-  utilisateurConnecte: IOfficier,
-  requete?: IRequeteCreation
-): boolean => {
+export const autorisePrendreEnChargeDepuisPageCreation = (utilisateurConnecte: IOfficier, requete?: IRequeteCreation): boolean => {
   if (requete) {
     return (
-      estRequeteCreationAuStatutATraiter(
-        requete.type,
-        requete.sousType,
-        requete.statutCourant.statut
-      ) &&
-      appartientAMonServiceOuServicesParentsOuServicesFils(
-        utilisateurConnecte,
-        requete.idService
-      )
+      estRequeteCreationAuStatutATraiter(requete.type, requete.sousType, requete.statutCourant.statut) &&
+      appartientAMonServiceOuServicesParentsOuServicesFils(utilisateurConnecte, requete.idService)
     );
   } else {
     return false;
   }
 };
 
-export const autorisePrendreEnChargeReqTableauCreation = (
-  requete: IRequeteTableauCreation,
-  utilisateurConnecte: IOfficier
-): boolean => {
+export const autorisePrendreEnChargeReqTableauCreation = (requete: IRequeteTableauCreation, utilisateurConnecte: IOfficier): boolean => {
   const type = TypeRequete.getEnumFromLibelle(requete.type);
   const sousType = SousTypeCreation.getEnumFromLibelleCourt(requete.sousType);
   const statut = StatutRequete.getEnumFromLibelle(requete.statut);
 
   return (
-    estRequeteCreationAuStatutATraiter(type, sousType, statut) &&
-    appartientAUtilisateurConnecte(utilisateurConnecte, requete.idUtilisateur)
+    estRequeteCreationAuStatutATraiter(type, sousType, statut) && appartientAUtilisateurConnecte(utilisateurConnecte, requete.idUtilisateur)
   );
 };
 
-export const filtrerListeActionsParSousTypes = (
-  requete: IRequeteDelivrance,
-  listeOptions: IActionOption[]
-): IActionOption[] => {
+export const filtrerListeActionsParSousTypes = (requete: IRequeteDelivrance, listeOptions: IActionOption[]): IActionOption[] => {
   return listeOptions?.filter(option => {
-    return option.sousTypes
-      ? option.sousTypes.find(sousType => sousType === requete?.sousType) !=
-          null
-      : true;
+    return option.sousTypes ? option.sousTypes.find(sousType => sousType === requete?.sousType) != null : true;
   });
 };
 
-export function getIdDocumentReponseAAfficher(
-  requete?: IRequeteDelivrance
-): string {
+export function getIdDocumentReponseAAfficher(requete?: IRequeteDelivrance): string {
   let idDocumentAAfficher = "";
   if (requete?.type === TypeRequete.DELIVRANCE) {
     const requeteDelivrance = requete;
 
-    const documentsDeDelivrance =
-      RequeteDelivrance.getDocumentsDeDelivrance(requeteDelivrance);
+    const documentsDeDelivrance = RequeteDelivrance.getDocumentsDeDelivrance(requeteDelivrance);
     if (documentsDeDelivrance.length > 0) {
-      idDocumentAAfficher = DocumentReponse.triDocumentsDelivrance(
-        documentsDeDelivrance
-      )[0].id;
+      idDocumentAAfficher = DocumentReponse.triDocumentsDelivrance(documentsDeDelivrance)[0].id;
     } else if (requeteDelivrance.documentsReponses.length > 0) {
-      // Il y a peu de chance de passer dans ce code car touts les documents réponse sont des documents de délivrance (du point de vue Catégorie)
-      idDocumentAAfficher = DocumentReponse.triDocumentsDelivrance(
-        requeteDelivrance.documentsReponses
-      )[0].id;
+      // Il y a peu de chance de passer dans ce code car tous les documents réponse sont des documents de délivrance (du point de vue Catégorie)
+      idDocumentAAfficher = DocumentReponse.triDocumentsDelivrance(requeteDelivrance.documentsReponses)[0].id;
     }
   }
   return idDocumentAAfficher;

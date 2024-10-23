@@ -1,6 +1,6 @@
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { getDateFormatJasperFromCompose } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
 import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";
 import { expect, test } from "vitest";
 test("Attendu: formatLeOuEn fonctionne correctement", () => {
@@ -18,18 +18,10 @@ test("Attendu: formatLeOuEnAPartirDate fonctionne correctement", () => {
     "En décembre 2021"
   );
   let date: any = { mois: "12", annee: "2021" };
-  expect(
-    `${EtatCivilUtil.formatLeOuEnAPartirDate(
-      date
-    )} ${getDateFormatJasperFromCompose(date)}`
-  ).toBe("En décembre 2021");
+  expect(`${EtatCivilUtil.formatLeOuEnAPartirDate(date)} ${DateUtils.getDateFormatJasperFromCompose(date)}`).toBe("En décembre 2021");
 
   date = { jour: "1", mois: "12", annee: "2021" };
-  expect(
-    `${EtatCivilUtil.formatLeOuEnAPartirDate(
-      date
-    )} ${getDateFormatJasperFromCompose(date)}`
-  ).toBe("Le 1er décembre 2021");
+  expect(`${EtatCivilUtil.formatLeOuEnAPartirDate(date)} ${DateUtils.getDateFormatJasperFromCompose(date)}`).toBe("Le 1er décembre 2021");
 });
 
 test("Attendu: formatNeOuNee fonctionne correctement", () => {

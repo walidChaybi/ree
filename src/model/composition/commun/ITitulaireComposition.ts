@@ -1,4 +1,4 @@
-import { getJourOu1er, getMoisEnLettre, IDateCompose } from "@util/DateUtils";
+import DateUtils, { IDateCompose } from "@util/DateUtils";
 import { formatPrenoms, getValeurOuVide } from "@util/Utils";
 import { ITitulaireRequeteTableau } from "../../requete/ITitulaireRequeteTableau";
 
@@ -27,17 +27,14 @@ export interface ITitulaireComposition {
 }
 
 export const TitulaireComposition = {
-  ajoutInfosTitulaire(
-    obj: ITitulaireComposition,
-    titulaire?: ITitulaireRequeteTableau
-  ) {
+  ajoutInfosTitulaire(obj: ITitulaireComposition, titulaire?: ITitulaireRequeteTableau) {
     if (titulaire) {
       obj.nom = getValeurOuVide(titulaire.nom);
       obj.prenoms = getValeurOuVide(formatPrenoms(titulaire.prenoms));
       obj.sexe = getValeurOuVide(titulaire.sexe?.libelle.toLowerCase());
 
-      obj.jour_naissance = getJourOu1er(titulaire.jourNaissance);
-      obj.mois_naissance = getMoisEnLettre(titulaire.moisNaissance);
+      obj.jour_naissance = DateUtils.getJourOu1er(titulaire.jourNaissance);
+      obj.mois_naissance = DateUtils.getMoisEnLettre(titulaire.moisNaissance);
       obj.annee_naissance = String(getValeurOuVide(titulaire.anneeNaissance));
       obj.ville_naissance = getValeurOuVide(titulaire.villeNaissance);
       obj.pays_naissance = getValeurOuVide(titulaire.paysNaissance);

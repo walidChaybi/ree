@@ -2,26 +2,20 @@ import {
   ISaisieAdresse,
   ISaisieIdentite
 } from "@model/form/delivrance/ISaisirRequetePageForm";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import {
   IPieceJustificative,
   mapPieceJustificative
 } from "@model/requete/pieceJointe/IPieceJustificative";
-import { estDateVide } from "@util/DateUtils";
+import DateUtils from "@util/DateUtils";
+import { DEUX, SNP, UN, auMoinsUneProprieteEstRenseigne, getValeurOuVide } from "@util/Utils";
 import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
-import {
-  auMoinsUneProprieteEstRenseigne,
-  DEUX,
-  getValeurOuVide,
-  SNP,
-  UN
-} from "@util/Utils";
 import {
   CreationRequeteRDC,
   SaisieRequeteRDC
@@ -94,11 +88,7 @@ function getTitulairesRequete(saisie: SaisieRequeteRDC) {
   const natureActe = NatureActeRequete.getEnumFor(saisie.requete.natureActe);
 
   function titulaire2estVide(personne: ISaisieIdentite) {
-    return (
-      !personne.noms.nomNaissance &&
-      !personne.prenoms.prenom1 &&
-      estDateVide(personne.naissance.dateEvenement)
-    );
+    return !personne.noms.nomNaissance && !personne.prenoms.prenom1 && DateUtils.estDateVide(personne.naissance.dateEvenement);
   }
 
   newTitulaires.push(getTitulaire(titulaire1, 1));
