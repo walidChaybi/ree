@@ -33,15 +33,9 @@ interface IUtilisateurDto {
 }
 
 export const UtilisateurDto = {
-  estDejaPresent: (
-    utilisateurDto: IUtilisateurDto,
-    utilisateurs: IUtilisateur[]
-  ) =>
+  estDejaPresent: (utilisateurDto: IUtilisateurDto, utilisateurs: IUtilisateur[]) =>
     utilisateurDto.idUtilisateur
-      ? (utilisateurs.findIndex(
-          utilisateur =>
-            utilisateur.idUtilisateur === utilisateurDto.idUtilisateur
-        ) ?? ZERO) >= ZERO
+      ? utilisateurs.findIndex(utilisateur => utilisateur.idUtilisateur === utilisateurDto.idUtilisateur) >= ZERO
       : false
 } as const;
 

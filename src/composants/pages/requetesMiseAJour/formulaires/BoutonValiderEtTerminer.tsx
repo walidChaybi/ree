@@ -16,16 +16,24 @@ const BoutonValiderEtTerminer: React.FC = () => {
 
   const onClick = () => {
     desactiverBlocker();
-    lancerValidation({ idActe: idActe, idRequete: idRequete }, () => {
-      navigate(URL_RECHERCHE_ACTE_INSCRIPTION);
-      messageManager.showSuccessAndClose("L'analyse marginale a été mise à jour avec succès");
+    lancerValidation({
+      parametres: { idActe: idActe, idRequete: idRequete },
+      apresSucces: () => {
+        navigate(URL_RECHERCHE_ACTE_INSCRIPTION);
+        messageManager.showSuccessAndClose("L'analyse marginale a été mise à jour avec succès");
+      }
     });
   };
 
   return (
     <>
       {validationEnCours && <PageChargeur />}
-      <Bouton title="Valider et terminer" type="button" onClick={onClick} disabled={!miseAJourEffectuee}>
+      <Bouton
+        title="Valider et terminer"
+        type="button"
+        onClick={onClick}
+        disabled={!miseAJourEffectuee}
+      >
         {"Valider et terminer"}
       </Bouton>
     </>

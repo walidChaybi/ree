@@ -18,24 +18,34 @@ describe("Test du traitement Abondon d'une requête de mise à jour", () => {
       <>
         <div>{traitementEnCours ? EN_COURS : PAS_EN_COURS}</div>
 
-        <button type="button" onClick={() => lancerTraitement({ idActe: "", idRequete: "test", miseAJourEffectuee: false })}>
+        <button
+          type="button"
+          onClick={() => lancerTraitement({ parametres: { idActe: "", idRequete: "test", miseAJourEffectuee: false } })}
+        >
           {BOUTON_SANS_PARAM_ACTE}
         </button>
 
-        <button type="button" onClick={() => lancerTraitement({ idActe: "test", idRequete: "", miseAJourEffectuee: false })}>
+        <button
+          type="button"
+          onClick={() => lancerTraitement({ parametres: { idActe: "test", idRequete: "", miseAJourEffectuee: false } })}
+        >
           {BOUTON_SANS_PARAM_REQUETE}
         </button>
 
         <button
           type="button"
-          onClick={() => lancerTraitement({ idActe: "test-id-acte", idRequete: "test-id-requete", miseAJourEffectuee: false })}
+          onClick={() =>
+            lancerTraitement({ parametres: { idActe: "test-id-acte", idRequete: "test-id-requete", miseAJourEffectuee: false } })
+          }
         >
           {BOUTON_SANS_AM_ENREGISTREE}
         </button>
 
         <button
           type="button"
-          onClick={() => lancerTraitement({ idActe: "test-id-acte", idRequete: "test-id-requete", miseAJourEffectuee: true })}
+          onClick={() =>
+            lancerTraitement({ parametres: { idActe: "test-id-acte", idRequete: "test-id-requete", miseAJourEffectuee: true } })
+          }
         >
           {BOUTON_AVEC_AM_ENREGISTREE}
         </button>

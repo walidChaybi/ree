@@ -57,9 +57,9 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
     titre: "Abandon du traitement",
     messages: ["La saisie en cours sera perdue.", "Voulez-vous continuer ?"],
     executerApresConfirmation: () =>
-      lancerTraitementAbandonner({ idActe: idActe, idRequete: idRequete, miseAJourEffectuee: miseAJourEffectuee }),
+      lancerTraitementAbandonner({ parametres: { idActe: idActe, idRequete: idRequete, miseAJourEffectuee: miseAJourEffectuee } }),
     executerSiRedirectionAvecBlocageSansPopin: () =>
-      lancerTraitementAbandonner({ idActe: idActe, idRequete: idRequete, miseAJourEffectuee: miseAJourEffectuee })
+      lancerTraitementAbandonner({ parametres: { idActe: idActe, idRequete: idRequete, miseAJourEffectuee: miseAJourEffectuee } })
   });
 
   const valeursContext = useMemo<IEditionMiseAJourContext>(

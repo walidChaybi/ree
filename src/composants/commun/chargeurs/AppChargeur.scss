@@ -1,0 +1,18 @@
+.conteneur-app-chargeur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    place-content: center;
+    z-index: 9999;
+
+    .app-chargeur {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+    }
+}

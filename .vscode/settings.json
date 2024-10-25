@@ -6,10 +6,12 @@
   "prettier.trailingComma": "none",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "editor.wordWrapColumn": 140,
+  "editor.foldingImportsByDefault": true,
   "prettier.arrowParens": "avoid",
+  "prettier.printWidth": 140,
+  "prettier.singleAttributePerLine": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
   },
-  "editor.formatOnSaveMode": "modifications"
+  "editor.formatOnSaveMode": "file"
 }

@@ -1,27 +1,22 @@
 import { CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/miseAJour/PatchStatutRequeteMiseAjour";
 import { CONFIG_PATCH_VALIDER_ANALYSE_MARGINALE } from "@api/configurations/requete/miseAJour/PatchValideranalyseMarginaleConfigApi";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { logError } from "@util/LogManager";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useFetchApi from "../../hooks/api/FetchApiHook";
-import { TTraitementApi } from "./TTraitementApi";
+import { IErreurTraitement, TRAITEMENT_SANS_REPONSE, TTraitementApi } from "./TTraitementApi";
 
 type TParamsValidation = {
   idActe: string;
   idRequete: string;
 };
 
-type TEtatAppel = "EN_COURS" | "TERMINE" | "ECHEC";
-
 const TRAITEMENT_VALIDATION_MISE_A_JOUR: TTraitementApi<TParamsValidation> = {
   Lancer: terminerTraitment => {
+    const [erreurTraitement, setErreurTraitement] = useState<IErreurTraitement>({ enEchec: false });
     const { appelApi: appelApiValiderAnalyseMarginale } = useFetchApi(CONFIG_PATCH_VALIDER_ANALYSE_MARGINALE);
-    const [etatValidationAnalyseMarginale, setEtatValidationAnalyseMarginale] = useState<TEtatAppel>("EN_COURS");
-
     const { appelApi: appelPatchMiseAJourStatutRequete } = useFetchApi(CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR);
-    const [etatMiseAJourStatut, setEtatMiseAJourStatut] = useState<TEtatAppel>("EN_COURS");
 
-    const lancer = (parametres: TParamsValidation | undefined, apresSucces: ((reponse?: unknown) => void) | undefined): void => {
+    const lancer = (parametres: TParamsValidation | undefined): void => {
       const idActe = parametres?.idActe;
       const idRequete = parametres?.idRequete;
       if (!idActe || !idRequete) {
@@ -41,57 +36,22 @@ const TRAITEMENT_VALIDATION_MISE_A_JOUR: TTraitementApi<TParamsValidation> = {
               estMiseAjourAnalyseMarginale: true
             }
           },
-          apresSucces: () => {
-            setEtatMiseAJourStatut("TERMINE");
-          },
-          apresErreur: () => {
-            setEtatMiseAJourStatut("ECHEC");
-          }
+          apresErreur: () => setErreurTraitement({ enEchec: true, message: "Impossible de valider l'analyse marginale" }),
+          finalement: () => terminerTraitment()
         });
       };
 
       appelApiValiderAnalyseMarginale({
         parametres: { path: { idActe: idActe } },
-        apresSucces: () => {
-          setEtatValidationAnalyseMarginale("TERMINE");
-          miseAJourStatutRequete();
-          apresSucces?.();
-        },
+        apresSucces: () => miseAJourStatutRequete(),
         apresErreur: () => {
-          setEtatValidationAnalyseMarginale("ECHEC");
-          setEtatMiseAJourStatut("ECHEC");
+          setErreurTraitement({ enEchec: true, message: "Impossible de valider l'analyse marginale" });
+          terminerTraitment();
         }
       });
     };
 
-    useEffect(() => {
-      const etatsValidation = [
-        { nom: "état civil", etat: etatValidationAnalyseMarginale },
-        { nom: "requête", etat: etatMiseAJourStatut }
-      ];
-      if (etatsValidation.find(etatValidation => etatValidation.etat === "EN_COURS")) {
-        return;
-      }
-
-      const apisEnEchec = etatsValidation.reduce((nomsApi: string[], etatValidation) => {
-        if (etatValidation.etat === "ECHEC") {
-          nomsApi.push(etatValidation.nom);
-        }
-
-        return nomsApi;
-      }, []);
-
-      if (etatValidationAnalyseMarginale === "ECHEC") {
-        logError({
-          messageUtilisateur: "Impossible de valider l'analyse marginale'",
-          error: apisEnEchec.join(", ")
-        });
-      }
-
-      terminerTraitment();
-    }, [etatValidationAnalyseMarginale, etatMiseAJourStatut]);
-
-    return { lancer };
+    return { lancer, erreurTraitement, reponseTraitement: TRAITEMENT_SANS_REPONSE };
   }
 };
 
