@@ -1,11 +1,5 @@
-import {
-  useGetDocumentReponseApi,
-  usePostDocumentsReponseApi
-} from "@hook/DocumentReponseHook";
-import {
-  documentReponseCARN_CSPAC_01,
-  idDocumentsReponse
-} from "@mock/data/DocumentReponse";
+import { useGetDocumentReponseApi, usePostDocumentsReponseApi } from "@hook/DocumentReponseHook";
+import { documentReponseCARN_CSPAC_01, idDocumentsReponse } from "@mock/data/DocumentReponse";
 import { imagePngVideBase64 } from "@mock/data/ImagePng";
 import { requeteRDCSC } from "@mock/data/requeteDelivrance";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -25,19 +19,19 @@ const HookConsumerUsePostDocumentsReponseApi: React.FC = () => {
   return <div>{uuids ? uuids[0] : ""}</div>;
 };
 
-test("Attendu: useGetDocumentReponseApi fonctionne correctement", () => {
+test("Attendu: useGetDocumentReponseApi fonctionne correctement", async () => {
   render(<HookConsumerUseGetDocumentReponseApi />);
 
-  waitFor(() => {
+  await waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
     expect(screen.getByText(imagePngVideBase64)).toBeDefined();
   });
 });
 
-test("Attendu: usePostDocumentsReponseApi fonctionne correctement", () => {
+test("Attendu: usePostDocumentsReponseApi fonctionne correctement", async () => {
   render(<HookConsumerUsePostDocumentsReponseApi />);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(screen.getByText(idDocumentsReponse[0])).toBeDefined();
   });
 });

@@ -12,9 +12,7 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { EvenementEtrangerFormDefaultValues } from "@pages/requeteCreation/saisirRequete/sousForm/evenement/EvenementEtranger";
-import IdentiteParentForm, {
-  ParentSubFormProps
-} from "@pages/requeteCreation/saisirRequete/sousForm/parent/IdentiteParentForm";
+import IdentiteParentForm, { ParentSubFormProps } from "@pages/requeteCreation/saisirRequete/sousForm/parent/IdentiteParentForm";
 import { ParentFormValidationSchema } from "@pages/requeteCreation/saisirRequete/sousForm/parent/ParentsForm";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
@@ -65,26 +63,28 @@ const HookParentForm: React.FC = () => {
       <Form>
         <IdentiteParentForm {...IdentiteParentFormProps} />
         <button type="submit">Submit</button>
-        <Field as="textarea" value={result} data-testid="result" />
+        <Field
+          as="textarea"
+          value={result}
+          data-testid="result"
+        />
       </Form>
     </Formik>
   );
 };
 
-test.skip("DOIT rendre le composant d'identite du parent correctement", () => {
+test.skip("DOIT rendre le composant d'identite du parent correctement", async () => {
   render(<HookParentForm />);
 
   const inputNomActeEtranger = screen.getByRole("textbox", {
     name: /parents.parent1.nom/i
   });
 
-  const boutonsCheckboxParentsPasDeNomConnu = screen.getByLabelText(
-    "parents.parent1.pasdenomconnu.pasdenomconnu"
-  );
+  const boutonsCheckboxParentsPasDeNomConnu = screen.getByLabelText("parents.parent1.pasdenomconnu.pasdenomconnu");
 
   fireEvent.click(boutonsCheckboxParentsPasDeNomConnu);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(inputNomActeEtranger).not.toBeDefined();
   });
 
@@ -92,25 +92,23 @@ test.skip("DOIT rendre le composant d'identite du parent correctement", () => {
 
   const inputPrenom1 = screen.queryByText("Prénom");
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(inputNomActeEtranger).toBeDefined();
     expect(inputPrenom1).toBeDefined();
   });
 
-  const boutonsCheckboxPasDePrenomConnu = screen.getByLabelText(
-    "parents.parent1.pasdeprenomconnu.pasdeprenomconnu"
-  );
+  const boutonsCheckboxPasDePrenomConnu = screen.getByLabelText("parents.parent1.pasdeprenomconnu.pasdeprenomconnu");
 
   fireEvent.click(boutonsCheckboxPasDePrenomConnu);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(inputPrenom1).not.toBeDefined();
   });
 
   fireEvent.click(boutonsCheckboxPasDePrenomConnu);
 });
 
-test("DOIT formater correctement", () => {
+test("DOIT formater correctement", async () => {
   render(<HookParentForm />);
 
   const inputPaysStatutRefugie = screen.getByRole("textbox", {
@@ -133,15 +131,11 @@ test("DOIT formater correctement", () => {
     }
   });
 
-  const paysStatut = screen.getByLabelText(
-    "Pays du statut de réfugié"
-  ) as HTMLInputElement;
-  const paysOrigine = screen.getByLabelText(
-    "Pays d'origine du réfugié"
-  ) as HTMLInputElement;
+  const paysStatut: HTMLInputElement = screen.getByLabelText("Pays du statut de réfugié");
+  const paysOrigine: HTMLInputElement = screen.getByLabelText("Pays d'origine du réfugié");
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(paysStatut.value).toBe("Algérie");
-    expect(paysOrigine).toBe("Tunisie");
+    expect(paysOrigine.value).toBe("Tunisie");
   });
 });

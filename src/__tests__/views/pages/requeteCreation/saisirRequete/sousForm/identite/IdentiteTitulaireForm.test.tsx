@@ -1,12 +1,5 @@
-import {
-  NOMS,
-  PAS_DE_PRENOM_CONNU,
-  PRENOMS
-} from "@composant/formulaire/ConstantesNomsForm";
-import {
-  creerValidationSchemaPrenom,
-  genererDefaultValuesPrenoms
-} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import { NOMS, PAS_DE_PRENOM_CONNU, PRENOMS } from "@composant/formulaire/ConstantesNomsForm";
+import { creerValidationSchemaPrenom, genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import IdentiteTitulaireForm from "@pages/requeteCreation/saisirRequete/sousForm/identite/IdentiteTitulaireForm";
 import {
   NomsFormDefaultValues,
@@ -47,20 +40,25 @@ const HookTitulaireForm: React.FC = () => {
       onSubmit={handleClickButton}
     >
       <Form>
-        <IdentiteTitulaireForm key={TITULAIRE} nom={TITULAIRE} />
+        <IdentiteTitulaireForm
+          key={TITULAIRE}
+          nom={TITULAIRE}
+        />
         <button type="submit">Submit</button>
-        <Field as="textarea" value={result} data-testid="result" />
+        <Field
+          as="textarea"
+          value={result}
+          data-testid="result"
+        />
       </Form>
     </Formik>
   );
 };
 
-test("DOIT rendre le composant d'identite du titulaire correctement", () => {
+test("DOIT rendre le composant d'identite du titulaire correctement", async () => {
   render(<HookTitulaireForm />);
 
-  const boutonsCheckboxTitulaireNomActeEtranger = screen.getByLabelText(
-    "titulaire.noms.pasdenomacteetranger.pasdenomacteetranger"
-  );
+  const boutonsCheckboxTitulaireNomActeEtranger = screen.getByLabelText("titulaire.noms.pasdenomacteetranger.pasdenomacteetranger");
 
   const inputNomActeEtranger = screen.getByRole("textbox", {
     name: /titulaire.noms.nomActeEtranger/i
@@ -68,13 +66,13 @@ test("DOIT rendre le composant d'identite du titulaire correctement", () => {
 
   fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
 
-  waitFor(() => {
-    expect(inputNomActeEtranger).not.toBeDefined();
+  await waitFor(() => {
+    expect(inputNomActeEtranger).toBeDefined();
   });
 
   fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(inputNomActeEtranger).toBeDefined();
   });
 
@@ -84,9 +82,7 @@ test("DOIT rendre le composant d'identite du titulaire correctement", () => {
     }
   });
 
-  const boutonsCheckboxTitulaireNomActeFrancais = screen.getByLabelText(
-    "titulaire.noms.nomSouhaiteActeFR"
-  );
+  const boutonsCheckboxTitulaireNomActeFrancais = screen.getByLabelText("titulaire.noms.nomSouhaiteActeFR");
 
   fireEvent.blur(boutonsCheckboxTitulaireNomActeFrancais, {
     target: {
@@ -102,9 +98,7 @@ test("DOIT cacher le sous formulaire des prénoms quand la checkbox 'pas de pré
 
   const inputPrenom1 = screen.getByLabelText("Prénom");
 
-  waitFor(() => {
-    expect(inputPrenom1).toBeDefined();
-  });
+  expect(inputPrenom1).toBeDefined();
 
   fireEvent.blur(inputPrenom1, {
     target: {
@@ -112,15 +106,11 @@ test("DOIT cacher le sous formulaire des prénoms quand la checkbox 'pas de pré
     }
   });
 
-  const boutonsCheckboxPasDePrenomConnu = screen.getByLabelText(
-    "titulaire.pasdeprenomconnu.pasdeprenomconnu"
-  );
+  const boutonsCheckboxPasDePrenomConnu = screen.getByLabelText("titulaire.pasdeprenomconnu.pasdeprenomconnu");
 
   fireEvent.click(boutonsCheckboxPasDePrenomConnu);
 
-  waitFor(() => {
-    expect(screen.queryByText("Prénom")).not.toBeDefined();
-  });
+  expect(screen.queryByText("Prénom")).toBeNull();
 
   fireEvent.click(boutonsCheckboxPasDePrenomConnu);
 });

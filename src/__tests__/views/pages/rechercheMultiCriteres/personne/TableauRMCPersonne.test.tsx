@@ -1,8 +1,5 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
-import {
-  IRMCAutoPersonneParams,
-  useRMCAutoPersonneApiAvecCacheHook
-} from "@hook/rmcAuto/RMCAutoPersonneApiHook";
+import { IRMCAutoPersonneParams, useRMCAutoPersonneApiAvecCacheHook } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { userDroitConsulterArchive } from "@mock/data/mockConnectedUserAvecDroit";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
@@ -30,35 +27,22 @@ interface HookConsumerTableauRMCPersonneProps {
   requete: IRequeteCreationTranscription;
 }
 
-const HookConsumerTableauRMCPersonne: React.FC<
-  HookConsumerTableauRMCPersonneProps
-> = props => {
-  const [rmcAutoPersonneParams, setRmcAutoPersonneParams] =
-    useState<IRMCAutoPersonneParams>();
-  const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(
-    rmcAutoPersonneParams
-  );
+const HookConsumerTableauRMCPersonne: React.FC<HookConsumerTableauRMCPersonneProps> = props => {
+  const [rmcAutoPersonneParams, setRmcAutoPersonneParams] = useState<IRMCAutoPersonneParams>();
+  const resultatRMCAutoPersonne = useRMCAutoPersonneApiAvecCacheHook(rmcAutoPersonneParams);
 
   useEffect(() => {
     if (props.requete) {
-      const titulaire = getPostulantNationaliteOuTitulaireActeTranscritDresse(
-        props.requete
-      );
+      const titulaire = getPostulantNationaliteOuTitulaireActeTranscritDresse(props.requete);
       if (titulaire) {
-        setRmcAutoPersonneParams(
-          mapTitulaireVersRMCAutoPersonneParams(titulaire)
-        );
+        setRmcAutoPersonneParams(mapTitulaireVersRMCAutoPersonneParams(titulaire));
       }
     }
   }, [props.requete]);
 
   return (
     <TableauRMCPersonne
-      dataTableauRMCPersonne={
-        resultatRMCAutoPersonne
-          ? mapDataTableauRMCPersonne(resultatRMCAutoPersonne)
-          : []
-      }
+      dataTableauRMCPersonne={resultatRMCAutoPersonne ? mapDataTableauRMCPersonne(resultatRMCAutoPersonne) : []}
       identifiantsPersonnesSelectionnees={[]}
       identifiantsActesInscriptionsSelectionnes={[]}
       natureActeRequete={NatureActeRequete.NAISSANCE}
@@ -68,11 +52,11 @@ const HookConsumerTableauRMCPersonne: React.FC<
   );
 };
 
-test("Attendu: L'affichage du tableau de la RMC Personne s'affiche correctement.", () => {
+test("Attendu: L'affichage du tableau de la RMC Personne s'affiche correctement.", async () => {
   const requete = mappingRequeteCreation(requeteCreationTranscription);
   render(<HookConsumerTableauRMCPersonne requete={requete} />);
 
-  waitFor(() => {
+  await waitFor(() => {
     // Colonnes tableau
     expect(screen.getByText("Nom")).toBeDefined();
     expect(screen.getByText("Autres noms")).toBeDefined();
@@ -145,15 +129,9 @@ test("Ouverture d'un acte", async () => {
 
   fireEvent.click(ligne);
 
-  waitFor(() => {
+  await waitFor(() => {
     const vue = screen.queryByText("Visualisation du RC");
-    if (
-      officierALeDroitSurLePerimetre(
-        Droit.CONSULTER,
-        Perimetre.TOUS_REGISTRES,
-        userDroitConsulterArchive
-      )
-    ) {
+    if (officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.TOUS_REGISTRES, userDroitConsulterArchive)) {
       expect(vue).toBeDefined();
     } else {
       expect(vue).toBeNull();

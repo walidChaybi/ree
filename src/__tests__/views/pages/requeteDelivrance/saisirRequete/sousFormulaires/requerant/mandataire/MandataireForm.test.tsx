@@ -31,23 +31,23 @@ const HookMandataireForm: React.FC = () => {
       <Form>
         <MandataireForm {...mandataireFormProps} />
         <button type="submit">Submit</button>
-        <Field as="textarea" value={result} data-testid="result" />
+        <Field
+          as="textarea"
+          value={result}
+          data-testid="result"
+        />
       </Form>
     </Formik>
   );
 };
 
-test("render composant Mandataire Formulaire", () => {
+test("render composant Mandataire Formulaire", async () => {
   render(<HookMandataireForm />);
 
-  const inputType = screen.getByTestId("mandataire.type") as HTMLSelectElement;
-  const inputRaisonSociale = screen.getByLabelText(
-    "mandataire.raisonSociale"
-  ) as HTMLInputElement;
-  const inputNom = screen.getByLabelText("mandataire.nom") as HTMLInputElement;
-  const inputPrenom = screen.getByLabelText(
-    "mandataire.prenom"
-  ) as HTMLInputElement;
+  const inputType: HTMLSelectElement = screen.getByTestId("mandataire.type");
+  const inputRaisonSociale: HTMLInputElement = screen.getByLabelText("mandataire.raisonSociale");
+  const inputNom: HTMLInputElement = screen.getByLabelText("mandataire.nom");
+  const inputPrenom: HTMLInputElement = screen.getByLabelText("mandataire.prenom");
 
   fireEvent.change(inputType, {
     target: {
@@ -76,19 +76,18 @@ test("render composant Mandataire Formulaire", () => {
   fireEvent.blur(inputPrenom);
   fireEvent.click(submit);
 
+  await waitFor(() => {
     const result = screen.getByTestId("result");
-
-    waitFor(() => {
-      expect(result.innerHTML).toBe(
-        '{"mandataire":{"type":"AVOCAT","nature":"","raisonSociale":"mockRaisonSociale","nom":"mockNom","prenom":"MockPrenom"}}'
-      );
-    });
+    expect(result.innerHTML).toBe(
+      '{"mandataire":{"type":"AVOCAT","nature":"","raisonSociale":"mockRaisonSociale","nom":"mockNom","prenom":"MockPrenom"}}'
+    );
+  });
 });
 
-test("render composant Mandataire Formulaire : Affichage de l'input Nature", () => {
+test("render composant Mandataire Formulaire : Affichage de l'input Nature", async () => {
   render(<HookMandataireForm />);
 
-  const inputType = screen.getByTestId("mandataire.type") as HTMLSelectElement;
+  const inputType: HTMLSelectElement = screen.getByTestId("mandataire.type");
 
   fireEvent.change(inputType, {
     target: {
@@ -96,9 +95,7 @@ test("render composant Mandataire Formulaire : Affichage de l'input Nature", () 
     }
   });
 
-  const inputNature = screen.getByLabelText(
-    "mandataire.nature"
-  ) as HTMLInputElement;
+  const inputNature: HTMLInputElement = screen.getByLabelText("mandataire.nature");
 
   const submit = screen.getByText(/Submit/i);
 
@@ -109,12 +106,9 @@ test("render composant Mandataire Formulaire : Affichage de l'input Nature", () 
   });
   fireEvent.click(submit);
 
+  await waitFor(() => {
+    expect(inputNature).toBeDefined();
     const result = screen.getByTestId("result");
-
-    waitFor(() => {
-      expect(inputNature).toBeDefined();
-      expect(result.innerHTML).toBe(
-        '{"mandataire":{"type":"AUTRE","nature":"mockNature","raisonSociale":"","nom":"","prenom":""}}'
-      );
-    });
+    expect(result.innerHTML).toBe('{"mandataire":{"type":"AUTRE","nature":"mockNature","raisonSociale":"","nom":"","prenom":""}}');
+  });
 });

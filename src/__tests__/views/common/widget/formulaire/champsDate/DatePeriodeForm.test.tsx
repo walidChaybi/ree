@@ -1,9 +1,7 @@
 import { Periode } from "@model/requete/enum/Periode";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import DatePeriodeForm, {
-  DatePeriodeFormProps
-} from "@widget/formulaire/champsDate/DatePeriodeForm";
+import DatePeriodeForm, { DatePeriodeFormProps } from "@widget/formulaire/champsDate/DatePeriodeForm";
 import { expect, test } from "vitest";
 
 const DatePeriodeFormHook: React.FC = () => {
@@ -31,17 +29,17 @@ const DatePeriodeFormHook: React.FC = () => {
   );
 };
 
-test("DOIT afficher qu'une seule date QUAND il ne s'agit pas d'une période", () => {
+test("DOIT afficher qu'une seule date QUAND il ne s'agit pas d'une période", async () => {
   afficherEtChangerPeriode(Periode.getKey(Periode.EN));
-  waitFor(() => {
+  await waitFor(() => {
     expect(screen.queryByLabelText("dateMariage.debut.jour")).toBeDefined();
-    expect(screen.queryByLabelText("dateMariage.fin.jour")).not.toBeDefined();
+    expect(screen.queryByLabelText("dateMariage.fin.jour")).toBeNull();
   });
 });
 
-test("DOIT afficher les deux dates QUAND il s'agit d'une période", () => {
+test("DOIT afficher les deux dates QUAND il s'agit d'une période", async () => {
   afficherEtChangerPeriode(Periode.getKey(Periode.ENTRE));
-  waitFor(() => {
+  await waitFor(() => {
     expect(screen.queryByLabelText("dateMariage.debut.jour")).toBeDefined();
     expect(screen.queryByLabelText("dateMariage.fin.jour")).toBeDefined();
   });
@@ -50,8 +48,6 @@ test("DOIT afficher les deux dates QUAND il s'agit d'une période", () => {
 function afficherEtChangerPeriode(valeur: string) {
   render(<DatePeriodeFormHook />);
   const selectPeriode = screen.getByLabelText("Date de mariage");
-  waitFor(() => {
-    expect(selectPeriode).toBeDefined();
-  });
+  expect(selectPeriode).toBeDefined();
   fireEvent.change(selectPeriode, { target: { value: valeur } });
 }

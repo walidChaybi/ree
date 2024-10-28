@@ -1,7 +1,4 @@
-import {
-  IMajAnalyseMarginale,
-  IMentionEnregistree
-} from "@hook/acte/EnregistrerMentionsApiHook";
+import { IMajAnalyseMarginale, IMentionEnregistree } from "@hook/acte/EnregistrerMentionsApiHook";
 import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
 import { AddAlerteActeApiHookParameters } from "@hook/alertes/AddAlerteActeHookApi";
 import { DeleteAlerteActeApiHookParameters } from "@hook/alertes/DeleteAlerteActeHookApi";
@@ -35,17 +32,13 @@ export const URL_ACTE_RMC = "/acte/rmc";
 // Utilisé pour visualiser les images de l'acte dans la fiche Acte (renvoie un "InputStreamResource")
 export const URL_CORPS_IMAGE = "/corps-image";
 export const URL_ACTE_IMAGES = "/acteimage/images";
-export const URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE =
-  "/donnees-pour-composition-acte-texte";
-const URL_DONNEES_POUR_COMPOSITION_ACTE_REPRIS =
-  "/donnees-pour-composition-acte-repris";
-const URL_DONNEES_POUR_COMPOSITION_ACTE_AVANT_SIGNATURE_MENTIONS =
-  "/donnees-pour-composition-acte-texte-mis-a-jour";
+export const URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE = "/donnees-pour-composition-acte-texte";
+const URL_DONNEES_POUR_COMPOSITION_ACTE_REPRIS = "/donnees-pour-composition-acte-repris";
+const URL_DONNEES_POUR_COMPOSITION_ACTE_AVANT_SIGNATURE_MENTIONS = "/donnees-pour-composition-acte-texte-mis-a-jour";
 export const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_MENTION = "/mentions";
-export const URL_ENREGISTRER_MENTIONS_ET_ANALYSE_MARGINALE =
-  "/mentions-et-analyse-marginale";
+export const URL_ENREGISTRER_MENTIONS_ET_ANALYSE_MARGINALE = "/mentions-et-analyse-marginale";
 export const URL_ABANDONNER_MAJ = "/abandonner-mise-a-jour";
 export const URL_CORPS_TEXTE = "/corpstexte";
 export const URL_ETAT_CIVIL_RMC_AUTO = "/repertoirecivil/rmcauto";
@@ -55,17 +48,15 @@ export const URL_TYPE_MENTION = "/typemention";
 export const URL_ALERTE_ACTE = "/alerte";
 export const URL_DECRETS = "/repertoirecivil/decrets";
 export const URL_DERNIERE_DELIVRANCE = "/dernieredelivrance";
-export const URL_DERNIERE_DELIVRANCE_RC_RCA_PACS =
-  "/repertoirecivil/datedernieredelivrance";
+export const URL_DERNIERE_DELIVRANCE_RC_RCA_PACS = "/repertoirecivil/datedernieredelivrance";
 export const URL_SAISIE_EXTRAIT = "/saisieExtrait";
-export const URL_PERSONNE = "/personne";
+export const URL_PERSONNES = "/personnes";
 export const URL_RC = "/rc";
-export const URL_PERSONNE_RMC_AUTO = "/personne/rmcauto";
+export const URL_PERSONNES_RMC_AUTO = "/personnes/rmcauto";
 export const URL_POCOPAS = "/mespocopas";
-export const URL_LISTE_PERSONNE = "/personne/listePersonne";
+export const URL_LISTE_PERSONNES = "/personnes/listePersonne";
 export const URL_PROJET_ACTE = "/projetacte";
-export const URL_PROJET_ACTE_INSCRIPTION_LISTE =
-  "/projetacte/actesinscriptionssauvegardes";
+export const URL_PROJET_ACTE_INSCRIPTION_LISTE = "/projetacte/actesinscriptionssauvegardes";
 export const URL_ANALYSE_MARGINALE = "/analyseMarginale";
 export const URL_BULLETIN_IDENTIFICATION = "/bulletinIdentification";
 const URL_COMPOSER_DOCUMENT_FINAL = "/composer-document-final";
@@ -73,20 +64,14 @@ const URL_REGISTRE_PAPIER_PROJET_ACTE = "/registre-papier";
 const URL_INTEGRER_ACTE_SIGNE = "/integrer-acte-signe";
 const URL_INTEGRER_DOCUMENT_MENTION_SIGNE = "/integrer-document-mention-signe";
 const URL_ACTE_RECOMPOSER_APRES_SIGNATURE = "/recomposer-document-final";
-const URL_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES =
-  "/composer-document-mentions-ulterieures";
+const URL_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES = "/composer-document-mentions-ulterieures";
 const URL_DERNIERE_ANALYSE_MARGINALE = "/derniere-analyse-marginale-valide";
-const URL_SUPPRIMER_DERNIERE_ANALYSE_MARGINALE_NON_VALIDE =
-  "/supprimer-analyse-marginale-non-valide";
+const URL_SUPPRIMER_DERNIERE_ANALYSE_MARGINALE_NON_VALIDE = "/supprimer-analyse-marginale-non-valide";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
  */
-export function getInformationsFiche(
-  typeFiche: TypeFiche,
-  identifiant: string,
-  estConsultation = false
-): Promise<any> {
+export function getInformationsFiche(typeFiche: TypeFiche, identifiant: string, estConsultation = false): Promise<any> {
   if (typeFiche === TypeFiche.ACTE) {
     return getInformationsFicheActe(identifiant, false, estConsultation, false);
   } else {
@@ -94,9 +79,7 @@ export function getInformationsFiche(
   }
 }
 
-export function getActesInscriptionsSauvegardes(
-  actesInscriptionsSauvegardes: IActeInscriptionSauvegardeDto[]
-): Promise<any> {
+export function getActesInscriptionsSauvegardes(actesInscriptionsSauvegardes: IActeInscriptionSauvegardeDto[]): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -147,11 +130,7 @@ export function patchProjetActe(acte: IProjetActe): Promise<any> {
 /**
  * Composition d'un projet d'acte final à signer.
  */
-export function composerDocumentFinal(
-  idActe: string,
-  issuerCertificat: string,
-  entiteCertificat: string
-): Promise<any> {
+export function composerDocumentFinal(idActe: string, issuerCertificat: string, entiteCertificat: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -191,11 +170,7 @@ export function integrerActeSigne(
 /**
  * Composition du document mention final à signer.
  */
-export function composerDocumentMentionsUlterieures(
-  idActe: string,
-  issuerCertificat: string,
-  entiteCertificat: string
-): Promise<any> {
+export function composerDocumentMentionsUlterieures(idActe: string, issuerCertificat: string, entiteCertificat: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -247,10 +222,7 @@ export function getRegistrePapierParIdProjetActe(idActe: string): Promise<any> {
 /**
  * Récupération des informations des Fiches RC/RCA/PACS
  */
-export function getInformationsFicheRepertoire(
-  typeFiche: TypeFiche,
-  identifiant: string
-): Promise<any> {
+export function getInformationsFicheRepertoire(typeFiche: TypeFiche, identifiant: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
@@ -319,15 +291,12 @@ export function getInscriptionsRC(identifiant: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
-      uri: `${URL_PERSONNE}/${identifiant}${URL_RC}`
+      uri: `${URL_PERSONNES}/${identifiant}${URL_RC}`
     })
   );
 }
 
-export function rechercheMultiCriteresActes(
-  criteres: IRMCRequestActesInscriptions,
-  range?: string
-): Promise<any> {
+export function rechercheMultiCriteresActes(criteres: IRMCRequestActesInscriptions, range?: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -340,10 +309,7 @@ export function rechercheMultiCriteresActes(
   );
 }
 
-export function rechercheMultiCriteresInscriptions(
-  criteres: IRMCRequestActesInscriptions,
-  range?: string
-): Promise<any> {
+export function rechercheMultiCriteresInscriptions(criteres: IRMCRequestActesInscriptions, range?: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -356,14 +322,11 @@ export function rechercheMultiCriteresInscriptions(
   );
 }
 
-export function rechercheMultiCriteresPersonne(
-  criteres: IRMCAutoPersonneRequest,
-  range?: string
-): Promise<any> {
+export function rechercheMultiCriteresPersonne(criteres: IRMCAutoPersonneRequest, range?: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
-      uri: `${URL_PERSONNE_RMC_AUTO}`,
+      uri: `${URL_PERSONNES_RMC_AUTO}`,
       data: criteres,
       parameters: {
         range
@@ -376,7 +339,7 @@ export function getPersonnesSauvegardees(idPersonnes: string[]): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
-      uri: `${URL_LISTE_PERSONNE}`,
+      uri: `${URL_LISTE_PERSONNES}`,
       parameters: { ids: idPersonnes }
     })
   );
@@ -402,9 +365,7 @@ export function getImagesDeLActe(identifiantActe: string): Promise<any> {
   );
 }
 
-export function getDonneesPourCompositionActeTexte(
-  idActe: string
-): Promise<any> {
+export function getDonneesPourCompositionActeTexte(idActe: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
@@ -413,9 +374,7 @@ export function getDonneesPourCompositionActeTexte(
   );
 }
 
-export function getDonneesPourCompositionActeRepris(
-  idActe: string
-): Promise<any> {
+export function getDonneesPourCompositionActeRepris(idActe: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
@@ -424,9 +383,7 @@ export function getDonneesPourCompositionActeRepris(
   );
 }
 
-export function getDonneesPourCompositionActeAvantSignatureMentions(
-  idActe: string
-): Promise<any> {
+export function getDonneesPourCompositionActeAvantSignatureMentions(idActe: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
@@ -435,11 +392,7 @@ export function getDonneesPourCompositionActeAvantSignatureMentions(
   );
 }
 
-export function getPocopasParFamille(
-  debutPocopa: string,
-  familleRegistre: string,
-  nombreResultatsMax: number
-): Promise<any> {
+export function getPocopasParFamille(debutPocopa: string, familleRegistre: string, nombreResultatsMax: number): Promise<any> {
   return getApiManager().then(api =>
     api.fetchCache({
       method: HttpMethod.GET,
@@ -491,14 +444,8 @@ export async function getTypesMention(): Promise<any> {
   );
 }
 
-export async function getMentions(
-  idActe: string,
-  statutMention?: StatutMention
-): Promise<any> {
-  const queryParams =
-    statutMention !== undefined
-      ? { statut: StatutMention[statutMention] }
-      : undefined;
+export async function getMentions(idActe: string, statutMention?: StatutMention): Promise<any> {
+  const queryParams = statutMention !== undefined ? { statut: StatutMention[statutMention] } : undefined;
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
@@ -508,10 +455,7 @@ export async function getMentions(
   );
 }
 
-export async function postMentions(
-  idActe: string,
-  mentions: any[]
-): Promise<any> {
+export async function postMentions(idActe: string, mentions: any[]): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -560,11 +504,7 @@ export async function enregistrerMentionsEtAnalyseMarginale(
   );
 }
 
-export async function postCorpsTexte(
-  idActe: string,
-  corpsExtrait: string,
-  type: TypeExtrait
-): Promise<any> {
+export async function postCorpsTexte(idActe: string, corpsExtrait: string, type: TypeExtrait): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -575,10 +515,7 @@ export async function postCorpsTexte(
   );
 }
 
-export function rechercheMultiCriteresAutoActes(
-  criteres: ICriteresRMCAutoActeInscription,
-  range?: string
-): Promise<any> {
+export function rechercheMultiCriteresAutoActes(criteres: ICriteresRMCAutoActeInscription, range?: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -591,10 +528,7 @@ export function rechercheMultiCriteresAutoActes(
   );
 }
 
-export function rechercheMultiCriteresAutoInscription(
-  criteres: ICriteresRMCAutoActeInscription,
-  range?: string
-): Promise<any> {
+export function rechercheMultiCriteresAutoInscription(criteres: ICriteresRMCAutoActeInscription, range?: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -616,9 +550,7 @@ export function getAlertesActe(idActe: string): Promise<any> {
   );
 }
 
-export function addAlerteActe(
-  parameters: AddAlerteActeApiHookParameters
-): Promise<any> {
+export function addAlerteActe(parameters: AddAlerteActeApiHookParameters): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -632,9 +564,7 @@ export function addAlerteActe(
   );
 }
 
-export function deleteAlerteActe(
-  parameters: DeleteAlerteActeApiHookParameters
-): Promise<any> {
+export function deleteAlerteActe(parameters: DeleteAlerteActeApiHookParameters): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.DELETE,
@@ -661,9 +591,7 @@ export function updateDateDerniereDelivranceActe(idActe: string): Promise<any> {
   );
 }
 
-export function updateDateDerniereDelivranceRcRcaPacs(
-  body: IDerniereDelivranceRcRcaPacsParams[]
-): Promise<any> {
+export function updateDateDerniereDelivranceRcRcaPacs(body: IDerniereDelivranceRcRcaPacsParams[]): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -673,10 +601,7 @@ export function updateDateDerniereDelivranceRcRcaPacs(
   );
 }
 
-export function majEtatCivilSuiteSaisieExtrait(
-  idActe: string,
-  extraitSaisiAEnvoyer: IExtraitSaisiAEnvoyer
-) {
+export function majEtatCivilSuiteSaisieExtrait(idActe: string, extraitSaisiAEnvoyer: IExtraitSaisiAEnvoyer) {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -694,9 +619,7 @@ export function getPocopasAgent(): Promise<any> {
   return getApiManager().then(api => api.fetch(config));
 }
 
-export function getTitulaireAnalyseMarginalByIdActe(
-  identifiantsActes: string[]
-): Promise<any> {
+export function getTitulaireAnalyseMarginalByIdActe(identifiantsActes: string[]): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -706,9 +629,7 @@ export function getTitulaireAnalyseMarginalByIdActe(
   );
 }
 
-export function getBulletinIdentificationByIdActe(
-  idActe: string
-): Promise<any> {
+export function getBulletinIdentificationByIdActe(idActe: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
@@ -736,13 +657,11 @@ export function getDerniereAnalyseMarginale(idActe: string): Promise<any> {
   );
 }
 
-export function deleteDerniereAnalyseMarginaleNonValide(
-  idActe: string
-): Promise<any> {
+export function deleteDerniereAnalyseMarginaleNonValide(idActe: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
       uri: `${URL_ACTE}/${idActe}${URL_SUPPRIMER_DERNIERE_ANALYSE_MARGINALE_NON_VALIDE}`
     })
   );
-} 
+}

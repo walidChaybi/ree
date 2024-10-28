@@ -33,11 +33,11 @@ const DateUtils = {
     }
 
     if (date?.mois) {
-      dateString = `${date.mois.length === UN ? "0" : ""}${date.mois}${separateur}${dateString}`;
+      dateString = `${`${date.mois}`.length === UN ? "0" : ""}${date.mois}${separateur}${dateString}`;
     }
 
     if (date?.jour) {
-      dateString = `${date.jour.length === UN ? "0" : ""}${date.jour}${separateur}${dateString}`;
+      dateString = `${`${date.jour}`.length === UN ? "0" : ""}${date.jour}${separateur}${dateString}`;
     }
 
     return dateString;

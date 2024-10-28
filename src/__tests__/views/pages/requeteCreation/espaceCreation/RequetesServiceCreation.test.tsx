@@ -1,27 +1,18 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import {
-  resultatHeaderUtilistateurLeBiannic,
-  resultatRequeteUtilistateurLeBiannic
-} from "@mock/data/mockConnectedUserAvecDroit";
+import { resultatHeaderUtilistateurLeBiannic, resultatRequeteUtilistateurLeBiannic } from "@mock/data/mockConnectedUserAvecDroit";
 import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { mappingOfficier } from "@model/agent/IOfficier";
 import { IPerimetre } from "@model/agent/IPerimetre";
 import { IService } from "@model/agent/IService";
-import {
-  IUtilisateur,
-  mapHabilitationsUtilisateur
-} from "@model/agent/IUtilisateur";
+import { IUtilisateur, mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { ETypeService } from "@model/agent/enum/ETypeService";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import { RequetesServiceCreation } from "@pages/requeteCreation/espaceCreation/RequetesServiceCreation";
 import { statutsRequetesCreation } from "@pages/requeteCreation/espaceCreation/params/EspaceCreationParams";
-import {
-  URL_REQUETES_CREATION_SERVICE,
-  URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID
-} from "@router/ReceUrls";
+import { URL_REQUETES_CREATION_SERVICE, URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { UN } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
@@ -59,13 +50,9 @@ const utilisateurs = [
   } as IUtilisateur
 ] as IUtilisateur[];
 
-const utilisateurConnecte = mappingOfficier(
-  resultatHeaderUtilistateurLeBiannic,
-  resultatRequeteUtilistateurLeBiannic.data
-);
+const utilisateurConnecte = mappingOfficier(resultatHeaderUtilistateurLeBiannic, resultatRequeteUtilistateurLeBiannic.data);
 utilisateurConnecte.habilitations = mapHabilitationsUtilisateur(
-  resultatRequeteUtilistateurLeBiannic.data
-    .habilitations as unknown as IHabilitationDto[]
+  resultatRequeteUtilistateurLeBiannic.data.habilitations as unknown as IHabilitationDto[]
 );
 
 const routerAvecContexte = (router: any): any => {
@@ -87,8 +74,7 @@ const queryParametersPourRequetes = {
 } as IQueryParametersPourRequetes;
 
 const HookConsummer: React.FC = () => {
-  const [popinAttribuerAOuvert, setPopinAttribuerAOuvert] =
-    useState<boolean>(false);
+  const [popinAttribuerAOuvert, setPopinAttribuerAOuvert] = useState<boolean>(false);
   const router = createTestingRouter(
     [
       {
@@ -146,15 +132,11 @@ test.skip("DOIT afficher le tableau des requêtes de service à vide QUAND on ar
 test("DOIT effectuer correctement le tri sur les requêtes de service QUAND on tri par une colonne", () => {
   render(<HookConsummer />);
 
-  waitFor(() => {
-    expect(screen.getAllByText("Statut")[1]).toBeDefined();
-  });
+  expect(screen.getAllByText("Statut")[1]).toBeDefined();
 
   fireEvent.click(screen.getAllByText("Statut")[1]);
 
-  waitFor(() => {
-    expect(screen.getAllByText("Statut")[1]).toBeDefined();
-  });
+  expect(screen.getAllByText("Statut")[1]).toBeDefined();
 });
 
 test.skip("DOIT correctement afficher l'attribution des requêtes de service QUAND on clique sur attribuer à", () => {
@@ -175,71 +157,49 @@ test.skip("DOIT correctement afficher l'attribution des requêtes de service QUA
 
   const getColonnesOfficierEtCheckbox = (requete: HTMLElement) => ({
     colonneOfficier: requete.childNodes.item(6) as HTMLElement,
-    colonneCheckbox: requete.childNodes.item(7).firstChild?.firstChild
-      ?.firstChild as HTMLInputElement
+    colonneCheckbox: requete.childNodes.item(7).firstChild?.firstChild?.firstChild as HTMLInputElement
   });
 
-  waitFor(() => {
-    expect(
-      screen.getByTestId("c9b817ca-1899-450e-9f04-979541946011")
-    ).toBeDefined();
-    expect(
-      screen.getByTestId("54ddf213-d9b7-4747-8e92-68c220f66de3")
-    ).toBeDefined();
-  });
+  expect(screen.getByTestId("c9b817ca-1899-450e-9f04-979541946011")).toBeDefined();
+  expect(screen.getByTestId("54ddf213-d9b7-4747-8e92-68c220f66de3")).toBeDefined();
 
   const boutonAttribuerA = screen.getByText(/Attribuer à/i);
-  const getPopinAttribution = (): HTMLElement | null =>
-    screen.queryByText(/Attribuer à un officier de l'état civil/i);
-  const requeteAlpha = getColonnesOfficierEtCheckbox(
-    screen.getByTestId("c9b817ca-1899-450e-9f04-979541946011")
-  );
-  const requeteBeta = getColonnesOfficierEtCheckbox(
-    screen.getByTestId("54ddf213-d9b7-4747-8e92-68c220f66de3")
-  );
+  const getPopinAttribution = (): HTMLElement | null => screen.queryByText(/Attribuer à un officier de l'état civil/i);
+  const requeteAlpha = getColonnesOfficierEtCheckbox(screen.getByTestId("c9b817ca-1899-450e-9f04-979541946011"));
+  const requeteBeta = getColonnesOfficierEtCheckbox(screen.getByTestId("54ddf213-d9b7-4747-8e92-68c220f66de3"));
 
-  waitFor(() => {
-    expect(boutonAttribuerA).toBeDefined();
-    expect(getPopinAttribution()).not.toBeDefined();
-    expect(requeteAlpha.colonneCheckbox.checked).not.toBeTruthy();
-    expect(requeteBeta.colonneCheckbox.checked).not.toBeTruthy();
-  });
+  expect(boutonAttribuerA).toBeDefined();
+  expect(getPopinAttribution()).not.toBeDefined();
+  expect(requeteAlpha.colonneCheckbox.checked).not.toBeTruthy();
+  expect(requeteBeta.colonneCheckbox.checked).not.toBeTruthy();
 
   fireEvent.click(requeteAlpha.colonneCheckbox);
   fireEvent.click(boutonAttribuerA);
 
-  const boutonValider = screen.getByText("Valider") as HTMLInputElement;
+  const boutonValider: HTMLInputElement = screen.getByText("Valider");
 
-  waitFor(() => {
-    expect(requeteAlpha.colonneCheckbox.checked).toBeTruthy();
-    expect(requeteBeta.colonneCheckbox.checked).not.toBeTruthy();
+  expect(requeteAlpha.colonneCheckbox.checked).toBeTruthy();
+  expect(requeteBeta.colonneCheckbox.checked).not.toBeTruthy();
 
-    expect(getPopinAttribution()).toBeDefined();
-    expect(boutonValider.disabled).toBeTruthy();
-  });
+  expect(getPopinAttribution()).toBeDefined();
+  expect(boutonValider.disabled).toBeTruthy();
 
   const autocomplete = screen.getAllByTestId("autocomplete")[2];
-  const champRecherche = screen.getByLabelText(
-    "TransfertPopin"
-  ) as HTMLInputElement;
+  const champRecherche: HTMLInputElement = screen.getByLabelText("TransfertPopin");
   autocomplete.focus();
 
   fireEvent.change(champRecherche, {
     target: { value: "Y" }
   });
 
-  const libelle = screen.getByText("Young Ashley") as HTMLInputElement;
+  const libelle: HTMLInputElement = screen.getByText("Young Ashley");
 
-  waitFor(() => {
-    expect(libelle.disabled).toBeTruthy();
-  });
+  expect(libelle.disabled).toBeTruthy();
 
   fireEvent.click(screen.getByText("Young Ashley"));
   fireEvent.click(screen.getByText("Valider"));
 
-  waitFor(() => {
-    expect(getPopinAttribution()).not.toBeDefined();
-  });
+  expect(getPopinAttribution()).not.toBeDefined();
 });
 
 test.skip("DOIT rendre possible le click sur une requête", () => {
@@ -266,9 +226,7 @@ test("DOIT pouvoir rechercher une requete via son numero NATALi", () => {
   fireEvent.change(input, { target: { value: "2022X 200178" } });
   fireEvent.click(boutonRechercher);
 
-  waitFor(() => {
-    expect(screen.queryByText("B-2-8GRZFCS3P")).toBeNull();
-    expect(screen.queryByText("YRQFLU")).toBeNull();
-    expect(screen.getByText("2022X 200178")).toBeDefined();
-  });
+  expect(screen.queryByText("B-2-8GRZFCS3P")).toBeNull();
+  expect(screen.queryByText("YRQFLU")).toBeNull();
+  expect(screen.queryByText("2022X 200178")).toBeNull();
 });

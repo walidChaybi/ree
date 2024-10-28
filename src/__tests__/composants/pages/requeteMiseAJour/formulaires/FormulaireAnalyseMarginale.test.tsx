@@ -42,7 +42,10 @@ test("renders le formulaire avec les bonnes valeurs par defaut", () => {
       {
         path: "/",
         element: (
-          <EditionMiseAJourContextProvider idActe="e5fdfe01-655b-44b9-a1fd-86c1169bb2ee" idRequete={""}>
+          <EditionMiseAJourContextProvider
+            idActe="e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"
+            idRequete={""}
+          >
             <FormulaireAnalyseMarginale derniereAnalyseMarginale={mockDerniereAnalyseMarginal} />
           </EditionMiseAJourContextProvider>
         )
@@ -64,7 +67,10 @@ test("redirige vers la page RMC au clic sur le bouton valider et terminer", asyn
       {
         path: "/",
         element: (
-          <EditionMiseAJourContextProvider idActe="e5fdfe01-655b-44b9-a1fd-86c1169bb2ee" idRequete={"e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"}>
+          <EditionMiseAJourContextProvider
+            idActe="e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"
+            idRequete={"e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"}
+          >
             <FormulaireAnalyseMarginale derniereAnalyseMarginale={mockDerniereAnalyseMarginal} />
           </EditionMiseAJourContextProvider>
         )
@@ -84,16 +90,12 @@ test("redirige vers la page RMC au clic sur le bouton valider et terminer", asyn
 
   fireEvent.click(screen.getByTitle("Actualiser et visualiser"));
 
-  await waitFor(() =>
-    expect(screen.getByDisplayValue("Doe Smithtest")).toBeDefined()
-  );
+  await waitFor(() => expect(screen.getByDisplayValue("Doe Smithtest")).toBeDefined());
 
   const boutonValider = screen.getByText("Valider et terminer");
   fireEvent.click(boutonValider);
-  waitFor(() => {
+  await waitFor(() => {
     expect(router.state.location.pathname).toBe(URL_RECHERCHE_ACTE_INSCRIPTION);
-    expect(messageManager.showSuccessAndClose).toHaveBeenCalledWith(
-      "L'analyse marginale a été mise à jour avec succès"
-    );
+    expect(messageManager.showSuccessAndClose).toHaveBeenCalledWith("L'analyse marginale a été mise à jour avec succès");
   });
 });

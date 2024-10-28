@@ -1,7 +1,5 @@
 import { TITULAIRE } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
-import RMCBoutons, {
-  RMCBoutonsProps
-} from "@pages/rechercheMultiCriteres/boutons/RMCBoutons";
+import RMCBoutons, { RMCBoutonsProps } from "@pages/rechercheMultiCriteres/boutons/RMCBoutons";
 import TitulaireFiltre, {
   TitulaireDefaultValues,
   TitulaireFiltreProps
@@ -41,7 +39,11 @@ const HookConsummerRMCBoutons: React.FC = () => {
       <Form>
         <TitulaireFiltre {...titulaireFiltreProps} />
         <RMCBoutons {...boutonsProps} />
-        <Field as="textarea" value={result} data-testid="result" />
+        <Field
+          as="textarea"
+          value={result}
+          data-testid="result"
+        />
       </Form>
     </Formik>
   );
@@ -50,30 +52,22 @@ const HookConsummerRMCBoutons: React.FC = () => {
 test("render composant RMCBoutons", () => {
   render(<HookConsummerRMCBoutons />);
 
-  waitFor(() => {
-    expect(screen.getByText(/Rappel critères/i)).toBeDefined();
-    expect(screen.getByText(/Réinitialiser les critères/i)).toBeDefined();
-    expect(screen.getByText(/Rechercher/i)).toBeDefined();
-  });
+  expect(screen.getByText(/Rappel critères/i)).toBeDefined();
+  expect(screen.getByText(/Réinitialiser les critères/i)).toBeDefined();
+  expect(screen.getByText(/Rechercher/i)).toBeDefined();
 });
 
-test("Click boutons", () => {
+test("Click boutons", async () => {
   render(<HookConsummerRMCBoutons />);
 
-  const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
-  const inputPrenom = screen.getByLabelText("Prénom") as HTMLInputElement;
-  const inputPays = screen.getByLabelText(
-    "Pays de naissance"
-  ) as HTMLInputElement;
+  const inputNom: HTMLInputElement = screen.getByLabelText("Nom");
+  const inputPrenom: HTMLInputElement = screen.getByLabelText("Prénom");
+  const inputPays: HTMLInputElement = screen.getByLabelText("Pays de naissance");
 
-  const boutonRappel = screen.getByText(
-    /Rappel critères/i
-  ) as HTMLButtonElement;
-  const boutonReset = screen.getByText(
-    /Réinitialiser les critères/i
-  ) as HTMLButtonElement;
+  const boutonRappel: HTMLButtonElement = screen.getByText(/Rappel critères/i);
+  const boutonReset: HTMLButtonElement = screen.getByText(/Réinitialiser les critères/i);
 
-  const boutonSubmit = screen.getByText(/Rechercher/i) as HTMLButtonElement;
+  const boutonSubmit: HTMLButtonElement = screen.getByText(/Rechercher/i);
 
   fireEvent.change(inputNom, {
     target: {
@@ -95,7 +89,7 @@ test("Click boutons", () => {
 
   const result = screen.getByTestId("result");
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(result.innerHTML).toBe(
       '{"titulaire":{"nom":"mockNom","prenom":"mockPrenom","dateNaissance":{"jour":"","mois":"","annee":""},"paysNaissance":"mockPays"}}'
     );
@@ -103,7 +97,7 @@ test("Click boutons", () => {
 
   fireEvent.click(boutonReset);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(inputNom.value).toBe("");
     expect(inputPrenom.value).toBe("");
     expect(inputPays.value).toBe("");
@@ -111,7 +105,7 @@ test("Click boutons", () => {
 
   fireEvent.click(boutonRappel);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(inputNom.value).toBe("mockNom");
     expect(inputPrenom.value).toBe("mockPrenom");
     expect(inputPays.value).toBe("mockPays");

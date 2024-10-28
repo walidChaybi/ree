@@ -1,8 +1,4 @@
-import {
-  NOM,
-  PRENOM,
-  RAISON_SOCIALE
-} from "@composant/formulaire/ConstantesNomsForm";
+import { NOM, PRENOM, RAISON_SOCIALE } from "@composant/formulaire/ConstantesNomsForm";
 import { IQualiteRequerant } from "@model/requete/IQualiteRequerant";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
@@ -11,8 +7,7 @@ import RequerantCourrierForm, {
   IRequerantCourrierFormProps,
   RequerantCourrierFormValidationSchema
 } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/RequerantCourrierForm";
-import { render, screen, waitFor } from "@testing-library/react";
-import { getLibelle } from "@util/Utils";
+import { render, screen } from "@testing-library/react";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import React from "react";
@@ -26,7 +21,7 @@ const HookRequerantCourrierForm: React.FC<{
       id: "a048f5c3-c8a4-4690-be31-ddf3171d7b34",
       qualiteRequerant: props.qualiteRequerant
     },
-    titre: getLibelle("Identité du requérant"),
+    titre: "Identité du requérant",
     formulaireReduit: true
   } as SubFormProps & IRequerantCourrierFormProps;
 
@@ -57,11 +52,9 @@ test("DOIT rendre les champs 'Nom' et 'Prenom' QUAND le requerant est de qualite
     />
   );
 
-  waitFor(() => {
-    expect(screen.queryByText("Nom")).toBeDefined();
-    expect(screen.queryByText("Prénom")).toBeDefined();
-    expect(screen.queryByText("Raison sociale")).not.toBeDefined();
-  });
+  expect(screen.queryByText("Nom")).toBeDefined();
+  expect(screen.queryByText("Prénom")).toBeDefined();
+  expect(screen.queryByText("Raison sociale")).toBeNull();
 });
 
 test("DOIT rendre les champs 'Raison sociale', 'Nom' et 'Prenom' QUAND le requerant est de qualite 'MANDATAIRE_HABILITE'", () => {
@@ -77,11 +70,9 @@ test("DOIT rendre les champs 'Raison sociale', 'Nom' et 'Prenom' QUAND le requer
     />
   );
 
-  waitFor(() => {
-    expect(screen.queryByText("Nom")).toBeDefined();
-    expect(screen.queryByText("Prénom")).toBeDefined();
-    expect(screen.queryByText("Raison sociale")).toBeDefined();
-  });
+  expect(screen.queryByText("Nom")).toBeDefined();
+  expect(screen.queryByText("Prénom")).toBeDefined();
+  expect(screen.queryByText("Raison sociale")).toBeDefined();
 });
 
 test("DOIT rendre les champs 'Raison sociale', 'Nom' et 'Prenom' QUAND le requerant est de qualite 'INSTITUTIONNEL'", () => {
@@ -97,11 +88,9 @@ test("DOIT rendre les champs 'Raison sociale', 'Nom' et 'Prenom' QUAND le requer
     />
   );
 
-  waitFor(() => {
-    expect(screen.queryByText("Nom")).toBeDefined();
-    expect(screen.queryByText("Prénom")).toBeDefined();
-    expect(screen.queryByText("Raison sociale")).toBeDefined();
-  });
+  expect(screen.queryByText("Nom")).toBeDefined();
+  expect(screen.queryByText("Prénom")).toBeDefined();
+  expect(screen.queryByText("Raison sociale")).toBeDefined();
 });
 
 test("DOIT rendre les champs 'Raison sociale', 'Nom' et 'Prenom' QUAND le requerant est de qualite 'AUTRE_PROFESSIONNEL'", () => {
@@ -117,9 +106,7 @@ test("DOIT rendre les champs 'Raison sociale', 'Nom' et 'Prenom' QUAND le requer
     />
   );
 
-  waitFor(() => {
-    expect(screen.queryByText("Nom")).toBeDefined();
-    expect(screen.queryByText("Prénom")).toBeDefined();
-    expect(screen.queryByText("Raison sociale")).toBeDefined();
-  });
+  expect(screen.queryByText("Nom")).toBeDefined();
+  expect(screen.queryByText("Prénom")).toBeDefined();
+  expect(screen.queryByText("Raison sociale")).toBeDefined();
 });

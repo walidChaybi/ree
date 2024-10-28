@@ -1,8 +1,6 @@
 import { creerValidationSchemaPrenom } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import NationalitesForm, {
-  NationalitesFormDefaultValues
-} from "@widget/formulaire/nationalites/NationalitesForm";
+import NationalitesForm, { NationalitesFormDefaultValues } from "@widget/formulaire/nationalites/NationalitesForm";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
@@ -32,18 +30,20 @@ const HookNationaliteForm: React.FC = () => {
       <Form>
         <NationalitesForm {...nationaliteFormProps} />
         <button type="submit">Submit</button>
-        <Field as="textarea" value={result} data-testid="result" />
+        <Field
+          as="textarea"
+          value={result}
+          data-testid="result"
+        />
       </Form>
     </Formik>
   );
 };
 
-test("DOIT rendre le sous formulaire de nationalité correctement", () => {
+test("DOIT rendre le sous formulaire de nationalité correctement", async () => {
   render(<HookNationaliteForm />);
 
-  const inputNationalite1 = screen.getByLabelText(
-    "nationalites.nationalite1"
-  ) as HTMLInputElement;
+  const inputNationalite1: HTMLInputElement = screen.getByLabelText("nationalites.nationalite1");
 
   fireEvent.change(inputNationalite1, {
     target: {
@@ -55,21 +55,16 @@ test("DOIT rendre le sous formulaire de nationalité correctement", () => {
   fireEvent.blur(inputNationalite1);
   fireEvent.click(submit);
 
-  const result = screen.getByTestId("result");
-
-  waitFor(() => {
-    expect(result.innerHTML).toBe(
-      '{"nationalites":{"nationalite1":"MockNationalite1","nationalite2":"","nationalite3":""}}'
-    );
+  await waitFor(() => {
+    const result = screen.getByTestId("result");
+    expect(result.innerHTML).toBe('{"nationalites":{"nationalite1":"MockNationalite1","nationalite2":"","nationalite3":""}}');
   });
 });
 
-test("DOIT rendre le composant de Nationalité et permettre l'ajout et la suppression correctement", () => {
+test("DOIT rendre le composant de Nationalité et permettre l'ajout et la suppression correctement", async () => {
   render(<HookNationaliteForm />);
 
-  const inputNationalite1 = screen.getByLabelText(
-    "nationalites.nationalite1"
-  ) as HTMLInputElement;
+  const inputNationalite1: HTMLInputElement = screen.getByLabelText("nationalites.nationalite1");
 
   fireEvent.change(inputNationalite1, {
     target: {
@@ -81,9 +76,7 @@ test("DOIT rendre le composant de Nationalité et permettre l'ajout et la suppre
   fireEvent.blur(inputNationalite1);
   fireEvent.click(ajoutNationalite);
 
-  const inputPrenom2 = screen.getByLabelText(
-    "nationalites.nationalite2"
-  ) as HTMLInputElement;
+  const inputPrenom2: HTMLInputElement = screen.getByLabelText("nationalites.nationalite2");
 
   fireEvent.change(inputPrenom2, {
     target: {
@@ -95,9 +88,7 @@ test("DOIT rendre le composant de Nationalité et permettre l'ajout et la suppre
   fireEvent.blur(inputPrenom2);
   fireEvent.click(ajoutNationalite2);
 
-  const inputNationalite3 = screen.getByLabelText(
-    "nationalites.nationalite3"
-  ) as HTMLInputElement;
+  const inputNationalite3: HTMLInputElement = screen.getByLabelText("nationalites.nationalite3");
 
   fireEvent.change(inputNationalite3, {
     target: {
@@ -111,7 +102,7 @@ test("DOIT rendre le composant de Nationalité et permettre l'ajout et la suppre
 
   const result = screen.getByTestId("result");
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(result.innerHTML).toBe(
       '{"nationalites":{"nationalite1":"MockNationalite1","nationalite2":"MockNationalite2","nationalite3":"MockNationalite3"}}'
     );
@@ -122,9 +113,9 @@ test("DOIT rendre le composant de Nationalité et permettre l'ajout et la suppre
 
   fireEvent.click(submit);
 
-    waitFor(() => {
-      expect(result.innerHTML).toBe(
-        '{"nationalites":{"nationalite1":"MockNationalite1","nationalite2":"MockNationalite2","nationalite3":""}}'
-      );
-    });
+  await waitFor(() => {
+    expect(result.innerHTML).toBe(
+      '{"nationalites":{"nationalite1":"MockNationalite1","nationalite2":"MockNationalite2","nationalite3":""}}'
+    );
+  });
 });

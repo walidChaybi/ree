@@ -31,27 +31,23 @@ const HookInstitutionnelForm: React.FC = () => {
       <Form>
         <InstitutionnelForm {...institutionnelFormProps} />
         <button type="submit">Submit</button>
-        <Field as="textarea" value={result} data-testid="result" />
+        <Field
+          as="textarea"
+          value={result}
+          data-testid="result"
+        />
       </Form>
     </Formik>
   );
 };
 
-test("render composant Institutionnel Formulaire", () => {
+test("render composant Institutionnel Formulaire", async () => {
   render(<HookInstitutionnelForm />);
 
-  const inputType = screen.getByTestId(
-    "institutionnel.type"
-  ) as HTMLSelectElement;
-  const inputNomInstitution = screen.getByLabelText(
-    "institutionnel.nomInstitution"
-  ) as HTMLInputElement;
-  const inputNom = screen.getByLabelText(
-    "institutionnel.nom"
-  ) as HTMLInputElement;
-  const inputPrenom = screen.getByLabelText(
-    "institutionnel.prenom"
-  ) as HTMLInputElement;
+  const inputType: HTMLSelectElement = screen.getByTestId("institutionnel.type");
+  const inputNomInstitution: HTMLInputElement = screen.getByLabelText("institutionnel.nomInstitution");
+  const inputNom: HTMLInputElement = screen.getByLabelText("institutionnel.nom");
+  const inputPrenom: HTMLInputElement = screen.getByLabelText("institutionnel.prenom");
 
   fireEvent.change(inputType, {
     target: {
@@ -80,21 +76,18 @@ test("render composant Institutionnel Formulaire", () => {
   fireEvent.blur(inputPrenom);
   fireEvent.click(submit);
 
+  await waitFor(() => {
     const result = screen.getByTestId("result");
-
-    waitFor(() => {
-      expect(result.innerHTML).toBe(
-        '{"institutionnel":{"type":"TRIBUNAL","nature":"","nomInstitution":"mockNomInstitution","nom":"mockNom","prenom":"MockPrenom"}}'
-      );
-    });
+    expect(result.innerHTML).toBe(
+      '{"institutionnel":{"type":"TRIBUNAL","nature":"","nomInstitution":"mockNomInstitution","nom":"mockNom","prenom":"MockPrenom"}}'
+    );
+  });
 });
 
-test("render input Nature Institutionnel Formulaire", () => {
+test("render input Nature Institutionnel Formulaire", async () => {
   render(<HookInstitutionnelForm />);
 
-  const inputType = screen.getByTestId(
-    "institutionnel.type"
-  ) as HTMLSelectElement;
+  const inputType: HTMLSelectElement = screen.getByTestId("institutionnel.type");
 
   fireEvent.change(inputType, {
     target: {
@@ -102,9 +95,7 @@ test("render input Nature Institutionnel Formulaire", () => {
     }
   });
 
-  const inputNature = screen.getByLabelText(
-    "institutionnel.nature"
-  ) as HTMLInputElement;
+  const inputNature: HTMLInputElement = screen.getByLabelText("institutionnel.nature");
 
   const submit = screen.getByText(/Submit/i);
 
@@ -115,12 +106,9 @@ test("render input Nature Institutionnel Formulaire", () => {
   });
   fireEvent.click(submit);
 
+  await waitFor(() => {
+    expect(inputNature).toBeDefined();
     const result = screen.getByTestId("result");
-
-    waitFor(() => {
-      expect(inputNature).toBeDefined();
-      expect(result.innerHTML).toBe(
-        '{"institutionnel":{"type":"AUTRE","nature":"mockNature","nomInstitution":"","nom":"","prenom":""}}'
-      );
-    });
+    expect(result.innerHTML).toBe('{"institutionnel":{"type":"AUTRE","nature":"mockNature","nomInstitution":"","nom":"","prenom":""}}');
+  });
 });

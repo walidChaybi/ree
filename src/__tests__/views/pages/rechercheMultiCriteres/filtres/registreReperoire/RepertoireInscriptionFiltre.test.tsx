@@ -5,10 +5,10 @@ import RepertoireInscriptionFiltre, {
   RepertoireInscriptionDefaultValues,
   RepertoireInscriptionFiltreProps
 } from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RepertoireInscriptionFiltre";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
-import React, { useState } from "react";
-import { expect, test } from "vitest";
+import React, { act, useState } from "react";
+import { beforeAll, expect, test } from "vitest";
 
 const HookRepertoireInscriptionFiltre: React.FC = () => {
   const [result, setResult] = useState("");
@@ -21,9 +21,6 @@ const HookRepertoireInscriptionFiltre: React.FC = () => {
     setResult(JSON.stringify(values));
   };
 
-  NatureRc.init();
-  NatureRca.init();
-
   return (
     <Formik
       initialValues={{
@@ -34,24 +31,28 @@ const HookRepertoireInscriptionFiltre: React.FC = () => {
       <Form>
         <RepertoireInscriptionFiltre {...repertoireInscriptionFiltreProps} />
         <button type="submit">Submit</button>
-        <Field as="textarea" value={result} data-testid="result" />
+        <Field
+          as="textarea"
+          value={result}
+          data-testid="result"
+        />
       </Form>
     </Formik>
   );
 };
 
-test("Le champ Nature de l'inscription est conditionné par le choix de l'utilisateur pour le type de répertoire RC", () => {
+beforeAll(async () => {
+  await NatureRc.init();
+  await NatureRca.init();
+});
+
+test("Le champ Nature de l'inscription est conditionné par le choix de l'utilisateur pour le type de répertoire RC", async () => {
+  console.log(NatureRc.getAllEnumsAsOptions());
   render(<HookRepertoireInscriptionFiltre />);
 
-  const numeroInscription = screen.getByLabelText(
-    "repertoire.numeroInscription"
-  ) as HTMLInputElement;
-  const typeRepertoire = screen.getByTestId(
-    "repertoire.typeRepertoire"
-  ) as HTMLSelectElement;
-  const natureInscription = screen.getByTestId(
-    "repertoire.natureInscription"
-  ) as HTMLSelectElement;
+  const numeroInscription: HTMLInputElement = screen.getByLabelText("repertoire.numeroInscription");
+  const typeRepertoire: HTMLSelectElement = screen.getByTestId("repertoire.typeRepertoire");
+  const natureInscription: HTMLSelectElement = screen.getByTestId("repertoire.natureInscription");
   const submit = screen.getByText(/Submit/i);
 
   fireEvent.change(numeroInscription, {
@@ -71,29 +72,21 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
       value: "058a436b-330d-4c3c-83e0-e49d27390123"
     }
   });
-  fireEvent.click(submit);
 
-  const result = screen.getByTestId("result");
-  waitFor(() => {
-    expect(natureInscription.disabled).toBeFalsy();
-    expect(result.innerHTML).toBe(
-      '{"repertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RC","natureInscription":"058a436b-330d-4c3c-83e0-e49d27390123"}}'
-    );
-  });
+  await act(() => fireEvent.click(submit));
+
+  expect(natureInscription.disabled).toBeFalsy();
+  expect(screen.getByTestId("result").innerHTML).toBe(
+    '{"repertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RC","natureInscription":"058a436b-330d-4c3c-83e0-e49d27390123"}}'
+  );
 });
 
-test("Le champ Nature de l'inscription est conditionné par le choix de l'utilisateur pour le type de répertoire RCA", () => {
+test("Le champ Nature de l'inscription est conditionné par le choix de l'utilisateur pour le type de répertoire RCA", async () => {
   render(<HookRepertoireInscriptionFiltre />);
 
-  const numeroInscription = screen.getByLabelText(
-    "repertoire.numeroInscription"
-  ) as HTMLInputElement;
-  const typeRepertoire = screen.getByTestId(
-    "repertoire.typeRepertoire"
-  ) as HTMLSelectElement;
-  const natureInscription = screen.getByTestId(
-    "repertoire.natureInscription"
-  ) as HTMLSelectElement;
+  const numeroInscription: HTMLInputElement = screen.getByLabelText("repertoire.numeroInscription");
+  const typeRepertoire: HTMLSelectElement = screen.getByTestId("repertoire.typeRepertoire");
+  const natureInscription: HTMLSelectElement = screen.getByTestId("repertoire.natureInscription");
   const submit = screen.getByText(/Submit/i);
 
   fireEvent.change(numeroInscription, {
@@ -113,29 +106,21 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
       value: "358a436b-330d-4c3c-83e0-e49d27390123"
     }
   });
-  fireEvent.click(submit);
 
-  const result = screen.getByTestId("result");
-  waitFor(() => {
-    expect(natureInscription.disabled).toBeFalsy();
-    expect(result.innerHTML).toBe(
-      '{"repertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RCA","natureInscription":"358a436b-330d-4c3c-83e0-e49d27390123"}}'
-    );
-  });
+  await act(() => fireEvent.click(submit));
+
+  expect(natureInscription.disabled).toBeFalsy();
+  expect(screen.getByTestId("result").innerHTML).toBe(
+    '{"repertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RCA","natureInscription":"358a436b-330d-4c3c-83e0-e49d27390123"}}'
+  );
 });
 
 test("Le champ Nature de l'inscription est désactivé par le choix de l'utilisateur pour le type de répertoire PACS", () => {
   render(<HookRepertoireInscriptionFiltre />);
 
-  const numeroInscription = screen.getByLabelText(
-    "repertoire.numeroInscription"
-  ) as HTMLInputElement;
-  const typeRepertoire = screen.getByTestId(
-    "repertoire.typeRepertoire"
-  ) as HTMLSelectElement;
-  const natureInscription = screen.getByTestId(
-    "repertoire.natureInscription"
-  ) as HTMLSelectElement;
+  const numeroInscription: HTMLInputElement = screen.getByLabelText("repertoire.numeroInscription");
+  const typeRepertoire: HTMLSelectElement = screen.getByTestId("repertoire.typeRepertoire");
+  const natureInscription: HTMLSelectElement = screen.getByTestId("repertoire.natureInscription");
 
   fireEvent.change(numeroInscription, {
     target: {
@@ -149,20 +134,14 @@ test("Le champ Nature de l'inscription est désactivé par le choix de l'utilisa
   });
   fireEvent.input(typeRepertoire);
 
-  waitFor(() => {
-    expect(natureInscription.disabled).toBeTruthy();
-  });
+  expect(natureInscription.disabled).toBeTruthy();
 });
 
 test("Le champ Nature de l'inscription est désactivé car l'utilisateur n'a pas choisi de type de répertoire", () => {
   render(<HookRepertoireInscriptionFiltre />);
 
-  const numeroInscription = screen.getByLabelText(
-    "repertoire.numeroInscription"
-  ) as HTMLInputElement;
-  const natureInscription = screen.getByTestId(
-    "repertoire.natureInscription"
-  ) as HTMLSelectElement;
+  const numeroInscription: HTMLInputElement = screen.getByLabelText("repertoire.numeroInscription");
+  const natureInscription: HTMLSelectElement = screen.getByTestId("repertoire.natureInscription");
 
   fireEvent.change(numeroInscription, {
     target: {
@@ -170,17 +149,13 @@ test("Le champ Nature de l'inscription est désactivé car l'utilisateur n'a pas
     }
   });
 
-  waitFor(() => {
-    expect(natureInscription.disabled).toBeTruthy();
-  });
+  expect(natureInscription.disabled).toBeTruthy();
 });
 
 test("Un tiret est automatiquement ajouté après le 4ème caractère du numéro d'inscription", () => {
   render(<HookRepertoireInscriptionFiltre />);
 
-  const numeroInscription = screen.getByLabelText(
-    "repertoire.numeroInscription"
-  ) as HTMLInputElement;
+  const numeroInscription: HTMLInputElement = screen.getByLabelText("repertoire.numeroInscription");
 
   fireEvent.change(numeroInscription, {
     target: {
@@ -190,17 +165,13 @@ test("Un tiret est automatiquement ajouté après le 4ème caractère du numéro
 
   fireEvent.input(numeroInscription);
 
-  waitFor(() => {
-    expect(numeroInscription.value).toEqual("1982-6");
-  });
+  expect(numeroInscription.value).toEqual("1982-6");
 });
 
 test("Un tiret n'est pas ajouté après le 4ème caractère du numéro d'inscription si le 5ème caractère est lui-même un tiret", () => {
   render(<HookRepertoireInscriptionFiltre />);
 
-  const numeroInscription = screen.getByLabelText(
-    "repertoire.numeroInscription"
-  ) as HTMLInputElement;
+  const numeroInscription: HTMLInputElement = screen.getByLabelText("repertoire.numeroInscription");
 
   fireEvent.change(numeroInscription, {
     target: {
@@ -208,7 +179,5 @@ test("Un tiret n'est pas ajouté après le 4ème caractère du numéro d'inscrip
     }
   });
 
-  waitFor(() => {
-    expect(numeroInscription.value).toEqual("1982-");
-  });
+  expect(numeroInscription.value).toEqual("1982-");
 });

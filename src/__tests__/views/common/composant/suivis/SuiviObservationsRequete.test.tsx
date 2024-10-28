@@ -20,22 +20,16 @@ test("renders suivi des observations requete", () => {
   let elem1: HTMLElement;
   let elem2: HTMLElement;
 
-  waitFor(() => {
-    expect(titre.textContent).toBeDefined();
-    elem1 = screen.getByText(/LOS/i);
-    expect(elem1).toBeDefined();
-    expect(elem1.innerHTML).toBe(
-      "C'est vraiment dur de pouvo... - 02/01/1970 - LOS"
-    );
-    elem2 = screen.getByText(/BTC/i);
-    expect(elem2).toBeDefined();
-    expect(elem2.innerHTML).toBe(
-      "Je fais pas 30 charactères - 02/01/1970 - BTC"
-    );
-  });
+  expect(titre.textContent).toBeDefined();
+  elem1 = screen.getByText(/LOS/i);
+  expect(elem1).toBeDefined();
+  expect(elem1.innerHTML).toBe("C'est vraiment dur de pouvo... - 02/01/1970 - LOS");
+  elem2 = screen.getByText(/BTC/i);
+  expect(elem2).toBeDefined();
+  expect(elem2.innerHTML).toBe("Je fais pas 30 charactères - 02/01/1970 - BTC");
 });
 
-test("ajouter observation", () => {
+test("ajouter observation", async () => {
   render(
     elementAvecContexte(
       <SuiviObservationsRequete
@@ -48,9 +42,7 @@ test("ajouter observation", () => {
 
   fireEvent.click(screen.getByText("Ajouter une observation"));
 
-  waitFor(() => {
-    expect(screen.getByText("Saisissez l'observation")).toBeDefined();
-  });
+  expect(screen.getByText("Saisissez l'observation")).toBeDefined();
 
   fireEvent.change(screen.getByPlaceholderText("Description"), {
     target: {
@@ -58,32 +50,29 @@ test("ajouter observation", () => {
     }
   });
 
-  waitFor(() => {
-    expect(screen.getByText("salut")).toBeDefined();
-  });
+  expect(screen.getByText("salut")).toBeDefined();
 
   fireEvent.click(screen.getByText("Valider"));
 
-  waitFor(() => {
-    expect(screen.getByText(/salut - /i)).toBeDefined();
-  });
+  await waitFor(() => expect(screen.getByText(/salut - /i)).toBeDefined());
 });
 
-test("modifier observation", () => {
+test("modifier observation", async () => {
   render(
     elementAvecContexte(
-      <SuiviObservationsRequete observations={observations0} idRequete="123" />,
+      <SuiviObservationsRequete
+        observations={observations0}
+        idRequete="123"
+      />,
       userDroitnonCOMEDEC
     )
   );
 
   fireEvent.click(screen.getByText(/C'est vraiment dur/i));
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(
-      screen.getByText(
-        "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec"
-      )
+      screen.getByText("C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec")
     ).toBeDefined();
   });
 
@@ -93,32 +82,33 @@ test("modifier observation", () => {
     }
   });
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(screen.getByText("salut")).toBeDefined();
   });
 
   fireEvent.click(screen.getByText("Valider"));
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(screen.getByText(/salut - /i)).toBeDefined();
   });
 });
 
-test("supprimer observation", () => {
+test("supprimer observation", async () => {
   render(
     elementAvecContexte(
-      <SuiviObservationsRequete observations={observations1} idRequete="123" />,
+      <SuiviObservationsRequete
+        observations={observations1}
+        idRequete="123"
+      />,
       userDroitnonCOMEDEC
     )
   );
 
   fireEvent.click(screen.getByText("Supprimer l'observation"));
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(
-      screen.getByTitle(
-        "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec"
-      )
-    ).not.toBeDefined();
+      screen.queryByTitle("C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec")
+    ).toBeNull();
   });
 });

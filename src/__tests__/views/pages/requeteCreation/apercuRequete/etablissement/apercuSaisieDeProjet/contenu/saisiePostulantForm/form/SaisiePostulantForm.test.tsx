@@ -11,16 +11,13 @@ import {
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID
 } from "@router/ReceUrls";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { DEUX, UN, ZERO } from "@util/Utils";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../../../../__tests__utils__/testsUtil";
 
-function afficheComposantSaisiePostulantForm(
-  titulaires: ITitulaireRequeteCreation[],
-  avancement?: AvancementProjetActe
-): void {
+function afficheComposantSaisiePostulantForm(titulaires: ITitulaireRequeteCreation[], avancement?: AvancementProjetActe): void {
   const router = createTestingRouter(
     [
       {
@@ -31,12 +28,7 @@ function afficheComposantSaisiePostulantForm(
             estProjetExistant={false}
             onSubmitSaisieProjetForm={() => {}}
             avancementProjet={avancement}
-            valeursForm={mappingTitulairesVersFormulairePostulant(
-              titulaires[ZERO],
-              titulaires[UN],
-              titulaires[DEUX],
-              "NAISSANCE"
-            )}
+            valeursForm={mappingTitulairesVersFormulairePostulant(titulaires[ZERO], titulaires[UN], titulaires[DEUX], "NAISSANCE")}
           />
         )
       }
@@ -55,86 +47,60 @@ function afficheComposantSaisiePostulantForm(
 
 describe("Test du bloc Postulant de l'onglet Postulant", () => {
   test("DOIT afficher et renseigner les champs du bloc postulant QUAND le formulaire est affiché", () => {
-    const requete = mappingRequeteCreation(
-      requeteCreationEtablissementSaisieProjet
-    );
+    const requete = mappingRequeteCreation(requeteCreationEtablissementSaisieProjet);
     afficheComposantSaisiePostulantForm(requete.titulaires!);
 
-    const champNom = screen.getAllByLabelText("Nom") as HTMLInputElement[];
-    const champPrenom = screen.getAllByLabelText(
-      "Prénom"
-    ) as HTMLInputElement[];
-    const champIdentite = screen.getByLabelText(
-      "Identité avant décret"
-    ) as HTMLInputElement;
-    const champSexe = screen.getAllByLabelText(
-      "Masculin"
-    )[0] as HTMLInputElement;
-    const champJourNaissance = screen.getAllByText("Date de naissance")[0]
-      .nextElementSibling as HTMLInputElement;
-    const champMoisNaissance = champJourNaissance.nextElementSibling
-      ?.nextElementSibling as HTMLInputElement;
-    const champAnneeNaissance = champMoisNaissance.nextElementSibling
-      ?.nextElementSibling as HTMLInputElement;
+    const champNom: HTMLInputElement[] = screen.getAllByLabelText("Nom");
+    const champPrenom: HTMLInputElement[] = screen.getAllByLabelText("Prénom");
+    const champIdentite: HTMLInputElement = screen.getByLabelText("Identité avant décret");
+    const champSexe = screen.getAllByLabelText("Masculin")[0] as HTMLInputElement;
+    const champJourNaissance = screen.getAllByText("Date de naissance")[0].nextElementSibling as HTMLInputElement;
+    const champMoisNaissance = champJourNaissance.nextElementSibling?.nextElementSibling as HTMLInputElement;
+    const champAnneeNaissance = champMoisNaissance.nextElementSibling?.nextElementSibling as HTMLInputElement;
     const champVille = screen.getAllByLabelText("Ville")[0] as HTMLInputElement;
-    const champEtat = screen.getAllByLabelText(
-      "Etat, canton, province"
-    )[0] as HTMLInputElement;
+    const champEtat = screen.getAllByLabelText("Etat, canton, province")[0] as HTMLInputElement;
     const champPays = screen.getAllByLabelText("Pays")[0] as HTMLInputElement;
-    const champNeMariage = screen.getByLabelText("Non") as HTMLInputElement;
+    const champNeMariage: HTMLInputElement = screen.getByLabelText("Non");
 
-    waitFor(() => {
-      expect(champNom[0].value).toBe("NOMNAISSANCE");
-      expect(screen.getByText("Nom sécable")).toBeDefined();
-      expect(screen.queryByText("1re partie")).toBeNull();
-      expect(screen.getByText("Pas de prénom")).toBeDefined();
-      expect(champPrenom[0].value).toBe("Prenom");
-      expect(champNom[1].value).toBe("NOMFRANCISATION");
-      expect(champPrenom[1].value).toBe("Prenomfrancisation");
-      expect(champIdentite.value).toBe("");
-      expect(champSexe.checked).toBeTruthy();
-      expect(champJourNaissance.value).toBe("01");
-      expect(champMoisNaissance.value).toBe("02");
-      expect(champAnneeNaissance.value).toBe("2000");
-      expect(champVille.value).toBe("Villenaissance");
-      expect(champEtat.value).toBe("");
-      expect(champPays.value).toBe("Paysnaissance");
-      expect(champNeMariage.checked).toBeTruthy();
-      expect(screen.getByText("Adopté par")).toBeDefined();
-    });
+    expect(champNom[0].value).toBe("NOMNAISSANCE");
+    expect(screen.getByText("Nom sécable")).toBeDefined();
+    expect(screen.queryByText("1re partie")).toBeNull();
+    expect(screen.getByText("Pas de prénom")).toBeDefined();
+    expect(champPrenom[0].value).toBe("Prenom");
+    expect(champNom[1].value).toBe("NOMFRANCISATION");
+    expect(champPrenom[1].value).toBe("Prenomfrancisation");
+    expect(champIdentite.value).toBe("");
+    expect(champSexe.checked).toBeTruthy();
+    expect(champJourNaissance.value).toBe("01");
+    expect(champMoisNaissance.value).toBe("02");
+    expect(champAnneeNaissance.value).toBe("2000");
+    expect(champVille.value).toBe("Villenaissance");
+    expect(champEtat.value).toBe("");
+    expect(champPays.value).toBe("Paysnaissance");
+    expect(champNeMariage.checked).toBeTruthy();
+    expect(screen.getByText("Adopté par")).toBeDefined();
   });
+
   test("DOIT afficher un message d'attention QUAND le sexe est indéterminé", () => {
-    const requete = mappingRequeteCreation(
-      requeteCreationEtablissementSaisieProjet
-    );
+    const requete = mappingRequeteCreation(requeteCreationEtablissementSaisieProjet);
     afficheComposantSaisiePostulantForm(requete.titulaires!);
 
-    waitFor(() => {
-      expect(screen.queryByText("Attention, sexe indéterminé")).toBeNull();
-    });
+    expect(screen.queryByText("Attention, sexe indéterminé")).toBeNull();
 
     fireEvent.click(screen.getAllByLabelText("Indéterminé")[0]);
 
-    waitFor(() => {
-      expect(screen.getByText("Attention, sexe indéterminé")).toBeDefined();
-    });
+    expect(screen.getByText("Attention, sexe indéterminé")).toBeDefined();
   });
+
   test("DOIT afficher un message d'attention QUAND le postulant n'a pas de jour et mois de naissance", () => {
-    const requete = mappingRequeteCreation(
-      requeteCreationEtablissementSaisieProjet
-    );
+    const requete = mappingRequeteCreation(requeteCreationEtablissementSaisieProjet);
     requete.titulaires![0].retenueSdanf!.jourNaissance = undefined;
     requete.titulaires![0].retenueSdanf!.moisNaissance = undefined;
     afficheComposantSaisiePostulantForm(requete.titulaires!);
 
-    const champJourNaissance = screen.getAllByText("Date de naissance")[0]
-      .nextElementSibling as HTMLInputElement;
+    const champJourNaissance = screen.getAllByText("Date de naissance")[0].nextElementSibling as HTMLInputElement;
 
-    waitFor(() => {
-      expect(
-        screen.getByText("Jour et mois valorisés par défaut")
-      ).toBeDefined();
-    });
+    expect(screen.getByText("Jour et mois valorisés par défaut")).toBeDefined();
 
     fireEvent.input(champJourNaissance, {
       target: {
@@ -142,101 +108,58 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
       }
     });
 
-    waitFor(() => {
-      expect(
-        screen.queryByText("Jour et mois valorisés par défaut")
-      ).toBeNull();
-    });
+    expect(screen.queryByText("Jour et mois valorisés par défaut")).toBeNull();
   });
+
   test("DOIT rendre la sécabilité du nom sans message d'attention QUAND il y a seulement 2 vocables", () => {
-    const requete = mappingRequeteCreation(
-      requeteCreationEtablissementSaisieProjet
-    );
+    const requete = mappingRequeteCreation(requeteCreationEtablissementSaisieProjet);
     requete.titulaires![0].retenueSdanf!.nomNaissance = "Test1 Test2";
     requete.titulaires![0].retenueSdanf!.paysNaissance = "Cuba";
     afficheComposantSaisiePostulantForm(requete.titulaires!);
 
-    const champNomPartie1 = screen.getByLabelText(
-      "1re partie"
-    ) as HTMLInputElement;
-    const champNomPartie2 = screen.getByLabelText(
-      "2nde partie"
-    ) as HTMLInputElement;
+    const champNomPartie1: HTMLInputElement = screen.getByLabelText("1re partie");
+    const champNomPartie2: HTMLInputElement = screen.getByLabelText("2nde partie");
 
-    waitFor(() => {
-      expect(champNomPartie1.value).toBe("TEST1");
-      expect(champNomPartie2.value).toBe("TEST2");
-      expect(screen.queryByText("Nom avec plus de deux vocables")).toBeNull();
-    });
+    expect(champNomPartie1.value).toBe("TEST1");
+    expect(champNomPartie2.value).toBe("TEST2");
+    expect(screen.queryByText("Nom avec plus de deux vocables")).toBeNull();
   });
+
   test("DOIT afficher un message d'attention QUAND le pays de naissance est sécable et que le nom a plus de 2 vocables", () => {
-    const requete = mappingRequeteCreation(
-      requeteCreationEtablissementSaisieProjet
-    );
+    const requete = mappingRequeteCreation(requeteCreationEtablissementSaisieProjet);
     requete.titulaires![0].retenueSdanf!.nomNaissance = "Test1 Test2 Test3";
     requete.titulaires![0].retenueSdanf!.paysNaissance = "Cuba";
     afficheComposantSaisiePostulantForm(requete.titulaires!);
 
-    const champNomPartie1 = screen.getByLabelText(
-      "1re partie"
-    ) as HTMLInputElement;
-    const champNomPartie2 = screen.getByLabelText(
-      "2nde partie"
-    ) as HTMLInputElement;
+    const champNomPartie1: HTMLInputElement = screen.getByLabelText("1re partie");
+    const champNomPartie2: HTMLInputElement = screen.getByLabelText("2nde partie");
 
-    waitFor(() => {
-      expect(champNomPartie1.value).toBe("TEST1");
-      expect(champNomPartie2.value).toBe("TEST2 TEST3");
-      expect(screen.getByText("Nom avec plus de deux vocables")).toBeDefined();
-    });
+    expect(champNomPartie1.value).toBe("TEST1");
+    expect(champNomPartie2.value).toBe("TEST2 TEST3");
+    expect(screen.getByText("Nom avec plus de deux vocables")).toBeDefined();
   });
+
   test("DOIT afficher le formulaire d'acquisition QUAND l'avancement est a signer'.", () => {
-    const requete = mappingRequeteCreation(
-      requeteCreationEtablissementSaisieProjet
-    );
-    afficheComposantSaisiePostulantForm(
-      requete.titulaires!,
-      AvancementProjetActe.A_SIGNER
-    );
-    waitFor(() => {
-      expect(screen.queryByTitle("Acquisition")).toBeDefined();
-    });
+    const requete = mappingRequeteCreation(requeteCreationEtablissementSaisieProjet);
+    afficheComposantSaisiePostulantForm(requete.titulaires!, AvancementProjetActe.A_SIGNER);
+    expect(screen.queryByTitle("Acquisition")).toBeDefined();
   });
+
   test("NE DOIT PAS afficher le formulaire d'acquisition QUAND l'avancement est a saisir'.", () => {
-    const requete = mappingRequeteCreation(
-      requeteCreationEtablissementSaisieProjet
-    );
-    afficheComposantSaisiePostulantForm(
-      requete.titulaires!,
-      AvancementProjetActe.A_SAISIR
-    );
-    waitFor(() => {
-      expect(screen.queryByTitle("Acquisition")).toBeNull();
-    });
+    const requete = mappingRequeteCreation(requeteCreationEtablissementSaisieProjet);
+    afficheComposantSaisiePostulantForm(requete.titulaires!, AvancementProjetActe.A_SAISIR);
+    expect(screen.queryByTitle("Acquisition")).toBeNull();
   });
 
   test("NE DOIT PAS afficher le formulaire d'acquisition QUAND l'avancement est en cours'.", () => {
-    const requete = mappingRequeteCreation(
-      requeteCreationEtablissementSaisieProjet
-    );
-    afficheComposantSaisiePostulantForm(
-      requete.titulaires!,
-      AvancementProjetActe.EN_COURS
-    );
-    waitFor(() => {
-      expect(screen.queryByTitle("Acquisition")).not.toBeDefined();
-    });
+    const requete = mappingRequeteCreation(requeteCreationEtablissementSaisieProjet);
+    afficheComposantSaisiePostulantForm(requete.titulaires!, AvancementProjetActe.EN_COURS);
+    expect(screen.queryByTitle("Acquisition")).toBeNull();
   });
+
   test("NE DOIT PAS afficher le formulaire d'acquisition QUAND l'avancement est valide'.", () => {
-    const requete = mappingRequeteCreation(
-      requeteCreationEtablissementSaisieProjet
-    );
-    afficheComposantSaisiePostulantForm(
-      requete.titulaires!,
-      AvancementProjetActe.VALIDE
-    );
-    waitFor(() => {
-      expect(screen.queryByTitle("Acquisition")).not.toBeDefined();
-    });
+    const requete = mappingRequeteCreation(requeteCreationEtablissementSaisieProjet);
+    afficheComposantSaisiePostulantForm(requete.titulaires!, AvancementProjetActe.VALIDE);
+    expect(screen.queryByTitle("Acquisition")).toBeNull();
   });
 });

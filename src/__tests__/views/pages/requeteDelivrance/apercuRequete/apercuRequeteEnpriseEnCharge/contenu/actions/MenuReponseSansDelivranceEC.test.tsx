@@ -6,7 +6,7 @@ import {
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_DELIVRANCE_EDITION_ID
 } from "@router/ReceUrls";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
@@ -20,25 +20,18 @@ test("renders du bloc Menu Reponse sans délivrance", () => {
         element: <MenuReponseSansDelivranceEC requete={requeteRDC} />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        idRequeteRDC
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, idRequeteRDC)]
   );
 
   render(<RouterProvider router={router} />);
 
-  waitFor(() => {
-    expect(screen.getByText(/Requête incomplète+/)).toBeDefined();
-    expect(screen.getByText(/Acte non détenu au SCEC+/)).toBeDefined();
-    expect(screen.getByText(/Divers+/)).toBeDefined();
-    expect(screen.getByText(/Ignorer la requête+/)).toBeDefined();
-  });
+  expect(screen.getByText(/Requête incomplète+/)).toBeDefined();
+  expect(screen.getByText(/Acte non détenu au SCEC+/)).toBeDefined();
+  expect(screen.getByText(/Divers+/)).toBeDefined();
+  expect(screen.getByText(/Ignorer la requête+/)).toBeDefined();
 });
 
-test.skip("Réponse requête incomplète", () => {
+test("Réponse requête incomplète", async () => {
   const router = createTestingRouter(
     [
       {
@@ -50,22 +43,13 @@ test.skip("Réponse requête incomplète", () => {
         element: <MenuReponseSansDelivranceEC requete={requeteRDC} />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        idRequeteRDC
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, idRequeteRDC)]
   );
 
   render(<RouterProvider router={router} />);
-  fireEvent.click(screen.getByText(/Requête incomplète+/));
+  await act(() => fireEvent.click(screen.getByText(/Requête incomplète+/)));
 
-  waitFor(() => {
-    expect(router.state.location.pathname).toBe(
-      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${idRequeteRDC}/`
-    );
-  });
+  expect(router.state.location.pathname).toBe(`${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${idRequeteRDC}/`);
 });
 
 test("Réponse acte non détenu", async () => {
@@ -80,25 +64,18 @@ test("Réponse acte non détenu", async () => {
         element: <MenuReponseSansDelivranceEC requete={requeteRDC} />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        idRequeteRDC
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, idRequeteRDC)]
   );
 
   render(<RouterProvider router={router} />);
   fireEvent.click(screen.getByText(/Acte non détenu+/));
 
   await waitFor(() => {
-    expect(router.state.location.pathname).toBe(
-      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${idRequeteRDC}/`
-    );
+    expect(router.state.location.pathname).toBe(`${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${idRequeteRDC}/`);
   });
 });
 
-test("Réponse divers", () => {
+test("Réponse divers", async () => {
   const router = createTestingRouter(
     [
       {
@@ -110,25 +87,18 @@ test("Réponse divers", () => {
         element: <MenuReponseSansDelivranceEC requete={requeteRDC} />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        idRequeteRDC
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, idRequeteRDC)]
   );
 
   render(<RouterProvider router={router} />);
   fireEvent.click(screen.getByText(/Divers+/));
 
-  waitFor(() => {
-    expect(router.state.location.pathname).toBe(
-      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${idRequeteRDC}/`
-    );
+  await waitFor(() => {
+    expect(router.state.location.pathname).toBe(`${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${idRequeteRDC}/`);
   });
 });
 
-test("Réponse ignorer", () => {
+test("Réponse ignorer", async () => {
   const router = createTestingRouter(
     [
       {
@@ -140,12 +110,7 @@ test("Réponse ignorer", () => {
         element: <MenuReponseSansDelivranceEC requete={requeteRDC} />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        idRequeteRDC
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, idRequeteRDC)]
   );
 
   render(<RouterProvider router={router} />);
@@ -154,9 +119,8 @@ test("Réponse ignorer", () => {
 
   fireEvent.click(screen.getByText(/Ignorer+/));
 
-  const valider = screen.getByText("Valider") as HTMLButtonElement;
-
-  waitFor(() => {
+  await waitFor(() => {
+    const valider: HTMLButtonElement = screen.getByText("Valider");
     expect(valider.disabled).toBeTruthy();
   });
 });

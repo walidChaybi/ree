@@ -1,8 +1,5 @@
 import { PRENOMS } from "@composant/formulaire/ConstantesNomsForm";
-import PrenomsForm, {
-  creerValidationSchemaPrenom,
-  genererDefaultValuesPrenoms
-} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import PrenomsForm, { creerValidationSchemaPrenom, genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
@@ -31,18 +28,20 @@ const HookPrenomsForm: React.FC = () => {
       <Form>
         <PrenomsForm {...prenomsFormProps} />
         <button type="submit">Submit</button>
-        <Field as="textarea" value={result} data-testid="result" />
+        <Field
+          as="textarea"
+          value={result}
+          data-testid="result"
+        />
       </Form>
     </Formik>
   );
 };
 
-test("render composant Prenoms Formulaire", () => {
+test("render composant Prenoms Formulaire", async () => {
   render(<HookPrenomsForm />);
 
-  const inputPrenom1 = screen.getByLabelText(
-    "prenoms.prenom1"
-  ) as HTMLInputElement;
+  const inputPrenom1: HTMLInputElement = screen.getByLabelText("prenoms.prenom1");
 
   waitFor(() => {
     expect(inputPrenom1).toBeDefined();
@@ -61,7 +60,7 @@ test("render composant Prenoms Formulaire", () => {
 
   const result = screen.getByTestId("result");
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(result.innerHTML).toBe(
       '{"prenoms":{"prenom1":"mockPrenom1","prenom2":"","prenom3":"","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":"","prenom13":"","prenom14":"","prenom15":""}}'
     );
@@ -71,9 +70,7 @@ test("render composant Prenoms Formulaire", () => {
 test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async () => {
   render(<HookPrenomsForm />);
 
-  const inputPrenom1 = screen.getByLabelText(
-    "prenoms.prenom1"
-  ) as HTMLInputElement;
+  const inputPrenom1: HTMLInputElement = screen.getByLabelText("prenoms.prenom1");
 
   waitFor(() => {
     expect(inputPrenom1).toBeDefined();
@@ -89,9 +86,7 @@ test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async (
   fireEvent.blur(inputPrenom1);
   fireEvent.click(ajoutPrenom);
 
-  const inputPrenom2 = screen.getByLabelText(
-    "prenoms.prenom2"
-  ) as HTMLInputElement;
+  const inputPrenom2: HTMLInputElement = screen.getByLabelText("prenoms.prenom2");
 
   fireEvent.change(inputPrenom2, {
     target: {
@@ -104,13 +99,9 @@ test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async (
   fireEvent.blur(inputPrenom2);
   fireEvent.click(ajoutPrenom2);
 
-  const inputPrenom3 = screen.getByLabelText(
-    "prenoms.prenom3"
-  ) as HTMLInputElement;
+  const inputPrenom3: HTMLInputElement = screen.getByLabelText("prenoms.prenom3");
 
-  waitFor(() => {
-    expect(inputPrenom3).toBeDefined();
-  });
+  expect(inputPrenom3).toBeDefined();
 
   fireEvent.change(inputPrenom3, {
     target: {
@@ -125,7 +116,7 @@ test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async (
 
   const result = screen.getByTestId("result");
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(result.innerHTML).toBe(
       '{"prenoms":{"prenom1":"mockPrenom1","prenom2":"mockprenom2","prenom3":"mockprenom3","prenom4":"","prenom5":"","prenom6":"","prenom7":"","prenom8":"","prenom9":"","prenom10":"","prenom11":"","prenom12":"","prenom13":"","prenom14":"","prenom15":""}}'
     );
@@ -147,15 +138,11 @@ test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async (
 test("DOIT afficher Prénom QAND il n'y a qu'un seul prénom et Prénom 1 QUAND il y en a plusieurs", () => {
   render(<HookPrenomsForm />);
 
-  waitFor(() => {
-    expect(screen.getByText("Prénom")).toBeDefined();
-    expect(screen.queryByText("Prénom 1")).toBeNull();
-  });
+  expect(screen.getByText("Prénom")).toBeDefined();
+  expect(screen.queryByText("Prénom 1")).toBeNull();
 
   fireEvent.click(screen.getByText(/Ajouter prénom/i));
 
-  waitFor(() => {
-    expect(screen.queryByText("Prénom")).toBeNull();
-    expect(screen.getByText("Prénom 1")).toBeDefined();
-  });
+  expect(screen.queryByText("Prénom")).toBeNull();
+  expect(screen.getByText("Prénom 1")).toBeDefined();
 });

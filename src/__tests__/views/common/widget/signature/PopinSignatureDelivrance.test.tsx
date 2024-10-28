@@ -1,16 +1,11 @@
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import {
-  createEvent,
-  fireEvent,
-  render,
-  waitFor
-} from "@testing-library/react";
+import { createEvent, fireEvent, render, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { PopinSignatureDelivrance } from "@widget/signature/PopinSignatureDelivrance";
 import { expect, test } from "vitest";
 import { acte } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
 
-test("renders PopinSignatureDelivrance, signature event is received and success displayed", () => {
+test("renders PopinSignatureDelivrance, signature event is received and success displayed", async () => {
   const { getByText } = render(
     <PopinSignatureDelivrance
       documentsByRequete={{
@@ -53,16 +48,14 @@ test("renders PopinSignatureDelivrance, signature event is received and success 
       { EventType: "CustomEvent" }
     )
   );
-  waitFor(() => {
-    const successMsg = getByText(
-      "Le(s) document(s) de la requête n°1 a (ont) été signé(s) le",
-      { exact: false }
-    );
+
+  await waitFor(() => {
+    const successMsg = getByText("Le(s) document(s) de la requête n°1 a (ont) été signé(s) le", { exact: false });
     expect(successMsg).toBeDefined();
   });
 });
 
-test("renders PopinSignatureDelivrance, signature event is received and error displayed", () => {
+test("renders PopinSignatureDelivrance, signature event is received and error displayed", async () => {
   // Désactivation de la log car l'erreur loguée est normale
   storeRece.logErrorDesactive = true;
   const { getByText } = render(
@@ -110,7 +103,8 @@ test("renders PopinSignatureDelivrance, signature event is received and error di
       { EventType: "CustomEvent" }
     )
   );
-  waitFor(() => {
+
+  await waitFor(() => {
     const errorCode = getByText("Requête n°1");
     const errorMsg = getByText("Erreur technique inconnue");
     expect(errorCode).toBeDefined();
@@ -119,7 +113,7 @@ test("renders PopinSignatureDelivrance, signature event is received and error di
   storeRece.logErrorDesactive = false;
 });
 
-test("renders PopinSignatureDelivrance, code erroné", () => {
+test("renders PopinSignatureDelivrance, code erroné", async () => {
   // Désactivation de la log car l'erreur loguée est normale
   storeRece.logErrorDesactive = true;
   const { getByText } = render(
@@ -167,7 +161,8 @@ test("renders PopinSignatureDelivrance, code erroné", () => {
       { EventType: "CustomEvent" }
     )
   );
-  waitFor(() => {
+
+  await waitFor(() => {
     const errorMsg = getByText("Code PIN invalide");
     expect(errorMsg).toBeDefined();
   });
