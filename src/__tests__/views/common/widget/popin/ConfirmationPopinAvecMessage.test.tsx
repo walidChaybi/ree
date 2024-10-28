@@ -12,15 +12,11 @@ interface HookConsummerConfirmationPopinAvecMessageProps {
   message?: string;
   nomPrenom?: any;
 }
-const HookConsummerConfirmationPopin: React.FC<
-  HookConsummerConfirmationPopinAvecMessageProps
-> = (props: any) => {
+const HookConsummerConfirmationPopin: React.FC<HookConsummerConfirmationPopinAvecMessageProps> = (props: any) => {
   const [display, setDisplay] = useState(true);
   const [disabled, setDisabled] = useState(true);
   const [message, setMessage] = useState(props.message);
-  const [messageErreur, setMessageErreur] = useState<string>(
-    props.messageErreur
-  );
+  const [messageErreur, setMessageErreur] = useState<string>(props.messageErreur);
 
   useEffect(() => {
     if (message === "") setDisabled(true);
@@ -72,13 +68,18 @@ const HookConsummerConfirmationPopin: React.FC<
 };
 
 describe("Popin avec confirmation et message", () => {
-  test("Doit désactiver le bouton d'envoi si le message est vide et activer si le message n'est pas vide", () => {
+  test("Doit désactiver le bouton d'envoi si le message est vide et activer si le message n'est pas vide", async () => {
     const valider = vi.fn();
 
-    render(<HookConsummerConfirmationPopin valider={valider} message={""} />);
+    render(
+      <HookConsummerConfirmationPopin
+        valider={valider}
+        message={""}
+      />
+    );
 
-    let boutonValiderMessage = screen.getByText("Valider") as HTMLButtonElement;
-    waitFor(() => {
+    let boutonValiderMessage: HTMLButtonElement = screen.getByText("Valider");
+    await waitFor(() => {
       expect(boutonValiderMessage.disabled).toBeTruthy();
     });
 
@@ -90,37 +91,33 @@ describe("Popin avec confirmation et message", () => {
     expect(boutonValiderMessage.disabled).not.toBeTruthy();
   });
 
-  test("Attendu la popin ConfirmationPopinAvecMessage, le bouton 'Annuler' fonctionne correctement", () => {
+  test("Attendu la popin ConfirmationPopinAvecMessage, le bouton 'Annuler' fonctionne correctement", async () => {
     const fermerPopin = vi.fn();
 
     render(<HookConsummerConfirmationPopin fermerPopin={fermerPopin} />);
 
     let boutonAnnuler: HTMLElement;
-    waitFor(() => {
+    await waitFor(() => {
       boutonAnnuler = screen.getByText("Annuler");
       expect(boutonAnnuler).toBeDefined();
     });
 
     fireEvent.click(boutonAnnuler!);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(fermerPopin).toHaveBeenCalledTimes(1);
-    });
-
-    waitFor(() => {
-      expect(boutonAnnuler).not.toBeDefined();
+      // Test incorrect, bouton toujours présent dans le DOM (hidden)
+      // expect(boutonAnnuler).toBeNull();
     });
   });
 
-  test("Attendu la popin ConfirmationPopinAvecMessage, le bouton 'Valider' fonctionne correctement", () => {
+  test("Attendu la popin ConfirmationPopinAvecMessage, le bouton 'Valider' fonctionne correctement", async () => {
     const envoyerMessageRetourSDANF = vi.fn();
 
-    render(
-      <HookConsummerConfirmationPopin valider={envoyerMessageRetourSDANF} />
-    );
+    render(<HookConsummerConfirmationPopin valider={envoyerMessageRetourSDANF} />);
 
     let boutonValider = screen.getByText("Valider");
-    waitFor(() => {
+    await waitFor(() => {
       expect(boutonValider).toBeDefined();
     });
 
@@ -131,36 +128,30 @@ describe("Popin avec confirmation et message", () => {
 
     fireEvent.click(boutonValider);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(envoyerMessageRetourSDANF).toHaveBeenCalledTimes(1);
-    });
-
-    waitFor(() => {
-      expect(boutonValider).not.toBeDefined();
+      // Test incorrect, bouton toujours présent dans le DOM (hidden)
+      // expect(boutonValider).toBeNull();
     });
   });
 
-  test("Doit afficher le titre quand il est présent dans les props", () => {
+  test("Doit afficher le titre quand il est présent dans les props", async () => {
     render(<HookConsummerConfirmationPopin title={"Je suis un titre"} />);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.getByText("Je suis un titre")).toBeDefined();
     });
   });
 
-  test("Doit afficher le message d'erreur quand il est présent", () => {
-    render(
-      <HookConsummerConfirmationPopin
-        messageErreur={"Je suis un message d'erreur"}
-      />
-    );
+  test("Doit afficher le message d'erreur quand il est présent", async () => {
+    render(<HookConsummerConfirmationPopin messageErreur={"Je suis un message d'erreur"} />);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.getByText("Je suis un message d'erreur")).toBeDefined();
     });
   });
 
-  test("Doit afficher un message d'erreur si le message est supérieur à 500 caractères", () => {
+  test("Doit afficher un message d'erreur si le message est supérieur à 500 caractères", async () => {
     render(<HookConsummerConfirmationPopin />);
 
     const message =
@@ -171,32 +162,30 @@ describe("Popin avec confirmation et message", () => {
       target: { value: message }
     });
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.getByText("500 caractères maximum")).toBeDefined();
     });
   });
 
-  test("Doit activer le bouton de soumission si le message SDANF n'est pas vide", () => {
+  test("Doit activer le bouton de soumission si le message SDANF n'est pas vide", async () => {
     render(<HookConsummerConfirmationPopin message={"Message"} />);
 
-    let boutonValiderMessage = screen.getByText("Valider") as HTMLButtonElement;
+    let boutonValiderMessage: HTMLButtonElement = screen.getByText("Valider");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(boutonValiderMessage.disabled).not.toBeTruthy();
     });
   });
 
-  test("Doit vider l'area après l'envoi d'un message", () => {
+  test("Doit vider l'area après l'envoi d'un message", async () => {
     const envoyerMessageRetourSDANF = vi.fn();
 
-    render(
-      <HookConsummerConfirmationPopin valider={envoyerMessageRetourSDANF} />
-    );
+    render(<HookConsummerConfirmationPopin valider={envoyerMessageRetourSDANF} />);
 
-    let boutonValider = screen.getByText("Valider") as HTMLButtonElement;
+    let boutonValider: HTMLButtonElement = screen.getByText("Valider");
     let textArea: HTMLAreaElement;
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(boutonValider).toBeDefined();
     });
 
@@ -207,12 +196,9 @@ describe("Popin avec confirmation et message", () => {
 
     fireEvent.click(boutonValider);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(envoyerMessageRetourSDANF).toHaveBeenCalledTimes(1);
-    });
-
-    waitFor(() => {
-      expect(textArea).toBe("");
+      expect(textArea.innerHTML).toBe("");
       expect(boutonValider.disabled).toBeTruthy();
     });
   });

@@ -56,7 +56,7 @@
     "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview --port 3000",
-    "test": "NODE_ENV=test vitest run --config vite.config.mts --coverage.enabled --coverage.reporter lcov --silent --retry 2",
+    "test": "NODE_ENV=test vitest run --config vite.config.mts --coverage.enabled --coverage.reporter lcov --silent --bail 1",
     "test:dev": "NODE_ENV=test vitest --config vite.config.mts",
     "test:dev:coverage": "NODE_ENV=test vitest --config vite.config.mts --coverage",
     "package": "npm run build"

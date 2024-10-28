@@ -29,7 +29,7 @@ import {
 } from "@router/ReceUrls";
 import { FenetreExterneUtil } from "@util/FenetreExterne";
 import { logError } from "@util/LogManager";
-import { UN } from "@util/Utils";
+import { UN, ZERO } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
@@ -39,13 +39,7 @@ import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import { BarreNavigationSuivPrec } from "@widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
@@ -71,10 +65,7 @@ export interface FichePageProps {
   provenanceRequete?: string;
   nbLignesTotales: number;
   nbLignesParAppel: number;
-  getLignesSuivantesOuPrecedentes?: (
-    ficheIdentifiant: string,
-    lien: string
-  ) => void;
+  getLignesSuivantesOuPrecedentes?: (ficheIdentifiant: string, lien: string) => void;
 }
 
 export interface IDataFicheProps {
@@ -96,24 +87,18 @@ export const FichePage: React.FC<FichePageProps> = ({
   getLignesSuivantesOuPrecedentes
 }) => {
   const navigate = useNavigate();
-  const [actualisationInfosFiche, setActualisationInfosFiche] =
-    useState<boolean>(false);
-  const [dataFicheCourante, setDataFicheCourante] = useState<
-    IDataFicheProps | undefined
-  >(datasFiches[getIndexLocal(index.value, nbLignesParAppel)]);
-  const [optionMiseAJour, setOptionMiseAJour] =
-    useState<EOptionMiseAJourActe | null>(null);
+  const [actualisationInfosFiche, setActualisationInfosFiche] = useState<boolean>(false);
+  const [dataFicheCourante, setDataFicheCourante] = useState<IDataFicheProps | undefined>(
+    datasFiches[getIndexLocal(index.value, nbLignesParAppel)]
+  );
+  const [optionMiseAJour, setOptionMiseAJour] = useState<EOptionMiseAJourActe | null>(null);
   // index courant sur la totalité des données
   const [indexCourant, setIndexCourant] = useState<number>(index.value);
 
-  const { appelApi: appelPostRequeteMiseAJour } = useFetchApi(
-    CONFIG_POST_REQUETE_MISE_A_JOUR
-  );
+  const { appelApi: appelPostRequeteMiseAJour } = useFetchApi(CONFIG_POST_REQUETE_MISE_A_JOUR);
 
   useEffect(() => {
-    setDataFicheCourante(
-      datasFiches[getIndexLocal(indexCourant, nbLignesParAppel)]
-    );
+    setDataFicheCourante(datasFiches[getIndexLocal(indexCourant, nbLignesParAppel)]);
   }, [datasFiches]);
 
   // (*) Permet de résoudre le pb de la fenêtre fiche déjà ouverte
@@ -122,9 +107,7 @@ export const FichePage: React.FC<FichePageProps> = ({
   // A noté que ce useEffect passe après le précédent et qu'il écrase donc la dataFicheCourante précédemment mise à jour par le useEffect ci-dessus
   useEffect(() => {
     setIndexCourant(index.value);
-    setDataFicheCourante(
-      datasFiches[getIndexLocal(index.value, nbLignesParAppel)]
-    );
+    setDataFicheCourante(datasFiches[getIndexLocal(index.value, nbLignesParAppel)]);
   }, [index]);
 
   const { utilisateurConnecte } = useContext(RECEContextData);
@@ -136,28 +119,14 @@ export const FichePage: React.FC<FichePageProps> = ({
     estConsultation
   );
 
-  const { bandeauFiche, panelsFiche, alertes, visuBoutonAlertes } = setFiche(
-    utilisateurConnecte,
-    dataFicheCourante,
-    dataFicheState.data
-  );
+  const { bandeauFiche, panelsFiche, alertes, visuBoutonAlertes } = setFiche(utilisateurConnecte, dataFicheCourante, dataFicheState.data);
 
   const droitsMiseAJour = useMemo(() => {
-    const droitMentions = officierHabiliterPourLeDroit(
-      utilisateurConnecte,
-      Droit.METTRE_A_JOUR_ACTE
-    );
-    const droitAnalyseMarginale = officierHabiliterPourLeDroit(
-      utilisateurConnecte,
-      Droit.MODIFIER_ANALYSE_MARGINALE
-    );
+    const droitMentions = officierHabiliterPourLeDroit(utilisateurConnecte, Droit.METTRE_A_JOUR_ACTE);
+    const droitAnalyseMarginale = officierHabiliterPourLeDroit(utilisateurConnecte, Droit.MODIFIER_ANALYSE_MARGINALE);
 
     return {
-      autorise:
-        OrigineActe.estRece(
-          OrigineActe.getEnumFor(dataFicheState?.data?.origine)
-        ) &&
-        (droitMentions || droitAnalyseMarginale),
+      autorise: OrigineActe.estRece(OrigineActe.getEnumFor(dataFicheState?.data?.origine)) && (droitMentions || droitAnalyseMarginale),
       mentions: droitMentions,
       AnalyseMarginale: droitAnalyseMarginale
     };
@@ -169,22 +138,16 @@ export const FichePage: React.FC<FichePageProps> = ({
       return;
     }
 
-    const estAnalyseMarginale =
-      optionMiseAJour === EOptionMiseAJourActe.ANALYSE_MARGINALE;
-    const sousTypeOptionMiseAJour =
-      OptionMiseAJourActe.getSousType(optionMiseAJour);
+    const estAnalyseMarginale = optionMiseAJour === EOptionMiseAJourActe.ANALYSE_MARGINALE;
+    const sousTypeOptionMiseAJour = OptionMiseAJourActe.getSousType(optionMiseAJour);
 
     appelPostRequeteMiseAJour({
       parametres: {
         body: {
           idActeMAJ: idActe,
-          choixMAJ: estAnalyseMarginale
-            ? "MAJ_ACTE_ANALYSE_MARGINALE"
-            : "MAJ_ACTE_APPOSER_MENTION",
+          choixMAJ: estAnalyseMarginale ? "MAJ_ACTE_ANALYSE_MARGINALE" : "MAJ_ACTE_APPOSER_MENTION",
           sousType: sousTypeOptionMiseAJour.nom,
-          titulaires: TitulaireRequeteMiseAJour.listeDepuisDonneesFiche(
-            dataFicheState.data.titulaires
-          )
+          titulaires: TitulaireRequeteMiseAJour.listeDepuisDonneesFiche(dataFicheState.data.titulaires)
         }
       },
       apresSucces: reponse => {
@@ -203,11 +166,12 @@ export const FichePage: React.FC<FichePageProps> = ({
 
         navigate(urlNavigation);
       },
-      apresErreur: erreur => {
+      apresErreur: erreurs => {
+        const messageErreur = erreurs[ZERO]?.code === "FCT_15181" ? erreurs[ZERO]?.message : "";
+
         logError({
-          error: erreur,
-          messageUtilisateur:
-            "Impossible d'accéder à la requete de mise a jour de l'acte"
+          error: erreurs,
+          messageUtilisateur: messageErreur || "Impossible d'accéder à la requête de mise à jour de l'acte"
         });
       },
       finalement: () => setOptionMiseAJour(null)
@@ -216,10 +180,7 @@ export const FichePage: React.FC<FichePageProps> = ({
 
   // Obligatoire pour les styles qui sont chargés dynamiquement
   useEffect(() => {
-    if (
-      dataFicheState.data &&
-      dataFicheState.data.id === dataFicheCourante?.identifiant
-    ) {
+    if (dataFicheState.data && dataFicheState.data.id === dataFicheCourante?.identifiant) {
       if (dataFicheState.data != null) {
         const event = new CustomEvent("refreshStyles");
         if (window.top) {
@@ -230,70 +191,35 @@ export const FichePage: React.FC<FichePageProps> = ({
         fenetreExterneUtil.ref.document.title = bandeauFiche.titreFenetre;
       }
     }
-  }, [
-    dataFicheState.data,
-    fenetreExterneUtil,
-    bandeauFiche,
-    dataFicheCourante
-  ]);
+  }, [dataFicheState.data, fenetreExterneUtil, bandeauFiche, dataFicheCourante]);
 
   const obtenirFicheSuivante = useCallback(
     (idxLocal: number, idx: number) => {
-      if (
-        getLignesSuivantesOuPrecedentes &&
-        dataFicheCourante?.lienSuivant &&
-        passageALaPlageSuivante(idxLocal, idx)
-      ) {
+      if (getLignesSuivantesOuPrecedentes && dataFicheCourante?.lienSuivant && passageALaPlageSuivante(idxLocal, idx)) {
         // On est en dehors de la plage courante (ie datasFiches) il faut faire un appel serveur pour obtenir la plage suivante
-        getLignesSuivantesOuPrecedentes(
-          dataFicheIdentifiant,
-          dataFicheCourante.lienSuivant
-        );
+        getLignesSuivantesOuPrecedentes(dataFicheIdentifiant, dataFicheCourante.lienSuivant);
       } else {
         setDataFicheCourante(datasFiches[idxLocal]);
       }
     },
-    [
-      dataFicheCourante,
-      dataFicheIdentifiant,
-      datasFiches,
-      getLignesSuivantesOuPrecedentes
-    ]
+    [dataFicheCourante, dataFicheIdentifiant, datasFiches, getLignesSuivantesOuPrecedentes]
   );
 
   const obtenirFichePrecedente = useCallback(
     (idx: number, idxLocal: number) => {
-      if (
-        getLignesSuivantesOuPrecedentes &&
-        dataFicheCourante?.lienPrecedent &&
-        passageALaPlagePrecedente(idx, nbLignesParAppel)
-      ) {
+      if (getLignesSuivantesOuPrecedentes && dataFicheCourante?.lienPrecedent && passageALaPlagePrecedente(idx, nbLignesParAppel)) {
         // On est en dehors de la plage courante (ie datasFiches) il faut faire un appel serveur pour obtenir la plage précédente
-        getLignesSuivantesOuPrecedentes(
-          dataFicheIdentifiant,
-          dataFicheCourante.lienPrecedent
-        );
+        getLignesSuivantesOuPrecedentes(dataFicheIdentifiant, dataFicheCourante.lienPrecedent);
       } else {
         setDataFicheCourante(datasFiches[idxLocal]);
       }
     },
-    [
-      dataFicheCourante,
-      dataFicheIdentifiant,
-      datasFiches,
-      getLignesSuivantesOuPrecedentes,
-      nbLignesParAppel
-    ]
+    [dataFicheCourante, dataFicheIdentifiant, datasFiches, getLignesSuivantesOuPrecedentes, nbLignesParAppel]
   );
 
   const setIndexFiche = useCallback(
     (idx: number) => {
-      if (
-        dataFicheCourante &&
-        datasFiches &&
-        idx >= 0 &&
-        idx < nbLignesTotales
-      ) {
+      if (dataFicheCourante && datasFiches && idx >= 0 && idx < nbLignesTotales) {
         if (idx > indexCourant) {
           obtenirFicheSuivante(getIndexLocal(idx, nbLignesParAppel), idx);
         } else {
@@ -302,22 +228,11 @@ export const FichePage: React.FC<FichePageProps> = ({
       }
       setIndexCourant(idx);
     },
-    [
-      dataFicheCourante,
-      datasFiches,
-      indexCourant,
-      nbLignesParAppel,
-      nbLignesTotales,
-      obtenirFichePrecedente,
-      obtenirFicheSuivante
-    ]
+    [dataFicheCourante, datasFiches, indexCourant, nbLignesParAppel, nbLignesTotales, obtenirFichePrecedente, obtenirFicheSuivante]
   );
 
   /* Ajout d'une alerte */
-  const [
-    ajouterAlerteActeApiHookParameters,
-    setAjouterAlerteActeApiHookParameters
-  ] = useState<AddAlerteActeApiHookParameters>();
+  const [ajouterAlerteActeApiHookParameters, setAjouterAlerteActeApiHookParameters] = useState<AddAlerteActeApiHookParameters>();
 
   const ajouterAlerteCallBack = useCallback(
     (value: IAjouterAlerteFormValue) => {
@@ -338,24 +253,16 @@ export const FichePage: React.FC<FichePageProps> = ({
   }, [alerte]);
 
   /* Suppression d'une alerte */
-  const [
-    deleteAlerteActeApiHookParameters,
-    setDeleteAlerteActeApiHookParameters
-  ] = useState<DeleteAlerteActeApiHookParameters>();
+  const [deleteAlerteActeApiHookParameters, setDeleteAlerteActeApiHookParameters] = useState<DeleteAlerteActeApiHookParameters>();
 
-  const supprimerAlerteCallBack = useCallback(
-    (idAlerteActe: string, idActe: string) => {
-      setDeleteAlerteActeApiHookParameters({
-        idAlerteActe,
-        idActe
-      });
-    },
-    []
-  );
+  const supprimerAlerteCallBack = useCallback((idAlerteActe: string, idActe: string) => {
+    setDeleteAlerteActeApiHookParameters({
+      idAlerteActe,
+      idActe
+    });
+  }, []);
 
-  const resultatSuppressionAlerte = useDeleteAlerteActeApiHook(
-    deleteAlerteActeApiHookParameters
-  );
+  const resultatSuppressionAlerte = useDeleteAlerteActeApiHook(deleteAlerteActeApiHookParameters);
   useEffect(() => {
     if (resultatSuppressionAlerte) {
       setActualisationInfosFiche(!actualisationInfosFiche);
@@ -405,22 +312,15 @@ export const FichePage: React.FC<FichePageProps> = ({
                     mentions: droitsMiseAJour.mentions,
                     analyseMarginale: droitsMiseAJour.AnalyseMarginale
                   })}
-                  onClickOption={option =>
-                    setOptionMiseAJour(option as EOptionMiseAJourActe)
-                  }
+                  onClickOption={option => setOptionMiseAJour(option as EOptionMiseAJourActe)}
                   anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                   transformOrigin={{ vertical: "top", horizontal: "right" }}
                   disableScrollLock={true}
                 />
               )}
               {dataFicheState.data &&
-                !officierDroitConsulterSurLeTypeRegistreOuDroitMAE(
-                  utilisateurConnecte,
-                  dataFicheState.data.registre?.type?.id
-                ) &&
-                gestionnaireFeatureFlag.estActif(
-                  FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-                ) && (
+                !officierDroitConsulterSurLeTypeRegistreOuDroitMAE(utilisateurConnecte, dataFicheState.data.registre?.type?.id) &&
+                gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) && (
                   <BoutonCreationRDD
                     label="Demander la délivrance"
                     labelPopin={`Vous allez demander la délivrance de cet acte. Souhaitez-vous continuer ?`}
@@ -436,15 +336,9 @@ export const FichePage: React.FC<FichePageProps> = ({
               key={`accordion-rece-${idx}`}
               panel={panel}
               index={idx}
-              expanded={
-                panelsFiche.panelParDefaut
-                  ? idx === panelsFiche.panelParDefaut
-                  : idx === 0
-              }
+              expanded={panelsFiche.panelParDefaut ? idx === panelsFiche.panelParDefaut : idx === 0}
               titre={panel?.title}
-              disabled={panel?.panelAreas.every(
-                (pa: SectionPanelAreaProps) => !pa.value && !pa.parts
-              )}
+              disabled={panel?.panelAreas.every((pa: SectionPanelAreaProps) => !pa.value && !pa.parts)}
             />
           ))}
         </>

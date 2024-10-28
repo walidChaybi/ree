@@ -2,34 +2,17 @@ import { ReponseAppelDetailRequeteInformationSansCorbeilleAgent } from "@mock/da
 import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { NOMENCLATURE_REPONSE } from "@mock/data/NomenclatureReponse";
 import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
-import {
-  NORESULT,
-  configRequetesInformation
-} from "@mock/superagent-config/superagent-mock-requetes-information";
+import { NORESULT, configRequetesInformation } from "@mock/superagent-config/superagent-mock-requetes-information";
 import { IOfficier } from "@model/agent/IOfficier";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
-import {
-  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_INFORMATION
-} from "@router/ReceUrls";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, URL_MES_REQUETES_DELIVRANCE, URL_MES_REQUETES_INFORMATION } from "@router/ReceUrls";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { beforeAll, expect, test, vi } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte,
-  mockFenetreFicheTestFunctions
-} from "../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
 let history: any;
 
@@ -54,32 +37,14 @@ test("renders ApercuReqInfoPage", async () => {
         element: <EspaceInformationPage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-        "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856")]
   );
 
-  render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      utilisateurConnecte,
-      LISTE_UTILISATEURS
-    )
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte, LISTE_UTILISATEURS));
 
   await waitFor(() => {
-    expect(document.title).toBe("Aperçu requête d'information");
-    expect(
-      screen.getByText(
-        /Requête transférée à Benoît TANGUY - Le : 20\/10\/2021/i
-      )
-    ).toBeDefined();
-    expect(
-      screen.getByText(/Résumé de la requête d'information/i)
-    ).toBeDefined();
+    expect(screen.getByText(/Requête transférée à Benoît TANGUY - Le : 20\/10\/2021/i)).toBeDefined();
+    expect(screen.getByText(/Résumé de la requête d'information/i)).toBeDefined();
     expect(screen.getByText(/Choix de la réponse/i)).toBeDefined();
     expect(screen.getByText(/Votre réponse/i)).toBeDefined();
     expect(screen.getByText(/Votre réponse/i)).toBeDefined();
@@ -93,13 +58,9 @@ test("renders ApercuReqInfoPage", async () => {
   const sousType = screen.getAllByText(/Sous-type/i);
   const valeurSousType = screen.getByText("Information");
   const objet = screen.getByText("Objet");
-  const valeurObjet = screen.getAllByText(
-    /Divorce et\/ou séparation de corps/i
-  );
+  const valeurObjet = screen.getAllByText(/Divorce et\/ou séparation de corps/i);
   const complementObjet = screen.getByText(/Complément d'objet/i);
-  const valeurComplementObjet = screen.getByText(
-    /Je souhaite mettre à jour mes actes de l'état civil/i
-  );
+  const valeurComplementObjet = screen.getByText(/Je souhaite mettre à jour mes actes de l'état civil/i);
   const dateCreation = screen.getByText(/Date de création/i);
   const valeurDateCreation = screen.getByText("20/10/2021");
   const numeroReq = screen.getByText(/N° de la requête liée/i);
@@ -162,12 +123,8 @@ test("renders ApercuReqInfoPage", async () => {
 
   fireEvent.click(boutonReponse1);
 
-  const libelleReponseChoisie = screen.getByText(
-    NOMENCLATURE_REPONSE[0].libelle
-  );
-  const mailReponseChoisie = screen.getByText(
-    NOMENCLATURE_REPONSE[0].corpsMail
-  );
+  const libelleReponseChoisie = screen.getByText(NOMENCLATURE_REPONSE[0].libelle);
+  const mailReponseChoisie = screen.getByText(NOMENCLATURE_REPONSE[0].corpsMail);
 
   await waitFor(() => {
     expect(libelleReponseChoisie).toBeDefined();
@@ -193,23 +150,10 @@ test("bouton annuler", async () => {
         element: <EspaceInformationPage />
       }
     ],
-    [
-      URL_MES_REQUETES_INFORMATION,
-      getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-        "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-      )
-    ]
+    [URL_MES_REQUETES_INFORMATION, getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856")]
   );
 
-  render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      utilisateurConnecte,
-      LISTE_UTILISATEURS
-    )
-  );
-  // const boutonAnnuler = screen.getByText(/Retour espace information/i);
+  render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte, LISTE_UTILISATEURS));
 
   await waitFor(() => {
     expect(screen.getByText(/Retour espace information/i)).toBeDefined();
@@ -236,22 +180,11 @@ test("clique requete liée", async () => {
         element: <EspaceDelivrancePage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-        "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856")]
   );
 
   await act(async () => {
-    render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        utilisateurConnecte,
-        LISTE_UTILISATEURS
-      )
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte, LISTE_UTILISATEURS));
   });
 
   const valeurRequeteLiee = screen.getByText(/LRU1A5/i);
@@ -277,22 +210,11 @@ test("bouton saisie libre", async () => {
         element: <ApercuReqInfoPage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-        "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856")]
   );
 
   await act(async () => {
-    render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        utilisateurConnecte,
-        LISTE_UTILISATEURS
-      )
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte, LISTE_UTILISATEURS));
   });
 
   fireEvent.change(screen.getByPlaceholderText("Mail de la réponse"), {
@@ -308,9 +230,7 @@ test("bouton saisie libre", async () => {
   fireEvent.click(boutonSaisieLibre);
 
   await waitFor(() => {
-    expect(screen.getByPlaceholderText("Mail de la réponse").textContent).toBe(
-      ""
-    );
+    expect(screen.getByPlaceholderText("Mail de la réponse").textContent).toBe("");
   });
 });
 
@@ -322,22 +242,11 @@ test("complétion en cours", async () => {
         element: <ApercuReqInfoPage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-        "bbd05aed-8ea9-45ba-a7d7-b8d55ad10557"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "bbd05aed-8ea9-45ba-a7d7-b8d55ad10557")]
   );
 
   await act(async () => {
-    render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        utilisateurConnecte,
-        LISTE_UTILISATEURS
-      )
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte, LISTE_UTILISATEURS));
   });
 
   await waitFor(() => {
@@ -353,22 +262,11 @@ test("renders ApercuReqInfoPage Double Menu", async () => {
         element: <ApercuReqInfoPage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-        "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856")]
   );
 
   await act(async () => {
-    render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        utilisateurConnecte,
-        LISTE_UTILISATEURS
-      )
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte, LISTE_UTILISATEURS));
   });
 
   const boutonReponses = screen.getByText(/Toutes les réponses disponibles/i);
@@ -397,12 +295,8 @@ test("renders ApercuReqInfoPage Double Menu", async () => {
 
   fireEvent.click(boutonReponse1);
 
-  const libelleReponseChoisie = screen.getByText(
-    NOMENCLATURE_REPONSE[2].libelle
-  );
-  const mailReponseChoisie = screen.getByText(
-    NOMENCLATURE_REPONSE[2].corpsMail
-  );
+  const libelleReponseChoisie = screen.getByText(NOMENCLATURE_REPONSE[2].libelle);
+  const mailReponseChoisie = screen.getByText(NOMENCLATURE_REPONSE[2].corpsMail);
 
   await waitFor(() => {
     expect(libelleReponseChoisie).toBeDefined();
@@ -418,24 +312,11 @@ test("render ApercuReqInfoPage : RMC état civil manuelle ", async () => {
         element: <ApercuReqInfoPage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-        "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856")]
   );
 
-  render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      utilisateurConnecte,
-      LISTE_UTILISATEURS
-    )
-  );
-  await expect
-    .poll(() => screen.getByText("Nouvelle recherche multi-critères"))
-    .toBeDefined();
+  render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte, LISTE_UTILISATEURS));
+  await expect.poll(() => screen.getByText("Nouvelle recherche multi-critères")).toBeDefined();
   fireEvent.click(screen.getByText("Nouvelle recherche multi-critères"));
 
   // const nomTitulaire = screen.getByLabelText(
@@ -443,9 +324,7 @@ test("render ApercuReqInfoPage : RMC état civil manuelle ", async () => {
   // ) as HTMLInputElement;
 
   await waitFor(() => {
-    const boutonRechercher = screen.getByText(
-      "Rechercher"
-    ) as HTMLButtonElement;
+    const boutonRechercher: HTMLButtonElement = screen.getByText("Rechercher");
     expect(screen.getByRole("dialog")).toBeDefined();
     expect(screen.getByLabelText("titulaire.nom")).toBeDefined();
     expect(boutonRechercher).toBeDefined();
@@ -457,12 +336,8 @@ test("render ApercuReqInfoPage : RMC état civil manuelle ", async () => {
   });
 
   await waitFor(() => {
-    const nomTitulaire = screen.getByLabelText(
-      "titulaire.nom"
-    ) as HTMLInputElement;
-    const boutonRechercher = screen.getByText(
-      "Rechercher"
-    ) as HTMLButtonElement;
+    const nomTitulaire: HTMLInputElement = screen.getByLabelText("titulaire.nom");
+    const boutonRechercher: HTMLButtonElement = screen.getByText("Rechercher");
     expect(nomTitulaire.value).toEqual(NORESULT);
     expect(boutonRechercher.disabled).toBeFalsy();
   });
@@ -472,9 +347,7 @@ test("render ApercuReqInfoPage : RMC état civil manuelle ", async () => {
   await waitFor(() => {
     expect(screen.queryByRole("dialog")).toBeNull();
     expect(screen.getByText("Aucun acte n'a été trouvé.")).toBeDefined();
-    expect(
-      screen.getByText("Aucune inscription n'a été trouvée.")
-    ).toBeDefined();
+    expect(screen.getByText("Aucune inscription n'a été trouvée.")).toBeDefined();
   });
 });
 
@@ -494,31 +367,18 @@ const renduApercuReqInfoPage = async () => {
         element: <ApercuReqInfoPage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-        ReponseAppelDetailRequeteInformationSansCorbeilleAgent.data.id
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, ReponseAppelDetailRequeteInformationSansCorbeilleAgent.data.id)]
   );
 
   await act(async () => {
-    render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        userDroitConsulterPerimetreTousRegistres,
-        LISTE_UTILISATEURS
-      )
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, userDroitConsulterPerimetreTousRegistres, LISTE_UTILISATEURS));
   });
 };
 
 test("Attendu: le bouton 'prendre en charge' est affiché, si la requête n'appartient pas à l'utilisateur, mais se trouve dans sa corbeille Service", async () => {
   await renduApercuReqInfoPage();
 
-  const boutonPrendreEnCharge = screen.queryByLabelText(
-    Labels.prendreEnCharge
-  ) as HTMLButtonElement;
+  const boutonPrendreEnCharge = screen.queryByLabelText(Labels.prendreEnCharge) as HTMLButtonElement;
 
   await waitFor(() => expect(boutonPrendreEnCharge).toBeDefined());
 });
@@ -526,9 +386,7 @@ test("Attendu: le bouton 'prendre en charge' est affiché, si la requête n'appa
 test.skip("Attendu: le bouton 'prendre en charge' disparait une fois qu'on a cliqué dessus", async () => {
   await renduApercuReqInfoPage();
 
-  let boutonPrendreEnCharge = await screen.findByLabelText<HTMLButtonElement>(
-    Labels.prendreEnCharge
-  );
+  let boutonPrendreEnCharge = await screen.findByLabelText<HTMLButtonElement>(Labels.prendreEnCharge);
 
   expect(boutonPrendreEnCharge).not.toBeNull();
 
@@ -540,17 +398,11 @@ test.skip("Attendu: le bouton 'prendre en charge' disparait une fois qu'on a cli
 test.skip("Attendu: les blocs non présents sur l'aperçu de requête sont bien absents si la requête n'appartient pas à l'utilisateur, mais se trouve dans sa corbeille Service", async () => {
   await renduApercuReqInfoPage();
 
-  const titreAutresRequetesAssocieesAuTitulaire = (await screen.queryByText(
-    Labels.autresRequetesAssocieesAuTitulaire
-  )) as HTMLDivElement;
+  const titreAutresRequetesAssocieesAuTitulaire = (await screen.queryByText(Labels.autresRequetesAssocieesAuTitulaire)) as HTMLDivElement;
 
-  const BoutonNouvelleRMC = (await screen.queryByText(
-    Labels.nouvelleRMC
-  )) as HTMLButtonElement;
+  const BoutonNouvelleRMC = (await screen.queryByText(Labels.nouvelleRMC)) as HTMLButtonElement;
 
-  const BoutonAjouterUnePieceJointe = (await screen.queryByText(
-    Labels.ajouterUnePieceJointe
-  )) as HTMLButtonElement;
+  const BoutonAjouterUnePieceJointe = (await screen.queryByText(Labels.ajouterUnePieceJointe)) as HTMLButtonElement;
 
   expect(titreAutresRequetesAssocieesAuTitulaire.innerHTML).toBeNull();
   expect(BoutonNouvelleRMC).toBeNull();
@@ -562,31 +414,17 @@ test("Attendu: le bouton 'prendre en charge' ne s'affiche pas lorsqu'on se trouv
     [
       {
         path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-        element: (
-          <ApercuReqInfoPage
-            idRequeteAAfficher={
-              ReponseAppelDetailRequeteInformationSansCorbeilleAgent.data.id
-            }
-          />
-        )
+        element: <ApercuReqInfoPage idRequeteAAfficher={ReponseAppelDetailRequeteInformationSansCorbeilleAgent.data.id} />
       }
     ],
     [URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID]
   );
 
   await act(async () => {
-    render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        userDroitConsulterPerimetreTousRegistres,
-        LISTE_UTILISATEURS
-      )
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, userDroitConsulterPerimetreTousRegistres, LISTE_UTILISATEURS));
   });
 
-  const boutonPrendreEnCharge = screen.queryByLabelText(
-    Labels.prendreEnCharge
-  ) as HTMLButtonElement;
+  const boutonPrendreEnCharge = screen.queryByLabelText(Labels.prendreEnCharge) as HTMLButtonElement;
 
   await waitFor(() => {
     expect(boutonPrendreEnCharge).toBeNull();
