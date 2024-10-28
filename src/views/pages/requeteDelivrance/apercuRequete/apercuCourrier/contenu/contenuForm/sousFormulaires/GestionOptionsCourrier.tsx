@@ -1,7 +1,4 @@
-import {
-  OptionCourrier,
-  OptionsCourrier
-} from "@model/requete/IOptionCourrier";
+import { OptionCourrier, OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IOptionCourrierDocumentReponse } from "@model/requete/IOptionCourrierDocumentReponse";
 import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -10,95 +7,56 @@ import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { getDocumentReponseAModifier } from "../CourrierFonctions";
 import "./scss/OptionsCourrierForm.scss";
 
-export function optionAPuce(option: OptionCourrier | undefined): boolean {
-  return Boolean(option?.optionAPuce);
-}
+export const contenuDisabled = (option: OptionCourrier | undefined, optionsChoisies: OptionsCourrier): boolean =>
+  option === undefined || optionsChoisies.indexOf(option) === -1 || !(option.presenceVariables || option.optionLibre);
 
-export function optionPresenceVariables(
-  option: OptionCourrier | undefined
-): boolean {
-  return Boolean(option?.presenceVariables);
-}
+export const contenuOptionNonModifie = (option: OptionCourrier | undefined): boolean =>
+  option !== undefined && !texteOptionCourrierModifie(option);
 
-export function optionOptionLibre(option: OptionCourrier | undefined): boolean {
-  return Boolean(option?.optionLibre);
-}
+export const texteOptionCourrierModifie = (option: OptionCourrier): boolean => {
+  return option.texteOptionCourrier !== option.texteOptionCourrierModifie;
+};
 
-export function contenuDisabled(
-  option: OptionCourrier | undefined,
-  optionsChoisies: OptionsCourrier
-): boolean {
-  return (
-    option === undefined ||
-    (option !== undefined && optionsChoisies.indexOf(option) === -1) ||
-    !(optionPresenceVariables(option) || optionOptionLibre(option))
-  );
-}
-
-export function contenuOptionNonModifier(
-  option: OptionCourrier | undefined
-): boolean {
-  return option !== undefined && !texteOptionCourrierModifie(option);
-}
-
-export const texteOptionCourrierModifie = (option: OptionCourrier): boolean =>
-  option.texteOptionCourrier !== option.texteOptionCourrierModifier;
-
-export function classNameContenu(
-  option: OptionCourrier | undefined,
-  optionsChoisies: OptionsCourrier
-): string | undefined {
-  let className: string | undefined;
-  if (contenuDisabled(option, optionsChoisies)) {
-    className = undefined;
-  } else if (contenuOptionNonModifier(option)) {
-    className = "BordureRouge";
-  } else {
-    className = "BordureVerte";
+export const classNameContenu = (option: OptionCourrier | undefined, optionsChoisies: OptionsCourrier): string | undefined => {
+  switch (true) {
+    case contenuDisabled(option, optionsChoisies):
+      return undefined;
+    case contenuOptionNonModifie(option):
+      return "BordureRouge";
+    default:
+      return "BordureVerte";
   }
-  return className;
-}
+};
 
-export function reinitialiserDisabled(
-  option: OptionCourrier | undefined,
-  optionsChoisies: OptionsCourrier
-): boolean {
-  return (
-    contenuDisabled(option, optionsChoisies) || contenuOptionNonModifier(option)
-  );
-}
+export const reinitialiserDisabled = (option: OptionCourrier | undefined, optionsChoisies: OptionsCourrier): boolean =>
+  contenuDisabled(option, optionsChoisies) || contenuOptionNonModifie(option);
 
-export function switchOption(
+// TOREFACTO : Nom de la fonction pas explicite
+export const switchOption = (
   opt: OptionCourrier,
-  optionsDisponibles: OptionsCourrier,
-  optionsChoisies: OptionsCourrier,
+  optionsDisponibles: OptionCourrier[],
+  optionsChoisies: OptionCourrier[],
   ajouter: boolean
 ): {
   disponibles: OptionCourrier[];
   choisies: OptionCourrier[];
-} {
+} => {
+  const choisies = (ajouter ? [...optionsChoisies, opt] : optionsChoisies.filter(optionChoisie => optionChoisie.id !== opt.id)).sort(
+    (a, b) => a.ordreEdition - b.ordreEdition
+  );
+
   const disponibles = (
-    ajouter
-      ? optionsDisponibles.filter(
-          optionDisponible => optionDisponible.id !== opt.id
-        )
-      : [...optionsDisponibles, opt]
+    ajouter ? optionsDisponibles.filter(optionDisponible => optionDisponible.id !== opt.id) : [...optionsDisponibles, opt]
   ).sort((a, b) => a.ordreEdition - b.ordreEdition);
 
-  const choisies = ajouter
-    ? [...optionsChoisies, opt]
-    : optionsChoisies.filter(optionChoisie => optionChoisie.id !== opt.id);
-
   return { disponibles, choisies };
-}
+};
 
-export function initialisationOptions(
-  optionsDisponibles: OptionsCourrier,
-  optionsChoisies: OptionsCourrier
-) {
-  let optsDispos: OptionsCourrier = [];
+// TOREFACTO : Noms de variables à changer
+export const initialisationOptions = (optionsDisponibles: OptionsCourrier, optionsChoisies: OptionsCourrier) => {
+  let optsDispos: OptionCourrier[] = [];
   if (optionsChoisies.length === 0) {
-    optionsDisponibles.forEach((optDispo: OptionCourrier, index: number) => {
+    optionsDisponibles.forEach((optDispo: OptionCourrier) => {
       if (optDispo.optionParDefaut) {
         optionsChoisies.push(optDispo);
       } else {
@@ -106,99 +64,74 @@ export function initialisationOptions(
       }
     });
   } else {
-    optsDispos = optionsDisponibles.filter(
-      optionDispo =>
-        !optionsChoisies.find(
-          optionChoisie => optionChoisie.id === optionDispo.id
-        )
-    );
+    optsDispos = optionsDisponibles.filter(optionDispo => !optionsChoisies.find(optionChoisie => optionChoisie.id === optionDispo.id));
   }
 
   return { optsDispos, optsChoisies: optionsChoisies };
-}
+};
 
-export function recupererLesOptionsDuCourrier(
-  requete: TRequete,
-  optionsCourrierPossible: OptionsCourrier
-) {
+export const recupererLesOptionsDuCourrier = (requete: TRequete, optionsCourrierPossible: OptionsCourrier) => {
   const document = getDocumentReponseAModifier(requete as IRequeteDelivrance);
-  let optionsDuCourrier: OptionsCourrier = [];
+  let optionsDuCourrier: OptionCourrier[] = [];
   if (document?.optionsCourrier) {
-    optionsDuCourrier = mappingOptionCourrierDocumentReponse(
-      document.optionsCourrier,
-      optionsCourrierPossible
-    );
+    optionsDuCourrier = mappingOptionCourrierDocumentReponse(document.optionsCourrier, optionsCourrierPossible);
   }
 
   return optionsDuCourrier;
-}
+};
 
-function mappingOptionCourrierDocumentReponse(
+const mappingOptionCourrierDocumentReponse = (
   optionsDuCourrier: IOptionCourrierDocumentReponse[],
   optionsCourrierPossible: OptionsCourrier
-) {
-  const optionsDocumentReponse = [] as OptionsCourrier;
+): OptionCourrier[] => {
+  const optionsDocumentReponse: OptionCourrier[] = [];
+
   optionsDuCourrier.forEach((optC: IOptionCourrierDocumentReponse) => {
-    const optionPossible = optionsCourrierPossible.find(
-      optP => optP.id === optC.code
-    );
-    if (optionPossible && optC.texte) {
-      optionPossible.texteOptionCourrierModifier = optC.texte;
+    if (!optC.texte) {
+      return;
+    }
+    const optionPossible = optionsCourrierPossible.find(optP => optP.id === optC.code);
+
+    if (optionPossible) {
+      optionPossible.texteOptionCourrierModifie = optC.texte;
       optionsDocumentReponse.push(optionPossible);
     }
   });
 
   return optionsDocumentReponse;
-}
+};
 
-export function recupererLesOptionsDisponiblesPourLeCourrier(
+export const recupererLesOptionsDisponiblesPourLeCourrier = (
   options: OptionsCourrier,
   documentDelivranceChoisi: DocumentDelivrance,
-  nature?: NatureActeRequete
-): OptionsCourrier {
-  const idDocumentDelivrance = DocumentDelivrance.getKeyForCode(
-    documentDelivranceChoisi.code
-  );
+  natureActe?: NatureActeRequete
+): OptionsCourrier => {
+  const idDocumentDelivrance = DocumentDelivrance.getKeyForCode(documentDelivranceChoisi.code);
+  const filtreNatureActe: keyof OptionCourrier | undefined = (() => {
+    switch (natureActe) {
+      case NatureActeRequete.NAISSANCE:
+        return "acteNaissance";
+      case NatureActeRequete.DECES:
+        return "acteDeces";
+      case NatureActeRequete.MARIAGE:
+        return "acteMariage";
+      default:
+        return undefined;
+    }
+  })();
   options = options.filter(
     (opt: OptionCourrier) =>
-      opt.documentDelivrance === idDocumentDelivrance && opt.estActif
+      opt.documentDelivrance === idDocumentDelivrance && opt.estActif && (filtreNatureActe ? opt[filtreNatureActe] : true)
   );
-  if (nature) {
-    options = filtreSurNatureActe(options, nature);
+
+  return options.map(initialisationSiOptionModifiable);
+};
+
+const initialisationSiOptionModifiable = (option: OptionCourrier): OptionCourrier => {
+  if (option.presenceVariables || option.optionLibre) {
+    option.texteOptionCourrierModifie = option.texteOptionCourrier;
   }
+  return option;
+};
 
-  return initialisationDesOptionsModifiables(options);
-}
-
-function filtreSurNatureActe(
-  options: OptionsCourrier,
-  nature: NatureActeRequete
-): OptionsCourrier {
-  switch (nature) {
-    case NatureActeRequete.NAISSANCE:
-      return options.filter((opt: OptionCourrier) => opt.acteNaissance);
-
-    case NatureActeRequete.DECES:
-      return options.filter((opt: OptionCourrier) => opt.acteDeces);
-
-    case NatureActeRequete.MARIAGE:
-      return options.filter((opt: OptionCourrier) => opt.acteMariage);
-    default:
-      return options;
-  }
-}
-
-function initialisationDesOptionsModifiables(
-  options: OptionsCourrier
-): OptionsCourrier {
-  options.forEach((opt: OptionCourrier) => {
-    if (opt.presenceVariables || opt.optionLibre) {
-      opt.texteOptionCourrierModifier = opt.texteOptionCourrier;
-    }
-  });
-  return options;
-}
-
-export function messageOptionVariables(options: OptionsCourrier) {
-  return options.some(opt => opt.presenceVariables === true);
-}
+export const messageOptionVariables = (options: OptionsCourrier): boolean => options.some(opt => opt.presenceVariables === true);

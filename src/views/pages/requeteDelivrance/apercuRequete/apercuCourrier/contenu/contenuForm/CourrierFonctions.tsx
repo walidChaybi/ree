@@ -219,7 +219,7 @@ function majOptionsPourActeNaissaneOuDecesDemande(
 export function controleFormulaire(
   saisieCourrier: SaisieCourrier | undefined,
   optionsChoisies: OptionsCourrier,
-  setMessagesBloquant: (message: string) => void
+  setMessageBloquant: (message: string) => void
 ) {
   switch (saisieCourrier?.[CHOIX_COURRIER][COURRIER]) {
     case DocumentDelivrance.getKeyForCode(DELIVRANCE_ACTE_INCOMPLET):
@@ -229,17 +229,9 @@ export function controleFormulaire(
     case DocumentDelivrance.getKeyForCode(REFUS_DELIVRANCE_MARIAGE):
     case DocumentDelivrance.getKeyForCode(ATTESTATION_PENSION):
     case DocumentDelivrance.getKeyForCode(ACTE_NON_TROUVE):
-      return controleActeNonTrouve(
-        saisieCourrier,
-        optionsChoisies,
-        setMessagesBloquant
-      );
+      return controleActeNonTrouve(saisieCourrier, optionsChoisies, setMessageBloquant);
     case DocumentDelivrance.getKeyForCode(DIVERS):
-      return controleDivers(
-        saisieCourrier,
-        optionsChoisies,
-        setMessagesBloquant
-      );
+      return controleDivers(saisieCourrier, optionsChoisies, setMessageBloquant);
     default:
       return true;
   }
@@ -248,35 +240,27 @@ export function controleFormulaire(
 function controleActeNonTrouve(
   saisieCourrier: SaisieCourrier,
   optionsChoisies: OptionsCourrier,
-  setMessagesBloquant: (message: string) => void
+  setMessageBloquant: (message: string) => void
 ) {
   if (
     optionsChoisies.filter(option => {
       return option.ordreEdition < LIMIT_ORDRE_EDITION_STANTARD;
     }).length === 0
   ) {
-    setMessagesBloquant(
-      "Le choix d'une option standard est obligatoire pour ce courrier"
-    );
+    setMessageBloquant("Le choix d'une option standard est obligatoire pour ce courrier");
     return false;
   }
   return true;
 }
 
-function controleDivers(
-  saisieCourrier: SaisieCourrier,
-  optionsChoisies: OptionsCourrier,
-  setMessagesBloquant: (message: string) => void
-) {
+function controleDivers(saisieCourrier: SaisieCourrier, optionsChoisies: OptionsCourrier, setMessageBloquant: (message: string) => void) {
   if (
     optionsChoisies.filter(option => {
       return option.ordreEdition < LIMIT_ORDRE_EDITION_STANTARD;
     }).length === 0 &&
     saisieCourrier[TEXTE_LIBRE][TEXTE].length === 0
   ) {
-    setMessagesBloquant(
-      "Le choix d'une option standard ou la saisie d'un texte libre est obligatoire pour ce courrier"
-    );
+    setMessageBloquant("Le choix d'une option standard ou la saisie d'un texte libre est obligatoire pour ce courrier");
     return false;
   }
   return true;

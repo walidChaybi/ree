@@ -1,3 +1,4 @@
+// TOREFACTO : type inutile
 export type OptionsCourrier = OptionCourrier[];
 export interface OptionCourrier {
   acteDeces: boolean;
@@ -8,12 +9,12 @@ export interface OptionCourrier {
   estActif: boolean;
   id: string;
   libelle: string;
-  optionAPuce: boolean;
+  optionATiret: boolean;
   optionExclusive: boolean;
   optionLibre: boolean;
   optionParDefaut: boolean;
   ordreEdition: number;
   presenceVariables: boolean;
   texteOptionCourrier: string;
-  texteOptionCourrierModifier?: string;
+  texteOptionCourrierModifie?: string;
 }

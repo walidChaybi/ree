@@ -1,17 +1,9 @@
-import {
-  OptionCourrier,
-  OptionsCourrier
-} from "@model/requete/IOptionCourrier";
-import { getLibelle } from "@util/Utils";
+import { OptionCourrier, OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IconeDanger } from "@widget/icones/IconeDanger";
 import { IconeMoins } from "@widget/icones/IconeMoins";
 import { IconePlus } from "@widget/icones/IconePlus";
 import { IconeValider } from "@widget/icones/IconeValider";
-import {
-  Ligne,
-  TableauSimple,
-  TableauSimpleProps
-} from "@widget/tableau/TableauSimple/TableauSimple";
+import { Ligne, TableauSimple, TableauSimpleProps } from "@widget/tableau/TableauSimple/TableauSimple";
 import { texteOptionCourrierModifie } from "./GestionOptionsCourrier";
 import "./scss/OptionsCourrierForm.scss";
 
@@ -21,12 +13,12 @@ export function getTableauOptionsDisponibles(
   optionsChoisies: OptionsCourrier,
   ajouterUneOption: (option: OptionCourrier) => void,
   modifierUneOption: (option: OptionCourrier) => void,
-  optionSelectionne?: OptionCourrier
+  optionSelectionnee?: OptionCourrier
 ): JSX.Element {
   const tableauOptionsDisponiblesProps: TableauSimpleProps = {
     entetes: [
       {
-        libelle: getLibelle("Option(s) disponible(s)")
+        libelle: "Option(s) disponible(s)"
       },
       {
         className: "BoutonOption",
@@ -37,14 +29,12 @@ export function getTableauOptionsDisponibles(
       // Si l'option choisie est exclusive alors on interdit les l'ajout d'autres options
       // OU S'il y a déjà une option choisie alors on interdit l'ajout d'une optionexclusive
       const ajoutOptionDesactiver =
-        (optionsChoisies &&
-          optionsChoisies.length > 0 &&
-          optionsChoisies[0].optionExclusive) ||
+        (optionsChoisies && optionsChoisies.length > 0 && optionsChoisies[0].optionExclusive) ||
         (optionsChoisies.length > 0 && opt.optionExclusive);
 
       const option = {
         key: opt.code,
-        className: optionSelectionne === opt ? "optionSelectionner" : undefined,
+        className: optionSelectionnee === opt ? "optionSelectionnee" : undefined,
         colonnes: [
           {
             contenu: opt.libelle,
@@ -82,7 +72,7 @@ export function getTableauOptionsChoisies(
   optionsChoisies: OptionsCourrier,
   supprimerUneOption: (option: OptionCourrier) => void,
   modifierUneOption: (option: OptionCourrier) => void,
-  optionSelectionne?: OptionCourrier
+  optionSelectionnee?: OptionCourrier
 ): JSX.Element {
   const tableauOptionsChoisiesProps: TableauSimpleProps = {
     entetes: [
@@ -91,7 +81,7 @@ export function getTableauOptionsChoisies(
         libelle: ""
       },
       {
-        libelle: getLibelle("Option(s) choisie(s)")
+        libelle: "Option(s) choisie(s)"
       },
       {
         className: "BoutonOption",
@@ -100,7 +90,7 @@ export function getTableauOptionsChoisies(
     ],
     lignes: optionsChoisies.map(opt => ({
       key: opt.code,
-      className: optionSelectionne === opt ? "optionSelectionner" : undefined,
+      className: optionSelectionnee === opt ? "optionSelectionnee" : undefined,
       colonnes: [
         {
           onClick: () => {
@@ -138,7 +128,7 @@ function getColonneAjouterOption(visible: boolean): JSX.Element {
     <>
       {visible && (
         <div className="BoutonOption">
-          <IconePlus title={getLibelle("Ajouter")} />
+          <IconePlus title={"Ajouter"} />
         </div>
       )}
     </>
@@ -148,7 +138,7 @@ function getColonneAjouterOption(visible: boolean): JSX.Element {
 function getColonneSupprimerOption(): JSX.Element {
   return (
     <div className="BoutonOption">
-      <IconeMoins title={getLibelle("Supprimer")} />
+      <IconeMoins title={"Supprimer"} />
     </div>
   );
 }
@@ -158,11 +148,7 @@ function getColonneModifierOption(opt: OptionCourrier): JSX.Element {
     <>
       {(opt.presenceVariables || opt.optionLibre) && (
         <div className="BoutonOption">
-          {texteOptionCourrierModifie(opt) ? (
-            <IconeValider title={getLibelle("Option modifié")} />
-          ) : (
-            <IconeDanger title={getLibelle("Option non modifié")} />
-          )}
+          {texteOptionCourrierModifie(opt) ? <IconeValider title={"Option modifiée"} /> : <IconeDanger title={"Option non modifiée"} />}
         </div>
       )}
     </>

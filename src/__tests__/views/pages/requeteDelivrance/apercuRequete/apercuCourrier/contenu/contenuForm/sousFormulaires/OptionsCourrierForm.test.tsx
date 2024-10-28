@@ -67,18 +67,14 @@ test("renders OptionsCourrierForm DoubleClick pour ajouter, bouton moins pour su
   fireEvent.dblClick(screen.getByText("Absence de date"));
 
   // On vérifie que le libelle et le texte de l'option sont valorisées dans les inputs
-  const inputLibelleOption = screen.getByLabelText(
-    "option.libelleOption"
-  ) as HTMLInputElement;
-  const inputContenuOption = screen.getByLabelText(
-    "option.contenu"
-  ) as HTMLInputElement;
-  const optionAPuce = screen.getByText("Option à tiret");
+  const inputLibelleOption = screen.getByLabelText("option.libelleOption") as HTMLInputElement;
+  const inputContenuOption = screen.getByLabelText("option.contenu") as HTMLInputElement;
+  const optionATiret = screen.getByText("Option à tiret");
 
   waitFor(() => {
     expect(inputLibelleOption.value).toBe("Absence de date");
     expect(inputContenuOption.value).toBe("- la date de l'événement");
-    expect(optionAPuce).toBeDefined();
+    expect(optionATiret).toBeDefined();
   });
 
   const boutonsSupprimer = screen.getAllByTitle("Supprimer");
@@ -104,13 +100,9 @@ test("renders OptionsCourrierForm modifier le contenu d'une option libre", async
   fireEvent.dblClick(screen.getByText("Ajout option -"));
 
   // On vérifie que le libelle et le texte de l'option sont valorisées dans les inputs
-  const inputLibelleOption = screen.getByLabelText(
-    "option.libelleOption"
-  ) as HTMLInputElement;
-  const inputContenuOption = screen.getByLabelText(
-    "option.contenu"
-  ) as HTMLInputElement;
-  const iconeDanger = screen.getByTitle("Option non modifié");
+  const inputLibelleOption = screen.getByLabelText("option.libelleOption") as HTMLInputElement;
+  const inputContenuOption = screen.getByLabelText("option.contenu") as HTMLInputElement;
+  const iconeDanger = screen.getByTitle("Option non modifiée");
 
   waitFor(() => {
     expect(inputLibelleOption.value).toBe("Ajout option -");
@@ -127,9 +119,7 @@ test("renders OptionsCourrierForm modifier le contenu d'une option libre", async
   });
 
   waitFor(() => {
-    expect(inputContenuOption.value).toBe(
-      "Changement du contenu de l'option libre"
-    );
+    expect(inputContenuOption.value).toBe("Changement du contenu de l'option libre");
     expect(screen.getByTitle("Option modifié")).toBeDefined();
   });
 
@@ -156,35 +146,19 @@ test("renders OptionsCourrierForm sélectionner une option, clique sur le bouton
   });
 
   waitFor(() => {
-    expect(
-      screen.getByText(
-        "Arrondissement d'Alger (événement entre le 24/04/1959 et le 31/12/1962)"
-      )
-    ).toBeDefined();
+    expect(screen.getByText("Arrondissement d'Alger (événement entre le 24/04/1959 et le 31/12/1962)")).toBeDefined();
   });
 
   // sélectionner une option
-  fireEvent.click(
-    screen.getByText(
-      "Arrondissement d'Alger (événement entre le 24/04/1959 et le 31/12/1962)"
-    )
-  );
+  fireEvent.click(screen.getByText("Arrondissement d'Alger (événement entre le 24/04/1959 et le 31/12/1962)"));
 
   // On vérifie que le libelle et le texte de l'option sont valorisées dans les inputs
-  const inputLibelleOption = screen.getByLabelText(
-    "option.libelleOption"
-  ) as HTMLInputElement;
-  const inputContenuOption = screen.getByLabelText(
-    "option.contenu"
-  ) as HTMLInputElement;
+  const inputLibelleOption = screen.getByLabelText("option.libelleOption") as HTMLInputElement;
+  const inputContenuOption = screen.getByLabelText("option.contenu") as HTMLInputElement;
 
   waitFor(() => {
-    expect(inputLibelleOption.value).toBe(
-      "Arrondissement d'Alger (événement entre le 24/04/1959 et le 31/12/1962)"
-    );
-    expect(inputContenuOption.value).toBe(
-      "- l'arrondissement d'Alger où a été enregistré l'acte demandé"
-    );
+    expect(inputLibelleOption.value).toBe("Arrondissement d'Alger (événement entre le 24/04/1959 et le 31/12/1962)");
+    expect(inputContenuOption.value).toBe("- l'arrondissement d'Alger où a été enregistré l'acte demandé");
   });
 
   fireEvent.click(screen.getAllByTitle("Ajouter")[0]);
@@ -196,9 +170,7 @@ test("renders OptionsCourrierForm sélectionner une option, clique sur le bouton
     expect(boutonsSupprimer.length).toEqual(2);
   });
 
-  const optionSelectionnerBis = screen.getByText(
-    "Arrondissement d'Alger (événement entre le 24/04/1959 et le 31/12/1962)"
-  );
+  const optionSelectionnerBis = screen.getByText("Arrondissement d'Alger (événement entre le 24/04/1959 et le 31/12/1962)");
 
   fireEvent.doubleClick(optionSelectionnerBis);
 });

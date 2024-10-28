@@ -202,7 +202,7 @@ export const OptionsChoisiesCourrier17 = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionAPuce: false,
+    optionATiret: false,
     optionLibre: false,
     texteOptionCourrier: "Demande de copie intégrale par un tiers"
   },
@@ -219,10 +219,10 @@ export const OptionsChoisiesCourrier17 = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionAPuce: false,
+    optionATiret: false,
     optionLibre: false,
     texteOptionCourrier: "Requérant mineur",
-    texteOptionCourrierModifier: "Requérant mineur (modifié)"
+    texteOptionCourrierModifie: "Requérant mineur (modifié)"
   },
   {
     id: "710366f5-4f17-4218-b83b-e5da1f16a42b",
@@ -237,7 +237,7 @@ export const OptionsChoisiesCourrier17 = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionAPuce: true,
+    optionATiret: true,
     optionLibre: false,
     texteOptionCourrier: "- Mge consulat étranger en France"
   },
@@ -254,10 +254,10 @@ export const OptionsChoisiesCourrier17 = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionAPuce: true,
+    optionATiret: true,
     optionLibre: false,
     texteOptionCourrier: "- Option à puce test",
-    texteOptionCourrierModifier: "- Option à puce test (modifié)"
+    texteOptionCourrierModifie: "- Option à puce test (modifié)"
   },
   {
     id: "710366f5-4f17-4218-b83b-e5da1f16a42e",
@@ -272,7 +272,7 @@ export const OptionsChoisiesCourrier17 = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionAPuce: true,
+    optionATiret: true,
     optionLibre: false,
     texteOptionCourrier: "- Option 996 A puce"
   },
@@ -289,10 +289,10 @@ export const OptionsChoisiesCourrier17 = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionAPuce: true,
+    optionATiret: true,
     optionLibre: false,
     texteOptionCourrier: "- Option 997 A puce",
-    texteOptionCourrierModifier: "- Option 997 A puce (modifié)"
+    texteOptionCourrierModifie: "- Option 997 A puce (modifié)"
   },
   {
     id: "710366f5-4f17-4218-b83b-e5da1f16a421",
@@ -307,7 +307,7 @@ export const OptionsChoisiesCourrier17 = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionAPuce: false,
+    optionATiret: false,
     optionLibre: false,
     texteOptionCourrier: "Option 998"
   },
@@ -324,10 +324,10 @@ export const OptionsChoisiesCourrier17 = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionAPuce: false,
+    optionATiret: false,
     optionLibre: false,
     texteOptionCourrier: "Option 999",
-    texteOptionCourrierModifier: "Option 999 (modifié)"
+    texteOptionCourrierModifie: "Option 999 (modifié)"
   }
 ] as OptionsCourrier;
 

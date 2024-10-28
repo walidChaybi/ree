@@ -28,55 +28,33 @@ import {
   ZERO
 } from "@util/Utils";
 
-function ajoutInfosTitulaire(
-  elementsJasper: IElementsJasperCourrier,
-  requete: IRequeteDelivrance,
-  acte?: IFicheActe
-) {
+function ajoutInfosTitulaire(elementsJasper: IElementsJasperCourrier, requete: IRequeteDelivrance, acte?: IFicheActe) {
   let titulaires = [];
   let analyseMarginale: IAnalyseMarginale | undefined;
   if (acte?.id && acte?.analyseMarginales) {
-    analyseMarginale = AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(
-      acte?.analyseMarginales
-    );
+    analyseMarginale = AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(acte?.analyseMarginales);
   }
 
   if (analyseMarginale?.titulaires) {
     elementsJasper.referenceActe = FicheActe.getReference(acte);
 
-    titulaires = triListeObjetsSurPropriete(
-      [...analyseMarginale.titulaires],
-      "ordre"
-    );
+    titulaires = triListeObjetsSurPropriete([...analyseMarginale.titulaires], "ordre");
 
     elementsJasper.nomTitulaire1 = TitulaireActe.getNom(titulaires[ZERO]);
-    elementsJasper.prenomsTitulaire1 = getPrenomsTitulaireActe(
-      titulaires[ZERO].prenoms
-    );
+    elementsJasper.prenomsTitulaire1 = getPrenomsTitulaireActe(titulaires[ZERO].prenoms);
 
     if (titulaires.length > UN) {
       elementsJasper.nomTitulaire2 = TitulaireActe.getNom(titulaires[UN]);
-      elementsJasper.prenomsTitulaire2 = getPrenomsTitulaireActe(
-        titulaires[UN].prenoms
-      );
+      elementsJasper.prenomsTitulaire2 = getPrenomsTitulaireActe(titulaires[UN].prenoms);
     }
-  } else {
-    if (requete.titulaires) {
-      titulaires = triListeObjetsSurPropriete(
-        [...requete.titulaires],
-        "position"
-      ) as ITitulaireRequete[];
-      elementsJasper.nomTitulaire1 = TitulaireRequete.getNom(titulaires[ZERO]);
-      elementsJasper.prenomsTitulaire1 = getPrenomsTitulaireRequete(
-        titulaires[ZERO].prenoms
-      );
+  } else if (requete.titulaires) {
+    titulaires = triListeObjetsSurPropriete([...requete.titulaires], "position") as ITitulaireRequete[];
+    elementsJasper.nomTitulaire1 = TitulaireRequete.getNom(titulaires[ZERO]);
+    elementsJasper.prenomsTitulaire1 = getPrenomsTitulaireRequete(titulaires[ZERO].prenoms);
 
-      if (titulaires.length > UN) {
-        elementsJasper.nomTitulaire2 = TitulaireRequete.getNom(titulaires[UN]);
-        elementsJasper.prenomsTitulaire2 = getPrenomsTitulaireRequete(
-          titulaires[UN].prenoms
-        );
-      }
+    if (titulaires.length > UN) {
+      elementsJasper.nomTitulaire2 = TitulaireRequete.getNom(titulaires[UN]);
+      elementsJasper.prenomsTitulaire2 = getPrenomsTitulaireRequete(titulaires[UN].prenoms);
     }
   }
 }
@@ -90,16 +68,11 @@ function getPrenomsTitulaireActe(prenomsTitulaire?: string[]): string {
   return prenoms;
 }
 
-function getPrenomsTitulaireRequete(
-  prenomsTitulaire?: IPrenomOrdonnes[]
-): string {
+function getPrenomsTitulaireRequete(prenomsTitulaire?: IPrenomOrdonnes[]): string {
   let prenoms = "";
 
   if (prenomsTitulaire) {
-    const prenomsOrdonnes = triListeObjetsSurPropriete(
-      [...prenomsTitulaire],
-      "numeroOrdre"
-    );
+    const prenomsOrdonnes = triListeObjetsSurPropriete([...prenomsTitulaire], "numeroOrdre");
     const tableau: string[] = [];
     prenomsOrdonnes.forEach((p: IPrenomOrdonnes) => tableau.push(p.prenom));
     prenoms = tableau.join(", ");
@@ -109,29 +82,23 @@ function getPrenomsTitulaireRequete(
 
 const LIMITE_ORDRE_EDITION_OPTION = 900;
 
-function ajoutOptions(
-  elementsJasper: IElementsJasperCourrier,
-  optionsChoisies?: OptionsCourrier
-) {
+function ajoutOptions(elementsJasper: IElementsJasperCourrier, optionsChoisies?: OptionsCourrier) {
   if (optionsChoisies && optionsChoisies.length > 0) {
     elementsJasper.options = [];
     elementsJasper.optionsTexteLibre = [];
 
     optionsChoisies.forEach((option: OptionCourrier) => {
       if (option.ordreEdition < LIMITE_ORDRE_EDITION_OPTION) {
-        optionOuOptionAPuce(elementsJasper.options, option);
+        optionOuOptionATiret(elementsJasper.options, option);
       } else {
-        optionOuOptionAPuce(elementsJasper.optionsTexteLibre, option);
+        optionOuOptionATiret(elementsJasper.optionsTexteLibre, option);
       }
     });
   }
 }
 
-function optionOuOptionAPuce(
-  tabOptions: OptionsJasper[],
-  option: OptionCourrier
-) {
-  if (option.optionAPuce) {
+function optionOuOptionATiret(tabOptions: OptionsJasper[], option: OptionCourrier) {
+  if (option.optionATiret) {
     tabOptions.push({
       option_puce: getTexteOption(option)
     });
@@ -143,9 +110,7 @@ function optionOuOptionAPuce(
 }
 
 function getTexteOption(option: OptionCourrier) {
-  return option.texteOptionCourrierModifier
-    ? option.texteOptionCourrierModifier
-    : option.texteOptionCourrier;
+  return option.texteOptionCourrierModifie ? option.texteOptionCourrierModifie : option.texteOptionCourrier;
 }
 
 const TEXTE_VARIABLE_RDD = `Le document d’état civil joint est délivré sur support électronique conformément à l’ordonnance n° 2019-724 du 10 juillet 2019 \
