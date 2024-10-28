@@ -1,5 +1,3 @@
-import { IUtilisateur } from "@model/agent/IUtilisateur";
-
 class StoreRece {
   private _retourUrl = "";
   private _logErrorOff = false;
@@ -22,12 +20,6 @@ class StoreRece {
 
   get retourUrl() {
     return this._retourUrl;
-  }
-
-  // Laissé ici car va être retire lors de la prochaine itération lorsque les TRIGRAMMES OEC seront remplacés partout par Nom et Prenom
-  public getTrigrammeFromID(utilisateurs?: IUtilisateur[], id?: string) {
-    return utilisateurs?.find(utilisateur => utilisateur.idUtilisateur === id)
-      ?.trigramme;
   }
 }
 

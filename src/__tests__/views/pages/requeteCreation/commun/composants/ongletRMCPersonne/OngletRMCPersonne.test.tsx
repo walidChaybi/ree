@@ -17,9 +17,7 @@ interface HookConsumerTableauRMCAutoPersonneProps {
   requete: IRequeteCreationTranscription;
 }
 
-const HookConsumerOngletRMCPersonne: React.FC<
-  HookConsumerTableauRMCAutoPersonneProps
-> = props => {
+const HookConsumerOngletRMCPersonne: React.FC<HookConsumerTableauRMCAutoPersonneProps> = props => {
   const {
     dataPersonnesSelectionnees,
     setDataPersonnesSelectionnees,
@@ -32,13 +30,9 @@ const HookConsumerOngletRMCPersonne: React.FC<
 
   useEffect(() => {
     if (props.requete) {
-      const titulaire = getPostulantNationaliteOuTitulaireActeTranscritDresse(
-        props.requete
-      );
+      const titulaire = getPostulantNationaliteOuTitulaireActeTranscritDresse(props.requete);
       if (titulaire) {
-        setRmcAutoPersonneParams(
-          mapTitulaireVersRMCAutoPersonneParams(titulaire)
-        );
+        setRmcAutoPersonneParams(mapTitulaireVersRMCAutoPersonneParams(titulaire));
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,27 +46,19 @@ const HookConsumerOngletRMCPersonne: React.FC<
       natureActeRequete={NatureActeRequete.NAISSANCE}
       dataPersonnesSelectionnees={dataPersonnesSelectionnees || []}
       setDataPersonnesSelectionnees={setDataPersonnesSelectionnees}
-      dataActesInscriptionsSelectionnes={
-        dataActesInscriptionsSelectionnes || []
-      }
-      setDataActesInscriptionsSelectionnes={
-        setDataActesInscriptionsSelectionnes
-      }
+      dataActesInscriptionsSelectionnes={dataActesInscriptionsSelectionnes || []}
+      setDataActesInscriptionsSelectionnes={setDataActesInscriptionsSelectionnes}
       setRmcAutoPersonneParams={setRmcAutoPersonneParams}
       tableauRMCPersonneEnChargement={rmcAutoPersonneEnChargement}
       tableauPersonnesSelectionneesEnChargement={!dataPersonnesSelectionnees}
-      tableauActesInscriptionsSelectionnesEnChargement={
-        !dataActesInscriptionsSelectionnes
-      }
+      tableauActesInscriptionsSelectionnesEnChargement={!dataActesInscriptionsSelectionnes}
     />
   );
 };
 
 const REQUETE = mappingRequeteCreation(requeteCreationTranscription);
 
-const hookConsumerOngletRMCPersonneAvecContexte = (
-  requete: IRequeteCreation
-): any => {
+const hookConsumerOngletRMCPersonneAvecContexte = (requete: IRequeteCreation): any => {
   return (
     <MockRECEContextProvider>
       <HookConsumerOngletRMCPersonne requete={requete} />
@@ -81,10 +67,10 @@ const hookConsumerOngletRMCPersonneAvecContexte = (
 };
 
 describe("Test l'affichage de l'onglet RMC Personne", () => {
-  test("DOIT rendre le tableau de résultat la RMC Personne QUAND on ouvre l'onglet.", () => {
+  test("DOIT rendre le tableau de résultat la RMC Personne QUAND on ouvre l'onglet.", async () => {
     render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.getAllByText("Nom")).toBeDefined();
       expect(screen.getAllByText("Autres noms")).toBeDefined();
       expect(screen.getAllByText("Prénoms")).toBeDefined();
@@ -97,13 +83,11 @@ describe("Test l'affichage de l'onglet RMC Personne", () => {
     });
   });
 
-  test("DOIT rendre le tableau des personnes sélectionnées pour le projet QUAND on ouvre l'onglet.", () => {
+  test("DOIT rendre le tableau des personnes sélectionnées pour le projet QUAND on ouvre l'onglet.", async () => {
     render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
 
-    waitFor(() => {
-      expect(
-        screen.getByText("Personnes sélectionnées pour le projet")
-      ).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByText("Personnes sélectionnées pour le projet")).toBeDefined();
       expect(screen.getAllByText("Nom")).toBeDefined();
       expect(screen.getAllByText("Autres noms")).toBeDefined();
       expect(screen.getAllByText("Prénoms")).toBeDefined();
@@ -114,13 +98,11 @@ describe("Test l'affichage de l'onglet RMC Personne", () => {
     });
   });
 
-  test("DOIT rendre le tableau des actes/inscriptions sélectionnés pour le projet QUAND on ouvre l'onglet.", () => {
+  test("DOIT rendre le tableau des actes/inscriptions sélectionnés pour le projet QUAND on ouvre l'onglet.", async () => {
     render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
 
-    waitFor(() => {
-      expect(
-        screen.getByText("Actes et inscriptions sélectionnés pour le projet")
-      ).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByText("Actes et inscriptions sélectionnés pour le projet")).toBeDefined();
       expect(screen.getAllByText("Nom")).toBeDefined();
       expect(screen.getAllByText("Autres noms")).toBeDefined();
       expect(screen.getAllByText("Prénoms")).toBeDefined();
@@ -133,13 +115,11 @@ describe("Test l'affichage de l'onglet RMC Personne", () => {
     });
   });
 
-  test("DOIT afficher le bouton-menu pour lancer une nouvelle RMC Auto QUAND on ouvre l'onglet.", () => {
+  test("DOIT afficher le bouton-menu pour lancer une nouvelle RMC Auto QUAND on ouvre l'onglet.", async () => {
     render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
 
-    waitFor(() => {
-      expect(
-        screen.getByText("Rechercher sur une personne de la requête")
-      ).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByText("Rechercher sur une personne de la requête")).toBeDefined();
     });
   });
 
@@ -151,12 +131,8 @@ describe("Test l'affichage de l'onglet RMC Personne", () => {
       expect(screen.getByText("Paul")).toBeDefined();
     });
 
-    fireEvent.mouseOver(
-      screen.getByText("Rechercher sur une personne de la requête")
-    );
-    fireEvent.click(
-      screen.getByText("Parent 2 - PHILIPS Yann (M), 01/02/2000")
-    );
+    fireEvent.mouseOver(screen.getByText("Rechercher sur une personne de la requête"));
+    fireEvent.click(screen.getByText("Parent 2 - PHILIPS Yann (M), 01/02/2000"));
 
     waitFor(() => {
       expect(screen.queryByText("DUPONT")).toBeNull();
@@ -164,22 +140,14 @@ describe("Test l'affichage de l'onglet RMC Personne", () => {
     });
   });
 
-  test("DOIT ne pas afficher le tableau des personnes selectionnées et les boutons ajouter personne QUAND on se trouve en étblissement", () => {
-    const requeteEtablissement = mappingRequeteCreation(
-      requeteCreationEtablissement
-    );
+  test("DOIT ne pas afficher le tableau des personnes selectionnées et les boutons ajouter personne QUAND on se trouve en étblissement", async () => {
+    const requeteEtablissement = mappingRequeteCreation(requeteCreationEtablissement);
     render(hookConsumerOngletRMCPersonneAvecContexte(requeteEtablissement));
 
-    waitFor(() => {
-      expect(
-        screen.queryByTitle("Ajouter cette personne au projet")
-      ).toBeNull();
-      expect(
-        screen.queryByText("Personnes sélectionnées pour le projet")
-      ).toBeNull();
-      expect(
-        screen.queryByText("Actes et inscriptions sélectionnés pour le projet")
-      ).toBeDefined();
+    await waitFor(() => {
+      expect(screen.queryByTitle("Ajouter cette personne au projet")).toBeNull();
+      expect(screen.queryByText("Personnes sélectionnées pour le projet")).toBeNull();
+      expect(screen.queryByText("Actes et inscriptions sélectionnés pour le projet")).toBeDefined();
     });
   });
 });
@@ -220,9 +188,7 @@ describe.skip("Test le fonctionnement de l'ajout / suppression des personnes au 
       expect(estDansTableauPersonnesSauvegardees("Parent 2")).toBeTruthy();
     });
 
-    const boutonRetirer = screen.getAllByTitle(
-      "Retirer cette personne du projet"
-    )[1];
+    const boutonRetirer = screen.getAllByTitle("Retirer cette personne du projet")[1];
 
     waitFor(() => {
       expect(boutonRetirer).toBeDefined();
@@ -250,9 +216,7 @@ describe.skip("Test le fonctionnement de l'ajout / suppression des personnes au 
     fireEvent.click(boutonAjouter);
     fireEvent.click(boutonItemParent);
 
-    const boutonRetirer = screen.getAllByTitle(
-      "Retirer cette personne du projet"
-    )[1];
+    const boutonRetirer = screen.getAllByTitle("Retirer cette personne du projet")[1];
 
     waitFor(() => {
       expect(boutonAjouter).not.toBeDefined();
@@ -293,12 +257,8 @@ describe.skip("Test le fonctionnement de l'ajout / suppression des personnes au 
       expect(estDansTableauPersonnesSauvegardees("Parent 2")).toBeTruthy();
     });
 
-    fireEvent.mouseOver(
-      screen.getByText("Rechercher sur une personne de la requête")
-    );
-    fireEvent.click(
-      screen.getByText("Parent 2 - PHILIPS Yann (M), 01/02/2000")
-    );
+    fireEvent.mouseOver(screen.getByText("Rechercher sur une personne de la requête"));
+    fireEvent.click(screen.getByText("Parent 2 - PHILIPS Yann (M), 01/02/2000"));
 
     waitFor(() => {
       expect(estDansTableauPersonnesSauvegardees("DUPONT")).toBeTruthy();
@@ -327,37 +287,23 @@ describe.skip("Test le fonctionnement de l'ajout / suppression des actes ou isnc
   test("DOIT ajouter / retirer un acte ou inscription au tableau des acte ou inscriptions sauvegardés avec le type PJ correspondant QUAND on ajoute / retire un acte ou inscription au projet.", () => {
     render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
 
-    const boutonAjouter = screen.getByTitle(
-      "Ajouter cet acte ou inscription au projet"
-    );
-    const boutonItemTitulaire = screen.getByText(
-      "Autres pièces justificatives"
-    );
+    const boutonAjouter = screen.getByTitle("Ajouter cet acte ou inscription au projet");
+    const boutonItemTitulaire = screen.getByText("Autres pièces justificatives");
 
     waitFor(() => {
       expect(boutonAjouter).toBeDefined();
       expect(boutonItemTitulaire).toBeDefined();
-      expect(
-        estDansTableauActesInscriptionsSauvegardes(
-          "Autres pièces justificatives"
-        )
-      ).toBeFalsy();
+      expect(estDansTableauActesInscriptionsSauvegardes("Autres pièces justificatives")).toBeFalsy();
     });
 
     fireEvent.click(boutonAjouter);
     fireEvent.click(boutonItemTitulaire);
 
     waitFor(() => {
-      expect(
-        estDansTableauActesInscriptionsSauvegardes(
-          "Autres pièces justificatives"
-        )
-      ).toBeTruthy();
+      expect(estDansTableauActesInscriptionsSauvegardes("Autres pièces justificatives")).toBeTruthy();
     });
 
-    const boutonRetirerAlpha = screen.getAllByTitle(
-      "Retirer cet acte ou inscription du projet"
-    )[2];
+    const boutonRetirerAlpha = screen.getAllByTitle("Retirer cet acte ou inscription du projet")[2];
 
     waitFor(() => {
       expect(boutonRetirerAlpha).toBeDefined();
@@ -367,23 +313,15 @@ describe.skip("Test le fonctionnement de l'ajout / suppression des actes ou isnc
 
     waitFor(() => {
       expect(boutonRetirerAlpha).not.toBeDefined();
-      expect(
-        estDansTableauActesInscriptionsSauvegardes(
-          "Autres pièces justificatives"
-        )
-      ).toBeFalsy();
+      expect(estDansTableauActesInscriptionsSauvegardes("Autres pièces justificatives")).toBeFalsy();
     });
   });
 
   test("DOIT afficher / masquer le bouton d'ajout d'un acte ou inscription QUAND on ajoute / retire cet acte ou inscription du projet.", () => {
     render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
 
-    const boutonAjouter = screen.getByTitle(
-      "Ajouter cet acte ou inscription au projet"
-    );
-    const boutonItemActeInscription = screen.getByText(
-      "Autres pièces justificatives"
-    );
+    const boutonAjouter = screen.getByTitle("Ajouter cet acte ou inscription au projet");
+    const boutonItemActeInscription = screen.getByText("Autres pièces justificatives");
 
     waitFor(() => {
       expect(boutonAjouter).toBeDefined();
@@ -393,27 +331,17 @@ describe.skip("Test le fonctionnement de l'ajout / suppression des actes ou isnc
     fireEvent.click(boutonAjouter);
     fireEvent.click(boutonItemActeInscription);
 
-    const boutonRetirer = screen.getAllByTitle(
-      "Retirer cet acte ou inscription du projet"
-    )[2];
+    const boutonRetirer = screen.getAllByTitle("Retirer cet acte ou inscription du projet")[2];
     waitFor(() => {
       expect(boutonAjouter).not.toBeDefined();
       expect(boutonRetirer).toBeDefined();
-      expect(
-        estDansTableauActesInscriptionsSauvegardes(
-          "Autres pièces justificatives"
-        )
-      ).toBeTruthy();
+      expect(estDansTableauActesInscriptionsSauvegardes("Autres pièces justificatives")).toBeTruthy();
     });
 
     fireEvent.click(boutonRetirer);
 
     waitFor(() => {
-      expect(
-        estDansTableauActesInscriptionsSauvegardes(
-          "Autres pièces justificatives"
-        )
-      ).toBeFalsy();
+      expect(estDansTableauActesInscriptionsSauvegardes("Autres pièces justificatives")).toBeFalsy();
     });
   });
 
@@ -421,58 +349,32 @@ describe.skip("Test le fonctionnement de l'ajout / suppression des actes ou isnc
     render(hookConsumerOngletRMCPersonneAvecContexte(REQUETE));
 
     // Ajouter acte ou inscription
-    const boutonAjouter = screen.getByTitle(
-      "Ajouter cet acte ou inscription au projet"
-    );
-    const boutonItemActeInscription = screen.getByText(
-      "Autres pièces justificatives"
-    );
+    const boutonAjouter = screen.getByTitle("Ajouter cet acte ou inscription au projet");
+    const boutonItemActeInscription = screen.getByText("Autres pièces justificatives");
 
     waitFor(() => {
       expect(boutonAjouter).toBeDefined();
       expect(boutonItemActeInscription).toBeDefined();
 
       expect(screen.getByText("PACS - 2011 - 1234590")).toBeDefined();
-      expect(
-        estDansTableauActesInscriptionsSauvegardes("PACS - 2011 - 1234590")
-      ).toBeFalsy();
-      expect(
-        estDansTableauActesInscriptionsSauvegardes(
-          "Autres pièces justificatives"
-        )
-      ).toBeFalsy();
+      expect(estDansTableauActesInscriptionsSauvegardes("PACS - 2011 - 1234590")).toBeFalsy();
+      expect(estDansTableauActesInscriptionsSauvegardes("Autres pièces justificatives")).toBeFalsy();
     });
 
-      fireEvent.click(boutonAjouter);
-      fireEvent.click(boutonItemActeInscription);
+    fireEvent.click(boutonAjouter);
+    fireEvent.click(boutonItemActeInscription);
 
-      waitFor(() => {
-        expect(
-          estDansTableauActesInscriptionsSauvegardes("PACS - 2011 - 1234590")
-        ).toBeTruthy();
-        expect(
-          estDansTableauActesInscriptionsSauvegardes(
-            "Autres pièces justificatives"
-          )
-        ).toBeTruthy();
-      });
+    waitFor(() => {
+      expect(estDansTableauActesInscriptionsSauvegardes("PACS - 2011 - 1234590")).toBeTruthy();
+      expect(estDansTableauActesInscriptionsSauvegardes("Autres pièces justificatives")).toBeTruthy();
+    });
 
-      fireEvent.mouseOver(
-        screen.getByText("Rechercher sur une personne de la requête")
-      );
-      fireEvent.click(
-        screen.getByText("Parent 2 - PHILIPS Yann (M), 01/02/2000")
-      );
+    fireEvent.mouseOver(screen.getByText("Rechercher sur une personne de la requête"));
+    fireEvent.click(screen.getByText("Parent 2 - PHILIPS Yann (M), 01/02/2000"));
 
-      waitFor(() => {
-        expect(
-          estDansTableauActesInscriptionsSauvegardes("PACS - 2011 - 1234590")
-        ).toBeTruthy();
-        expect(
-          estDansTableauActesInscriptionsSauvegardes(
-            "Autres pièces justificatives"
-          )
-        ).toBeTruthy();
-      });
+    waitFor(() => {
+      expect(estDansTableauActesInscriptionsSauvegardes("PACS - 2011 - 1234590")).toBeTruthy();
+      expect(estDansTableauActesInscriptionsSauvegardes("Autres pièces justificatives")).toBeTruthy();
+    });
   });
 });

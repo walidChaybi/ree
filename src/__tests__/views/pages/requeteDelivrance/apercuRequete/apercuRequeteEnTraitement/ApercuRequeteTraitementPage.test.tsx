@@ -1,20 +1,13 @@
 import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
-import {
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID
-} from "@router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE, URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { afterAll, beforeAll, beforeEach, expect, test } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte,
-  mockFenetreFicheTestFunctions
-} from "../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();
@@ -40,32 +33,17 @@ test.skip("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée
         element: <ApercuRequeteTraitementPage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-        "a4cefb71-8457-4f6b-937e-34b49335d494"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID, "a4cefb71-8457-4f6b-937e-34b49335d494")]
   );
 
-  const { container } = render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      userDroitnonCOMEDEC,
-      LISTE_UTILISATEURS
-    )
-  );
+  const { container } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC, LISTE_UTILISATEURS));
 
   waitFor(() => {
-    expect(
-      container.getElementsByClassName("OperationLocaleEnCoursSimple").length
-    ).toBe(1);
+    expect(container.getElementsByClassName("OperationLocaleEnCoursSimple").length).toBe(1);
   });
 
   waitFor(() => {
-    expect(
-      container.getElementsByClassName("OperationLocaleEnCoursSimple").length
-    ).toBe(0);
+    expect(container.getElementsByClassName("OperationLocaleEnCoursSimple").length).toBe(0);
   });
 });
 
@@ -77,38 +55,19 @@ test.skip("renders ApercuRequeteTraitementPage", () => {
         element: <ApercuRequeteTraitementPage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-        "a4cefb71-8457-4f6b-937e-34b49335d494"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID, "a4cefb71-8457-4f6b-937e-34b49335d494")]
   );
 
-  render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      userDroitnonCOMEDEC,
-      LISTE_UTILISATEURS
-    )
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC, LISTE_UTILISATEURS));
 
-  const bandeau = screen.getByText(
-    "Requête à signer le 14/07/2020 par Ashley YOUNG"
-  );
+  const bandeau = screen.getByText("Requête à signer le 14/07/2020 par Ashley YOUNG");
   const actions = screen.getByText(/Suivi requête/i);
 
-  const listeAction1 = screen.getByText(
-    /Saisie de la requête - 10\/03\/2020 - APP/i
-  );
-  const listeAction2 = screen.getByText(/À traiter - 10\/03\/2020 - BOB/i);
+  const listeAction1 = screen.getByText(/Saisie de la requête - 10\/03\/2020 - Lennon John/i);
+  const listeAction2 = screen.getByText(/À traiter - 10\/03\/2020 - Dylan Bob/i);
 
-  const listeObservation1 = screen.getByText(
-    /C'est vraiment dur de pouvo... - 02\/01\/1970/i
-  );
-  const listeObservation2 = screen.getByText(
-    /Je fais pas 30 charactères - 02\/01\/1970 - BOB/i
-  );
+  const listeObservation1 = screen.getByText(/C'est vraiment dur de pouvo... - 02\/01\/1970/i);
+  const listeObservation2 = screen.getByText(/Je fais pas 30 charactères - 02\/01\/1970 - Dylan Bob/i);
 
   waitFor(() => {
     expect(document.title).toBe("Aperçu de la requête en traitement");
@@ -129,21 +88,10 @@ test.skip("renders document réponses", () => {
         element: <ApercuRequeteTraitementPage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-        "a4cefb71-8457-4f6b-937e-34b49335d494"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID, "a4cefb71-8457-4f6b-937e-34b49335d494")]
   );
 
-  render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      userDroitnonCOMEDEC,
-      LISTE_UTILISATEURS
-    )
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC, LISTE_UTILISATEURS));
 
   const title = screen.getByText(/Documents à délivrer/i);
   const doc1 = screen.getByText(/^Courrier$/);
@@ -169,21 +117,10 @@ test.skip("transmettre à valideur", () => {
         element: <ApercuRequeteTraitementPage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-        "a4cefb71-8457-4f6b-937e-34b49335d494"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID, "a4cefb71-8457-4f6b-937e-34b49335d494")]
   );
 
-  render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      userDroitnonCOMEDEC,
-      LISTE_UTILISATEURS
-    )
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC, LISTE_UTILISATEURS));
 
   waitFor(() => {
     expect(screen.getByText("Transmettre à valideur")).toBeDefined();
@@ -191,9 +128,7 @@ test.skip("transmettre à valideur", () => {
 
   fireEvent.click(screen.getByText("Transmettre à valideur"));
   const autocomplete = screen.getByTestId("autocomplete");
-  const inputChampRecherche = screen.getByLabelText(
-    "TransfertPopin"
-  ) as HTMLInputElement;
+  const inputChampRecherche = screen.getByLabelText("TransfertPopin") as HTMLInputElement;
   autocomplete.focus();
   fireEvent.change(inputChampRecherche, {
     target: {
@@ -213,17 +148,13 @@ test.skip("transmettre à valideur", () => {
   });
 
   waitFor(() => {
-    expect(
-      (screen.getByText("Valider") as HTMLButtonElement).disabled
-    ).toBeFalsy();
+    expect((screen.getByText("Valider") as HTMLButtonElement).disabled).toBeFalsy();
   });
 
   fireEvent.click(screen.getByText("Valider"));
 
   waitFor(() => {
-    expect(router.state.location.pathname).toStrictEqual(
-      URL_MES_REQUETES_DELIVRANCE
-    );
+    expect(router.state.location.pathname).toStrictEqual(URL_MES_REQUETES_DELIVRANCE);
   });
 });
 
@@ -239,21 +170,10 @@ test.skip("retour approuvé", () => {
         element: <ApercuRequeteTraitementPage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-        "a4cefb71-8457-4f6b-937e-34b49335d495"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID, "a4cefb71-8457-4f6b-937e-34b49335d495")]
   );
 
-  render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      userDroitnonCOMEDEC,
-      LISTE_UTILISATEURS
-    )
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC, LISTE_UTILISATEURS));
 
   waitFor(() => {
     expect(screen.getByText("Relecture commentée")).toBeDefined();
@@ -268,17 +188,13 @@ test.skip("retour approuvé", () => {
   });
 
   waitFor(() => {
-    expect(
-      (screen.getByText("Valider") as HTMLButtonElement).disabled
-    ).toBeFalsy();
+    expect((screen.getByText("Valider") as HTMLButtonElement).disabled).toBeFalsy();
   });
 
   fireEvent.click(screen.getByText("Valider"));
 
   waitFor(() => {
-    expect(router.state.location.pathname).toStrictEqual(
-      URL_MES_REQUETES_DELIVRANCE
-    );
+    expect(router.state.location.pathname).toStrictEqual(URL_MES_REQUETES_DELIVRANCE);
   });
 });
 
@@ -290,21 +206,10 @@ test.skip("reprendre traitement", () => {
         element: <ApercuRequeteTraitementPage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-        "a4cefb71-8457-4f6b-937e-34b49335d495"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID, "a4cefb71-8457-4f6b-937e-34b49335d495")]
   );
 
-  render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      userDroitnonCOMEDEC,
-      LISTE_UTILISATEURS
-    )
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC, LISTE_UTILISATEURS));
 
   waitFor(() => {
     expect(screen.getByText("Reprendre le traitement")).toBeDefined();

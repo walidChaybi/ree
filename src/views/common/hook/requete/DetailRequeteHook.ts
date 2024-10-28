@@ -1,6 +1,6 @@
 import { getDetailRequete } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { IUtilisateur, getTrigrammeFromID } from "@model/agent/IUtilisateur";
+import { IUtilisateur, getNomPrenomUtilisateurAPartirId } from "@model/agent/IUtilisateur";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { CategorieDocument } from "@model/requete/CategorieDocument";
 import { IAction } from "@model/requete/IActions";
@@ -40,10 +40,7 @@ import { TypeMandant } from "@model/requete/enum/TypeMandant";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
-import {
-  IPieceJustificativeCreation,
-  PieceJustificativeCreation
-} from "@model/requete/pieceJointe/IPieceJustificativeCreation";
+import { IPieceJustificativeCreation, PieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import DateUtils from "@util/DateUtils";
 import { logError } from "@util/LogManager";
 import { getValeurOuUndefined } from "@util/Utils";
@@ -189,7 +186,7 @@ function getActions(actions: any, utilisateurs?: IUtilisateur[]): IAction[] {
   const actionsRequete: IAction[] = [];
   actions.forEach((a: any) => {
     const action = a as IAction;
-    const trigramme = getTrigrammeFromID(action.idUtilisateur, utilisateurs);
+    const trigramme = getNomPrenomUtilisateurAPartirId(action.idUtilisateur, utilisateurs ?? []);
     action.trigramme = trigramme ?? "";
     action.nomUtilisateur = a.nomUtilisateur ? a.nomUtilisateur : "";
     action.prenomUtilisateur = a.prenomUtilisateur ? a.prenomUtilisateur : "";
@@ -202,7 +199,7 @@ function getObservations(observations: any, utilisateurs?: IUtilisateur[]): IObs
   const observationsRequete: IObservation[] = [];
   observations.forEach((a: any) => {
     const observation = a as IObservation;
-    const trigramme = getTrigrammeFromID(observation.idUtilisateur, utilisateurs);
+    const trigramme = getNomPrenomUtilisateurAPartirId(observation.idUtilisateur, utilisateurs ?? []);
     observation.trigramme = trigramme ?? "RECE";
     observationsRequete.push(observation);
   });
@@ -348,30 +345,18 @@ function mapUnDocumentPJ(document?: any): IDocumentPJ | undefined {
   return document
     ? {
         ...document,
-        categorie: CategorieDocument.creationCategorieDocument(
-          document.categorie,
-          document.libelle
-        )
+        categorie: CategorieDocument.creationCategorieDocument(document.categorie, document.libelle)
       }
     : undefined;
 }
 
 function mapDocumentPJ(documents?: any): IDocumentPJ[] {
-  return DocumentPJ.trie(
-    documents?.map(
-      (document: any): IDocumentPJ => mapUnDocumentPJ(document) as IDocumentPJ
-    )
-  );
+  return DocumentPJ.trie(documents?.map((document: any): IDocumentPJ => mapUnDocumentPJ(document) as IDocumentPJ));
 }
 
-export function mappingRequeteCreation(
-  data: any,
-  utilisateurs?: IUtilisateur[]
-): IRequeteCreation {
+export function mappingRequeteCreation(data: any, utilisateurs?: IUtilisateur[]): IRequeteCreation {
   const requete = mappingRequete(data, utilisateurs);
-  const natureActeTranscrit = NatureActeTranscription.getEnumFor(
-    data.natureActeTranscrit
-  );
+  const natureActeTranscrit = NatureActeTranscription.getEnumFor(data.natureActeTranscrit);
 
   return {
     ...data,
@@ -381,15 +366,11 @@ export function mappingRequeteCreation(
     sousType: SousTypeCreation.getEnumFor(data.sousType),
     numeroDossierMetier: data.numeroDossierMetier,
     numeroAncien: data.numeroAncienSI,
-    piecesJustificatives: mapPiecesJustificativesCreation(
-      data.piecesJustificatives
-    ),
+    piecesJustificatives: mapPiecesJustificativesCreation(data.piecesJustificatives),
     mandant: data.mandant ? getMandant(data.mandant) : undefined,
     provenanceNatali: {
       ...data.provenanceNatali,
-      tagPriorisation: TagPriorisation.getEnumFor(
-        data.provenanceNatali?.tagPriorisation
-      ),
+      tagPriorisation: TagPriorisation.getEnumFor(data.provenanceNatali?.tagPriorisation),
       echanges: mapEchangesRetourSDANF(data.provenanceNatali?.echanges)
     },
     provenanceServicePublic: data.provenanceServicePublic,
@@ -404,9 +385,7 @@ export function mappingRequeteCreation(
   };
 }
 
-export function mapTitulairesCreation(
-  titulaires: any[]
-): ITitulaireRequeteCreation[] {
+export function mapTitulairesCreation(titulaires: any[]): ITitulaireRequeteCreation[] {
   return titulaires.map(titulaire => ({
     ...titulaire,
     qualite: QualiteFamille.getEnumFor(titulaire.qualite),
@@ -419,16 +398,10 @@ export function mapTitulairesCreation(
   }));
 }
 
-function mapPersonnesSauvegardees(
-  data?: any[],
-  estRequeteMariage = false
-): IPersonneSauvegardee[] {
+function mapPersonnesSauvegardees(data?: any[], estRequeteMariage = false): IPersonneSauvegardee[] {
   const personnesSauvegardees: IPersonneSauvegardee[] = [];
   data?.forEach(dataCourant => {
-    const role = RolePersonneSauvegardee.getEnumForEnFonctionNatureActeRequete(
-      dataCourant.role,
-      estRequeteMariage
-    );
+    const role = RolePersonneSauvegardee.getEnumForEnFonctionNatureActeRequete(dataCourant.role, estRequeteMariage);
     if (role) {
       personnesSauvegardees.push({
         idPersonne: dataCourant.idPersonne,
@@ -447,16 +420,9 @@ function mapSuiviDossiers(suiviDossiers?: any[]): ISuiviDossier[] | undefined {
     jourEvenement: getValeurOuUndefined(suiviDossier.jourEvenement),
     moisEvenement: getValeurOuUndefined(suiviDossier.moisEvenement),
     anneeEvenement: getValeurOuUndefined(suiviDossier.anneeEvenement),
-    natureProjet: NatureProjetEtablissement.getEnumFor(
-      getValeurOuUndefined(suiviDossier.natureProjet)
-    ),
+    natureProjet: NatureProjetEtablissement.getEnumFor(getValeurOuUndefined(suiviDossier.natureProjet)),
     referenceActe: getValeurOuUndefined(suiviDossier.referenceActe),
-    avancement: AvancementProjetActe.getEnumFor(
-      getValeurOuUndefined(suiviDossier.avancement)
-    ),
-    unionActuelle: UnionActuelle.getEnumFor(
-      getValeurOuUndefined(suiviDossier.unionActuelle)
-    )
+    avancement: AvancementProjetActe.getEnumFor(getValeurOuUndefined(suiviDossier.avancement)),
+    unionActuelle: UnionActuelle.getEnumFor(getValeurOuUndefined(suiviDossier.unionActuelle))
   }));
 }
-

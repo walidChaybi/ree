@@ -59,6 +59,7 @@ const RECEContextProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
       apresErreur: erreurs => {
         gestionnaireDoubleOuverture.init();
         setUtilisateurConnecte({} as IOfficier);
+        setNomenclaturesChargees(true);
         setErreurLogin(erreurs);
       }
     });

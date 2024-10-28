@@ -2,28 +2,17 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  ICreationObservationParams,
-  useCreationObservationApi
-} from "@hook/observation/CreationObservationApiHook";
-import {
-  ISuppressionObservationParams,
-  useSuppressionObservationApi
-} from "@hook/observation/SuppressionObservationApiHook";
+import { ICreationObservationParams, useCreationObservationApi } from "@hook/observation/CreationObservationApiHook";
+import { ISuppressionObservationParams, useSuppressionObservationApi } from "@hook/observation/SuppressionObservationApiHook";
 import { IObservation, Observation } from "@model/requete/IObservation";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import { logError } from "@util/LogManager";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
-import { storeRece } from "@util/storeRece";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { BoutonAccordionTitle } from "@widget/accordion/BoutonAccordionTitle";
 import React, { useContext, useEffect, useState } from "react";
-import {
-  IAjouterObservationFormValue,
-  OBSERVATION,
-  PopinAjouterObservation
-} from "./contenu/PopinAjouterObservation";
+import { IAjouterObservationFormValue, OBSERVATION, PopinAjouterObservation } from "./contenu/PopinAjouterObservation";
 import "./scss/Suivis.scss";
 
 interface SuiviObservationsRequeteProps {
@@ -32,29 +21,20 @@ interface SuiviObservationsRequeteProps {
   disabled?: boolean;
 }
 
-export const SuiviObservationsRequete: React.FC<
-  SuiviObservationsRequeteProps
-> = props => {
-  const [observations, setObservations] = useState<IObservation[]>(
-    props.observations || []
-  );
-  const [observationASupprimer, setObservationASupprimer] =
-    useState<ISuppressionObservationParams>();
-  const [idObservationAModifier, setIdObservationAModifier] =
-    useState<string>();
+export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> = props => {
+  const [observations, setObservations] = useState<IObservation[]>(props.observations || []);
+  const [observationASupprimer, setObservationASupprimer] = useState<ISuppressionObservationParams>();
+  const [idObservationAModifier, setIdObservationAModifier] = useState<string>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [texteObservation, setTexteObservation] = useState<string>();
-  const [creationObservation, setCreationObservation] =
-    useState<ICreationObservationParams>();
+  const [creationObservation, setCreationObservation] = useState<ICreationObservationParams>();
   const [expanded, setIsExpanded] = useState(true);
 
-  const { utilisateurConnecte, utilisateurs } = useContext(RECEContextData);
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   const idUtilisateurConnecte = utilisateurConnecte?.idUtilisateur;
 
-  const resultatSuppression = useSuppressionObservationApi(
-    observationASupprimer
-  );
+  const resultatSuppression = useSuppressionObservationApi(observationASupprimer);
 
   const resultatCreation = useCreationObservationApi(creationObservation);
 
@@ -88,12 +68,9 @@ export const SuiviObservationsRequete: React.FC<
   useEffect(() => {
     if (resultatCreation && creationObservation?.texteObservation) {
       if (idObservationAModifier) {
-        const indexObservation = observations.findIndex(
-          el => el.id === resultatCreation.id
-        );
+        const indexObservation = observations.findIndex(el => el.id === resultatCreation.id);
         if (indexObservation !== -1) {
-          observations[indexObservation].texte =
-            creationObservation.texteObservation;
+          observations[indexObservation].texte = creationObservation.texteObservation;
           setObservations(observations);
           setIdObservationAModifier(undefined);
         }
@@ -102,10 +79,7 @@ export const SuiviObservationsRequete: React.FC<
           ...observations,
           {
             id: resultatCreation.id,
-            trigramme: storeRece.getTrigrammeFromID(
-              utilisateurs,
-              getValeurOuVide(idUtilisateurConnecte)
-            ),
+            trigramme: `${utilisateurConnecte?.nom} ${utilisateurConnecte?.prenom}`,
             idUtilisateur: idUtilisateurConnecte,
             texte: creationObservation?.texteObservation,
             numeroOrdre: getNumeroOrdreMax(observations) + 1,
@@ -120,15 +94,9 @@ export const SuiviObservationsRequete: React.FC<
   }, [resultatCreation]);
 
   useEffect(() => {
-    if (
-      resultatSuppression &&
-      resultatSuppression.resultat &&
-      observationASupprimer
-    ) {
+    if (resultatSuppression && resultatSuppression.resultat && observationASupprimer) {
       observations.splice(
-        observations.findIndex(
-          el => observationASupprimer.idObservation === el.id
-        ),
+        observations.findIndex(el => observationASupprimer.idObservation === el.id),
         1
       );
       setObservationASupprimer(undefined);
@@ -142,8 +110,7 @@ export const SuiviObservationsRequete: React.FC<
       setObservationASupprimer({ idObservation: ob.id });
     } else {
       logError({
-        messageUtilisateur:
-          "Vous ne pouvez pas supprimer une observation que vous n'avez pas vous-même enregistrée"
+        messageUtilisateur: "Vous ne pouvez pas supprimer une observation que vous n'avez pas vous-même enregistrée"
       });
     }
   };
@@ -155,8 +122,7 @@ export const SuiviObservationsRequete: React.FC<
       setIsOpen(true);
     } else {
       logError({
-        messageUtilisateur:
-          "Vous ne pouvez pas modifier une observation que vous n'avez pas vous-même enregistrée"
+        messageUtilisateur: "Vous ne pouvez pas modifier une observation que vous n'avez pas vous-même enregistrée"
       });
     }
   };
@@ -189,18 +155,14 @@ export const SuiviObservationsRequete: React.FC<
               <ListItemText
                 title={el.texte}
                 key={el.id}
-                className={
-                  Observation.getTrigramme(el) === "RECE" ? "RECE" : ""
-                }
+                className={Observation.getTrigramme(el) === "RECE" ? "RECE" : ""}
               >
                 <div
                   onClick={() => onClickModifier(el)}
                   className="Observation"
                 >
                   {`${Observation.getTexte(el)} - ${Observation.getDate(el)} ${
-                    Observation.getTrigramme(el) !== "RECE"
-                      ? getTrigramme(el)
-                      : ""
+                    Observation.getTrigramme(el) !== "RECE" ? getTrigramme(el) : ""
                   }`}
                 </div>
                 <FontAwesomeIcon
