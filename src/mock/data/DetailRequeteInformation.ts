@@ -9,6 +9,8 @@ export const ReponseAppelDetailRequeteInformation = {
     dateCreation: 1634708514000,
     canal: "INTERNET",
     type: "INFORMATION",
+    idUtilisateur: "90c6aee1-21be-4ba6-9e55-fc8831252646",
+    idService: "67379d0b-ba6a-44eb-900e-a45d1b0264bc",
     actions: [],
     titulaires: [
       {
@@ -38,14 +40,6 @@ export const ReponseAppelDetailRequeteInformation = {
         parentsTitulaire: []
       }
     ],
-    corbeilleAgent: {
-      id: "bbdb674e-1221-4fbd-b30f-84b442aefc64",
-      idUtilisateur: "90c6aee1-21be-4ba6-9e55-fc8831252646"
-    },
-    corbeilleService: {
-      id: "99c78b2e-62fa-4794-b504-63b0a4d731d9",
-      idService: "67379d0b-ba6a-44eb-900e-a45d1b0264bc"
-    },
     piecesJustificatives: null,
     requerant: {
       id: "bbd0b63b-519e-4443-b80b-f590a3f8cd56",
@@ -83,8 +77,7 @@ export const ReponseAppelDetailRequeteInformation = {
     sousType: "INFORMATION",
     objet: "DIVORCE",
     complementObjet: "MISE_A_JOUR_ETAT_CIVIL",
-    commentaire:
-      "Je pense avoir oublier de mettre mon pays de naissance qui est l'espagne. Est-ce trop tard ? Monsieur XXX",
+    commentaire: "Je pense avoir oublier de mettre mon pays de naissance qui est l'espagne. Est-ce trop tard ? Monsieur XXX",
     reponse: null,
     provenance: "INTERNET",
     numeroRequeteLiee: "LRU1A5",
@@ -106,6 +99,7 @@ export const ReponseAppelDetailRequeteInformationSansCorbeilleAgent = {
     dateCreation: 1634708514000,
     canal: "INTERNET",
     type: "INFORMATION",
+    idService: "6737e047-16cc-4731-9a2e-d2e228f7d75f",
     actions: [],
     titulaires: [
       {
@@ -135,11 +129,6 @@ export const ReponseAppelDetailRequeteInformationSansCorbeilleAgent = {
         parentsTitulaire: []
       }
     ],
-    corbeilleAgent: null,
-    corbeilleService: {
-      id: "99c78b2e-62fa-4794-b504-63b0a4d731d9",
-      idService: "6737e047-16cc-4731-9a2e-d2e228f7d75f"
-    },
     piecesJustificatives: null,
     requerant: {
       id: "bbd0b63b-519e-4443-b80b-f590a3f8cd56",
@@ -177,8 +166,7 @@ export const ReponseAppelDetailRequeteInformationSansCorbeilleAgent = {
     sousType: "INFORMATION",
     objet: "DIVORCE",
     complementObjet: "MISE_A_JOUR_ETAT_CIVIL",
-    commentaire:
-      "Je pense avoir oublier de mettre mon pays de naissance qui est l'espagne. Est-ce trop tard ? Monsieur XXX",
+    commentaire: "Je pense avoir oublier de mettre mon pays de naissance qui est l'espagne. Est-ce trop tard ? Monsieur XXX",
     reponse: null,
     provenance: "INTERNET",
     numeroRequeteLiee: "LRU1A5",
@@ -200,6 +188,8 @@ export const ReponseAppelDetailRequeteCompletion = {
     dateCreation: 1634708514000,
     canal: "INTERNET",
     type: "INFORMATION",
+    idUtilisateur: "90c6aee1-21be-4ba6-9e55-fc8831252646",
+    idService: "67379d0b-ba6a-44eb-900e-a45d1b0264bc",
     actions: [],
     titulaires: [
       {
@@ -229,14 +219,6 @@ export const ReponseAppelDetailRequeteCompletion = {
         parentsTitulaire: []
       }
     ],
-    corbeilleAgent: {
-      id: "bbdb674e-1221-4fbd-b30f-84b442aefc64",
-      idUtilisateur: "90c6aee1-21be-4ba6-9e55-fc8831252646"
-    },
-    corbeilleService: {
-      id: "99c78b2e-62fa-4794-b504-63b0a4d731d9",
-      idService: "67379d0b-ba6a-44eb-900e-a45d1b0264bc"
-    },
     piecesJustificatives: null,
     requerant: {
       id: "bbd0b63b-519e-4443-b80b-f590a3f8cd56",
@@ -274,8 +256,7 @@ export const ReponseAppelDetailRequeteCompletion = {
     sousType: "COMPLETION_REQUETE_EN_COURS",
     objet: "COMPLETION_REQUETE_EN_COURS",
     complementObjet: "REPONSE_LIBRE_AGENT",
-    commentaire:
-      "Je pense avoir oublier de mettre mon pays de naissance qui est l'espagne. Est-ce trop tard ? Monsieur XXX",
+    commentaire: "Je pense avoir oublier de mettre mon pays de naissance qui est l'espagne. Est-ce trop tard ? Monsieur XXX",
     reponse: null,
     provenance: "INTERNET",
     numeroRequeteLiee: "9TY6ML",

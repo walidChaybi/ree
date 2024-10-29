@@ -7,6 +7,8 @@ export const requeteCreationTranscription = {
   dateCreation: 1656404736683,
   canal: "RIE",
   type: "CREATION",
+  idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
+  idService: "6737566d-0f25-45dc-8443-97b444e6753a",
   actions: [
     {
       id: "3ed97fb3-54ff-4bd4-925e-f0711ea215ec",
@@ -254,14 +256,6 @@ export const requeteCreationTranscription = {
       parent2Enfant: null
     }
   ],
-  corbeilleAgent: {
-    id: "bbdba5f5-0b65-40d1-a44c-fbbab948b3b6",
-    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55"
-  },
-  corbeilleService: {
-    id: "8035fb6c-df33-11eb-ba80-0242ac130004",
-    idService: "6737566d-0f25-45dc-8443-97b444e6753a"
-  },
   piecesJustificatives: [
     {
       id: "3ed92b89-268a-4883-a41f-0763cfea9ef7",
@@ -461,6 +455,8 @@ export const requeteCreationTranscription = {
 
 export const requeteCreationTranscriptionStatutATraiter = {
   ...requeteCreationTranscription,
+  idUtilisateur: "idUtilisateurConnectedUser",
+  idService: "6737e047-16cc-4731-9a2e-d2e228f7d75f",
   statut: {
     id: "3ed97a35-c9b0-4ae4-b2dc-75eb84e4e82d",
     statutRequete: "A_TRAITER",
@@ -468,53 +464,44 @@ export const requeteCreationTranscriptionStatutATraiter = {
     raisonStatut: null
   },
   sousType: "RCTC",
-  piecesJustificatives: [],
-  corbeilleAgent: {
-    id: "bbdba5f5-0b65-40d1-a44c-fbbab948b3b6",
-    idUtilisateur: "idUtilisateurConnectedUser"
-  },
-  corbeilleService: {
-    id: "8035fb6c-df33-11eb-ba80-0242ac130004",
-    idService: "6737e047-16cc-4731-9a2e-d2e228f7d75f"
-  }
+  piecesJustificatives: []
 } as any as IRequeteCreationTranscription;
 
-export const creationRequeteTranscriptionParams: ICreationRequeteCreationParams =
-  {
-    requete: {
-      villeRegistre: "",
-      canal: "COURRIER",
-      type: "CREATION",
-      sousType: "RCTC",
-      provenance: "COURRIER",
-      natureActeTranscrit: "NAISSANCE_MINEUR",
-      lienRequerant: { typeLienRequerant: "PERE_MERE" },
-      titulaires: [
-        {
-          prenoms: [{ prenom: "Prenom", numeroOrdre: 1 }],
-          sexe: "INCONNU",
-          nationalite: "INCONNUE",
-          typeObjetTitulaire: "TITULAIRE_ACTE_TRANSCRIT_DRESSE",
-          position: 1,
-          nomNaissance: "Nom acte etranger",
-          nomSouhaite: "Nom souhaite FR",
-          evenementUnions: []
-        },
-        {
-          prenoms: [{ prenom: "SPC", numeroOrdre: 1 }],
-          sexe: "INCONNU",
-          nationalite: "INCONNUE",
-          nomNaissance: "SNP",
-          typeObjetTitulaire: "FAMILLE",
-          qualite: "PARENT",
-          position: 1,
-          nationalites: [],
-          evenementUnions: []
-        }
-      ],
-      requerant: { adresse: {}, qualite: "PARTICULIER" }
-    }
-  };
+export const creationRequeteTranscriptionParams: ICreationRequeteCreationParams = {
+  requete: {
+    villeRegistre: "",
+    canal: "COURRIER",
+    type: "CREATION",
+    sousType: "RCTC",
+    provenance: "COURRIER",
+    natureActeTranscrit: "NAISSANCE_MINEUR",
+    lienRequerant: { typeLienRequerant: "PERE_MERE" },
+    titulaires: [
+      {
+        prenoms: [{ prenom: "Prenom", numeroOrdre: 1 }],
+        sexe: "INCONNU",
+        nationalite: "INCONNUE",
+        typeObjetTitulaire: "TITULAIRE_ACTE_TRANSCRIT_DRESSE",
+        position: 1,
+        nomNaissance: "Nom acte etranger",
+        nomSouhaite: "Nom souhaite FR",
+        evenementUnions: []
+      },
+      {
+        prenoms: [{ prenom: "SPC", numeroOrdre: 1 }],
+        sexe: "INCONNU",
+        nationalite: "INCONNUE",
+        nomNaissance: "SNP",
+        typeObjetTitulaire: "FAMILLE",
+        qualite: "PARENT",
+        position: 1,
+        nationalites: [],
+        evenementUnions: []
+      }
+    ],
+    requerant: { adresse: {}, qualite: "PARTICULIER" }
+  }
+};
 
 export const creationRequeteRCTCResultat = [
   {
@@ -523,6 +510,8 @@ export const creationRequeteRCTCResultat = [
     dateCreation: 1678784544723,
     canal: "COURRIER",
     type: "CREATION",
+    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
     actions: [
       {
         id: "efdeecd1-340c-46c5-8741-69d853bd07b5",
@@ -637,14 +626,6 @@ export const creationRequeteRCTCResultat = [
         enfantTitulaireActeTranscritDresse: null
       }
     ],
-    corbeilleAgent: {
-      id: "7a091a3b-6835-4824-94fb-527d68926d55",
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55"
-    },
-    corbeilleService: {
-      id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-    },
     piecesJustificatives: [],
     requerant: {
       id: "efded426-2e1b-45fa-8a25-f349d1baa7fe",

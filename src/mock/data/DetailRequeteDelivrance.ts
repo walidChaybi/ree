@@ -1,13 +1,5 @@
-import {
-  documentReponseCARN_CSPAC_01,
-  documentReponseCertificatRCA
-} from "./DocumentReponse";
-import {
-  idFicheActeAvecGenreIndetermine,
-  idFicheActeAvecTitulaireMultiple,
-  idficheActeEC,
-  idFicheActeMariage
-} from "./ficheActe";
+import { documentReponseCARN_CSPAC_01, documentReponseCertificatRCA } from "./DocumentReponse";
+import { idFicheActeAvecGenreIndetermine, idFicheActeAvecTitulaireMultiple, idficheActeEC, idFicheActeMariage } from "./ficheActe";
 import { TYPE_PIECE_JUSTIFICATIVE } from "./NomenclatureTypePieceJustificative";
 
 export const ReponseAppelDetailRequeteDelivrance = {
@@ -24,6 +16,7 @@ export const ReponseAppelDetailRequeteDelivrance = {
     canal: "COURRIER",
     type: "DELIVRANCE",
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
     actions: [
       {
         id: "1d189cd9-0df0-45dc-a4cf-0174eb621234",
@@ -145,14 +138,6 @@ export const ReponseAppelDetailRequeteDelivrance = {
         ]
       }
     ],
-    corbeilleAgent: {
-      id: "4072e911-9f39-4910-8f58-bc355012bf7c",
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
-    },
-    corbeilleService: {
-      id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-    },
     piecesJustificatives: [
       {
         conteneurSwift: "conteneur-swift",
@@ -215,8 +200,7 @@ export const ReponseAppelDetailRequeteDelivrance = {
       },
       {
         id: "id0000",
-        texte:
-          "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
+        texte: "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
         idUtilisateur: "",
         trigramme: "LOS",
         numeroOrdre: 1234,
@@ -256,10 +240,7 @@ export const ReponseAppelDetailRequeteDelivrance = {
     },
     provenanceRece: null,
     provenanceServicePublic: null,
-    documentsReponses: [
-      documentReponseCARN_CSPAC_01,
-      documentReponseCertificatRCA
-    ],
+    documentsReponses: [documentReponseCARN_CSPAC_01, documentReponseCertificatRCA],
     evenement: {
       id: "0fb80e4f-ab5c-4f26-afcc-3199b67aa2f0",
       natureActe: "MARIAGE",
@@ -285,6 +266,7 @@ export const ReponseAppelDetailRequeteDelivranceASigner = {
     canal: "COURRIER",
     type: "DELIVRANCE",
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
     actions: [
       {
         id: "1d189cd9-0df0-45dc-a4cf-0174eb621234",
@@ -406,14 +388,6 @@ export const ReponseAppelDetailRequeteDelivranceASigner = {
         ]
       }
     ],
-    corbeilleAgent: {
-      id: "4072e911-9f39-4910-8f58-bc355012bf7c",
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
-    },
-    corbeilleService: {
-      id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-    },
     piecesJustificatives: [
       {
         conteneurSwift: "conteneur-swift",
@@ -476,8 +450,7 @@ export const ReponseAppelDetailRequeteDelivranceASigner = {
       },
       {
         id: "id0000",
-        texte:
-          "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
+        texte: "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
         idUtilisateur: "",
         trigramme: "LOS",
         numeroOrdre: 1234,
@@ -518,10 +491,7 @@ export const ReponseAppelDetailRequeteDelivranceASigner = {
     },
     provenanceRece: null,
     provenanceServicePublic: null,
-    documentsReponses: [
-      documentReponseCARN_CSPAC_01,
-      documentReponseCertificatRCA
-    ],
+    documentsReponses: [documentReponseCARN_CSPAC_01, documentReponseCertificatRCA],
     evenement: {
       id: "0fb80e4f-ab5c-4f26-afcc-3199b67aa2f0",
       natureActe: "MARIAGE",
@@ -547,6 +517,7 @@ export const ReponseAppelDetailRequeteDelivrancePriseEnCharge = {
     canal: "COURRIER",
     type: "DELIVRANCE",
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
     actions: [
       {
         id: "1d189cd9-0df0-45dc-a4cf-0174eb621234",
@@ -668,14 +639,6 @@ export const ReponseAppelDetailRequeteDelivrancePriseEnCharge = {
         ]
       }
     ],
-    corbeilleAgent: {
-      id: "4072e911-9f39-4910-8f58-bc355012bf7c",
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
-    },
-    corbeilleService: {
-      id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-    },
     piecesJustificatives: [
       {
         conteneurSwift: "conteneur-swift",
@@ -738,8 +701,7 @@ export const ReponseAppelDetailRequeteDelivrancePriseEnCharge = {
       },
       {
         id: "id0000",
-        texte:
-          "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
+        texte: "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
         idUtilisateur: "",
         trigramme: "LOS",
         numeroOrdre: 1234,
@@ -779,10 +741,7 @@ export const ReponseAppelDetailRequeteDelivrancePriseEnCharge = {
     },
     provenanceRece: null,
     provenanceServicePublic: null,
-    documentsReponses: [
-      documentReponseCARN_CSPAC_01,
-      documentReponseCertificatRCA
-    ],
+    documentsReponses: [documentReponseCARN_CSPAC_01, documentReponseCertificatRCA],
     evenement: {
       id: "0fb80e4f-ab5c-4f26-afcc-3199b67aa2f0",
       natureActe: "MARIAGE",
@@ -809,6 +768,7 @@ export const ReponseAppelDetailRequeteDelivranceRDC = {
     type: "DELIVRANCE",
     choixDelivrance: "DELIVRER_EC_EXTRAIT_SANS_FILIATION",
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
     actions: [
       {
         id: "1d189cd9-0df0-45dc-a4cf-0174eb621234",
@@ -930,14 +890,6 @@ export const ReponseAppelDetailRequeteDelivranceRDC = {
         ]
       }
     ],
-    corbeilleAgent: {
-      id: "4072e911-9f39-4910-8f58-bc355012bf7c",
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
-    },
-    corbeilleService: {
-      id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-    },
     piecesJustificatives: [
       {
         conteneurSwift: "conteneur-swift",
@@ -1000,8 +952,7 @@ export const ReponseAppelDetailRequeteDelivranceRDC = {
       },
       {
         id: "id0000",
-        texte:
-          "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
+        texte: "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
         idUtilisateur: "",
         trigramme: "LOS",
         numeroOrdre: 1234,
@@ -1041,10 +992,7 @@ export const ReponseAppelDetailRequeteDelivranceRDC = {
     },
     provenanceRece: null,
     provenanceServicePublic: null,
-    documentsReponses: [
-      documentReponseCARN_CSPAC_01,
-      documentReponseCertificatRCA
-    ],
+    documentsReponses: [documentReponseCARN_CSPAC_01, documentReponseCertificatRCA],
     evenement: {
       id: "0fb80e4f-ab5c-4f26-afcc-3199b67aa2f0",
       natureActe: "MARIAGE",
@@ -1070,6 +1018,7 @@ export const ReponseAppelDetailRequeteDelivranceBrouillon = {
     canal: "COURRIER",
     type: "DELIVRANCE",
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
     actions: [],
     titulaires: [
       {
@@ -1088,14 +1037,6 @@ export const ReponseAppelDetailRequeteDelivranceBrouillon = {
         parentsTitulaire: []
       }
     ],
-    corbeilleAgent: {
-      id: "4072e911-9f39-4910-8f58-bc355012bf7c",
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
-    },
-    corbeilleService: {
-      id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-    },
     piecesJustificatives: [
       {
         conteneurSwift: "conteneur-swift",
@@ -1162,6 +1103,7 @@ export const ReponseAppelDetailRequeteDelivranceUnTitulaire = {
     canal: "COURRIER",
     type: "DELIVRANCE",
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
     actions: [
       {
         id: "1d189cd9-0df0-45dc-a4cf-0174eb621234",
@@ -1238,14 +1180,6 @@ export const ReponseAppelDetailRequeteDelivranceUnTitulaire = {
         ]
       }
     ],
-    corbeilleAgent: {
-      id: "4072e911-9f39-4910-8f58-bc355012bf7c",
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
-    },
-    corbeilleService: {
-      id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-    },
     piecesJustificatives: [],
     requerant: {
       id: "97d0e400-19d3-47fa-aedb-137002a96f18",
@@ -1302,8 +1236,7 @@ export const ReponseAppelDetailRequeteDelivranceUnTitulaire = {
       },
       {
         id: "id0000",
-        texte:
-          "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
+        texte: "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
         idUtilisateur: "",
         trigramme: "LOS",
         numeroOrdre: 1234,
@@ -1369,6 +1302,7 @@ export const ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ = {
     canal: "COURRIER",
     type: "DELIVRANCE",
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
     actions: [
       {
         id: "1d189cd9-0df0-45dc-a4cf-0174eb621234",
@@ -1388,14 +1322,6 @@ export const ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ = {
       }
     ],
     titulaires: [],
-    corbeilleAgent: {
-      id: "4072e911-9f39-4910-8f58-bc355012bf7c",
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
-    },
-    corbeilleService: {
-      id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-    },
     piecesJustificatives: [
       {
         id: "519900ee-c9a0-4d41-8673-512949b64946",
@@ -1456,8 +1382,7 @@ export const ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ = {
       },
       {
         id: "id0000",
-        texte:
-          "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
+        texte: "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
         idUtilisateur: "",
         trigramme: "LOS",
         numeroOrdre: 1234,
@@ -1512,6 +1437,8 @@ export const requeteRDDPAvecDocs = {
   dateCreation: 1646038685506,
   canal: "COURRIER",
   type: "DELIVRANCE",
+  idUtilisateur: "idUtilisateurConnectedUser",
+  idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
   actions: [
     {
       id: "9c09e900-d09f-4a82-8762-2437c811bb4f",
@@ -1565,14 +1492,6 @@ export const requeteRDDPAvecDocs = {
       parentsTitulaire: []
     }
   ],
-  corbeilleAgent: {
-    id: "8ef08da4-95c3-4425-961e-ff3d2fc4ad1e",
-    idUtilisateur: "idUtilisateurConnectedUser"
-  },
-  corbeilleService: {
-    id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-  },
   piecesJustificatives: [],
   requerant: {
     id: "9bfa2963-43f2-43e9-91a6-aa360fed5dd6",
@@ -1640,8 +1559,7 @@ export const requeteRDDPAvecDocs = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "9bfa282d-1e66-4538-b242-b9de4f683f0f_9c09e355-6e87-424b-8e4d-2531c59863d6.pdf",
+      referenceSwift: "9bfa282d-1e66-4538-b242-b9de4f683f0f_9c09e355-6e87-424b-8e4d-2531c59863d6.pdf",
       conteneurSwift: "documents-delivres-2022-2",
       optionsCourrier: [],
       mentionsRetirees: [],
@@ -1656,8 +1574,7 @@ export const requeteRDDPAvecDocs = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "9bfa282d-1e66-4538-b242-b9de4f683f0f_9bfaca5e-a9f5-4e68-83fb-4b97d3e50285.pdf",
+      referenceSwift: "9bfa282d-1e66-4538-b242-b9de4f683f0f_9bfaca5e-a9f5-4e68-83fb-4b97d3e50285.pdf",
       conteneurSwift: "documents-delivres-2022-2",
       validation: "O",
       idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
@@ -1684,6 +1601,8 @@ export const requeteAvecDocs = {
   dateCreation: 1646038685506,
   canal: "COURRIER",
   type: "DELIVRANCE",
+  idUtilisateur: "idUtilisateurConnectedUser",
+  idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
   actions: [
     {
       id: "9c09e900-d09f-4a82-8762-2437c811bb4f",
@@ -1737,14 +1656,6 @@ export const requeteAvecDocs = {
       parentsTitulaire: []
     }
   ],
-  corbeilleAgent: {
-    id: "8ef08da4-95c3-4425-961e-ff3d2fc4ad1e",
-    idUtilisateur: "idUtilisateurConnectedUser"
-  },
-  corbeilleService: {
-    id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-  },
   piecesJustificatives: [],
   requerant: {
     id: "9bfa2963-43f2-43e9-91a6-aa360fed5dd6",
@@ -1812,8 +1723,7 @@ export const requeteAvecDocs = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "9bfa282d-1e66-4538-b242-b9de4f683f0f_9c09e355-6e87-424b-8e4d-2531c59863d6.pdf",
+      referenceSwift: "9bfa282d-1e66-4538-b242-b9de4f683f0f_9c09e355-6e87-424b-8e4d-2531c59863d6.pdf",
       conteneurSwift: "documents-delivres-2022-2",
       optionsCourrier: [],
       mentionsRetirees: [],
@@ -1828,8 +1738,7 @@ export const requeteAvecDocs = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "9bfa282d-1e66-4538-b242-b9de4f683f0f_9bfaca5e-a9f5-4e68-83fb-4b97d3e50285.pdf",
+      referenceSwift: "9bfa282d-1e66-4538-b242-b9de4f683f0f_9bfaca5e-a9f5-4e68-83fb-4b97d3e50285.pdf",
       conteneurSwift: "documents-delivres-2022-2",
       validation: "O",
       idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
@@ -1846,8 +1755,7 @@ export const requeteAvecDocs = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+      referenceSwift: "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
       conteneurSwift: "documents-delivres-2022-3",
       validation: "O",
       idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
@@ -1874,6 +1782,8 @@ export const requeteAvecDocsPlurilingue = {
   dateCreation: 1664276289612,
   canal: "COURRIER",
   type: "DELIVRANCE",
+  idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162",
+  idService: "6737f85c-6207-4174-8825-d5f65d757e4f",
   actions: [
     {
       id: "3f526162-947f-4fc7-af6b-96d6407954ac",
@@ -1929,14 +1839,6 @@ export const requeteAvecDocsPlurilingue = {
       typeObjetTitulaire: null
     }
   ],
-  corbeilleAgent: {
-    id: "bbdba5f5-0b65-40d1-a44c-fbbab948b3b6",
-    idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162"
-  },
-  corbeilleService: {
-    id: "99c7aab2-6def-48ae-8493-2bd72b6a32db",
-    idService: "6737f85c-6207-4174-8825-d5f65d757e4f"
-  },
   piecesJustificatives: [],
   requerant: {
     id: "3f523c72-e43e-4aa1-af84-8387843b560e",
@@ -2005,8 +1907,7 @@ export const requeteAvecDocsPlurilingue = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "3f52370d-14ed-4c55-8cf4-afe006d9aa38_44745c09-2d1d-4d2a-8b2c-c1a98e03f52e.pdf",
+      referenceSwift: "3f52370d-14ed-4c55-8cf4-afe006d9aa38_44745c09-2d1d-4d2a-8b2c-c1a98e03f52e.pdf",
       conteneurSwift: "documents-delivres-2022-9",
       empreinte: "�S�`��8,�[�\u0010O��[",
       optionsCourrier: [],
@@ -2027,8 +1928,7 @@ export const requeteAvecDocsPlurilingue = {
         referenceActe: null,
         empreinte: null
       },
-      referenceSwift:
-        "3f52370d-14ed-4c55-8cf4-afe006d9aa38_4474d2b3-82e9-4716-9c77-0343210d166d.pdf",
+      referenceSwift: "3f52370d-14ed-4c55-8cf4-afe006d9aa38_4474d2b3-82e9-4716-9c77-0343210d166d.pdf",
       conteneurSwift: "documents-delivres-2022-9",
       empreinte: "Tj�.�\u0014@d\u0018� 2\u001e\u001fq�",
       validation: "O",
@@ -2056,8 +1956,7 @@ export const requeteAvecDocsPlurilingue = {
         referenceActe: null,
         empreinte: null
       },
-      referenceSwift:
-        "3f52370d-14ed-4c55-8cf4-afe006d9aa38_447584c8-e195-49de-9e66-b3e41dce3d70.pdf",
+      referenceSwift: "3f52370d-14ed-4c55-8cf4-afe006d9aa38_447584c8-e195-49de-9e66-b3e41dce3d70.pdf",
       conteneurSwift: "documents-delivres-2022-9",
       empreinte: "��<8\u0010���0Ow5Ӿ��",
       validation: "O",
@@ -2099,8 +1998,7 @@ export function getRequeteAvecDeuxDocs(requete: any) {
     avecCtv: false,
     nbPages: 1,
     orientation: "Portrait",
-    referenceSwift:
-      "9bfa282d-1e66-4538-b242-b9de4f683f0f_9bfaca5e-a9f5-4e68-83fb-4b97d3e50285.pdf",
+    referenceSwift: "9bfa282d-1e66-4538-b242-b9de4f683f0f_9bfaca5e-a9f5-4e68-83fb-4b97d3e50285.pdf",
     conteneurSwift: "documents-delivres-2022-2",
     validation: "O",
     idActe: "b41079a5-9e8f-478a-b04c-c4c2ac671123",
@@ -2117,6 +2015,8 @@ export const requeteAvecCopieIntegraleActeImage = {
   dateCreation: 1646038685506,
   canal: "COURRIER",
   type: "DELIVRANCE",
+  idUtilisateur: "idUtilisateurConnectedUser",
+  idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
   actions: [
     {
       id: "9c09e900-d09f-4a82-8762-2437c811bb4f",
@@ -2170,14 +2070,6 @@ export const requeteAvecCopieIntegraleActeImage = {
       parentsTitulaire: []
     }
   ],
-  corbeilleAgent: {
-    id: "8ef08da4-95c3-4425-961e-ff3d2fc4ad1e",
-    idUtilisateur: "idUtilisateurConnectedUser"
-  },
-  corbeilleService: {
-    id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-  },
   piecesJustificatives: [],
   requerant: {
     id: "9bfa2963-43f2-43e9-91a6-aa360fed5dd6",
@@ -2245,8 +2137,7 @@ export const requeteAvecCopieIntegraleActeImage = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+      referenceSwift: "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
       conteneurSwift: "documents-delivres-2022-3",
       validation: "O",
       idActe: idFicheActeMariage,
@@ -2262,8 +2153,7 @@ export const requeteAvecCopieIntegraleActeImage = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+      referenceSwift: "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
       conteneurSwift: "documents-delivres-2022-3",
       validation: "O",
       idActe: idFicheActeMariage,
@@ -2311,6 +2201,8 @@ export const requeteSansDocument = {
   dateCreation: 1661264881377,
   canal: "COURRIER",
   type: "DELIVRANCE",
+  idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162",
+  idService: "6737f85c-6207-4174-8825-d5f65d757e4f",
   actions: [
     {
       id: "7b441a04-e1aa-4cbe-bb06-ef406a0b9a82",
@@ -2359,14 +2251,6 @@ export const requeteSansDocument = {
       typeObjetTitulaire: null
     }
   ],
-  corbeilleAgent: {
-    id: "bbdba5f5-0b65-40d1-a44c-fbbab948b3b6",
-    idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162"
-  },
-  corbeilleService: {
-    id: "99c7aab2-6def-48ae-8493-2bd72b6a32db",
-    idService: "6737f85c-6207-4174-8825-d5f65d757e4f"
-  },
   piecesJustificatives: [],
   requerant: {
     id: "7b4460a6-26fc-48e6-9344-7990117fd763",
@@ -2468,62 +2352,61 @@ export const detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece = {
   }
 };
 
-export const detailRequeteDelivranceAvecExtraitAvecFiliationEtExtraitPlurilingue =
-  {
-    ...requeteAvecDocs,
-    id: "9bfa282d-1e66-4538-b212-b9de4f683a0f"
-    // documentsReponses: [
-    //   {
-    //     id: "9c099809-951e-4b05-a27a-01d1344f479f",
-    //     nom: "Délivrance d'acte (116)",
-    //     typeDocument: "cb1f3518-9457-471d-a31c-10bc8d34c9a2",
-    //     mimeType: "application/pdf",
-    //     taille: 53976,
-    //     avecCtv: false,
-    //     nbPages: 1,
-    //     orientation: "Portrait",
-    //     referenceSwift:
-    //       "9bfa282d-1e66-4538-b242-b9de4f683f0f_9c09e355-6e87-424b-8e4d-2531c59863d6.pdf",
-    //     conteneurSwift: "documents-delivres-2022-2",
-    //     optionsCourrier: [],
-    //     mentionsRetirees: [],
-    //   },
-    //   {
-    //     id: "9bfa865e-6d7a-4d66-900e-b548178854db",
-    //     nom: "Extrait copie avec filiation",
-    //     typeDocument: "28580709-06dd-4df2-bf6e-70a9482940a1",
-    //     mimeType: "application/pdf",
-    //     taille: 28828,
-    //     avecCtv: false,
-    //     nbPages: 1,
-    //     orientation: "Portrait",
-    //     referenceSwift:
-    //       "9bfa282d-1e66-4538-b242-b9de4f683f0f_9bfaca5e-a9f5-4e68-83fb-4b97d3e50285.pdf",
-    //     conteneurSwift: "documents-delivres-2022-2",
-    //     validation: "O",
-    //     idActe: "19c0d867-6ae5-4376-aa1f-6d781a2ad35a",
-    //     optionsCourrier: [],
-    //     mentionsRetirees: [],
-    //   },
-    //   {
-    //     id: "28bc3078-7e53-4b8b-8cf8-7f75a2502573",
-    //     nom: "Extrait copie plurilingue",
-    //     typeDocument: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
-    //     mimeType: "application/pdf",
-    //     taille: 30132,
-    //     avecCtv: false,
-    //     nbPages: 1,
-    //     orientation: "Portrait",
-    //     referenceSwift:
-    //       "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
-    //     conteneurSwift: "documents-delivres-2022-3",
-    //     validation: "O",
-    //     idActe: "19c0d867-6ae5-4376-aa1f-6d781a2ad35a",
-    //     optionsCourrier: [],
-    //     mentionsRetirees: [],
-    //   },
-    // ],
-  };
+export const detailRequeteDelivranceAvecExtraitAvecFiliationEtExtraitPlurilingue = {
+  ...requeteAvecDocs,
+  id: "9bfa282d-1e66-4538-b212-b9de4f683a0f"
+  // documentsReponses: [
+  //   {
+  //     id: "9c099809-951e-4b05-a27a-01d1344f479f",
+  //     nom: "Délivrance d'acte (116)",
+  //     typeDocument: "cb1f3518-9457-471d-a31c-10bc8d34c9a2",
+  //     mimeType: "application/pdf",
+  //     taille: 53976,
+  //     avecCtv: false,
+  //     nbPages: 1,
+  //     orientation: "Portrait",
+  //     referenceSwift:
+  //       "9bfa282d-1e66-4538-b242-b9de4f683f0f_9c09e355-6e87-424b-8e4d-2531c59863d6.pdf",
+  //     conteneurSwift: "documents-delivres-2022-2",
+  //     optionsCourrier: [],
+  //     mentionsRetirees: [],
+  //   },
+  //   {
+  //     id: "9bfa865e-6d7a-4d66-900e-b548178854db",
+  //     nom: "Extrait copie avec filiation",
+  //     typeDocument: "28580709-06dd-4df2-bf6e-70a9482940a1",
+  //     mimeType: "application/pdf",
+  //     taille: 28828,
+  //     avecCtv: false,
+  //     nbPages: 1,
+  //     orientation: "Portrait",
+  //     referenceSwift:
+  //       "9bfa282d-1e66-4538-b242-b9de4f683f0f_9bfaca5e-a9f5-4e68-83fb-4b97d3e50285.pdf",
+  //     conteneurSwift: "documents-delivres-2022-2",
+  //     validation: "O",
+  //     idActe: "19c0d867-6ae5-4376-aa1f-6d781a2ad35a",
+  //     optionsCourrier: [],
+  //     mentionsRetirees: [],
+  //   },
+  //   {
+  //     id: "28bc3078-7e53-4b8b-8cf8-7f75a2502573",
+  //     nom: "Extrait copie plurilingue",
+  //     typeDocument: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
+  //     mimeType: "application/pdf",
+  //     taille: 30132,
+  //     avecCtv: false,
+  //     nbPages: 1,
+  //     orientation: "Portrait",
+  //     referenceSwift:
+  //       "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+  //     conteneurSwift: "documents-delivres-2022-3",
+  //     validation: "O",
+  //     idActe: "19c0d867-6ae5-4376-aa1f-6d781a2ad35a",
+  //     optionsCourrier: [],
+  //     mentionsRetirees: [],
+  //   },
+  // ],
+};
 
 export const detailRequeteDelivranceCopieArchive = {
   id: "9bfa282d-1e66-4538-b272-b9de4g683aaf",
@@ -2531,6 +2414,8 @@ export const detailRequeteDelivranceCopieArchive = {
   dateCreation: 1646038685506,
   canal: "COURRIER",
   type: "DELIVRANCE",
+  idUtilisateur: "idUtilisateurConnectedUser",
+  idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
   actions: [
     {
       id: "9c09e900-d09f-4a82-8762-2437c811bb4f",
@@ -2584,14 +2469,6 @@ export const detailRequeteDelivranceCopieArchive = {
       parentsTitulaire: []
     }
   ],
-  corbeilleAgent: {
-    id: "8ef08da4-95c3-4425-961e-ff3d2fc4ad1e",
-    idUtilisateur: "idUtilisateurConnectedUser"
-  },
-  corbeilleService: {
-    id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-  },
   piecesJustificatives: [],
   requerant: {
     id: "9bfa2963-43f2-43e9-91a6-aa360fed5dd6",
@@ -2659,8 +2536,7 @@ export const detailRequeteDelivranceCopieArchive = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+      referenceSwift: "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
       conteneurSwift: "documents-delivres-2022-3",
       validation: "O",
       idActe: idficheActeEC,
@@ -2676,8 +2552,7 @@ export const detailRequeteDelivranceCopieArchive = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+      referenceSwift: "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
       conteneurSwift: "documents-delivres-2022-3",
       validation: "O",
       idActe: idficheActeEC,
@@ -2703,6 +2578,8 @@ export const detailRequeteDelivranceGenreIndetermine = {
   dateCreation: 1646038685506,
   canal: "COURRIER",
   type: "DELIVRANCE",
+  idUtilisateur: "idUtilisateurConnectedUser",
+  idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
   actions: [
     {
       id: "9c09e900-d09f-4a82-8762-2437c811bb4f",
@@ -2756,14 +2633,6 @@ export const detailRequeteDelivranceGenreIndetermine = {
       parentsTitulaire: []
     }
   ],
-  corbeilleAgent: {
-    id: "8ef08da4-95c3-4425-961e-ff3d2fc4ad1e",
-    idUtilisateur: "idUtilisateurConnectedUser"
-  },
-  corbeilleService: {
-    id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-  },
   piecesJustificatives: [],
   requerant: {
     id: "9bfa2963-43f2-43e9-91a6-aa360fed5dd6",
@@ -2831,8 +2700,7 @@ export const detailRequeteDelivranceGenreIndetermine = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+      referenceSwift: "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
       conteneurSwift: "documents-delivres-2022-3",
       validation: "O",
       idActe: idFicheActeAvecGenreIndetermine,
@@ -2848,8 +2716,7 @@ export const detailRequeteDelivranceGenreIndetermine = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+      referenceSwift: "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
       conteneurSwift: "documents-delivres-2022-3",
       validation: "O",
       idActe: idFicheActeAvecGenreIndetermine,
@@ -2875,6 +2742,8 @@ export const detailRequeteDelivranceAvecTitulaireMultiple = {
   dateCreation: 1646038685506,
   canal: "COURRIER",
   type: "DELIVRANCE",
+  idUtilisateur: "idUtilisateurConnectedUser",
+  idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
   actions: [
     {
       id: "9c09e900-d09f-4a82-8762-2437c811bb4f",
@@ -2928,14 +2797,6 @@ export const detailRequeteDelivranceAvecTitulaireMultiple = {
       parentsTitulaire: []
     }
   ],
-  corbeilleAgent: {
-    id: "8ef08da4-95c3-4425-961e-ff3d2fc4ad1e",
-    idUtilisateur: "idUtilisateurConnectedUser"
-  },
-  corbeilleService: {
-    id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-  },
   piecesJustificatives: [],
   requerant: {
     id: "9bfa2963-43f2-43e9-91a6-aa360fed5dd6",
@@ -3003,8 +2864,7 @@ export const detailRequeteDelivranceAvecTitulaireMultiple = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+      referenceSwift: "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
       conteneurSwift: "documents-delivres-2022-3",
       validation: "O",
       idActe: idFicheActeAvecTitulaireMultiple,
@@ -3020,8 +2880,7 @@ export const detailRequeteDelivranceAvecTitulaireMultiple = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+      referenceSwift: "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
       conteneurSwift: "documents-delivres-2022-3",
       validation: "O",
       idActe: idFicheActeAvecTitulaireMultiple,
@@ -3047,6 +2906,8 @@ export const requeteActeMariageAvecTroisTitulaire = {
   dateCreation: 1646038685506,
   canal: "COURRIER",
   type: "DELIVRANCE",
+  idUtilisateur: "idUtilisateurConnectedUser",
+  idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
   actions: [
     {
       id: "9c09e900-d09f-4a82-8762-2437c811bb4f",
@@ -3100,14 +2961,6 @@ export const requeteActeMariageAvecTroisTitulaire = {
       parentsTitulaire: []
     }
   ],
-  corbeilleAgent: {
-    id: "8ef08da4-95c3-4425-961e-ff3d2fc4ad1e",
-    idUtilisateur: "idUtilisateurConnectedUser"
-  },
-  corbeilleService: {
-    id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-  },
   piecesJustificatives: [],
   requerant: {
     id: "9bfa2963-43f2-43e9-91a6-aa360fed5dd6",
@@ -3175,8 +3028,7 @@ export const requeteActeMariageAvecTroisTitulaire = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+      referenceSwift: "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
       conteneurSwift: "documents-delivres-2022-3",
       validation: "O",
       idActe: idFicheActeMariage,

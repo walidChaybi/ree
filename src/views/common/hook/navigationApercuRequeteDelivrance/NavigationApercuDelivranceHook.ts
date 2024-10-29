@@ -4,11 +4,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import {
-  PATH_APERCU_REQ_DEL,
-  PATH_APERCU_REQ_TRAITEMENT,
-  PATH_EDITION
-} from "@router/ReceUrls";
+import { PATH_APERCU_REQ_DEL, PATH_APERCU_REQ_TRAITEMENT, PATH_EDITION } from "@router/ReceUrls";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import messageManager from "@util/messageManager";
@@ -27,30 +23,18 @@ export function useNavigationApercuDelivrance(
   urlWithoutParam?: string,
   requete?: IRequeteTableauDelivrance
 ): INavigationApercuDelivrance | undefined {
-  const [redirection, setRedirection] = useState<
-    INavigationApercuDelivrance | undefined
-  >();
+  const [redirection, setRedirection] = useState<INavigationApercuDelivrance | undefined>();
   const { utilisateurConnecte } = useContext(RECEContextData);
 
   useEffect(() => {
     if (requete && urlWithoutParam) {
-      // Si la requete est dans sa corbeille
-      if (
-        utilisateurConnecte &&
-        utilisateurConnecte?.idUtilisateur === requete.idUtilisateur &&
-        requete.type &&
-        requete.statut
-      ) {
+      // Si la requete lui est attribuée
+      if (utilisateurConnecte && utilisateurConnecte?.idUtilisateur === requete.idUtilisateur && requete.type && requete.statut) {
         // US 207 et de type RDC au statut "Traité - A imprimer" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
         // US 207 et de type RDD au statut "Traiter - A Délivrer démat" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
-        redirectionEnFonctionMaRequete(
-          utilisateurConnecte,
-          requete,
-          setRedirection,
-          urlWithoutParam
-        );
+        redirectionEnFonctionMaRequete(utilisateurConnecte, requete, setRedirection, urlWithoutParam);
       } else {
-        // Si la requête N'EST PAS dans sa corbeille agent-> redirection vers "Aperçu de requête"
+        // Si la requête NE LUI EST PAS attribuée -> redirection vers "Aperçu de requête"
         redirectionApercuRequete(setRedirection, urlWithoutParam, requete);
       }
     }
@@ -62,9 +46,7 @@ export function useNavigationApercuDelivrance(
 const redirectionEnFonctionMaRequete = (
   utilisateurConnecte: IOfficier,
   requete: IRequeteTableauDelivrance,
-  setRedirection: (
-    value: React.SetStateAction<INavigationApercuDelivrance | undefined>
-  ) => void,
+  setRedirection: (value: React.SetStateAction<INavigationApercuDelivrance | undefined>) => void,
   urlWithoutParam: string
 ) => {
   if (estUneRequeteDeDelivranceAvecUnStatut(requete)) {
@@ -72,12 +54,7 @@ const redirectionEnFonctionMaRequete = (
       case StatutRequete.TRANSFEREE.libelle:
       case StatutRequete.A_TRAITER.libelle:
         // US 210 et au statut "À traiter" ou "Transférée", on lance la "RMC Auto" et redirection suivant le résultat
-        redirectionATraiterTransferee(
-          utilisateurConnecte,
-          requete,
-          setRedirection,
-          urlWithoutParam
-        );
+        redirectionATraiterTransferee(utilisateurConnecte, requete, setRedirection, urlWithoutParam);
         break;
       case StatutRequete.PRISE_EN_CHARGE.libelle:
         // US 211 ... et au statut "Prise en charge", on lance la "RMC Auto" et redirection suivant le résultat
@@ -97,16 +74,8 @@ const redirectionEnFonctionMaRequete = (
         redirectionRequeteDoublon(setRedirection, urlWithoutParam, requete);
         break;
       default:
-        if (
-          GestionnaireARetraiterDansSaga.estARetraiterSagaRequeteTableau(
-            requete
-          )
-        ) {
-          redirectionVersApercuTraitement(
-            setRedirection,
-            urlWithoutParam,
-            requete
-          );
+        if (GestionnaireARetraiterDansSaga.estARetraiterSagaRequeteTableau(requete)) {
+          redirectionVersApercuTraitement(setRedirection, urlWithoutParam, requete);
         } else {
           redirectionApercuRequete(setRedirection, urlWithoutParam, requete);
         }
@@ -115,50 +84,35 @@ const redirectionEnFonctionMaRequete = (
   }
 };
 
-function estUneRequeteDeDelivranceAvecUnStatut(
-  requete: IRequeteTableauDelivrance
-) {
-  const type =
-    requete.type != null && TypeRequete.getEnumFromLibelle(requete.type);
+function estUneRequeteDeDelivranceAvecUnStatut(requete: IRequeteTableauDelivrance) {
+  const type = requete.type != null && TypeRequete.getEnumFromLibelle(requete.type);
   return requete.statut && requete.type && TypeRequete.estDelivrance(type);
 }
 
 function redirectionVersApercuTraitement(
-  setRedirection: (
-    value: React.SetStateAction<INavigationApercuDelivrance | undefined>
-  ) => void,
+  setRedirection: (value: React.SetStateAction<INavigationApercuDelivrance | undefined>) => void,
   urlWithoutParam: string,
   requete: IRequeteTableauDelivrance
 ) {
   setRedirection({
-    url: getUrlWithParam(
-      `${urlWithoutParam}/${PATH_APERCU_REQ_TRAITEMENT}/:idRequete`,
-      requete.idRequete
-    )
+    url: getUrlWithParam(`${urlWithoutParam}/${PATH_APERCU_REQ_TRAITEMENT}/:idRequete`, requete.idRequete)
   });
 }
 
 function redirectionAValider(
-  setRedirection: (
-    value: React.SetStateAction<INavigationApercuDelivrance | undefined>
-  ) => void,
+  setRedirection: (value: React.SetStateAction<INavigationApercuDelivrance | undefined>) => void,
   urlWithoutParam: string,
   requete: IRequeteTableauDelivrance
 ) {
   const sousType = requete.sousType;
   if (
-    gestionnaireFeatureFlag.estActif(
-      FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-    ) &&
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) &&
     (sousType === SousTypeDelivrance.RDDP.libelleCourt ||
       sousType === SousTypeDelivrance.RDD.libelleCourt ||
       sousType === SousTypeDelivrance.RDC.libelleCourt)
   ) {
     setRedirection({
-      url: getUrlWithParam(
-        `${urlWithoutParam}/${PATH_EDITION}/:idRequete`,
-        requete.idRequete
-      )
+      url: getUrlWithParam(`${urlWithoutParam}/${PATH_EDITION}/:idRequete`, requete.idRequete)
     });
   } else {
     redirectionVersApercuTraitement(setRedirection, urlWithoutParam, requete);
@@ -166,31 +120,22 @@ function redirectionAValider(
 }
 
 function redirectionApercuRequete(
-  setRedirection: (
-    value: React.SetStateAction<INavigationApercuDelivrance | undefined>
-  ) => void,
+  setRedirection: (value: React.SetStateAction<INavigationApercuDelivrance | undefined>) => void,
   urlWithoutParam: string,
   requete: IRequeteTableauDelivrance
 ) {
   setRedirection({
-    url: getUrlWithParam(
-      `${urlWithoutParam}/${PATH_APERCU_REQ_DEL}/:idRequete`,
-      requete.idRequete
-    )
+    url: getUrlWithParam(`${urlWithoutParam}/${PATH_APERCU_REQ_DEL}/:idRequete`, requete.idRequete)
   });
 }
 
 function redirectionATraiterTransferee(
   utilisateurConnecte: IOfficier,
   requete: IRequeteTableauDelivrance,
-  setRedirection: (
-    value: React.SetStateAction<INavigationApercuDelivrance | undefined>
-  ) => void,
+  setRedirection: (value: React.SetStateAction<INavigationApercuDelivrance | undefined>) => void,
   urlWithoutParam: string
 ) {
-  if (
-    autorisePrendreEnChargeReqTableauDelivrance(utilisateurConnecte, requete)
-  ) {
+  if (autorisePrendreEnChargeReqTableauDelivrance(utilisateurConnecte, requete)) {
     setRedirection({ isRmcAuto: true });
   } else {
     redirectionApercuRequete(setRedirection, urlWithoutParam, requete);
@@ -199,38 +144,23 @@ function redirectionATraiterTransferee(
 
 function redirectionBrouillon(
   requete: IRequeteTableauDelivrance,
-  setRedirection: (
-    value: React.SetStateAction<INavigationApercuDelivrance | undefined>
-  ) => void,
+  setRedirection: (value: React.SetStateAction<INavigationApercuDelivrance | undefined>) => void,
   urlWithoutParam: string
 ) {
-  if (
-    requete.sousType &&
-    requete.sousType === SousTypeDelivrance.RDCSC.libelleCourt
-  ) {
+  if (requete.sousType && requete.sousType === SousTypeDelivrance.RDCSC.libelleCourt) {
     setRedirection({
-      url: getUrlWithParam(
-        `${urlWithoutParam}/saisircertificatsituation/:idRequete`,
-        requete.idRequete
-      )
+      url: getUrlWithParam(`${urlWithoutParam}/saisircertificatsituation/:idRequete`, requete.idRequete)
     });
   }
 }
 
 function redirectionRequeteDoublon(
-  setRedirection: (
-    value: React.SetStateAction<INavigationApercuDelivrance | undefined>
-  ) => void,
+  setRedirection: (value: React.SetStateAction<INavigationApercuDelivrance | undefined>) => void,
   urlWithoutParam: string,
   requete: IRequeteTableauDelivrance
 ) {
   setRedirection({
-    url: getUrlWithParam(
-      `${getUrlPrecedente(urlWithoutParam)}/${PATH_APERCU_REQ_DEL}/:idRequete`,
-      requete.idRequete
-    )
+    url: getUrlWithParam(`${getUrlPrecedente(urlWithoutParam)}/${PATH_APERCU_REQ_DEL}/:idRequete`, requete.idRequete)
   });
-  messageManager.showSuccessAndClose(
-    getLibelle("La requête a bien été enregistrée")
-  );
+  messageManager.showSuccessAndClose(getLibelle("La requête a bien été enregistrée"));
 }

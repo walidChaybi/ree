@@ -11,6 +11,7 @@ export const ReponseAppelDetailRequeteCreation = {
     canal: "COURRIER",
     type: "CREATION",
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
     actions: [
       {
         id: "1d189cd9-0df0-45dc-a4cf-0174eb621234",
@@ -29,15 +30,6 @@ export const ReponseAppelDetailRequeteCreation = {
         trigramme: "APP"
       }
     ],
-    titulaires: [],
-    corbeilleAgent: {
-      id: "4072e911-9f39-4910-8f58-bc355012bf7c",
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
-    },
-    corbeilleService: {
-      id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
-      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
-    },
     piecesJustificatives: [
       {
         id: "519900ee-c9a0-4d41-8673-512949b64946",
@@ -103,8 +95,7 @@ export const ReponseAppelDetailRequeteCreation = {
       },
       {
         id: "id0000",
-        texte:
-          "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
+        texte: "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
         idUtilisateur: "",
         trigramme: "LOS",
         numeroOrdre: 1234,

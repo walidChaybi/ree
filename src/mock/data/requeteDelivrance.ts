@@ -1,4 +1,8 @@
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { IProvenancePlanete } from "@model/requete/IProvenancePlanete";
+import { IProvenanceRece } from "@model/requete/IProvenanceRece";
+import { IRequerant } from "@model/requete/IRequerant";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
@@ -12,10 +16,6 @@ import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IProvenancePlanete } from "@model/requete/IProvenancePlanete";
-import { IProvenanceRece } from "@model/requete/IProvenanceRece";
-import { IRequerant } from "@model/requete/IRequerant";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { documentReponseCourrier117 } from "./DocumentReponse";
 import { TYPE_PIECE_JUSTIFICATIVE } from "./NomenclatureTypePieceJustificative";
 
@@ -331,8 +331,7 @@ export const requeteRDCSC = {
   ]
 } as any as IRequeteDelivrance;
 
-export const idRequeteRDCSCCertificatSituationRCA =
-  "d19650ed-012b-41ec-b7be-9e6ea2101eae";
+export const idRequeteRDCSCCertificatSituationRCA = "d19650ed-012b-41ec-b7be-9e6ea2101eae";
 export const requeteRDCSCCertificatSituationRCA = {
   ...requeteRDCSC,
   id: idRequeteRDCSCCertificatSituationRCA,
@@ -533,16 +532,16 @@ export const requeteRDD = {
   }
 } as IRequeteDelivrance;
 
-export const idRequeteRDCPourModification =
-  "9d00fe88-9d21-482e-bb02-223636f78386";
-export const idRequeteRDCPourModificationMaCorbeille =
-  "8f00fe88-9d21-482e-bb02-223636f78386";
+export const idRequeteRDCPourModification = "9d00fe88-9d21-482e-bb02-223636f78386";
+export const idRequeteRDCPourModificationMaCorbeille = "8f00fe88-9d21-482e-bb02-223636f78386";
 export const requeteRDCPourModification = {
   id: "9d00fe88-9d21-482e-bb02-223636f78386",
   numeroFonctionnel: "SIE5G4",
   dateCreation: 1669647394371,
   canal: "COURRIER",
   type: "DELIVRANCE",
+  idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162",
+  idService: "6737f85c-6207-4174-8825-d5f65d757e4f",
   actions: [
     {
       id: "9d00b2fb-748f-4575-b318-eef17e10462b",
@@ -607,14 +606,6 @@ export const requeteRDCPourModification = {
       typeObjetTitulaire: null
     }
   ],
-  corbeilleAgent: {
-    id: "bbdba5f5-0b65-40d1-a44c-fbbab948b3b6",
-    idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162"
-  },
-  corbeilleService: {
-    id: "99c7aab2-6def-48ae-8493-2bd72b6a32db",
-    idService: "6737f85c-6207-4174-8825-d5f65d757e4f"
-  },
   piecesJustificatives: [],
   requerant: {
     id: "9d00116e-d7f7-419d-b9e2-44d47ac8f18c",

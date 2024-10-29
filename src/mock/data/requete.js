@@ -15,9 +15,7 @@ export default {
   paysEvenement: "maroc",
   canal: "INTERNET",
   motifRequete: "PAPIERS_IDENTITE_PASSEPORT",
-  corbeilleAgent: {
-    idUtilisateur: "a091a3b-6835-4824-94fb-527d68926d56"
-  },
+  idUtilisateur: "a091a3b-6835-4824-94fb-527d68926d56",
   requerant: {
     idRequerant: "f275d357-14ec-42ac-a219-d481cbcbbc61",
     typeRequerant: "TITULAIRE",
@@ -123,8 +121,7 @@ export default {
     },
     {
       id: "id0000",
-      texte:
-        "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
+      texte: "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
       idUtilisateur: "",
       trigramme: "LOS",
       numeroOrdre: 1234,

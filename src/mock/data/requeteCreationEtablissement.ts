@@ -4,6 +4,8 @@ export const requeteCreationEtablissement = {
   id: "a2724cc9-450c-4e50-9d05-a44a28717954",
   numeroFonctionnel: "3S3WN7",
   dateCreation: 1669731006000,
+  idUtilisateur: "b67f9d14-cc5e-4002-aa06-e54029ffa073",
+  idService: "6737dca8-2f96-4086-8288-fd1a136a61df",
   canal: {
     _libelle: "RIE",
     _nom: "RIE"
@@ -632,14 +634,6 @@ export const requeteCreationEtablissement = {
       domiciliationEnfant: ""
     }
   ],
-  corbeilleAgent: {
-    id: "6ddd44a2-71a2-40bf-9a90-bc6fd7519ac3",
-    idUtilisateur: "b67f9d14-cc5e-4002-aa06-e54029ffa073"
-  },
-  corbeilleService: {
-    id: "78d8b291-d07b-4d14-9b15-f5f5575f2adb",
-    idService: "6737dca8-2f96-4086-8288-fd1a136a61df"
-  },
   piecesJustificatives: [
     {
       id: "a272746d-709f-4690-95a3-b42bbc408d4d",
@@ -955,8 +949,7 @@ export const requeteCreationEtablissement = {
         emetteur: "SCEC",
         destinataire: "SDANF",
         nature: "REPONSE_SCEC",
-        message:
-          "Élément manquant - CAS F\nRetour SCEC (flux3) : Décision défavorable élément manquant - Cecile LAMARQUE",
+        message: "Élément manquant - CAS F\nRetour SCEC (flux3) : Décision défavorable élément manquant - Cecile LAMARQUE",
         dateTransfert: 1670406608000,
         pieceJustificativeRequeteCreation: []
       }
@@ -1205,8 +1198,6 @@ export const requeteCreationEtablissement = {
     dateEffet: 1670406024000,
     raisonStatut: ""
   },
-  idUtilisateur: "b67f9d14-cc5e-4002-aa06-e54029ffa073",
-  idService: "6737dca8-2f96-4086-8288-fd1a136a61df",
   numeroAncien: "",
   natureActeTranscrit: "",
   personnesSauvegardees: []
@@ -1218,6 +1209,8 @@ export const requeteCreationEtablissementSaisieProjet = {
   dateCreation: 1656404736683,
   canal: "RIE",
   type: "CREATION",
+  idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
+  idService: "6737566d-0f25-45dc-8443-97b444e6753a",
   actions: [],
   titulaires: [
     {
@@ -1611,14 +1604,6 @@ export const requeteCreationEtablissementSaisieProjet = {
       nombreEnfantEffetCollectif: 0
     }
   ],
-  corbeilleAgent: {
-    id: "bbdba5f5-0b65-40d1-a44c-fbbab948b3b6",
-    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55"
-  },
-  corbeilleService: {
-    id: "8035fb6c-df33-11eb-ba80-0242ac130004",
-    idService: "6737566d-0f25-45dc-8443-97b444e6753a"
-  },
   piecesJustificatives: [],
   requerant: {
     id: "3ed9ea0d-9e13-4249-a82c-3ec2e600175a",
@@ -1711,6 +1696,8 @@ export const requeteCreationEtablissementPieceJustificative = {
     dateCreation: 1669731006000,
     canal: "RIE",
     type: "CREATION",
+    idUtilisateur: "b67f9d14-cc5e-4002-aa06-e54029ffa073",
+    idService: "6737dca8-2f96-4086-8288-fd1a136a61df",
     actions: [
       {
         id: "a272f8e0-d9d9-4051-940e-a27112d99a25",
@@ -2372,14 +2359,6 @@ export const requeteCreationEtablissementPieceJustificative = {
         domiciliationEnfant: ""
       }
     ],
-    corbeilleAgent: {
-      id: "6ddd44a2-71a2-40bf-9a90-bc6fd7519ac3",
-      idUtilisateur: "b67f9d14-cc5e-4002-aa06-e54029ffa073"
-    },
-    corbeilleService: {
-      id: "78d8b291-d07b-4d14-9b15-f5f5575f2adb",
-      idService: "6737dca8-2f96-4086-8288-fd1a136a61df"
-    },
     piecesJustificatives: [
       {
         id: "a272015d-4e53-4e73-9fef-a31b56730b77",
@@ -2654,8 +2633,7 @@ export const requeteCreationEtablissementPieceJustificative = {
           emetteur: "SCEC",
           destinataire: "SDANF",
           nature: "REPONSE_SCEC",
-          message:
-            "Élément manquant - CAS F\nRetour SCEC (flux3) : Décision défavorable élément manquant - Cecile LAMARQUE",
+          message: "Élément manquant - CAS F\nRetour SCEC (flux3) : Décision défavorable élément manquant - Cecile LAMARQUE",
           dateMessage: 1670406024000,
           dateTransfert: 1670406608000,
           pieceJustificativeRequeteCreation: []

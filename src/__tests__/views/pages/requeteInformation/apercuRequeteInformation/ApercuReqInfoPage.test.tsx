@@ -375,7 +375,7 @@ const renduApercuReqInfoPage = async () => {
   });
 };
 
-test("Attendu: le bouton 'prendre en charge' est affiché, si la requête n'appartient pas à l'utilisateur, mais se trouve dans sa corbeille Service", async () => {
+test("Attendu: le bouton 'prendre en charge' est affiché, si la requête n'appartient pas à l'utilisateur, mais à son Service", async () => {
   await renduApercuReqInfoPage();
 
   const boutonPrendreEnCharge = screen.queryByLabelText(Labels.prendreEnCharge) as HTMLButtonElement;
@@ -395,7 +395,7 @@ test.skip("Attendu: le bouton 'prendre en charge' disparait une fois qu'on a cli
   await waitFor(() => expect(boutonPrendreEnCharge).not.toBeDefined());
 });
 
-test.skip("Attendu: les blocs non présents sur l'aperçu de requête sont bien absents si la requête n'appartient pas à l'utilisateur, mais se trouve dans sa corbeille Service", async () => {
+test.skip("Attendu: les blocs non présents sur l'aperçu de requête sont bien absents si la requête n'appartient pas à l'utilisateur, mais à son Service", async () => {
   await renduApercuReqInfoPage();
 
   const titreAutresRequetesAssocieesAuTitulaire = (await screen.queryByText(Labels.autresRequetesAssocieesAuTitulaire)) as HTMLDivElement;

@@ -1,7 +1,4 @@
-import {
-  idRequeteRDCPourModification,
-  idRequeteRDCPourModificationMaCorbeille
-} from "./requeteDelivrance";
+import { idRequeteRDCPourModification, idRequeteRDCPourModificationMaCorbeille } from "./requeteDelivrance";
 
 export const CreationRDCSC = {
   id: "1072bc37-f889-4365-8f75-912166b767dd",
@@ -13,8 +10,8 @@ export const CreationRDCSC = {
   titulaires: [],
   requerant: [],
   mandant: null,
-  idUtilisateur: "id",
-  idService: "id",
+  idUtilisateur: "idUtilisateurConnectedUser",
+  idService: "idService",
   actions: [],
   observations: [],
   piecesJustificatives: [],
@@ -27,9 +24,6 @@ export const CreationRDCSC = {
   complementMotif: null,
   choixDelivrance: null,
   documentsReponses: [],
-  corbeilleAgent: {
-    idUtilisateur: "idUtilisateurConnectedUser"
-  },
   statut: {
     id: "9d002653-710b-4a78-b651-e5c8cce92ed8",
     statutRequete: "PRISE_EN_CHARGE",
@@ -41,9 +35,7 @@ export const CreationRDCSC = {
 export const UpdateRDCSC = {
   ...CreationRDCSC,
   id: "1072bc37-f889-4365-8f75-912166b767dd",
-  corbeilleAgent: {
-    idUtilisateur: "9587453e-c9a5-44da-873f-a046a727e726"
-  }
+  idUtilisateur: "9587453e-c9a5-44da-873f-a046a727e726"
 };
 
 export const UpdateRDC = {
@@ -56,7 +48,5 @@ export const UpdateRDC = {
 export const UpdateRDCMaCorbeille = {
   ...UpdateRDC,
   id: idRequeteRDCPourModificationMaCorbeille,
-  corbeilleAgent: {
-    idUtilisateur: "9587453e-c9a5-44da-873f-a046a727e726"
-  }
+  idUtilisateur: "9587453e-c9a5-44da-873f-a046a727e726"
 };
