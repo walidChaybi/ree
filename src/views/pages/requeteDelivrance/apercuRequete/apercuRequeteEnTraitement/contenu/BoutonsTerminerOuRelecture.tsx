@@ -1,23 +1,15 @@
-import { TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
+import { ITransfertPopinForm, TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
-import {
-  IRegenerationDocumentsParams,
-  useRegenerationDocumentsHook
-} from "@hook/requete/RegenerationDocumentsHook";
-import {
-  IRetourValideurParams,
-  useRetourValideurApiHook
-} from "@hook/requete/RetourValideur";
+import { IRegenerationDocumentsParams, useRegenerationDocumentsHook } from "@hook/requete/RegenerationDocumentsHook";
+import { IRetourValideurParams, useRetourValideurApiHook } from "@hook/requete/RetourValideur";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
-import { Option } from "@util/Type";
-import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useContext, useEffect, useState } from "react";
@@ -31,20 +23,14 @@ interface BoutonsTerminerOuRelectureProps {
   acte?: IFicheActe;
 }
 
-export const BoutonsTerminerOuRelecture: React.FC<
-  BoutonsTerminerOuRelectureProps
-> = props => {
+export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProps> = props => {
   const [retourParams, setRetourParams] = useState<IRetourValideurParams>();
-  const [majStatutParams, setMajStatutParams] =
-    useState<ICreationActionMiseAjourStatutHookParams>();
-  const [regenerationParams, setRegenerationParams] =
-    useState<IRegenerationDocumentsParams>();
+  const [majStatutParams, setMajStatutParams] = useState<ICreationActionMiseAjourStatutHookParams>();
+  const [regenerationParams, setRegenerationParams] = useState<IRegenerationDocumentsParams>();
   const [open, setOpen] = useState<boolean>(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { rafraichirRequete, setOperationEnCours } = useContext(
-    EditionExtraitCopiePageContext
-  );
+  const { rafraichirRequete, setOperationEnCours } = useContext(EditionExtraitCopiePageContext);
 
   useRegenerationDocumentsHook(regenerationParams);
 
@@ -52,16 +38,10 @@ export const BoutonsTerminerOuRelecture: React.FC<
 
   function onClickValidate(statut: StatutRequete, texte?: string) {
     setRetourParams({
-      libelleAction:
-        statut === StatutRequete.A_REVOIR
-          ? statut.libelle
-          : `Requête approuvée - ${statut.libelle}`,
+      libelleAction: statut === StatutRequete.A_REVOIR ? statut.libelle : `Requête approuvée - ${statut.libelle}`,
       statutDemande: statut.nom,
       requeteId: props.requete.id,
-      texteObservation:
-        statut === StatutRequete.A_REVOIR
-          ? `Requête relue - ${getValeurOuVide(texte)}`
-          : getLibelle("Requête approuvée")
+      texteObservation: statut === StatutRequete.A_REVOIR ? `Requête relue - ${texte ?? ""}` : "Requête approuvée"
     });
   }
 
@@ -93,52 +73,39 @@ export const BoutonsTerminerOuRelecture: React.FC<
 
   return (
     <>
-      {props.requete.statutCourant.statut ===
-      StatutRequete.TRANSMISE_A_VALIDEUR ? (
+      {props.requete.statutCourant.statut === StatutRequete.TRANSMISE_A_VALIDEUR ? (
         <>
           {!SousTypeDelivrance.estRDCSDouRDCSC(props.requete.sousType) && (
             <BoutonDoubleSubmit
               onClick={() =>
                 onClickReprise(
-                  props.requete.documentsReponses.some(
-                    document => document.avecCtv
-                  )
-                    ? StatutRequete.A_SIGNER
-                    : StatutRequete.A_VALIDER
+                  props.requete.documentsReponses.some(document => document.avecCtv) ? StatutRequete.A_SIGNER : StatutRequete.A_VALIDER
                 )
               }
             >
-              {getLibelle("Reprendre le traitement")}
+              {"Reprendre le traitement"}
             </BoutonDoubleSubmit>
           )}
           <BoutonDoubleSubmit
             onClick={() =>
               onClickValidate(
-                props.requete.documentsReponses.some(
-                  document => document.avecCtv
-                )
-                  ? StatutRequete.A_SIGNER
-                  : StatutRequete.A_VALIDER
+                props.requete.documentsReponses.some(document => document.avecCtv) ? StatutRequete.A_SIGNER : StatutRequete.A_VALIDER
               )
             }
           >
-            {getLibelle("Relecture approuvée")}
+            {"Relecture approuvée"}
           </BoutonDoubleSubmit>
-          <BoutonDoubleSubmit onClick={() => setOpen(true)}>
-            {getLibelle("Relecture commentée")}
-          </BoutonDoubleSubmit>
+          <BoutonDoubleSubmit onClick={() => setOpen(true)}>{"Relecture commentée"}</BoutonDoubleSubmit>
         </>
       ) : (
         <BoutonsTerminer requete={props.requete} acte={props.acte} />
       )}
       <TransfertPopin
-        onValidate={(optionUtilisateur?: Option, texte?: string) =>
-          onClickValidate(StatutRequete.A_REVOIR, texte)
-        }
+        onValidate={(valeurs: ITransfertPopinForm) => onClickValidate(StatutRequete.A_REVOIR, valeurs.texte)}
         open={open}
         onClose={() => setOpen(false)}
-        titre={getLibelle("Commentaire pour agent requérant")}
-        placeholder={getLibelle("En retour")}
+        titre={"Commentaire pour agent requérant"}
+        placeholder={"En retour"}
       />
     </>
   );

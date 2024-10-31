@@ -10,12 +10,7 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import AssignmentInd from "@mui/icons-material/AssignmentInd";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import {
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_INFORMATION
-} from "@router/ReceUrls";
-import { Option } from "@util/Type";
-import { getLibelle } from "@util/Utils";
+import { URL_MES_REQUETES_DELIVRANCE, URL_MES_REQUETES_INFORMATION } from "@router/ReceUrls";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
@@ -29,7 +24,7 @@ import {
   onValidateService,
   reinitialiserOnClick
 } from "./MenuTransfertUtil";
-import { TransfertPopin } from "./TransfertPopin";
+import { ITransfertPopinForm, TransfertPopin } from "./TransfertPopin";
 
 const INDEX_ACTION_TRANSFERT_SERVICE = 0;
 const INDEX_ACTION_TRANSFERT_OFFICIER = 1;
@@ -57,11 +52,11 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
   const reponseSansDelivranceCSOptions: IActionOption[] = [
     {
       value: INDEX_ACTION_TRANSFERT_SERVICE,
-      label: getLibelle("À un service")
+      label: "À un service"
     },
     {
       value: INDEX_ACTION_TRANSFERT_OFFICIER,
-      label: getLibelle("À un officier de l'état civil")
+      label: "À un officier de l'état civil"
     }
   ];
 
@@ -88,8 +83,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
   };
 
   /* Gestion du Menu */
-  const [menuReponsesProposees, setMenuReponsesProposees] =
-    React.useState<null | HTMLElement>(null);
+  const [menuReponsesProposees, setMenuReponsesProposees] = React.useState<null | HTMLElement>(null);
 
   const handleClickBoutonReponse = (e: any) => {
     if (e) {
@@ -107,8 +101,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
   const [agentPopinOpen, setAgentPopinOpen] = useState<boolean>(false);
   const [param, setParam] = useState<TransfertUnitaireParams>();
 
-  const { utilisateurs, services, utilisateurConnecte } =
-    useContext(RECEContextData);
+  const { utilisateurs, services, utilisateurConnecte } = useContext(RECEContextData);
 
   const onCloseService = () => {
     setServicePopinOpen(false);
@@ -140,24 +133,19 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
   return (
     <>
       <OperationEnCours
-        visible={
-          operationEnCours || !utilisateurs || !services || !utilisateurConnecte
-        }
+        visible={operationEnCours || !utilisateurs || !services || !utilisateurConnecte}
         onTimeoutEnd={() => setOperationEnCours(false)}
         onClick={() => setOperationEnCours(false)}
       />
       {props.menuFermer ? (
         <div>
           {props.icone ? (
-            <span title={getLibelle("Attribuer requête")}>
+            <span title={"Attribuer requête"}>
               <AssignmentInd onClick={e => handleClickBoutonReponse(e)} />
             </span>
           ) : (
-            <BoutonDoubleSubmit
-              disabled={props.disabled}
-              onClick={e => handleClickBoutonReponse(e)}
-            >
-              {getLibelle("Transférer")}
+            <BoutonDoubleSubmit disabled={props.disabled} onClick={e => handleClickBoutonReponse(e)}>
+              {"Transférer"}
             </BoutonDoubleSubmit>
           )}
 
@@ -179,10 +167,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
           >
             {options.map((action: IActionOption) => {
               return (
-                <MenuItem
-                  onClick={e => handleTransfertMenu(action.value, e)}
-                  key={`action${action.value}`}
-                >
+                <MenuItem onClick={e => handleTransfertMenu(action.value, e)} key={`action${action.value}`}>
                   {action.label}
                 </MenuItem>
               );
@@ -190,25 +175,14 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
           </Menu>
         </div>
       ) : (
-        <GroupeBouton
-          titre={"Transférer"}
-          listeActions={options}
-          onSelect={handleTransfertMenu}
-          refs={refs}
-        />
+        <GroupeBouton titre={"Transférer"} listeActions={options} onSelect={handleTransfertMenu} refs={refs} />
       )}
 
       <TransfertPopin
         open={servicePopinOpen}
         onClose={onCloseService}
-        onValidate={(service?: Option) =>
-          onValidateService(
-            setOperationEnCours,
-            setParam,
-            props,
-            setServicePopinOpen,
-            service
-          )
+        onValidate={(valeurs: ITransfertPopinForm) =>
+          onValidateService(setOperationEnCours, setParam, props, setServicePopinOpen, valeurs.optionChoisie)
         }
         options={listeServicesToOptions(services)}
         titre={`${props.estTransfert ? "Transfert" : "Attribuer"} à un service`}
@@ -216,15 +190,8 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
       <TransfertPopin
         open={agentPopinOpen}
         onClose={onCloseAgent}
-        onValidate={(agent?: Option) =>
-          onValidateAgent(
-            setParam,
-            props,
-            setAgentPopinOpen,
-            setOperationEnCours,
-            utilisateurs,
-            agent
-          )
+        onValidate={(valeurs: ITransfertPopinForm) =>
+          onValidateAgent(setParam, props, setAgentPopinOpen, setOperationEnCours, utilisateurs, valeurs.optionChoisie)
         }
         options={listeUtilisateursToOptionsBis(
           props.typeRequete,
@@ -233,9 +200,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
           props.estTransfert,
           utilisateurs
         )}
-        titre={`${
-          props.estTransfert ? "Transfert" : "Attribuer"
-        } à un officier de l'état civil`}
+        titre={`${props.estTransfert ? "Transfert" : "Attribuer"} à un officier de l'état civil`}
       ></TransfertPopin>
     </>
   );

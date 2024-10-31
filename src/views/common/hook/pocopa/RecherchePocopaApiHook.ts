@@ -3,7 +3,7 @@ import {
   getPocopasParFamille
 } from "@api/appels/etatcivilApi";
 import messageManager from "@util/messageManager";
-import { estRenseigne, getLibelle, getValeurOuUndefined } from "@util/Utils";
+import { estRenseigne, getValeurOuUndefined } from "@util/Utils";
 import { useEffect, useState } from "react";
 
 export function useRecherchePocopa(
@@ -34,11 +34,7 @@ export function useRecherchePocopa(
             );
           }
         } catch (error) {
-          messageManager.showErrorAndClose(
-            getLibelle(
-              "Une erreur est survenue lors de la récupération des pocopas"
-            )
-          );
+          messageManager.showErrorAndClose("Une erreur est survenue lors de la récupération des pocopas");
         }
         setPocopasState(pocopas.body.data);
       } else {

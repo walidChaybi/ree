@@ -3,7 +3,7 @@ import {
   TypeAppelRequete
 } from "@api/appels/requeteApi";
 import { listeUtilisateursToOptionsBis } from "@composant/menuTransfert/MenuTransfertUtil";
-import { TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
+import { ITransfertPopinForm, TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   NavigationApercuReqCreationParams,
@@ -13,10 +13,7 @@ import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import {
-  TransfertParLotParams,
-  useTransfertsApi
-} from "@hook/requete/TransfertHook";
+import { TransfertParLotParams, useTransfertsApi } from "@hook/requete/TransfertHook";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { IFiltreServiceRequeteCreationFormValues } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
@@ -24,7 +21,6 @@ import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { Option, Options } from "@util/Type";
-import { getLibelle } from "@util/Utils";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { SortOrder } from "@widget/tableau/TableUtils";
@@ -59,8 +55,7 @@ export const RequetesServiceCreation: React.FC<
   const [parametresLienRequete, setParametresLienRequete] =
     useState<IQueryParametersPourRequetes>();
   const [enChargement, setEnChargement] = React.useState(false);
-  const [paramsAttributionParLot, setParamAttributionParLot] =
-    useState<TransfertParLotParams>();
+  const [paramsAttributionParLot, setParamsAttributionParLot] = useState<TransfertParLotParams>();
   const [paramsCreation, setParamsCreation] = useState<
     NavigationApercuReqCreationParams | undefined
   >();
@@ -148,11 +143,9 @@ export const RequetesServiceCreation: React.FC<
   ) => {
     const requetesChecked = filtrerRequetesChecked(requetes);
     setOpEnCours(true);
-    setParamAttributionParLot({
+    setParamsAttributionParLot({
       idRequetes: requetesChecked.map(requete => requete.idRequete),
-      statutRequete: requetesChecked.map(requete =>
-        StatutRequete.getEnumFromLibelle(requete?.statut)
-      ),
+      statutRequete: requetesChecked.map(requete => StatutRequete.getEnumFromLibelle(requete?.statut)),
       idUtilisateur: agent?.cle,
       libelleAction: `Attribuée à  ${agent?.libelle}`,
       estTransfert: false
@@ -210,22 +203,13 @@ export const RequetesServiceCreation: React.FC<
 
   return (
     <>
-      <OperationEnCours
-        visible={opEnCours || !decrets || !utilisateurConnecte}
-        onTimeoutEnd={finOpEnCours}
-        onClick={finOpEnCours}
-      />
+      <OperationEnCours visible={opEnCours || !decrets || !utilisateurConnecte} onTimeoutEnd={finOpEnCours} onClick={finOpEnCours} />
       <FiltreServiceRequeteCreationForm onSubmit={soumettreFiltre} />
       <TableauRece
         idKey={"idRequete"}
         sortOrderByState={parametresLienRequete?.tri}
         sortOrderState={parametresLienRequete?.sens}
-        onClickOnLine={getOnClickSurLigneTableauEspaceCreation(
-          setOpEnCours,
-          setParamsMiseAJour,
-          setParamsCreation,
-          utilisateurConnecte
-        )}
+        onClickOnLine={getOnClickSurLigneTableauEspaceCreation(setOpEnCours, setParamsMiseAJour, setParamsCreation, utilisateurConnecte)}
         columnHeaders={columnHeaders}
         dataState={dataState}
         paramsTableau={paramsTableau}
@@ -242,9 +226,9 @@ export const RequetesServiceCreation: React.FC<
       <TransfertPopin
         open={props.popinAttribuerAOuvert}
         onClose={onClosePopinAttribuerA}
-        titre={getLibelle("Attribuer à un officier de l'état civil")}
+        titre={"Attribuer à un officier de l'état civil"}
         options={getUtilisateursAsOptions(dataState, utilisateurs)}
-        onValidate={(agent?: Option) => onValidateAttribuerA(dataState, agent)}
+        onValidate={(valeurs: ITransfertPopinForm) => onValidateAttribuerA(dataState, valeurs.optionChoisie)}
       />
     </>
   );

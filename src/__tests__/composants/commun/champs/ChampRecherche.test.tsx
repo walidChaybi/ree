@@ -1,31 +1,37 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { Options } from "@util/Type";
-import { ChampRecherche } from "@widget/formulaire/champRecherche/ChampRechercheField";
+import { OPTION_VIDE, Option } from "@util/Type";
+import { Form, Formik } from "formik";
 import { expect, test, vi } from "vitest";
+import ChampRecherche from "../../../../composants/commun/champs/ChampRecherche";
+
+const onChange = vi.fn();
+const onInput = vi.fn();
+const options: Option[] = [
+  { cle: "k1", libelle: "str1" },
+  { cle: "k2", libelle: "str2" }
+];
+const MockForm = ({ initialValues }: any) => (
+  <Formik
+    initialValues={initialValues}
+    onSubmit={() => {}}
+  >
+    <Form>
+      <ChampRecherche
+        name="autocomplete"
+        options={options}
+        onChange={onChange}
+        onInput={onInput}
+      />
+    </Form>
+  </Formik>
+);
 
 // Pour un test du composant dans un formulaire voir RegistreActeFiltre.test.tsx
 test("Attendu: composant ChampRecherche fonctionne correctement", () => {
-  const onChange = vi.fn();
-  const onInput = vi.fn();
-  const onClickClear = vi.fn();
-  const options: Options = [
-    { cle: "k1", libelle: "str1" },
-    { cle: "k2", libelle: "str2" }
-  ];
-  render(
-    <ChampRecherche
-      componentName="testChampRecherche"
-      options={options}
-      onChange={onChange}
-      onInput={onInput}
-      onClickClear={onClickClear}
-    />
-  );
+  render(<MockForm initialValues={{ autocomplete: OPTION_VIDE }} />);
 
   const autocomplete = screen.getByTestId("autocomplete");
-  const inputChampRecherche = screen.getByLabelText(
-    "testChampRecherche"
-  ) as HTMLInputElement;
+  const inputChampRecherche = screen.getByTestId("inputChampRecherche");
   const iconeCroix = screen.getByTitle("Vider le champ");
 
   waitFor(() => {
@@ -54,12 +60,10 @@ test("Attendu: composant ChampRecherche fonctionne correctement", () => {
 
   waitFor(() => {
     expect(onChange).toBeCalled();
-
-    expect(onClickClear).not.toBeCalled();
   });
 
   fireEvent.click(iconeCroix);
   waitFor(() => {
-    expect(onClickClear).toBeCalled();
+    expect(inputChampRecherche).toBeNull();
   });
 });

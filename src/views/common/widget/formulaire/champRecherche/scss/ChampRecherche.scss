@@ -1,37 +1,6 @@
 @import "./../../../../../../scss/colors";
 
-.Autocomplete {
-  font-size: 14.7px;
-  font-family: "'NotoSansUI-Regular', sans-serif";
-  .Autocomplete:focus {
-    background-color: "#0579be78"
-  }
-  input {
-    width: -webkit-fill-available; // Force le champ input à 100% de son parent dans tous les cas (chrome)
-    width: -moz-available; // Force le champ input à 100% de son parent dans tous les cas (firefox)
-    border: 1px solid #c8c8c8;
-    border-radius: 3px;
-    height: 1.9em;
-    &:disabled {
-      background-color: #dedede;
-    }
-  }
 
-  .loupeChampsRecherche {
-    font-size: 1.2rem;
-    color: $application-color;
-    margin-left: 1.8rem;
-  }
-
-  .IconeCroix {
-    margin-left: -25px;
-  }
-}
-
-.ChampRecherche {
-  margin-bottom: 0.5rem;
-
-  .FieldContainer {
-    margin-bottom: -0.5rem;
-  } 
-}
+.FieldContainer {
+  margin-bottom: -0.5rem;
+} 

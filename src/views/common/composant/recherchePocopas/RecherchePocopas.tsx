@@ -1,10 +1,6 @@
 import { useRecherchePocopa } from "@hook/pocopa/RecherchePocopaApiHook";
-import { Option, Options } from "@util/Type";
-import {
-  enMajuscule,
-  getLibelle,
-  premiereLettreEnMajusculeLeResteEnMinuscule
-} from "@util/Utils";
+import { Option } from "@util/Type";
+import { enMajuscule, premiereLettreEnMajusculeLeResteEnMinuscule } from "@util/Utils";
 import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import { INomForm, SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
@@ -15,25 +11,17 @@ interface RecherchePocopasProps {
   nombreResultatsMax: number;
   familleRegistre: string;
   estOuvert?: boolean;
-  optionsValidesNonAffichees?: Options;
+  optionsValidesNonAffichees?: Option[];
 }
 
 type RecherchePocopasSubForm = RecherchePocopasProps & SubFormProps;
 
 const RecherchePocopas: React.FC<RecherchePocopasSubForm> = props => {
-  const [valeurChampAutocomplete, setValeurChampAutocomplete] =
-    useState<string>("");
+  const [valeurChampAutocomplete, setValeurChampAutocomplete] = useState<string>("");
 
-  const [lastPocopaSelected, setLastPocopaSelected] = useState<
-    string | undefined
-  >(undefined);
+  const [lastPocopaSelected, setLastPocopaSelected] = useState<string | undefined>(undefined);
 
-  const pocopas = useRecherchePocopa(
-    valeurChampAutocomplete,
-    props.familleRegistre,
-    props.nombreResultatsMax,
-    props.estOuvert
-  );
+  const pocopas = useRecherchePocopa(valeurChampAutocomplete, props.familleRegistre, props.nombreResultatsMax, props.estOuvert);
 
   /**
    * Ajoute le dernier pocopa sélectionné à la liste de pocopas ramenée par l'api
@@ -48,7 +36,7 @@ const RecherchePocopas: React.FC<RecherchePocopasSubForm> = props => {
    *   You can use the `getOptionSelected` prop to customize the equality test.
    */
   const getPocopasAsOptions = useCallback(() => {
-    let pocopasAsOptions = [] as Options;
+    let pocopasAsOptions: Option[] = [];
     if (pocopas?.length) {
       pocopasAsOptions = pocopas.map(
         p =>
@@ -74,18 +62,16 @@ const RecherchePocopas: React.FC<RecherchePocopasSubForm> = props => {
   }
 
   function onChampRechercheInput(value: string | null) {
-    setValeurChampAutocomplete(value ? value : "");
+    setValeurChampAutocomplete(value ?? "");
   }
 
   return (
     <ChampRechercheField
-      componentName="SaisirRegistre"
       name={props.nom}
-      label={getLibelle(props.label)}
+      label={props.label ?? ""}
       onChange={onChampRechercheChange}
       onInput={onChampRechercheInput}
       options={getPocopasAsOptions()}
-      disabledPortal={true}
       disabled={props.disabled}
       optionsValidesNonAffichees={props.optionsValidesNonAffichees}
     />

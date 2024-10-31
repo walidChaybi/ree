@@ -2,7 +2,6 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { TRequete } from "@model/requete/IRequete";
 import { Options } from "@util/Type";
-import { getLibelle } from "@util/Utils";
 import { FormikProps, FormikValues } from "formik";
 import { ISaisieParentSousForm } from "./../../../../../model/form/creation/etablissement/ISaisiePostulantForm";
 import { traiteEspace } from "./ControlesUtil";
@@ -14,6 +13,7 @@ export const TRENTE_DEUX_CARACT_MAX = "32";
 export const DEUX_CENT_CARACT_MAX = "200";
 export const CENT_CARACT_MAX = "100";
 export const DIX_CARACT_MAX = "10";
+// TOREFACTO Pas la bonne valeur ?
 export const TRENTE_HUIT_CARACT_MAX = "100";
 export const IGNORER_TABULATION = -1;
 
@@ -55,28 +55,21 @@ export function withNamespace(nomParent: string, nomChamp: string) {
   return nomParent ? `${nomParent}.${nomChamp}` : nomChamp;
 }
 
-export function reinitialiserChamps(
-  prefixChamp: string,
-  suffixChamps: string[],
-  formik: FormikProps<FormikValues>
-): void {
+export function reinitialiserChamps(prefixChamp: string, suffixChamps: string[], formik: FormikProps<FormikValues>): void {
   for (const suffixChamp of suffixChamps) {
     formik.setFieldValue(withNamespace(prefixChamp, suffixChamp), "");
   }
 }
 
-export function getLibelleParentFromSexe(
-  numeroOrdre: number,
-  saisie?: ISaisieParentSousForm
-) {
-  const sexeEnum = Sexe.getEnumFor(saisie?.sexe || "");
+export function getLibelleParentFromSexe(numeroOrdre: number, saisie?: ISaisieParentSousForm) {
+  const sexeEnum = Sexe.getEnumFor(saisie?.sexe ?? "");
   switch (sexeEnum) {
     case Sexe.FEMININ:
-      return getLibelle("Mère");
+      return "Mère";
     case Sexe.MASCULIN:
-      return getLibelle("Père");
+      return "Père";
     default:
-      return getLibelle(`Parent ${numeroOrdre}`);
+      return `Parent ${numeroOrdre}`;
   }
 }
 

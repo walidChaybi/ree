@@ -1,13 +1,8 @@
 import { listeValideurToOptions } from "@composant/menuTransfert/MenuTransfertUtil";
-import { TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
+import { ITransfertPopinForm, TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import {
-  ITransmettreAValideurParams,
-  useTransmettreAValideurApiHook
-} from "@hook/requete/TransmettreAValideur";
+import { ITransmettreAValideurParams, useTransmettreAValideurApiHook } from "@hook/requete/TransmettreAValideur";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
-import { Option } from "@util/Type";
-import { getLibelle } from "@util/Utils";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -26,16 +21,14 @@ export const BoutonTransmettreAValideur: React.FC<
   const [params, setParams] = useState<ITransmettreAValideurParams>();
 
   const onValidate = useCallback(
-    (optionUtilisateur?: Option, texte?: string) => {
-      if (optionUtilisateur) {
-        const texteObservation = ` - ${texte}`;
+    (valeurs: ITransfertPopinForm) => {
+      if (valeurs.optionChoisie) {
+        const texteObservation = ` - ${valeurs.texte}`;
         setParams({
-          libelleAction: getLibelle("Requête transmise"),
-          texteObservation: `${getLibelle("Requête transmise")}${
-            texte ? texteObservation : ""
-          }`,
+          libelleAction: "Requête transmise",
+          texteObservation: `${"Requête transmise"}${valeurs.texte ? texteObservation : ""}`,
           requeteId: props.idRequete,
-          idUtilisateur: optionUtilisateur.cle
+          idUtilisateur: valeurs.optionChoisie.cle
         });
       }
     },
@@ -53,22 +46,15 @@ export const BoutonTransmettreAValideur: React.FC<
 
   return (
     <>
-      <BoutonDoubleSubmit onClick={() => setOpen(true)}>
-        {getLibelle("Transmettre à valideur")}
-      </BoutonDoubleSubmit>{" "}
+      <BoutonDoubleSubmit onClick={() => setOpen(true)}>{"Transmettre à valideur"}</BoutonDoubleSubmit>{" "}
       <TransfertPopin
-        onValidate={(optionUtilisateur?: Option, texte?: string) =>
-          onValidate(optionUtilisateur, texte)
-        }
+        onValidate={onValidate}
         open={open}
         onClose={() => setOpen(false)}
-        options={listeValideurToOptions(
-          utilisateurs,
-          utilisateurConnecte?.idUtilisateur
-        )}
-        titre={getLibelle("Transmettre à valideur")}
-        placeholder={getLibelle("Pour vérification")}
-        libelleAvantTexte={getLibelle("Message pour valideur :")}
+        options={listeValideurToOptions(utilisateurs, utilisateurConnecte?.idUtilisateur)}
+        titre={"Transmettre à valideur"}
+        placeholder={"Pour vérification"}
+        libelleAvantTexte={"Message pour valideur :"}
       />
     </>
   );

@@ -1,0 +1,91 @@
+import { FilterOptionsState } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
+import { OPTION_VIDE, Option } from "@util/Type";
+import { IconeCroix } from "@widget/icones/IconeCroix";
+import { useField } from "formik";
+import "./ChampRecherche.scss";
+
+export interface IChampRechercheProps {
+  name: string;
+  options: Option[];
+  disabled?: boolean;
+  onInput?: (value: string | null) => void;
+  onChange?: (option?: Option) => void;
+  filterOptions?: (options: Option[], state: FilterOptionsState<Option>) => Option[];
+  optionsValidesNonAffichees?: Option[];
+  noOptionsText?: string;
+}
+
+const ChampRecherche: React.FC<IChampRechercheProps> = ({
+  name,
+  options,
+  disabled,
+  onInput,
+  onChange,
+  filterOptions,
+  optionsValidesNonAffichees,
+  noOptionsText,
+  ...props
+}) => {
+  const [field, meta, helpers] = useField(name);
+
+  return (
+    <>
+      <Autocomplete
+        id={name}
+        data-testid={name}
+        options={[OPTION_VIDE, ...options]}
+        value={field.value}
+        renderInput={params => (
+          <div ref={params.InputProps.ref}>
+            <input
+              type="text"
+              data-testid="inputChampRecherche"
+              placeholder={"Recherche..."}
+              {...params.inputProps}
+            />
+            {!disabled && (
+              <IconeCroix
+                onClick={() => helpers.setValue(OPTION_VIDE)}
+                title={"Vider le champ"}
+              />
+            )}
+          </div>
+        )}
+        renderOption={(renderProps, option: Option) =>
+          option.cle.length ? (
+            <li
+              {...renderProps}
+              key={option.cle}
+            >
+              {option.libelle}
+            </li>
+          ) : (
+            <></>
+          )
+        }
+        onChange={(_, newValue) => {
+          onChange?.(newValue ?? undefined);
+          helpers.setValue(newValue);
+        }}
+        onInputChange={(_, newInputValue) => {
+          onInput?.(newInputValue || null);
+        }}
+        autoHighlight={true}
+        disablePortal={false}
+        disabled={disabled ?? false}
+        className="Autocomplete"
+        filterOptions={filterOptions}
+        noOptionsText={noOptionsText ?? "Aucun résultat"}
+        getOptionLabel={(option: Option) => option.libelle || ""}
+        isOptionEqualToValue={(option: Option, value) => {
+          return (
+            option.cle === value.cle || optionsValidesNonAffichees?.some(optionNonAffichee => optionNonAffichee.cle === value.cle) || false
+          );
+        }}
+      />
+      {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+    </>
+  );
+};
+export default ChampRecherche;
