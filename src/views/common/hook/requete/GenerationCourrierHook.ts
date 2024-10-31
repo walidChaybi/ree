@@ -277,30 +277,19 @@ function mapCourrierPourSauvegarde(
   };
 }
 
-function requeteAvecSaisieRequerant(
-  requete: IRequeteDelivrance,
-  saisieCourrier: SaisieCourrier
-) {
+function requeteAvecSaisieRequerant(requete: IRequeteDelivrance, saisieCourrier: SaisieCourrier) {
   if (saisieCourrier[REQUERANT]) {
-    requete.requerant = ajoutSaisieIdentiteRequerantVersRequerantRequete(
-      saisieCourrier,
-      requete.requerant
-    );
+    requete.requerant = ajoutSaisieIdentiteRequerantVersRequerantRequete(saisieCourrier, requete.requerant);
   }
   if (saisieCourrier[ADRESSE]) {
-    requete.requerant.adresse =
-      mappingSaisieAdresseVersAdresseRequerant(saisieCourrier);
+    requete.requerant.adresse = mappingSaisieAdresseVersAdresseRequerant(saisieCourrier);
   }
   return requete;
 }
 
-function mappingSaisieAdresseVersAdresseRequerant(
-  saisieCourrier: SaisieCourrier | undefined
-): IAdresseRequerant {
+function mappingSaisieAdresseVersAdresseRequerant(saisieCourrier: SaisieCourrier | undefined): IAdresseRequerant {
   return {
-    ligne2: getValeurOuVide(
-      saisieCourrier?.[ADRESSE]?.[COMPLEMENT_DESTINATAIRE]
-    ),
+    ligne2: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[COMPLEMENT_DESTINATAIRE]),
     ligne3: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[COMPLEMENT_POINT_GEO]),
     ligne4: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[VOIE]),
     ligne5: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[LIEU_DIT]),
@@ -310,10 +299,7 @@ function mappingSaisieAdresseVersAdresseRequerant(
   };
 }
 
-function ajoutSaisieIdentiteRequerantVersRequerantRequete(
-  saisieCourrier: SaisieCourrier,
-  requerantRequete: IRequerant
-): IRequerant {
+function ajoutSaisieIdentiteRequerantVersRequerantRequete(saisieCourrier: SaisieCourrier, requerantRequete: IRequerant): IRequerant {
   const requerant: IRequerant = { ...requerantRequete };
 
   const nomRequerant = saisieCourrier[REQUERANT][NOM];
@@ -330,20 +316,17 @@ function ajoutSaisieIdentiteRequerantVersRequerantRequete(
       break;
     case Qualite.MANDATAIRE_HABILITE:
       if (requerant.qualiteRequerant.mandataireHabilite) {
-        requerant.qualiteRequerant.mandataireHabilite.raisonSociale =
-          raisonSocialeRequerant;
+        requerant.qualiteRequerant.mandataireHabilite.raisonSociale = raisonSocialeRequerant;
       }
       break;
     case Qualite.INSTITUTIONNEL:
       if (requerant.qualiteRequerant.institutionnel) {
-        requerant.qualiteRequerant.institutionnel.nomInstitution =
-          raisonSocialeRequerant;
+        requerant.qualiteRequerant.institutionnel.nomInstitution = raisonSocialeRequerant;
       }
       break;
     case Qualite.AUTRE_PROFESSIONNEL:
       if (requerant.qualiteRequerant.autreProfessionnel) {
-        requerant.qualiteRequerant.autreProfessionnel.raisonSociale =
-          raisonSocialeRequerant;
+        requerant.qualiteRequerant.autreProfessionnel.raisonSociale = raisonSocialeRequerant;
       }
       break;
     default:

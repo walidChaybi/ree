@@ -6,16 +6,20 @@ import "./scss/ChampRecherche.scss";
 
 export type ChampRechercheFieldProps = IChampRechercheProps & {
   label: string;
+  componentName: string;
 };
 
-export const ChampRechercheField: React.FC<ChampRechercheFieldProps> = ({ name, label, ...props }) => {
+export const ChampRechercheField: React.FC<ChampRechercheFieldProps> = ({ componentName, label, ...props }) => {
   return (
     <div className="BlockInput ChampRecherche">
-      {label && <label htmlFor={name}>{label}</label>}
+      {label && <label htmlFor={componentName}>{label}</label>}
       <div className="FieldContainer">
-        <ChampRecherche name={name} {...props} />
+        <ChampRecherche {...props} />
         <div className="BlockErreur">
-          <ErrorMessage component={IconErrorMessage} name={name} />
+          <ErrorMessage
+            component={IconErrorMessage}
+            name={componentName}
+          />
         </div>
       </div>
     </div>

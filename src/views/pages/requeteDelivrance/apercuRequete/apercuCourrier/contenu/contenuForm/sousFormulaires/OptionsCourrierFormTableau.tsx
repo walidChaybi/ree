@@ -1,4 +1,4 @@
-import { OptionCourrier, OptionsCourrier } from "@model/requete/IOptionCourrier";
+import { OptionCourrier } from "@model/requete/IOptionCourrier";
 import { IconeDanger } from "@widget/icones/IconeDanger";
 import { IconeMoins } from "@widget/icones/IconeMoins";
 import { IconePlus } from "@widget/icones/IconePlus";
@@ -8,13 +8,13 @@ import { texteOptionCourrierModifie } from "./GestionOptionsCourrier";
 import "./scss/OptionsCourrierForm.scss";
 
 /** Construction du tableau des Options Disponibles */
-export function getTableauOptionsDisponibles(
-  optionsDisponibles: OptionsCourrier,
-  optionsChoisies: OptionsCourrier,
+export const getTableauOptionsDisponibles = (
+  optionsDisponibles: OptionCourrier[],
+  optionsChoisies: OptionCourrier[],
   ajouterUneOption: (option: OptionCourrier) => void,
   modifierUneOption: (option: OptionCourrier) => void,
   optionSelectionnee?: OptionCourrier
-): JSX.Element {
+): JSX.Element => {
   const tableauOptionsDisponiblesProps: TableauSimpleProps = {
     entetes: [
       {
@@ -65,15 +65,15 @@ export function getTableauOptionsDisponibles(
       <TableauSimple {...tableauOptionsDisponiblesProps} />
     </div>
   );
-}
+};
 
 /** Construction du tableau des Options Choisies */
-export function getTableauOptionsChoisies(
-  optionsChoisies: OptionsCourrier,
+export const getTableauOptionsChoisies = (
+  optionsChoisies: OptionCourrier[],
   supprimerUneOption: (option: OptionCourrier) => void,
   modifierUneOption: (option: OptionCourrier) => void,
   optionSelectionnee?: OptionCourrier
-): JSX.Element {
+): JSX.Element => {
   const tableauOptionsChoisiesProps: TableauSimpleProps = {
     entetes: [
       {
@@ -121,36 +121,30 @@ export function getTableauOptionsChoisies(
       <TableauSimple {...tableauOptionsChoisiesProps} />
     </div>
   );
-}
+};
 
-function getColonneAjouterOption(visible: boolean): JSX.Element {
-  return (
-    <>
-      {visible && (
-        <div className="BoutonOption">
-          <IconePlus title={"Ajouter"} />
-        </div>
-      )}
-    </>
-  );
-}
+const getColonneAjouterOption = (visible: boolean): JSX.Element => (
+  <>
+    {visible && (
+      <div className="BoutonOption">
+        <IconePlus title={"Ajouter"} />
+      </div>
+    )}
+  </>
+);
 
-function getColonneSupprimerOption(): JSX.Element {
-  return (
-    <div className="BoutonOption">
-      <IconeMoins title={"Supprimer"} />
-    </div>
-  );
-}
+const getColonneSupprimerOption = (): JSX.Element => (
+  <div className="BoutonOption">
+    <IconeMoins title={"Supprimer"} />
+  </div>
+);
 
-function getColonneModifierOption(opt: OptionCourrier): JSX.Element {
-  return (
-    <>
-      {(opt.presenceVariables || opt.optionLibre) && (
-        <div className="BoutonOption">
-          {texteOptionCourrierModifie(opt) ? <IconeValider title={"Option modifiée"} /> : <IconeDanger title={"Option non modifiée"} />}
-        </div>
-      )}
-    </>
-  );
-}
+const getColonneModifierOption = (opt: OptionCourrier): JSX.Element => (
+  <>
+    {(opt.presenceVariables || opt.optionLibre) && (
+      <div className="BoutonOption">
+        {texteOptionCourrierModifie(opt) ? <IconeValider title={"Option modifiée"} /> : <IconeDanger title={"Option non modifiée"} />}
+      </div>
+    )}
+  </>
+);

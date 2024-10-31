@@ -1,5 +1,5 @@
 import { CONTENU, LIBELLE_OPTION } from "@composant/formulaire/ConstantesNomsForm";
-import { OptionCourrier, OptionsCourrier } from "@model/requete/IOptionCourrier";
+import { OptionCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import SettingsBackupRestore from "@mui/icons-material/SettingsBackupRestore";
@@ -24,8 +24,8 @@ import { getTableauOptionsChoisies, getTableauOptionsDisponibles } from "./Optio
 import "./scss/OptionsCourrierForm.scss";
 
 interface OptionsCourrierFormProps {
-  optionsChoisies: OptionsCourrier;
-  setOptionsChoisies: (options: OptionsCourrier) => void;
+  optionsChoisies: OptionCourrier[];
+  setOptionsChoisies: (options: OptionCourrier[]) => void;
   setCheckOptions: () => void;
   documentDelivranceChoisi?: DocumentDelivrance;
 }
@@ -43,7 +43,7 @@ export const ValidationSchemaOptionCourrier = Yup.object().shape({
 });
 
 const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
-  const [optionsDisponibles, setOptionsDisponibles] = useState<OptionsCourrier>([]);
+  const [optionsDisponibles, setOptionsDisponibles] = useState<OptionCourrier[]>([]);
   const [optionSelectionnee, setOptionSelectionnee] = useState<OptionCourrier>();
 
   const optionsCourrierDisponibles = useOptionsCourriersApiHook(props.documentDelivranceChoisi, props.requete as IRequeteDelivrance);
@@ -144,7 +144,11 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
           </div>
           <div className="TitreContenuOption">{"Contenu option"}</div>
           <div className="LibelleOptionForm">
-            <InputField name={withNamespace(props.nom, LIBELLE_OPTION)} label={"Option"} disabled={true} />
+            <InputField
+              name={withNamespace(props.nom, LIBELLE_OPTION)}
+              label={"Option"}
+              disabled={true}
+            />
             {Boolean(optionSelectionnee?.optionATiret) && <div className="OptionTiret">{"Option à tiret"}</div>}
           </div>
           <div className="ContenuOptionForm">

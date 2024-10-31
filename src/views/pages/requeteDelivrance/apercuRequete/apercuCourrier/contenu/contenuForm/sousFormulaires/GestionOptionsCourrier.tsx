@@ -1,4 +1,4 @@
-import { OptionCourrier, OptionsCourrier } from "@model/requete/IOptionCourrier";
+import { OptionCourrier, OptionCourrierDto, depuisOptionCourrierDtoVersOptionCourrier } from "@model/requete/IOptionCourrier";
 import { IOptionCourrierDocumentReponse } from "@model/requete/IOptionCourrierDocumentReponse";
 import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -7,17 +7,16 @@ import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { getDocumentReponseAModifier } from "../CourrierFonctions";
 import "./scss/OptionsCourrierForm.scss";
 
-export const contenuDisabled = (option: OptionCourrier | undefined, optionsChoisies: OptionsCourrier): boolean =>
+export const contenuDisabled = (option: OptionCourrier | undefined, optionsChoisies: OptionCourrier[]): boolean =>
   option === undefined || optionsChoisies.indexOf(option) === -1 || !(option.presenceVariables || option.optionLibre);
 
 export const contenuOptionNonModifie = (option: OptionCourrier | undefined): boolean =>
   option !== undefined && !texteOptionCourrierModifie(option);
 
-export const texteOptionCourrierModifie = (option: OptionCourrier): boolean => {
-  return option.texteOptionCourrier !== option.texteOptionCourrierModifie;
-};
+export const texteOptionCourrierModifie = (option: OptionCourrier): boolean =>
+  option.texteOptionCourrier !== option.texteOptionCourrierModifie;
 
-export const classNameContenu = (option: OptionCourrier | undefined, optionsChoisies: OptionsCourrier): string | undefined => {
+export const classNameContenu = (option: OptionCourrier | undefined, optionsChoisies: OptionCourrier[]): string | undefined => {
   switch (true) {
     case contenuDisabled(option, optionsChoisies):
       return undefined;
@@ -28,7 +27,7 @@ export const classNameContenu = (option: OptionCourrier | undefined, optionsChoi
   }
 };
 
-export const reinitialiserDisabled = (option: OptionCourrier | undefined, optionsChoisies: OptionsCourrier): boolean =>
+export const reinitialiserDisabled = (option: OptionCourrier | undefined, optionsChoisies: OptionCourrier[]): boolean =>
   contenuDisabled(option, optionsChoisies) || contenuOptionNonModifie(option);
 
 // TOREFACTO : Nom de la fonction pas explicite
@@ -53,7 +52,7 @@ export const switchOption = (
 };
 
 // TOREFACTO : Noms de variables à changer
-export const initialisationOptions = (optionsDisponibles: OptionsCourrier, optionsChoisies: OptionsCourrier) => {
+export const initialisationOptions = (optionsDisponibles: OptionCourrier[], optionsChoisies: OptionCourrier[]) => {
   let optsDispos: OptionCourrier[] = [];
   if (optionsChoisies.length === 0) {
     optionsDisponibles.forEach((optDispo: OptionCourrier) => {
@@ -66,11 +65,13 @@ export const initialisationOptions = (optionsDisponibles: OptionsCourrier, optio
   } else {
     optsDispos = optionsDisponibles.filter(optionDispo => !optionsChoisies.find(optionChoisie => optionChoisie.id === optionDispo.id));
   }
+  optsDispos.sort((a, b) => a.ordreEdition - b.ordreEdition);
+  optionsChoisies.sort((a, b) => a.ordreEdition - b.ordreEdition);
 
   return { optsDispos, optsChoisies: optionsChoisies };
 };
 
-export const recupererLesOptionsDuCourrier = (requete: TRequete, optionsCourrierPossible: OptionsCourrier) => {
+export const recupererLesOptionsDuCourrier = (requete: TRequete, optionsCourrierPossible: OptionCourrier[]) => {
   const document = getDocumentReponseAModifier(requete as IRequeteDelivrance);
   let optionsDuCourrier: OptionCourrier[] = [];
   if (document?.optionsCourrier) {
@@ -82,7 +83,7 @@ export const recupererLesOptionsDuCourrier = (requete: TRequete, optionsCourrier
 
 const mappingOptionCourrierDocumentReponse = (
   optionsDuCourrier: IOptionCourrierDocumentReponse[],
-  optionsCourrierPossible: OptionsCourrier
+  optionsCourrierPossible: OptionCourrier[]
 ): OptionCourrier[] => {
   const optionsDocumentReponse: OptionCourrier[] = [];
 
@@ -102,10 +103,10 @@ const mappingOptionCourrierDocumentReponse = (
 };
 
 export const recupererLesOptionsDisponiblesPourLeCourrier = (
-  options: OptionsCourrier,
+  options: OptionCourrierDto[],
   documentDelivranceChoisi: DocumentDelivrance,
   natureActe?: NatureActeRequete
-): OptionsCourrier => {
+): OptionCourrier[] => {
   const idDocumentDelivrance = DocumentDelivrance.getKeyForCode(documentDelivranceChoisi.code);
   const filtreNatureActe: keyof OptionCourrier | undefined = (() => {
     switch (natureActe) {
@@ -120,18 +121,20 @@ export const recupererLesOptionsDisponiblesPourLeCourrier = (
     }
   })();
   options = options.filter(
-    (opt: OptionCourrier) =>
+    (opt: OptionCourrierDto) =>
       opt.documentDelivrance === idDocumentDelivrance && opt.estActif && (filtreNatureActe ? opt[filtreNatureActe] : true)
   );
 
-  return options.map(initialisationSiOptionModifiable);
+  return options.map(initialisationOptionCourrier);
 };
 
-const initialisationSiOptionModifiable = (option: OptionCourrier): OptionCourrier => {
+const initialisationOptionCourrier = (optionDto: OptionCourrierDto): OptionCourrier => {
+  let option = depuisOptionCourrierDtoVersOptionCourrier(optionDto);
+
   if (option.presenceVariables || option.optionLibre) {
     option.texteOptionCourrierModifie = option.texteOptionCourrier;
   }
   return option;
 };
 
-export const messageOptionVariables = (options: OptionsCourrier): boolean => options.some(opt => opt.presenceVariables === true);
+export const messageOptionVariables = (options: OptionCourrier[]): boolean => options.some(opt => opt.presenceVariables === true);

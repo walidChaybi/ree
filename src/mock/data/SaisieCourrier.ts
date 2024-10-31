@@ -1,9 +1,6 @@
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
-import {
-  ISaisieAdresse,
-  Requete
-} from "@model/form/delivrance/ISaisirRequetePageForm";
+import { ISaisieAdresse, Requete } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
@@ -143,9 +140,7 @@ export const RequeteRDDCourrier17 = {
   observations: [],
   piecesJustificatives: [],
   sousType: SousTypeDelivrance.RDD,
-  documentDemande: DocumentDelivrance.getDocumentDelivrance(
-    "fce55a9f-4f4b-4996-a60b-59332bc10565"
-  ),
+  documentDemande: DocumentDelivrance.getDocumentDelivrance("fce55a9f-4f4b-4996-a60b-59332bc10565"),
   nbExemplaireImpression: 2,
   provenanceRequete: {
     provenance: Provenance.SERVICE_PUBLIC,
@@ -244,7 +239,7 @@ export const OptionsChoisiesCourrier17 = [
   {
     id: "710366f5-4f17-4218-b83b-e5da1f16a42d",
     code: "CARN_EC_17-25",
-    libelle: "Option à puce test",
+    libelle: "Option à tiret test",
     estActif: true,
     documentDelivrance: "fce55a9f-4f4b-4996-a60b-59332bc10565",
     ordreEdition: 25,
@@ -256,13 +251,13 @@ export const OptionsChoisiesCourrier17 = [
     optionExclusive: false,
     optionATiret: true,
     optionLibre: false,
-    texteOptionCourrier: "- Option à puce test",
-    texteOptionCourrierModifie: "- Option à puce test (modifié)"
+    texteOptionCourrier: "- Option à tiret test",
+    texteOptionCourrierModifie: "- Option à tiret test (modifié)"
   },
   {
     id: "710366f5-4f17-4218-b83b-e5da1f16a42e",
     code: "CARN_EC_17-996",
-    libelle: "Option 996 puce",
+    libelle: "Option 996 tiret",
     estActif: true,
     documentDelivrance: "fce55a9f-4f4b-4996-a60b-59332bc10565",
     ordreEdition: 996,
@@ -274,12 +269,12 @@ export const OptionsChoisiesCourrier17 = [
     optionExclusive: false,
     optionATiret: true,
     optionLibre: false,
-    texteOptionCourrier: "- Option 996 A puce"
+    texteOptionCourrier: "- Option 996 A tiret"
   },
   {
     id: "710366f5-4f17-4218-b83b-e5da1f16a42f",
     code: "CARN_EC_17-997",
-    libelle: "Option 997 puce",
+    libelle: "Option 997 tiret",
     estActif: true,
     documentDelivrance: "fce55a9f-4f4b-4996-a60b-59332bc10565",
     ordreEdition: 997,
@@ -291,8 +286,8 @@ export const OptionsChoisiesCourrier17 = [
     optionExclusive: false,
     optionATiret: true,
     optionLibre: false,
-    texteOptionCourrier: "- Option 997 A puce",
-    texteOptionCourrierModifie: "- Option 997 A puce (modifié)"
+    texteOptionCourrier: "- Option 997 A tiret",
+    texteOptionCourrierModifie: "- Option 997 A tiret (modifié)"
   },
   {
     id: "710366f5-4f17-4218-b83b-e5da1f16a421",

@@ -12,7 +12,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: false,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: true,
+    optionAPuce: true,
     optionLibre: false,
     texteOptionCourrier:
       "- une copie intégrale de l'acte de mariage, délivrée par la mairie du lieu de célébration en France.\nLa photocopie du livret de famille n'est en aucun cas acceptée.\nSi le mariage a été célébré à l'étranger, il convient d'indiquer la date et le lieu ainsi que l'identité du conjoint. "
@@ -30,7 +30,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: false,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: true,
+    optionAPuce: true,
     optionLibre: false,
     texteOptionCourrier:
       "- une copie intégrale de l'acte de mariage portant la mention de divorce ou de la séparation de corps.\nLa photocopie du livret de famille n'est en aucun cas acceptée."
@@ -48,7 +48,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: false,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: true,
+    optionAPuce: true,
     optionLibre: false,
     texteOptionCourrier: "- en cas de PACS, joindre tout document attestant du ou des PACS, même dissous."
   },
@@ -65,7 +65,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: false,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: true,
+    optionAPuce: true,
     optionLibre: false,
     texteOptionCourrier: "- une copie intégrale de l'acte de décès."
   },
@@ -82,7 +82,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: false,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: true,
+    optionAPuce: true,
     optionLibre: false,
     texteOptionCourrier:
       "- une copie certifiée conforme de la décision du divorce ou de séparation de corps et un justificatif du caractère définitif de cette décision.\nCes documents peuvent être délivrés par votre avocat ou par le greffier compétent.\nSi le divorce ou la séparation de corps a été enregistré(e) par un notaire, il conviendra de nous transmettre l’attestation de dépôt de la convention, établie par ce notaire. "
@@ -100,7 +100,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: false,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: true,
+    optionAPuce: true,
     optionLibre: false,
     texteOptionCourrier:
       "- soit un extrait de l'acte de changement de régime matrimonial et un certificat de non opposition établi par le notaire ayant reçu l'acte,\n- soit une copie certifiée conforme du dispositif du jugement de changement de régime matrimonial ou d'un extrait du jugement et un certificat attestant que le jugement est définitif. Ces documents peuvent être délivrés pa votre avocat ou par le greffier de la Cour d'appel."
@@ -118,7 +118,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: true,
+    optionAPuce: true,
     optionLibre: false,
     texteOptionCourrier:
       "- une copie de l'ampliation du décret de francisation de nom et/ou de prénom ou la décision de changement de nom et/ou de prénom."
@@ -136,7 +136,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: false,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: true,
+    optionAPuce: true,
     optionLibre: false,
     texteOptionCourrier:
       "- une copie intégrale de l'acte de reconnaissance paternelle et/ou maternelle souscrite en faveur de l'intéressé(e)."
@@ -154,7 +154,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: true,
+    optionAPuce: true,
     optionLibre: true,
     texteOptionCourrier: "-"
   },
@@ -171,7 +171,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: false,
+    optionAPuce: false,
     optionLibre: false,
     texteOptionCourrier:
       "Je vous informe que la délivrance de copies ou extraits d'actes détenus par le Service central d’état civil (SCEC) est une procédure gratuite. Si la démarche vous a été facturée, il est possible que vous ayez formulé votre demande sur le site d'un prestataire privé (et non sur celui du SCEC) dont la prestation est payante. Afin d’éviter à l’avenir un tel désagrément, je vous recommande de formuler votre prochaine demande sur internet, à l’adresse suivante https://psl.service-public.fr/mademarche/delivrance_demat/demarche."
@@ -189,7 +189,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: true,
+    optionAPuce: true,
     optionLibre: false,
     texteOptionCourrier: "- l'arrondissement d'Alger où a été enregistré l'acte demandé"
   },
@@ -206,7 +206,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: false,
+    optionAPuce: false,
     optionLibre: false,
     texteOptionCourrier:
       "Conformément à la réglementation, des copies intégrales ou extraits avec filiation ne peuvent être adressés qu'aux intéressés eux-mêmes s'ils sont majeurs, ou aux personnes légalement habilitées (décret n°2017-890 du 6 mai 2017 - art. 30 à 32).\nLe Service central d'état civil a donc été amené à vous délivrer un extrait sans filiation."
@@ -224,7 +224,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: false,
+    optionAPuce: false,
     optionLibre: false,
     texteOptionCourrier:
       "Les mineurs non émancipés ne peuvent obtenir ni copie ni extrait avec filiation de leur acte de naissance. La demande doit être formulée par le ou les parents ou par le représentant légal.\nLes mineurs émancipés doivent fournir un justificatif de leur émancipation."
@@ -242,7 +242,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: false,
+    optionAPuce: false,
     optionLibre: false,
     texteOptionCourrier:
       "En l’absence des justificatifs attestant de votre qualité de représentant légal, le service central d’état civil a été amené à vous délivrer un extrait sans filiation."
@@ -260,7 +260,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: false,
+    optionAPuce: false,
     optionLibre: false,
     texteOptionCourrier:
       "Dans la mesure où vous n'avez pas précisé la filiation (nom et prénom(s) des parents) de la personne pour laquelle un document d'état civil a été sollicité, le Service central d'état civil a été amené à vous délivrer un extrait sans filiation.\nLes personnes habilitées qui seraient dans l'impossibilité de donner ces précisions doivent accompagner leur demande d'une lettre motivée."
@@ -278,7 +278,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: false,
+    optionAPuce: false,
     optionLibre: false,
     texteOptionCourrier:
       "Si vous estimez que certaines énonciations figurant sur cet acte sont erronées, vous voudrez bien solliciter les rectifications qui vous paraissent nécessaires, par courrier uniquement, auprès du Service central d'état civil. Il conviendra de joindre les justificatifs permettant de corriger les erreurs signalées."
@@ -296,7 +296,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: false,
+    optionAPuce: false,
     optionLibre: false,
     texteOptionCourrier:
       "L'adresse figurant dans l'acte est celle de votre domicile lors de l'acquisition de la nationalité française. Elle ne peut être modifiée en cas de changement de domicile.\nIl en est de même pour la profession."
@@ -314,7 +314,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: false,
+    optionAPuce: false,
     optionLibre: false,
     texteOptionCourrier:
       "Je vous informe que la délivrance de copies ou extraits d'actes détenus par le Service central d’état civil (SCEC) est une procédure gratuite. Si la démarche vous a été facturée, il est possible que vous ayez formulé votre demande sur le site d'un prestataire privé (et non sur celui du SCEC) dont la prestation est payante. Afin d’éviter à l’avenir un tel désagrément, je vous recommande de formuler votre prochaine demande sur internet, à l’adresse suivante https://psl.service-public.fr/mademarche/delivrance_demat/demarche."
@@ -332,7 +332,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: true,
+    optionAPuce: true,
     optionLibre: false,
     texteOptionCourrier: "- la filiation (prénom et nom du ou des parent(s))\n"
   },
@@ -349,7 +349,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: true,
+    optionAPuce: true,
     optionLibre: false,
     texteOptionCourrier: "- la date de l'événement"
   },
@@ -366,7 +366,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: true,
+    optionAPuce: true,
     optionLibre: false,
     texteOptionCourrier: "- le lieu de l'événement (ville et/ou pays)"
   },
@@ -383,7 +383,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: true,
+    optionAPuce: true,
     optionLibre: false,
     texteOptionCourrier: "- le nom et le(s) prénom(s)\n"
   },
@@ -400,7 +400,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: true,
+    optionAPuce: true,
     optionLibre: true,
     texteOptionCourrier: "-"
   },
@@ -417,7 +417,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     acteDeces: true,
     optionParDefaut: false,
     optionExclusive: false,
-    optionATiret: false,
+    optionAPuce: false,
     optionLibre: false,
     texteOptionCourrier:
       "Je vous informe que la délivrance de copies ou extraits d'actes détenus par le Service central d’état civil (SCEC) est une procédure gratuite. Si la démarche vous a été facturée, il est possible que vous ayez formulé votre demande sur le site d'un prestataire privé (et non sur celui du SCEC) dont la prestation est payante. Afin d’éviter à l’avenir un tel désagrément, je vous recommande de formuler votre prochaine demande sur internet, à l’adresse suivante https://psl.service-public.fr/mademarche/delivrance_demat/demarche."

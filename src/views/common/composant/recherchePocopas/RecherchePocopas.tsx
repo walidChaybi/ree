@@ -68,6 +68,7 @@ const RecherchePocopas: React.FC<RecherchePocopasSubForm> = props => {
   return (
     <ChampRechercheField
       name={props.nom}
+      componentName="SaisirRegistre"
       label={props.label ?? ""}
       onChange={onChampRechercheChange}
       onInput={onChampRechercheInput}

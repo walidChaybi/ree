@@ -1,32 +1,15 @@
-import {
-  IElementsJasperCourrier,
-  OptionsJasper
-} from "@model/composition/ICourrierComposition";
-import {
-  AnalyseMarginale,
-  IAnalyseMarginale
-} from "@model/etatcivil/acte/IAnalyseMarginale";
+import { IElementsJasperCourrier, OptionsJasper } from "@model/composition/ICourrierComposition";
+import { AnalyseMarginale, IAnalyseMarginale } from "@model/etatcivil/acte/IAnalyseMarginale";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
-import {
-  OptionCourrier,
-  OptionsCourrier
-} from "@model/requete/IOptionCourrier";
+import { OptionCourrier, OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import {
-  ITitulaireRequete,
-  TitulaireRequete
-} from "@model/requete/ITitulaireRequete";
-import {
-  getValeurOuVide,
-  triListeObjetsSurPropriete,
-  UN,
-  ZERO
-} from "@util/Utils";
+import { ITitulaireRequete, TitulaireRequete } from "@model/requete/ITitulaireRequete";
+import { getValeurOuVide, triListeObjetsSurPropriete, UN, ZERO } from "@util/Utils";
 
 function ajoutInfosTitulaire(elementsJasper: IElementsJasperCourrier, requete: IRequeteDelivrance, acte?: IFicheActe) {
   let titulaires = [];
@@ -132,10 +115,7 @@ const TEXTE_VARIABLE_RDC = `Pour formuler une nouvelle demande, il vous est cons
 
 https://psl.service-public.fr/mademarche/delivrance_demat/demarche`;
 
-function ajoutTexteVariable(
-  elementsJasper: IElementsJasperCourrier,
-  sousTypeRequete: SousTypeRequete
-) {
+function ajoutTexteVariable(elementsJasper: IElementsJasperCourrier, sousTypeRequete: SousTypeRequete) {
   if (sousTypeRequete === SousTypeDelivrance.RDD) {
     elementsJasper.texte_variable_RDD = TEXTE_VARIABLE_RDD;
   } else if (sousTypeRequete === SousTypeDelivrance.RDC) {
@@ -145,18 +125,11 @@ function ajoutTexteVariable(
 
 /////////////////////////////////////////////////////////////////////
 class SpecificationCourrier {
-  getElementsJasper(
-    saisieCourrier: SaisieCourrier,
-    requete: IRequeteDelivrance,
-    optionsChoisies?: OptionsCourrier,
-    acte?: IFicheActe
-  ) {
+  getElementsJasper(saisieCourrier: SaisieCourrier, requete: IRequeteDelivrance, optionsChoisies?: OptionsCourrier, acte?: IFicheActe) {
     const elementsJasper = {} as IElementsJasperCourrier;
 
     if (requete && saisieCourrier) {
-      elementsJasper.natureActe = getValeurOuVide(
-        requete.evenement?.natureActe.libelle
-      ).toLowerCase();
+      elementsJasper.natureActe = getValeurOuVide(requete.evenement?.natureActe.libelle).toLowerCase();
       ajoutInfosTitulaire(elementsJasper, requete, acte);
       ajoutOptions(elementsJasper, optionsChoisies);
       elementsJasper.texteLibre = saisieCourrier.texteLibre.texte;
