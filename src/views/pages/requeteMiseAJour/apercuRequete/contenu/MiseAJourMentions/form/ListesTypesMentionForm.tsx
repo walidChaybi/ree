@@ -1,24 +1,12 @@
-import {
-  MENTION_NIVEAU_DEUX,
-  MENTION_NIVEAU_TROIS,
-  MENTION_NIVEAU_UN,
-  TEXTE_MENTION
-} from "@composant/formulaire/ConstantesNomsForm";
+import { MENTION_NIVEAU_DEUX, MENTION_NIVEAU_TROIS, MENTION_NIVEAU_UN, TEXTE_MENTION } from "@composant/formulaire/ConstantesNomsForm";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { MiseAJourMentionsContext } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import {
-  OptionVide,
-  SelectField
-} from "@widget/formulaire/champsSaisie/SelectField";
-import {
-  ISubForm,
-  SubFormProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { OptionVide, SelectField } from "@widget/formulaire/champsSaisie/SelectField";
+import { ISubForm, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import { useContext, useEffect, useState } from "react";
 import "./scss/MiseAJourMentionsForm.scss";
@@ -27,13 +15,8 @@ interface IListesTypesMentionForm {
   natureActe: NatureActe;
 }
 
-const ListesTypesMentionForm: React.FC<
-  IListesTypesMentionForm & SubFormProps
-> = ({ formik, nom, natureActe }) => {
-  const listeNiveau1 = TypeMention.getTypeMentionAsOptions([
-    ...TypeMention.getTypeMentionParNatureActe(natureActe),
-    TypeMention.getTypeMentionInconnue()
-  ]);
+const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> = ({ formik, nom, natureActe }) => {
+  const listeNiveau1 = TypeMention.getTypeMentionAsOptions([...TypeMention.getTypeMentionParNatureActe(natureActe)]);
   const [listeNiveau2, setListeNiveau2] = useState<Options>();
   const [listeNiveau3, setListeNiveau3] = useState<Options>();
 
@@ -41,20 +24,11 @@ const ListesTypesMentionForm: React.FC<
 
   const NOM_CHAMP_MENTION_NIVEAU_UN = withNamespace(nom, MENTION_NIVEAU_UN);
   const NOM_CHAMP_MENTION_NIVEAU_DEUX = withNamespace(nom, MENTION_NIVEAU_DEUX);
-  const NOM_CHAMP_MENTION_NIVEAU_TROIS = withNamespace(
-    nom,
-    MENTION_NIVEAU_TROIS
-  );
+  const NOM_CHAMP_MENTION_NIVEAU_TROIS = withNamespace(nom, MENTION_NIVEAU_TROIS);
 
-  const formikValueInputUn = formik.getFieldMeta(
-    NOM_CHAMP_MENTION_NIVEAU_UN
-  ).value;
-  const formikValueInputDeux = formik.getFieldMeta(
-    NOM_CHAMP_MENTION_NIVEAU_DEUX
-  ).value;
-  const formikValueInputTrois = formik.getFieldMeta(
-    NOM_CHAMP_MENTION_NIVEAU_TROIS
-  ).value;
+  const formikValueInputUn = formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_UN).value;
+  const formikValueInputDeux = formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_DEUX).value;
+  const formikValueInputTrois = formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_TROIS).value;
 
   useEffect(() => {
     if (numeroOrdreEnModification !== undefined) {
@@ -74,13 +48,9 @@ const ListesTypesMentionForm: React.FC<
   // change les valeurs de la liste de 2nd niveau quand le type mentions est selectionné
   useEffect(() => {
     if (formikValueInputUn !== "") {
-      const mentionsSelectionne = TypeMention.getTypesMention().find(
-        mention => mention.id === formikValueInputUn
-      );
+      const mentionsSelectionne = TypeMention.getTypesMention().find(mention => mention.id === formikValueInputUn);
       if (mentionsSelectionne?.sousTypes) {
-        setListeNiveau2(
-          TypeMention.getTypeMentionAsOptions(mentionsSelectionne.sousTypes)
-        );
+        setListeNiveau2(TypeMention.getTypeMentionAsOptions(mentionsSelectionne.sousTypes));
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,19 +59,10 @@ const ListesTypesMentionForm: React.FC<
   // change les valeurs de la liste de 3eme niveau quand le sous-type mentions est selectionné
   useEffect(() => {
     if (formikValueInputDeux !== "") {
-      const mentionSelectionneNiveauUn = TypeMention.getTypesMention().find(
-        mention => mention.id === formikValueInputUn
-      );
-      const mentionSelectionneNiveauDeux =
-        mentionSelectionneNiveauUn?.sousTypes?.find(
-          mention => mention.id === formikValueInputDeux
-        );
+      const mentionSelectionneNiveauUn = TypeMention.getTypesMention().find(mention => mention.id === formikValueInputUn);
+      const mentionSelectionneNiveauDeux = mentionSelectionneNiveauUn?.sousTypes?.find(mention => mention.id === formikValueInputDeux);
       if (mentionSelectionneNiveauDeux?.sousTypes) {
-        setListeNiveau3(
-          TypeMention.getTypeMentionAsOptions(
-            mentionSelectionneNiveauDeux?.sousTypes
-          )
-        );
+        setListeNiveau3(TypeMention.getTypeMentionAsOptions(mentionSelectionneNiveauDeux?.sousTypes));
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -125,17 +86,12 @@ const ListesTypesMentionForm: React.FC<
           options={listeNiveau1}
           label={getLibelle("Type")}
           onChange={() => {
-            resetFormikInput([
-              NOM_CHAMP_MENTION_NIVEAU_DEUX,
-              NOM_CHAMP_MENTION_NIVEAU_TROIS
-            ]);
+            resetFormikInput([NOM_CHAMP_MENTION_NIVEAU_DEUX, NOM_CHAMP_MENTION_NIVEAU_TROIS]);
           }}
         />
       </div>
 
-      {listeNiveau2 &&
-      listeNiveau2.length > 0 &&
-      formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_UN).value !== "" ? (
+      {listeNiveau2 && listeNiveau2.length > 0 && formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_UN).value !== "" ? (
         <div className="selectFieldMentions">
           <SelectField
             name={NOM_CHAMP_MENTION_NIVEAU_DEUX}
@@ -147,9 +103,7 @@ const ListesTypesMentionForm: React.FC<
         </div>
       ) : undefined}
 
-      {listeNiveau3 &&
-      listeNiveau3.length > 0 &&
-      formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_DEUX).value !== "" ? (
+      {listeNiveau3 && listeNiveau3.length > 0 && formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_DEUX).value !== "" ? (
         <div className="selectFieldMentions">
           <SelectField
             name={NOM_CHAMP_MENTION_NIVEAU_TROIS}
@@ -176,6 +130,4 @@ const ListesTypesMentionForm: React.FC<
   );
 };
 
-export default connect<IListesTypesMentionForm & ISubForm>(
-  ListesTypesMentionForm
-);
+export default connect<IListesTypesMentionForm & ISubForm>(ListesTypesMentionForm);

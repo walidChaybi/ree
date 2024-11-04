@@ -6,7 +6,10 @@ import { expect, test } from "vitest";
 test("DOIT afficher l'onglet ApercuActeMisAjour correctement", async () => {
   render(
     <MemoryRouter>
-      <ApercuActeMisAJour idActeAAfficher="d8708d77-a359-4553-be72-1eb5f246d4da" />
+      <ApercuActeMisAJour
+        idActeAAfficher="d8708d77-a359-4553-be72-1eb5f246d4da"
+        doitMettreAJourApercu={true}
+      />
     </MemoryRouter>
   );
 
