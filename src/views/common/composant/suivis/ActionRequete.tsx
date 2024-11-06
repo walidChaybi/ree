@@ -7,8 +7,6 @@ interface ActionRequeteProps {
   action: IAction;
 }
 
-export const ActionRequete: React.FC<ActionRequeteProps> = props => {
-  const trigramme = ` - ${props.action.trigramme}`;
-
-  return <ListItemText>{`${Action.getLibelle(props.action)} - ${Action.getDateAction(props.action)}${trigramme}`}</ListItemText>;
-};
+export const ActionRequete: React.FC<ActionRequeteProps> = ({ action }) => (
+  <ListItemText>{`${Action.getLibelle(action)} - ${Action.getDateAction(action)}${Action.getNomPrenom(action)}`}</ListItemText>
+);
