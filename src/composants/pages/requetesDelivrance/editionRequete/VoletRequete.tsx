@@ -11,34 +11,34 @@ interface IVoletRequeteProps {
   requete: IRequeteDelivrance;
 }
 
-const VoletRequete: React.FC<IVoletRequeteProps> = ({ requete }) => {
-  return (
-    <div className="volet-requete">
-      <ConteneurAccordeon titre={`Description requête ${requete.numero}`} ouvertParDefaut>
-        <ResumeRequetePartieHaute requete={requete} />
-      </ConteneurAccordeon>
+const VoletRequete: React.FC<IVoletRequeteProps> = ({ requete }) => (
+  <div className="volet-requete">
+    <ConteneurAccordeon
+      titre={`Description requête ${requete.numero}`}
+      ouvertParDefaut
+    >
+      <ResumeRequetePartieHaute requete={requete} />
+    </ConteneurAccordeon>
 
-      <ConteneurAccordeon titre="Type requête">
-        <TypeRequete requete={requete} />
-      </ConteneurAccordeon>
+    <ConteneurAccordeon titre="Type requête">
+      <TypeRequete requete={requete} />
+    </ConteneurAccordeon>
 
-      <ConteneurAccordeon titre="Observations requête">
-        <ObservationsRequete requete={requete} />
-      </ConteneurAccordeon>
+    <ConteneurAccordeon titre="Observations requête">
+      <ObservationsRequete requete={requete} />
+    </ConteneurAccordeon>
 
-      <ConteneurAccordeon titre="Suivi requête">
-        <div className="actions-requete">
-          {requete.actions
-            ?.sort((actA, actB) => (actA.numeroOrdre > actB.numeroOrdre ? UN : -UN))
-            .map(action => (
-              <div key={action.id}>{`${action.libelle} - ${DateUtils.getFormatDateFromTimestamp(action.dateAction)} ${
-                action.trigramme ? ` - ${action.trigramme}` : ""
-              }`}</div>
-            ))}
-        </div>
-      </ConteneurAccordeon>
-    </div>
-  );
-};
-
+    <ConteneurAccordeon titre="Suivi requête">
+      <div className="actions-requete">
+        {requete.actions
+          ?.sort((actA, actB) => (actA.numeroOrdre > actB.numeroOrdre ? UN : -UN))
+          .map(action => (
+            <div key={action.id}>{`${action.libelle} - ${DateUtils.getFormatDateFromTimestamp(action.dateAction)} ${
+              action.trigramme ? ` - ${action.trigramme}` : ""
+            }`}</div>
+          ))}
+      </div>
+    </ConteneurAccordeon>
+  </div>
+);
 export default VoletRequete;

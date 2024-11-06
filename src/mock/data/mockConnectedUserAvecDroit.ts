@@ -357,7 +357,7 @@ export const resultatHeaderUtilistateurLaurenceBourdeau = {
   id_sso: "00115467",
   nom: "BOURDEAU",
   prenom: "Laurence",
-  trigramme: "LBO",
+  trigramme: "BOURDEAU Laurence",
   mail: "lb@lb.fr",
   profil: "RECE_USER\\; RECE_ADMIN",
   telephone: "0600000000"
@@ -376,7 +376,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
     nom: "BOURDEAU",
     prenom: "Laurence",
     mel: "laurence.bourdeau@diplomatie.gouv.fr",
-    trigramme: "LBO",
+    trigramme: "BOURDEAU Laurence",
     origineMaj: "Admin",
     dateDebut: 1610496000000,
     dateFin: null,
@@ -432,8 +432,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                     idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                     type: "MINISTERE",
                     code: "MEAE",
-                    libelleService:
-                      "Ministère de l'Europe et des Affaires Etrangères",
+                    libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                     siteInternet: null,
                     hierarchieService: [],
                     utilisateur: null,
@@ -492,12 +491,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -564,8 +561,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -631,12 +627,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -709,12 +703,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -787,12 +779,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -865,12 +855,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -943,12 +931,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -1021,12 +1007,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -1093,8 +1077,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -1154,8 +1137,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -1215,8 +1197,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -1276,8 +1257,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -1337,8 +1317,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -1404,12 +1383,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -1482,12 +1459,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -1554,8 +1529,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -1621,12 +1595,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -1693,8 +1665,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -1760,12 +1731,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -1832,8 +1801,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -1884,8 +1852,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                     idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                     type: "MINISTERE",
                     code: "MEAE",
-                    libelleService:
-                      "Ministère de l'Europe et des Affaires Etrangères",
+                    libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                     siteInternet: null,
                     hierarchieService: [],
                     utilisateur: null,
@@ -1938,8 +1905,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -1999,8 +1965,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -2066,12 +2031,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -2144,12 +2107,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -2216,8 +2177,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -2268,8 +2228,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                     idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                     type: "MINISTERE",
                     code: "MEAE",
-                    libelleService:
-                      "Ministère de l'Europe et des Affaires Etrangères",
+                    libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                     siteInternet: null,
                     hierarchieService: [],
                     utilisateur: null,
@@ -2328,12 +2287,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -2400,8 +2357,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -2461,8 +2417,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -2528,12 +2483,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -2606,12 +2559,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -2684,12 +2635,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -2762,12 +2711,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -2834,8 +2781,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -2901,12 +2847,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -2964,8 +2908,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                     idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                     type: "MINISTERE",
                     code: "MEAE",
-                    libelleService:
-                      "Ministère de l'Europe et des Affaires Etrangères",
+                    libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                     siteInternet: null,
                     hierarchieService: [],
                     utilisateur: null,
@@ -3018,8 +2961,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -3070,8 +3012,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                     idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                     type: "MINISTERE",
                     code: "MEAE",
-                    libelleService:
-                      "Ministère de l'Europe et des Affaires Etrangères",
+                    libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                     siteInternet: null,
                     hierarchieService: [],
                     utilisateur: null,
@@ -3124,8 +3065,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -3191,12 +3131,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -3269,12 +3207,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -3332,8 +3268,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                     idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                     type: "MINISTERE",
                     code: "MEAE",
-                    libelleService:
-                      "Ministère de l'Europe et des Affaires Etrangères",
+                    libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                     siteInternet: null,
                     hierarchieService: [],
                     utilisateur: null,
@@ -3386,8 +3321,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -3453,12 +3387,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -3531,12 +3463,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -3603,8 +3533,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -3664,8 +3593,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -3731,12 +3659,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -3809,12 +3735,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -3881,8 +3805,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -3942,8 +3865,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -4003,8 +3925,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                           idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                           type: "MINISTERE",
                           code: "MEAE",
-                          libelleService:
-                            "Ministère de l'Europe et des Affaires Etrangères",
+                          libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                           siteInternet: null,
                           hierarchieService: [],
                           utilisateur: null,
@@ -4070,12 +3991,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -4148,12 +4067,10 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
                             {
                               service: null,
                               serviceParent: {
-                                idService:
-                                  "95878007-0256-49a7-9d61-1bd506baa82f",
+                                idService: "95878007-0256-49a7-9d61-1bd506baa82f",
                                 type: "MINISTERE",
                                 code: "MEAE",
-                                libelleService:
-                                  "Ministère de l'Europe et des Affaires Etrangères",
+                                libelleService: "Ministère de l'Europe et des Affaires Etrangères",
                                 siteInternet: null,
                                 hierarchieService: [],
                                 utilisateur: null,
@@ -4428,7 +4345,7 @@ export const resultatRequeteUtilistateurLeBiannic = {
     nom: "LE BIANNIC",
     prenom: "Johann",
     mel: "johann.lebiannic@soprasteria.com",
-    trigramme: "JLB",
+    trigramme: "LE BIANNIC Johann",
     origineMaj: "init Excel",
     dateDebut: 1594159200000,
     dateFin: null,
@@ -4464,8 +4381,7 @@ export const resultatRequeteUtilistateurLeBiannic = {
                         idService: "427786f4-dbc2-4762-929c-b80d8f48020e",
                         type: "MINISTERE",
                         code: "MEAE",
-                        libelleService:
-                          "Ministère de l'Europe et des Affaires Étrangères",
+                        libelleService: "Ministère de l'Europe et des Affaires Étrangères",
                         siteInternet: null,
                         hierarchieService: [],
                         utilisateur: null,

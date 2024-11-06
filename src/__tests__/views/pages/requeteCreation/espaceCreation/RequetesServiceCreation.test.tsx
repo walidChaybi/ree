@@ -28,7 +28,7 @@ const utilisateurs = [
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
     prenom: "Ashley",
     nom: "Young",
-    trigramme: "FOO",
+    trigramme: "Young Ashley",
     habilitations: [
       {
         idHabilitation: "123",

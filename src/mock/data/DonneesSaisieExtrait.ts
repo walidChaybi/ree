@@ -534,7 +534,7 @@ export const requeteExtraitSaisie = {
       libelle: "À signer",
       dateAction: 1655207682054,
       idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162",
-      trigramme: "LBO"
+      trigramme: "BOURDEAU Laurence"
     },
     {
       id: "f0eade91-ff3e-4296-92d7-dfef9fb59e0c",
@@ -542,7 +542,7 @@ export const requeteExtraitSaisie = {
       libelle: "Prise en charge",
       dateAction: 1655207655042,
       idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162",
-      trigramme: "LBO"
+      trigramme: "BOURDEAU Laurence"
     },
     {
       id: "f0eac43a-7c66-4b09-bdbc-2930bb22d0ab",
@@ -550,7 +550,7 @@ export const requeteExtraitSaisie = {
       libelle: "Saisie de la requête",
       dateAction: 1655207654918,
       idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162",
-      trigramme: "LBO"
+      trigramme: "BOURDEAU Laurence"
     }
   ],
   observations: [],
@@ -607,8 +607,7 @@ export const requeteExtraitSaisie = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "f0ea8f29-ddcd-494b-86e4-0a58f6990c96_f0eaa306-e904-45b2-9e1c-3fbc5662cbec.pdf",
+      referenceSwift: "f0ea8f29-ddcd-494b-86e4-0a58f6990c96_f0eaa306-e904-45b2-9e1c-3fbc5662cbec.pdf",
       conteneurSwift: "documents-delivres-2022-6",
       optionsCourrier: [],
       mentionsRetirees: [],
@@ -623,8 +622,7 @@ export const requeteExtraitSaisie = {
       avecCtv: false,
       nbPages: 1,
       orientation: "Portrait",
-      referenceSwift:
-        "f0ea8f29-ddcd-494b-86e4-0a58f6990c96_01155c0e-574e-40fe-92b7-871e24e834d8.pdf",
+      referenceSwift: "f0ea8f29-ddcd-494b-86e4-0a58f6990c96_01155c0e-574e-40fe-92b7-871e24e834d8.pdf",
       conteneurSwift: "documents-delivres-2022-6",
       validation: "O",
       idActe: "6e89c1c1-16c4-4e40-9b72-7b567270b26f",

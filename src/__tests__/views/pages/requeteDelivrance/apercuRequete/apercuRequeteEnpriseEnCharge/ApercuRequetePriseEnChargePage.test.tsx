@@ -1,10 +1,7 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { DataRMCActeAvecResultat, DataTableauActe } from "@mock/data/RMCActe";
-import {
-  DataRMCInscriptionAvecResultat,
-  DataTableauInscription
-} from "@mock/data/RMCInscription";
+import { DataRMCInscriptionAvecResultat, DataTableauInscription } from "@mock/data/RMCInscription";
 import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { MOTIF_IGNORE } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/IgnoreRequetePopin";
 import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
@@ -13,20 +10,11 @@ import {
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_DELIVRANCE_EDITION_ID
 } from "@router/ReceUrls";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { Navigate, RouterProvider } from "react-router-dom";
 import { beforeAll, expect, test } from "vitest";
-import {
-  createTestingRouter,
-  mockFenetreFicheTestFunctions
-} from "../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();
@@ -40,7 +28,7 @@ const routerAvecContexte = (router: any): any => {
   );
 };
 
-test.skip("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", () => {
+test.skip("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", async () => {
   const router = createTestingRouter(
     [
       {
@@ -48,26 +36,17 @@ test.skip("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée
         element: <ApercuRequetePriseEnChargePage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        "a4cefb71-8457-4f6b-937e-34b49335d884"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, "a4cefb71-8457-4f6b-937e-34b49335d884")]
   );
 
   const { container } = render(routerAvecContexte(router));
 
-  waitFor(() => {
-    expect(
-      container.getElementsByClassName("OperationLocaleEnCoursSimple").length
-    ).toBe(1);
+  await waitFor(() => {
+    expect(container.getElementsByClassName("OperationLocaleEnCoursSimple").length).toBe(1);
   });
 
-  waitFor(() => {
-    expect(
-      container.getElementsByClassName("OperationLocaleEnCoursSimple").length
-    ).toBe(0);
+  await waitFor(() => {
+    expect(container.getElementsByClassName("OperationLocaleEnCoursSimple").length).toBe(0);
   });
 });
 
@@ -83,10 +62,7 @@ test.skip("renders ApercuRequetePriseEnChargePage", async () => {
         // passer un state
         element: (
           <Navigate
-            to={getUrlWithParam(
-              URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-              "a4cefb71-8457-4f6b-937e-34b49335d884"
-            )}
+            to={getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, "a4cefb71-8457-4f6b-937e-34b49335d884")}
             state={{
               dataRMCAutoActe: DataRMCActeAvecResultat,
               dataTableauRMCAutoActe: { DataTableauActe },
@@ -106,39 +82,31 @@ test.skip("renders ApercuRequetePriseEnChargePage", async () => {
 
   render(routerAvecContexte(router));
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(document.title).toBe("Aperçu de la requête en prise en charge");
-    expect(
-      screen.getByText(
-        "Requête prise en charge par : Ashley YOUNG - Le : 14/07/2020"
-      )
-    ).toBeDefined();
+    expect(screen.getByText("Requête prise en charge par : Ashley YOUNG - Le : 14/07/2020")).toBeDefined();
     expect(screen.getByText(/Suivi requête/i)).toBeDefined();
     expect(screen.getByText(/Saisie de la requête/i)).toBeDefined();
-    expect(screen.getByText(/À traiter - 10\/03\/2020 - BOB/i)).toBeDefined();
-    expect(
-      screen.getByText(/C'est vraiment dur de pouvo... - 02\/01\/1970/i)
-    ).toBeDefined();
-    expect(
-      screen.getByText(/Je fais pas 30 charactères - 02\/01\/1970 - BOB/i)
-    ).toBeDefined();
+    expect(screen.getByText(/À traiter - 10\/03\/2020 - Dylan Bob/i)).toBeDefined();
+    expect(screen.getByText(/C'est vraiment dur de pouvo... - 02\/01\/1970/i)).toBeDefined();
+    expect(screen.getByText(/Je fais pas 30 charactères - 02\/01\/1970 - Dylan Bob/i)).toBeDefined();
   });
 
   const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
-  waitFor(() => {
+  await waitFor(() => {
     expect(checkboxColumns).toBeDefined();
   });
 
   // Tableau Acte
   fireEvent.click(checkboxColumns[0]);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(screen.getAllByText("1 élément(s) coché(s)")).toBeDefined();
   });
 
   fireEvent.click(checkboxColumns[0]);
 
-  waitFor(() => {
+  await waitFor(() => {
     const elementsCoches = screen.getAllByText("0 élément(s) coché(s)");
     expect(elementsCoches).toBeDefined();
   });
@@ -146,13 +114,13 @@ test.skip("renders ApercuRequetePriseEnChargePage", async () => {
   // Tableau inscription
   fireEvent.click(checkboxColumns[9]);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(screen.getAllByText("1 élément(s) coché(s)")).toBeDefined();
   });
 
   fireEvent.click(checkboxColumns[9]);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(screen.getAllByText("0 élément(s) coché(s)")).toBeDefined();
   });
 });
@@ -174,10 +142,7 @@ test.skip("redirection requete RDD", async () => {
         // passer un state
         element: (
           <Navigate
-            to={getUrlWithParam(
-              URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-              "a4cefb71-8457-4f6b-937e-34b49335d884"
-            )}
+            to={getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, "a4cefb71-8457-4f6b-937e-34b49335d884")}
             state={{
               dataRMCAutoActe: DataRMCActeAvecResultat,
               dataTableauRMCAutoActe: { DataTableauActe },
@@ -191,9 +156,7 @@ test.skip("redirection requete RDD", async () => {
     ["/"]
   );
 
-  await act(async () => {
-    render(routerAvecContexte(router));
-  });
+  render(routerAvecContexte(router));
 
   const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
 
@@ -206,7 +169,7 @@ test.skip("redirection requete RDD", async () => {
 
   fireEvent.click(screen.getByText(/Oui/i));
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(router.state.location.pathname).toBe(
       "/rece/rece-ui/mesrequetes/Edition/a4cefb71-8457-4f6b-937e-34b49335d666/b41079a5-9e8d-478c-b04c-c4c2ac67134f"
     );
@@ -231,10 +194,7 @@ test.skip("redirection requete RDC", async () => {
         // element de navigation qui permet de passer un state
         element: (
           <Navigate
-            to={getUrlWithParam(
-              URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-              "a4cefb71-8457-4f6b-937e-34b49335d884"
-            )}
+            to={getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, "a4cefb71-8457-4f6b-937e-34b49335d884")}
             state={{
               dataRMCAutoActe: DataRMCActeAvecResultat,
               dataTableauRMCAutoActe: { DataTableauActe },
@@ -248,9 +208,7 @@ test.skip("redirection requete RDC", async () => {
     ["/"]
   );
 
-  await act(async () => {
-    render(routerAvecContexte(router));
-  });
+  render(routerAvecContexte(router));
 
   const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
 
@@ -263,7 +221,7 @@ test.skip("redirection requete RDC", async () => {
 
   fireEvent.click(screen.getByText(/Oui/i));
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(router.state.location.pathname).toBe(
       "/rece/rece-ui/mesrequetes/Edition/a4cefb71-8457-4f6b-937e-34b49335d666/b41079a5-9e8d-478c-b04c-c4c2ac67134f"
     );
@@ -287,10 +245,7 @@ test.skip("ignorer requete", async () => {
         // element de navigation qui permet de passer un state
         element: (
           <Navigate
-            to={getUrlWithParam(
-              URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-              "a4cefb71-8457-4f6b-937e-34b49335d666"
-            )}
+            to={getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, "a4cefb71-8457-4f6b-937e-34b49335d666")}
             state={{
               dataRMCAutoActe: DataRMCActeAvecResultat,
               dataTableauRMCAutoActe: { DataTableauActe },
@@ -310,7 +265,7 @@ test.skip("ignorer requete", async () => {
 
   render(routerAvecContexte(router));
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(screen.getByText(/Documents à délivrer/i)).toBeDefined();
     expect(screen.getByText(/Certificat d'inscription au RCA/i)).toBeDefined();
   });
@@ -318,15 +273,15 @@ test.skip("ignorer requete", async () => {
   fireEvent.click(screen.getByText(/Certificat d'inscription au RCA/i));
 
   const bontonIgnore = screen.getByText(/Ignorer+/);
-  waitFor(() => {
+  await waitFor(() => {
     expect(bontonIgnore).toBeDefined();
   });
 
   fireEvent.click(bontonIgnore);
 
-  const select = screen.getByTestId(MOTIF_IGNORE) as HTMLSelectElement;
+  const select: HTMLSelectElement = screen.getByTestId(MOTIF_IGNORE);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(select).toBeDefined();
   });
 
@@ -337,13 +292,13 @@ test.skip("ignorer requete", async () => {
   });
 
   const valider = screen.getByText("Valider");
-  waitFor(() => {
+  await waitFor(() => {
     expect(valider).toBeDefined();
   });
 
   fireEvent.click(valider);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(router.state.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
   });
 });

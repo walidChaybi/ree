@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import DateUtils from "@util/DateUtils";
-import { chainesEgalesIgnoreCasseEtAccent, enMajuscule, premiereLettreEnMajuscule } from "@util/Utils";
+import { chainesEgalesIgnoreCasseEtAccent, premiereLettreEnMajuscule } from "@util/Utils";
 
 export interface IAction {
   id: string;
@@ -19,9 +19,6 @@ const A_REVOIR = "a revoir";
 export const Action = {
   getLibelle(action?: IAction): string {
     return action ? premiereLettreEnMajuscule(action.libelle) : "";
-  },
-  getTrigramme(action?: IAction): string {
-    return action ? enMajuscule(action.trigramme) : "";
   },
   getDateAction(action?: IAction): string {
     return action ? DateUtils.getFormatDateFromTimestamp(action.dateAction) : "";

@@ -43,13 +43,8 @@ const triObjetsSurPropriete = (o1: any, o2: any, propertyName: string) => {
   return 0;
 };
 
-export const triListeObjetsSurPropriete = (
-  objets: any[],
-  propriete: string
-) => {
-  return objets
-    ? objets.sort((o1, o2) => triObjetsSurPropriete(o1, o2, propriete))
-    : [];
+export const triListeObjetsSurPropriete = (objets: any[], propriete: string) => {
+  return objets ? objets.sort((o1, o2) => triObjetsSurPropriete(o1, o2, propriete)) : [];
 };
 
 export const chiffreEstPair = (chiffre: number) => {
@@ -60,10 +55,7 @@ export const triListeObjetsSurDate = (objets: any[], nomPropriete: string) => {
   return objets
     ? objets.sort((o1, o2) => {
         let res = 0;
-        if (
-          o1[nomPropriete] instanceof Date &&
-          o2[nomPropriete] instanceof Date
-        ) {
+        if (o1[nomPropriete] instanceof Date && o2[nomPropriete] instanceof Date) {
           res = o1[nomPropriete].getTime() - o2[nomPropriete].getTime();
         }
         return res;
@@ -90,8 +82,7 @@ export const formatPremieresLettresMajusculesNomCompose = (str?: string) => {
     str = str.toLowerCase();
     // Selectionne les caractères de debut et ceux aprés un espace ou un tiret
     // mais qui ne sont pas des mots de liaison ou des lettres suivis d'une apostrophe
-    const reg =
-      /(?![ -](de|du|la|le|sous|sur|en|des|les|et)[ -])(?! [a-z]')(^.|[' -].)/gi;
+    const reg = /(?![ -](de|du|la|le|sous|sur|en|des|les|et)[ -])(?! [a-z]')(^.|[' -].)/gi;
     res = str.replace(reg, function (s) {
       return s.toUpperCase();
     });
@@ -99,6 +90,7 @@ export const formatPremieresLettresMajusculesNomCompose = (str?: string) => {
   return res;
 };
 
+/** @deprecated méthode inutile, opération trop simple pour justifier une fonction */
 export const enMajuscule = (str?: string): string => {
   return str ? str.toLocaleUpperCase() : "";
 };
@@ -110,29 +102,19 @@ export const remplaceSPC = (prenom: string) => {
   return prenom;
 };
 
-export const formatPrenom = (
-  prenom?: string,
-  prenomParDefaut = SANS_PRENOM_CONNU,
-  enMajuscules = true
-): string => {
+export const formatPrenom = (prenom?: string, prenomParDefaut = SANS_PRENOM_CONNU, enMajuscules = true): string => {
   let prenomFormate = "";
   if (prenom === SPC) {
     prenomFormate = prenomParDefaut;
   } else {
-    prenomFormate = enMajuscules
-      ? formatMajusculesMinusculesMotCompose(prenom)
-      : prenom
-      ? prenom
-      : "";
+    prenomFormate = enMajuscules ? formatMajusculesMinusculesMotCompose(prenom) : prenom ?? "";
   }
 
   return prenomFormate;
 };
 
 export const triPrenoms = (prenoms: IPrenomOrdonnes[]): string[] => {
-  return [...prenoms]
-    .sort((a, b) => a.numeroOrdre - b.numeroOrdre)
-    .map(prenom => prenom.prenom);
+  return [...prenoms].sort((a, b) => a.numeroOrdre - b.numeroOrdre).map(prenom => prenom.prenom);
 };
 
 export const remplaceSNP = (nom: string) => {
@@ -142,12 +124,8 @@ export const remplaceSNP = (nom: string) => {
   return nom;
 };
 
-export const formatNom = (
-  nom?: string,
-  nomParDefaut = SANS_NOM_PATRONYMIQUE,
-  enMajuscules = true
-): string => {
-  let nomFormate = nom || "";
+export const formatNom = (nom?: string, nomParDefaut = SANS_NOM_PATRONYMIQUE, enMajuscules = true): string => {
+  let nomFormate = nom ?? "";
   if (nom === SNP) {
     nomFormate = nomParDefaut;
   } else {
@@ -163,6 +141,7 @@ export const formatDe = (str: string) => {
   return lettres.includes(premiereLettre) ? "d'" : "de ";
 };
 
+/** @deprecated méthode inutile (idem que getLibelle) */
 export const getValeurOuVide = (str?: any) => {
   return str ?? "";
 };
@@ -242,25 +221,13 @@ export const formatNoms = (noms?: string[]): string => {
 };
 
 // Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une ","
-export const formatPrenoms = (
-  prenoms?: string[],
-  prenomParDefaut = SANS_PRENOM_CONNU,
-  enMajuscules = true
-): string => {
-  return prenoms
-    ? joint(prenoms.map(p => formatPrenom(p, prenomParDefaut, enMajuscules)))
-    : "";
+export const formatPrenoms = (prenoms?: string[], prenomParDefaut = SANS_PRENOM_CONNU, enMajuscules = true): string => {
+  return prenoms ? joint(prenoms.map(p => formatPrenom(p, prenomParDefaut, enMajuscules))) : "";
 };
 
 // Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une ","
 export const jointPrenoms = (prenoms?: IPrenom[]): string => {
-  return prenoms
-    ? joint(
-        prenoms
-          .sort((p1, p2) => compareNombre(p1.numeroOrdre, p2.numeroOrdre))
-          .map(p => formatPrenom(p.valeur))
-      )
-    : "";
+  return prenoms ? joint(prenoms.sort((p1, p2) => compareNombre(p1.numeroOrdre, p2.numeroOrdre)).map(p => formatPrenom(p.valeur))) : "";
 };
 
 export const numberToString = (nb?: number): string => {
@@ -287,34 +254,22 @@ export const supprimeSautDeLigneEtEspaceInutiles = (value?: string) => {
   return res;
 };
 
-export const changeLaPlaceDunElement = (
-  tab: any[],
-  index: number,
-  nouvelIndex: number
-) => {
+export const changeLaPlaceDunElement = (tab: any[], index: number, nouvelIndex: number) => {
   if (tab && tab.length > 0 && index >= 0 && nouvelIndex >= 0) {
     const elements = tab.splice(index, 1);
     tab.splice(nouvelIndex, 0, ...elements);
   }
 };
 
-export const finirAvec3petitsPoints = (
-  texte: string,
-  charactereAvantPoints: number
-) => {
-  return texte.length > charactereAvantPoints
-    ? `${texte.slice(0, charactereAvantPoints - "...".length)}...`
-    : texte;
+export const finirAvec3petitsPoints = (texte: string, charactereAvantPoints: number) => {
+  return texte.length > charactereAvantPoints ? `${texte.slice(0, charactereAvantPoints - "...".length)}...` : texte;
 };
 
 export const supprimerNullEtUndefinedDuTableau = (elements?: any[]) => {
   return elements?.filter((el: any) => el != null);
 };
 
-export const replaceIndexByValue = (
-  phrase: string,
-  values: (string | number)[]
-) => {
+export const replaceIndexByValue = (phrase: string, values: (string | number)[]) => {
   if (phrase && values) {
     values.forEach((value: string | number, index: number) => {
       const valueToUse = typeof value === "number" ? value.toString() : value;
@@ -354,10 +309,7 @@ export const supprimeElement = (tableau: any[], fct: any) => {
   let nouveauTableau;
   const indexASupprimer = tableau.findIndex(element => fct(element));
   if (indexASupprimer !== -1) {
-    nouveauTableau = [
-      ...tableau.slice(0, indexASupprimer),
-      ...tableau.slice(indexASupprimer + 1)
-    ];
+    nouveauTableau = [...tableau.slice(0, indexASupprimer), ...tableau.slice(indexASupprimer + 1)];
   } else {
     nouveauTableau = [...tableau];
   }
@@ -393,10 +345,7 @@ export const shallowEgal = (obj1?: Object, obj2?: Object): boolean => {
       let resultat = false;
       if (obj2.hasOwnProperty(key)) {
         const valeur2 = obj2[key];
-        resultat =
-          Array.isArray(valeur1) && Array.isArray(valeur2)
-            ? shallowEgalTableau(valeur1, valeur2)
-            : obj1[key] === obj2[key];
+        resultat = Array.isArray(valeur1) && Array.isArray(valeur2) ? shallowEgalTableau(valeur1, valeur2) : obj1[key] === obj2[key];
       }
       return resultat;
     })
@@ -423,9 +372,7 @@ export const estNonRenseigne = (valeur: any): boolean => {
 
 export const mapPrenomsVersPrenomsOrdonnes = (prenoms?: string[]) => {
   const prenomsOrdonnes: IPrenomOrdonnes[] = [];
-  prenoms?.forEach((prenom, idx) =>
-    prenomsOrdonnes.push({ prenom, numeroOrdre: idx + 1 })
-  );
+  prenoms?.forEach((prenom, idx) => prenomsOrdonnes.push({ prenom, numeroOrdre: idx + 1 }));
   return prenomsOrdonnes;
 };
 
@@ -433,7 +380,7 @@ export const mapPrenomsVersTableauString = (prenoms?: Prenoms): string[] => {
   const tableauPrenoms: string[] = [];
   if (prenoms) {
     Object.values(prenoms).forEach(prenom => {
-      if (Boolean(prenom)) {
+      if (prenom) {
         tableauPrenoms.push(prenom);
       }
     });
@@ -456,9 +403,7 @@ export const checkDirty = (isDirty: boolean, setIsDirty: any) => {
   if (isDirty) {
     if (
       window.confirm(
-        getLibelle(
-          `Vous n'avez pas validé vos modifications. Si vous continuez, celles-ci seront perdues et les données réinitialisées.\n\nVoulez-vous continuer ?`
-        )
+        `Vous n'avez pas validé vos modifications. Si vous continuez, celles-ci seront perdues et les données réinitialisées.\n\nVoulez-vous continuer ?`
       )
     ) {
       setIsDirty(false);
@@ -471,9 +416,7 @@ export const checkDirty = (isDirty: boolean, setIsDirty: any) => {
   }
 };
 
-export const getNombreOuUndefined = (
-  nombreStr?: string
-): number | undefined => {
+export const getNombreOuUndefined = (nombreStr?: string): number | undefined => {
   const nombre = parseInt(nombreStr || "", DIX);
   return isNaN(nombre) ? undefined : nombre;
 };
@@ -483,19 +426,18 @@ export const getNombreOuNull = (nombreStr?: string): number | null => {
   return isNaN(nombre) ? null : nombre;
 };
 
+/** @deprecated méthode inutile, opération trop simple pour justifier une fonction */
 export const getValeurOuUndefined = (valeur?: any): any | undefined => {
-  return valeur ? valeur : undefined;
+  return valeur || undefined;
 };
 
+/** @deprecated méthode inutile, opération trop simple pour justifier une fonction */
 export const getValeurOuNull = <T>(valeur?: T): T | null => {
-  return valeur ? valeur : null;
+  return valeur ?? null;
 };
 
-export const getPremiereOuSecondeValeur = (
-  valeur1: string | undefined | null,
-  valeur2: string | undefined | null
-) => {
-  return valeur1 ? valeur1 : valeur2 || "";
+export const getPremiereOuSecondeValeur = (valeur1: string | undefined | null, valeur2: string | undefined | null) => {
+  return valeur1 ?? valeur2 ?? "";
 };
 
 export const getTableauAPartirElementsNonVides = (...args: any[]) => {
@@ -509,13 +451,12 @@ export const getTableauAPartirElementsNonVides = (...args: any[]) => {
 };
 
 export const executeEnDiffere = (fct: any, tempsMs?: number) => {
-  setTimeout(fct, tempsMs ? tempsMs : TIME_OUT_MS);
+  setTimeout(fct, tempsMs || TIME_OUT_MS);
 };
 
+/** @deprecated méthode inutile, opération trop simple pour justifier une fonction  */
 export const execute = (fct?: any) => {
-  if (fct) {
-    fct();
-  }
+  fct?.();
 };
 
 export const auMoinsUneProprieteEstRenseigne = (objet: Object): boolean => {
@@ -545,10 +486,7 @@ export const estUnNombre = (str?: string): boolean => {
   return str != null && str !== "" && Number.isInteger(+str);
 };
 
-export const getValeurProprieteAPartirChemin = (
-  chemin: string,
-  objet?: Object
-) => {
+export const getValeurProprieteAPartirChemin = (chemin: string, objet?: Object) => {
   return objet
     ? chemin
         .split(".")
@@ -557,52 +495,31 @@ export const getValeurProprieteAPartirChemin = (
     : undefined;
 };
 
-export const seulementUneProprieteRenseignee = (
-  cheminPropriete: string,
-  objet?: Object
-): boolean => {
-  const valeurPropriete = getValeurProprieteAPartirChemin(
-    cheminPropriete,
-    objet
-  );
+export const seulementUneProprieteRenseignee = (cheminPropriete: string, objet?: Object): boolean => {
+  const valeurPropriete = getValeurProprieteAPartirChemin(cheminPropriete, objet);
 
   return (
     objet != null &&
     estRenseigne(valeurPropriete) &&
-    (!estUnObjet(valeurPropriete) ||
-      auMoinsUneProprieteEstRenseigne(valeurPropriete as Object)) &&
+    (!estUnObjet(valeurPropriete) || auMoinsUneProprieteEstRenseigne(valeurPropriete as Object)) &&
     seulementUneProprieteRenseigneeAvecCheminCourant(cheminPropriete, objet, "")
   );
 };
 
-export const ajouteCheminCourant = (
-  propriete: string,
-  cheminCourant: string
-) => {
+export const ajouteCheminCourant = (propriete: string, cheminCourant: string) => {
   return cheminCourant ? `${cheminCourant}.${propriete}` : propriete;
 };
 
-const seulementUneProprieteRenseigneeAvecCheminCourant = (
-  cheminPropriete: string,
-  objet: Object,
-  cheminCourant: string
-): boolean => {
+const seulementUneProprieteRenseigneeAvecCheminCourant = (cheminPropriete: string, objet: Object, cheminCourant: string): boolean => {
   let res = true;
   const proprietes = Object.getOwnPropertyNames(objet);
   for (const propriete of proprietes) {
-    const cheminProprieteCourante = ajouteCheminCourant(
-      propriete,
-      cheminCourant
-    );
+    const cheminProprieteCourante = ajouteCheminCourant(propriete, cheminCourant);
     if (cheminPropriete !== cheminProprieteCourante) {
       //@ts-ignore
       const valeur = objet[propriete];
       if (estUnObjet(valeur)) {
-        res = seulementUneProprieteRenseigneeAvecCheminCourant(
-          cheminPropriete,
-          valeur,
-          cheminProprieteCourante
-        );
+        res = seulementUneProprieteRenseigneeAvecCheminCourant(cheminPropriete, valeur, cheminProprieteCourante);
         if (!res) {
           break;
         }
@@ -642,11 +559,7 @@ export const aucuneProprieteRenseignee = (objet?: Object): boolean => {
   return res;
 };
 
-export const chainesEgales = (
-  sensitivity: "base" | "accent",
-  str1?: string,
-  str2?: string
-): boolean => {
+export const chainesEgales = (sensitivity: "base" | "accent", str1?: string, str2?: string): boolean => {
   let res;
   if (str1 === str2) {
     res = true;
@@ -659,17 +572,11 @@ export const chainesEgales = (
   return res;
 };
 
-export const chainesEgalesIgnoreCasseEtAccent = (
-  str1?: string,
-  str2?: string
-): boolean => {
+export const chainesEgalesIgnoreCasseEtAccent = (str1?: string, str2?: string): boolean => {
   return chainesEgales("base", str1, str2);
 };
 
-export const chainesEgalesIgnoreCasse = (
-  str1?: string,
-  str2?: string
-): boolean => {
+export const chainesEgalesIgnoreCasse = (str1?: string, str2?: string): boolean => {
   return chainesEgales("accent", str1, str2);
 };
 
@@ -749,10 +656,7 @@ export const objectsSontIdentiques = (object1: any, object2: any): boolean => {
     const val1 = object1[key];
     const val2 = object2[key];
     const areObjects = isObject(val1) && isObject(val2);
-    if (
-      (areObjects && !objectsSontIdentiques(val1, val2)) ||
-      (!areObjects && val1 !== val2)
-    ) {
+    if ((areObjects && !objectsSontIdentiques(val1, val2)) || (!areObjects && val1 !== val2)) {
       return false;
     }
   }
@@ -767,4 +671,3 @@ export const isObject = (object: any): boolean => {
 export const triAlphanumerique = (texteA: string, texteB: string) => {
   return texteA.localeCompare(texteB);
 };
-

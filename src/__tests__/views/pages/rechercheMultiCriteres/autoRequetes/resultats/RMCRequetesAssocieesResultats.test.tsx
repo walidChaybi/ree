@@ -33,10 +33,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte
-} from "../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 
 describe("RMCRequetesAssocieesResultats", () => {
   test.skip("DOIT rendre le titre du tableau des requêtes associées aux titulaires d'une requêtes d'information", () => {
@@ -44,25 +41,16 @@ describe("RMCRequetesAssocieesResultats", () => {
       [
         {
           path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-          element: (
-            <RMCRequetesAssocieesResultats requete={requeteInformation} />
-          )
+          element: <RMCRequetesAssocieesResultats requete={requeteInformation} />
         }
       ],
-      [
-        getUrlWithParam(
-          URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-          requeteInformation.id
-        )
-      ]
+      [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, requeteInformation.id)]
     );
 
     render(<RouterProvider router={router} />);
 
     waitFor(() => {
-      expect(
-        screen.getByText("Autres requêtes associées au titulaire")
-      ).toBeDefined();
+      expect(screen.getByText("Autres requêtes associées au titulaire")).toBeDefined();
     });
   });
 
@@ -71,7 +59,7 @@ describe("RMCRequetesAssocieesResultats", () => {
       idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
       prenom: "Ashley",
       nom: "Young",
-      trigramme: "FOO",
+      trigramme: "Young Ashley",
       service: { estDansScec: true },
       habilitations: [
         {
@@ -104,9 +92,7 @@ describe("RMCRequetesAssocieesResultats", () => {
       ]
     } as IOfficier;
 
-    const aDroitConsulter = aDroitConsulterRequeteDelivrance(
-      utilisateurConnecteMock
-    );
+    const aDroitConsulter = aDroitConsulterRequeteDelivrance(utilisateurConnecteMock);
 
     expect(aDroitConsulter).toBe(true);
   });
@@ -116,7 +102,7 @@ describe("RMCRequetesAssocieesResultats", () => {
       idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
       prenom: "Ashley",
       nom: "Young",
-      trigramme: "FOO",
+      trigramme: "Young Ashley",
       service: { estDansScec: true },
       habilitations: [
         {
@@ -149,22 +135,15 @@ describe("RMCRequetesAssocieesResultats", () => {
       ]
     } as IOfficier;
     const libelleCourtEtablissement = "Acte Etab X (d)";
-    const aDroitConsulter = aDroitConsulterRequeteCreation(
-      libelleCourtEtablissement,
-      utilisateurConnecteMock
-    );
+    const aDroitConsulter = aDroitConsulterRequeteCreation(libelleCourtEtablissement, utilisateurConnecteMock);
 
     expect(aDroitConsulter).toBe(true);
   });
 
   test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête de création Transcription", () => {
-    const utilisateurConnecteMock =
-      userDroitCreerActeTranscritPerimetreTousRegistres;
+    const utilisateurConnecteMock = userDroitCreerActeTranscritPerimetreTousRegistres;
     const libelleCourtTranscription = "Acte Transcrit (c)";
-    const aDroitConsulter = aDroitConsulterRequeteCreation(
-      libelleCourtTranscription,
-      utilisateurConnecteMock
-    );
+    const aDroitConsulter = aDroitConsulterRequeteCreation(libelleCourtTranscription, utilisateurConnecteMock);
 
     expect(aDroitConsulter).toBe(true);
   });
@@ -174,7 +153,7 @@ describe("RMCRequetesAssocieesResultats", () => {
       idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
       prenom: "Ashley",
       nom: "Young",
-      trigramme: "FOO",
+      trigramme: "Young Ashley",
       service: { estDansScec: true },
       habilitations: [
         {
@@ -208,10 +187,7 @@ describe("RMCRequetesAssocieesResultats", () => {
     } as IOfficier;
 
     const libelleCourtTranscription = "Acte Transcrit (c)";
-    const aDroitConsulter = aDroitConsulterRequeteCreation(
-      libelleCourtTranscription,
-      utilisateurConnecteSansDroitTranscritMock
-    );
+    const aDroitConsulter = aDroitConsulterRequeteCreation(libelleCourtTranscription, utilisateurConnecteSansDroitTranscritMock);
 
     expect(aDroitConsulter).toBe(false);
   });
@@ -221,7 +197,7 @@ describe("RMCRequetesAssocieesResultats", () => {
       idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
       prenom: "Ashley",
       nom: "Young",
-      trigramme: "FOO",
+      trigramme: "Young Ashley",
       service: { estDansScec: true },
       habilitations: [
         {
@@ -254,9 +230,7 @@ describe("RMCRequetesAssocieesResultats", () => {
       ]
     } as IOfficier;
 
-    const aDroitConsulter = aDroitConsulterApercuRequeteInformation(
-      utilisateurConnecteAvecDroitInformerUsagerMock
-    );
+    const aDroitConsulter = aDroitConsulterApercuRequeteInformation(utilisateurConnecteAvecDroitInformerUsagerMock);
 
     expect(aDroitConsulter).toBe(true);
   });
@@ -274,21 +248,13 @@ describe("RMCRequetesAssocieesResultats", () => {
   });
 
   test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête de délivrance'", () => {
-    const aDroitConsulter = utilisateurADroitOuvrirRequete(
-      TypeRequete.DELIVRANCE.libelle,
-      "",
-      userDroitDelivrer
-    );
+    const aDroitConsulter = utilisateurADroitOuvrirRequete(TypeRequete.DELIVRANCE.libelle, "", userDroitDelivrer);
 
     expect(aDroitConsulter).toBe(true);
   });
 
   test("DOIT retourner true QUAND l'utilisateur à pas le droit de consulter une requête d'information'", () => {
-    const aDroitConsulter = utilisateurADroitOuvrirRequete(
-      TypeRequete.INFORMATION.libelle,
-      "",
-      userDroitInformerUsager
-    );
+    const aDroitConsulter = utilisateurADroitOuvrirRequete(TypeRequete.INFORMATION.libelle, "", userDroitInformerUsager);
 
     expect(aDroitConsulter).toBe(true);
   });
@@ -305,27 +271,13 @@ describe("RMCRequetesAssocieesResultats", () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          element: (
-            <ApercuRequetePage
-              idRequeteAAfficher={requeteSelectionnee?.idRequete}
-            />
-          )
+          element: <ApercuRequetePage idRequeteAAfficher={requeteSelectionnee?.idRequete} />
         }
       ],
-      [
-        getUrlWithParam(
-          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          requeteSelectionnee.idRequete
-        )
-      ]
+      [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID, requeteSelectionnee.idRequete)]
     );
 
-    const { container } = render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        userDroitInformerUsager
-      )
-    );
+    const { container } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitInformerUsager));
 
     expect(container.getElementsByClassName("ApercuRequete").length).toBe(1);
   });
@@ -342,30 +294,15 @@ describe("RMCRequetesAssocieesResultats", () => {
       [
         {
           path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-          element:
-            getApercuRequeteEtablissementOuTranscription(requeteSelectionnee)
+          element: getApercuRequeteEtablissementOuTranscription(requeteSelectionnee)
         }
       ],
-      [
-        getUrlWithParam(
-          URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-          requeteSelectionnee.idRequete
-        )
-      ]
+      [getUrlWithParam(URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID, requeteSelectionnee.idRequete)]
     );
 
-    const { container } = render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        userDroitInformerUsager
-      )
-    );
+    const { container } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitInformerUsager));
 
-    expect(
-      container.getElementsByClassName(
-        "ApercuReqCreationEtablissementSimplePage"
-      ).length
-    ).toBe(1);
+    expect(container.getElementsByClassName("ApercuReqCreationEtablissementSimplePage").length).toBe(1);
   });
 
   test("DOIT retourner le bon composant d'aperçu simple d'une requête de création de transcription", () => {
@@ -380,30 +317,17 @@ describe("RMCRequetesAssocieesResultats", () => {
       [
         {
           path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
-          element:
-            getApercuRequeteEtablissementOuTranscription(requeteSelectionnee)
+          element: getApercuRequeteEtablissementOuTranscription(requeteSelectionnee)
         }
       ],
-      [
-        getUrlWithParam(
-          URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
-          requeteSelectionnee.idRequete
-        )
-      ]
+      [getUrlWithParam(URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID, requeteSelectionnee.idRequete)]
     );
 
     const { container } = render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        userDroitCreerActeTranscritPerimetreTousRegistres
-      )
+      elementAvecContexte(<RouterProvider router={router} />, userDroitCreerActeTranscritPerimetreTousRegistres)
     );
 
-    expect(
-      container.getElementsByClassName(
-        "ApercuReqCreationTranscriptionSimplePage"
-      ).length
-    ).toBe(1);
+    expect(container.getElementsByClassName("ApercuReqCreationTranscriptionSimplePage").length).toBe(1);
   });
 
   test("DOIT retourner le bon composant d'aperçu simple d'une requête d'information'", () => {
@@ -418,27 +342,13 @@ describe("RMCRequetesAssocieesResultats", () => {
       [
         {
           path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-          element: (
-            <ApercuReqInfoPage
-              idRequeteAAfficher={requeteSelectionnee?.idRequete}
-            />
-          )
+          element: <ApercuReqInfoPage idRequeteAAfficher={requeteSelectionnee?.idRequete} />
         }
       ],
-      [
-        getUrlWithParam(
-          URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-          requeteSelectionnee.idRequete
-        )
-      ]
+      [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, requeteSelectionnee.idRequete)]
     );
 
-    const { container } = render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        userDroitInformerUsager
-      )
-    );
+    const { container } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitInformerUsager));
     expect(container.getElementsByClassName("ApercuRequete").length).toBe(1);
   });
 });

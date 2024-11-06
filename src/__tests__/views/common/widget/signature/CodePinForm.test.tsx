@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { CodePinForm } from "@widget/signature/CodePinForm";
 import { expect, test, vi } from "vitest";
 
-test("renders form popin, setPinCode function called on validation", () => {
+test("renders form popin, setPinCode function called on validation", async () => {
   const handleClickButton = vi.fn();
 
   render(
@@ -22,7 +22,7 @@ test("renders form popin, setPinCode function called on validation", () => {
   const validateButton = screen.getByText("Valider");
   fireEvent.click(validateButton);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(handleClickButton).toHaveBeenCalledTimes(1);
   });
 });
@@ -44,7 +44,7 @@ test("renders form popin, close function called on cancel", () => {
   expect(handleClickButton).toHaveBeenCalledTimes(1);
 });
 
-test("DOIT afficher un message d'erreur QUAND le code pin est effacé", () => {
+test("DOIT afficher un message d'erreur QUAND le code pin est effacé", async () => {
   const handleClickButton = vi.fn();
 
   render(
@@ -62,14 +62,12 @@ test("DOIT afficher un message d'erreur QUAND le code pin est effacé", () => {
     fireEvent.change(pinCodeInput, { target: { value: "" } });
   }
 
-  waitFor(() => {
-    expect(
-      screen.getByText("Le code pin de la carte doit être fourni")
-    ).toBeDefined();
+  await waitFor(() => {
+    expect(screen.getByText("Le code pin de la carte doit être fourni")).toBeDefined();
   });
 });
 
-test("DOIT afficher un message d'erreur QUAND le code pin ne contient pas que des nombres", () => {
+test("DOIT afficher un message d'erreur QUAND le code pin ne contient pas que des nombres", async () => {
   const handleClickButton = vi.fn();
 
   render(
@@ -86,11 +84,11 @@ test("DOIT afficher un message d'erreur QUAND le code pin ne contient pas que de
     fireEvent.change(pinCodeInput, { target: { value: "1a2b" } });
   }
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(screen.getByText("Le code pin doit être un nombre")).toBeDefined();
   });
 });
-test("DOIT afficher un message d'erreur QUAND le code pin est supérieur à 8 caractères", () => {
+test("DOIT afficher un message d'erreur QUAND le code pin est supérieur à 8 caractères", async () => {
   const handleClickButton = vi.fn();
 
   render(
@@ -107,9 +105,7 @@ test("DOIT afficher un message d'erreur QUAND le code pin est supérieur à 8 ca
     fireEvent.change(pinCodeInput, { target: { value: "123456789" } });
   }
 
-  waitFor(() => {
-    expect(
-      screen.getByText("Le code pin ne doit pas dépasser 8 caractères")
-    ).toBeDefined();
+  await waitFor(() => {
+    expect(screen.getByText("Le code pin ne doit pas dépasser 8 caractères")).toBeDefined();
   });
 });

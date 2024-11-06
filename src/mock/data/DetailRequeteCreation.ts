@@ -19,7 +19,7 @@ export const ReponseAppelDetailRequeteCreation = {
         libelle: "Saisie de la requête",
         dateAction: 1583794800000,
         idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985894",
-        trigramme: "BOB"
+        trigramme: "Dylan Bob"
       },
       {
         id: "1d189cd9-0df0-45dc-a4cf-0174eb621235",
@@ -27,7 +27,7 @@ export const ReponseAppelDetailRequeteCreation = {
         libelle: "À traiter",
         dateAction: 1583794800000,
         idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985895",
-        trigramme: "APP"
+        trigramme: "Lennon John"
       }
     ],
     piecesJustificatives: [
@@ -91,13 +91,13 @@ export const ReponseAppelDetailRequeteCreation = {
         idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985895",
         numeroOrdre: 12,
         dateObservation: 122335587,
-        trigramme: "BTC"
+        trigramme: "WONDER Stevie"
       },
       {
         id: "id0000",
         texte: "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
         idUtilisateur: "",
-        trigramme: "LOS",
+        trigramme: "JACKSON Michael",
         numeroOrdre: 1234,
         dateObservation: 123456789
       }

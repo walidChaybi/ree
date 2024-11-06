@@ -8,7 +8,6 @@ import { IObservation, Observation } from "@model/requete/IObservation";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import { logError } from "@util/LogManager";
-import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { BoutonAccordionTitle } from "@widget/accordion/BoutonAccordionTitle";
 import React, { useContext, useEffect, useState } from "react";
@@ -28,7 +27,7 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [texteObservation, setTexteObservation] = useState<string>();
   const [creationObservation, setCreationObservation] = useState<ICreationObservationParams>();
-  const [expanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 
@@ -133,16 +132,16 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
         open={isOpen}
         onClosePopin={onClosePopin}
         onSubmit={onSubmit}
-        defaultValue={{ observation: getValeurOuVide(texteObservation) }}
+        defaultValue={{ observation: texteObservation ?? "" }}
       />
       <AccordionRece
         titre={"Observations requête"}
-        expanded={expanded}
+        expanded={isExpanded}
         expandedPossible={observations?.length > 0}
         bouton={
           <BoutonAccordionTitle
             iconeBouton={faPlusCircle}
-            descriptionBouton={getLibelle("Ajouter une observation")}
+            descriptionBouton={"Ajouter une observation"}
             classNameBouton={"BoutonAjouter"}
             onClickBouton={onClickBouton}
           />
@@ -155,20 +154,18 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
               <ListItemText
                 title={el.texte}
                 key={el.id}
-                className={Observation.getTrigramme(el) === "RECE" ? "RECE" : ""}
+                className={el.trigramme === "RECE Système" ? "RECE" : ""}
               >
                 <div
                   onClick={() => onClickModifier(el)}
                   className="Observation"
                 >
-                  {`${Observation.getTexte(el)} - ${Observation.getDate(el)} ${
-                    Observation.getTrigramme(el) !== "RECE" ? getTrigramme(el) : ""
-                  }`}
+                  {`${Observation.getTexte(el)} - ${Observation.getDate(el)} ${el.trigramme !== "RECE Système" ? getTrigramme(el) : ""}`}
                 </div>
                 <FontAwesomeIcon
                   icon={faTrashAlt}
                   className="IconeSupprimer"
-                  title={getLibelle("Supprimer l'observation")}
+                  title={"Supprimer l'observation"}
                   onClick={() => onClickSupprimer(el)}
                 />
               </ListItemText>
@@ -179,15 +176,13 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
   );
 };
 
-function getTrigramme(observation: IObservation) {
-  return `- ${Observation.getTrigramme(observation)}`;
-}
+const getTrigramme = (observation: IObservation) => `- ${observation.trigramme}`;
 
-function getNumeroOrdreMax(observations: IObservation[]) {
+const getNumeroOrdreMax = (observations: IObservation[]) => {
   let res = 0;
   if (observations.length > 0) {
     observations.sort((a, b) => b.numeroOrdre - a.numeroOrdre);
     res = observations[0].numeroOrdre;
   }
   return res;
-}
+};

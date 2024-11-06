@@ -21,12 +21,12 @@ test("renders suivi des observations requete", () => {
   let elem2: HTMLElement;
 
   expect(titre.textContent).toBeDefined();
-  elem1 = screen.getByText(/LOS/i);
+  elem1 = screen.getByText(/JACKSON Michael/i);
   expect(elem1).toBeDefined();
-  expect(elem1.innerHTML).toBe("C'est vraiment dur de pouvo... - 02/01/1970 - LOS");
-  elem2 = screen.getByText(/BTC/i);
+  expect(elem1.innerHTML).toBe("C'est vraiment dur de pouvo... - 02/01/1970 - JACKSON Michael");
+  elem2 = screen.getByText(/WONDER Stevie/i);
   expect(elem2).toBeDefined();
-  expect(elem2.innerHTML).toBe("Je fais pas 30 charactères - 02/01/1970 - BTC");
+  expect(elem2.innerHTML).toBe("Je fais pas 30 charactères - 02/01/1970 - WONDER Stevie");
 });
 
 test("ajouter observation", async () => {

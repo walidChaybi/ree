@@ -9,20 +9,23 @@ interface SuiviActionsRequeteProps {
   actions?: IAction[];
 }
 
-export const SuiviActionsRequete: React.FC<
-  SuiviActionsRequeteProps
-> = props => {
-  return (
-    <div className="suivis-requete">
-      <AccordionRece titre={"Suivi requête"} disabled={false} expanded={false}>
-        <List>
-          {props.actions
-            ?.sort((a, b) => (a.numeroOrdre > b.numeroOrdre ? -1 : 1))
-            .map(el => (
-              <ActionRequete key={el.id} action={el} />
-            ))}
-        </List>
-      </AccordionRece>
-    </div>
-  );
-};
+export const SuiviActionsRequete: React.FC<SuiviActionsRequeteProps> = props => (
+  <div className="suivis-requete">
+    <AccordionRece
+      titre={"Suivi requête"}
+      disabled={false}
+      expanded={false}
+    >
+      <List>
+        {props.actions
+          ?.sort((a, b) => (a.numeroOrdre > b.numeroOrdre ? -1 : 1))
+          .map(el => (
+            <ActionRequete
+              key={el.id}
+              action={el}
+            />
+          ))}
+      </List>
+    </AccordionRece>
+  </div>
+);
