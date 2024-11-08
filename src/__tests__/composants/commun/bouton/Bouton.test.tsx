@@ -4,23 +4,23 @@ import { expect, it as test, vi } from "vitest";
 import Bouton from "../../../../composants/commun/bouton/Bouton";
 
 test("renders le Bouton correctement", () => {
-  render(<Bouton>Click Me</Bouton>);
+  render(<Bouton>Click Moi</Bouton>);
 
-  const buttonElement = screen.getByRole("button", { name: /click me/i });
+  const buttonElement = screen.getByRole("button", { name: "Click Moi" });
   expect(buttonElement).toBeDefined();
 
-  expect(buttonElement.textContent).toContain("Click Me");
+  expect(buttonElement.textContent).toContain("Click Moi");
 });
 
 test("les props sont correctement transmis", async () => {
   const handleClick = vi.fn();
   render(
     <Bouton className="classe-test" onClick={handleClick}>
-      Click Me
-    </Bouton>
+      Click Moi
+    </Bouton>,
   );
 
-  const buttonElement = screen.getByRole("button", { name: /click me/i });
+  const buttonElement = screen.getByRole("button", { name: "Click Moi" });
 
   await userEvent.click(buttonElement);
 

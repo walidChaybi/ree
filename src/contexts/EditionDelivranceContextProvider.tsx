@@ -15,7 +15,7 @@ interface IEditionDelivranceContext {
 
 export const EditionDelivranceContext =
   React.createContext<IEditionDelivranceContext>(
-    {} as IEditionDelivranceContext
+    {} as IEditionDelivranceContext,
   );
 
 const EditionDelivranceContextProvider: React.FC<
@@ -31,28 +31,26 @@ const EditionDelivranceContextProvider: React.FC<
     () => ({
       requete: requete ?? ({} as IRequeteDelivrance),
       acte: acte ?? null,
-      rechargerRequete: () => setDoitChargerRequete(true)
+      rechargerRequete: () => setDoitChargerRequete(true),
     }),
-    [requete, acte]
+    [requete, acte],
   );
 
-  /** Remplacer par UseFetch */
+  //TOREFACTOR : passer en useFetch
   const [enRecuperation, setEnRecuperation] = useState<boolean>(false);
   useEffect(() => {
-    if (enRecuperation || !doitChargerRequete) {
+    if (enRecuperation || !doitChargerRequete || !idRequeteParam) {
       return;
     }
 
     setDoitChargerRequete(false);
     setEnRecuperation(true);
     getDetailRequete(idRequeteParam)
-      .then(res => setRequete(mappingRequeteDelivrance(res.body.data)))
+      .then((res) => setRequete(mappingRequeteDelivrance(res.body.data)))
       .finally(() => setEnRecuperation(false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idRequeteParam, doitChargerRequete]);
-  /**FIN Remplacer par UseFetch */
 
-  /** Remplacer par UseFetch */
+  //TOREFACTOR : passer en useFetch
   const [enRecuperationActe, setEnRecuperationActe] = useState<boolean>(false);
   useEffect(() => {
     if (enRecuperationActe || !requete) {
@@ -61,8 +59,9 @@ const EditionDelivranceContextProvider: React.FC<
 
     let idActe =
       idActeParam ??
-      requete?.documentsReponses.find(documentReponse => documentReponse.idActe)
-        ?.idActe;
+      requete?.documentsReponses.find(
+        (documentReponse) => documentReponse.idActe,
+      )?.idActe;
     if (!idActe) {
       setActe(null);
 
@@ -71,16 +70,14 @@ const EditionDelivranceContextProvider: React.FC<
 
     setEnRecuperationActe(true);
     getInformationsFicheActe(idActe)
-      .then(data => setActe(mapActe(data.body.data)))
+      .then((data) => setActe(mapActe(data.body.data)))
       .finally(() => setEnRecuperationActe(false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idActeParam, requete]);
-  /**FIN Remplacer par UseFetch */
 
   return (
     <EditionDelivranceContext.Provider value={valeursContext}>
       {(enRecuperation || enRecuperationActe) && <PageChargeur />}
-      {requete && acte !== undefined && children}
+      {requete && acte && children}
     </EditionDelivranceContext.Provider>
   );
 };

@@ -15,6 +15,7 @@ import React from "react";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import "../../index.css";
 import "./App.scss";
 import { RECEContextProvider } from "./contexts/RECEContext";
 

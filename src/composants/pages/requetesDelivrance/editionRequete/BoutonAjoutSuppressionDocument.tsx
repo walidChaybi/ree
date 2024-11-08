@@ -1,7 +1,7 @@
 import { deleteDocumentComplementaire } from "@api/appels/requeteApi";
 import {
   IGenerationECParams,
-  useGenerationEC
+  useGenerationEC,
 } from "@hook/generation/generationECHook/generationECHook";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -11,7 +11,7 @@ import {
   CODE_COPIE_INTEGRALE,
   CODE_EXTRAIT_AVEC_FILIATION,
   CODE_EXTRAIT_PLURILINGUE,
-  CODE_EXTRAIT_SANS_FILIATION
+  CODE_EXTRAIT_SANS_FILIATION,
 } from "@model/requete/enum/DocumentDelivranceConstante";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -20,6 +20,7 @@ import Clear from "@mui/icons-material/Clear";
 import { getParamsCreationEC } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { EditionDelivranceContext } from "../../../../contexts/EditionDelivranceContextProvider";
+import Bouton from "../../../commun/bouton/Bouton";
 import PageChargeur from "../../../commun/chargeurs/PageChargeur";
 
 interface IBoutonAjoutSuppressionDocumentProps {
@@ -28,13 +29,14 @@ interface IBoutonAjoutSuppressionDocumentProps {
     secondaire: IDocumentReponse | null;
   };
   naviguerVersOngletAjoute: () => void;
+  styleBouton?: string;
 }
 
 const BoutonAjoutSuppressionDocument: React.FC<
   IBoutonAjoutSuppressionDocumentProps
-> = ({ documentsDelivrance, naviguerVersOngletAjoute }) => {
+> = ({ documentsDelivrance, naviguerVersOngletAjoute, styleBouton }) => {
   const { requete, acte, rechargerRequete } = useContext(
-    EditionDelivranceContext
+    EditionDelivranceContext,
   );
   const boutonDisponible = useMemo(
     () =>
@@ -44,47 +46,47 @@ const BoutonAjoutSuppressionDocument: React.FC<
       StatutRequete.TRANSMISE_A_VALIDEUR !== requete.statutCourant.statut &&
       !SousTypeDelivrance.estRDDP(requete.sousType) &&
       Boolean(requete.documentsReponses.length),
-    [requete]
+    [requete],
   );
   const ajoutDocument = useMemo(
     () => !documentsDelivrance.secondaire,
-    [documentsDelivrance]
+    [documentsDelivrance],
   );
   const listeDocuments = useMemo(
     () =>
       [
         {
           cle: DocumentDelivrance.getKeyForCode(CODE_COPIE_INTEGRALE),
-          libelle: "Copie intégrale"
+          libelle: "Copie intégrale",
         },
         ...(acte?.nature !== NatureActe.DECES
           ? [
               {
                 cle: DocumentDelivrance.getKeyForCode(
-                  CODE_EXTRAIT_AVEC_FILIATION
+                  CODE_EXTRAIT_AVEC_FILIATION,
                 ),
-                libelle: "Extrait avec filiation"
+                libelle: "Extrait avec filiation",
               },
               {
                 cle: DocumentDelivrance.getKeyForCode(
-                  CODE_EXTRAIT_SANS_FILIATION
+                  CODE_EXTRAIT_SANS_FILIATION,
                 ),
-                libelle: "Extrait sans filiation"
-              }
+                libelle: "Extrait sans filiation",
+              },
             ]
           : []),
         {
           cle: DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_PLURILINGUE),
-          libelle: "Extrait plurilingue"
-        }
+          libelle: "Extrait plurilingue",
+        },
       ].filter(
-        item => item.cle !== documentsDelivrance.principal?.typeDocument
+        (item) => item.cle !== documentsDelivrance.principal?.typeDocument,
       ),
-    [documentsDelivrance, acte]
+    [documentsDelivrance, acte],
   );
   const [menuOuvert, setMenuOuvert] = useState<boolean>(false);
 
-  /** Remplacer par UseFetch */
+  //TOREFACTO: Utilier le useFetch
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [creationECParams, setCreationECParams] =
     useState<IGenerationECParams>();
@@ -98,13 +100,12 @@ const BoutonAjoutSuppressionDocument: React.FC<
     setOperationEnCours(false);
     rechargerRequete();
     naviguerVersOngletAjoute();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resulatEC]);
 
   const ajouterDocument = (typeDocument: string) => {
     setOperationEnCours(true);
     setCreationECParams(
-      getParamsCreationEC(typeDocument, requete, { acte: acte ?? undefined })
+      getParamsCreationEC(typeDocument, requete, { acte: acte ?? undefined }),
     );
   };
 
@@ -118,17 +119,14 @@ const BoutonAjoutSuppressionDocument: React.FC<
       .then(() => rechargerRequete())
       .finally(() => setOperationEnCours(false));
   };
-  /** FIN Remplacer par UseFetch */
 
   return boutonDisponible ? (
     <>
       {operationEnCours && <PageChargeur />}
-      <div
-        className="conteneur-bouton-ajout"
-        onMouseLeave={() => setMenuOuvert(false)}
-      >
-        <button
-          className="onglet-bouton bouton-ajout-document"
+      <div className="relative" onMouseLeave={() => setMenuOuvert(false)}>
+        <Bouton
+          className={`${styleBouton} border-dashed`}
+          styleBouton={ajoutDocument ? "secondaire" : "suppression"}
           type="button"
           title={
             ajoutDocument
@@ -140,14 +138,14 @@ const BoutonAjoutSuppressionDocument: React.FC<
           }
         >
           {ajoutDocument ? <Add /> : <Clear />}
-        </button>
+        </Bouton>
 
         {ajoutDocument && menuOuvert && (
-          <div className="menu-ajout-document">
-            {listeDocuments.map(itemListe => (
+          <div className="z-2 absolute left-0 top-full animate-apparition-menu overflow-hidden rounded-md bg-bleu-sombre shadow-[0px_5px_5px_-3px_rgba(0,0,0,0.2),0px_8px_10px_1px_rgba(0,0,0,0.14),0px_3px_14px_2px_rgba(0,0,0,0.12)]">
+            {listeDocuments.map((itemListe) => (
               <button
                 key={itemListe.cle}
-                className="bouton-menu-ajout"
+                className="m-0 block w-full whitespace-nowrap rounded-none px-8 py-4 text-left font-sans normal-case text-blanc no-underline transition-colors duration-200 ease-in-out hover:bg-bleu"
                 type="button"
                 onClick={() => ajouterDocument(itemListe.cle)}
               >

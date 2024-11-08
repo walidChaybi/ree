@@ -1,5 +1,5 @@
 import React from "react";
-import "./OngletsBouton.scss";
+import Bouton from "../bouton/Bouton";
 
 export interface IOngletBouton {
   cle: string;
@@ -11,30 +11,35 @@ interface IOngletsBoutonProps {
   onglets: IOngletBouton[];
   cleOngletActif: string;
   changerOnglet: (valeur: string) => void;
-  boutonAjout?: JSX.Element;
+  renderBoutonAjout?: (style: string) => JSX.Element;
 }
 
 const OngletsBouton: React.FC<IOngletsBoutonProps> = ({
   onglets,
   cleOngletActif,
   changerOnglet,
-  boutonAjout
+  renderBoutonAjout,
 }) => {
   return (
-    <div className="conteneur-onglets-bouton">
-      {onglets.map(onglet => (
-        <button
+    <div className="flex border-b border-gris">
+      {onglets.map((onglet: IOngletBouton) => (
+        <Bouton
           key={onglet.cle}
-          className={`onglet-bouton${onglet.inactif ? " onglet-inactif" : ""}`}
+          styleBouton={
+            cleOngletActif === onglet.cle ? "principal" : "secondaire"
+          }
+          className={`${cleOngletActif === onglet.cle ? "disabled:bg-bleu-sombre" : "disabled:border-gris disabled:bg-gris"} m-0 h-14 max-w-60 rounded-b-none rounded-t-lg border border-b-0 border-l-0 border-solid px-4 py-1.5 transition duration-200 ease-in-out first:border-l`}
           type="button"
           title={onglet.libelle}
           disabled={cleOngletActif === onglet.cle || onglet.inactif}
           onClick={() => changerOnglet(onglet.cle)}
         >
           {onglet.libelle}
-        </button>
+        </Bouton>
       ))}
-      {boutonAjout}
+      {renderBoutonAjout?.(
+        "m-0 h-14 max-w-60 rounded-b-none rounded-t-lg border-b-0 border-l-0.5 px-4 py-1.5 transition duration-200 ease-in-out",
+      )}
     </div>
   );
 };

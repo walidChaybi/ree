@@ -7,36 +7,36 @@ import { EditionDelivranceContext } from "../../../../contexts/EditionDelivrance
 import OngletsBouton from "../../../commun/onglets/OngletsBouton";
 import BoutonAjoutSuppressionDocument from "./BoutonAjoutSuppressionDocument";
 import ConteneurVoletEdition from "./ConteneurVoletEdition";
-import VoletCourrier from "./VoletCourrier";
 import VoletDocumentDelivre from "./VoletDocumentDelivre";
+import VoletCourrier from "./voletCourrier/VoletCourrier";
 
 enum ECleOngletDocuments {
   COURRIER = "courrier",
   PRINCIPAL = "principal",
-  SECONDAIRE = "secondaire"
+  SECONDAIRE = "secondaire",
 }
 
 const documentsDelivranceTries = (
   documents: IDocumentReponse[],
-  choixDelivrance: ChoixDelivrance
+  choixDelivrance: ChoixDelivrance,
 ): IDocumentReponse[] => {
   const enumDocumentPrincipal = DocumentDelivrance.getEnumForCode(
     ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(
-      choixDelivrance
-    )
+      choixDelivrance,
+    ),
   );
 
   return documents
     .filter(
-      doc => !DocumentDelivrance.estCourrierDelivranceEC(doc.typeDocument)
+      (doc) => !DocumentDelivrance.estCourrierDelivranceEC(doc.typeDocument),
     )
-    .map(doc => ({
+    .map((doc) => ({
       ...doc,
       ordre:
         DocumentDelivrance.getEnumForUUID(doc.typeDocument) ===
         enumDocumentPrincipal
           ? UN
-          : DEUX
+          : DEUX,
     }))
     .sort((docA, docB) => (docA.ordre > docB.ordre ? UN : -UN));
 };
@@ -47,52 +47,52 @@ const PartieDocuments: React.FC = () => {
   const documentsDelivrance = useMemo(() => {
     const documents = documentsDelivranceTries(
       requete.documentsReponses,
-      requete.choixDelivrance as ChoixDelivrance
+      requete.choixDelivrance as ChoixDelivrance,
     );
 
     return {
       principal: documents[ZERO] ?? null,
-      secondaire: documents[UN] ?? null
+      secondaire: documents[UN] ?? null,
     };
   }, [requete]);
   const onglets = useMemo(
     () => [
       {
         cle: ECleOngletDocuments.COURRIER,
-        libelle: "Courrier"
+        libelle: "Courrier",
       },
       ...(documentsDelivrance.principal
         ? [
             {
               cle: ECleOngletDocuments.PRINCIPAL,
-              libelle: documentsDelivrance.principal.nom
-            }
+              libelle: documentsDelivrance.principal.nom,
+            },
           ]
         : []),
       ...(documentsDelivrance.secondaire
         ? [
             {
               cle: ECleOngletDocuments.SECONDAIRE,
-              libelle: documentsDelivrance.secondaire.nom
-            }
+              libelle: documentsDelivrance.secondaire.nom,
+            },
           ]
-        : [])
+        : []),
     ],
-    [documentsDelivrance]
+    [documentsDelivrance],
   );
   const [ongletActif, setOngletActif] = useState<ECleOngletDocuments>(
-    ECleOngletDocuments.COURRIER
+    ECleOngletDocuments.COURRIER,
   );
   const [ajoutEffectue, setAjoutEffectue] = useState<boolean>(false);
 
   useEffect(() => {
-    if (onglets.find(onglet => onglet.cle === ongletActif)) {
+    if (onglets.find((onglet) => onglet.cle === ongletActif)) {
       return;
     }
 
     setOngletActif(
-      onglets.find(onglet => onglet.cle === ECleOngletDocuments.PRINCIPAL)
-        ?.cle ?? ECleOngletDocuments.COURRIER
+      onglets.find((onglet) => onglet.cle === ECleOngletDocuments.PRINCIPAL)
+        ?.cle ?? ECleOngletDocuments.COURRIER,
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onglets]);
@@ -112,19 +112,20 @@ const PartieDocuments: React.FC = () => {
   }, [documentsDelivrance, ajoutEffectue]);
 
   return (
-    <div className="volet-documents">
+    <div className="w-7/12">
       <OngletsBouton
         onglets={onglets}
         cleOngletActif={ongletActif}
         changerOnglet={(valeur: string) =>
           setOngletActif(valeur as ECleOngletDocuments)
         }
-        boutonAjout={
+        renderBoutonAjout={(styleBouton?: string) => (
           <BoutonAjoutSuppressionDocument
             documentsDelivrance={documentsDelivrance}
             naviguerVersOngletAjoute={() => setAjoutEffectue(true)}
+            styleBouton={styleBouton}
           />
-        }
+        )}
       />
 
       <ConteneurVoletEdition

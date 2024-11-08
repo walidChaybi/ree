@@ -64,7 +64,6 @@ const FormulaireAnalyseMarginale: React.FC<IFormulaireAnalyseMarginaleProps> = (
         formDefaultValues={valeursParDefaut}
         formValidationSchema={SCHEMA_VALIDATION_MISE_A_JOUR_ANALYSE_MARGINALE}
         onSubmit={valeurs => onSubmit(valeurs as IMiseAJourAnalyseMarginaleValeursForm)}
-        className="sans-marge"
       >
         <div className="formulaire-mise-a-jour-analyse-marginale">
           <div className="champs-formulaire">

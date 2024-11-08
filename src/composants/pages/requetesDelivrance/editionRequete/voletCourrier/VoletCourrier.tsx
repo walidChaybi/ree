@@ -1,7 +1,7 @@
 import { Courrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/Courrier";
 import { useContext } from "react";
-import { EditionDelivranceContext } from "../../../../contexts/EditionDelivranceContextProvider";
-import ConteneurFormulaire from "../../../commun/conteneurs/formulaire/ConteneurFormulaire";
+import { EditionDelivranceContext } from "../../../../../contexts/EditionDelivranceContextProvider";
+import ConteneurFormulaire from "../../../../commun/conteneurs/formulaire/ConteneurFormulaire";
 
 const VoletCourrier = () => {
   const { requete, acte } = useContext(EditionDelivranceContext);

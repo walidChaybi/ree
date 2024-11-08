@@ -1,9 +1,7 @@
 @import "../../../../../scss/_colors.scss";
 
 .Formulaire {
-  &:not(.sans-marge) {
-    margin: 1.5rem 7rem;
-  }
+  
   .DeuxColonnes {
     display: grid;
     grid-template-columns: 50% 50%;

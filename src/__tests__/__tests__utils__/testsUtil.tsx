@@ -1,17 +1,22 @@
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import { acte } from "@mock/data/ficheEtBandeau/ficheActe";
+import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IService } from "@model/agent/IService";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { fireEvent, waitFor } from "@testing-library/react";
 import { RouteObject, createMemoryRouter } from "react-router-dom";
 import { expect, vi } from "vitest";
+import { EditionDelivranceContext } from "../../contexts/EditionDelivranceContextProvider";
 import { urlImagePngVideBase64 } from "../../mock/data/ImagePng";
 
 export const attendre = async (apresAttente: void | Promise<void>) =>
-  await waitFor(() => apresAttente, { timeout: 500 }); 
+  await waitFor(() => apresAttente, { timeout: 500 });
 
 function dataURLtoFile(dataurl: string, filename: string): File {
   const arr = dataurl.split(",");
@@ -31,16 +36,16 @@ const pngFile = dataURLtoFile(urlImagePngVideBase64, "hello.png");
 export const pngFiles = [pngFile];
 export const inputPngFiles = {
   item: (index: number) => pngFiles[index],
-  ...pngFiles
+  ...pngFiles,
 };
 
 export function getRequeteWithChoixDelivrance(
   requete: any,
-  choixDelivrance: ChoixDelivrance
+  choixDelivrance: ChoixDelivrance,
 ) {
   return {
     ...mappingRequeteDelivrance(requete),
-    choixDelivrance
+    choixDelivrance,
   };
 }
 
@@ -53,7 +58,7 @@ export function mockFenetreFicheTestFunctions() {
       ...window,
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn()
+      dispatchEvent: vi.fn(),
     };
   };
   globalAny.close = vi.fn();
@@ -62,14 +67,14 @@ export function mockFenetreFicheTestFunctions() {
 export function renseigneChampsRecherche(
   screen: any,
   nomChamp: string,
-  valeurChamp: string
+  valeurChamp: string,
 ) {
   const autocomplete = screen.getByTestId("autocomplete");
   const champRecherche = screen.getByLabelText(nomChamp) as HTMLInputElement;
   autocomplete.focus();
 
   fireEvent.change(champRecherche, {
-    target: { value: valeurChamp }
+    target: { value: valeurChamp },
   });
 
   waitFor(() => {
@@ -85,15 +90,15 @@ export function deepCopie(objet: any) {
 
 export function createTestingRouter(
   routes: RouteObject[],
-  initialEntries: string[]
+  initialEntries: string[],
 ) {
   return createMemoryRouter(
-    routes.map(route => {
+    routes.map((route) => {
       return { path: route.path, element: route.element };
     }),
     {
-      initialEntries
-    }
+      initialEntries,
+    },
   );
 }
 
@@ -103,7 +108,7 @@ export const elementAvecContexte = (
   utilisateurs?: IUtilisateur[],
   services?: IService[],
   decrets?: IDecret[],
-  erreurLogin?: any
+  erreurLogin?: any,
 ): any => {
   return (
     <MockRECEContextProvider
@@ -115,5 +120,22 @@ export const elementAvecContexte = (
     >
       {children}
     </MockRECEContextProvider>
+  );
+};
+
+export const elementAvecEditionDelivranceContexte = (
+  children: React.ReactElement,
+  requete: IRequeteDelivrance,
+): any => {
+  const valeursContext = {
+    requete: requete ?? (requeteDelivrance as IRequeteDelivrance),
+    acte: acte as IFicheActe,
+    rechargerRequete: () => {},
+  };
+
+  return (
+    <EditionDelivranceContext.Provider value={valeursContext}>
+      {children}
+    </EditionDelivranceContext.Provider>
   );
 };

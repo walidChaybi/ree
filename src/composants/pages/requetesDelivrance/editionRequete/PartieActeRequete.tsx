@@ -13,24 +13,24 @@ import VoletRequete from "./VoletRequete";
 enum ECleOngletRequete {
   ACTE = "acte",
   REQUETE = "requete",
-  COURRIER_EDITE = "courrier-edite"
+  COURRIER_EDITE = "courrier-edite",
 }
 
 const PartieActeRequete: React.FC = () => {
   const { requete, acte } = useContext(EditionDelivranceContext);
   const [ongletActif, setOngletActif] = useState<string>(
-    acte ? ECleOngletRequete.ACTE : ECleOngletRequete.REQUETE
+    acte ? ECleOngletRequete.ACTE : ECleOngletRequete.REQUETE,
   );
   const [contenuActe, setContenuActe] = useState<string | null>(null);
   const [contenuCourrier, setContenuCourrier] = useState<string | null>(null);
   const documentCourrier = useMemo(
     () =>
       requete.documentsReponses
-        .filter(doc =>
-          DocumentDelivrance.estCourrierDelivranceEC(doc.typeDocument)
+        .filter((doc) =>
+          DocumentDelivrance.estCourrierDelivranceEC(doc.typeDocument),
         )
         .shift(),
-    [requete]
+    [requete],
   );
 
   useEffect(() => {
@@ -38,8 +38,8 @@ const PartieActeRequete: React.FC = () => {
       return;
     }
 
-    getDocumentReponseById(documentCourrier.id).then(data =>
-      setContenuCourrier(data.body.data.contenu ?? "")
+    getDocumentReponseById(documentCourrier.id).then((data) =>
+      setContenuCourrier(data.body.data.contenu ?? ""),
     );
   }, [documentCourrier]);
 
@@ -48,39 +48,39 @@ const PartieActeRequete: React.FC = () => {
       return;
     }
 
-    getDonneesPourCompositionActeTexte(acte.id).then(data => {
+    getDonneesPourCompositionActeTexte(acte.id).then((data) => {
       compositionApi
         .getCompositionActeTexte(data.body)
-        .then(dataComposition =>
-          setContenuActe(dataComposition.body.data.contenu ?? "")
+        .then((dataComposition) =>
+          setContenuActe(dataComposition.body.data.contenu ?? ""),
         );
     });
   }, [contenuActe, acte]);
 
   return (
-    <div className="volet-acte-requete">
+    <div className="w-5/12">
       <OngletsBouton
         onglets={[
           ...(acte
             ? [
                 {
                   cle: ECleOngletRequete.ACTE,
-                  libelle: "Acte registre"
-                }
+                  libelle: "Acte registre",
+                },
               ]
             : []),
           {
             cle: ECleOngletRequete.REQUETE,
-            libelle: "Requête"
+            libelle: "Requête",
           },
           ...(documentCourrier
             ? [
                 {
                   cle: ECleOngletRequete.COURRIER_EDITE,
-                  libelle: "Courrier édité"
-                }
+                  libelle: "Courrier édité",
+                },
               ]
-            : [])
+            : []),
         ]}
         cleOngletActif={ongletActif}
         changerOnglet={(valeur: string) => setOngletActif(valeur)}

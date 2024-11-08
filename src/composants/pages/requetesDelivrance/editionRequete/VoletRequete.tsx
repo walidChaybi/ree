@@ -12,7 +12,7 @@ interface IVoletRequeteProps {
 }
 
 const VoletRequete: React.FC<IVoletRequeteProps> = ({ requete }) => (
-  <div className="volet-requete">
+  <div className="grid gap-2 py-4">
     <ConteneurAccordeon
       titre={`Description requête ${requete.numero}`}
       ouvertParDefaut
@@ -29,11 +29,15 @@ const VoletRequete: React.FC<IVoletRequeteProps> = ({ requete }) => (
     </ConteneurAccordeon>
 
     <ConteneurAccordeon titre="Suivi requête">
-      <div className="actions-requete">
+      <div className="grid gap-1 p-4 text-left">
         {requete.actions
-          ?.sort((actA, actB) => (actA.numeroOrdre > actB.numeroOrdre ? UN : -UN))
-          .map(action => (
-            <div key={action.id}>{`${action.libelle} - ${DateUtils.getFormatDateFromTimestamp(action.dateAction)} ${
+          ?.sort((actA, actB) =>
+            actA.numeroOrdre > actB.numeroOrdre ? UN : -UN,
+          )
+          .map((action) => (
+            <div
+              key={action.id}
+            >{`${action.libelle} - ${DateUtils.getFormatDateFromTimestamp(action.dateAction)} ${
               action.trigramme ? ` - ${action.trigramme}` : ""
             }`}</div>
           ))}

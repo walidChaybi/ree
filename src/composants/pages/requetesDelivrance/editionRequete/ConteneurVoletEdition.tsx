@@ -7,9 +7,7 @@ interface IConteneurVoletEditionProps {
 const ConteneurVoletEdition: React.FC<
   React.PropsWithChildren<IConteneurVoletEditionProps>
 > = ({ estActif, children }) => (
-  <div className={`volet-edition${estActif ? " volet-actif" : ""}`}>
-    {children}
-  </div>
+  <div className={`gap-2 py-4 ${estActif ? "grid" : "hidden"}`}>{children}</div>
 );
 
 export default ConteneurVoletEdition;
