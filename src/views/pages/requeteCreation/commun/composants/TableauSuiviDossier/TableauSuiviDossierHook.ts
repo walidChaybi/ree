@@ -38,14 +38,15 @@ export function useTableauSuiviDossierHook(titulaires?: ITitulaireRequeteCreatio
   const idActes = useMemo(() => titulairesAAfficher.reduce(getIdentifiantsActeFromTitulaires, []), [titulairesAAfficher]);
 
   const titulaireAnalyseMarginaleResultat = useTitulaireAnalyseMarginaleApiHook(idActes);
-
+  
   useEffect(() => {
     if (titulairesAAfficher && titulaireAnalyseMarginaleResultat) {
       const lignesTableauSuiviDossier = titulairesAAfficher.reduce(
         (lignesTableau: ILigneTableauSuiviDossier[], titulaireCourant: ITitulaireRequeteCreation) => {
-          const dataAnalyseMarginale = titulaireAnalyseMarginaleResultat.find(analyseMarginale =>
-            titulaireCourant.suiviDossiers?.some(suiviDossier => suiviDossier.idActe === analyseMarginale.idActe)
-          );
+
+          // POSTULANT => acte de naissance pour celibataire / sans enfant = pas de verification sur le titulaire de l'analyse marginale
+          // TODO => créer tri pour recup la bonne analyse marginale lorsqu'il y aura plusieurs titulaires aux analyses marginales
+          const dataAnalyseMarginale = titulaireAnalyseMarginaleResultat[0];
 
           const ligneTitulaire: ILigneTableauSuiviDossier = {
             id: titulaireCourant.id,
