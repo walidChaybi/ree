@@ -52,8 +52,7 @@ import {
 import {
   DateValidationCompleteSchemaSansTestFormatRequired,
   DateValidationSchema,
-  DateValidationSchemaSansTestFormat,
-  DateValidationSchemaSansTestFormatRequired
+  DateValidationSchemaSansTestFormat
 } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import * as Yup from "yup";
 import {
@@ -92,7 +91,7 @@ function validationSchemaPostulant() {
       [PRENOMS]: creerValidationSchemaPrenom()
     }),
     [SEXE]: Yup.string().required("La saisie du sexe est obligatoire"),
-    [DATE_NAISSANCE]: DateValidationSchemaSansTestFormatRequired,
+    [DATE_NAISSANCE]: DateValidationSchema,
     [LIEU_DE_NAISSANCE]: Yup.object().shape({
       [VILLE_NAISSANCE]: Yup.string()
         .matches(
