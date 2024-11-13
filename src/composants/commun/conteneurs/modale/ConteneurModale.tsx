@@ -1,14 +1,18 @@
 import "./ConteneurModale.scss";
 
 interface IConteneurModaleProps {
-  fermerModale: () => void;
+  fermerModale?: () => void;
 }
 
-const ConteneurModale: React.FC<
-  React.PropsWithChildren<IConteneurModaleProps>
-> = ({ fermerModale, children }) => (
-  <div className="conteneur-modale" onClick={() => fermerModale()}>
-    <div className="contenu-modale" onClick={event => event.stopPropagation()}>
+const ConteneurModale: React.FC<React.PropsWithChildren<IConteneurModaleProps>> = ({ fermerModale, children }) => (
+  <div
+    className="conteneur-modale"
+    {...(fermerModale ? { onClick: fermerModale } : {})}
+  >
+    <div
+      className="contenu-modale"
+      onClick={event => event.stopPropagation()}
+    >
       {children}
     </div>
   </div>

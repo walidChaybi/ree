@@ -1,4 +1,3 @@
-import { getLibelle } from "@util/Utils";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { useEffect, useMemo, useState } from "react";
 import { useBlocker } from "react-router-dom";
@@ -58,22 +57,20 @@ export const useCreateBlocker = ({
     <ConfirmationPopin
       boutons={[
         {
-          label: getLibelle("OK"),
+          label: "OK",
           action: () => {
             executerApresConfirmation();
             blocker.proceed?.();
           }
         },
         {
-          label: getLibelle("Annuler"),
+          label: "Annuler",
           action: () => {
             blocker.reset?.();
           }
         }
       ]}
-      estOuvert={
-        blocker.state === "blocked" && estNavigationBloquee.estPopinAffichee
-      }
+      estOuvert={blocker.state === "blocked" && estNavigationBloquee.estPopinAffichee}
       messages={messages}
       titre={titre}
     />

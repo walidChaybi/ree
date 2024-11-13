@@ -1,0 +1,86 @@
+import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { RouterProvider } from "react-router-dom";
+import request from "superagent";
+import { afterAll, describe, expect, test, vi } from "vitest";
+import CompteurTemps from "../../../../../composants/pages/requetesMiseAJour/compteurTemps/CompteurTemps";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
+
+describe("Test du composant CompteurTemps", () => {
+  const ID_REQUETE_VALIDE = "id-requete-valide";
+  const ID_REQUETE_DEPASSEE = "id-requete-depassee";
+  const superagentMock = require("superagent-mock")(request, [
+    {
+      pattern: `http://localhost/rece/rece-requete-api/v2/requetes/mise-a-jour/(${ID_REQUETE_DEPASSEE}|${ID_REQUETE_VALIDE})/delai-de-traitement-restant-en-minutes`,
+      fixtures: function (match: any) {
+        if (match[1] === ID_REQUETE_VALIDE) {
+          return { data: 10 };
+        }
+
+        if (match[1] === ID_REQUETE_DEPASSEE) {
+          throw new Error("500");
+        }
+      },
+      get: function (_: any, data: any) {
+        console.log(data);
+        return {
+          body: data
+        };
+      }
+    }
+  ]);
+
+  afterAll(() => superagentMock.unset());
+
+  test("Aucun message si temps restant", () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: "/",
+          element: (
+            <CompteurTemps
+              idRequete={ID_REQUETE_VALIDE}
+              abandonnerRequete={() => {}}
+            />
+          )
+        }
+      ],
+      ["/"]
+    );
+
+    render(<RouterProvider router={router} />);
+
+    expect(screen.queryByTitle("OK")).toBeNull();
+  });
+
+  test("Message si temps dépassé et redirection", async () => {
+    const REDIRIGE = "Redirigé";
+    const abandon = vi.fn();
+    const router = createTestingRouter(
+      [
+        {
+          path: "/",
+          element: (
+            <CompteurTemps
+              idRequete={ID_REQUETE_DEPASSEE}
+              abandonnerRequete={abandon}
+            />
+          )
+        },
+        {
+          path: URL_RECHERCHE_ACTE_INSCRIPTION,
+          element: <div>{REDIRIGE}</div>
+        }
+      ],
+      ["/"]
+    );
+
+    render(<RouterProvider router={router} />);
+
+    await waitFor(() => expect(screen.getByTitle("OK")).toBeDefined());
+    expect(abandon).toHaveBeenCalledOnce();
+
+    fireEvent.click(screen.getByTitle("OK"));
+    await waitFor(() => expect(screen.getByText(REDIRIGE)).toBeDefined());
+  });
+});

@@ -21,7 +21,7 @@ import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import ActeRegistre from "@pages/requeteCreation/commun/composants/ActeRegistre";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
-import { UN, ZERO, getLibelle, shallowEgal, shallowEgalTableau } from "@util/Utils";
+import { UN, ZERO, shallowEgal, shallowEgalTableau } from "@util/Utils";
 import messageManager from "@util/messageManager";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
@@ -31,6 +31,7 @@ import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { BlocageNavigationDetail, BlockerNavigation } from "../../../../composants/commun/blocker/BlockerNavigation";
+import CompteurTemps from "../../../../composants/pages/requetesMiseAJour/compteurTemps/CompteurTemps";
 import { ApercuActeMisAJour } from "./commun/ApercuActeMisAjour";
 import MiseAJourAnalyseMarginale from "./contenu/MiseAJourAnalyseMarginale/MiseAJourAnalyseMarginale";
 import MiseAJourMentions from "./contenu/MiseAJourMentions/MiseAJourMentions";
@@ -240,7 +241,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
     // A revoir quand on aura corriger le bug des onglets de VoletAvecOnglet.
     setOngletSelectionne(ZERO);
     setAffichageApresSignature(true);
-    messageManager.showSuccessAndClose(getLibelle("L'acte a été mis à jour avec succès."));
+    messageManager.showSuccessAndClose("L'acte a été mis à jour avec succès.");
     setEstNavigationBloquee({
       estBloquee: false,
       estPopinAffichee: false
@@ -339,7 +340,7 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
                     title="Abandonner"
                     onClick={onClickBoutonAbandonner}
                   >
-                    {getLibelle("Abandonner")}
+                    {"Abandonner"}
                   </BoutonDoubleSubmit>
                 )}
               </div>
@@ -359,14 +360,14 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
                       disabled={estVerrouilleActualiserEtVisualiser}
                       onClick={actualiserEtVisualiserCallback}
                     >
-                      {getLibelle("Actualiser et visualiser")}
+                      {"Actualiser et visualiser"}
                     </BoutonDoubleSubmit>
                     {estOfficierHabiliterPourTousLesDroits(utilisateurConnecte, [Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE]) && (
                       <BoutonDoubleSubmit
                         disabled={estVerrouilleTerminerEtSigner}
                         onClick={() => setEstPopinSignatureOuverte(true)}
                       >
-                        {getLibelle("Terminer et Signer")}
+                        {"Terminer et Signer"}
                       </BoutonDoubleSubmit>
                     )}
                   </div>
@@ -382,17 +383,24 @@ const ApercuRequeteMiseAJourPage: React.FC = () => {
             <OperationLocaleEnCoursSimple />
           )}
         </MiseAJourMentionsContext.Provider>
+        {idRequeteParam && (
+          <CompteurTemps
+            idRequete={idRequeteParam}
+            abandonnerRequete={() => {
+              abandonnerRequete();
+              setEstNavigationBloquee({ estBloquee: false, estPopinAffichee: false });
+            }}
+          />
+        )}
         <BlockerNavigation
           estNavigationBloquee={estNavigationBloquee}
           onConfirmation={onConfirmationBlocker}
-          titre={getLibelle("Abandon du traitement")}
+          titre={"Abandon du traitement"}
           fonctionAExecuterAvantRedirection={abandonnerRequete}
-          messages={[getLibelle("La saisie en cours sera perdue."), getLibelle("Voulez-vous continuer ?")]}
+          messages={["La saisie en cours sera perdue.", "Voulez-vous continuer ?"]}
         />
       </div>
-      {affichageApresSignature && (
-        <BoutonDoubleSubmit onClick={retourRMCActe}>{getLibelle("Retour rechercher un acte")}</BoutonDoubleSubmit>
-      )}
+      {affichageApresSignature && <BoutonDoubleSubmit onClick={retourRMCActe}>{"Retour rechercher un acte"}</BoutonDoubleSubmit>}
     </div>
   );
 };
@@ -406,7 +414,7 @@ const getListeOngletsGauche = (
 ): ItemListe[] => {
   const liste: ItemListe[] = [
     {
-      titre: getLibelle("Acte Registre"),
+      titre: "Acte Registre",
       component: (
         <ActeRegistre
           idActeAAfficher={idActe}
@@ -418,7 +426,7 @@ const getListeOngletsGauche = (
   ];
   if (estVisibleApercuActeMisAJour) {
     liste.push({
-      titre: getLibelle("Apercu acte mis à jour"),
+      titre: "Apercu acte mis à jour",
       component: (
         <ApercuActeMisAJour
           idActeAAfficher={idActe}
@@ -441,7 +449,7 @@ const getListeOngletsDroit = (
 ): ItemListe[] => {
   const liste: ItemListe[] = [
     {
-      titre: getLibelle("Gérer les mentions"),
+      titre: "Gérer les mentions",
       component: <MiseAJourMentions />,
       index: ZERO
     }
@@ -455,7 +463,7 @@ const getListeOngletsDroit = (
 
   if (mentionChangeAM) {
     liste.push({
-      titre: getLibelle("Analyse marginale"),
+      titre: "Analyse marginale",
       component: (
         <MiseAJourAnalyseMarginale
           onClickAbandonnerDerniereAnalyseMarginaleNonValide={onClickAbandonnerDerniereAnalyseMarginaleNonValide}
