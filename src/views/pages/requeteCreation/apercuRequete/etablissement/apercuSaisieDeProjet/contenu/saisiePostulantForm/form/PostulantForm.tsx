@@ -28,9 +28,9 @@ import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { MessageAvertissement } from "@widget/formulaire/erreur/MessageAvertissement";
 import {
-  compteNombreDePrenoms,
   FormikComponentProps,
   NB_CARACT_MAX_SAISIE,
+  compteNombreDePrenoms,
   withNamespace
 } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
@@ -90,7 +90,6 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
       />
       <PrenomsConnusForm
         libelleAucunPrenom={getLibelle("Pas de prénom")}
-        pasDePrenomConnu={nbPrenoms === 0}
         nom={withNamespace(props.nom, PRENOMS)}
         nbPrenomsAffiche={nbPrenoms}
         nbPrenoms={nbPrenoms}
