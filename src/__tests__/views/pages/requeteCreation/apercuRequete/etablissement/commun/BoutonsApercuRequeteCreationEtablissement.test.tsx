@@ -2,7 +2,7 @@ import { requeteCreationEtablissement } from "@mock/data/requeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
-import { BoutonsApercuCreationEtablissement } from "@pages/requeteCreation/apercuRequete/etablissement/commun/BoutonsApercuRequeteCreationEtablissement";
+import { BoutonsApercuRequeteCreationEtablissement } from "@pages/requeteCreation/apercuRequete/etablissement/commun/BoutonsApercuRequeteCreationEtablissement";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,
@@ -17,7 +17,7 @@ import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 import { localStorageFeatureFlagMock } from "../../../../../../setupTests";
 
-describe.skip("BoutonsApercuCreationEtablissement - ", () => {
+describe("BoutonsApercuCreationEtablissement - ", () => {
   test("DOIT rediriger vers Mes requêtes de création QUAND le bouton affiche Retour mes requêtes", () => {
     const requete = {
       ...requeteCreationEtablissement,
@@ -27,7 +27,7 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
       [
         {
           path: `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`,
-          element: <BoutonsApercuCreationEtablissement requete={requete} />
+          element: <BoutonsApercuRequeteCreationEtablissement requete={requete} />
         },
         {
           path: URL_MES_REQUETES_CREATION,
@@ -39,9 +39,7 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
 
     render(<RouterProvider router={router} />);
 
-    const boutonRetour = screen.getByText(
-      "Retour mes requêtes de création"
-    ) as HTMLButtonElement;
+    const boutonRetour = screen.getByText("Retour mes requêtes de création") as HTMLButtonElement;
     fireEvent.click(boutonRetour);
 
     waitFor(() => {
@@ -58,29 +56,23 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
       [
         {
           path: `${URL_REQUETES_CREATION_SERVICE}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`,
-          element: <BoutonsApercuCreationEtablissement requete={requete} />
+          element: <BoutonsApercuRequeteCreationEtablissement requete={requete} />
         },
         {
           path: URL_REQUETES_CREATION_SERVICE,
           element: <EspaceCreationPage />
         }
       ],
-      [
-        `${URL_REQUETES_CREATION_SERVICE}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`
-      ]
+      [`${URL_REQUETES_CREATION_SERVICE}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`]
     );
 
     render(<RouterProvider router={router} />);
 
-    const boutonRetour = screen.getByText(
-      "Retour requêtes de création de mon service"
-    ) as HTMLButtonElement;
+    const boutonRetour = screen.getByText("Retour requêtes de création de mon service") as HTMLButtonElement;
     fireEvent.click(boutonRetour);
 
     waitFor(() => {
-      expect(router.state.location.pathname).toBe(
-        URL_REQUETES_CREATION_SERVICE
-      );
+      expect(router.state.location.pathname).toBe(URL_REQUETES_CREATION_SERVICE);
     });
   });
 
@@ -93,7 +85,7 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
       [
         {
           path: `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`,
-          element: <BoutonsApercuCreationEtablissement requete={requete} />
+          element: <BoutonsApercuRequeteCreationEtablissement requete={requete} />
         },
         {
           path: URL_RECHERCHE_REQUETE,
@@ -105,9 +97,7 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
 
     render(<RouterProvider router={router} />);
 
-    const boutonRetour = screen.getByText(
-      "Retour recherche requête"
-    ) as HTMLButtonElement;
+    const boutonRetour = screen.getByText("Retour recherche requête") as HTMLButtonElement;
     fireEvent.click(boutonRetour);
 
     waitFor(() => {
@@ -116,10 +106,7 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
   });
 
   test("NE DOIT PAS afficher le bouton 'SIGNER' QUAND le feature flag est désactivé.", () => {
-    localStorageFeatureFlagMock.setItem(
-      "FF_SIGNER_ACTE_ETABLISSEMENT",
-      "false"
-    );
+    localStorageFeatureFlagMock.setItem("FF_SIGNER_ACTE_ETABLISSEMENT", "false");
 
     const mockRequete = {
       ...requeteCreationEtablissement,
@@ -130,19 +117,17 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
         {
           path: `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`,
           element: (
-            <BoutonsApercuCreationEtablissement
+            <BoutonsApercuRequeteCreationEtablissement
               requete={mockRequete}
               conditionAffichageBoutonsApercuActe={true}
-              avancement={AvancementProjetActe.A_SIGNER}
+              avancement={AvancementProjetActe.ACTE_A_SIGNER}
               estRegistreOuvert={true}
               estFormulaireModifie={false}
             />
           )
         }
       ],
-      [
-        `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`
-      ]
+      [`${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`]
     );
 
     render(<RouterProvider router={router} />);
@@ -167,48 +152,43 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
       afficherBoutonSigner: false
     },
     {
-      avancement: AvancementProjetActe.A_SIGNER,
+      avancement: AvancementProjetActe.ACTE_A_SIGNER,
       afficherBoutonSigner: true
     }
-  ])(
-    "DOIT afficher le bouton 'SIGNER' QUAND l'avancement du projet est '$avancement'.",
-    params => {
-      const mockRequete = {
-        ...requeteCreationEtablissement,
-        statutCourant: { statut: StatutRequete.A_TRAITER, dateEffet: 0 }
-      };
-      const router = createTestingRouter(
-        [
-          {
-            path: `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`,
-            element: (
-              <BoutonsApercuCreationEtablissement
-                requete={mockRequete}
-                conditionAffichageBoutonsApercuActe={true}
-                avancement={params.avancement}
-                estRegistreOuvert={true}
-                estFormulaireModifie={false}
-              />
-            )
-          }
-        ],
-        [
-          `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`
-        ]
-      );
-
-      render(<RouterProvider router={router} />);
-
-      waitFor(() => {
-        const boutonSigner = screen.queryByTitle("SIGNER");
-        if (params.afficherBoutonSigner) {
-          expect(boutonSigner).toBeDefined();
-        } else {
-          expect(boutonSigner).not.toBeDefined();
+  ])("DOIT afficher le bouton 'SIGNER' QUAND l'avancement du projet est '$avancement'.", params => {
+    const mockRequete = {
+      ...requeteCreationEtablissement,
+      statutCourant: { statut: StatutRequete.A_TRAITER, dateEffet: 0 }
+    };
+    const router = createTestingRouter(
+      [
+        {
+          path: `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`,
+          element: (
+            <BoutonsApercuRequeteCreationEtablissement
+              requete={mockRequete}
+              conditionAffichageBoutonsApercuActe={true}
+              avancement={params.avancement}
+              estRegistreOuvert={true}
+              estFormulaireModifie={false}
+            />
+          )
         }
-      });
-    }
-  );
+      ],
+      [`${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`]
+    );
+
+    render(<RouterProvider router={router} />);
+
+    waitFor(() => {
+      const boutonSigner = screen.queryByTitle("SIGNER");
+      if (params.afficherBoutonSigner) {
+        expect(boutonSigner).toBeDefined();
+      } else {
+        expect(boutonSigner).not.toBeDefined();
+      }
+    });
+  });
 
   test.each([
     {
@@ -224,50 +204,43 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
       afficherBoutonValideLeProjet: false
     },
     {
-      avancement: AvancementProjetActe.A_SIGNER,
+      avancement: AvancementProjetActe.ACTE_A_SIGNER,
       afficherBoutonValideLeProjet: false
     }
-  ])(
-    "DOIT afficher le bouton 'VALIDER LE PROJET' QUAND l'avancement du projet est '$avancement'.",
-    params => {
-      const mockRequete = {
-        ...requeteCreationEtablissement,
-        statutCourant: { statut: StatutRequete.A_TRAITER, dateEffet: 0 }
-      };
-      const router = createTestingRouter(
-        [
-          {
-            path: `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`,
-            element: (
-              <BoutonsApercuCreationEtablissement
-                requete={mockRequete}
-                conditionAffichageBoutonsApercuActe={true}
-                avancement={params.avancement}
-                estRegistreOuvert={true}
-                estFormulaireModifie={false}
-              />
-            )
-          }
-        ],
-        [
-          `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`
-        ]
-      );
-
-      render(<RouterProvider router={router} />);
-
-      waitFor(() => {
-        const boutonValiderLeProjet = screen.queryByTitle(
-          "Valider le projet d'acte"
-        );
-        if (params.afficherBoutonValideLeProjet) {
-          expect(boutonValiderLeProjet).toBeDefined();
-        } else {
-          expect(boutonValiderLeProjet).not.toBeDefined();
+  ])("DOIT afficher le bouton 'VALIDER LE PROJET' QUAND l'avancement du projet est '$avancement'.", params => {
+    const mockRequete = {
+      ...requeteCreationEtablissement,
+      statutCourant: { statut: StatutRequete.A_TRAITER, dateEffet: 0 }
+    };
+    const router = createTestingRouter(
+      [
+        {
+          path: `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`,
+          element: (
+            <BoutonsApercuRequeteCreationEtablissement
+              requete={mockRequete}
+              conditionAffichageBoutonsApercuActe={true}
+              avancement={params.avancement}
+              estRegistreOuvert={true}
+              estFormulaireModifie={false}
+            />
+          )
         }
-      });
-    }
-  );
+      ],
+      [`${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`]
+    );
+
+    render(<RouterProvider router={router} />);
+
+    waitFor(() => {
+      const boutonValiderLeProjet = screen.queryByTitle("Valider le projet d'acte");
+      if (params.afficherBoutonValideLeProjet) {
+        expect(boutonValiderLeProjet).toBeDefined();
+      } else {
+        expect(boutonValiderLeProjet).not.toBeDefined();
+      }
+    });
+  });
 
   test("NE DOIT PAS afficher le bouton SIGNER QUAND le projet n'est pas a signer", () => {
     const mockRequete = {
@@ -279,7 +252,7 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
         {
           path: `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`,
           element: (
-            <BoutonsApercuCreationEtablissement
+            <BoutonsApercuRequeteCreationEtablissement
               requete={mockRequete}
               conditionAffichageBoutonsApercuActe={true}
               avancement={AvancementProjetActe.EN_COURS}
@@ -289,9 +262,7 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
           )
         }
       ],
-      [
-        `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`
-      ]
+      [`${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`]
     );
 
     render(<RouterProvider router={router} />);
@@ -311,19 +282,17 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
         {
           path: `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`,
           element: (
-            <BoutonsApercuCreationEtablissement
+            <BoutonsApercuRequeteCreationEtablissement
               requete={mockRequete}
               conditionAffichageBoutonsApercuActe={true}
-              avancement={AvancementProjetActe.A_SIGNER}
+              avancement={AvancementProjetActe.ACTE_A_SIGNER}
               estRegistreOuvert={true}
               estFormulaireModifie={false}
             />
           )
         }
       ],
-      [
-        `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`
-      ]
+      [`${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`]
     );
 
     render(<RouterProvider router={router} />);
@@ -345,19 +314,17 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
         {
           path: `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`,
           element: (
-            <BoutonsApercuCreationEtablissement
+            <BoutonsApercuRequeteCreationEtablissement
               requete={mockRequete}
               conditionAffichageBoutonsApercuActe={true}
-              avancement={AvancementProjetActe.A_SIGNER}
+              avancement={AvancementProjetActe.ACTE_A_SIGNER}
               estRegistreOuvert={false}
               estFormulaireModifie={false}
             />
           )
         }
       ],
-      [
-        `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`
-      ]
+      [`${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`]
     );
 
     render(<RouterProvider router={router} />);
@@ -366,11 +333,7 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
 
     waitFor(() => {
       expect(boutonSigner.disabled).toBeTruthy();
-      expect(
-        screen.queryByText(
-          "Le registre n'est pas ouvert. Vous ne pouvez pas signer l'acte."
-        )
-      ).toBeDefined();
+      expect(screen.queryByText("Le registre n'est pas ouvert. Vous ne pouvez pas signer l'acte.")).toBeDefined();
     });
   });
 
@@ -384,19 +347,17 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
         {
           path: `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`,
           element: (
-            <BoutonsApercuCreationEtablissement
+            <BoutonsApercuRequeteCreationEtablissement
               requete={mockRequete}
               conditionAffichageBoutonsApercuActe={true}
-              avancement={AvancementProjetActe.A_SIGNER}
+              avancement={AvancementProjetActe.ACTE_A_SIGNER}
               estRegistreOuvert={true}
               estFormulaireModifie={true}
             />
           )
         }
       ],
-      [
-        `${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`
-      ]
+      [`${URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}`]
     );
 
     render(<RouterProvider router={router} />);
@@ -405,11 +366,7 @@ describe.skip("BoutonsApercuCreationEtablissement - ", () => {
 
     waitFor(() => {
       expect(boutonSigner.disabled).toBeTruthy();
-      expect(
-        screen.queryByText(
-          'Des données ont été modifiées. Veuillez cliquer sur le bouton "Actualiser et Visualiser".'
-        )
-      ).toBeDefined();
+      expect(screen.queryByText('Des données ont été modifiées. Veuillez cliquer sur le bouton "Actualiser et Visualiser".')).toBeDefined();
     });
   });
 });

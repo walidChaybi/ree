@@ -55,7 +55,7 @@ import {
   getConteneurResumeRequete,
   onRenommePieceJustificativeEtablissement
 } from "../commun/ApercuRequeteEtablissementUtils";
-import { BoutonsApercuCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
+import { BoutonsApercuRequeteCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
 import "../commun/scss/OngletsApercuCreationEtablissement.scss";
 import { SaisiePostulantForm } from "./contenu/saisiePostulantForm/SaisiePostulantForm";
 import { useProjetActeHook } from "./contenu/saisiePostulantForm/hook/ProjetActeHook";
@@ -389,7 +389,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
               ongletSelectionne={ongletSelectionne}
               handleChange={handleChange}
             />
-            <BoutonsApercuCreationEtablissement
+            <BoutonsApercuRequeteCreationEtablissement
               requete={requete}
               conditionAffichageBoutonsApercuActe={
                 ongletSelectionne === DEUX && Boolean(documentComposer)

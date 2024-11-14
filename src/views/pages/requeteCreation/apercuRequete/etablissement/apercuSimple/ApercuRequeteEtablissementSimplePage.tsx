@@ -1,6 +1,6 @@
 import {
-  IDetailRequeteParams,
-  useDetailRequeteApiHook
+    IDetailRequeteParams,
+    useDetailRequeteApiHook
 } from "@hook/requete/DetailRequeteHook";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
@@ -14,11 +14,11 @@ import { useLocation, useParams } from "react-router-dom";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import { SuiviDossier } from "../apercuPriseEnCharge/contenu/SuiviDossier";
 import {
-  getConteneurPieceJustificative,
-  getConteneurResumeRequete,
-  onRenommePieceJustificativeEtablissement
+    getConteneurPieceJustificative,
+    getConteneurResumeRequete,
+    onRenommePieceJustificativeEtablissement
 } from "../commun/ApercuRequeteEtablissementUtils";
-import { BoutonsApercuCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
+import { BoutonsApercuRequeteCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
 import "../commun/scss/OngletsApercuCreationEtablissement.scss";
 
 interface ApercuRequeteEtablissementSimplePageProps {
@@ -113,7 +113,7 @@ export const ApercuRequeteEtablissementSimplePage: React.FC<
 
           <div className="OngletsApercuCreationEtablissement">
             <VoletAvecOnglet liste={liste} />
-            <BoutonsApercuCreationEtablissement requete={requete} />
+            <BoutonsApercuRequeteCreationEtablissement requete={requete} />
           </div>
 
           {getConteneurPieceJustificative(

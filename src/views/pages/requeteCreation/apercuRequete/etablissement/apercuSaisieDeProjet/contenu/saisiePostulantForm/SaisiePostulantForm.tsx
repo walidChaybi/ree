@@ -11,10 +11,7 @@ import {
   TITULAIRE,
   TYPE
 } from "@composant/formulaire/ConstantesNomsForm";
-import {
-  RECEContextActions,
-  RECEContextData
-} from "@core/contexts/RECEContext";
+import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
@@ -22,10 +19,7 @@ import { DEUX, UN, getLibelle } from "@util/Utils";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import {
-  getLibelleParentFromSexe,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { getLibelleParentFromSexe, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import FormikEffect from "@widget/formulaire/utils/FormikEffect";
 import { FormikHelpers } from "formik";
 import React, { useContext } from "react";
@@ -43,36 +37,22 @@ interface ISaisiePostulantFormProps {
   estProjetExistant: boolean;
   valeursForm?: ISaisieProjetPostulantForm;
   avancementProjet?: AvancementProjetActe;
-  onSubmitSaisieProjetForm: (
-    valeurs: ISaisieProjetPostulantForm,
-    formikHelpers?: FormikHelpers<ISaisieProjetPostulantForm>
-  ) => void;
+  onSubmitSaisieProjetForm: (valeurs: ISaisieProjetPostulantForm, formikHelpers?: FormikHelpers<ISaisieProjetPostulantForm>) => void;
 }
 
-export const SaisiePostulantForm: React.FC<
-  ISaisiePostulantFormProps
-> = props => {
+export const SaisiePostulantForm: React.FC<ISaisiePostulantFormProps> = props => {
   const { isDirty } = useContext(RECEContextData);
   const { setIsDirty } = useContext(RECEContextActions);
 
-
-  const libelleParent1 = getLibelleParentFromSexe(
-    UN,
-    props.valeursForm?.parents.parent1
-  );
-  const libelleParent2 = getLibelleParentFromSexe(
-    DEUX,
-    props.valeursForm?.parents.parent2
-  );
+  const libelleParent1 = getLibelleParentFromSexe(UN, props.valeursForm?.parents.parent1);
+  const libelleParent2 = getLibelleParentFromSexe(DEUX, props.valeursForm?.parents.parent2);
   const elementListe = [
     {
       libelle: "Postulant",
       element: (
         <PostulantForm
           nom={TITULAIRE}
-          afficherMessageNaissance={estJourMoisVide(
-            props.postulant.retenueSdanf
-          )}
+          afficherMessageNaissance={estJourMoisVide(props.postulant.retenueSdanf)}
         />
       )
     },
@@ -88,13 +68,19 @@ export const SaisiePostulantForm: React.FC<
     {
       libelle: libelleParent1,
       element: (
-        <ParentForm nom={`${PARENTS}.${PARENT1}`} libelle={libelleParent1} />
+        <ParentForm
+          nom={`${PARENTS}.${PARENT1}`}
+          libelle={libelleParent1}
+        />
       )
     },
     {
       libelle: libelleParent2,
       element: (
-        <ParentForm nom={`${PARENTS}.${PARENT2}`} libelle={libelleParent2} />
+        <ParentForm
+          nom={`${PARENTS}.${PARENT2}`}
+          libelle={libelleParent2}
+        />
       )
     },
     {
@@ -104,17 +90,13 @@ export const SaisiePostulantForm: React.FC<
   ];
 
   props.avancementProjet &&
-    !AvancementProjetActe.getAvancementsMasquantAcquisitionDecret().includes(
-      props.avancementProjet
-    ) &&
+    !AvancementProjetActe.getAvancementsMasquantAcquisitionDecret().includes(props.avancementProjet) &&
     elementListe.push({
       libelle: getLibelle("Acquisition"),
       element: (
         <AcquisitionForm
           nom={ACQUISITION}
-          estAvancementASigner={AvancementProjetActe.estASigner(
-            props.avancementProjet
-          )}
+          estAvancementASigner={AvancementProjetActe.estActeASigner(props.avancementProjet)}
         />
       )
     });
@@ -123,9 +105,7 @@ export const SaisiePostulantForm: React.FC<
     <div className="Postulant">
       <Formulaire
         formDefaultValues={props.valeursForm}
-        formValidationSchema={getPostulantValidationSchema(
-          props.avancementProjet
-        )}
+        formValidationSchema={getPostulantValidationSchema(props.avancementProjet)}
         onSubmit={props.onSubmitSaisieProjetForm}
         className="FormulairePostulant"
       >
@@ -147,7 +127,10 @@ export const SaisiePostulantForm: React.FC<
           />
         </div>
         <GestionnaireElementScroll elementListe={elementListe} />
-        <BoutonDoubleSubmit type="submit" disabled={!isDirty && props.estProjetExistant}>
+        <BoutonDoubleSubmit
+          type="submit"
+          disabled={!isDirty && props.estProjetExistant}
+        >
           {getLibelle("Actualiser et visualiser")}
         </BoutonDoubleSubmit>
       </Formulaire>

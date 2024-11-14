@@ -5,7 +5,7 @@ import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 
-describe.skip("Test de la page Aperçu requête etablissement Acte Registre", () => {
+describe("Test de la page Aperçu requête etablissement Acte Registre", () => {
   test("DOIT afficher les onglet RMC, PJ et ActeRegistre QUAND on arrive sur la page", () => {
     const router = createTestingRouter(
       [

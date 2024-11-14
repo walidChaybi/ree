@@ -22,7 +22,7 @@ import { BlocInformatif } from "../../../../../common/composant/BlocInformatif/B
 import { BoutonPrendreEnChargeCreation } from "./BoutonPrendreEnChargeCreation";
 import "./scss/OngletsApercuCreationEtablissement.scss";
 
-interface BoutonsApercuCreationEtablissementProps {
+interface BoutonsApercuRequeteCreationEtablissementProps {
   requete: IRequeteCreationEtablissement;
   conditionAffichageBoutonsApercuActe?: boolean;
   avancement?: AvancementProjetActe;
@@ -34,40 +34,25 @@ interface BoutonsApercuCreationEtablissementProps {
 }
 
 const RETOUR_RECHERCHE_REQUETE = getLibelle("Retour recherche requête");
-const RETOUR_MES_REQUETES_CREATION = getLibelle(
-  "Retour mes requêtes de création"
-);
-const RETOUR_REQUETES_SERVICE_CREATION = getLibelle(
-  "Retour requêtes de création de mon service"
-);
+const RETOUR_MES_REQUETES_CREATION = getLibelle("Retour mes requêtes de création");
+const RETOUR_REQUETES_SERVICE_CREATION = getLibelle("Retour requêtes de création de mon service");
 const RETOUR_SUIVI_DOSSIER = getLibelle("Retour apercu suivi dossier");
-const ERREUR_REGISTRE_NON_OUVERT = getLibelle(
-  "Le registre n'est pas ouvert. Vous ne pouvez pas signer l'acte."
-);
+const ERREUR_REGISTRE_NON_OUVERT = getLibelle("Le registre n'est pas ouvert. Vous ne pouvez pas signer l'acte.");
 const ERREUR_DONNEES_MODIFIEES_FORMULAIRE = getLibelle(
   'Des données ont été modifiées. Veuillez cliquer sur le bouton "Actualiser et Visualiser".'
 );
 
-export const BoutonsApercuCreationEtablissement: React.FC<
-  BoutonsApercuCreationEtablissementProps
-> = props => {
-  const { idRequeteParam, idSuiviDossierParam } =
-    useParams<TUuidSuiviDossierParams>();
+export const BoutonsApercuRequeteCreationEtablissement: React.FC<BoutonsApercuRequeteCreationEtablissementProps> = props => {
+  const { idRequeteParam, idSuiviDossierParam } = useParams<TUuidSuiviDossierParams>();
   const navigate = useNavigate();
   const location = useLocation();
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const estPresentBoutonPriseEnCharge =
-    autorisePrendreEnChargeDepuisPageCreation(
-      utilisateurConnecte,
-      props.requete
-    );
+  const estPresentBoutonPriseEnCharge = autorisePrendreEnChargeDepuisPageCreation(utilisateurConnecte, props.requete);
 
-  const estProjetActeASigner =
-    props.avancement && AvancementProjetActe.estASigner(props.avancement);
+  const estProjetActeASigner = props.avancement && AvancementProjetActe.estActeASigner(props.avancement);
 
-  const estBoutonSignatureDesactive =
-    !props.estRegistreOuvert || props.estFormulaireModifie;
+  const estBoutonSignatureDesactive = !props.estRegistreOuvert || props.estFormulaireModifie;
 
   const boutonRetour = useMemo(() => {
     const pathname = location.pathname;
@@ -77,9 +62,7 @@ export const BoutonsApercuCreationEtablissement: React.FC<
     };
     if (pathname.includes(PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET)) {
       bouton.libelle = RETOUR_SUIVI_DOSSIER;
-      bouton.url = `${getUrlPrecedente(
-        location.pathname
-      )}/${PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER}/${props.requete.id}`;
+      bouton.url = `${getUrlPrecedente(location.pathname)}/${PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER}/${props.requete.id}`;
     } else if (pathname.startsWith(URL_MES_REQUETES_CREATION)) {
       bouton.libelle = RETOUR_MES_REQUETES_CREATION;
       bouton.url = URL_MES_REQUETES_CREATION;
@@ -133,12 +116,7 @@ export const BoutonsApercuCreationEtablissement: React.FC<
             // navigate() ne doit pas être là, ce n'est pas cette fonction qui doit s'occuper de la redirection.
             // En retirant ce navigate() on observe une erreur de redirection de la part de useNavigationApercuCreationHook,
             // il faut corriger le problème à ce niveau !
-            navigate(
-              location.pathname.replace(
-                PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,
-                PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER
-              )
-            )
+            navigate(location.pathname.replace(PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE, PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER))
           }
         />
       )}
@@ -159,10 +137,8 @@ export const BoutonsApercuCreationEtablissement: React.FC<
                 {getLibelle("Valider le projet d'acte")}
               </BoutonDoubleSubmit>
             )}
-            {gestionnaireFeatureFlag.estActif(
-              FeatureFlag.FF_SIGNER_ACTE_ETABLISSEMENT
-            ) &&
-              AvancementProjetActe.estASigner(props.avancement) && (
+            {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_SIGNER_ACTE_ETABLISSEMENT) &&
+              AvancementProjetActe.estActeASigner(props.avancement) && (
                 <BoutonDoubleSubmit
                   disabled={estBoutonSignatureDesactive}
                   title={getLibelle("SIGNER")}

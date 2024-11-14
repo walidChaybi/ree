@@ -71,7 +71,11 @@ export function getConteneurPieceJustificative(
   rechargerRequete: () => void
 ): JSX.Element {
   return (
-    <ConteneurRetractable titre={"Pièces justificatives"} className="FocusPieceJustificative" estADroite={true}>
+    <ConteneurRetractable
+      titre={"Pièces justificatives"}
+      className="FocusPieceJustificative"
+      estADroite={true}
+    >
       <OngletPiecesJustificatives
         requete={requete}
         onRenommePieceJustificative={onRenommePieceJustificative}
@@ -178,7 +182,7 @@ export function estModificationsDonneesBIAAnnuler(
   saisieProjetPostulant: ISaisieProjetPostulantForm
 ): boolean {
   return (
-    (AvancementProjetActe.estProjetValide(avancement) || AvancementProjetActe.estASigner(avancement)) &&
+    (AvancementProjetActe.estProjetValide(avancement) || AvancementProjetActe.estActeASigner(avancement)) &&
     estModifieBulletinIdentification(saisieProjetPostulant, projetActe) &&
     !window.confirm(
       `Attention ! Vous avez modifié des données des cinq items après validation du BI ou après publication du décret.\n\nVoulez-vous continuer ?`
@@ -190,17 +194,12 @@ export function annulerModificationBulletinIdentification(
   formikHelpers: FormikHelpers<ISaisieProjetPostulantForm>,
   projetActe: IProjetActe
 ): void {
-  const modifierChampAvecValeur = (
-    nomsChamp: string[],
-    valeur?: string | number | Prenoms
-  ) => {
+  const modifierChampAvecValeur = (nomsChamp: string[], valeur?: string | number | Prenoms) => {
     formikHelpers.setFieldValue(jointAvec(nomsChamp, "."), valeur);
   };
 
   const postulantProjetActe = getPostulantProjetActe(projetActe);
-  const analyseMarginalePostulant = getPostulantAnalyseMarginale(
-    projetActe.analyseMarginales
-  );
+  const analyseMarginalePostulant = getPostulantAnalyseMarginale(projetActe.analyseMarginales);
 
   const champsPrenoms = analyseMarginalePostulant?.prenoms
     ? analyseMarginalePostulant?.prenoms.reduce<Prenoms>(
@@ -212,41 +211,19 @@ export function annulerModificationBulletinIdentification(
       )
     : {};
 
-  modifierChampAvecValeur(
-    [TITULAIRE, ANALYSE_MARGINALE, NOM],
-    analyseMarginalePostulant?.nom ?? ""
-  );
-  modifierChampAvecValeur(
-    [TITULAIRE, ANALYSE_MARGINALE, PRENOMS],
-    champsPrenoms
-  );
+  modifierChampAvecValeur([TITULAIRE, ANALYSE_MARGINALE, NOM], analyseMarginalePostulant?.nom ?? "");
+  modifierChampAvecValeur([TITULAIRE, ANALYSE_MARGINALE, PRENOMS], champsPrenoms);
   modifierChampAvecValeur([TITULAIRE, SEXE], postulantProjetActe.sexe);
   modifierChampAvecValeur(
     [TITULAIRE, DATE_NAISSANCE, JOUR],
-    postulantProjetActe.naissance?.jour
-      ? rempliAGaucheAvecZero(postulantProjetActe.naissance?.jour)
-      : undefined
+    postulantProjetActe.naissance?.jour ? rempliAGaucheAvecZero(postulantProjetActe.naissance?.jour) : undefined
   );
   modifierChampAvecValeur(
     [TITULAIRE, DATE_NAISSANCE, MOIS],
-    postulantProjetActe.naissance?.mois
-      ? rempliAGaucheAvecZero(postulantProjetActe.naissance?.mois)
-      : undefined
+    postulantProjetActe.naissance?.mois ? rempliAGaucheAvecZero(postulantProjetActe.naissance?.mois) : undefined
   );
-  modifierChampAvecValeur(
-    [TITULAIRE, DATE_NAISSANCE, ANNEE],
-    postulantProjetActe.naissance?.annee
-  );
-  modifierChampAvecValeur(
-    [TITULAIRE, LIEU_DE_NAISSANCE, VILLE_NAISSANCE],
-    postulantProjetActe.naissance?.ville ?? ""
-  );
-  modifierChampAvecValeur(
-    [TITULAIRE, LIEU_DE_NAISSANCE, ETAT_CANTON_PROVINCE],
-    postulantProjetActe.naissance?.region ?? ""
-  );
-  modifierChampAvecValeur(
-    [TITULAIRE, LIEU_DE_NAISSANCE, PAYS_NAISSANCE],
-    postulantProjetActe.naissance?.pays ?? ""
-  );
+  modifierChampAvecValeur([TITULAIRE, DATE_NAISSANCE, ANNEE], postulantProjetActe.naissance?.annee);
+  modifierChampAvecValeur([TITULAIRE, LIEU_DE_NAISSANCE, VILLE_NAISSANCE], postulantProjetActe.naissance?.ville ?? "");
+  modifierChampAvecValeur([TITULAIRE, LIEU_DE_NAISSANCE, ETAT_CANTON_PROVINCE], postulantProjetActe.naissance?.region ?? "");
+  modifierChampAvecValeur([TITULAIRE, LIEU_DE_NAISSANCE, PAYS_NAISSANCE], postulantProjetActe.naissance?.pays ?? "");
 }

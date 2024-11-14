@@ -141,7 +141,7 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
 
   test("DOIT afficher le formulaire d'acquisition QUAND l'avancement est a signer'.", () => {
     const requete = mappingRequeteCreation(requeteCreationEtablissementSaisieProjet);
-    afficheComposantSaisiePostulantForm(requete.titulaires!, AvancementProjetActe.A_SIGNER);
+    afficheComposantSaisiePostulantForm(requete.titulaires!, AvancementProjetActe.ACTE_A_SIGNER);
     expect(screen.queryByTitle("Acquisition")).toBeDefined();
   });
 

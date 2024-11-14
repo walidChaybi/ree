@@ -17,7 +17,9 @@ import { IDecretNaturalisation } from "@model/etatcivil/acte/IDecretNaturalisati
 import { IRegistre } from "@model/etatcivil/acte/IRegistre";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import {
+  estModificationsDonneesBIAAnnuler,
   estModifieBulletinIdentification,
   estOuvertRegistrePapier
 } from "@pages/requeteCreation/apercuRequete/etablissement/commun/ApercuRequeteEtablissementUtils";
@@ -48,6 +50,29 @@ describe("Test la modification des donnees du BI.", () => {
     }
   } as any as ISaisieProjetPostulantForm;
 
+  const SAISIE_PROJET_MODIFIE = {
+    [TITULAIRE]: {
+      [ANALYSE_MARGINALE]: {
+        [NOM]: "NomModifie",
+        [PRENOMS]: {
+          prenom1: "Prenom1Modifie",
+          prenom2: "Prenom2Modifie"
+        }
+      },
+      [SEXE]: "MASCULIN",
+      [DATE_NAISSANCE]: {
+        [JOUR]: "02",
+        [MOIS]: "02",
+        [ANNEE]: "2002"
+      },
+      [LIEU_DE_NAISSANCE]: {
+        [VILLE_NAISSANCE]: "VilleModifie",
+        [ETAT_CANTON_PROVINCE]: "RegionModifie",
+        [PAYS_NAISSANCE]: "PaysModifie"
+      }
+    }
+  } as any as ISaisieProjetPostulantForm;
+
   const PROJET_ACTE = {
     analyseMarginales: [
       {
@@ -73,6 +98,17 @@ describe("Test la modification des donnees du BI.", () => {
   test("DOIT renvoyer 'false' QUAND le projet d'acte est undefined.", () => {
     expect(estModifieBulletinIdentification(SAISIE_PROJET, undefined)).toBeFalsy();
   });
+
+  test("DOIT renvoyer 'true' QUAND les donnees du BI doivent etre annuler", () => {
+    expect(estModificationsDonneesBIAAnnuler(AvancementProjetActe.ACTE_A_SIGNER, PROJET_ACTE, SAISIE_PROJET_MODIFIE)).toBeTruthy();
+    expect(estModificationsDonneesBIAAnnuler(AvancementProjetActe.VALIDE, PROJET_ACTE, SAISIE_PROJET_MODIFIE)).toBeTruthy();
+  })
+
+  test("DOIT renvoyer 'false' QUAND les donnees du BI ne doivent pas etre annuler", () => {
+    expect(estModificationsDonneesBIAAnnuler(AvancementProjetActe.A_SAISIR, PROJET_ACTE, SAISIE_PROJET)).toBeFalsy();
+    expect(estModificationsDonneesBIAAnnuler(AvancementProjetActe.A_VERIFIER, PROJET_ACTE, SAISIE_PROJET)).toBeFalsy();
+    expect(estModificationsDonneesBIAAnnuler(AvancementProjetActe.EN_COURS, PROJET_ACTE, SAISIE_PROJET)).toBeFalsy();
+  })
 
   test("DOIT renvoyer 'false' QUAND les données de la saisie sont identiques aux données du projet d'acte.", () => {
     expect(estModifieBulletinIdentification(SAISIE_PROJET, PROJET_ACTE)).toBeFalsy();

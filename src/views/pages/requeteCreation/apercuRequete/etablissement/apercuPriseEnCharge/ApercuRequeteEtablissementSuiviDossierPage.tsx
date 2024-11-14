@@ -3,12 +3,12 @@ import {
   useDetailRequeteApiHook
 } from "@hook/requete/DetailRequeteHook";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
-import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
+import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { DEUX, getLibelle } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
@@ -21,7 +21,7 @@ import {
   getConteneurResumeRequete,
   onRenommePieceJustificativeEtablissement
 } from "../commun/ApercuRequeteEtablissementUtils";
-import { BoutonsApercuCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
+import { BoutonsApercuRequeteCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
 import "../commun/scss/OngletsApercuCreationEtablissement.scss";
 import { SuiviDossier } from "./contenu/SuiviDossier";
 
@@ -154,7 +154,7 @@ export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<
 
           <div className="OngletsApercuCreationEtablissement">
             <VoletAvecOnglet liste={liste} ongletParDefault={DEUX} />
-            <BoutonsApercuCreationEtablissement requete={requete} />
+            <BoutonsApercuRequeteCreationEtablissement requete={requete} />
           </div>
 
           {getConteneurPieceJustificative(

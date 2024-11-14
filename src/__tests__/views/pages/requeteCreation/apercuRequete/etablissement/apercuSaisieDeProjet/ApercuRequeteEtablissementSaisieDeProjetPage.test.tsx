@@ -12,7 +12,7 @@ import "../../../../../../../mock/element/IntersectionObserver";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 
 describe("Test de la page Aperçu requête etablissement sasie projet", () => {
-  test.skip("DOIT afficher l'onglet pièces justificatives et postulant QUAND on arrive sur la page", () => {
+  test("DOIT afficher l'onglet pièces justificatives et postulant QUAND on arrive sur la page", () => {
     afficherPageRequeteCreationEtablissment();
 
     waitFor(() => {
@@ -31,10 +31,10 @@ describe("Test de la page Aperçu requête etablissement sasie projet", () => {
     });
   });
 
-  test.skip("DOIT changer d'onglet selectionner QUAND on clique sur le bouton actualiser & visualiser", () => {
-    afficherPageRequeteCreationEtablissment();
+  test("DOIT changer d'onglet selectionner QUAND on clique sur le bouton actualiser & visualiser", async () => {
+     afficherPageRequeteCreationEtablissment();
 
-    waitFor(() => {
+     await waitFor(() => {
       expect(screen.getByText("Apercu du projet")).toBeDefined();
       expect(
         screen.getByText("Apercu du projet").getAttribute("aria-selected")

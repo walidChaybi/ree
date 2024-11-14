@@ -10,7 +10,7 @@ import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 
-describe.skip("Test de la page Aperçu requête etablissement suivi dossier", () => {
+describe("Test de la page Aperçu requête etablissement suivi dossier", () => {
   test("DOIT afficher les onglets avec pièce justificative active QUAND on arrive sur la page", () => {
     afficherPageRequeteCreationEtablissment();
 

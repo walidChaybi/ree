@@ -1,7 +1,7 @@
 import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
 import { IRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { IDataTableauActeInscriptionSelectionne } from "@pages/requeteCreation/commun/composants/tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
@@ -9,10 +9,10 @@ import { DEUX, getLibelle } from "@util/Utils";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React from "react";
 import {
-  OngletPiecesJustificatives,
-  typeFctRenommePieceJustificative
+    OngletPiecesJustificatives,
+    typeFctRenommePieceJustificative
 } from "../../../../commun/composants/OngletPiecesJustificatives";
-import { BoutonsApercuCreationEtablissement } from "../../commun/BoutonsApercuRequeteCreationEtablissement";
+import { BoutonsApercuRequeteCreationEtablissement } from "../../commun/BoutonsApercuRequeteCreationEtablissement";
 import "../../commun/scss/OngletsApercuCreationEtablissement.scss";
 import { SuiviDossier } from "./SuiviDossier";
 
@@ -100,7 +100,7 @@ export const OngletsApercuCreationEtablissementPriseEnCharge: React.FC<
   return (
     <div className="OngletsApercuCreationEtablissement">
       <VoletAvecOnglet liste={liste} ongletParDefault={DEUX} />
-      <BoutonsApercuCreationEtablissement requete={props.requete} />
+      <BoutonsApercuRequeteCreationEtablissement requete={props.requete} />
     </div>
   );
 };
