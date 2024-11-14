@@ -19,9 +19,9 @@ import Add from "@mui/icons-material/Add";
 import Clear from "@mui/icons-material/Clear";
 import { getParamsCreationEC } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { EditionDelivranceContext } from "../../../../contexts/EditionDelivranceContextProvider";
-import Bouton from "../../../commun/bouton/Bouton";
-import PageChargeur from "../../../commun/chargeurs/PageChargeur";
+import { EditionDelivranceContext } from "../../../../../contexts/EditionDelivranceContextProvider";
+import Bouton from "../../../../commun/bouton/Bouton";
+import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
 
 interface IBoutonAjoutSuppressionDocumentProps {
   documentsDelivrance: {
@@ -42,7 +42,7 @@ const BoutonAjoutSuppressionDocument: React.FC<
     () =>
       !ChoixDelivrance.estReponseSansDelivrance(requete.choixDelivrance) &&
       requete.choixDelivrance !== ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE &&
-      !requete.provenanceRequete.provenancePlanete &&
+      !requete.provenanceRequete?.provenancePlanete &&
       StatutRequete.TRANSMISE_A_VALIDEUR !== requete.statutCourant.statut &&
       !SousTypeDelivrance.estRDDP(requete.sousType) &&
       Boolean(requete.documentsReponses.length),
@@ -123,9 +123,9 @@ const BoutonAjoutSuppressionDocument: React.FC<
   return boutonDisponible ? (
     <>
       {operationEnCours && <PageChargeur />}
-      <div className="relative" onMouseLeave={() => setMenuOuvert(false)}>
+      <div className="group relative" onMouseLeave={() => setMenuOuvert(false)}>
         <Bouton
-          className={`${styleBouton} border-dashed`}
+          className={`${styleBouton} flex items-center justify-center border-dashed group-hover:bg-bleu group-hover:text-blanc`}
           styleBouton={ajoutDocument ? "secondaire" : "suppression"}
           type="button"
           title={
@@ -141,11 +141,11 @@ const BoutonAjoutSuppressionDocument: React.FC<
         </Bouton>
 
         {ajoutDocument && menuOuvert && (
-          <div className="z-2 absolute left-0 top-full animate-apparition-menu overflow-hidden rounded-md bg-bleu-sombre shadow-[0px_5px_5px_-3px_rgba(0,0,0,0.2),0px_8px_10px_1px_rgba(0,0,0,0.14),0px_3px_14px_2px_rgba(0,0,0,0.12)]">
+          <div className="absolute left-0 top-full z-10 animate-apparition overflow-hidden rounded-md rounded-tl-none bg-blanc shadow-lg">
             {listeDocuments.map((itemListe) => (
               <button
                 key={itemListe.cle}
-                className="m-0 block w-full whitespace-nowrap rounded-none px-8 py-4 text-left font-sans normal-case text-blanc no-underline transition-colors duration-200 ease-in-out hover:bg-bleu"
+                className="duration-250 m-0 block w-full whitespace-nowrap rounded-none bg-bleu px-8 py-2.5 text-left font-sans font-semibold normal-case text-blanc no-underline transition-opacity ease-in-out hover:opacity-75"
                 type="button"
                 onClick={() => ajouterDocument(itemListe.cle)}
               >

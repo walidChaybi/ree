@@ -1,40 +1,33 @@
-import "./Bouton.scss";
-
-type BoutonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
-
-export type TStyleBouton =
-  | "principal"
-  | "secondaire"
-  | "suppression"
-  | "desactive";
+export type TStyleBouton = "principal" | "secondaire" | "suppression";
 
 const getStyleBouton = (styleBouton?: TStyleBouton) => {
   switch (styleBouton) {
     case "principal":
-      return `border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu`;
+      return `border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu disabled:bg-bleu-sombre `;
     case "secondaire":
-      return "border-bleu-sombre bg-blanc text-bleu-sombre hover:text-blanc hover:bg-bleu hover:border-bleu";
+      return "border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu hover:border-bleu";
     case "suppression":
       return "border-rouge bg-blanc text-rouge hover:border-rouge hover:bg-rouge hover:text-blanc";
     default:
       return;
   }
 };
-
-interface CustomBoutonProps
+export interface IBoutonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   styleBouton?: TStyleBouton;
+  garderStyleSiDisabled?: boolean;
 }
 
-const Bouton = ({
-  styleBouton,
+const Bouton: React.FC<React.PropsWithChildren<IBoutonProps>> = ({
+  styleBouton = "principal",
+  garderStyleSiDisabled = false,
   children,
   className,
   ...props
-}: React.PropsWithChildren<CustomBoutonProps>) => {
+}) => {
   return (
     <button
-      className={`bouton-rece ${getStyleBouton(styleBouton)} ${className ?? ""}`.trim()}
+      className={`m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors ${getStyleBouton(styleBouton)} ${!garderStyleSiDisabled && "disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"} ${className ?? ""}`.trim()}
       {...props}
     >
       {children}
@@ -43,5 +36,3 @@ const Bouton = ({
 };
 
 export default Bouton;
-
-

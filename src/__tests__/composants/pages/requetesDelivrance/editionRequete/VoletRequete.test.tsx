@@ -2,7 +2,7 @@ import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { render, screen } from "@testing-library/react";
 import { expect, test } from "vitest";
-import VoletRequete from "../../../../../composants/pages/requetesDelivrance/editionRequete/VoletRequete";
+import VoletRequete from "../../../../../composants/pages/requetesDelivrance/editionRequete/partieActeRequete/VoletRequete";
 
 const requeteMock = {
   ...requeteDelivrance,

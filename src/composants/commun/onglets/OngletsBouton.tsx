@@ -21,14 +21,15 @@ const OngletsBouton: React.FC<IOngletsBoutonProps> = ({
   renderBoutonAjout,
 }) => {
   return (
-    <div className="flex border-b border-gris">
+    <div className="flex border-0 border-b border-solid border-gris">
       {onglets.map((onglet: IOngletBouton) => (
         <Bouton
           key={onglet.cle}
           styleBouton={
             cleOngletActif === onglet.cle ? "principal" : "secondaire"
           }
-          className={`${cleOngletActif === onglet.cle ? "disabled:bg-bleu-sombre" : "disabled:border-gris disabled:bg-gris"} m-0 h-14 max-w-60 rounded-b-none rounded-t-lg border border-b-0 border-l-0 border-solid px-4 py-1.5 transition duration-200 ease-in-out first:border-l`}
+          garderStyleSiDisabled={cleOngletActif === onglet.cle}
+          className="m-0 h-11 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
           type="button"
           title={onglet.libelle}
           disabled={cleOngletActif === onglet.cle || onglet.inactif}
@@ -38,7 +39,7 @@ const OngletsBouton: React.FC<IOngletsBoutonProps> = ({
         </Bouton>
       ))}
       {renderBoutonAjout?.(
-        "m-0 h-14 max-w-60 rounded-b-none rounded-t-lg border-b-0 border-l-0.5 px-4 py-1.5 transition duration-200 ease-in-out",
+        "m-0 h-11 rounded-b-none rounded-t-lg border-b-0 border-l-0.5 px-4 py-1.5 transition duration-200 ease-in-out",
       )}
     </div>
   );

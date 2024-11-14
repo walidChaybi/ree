@@ -51,4 +51,47 @@ describe("Test de la page aperçu requête edition analyse marginale", async () 
       expect(screen.queryByText("Acte registre")).toBeNull();
     });
   });
+
+  test("L'onglet Requete est actif si il n'y à pas de délivrance", async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: `${URL_CONTEXT_APP}/:idRequeteParam`,
+          element: <PageEditionRequeteDelivrance />,
+        },
+      ],
+      [`${URL_CONTEXT_APP}/:idRequeteParam`.replace(ID, idRequete)],
+    );
+
+    render(<RouterProvider router={router} />);
+
+    await waitFor(() => {
+      const button = screen.getAllByRole("button", { name: /Requête/i });
+
+      expect((button[0] as HTMLButtonElement).disabled).toBeTruthy();
+    });
+  });
+
+  test("Les onglets Acte est actif si il y à une délivrance", async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: `${URL_CONTEXT_APP}/:idRequeteParam/:idActeParam`,
+          element: <PageEditionRequeteDelivrance />,
+        },
+      ],
+      [
+        `${URL_CONTEXT_APP}/:idRequeteParam/:idActeParam`
+          .replace(ID, idRequete)
+          .replace(ID_ACTE, idActe),
+      ],
+    );
+
+    render(<RouterProvider router={router} />);
+
+    await waitFor(() => {
+      const button = screen.getAllByRole("button", { name: /Acte registre/i });
+      expect((button[0] as HTMLButtonElement).disabled).toBeTruthy();
+    });
+  });
 });

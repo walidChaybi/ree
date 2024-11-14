@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
-import PartieActeRequete from "../../../../../composants/pages/requetesDelivrance/editionRequete/PartieActeRequete";
+import PartieActeRequete from "../../../../../composants/pages/requetesDelivrance/editionRequete/partieActeRequete/PartieActeRequete";
 import EditionDelivranceContextProvider from "../../../../../contexts/EditionDelivranceContextProvider";
 
 const idActe = "b41079a5-9e8f-478a-b04c-c4c2ac671123";
@@ -25,7 +25,7 @@ describe("PartieActeRequete", () => {
         idRequeteParam={idRequete}
         idActeParam={idActe}
       >
-        <PartieActeRequete />
+        <PartieActeRequete ongletActif={""} setOngletActif={() => {}} />
       </EditionDelivranceContextProvider>,
     );
 
@@ -41,7 +41,7 @@ describe("PartieActeRequete", () => {
         idRequeteParam={""}
         idActeParam={idActe}
       >
-        <PartieActeRequete />
+        <PartieActeRequete ongletActif={""} setOngletActif={() => {}} />
       </EditionDelivranceContextProvider>,
     );
 
@@ -57,7 +57,7 @@ describe("PartieActeRequete", () => {
         idRequeteParam={idRequete}
         idActeParam={idActe}
       >
-        <PartieActeRequete />
+        <PartieActeRequete ongletActif={""} setOngletActif={() => {}} />
       </EditionDelivranceContextProvider>,
     );
 

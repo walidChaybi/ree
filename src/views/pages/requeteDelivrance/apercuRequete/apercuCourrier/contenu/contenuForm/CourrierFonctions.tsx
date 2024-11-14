@@ -24,7 +24,7 @@ import {
   REQUETE,
   TEXTE,
   TEXTE_LIBRE,
-  VOIE
+  VOIE,
 } from "@composant/formulaire/ConstantesNomsForm";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -46,7 +46,7 @@ import {
   JUSTIFICATIF_REPRESENTANT_MANQUANT,
   MANDAT_GENEALOGIQUE,
   PROPOSITION_TRANSCRIPTION,
-  REFUS_DELIVRANCE_MARIAGE
+  REFUS_DELIVRANCE_MARIAGE,
 } from "@model/requete/enum/DocumentDelivranceConstante";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
@@ -61,14 +61,14 @@ const LIMIT_ORDRE_EDITION_STANTARD = 900;
 function getTypesCourrierRequeteIncomplete(sousType: SousTypeDelivrance) {
   let typesCourrier;
   typesCourrier = [
-    DocumentDelivrance.getOptionFromCode(INFORMATION_DIVERSES_MANQUANTE) // Courrier 117
+    DocumentDelivrance.getOptionFromCode(INFORMATION_DIVERSES_MANQUANTE), // Courrier 117
   ];
 
   if (!SousTypeDelivrance.estRDDP(sousType)) {
     typesCourrier = [
       ...typesCourrier,
       DocumentDelivrance.getOptionFromCode(MANDAT_GENEALOGIQUE), // Courrier 18
-      DocumentDelivrance.getOptionFromCode(JUSTIFICATIF_REPRESENTANT_MANQUANT) // Courrier 19]
+      DocumentDelivrance.getOptionFromCode(JUSTIFICATIF_REPRESENTANT_MANQUANT), // Courrier 19]
     ];
   }
 
@@ -80,14 +80,14 @@ function getTypesCourrierActeNonDetenuAuScec(sousType: SousTypeDelivrance) {
   typesCourrier = [
     DocumentDelivrance.getOptionFromCode(ACTE_NON_TROUVE), // Courrier 115
     DocumentDelivrance.getOptionFromCode(ACTE_NON_TROUVE_ALGERIE), // Courrier 64
-    DocumentDelivrance.getOptionFromCode(ACTE_NAISSANCE_NON_TROUVE_MARIAGE) // Courrier 24
+    DocumentDelivrance.getOptionFromCode(ACTE_NAISSANCE_NON_TROUVE_MARIAGE), // Courrier 24
   ];
 
   if (!SousTypeDelivrance.estRDDP(sousType)) {
     typesCourrier = [
       ...typesCourrier,
       DocumentDelivrance.getOptionFromCode(ATTESTATION_PENSION), // Courrier ??
-      DocumentDelivrance.getOptionFromCode(PROPOSITION_TRANSCRIPTION) // Courrier ??
+      DocumentDelivrance.getOptionFromCode(PROPOSITION_TRANSCRIPTION), // Courrier ??
     ];
   }
 
@@ -96,7 +96,7 @@ function getTypesCourrierActeNonDetenuAuScec(sousType: SousTypeDelivrance) {
 
 export const getTypesCourrier = (
   requete: IRequeteDelivrance,
-  acteSelected?: IResultatRMCActe[]
+  acteSelected?: IResultatRMCActe[],
 ): Options => {
   let typesCourrier: Options = [];
   switch (requete.choixDelivrance) {
@@ -108,16 +108,16 @@ export const getTypesCourrier = (
       break;
     case ChoixDelivrance.REP_SANS_DEL_EC_DIVERS:
       typesCourrier = [
-        DocumentDelivrance.getOptionFromCode(DIVERS) // Courrier 17
+        DocumentDelivrance.getOptionFromCode(DIVERS), // Courrier 17
       ];
       majOptionsPourActeNaissaneOuDecesDemande(
         typesCourrier,
-        requete.evenement?.natureActe
+        requete.evenement?.natureActe,
       );
       break;
     case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
       typesCourrier = [
-        DocumentDelivrance.getOptionFromCode(DELIVRANCE_ACTE_NON_ANTHENTIQUE) // Courrier ???
+        DocumentDelivrance.getOptionFromCode(DELIVRANCE_ACTE_NON_ANTHENTIQUE), // Courrier ???
       ];
       break;
     case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
@@ -126,7 +126,7 @@ export const getTypesCourrier = (
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
       typesCourrier = [
         DocumentDelivrance.getOptionFromCode(DELIVRANCE_ACTE), // Courrier 116
-        DocumentDelivrance.getOptionFromCode(DELIVRANCE_ACTE_INCOMPLET) // Courrier 50
+        DocumentDelivrance.getOptionFromCode(DELIVRANCE_ACTE_INCOMPLET), // Courrier 50
       ];
       break;
     default:
@@ -136,7 +136,7 @@ export const getTypesCourrier = (
 };
 
 export const getDefaultValuesCourrier = (
-  requete: IRequeteDelivrance
+  requete: IRequeteDelivrance,
 ): SaisieCourrier => {
   const documentReponse = getDocumentReponseAModifier(requete);
 
@@ -145,55 +145,55 @@ export const getDefaultValuesCourrier = (
       [DELIVRANCE]: getValeurOuVide(requete.choixDelivrance?.libelle),
       [COURRIER]: documentReponse?.typeDocument
         ? documentReponse?.typeDocument
-        : getTypesCourrier(requete)[0].cle
+        : getTypesCourrier(requete)[0].cle,
     },
     [REQUERANT]: {
       [RAISON_SOCIALE]: Requerant.getRaisonSociale(requete.requerant) ?? "",
       [NOM]: Requerant.getNomUsageOuNomFamille(requete.requerant) ?? "",
-      [PRENOM]: Requerant.getPrenom(requete.requerant)
+      [PRENOM]: Requerant.getPrenom(requete.requerant),
     },
     [OPTION]: OptionCourrierFormDefaultValues,
     [TEXTE_LIBRE]: {
       [TEXTE]: documentReponse?.texteLibreCourrier?.texte
         ? documentReponse?.texteLibreCourrier?.texte
-        : ""
+        : "",
     },
     [ADRESSE]: {
       [VOIE]: getValeurOuVide(requete.requerant.adresse?.ligne4),
       [LIEU_DIT]: getValeurOuVide(requete.requerant.adresse?.ligne5),
       [COMPLEMENT_DESTINATAIRE]: getValeurOuVide(
-        requete.requerant.adresse?.ligne2
+        requete.requerant.adresse?.ligne2,
       ),
       [COMPLEMENT_POINT_GEO]: getValeurOuVide(
-        requete.requerant.adresse?.ligne3
+        requete.requerant.adresse?.ligne3,
       ),
       [CODE_POSTAL]: getValeurOuVide(requete.requerant.adresse?.codePostal),
       [COMMUNE]: getValeurOuVide(requete.requerant.adresse?.ville),
       [PAYS]: getValeurOuVide(requete.requerant.adresse?.pays),
       [ADRESSE_COURRIEL]: "",
-      [NUMERO_TELEPHONE]: ""
+      [NUMERO_TELEPHONE]: "",
     },
     [REQUETE]: {
       [MOTIF]: requete.motif ? MotifDelivrance.getKey(requete.motif) : "",
       [COMPLEMENT_MOTIF]: getValeurOuVide(requete.complementMotif),
       [NB_EXEMPLAIRE]: getValeurOuVide(requete.nbExemplaireImpression),
       [NATURE_ACTE]: "",
-      [DOCUMENT_DEMANDE]: ""
-    }
+      [DOCUMENT_DEMANDE]: DocumentDelivrance.getCopieIntegraleUUID(),
+    },
   };
 };
 
 export function courrierExiste(requete: IRequeteDelivrance): boolean {
-  return requete.documentsReponses.some(element => {
+  return requete.documentsReponses.some((element) => {
     return DocumentDelivrance.estCourrierDelivranceEC(element.typeDocument);
   });
 }
 
 export function getDocumentReponseAModifier(
-  requete: IRequeteDelivrance
+  requete: IRequeteDelivrance,
 ): IDocumentReponse | undefined {
   let doc: IDocumentReponse | undefined = undefined;
-  requete.documentsReponses.forEach(element => {
+  requete.documentsReponses.forEach((element) => {
     if (DocumentDelivrance.estCourrierDelivranceEC(element.typeDocument)) {
       doc = element;
     }
@@ -203,7 +203,7 @@ export function getDocumentReponseAModifier(
 
 function majOptionsPourActeNaissaneOuDecesDemande(
   typesCourrier: Options,
-  natureActeRequete?: NatureActeRequete
+  natureActeRequete?: NatureActeRequete,
 ) {
   if (
     natureActeRequete &&
@@ -211,7 +211,7 @@ function majOptionsPourActeNaissaneOuDecesDemande(
     natureActeRequete !== NatureActeRequete.DECES
   ) {
     typesCourrier.push(
-      DocumentDelivrance.getOptionFromCode(REFUS_DELIVRANCE_MARIAGE) // ???
+      DocumentDelivrance.getOptionFromCode(REFUS_DELIVRANCE_MARIAGE), // ???
     );
   }
 }
@@ -219,7 +219,7 @@ function majOptionsPourActeNaissaneOuDecesDemande(
 export function controleFormulaire(
   saisieCourrier: SaisieCourrier | undefined,
   optionsChoisies: OptionsCourrier,
-  setMessageBloquant: (message: string) => void
+  setMessageBloquant: (message: string) => void,
 ) {
   switch (saisieCourrier?.[CHOIX_COURRIER][COURRIER]) {
     case DocumentDelivrance.getKeyForCode(DELIVRANCE_ACTE_INCOMPLET):
@@ -229,9 +229,17 @@ export function controleFormulaire(
     case DocumentDelivrance.getKeyForCode(REFUS_DELIVRANCE_MARIAGE):
     case DocumentDelivrance.getKeyForCode(ATTESTATION_PENSION):
     case DocumentDelivrance.getKeyForCode(ACTE_NON_TROUVE):
-      return controleActeNonTrouve(saisieCourrier, optionsChoisies, setMessageBloquant);
+      return controleActeNonTrouve(
+        saisieCourrier,
+        optionsChoisies,
+        setMessageBloquant,
+      );
     case DocumentDelivrance.getKeyForCode(DIVERS):
-      return controleDivers(saisieCourrier, optionsChoisies, setMessageBloquant);
+      return controleDivers(
+        saisieCourrier,
+        optionsChoisies,
+        setMessageBloquant,
+      );
     default:
       return true;
   }
@@ -240,27 +248,35 @@ export function controleFormulaire(
 function controleActeNonTrouve(
   saisieCourrier: SaisieCourrier,
   optionsChoisies: OptionsCourrier,
-  setMessageBloquant: (message: string) => void
+  setMessageBloquant: (message: string) => void,
 ) {
   if (
-    optionsChoisies.filter(option => {
+    optionsChoisies.filter((option) => {
       return option.ordreEdition < LIMIT_ORDRE_EDITION_STANTARD;
     }).length === 0
   ) {
-    setMessageBloquant("Le choix d'une option standard est obligatoire pour ce courrier");
+    setMessageBloquant(
+      "Le choix d'une option standard est obligatoire pour ce courrier",
+    );
     return false;
   }
   return true;
 }
 
-function controleDivers(saisieCourrier: SaisieCourrier, optionsChoisies: OptionsCourrier, setMessageBloquant: (message: string) => void) {
+function controleDivers(
+  saisieCourrier: SaisieCourrier,
+  optionsChoisies: OptionsCourrier,
+  setMessageBloquant: (message: string) => void,
+) {
   if (
-    optionsChoisies.filter(option => {
+    optionsChoisies.filter((option) => {
       return option.ordreEdition < LIMIT_ORDRE_EDITION_STANTARD;
     }).length === 0 &&
     saisieCourrier[TEXTE_LIBRE][TEXTE].length === 0
   ) {
-    setMessageBloquant("Le choix d'une option standard ou la saisie d'un texte libre est obligatoire pour ce courrier");
+    setMessageBloquant(
+      "Le choix d'une option standard ou la saisie d'un texte libre est obligatoire pour ce courrier",
+    );
     return false;
   }
   return true;

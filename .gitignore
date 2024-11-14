@@ -26,4 +26,10 @@ yarn-debug.log*
 yarn-error.log*
 .vscode/settings.json
 
+
+# Adrien à supprimer suite à la 3373
 *.iml
+src/pages/requetesDelivrance/A_SUPPRIMER_TOGGLE/toggleBoutonASUPPRIMER.scss
+src/views/core/header/Header.tsx
+src/pages/requetesDelivrance/A_SUPPRIMER_TOGGLE/ToggleRedirectionASUPPRIMER.tsx
+src/views/router/ReceRoutes.ts

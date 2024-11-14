@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import NumeroActeForm, {
-  NumeroActeDefaultValues
+  NumeroActeDefaultValues,
 } from "@widget/formulaire/champNumeroActe/NumeroActeForm";
 import { Field, Form, Formik } from "formik";
 import { useState } from "react";
@@ -24,10 +24,10 @@ const HookNumeroActeForm: React.FC = () => {
   );
 };
 
-test("DOIT afficher les champs du composant NumeroActeForm", () => {
+test("DOIT afficher les champs du composant NumeroActeForm", async () => {
   render(<HookNumeroActeForm />);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(screen.queryByText("N° d'acte / N° d'ordre")).toBeDefined();
     expect(screen.queryByPlaceholderText("N° d'acte ou d'ordre")).toBeDefined();
     expect(screen.queryByPlaceholderText("N° BisTer")).toBeDefined();
@@ -43,28 +43,28 @@ test.each([
     libelleTestDebut: "DOIT",
     libelleTestFin: "n'est pas",
     valeur: "",
-    estVerrouille: true
+    estVerrouille: true,
   },
   {
     libelleTestDebut: "NE DOIT PAS",
     libelleTestFin: "est",
     valeur: "123",
-    estVerrouille: false
-  }
+    estVerrouille: false,
+  },
 ])(
   "$libelleTestDebut verrouiller la case à cocher 'A partir de' QUAND le champ 'Numero acte ou d'ordre' $libelleTestFin saisie.",
-  params => {
+  (params) => {
     render(<HookNumeroActeForm />);
 
     const champNumeroActeOuOrdre = screen.getByLabelText(
-      "Numero d'acte ou d'ordre"
+      "Numero d'acte ou d'ordre",
     );
     const caseAPartirDe = screen.getByLabelText(
-      "A partir de"
+      "A partir de",
     ) as HTMLInputElement;
 
     fireEvent.change(champNumeroActeOuOrdre, {
-      target: { value: params.valeur }
+      target: { value: params.valeur },
     });
 
     waitFor(() => {
@@ -75,5 +75,5 @@ test.each([
         expect(caseAPartirDe.disabled).not.toBeTruthy();
       }
     });
-  }
+  },
 );

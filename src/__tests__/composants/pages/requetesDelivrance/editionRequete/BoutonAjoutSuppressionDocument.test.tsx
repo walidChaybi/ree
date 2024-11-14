@@ -9,7 +9,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { expect, test, vi } from "vitest";
-import BoutonAjoutSuppressionDocument from "../../../../../composants/pages/requetesDelivrance/editionRequete/BoutonAjoutSuppressionDocument";
+import BoutonAjoutSuppressionDocument from "../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonAjoutSuppressionDocument";
 import {
   createTestingRouter,
   elementAvecEditionDelivranceContexte,

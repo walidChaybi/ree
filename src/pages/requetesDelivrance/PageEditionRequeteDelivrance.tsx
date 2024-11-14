@@ -1,8 +1,8 @@
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import React from "react";
 import { useParams } from "react-router-dom";
-import PartieActeRequete from "../../composants/pages/requetesDelivrance/editionRequete/PartieActeRequete";
-import PartieDocuments from "../../composants/pages/requetesDelivrance/editionRequete/PartieDocuments";
+import EditionRequeteDelivrance from "../../composants/pages/requetesDelivrance/editionRequete/EditionRequeteDelivrance";
+import BoutonsEditionRequeteDelivrance from "../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonsEditionRequeteDelivrance";
 import EditionDelivranceContextProvider from "../../contexts/EditionDelivranceContextProvider";
 
 export interface IDocumentsDelivrance {
@@ -19,9 +19,9 @@ const PageEditionRequeteDelivrance: React.FC = () => {
       idRequeteParam={idRequeteParam as string}
       idActeParam={idActeParam}
     >
-      <div className="flex gap-12 py-8">
-        <PartieActeRequete />
-        <PartieDocuments />
+      <div className="flex gap-12 pt-5">
+        <EditionRequeteDelivrance />
+        <BoutonsEditionRequeteDelivrance />
       </div>
     </EditionDelivranceContextProvider>
   );

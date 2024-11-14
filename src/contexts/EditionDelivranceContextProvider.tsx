@@ -10,7 +10,7 @@ import PageChargeur from "../composants/commun/chargeurs/PageChargeur";
 interface IEditionDelivranceContext {
   requete: IRequeteDelivrance;
   acte: IFicheActe | null;
-  rechargerRequete: () => void;
+  rechargerRequete: (onRechargementTermine?: () => void) => void;
 }
 
 export const EditionDelivranceContext =
@@ -31,7 +31,10 @@ const EditionDelivranceContextProvider: React.FC<
     () => ({
       requete: requete ?? ({} as IRequeteDelivrance),
       acte: acte ?? null,
-      rechargerRequete: () => setDoitChargerRequete(true),
+      rechargerRequete: (onRechargementTermine: (() => void) | undefined) => {
+        setDoitChargerRequete(true);
+        onRechargementTermine?.();
+      },
     }),
     [requete, acte],
   );
@@ -45,6 +48,7 @@ const EditionDelivranceContextProvider: React.FC<
 
     setDoitChargerRequete(false);
     setEnRecuperation(true);
+    //TOREFACTOR : remplacer par useFetch, et possiblement passer le onRechargementTermine dans le .finally du useFetch
     getDetailRequete(idRequeteParam)
       .then((res) => setRequete(mappingRequeteDelivrance(res.body.data)))
       .finally(() => setEnRecuperation(false));
@@ -56,12 +60,13 @@ const EditionDelivranceContextProvider: React.FC<
     if (enRecuperationActe || !requete) {
       return;
     }
-
+    //
     let idActe =
       idActeParam ??
       requete?.documentsReponses.find(
         (documentReponse) => documentReponse.idActe,
       )?.idActe;
+
     if (!idActe) {
       setActe(null);
 
@@ -69,6 +74,7 @@ const EditionDelivranceContextProvider: React.FC<
     }
 
     setEnRecuperationActe(true);
+    //TOREFACTOR : remplacer par useFetch
     getInformationsFicheActe(idActe)
       .then((data) => setActe(mapActe(data.body.data)))
       .finally(() => setEnRecuperationActe(false));
@@ -77,7 +83,7 @@ const EditionDelivranceContextProvider: React.FC<
   return (
     <EditionDelivranceContext.Provider value={valeursContext}>
       {(enRecuperation || enRecuperationActe) && <PageChargeur />}
-      {requete && acte && children}
+      {requete && (acte || acte === null) && children}
     </EditionDelivranceContext.Provider>
   );
 };

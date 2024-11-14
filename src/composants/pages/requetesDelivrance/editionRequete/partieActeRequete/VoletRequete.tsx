@@ -3,16 +3,16 @@ import { ResumeRequetePartieHaute } from "@pages/requeteDelivrance/apercuRequete
 import DateUtils from "@util/DateUtils";
 import { UN } from "@util/Utils";
 import React from "react";
-import ConteneurAccordeon from "../../../commun/conteneurs/accordeon/ConteneurAccordeon";
-import ObservationsRequete from "../commun/requete/ObservationsRequete";
-import TypeRequete from "../commun/requete/TypeRequete";
+import ConteneurAccordeon from "../../../../commun/conteneurs/accordeon/ConteneurAccordeon";
+import ObservationsRequete from "../../commun/requete/ObservationsRequete";
+import TypeRequete from "../../commun/requete/TypeRequete";
 
 interface IVoletRequeteProps {
   requete: IRequeteDelivrance;
 }
 
 const VoletRequete: React.FC<IVoletRequeteProps> = ({ requete }) => (
-  <div className="grid gap-2 py-4">
+  <div className="grid gap-2 pt-4">
     <ConteneurAccordeon
       titre={`Description requête ${requete.numero}`}
       ouvertParDefaut

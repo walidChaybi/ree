@@ -1,6 +1,6 @@
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { acte } from "@mock/data/ficheEtBandeau/ficheActe";
+import { acte as acteMock } from "@mock/data/ficheEtBandeau/ficheActe";
 import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IService } from "@model/agent/IService";
@@ -125,11 +125,12 @@ export const elementAvecContexte = (
 
 export const elementAvecEditionDelivranceContexte = (
   children: React.ReactElement,
-  requete: IRequeteDelivrance,
+  requete?: IRequeteDelivrance,
+  acte?: IFicheActe,
 ): any => {
   const valeursContext = {
-    requete: requete ?? (requeteDelivrance as IRequeteDelivrance),
-    acte: acte as IFicheActe,
+    requete: requete ?? requeteDelivrance,
+    acte: acte ?? (acteMock as IFicheActe),
     rechargerRequete: () => {},
   };
 

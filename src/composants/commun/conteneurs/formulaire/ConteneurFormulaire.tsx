@@ -1,5 +1,4 @@
 import React from "react";
-import "./ConteneurFormulaire.scss";
 
 interface IConteneurFormulaireProps {
   titreEnTete: string;
@@ -8,9 +7,11 @@ interface IConteneurFormulaireProps {
 const ConteneurFormulaire: React.FC<
   React.PropsWithChildren<IConteneurFormulaireProps>
 > = ({ children, titreEnTete }) => (
-  <div className="conteneur-formulaire">
-    <h1 className="titre-conteneur-formulaire">{titreEnTete}</h1>
-    <div className="contenu-conteneur-formulaire">{children}</div>
+  <div className="w-full rounded-lg border border-solid border-bleu bg-gris-clair">
+    <h1 className="m-0 rounded-t-md bg-bleu p-1.5 text-base font-bold text-white">
+      {titreEnTete}
+    </h1>
+    <div className="h-[41rem] overflow-y-scroll rounded-lg">{children}</div>
   </div>
 );
 

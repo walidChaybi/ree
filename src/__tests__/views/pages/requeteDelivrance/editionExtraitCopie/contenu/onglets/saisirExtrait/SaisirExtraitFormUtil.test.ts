@@ -2,7 +2,7 @@ import { mapTitulaires } from "@hook/repertoires/MappingRepertoires";
 import {
   titulaireClassique,
   titulaireParentsDeMemeSexe,
-  titulaireSexeInconnu
+  titulaireSexeInconnu,
 } from "@mock/data/Titulaire";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -14,22 +14,24 @@ test("Attendu: parentMemeSexeOuExtraitPlurilingue fonctionne correctement", () =
   const titulairesSexesInconnus = mapTitulaires([titulaireSexeInconnu]);
   const documentsReponses = [
     {
-      typeDocument: DocumentDelivrance.getUuidFromCode(CODE_EXTRAIT_PLURILINGUE)
-    } as IDocumentReponse
-  ];
+      typeDocument: DocumentDelivrance.getUuidFromCode(
+        CODE_EXTRAIT_PLURILINGUE,
+      ),
+    },
+  ] as IDocumentReponse[];
   expect(
     parentMemeSexeOuIndeterminCasPlurilingue(
       titulairesSexesInconnus,
-      documentsReponses
-    )
+      documentsReponses,
+    ),
   ).toBeTruthy();
 
   const titulairesParentsMemeSexe = mapTitulaires([titulaireParentsDeMemeSexe]);
   expect(
     parentMemeSexeOuIndeterminCasPlurilingue(
       titulairesParentsMemeSexe,
-      documentsReponses
-    )
+      documentsReponses,
+    ),
   ).toBeTruthy();
 
   const titulairesClassiques = mapTitulaires([titulaireClassique]);
@@ -37,7 +39,7 @@ test("Attendu: parentMemeSexeOuExtraitPlurilingue fonctionne correctement", () =
   expect(
     parentMemeSexeOuIndeterminCasPlurilingue(
       titulairesClassiques,
-      documentsReponses
-    )
+      documentsReponses,
+    ),
   ).toBeFalsy();
 });

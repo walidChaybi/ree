@@ -2,18 +2,18 @@ import { ReinitialiserValiderBoutons } from "@composant/formulaire/boutons/Reini
 import { RECEContextActions } from "@core/contexts/RECEContext";
 import {
   IMentionsParams,
-  useMentionsApiHook
+  useMentionsApiHook,
 } from "@hook/acte/mentions/MentionsApiHook";
 import {
   SauvegarderMentionsParam,
-  useSauvegarderMentions
+  useSauvegarderMentions,
 } from "@hook/acte/mentions/SauvegarderMentionsHook";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { Mention } from "@model/etatcivil/acte/mention/IMention";
 import {
   IMentionAffichage,
   mappingVersMentionAffichage,
-  modificationEffectue
+  modificationEffectue,
 } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { StatutMention } from "@model/etatcivil/enum/StatutMention";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -23,11 +23,12 @@ import { CODE_COPIE_INTEGRALE } from "@model/requete/enum/DocumentDelivranceCons
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { estTableauNonVide, getLibelle, getValeurOuVide } from "@util/Utils";
 import React, { useCallback, useContext, useEffect, useState } from "react";
+import { ECleOngletDocumentDelivre } from "../../../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletDocuments/VoletDocumentDelivre";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
 import {
   boutonReinitialiserEstDisabled,
   getValeurEstdeverrouillerCommencement,
-  validerMentions
+  validerMentions,
 } from "./GestionMentionsUtil";
 import { MentionsCopie } from "./contenu/MentionsCopie";
 import { MentionsExtrait } from "./contenu/MentionsExtrait";
@@ -37,13 +38,14 @@ export interface GestionMentionsProps {
   acte?: IFicheActe;
   document?: IDocumentReponse;
   requete: IRequeteDelivrance;
+  setOngletDocumentDelivre?: (nouvelOnglet: ECleOngletDocumentDelivre) => void;
 }
 
-export const GestionMentions: React.FC<GestionMentionsProps> = props => {
+export const GestionMentions: React.FC<GestionMentionsProps> = (props) => {
   const { setIsDirty } = useContext(RECEContextActions);
 
   const { setOperationEnCours, rafraichirRequete } = useContext(
-    EditionExtraitCopiePageContext
+    EditionExtraitCopiePageContext,
   );
 
   const [mentionSelect, setMentionSelect] = useState<IMentionAffichage>();
@@ -53,11 +55,11 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
   const [sauvegarderMentionsParams, setSauvegarderMentionsParams] =
     useState<SauvegarderMentionsParam>();
   const [estDeverrouille, setEstdeverrouille] = useState<boolean>(
-    getValeurEstdeverrouillerCommencement(props.document)
+    getValeurEstdeverrouillerCommencement(props.document),
   );
 
   const estExtraitPlurilingue = DocumentDelivrance.estExtraitPlurilingue(
-    props.document?.typeDocument
+    props.document?.typeDocument,
   );
 
   const mentionsApi = useMentionsApiHook(mentionsParams);
@@ -66,15 +68,17 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
   useEffect(() => {
     if (props.document && resultatSauvegarde) {
       rafraichirRequete();
+      props.setOngletDocumentDelivre?.(
+        ECleOngletDocumentDelivre.DOCUMENT_EDITE,
+      );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatSauvegarde]);
 
   useEffect(() => {
     if (props.acte) {
       setMentionsParams({
         idActe: props.acte.id,
-        statutMention: StatutMention.SIGNEE
+        statutMention: StatutMention.SIGNEE,
       });
     }
   }, [props.acte]);
@@ -93,11 +97,11 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
           nouvellesMentions,
           mentionsApi?.mentions,
           props.document,
-          props.acte?.nature
-        )
+          props.acte?.nature,
+        ),
       );
     },
-    [mentionsApi, props.document, setIsDirty, props.acte]
+    [mentionsApi, props.document, setIsDirty, props.acte],
   );
 
   const reinitialisation = useCallback(() => {
@@ -105,14 +109,14 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
       const mentionsAAfficher = mappingVersMentionAffichage(
         mentionsApi.mentions,
         props.document,
-        props.acte?.nature
+        props.acte?.nature,
       );
       if (estTableauNonVide(mentionsAAfficher)) {
         setMentions(mentionsAAfficher);
         const premiereMention = { ...mentionsAAfficher[0] };
         if (estExtraitPlurilingue) {
           premiereMention.texte = Mention.getTexteAPartirPlurilingue(
-            premiereMention.texte
+            premiereMention.texte,
           );
         }
         setMentionSelect(premiereMention);
@@ -132,7 +136,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
         mentions,
         acte: props.acte,
         document: props.document,
-        requete: props.requete
+        requete: props.requete,
       });
     }
   }, [mentions, mentionsApi, props, setOperationEnCours]);
@@ -143,7 +147,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
       sauvegarderMentions,
       mentionsApi?.mentions,
       props.acte,
-      props.document
+      props.document,
     );
   }, [mentions, sauvegarderMentions, mentionsApi, props]);
 
@@ -162,7 +166,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
         </div>
       )}
       {DocumentDelivrance.getEnumForUUID(
-        getValeurOuVide(props.document?.typeDocument)
+        getValeurOuVide(props.document?.typeDocument),
       ).code === CODE_COPIE_INTEGRALE ? (
         <MentionsCopie
           estDeverrouille={estDeverrouille}
@@ -190,12 +194,12 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
           mentionsApi?.mentions,
           mentions,
           props.document,
-          props.acte?.nature
+          props.acte?.nature,
         )}
         onClickValider={valider}
         afficherBouton={
           !StatutRequete.estTransmiseAValideur(
-            props.requete.statutCourant.statut
+            props.requete.statutCourant.statut,
           )
         }
       />

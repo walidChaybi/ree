@@ -10,7 +10,7 @@ import { TypeActe } from "@model/etatcivil/enum/TypeActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import {
   IRequeteDelivrance,
-  RequeteDelivrance
+  RequeteDelivrance,
 } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -20,7 +20,7 @@ import {
   CODE_COPIE_NON_SIGNEE,
   CODE_EXTRAIT_AVEC_FILIATION,
   CODE_EXTRAIT_PLURILINGUE,
-  CODE_EXTRAIT_SANS_FILIATION
+  CODE_EXTRAIT_SANS_FILIATION,
 } from "@model/requete/enum/DocumentDelivranceConstante";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
@@ -30,15 +30,15 @@ import {
   UN,
   ZERO,
   estTableauNonVide,
-  getLibelle
+  getLibelle,
 } from "@util/Utils";
 import { gestionnaireMentionsRetireesAuto } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { OngletProps } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React from "react";
+import { Courrier } from "../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletCourrier/Courrier";
 import { DocumentEC } from "../../../../model/requete/enum/DocumentEC";
-import { Courrier } from "../apercuRequete/apercuCourrier/contenu/Courrier";
 import { BoutonModifierTraitement } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonModifierTraitement";
 import { BoutonsTerminerOuRelecture } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonsTerminerOuRelecture";
 import { ResumeRequetePartieHaute } from "../apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequetePartieHaute";
@@ -58,11 +58,11 @@ const REQUETE = "Requête";
 export const getOngletsEdition = (
   requete: IRequeteDelivrance,
   document?: IDocumentReponse,
-  acte?: IFicheActe
+  acte?: IFicheActe,
 ) => {
   const res: OngletProps = {
     liste: [],
-    ongletSelectionne: -1
+    ongletSelectionne: -1,
   };
   if (acte && document) {
     switch (
@@ -85,7 +85,7 @@ export const getOngletsEdition = (
   if (document) {
     if (res.ongletSelectionne === -1) {
       res.ongletSelectionne = res.liste.findIndex(
-        onglet => onglet.titre === DOCUMENT_EDITE
+        (onglet) => onglet.titre === DOCUMENT_EDITE,
       );
     }
   }
@@ -95,13 +95,13 @@ export const getOngletsEdition = (
 export const getOngletsVisu = (
   requete: IRequeteDelivrance,
   document?: IDocumentReponse,
-  acte?: IFicheActe
+  acte?: IFicheActe,
 ) => {
   const res: OngletProps = { liste: [], ongletSelectionne: -1 };
   if (acte) {
     res.liste.push({
       titre: getLibelle("Acte registre"),
-      component: <VisionneuseActeEdition acte={acte} detailRequete={requete} />
+      component: <VisionneuseActeEdition acte={acte} detailRequete={requete} />,
     });
   }
   ajouterOngletRequete(res, requete);
@@ -112,7 +112,7 @@ export const getOngletsVisu = (
     ) {
       res.liste.push({
         titre: getLibelle("Courrier édité"),
-        component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
+        component: <VisionneuseEdition idDocumentAAfficher={document?.id} />,
       });
       res.ongletSelectionne = res.liste.length - 1;
     } else if (RequeteDelivrance.estARevoir(requete)) {
@@ -147,7 +147,7 @@ function ajouterOngletRequete(res: OngletProps, requete: IRequeteDelivrance) {
         />
         <SuiviActionsRequete actions={requete.actions} />
       </>
-    )
+    ),
   });
   res.ongletSelectionne = 0;
 }
@@ -156,7 +156,7 @@ function ajoutDocumentEditeeOuModifierCourrier(
   res: OngletProps,
   requete: IRequeteDelivrance,
   acte: IFicheActe | undefined,
-  document?: IDocumentReponse
+  document?: IDocumentReponse,
 ) {
   if (
     !document ||
@@ -170,13 +170,13 @@ function ajoutDocumentEditeeOuModifierCourrier(
           idActe={acte?.id}
           natureActe={acte?.nature}
         />
-      )
+      ),
     });
     res.ongletSelectionne = 0;
   } else {
     res.liste.push({
       titre: getLibelle(DOCUMENT_EDITE),
-      component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
+      component: <VisionneuseEdition idDocumentAAfficher={document?.id} />,
     });
   }
 }
@@ -185,7 +185,7 @@ function ajoutOngletsCopie(
   res: OngletProps,
   document: IDocumentReponse,
   acte: IFicheActe,
-  requete: IRequeteDelivrance
+  requete: IRequeteDelivrance,
 ) {
   if (
     acte.type === TypeActe.TEXTE &&
@@ -203,7 +203,7 @@ export const ajoutOngletsExtraitFilliation = (
   res: OngletProps,
   document: IDocumentReponse,
   acte: IFicheActe,
-  requete: IRequeteDelivrance
+  requete: IRequeteDelivrance,
 ) => {
   switch (document.validation) {
     case Validation.N:
@@ -231,7 +231,7 @@ export const ajoutOngletsExtraitFilliation = (
           requete={requete}
           document={document}
         />
-      )
+      ),
     });
   }
 };
@@ -240,7 +240,7 @@ export const ajoutOngletsExtraitPlurilingue = (
   res: OngletProps,
   document: IDocumentReponse,
   acte: IFicheActe,
-  requete: IRequeteDelivrance
+  requete: IRequeteDelivrance,
 ) => {
   res.liste.push(ongletSaisirExtrait(acte, requete, document));
   if (
@@ -265,11 +265,11 @@ export const ajoutOngletsExtraitPlurilingue = (
 export const boutonModifierCopiePresent = (
   statut: StatutRequete,
   acte?: IFicheActe,
-  documentEdite?: IDocumentReponse
+  documentEdite?: IDocumentReponse,
 ) => {
   if (acte && documentEdite) {
     const codeDoc = DocumentDelivrance.getDocumentDelivrance(
-      documentEdite.typeDocument
+      documentEdite.typeDocument,
     ).code;
     return (
       codeDoc === CODE_COPIE_INTEGRALE &&
@@ -283,7 +283,7 @@ export const boutonModifierCopiePresent = (
 export const ongletMentions = (
   acte: IFicheActe,
   doc: IDocumentReponse,
-  requete: IRequeteDelivrance
+  requete: IRequeteDelivrance,
 ) => {
   return {
     titre: getLibelle("Gérer les mentions"),
@@ -294,28 +294,28 @@ export const ongletMentions = (
         document={doc}
         requete={requete}
       ></GestionMentions>
-    )
+    ),
   };
 };
 
 const ongletSaisirExtrait = (
   acte: IFicheActe,
   requete: IRequeteDelivrance,
-  doc: IDocumentReponse
+  doc: IDocumentReponse,
 ) => {
   return {
     titre: getLibelle("Saisir l'extrait"),
     iconeWarning: doc.validation === Validation.E,
     component: (
       <SaisirExtraitForm acte={acte} requete={requete}></SaisirExtraitForm>
-    )
+    ),
   };
 };
 
 export function choisirDocumentEdite(
   indexDocEditeDemande: DocumentEC | undefined,
   setIndexDocEdite: React.Dispatch<React.SetStateAction<DocumentEC>>,
-  requete: IRequeteDelivrance | undefined
+  requete: IRequeteDelivrance | undefined,
 ) {
   if (indexDocEditeDemande !== undefined) {
     setIndexDocEdite(indexDocEditeDemande);
@@ -336,7 +336,7 @@ export function retoucheImage(
   setGenerationEcParams: React.Dispatch<
     React.SetStateAction<IGenerationECParams | undefined>
   >,
-  setOperationEnCours: React.Dispatch<React.SetStateAction<boolean>>
+  setOperationEnCours: React.Dispatch<React.SetStateAction<boolean>>,
 ) {
   if (
     estTableauNonVide(imagesModifieesBase64) &&
@@ -348,7 +348,7 @@ export function retoucheImage(
     FicheActe.setImages(
       resultatInformationsActeApiHook.acte,
       // @ts-ignore imagesModifieesBase64 non null
-      imagesModifieesBase64
+      imagesModifieesBase64,
     );
 
     // @ts-ignore imagesModifieesBase64 non null
@@ -363,7 +363,7 @@ export function retoucheImage(
       requete,
       validation: documentReponseCopieIntegrale?.validation ?? Validation.O,
       mentionsRetirees: [],
-      choixDelivrance: requete.choixDelivrance
+      choixDelivrance: requete.choixDelivrance,
     });
   } else {
     setOperationEnCours(false);
@@ -379,7 +379,7 @@ export function getBoutonsEdition(
   setImagesDeLActe: React.Dispatch<React.SetStateAction<string[]>>,
   setRecuperationImagesDeLActeParams: React.Dispatch<
     React.SetStateAction<IGetImagesDeLActeParams | undefined>
-  >
+  >,
 ) {
   return (
     <div className="BoutonsEdition">
@@ -393,7 +393,7 @@ export function getBoutonsEdition(
         {boutonModifierCopiePresent(
           requete.statutCourant.statut,
           resultatInformationsActeApiHook?.acte,
-          documentEdite
+          documentEdite,
         ) && (
           <BoutonDoubleSubmit
             title={getLibelle("Modifier la copie à délivrer")}
@@ -403,7 +403,7 @@ export function getBoutonsEdition(
                 setImagesDeLActe([...imagesDeLActeModifiees]);
               } else {
                 setRecuperationImagesDeLActeParams({
-                  idActe: resultatInformationsActeApiHook?.acte?.id
+                  idActe: resultatInformationsActeApiHook?.acte?.id,
                 });
               }
             }}
@@ -421,9 +421,9 @@ export function getBoutonsEdition(
 }
 
 export function filtrerDocumentComplementaireASupprimer(
-  documents?: IDocumentReponse[]
+  documents?: IDocumentReponse[],
 ): IDocumentReponse | undefined {
-  return documents?.find(document => {
+  return documents?.find((document) => {
     return document.ordre === DocumentEC.Complementaire;
   });
 }
@@ -431,7 +431,7 @@ export function filtrerDocumentComplementaireASupprimer(
 export const getContenuEdition = (
   requete: IRequeteDelivrance,
   documentEdite?: IDocumentReponse,
-  resultatInformationsActeApiHook?: IActeApiHookResultat
+  resultatInformationsActeApiHook?: IActeApiHookResultat,
 ): JSX.Element | undefined => {
   return (
     <div className="contenu-edition">
@@ -453,7 +453,7 @@ export const getContenuEdition = (
 export const getParamsCreationEC = (
   typeDocument: string,
   requete: IRequeteDelivrance,
-  resultatInformationsActeApiHook?: IActeApiHookResultat
+  resultatInformationsActeApiHook?: IActeApiHookResultat,
 ): IGenerationECParams => {
   const choixDelivrance =
     DocumentDelivrance.getChoixDelivranceFromUUID(typeDocument);
@@ -462,7 +462,7 @@ export const getParamsCreationEC = (
     validation: Validation.O,
     pasDAction: true,
     choixDelivrance,
-    mentionsRetirees: []
+    mentionsRetirees: [],
   };
   if (DocumentDelivrance.estCopieIntegrale(typeDocument)) {
     paramsCreationEC.idActe = resultatInformationsActeApiHook?.acte?.id;
@@ -475,7 +475,7 @@ export const getParamsCreationEC = (
         resultatInformationsActeApiHook?.acte?.mentions
           ? resultatInformationsActeApiHook?.acte?.mentions
           : [],
-        resultatInformationsActeApiHook?.acte?.nature
+        resultatInformationsActeApiHook?.acte?.nature,
       );
     }
     paramsCreationEC.acte = resultatInformationsActeApiHook?.acte;
@@ -483,8 +483,8 @@ export const getParamsCreationEC = (
       ...gestionnaireMentionsRetireesAuto.getIdsMentionsRetirees(
         mentions,
         choixDelivrance,
-        resultatInformationsActeApiHook?.acte?.nature
-      )
+        resultatInformationsActeApiHook?.acte?.nature,
+      ),
     );
   }
   return paramsCreationEC;
@@ -495,7 +495,7 @@ export const getDocumentEditeDefaut = (idActe: string): IDocumentReponse => {
     id: "COURRIER",
     idActe,
     typeDocument: DocumentDelivrance.getUuidFromCode(ACTE_NON_TROUVE),
-    nbPages: 0
+    nbPages: 0,
   } as IDocumentReponse;
 };
 
@@ -506,7 +506,7 @@ export const getOngletsDocumentsEdites = (
   changementDocEdite: (id: string) => void,
   documents?: IDocumentReponse[],
   documentEdite?: IDocumentReponse,
-  resultatInformationsActeApiHook?: IActeApiHookResultat
+  resultatInformationsActeApiHook?: IActeApiHookResultat,
 ): JSX.Element => {
   return (
     <OngletsDocumentsEdites
