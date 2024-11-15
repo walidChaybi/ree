@@ -7,14 +7,18 @@ import Bouton from "../../../commun/bouton/Bouton";
 const boutonInactif = (
   valeursInitiale: IMiseAJourAnalyseMarginaleValeursForm,
   valeurs: IMiseAJourAnalyseMarginaleValeursForm,
-  miseAJourEffectuee: boolean
+  miseAJourEffectuee: boolean,
 ) => {
   switch (true) {
-    case miseAJourEffectuee && valeursInitiale.analyseMarginale.motif !== valeurs.analyseMarginale.motif:
+    case miseAJourEffectuee &&
+      valeursInitiale.analyseMarginale.motif !== valeurs.analyseMarginale.motif:
     case valeursInitiale.nomSecable.secable !== valeurs.nomSecable.secable:
-    case valeursInitiale.analyseMarginale.nom.trim() !== valeurs.analyseMarginale.nom.trim():
-    case valeursInitiale.nomSecable.nomPartie1.trim() !== valeurs.nomSecable.nomPartie1.trim():
-    case valeursInitiale.nomSecable.nomPartie2.trim() !== valeurs.nomSecable.nomPartie2.trim():
+    case valeursInitiale.analyseMarginale.nom.trim() !==
+      valeurs.analyseMarginale.nom.trim():
+    case valeursInitiale.nomSecable.nomPartie1.trim() !==
+      valeurs.nomSecable.nomPartie1.trim():
+    case valeursInitiale.nomSecable.nomPartie2.trim() !==
+      valeurs.nomSecable.nomPartie2.trim():
       return false;
     default:
       break;
@@ -22,7 +26,10 @@ const boutonInactif = (
 
   const prenomsDefaut = valeursInitiale.analyseMarginale.prenoms;
   const prenomsSaisis = valeurs.analyseMarginale.prenoms;
-  if (Object.values(prenomsDefaut).filter(prenom => prenom).length !== Object.values(prenomsSaisis).filter(prenom => prenom).length) {
+  if (
+    Object.values(prenomsDefaut).filter((prenom) => prenom).length !==
+    Object.values(prenomsSaisis).filter((prenom) => prenom).length
+  ) {
     return false;
   }
 
@@ -37,10 +44,17 @@ const boutonInactif = (
 
 const BoutonActualiserEtVisualiser: React.FC = () => {
   const { miseAJourEffectuee } = useContext(EditionMiseAJourContext.Valeurs);
-  const { initialValues, values } = useFormikContext<IMiseAJourAnalyseMarginaleValeursForm>();
+  const { initialValues, values, dirty } =
+    useFormikContext<IMiseAJourAnalyseMarginaleValeursForm>();
 
   return (
-    <Bouton title="Actualiser et visualiser" type="submit" disabled={boutonInactif(initialValues, values, miseAJourEffectuee)}>
+    <Bouton
+      title="Actualiser et visualiser"
+      type="submit"
+      disabled={
+        !dirty || boutonInactif(initialValues, values, miseAJourEffectuee)
+      }
+    >
       {"Actualiser et visualiser"}
     </Bouton>
   );

@@ -1,6 +1,8 @@
 import TRAITEMENT_VALIDATION_MISE_A_JOUR from "@api/traitements/TraitementValidationMiseAJour";
+import { IMiseAJourAnalyseMarginaleValeursForm } from "@api/validations/requeteMiseAJour/MiseAJourAnalyseMarginaleValidation";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import messageManager from "@util/messageManager";
+import { useFormikContext } from "formik";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { EditionMiseAJourContext } from "../../../../contexts/EditionMiseAJourContextProvider";
@@ -10,9 +12,15 @@ import PageChargeur from "../../../commun/chargeurs/PageChargeur";
 
 const BoutonValiderEtTerminer: React.FC = () => {
   const navigate = useNavigate();
-  const { idActe, idRequete, miseAJourEffectuee } = useContext(EditionMiseAJourContext.Valeurs);
+  const { idActe, idRequete, miseAJourEffectuee } = useContext(
+    EditionMiseAJourContext.Valeurs,
+  );
+  const { dirty } = useFormikContext<IMiseAJourAnalyseMarginaleValeursForm>();
   const { desactiverBlocker } = useContext(EditionMiseAJourContext.Actions);
-  const { lancerTraitement: lancerValidation, traitementEnCours: validationEnCours } = useTraitementApi(TRAITEMENT_VALIDATION_MISE_A_JOUR);
+  const {
+    lancerTraitement: lancerValidation,
+    traitementEnCours: validationEnCours,
+  } = useTraitementApi(TRAITEMENT_VALIDATION_MISE_A_JOUR);
 
   const onClick = () => {
     desactiverBlocker();
@@ -20,8 +28,10 @@ const BoutonValiderEtTerminer: React.FC = () => {
       parametres: { idActe: idActe, idRequete: idRequete },
       apresSucces: () => {
         navigate(URL_RECHERCHE_ACTE_INSCRIPTION);
-        messageManager.showSuccessAndClose("L'analyse marginale a été mise à jour avec succès");
-      }
+        messageManager.showSuccessAndClose(
+          "L'analyse marginale a été mise à jour avec succès",
+        );
+      },
     });
   };
 
@@ -32,7 +42,7 @@ const BoutonValiderEtTerminer: React.FC = () => {
         title="Valider et terminer"
         type="button"
         onClick={onClick}
-        disabled={!miseAJourEffectuee}
+        disabled={dirty || !miseAJourEffectuee}
       >
         {"Valider et terminer"}
       </Bouton>
