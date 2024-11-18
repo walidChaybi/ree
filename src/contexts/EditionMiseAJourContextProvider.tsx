@@ -56,10 +56,16 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
   const { gestionBlocker, BlockerNavigation } = useCreateBlocker({
     titre: "Abandon du traitement",
     messages: ["La saisie en cours sera perdue.", "Voulez-vous continuer ?"],
-    executerApresConfirmation: () =>
-      lancerTraitementAbandonner({ parametres: { idActe: idActe, idRequete: idRequete, miseAJourEffectuee: miseAJourEffectuee } }),
-    executerSiRedirectionAvecBlocageSansPopin: () =>
-      lancerTraitementAbandonner({ parametres: { idActe: idActe, idRequete: idRequete, miseAJourEffectuee: miseAJourEffectuee } })
+    executerApresConfirmation: debloquer =>
+      lancerTraitementAbandonner({
+        parametres: { idActe: idActe, idRequete: idRequete, miseAJourEffectuee: miseAJourEffectuee },
+        finalement: debloquer
+      }),
+    executerSiRedirectionAvecBlocageSansPopin: debloquer =>
+      lancerTraitementAbandonner({
+        parametres: { idActe: idActe, idRequete: idRequete, miseAJourEffectuee: miseAJourEffectuee },
+        finalement: debloquer
+      })
   });
 
   const valeursContext = useMemo<IEditionMiseAJourContext>(

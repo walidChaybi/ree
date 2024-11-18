@@ -2,6 +2,7 @@ export type TAppelTraitement<TParamTraitment extends object | undefined = undefi
   parametres?: TParamTraitment;
   apresSucces?: (reponse: TReponseSucces) => void;
   apresErreur?: (messageErreur?: string) => void;
+  finalement?: () => void;
 };
 
 export interface IErreurTraitement {

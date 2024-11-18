@@ -7,6 +7,7 @@ type TEtatTraitement = "EN_ATTENTE_APPEL" | "EN_COURS" | "TERMINE";
 type TActionsTraitement<TReponseSucces> = {
   apresSucces?: (reponse: TReponseSucces) => void;
   apresErreur?: (messageErreur?: string) => void;
+  finalement?: () => void;
 };
 
 const useTraitementApi = <TParam extends object | undefined, TReponseSucces>(traitement: TTraitementApi<TParam, TReponseSucces>) => {
@@ -19,7 +20,11 @@ const useTraitementApi = <TParam extends object | undefined, TReponseSucces>(tra
       return;
     }
 
-    setActionsTraitement({ apresSucces: appel?.apresSucces, apresErreur: appel?.apresErreur });
+    setActionsTraitement({
+      apresSucces: appel?.apresSucces,
+      apresErreur: appel?.apresErreur,
+      finalement: appel?.finalement,
+    });
     setEtatTraitement("EN_COURS");
     lancer(appel?.parametres);
   };
@@ -32,6 +37,7 @@ const useTraitementApi = <TParam extends object | undefined, TReponseSucces>(tra
     erreurTraitement.enEchec
       ? actionsTraitement?.apresErreur?.(erreurTraitement.message)
       : actionsTraitement?.apresSucces?.(reponseTraitement);
+    actionsTraitement?.finalement?.();
     erreurTraitement.message && logError({ messageUtilisateur: erreurTraitement.message });
     setEtatTraitement("EN_ATTENTE_APPEL");
     setActionsTraitement(null);
@@ -39,7 +45,7 @@ const useTraitementApi = <TParam extends object | undefined, TReponseSucces>(tra
 
   return {
     lancerTraitement: lancerTraitement,
-    traitementEnCours: etatTraitement === "EN_COURS"
+    traitementEnCours: etatTraitement === "EN_COURS",
   };
 };
 

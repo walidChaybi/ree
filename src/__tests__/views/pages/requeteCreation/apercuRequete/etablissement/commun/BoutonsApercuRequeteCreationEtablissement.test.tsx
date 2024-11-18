@@ -18,7 +18,7 @@ import { createTestingRouter } from "../../../../../../__tests__utils__/testsUti
 import { localStorageFeatureFlagMock } from "../../../../../../setupTests";
 
 describe("BoutonsApercuCreationEtablissement - ", () => {
-  test("DOIT rediriger vers Mes requêtes de création QUAND le bouton affiche Retour mes requêtes", () => {
+  test("DOIT rediriger vers Mes requêtes de création QUAND le bouton affiche Retour mes requêtes", async () => {
     const requete = {
       ...requeteCreationEtablissement,
       statutCourant: { statut: StatutRequete.A_TRAITER, dateEffet: 0 }
@@ -39,15 +39,15 @@ describe("BoutonsApercuCreationEtablissement - ", () => {
 
     render(<RouterProvider router={router} />);
 
-    const boutonRetour = screen.getByText("Retour mes requêtes de création") as HTMLButtonElement;
+    const boutonRetour: HTMLButtonElement = screen.getByText("Retour mes requêtes de création");
     fireEvent.click(boutonRetour);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(router.state.location.pathname).toBe(URL_MES_REQUETES_CREATION);
     });
   });
 
-  test("DOIT rediriger vers Requêtes de création de mon service QUAND le bouton affiche Retour requêtes de service", () => {
+  test("DOIT rediriger vers Requêtes de création de mon service QUAND le bouton affiche Retour requêtes de service", async () => {
     const requete = {
       ...requeteCreationEtablissement,
       statutCourant: { statut: StatutRequete.A_TRAITER, dateEffet: 0 }
@@ -68,15 +68,15 @@ describe("BoutonsApercuCreationEtablissement - ", () => {
 
     render(<RouterProvider router={router} />);
 
-    const boutonRetour = screen.getByText("Retour requêtes de création de mon service") as HTMLButtonElement;
+    const boutonRetour: HTMLButtonElement = screen.getByText("Retour requêtes de création de mon service");
     fireEvent.click(boutonRetour);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(router.state.location.pathname).toBe(URL_REQUETES_CREATION_SERVICE);
     });
   });
 
-  test("DOIT rediriger vers Rechercher une requête QUAND le bouton affiche Retour recherche requêtes", () => {
+  test("DOIT rediriger vers Rechercher une requête QUAND le bouton affiche Retour recherche requêtes", async () => {
     const requete = {
       ...requeteCreationEtablissement,
       statutCourant: { statut: StatutRequete.A_TRAITER, dateEffet: 0 }
@@ -97,15 +97,15 @@ describe("BoutonsApercuCreationEtablissement - ", () => {
 
     render(<RouterProvider router={router} />);
 
-    const boutonRetour = screen.getByText("Retour recherche requête") as HTMLButtonElement;
+    const boutonRetour: HTMLButtonElement = screen.getByText("Retour recherche requête");
     fireEvent.click(boutonRetour);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(router.state.location.pathname).toBe(URL_RECHERCHE_REQUETE);
     });
   });
 
-  test("NE DOIT PAS afficher le bouton 'SIGNER' QUAND le feature flag est désactivé.", () => {
+  test("NE DOIT PAS afficher le bouton 'SIGNER' QUAND le feature flag est désactivé.", async () => {
     localStorageFeatureFlagMock.setItem("FF_SIGNER_ACTE_ETABLISSEMENT", "false");
 
     const mockRequete = {
@@ -132,8 +132,8 @@ describe("BoutonsApercuCreationEtablissement - ", () => {
 
     render(<RouterProvider router={router} />);
 
-    waitFor(() => {
-      expect(screen.queryByTitle("SIGNER")).not.toBeDefined();
+    await waitFor(() => {
+      expect(screen.queryByTitle("SIGNER")).toBeNull();
     });
     localStorageFeatureFlagMock.setItem("FF_SIGNER_ACTE_ETABLISSEMENT", "true");
   });
@@ -155,7 +155,7 @@ describe("BoutonsApercuCreationEtablissement - ", () => {
       avancement: AvancementProjetActe.ACTE_A_SIGNER,
       afficherBoutonSigner: true
     }
-  ])("DOIT afficher le bouton 'SIGNER' QUAND l'avancement du projet est '$avancement'.", params => {
+  ])("DOIT afficher le bouton 'SIGNER' QUAND l'avancement du projet est '$avancement'.", async params => {
     const mockRequete = {
       ...requeteCreationEtablissement,
       statutCourant: { statut: StatutRequete.A_TRAITER, dateEffet: 0 }
@@ -180,12 +180,12 @@ describe("BoutonsApercuCreationEtablissement - ", () => {
 
     render(<RouterProvider router={router} />);
 
-    waitFor(() => {
+    await waitFor(() => {
       const boutonSigner = screen.queryByTitle("SIGNER");
       if (params.afficherBoutonSigner) {
         expect(boutonSigner).toBeDefined();
       } else {
-        expect(boutonSigner).not.toBeDefined();
+        expect(boutonSigner).toBeNull();
       }
     });
   });
@@ -207,7 +207,7 @@ describe("BoutonsApercuCreationEtablissement - ", () => {
       avancement: AvancementProjetActe.ACTE_A_SIGNER,
       afficherBoutonValideLeProjet: false
     }
-  ])("DOIT afficher le bouton 'VALIDER LE PROJET' QUAND l'avancement du projet est '$avancement'.", params => {
+  ])("DOIT afficher le bouton 'VALIDER LE PROJET' QUAND l'avancement du projet est '$avancement'.", async params => {
     const mockRequete = {
       ...requeteCreationEtablissement,
       statutCourant: { statut: StatutRequete.A_TRAITER, dateEffet: 0 }
@@ -232,17 +232,17 @@ describe("BoutonsApercuCreationEtablissement - ", () => {
 
     render(<RouterProvider router={router} />);
 
-    waitFor(() => {
+    await waitFor(() => {
       const boutonValiderLeProjet = screen.queryByTitle("Valider le projet d'acte");
       if (params.afficherBoutonValideLeProjet) {
         expect(boutonValiderLeProjet).toBeDefined();
       } else {
-        expect(boutonValiderLeProjet).not.toBeDefined();
+        expect(boutonValiderLeProjet).toBeNull();
       }
     });
   });
 
-  test("NE DOIT PAS afficher le bouton SIGNER QUAND le projet n'est pas a signer", () => {
+  test("NE DOIT PAS afficher le bouton SIGNER QUAND le projet n'est pas a signer", async () => {
     const mockRequete = {
       ...requeteCreationEtablissement,
       statutCourant: { statut: StatutRequete.A_TRAITER, dateEffet: 0 }
@@ -267,12 +267,12 @@ describe("BoutonsApercuCreationEtablissement - ", () => {
 
     render(<RouterProvider router={router} />);
 
-    waitFor(() => {
-      expect(screen.queryByTitle("SIGNER")).not.toBeDefined();
+    await waitFor(() => {
+      expect(screen.queryByTitle("SIGNER")).toBeNull();
     });
   });
 
-  test("DOIT avoir le bouton SIGNER clickable QUAND le registre est ouvert et que le document n'est pas modifie", () => {
+  test("DOIT avoir le bouton SIGNER clickable QUAND le registre est ouvert et que le document n'est pas modifie", async () => {
     const mockRequete = {
       ...requeteCreationEtablissement,
       statutCourant: { statut: StatutRequete.A_TRAITER, dateEffet: 0 }
@@ -299,12 +299,12 @@ describe("BoutonsApercuCreationEtablissement - ", () => {
 
     const boutonSigner = screen.queryByTitle("SIGNER") as HTMLInputElement;
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(boutonSigner.disabled).not.toBeTruthy();
     });
   });
 
-  test("NE DOIT PAS avoir le bouton SIGNER cliquable QUAND le registre n'est pas ouvert", () => {
+  test("NE DOIT PAS avoir le bouton SIGNER cliquable QUAND le registre n'est pas ouvert", async () => {
     const mockRequete = {
       ...requeteCreationEtablissement,
       statutCourant: { statut: StatutRequete.A_TRAITER, dateEffet: 0 }
@@ -331,13 +331,13 @@ describe("BoutonsApercuCreationEtablissement - ", () => {
 
     const boutonSigner = screen.queryByTitle("SIGNER") as HTMLInputElement;
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(boutonSigner.disabled).toBeTruthy();
-      expect(screen.queryByText("Le registre n'est pas ouvert. Vous ne pouvez pas signer l'acte.")).toBeDefined();
+      expect(screen.getByText("Le registre n'est pas ouvert. Vous ne pouvez pas signer l'acte.")).toBeDefined();
     });
   });
 
-  test("NE DOIT PAS avoir le bouton SIGNER cliquable QUAND le formulaire est modifié", () => {
+  test("NE DOIT PAS avoir le bouton SIGNER cliquable QUAND le formulaire est modifié", async () => {
     const mockRequete = {
       ...requeteCreationEtablissement,
       statutCourant: { statut: StatutRequete.A_TRAITER, dateEffet: 0 }
@@ -364,9 +364,9 @@ describe("BoutonsApercuCreationEtablissement - ", () => {
 
     const boutonSigner = screen.queryByTitle("SIGNER") as HTMLInputElement;
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(boutonSigner.disabled).toBeTruthy();
-      expect(screen.queryByText('Des données ont été modifiées. Veuillez cliquer sur le bouton "Actualiser et Visualiser".')).toBeDefined();
+      expect(screen.getByText('Des données ont été modifiées. Veuillez cliquer sur le bouton "Actualiser et Visualiser".')).toBeDefined();
     });
   });
 });

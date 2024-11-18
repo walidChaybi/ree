@@ -4,21 +4,22 @@ import { useBlocker } from "react-router-dom";
 
 interface IBlockerNavigationParams {
   messages: string[];
-  executerApresConfirmation: () => void;
+  executerApresConfirmation?: (debloquer: () => void) => void;
   titre?: string;
-  executerSiRedirectionAvecBlocageSansPopin?: () => void;
+  executerSiRedirectionAvecBlocageSansPopin?: (debloquer: () => void) => void;
 }
 
 export const useCreateBlocker = ({
   messages,
   executerApresConfirmation,
   titre,
-  executerSiRedirectionAvecBlocageSansPopin
+  executerSiRedirectionAvecBlocageSansPopin,
 }: IBlockerNavigationParams) => {
   const [estNavigationBloquee, setEstNavigationBloquee] = useState({
     estBloquee: true,
-    estPopinAffichee: false
+    estPopinAffichee: false,
   });
+  const [estConfirme, setEstConfirme] = useState<boolean>(false);
 
   const blocker = useBlocker(() => estNavigationBloquee.estBloquee);
 
@@ -30,7 +31,12 @@ export const useCreateBlocker = ({
         blocker.proceed?.();
         break;
       case !estNavigationBloquee.estPopinAffichee:
-        executerSiRedirectionAvecBlocageSansPopin?.();
+        if (executerSiRedirectionAvecBlocageSansPopin) {
+          executerSiRedirectionAvecBlocageSansPopin?.(gestionBlocker.desactiverBlocker);
+
+          break;
+        }
+
         gestionBlocker.desactiverBlocker();
         break;
       default:
@@ -48,9 +54,9 @@ export const useCreateBlocker = ({
       },
       desactiverBlocker: () => {
         setEstNavigationBloquee({ estBloquee: false, estPopinAffichee: false });
-      }
+      },
     }),
-    []
+    [],
   );
 
   const BlockerNavigation = () => (
@@ -59,18 +65,24 @@ export const useCreateBlocker = ({
         {
           label: "OK",
           action: () => {
-            executerApresConfirmation();
+            setEstConfirme(true);
+            if (executerApresConfirmation) {
+              executerApresConfirmation(() => blocker.proceed?.());
+
+              return;
+            }
+
             blocker.proceed?.();
-          }
+          },
         },
         {
           label: "Annuler",
           action: () => {
             blocker.reset?.();
-          }
-        }
+          },
+        },
       ]}
-      estOuvert={blocker.state === "blocked" && estNavigationBloquee.estPopinAffichee}
+      estOuvert={blocker.state === "blocked" && estNavigationBloquee.estPopinAffichee && !estConfirme}
       messages={messages}
       titre={titre}
     />
@@ -78,6 +90,6 @@ export const useCreateBlocker = ({
 
   return {
     gestionBlocker,
-    BlockerNavigation
+    BlockerNavigation,
   };
 };

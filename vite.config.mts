@@ -21,30 +21,19 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: ["src/__tests__/setupTests.ts"],
-    maxWorkers: 4,
+    maxWorkers: 3,
     testTimeout: 10000,
     include: ["src/__tests__/**/?(*.)test.ts?(x)"],
     coverage: {
       include: ["src/*"],
-      exclude: [
-        "src/App.tsx",
-        "src/index.tsx",
-        "src/ressources/*",
-        "src/__tests__/*",
-        "src/mock/*",
-        "src/api/configuration/*"
-      ]
+      exclude: ["src/App.tsx", "src/index.tsx", "src/ressources/*", "src/__tests__/*", "src/mock/*", "src/api/configuration/*"]
     }
   },
   define: {
     "process.env": {
       //     ...env.stringified["process.env"],
       VERSION: JSON.stringify(packageJson.version),
-      DATE_BUILD: JSON.stringify(
-        `${new Date(Date.now()).toISOString()} (${new Date(
-          Date.now()
-        ).toLocaleString()})`
-      )
+      DATE_BUILD: JSON.stringify(`${new Date(Date.now()).toISOString()} (${new Date(Date.now()).toLocaleString()})`)
     }
   },
   plugins: [
