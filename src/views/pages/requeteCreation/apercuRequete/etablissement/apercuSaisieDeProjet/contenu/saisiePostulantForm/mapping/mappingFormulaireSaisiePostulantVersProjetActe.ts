@@ -17,7 +17,7 @@ import {
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
-import { SPC, UN, ZERO, getNombreOuNull, getValeurOuNull } from "@util/Utils";
+import { SPC, UN, ZERO, getNombreOuNull } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export function mappingSaisieProjetPostulantFormVersProjetActe(
@@ -25,34 +25,28 @@ export function mappingSaisieProjetPostulantFormVersProjetActe(
   numeroDossierNational?: string,
   projetActeExistant?: IProjetActe
 ): IProjetActe {
-  const projetActeAEnvoyer = projetActeExistant
-    ? { ...projetActeExistant, corpsTexte: undefined }
-    : ({} as IProjetActe);
-
+  const projetActeAEnvoyer = projetActeExistant ? { ...projetActeExistant, corpsTexte: undefined } : ({} as IProjetActe);
   projetActeAEnvoyer.modeCreation = TypeRedactionActe.ETABLI;
 
   const naissancePostulantEvenement = {
     annee: +saisieProjetPostulant.titulaire.dateNaissance.annee,
-    mois: getValeurOuNull(+saisieProjetPostulant.titulaire.dateNaissance.mois),
-    jour: getValeurOuNull(+saisieProjetPostulant.titulaire.dateNaissance.jour),
+    mois: +saisieProjetPostulant.titulaire.dateNaissance.mois || null,
+    jour: +saisieProjetPostulant.titulaire.dateNaissance.jour || null,
     pays: saisieProjetPostulant.titulaire.lieuNaissance.paysNaissance,
     ville: saisieProjetPostulant.titulaire.lieuNaissance.villeNaissance,
     region: saisieProjetPostulant.titulaire.lieuNaissance.regionNaissance,
-    neDansLeMariage:
-      saisieProjetPostulant.titulaire.lieuNaissance.neDansMariage === "OUI"
+    neDansLeMariage: saisieProjetPostulant.titulaire.lieuNaissance.neDansMariage === "OUI"
   } as IEvenement;
 
   const mappingAnalyseMarginale = () => {
-    const prenoms = getPrenomsTableauStringVersPrenomsOrdonnes(
-      saisieProjetPostulant.titulaire.analyseMarginale.prenoms
-    ).map(p => p.prenom);
+    const prenoms = getPrenomsTableauStringVersPrenomsOrdonnes(saisieProjetPostulant.titulaire.analyseMarginale.prenoms).map(p => p.prenom);
     return [
       {
         id: projetActeAEnvoyer?.analyseMarginales?.[ZERO].id,
         titulaires: projetActeAEnvoyer.titulaires.map(titulaire => ({
           ...titulaire,
-          nom: saisieProjetPostulant.titulaire.analyseMarginale.nom,
-          prenoms
+          nom: saisieProjetPostulant.titulaire.analyseMarginale.nom.trim(),
+          prenoms: prenoms.map(prenom => prenom.trim())
         }))
       }
     ];
@@ -64,31 +58,20 @@ export function mappingSaisieProjetPostulantFormVersProjetActe(
   };
   projetActeAEnvoyer.titulaires = [
     {
-      ...mapPostulantVersTitulaireProjetActe(
-        saisieProjetPostulant,
-        naissancePostulantEvenement
-      )
+      ...mapPostulantVersTitulaireProjetActe(saisieProjetPostulant, naissancePostulantEvenement)
     } as ITitulaireProjetActe
   ];
-  projetActeAEnvoyer.analyseMarginales =
-    mappingAnalyseMarginale() as IProjetAnalyseMarginale[];
+  projetActeAEnvoyer.analyseMarginales = mappingAnalyseMarginale() as IProjetAnalyseMarginale[];
   projetActeAEnvoyer.nature =
-    NatureActe.getKey(
-      NatureActe.getEnumFromLibelle(saisieProjetPostulant.projet.natureActe)
-    ) || saisieProjetPostulant.projet.natureActe;
+    NatureActe.getKey(NatureActe.getEnumFromLibelle(saisieProjetPostulant.projet.natureActe)) || saisieProjetPostulant.projet.natureActe;
   projetActeAEnvoyer.numeroDossierNational = numeroDossierNational;
-  projetActeAEnvoyer.visibiliteArchiviste = TypeVisibiliteArchiviste.getKey(
-    TypeVisibiliteArchiviste.NON
-  );
+  projetActeAEnvoyer.visibiliteArchiviste = TypeVisibiliteArchiviste.getKey(TypeVisibiliteArchiviste.NON);
   projetActeAEnvoyer.declarant = saisieProjetPostulant.autres.declarant
     ? ({
         ...projetActeAEnvoyer.declarant,
-        identiteDeclarant: getValeurOuNull(
-          saisieProjetPostulant.autres.declarant
-        ),
+        identiteDeclarant: saisieProjetPostulant.autres.declarant || null,
         complementDeclarant:
-          TypeDeclarant.getEnumFor(saisieProjetPostulant.autres.declarant) ===
-          TypeDeclarant.AUTRE
+          TypeDeclarant.getEnumFor(saisieProjetPostulant.autres.declarant) === TypeDeclarant.AUTRE
             ? saisieProjetPostulant.autres.autreDeclarant
             : null
       } as IDeclarant)
@@ -96,7 +79,7 @@ export function mappingSaisieProjetPostulantFormVersProjetActe(
   return projetActeAEnvoyer;
 }
 
-function mapPostulantVersTitulaireProjetActe(
+export function mapPostulantVersTitulaireProjetActe(
   acte: ISaisieProjetPostulantForm,
   naissancePostulantEvenement: IEvenement
 ): ITitulaireProjetActe {
@@ -106,7 +89,7 @@ function mapPostulantVersTitulaireProjetActe(
   const lieuDeNaissanceExiste = !LieuxUtils.estPaysInconnu(adresse);
   const lieuDeNaissanceEstFrance = LieuxUtils.estPaysFrance(adresse);
   return {
-    nom: postulant.nom,
+    nom: postulant.nom.trim(),
     ordre: UN,
     prenoms,
     sexe: postulant.sexe,
@@ -114,85 +97,54 @@ function mapPostulantVersTitulaireProjetActe(
     naissance: naissancePostulantEvenement,
     domicile: lieuDeNaissanceExiste
       ? ({
-          ville: getValeurOuNull(acte.autres.ville),
-          region:
-            lieuDeNaissanceEstFrance &&
-            !LieuxUtils.estVilleParis(acte.autres.ville)
-              ? getValeurOuNull(acte.autres.departement)
-              : null,
-          pays: getValeurOuNull(
-            lieuDeNaissanceEstFrance
-              ? EtrangerFrance.FRANCE.libelle
-              : acte.autres.pays
-          ),
+          ville: acte.autres.ville || null,
+          region: lieuDeNaissanceEstFrance && !LieuxUtils.estVilleParis(acte.autres.ville) ? acte.autres.departement || null : null,
+          pays: lieuDeNaissanceEstFrance ? EtrangerFrance.FRANCE.libelle : acte.autres.pays || null,
           arrondissement:
-            lieuDeNaissanceEstFrance &&
-            LieuxUtils.estVilleMarseilleLyonParis(acte.autres.ville)
-              ? getValeurOuNull(acte.autres.arrondissement)
-              : null
+            lieuDeNaissanceEstFrance && LieuxUtils.estVilleMarseilleLyonParis(acte.autres.ville) ? acte.autres.arrondissement || null : null
         } as IAdresse)
       : null,
     filiations: getFiliation(acte),
-    nomPartie1: getValeurOuNull(postulant.nomSecable.nomPartie1),
-    nomPartie2: getValeurOuNull(postulant.nomSecable.nomPartie2),
-    identiteAvantDecret: getValeurOuNull(postulant.identite),
+    nomPartie1: postulant.nomSecable.nomPartie1 || null,
+    nomPartie2: postulant.nomSecable.nomPartie2 || null,
+    identiteAvantDecret: postulant.identite || null,
     pasDePrenom: prenoms.length === ZERO,
     decretNaturalisation:
       acte.acquisition.nature !== ""
         ? {
             dateSignature:
               acte.acquisition.date.annee &&
-              new Date(Date.UTC(
-                +acte.acquisition.date.annee,
-                +acte.acquisition.date.mois - UN,
-                +acte.acquisition.date.jour
-              )),
+              new Date(Date.UTC(+acte.acquisition.date.annee, +acte.acquisition.date.mois - UN, +acte.acquisition.date.jour)),
             natureDecret: acte.acquisition.nature
           }
         : null,
-    reconnuPar: getValeurOuNull(acte.autres.reconnaissance)
+    reconnuPar: acte.autres.reconnaissance || null
   } as ITitulaireProjetActe;
 }
 
-function getFiliationParParent(
-  parentForm: ISaisieParentSousForm,
-  ordre: number
-): IProjetFiliation {
-  const prenoms = getPrenomsTableauStringVersPrenomsOrdonnes(
-    parentForm.prenom.prenoms
-  ).map(p => p.prenom);
+export function getFiliationParParent(parentForm: ISaisieParentSousForm, ordre: number): IProjetFiliation {
+  const prenoms = getPrenomsTableauStringVersPrenomsOrdonnes(parentForm.prenom.prenoms).map(p => p.prenom);
   return {
     lienParente: LienParente.PARENT,
     ordre,
-    nom: getValeurOuNull(parentForm.nom),
+    nom: parentForm.nom.trim() || null,
     sexe: parentForm.sexe,
     naissance: getFiliationNaissance(parentForm) as IEvenement,
-    age: getValeurOuNull(parseInt(parentForm.dateNaissance.age)),
-    prenoms: prenoms.length ? prenoms : null
+    age: parseInt(parentForm.dateNaissance.age) || null,
+    prenoms: prenoms.length ? prenoms.map(prenom => prenom.trim()) : null
   } as IProjetFiliation;
 }
 
-function getFiliationNaissance(parentForm: ISaisieParentSousForm) {
-  const lieuNaissanceExiste = !LieuxUtils.estPaysInconnu(
-    parentForm.lieuNaissance.lieuNaissance
-  );
-  const lieuNaissanceEstFrance = LieuxUtils.estPaysFrance(
-    parentForm.lieuNaissance.lieuNaissance
-  );
+export function getFiliationNaissance(parentForm: ISaisieParentSousForm) {
+  const lieuNaissanceExiste = !LieuxUtils.estPaysInconnu(parentForm.lieuNaissance.lieuNaissance);
+  const lieuNaissanceEstFrance = LieuxUtils.estPaysFrance(parentForm.lieuNaissance.lieuNaissance);
 
   return {
-    pays: lieuNaissanceExiste
-      ? lieuNaissanceEstFrance
-        ? EtrangerFrance.FRANCE.libelle
-        : parentForm.lieuNaissance.paysNaissance
-      : null,
+    pays: lieuNaissanceExiste ? (lieuNaissanceEstFrance ? EtrangerFrance.FRANCE.libelle : parentForm.lieuNaissance.paysNaissance) : null,
     ville: lieuNaissanceExiste ? parentForm.lieuNaissance.villeNaissance : null,
     region: getRegionNaissanceFiliation(parentForm),
     arrondissement:
-      lieuNaissanceEstFrance &&
-      LieuxUtils.estVilleMarseilleLyonParis(
-        parentForm.lieuNaissance.villeNaissance
-      )
+      lieuNaissanceEstFrance && LieuxUtils.estVilleMarseilleLyonParis(parentForm.lieuNaissance.villeNaissance)
         ? parentForm.lieuNaissance.arrondissementNaissance
         : null,
     annee: getNombreOuNull(parentForm.dateNaissance.date?.annee),
@@ -200,33 +152,24 @@ function getFiliationNaissance(parentForm: ISaisieParentSousForm) {
     jour: getNombreOuNull(parentForm.dateNaissance.date?.jour)
   };
 }
-function getRegionNaissanceFiliation(parentForm: ISaisieParentSousForm) {
-  const lieuNaissanceEstEtranger = LieuxUtils.estPaysEtranger(
-    parentForm.lieuNaissance.lieuNaissance
-  );
-  const lieuNaissanceEstFrance = LieuxUtils.estPaysFrance(
-    parentForm.lieuNaissance.lieuNaissance
-  );
+export function getRegionNaissanceFiliation(parentForm: ISaisieParentSousForm) {
+  const lieuNaissanceEstEtranger = LieuxUtils.estPaysEtranger(parentForm.lieuNaissance.lieuNaissance);
+  const lieuNaissanceEstFrance = LieuxUtils.estPaysFrance(parentForm.lieuNaissance.lieuNaissance);
   if (lieuNaissanceEstEtranger) {
     return parentForm.lieuNaissance.regionNaissance;
   } else if (lieuNaissanceEstFrance) {
-    return !LieuxUtils.estVilleParis(parentForm.lieuNaissance.villeNaissance)
-      ? parentForm.lieuNaissance.departementNaissance
-      : null;
+    return !LieuxUtils.estVilleParis(parentForm.lieuNaissance.villeNaissance) ? parentForm.lieuNaissance.departementNaissance : null;
   } else {
     return null;
   }
 }
 
-function getFiliation(acte: ISaisieProjetPostulantForm): IProjetFiliation[] {
+export function getFiliation(acte: ISaisieProjetPostulantForm): IProjetFiliation[] {
+  console.log("acte", acte);
   let filiation: IProjetFiliation[] = [];
   const listeParents: ISaisieParentSousForm[] = [];
-  acte.parents.parent1 &&
-    estParentRenseigne(acte.parents.parent1) &&
-    listeParents.push(acte.parents.parent1);
-  acte.parents.parent2 &&
-    estParentRenseigne(acte.parents.parent2) &&
-    listeParents.push(acte.parents.parent2);
+  acte.parents.parent1 && estParentRenseigne(acte.parents.parent1) && listeParents.push(acte.parents.parent1);
+  acte.parents.parent2 && estParentRenseigne(acte.parents.parent2) && listeParents.push(acte.parents.parent2);
   listeParents.forEach((parent, index) => {
     const ordreDuParent = index + UN;
     filiation = [...filiation, getFiliationParParent(parent, ordreDuParent)];
@@ -235,16 +178,10 @@ function getFiliation(acte: ISaisieProjetPostulantForm): IProjetFiliation[] {
 }
 
 function getPrenomsTitulaire(postulant: ISaisiePostulantSousForm): string[] {
-  const listePrenoms: string[] = getPrenomsTableauStringVersPrenomsOrdonnes(
-    postulant.prenoms.prenoms
-  ).map(p => p.prenom);
+  const listePrenoms: string[] = getPrenomsTableauStringVersPrenomsOrdonnes(postulant.prenoms.prenoms).map(p => p.prenom.trim());
   return listePrenoms.length ? listePrenoms : [SPC];
 }
 
 function estParentRenseigne(parent: ISaisieParentSousForm): boolean {
-  return (
-    Boolean(parent.nom) ||
-    getPrenomsTableauStringVersPrenomsOrdonnes(parent.prenom?.prenoms)?.length >
-      ZERO
-  );
+  return Boolean(parent.nom) || getPrenomsTableauStringVersPrenomsOrdonnes(parent.prenom?.prenoms)?.length > ZERO;
 }
