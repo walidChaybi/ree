@@ -3,13 +3,9 @@
     "projectKey": "fr.gouv.diplomatie.rece:rece-ui"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
-  "prettier.trailingComma": "none",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.foldingImportsByDefault": true,
-  "prettier.arrowParens": "avoid",
-  "prettier.printWidth": 140,
-  "prettier.singleAttributePerLine": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
   },
