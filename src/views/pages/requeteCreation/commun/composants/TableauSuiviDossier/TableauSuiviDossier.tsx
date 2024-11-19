@@ -74,7 +74,7 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
         }),
         lieuNaissance: LieuxUtils.getVillePays(dataSdanf?.villeNaissance, dataSdanf?.paysNaissance)
       });
-      setIdBIAAfficher(id);
+      setIdBIAAfficher(ligneSelectionnee.idActe || "");
       setIsModalOuverte(true);
     } else if (NatureProjetEtablissement.estNaissance(NatureProjetEtablissement.getEnumFromLibelle(ligneSelectionnee?.evenement || ""))) {
       const ligneTitulaire = data.find(ligne => ligne.id === ligneSelectionnee.id);

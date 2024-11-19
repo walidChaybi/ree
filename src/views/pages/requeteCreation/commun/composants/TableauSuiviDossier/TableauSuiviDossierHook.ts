@@ -16,6 +16,7 @@ export interface ITableauSuiviDossierParams {
 
 export interface ILigneTableauSuiviDossier {
   id: string;
+  idActe?: string;
   idSuiviDossier: string;
   qualite: string;
   nom: string;
@@ -50,6 +51,7 @@ export function useTableauSuiviDossierHook(titulaires?: ITitulaireRequeteCreatio
 
           const ligneTitulaire: ILigneTableauSuiviDossier = {
             id: titulaireCourant.id,
+            idActe: idActes[0],
             idSuiviDossier: "",
             prenoms: getPrenomTitulaire(titulaireCourant, dataAnalyseMarginale),
             nom: getNomTitulaire(titulaireCourant, dataAnalyseMarginale),
