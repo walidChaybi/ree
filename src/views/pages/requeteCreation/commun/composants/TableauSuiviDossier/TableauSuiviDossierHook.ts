@@ -56,7 +56,7 @@ export function useTableauSuiviDossierHook(titulaires?: ITitulaireRequeteCreatio
             prenoms: getPrenomTitulaire(titulaireCourant, dataAnalyseMarginale),
             nom: getNomTitulaire(titulaireCourant, dataAnalyseMarginale),
             qualite: QualiteFamille.afficheLibelleEnfantSiEstEnfant(QualiteFamille.getEnumFromTitulaire(titulaireCourant)) ?? "",
-            decret: "",
+            decret: titulaireCourant.decret?.numeroDecret || "",
             evenement: "",
             dateEvenement: "",
             avancement: ""
