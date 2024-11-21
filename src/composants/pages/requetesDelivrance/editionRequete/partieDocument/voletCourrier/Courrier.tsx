@@ -1,19 +1,8 @@
-import {
-  ADRESSE,
-  CHOIX_COURRIER,
-  OPTION,
-  REQUERANT,
-} from "@composant/formulaire/ConstantesNomsForm";
-import {
-  ICreerCourrierECParams,
-  useCreerCourrierEC,
-} from "@hook/requete/creerCourrierECHook";
+import { ADRESSE, CHOIX_COURRIER, OPTION, REQUERANT } from "@composant/formulaire/ConstantesNomsForm";
+import { ICreerCourrierECParams, useCreerCourrierEC } from "@hook/requete/creerCourrierECHook";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
-import {
-  OptionCourrier,
-  OptionsCourrier,
-} from "@model/requete/IOptionCourrier";
+import { OptionCourrier, OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -22,10 +11,7 @@ import { RequerantCourrierFormValidationSchema } from "@pages/requeteDelivrance/
 import { useReinitialisationComposant } from "@util/form/useReinitialisation";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import {
-  AdresseFormValidationSchema,
-  AdresseFormValidationSchemaRequired,
-} from "@widget/formulaire/adresse/AdresseForm";
+import { AdresseFormValidationSchema, AdresseFormValidationSchemaRequired } from "@widget/formulaire/adresse/AdresseForm";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
@@ -35,7 +21,7 @@ import {
   controleFormulaire,
   getDefaultValuesCourrier,
   getDocumentReponseAModifier,
-  getTypesCourrier,
+  getTypesCourrier
 } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import {
   getAdresseCourrierForm,
@@ -43,14 +29,13 @@ import {
   getOptionsCourrier,
   getRequerantCourrierForm,
   getRequeteCourrierForm,
-  getTexteLibre,
+  getTexteLibre
 } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierForms";
 import { ValidationSchemaChoixCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/ChoixCourrierForm";
 import { texteOptionCourrierModifie } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/GestionOptionsCourrier";
 import { ValidationSchemaOptionCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/OptionsCourrierForm";
 import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import { EditionDelivranceContext } from "../../../../../../contexts/EditionDelivranceContextProvider";
-import { ConteneurBoutonBasDePage } from "../../../../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
 import BoutonsValiderEtReinitialiser from "../../boutons/BoutonsValiderEtReinitialiser";
 import { ECleOngletRequete } from "../../partieActeRequete/PartieActeRequete";
 
@@ -58,15 +43,10 @@ interface ModificationCourrierProps {
   requete: IRequeteDelivrance;
   idActe?: string;
   natureActe?: NatureActe;
-  estNouvelEcranCourrier?: Boolean;
+  estNouvelEcranCourrier?: boolean;
 }
 
-export const Courrier: React.FC<ModificationCourrierProps> = ({
-  requete,
-  idActe,
-  natureActe,
-  estNouvelEcranCourrier,
-}) => {
+export const Courrier: React.FC<ModificationCourrierProps> = ({ requete, idActe, natureActe, estNouvelEcranCourrier }) => {
   const typesCourrier = getTypesCourrier(requete);
   const { rechargerRequete } = useContext(EditionDelivranceContext);
 
@@ -77,32 +57,20 @@ export const Courrier: React.FC<ModificationCourrierProps> = ({
   const [idTypeCourrier, setIdTypeCourrier] = useState<string>();
   const [messagesBloquant, setMessagesBloquant] = useState<string>();
   const [optionsChoisies, setOptionsChoisies] = useState<OptionsCourrier>([]);
-  const [courrierEcParams, setCourrierEcParams] =
-    useState<ICreerCourrierECParams>();
-  const [documentDelivranceChoisi, setDocumentDelivranceChoisi] =
-    useState<DocumentDelivrance>();
-  const { cleReinitialisation, reinitialisation } =
-    useReinitialisationComposant();
+  const [courrierEcParams, setCourrierEcParams] = useState<ICreerCourrierECParams>();
+  const [documentDelivranceChoisi, setDocumentDelivranceChoisi] = useState<DocumentDelivrance>();
+  const { cleReinitialisation, reinitialisation } = useReinitialisationComposant();
 
   const ValidationSchemaCourrier = Yup.object({
     [CHOIX_COURRIER]: ValidationSchemaChoixCourrier,
     [OPTION]: ValidationSchemaOptionCourrier,
-    [ADRESSE]:
-      requete.sousType === SousTypeDelivrance.RDC
-        ? AdresseFormValidationSchemaRequired
-        : AdresseFormValidationSchema,
-    [REQUERANT]: RequerantCourrierFormValidationSchema,
+    [ADRESSE]: requete.sousType === SousTypeDelivrance.RDC ? AdresseFormValidationSchemaRequired : AdresseFormValidationSchema,
+    [REQUERANT]: RequerantCourrierFormValidationSchema
   });
 
   const onChangeTypeCourrier = (idTypeCourrierSelectionne: string) => {
     setIdTypeCourrier(idTypeCourrierSelectionne);
   };
-
-  const estDocumentCourrierExistant = requete.documentsReponses
-    .filter((doc) =>
-      DocumentDelivrance.estCourrierDelivranceEC(doc.typeDocument),
-    )
-    .shift();
 
   const checkOptionsToutesValides = useCallback(() => {
     return optionsChoisies.every((opt: OptionCourrier) => {
@@ -114,9 +82,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = ({
     });
   }, [optionsChoisies]);
 
-  const [optionsToutesValides, setOptionsToutesValides] = useState<boolean>(
-    checkOptionsToutesValides(),
-  );
+  const [optionsToutesValides, setOptionsToutesValides] = useState<boolean>(checkOptionsToutesValides());
 
   const setCheckOptions = () => {
     setOptionsToutesValides(checkOptionsToutesValides());
@@ -135,23 +101,21 @@ export const Courrier: React.FC<ModificationCourrierProps> = ({
               rechargerRequete(() =>
                 document.dispatchEvent(
                   new CustomEvent("changerOngletActifPartieActeRequete", {
-                    detail: ECleOngletRequete.COURRIER_EDITE,
-                  }),
-                ),
+                    detail: ECleOngletRequete.COURRIER_EDITE
+                  })
+                )
               );
             }
           : rafraichirRequete,
         saisieCourrier: { ...values },
-        setOperationEnCours,
+        setOperationEnCours
       });
     }
   };
 
   useEffect(() => {
     if (idTypeCourrier) {
-      setDocumentDelivranceChoisi(
-        DocumentDelivrance.getDocumentDelivrance(idTypeCourrier),
-      );
+      setDocumentDelivranceChoisi(DocumentDelivrance.getDocumentDelivrance(idTypeCourrier));
     }
   }, [idTypeCourrier]);
 
@@ -170,17 +134,11 @@ export const Courrier: React.FC<ModificationCourrierProps> = ({
 
   const blocsForm: JSX.Element[] = [
     getChoixCourrier(typesCourrier, onChangeTypeCourrier),
-    getOptionsCourrier(
-      requete,
-      optionsChoisies,
-      setOptionsChoisies,
-      setCheckOptions,
-      documentDelivranceChoisi,
-    ),
+    getOptionsCourrier(requete, optionsChoisies, setOptionsChoisies, setCheckOptions, documentDelivranceChoisi),
     getTexteLibre(requete, documentDelivranceChoisi),
     getRequerantCourrierForm(isSousTypeRDC, requete.requerant),
     getAdresseCourrierForm(isSousTypeRDC),
-    getRequeteCourrierForm(isSousTypeRDC),
+    getRequeteCourrierForm(isSousTypeRDC)
   ];
 
   const finOperationEnCours = () => {
@@ -205,26 +163,20 @@ export const Courrier: React.FC<ModificationCourrierProps> = ({
       >
         {blocsForm}
         {estNouvelEcranCourrier ? (
-          requete.statutCourant.statut !==
-            StatutRequete.TRANSMISE_A_VALIDEUR && (
-            <ConteneurBoutonBasDePage
-              position="droite"
-              className={`${estDocumentCourrierExistant && "bottom-16"}`}
-            >
+          requete.statutCourant.statut !== StatutRequete.TRANSMISE_A_VALIDEUR && (
+            <div className="fixed bottom-24 right-16">
               <BoutonsValiderEtReinitialiser
                 onReinitialiser={reinitialisation}
                 desactiverBoutonValider={!optionsToutesValides}
-                styleBoutonValider={`${estDocumentCourrierExistant ? "secondaire" : "principal"}`}
+                styleBoutonValider={"principal"}
               />
-            </ConteneurBoutonBasDePage>
+            </div>
           )
         ) : (
           <ReinitialiserValiderFormBoutons
             onClickReInitialiser={reinitialisation}
             validerDisabled={!optionsToutesValides}
-            afficherBouton={
-              !StatutRequete.estTransmiseAValideur(requete.statutCourant.statut)
-            }
+            afficherBouton={!StatutRequete.estTransmiseAValideur(requete.statutCourant.statut)}
           />
         )}
       </Formulaire>
@@ -237,8 +189,8 @@ export const Courrier: React.FC<ModificationCourrierProps> = ({
               label: "OK",
               action: () => {
                 setMessagesBloquant(undefined);
-              },
-            },
+              }
+            }
           ]}
         />
       )}

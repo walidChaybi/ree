@@ -3,7 +3,7 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   mode: "jit",
   corePlugins: {
-    preflight: false,
+    preflight: false
   },
   theme: {
     extend: {
@@ -11,35 +11,43 @@ module.exports = {
         bleu: {
           DEFAULT: "#0579be",
           sombre: "#03476e",
-          transparent: "#0579BE80",
+          transparent: "#0579BE80"
         },
         rouge: {
-          DEFAULT: "#f44336",
+          DEFAULT: "#f44336"
         },
         blanc: {
-          DEFAULT: "#ffffff",
+          DEFAULT: "#ffffff"
         },
         gris: {
           DEFAULT: "#cccccc",
           sombre: "#888888",
-          clair: "#f5f5f5",
+          clair: "#f5f5f5"
         },
+        bordure: {
+          DEFAULT: "#8080805c"
+        }
       },
 
       keyframes: {
         apparition: {
           "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
+          "100%": { opacity: "1" }
+        }
       },
+
+      fontFamily: {
+        "noto-sans-ui": ["NotoSansUI-Regular", "sans-serif"]
+      },
+
       animation: {
-        apparition: "apparition 0.5s ease-in-out",
+        apparition: "apparition 0.5s ease-in-out"
       },
 
       transitionProperty: {
-        opacity: "opacity",
-      },
-    },
+        opacity: "opacity"
+      }
+    }
   },
-  plugins: [],
+  plugins: []
 };

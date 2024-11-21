@@ -1,49 +1,41 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
-import { getLibelle } from "@util/Utils";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErreur";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useContext } from "react";
-import "./scss/ReinitialiserValiderBoutons.scss";
 
-interface ReinitialiserValiderBoutonsProps {
+interface IReinitialiserValiderBoutonsProps {
   afficherBouton: boolean;
   onClickReInitialiser?: any;
   reInitialiserDisabled?: boolean;
   onClickValider?: any;
   validerDisabled?: boolean;
-  validationEnCours?: boolean;
 }
 
-export const ReinitialiserValiderBoutons: React.FC<
-  ReinitialiserValiderBoutonsProps
-> = props => {
+export const ReinitialiserValiderBoutons: React.FC<IReinitialiserValiderBoutonsProps> = props => {
   const { utilisateurConnecte } = useContext(RECEContextData);
   return (
     <>
       {props.afficherBouton && (
-        <div className="ReinitialiserValiderBoutons">
+        <div className="sticky bottom-8">
           <BoutonDoubleSubmit
             type="reset"
             onClick={props.onClickReInitialiser}
             disabled={props.reInitialiserDisabled}
             aria-label="Réinitialiser"
           >
-            {getLibelle("Réinitialiser")}
+            {"Réinitialiser"}
           </BoutonDoubleSubmit>
           <BoutonDoubleSubmit
             type="button"
             onClick={props.onClickValider}
-            disabled={
-              props.validerDisabled ||
-              !officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER)
-            }
+            disabled={props.validerDisabled || !officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER)}
             aria-label="Valider"
           >
-            {getLibelle("Valider")}
+            {"Valider"}
           </BoutonDoubleSubmit>
         </div>
       )}
@@ -51,16 +43,11 @@ export const ReinitialiserValiderBoutons: React.FC<
   );
 };
 
-type ReinitialiserValiderFormBoutonsProps = ReinitialiserValiderBoutonsProps &
-  FormikComponentProps;
+type TReinitialiserValiderFormBoutonsProps = IReinitialiserValiderBoutonsProps & FormikComponentProps;
 
-const _ReinitialiserValiderFormBoutons: React.FC<
-  ReinitialiserValiderFormBoutonsProps
-> = props => {
+const _ReinitialiserValiderFormBoutons: React.FC<TReinitialiserValiderFormBoutonsProps> = props => {
   function getReinitialiserDisabled() {
-    return props.reInitialiserDisabled !== undefined
-      ? props.reInitialiserDisabled
-      : !props.formik.dirty;
+    return props.reInitialiserDisabled ?? !props.formik.dirty;
   }
 
   return (
@@ -75,15 +62,10 @@ const _ReinitialiserValiderFormBoutons: React.FC<
               GestionnaireBlockErreur.scrollALaPremiereErreur();
             }
       }
-      validerDisabled={
-        props.validerDisabled !== undefined
-          ? props.validerDisabled
-          : !props.formik.dirty
-      }
+      validerDisabled={props.validerDisabled ?? !props.formik.dirty}
       afficherBouton={props.afficherBouton}
     />
   );
 };
 
-export const ReinitialiserValiderFormBoutons =
-  connect<ReinitialiserValiderBoutonsProps>(_ReinitialiserValiderFormBoutons);
+export const ReinitialiserValiderFormBoutons = connect<IReinitialiserValiderBoutonsProps>(_ReinitialiserValiderFormBoutons);

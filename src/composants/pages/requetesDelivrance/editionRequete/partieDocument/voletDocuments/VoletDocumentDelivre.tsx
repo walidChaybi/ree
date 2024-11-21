@@ -11,7 +11,7 @@ import {
   CODE_COPIE_NON_SIGNEE,
   CODE_EXTRAIT_AVEC_FILIATION,
   CODE_EXTRAIT_PLURILINGUE,
-  CODE_EXTRAIT_SANS_FILIATION,
+  CODE_EXTRAIT_SANS_FILIATION
 } from "@model/requete/enum/DocumentDelivranceConstante";
 import { Validation } from "@model/requete/enum/Validation";
 import { GestionMentions } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentions";
@@ -25,73 +25,51 @@ import ConteneurVoletEdition from "../../ConteneurVoletEdition";
 
 interface IVoletDocumentDelivreProps {
   documentDelivre: IDocumentReponse;
-  resetOngletActif: Boolean;
+  resetOngletActif: boolean;
 }
 
 export enum ECleOngletDocumentDelivre {
   SAISIE = "saisie",
   MENTION = "mention",
   SAISIE_CORPS = "saisie-corps",
-  DOCUMENT_EDITE = "document-edite",
+  DOCUMENT_EDITE = "document-edite"
 }
 
 const aOngletSaisirExtrait = (typeDelivrance: DocumentDelivrance): boolean =>
   ![CODE_COPIE_INTEGRALE, CODE_COPIE_NON_SIGNEE].includes(typeDelivrance.code);
 
-const aOngletMention = (
-  typeDelivrance: DocumentDelivrance,
-  requete: IRequeteDelivrance,
-  acte: IFicheActe | null,
-) => {
+const aOngletMention = (typeDelivrance: DocumentDelivrance, requete: IRequeteDelivrance, acte: IFicheActe | null) => {
   switch (typeDelivrance.code) {
     case CODE_EXTRAIT_PLURILINGUE:
-      return (
-        acte && [NatureActe.NAISSANCE, NatureActe.MARIAGE].includes(acte.nature)
-      );
+      return acte && [NatureActe.NAISSANCE, NatureActe.MARIAGE].includes(acte.nature);
     case CODE_COPIE_INTEGRALE:
     case CODE_COPIE_NON_SIGNEE:
-      return (
-        acte?.type === TypeActe.TEXTE &&
-        requete.choixDelivrance !== ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE
-      );
+      return acte?.type === TypeActe.TEXTE && requete.choixDelivrance !== ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE;
     default:
       return true;
   }
 };
 
-const aOngletSaisirCorps = (
-  typeDelivrance: DocumentDelivrance,
-  validation: Validation | undefined,
-) =>
-  [CODE_EXTRAIT_AVEC_FILIATION, CODE_EXTRAIT_SANS_FILIATION].includes(
-    typeDelivrance.code,
-  ) && validation !== Validation.E;
+const aOngletSaisirCorps = (typeDelivrance: DocumentDelivrance, validation: Validation | undefined) =>
+  [CODE_EXTRAIT_AVEC_FILIATION, CODE_EXTRAIT_SANS_FILIATION].includes(typeDelivrance.code) && validation !== Validation.E;
 
-const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({
-  documentDelivre,
-  resetOngletActif,
-}) => {
+const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDelivre, resetOngletActif }) => {
   const { requete, acte } = useContext(EditionDelivranceContext);
   const [contenuDocument, setContenuDocument] = useState<string | null>(null);
   const ongletsDisponible = useMemo(() => {
-    const typeDocument = DocumentDelivrance.getEnumForUUID(
-      documentDelivre.typeDocument,
-    );
+    const typeDocument = DocumentDelivrance.getEnumForUUID(documentDelivre.typeDocument);
 
     return {
       saisie: aOngletSaisirExtrait(typeDocument),
       mention: aOngletMention(typeDocument, requete, acte),
-      saisieCorps: aOngletSaisirCorps(typeDocument, documentDelivre.validation),
+      saisieCorps: aOngletSaisirCorps(typeDocument, documentDelivre.validation)
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [documentDelivre]);
-  const [ongletActif, setOngletActif] = useState<ECleOngletDocumentDelivre>(
-    ECleOngletDocumentDelivre.DOCUMENT_EDITE,
-  );
+  const [ongletActif, setOngletActif] = useState<ECleOngletDocumentDelivre>(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
 
   useEffect(() => {
-    resetOngletActif &&
-      setOngletActif(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
+    resetOngletActif && setOngletActif(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
   }, [resetOngletActif]);
 
   useEffect(() => {
@@ -99,70 +77,72 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({
       return;
     }
 
-    getDocumentReponseById(documentDelivre.id).then((data) =>
-      setContenuDocument(data.body?.data?.contenu ?? ""),
-    );
+    getDocumentReponseById(documentDelivre.id).then(data => setContenuDocument(data.body?.data?.contenu ?? ""));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contenuDocument]);
 
   return (
-    <div>
+    <>
       <OngletsBouton
         onglets={[
           ...(ongletsDisponible.saisie
             ? [
                 {
                   cle: ECleOngletDocumentDelivre.SAISIE,
-                  libelle: "Saisir l'extrait",
-                },
+                  libelle: "Saisir l'extrait"
+                }
               ]
             : []),
           ...(ongletsDisponible.mention
             ? [
                 {
                   cle: ECleOngletDocumentDelivre.MENTION,
-                  libelle: "Gérer les mentions",
-                },
+                  libelle: "Gérer les mentions"
+                }
               ]
             : []),
           ...(ongletsDisponible.saisieCorps
             ? [
                 {
                   cle: ECleOngletDocumentDelivre.SAISIE_CORPS,
-                  libelle: "Modifier le corps de l'extrait",
-                },
+                  libelle: "Modifier le corps de l'extrait"
+                }
               ]
             : []),
           {
             cle: ECleOngletDocumentDelivre.DOCUMENT_EDITE,
-            libelle: "Document édité",
-          },
+            libelle: "Document édité"
+          }
         ]}
         cleOngletActif={ongletActif}
-        changerOnglet={(valeur: string) =>
-          setOngletActif(valeur as ECleOngletDocumentDelivre)
-        }
+        changerOnglet={(valeur: string) => setOngletActif(valeur as ECleOngletDocumentDelivre)}
       />
 
       {ongletsDisponible.saisie && (
         <ConteneurVoletEdition
           estActif={ongletActif === ECleOngletDocumentDelivre.SAISIE}
+          estSousOnglet
         >
-          <SaisirExtraitForm acte={acte as IFicheActe} requete={requete} />
+          <div className="m-0 overflow-auto">
+            <SaisirExtraitForm
+              acte={acte as IFicheActe}
+              requete={requete}
+            />
+          </div>
         </ConteneurVoletEdition>
       )}
 
       {ongletsDisponible.mention && (
         <ConteneurVoletEdition
           estActif={ongletActif === ECleOngletDocumentDelivre.MENTION}
+          estScrollable
+          estSousOnglet
         >
           <GestionMentions
             acte={acte as IFicheActe}
             document={documentDelivre}
             requete={requete}
-            setOngletDocumentDelivre={(
-              nouvelOnglet: ECleOngletDocumentDelivre,
-            ) => setOngletActif(nouvelOnglet)}
+            setOngletDocumentDelivre={(nouvelOnglet: ECleOngletDocumentDelivre) => setOngletActif(nouvelOnglet)}
           ></GestionMentions>
         </ConteneurVoletEdition>
       )}
@@ -170,6 +150,8 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({
       {ongletsDisponible.saisieCorps && (
         <ConteneurVoletEdition
           estActif={ongletActif === ECleOngletDocumentDelivre.SAISIE_CORPS}
+          estScrollable
+          estSousOnglet
         >
           <ModifierCorpsExtrait
             acte={acte as IFicheActe}
@@ -181,10 +163,14 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({
 
       <ConteneurVoletEdition
         estActif={ongletActif === ECleOngletDocumentDelivre.DOCUMENT_EDITE}
+        estSousOnglet
       >
-        <AffichagePDF contenuBase64={contenuDocument} />
+        <AffichagePDF
+          contenuBase64={contenuDocument}
+          typeZoom="automatic-zoom"
+        />
       </ConteneurVoletEdition>
-    </div>
+    </>
   );
 };
 

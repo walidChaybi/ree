@@ -9,18 +9,10 @@ interface IOngletActeMisAJourProps {
   estActif: boolean;
 }
 
-const OngletActeMisAJour: React.FC<IOngletActeMisAJourProps> = ({
-  estActif
-}) => {
-  const { idActe, composerActeMisAJour } = useContext(
-    EditionMiseAJourContext.Valeurs
-  );
-  const { setComposerActeMisAJour } = useContext(
-    EditionMiseAJourContext.Actions
-  );
-  const [contenuActeMisAJour, setContenuActeMisAJour] = useState<string | null>(
-    null
-  );
+const OngletActeMisAJour: React.FC<IOngletActeMisAJourProps> = ({ estActif }) => {
+  const { idActe, composerActeMisAJour } = useContext(EditionMiseAJourContext.Valeurs);
+  const { setComposerActeMisAJour } = useContext(EditionMiseAJourContext.Actions);
+  const [contenuActeMisAJour, setContenuActeMisAJour] = useState<string | null>(null);
 
   useEffect(() => {
     if (!composerActeMisAJour) {
@@ -28,18 +20,19 @@ const OngletActeMisAJour: React.FC<IOngletActeMisAJourProps> = ({
     }
 
     getDonneesPourCompositionActeAvantSignatureMentions(idActe).then(data =>
-      compositionApi
-        .getCompositionActeTexte(data.body)
-        .then(dataComposition => {
-          setContenuActeMisAJour(dataComposition.body.data.contenu ?? "");
-          setComposerActeMisAJour(false);
-        })
+      compositionApi.getCompositionActeTexte(data.body).then(dataComposition => {
+        setContenuActeMisAJour(dataComposition.body.data.contenu ?? "");
+        setComposerActeMisAJour(false);
+      })
     );
   }, [composerActeMisAJour]);
 
   return (
     <OngletsContenu estActif={estActif}>
-      <AffichagePDF contenuBase64={contenuActeMisAJour} />
+      <AffichagePDF
+        contenuBase64={contenuActeMisAJour}
+        typeZoom="automatic-zoom"
+      />
     </OngletsContenu>
   );
 };

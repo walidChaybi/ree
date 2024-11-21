@@ -15,14 +15,17 @@ vi.mock("@util/FileUtils", () => {
 test("renders un PDF  dans l'iframe quand un contenuBase64 est fourni", () => {
   const contenuBase64 = "sampleBase64String";
 
-  render(<AffichagePDF contenuBase64={contenuBase64} />);
+  render(
+    <AffichagePDF
+      contenuBase64={contenuBase64}
+      typeZoom="automatic-zoom"
+    />
+  );
 
   const iframe = screen.getByTitle("Document PDF");
   expect(iframe).toBeDefined();
 
-  expect(iframe.getAttribute("src")).toBe(
-    "blobUrl://sampleBase64String#zoom=page-fit"
-  );
+  expect(iframe.getAttribute("src")).toBe("blobUrl://sampleBase64String#zoom=automatic-zoom");
 });
 
 test("renders un message informatif quand le contenuBase64 est null", () => {
@@ -32,15 +35,13 @@ test("renders un message informatif quand le contenuBase64 est null", () => {
   expect(fallbackText).toBeDefined();
 });
 
-test("doit mémoiser le blob pour ne pas re-calculer lorsque le contenuBase64 reste inchangé", () => {
+test("doit mémoriser le blob pour ne pas re-calculer lorsque le contenuBase64 reste inchangé", () => {
   let contenuBase64 = "mockDocBase64";
   const { rerender } = render(<AffichagePDF contenuBase64={contenuBase64} />);
 
   let iframe = screen.getByTitle("Document PDF");
   expect(iframe).toBeDefined();
-  expect(iframe.getAttribute("src")).toBe(
-    "blobUrl://mockDocBase64#zoom=page-fit"
-  );
+  expect(iframe.getAttribute("src")).toBe("blobUrl://mockDocBase64#zoom=page-fit");
   expect(base64toBlobUrl).toHaveBeenCalledTimes(2);
 
   rerender(<AffichagePDF contenuBase64={contenuBase64} />);
@@ -48,9 +49,7 @@ test("doit mémoiser le blob pour ne pas re-calculer lorsque le contenuBase64 re
   iframe = screen.getByTitle("Document PDF");
 
   expect(iframe).toBeDefined();
-  expect(iframe.getAttribute("src")).toBe(
-    "blobUrl://mockDocBase64#zoom=page-fit"
-  );
+  expect(iframe.getAttribute("src")).toBe("blobUrl://mockDocBase64#zoom=page-fit");
 
   expect(base64toBlobUrl).toHaveBeenCalledTimes(2);
 
@@ -61,9 +60,7 @@ test("doit mémoiser le blob pour ne pas re-calculer lorsque le contenuBase64 re
   iframe = screen.getByTitle("Document PDF");
 
   expect(iframe).toBeDefined();
-  expect(iframe.getAttribute("src")).toBe(
-    "blobUrl://nouveauMockDocBase64#zoom=page-fit"
-  );
+  expect(iframe.getAttribute("src")).toBe("blobUrl://nouveauMockDocBase64#zoom=page-fit");
 
   expect(base64toBlobUrl).toHaveBeenCalledTimes(3);
 });

@@ -11,9 +11,11 @@ interface BoutonsValiderEtReinitialiserProps {
   styleBoutonValider?: TStyleBouton;
 }
 
-const BoutonsValiderEtReinitialiser: React.FC<
-  BoutonsValiderEtReinitialiserProps
-> = ({ onReinitialiser, desactiverBoutonValider, styleBoutonValider }) => {
+const BoutonsValiderEtReinitialiser: React.FC<BoutonsValiderEtReinitialiserProps> = ({
+  onReinitialiser,
+  desactiverBoutonValider,
+  styleBoutonValider
+}) => {
   const { utilisateurConnecte } = useContext(RECEContextData);
   const formik = useFormikContext();
 
@@ -33,11 +35,7 @@ const BoutonsValiderEtReinitialiser: React.FC<
         className={`${styleBoutonValider === "secondaire" && "hover:bg-bleu hover:text-white"}`}
         type="submit"
         onClick={formik.submitForm}
-        disabled={
-          desactiverBoutonValider ||
-          !formik.dirty ||
-          !officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER)
-        }
+        disabled={desactiverBoutonValider || !officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER)}
         aria-label="Valider"
       >
         Valider

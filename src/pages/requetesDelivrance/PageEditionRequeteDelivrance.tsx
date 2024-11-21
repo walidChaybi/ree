@@ -13,13 +13,12 @@ export interface IDocumentsDelivrance {
 
 const PageEditionRequeteDelivrance: React.FC = () => {
   const { idRequeteParam, idActeParam } = useParams<TUuidActeParams>();
-
   return (
     <EditionDelivranceContextProvider
       idRequeteParam={idRequeteParam as string}
       idActeParam={idActeParam}
     >
-      <div className="flex gap-12 pt-5">
+      <div className="flex gap-12 pt-4">
         <EditionRequeteDelivrance />
         <BoutonsEditionRequeteDelivrance />
       </div>

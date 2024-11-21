@@ -1,10 +1,11 @@
 .BoutonVerrouillage {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 1rem;
 
-    svg {
-        color: red;
-        height: 100%;
-    }
+  svg {
+    color: red;
+    height: 100%;
+  }
 }

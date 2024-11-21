@@ -12,8 +12,7 @@ const getStyleBouton = (styleBouton?: TStyleBouton) => {
       return;
   }
 };
-export interface IBoutonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface IBoutonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   styleBouton?: TStyleBouton;
   garderStyleSiDisabled?: boolean;
 }

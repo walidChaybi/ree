@@ -1,119 +1,112 @@
 .conteneur-observations-requete-delivrance {
-    padding: 1rem;
-    text-align: start;
-    font-size: .9rem;
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 2rem;
-    align-items: center;
-    justify-content: space-between;
+  padding: 1rem;
+  text-align: start;
+  font-size: 0.9rem;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 2rem;
+  align-items: center;
+  justify-content: space-between;
 
-    button {
-        margin: 0;
-        padding: 0;
-        background-color: transparent;
-        min-width: unset;
+  button {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    min-width: unset;
+  }
+
+  .conteneur-lignes-observation {
+    display: grid;
+    gap: 0.2rem;
+
+    .aucune-observation {
+      font-style: italic;
     }
 
-    .conteneur-lignes-observation {
-        display: grid;
-        gap: .2rem;
+    .ligne-observation {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
 
-        .aucune-observation {
-            font-style: italic;
-        }
+      .texte-observation {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+      }
 
-        .ligne-observation {
-            display: flex;
-            flex-wrap: nowrap;
-            align-items: center;
-    
-            .texte-observation {
-                overflow: hidden;
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 1;
-            }
-    
-            .date-observation {
-                padding-left: .1rem;
-                white-space: nowrap;
-            }
-    
-            .boutons-observation {
-                display: flex;
-                flex-wrap: nowrap;
-                align-items: center;
-                gap: .25rem;
-                padding: 0 .5rem;
-    
-                .bouton-modifier {
-                    color: var(--bleu-sombre-rece);
-                    transition: color .25s ease;
-    
-                    &:hover {
-                        color: var(--bleu-rece);
-                    }
-                }
-    
-                .bouton-supprimer {
-                    color: var(--rouge-erreur);
-                    transition: opacity .25s ease;
-    
-                    &:hover {
-                        opacity: .7;
-                    }
-                }
-            }
-        }
-    }
+      .boutons-observation {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0 0.5rem;
 
-    
+        .bouton-modifier {
+          color: var(--bleu-sombre-rece);
+          transition: color 0.25s ease;
 
-    .bouton-ajouter {
-        color: var(--bleu-sombre-rece);
-        transition: color .25s ease;
-
-        &:hover {
+          &:hover {
             color: var(--bleu-rece);
+          }
         }
+
+        .bouton-supprimer {
+          color: var(--rouge-erreur);
+          transition: opacity 0.25s ease;
+
+          &:hover {
+            opacity: 0.7;
+          }
+        }
+      }
     }
+  }
+
+  .bouton-ajouter {
+    color: var(--bleu-sombre-rece);
+    transition: color 0.25s ease;
+
+    &:hover {
+      color: var(--bleu-rece);
+    }
+  }
 }
 
 .conteneur-modale-observation {
-    background-color: var(--blanc-rece);
-    border-radius: .25rem;
-    padding: 1rem;
-    min-width: 40rem;
+  background-color: var(--blanc-rece);
+  border-radius: 0.25rem;
+  padding: 1rem;
+  min-width: 40rem;
 
-    .Formulaire {
-        margin: 0;
+  .Formulaire {
+    margin: 0;
+  }
+
+  .label-text-observation {
+    display: block;
+    text-align: center;
+    color: var(--bleu-sombre-rece);
+  }
+
+  .label-suppression-observation {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  textarea {
+    min-width: 39rem;
+  }
+
+  .boutons-modale-observation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    button {
+      margin-bottom: 0;
     }
-
-    .label-text-observation {
-        display: block;
-        text-align: center;
-        color: var(--bleu-sombre-rece);
-    }
-
-    .label-suppression-observation {
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-    }
-
-    textarea {
-        min-width: 39rem;
-    }
-
-    .boutons-modale-observation {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 1rem;
-
-        button {
-            margin-bottom: 0;
-        }
-    }
+  }
 }

@@ -1,27 +1,28 @@
-import { ID, ID_ACTE, URL_CONTEXT_APP } from "@router/ReceUrls";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { ID, ID_ACTE, URL_CONTEXT_APP, URL_MES_REQUETES_DELIVRANCE_EDITION_ID } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import PageEditionRequeteDelivrance from "../../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
 import { createTestingRouter } from "../../__tests__utils__/testsUtil";
 
-const idActe = "b41079a5-9e8f-478a-b04c-c4c2ac671123";
-const idRequete = "9d00fe88-9d21-482e-bb02-223636f78386";
-
 describe("Test de la page aperçu requête edition analyse marginale", async () => {
+  const idActe = "b41079a5-9e8f-478a-b04c-c4c2ac671123";
+  const idRequete = "9d00fe88-9d21-482e-bb02-223636f78386";
   test("La page s'affiche correctement", async () => {
     const router = createTestingRouter(
       [
         {
-          path: `${URL_CONTEXT_APP}/:idRequeteParam/:idActeParam`,
-          element: <PageEditionRequeteDelivrance />,
-        },
+          path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+          element: (
+            <MockRECEContextProvider utilisateurs={[{} as IUtilisateur]}>
+              <PageEditionRequeteDelivrance />
+            </MockRECEContextProvider>
+          )
+        }
       ],
-      [
-        `${URL_CONTEXT_APP}/:idRequeteParam/:idActeParam`
-          .replace(ID, idRequete)
-          .replace(ID_ACTE, idActe),
-      ],
+      [URL_MES_REQUETES_DELIVRANCE_EDITION_ID.replace(ID, idRequete).replace(ID_ACTE, idActe)]
     );
 
     render(<RouterProvider router={router} />);
@@ -31,19 +32,19 @@ describe("Test de la page aperçu requête edition analyse marginale", async () 
     });
   });
 
-  test("La page est redirigé si pas d'id acte ou idParam", async () => {
+  test("La page est redirigé si pas d'idActe ou idParam", async () => {
     const router = createTestingRouter(
       [
         {
           path: `${URL_CONTEXT_APP}/test`,
-          element: <PageEditionRequeteDelivrance />,
+          element: <PageEditionRequeteDelivrance />
         },
         {
           path: URL_CONTEXT_APP,
-          element: <div>Redirigé</div>,
-        },
+          element: <div>Redirigé</div>
+        }
       ],
-      [`${URL_CONTEXT_APP}/test`],
+      [`${URL_CONTEXT_APP}/test`]
     );
 
     render(<RouterProvider router={router} />);
@@ -52,15 +53,19 @@ describe("Test de la page aperçu requête edition analyse marginale", async () 
     });
   });
 
-  test("L'onglet Requete est actif si il n'y à pas de délivrance", async () => {
+  test("L'onglet Requete est actif s'il n'y a pas de délivrance", async () => {
     const router = createTestingRouter(
       [
         {
           path: `${URL_CONTEXT_APP}/:idRequeteParam`,
-          element: <PageEditionRequeteDelivrance />,
-        },
+          element: (
+            <MockRECEContextProvider utilisateurs={[{} as IUtilisateur]}>
+              <PageEditionRequeteDelivrance />
+            </MockRECEContextProvider>
+          )
+        }
       ],
-      [`${URL_CONTEXT_APP}/:idRequeteParam`.replace(ID, idRequete)],
+      [`${URL_CONTEXT_APP}/:idRequeteParam`.replace(ID, idRequete)]
     );
 
     render(<RouterProvider router={router} />);
@@ -72,19 +77,19 @@ describe("Test de la page aperçu requête edition analyse marginale", async () 
     });
   });
 
-  test("Les onglets Acte est actif si il y à une délivrance", async () => {
+  test("Les onglets Acte sont actifs s'il y a une délivrance", async () => {
     const router = createTestingRouter(
       [
         {
-          path: `${URL_CONTEXT_APP}/:idRequeteParam/:idActeParam`,
-          element: <PageEditionRequeteDelivrance />,
-        },
+          path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+          element: (
+            <MockRECEContextProvider utilisateurs={[{} as IUtilisateur]}>
+              <PageEditionRequeteDelivrance />
+            </MockRECEContextProvider>
+          )
+        }
       ],
-      [
-        `${URL_CONTEXT_APP}/:idRequeteParam/:idActeParam`
-          .replace(ID, idRequete)
-          .replace(ID_ACTE, idActe),
-      ],
+      [URL_MES_REQUETES_DELIVRANCE_EDITION_ID.replace(ID, idRequete).replace(ID_ACTE, idActe)]
     );
 
     render(<RouterProvider router={router} />);

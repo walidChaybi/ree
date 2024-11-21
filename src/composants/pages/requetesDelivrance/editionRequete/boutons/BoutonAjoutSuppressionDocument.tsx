@@ -1,8 +1,5 @@
 import { deleteDocumentComplementaire } from "@api/appels/requeteApi";
-import {
-  IGenerationECParams,
-  useGenerationEC,
-} from "@hook/generation/generationECHook/generationECHook";
+import { IGenerationECParams, useGenerationEC } from "@hook/generation/generationECHook/generationECHook";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
@@ -11,7 +8,7 @@ import {
   CODE_COPIE_INTEGRALE,
   CODE_EXTRAIT_AVEC_FILIATION,
   CODE_EXTRAIT_PLURILINGUE,
-  CODE_EXTRAIT_SANS_FILIATION,
+  CODE_EXTRAIT_SANS_FILIATION
 } from "@model/requete/enum/DocumentDelivranceConstante";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -32,12 +29,12 @@ interface IBoutonAjoutSuppressionDocumentProps {
   styleBouton?: string;
 }
 
-const BoutonAjoutSuppressionDocument: React.FC<
-  IBoutonAjoutSuppressionDocumentProps
-> = ({ documentsDelivrance, naviguerVersOngletAjoute, styleBouton }) => {
-  const { requete, acte, rechargerRequete } = useContext(
-    EditionDelivranceContext,
-  );
+const BoutonAjoutSuppressionDocument: React.FC<IBoutonAjoutSuppressionDocumentProps> = ({
+  documentsDelivrance,
+  naviguerVersOngletAjoute,
+  styleBouton
+}) => {
+  const { requete, acte, rechargerRequete } = useContext(EditionDelivranceContext);
   const boutonDisponible = useMemo(
     () =>
       !ChoixDelivrance.estReponseSansDelivrance(requete.choixDelivrance) &&
@@ -46,50 +43,40 @@ const BoutonAjoutSuppressionDocument: React.FC<
       StatutRequete.TRANSMISE_A_VALIDEUR !== requete.statutCourant.statut &&
       !SousTypeDelivrance.estRDDP(requete.sousType) &&
       Boolean(requete.documentsReponses.length),
-    [requete],
+    [requete]
   );
-  const ajoutDocument = useMemo(
-    () => !documentsDelivrance.secondaire,
-    [documentsDelivrance],
-  );
+  const ajoutDocument = useMemo(() => !documentsDelivrance.secondaire, [documentsDelivrance]);
   const listeDocuments = useMemo(
     () =>
       [
         {
           cle: DocumentDelivrance.getKeyForCode(CODE_COPIE_INTEGRALE),
-          libelle: "Copie intégrale",
+          libelle: "Copie intégrale"
         },
         ...(acte?.nature !== NatureActe.DECES
           ? [
               {
-                cle: DocumentDelivrance.getKeyForCode(
-                  CODE_EXTRAIT_AVEC_FILIATION,
-                ),
-                libelle: "Extrait avec filiation",
+                cle: DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_AVEC_FILIATION),
+                libelle: "Extrait avec filiation"
               },
               {
-                cle: DocumentDelivrance.getKeyForCode(
-                  CODE_EXTRAIT_SANS_FILIATION,
-                ),
-                libelle: "Extrait sans filiation",
-              },
+                cle: DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_SANS_FILIATION),
+                libelle: "Extrait sans filiation"
+              }
             ]
           : []),
         {
           cle: DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_PLURILINGUE),
-          libelle: "Extrait plurilingue",
-        },
-      ].filter(
-        (item) => item.cle !== documentsDelivrance.principal?.typeDocument,
-      ),
-    [documentsDelivrance, acte],
+          libelle: "Extrait plurilingue"
+        }
+      ].filter(item => item.cle !== documentsDelivrance.principal?.typeDocument),
+    [documentsDelivrance, acte]
   );
   const [menuOuvert, setMenuOuvert] = useState<boolean>(false);
 
   //TOREFACTO: Utilier le useFetch
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [creationECParams, setCreationECParams] =
-    useState<IGenerationECParams>();
+  const [creationECParams, setCreationECParams] = useState<IGenerationECParams>();
   const resulatEC = useGenerationEC(creationECParams);
   useEffect(() => {
     if (!resulatEC) {
@@ -104,9 +91,7 @@ const BoutonAjoutSuppressionDocument: React.FC<
 
   const ajouterDocument = (typeDocument: string) => {
     setOperationEnCours(true);
-    setCreationECParams(
-      getParamsCreationEC(typeDocument, requete, { acte: acte ?? undefined }),
-    );
+    setCreationECParams(getParamsCreationEC(typeDocument, requete, { acte: acte ?? undefined }));
   };
 
   const supprimerDocument = () => {
@@ -123,26 +108,23 @@ const BoutonAjoutSuppressionDocument: React.FC<
   return boutonDisponible ? (
     <>
       {operationEnCours && <PageChargeur />}
-      <div className="group relative" onMouseLeave={() => setMenuOuvert(false)}>
+      <div
+        className="group relative"
+        onMouseLeave={() => setMenuOuvert(false)}
+      >
         <Bouton
-          className={`${styleBouton} flex items-center justify-center border-dashed group-hover:bg-bleu group-hover:text-blanc`}
+          className={`${styleBouton} flex items-center justify-center border-dashed group-hover:text-blanc ${ajoutDocument ? "group-hover:bg-bleu" : "group-hover:bg-rouge"}`}
           styleBouton={ajoutDocument ? "secondaire" : "suppression"}
           type="button"
-          title={
-            ajoutDocument
-              ? "Ajouter un document"
-              : `Supprimer ${documentsDelivrance.secondaire?.nom}`
-          }
-          onClick={() =>
-            ajoutDocument ? setMenuOuvert(!menuOuvert) : supprimerDocument()
-          }
+          title={ajoutDocument ? "Ajouter un document" : `Supprimer ${documentsDelivrance.secondaire?.nom}`}
+          onClick={() => (ajoutDocument ? setMenuOuvert(!menuOuvert) : supprimerDocument())}
         >
           {ajoutDocument ? <Add /> : <Clear />}
         </Bouton>
 
         {ajoutDocument && menuOuvert && (
           <div className="absolute left-0 top-full z-10 animate-apparition overflow-hidden rounded-md rounded-tl-none bg-blanc shadow-lg">
-            {listeDocuments.map((itemListe) => (
+            {listeDocuments.map(itemListe => (
               <button
                 key={itemListe.cle}
                 className="duration-250 m-0 block w-full whitespace-nowrap rounded-none bg-bleu px-8 py-2.5 text-left font-sans font-semibold normal-case text-blanc no-underline transition-opacity ease-in-out hover:opacity-75"

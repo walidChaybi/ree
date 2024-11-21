@@ -13,37 +13,22 @@ import * as Yup from "yup";
 import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
 import ConteneurModale from "../../../../commun/conteneurs/modale/ConteneurModale";
 import "./ObservationsRequete.scss";
-import ObservationsRequeteForm, {
-  IObservationsRequeteForm
-} from "./ObservationsRequeteForm";
+import ObservationsRequeteForm, { IObservationsRequeteForm } from "./ObservationsRequeteForm";
 
 interface IObservationsRequeteProps {
   requete: IRequeteDelivrance;
 }
 
-const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({
-  requete
-}) => {
+const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({ requete }) => {
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const idOfficier: string | undefined = useMemo(
-    () => utilisateurConnecte?.idUtilisateur,
-    []
-  );
+  const idOfficier: string | undefined = useMemo(() => utilisateurConnecte?.idUtilisateur, []);
   const [observations, setObservations] = useState<IObservation[]>(
-    requete.observations?.sort(
-      (observationA, observationB) =>
-        observationA.numeroOrdre - observationB.numeroOrdre
-    ) ?? []
+    requete.observations?.sort((observationA, observationB) => observationA.numeroOrdre - observationB.numeroOrdre) ?? []
   );
-  const [observationModifiee, setObservationModifiee] =
-    useState<IObservation | null>(null);
-  const [modaleObservationOuverte, setModaleObservationOuverte] =
-    useState<boolean>(false);
-  const [idObservationSupprimee, setIdObservationSupprimee] = useState<
-    string | null
-  >(null);
-  const [modaleSuppressionOuverte, setModaleSuppressionOuverte] =
-    useState<boolean>(false);
+  const [observationModifiee, setObservationModifiee] = useState<IObservation | null>(null);
+  const [modaleObservationOuverte, setModaleObservationOuverte] = useState<boolean>(false);
+  const [idObservationSupprimee, setIdObservationSupprimee] = useState<string | null>(null);
+  const [modaleSuppressionOuverte, setModaleSuppressionOuverte] = useState<boolean>(false);
 
   const ouvrirModaleObservation = (observation?: IObservation) => {
     setObservationModifiee(observation ?? null);
@@ -79,9 +64,7 @@ const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({
       .then(reponse => {
         const idObservation: string = reponse.body.data;
         const observationsMaj = [...observations];
-        const indexObservation = observationsMaj.findIndex(
-          observation => observation.id === idObservation
-        );
+        const indexObservation = observationsMaj.findIndex(observation => observation.id === idObservation);
         if (indexObservation >= ZERO) {
           observationsMaj[indexObservation].texte = texteObservation;
         } else {
@@ -89,7 +72,8 @@ const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({
             id: idObservation,
             texte: texteObservation,
             dateObservation: Date.now(),
-            idUtilisateur: idOfficier
+            idUtilisateur: idOfficier,
+            trigramme: `${utilisateurConnecte?.nom} ${utilisateurConnecte?.prenom}`
           } as IObservation);
         }
 
@@ -114,9 +98,7 @@ const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({
         }
 
         const observationsMaj = [...observations];
-        const indexObservationSupprimee = observationsMaj.findIndex(
-          observation => observation.id === idObservationSupprimee
-        );
+        const indexObservationSupprimee = observationsMaj.findIndex(observation => observation.id === idObservationSupprimee);
 
         if (indexObservationSupprimee >= ZERO) {
           observationsMaj.splice(indexObservationSupprimee, UN);
@@ -137,11 +119,18 @@ const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({
         <div className="conteneur-lignes-observation">
           {observations.length ? (
             observations.map(observation => (
-              <div key={observation.id} className="ligne-observation">
-                <span className="texte-observation" title={observation.texte}>
+              <div
+                key={observation.id}
+                className="ligne-observation"
+              >
+                <span
+                  className="texte-observation"
+                  title={observation.texte}
+                >
                   {observation.texte}
                 </span>
-                <span className="date-observation">{`- ${DateUtils.getFormatDateFromTimestamp(observation.dateObservation)}`}</span>
+                <span className="whitespace-nowrap">&nbsp;{`- ${DateUtils.getFormatDateFromTimestamp(observation.dateObservation)}`}</span>
+                <span className="whitespace-nowrap">&nbsp;{observation.trigramme ? `- ${observation.trigramme}` : ""}</span>
                 {observation.idUtilisateur === idOfficier && (
                   <div className="boutons-observation">
                     <button
@@ -169,7 +158,12 @@ const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({
           )}
         </div>
         <div>
-          <button className="bouton-ajouter" type="button" title="Ajouter une observation" onClick={() => ouvrirModaleObservation()}>
+          <button
+            className="bouton-ajouter"
+            type="button"
+            title="Ajouter une observation"
+            onClick={() => ouvrirModaleObservation()}
+          >
             <AddCircleOutline fontSize="large" />
           </button>
         </div>
@@ -203,10 +197,17 @@ const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({
             <div className="label-suppression-observation">{"Voulez-vous vraiment supprimer cette observation?"}</div>
 
             <div className="boutons-modale-observation">
-              <button type="button" onClick={fermerModaleSuppression}>
+              <button
+                type="button"
+                onClick={fermerModaleSuppression}
+              >
                 {"Annuler"}
               </button>
-              <button type="button" onClick={supprimerObservation} disabled={operationEnCours}>
+              <button
+                type="button"
+                onClick={supprimerObservation}
+                disabled={operationEnCours}
+              >
                 {"Valider"}
               </button>
             </div>

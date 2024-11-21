@@ -1,27 +1,17 @@
 import { ReinitialiserValiderBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import { RECEContextActions } from "@core/contexts/RECEContext";
-import {
-  IModifierCorpsExtraitParams,
-  useModifierCorpsExtrait
-} from "@hook/acte/ModifierCorpsExtraitApiHook";
+import { IModifierCorpsExtraitParams, useModifierCorpsExtrait } from "@hook/acte/ModifierCorpsExtraitApiHook";
 import { creationCompositionExtraitCopieActeTexte } from "@hook/generation/generationECHook/creationComposition/creationCompositionExtraitCopieActeTexte";
-import {
-  IGenerationECParams,
-  useGenerationEC
-} from "@hook/generation/generationECHook/generationECHook";
+import { IGenerationECParams, useGenerationEC } from "@hook/generation/generationECHook/generationECHook";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import {
-  CODE_EXTRAIT_AVEC_FILIATION,
-  CODE_EXTRAIT_SANS_FILIATION
-} from "@model/requete/enum/DocumentDelivranceConstante";
+import { CODE_EXTRAIT_AVEC_FILIATION, CODE_EXTRAIT_SANS_FILIATION } from "@model/requete/enum/DocumentDelivranceConstante";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
 import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
-import { getLibelle } from "@util/Utils";
 import { StaticField } from "@widget/formulaire/champFixe/StaticField";
 import React, { useContext, useEffect, useState } from "react";
 import "./scss/ModifierCorpsExtrait.scss";
@@ -32,26 +22,16 @@ export interface ModifierCorpsExtraitProps {
   document: IDocumentReponse;
 }
 
-export const ModifierCorpsExtrait: React.FC<
-  ModifierCorpsExtraitProps
-> = props => {
+export const ModifierCorpsExtrait: React.FC<ModifierCorpsExtraitProps> = props => {
   const { setIsDirty } = useContext(RECEContextActions);
   const { rafraichirRequete } = useContext(EditionExtraitCopiePageContext);
 
-  const [corpsTexte] = useState<string | undefined>(
-    getCorpsTexte(props.acte, props.requete, props.document)
-  );
-  const [corpsTexteNew, setCorpsTexteNew] = useState<string>(
-    corpsTexte ? corpsTexte : ""
-  );
-  const [modifierCorpsExtraitParams, setModifierCorpsExtraitParams] =
-    useState<IModifierCorpsExtraitParams>();
-  const [generationECParams, setGenerationECParams] =
-    useState<IGenerationECParams>();
+  const [corpsTexte] = useState<string | undefined>(getCorpsTexte(props.acte, props.requete, props.document));
+  const [corpsTexteNew, setCorpsTexteNew] = useState<string>(corpsTexte ?? "");
+  const [modifierCorpsExtraitParams, setModifierCorpsExtraitParams] = useState<IModifierCorpsExtraitParams>();
+  const [generationECParams, setGenerationECParams] = useState<IGenerationECParams>();
 
-  const resultatModifierCorpsExtrait = useModifierCorpsExtrait(
-    modifierCorpsExtraitParams
-  );
+  const resultatModifierCorpsExtrait = useModifierCorpsExtrait(modifierCorpsExtraitParams);
 
   const resultatGenerationEC = useGenerationEC(generationECParams);
 
@@ -61,7 +41,7 @@ export const ModifierCorpsExtrait: React.FC<
   }
 
   function reinitialisation() {
-    setCorpsTexteNew(corpsTexte ? corpsTexte : "");
+    setCorpsTexteNew(corpsTexte ?? "");
   }
 
   function valider() {
@@ -73,30 +53,21 @@ export const ModifierCorpsExtrait: React.FC<
   }
 
   useEffect(() => {
-    if (resultatModifierCorpsExtrait && resultatModifierCorpsExtrait.resultat) {
+    if (resultatModifierCorpsExtrait?.resultat) {
       setGenerationECParams({
         idActe: props.acte.id,
         requete: props.requete,
-        validation: props.document.validation
-          ? props.document.validation
-          : Validation.O,
-        mentionsRetirees: props.document.mentionsRetirees
-          ? props.document.mentionsRetirees.map(el => el.idMention)
-          : [],
+        validation: props.document.validation ? props.document.validation : Validation.O,
+        mentionsRetirees: props.document.mentionsRetirees ? props.document.mentionsRetirees.map(el => el.idMention) : [],
         pasDAction: true,
-        choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(
-          props.document.typeDocument
-        )
+        choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(props.document.typeDocument)
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatModifierCorpsExtrait]);
 
   useEffect(() => {
-    if (
-      resultatGenerationEC &&
-      resultatGenerationEC.resultGenerationUnDocument
-    ) {
+    if (resultatGenerationEC?.resultGenerationUnDocument) {
       rafraichirRequete();
     } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatGenerationEC]);
@@ -105,21 +76,21 @@ export const ModifierCorpsExtrait: React.FC<
     <div className="ModifierCorpsExtrait">
       <div className="DeuxColonnes">
         <StaticField
-          libelle={getLibelle("Délivrance")}
+          libelle={"Délivrance"}
           valeur={getTypeExtrait(props.document.typeDocument).libelle}
         ></StaticField>
         <StaticField
-          libelle={getLibelle("Nature")}
+          libelle={"Nature"}
           valeur={props.acte.nature.libelle}
         ></StaticField>
         <StaticField
-          libelle={getLibelle("Référence")}
+          libelle={"Référence"}
           valeur={FicheActe.getReference(props.acte)}
         ></StaticField>
       </div>
       <textarea
         onChange={handleChangeText}
-        placeholder={getLibelle("Corps de l'extrait")}
+        placeholder={"Corps de l'extrait"}
         value={corpsTexteNew}
       ></textarea>
       <ReinitialiserValiderBoutons
@@ -127,48 +98,32 @@ export const ModifierCorpsExtrait: React.FC<
         validerDisabled={corpsNonModifierOuCorpsVide(corpsTexteNew, corpsTexte)}
         onClickReInitialiser={reinitialisation}
         onClickValider={valider}
-        afficherBouton={
-          !StatutRequete.estTransmiseAValideur(
-            props.requete.statutCourant.statut
-          )
-        }
+        afficherBouton={!StatutRequete.estTransmiseAValideur(props.requete.statutCourant.statut)}
       />
     </div>
   );
 };
 
 export function getTypeExtrait(typeDocument: string): TypeExtrait {
-  return DocumentDelivrance.typeDocumentCorrespondACode(
-    typeDocument,
-    CODE_EXTRAIT_AVEC_FILIATION
-  )
+  return DocumentDelivrance.typeDocumentCorrespondACode(typeDocument, CODE_EXTRAIT_AVEC_FILIATION)
     ? TypeExtrait.getEnumFor(CODE_EXTRAIT_AVEC_FILIATION)
     : TypeExtrait.getEnumFor(CODE_EXTRAIT_SANS_FILIATION);
 }
 
-export function getCorpsTexte(
-  acte: IFicheActe,
-  requete: IRequeteDelivrance,
-  document: IDocumentReponse
-) {
+export function getCorpsTexte(acte: IFicheActe, requete: IRequeteDelivrance, document: IDocumentReponse) {
   let composition;
   composition = creationCompositionExtraitCopieActeTexte(
     acte,
     requete,
     document.validation ? document.validation : Validation.O,
-    document.mentionsRetirees
-      ? document.mentionsRetirees.map(el => el.idMention)
-      : [],
+    document.mentionsRetirees ? document.mentionsRetirees.map(el => el.idMention) : [],
     DocumentDelivrance.getChoixDelivranceFromUUID(document.typeDocument)
   );
 
   return composition?.corps_texte;
 }
 
-export function corpsNonModifierOuCorpsVide(
-  corpsTexteNew: string,
-  corpsTexte?: string
-) {
+export function corpsNonModifierOuCorpsVide(corpsTexteNew: string, corpsTexte?: string) {
   return !corpsModifie(corpsTexteNew, corpsTexte) || corpsTexteNew === "";
 }
 

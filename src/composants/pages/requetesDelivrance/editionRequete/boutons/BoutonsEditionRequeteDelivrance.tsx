@@ -11,7 +11,10 @@ const BoutonsEditionRequeteDelivrance: React.FC = () => {
   return (
     <>
       {requete.statutCourant.statut !== StatutRequete.TRANSMISE_A_VALIDEUR && (
-        <ConteneurBoutonBasDePage position="gauche" afficherDegrade>
+        <ConteneurBoutonBasDePage
+          position="gauche"
+          afficherDegrade
+        >
           <BoutonModifierTraitement requete={requete} />
         </ConteneurBoutonBasDePage>
       )}

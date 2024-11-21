@@ -1,5 +1,6 @@
 .FormulaireSaisirExtrait {
   margin: 0;
+  width: 100%;
   .StaticField {
     font-size: 1.1rem;
   }
@@ -9,7 +10,7 @@
     padding-top: 1rem;
   }
 
-  .SouligneGras{
+  .SouligneGras {
     font-weight: bold;
     text-decoration: underline;
     margin-left: 1rem;

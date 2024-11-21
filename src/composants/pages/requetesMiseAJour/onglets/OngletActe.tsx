@@ -61,18 +61,17 @@ const OngletActe: React.FC<IOngletActeProps> = ({ estActif }) => {
     // });
 
     getDonneesPourCompositionActeTexte(idActe).then(data =>
-      compositionApi
-        .getCompositionActeTexte(data.body)
-        .then(dataComposition =>
-          setContenuActe(dataComposition.body.data.contenu ?? "")
-        )
+      compositionApi.getCompositionActeTexte(data.body).then(dataComposition => setContenuActe(dataComposition.body.data.contenu ?? ""))
     );
   }, [idActe]);
 
   return (
     <OngletsContenu estActif={estActif}>
       <AlertesActes idActeInit={idActe} />
-      <AffichagePDF contenuBase64={contenuActe} />
+      <AffichagePDF
+        contenuBase64={contenuActe}
+        typeZoom="automatic-zoom"
+      />
     </OngletsContenu>
   );
 };
