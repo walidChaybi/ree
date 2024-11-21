@@ -2,9 +2,9 @@ import { AGENT_API } from "@api/ApiDisponibles";
 import { TConfigurationApi } from "@model/api/Api";
 import IUtilisateurDto from "../../../../dto/etatcivil/agent/IUtilisateurDto";
 
-const URI = "/utilisateurs/login";
+const URI = "/utilisateurs/connexion";
 
-export const CONFIG_GET_UTILISATEUR_LOGIN: TConfigurationApi<
+export const CONFIG_GET_UTILISATEUR_CONNECTE: TConfigurationApi<
   typeof URI,
   undefined,
   undefined,

@@ -1,5 +1,5 @@
 /* v8 ignore start */
-import { CONFIG_GET_UTILISATEUR_LOGIN } from "@api/configurations/agent/utilisateur/GetLoginConfigApi";
+import { CONFIG_GET_UTILISATEUR_CONNECTE } from "@api/configurations/agent/utilisateur/GetUtilisateurConnecteConfigApi";
 import { TRAITEMENT_GET_DONNEES_CONTEXT } from "@api/traitements/RECEContext/TraitementGetDonneesContext";
 import { TRAITEMENT_GET_NOMENCLATURES } from "@api/traitements/RECEContext/TraitementGetNomenclatures";
 import { IOfficier, mappingOfficier } from "@model/agent/IOfficier";
@@ -39,7 +39,7 @@ const RECEContextProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     decrets: []
   });
   const [nomenclaturesChargees, setNomenclaturesChargees] = useState<boolean>(false);
-  const { appelApi: appelApiLogin } = useFetchApi(CONFIG_GET_UTILISATEUR_LOGIN);
+  const { appelApi: appelApiLogin } = useFetchApi(CONFIG_GET_UTILISATEUR_CONNECTE);
   const { lancerTraitement: chargerNomenclature } = useTraitementApi(TRAITEMENT_GET_NOMENCLATURES);
   const { lancerTraitement: recupererDonneesContext } = useTraitementApi(TRAITEMENT_GET_DONNEES_CONTEXT);
 

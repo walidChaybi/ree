@@ -368,7 +368,7 @@ export const resultatRequeteUtilistateurLaurenceBourdeau = {
   hasTechnicalError: false,
   hasBusinessError: false,
   status: 200,
-  url: "/rece-agent-api/v1/utilisateurs/login",
+  url: "/rece-agent-api/v1/utilisateurs/connexion",
   data: {
     idUtilisateur: "9587453e-c9a5-44da-873f-a046a727e726",
     idArobas: "00115467",
@@ -4337,7 +4337,7 @@ export const resultatRequeteUtilistateurLeBiannic = {
   hasTechnicalError: false,
   hasBusinessError: false,
   status: 200,
-  url: "/rece-agent-api/v1/utilisateurs/login",
+  url: "/rece-agent-api/v1/utilisateurs/connexion",
   data: {
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
     idArobas: "04663316",

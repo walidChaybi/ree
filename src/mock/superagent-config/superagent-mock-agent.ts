@@ -23,7 +23,7 @@ export const configAgent = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function (match: any, params: any, headers: any, context: any) {
-      if (match[1] === "/utilisateurs/login") {
+      if (match[1] === "/utilisateurs/connexion") {
         return { headers: mockConnectedUser, data: MockHabilitation };
       }
 
