@@ -18,7 +18,7 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 export type NavigationApercuReqCreationParams = {
   idRequete: string;
   sousType?: SousTypeCreation;
-  statut?: StatutRequete;
+  statut: StatutRequete;
   idUtilisateur?: string;
   handleTraitementTermine?: () => void;
 };
@@ -60,14 +60,21 @@ function redirectionEtablissement(
   navigate: NavigateFunction,
   utilisateurConnecte: IOfficier,
   idRequete: string,
-  statut?: StatutRequete,
+  statut: StatutRequete,
   idUtilisateur?: string
 ) {
   let path: string;
+  const statutsQuiRedirigentVersLeSuiviDossier = [
+    StatutRequete.A_TRAITER,
+    StatutRequete.PRISE_EN_CHARGE,
+    StatutRequete.RETOUR_SDANF,
+    StatutRequete.BI_VALIDE,
+    StatutRequete.PROJET_VALIDE,
+    StatutRequete.A_SIGNER
+  ];
   if (
     appartientAUtilisateurConnecte(utilisateurConnecte, idUtilisateur) &&
-    (StatutRequete.estATraiter(statut) ||
-      StatutRequete.estPriseEnCharge(statut))
+    statutsQuiRedirigentVersLeSuiviDossier.includes(statut)
   ) {
     path = PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER;
   } else {

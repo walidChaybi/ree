@@ -189,10 +189,6 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
     const router = createTestingRouter(
       [
         {
-          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-          element: <ApercuReqCreationTranscriptionPriseEnChargePage />
-        },
-        {
           path: URL_MES_REQUETES_CREATION,
           element: <HookConsumer paramsCreation={paramsCreation} />
         },
@@ -224,10 +220,6 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
     const router = createTestingRouter(
       [
         {
-          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-          element: <ApercuReqCreationTranscriptionPriseEnChargePage />
-        },
-        {
           path: URL_MES_REQUETES_CREATION,
           element: <HookConsumer paramsCreation={paramsCreation} />
         },
@@ -258,10 +250,6 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
     const router = createTestingRouter(
       [
         {
-          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-          element: <ApercuReqCreationTranscriptionPriseEnChargePage />
-        },
-        {
           path: URL_MES_REQUETES_CREATION,
           element: <HookConsumer paramsCreation={paramsCreation} />
         },
@@ -282,6 +270,127 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
       )
     );
   });
+
+  test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut Projet Validé", () => {
+    const paramsCreation: NavigationApercuReqCreationParams = {
+      idRequete: ID_REQUETE,
+      sousType: SousTypeCreation.RCEXR,
+      statut: StatutRequete.PROJET_VALIDE
+    };
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION,
+          element: <HookConsumer paramsCreation={paramsCreation} />
+        },
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
+          element: <ApercuRequeteEtablissementSuiviDossierPage />
+        }
+      ],
+      [URL_MES_REQUETES_CREATION]
+    );
+
+    render(routerAvecContexte(router));
+
+    expect(router.state.location.pathname).toBe(
+      apercuRequeteURL(
+        "apercurequetecreationetablissementsuividossier",
+        paramsCreation.idRequete
+      )
+    );
+  });
+
+  test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut Retour SDANF", () => {
+    const paramsCreation: NavigationApercuReqCreationParams = {
+      idRequete: ID_REQUETE,
+      sousType: SousTypeCreation.RCEXR,
+      statut: StatutRequete.RETOUR_SDANF
+    };
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION,
+          element: <HookConsumer paramsCreation={paramsCreation} />
+        },
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
+          element: <ApercuRequeteEtablissementSuiviDossierPage />
+        }
+      ],
+      [URL_MES_REQUETES_CREATION]
+    );
+
+    render(routerAvecContexte(router));
+
+    expect(router.state.location.pathname).toBe(
+      apercuRequeteURL(
+        "apercurequetecreationetablissementsuividossier",
+        paramsCreation.idRequete
+      )
+    );
+  });
+
+  test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut BI Validé", () => {
+    const paramsCreation: NavigationApercuReqCreationParams = {
+      idRequete: ID_REQUETE,
+      sousType: SousTypeCreation.RCEXR,
+      statut: StatutRequete.BI_VALIDE
+    };
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION,
+          element: <HookConsumer paramsCreation={paramsCreation} />
+        },
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
+          element: <ApercuRequeteEtablissementSuiviDossierPage />
+        }
+      ],
+      [URL_MES_REQUETES_CREATION]
+    );
+
+    render(routerAvecContexte(router));
+
+    expect(router.state.location.pathname).toBe(
+      apercuRequeteURL(
+        "apercurequetecreationetablissementsuividossier",
+        paramsCreation.idRequete
+      )
+    );
+  });
+
+  test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut A Signer", () => {
+    const paramsCreation: NavigationApercuReqCreationParams = {
+      idRequete: ID_REQUETE,
+      sousType: SousTypeCreation.RCEXR,
+      statut: StatutRequete.A_SIGNER
+    };
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION,
+          element: <HookConsumer paramsCreation={paramsCreation} />
+        },
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
+          element: <ApercuRequeteEtablissementSuiviDossierPage />
+        }
+      ],
+      [URL_MES_REQUETES_CREATION]
+    );
+
+    render(routerAvecContexte(router));
+
+    expect(router.state.location.pathname).toBe(
+      apercuRequeteURL(
+        "apercurequetecreationetablissementsuividossier",
+        paramsCreation.idRequete
+      )
+    );
+  });
+
 });
 
 function apercuRequeteURL(apercuRequete: string, idRequete: string) {
