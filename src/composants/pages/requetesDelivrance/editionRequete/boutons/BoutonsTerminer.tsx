@@ -1,11 +1,5 @@
-import {
-  RECEContextActions,
-  RECEContextData,
-} from "@core/contexts/RECEContext";
-import {
-  IOfficier,
-  officierHabiliterPourLeDroit,
-} from "@model/agent/IOfficier";
+import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
+import { IOfficier, officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
@@ -32,82 +26,46 @@ interface BoutonsTerminerProps {
   acte?: IFicheActe;
 }
 
-export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
-  requete,
-  acte,
-}) => {
+export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete, acte }) => {
   const navigate = useNavigate();
   const [estDisabled, setEstDisabled] = useState(true);
   const { isDirty, utilisateurConnecte } = useContext(RECEContextData);
   const { setIsDirty } = useContext(RECEContextActions);
 
   const afficherBoutonValiderTerminer = (requete: IRequeteDelivrance) =>
-    (gestionnaireFeatureFlag.estActif(
-      FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES,
-    ) &&
+    (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) &&
       SousTypeDelivrance.estRDDouRDCouRDDP(requete?.sousType)) ||
-    (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
-      SousTypeDelivrance.estRDCSDouRDCSC(requete.sousType));
+    (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) && SousTypeDelivrance.estRDCSDouRDCSC(requete.sousType));
 
-  const estPossibleDeSigner = (
-    statut: StatutRequete,
-    sousTypeDelivrance: SousTypeDelivrance,
-    utilisateurConnecte: IOfficier,
-  ): boolean => {
+  const estPossibleDeSigner = (statut: StatutRequete, sousTypeDelivrance: SousTypeDelivrance, utilisateurConnecte: IOfficier): boolean => {
     return (
-      officierHabiliterPourLeDroit(
-        utilisateurConnecte,
-        Droit.SIGNER_DELIVRANCE_DEMAT,
-      ) &&
+      officierHabiliterPourLeDroit(utilisateurConnecte, Droit.SIGNER_DELIVRANCE_DEMAT) &&
       StatutRequete.estASigner(statut) &&
       SousTypeDelivrance.estSousTypeSignable(sousTypeDelivrance)
     );
   };
 
   const possibleDeTransmettreAValideur = (statut: StatutRequete): boolean => {
-    return (
-      StatutRequete.estASignerOuAValider(statut) &&
-      gestionnaireFeatureFlag.estActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES,
-      )
-    );
+    return StatutRequete.estASignerOuAValider(statut) && gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES);
   };
 
-  const aDroitSignerEtStatutSigner = estPossibleDeSigner(
-    requete.statutCourant.statut,
-    requete.sousType,
-    utilisateurConnecte,
-  );
+  const aDroitSignerEtStatutSigner = estPossibleDeSigner(requete.statutCourant.statut, requete.sousType, utilisateurConnecte);
 
-  const afficheBoutonTransmettreAValideur = possibleDeTransmettreAValideur(
-    requete.statutCourant.statut,
-  );
+  const afficheBoutonTransmettreAValideur = possibleDeTransmettreAValideur(requete.statutCourant.statut);
   const afficherBoutonTerminerApresImpression =
     afficherBoutonValiderTerminer(requete) &&
-    (requete.statutCourant.statut === StatutRequete.A_VALIDER ||
-      requete.statutCourant.statut === StatutRequete.A_SIGNER) &&
-    (requete.sousType === SousTypeDelivrance.RDC ||
-      requete.sousType === SousTypeDelivrance.RDCSC);
+    (requete.statutCourant.statut === StatutRequete.A_VALIDER || requete.statutCourant.statut === StatutRequete.A_SIGNER) &&
+    (requete.sousType === SousTypeDelivrance.RDC || requete.sousType === SousTypeDelivrance.RDCSC);
 
-  const mAppartient =
-    requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
+  const mAppartient = requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
 
-  if (
-    mAppartient &&
-    aDroitSignerEtStatutSigner &&
-    DocumentReponse.verifierDocumentsValides(requete.documentsReponses) &&
-    estDisabled
-  ) {
+  if (mAppartient && aDroitSignerEtStatutSigner && DocumentReponse.verifierDocumentsValides(requete.documentsReponses) && estDisabled) {
     setEstDisabled(false);
   }
 
   const onClickTerminer = useCallback(() => {
     if (checkDirty(isDirty, setIsDirty)) {
-      validerMentionsPlusieursDocuments(
-        () => navigate(URL_MES_REQUETES_DELIVRANCE),
-        acte,
-        requete.documentsReponses,
-      );
+      validerMentionsPlusieursDocuments(() => navigate(URL_MES_REQUETES_DELIVRANCE), acte, requete.documentsReponses);
     }
   }, [acte, requete.documentsReponses, isDirty, setIsDirty]);
 
@@ -117,12 +75,15 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
         onClickTerminer();
       }
     },
-    [onClickTerminer],
+    [onClickTerminer]
   );
 
   return (
     <>
-      <BoutonListeDeroulante titre="Autres options" styleBouton="secondaire">
+      <BoutonListeDeroulante
+        titre="Autres actions"
+        styleBouton="secondaire"
+      >
         {afficheBoutonTransmettreAValideur && (
           <BoutonTransmettreAValideur
             idRequete={requete.id}
@@ -138,9 +99,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
           />
         )}
       </BoutonListeDeroulante>
-      {afficherBoutonValiderTerminer(requete) && (
-        <BoutonValiderTerminer requete={requete} />
-      )}
+      {afficherBoutonValiderTerminer(requete) && <BoutonValiderTerminer requete={requete} />}
 
       {aDroitSignerEtStatutSigner && (
         <>
@@ -150,19 +109,15 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
             requeteASignerProp={[
               {
                 requete: mappingRequeteDelivranceToRequeteTableau(requete),
-                acte,
-              },
+                acte
+              }
             ]}
             reloadData={actionApresSignature}
             uniqueSignature={true}
             connectedUser={utilisateurConnecte}
-            validerMentionsPlusieursDocuments={
-              validerMentionsPlusieursDocuments
-            }
+            validerMentionsPlusieursDocuments={validerMentionsPlusieursDocuments}
           />
-          {gestionnaireFeatureFlag.estActif(
-            FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES,
-          ) && (
+          {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) && (
             <Bouton
               title="Terminer"
               onClick={onClickTerminer}

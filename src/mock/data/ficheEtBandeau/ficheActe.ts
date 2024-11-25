@@ -1,4 +1,5 @@
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
 
 export const bandeauActe: IBandeauFiche = {
@@ -54,6 +55,7 @@ export const acte: any = {
     pays: "Inde",
     lieuFormate: "Kanpur, Uttar Pradesh (Inde)"
   },
+  corpsExtraitRectifications: [],
   mentions: [
     {
       id: "1a0aa3be-8311-465d-b750-d4c19834477a",
@@ -272,7 +274,7 @@ export const acte: any = {
       autresNoms: null,
       autresPrenoms: null,
       ordre: 1,
-      sexe: "FEMININ",
+      sexe: Sexe.FEMININ,
       profession: "DEVELOPPEUR",
       naissance: {
         minute: null,
@@ -285,8 +287,7 @@ export const acte: any = {
         ville: "Marseille",
         arrondissement: "10",
         voie: "",
-        lieuFormate:
-          "Marseille 10ème arrondissement (Provence-Alpes-Côte d'Azur)"
+        lieuFormate: "Marseille 10ème arrondissement (Provence-Alpes-Côte d'Azur)"
       },
       domicile: {
         pays: "DJIBOUTI",
@@ -318,7 +319,7 @@ export const acte: any = {
       autresNoms: null,
       autresPrenoms: null,
       ordre: 2,
-      sexe: "MASCULIN",
+      sexe: Sexe.MASCULIN,
       profession: "POMPIER",
       naissance: {
         minute: null,
@@ -386,8 +387,7 @@ export const acte: any = {
             ville: "Marseille",
             arrondissement: "10",
             voie: "",
-            lieuFormate:
-              "Marseille 10ème arrondissement (Provence-Alpes-Côte d'Azur)"
+            lieuFormate: "Marseille 10ème arrondissement (Provence-Alpes-Côte d'Azur)"
           },
           domicile: {
             pays: "DJIBOUTI",
@@ -1496,8 +1496,7 @@ export const acte4: any = {
         id: "058a436b-330d-4c3c-83e0-d49c27390ab5",
         nom: "TYPE_ALERTE",
         code: "DELIVRANCE_RESERVE_PREUVE",
-        libelle:
-          "Délivrance sous réserve de la preuve de la nationalité française de l'autre conjoint",
+        libelle: "Délivrance sous réserve de la preuve de la nationalité française de l'autre conjoint",
         type: "A délivrer sous conditions",
         sousType: "Divers - délivrer sous conditions "
       },
@@ -1992,7 +1991,7 @@ export const acteNaissance: any = {
   modeCreation: "DRESSE",
   statut: "ANNULE",
   dateStatut: 1045609200,
-  nature: "NAISSANCE",
+  nature: NatureActe.NAISSANCE,
   numero: "410",
   numeroBisTer: "681",
   nomOec: "MARTIN",
@@ -2030,7 +2029,7 @@ export const acteNaissance: any = {
       autresNoms: null,
       autresPrenoms: null,
       ordre: 1,
-      sexe: "FEMININ",
+      sexe: Sexe.FEMININ,
       profession: "DEVELOPPEUR",
       naissance: {
         minute: null,
@@ -2074,7 +2073,7 @@ export const acteNaissance: any = {
       autresNoms: null,
       autresPrenoms: null,
       ordre: 2,
-      sexe: "MASCULIN",
+      sexe: Sexe.MASCULIN,
       profession: "POMPIER",
       naissance: {
         minute: null,

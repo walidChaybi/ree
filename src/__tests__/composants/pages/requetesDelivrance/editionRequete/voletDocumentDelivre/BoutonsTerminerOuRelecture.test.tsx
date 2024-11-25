@@ -12,10 +12,7 @@ import { render } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { BoutonsTerminerOuRelecture } from "../../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonsTerminerOuRelecture";
-import {
-  createTestingRouter,
-  elementAvecContexte,
-} from "../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
@@ -24,7 +21,7 @@ const requeteTestCOURRIER = {
   dateCreation: 1577836800000,
   statutCourant: {
     statut: StatutRequete.A_SIGNER,
-    dateEffet: 1577923200000,
+    dateEffet: 1577923200000
   },
   idUtilisateur: "idUtilisateurConnectedUser",
   provenanceRequete: { provenance: Provenance.COURRIER },
@@ -37,16 +34,16 @@ const requeteTestCOURRIER = {
       prenoms: [
         {
           prenom: "Hugo",
-          numeroOrdre: 1,
-        },
+          numeroOrdre: 1
+        }
       ],
       jourNaissance: 31,
       moisNaissance: 12,
       anneeNaissance: 1981,
-      sexe: Sexe.MASCULIN.libelle,
-    },
+      sexe: Sexe.MASCULIN.libelle
+    }
   ],
-  sousType: SousTypeDelivrance.RDD,
+  sousType: SousTypeDelivrance.RDD
 } as IRequeteDelivrance;
 
 describe("BoutonTerminerOuRelecture - ", () => {
@@ -61,27 +58,22 @@ describe("BoutonTerminerOuRelecture - ", () => {
                 ...requeteTestCOURRIER,
                 statutCourant: {
                   statut: StatutRequete.TRANSMISE_A_VALIDEUR,
-                  dateEffet: 0,
-                },
+                  dateEffet: 0
+                }
               }}
               acte={acte}
             ></BoutonsTerminerOuRelecture>
-          ),
+          )
         },
         {
           path: "*",
-          element: <></>,
-        },
+          element: <></>
+        }
       ],
-      ["/test"],
+      ["/test"]
     );
 
-    const { getByText } = render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        userDroitnonCOMEDEC,
-      ),
-    );
+    const { getByText } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
 
     expect(getByText("Reprendre le traitement")).toBeDefined();
     expect(getByText("Relecture")).toBeDefined();
@@ -99,28 +91,23 @@ describe("BoutonTerminerOuRelecture - ", () => {
                 sousType: SousTypeDelivrance.RDCSD,
                 statutCourant: {
                   statut: StatutRequete.A_SIGNER,
-                  dateEffet: 0,
-                },
+                  dateEffet: 0
+                }
               }}
               acte={acte}
             ></BoutonsTerminerOuRelecture>
-          ),
+          )
         },
         {
           path: "*",
-          element: <></>,
-        },
+          element: <></>
+        }
       ],
-      ["/test"],
+      ["/test"]
     );
 
-    const { getByText } = render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        userDroitnonCOMEDEC,
-      ),
-    );
+    const { getByText } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
 
-    expect(getByText("Autres options")).toBeDefined();
+    expect(getByText("Autres actions")).toBeDefined();
   });
 });

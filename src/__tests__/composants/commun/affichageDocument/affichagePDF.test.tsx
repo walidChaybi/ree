@@ -18,14 +18,14 @@ test("renders un PDF  dans l'iframe quand un contenuBase64 est fourni", () => {
   render(
     <AffichagePDF
       contenuBase64={contenuBase64}
-      typeZoom="automatic-zoom"
+      typeZoom="auto"
     />
   );
 
   const iframe = screen.getByTitle("Document PDF");
   expect(iframe).toBeDefined();
 
-  expect(iframe.getAttribute("src")).toBe("blobUrl://sampleBase64String#zoom=automatic-zoom");
+  expect(iframe.getAttribute("src")).toBe("blobUrl://sampleBase64String#zoom=auto");
 });
 
 test("renders un message informatif quand le contenuBase64 est null", () => {

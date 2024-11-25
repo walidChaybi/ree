@@ -29,6 +29,7 @@ function afficheComposantSaisiePostulantForm(titulaires: ITitulaireRequeteCreati
             onSubmitSaisieProjetForm={() => {}}
             avancementProjet={avancement}
             valeursForm={mappingTitulairesVersFormulairePostulant(titulaires[ZERO], titulaires[UN], titulaires[DEUX], "NAISSANCE")}
+            affichageActualiserEtVisualiser={true}
           />
         )
       }

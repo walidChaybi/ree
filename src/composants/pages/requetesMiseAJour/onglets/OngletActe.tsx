@@ -70,7 +70,7 @@ const OngletActe: React.FC<IOngletActeProps> = ({ estActif }) => {
       <AlertesActes idActeInit={idActe} />
       <AffichagePDF
         contenuBase64={contenuActe}
-        typeZoom="automatic-zoom"
+        typeZoom="auto"
       />
     </OngletsContenu>
   );

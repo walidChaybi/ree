@@ -31,7 +31,7 @@ const OngletActeMisAJour: React.FC<IOngletActeMisAJourProps> = ({ estActif }) =>
     <OngletsContenu estActif={estActif}>
       <AffichagePDF
         contenuBase64={contenuActeMisAJour}
-        typeZoom="automatic-zoom"
+        typeZoom="auto"
       />
     </OngletsContenu>
   );

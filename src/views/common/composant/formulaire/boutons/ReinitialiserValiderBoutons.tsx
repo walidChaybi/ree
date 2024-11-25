@@ -13,27 +13,37 @@ interface IReinitialiserValiderBoutonsProps {
   reInitialiserDisabled?: boolean;
   onClickValider?: any;
   validerDisabled?: boolean;
+  titreBoutons?: string;
 }
 
-export const ReinitialiserValiderBoutons: React.FC<IReinitialiserValiderBoutonsProps> = props => {
+export const ReinitialiserValiderBoutons: React.FC<IReinitialiserValiderBoutonsProps> = ({
+  afficherBouton,
+  onClickReInitialiser,
+  reInitialiserDisabled,
+  onClickValider,
+  validerDisabled,
+  titreBoutons
+}) => {
   const { utilisateurConnecte } = useContext(RECEContextData);
   return (
     <>
-      {props.afficherBouton && (
+      {afficherBouton && (
         <div className="sticky bottom-8">
           <BoutonDoubleSubmit
             type="reset"
-            onClick={props.onClickReInitialiser}
-            disabled={props.reInitialiserDisabled}
+            onClick={onClickReInitialiser}
+            disabled={reInitialiserDisabled}
             aria-label="Réinitialiser"
+            title={titreBoutons ? `Réinitialiser ${titreBoutons}` : undefined}
           >
             {"Réinitialiser"}
           </BoutonDoubleSubmit>
           <BoutonDoubleSubmit
             type="button"
-            onClick={props.onClickValider}
-            disabled={props.validerDisabled || !officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER)}
+            onClick={onClickValider}
+            disabled={validerDisabled || !officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER)}
             aria-label="Valider"
+            title={titreBoutons ? `Valider ${titreBoutons}` : undefined}
           >
             {"Valider"}
           </BoutonDoubleSubmit>
@@ -64,6 +74,7 @@ const _ReinitialiserValiderFormBoutons: React.FC<TReinitialiserValiderFormBouton
       }
       validerDisabled={props.validerDisabled ?? !props.formik.dirty}
       afficherBouton={props.afficherBouton}
+      titreBoutons={props.titreBoutons}
     />
   );
 };

@@ -15,9 +15,6 @@ import { expect, vi } from "vitest";
 import { EditionDelivranceContext } from "../../contexts/EditionDelivranceContextProvider";
 import { urlImagePngVideBase64 } from "../../mock/data/ImagePng";
 
-export const attendre = async (apresAttente: void | Promise<void>) =>
-  await waitFor(() => apresAttente, { timeout: 500 });
-
 function dataURLtoFile(dataurl: string, filename: string): File {
   const arr = dataurl.split(",");
   const mime = arr[0]!.match(/:(.*?);/)![1]; // NOSONAR fichier non présent en PROD
@@ -36,16 +33,13 @@ const pngFile = dataURLtoFile(urlImagePngVideBase64, "hello.png");
 export const pngFiles = [pngFile];
 export const inputPngFiles = {
   item: (index: number) => pngFiles[index],
-  ...pngFiles,
+  ...pngFiles
 };
 
-export function getRequeteWithChoixDelivrance(
-  requete: any,
-  choixDelivrance: ChoixDelivrance,
-) {
+export function getRequeteWithChoixDelivrance(requete: any, choixDelivrance: ChoixDelivrance) {
   return {
     ...mappingRequeteDelivrance(requete),
-    choixDelivrance,
+    choixDelivrance
   };
 }
 
@@ -58,23 +52,19 @@ export function mockFenetreFicheTestFunctions() {
       ...window,
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
+      dispatchEvent: vi.fn()
     };
   };
   globalAny.close = vi.fn();
 }
 
-export function renseigneChampsRecherche(
-  screen: any,
-  nomChamp: string,
-  valeurChamp: string,
-) {
+export function renseigneChampsRecherche(screen: any, nomChamp: string, valeurChamp: string) {
   const autocomplete = screen.getByTestId("autocomplete");
   const champRecherche = screen.getByLabelText(nomChamp) as HTMLInputElement;
   autocomplete.focus();
 
   fireEvent.change(champRecherche, {
-    target: { value: valeurChamp },
+    target: { value: valeurChamp }
   });
 
   waitFor(() => {
@@ -88,17 +78,14 @@ export function deepCopie(objet: any) {
   return JSON.parse(JSON.stringify(objet));
 }
 
-export function createTestingRouter(
-  routes: RouteObject[],
-  initialEntries: string[],
-) {
+export function createTestingRouter(routes: RouteObject[], initialEntries: string[]) {
   return createMemoryRouter(
-    routes.map((route) => {
+    routes.map(route => {
       return { path: route.path, element: route.element };
     }),
     {
-      initialEntries,
-    },
+      initialEntries
+    }
   );
 }
 
@@ -108,7 +95,7 @@ export const elementAvecContexte = (
   utilisateurs?: IUtilisateur[],
   services?: IService[],
   decrets?: IDecret[],
-  erreurLogin?: any,
+  erreurLogin?: any
 ): any => {
   return (
     <MockRECEContextProvider
@@ -126,17 +113,13 @@ export const elementAvecContexte = (
 export const elementAvecEditionDelivranceContexte = (
   children: React.ReactElement,
   requete?: IRequeteDelivrance,
-  acte?: IFicheActe,
+  acte?: IFicheActe
 ): any => {
   const valeursContext = {
     requete: requete ?? requeteDelivrance,
     acte: acte ?? (acteMock as IFicheActe),
-    rechargerRequete: () => {},
+    rechargerRequete: () => {}
   };
 
-  return (
-    <EditionDelivranceContext.Provider value={valeursContext}>
-      {children}
-    </EditionDelivranceContext.Provider>
-  );
+  return <EditionDelivranceContext.Provider value={valeursContext}>{children}</EditionDelivranceContext.Provider>;
 };

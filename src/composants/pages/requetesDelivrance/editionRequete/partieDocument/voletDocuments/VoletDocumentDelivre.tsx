@@ -127,6 +127,7 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
             <SaisirExtraitForm
               acte={acte as IFicheActe}
               requete={requete}
+              setOngletDocumentDelivre={(nouvelOnglet: ECleOngletDocumentDelivre) => setOngletActif(nouvelOnglet)}
             />
           </div>
         </ConteneurVoletEdition>
@@ -157,6 +158,7 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
             acte={acte as IFicheActe}
             requete={requete}
             document={documentDelivre}
+            setOngletDocumentDelivre={(nouvelOnglet: ECleOngletDocumentDelivre) => setOngletActif(nouvelOnglet)}
           />
         </ConteneurVoletEdition>
       )}
@@ -167,7 +169,7 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
       >
         <AffichagePDF
           contenuBase64={contenuDocument}
-          typeZoom="automatic-zoom"
+          typeZoom="auto"
         />
       </ConteneurVoletEdition>
     </>

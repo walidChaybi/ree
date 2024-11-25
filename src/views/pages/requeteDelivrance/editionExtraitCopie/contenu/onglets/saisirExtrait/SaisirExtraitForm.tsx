@@ -19,6 +19,7 @@ import FormikEffect from "@widget/formulaire/utils/FormikEffect";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { FormikProps, FormikValues } from "formik";
 import React, { useCallback, useContext, useEffect, useState } from "react";
+import { ECleOngletDocumentDelivre } from "../../../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletDocuments/VoletDocumentDelivre";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
 import {
   IProprietesFormulaire,
@@ -32,12 +33,12 @@ import { mappingActeVerFormulaireSaisirExtrait } from "./mapping/mappingActeVerF
 import { mappingFormulaireSaisirExtraitVersExtraitAEnvoyer } from "./mapping/mappingFormulaireSaisirExtraitVersExtraitAEnvoyer";
 import "./scss/FormulaireSaisirExtrait.scss";
 
-interface ComponentFormProps {
+interface IComponentFormProps {
   acte: IFicheActe;
   requete: IRequeteDelivrance;
 }
 
-type SaisirExtraitFormProps = ComponentFormProps;
+type ISaisirExtraitFormProps = IComponentFormProps & { setOngletDocumentDelivre?: (nouvelOnglet: ECleOngletDocumentDelivre) => void };
 
 export const SaisirExtraitFormContext = React.createContext({
   setAfficheParentsAdoptantsTitulaire: (
@@ -55,7 +56,7 @@ interface IPopinMessageErreur {
   problemePlurilingueActeNaissanceOuDeces: boolean;
 }
 
-export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
+export const SaisirExtraitForm: React.FC<ISaisirExtraitFormProps> = props => {
   const { setOperationEnCours, rafraichirRequete } = useContext(EditionExtraitCopiePageContext);
   const { setIsDirty } = useContext(RECEContextActions);
   const { mapPrenomAffiche } = useContext(SaisirExtraitFormContext);
@@ -103,12 +104,19 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         requete: props.requete,
         acte: props.acte,
         extraitSaisiAEnvoyer: extraitAEnvoyer,
-        callBack: rafraichirRequete,
+        callBack: fermerOngletApresValidation,
         problemePlurilingue: false,
         valeursCourrierParDefaut: getDefaultValuesCourrier(props.requete)
       });
     }
   };
+
+  const fermerOngletApresValidation = useCallback(() => {
+    setOperationEnCours(false);
+    setSaisieVerrouillee(true);
+    rafraichirRequete();
+    props.setOngletDocumentDelivre?.(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
+  }, []);
 
   const handlePopinOui = useCallback(() => {
     if (extraitSaisiAEnvoyer) {
@@ -118,10 +126,7 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         acte: props.acte,
         extraitSaisiAEnvoyer,
         valeursCourrierParDefaut: getDefaultValuesCourrier(props.requete),
-        callBack: () => {
-          setOperationEnCours(false);
-          rafraichirRequete();
-        },
+        callBack: fermerOngletApresValidation,
         problemePlurilingue: popinMessageErreur.problemePlurilingueActeNaissanceOuDeces || popinMessageErreur.problemePlurilingueActeMariage
       });
     }

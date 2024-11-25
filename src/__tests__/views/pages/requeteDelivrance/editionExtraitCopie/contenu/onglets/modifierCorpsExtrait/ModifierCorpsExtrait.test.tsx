@@ -1,7 +1,7 @@
-import { corpsNonModifierOuCorpsVide } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/modifierCorpsExtrait/ModifierCorpsExtrait";
+import { corpsNonModifieOuCorpsVide } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/modifierCorpsExtrait/ModifierCorpsExtrait";
 import { expect, test } from "vitest";
 
-test("corpsNonModifierOuCorpsVide", () => {
-  expect(corpsNonModifierOuCorpsVide("", "rfr")).toBeTruthy();
-  expect(corpsNonModifierOuCorpsVide("frrr", "rfr")).toBeFalsy();
+test("corpsNonModifieOuCorpsVide", () => {
+  expect(corpsNonModifieOuCorpsVide("", "rfr")).toBeTruthy();
+  expect(corpsNonModifieOuCorpsVide("frrr", "rfr")).toBeFalsy();
 });

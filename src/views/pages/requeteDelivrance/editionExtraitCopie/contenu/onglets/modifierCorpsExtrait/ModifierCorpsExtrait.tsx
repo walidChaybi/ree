@@ -14,15 +14,17 @@ import { Validation } from "@model/requete/enum/Validation";
 import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import { StaticField } from "@widget/formulaire/champFixe/StaticField";
 import React, { useContext, useEffect, useState } from "react";
+import { ECleOngletDocumentDelivre } from "../../../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletDocuments/VoletDocumentDelivre";
 import "./scss/ModifierCorpsExtrait.scss";
 
-export interface ModifierCorpsExtraitProps {
+export interface IModifierCorpsExtraitProps {
   acte: IFicheActe;
   requete: IRequeteDelivrance;
   document: IDocumentReponse;
+  setOngletDocumentDelivre?: (nouvelOnglet: ECleOngletDocumentDelivre) => void;
 }
 
-export const ModifierCorpsExtrait: React.FC<ModifierCorpsExtraitProps> = props => {
+export const ModifierCorpsExtrait: React.FC<IModifierCorpsExtraitProps> = props => {
   const { setIsDirty } = useContext(RECEContextActions);
   const { rafraichirRequete } = useContext(EditionExtraitCopiePageContext);
 
@@ -35,22 +37,20 @@ export const ModifierCorpsExtrait: React.FC<ModifierCorpsExtraitProps> = props =
 
   const resultatGenerationEC = useGenerationEC(generationECParams);
 
-  function handleChangeText(e: any) {
+  const handleChangeText = (e: any) => {
     setIsDirty(corpsTexte !== e.target.value);
     setCorpsTexteNew(e.target.value);
-  }
+  };
 
-  function reinitialisation() {
-    setCorpsTexteNew(corpsTexte ?? "");
-  }
+  const reinitialisation = () => setCorpsTexteNew(corpsTexte ?? "");
 
-  function valider() {
+  const valider = () => {
     setModifierCorpsExtraitParams({
       idActe: props.acte.id,
       corpsTexteModifie: corpsTexteNew,
       type: getTypeExtrait(props.document.typeDocument)
     });
-  }
+  };
 
   useEffect(() => {
     if (resultatModifierCorpsExtrait?.resultat) {
@@ -69,6 +69,7 @@ export const ModifierCorpsExtrait: React.FC<ModifierCorpsExtraitProps> = props =
   useEffect(() => {
     if (resultatGenerationEC?.resultGenerationUnDocument) {
       rafraichirRequete();
+      props.setOngletDocumentDelivre?.(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
     } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatGenerationEC]);
 
@@ -95,7 +96,7 @@ export const ModifierCorpsExtrait: React.FC<ModifierCorpsExtraitProps> = props =
       ></textarea>
       <ReinitialiserValiderBoutons
         reInitialiserDisabled={!corpsModifie(corpsTexteNew, corpsTexte)}
-        validerDisabled={corpsNonModifierOuCorpsVide(corpsTexteNew, corpsTexte)}
+        validerDisabled={corpsNonModifieOuCorpsVide(corpsTexteNew, corpsTexte)}
         onClickReInitialiser={reinitialisation}
         onClickValider={valider}
         afficherBouton={!StatutRequete.estTransmiseAValideur(props.requete.statutCourant.statut)}
@@ -104,13 +105,12 @@ export const ModifierCorpsExtrait: React.FC<ModifierCorpsExtraitProps> = props =
   );
 };
 
-export function getTypeExtrait(typeDocument: string): TypeExtrait {
-  return DocumentDelivrance.typeDocumentCorrespondACode(typeDocument, CODE_EXTRAIT_AVEC_FILIATION)
+const getTypeExtrait = (typeDocument: string): TypeExtrait =>
+  DocumentDelivrance.typeDocumentCorrespondACode(typeDocument, CODE_EXTRAIT_AVEC_FILIATION)
     ? TypeExtrait.getEnumFor(CODE_EXTRAIT_AVEC_FILIATION)
     : TypeExtrait.getEnumFor(CODE_EXTRAIT_SANS_FILIATION);
-}
 
-export function getCorpsTexte(acte: IFicheActe, requete: IRequeteDelivrance, document: IDocumentReponse) {
+const getCorpsTexte = (acte: IFicheActe, requete: IRequeteDelivrance, document: IDocumentReponse) => {
   let composition;
   composition = creationCompositionExtraitCopieActeTexte(
     acte,
@@ -121,12 +121,9 @@ export function getCorpsTexte(acte: IFicheActe, requete: IRequeteDelivrance, doc
   );
 
   return composition?.corps_texte;
-}
+};
 
-export function corpsNonModifierOuCorpsVide(corpsTexteNew: string, corpsTexte?: string) {
-  return !corpsModifie(corpsTexteNew, corpsTexte) || corpsTexteNew === "";
-}
+export const corpsNonModifieOuCorpsVide = (corpsTexteNew: string, corpsTexte?: string) =>
+  !corpsModifie(corpsTexteNew, corpsTexte) || corpsTexteNew === "";
 
-export function corpsModifie(corpsTexteNew: string, corpsTexte?: string) {
-  return corpsTexte !== corpsTexteNew;
-}
+const corpsModifie = (corpsTexteNew: string, corpsTexte?: string) => corpsTexte !== corpsTexteNew;

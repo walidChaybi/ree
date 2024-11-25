@@ -89,7 +89,7 @@ const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongle
             />
             <AffichagePDF
               contenuBase64={contenuActe}
-              typeZoom="automatic-zoom"
+              typeZoom="auto"
             />
           </div>
         </ConteneurVoletEdition>
@@ -106,7 +106,7 @@ const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongle
         <ConteneurVoletEdition estActif={ongletActif === ECleOngletRequete.COURRIER_EDITE}>
           <AffichagePDF
             contenuBase64={contenuCourrier}
-            typeZoom="automatic-zoom"
+            typeZoom="auto"
           />
         </ConteneurVoletEdition>
       )}
