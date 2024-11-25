@@ -165,7 +165,6 @@ export function getRegionNaissanceFiliation(parentForm: ISaisieParentSousForm) {
 }
 
 export function getFiliation(acte: ISaisieProjetPostulantForm): IProjetFiliation[] {
-  console.log("acte", acte);
   let filiation: IProjetFiliation[] = [];
   const listeParents: ISaisieParentSousForm[] = [];
   acte.parents.parent1 && estParentRenseigne(acte.parents.parent1) && listeParents.push(acte.parents.parent1);

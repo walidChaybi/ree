@@ -15,7 +15,7 @@ import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext"
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
-import { DEUX, UN, getLibelle } from "@util/Utils";
+import { DEUX, UN } from "@util/Utils";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
@@ -38,6 +38,7 @@ interface ISaisiePostulantFormProps {
   valeursForm?: ISaisieProjetPostulantForm;
   avancementProjet?: AvancementProjetActe;
   onSubmitSaisieProjetForm: (valeurs: ISaisieProjetPostulantForm, formikHelpers?: FormikHelpers<ISaisieProjetPostulantForm>) => void;
+  affichageActualiserEtVisualiser: boolean
 }
 
 export const SaisiePostulantForm: React.FC<ISaisiePostulantFormProps> = props => {
@@ -57,7 +58,7 @@ export const SaisiePostulantForm: React.FC<ISaisiePostulantFormProps> = props =>
       )
     },
     {
-      libelle: getLibelle("Francisation postulant"),
+      libelle: "Francisation postulant",
       element: (
         <FrancisationPostulantForm
           nom={FRANCISATION_POSTULANT}
@@ -84,7 +85,7 @@ export const SaisiePostulantForm: React.FC<ISaisiePostulantFormProps> = props =>
       )
     },
     {
-      libelle: getLibelle("Autres"),
+      libelle: "Autres",
       element: <AutresForm nom={AUTRES} />
     }
   ];
@@ -92,7 +93,7 @@ export const SaisiePostulantForm: React.FC<ISaisiePostulantFormProps> = props =>
   props.avancementProjet &&
     !AvancementProjetActe.getAvancementsMasquantAcquisitionDecret().includes(props.avancementProjet) &&
     elementListe.push({
-      libelle: getLibelle("Acquisition"),
+      libelle: "Acquisition",
       element: (
         <AcquisitionForm
           nom={ACQUISITION}
@@ -117,22 +118,26 @@ export const SaisiePostulantForm: React.FC<ISaisiePostulantFormProps> = props =>
         <div className="Projet">
           <InputField
             name={withNamespace(PROJET, TYPE)}
-            label={getLibelle("Intéressé")}
+            label={"Intéressé"}
             disabled={true}
           />
           <InputField
             name={withNamespace(PROJET, NATURE_ACTE)}
-            label={getLibelle("Nature acte")}
+            label={"Nature acte"}
             disabled={true}
           />
         </div>
         <GestionnaireElementScroll elementListe={elementListe} />
-        <BoutonDoubleSubmit
-          type="submit"
-          disabled={!isDirty && props.estProjetExistant}
-        >
-          {getLibelle("Actualiser et visualiser")}
-        </BoutonDoubleSubmit>
+        {
+          props.affichageActualiserEtVisualiser && (
+            <BoutonDoubleSubmit
+            type="submit"
+            disabled={!isDirty && props.estProjetExistant}
+          >
+            {"Actualiser et visualiser"}
+          </BoutonDoubleSubmit>
+          )
+        }
       </Formulaire>
     </div>
   );

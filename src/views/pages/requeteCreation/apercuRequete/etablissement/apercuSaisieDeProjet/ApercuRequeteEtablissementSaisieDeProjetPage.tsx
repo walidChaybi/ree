@@ -19,6 +19,7 @@ import {
   IModifierAvancementProjetActeParams,
   useModifierAvancementSuiviDossierApiHook
 } from "@hook/requete/ModifierAvancementSuiviDossierApiHook";
+import { appartientAUtilisateurConnecte } from "@model/agent/IOfficier";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { TUuidSuiviDossierParams } from "@model/params/TUuidSuiviDossierParams";
@@ -81,7 +82,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
     useParams<TUuidSuiviDossierParams>();
   const navigate = useNavigate();
   const location = useLocation();
-  const { isDirty } = useContext(RECEContextData);
+  const { isDirty, utilisateurConnecte } = useContext(RECEContextData);
   const { setIsDirty } = useContext(RECEContextActions);
 
   const [rafraichirForm, setRafraichirForm] = useState<
@@ -356,6 +357,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
               valeursForm={getValeursPostulantForm(titulaireProjetActe)}
               avancementProjet={dossierProjetActe?.avancement}
               onSubmitSaisieProjetForm={onSubmitSaisieProjetForm}
+              affichageActualiserEtVisualiser={appartientAUtilisateurConnecte(utilisateurConnecte, requete?.idUtilisateur)}
             />
           )}
         </>
@@ -392,7 +394,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
             <BoutonsApercuRequeteCreationEtablissement
               requete={requete}
               conditionAffichageBoutonsApercuActe={
-                ongletSelectionne === DEUX && Boolean(documentComposer)
+                ongletSelectionne === DEUX && Boolean(documentComposer) && appartientAUtilisateurConnecte(utilisateurConnecte, requete?.idUtilisateur)
               }
               avancement={dossierProjetActe?.avancement}
               estRegistreOuvert={estOuvertRegistrePapier(

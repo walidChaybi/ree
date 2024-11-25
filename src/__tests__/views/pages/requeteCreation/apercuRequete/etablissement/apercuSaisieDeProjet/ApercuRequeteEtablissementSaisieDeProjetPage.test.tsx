@@ -1,4 +1,5 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import { IOfficier } from "@model/agent/IOfficier";
 import { ApercuRequeteEtablissementSaisieDeProjetPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/ApercuRequeteEtablissementSaisieDeProjetPage";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
@@ -11,11 +12,11 @@ import { describe, expect, test } from "vitest";
 import "../../../../../../../mock/element/IntersectionObserver";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 
-describe("Test de la page Aperçu requête etablissement sasie projet", () => {
-  test("DOIT afficher l'onglet pièces justificatives et postulant QUAND on arrive sur la page", () => {
+describe("Test de la page Aperçu requête etablissement saisie projet", () => {
+  test("DOIT afficher l'onglet pièces justificatives et postulant QUAND on arrive sur la page", async () => {
     afficherPageRequeteCreationEtablissment();
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.getByText("RMC")).toBeDefined();
       expect(
         screen
@@ -32,7 +33,7 @@ describe("Test de la page Aperçu requête etablissement sasie projet", () => {
   });
 
   test("DOIT changer d'onglet selectionner QUAND on clique sur le bouton actualiser & visualiser", async () => {
-     afficherPageRequeteCreationEtablissment();
+     afficherPageRequeteCreationEtablissment("7a091a3b-6835-4824-94fb-527d68926d55");
 
      await waitFor(() => {
       expect(screen.getByText("Apercu du projet")).toBeDefined();
@@ -44,15 +45,28 @@ describe("Test de la page Aperçu requête etablissement sasie projet", () => {
 
     fireEvent.click(screen.getByText("Actualiser et visualiser"));
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(
         screen.getByText("Apercu du projet").getAttribute("aria-selected")
       ).toBe("true");
     });
   });
+
+  test("NE DOIT PAS afficher les boutons de modification du formulaire lorsque la requete ne nous est PAS attribué", async () => {
+    afficherPageRequeteCreationEtablissment();
+
+    await waitFor(() => {
+     expect(screen.getByText("Apercu du projet")).toBeDefined();
+     expect(screen.queryByText("Actualiser et visualiser")).toBeNull();
+     expect(screen.queryByText("Valider le projet d'acte")).toBeNull();
+     expect(screen.queryByText("SIGNER")).toBeNull();
+   });
+ });
+
 });
 
-function afficherPageRequeteCreationEtablissment() {
+  // on donne l'idUtilisateur au RECEContext pour simuler que la requete appartient a l'utilisateur connecté
+function afficherPageRequeteCreationEtablissment(idUtilisateur?: string) {
   const router = createTestingRouter(
     [
       {
@@ -66,7 +80,7 @@ function afficherPageRequeteCreationEtablissment() {
   );
 
   render(
-    <MockRECEContextProvider>
+    <MockRECEContextProvider utilisateurConnecte={idUtilisateur ? {idUtilisateur} as IOfficier : undefined}>
       <RouterProvider router={router} />
     </MockRECEContextProvider>
   );
