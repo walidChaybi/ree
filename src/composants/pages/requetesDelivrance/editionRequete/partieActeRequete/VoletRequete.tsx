@@ -24,7 +24,10 @@ const VoletRequete: React.FC<IVoletRequeteProps> = ({ requete }) => (
       <TypeRequete requete={requete} />
     </ConteneurAccordeon>
 
-    <ConteneurAccordeon titre="Observations requête">
+    <ConteneurAccordeon
+      titre="Observations requête"
+      ouvertParDefaut
+    >
       <ObservationsRequete requete={requete} />
     </ConteneurAccordeon>
 

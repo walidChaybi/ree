@@ -1,4 +1,4 @@
-import { RequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { Action } from "@model/requete/IActions";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { useContext, useEffect, useRef, useState } from "react";
 import { EditionDelivranceContext } from "../../../../contexts/EditionDelivranceContextProvider";
@@ -10,7 +10,7 @@ const EditionRequeteDelivrance: React.FC = () => {
 
   const getOngletActifActeRequeteParDefaut = () => {
     switch (true) {
-      case RequeteDelivrance.estARevoir(requete):
+      case Action.estARevoir(Action.getActionsDansLOrdre(requete.actions).at(-2)):
         return ECleOngletRequete.REQUETE;
       case Boolean(acte):
         return ECleOngletRequete.ACTE;
@@ -30,11 +30,11 @@ const EditionRequeteDelivrance: React.FC = () => {
   const ongletDocumentPrecedent = useRef<string>();
 
   useEffect(() => {
-    document.addEventListener("changerOngletActifPartieActeRequete", event => {
-      setOngletActifActeRequete((event as CustomEvent).detail);
-    });
+    const changerOnglet = ((event: CustomEvent) => setOngletActifActeRequete(event.detail)) as EventListener;
+    document.addEventListener("changerOngletActifPartieActeRequete", changerOnglet);
+
     return () => {
-      document.removeEventListener("changerOngletActifPartieActeRequete", () => () => {});
+      document.removeEventListener("changerOngletActifPartieActeRequete", changerOnglet);
     };
   }, []);
 

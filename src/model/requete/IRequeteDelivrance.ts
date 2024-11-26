@@ -25,50 +25,26 @@ export interface IRequeteDelivrance extends IRequete {
 }
 
 export const RequeteDelivrance = {
-  getDocumentsDeDelivrance(requete: IRequeteDelivrance) {
-    return DocumentReponse.getDocumentsDeDelivrance(requete.documentsReponses);
-  },
+  getDocumentsDeDelivrance: (requete: IRequeteDelivrance) => DocumentReponse.getDocumentsDeDelivrance(requete.documentsReponses),
 
-  estAuStatut(requete: IRequeteDelivrance, statut: StatutRequete): boolean {
-    return requete.statutCourant.statut === statut;
-  },
+  estAuStatut: (requete: IRequeteDelivrance, statut: StatutRequete): boolean => requete.statutCourant.statut === statut,
 
-  estAuStatutASigner(requete: IRequeteDelivrance) {
-    return this.estAuStatut(requete, StatutRequete.A_SIGNER);
-  },
+  estAuStatutASigner: (requete: IRequeteDelivrance) => RequeteDelivrance.estAuStatut(requete, StatutRequete.A_SIGNER),
 
-  getDocumentReponseCopieIntegrale(requete?: IRequeteDelivrance) {
-    return DocumentReponse.getCopieIntegrale(requete?.documentsReponses);
-  },
+  getDocumentReponseCopieIntegrale: (requete?: IRequeteDelivrance) => DocumentReponse.getCopieIntegrale(requete?.documentsReponses),
 
-  getDocumentsASigner(requete: IRequeteDelivrance) {
-    return requete.documentsReponses?.filter(el =>
-      DocumentDelivrance.estExtraitCopieAsigner(el.typeDocument)
-    );
-  },
+  getDocumentsASigner: (requete: IRequeteDelivrance) =>
+    requete.documentsReponses?.filter(el => DocumentDelivrance.estExtraitCopieAsigner(el.typeDocument)),
 
-  possedeUnDocumentPlurilingue(requete: IRequeteDelivrance): boolean {
-    return (
-      DocumentReponse.getExtraitPlurilingue(requete?.documentsReponses) != null
-    );
-  },
+  possedeUnDocumentPlurilingue: (requete: IRequeteDelivrance): boolean =>
+    DocumentReponse.getExtraitPlurilingue(requete?.documentsReponses) != null,
 
-  getExtraitsCopies(requete: IRequeteDelivrance): IDocumentReponse[] {
-    return requete.documentsReponses.filter(documentReponse =>
-      DocumentDelivrance.estExtraitCopieViaUUID(documentReponse.typeDocument)
-    );
-  },
+  getExtraitsCopies: (requete: IRequeteDelivrance): IDocumentReponse[] =>
+    requete.documentsReponses.filter(documentReponse => DocumentDelivrance.estExtraitCopieViaUUID(documentReponse.typeDocument)),
 
-  getCourrier(requete: IRequeteDelivrance): IDocumentReponse | undefined {
-    return requete.documentsReponses.find(el =>
-      DocumentDelivrance.estCourrierDelivranceEC(el.typeDocument)
-    );
-  },
+  getCourrier: (requete: IRequeteDelivrance): IDocumentReponse | undefined =>
+    requete.documentsReponses.find(el => DocumentDelivrance.estCourrierDelivranceEC(el.typeDocument)),
 
   /** La requete possede une action "A Revoir" en dernier ou juste avant une action "A Signer" */
-  estARevoir(requete?: IRequeteDelivrance): boolean {
-    return Action.estARevoir(
-      Action.getActionAvantActionsASigner(requete?.actions)
-    );
-  }
+  estARevoir: (requete?: IRequeteDelivrance): boolean => Action.estARevoir(Action.getActionAvantActionsASigner(requete?.actions))
 };
