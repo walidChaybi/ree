@@ -23,9 +23,7 @@ export const SCHEMA_VALIDATION_MISE_A_JOUR_ANALYSE_MARGINALE = Yup.object().shap
 });
 
 export const MiseAJourAnalyseMarginaleValeursForm = {
-  valeurParDefaut: (
-    defaut: IDerniereAnalyseMarginalResultat | undefined
-  ): IMiseAJourAnalyseMarginaleValeursForm => {
+  valeurParDefaut: (defaut: IDerniereAnalyseMarginalResultat | undefined): IMiseAJourAnalyseMarginaleValeursForm => {
     const nomPartie1 = defaut?.titulaire.nomPartie1 ?? "";
     const nomPartie2 = defaut?.titulaire.nomPartie2 ?? "";
     const secable = Boolean(nomPartie1 && nomPartie2);
@@ -51,9 +49,7 @@ export const MiseAJourAnalyseMarginaleValeursForm = {
     };
   },
 
-  versDto: (
-    valeurs: IMiseAJourAnalyseMarginaleValeursForm
-  ): IMiseAJourAnalyseMarginaleDto => {
+  versDto: (valeurs: IMiseAJourAnalyseMarginaleValeursForm): IMiseAJourAnalyseMarginaleDto => {
     const secable = valeurs.nomSecable.secable;
     const nomPartie1 = secable ? valeurs.nomSecable.nomPartie1 : null;
     const nomPartie2 = secable ? valeurs.nomSecable.nomPartie2 : null;

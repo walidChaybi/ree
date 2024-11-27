@@ -1,5 +1,5 @@
 import { CONFIG_DELETE_ANALYSE_MARGINALE_ABANDONNEE } from "@api/configurations/etatCivil/DeleteAnalyseMarginaleAbandonneeConfigApi";
-import { CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/miseAJour/PatchStatutRequeteMiseAjour";
+import { CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/miseAJour/PatchStatutRequeteMiseAjourConfigApi";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import useFetchApi from "../../hooks/api/FetchApiHook";
 import { TRAITEMENT_SANS_ERREUR, TRAITEMENT_SANS_REPONSE, TTraitementApi } from "./TTraitementApi";

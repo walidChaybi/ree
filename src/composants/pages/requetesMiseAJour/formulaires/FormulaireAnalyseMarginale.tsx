@@ -83,10 +83,18 @@ const FormulaireAnalyseMarginale: React.FC<IFormulaireAnalyseMarginaleProps> = (
             </div>
 
             <div>
-              <ChampsPrenoms cheminPrenoms={"analyseMarginale.prenoms"} prefixePrenom={"prenom"} />
+              <ChampsPrenoms
+                cheminPrenoms={"analyseMarginale.prenoms"}
+                prefixePrenom={"prenom"}
+              />
             </div>
 
-            <ChampsTexte className="champs-motif" name="analyseMarginale.motif" libelle="Motif" type="text" />
+            <ChampsTexte
+              className="champs-motif"
+              name="analyseMarginale.motif"
+              libelle="Motif"
+              type="text"
+            />
           </div>
 
           <div className="bouton-annuler-saisie">

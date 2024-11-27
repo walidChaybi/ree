@@ -1,13 +1,7 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
-import {
-  faChartBar,
-  faGavel,
-  faPlusCircle,
-  faSearch,
-  faSync
-} from "@fortawesome/free-solid-svg-icons";
+import { faChartBar, faGavel, faPlusCircle, faSearch, faSync } from "@fortawesome/free-solid-svg-icons";
 import { IOfficier } from "@model/agent/IOfficier";
 import { getCodesHierarchieService } from "@model/agent/IUtilisateur";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -36,12 +30,8 @@ export const AccueilPage: React.FC = () => {
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const nbReqInfoAPI = useNbReqInfoHook(
-    [StatutRequete.PRISE_EN_CHARGE.nom, StatutRequete.TRANSFEREE.nom].join(",")
-  );
-  const nbReqTraiteReponduAPI = useCompteurRequeteHook(false, [
-    StatutRequete.TRAITE_REPONDU.nom
-  ]);
+  const nbReqInfoAPI = useNbReqInfoHook([StatutRequete.PRISE_EN_CHARGE.nom, StatutRequete.TRANSFEREE.nom].join(","));
+  const nbReqTraiteReponduAPI = useCompteurRequeteHook(false, [StatutRequete.TRAITE_REPONDU.nom]);
 
   useEffect(() => {
     if (nbReqInfoAPI) {
@@ -59,7 +49,10 @@ export const AccueilPage: React.FC = () => {
 
   return (
     <div className="AccueilPage">
-      <img src={logoRece} alt={getLibelle("Logo RECE")} />
+      <img
+        src={logoRece}
+        alt={getLibelle("Logo RECE")}
+      />
       <div className="Titre">{getBienvenueOfficier(utilisateurConnecte)}</div>
       <div className="Affectation">{getAffectation(utilisateurConnecte)}</div>
       <div className="MenuAccueil">
@@ -88,9 +81,7 @@ export const AccueilPage: React.FC = () => {
             libelle={getLibelle("Communication avec les usagers")}
             pageUrl="mesrequetesinformation"
             iconFA={faEnvelope}
-            title={getLibelle(
-              "Bouton pour accèder à la communication avec les usagers"
-            )}
+            title={getLibelle("Bouton pour accèder à la communication avec les usagers")}
             badge={nbReqInfo}
           ></BoutonAccueilCommunication>
         )}
@@ -100,18 +91,14 @@ export const AccueilPage: React.FC = () => {
               libelle={getLibelle("Rechercher une requête")}
               pageUrl="rechercherequete"
               iconFA={faSearch}
-              title={getLibelle(
-                "Bouton pour accèder à la recherche d'une requête"
-              )}
+              title={getLibelle("Bouton pour accèder à la recherche d'une requête")}
             ></BoutonAccueilRechercheRequete>
 
             <BoutonAccueilRechercheActeOuInscription
               libelle={getLibelle("Rechercher un acte et une inscription")}
               pageUrl="rechercheacteinscription"
               iconFA={faSearch}
-              title={getLibelle(
-                "Bouton pour accèder à la recherche d'un acte et d'une inscription"
-              )}
+              title={getLibelle("Bouton pour accèder à la recherche d'un acte et d'une inscription")}
             ></BoutonAccueilRechercheActeOuInscription>
           </>
         )}

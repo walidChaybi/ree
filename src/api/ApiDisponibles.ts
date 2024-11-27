@@ -23,3 +23,8 @@ export const REQUETE_API: TApi = {
   nom: "rece-requete-api",
   version: "v2"
 };
+
+export const TELEVERIFICATION_API: TApi = {
+  nom: "rece-televerification-api",
+  version: "v1"
+};

@@ -6,8 +6,9 @@ export type TApiAutorisee =
   | "rece-requete-api"
   | "rece-outiltech-api"
   | "rece-etatcivil-api"
-  | "rece-composition-api";
-  
+  | "rece-composition-api"
+  | "rece-televerification-api";
+
 export type TMethodeHttp = "GET" | "DELETE" | "PATCH" | "POST" | "PUT";
 
 type TErreurApiTech = {
@@ -81,19 +82,14 @@ export type TAppelApi<
   finalement?: () => void;
 };
 
-type TParametres<
-  TUri extends TBaseUri,
-  TBody extends object | undefined,
-  TQuery extends object | undefined
-> = {
+type TParametres<TUri extends TBaseUri, TBody extends object | undefined, TQuery extends object | undefined> = {
   path?: ExtraireParametresUri<TUri>;
   body?: TBody;
   query?: TQuery;
 };
 
-type ExtraireParametresUri<Uri extends TBaseUri> =
-  Uri extends `${string}/:${infer Param1}/${infer Reste}`
-    ? { [Cle in Param1]: string } & ExtraireParametresUri<`/${Reste}`>
-    : Uri extends `${string}/:${infer Param2}`
+type ExtraireParametresUri<Uri extends TBaseUri> = Uri extends `${string}/:${infer Param1}/${infer Reste}`
+  ? { [Cle in Param1]: string } & ExtraireParametresUri<`/${Reste}`>
+  : Uri extends `${string}/:${infer Param2}`
     ? { [Cle in Param2]: string }
     : {};

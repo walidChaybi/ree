@@ -1,6 +1,6 @@
 import { CONFIG_GET_TOUS_SERVICES } from "@api/configurations/agent/services/GetServicesConfigApi";
 import { CONFIG_GET_TOUS_UTILISATEURS } from "@api/configurations/agent/utilisateur/GetUtilisateursConfigApi";
-import { CONFIG_GET_DECRETS } from "@api/configurations/decret/GetDecretsConfigApi";
+import { CONFIG_GET_DECRETS } from "@api/configurations/etatCivil/GetDecretsConfigApi";
 import { gereErreur } from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
 import { IService, Service } from "@model/agent/IService";
 import { IUtilisateur, Utilisateur } from "@model/agent/IUtilisateur";

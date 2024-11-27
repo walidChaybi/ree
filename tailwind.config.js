@@ -41,7 +41,7 @@ module.exports = {
       },
 
       animation: {
-        apparition: "apparition 0.5s ease-in-out"
+        apparition: "apparition .25s ease"
       },
 
       transitionProperty: {

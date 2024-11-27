@@ -67,11 +67,13 @@ const OngletActe: React.FC<IOngletActeProps> = ({ estActif }) => {
 
   return (
     <OngletsContenu estActif={estActif}>
-      <AlertesActes idActeInit={idActe} />
-      <AffichagePDF
-        contenuBase64={contenuActe}
-        typeZoom="auto"
-      />
+      <div className="flex h-[calc(100vh-18.5rem)] flex-col gap-1">
+        <AlertesActes idActeInit={idActe} />
+        <AffichagePDF
+          contenuBase64={contenuActe}
+          typeZoom="auto"
+        />
+      </div>
     </OngletsContenu>
   );
 };

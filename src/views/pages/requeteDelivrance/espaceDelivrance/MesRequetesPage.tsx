@@ -1,12 +1,6 @@
-import {
-  IQueryParametersPourRequetes,
-  TypeAppelRequete
-} from "@api/appels/requeteApi";
+import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import {
-  ICreationActionEtMiseAjourStatutParams,
-  usePostCreationActionEtMiseAjourStatutApi
-} from "@hook/requete/ActionHook";
+import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
@@ -15,12 +9,10 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { getLibelle } from "@util/Utils";
-import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
-import { BoutonSignature } from "@widget/signature/BoutonSignature";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE,
@@ -28,53 +20,33 @@ import {
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { validerMentionsPlusieursDocuments } from "../editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
-import {
-  dateStatutColumnHeaders,
-  requeteColumnHeaders
-} from "./EspaceDelivranceParams";
-import {
-  goToLinkRequete,
-  miseAjourOuRedirection
-} from "./EspaceDelivranceUtils";
+import SignatureDelivrance from "../../../../composants/commun/signature/SignatureDelivrance";
+import { dateStatutColumnHeaders, requeteColumnHeaders } from "./EspaceDelivranceParams";
+import { goToLinkRequete, miseAjourOuRedirection } from "./EspaceDelivranceUtils";
 import { useRequeteDelivranceApiHook } from "./hook/DonneesRequeteDelivranceApiHook";
 import "./scss/RequeteTableau.scss";
 
-const columnsMesRequestes = [
-  ...requeteColumnHeaders,
-  ...dateStatutColumnHeaders
-];
+const columnsMesRequestes = [...requeteColumnHeaders, ...dateStatutColumnHeaders];
 
 interface MesRequetesPageProps {
   miseAJourCompteur: () => void;
-  setParamsRMCAuto: (
-    id: string,
-    requete: IRequeteTableauDelivrance,
-    urlWithParam: string,
-    pasDeTraitementAuto: boolean
-  ) => void;
+  setParamsRMCAuto: (id: string, requete: IRequeteTableauDelivrance, urlWithParam: string, pasDeTraitementAuto: boolean) => void;
 }
 
 export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [paramsMiseAJour, setParamsMiseAJour] = useState<
-    ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-  >();
-  const [lancerMajRequeteBouton, setLancerMajRequeteBouton] =
-    useState<ICreationActionEtMiseAjourStatutParams>();
+  const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
+  const [lancerMajRequeteBouton, setLancerMajRequeteBouton] = useState<ICreationActionEtMiseAjourStatutParams>();
 
   const { decrets, utilisateurConnecte } = useContext(RECEContextData);
-  const idAction = usePostCreationActionEtMiseAjourStatutApi(
-    lancerMajRequeteBouton
-  );
+  const idAction = usePostCreationActionEtMiseAjourStatutApi(lancerMajRequeteBouton);
 
-  const [linkParameters, setLinkParameters] =
-    React.useState<IQueryParametersPourRequetes>({
-      statuts: StatutRequete.getStatutsMesRequetes(),
-      tri: "dateStatut",
-      sens: "ASC",
-      range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
-    });
+  const [linkParameters, setLinkParameters] = React.useState<IQueryParametersPourRequetes>({
+    statuts: StatutRequete.getStatutsMesRequetes(),
+    tri: "dateStatut",
+    sens: "ASC",
+    range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
+  });
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteDelivranceApiHook(
     linkParameters,
@@ -113,11 +85,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     }
   }, [linkParameters, props]);
 
-  function onClickOnLine(
-    idRequete: string,
-    data: IRequeteTableauDelivrance[],
-    idx: number
-  ) {
+  function onClickOnLine(idRequete: string, data: IRequeteTableauDelivrance[], idx: number) {
     setOperationEnCours(true);
     const requeteSelect = data[idx];
     miseAjourOuRedirection(
@@ -156,12 +124,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     }
   }, [idAction]);
 
-  function getBoutonFinConsultation(
-    id: string,
-    sousType: string,
-    idUtilisateur: string,
-    statut?: string
-  ): JSX.Element {
+  function getBoutonFinConsultation(id: string, sousType: string, idUtilisateur: string, statut?: string): JSX.Element {
     return (
       <>
         {statut === "Traitée - Répondue" && (
@@ -200,9 +163,11 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
         nbLignesParPage={NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}
       >
-        <BoutonSignerLeLot
-          libelle={getLibelle("Signer le lot")}
-          validerMentionsPlusieursDocuments={validerMentionsPlusieursDocuments}
+        <SignatureDelivrance
+          titreBouton="Signer le lot"
+          titreModale="Signature des documents"
+          numerosFonctionnel={dataState.filter(requete => requete.numero).map(requete => requete.numero as string)}
+          apreSignature={() => handleReload()}
         />
       </TableauRece>
 
@@ -210,8 +175,3 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     </>
   );
 };
-
-const BoutonSignerLeLot = WithHabilitation(
-  BoutonSignature,
-  "BoutonSignerLeLot"
-);

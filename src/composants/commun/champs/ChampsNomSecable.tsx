@@ -20,48 +20,30 @@ interface IChampsNomSecableProps {
 }
 
 const valeurChamps = (valeurs: FormikValues, chemin: string) =>
-  chemin
-    .split(".")
-    .reduce((valeur: string | boolean | FormikValues, partieChemin: string) => {
-      if (valeur instanceof Object) {
-        return valeur[partieChemin] ?? "";
-      }
+  chemin.split(".").reduce((valeur: string | boolean | FormikValues, partieChemin: string) => {
+    if (valeur instanceof Object) {
+      return valeur[partieChemin] ?? "";
+    }
 
-      return valeur;
-    }, valeurs);
+    return valeur;
+  }, valeurs);
 
 const mettreAJourChamps = (
   nomChamps: string,
   ancienneValeur: string | boolean,
   nouvelleValeur: string | boolean,
-  modifierChamps: (
-    field: string,
-    value: any,
-    shouldValidate?: boolean | undefined
-  ) => Promise<void | FormikErrors<FormikValues>>
-) =>
-  ancienneValeur !== nouvelleValeur &&
-  modifierChamps(nomChamps, nouvelleValeur);
+  modifierChamps: (field: string, value: any, shouldValidate?: boolean | undefined) => Promise<void | FormikErrors<FormikValues>>
+) => ancienneValeur !== nouvelleValeur && modifierChamps(nomChamps, nouvelleValeur);
 
-const boutonPresent = (valeur: string): boolean =>
-  valeur.split(" ").length > UN;
+const boutonPresent = (valeur: string): boolean => valeur.split(" ").length > UN;
 
-const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
-  nom,
-  secable,
-  nomPartie1,
-  nomPartie2
-}) => {
+const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({ nom, secable, nomPartie1, nomPartie2 }) => {
   const { values, setFieldValue } = useFormikContext<FormikValues>();
   const [secablePossible, setSecablePossible] = useState<boolean>(false);
 
   const deplacerVocable = (remonter: boolean = true) => {
-    const valeursNom1 = (valeurChamps(values, nomPartie1.name) as string).split(
-      " "
-    );
-    const valeursNom2 = (valeurChamps(values, nomPartie2.name) as string).split(
-      " "
-    );
+    const valeursNom1 = (valeurChamps(values, nomPartie1.name) as string).split(" ");
+    const valeursNom2 = (valeurChamps(values, nomPartie2.name) as string).split(" ");
 
     if (remonter) {
       valeursNom1.push(valeursNom2.shift() as string);
@@ -74,9 +56,7 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
   };
 
   useEffect(() => {
-    const valeursNom = (valeurChamps(values, nom.name) as string)
-      .split(" ")
-      .filter(partieNom => partieNom.length);
+    const valeursNom = (valeurChamps(values, nom.name) as string).split(" ").filter(partieNom => partieNom.length);
     const valeurNom1 = valeurChamps(values, nomPartie1.name) as string;
     const valeurNom2 = valeurChamps(values, nomPartie2.name) as string;
     const valeurSecable = valeurChamps(values, secable.name) as boolean;
@@ -96,18 +76,8 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
     }
 
     if (!valeurNom1 || !valeurNom2 || valeursNom.length === DEUX) {
-      mettreAJourChamps(
-        nomPartie1.name,
-        valeurNom1,
-        valeursNom.shift() as string,
-        setFieldValue
-      );
-      mettreAJourChamps(
-        nomPartie2.name,
-        valeurNom2,
-        valeursNom.join(" "),
-        setFieldValue
-      );
+      mettreAJourChamps(nomPartie1.name, valeurNom1, valeursNom.shift() as string, setFieldValue);
+      mettreAJourChamps(nomPartie2.name, valeurNom2, valeursNom.join(" "), setFieldValue);
 
       return;
     }
@@ -115,23 +85,16 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
     const vocablesPartie1 = Array.from({
       length: valeurNom1.split(" ").length
     }).map(() => valeursNom.shift());
-    mettreAJourChamps(
-      nomPartie1.name,
-      valeurNom1,
-      vocablesPartie1.join(" "),
-      setFieldValue
-    );
-    mettreAJourChamps(
-      nomPartie2.name,
-      valeurNom2,
-      valeursNom.join(" "),
-      setFieldValue
-    );
+    mettreAJourChamps(nomPartie1.name, valeurNom1, vocablesPartie1.join(" "), setFieldValue);
+    mettreAJourChamps(nomPartie2.name, valeurNom2, valeursNom.join(" "), setFieldValue);
   }, [values]);
 
   return (
     <div className="conteneur-champs-nom-secable">
-      <ChampsTexte name={nom.name} libelle={nom.libelle} />
+      <ChampsTexte
+        name={nom.name}
+        libelle={nom.libelle}
+      />
       <div className="champs-secable-et-info">
         <ChampsCaseACocher
           name={secable.name}
@@ -148,40 +111,44 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
 
       {valeurChamps(values, secable.name) && (
         <>
-          <div className="champs-partie-nom-secable">
+          <div className="flex gap-2">
             <ChampsTexte
               name={nomPartie1.name}
               libelle={nomPartie1.libelle}
               readOnly
             />
 
-            {boutonPresent(valeurChamps(values, nomPartie1.name) as string) && (
-              <BoutonIcon
-                type="button"
-                title="Descendre la dernière vocable"
-                onClick={() => deplacerVocable(false)}
-              >
-                <ArrowDownward />
-              </BoutonIcon>
-            )}
+            <div className="flex w-10 items-end">
+              {boutonPresent(valeurChamps(values, nomPartie1.name) as string) && (
+                <BoutonIcon
+                  type="button"
+                  title="Descendre la dernière vocable"
+                  onClick={() => deplacerVocable(false)}
+                >
+                  <ArrowDownward />
+                </BoutonIcon>
+              )}
+            </div>
           </div>
 
-          <div className="champs-partie-nom-secable">
+          <div className="flex gap-2">
             <ChampsTexte
               name={nomPartie2.name}
               libelle={nomPartie2.libelle}
               readOnly
             />
 
-            {boutonPresent(valeurChamps(values, nomPartie2.name) as string) && (
-              <BoutonIcon
-                type="button"
-                title="Remonter la première vocable"
-                onClick={() => deplacerVocable(true)}
-              >
-                <ArrowUpward />
-              </BoutonIcon>
-            )}
+            <div className="flex w-10 items-end">
+              {boutonPresent(valeurChamps(values, nomPartie2.name) as string) && (
+                <BoutonIcon
+                  type="button"
+                  title="Remonter la première vocable"
+                  onClick={() => deplacerVocable(true)}
+                >
+                  <ArrowUpward />
+                </BoutonIcon>
+              )}
+            </div>
           </div>
         </>
       )}

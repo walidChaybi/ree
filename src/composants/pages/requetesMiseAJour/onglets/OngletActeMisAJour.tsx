@@ -29,10 +29,12 @@ const OngletActeMisAJour: React.FC<IOngletActeMisAJourProps> = ({ estActif }) =>
 
   return (
     <OngletsContenu estActif={estActif}>
-      <AffichagePDF
-        contenuBase64={contenuActeMisAJour}
-        typeZoom="auto"
-      />
+      <div className="flex h-[calc(100vh-18.5rem)] flex-col gap-1">
+        <AffichagePDF
+          contenuBase64={contenuActeMisAJour}
+          typeZoom="auto"
+        />
+      </div>
     </OngletsContenu>
   );
 };
