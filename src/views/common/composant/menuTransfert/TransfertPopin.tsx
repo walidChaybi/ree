@@ -96,7 +96,7 @@ export const TransfertPopin: React.FC<ITransfertPopinProps> = ({
                 </Button>
                 <BoutonOperationEnCours
                   onClick={() => onValidate({ ...values } as ITransfertPopinForm)}
-                  estDesactive={estDesactive(values.optionChoisie, values.texte, Boolean(placeholder), Boolean(options))}
+                  estDesactive={estDesactive(values.optionChoisie ?? OPTION_VIDE, values.texte, Boolean(placeholder), Boolean(options))}
                   type="submit"
                 >
                   Valider
