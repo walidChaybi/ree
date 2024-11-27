@@ -1,15 +1,9 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
+import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { URL_CONTEXT_APP } from "@router/ReceUrls";
-import { getLibelle } from "@util/Utils";
 import { IRoute } from "@util/route/IRoute";
-import {
-  URL_SEPARATEUR,
-  getUrlWithoutIdParam,
-  getUrlWithoutParam,
-  isPathElemId
-} from "@util/route/UrlUtil";
+import { URL_SEPARATEUR, getUrlWithoutIdParam, getUrlWithoutParam, isPathElemId } from "@util/route/UrlUtil";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext } from "react";
 import { useBlocker, useLocation } from "react-router-dom";
@@ -20,9 +14,7 @@ class GestionnaireNavigation {
   private urls: string[] = [];
 
   urlStartsWith(url1: string, url2: string) {
-    return getPathElements(url1)
-      .join()
-      .startsWith(getPathElements(url2).join());
+    return getPathElements(url1).join().startsWith(getPathElements(url2).join());
   }
 
   addUrl(url: string) {
@@ -56,19 +48,16 @@ interface FilArianeProps {
   routes: IRoute[];
 }
 
-export const fildarianeLabel = getLibelle("Navigation par fil d'ariane");
+export const fildarianeLabel = "Navigation par fil d'ariane";
 
 export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
   const location = useLocation();
   const { isDirty } = useContext(RECEContextData);
+  const { setIsDirty } = useContext(RECEContextActions);
   const blocker = useBlocker(() => isDirty);
 
   gestionnaireNavigation.addUrl(location.pathname);
-  const pagesInfos = buildPagesInfos(
-    location.pathname,
-    routes,
-    gestionnaireNavigation
-  );
+  const pagesInfos = buildPagesInfos(location.pathname, routes, gestionnaireNavigation);
   const routeAccueil = getRoute("", routes);
 
   return (
@@ -100,13 +89,14 @@ export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
       <ConfirmationPopin
         boutons={[
           {
-            label: getLibelle("OK"),
+            label: "OK",
             action: () => {
+              setIsDirty(false);
               blocker.proceed?.();
             }
           },
           {
-            label: getLibelle("Annuler"),
+            label: "Annuler",
             action: () => {
               blocker.reset?.();
             }
@@ -114,10 +104,8 @@ export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
         ]}
         estOuvert={blocker.state === "blocked"}
         messages={[
-          getLibelle(
-            "Vous n'avez pas validé vos modifications. Si vous continuez, celles-ci seront perdues et les données réinitialisées."
-          ),
-          getLibelle("Voulez-vous continuer ?")
+          "Vous n'avez pas validé vos modifications. Si vous continuez, celles-ci seront perdues et les données réinitialisées.",
+          "Voulez-vous continuer ?"
         ]}
       />
     </div>
@@ -135,11 +123,7 @@ interface IPageInfo {
   derniere: boolean;
 }
 
-export function buildPagesInfos(
-  path: string,
-  routes: IRoute[],
-  gestNavigation: GestionnaireNavigation
-) {
+export function buildPagesInfos(path: string, routes: IRoute[], gestNavigation: GestionnaireNavigation) {
   const pagesInfos: IPageInfo[] = [];
   const pathElements = getPathElements(path);
   const navigationUrls = gestNavigation.getUrls();
@@ -155,16 +139,12 @@ export function buildPagesInfos(
     // Donc on voit que les urls du gestionnaire de navigation correspondent aux deux dernières urls de pathElements
     // (le code ci-dessous traite ce cas en faisant correspndent les urls du gestionnaires de navigation à celles de pathElements
     // pour construire la bonne url pour l'objet IPageInfo)
-    const indexDansUrlsGestionnaireNavigation =
-      navigationUrls.length - indexAPartirDeLaFinDePathElements - 1;
+    const indexDansUrlsGestionnaireNavigation = navigationUrls.length - indexAPartirDeLaFinDePathElements - 1;
     // Si la navigation est classique à partir de la page d'accueil alors c'est toujours l'url du gestionnaire de navigation qui est utilisée
     // Si la navigation s'effectue par "favoris" alors c'est l'url reconstruite à partir de l'url entrée via "favoris" qui est utilisée
     const utiliserUrlGestionnaireNavigation =
-      indexDansUrlsGestionnaireNavigation >= 0 &&
-      indexDansUrlsGestionnaireNavigation < navigationUrls.length;
-    url = utiliserUrlGestionnaireNavigation
-      ? gestNavigation.getUrl(indexDansUrlsGestionnaireNavigation)
-      : url;
+      indexDansUrlsGestionnaireNavigation >= 0 && indexDansUrlsGestionnaireNavigation < navigationUrls.length;
+    url = utiliserUrlGestionnaireNavigation ? gestNavigation.getUrl(indexDansUrlsGestionnaireNavigation) : url;
 
     const route = getRoute(url, routes);
 
@@ -179,9 +159,7 @@ export function buildPagesInfos(
 }
 
 export function getUrlFromNPathElements(pathElements: string[], idx: number) {
-  return `${URL_CONTEXT_APP}/${pathElements
-    .slice(0, idx + 1)
-    .join(URL_SEPARATEUR)}`;
+  return `${URL_CONTEXT_APP}/${pathElements.slice(0, idx + 1).join(URL_SEPARATEUR)}`;
 }
 
 export function getPathElements(path: string) {
@@ -194,10 +172,7 @@ export function getPathElements(path: string) {
   // suppression des éléments vides dûs aux "/" de début et de fin potentiels
   pathElements = pathElements.filter(x => x);
   // Suppression des éventuel Nombre ou UUID de fin
-  while (
-    pathElements.length > 0 &&
-    isPathElemId(pathElements[pathElements.length - 1])
-  ) {
+  while (pathElements.length > 0 && isPathElemId(pathElements[pathElements.length - 1])) {
     pathElements.pop();
   }
   return pathElements;
