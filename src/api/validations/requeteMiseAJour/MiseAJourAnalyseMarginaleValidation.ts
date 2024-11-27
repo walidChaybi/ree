@@ -1,5 +1,8 @@
 import { IMiseAJourAnalyseMarginaleDto } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
 import { IDerniereAnalyseMarginalResultat } from "@hook/requete/miseajour/DerniereAnalyseMarginaleApiHook";
+import { IMajMention } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
+import { getMotif } from "@pages/requeteMiseAJour/apercuRequete/contenu/MiseAJourAnalyseMarginale/MiseAJourAnalyseMarginale";
+import { getPremiereOuSecondeValeur } from "@util/Utils";
 import * as Yup from "yup";
 
 export interface IMiseAJourAnalyseMarginaleValeursForm {
@@ -23,11 +26,15 @@ export const SCHEMA_VALIDATION_MISE_A_JOUR_ANALYSE_MARGINALE = Yup.object().shap
 });
 
 export const MiseAJourAnalyseMarginaleValeursForm = {
-  valeurParDefaut: (defaut: IDerniereAnalyseMarginalResultat | undefined): IMiseAJourAnalyseMarginaleValeursForm => {
+  valeurParDefaut: (
+    defaut: IDerniereAnalyseMarginalResultat | undefined,
+    listeMentions?: IMajMention[]
+  ): IMiseAJourAnalyseMarginaleValeursForm => {
     const nomPartie1 = defaut?.titulaire.nomPartie1 ?? "";
     const nomPartie2 = defaut?.titulaire.nomPartie2 ?? "";
     const secable = Boolean(nomPartie1 && nomPartie2);
     const prenoms = defaut?.titulaire.prenoms ?? [];
+    const motif = listeMentions?.length ? getPremiereOuSecondeValeur(defaut?.motif, getMotif(listeMentions, defaut)) : "";
 
     return {
       analyseMarginale: {
@@ -39,7 +46,7 @@ export const MiseAJourAnalyseMarginaleValeursForm = {
           }),
           {}
         ),
-        motif: ""
+        motif: motif
       },
       nomSecable: {
         secable: secable,

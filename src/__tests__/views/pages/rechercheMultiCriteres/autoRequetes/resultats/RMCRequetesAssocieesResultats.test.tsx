@@ -281,7 +281,6 @@ describe("RMCRequetesAssocieesResultats", () => {
 
     expect(container.getElementsByClassName("ApercuRequete").length).toBe(1);
   });
-  // ADRIEN
   test("DOIT retourner le bon composant d'aperçu simple d'une requête de création d'établissement", () => {
     const requeteSelectionnee = {
       idRequete: "7b448d64-add5-4dbd-8041-b7081ea7bc86",

@@ -24,7 +24,6 @@ import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCP
 import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
-import ApercuRequeteMiseAJourPage from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { IRoute } from "@util/route/IRoute";
@@ -580,13 +579,13 @@ export const routesRece: IRoute[] = [
   ////////////////////////////////////////////////////////
   {
     url: URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID,
-    component: ApercuRequeteMiseAJourPage,
+    component: PageEditionRequeteMiseAJour,
     auMoinsUnDesDroits: [Droit.METTRE_A_JOUR_ACTE],
     libelle: LIBELLE_APERCU_MISE_A_JOUR_
   },
   {
     url: URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID,
-    component: ApercuRequeteMiseAJourPage,
+    component: PageEditionRequeteMiseAJour,
     auMoinsUnDesDroits: [Droit.METTRE_A_JOUR_ACTE],
     libelle: LIBELLE_APERCU_MISE_A_JOUR_
   },

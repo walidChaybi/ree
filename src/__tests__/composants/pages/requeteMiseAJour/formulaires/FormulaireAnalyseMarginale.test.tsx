@@ -6,7 +6,7 @@ import userEvent from "@testing-library/user-event";
 import messageManager from "@util/messageManager";
 import { RouterProvider } from "react-router-dom";
 import { expect, test, vi } from "vitest";
-import FormulaireAnalyseMarginale from "../../../../../composants/pages/requetesMiseAJour/formulaires/FormulaireAnalyseMarginale";
+import FormulaireAnalyseMarginale from "../../../../../composants/pages/requetesMiseAJour/formulaires/analyseMarginale/FormulaireAnalyseMarginale";
 import EditionMiseAJourContextProvider from "../../../../../contexts/EditionMiseAJourContextProvider";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
@@ -45,6 +45,7 @@ test("renders le formulaire avec les bonnes valeurs par defaut", () => {
           <EditionMiseAJourContextProvider
             idActe="e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"
             idRequete={""}
+            estMiseAJourAvecMentions={false}
           >
             <FormulaireAnalyseMarginale derniereAnalyseMarginale={mockDerniereAnalyseMarginal} />
           </EditionMiseAJourContextProvider>
@@ -61,7 +62,8 @@ test("renders le formulaire avec les bonnes valeurs par defaut", () => {
   expect(screen.queryByText("motifMock")).toBeNull();
 });
 
-test("redirige vers la page RMC au clic sur le bouton valider et terminer", async () => {
+//Test à effectuer dans la PageFormulaire maintenant (bouton déplacé)
+test.skip("redirige vers la page RMC au clic sur le bouton valider et terminer", async () => {
   const router = createTestingRouter(
     [
       {
@@ -70,6 +72,7 @@ test("redirige vers la page RMC au clic sur le bouton valider et terminer", asyn
           <EditionMiseAJourContextProvider
             idActe="e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"
             idRequete={"e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"}
+            estMiseAJourAvecMentions={false}
           >
             <FormulaireAnalyseMarginale derniereAnalyseMarginale={mockDerniereAnalyseMarginal} />
           </EditionMiseAJourContextProvider>

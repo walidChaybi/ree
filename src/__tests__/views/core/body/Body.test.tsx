@@ -7,12 +7,9 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte
-} from "../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";
 
-test("renders BoutonDeconnexion", () => {
+test("renders BoutonDeconnexion", async () => {
   const router = createTestingRouter(
     [
       {
@@ -27,22 +24,15 @@ test("renders BoutonDeconnexion", () => {
   off.profils = [...off.profils];
   off.profils.push("RECE_ADMIN");
 
-  render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      off as unknown as IOfficier
-    )
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, off as unknown as IOfficier));
 
-  waitFor(() => {
-    const boutonElement = screen.getByText(
-      /prenomConnectedUser nomConnectedUser/i
-    );
+  await waitFor(() => {
+    const boutonElement = screen.getByText(/prenomConnectedUser nomConnectedUser/i);
     expect(boutonElement).toBeDefined();
   });
 });
 
-test("renders Body", () => {
+test("renders Body", async () => {
   officier.profils.push("RECE_ADMIN");
 
   const router = createTestingRouter(
@@ -62,14 +52,14 @@ test("renders Body", () => {
     } as unknown as IOfficier)
   );
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(document.title).toBe("Accueil");
     expect(screen.getByText("Délivrance")).toBeDefined();
   });
 });
 
 // TODO: fix test
-test("renders Body Connexion en cours", () => {
+test("renders Body Connexion en cours", async () => {
   const router = createTestingRouter(
     [
       {
@@ -82,13 +72,13 @@ test("renders Body Connexion en cours", () => {
 
   render(elementAvecContexte(<RouterProvider router={router} />));
 
-  waitFor(() => {
+  await waitFor(() => {
     const titre = screen.getByText(/Connexion en cours/i);
     expect(titre).toBeDefined();
   });
 });
 
-test("renders Body avec erreur de login", () => {
+test("renders Body avec erreur de login", async () => {
   storeRece.logErrorDesactive = true;
   officier.profils.push("RECE_ADMIN");
 
@@ -103,26 +93,19 @@ test("renders Body avec erreur de login", () => {
   );
 
   render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      officier as unknown as IOfficier,
-      undefined,
-      undefined,
-      undefined,
-      {
-        status: "Autre (console.error LogManager)"
-      }
-    )
+    elementAvecContexte(<RouterProvider router={router} />, officier as unknown as IOfficier, undefined, undefined, undefined, {
+      status: "Autre (console.error LogManager)"
+    })
   );
 
-  waitFor(() => {
+  await waitFor(() => {
     const titre = screen.getByText(/Erreur Système/i);
     expect(titre).toBeDefined();
   });
   storeRece.logErrorDesactive = false;
 });
 
-test("renders Body 403", () => {
+test("renders Body 403", async () => {
   const router = createTestingRouter(
     [
       {
@@ -134,22 +117,13 @@ test("renders Body 403", () => {
   );
 
   render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      officier as unknown as IOfficier,
-      undefined,
-      undefined,
-      undefined,
-      {
-        status: 403
-      }
-    )
+    elementAvecContexte(<RouterProvider router={router} />, officier as unknown as IOfficier, undefined, undefined, undefined, {
+      status: 403
+    })
   );
 
-  const titre = screen.getByText(
-    /Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BIMO/i
-  );
-  waitFor(() => {
+  const titre = screen.getByText(/Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BIMO/i);
+  await waitFor(() => {
     expect(titre).toBeDefined();
   });
 });
