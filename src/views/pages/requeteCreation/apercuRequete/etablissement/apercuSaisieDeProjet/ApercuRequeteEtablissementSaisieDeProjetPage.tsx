@@ -1,20 +1,11 @@
-import {
-  RECEContextActions,
-  RECEContextData
-} from "@core/contexts/RECEContext";
+import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import {
   IRecupererRegistrePapierParIdActeParams,
   useRecupererRegistrePapierParIdActeApiHook
 } from "@hook/acte/RecupererRegistrePapierParIdActeApiHook";
 import { useValiderProjetActeApiHook } from "@hook/acte/ValiderProjetActeApiHook";
-import {
-  ICompositionProjetActeParams,
-  useCompositionProjetActeApiHook
-} from "@hook/composition/CompositionProjetActeApiHook";
-import {
-  IDetailRequeteParams,
-  useDetailRequeteApiHook
-} from "@hook/requete/DetailRequeteHook";
+import { ICompositionProjetActeParams, useCompositionProjetActeApiHook } from "@hook/composition/CompositionProjetActeApiHook";
+import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import {
   IModifierAvancementProjetActeParams,
   useModifierAvancementSuiviDossierApiHook
@@ -25,10 +16,7 @@ import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/I
 import { TUuidSuiviDossierParams } from "@model/params/TUuidSuiviDossierParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { ISuiviDossier } from "@model/requete/ISuiviDossier";
-import {
-  ITitulaireRequeteCreation,
-  TitulaireRequeteCreation
-} from "@model/requete/ITitulaireRequeteCreation";
+import { ITitulaireRequeteCreation, TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { ApercuProjet } from "@pages/requeteCreation/commun/composants/ApercuProjet";
@@ -36,13 +24,11 @@ import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
-import {
-  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
-  URL_RECHERCHE_REQUETE
-} from "@router/ReceUrls";
+import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID, URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { DEUX, UN, getLibelle } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
+import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { PopinSignatureCreationEtablissement } from "@widget/signature/PopinSignatureCreationEtablissement";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import { FormikHelpers } from "formik";
@@ -75,36 +61,27 @@ interface ItemListe {
   component: JSX.Element;
 }
 
-export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
-  ApercuRequeteEtablissementSaisieDeProjetPageProps
-> = props => {
-  const { idRequeteParam, idSuiviDossierParam } =
-    useParams<TUuidSuiviDossierParams>();
+export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequeteEtablissementSaisieDeProjetPageProps> = props => {
+  const { idRequeteParam, idSuiviDossierParam } = useParams<TUuidSuiviDossierParams>();
   const navigate = useNavigate();
   const location = useLocation();
   const { isDirty, utilisateurConnecte } = useContext(RECEContextData);
   const { setIsDirty } = useContext(RECEContextActions);
 
-  const [rafraichirForm, setRafraichirForm] = useState<
-    (() => void) | undefined
-  >();
-  const [titulaireProjetActe, setTitulaireProjetActe] =
-    useState<ITitulaireRequeteCreation>();
+  const [rafraichirForm, setRafraichirForm] = useState<(() => void) | undefined>();
+  const [titulaireProjetActe, setTitulaireProjetActe] = useState<ITitulaireRequeteCreation>();
   const [dossierProjetActe, setDossierProjetActe] = useState<ISuiviDossier>();
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
   const [estProjetExistant, setEstProjetExistant] = useState<boolean>(false);
-  const [estOuvertPopinSignature, setEstOuvertPopinSignature] =
-    useState<boolean>(false);
+  const [estOuvertPopinSignature, setEstOuvertPopinSignature] = useState<boolean>(false);
 
   const [ongletSelectionne, setOngletSelectionne] = useState(UN);
+  const [estPopinValiderProjetOuverte, setEstPopinValiderProjetOuverte] = useState<boolean>(false);
 
-  const [detailRequeteParams, setDetailRequeteParams] =
-    useState<IDetailRequeteParams>();
-  const [modifierAvancementProjetParams, setModifierAvancementProjetParams] =
-    useState<IModifierAvancementProjetActeParams>();
+  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
+  const [modifierAvancementProjetParams, setModifierAvancementProjetParams] = useState<IModifierAvancementProjetActeParams>();
 
-  const [compositionProjetActeParams, setCompositionProjetActeParams] =
-    useState<ICompositionProjetActeParams>();
+  const [compositionProjetActeParams, setCompositionProjetActeParams] = useState<ICompositionProjetActeParams>();
 
   const [validerProjetActeParams, setValiderProjetActeParams] = useState<{
     idRequete: string;
@@ -113,22 +90,10 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
 
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
   useModifierAvancementSuiviDossierApiHook(modifierAvancementProjetParams);
-  const { documentComposer } = useCompositionProjetActeApiHook(
-    compositionProjetActeParams
-  );
+  const { documentComposer } = useCompositionProjetActeApiHook(compositionProjetActeParams);
 
-  const parentMasculinEtOuPositionUn =
-    TitulaireRequeteCreation.getParentParSexeEtOuParPosition(
-      Sexe.MASCULIN,
-      UN,
-      requete?.titulaires
-    );
-  const parentFemininEtOuPositionDeux =
-    TitulaireRequeteCreation.getParentParSexeEtOuParPosition(
-      Sexe.FEMININ,
-      DEUX,
-      requete?.titulaires
-    );
+  const parentMasculinEtOuPositionUn = TitulaireRequeteCreation.getParentParSexeEtOuParPosition(Sexe.MASCULIN, UN, requete?.titulaires);
+  const parentFemininEtOuPositionDeux = TitulaireRequeteCreation.getParentParSexeEtOuParPosition(Sexe.FEMININ, DEUX, requete?.titulaires);
 
   const { projetActe, onClickActualiserProjet } = useProjetActeHook(
     mappingSaisieProjetPostulantFormVersProjetActe,
@@ -138,17 +103,11 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
     requete?.provenanceNatali?.numeroDossierNational
   );
 
-  const [
-    recupererRegistrePapierParIdProjetActeParams,
-    setRecupererRegistrePapierParIdProjetActeParams
-  ] = useState<IRecupererRegistrePapierParIdActeParams>();
-  const registrePapier = useRecupererRegistrePapierParIdActeApiHook(
-    recupererRegistrePapierParIdProjetActeParams
-  );
+  const [recupererRegistrePapierParIdProjetActeParams, setRecupererRegistrePapierParIdProjetActeParams] =
+    useState<IRecupererRegistrePapierParIdActeParams>();
+  const registrePapier = useRecupererRegistrePapierParIdActeApiHook(recupererRegistrePapierParIdProjetActeParams);
 
-  const { projetEstValide } = useValiderProjetActeApiHook(
-    validerProjetActeParams
-  );
+  const { projetEstValide } = useValiderProjetActeApiHook(validerProjetActeParams);
 
   const validerProjetActe = (idRequete: string, idSuiviDossier: string) => {
     setValiderProjetActeParams({ idRequete, idSuiviDossier });
@@ -171,10 +130,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
   useEffect(() => {
     if (projetEstValide) {
       navigate(
-        getUrlWithParam(
-          URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
-          idRequeteParam || ""
-        ),
+        getUrlWithParam(URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID, idRequeteParam || ""),
         // TODO: passage du state non fonctionnel ==> reussir a passer l'idSuiviDossier & le location.pathname a l'apercu suivi dossier
         { state: { idSuiviDossier: idSuiviDossierParam } }
       );
@@ -184,16 +140,10 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
 
   useEffect(() => {
     if (requete?.titulaires && idSuiviDossierParam) {
-      const getSuiviDossierParId = (suiviDossier: ISuiviDossier) =>
-        suiviDossier.idSuiviDossier === idSuiviDossierParam;
-      const titulaire = requete.titulaires.find(titulaireCourant =>
-        titulaireCourant.suiviDossiers?.some(getSuiviDossierParId)
-      );
+      const getSuiviDossierParId = (suiviDossier: ISuiviDossier) => suiviDossier.idSuiviDossier === idSuiviDossierParam;
+      const titulaire = requete.titulaires.find(titulaireCourant => titulaireCourant.suiviDossiers?.some(getSuiviDossierParId));
       const dossier = titulaire?.suiviDossiers?.find(getSuiviDossierParId);
-      dossier &&
-        setEstProjetExistant(
-          !AvancementProjetActe.estASaisir(dossier.avancement)
-        );
+      dossier && setEstProjetExistant(!AvancementProjetActe.estASaisir(dossier.avancement));
       setTitulaireProjetActe(titulaire);
       setDossierProjetActe(dossier);
       setRecupererRegistrePapierParIdProjetActeParams({
@@ -207,9 +157,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
       if (dossierProjetActe && idSuiviDossierParam && !estProjetExistant) {
         setModifierAvancementProjetParams({
           idSuiviDossier: idSuiviDossierParam,
-          avancement: AvancementProjetActe.estAVerifier(
-            dossierProjetActe.avancement
-          )
+          avancement: AvancementProjetActe.estAVerifier(dossierProjetActe.avancement)
             ? AvancementProjetActe.VERIFIE
             : AvancementProjetActe.EN_COURS
         });
@@ -221,8 +169,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
       }
 
       setCompositionProjetActeParams({
-        projetActeComposition:
-          mappingProjetActeVersProjetActeComposition(projetActe)
+        projetActeComposition: mappingProjetActeVersProjetActeComposition(projetActe)
       });
 
       setIsDirty(false);
@@ -247,50 +194,26 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
     });
   }
 
-  function onRenommePieceJustificativeSaisieProjet(
-    idPieceJustificative: string,
-    nouveauLibelle: string,
-    idDocumentPJ?: string
-  ) {
-    onRenommePieceJustificativeEtablissement(
-      requete,
-      setRequete,
-      idPieceJustificative,
-      nouveauLibelle,
-      idDocumentPJ
-    );
+  function onRenommePieceJustificativeSaisieProjet(idPieceJustificative: string, nouveauLibelle: string, idDocumentPJ?: string) {
+    onRenommePieceJustificativeEtablissement(requete, setRequete, idPieceJustificative, nouveauLibelle, idDocumentPJ);
   }
 
   function navigueEtAffichePdfProjetActe(): void {
     setOngletSelectionne(DEUX);
     setIsDirty(false);
   }
-  const getValeursPostulantForm = (
-    postulant: ITitulaireRequeteCreation
-  ): ISaisieProjetPostulantForm => {
+  const getValeursPostulantForm = (postulant: ITitulaireRequeteCreation): ISaisieProjetPostulantForm => {
     return estProjetExistant
       ? mappingProjetActeVersFormulairePostulant(postulant, projetActe)
-      : mappingTitulairesVersFormulairePostulant(
-          postulant,
-          parentMasculinEtOuPositionUn,
-          parentFemininEtOuPositionDeux,
-          requete?.nature
-        );
+      : mappingTitulairesVersFormulairePostulant(postulant, parentMasculinEtOuPositionUn, parentFemininEtOuPositionDeux, requete?.nature);
   };
 
-  function onSubmitSaisieProjetForm(
-    valeurs: ISaisieProjetPostulantForm,
-    formikHelpers?: FormikHelpers<ISaisieProjetPostulantForm>
-  ): void {
+  function onSubmitSaisieProjetForm(valeurs: ISaisieProjetPostulantForm, formikHelpers?: FormikHelpers<ISaisieProjetPostulantForm>): void {
     if (
       dossierProjetActe &&
       projetActe &&
       formikHelpers &&
-      estModificationsDonneesBIAAnnuler(
-        dossierProjetActe?.avancement,
-        projetActe,
-        valeurs
-      )
+      estModificationsDonneesBIAAnnuler(dossierProjetActe?.avancement, projetActe, valeurs)
     ) {
       annulerModificationBulletinIdentification(formikHelpers, projetActe);
     } else {
@@ -308,19 +231,11 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
           resultatRMCPersonne={resultatRMCAutoPersonne ?? []}
           sousTypeRequete={requete?.sousType}
           listeTitulaires={requete?.titulaires}
-          natureActeRequete={NatureActeRequete.getEnumFor(
-            requete?.nature ?? ""
-          )}
+          natureActeRequete={NatureActeRequete.getEnumFor(requete?.nature ?? "")}
           tableauRMCPersonneEnChargement={rmcAutoPersonneEnChargement}
-          tableauActesInscriptionsSelectionnesEnChargement={
-            !dataActesInscriptionsSelectionnes
-          }
-          dataActesInscriptionsSelectionnes={
-            dataActesInscriptionsSelectionnes || []
-          }
-          setDataActesInscriptionsSelectionnes={
-            setDataActesInscriptionsSelectionnes
-          }
+          tableauActesInscriptionsSelectionnesEnChargement={!dataActesInscriptionsSelectionnes}
+          dataActesInscriptionsSelectionnes={dataActesInscriptionsSelectionnes || []}
+          setDataActesInscriptionsSelectionnes={setDataActesInscriptionsSelectionnes}
           setRmcAutoPersonneParams={setRmcAutoPersonneParams}
         />
       ),
@@ -394,21 +309,45 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
             <BoutonsApercuRequeteCreationEtablissement
               requete={requete}
               conditionAffichageBoutonsApercuActe={
-                ongletSelectionne === DEUX && Boolean(documentComposer) && appartientAUtilisateurConnecte(utilisateurConnecte, requete?.idUtilisateur)
+                ongletSelectionne === DEUX &&
+                Boolean(documentComposer) &&
+                appartientAUtilisateurConnecte(utilisateurConnecte, requete?.idUtilisateur)
               }
               avancement={dossierProjetActe?.avancement}
               estRegistreOuvert={estOuvertRegistrePapier(
-                projetActe?.titulaires.find(titulaire => titulaire.ordre === UN)
-                  ?.decretNaturalisation,
+                projetActe?.titulaires.find(titulaire => titulaire.ordre === UN)?.decretNaturalisation,
                 registrePapier
               )}
               estFormulaireModifie={isDirty}
-              validerProjetActe={validerProjetActe}
+              validerProjetActe={() => setEstPopinValiderProjetOuverte(true)}
               setEstOuvertPopinSignature={setEstOuvertPopinSignature}
+            />
+            <ConfirmationPopin
+              boutons={[
+                {
+                  label: "OK",
+                  action: () => {
+                    !isDirty && idRequeteParam && idSuiviDossierParam
+                      ? validerProjetActe(idRequeteParam, idSuiviDossierParam)
+                      : setEstPopinValiderProjetOuverte(false);
+                  }
+                },
+                {
+                  label: "Annuler",
+                  action: () => {
+                    setEstPopinValiderProjetOuverte(false);
+                  }
+                }
+              ]}
+              estOuvert={estPopinValiderProjetOuverte}
+              messages={getTextePopinValiderProjetActe(isDirty)}
             />
           </div>
           <div className="OngletsApercuCreationEtablissement">
-            <VoletAvecOnglet liste={listeOngletsDroit} checkDirty={true} />
+            <VoletAvecOnglet
+              liste={listeOngletsDroit}
+              checkDirty={true}
+            />
           </div>
         </>
       ) : (
@@ -416,4 +355,10 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<
       )}
     </div>
   );
+};
+
+const getTextePopinValiderProjetActe = (formIsDirty: boolean): string[] => {
+  return formIsDirty
+    ? [`Des modifications du projet d'acte ne sont pas enregistrées.`, `Veuillez actualiser le projet d'acte avant sa validation.`]
+    : [`Confirmez-vous la validation du projet pour envoi du BI à la SDANF ?`];
 };

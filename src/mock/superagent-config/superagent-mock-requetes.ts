@@ -26,10 +26,7 @@ import {
   idDocumentsReponse
 } from "../data/DocumentReponse";
 import { reponseMesRequeteCreation } from "../data/EspaceCreation";
-import {
-  ReponseAppelMesRequetes,
-  ReponseAppelRequetesService
-} from "../data/EspaceDelivrance";
+import { ReponseAppelMesRequetes, ReponseAppelRequetesService } from "../data/EspaceDelivrance";
 import { NOMENCLATURE_OPTION_COURRIER } from "../data/NomenclatureOptionCourrier";
 import { parametresBaseRequete } from "../data/NomenclatureParametresBaseRequete";
 import {
@@ -46,7 +43,8 @@ import {
 } from "../data/requeteCreation";
 import {
   requeteCreationEtablissement as reqEtablissement,
-  requeteCreationEtablissementSaisieProjet
+  requeteCreationEtablissementSaisieProjet,
+  requeteCreationEtablissementSaisieProjetEnCours
 } from "../data/requeteCreationEtablissement";
 import {
   idRequeteRDCPourModification,
@@ -55,16 +53,8 @@ import {
   requeteRDCPourModification,
   requeteRDCPourModificationMaCorbeille
 } from "../data/requeteDelivrance";
-import {
-  DataRMCRequeteRechercheViaNumeroDossierNational,
-  ReponseAppelRMCRequete
-} from "../data/RMCRequete";
-import {
-  CreationRDCSC,
-  UpdateRDC,
-  UpdateRDCMaCorbeille,
-  UpdateRDCSC
-} from "../data/SaisirRequeteDelivrance";
+import { DataRMCRequeteRechercheViaNumeroDossierNational, ReponseAppelRMCRequete } from "../data/RMCRequete";
+import { CreationRDCSC, UpdateRDC, UpdateRDCMaCorbeille, UpdateRDCSC } from "../data/SaisirRequeteDelivrance";
 import { configFakeUrl } from "./superagent-mock-fake-url";
 import { configRequetesCreation } from "./superagent-mock-requetes-creation";
 import { configRequetesGeneInscription } from "./superagent-mock-requetes-gene-inscription";
@@ -224,18 +214,12 @@ export const configRequetes = [
       ////// Mock requete de mon service Delivrance avec filtre
 
       if (
-        match[1] ===
-          "/requetes/requetesService?tri=dateCreation&sens=ASC&range=0-100" ||
-        match[1] ===
-          "/requetes/requetesService?tri=statut&sens=ASC&range=0-105" ||
-        match[1] ===
-          "/requetes/requetesService?tri=dateDerniereAction&sens=ASC&range=0-105" ||
-        match[1] ===
-          "/requetes/requetesService?tri=provenance&sens=ASC&range=0-105" ||
-        match[1] ===
-          "/requetes/requetesService?tri=numero&sens=ASC&range=0-100" ||
-        match[1] ===
-          "/requetes/requetesService?tri=dateCreation&sens=ASC&range=0-105"
+        match[1] === "/requetes/requetesService?tri=dateCreation&sens=ASC&range=0-100" ||
+        match[1] === "/requetes/requetesService?tri=statut&sens=ASC&range=0-105" ||
+        match[1] === "/requetes/requetesService?tri=dateDerniereAction&sens=ASC&range=0-105" ||
+        match[1] === "/requetes/requetesService?tri=provenance&sens=ASC&range=0-105" ||
+        match[1] === "/requetes/requetesService?tri=numero&sens=ASC&range=0-100" ||
+        match[1] === "/requetes/requetesService?tri=dateCreation&sens=ASC&range=0-105"
       ) {
         return {
           data: ReponseAppelRequetesService,
@@ -296,28 +280,31 @@ export const configRequetes = [
       // Mes requêtes création Etablissement
       if (
         match[1] === "/requetes/3ed9aa4e-921b-489f-b8fe-531dd703c60c" ||
-        match[1] ===
-          "/requetes/3ed9aa4e-921b-489f-b8fe-531dd703c60c?isConsultationHistoriqueAction=true"
+        match[1] === "/requetes/3ed9aa4e-921b-489f-b8fe-531dd703c60c?isConsultationHistoriqueAction=true"
       ) {
         return {
           data: deepCopie(requeteCreationEtablissement)
         };
       }
-      if (
-        match[1] === "/requetes/a2724cc9-450c-4e50-9d05-a44a28717954" ||
-        match[1] === "/requetes/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee"
-      ) {
+      if (match[1] === "/requetes/a2724cc9-450c-4e50-9d05-a44a28717954" || match[1] === "/requetes/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee") {
         return {
           data: deepCopie(reqEtablissement)
         };
       }
       if (
         match[1] === "/requetes/er5ez456-354v-461z-c5fd-162md289m74h" ||
-        match[1] ===
-          "/requetes/er5ez456-354v-461z-c5fd-162md289m74h?isConsultationHistoriqueAction=true"
+        match[1] === "/requetes/er5ez456-354v-461z-c5fd-162md289m74h?isConsultationHistoriqueAction=true"
       ) {
         return {
           data: deepCopie(requeteCreationEtablissementSaisieProjet)
+        };
+      }
+      if (
+        match[1] === "/requetes/er5ez456-354v-461z-c5fd-162md289m75v" ||
+        match[1] === "/requetes/er5ez456-354v-461z-c5fd-162md289m75v?isConsultationHistoriqueAction=true"
+      ) {
+        return {
+          data: deepCopie(requeteCreationEtablissementSaisieProjetEnCours)
         };
       }
       // Mes requêtes création Transcription
@@ -328,18 +315,12 @@ export const configRequetes = [
       }
 
       //// Aavancement du statut apres une saisie de projet
-      if (
-        match[1] ===
-        "/requetes/creation/suiviDossier/a272ec8a-1351-4edd-99b8-03004292a9d2/avancement?avancement=EN_COURS"
-      ) {
+      if (match[1] === "/requetes/creation/suiviDossier/a272ec8a-1351-4edd-99b8-03004292a9d2/avancement?avancement=EN_COURS") {
         return {};
       }
 
       // Mise à jour de l'id_acte du suii dossier après création du projet d'acte
-      if (
-        match[1] ===
-        "/requetes/creation/suiviDossier/a272ec8a-1351-4edd-99b8-03004292a9d2/acte/dcd70ce9-1bb4-45b1-b672-a94dc152c339"
-      ) {
+      if (match[1] === "/requetes/creation/suiviDossier/a272ec8a-1351-4edd-99b8-03004292a9d2/acte/dcd70ce9-1bb4-45b1-b672-a94dc152c339") {
         return {};
       }
 
@@ -376,31 +357,21 @@ export const configRequetes = [
         return { data: "123456789" };
       }
 
-      if (
-        match[1] ===
-        "/requetes/action/retourSdanf?idRequete=3ed9aa4e-921b-429f-b8fe-531dd103c68s"
-      ) {
+      if (match[1] === "/requetes/action/retourSdanf?idRequete=3ed9aa4e-921b-429f-b8fe-531dd103c68s") {
         return { data: reponseRequeteCreationMessageSdanf };
       }
 
       if (
-        match[1] ===
-          "/requetes/fichierpiecejustificative/1234/libelle?nouveauLibelle=nouveauLibelle" ||
-        match[1] ===
-          "/requetes/fichierpiecejustificative/3ed92b89-268a-4883-a41f-0763cfea9ef7/libelle?nouveauLibelle=nouveauLibelle" ||
-        match[1] ===
-          "/requetes/fichierpiecejustificative/1234/libelle?nouveauLibelle=test%20libelle" ||
-        match[1] ===
-          "/requetes/fichierpiecejustificative/1234/libelle?nouveauLibelle=fichierPJ"
+        match[1] === "/requetes/fichierpiecejustificative/1234/libelle?nouveauLibelle=nouveauLibelle" ||
+        match[1] === "/requetes/fichierpiecejustificative/3ed92b89-268a-4883-a41f-0763cfea9ef7/libelle?nouveauLibelle=nouveauLibelle" ||
+        match[1] === "/requetes/fichierpiecejustificative/1234/libelle?nouveauLibelle=test%20libelle" ||
+        match[1] === "/requetes/fichierpiecejustificative/1234/libelle?nouveauLibelle=fichierPJ"
       ) {
         return { data: "12345" };
       }
 
       // RMC Requete
-      if (
-        match[1] === "/requetes/rmc?range=0-100" ||
-        match[1] === "/requetes/rmc?range=0-105"
-      ) {
+      if (match[1] === "/requetes/rmc?range=0-100" || match[1] === "/requetes/rmc?range=0-105") {
         // RMC Manuelle suite RMC Auto (vue ApercuRequetePriseEnChargePartieGauche)
         if (params?.nomTitulaire === NORESULT) {
           return {
@@ -415,8 +386,7 @@ export const configRequetes = [
         else if (params.numeroDossierNational === "2022X 200156") {
           return {
             headers: {
-              "content-range":
-                "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
+              "content-range": "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
               link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
             },
             data: DataRMCRequeteRechercheViaNumeroDossierNational
@@ -426,8 +396,7 @@ export const configRequetes = [
         else {
           return {
             headers: {
-              "content-range":
-                "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
+              "content-range": "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
               link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
             },
             data: ReponseAppelRMCRequete.data
@@ -438,15 +407,11 @@ export const configRequetes = [
       // Détail requête Délivrance
       if (
         match[1] === "/requetes/7b448d64-add5-4dbd-8041-b7081ea7bc86" ||
-        match[1] ===
-          "/requetes/7b448d64-add5-4dbd-8041-b7081ea7bc86?isConsultationHistoriqueAction=true"
+        match[1] === "/requetes/7b448d64-add5-4dbd-8041-b7081ea7bc86?isConsultationHistoriqueAction=true"
       ) {
         return { data: requeteSansDocument };
       }
-      if (
-        match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d404" ||
-        match[1] === "/requetes/1072bc37-f889-4365-8f75-912166b767dd"
-      ) {
+      if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d404" || match[1] === "/requetes/1072bc37-f889-4365-8f75-912166b767dd") {
         return { data: ReponseAppelDetailRequeteDelivrance.data };
       }
       if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d494") {
@@ -557,18 +522,12 @@ export const configRequetes = [
       }
 
       // Get de Piece complement information
-      if (
-        match[1] ===
-        "/requetes/piecescomplementinformations/c4306a3c-6bd4-422f-a56b-20760795ba61"
-      ) {
+      if (match[1] === "/requetes/piecescomplementinformations/c4306a3c-6bd4-422f-a56b-20760795ba61") {
         return { data: pieceComplementInformation };
       }
 
       // Get nombre requête information
-      if (
-        match[1] ===
-        "/requetes/information/count?statuts=PRISE_EN_CHARGE%2CTRANSFEREE"
-      ) {
+      if (match[1] === "/requetes/information/count?statuts=PRISE_EN_CHARGE%2CTRANSFEREE") {
         return { data: 2 };
       }
 
@@ -611,8 +570,7 @@ export const configRequetes = [
       // Creation Requete Delivrance
       // Certificat de Situation Courrier
       if (
-        match[1] ===
-          "/requetes/delivrance?refus=false&futurStatut=PRISE_EN_CHARGE" ||
+        match[1] === "/requetes/delivrance?refus=false&futurStatut=PRISE_EN_CHARGE" ||
         match[1] === "/requetes/delivrance?refus=true&futurStatut=A_TRAITER" ||
         match[1] === "/requetes/delivrance?refus=false&futurStatut=BROUILLON" ||
         match[1] === "/requetes/delivrance?refus=true&futurStatut=BROUILLON"
@@ -623,8 +581,7 @@ export const configRequetes = [
       }
       if (
         match[1] === `/requetes/b63ebccd-ba5e-443a-8837-c5e1e111e846` ||
-        match[1] ===
-          `/requetes/b63ebccd-ba5e-443a-8837-c5e1e111e846?isConsultationHistoriqueAction=true`
+        match[1] === `/requetes/b63ebccd-ba5e-443a-8837-c5e1e111e846?isConsultationHistoriqueAction=true`
       ) {
         return {
           data: requetesCreationAlimentationTableau
@@ -644,8 +601,7 @@ export const configRequetes = [
         };
       }
       if (
-        match[1] ===
-          `/requetes/delivrance/${idRequeteRDCPourModification}?refus=false&futurStatut=PRISE_EN_CHARGE` &&
+        match[1] === `/requetes/delivrance/${idRequeteRDCPourModification}?refus=false&futurStatut=PRISE_EN_CHARGE` &&
         context.method === "patch"
       ) {
         return {
@@ -654,8 +610,7 @@ export const configRequetes = [
       }
 
       if (
-        match[1] ===
-          `/requetes/delivrance/${idRequeteRDCPourModificationMaCorbeille}?refus=false&futurStatut=PRISE_EN_CHARGE` &&
+        match[1] === `/requetes/delivrance/${idRequeteRDCPourModificationMaCorbeille}?refus=false&futurStatut=PRISE_EN_CHARGE` &&
         context.method === "patch"
       ) {
         return {
@@ -665,12 +620,9 @@ export const configRequetes = [
 
       // Certificat de Situation Courrier
       if (
-        match[1] ===
-          "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=false&futurStatut=PRISE_EN_CHARGE" ||
-        match[1] ===
-          "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=true&futurStatut=A_TRAITER" ||
-        match[1] ===
-          "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=false&futurStatut=BROUILLON"
+        match[1] === "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=false&futurStatut=PRISE_EN_CHARGE" ||
+        match[1] === "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=true&futurStatut=A_TRAITER" ||
+        match[1] === "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=false&futurStatut=BROUILLON"
       ) {
         return {
           data: UpdateRDCSC
@@ -684,24 +636,19 @@ export const configRequetes = [
           "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/choixdelivrance?choixDelivrance=REP_SANS_DEL_EC_REQUETE_INCOMPLETE" ||
         match[1] ===
           "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/choixdelivrance?choixDelivrance=REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC" ||
-        match[1] ===
-          "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/choixdelivrance?choixDelivrance=REP_SANS_DEL_EC_DIVERS"
+        match[1] === "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/choixdelivrance?choixDelivrance=REP_SANS_DEL_EC_DIVERS"
       ) {
         return { data: "d19650ed-012b-41ec-b7be-9e6ea9101eaa" };
       }
       if (
         match[1] ===
           "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d666/choixdelivrance?choixDelivrance=DELIVRER_EC_COPIE_INTEGRALE" ||
-        match[1] ===
-          "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d884/choixdelivrance?choixDelivrance=DELIVRER_EC_COPIE_INTEGRALE"
+        match[1] === "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d884/choixdelivrance?choixDelivrance=DELIVRER_EC_COPIE_INTEGRALE"
       ) {
         return { data: "a4cefb71-8457-4f6b-937e-34b49335d666" };
       }
 
-      if (
-        match[1] ===
-        "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/choixdelivrance?choixDelivrance"
-      ) {
+      if (match[1] === "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/choixdelivrance?choixDelivrance") {
         return { data: "d19650ed-012b-41ec-b7be-9e6ea9101eaa" };
       }
 
@@ -709,8 +656,7 @@ export const configRequetes = [
       if (match[1] === "/requetes/rmcauto?range=0-105") {
         return {
           headers: {
-            "content-range":
-              "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
+            "content-range": "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
             link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCRequete.data
@@ -719,20 +665,15 @@ export const configRequetes = [
 
       // Récupération d'un document par son id
       if (
-        match[1] ===
-          "/requetes/piecesjustificatives/" + idDocumentsReponse[0] ||
+        match[1] === "/requetes/piecesjustificatives/" + idDocumentsReponse[0] ||
         match[1] === "/requetes/piecesjustificatives/1234" ||
-        match[1] ===
-          "/requetes/piecesjustificatives/3ed9ad41-ca61-416a-91df-448690804363"
+        match[1] === "/requetes/piecesjustificatives/3ed9ad41-ca61-416a-91df-448690804363"
       ) {
         return { data: documentReponseCARN_CSPAC_01 };
       }
 
       // update mentions retiré et validé document
-      if (
-        match[1] ===
-        "/documentsreponses/bbac2335-562c-4b14-96aa-4386814c02a2/mentions"
-      ) {
+      if (match[1] === "/documentsreponses/bbac2335-562c-4b14-96aa-4386814c02a2/mentions") {
         return { data: true };
       }
 
@@ -746,33 +687,23 @@ export const configRequetes = [
       }
 
       if (
-        match[1] ===
-          "/documentsreponses/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions" ||
-        match[1] ===
-          "/documentsreponses/9bfa865e-6d7a-4d66-900e-b548178854db/mentions"
+        match[1] === "/documentsreponses/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions" ||
+        match[1] === "/documentsreponses/9bfa865e-6d7a-4d66-900e-b548178854db/mentions"
       ) {
         return { data: true };
       }
 
-      if (
-        match[1] === "/documentsreponses/f9279c00-5d2b-11ea-bc55-0242ac130004"
-      ) {
+      if (match[1] === "/documentsreponses/f9279c00-5d2b-11ea-bc55-0242ac130004") {
         return { data: documentReponseCopieIntegrale };
       }
-      if (
-        match[1] === "/documentsreponses/9c099809-951e-4b05-a27a-01d1344f479f"
-      ) {
+      if (match[1] === "/documentsreponses/9c099809-951e-4b05-a27a-01d1344f479f") {
         return { data: documentReponseCourrier117 };
       }
       if (
-        match[1] ===
-          "/documentsreponses/9bfa865e-6d7a-4d66-900e-b548178854db" ||
-        match[1] ===
-          "/documentsreponses/4475fe91-62f6-4849-9474-1309364866ab" ||
-        match[1] ===
-          "/documentsreponses/28bc3078-7e53-4b8b-8cf8-7f75a2502573" ||
-        match[1] ===
-          "/documentsreponses/28bc3078-7e53-4b8b-8cf8-7f75a25025743" ||
+        match[1] === "/documentsreponses/9bfa865e-6d7a-4d66-900e-b548178854db" ||
+        match[1] === "/documentsreponses/4475fe91-62f6-4849-9474-1309364866ab" ||
+        match[1] === "/documentsreponses/28bc3078-7e53-4b8b-8cf8-7f75a2502573" ||
+        match[1] === "/documentsreponses/28bc3078-7e53-4b8b-8cf8-7f75a25025743" ||
         match[1] === "/documentsreponses/f63223ce-f425-441e-846c-114b0f36936d"
       ) {
         return { data: documentReponseExtraitAvecFiliation };
@@ -784,10 +715,7 @@ export const configRequetes = [
       }
 
       // Supression des documents reponses (DELETE)
-      if (
-        match[1] === "/documentsreponses/" + idRequeteRDCSC &&
-        context.method === "delete"
-      ) {
+      if (match[1] === "/documentsreponses/" + idRequeteRDCSC && context.method === "delete") {
         return { data: {} };
       }
 
@@ -802,22 +730,16 @@ export const configRequetes = [
 
       // Ajout observation
       if (
-        (match[1] ===
-          "/requetes/observation?idRequete=123&texteObservation=salut" ||
-          match[1] ===
-            "/requetes/observation?idRequete=123&texteObservation=salut&idObservation=id0000" ||
-          match[1] ===
-            "/requetes/observation?idRequete=123&texteObservation=salut&idObservation=123456789") &&
+        (match[1] === "/requetes/observation?idRequete=123&texteObservation=salut" ||
+          match[1] === "/requetes/observation?idRequete=123&texteObservation=salut&idObservation=id0000" ||
+          match[1] === "/requetes/observation?idRequete=123&texteObservation=salut&idObservation=123456789") &&
         context.method === "post"
       ) {
         return { data: "123456789" };
       }
 
       // Suppression observation
-      if (
-        match[1] === "/requetes/observation?idObservation=id0000" &&
-        context.method === "delete"
-      ) {
+      if (match[1] === "/requetes/observation?idObservation=id0000" && context.method === "delete") {
         return { data: true };
       }
 
@@ -825,15 +747,13 @@ export const configRequetes = [
       if (
         (match[1] ===
           "/requetes/action/ignorer?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&texteObservation=Adresse%20incompl%C3%A8te" ||
-          match[1] ===
-            "/requetes/action/ignorer?idRequete=12345&texteObservation=libelleAction") &&
+          match[1] === "/requetes/action/ignorer?idRequete=12345&texteObservation=libelleAction") &&
         context.method === "post"
       ) {
         return { data: "123456789" };
       }
       if (
-        match[1] ===
-          "/requetes/action/ignorer?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&texteObservation=Adresse%20incompl%C3%A8te" &&
+        match[1] === "/requetes/action/ignorer?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&texteObservation=Adresse%20incompl%C3%A8te" &&
         context.method === "post"
       ) {
         return { data: "123456789" };
@@ -843,8 +763,7 @@ export const configRequetes = [
       if (
         (match[1] ===
           "/requetes/action/majStatut?idRequete=85b32284-d3dd-4502-bfbd-5634ba52ba22&libelleAction=A%20valider&statutRequete=A_VALIDER" ||
-          match[1] ===
-            "/requetes/action/majStatut?idRequete=12345&libelleAction=libelleAction&statutRequete=A_VALIDER" ||
+          match[1] === "/requetes/action/majStatut?idRequete=12345&libelleAction=libelleAction&statutRequete=A_VALIDER" ||
           match[1] ===
             "/requetes/action/majStatut?idRequete=54ddf213-d9b7-4747-8e92-68c220f66de3&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
           match[1] ===
@@ -857,8 +776,7 @@ export const configRequetes = [
             "/requetes/action/majStatut?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=A%20signer&statutRequete=A_SIGNER" ||
           match[1] ===
             "/requetes/action/majStatut?idRequete=a4cefb71-8457-4f6b-937e-34b49335d494&libelleAction=Requ%C3%AAte%20reprise&statutRequete=A_VALIDER" ||
-          match[1] ===
-            `/requetes/action/majStatut?idRequete=${idRequeteRDCSC}&libelleAction=A%20valider&statutRequete=A_VALIDER` ||
+          match[1] === `/requetes/action/majStatut?idRequete=${idRequeteRDCSC}&libelleAction=A%20valider&statutRequete=A_VALIDER` ||
           match[1] ===
             `/requetes/action/majStatut?idRequete=${idRequeteRDCSC}&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE` ||
           match[1] ===
@@ -901,10 +819,8 @@ export const configRequetes = [
 
       // Création d'une action uniquement (pendant l'update d'une requête délivrance)
       if (
-        (match[1] ===
-          `/requetes/action?idRequete=${idRequeteRDCPourModification}&libelleAction=Requ%C3%AAte%20modifi%C3%A9e` ||
-          match[1] ===
-            `requetes/action?idRequete=${idRequeteRDCPourModificationMaCorbeille}&libelleAction=Requ%C3%AAte%20modifi%C3%A9e`) &&
+        (match[1] === `/requetes/action?idRequete=${idRequeteRDCPourModification}&libelleAction=Requ%C3%AAte%20modifi%C3%A9e` ||
+          match[1] === `requetes/action?idRequete=${idRequeteRDCPourModificationMaCorbeille}&libelleAction=Requ%C3%AAte%20modifi%C3%A9e`) &&
         context.method === "post"
       ) {
         return { data: "123456789" };
@@ -924,39 +840,28 @@ export const configRequetes = [
       }
 
       // Prise en charge requete
-      if (
-        match[1] ===
-        "/requetes/action/majStatut?idRequete=0&libelleAction=Prendre%20en%20charge&statutRequete=PRISE_EN_CHARGE"
-      ) {
+      if (match[1] === "/requetes/action/majStatut?idRequete=0&libelleAction=Prendre%20en%20charge&statutRequete=PRISE_EN_CHARGE") {
         return true;
       }
 
       //Sauvegarde document réponse suite modifier corps extrait
       if (
-        match[1] ===
-          "/documentsreponses/update/9bfa282d-1e66-4538-b242-b9de4f683f0f" ||
-        match[1] ===
-          "/documentsreponses/update/3f52370d-14ed-4c55-8cf4-afe006d9aa38"
+        match[1] === "/documentsreponses/update/9bfa282d-1e66-4538-b242-b9de4f683f0f" ||
+        match[1] === "/documentsreponses/update/3f52370d-14ed-4c55-8cf4-afe006d9aa38"
       ) {
         return { data: ["9bfa282d-1e66-4538-b242-b9de4f683777"] };
       }
-      if (
-        match[1] ===
-        "/documentsreponses/update/9bfa282d-1e66-4538-b272-b9de4g683aaf"
-      ) {
+      if (match[1] === "/documentsreponses/update/9bfa282d-1e66-4538-b272-b9de4g683aaf") {
         return { data: ["9bfa282d-1e66-4538-b242-b9de4f683777"] };
       }
 
-      let otherData = recupereLesDonneesEnTestantLesAutresConfigs(
-        { match, params, headers, context },
-        [
-          configRequetesInformation,
-          configRequetesGeneInscription,
-          configRequetesCreation,
-          configRequetesMiseAJour,
-          configFakeUrl
-        ]
-      );
+      let otherData = recupereLesDonneesEnTestantLesAutresConfigs({ match, params, headers, context }, [
+        configRequetesInformation,
+        configRequetesGeneInscription,
+        configRequetesCreation,
+        configRequetesMiseAJour,
+        configFakeUrl
+      ]);
       if (otherData) {
         return otherData;
       }
@@ -1034,19 +939,11 @@ function recupereLesDonneesEnTestantLesAutresConfigs<
   T extends {
     fixtures: (match: any, params: any, headers: any, context: any) => any;
   }[]
->(
-  args: { match: any; params: any; headers: any; context: any },
-  configs: T[]
-): any {
+>(args: { match: any; params: any; headers: any; context: any }, configs: T[]): any {
   const config = configs.shift();
   let data;
   if (config) {
-    data = config[0].fixtures(
-      args.match,
-      args.params,
-      args.headers,
-      args.context
-    );
+    data = config[0].fixtures(args.match, args.params, args.headers, args.context);
 
     if (!data) {
       data = recupereLesDonneesEnTestantLesAutresConfigs(args, configs);
