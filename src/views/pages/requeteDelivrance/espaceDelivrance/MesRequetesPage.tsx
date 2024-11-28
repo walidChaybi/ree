@@ -166,7 +166,10 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
         <SignatureDelivrance
           titreBouton="Signer le lot"
           titreModale="Signature des documents"
-          numerosFonctionnel={dataState.filter(requete => requete.numero).map(requete => requete.numero as string)}
+          numerosFonctionnel={dataState
+            .filter(requete => requete.numero && requete.statut === StatutRequete.A_SIGNER.libelle)
+            .map(requete => requete.numero as string)
+            .slice(0, 10)}
           apreSignature={() => handleReload()}
         />
       </TableauRece>

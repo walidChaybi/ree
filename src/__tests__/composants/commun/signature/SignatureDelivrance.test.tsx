@@ -27,7 +27,7 @@ describe("Test du composant Signature délivrance", () => {
 
   const APPEL_RECUPERER = "rece-requete-api/v2/documentsreponses/a-signer";
   const APPEL_ENREGISTRER_REQUETE = "rece-requete-api/v2/documentsreponses/signature-par-lot";
-  const APPEL_ENREGISTRER_TELEVERIFICATION = "rece-televerification-api/v1/televerification/generer";
+  const APPEL_ENREGISTRER_TELEVERIFICATION = "rece-televerification-api/v1/televerifications/generer";
   const NUM_SANS_DOC = "numeroSansDoc";
   const NUM_AVEC_DOC = "numeroAvecDoc";
   const DOC_A_SIGNER: IDocumentASigner = {
@@ -182,8 +182,9 @@ describe("Test du composant Signature délivrance", () => {
     await act(() => userEvent.type(champPin, "1234"));
     await waitFor(() => fireEvent.click(boutonValider));
 
-    await waitFor(() => expect(screen.getByText("Signature des documents effectuée.")).toBeDefined());
+    await waitFor(() => expect(screen.getByText("signature des documents : 2/2")).toBeDefined());
     expect(screen.queryAllByText(LIBELLE_NON_BLOQUANT).length).toBe(2);
+    await waitFor(() => expect(() => screen.queryByText("Signature des documents effectuée.")).toBeDefined());
     demonterListener();
 
     fireEvent.click(screen.getByTitle("Fermer"));

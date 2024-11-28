@@ -1,51 +1,63 @@
 import { TAppelTraitement, TTraitementApi } from "@api/traitements/TTraitementApi";
 import { logError } from "@util/LogManager";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-type TEtatTraitement = "EN_ATTENTE_APPEL" | "EN_COURS" | "TERMINE";
-
-type TActionsTraitement<TReponseSucces> = {
-  apresSucces?: (reponse: TReponseSucces) => void;
-  apresErreur?: (messageErreur?: string) => void;
-  finalement?: () => void;
+type TInformationsTraitement<TReponseSucces, TParam> = {
+  statut: "EN_ATTENTE_APPEL" | "EN_COURS" | "TERMINE";
+  parametres: TParam | null;
+  apresSucces: ((reponse: TReponseSucces) => void) | null;
+  apresErreur: ((messageErreur?: string) => void) | null;
+  finalement: (() => void) | null;
 };
 
 const useTraitementApi = <TParam extends object | undefined, TReponseSucces>(traitement: TTraitementApi<TParam, TReponseSucces>) => {
-  const [etatTraitement, setEtatTraitement] = useState<TEtatTraitement>("EN_ATTENTE_APPEL");
-  const [actionsTraitement, setActionsTraitement] = useState<TActionsTraitement<TReponseSucces> | null>(null);
-  const { lancer, erreurTraitement, reponseTraitement } = traitement.Lancer(() => setEtatTraitement("TERMINE"));
+  const informationsDefaut = useMemo<TInformationsTraitement<TReponseSucces, TParam>>(
+    () => ({ statut: "EN_ATTENTE_APPEL", parametres: null, apresSucces: null, apresErreur: null, finalement: null }),
+    [traitement]
+  );
+  const [informationsTraitement, setInformationsTraitement] = useState<TInformationsTraitement<TReponseSucces, TParam>>({
+    ...informationsDefaut
+  });
+  const { lancer, erreurTraitement, reponseTraitement } = traitement.Lancer(() =>
+    setInformationsTraitement(prec => ({ ...prec, statut: "TERMINE" }))
+  );
 
   const lancerTraitement = (appel?: TAppelTraitement<TParam, TReponseSucces>): void => {
-    if (etatTraitement === "EN_COURS") {
+    if (informationsTraitement.statut !== "EN_ATTENTE_APPEL") {
       return;
     }
 
-    setActionsTraitement({
-      apresSucces: appel?.apresSucces,
-      apresErreur: appel?.apresErreur,
-      finalement: appel?.finalement,
+    setInformationsTraitement({
+      statut: "EN_COURS",
+      parametres: appel?.parametres ?? null,
+      apresSucces: appel?.apresSucces ?? null,
+      apresErreur: appel?.apresErreur ?? null,
+      finalement: appel?.finalement ?? null
     });
-    setEtatTraitement("EN_COURS");
-    lancer(appel?.parametres);
   };
 
   useEffect(() => {
-    if (etatTraitement !== "TERMINE") {
+    if (informationsTraitement.statut === "EN_COURS") {
+      lancer(informationsTraitement.parametres ?? undefined);
+
+      return;
+    }
+
+    if (informationsTraitement.statut !== "TERMINE") {
       return;
     }
 
     erreurTraitement.enEchec
-      ? actionsTraitement?.apresErreur?.(erreurTraitement.message)
-      : actionsTraitement?.apresSucces?.(reponseTraitement);
-    actionsTraitement?.finalement?.();
+      ? informationsTraitement?.apresErreur?.(erreurTraitement.message)
+      : informationsTraitement?.apresSucces?.(reponseTraitement);
+    informationsTraitement?.finalement?.();
     erreurTraitement.message && logError({ messageUtilisateur: erreurTraitement.message });
-    setEtatTraitement("EN_ATTENTE_APPEL");
-    setActionsTraitement(null);
-  }, [etatTraitement]);
+    setInformationsTraitement({ ...informationsDefaut });
+  }, [informationsTraitement]);
 
   return {
     lancerTraitement: lancerTraitement,
-    traitementEnCours: etatTraitement === "EN_COURS",
+    traitementEnCours: informationsTraitement.statut === "EN_COURS"
   };
 };
 

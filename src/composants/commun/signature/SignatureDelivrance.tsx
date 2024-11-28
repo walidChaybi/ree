@@ -79,7 +79,7 @@ const SignatureDelivrance: React.FC<IModaleSignatureDelivranceProps> = ({
   }, [numerosFonctionnel]);
 
   useEffect(() => {
-    if (informationsSignature.aSigner === null || !informationsSignature.codePin) {
+    if (informationsSignature.aSigner === null || !informationsSignature.codePin || informationsSignature.statut === "termine") {
       return;
     }
 
@@ -123,7 +123,8 @@ const SignatureDelivrance: React.FC<IModaleSignatureDelivranceProps> = ({
     }
 
     lancerTraitementEnregistrement({
-      apresSucces: () =>
+      parametres: { documentsSigne: informationsSignature.signes },
+      apresSucces: rep =>
         setInformationsSignature(prec => ({
           ...prec,
           statut: "termine"
