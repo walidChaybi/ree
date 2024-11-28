@@ -1,7 +1,4 @@
-import {
-  getServicesAsOptions,
-  listeUtilisateursToOptionsBis
-} from "@composant/menuTransfert/MenuTransfertUtil";
+import { getServicesAsOptions, listeUtilisateursToOptionsBis } from "@composant/menuTransfert/MenuTransfertUtil";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,38 +21,32 @@ export interface FiltreServiceRequeteCreationFormProps {
   onSubmit: (values: IFiltreServiceRequeteCreationFormValues) => void;
 }
 
-export const FiltreServiceRequeteCreationFormDefaultValues: IFiltreServiceRequeteCreationFormValues =
-  {
-    numeroRequete: "",
-    sousType: "",
-    priorisation: "",
-    attribueA: { cle: "", libelle: "" },
-    attribueAuService: { cle: "", libelle: "" },
-    statut: ""
-  };
+export const FiltreServiceRequeteCreationFormDefaultValues: IFiltreServiceRequeteCreationFormValues = {
+  numeroRequete: "",
+  sousType: "",
+  priorisation: "",
+  attribueA: { cle: "", libelle: "" },
+  attribueAuService: { cle: "", libelle: "" },
+  statut: ""
+};
 
-export const FiltreServiceRequeteCreationForm: React.FC<
-  FiltreServiceRequeteCreationFormProps
-> = props => {
+export const FiltreServiceRequeteCreationForm: React.FC<FiltreServiceRequeteCreationFormProps> = props => {
   const { utilisateurs, utilisateurConnecte } = useContext(RECEContextData);
   const optionsUtilisateurs = listeUtilisateursToOptionsBis(
     TypeRequete.CREATION,
     SousTypeCreation.RCEDXC,
+    "",
     utilisateurConnecte,
     false,
     utilisateurs
   );
 
-  const filtreSousTypeCreation: Options =
-    SousTypeCreation.getAllEnumsAsOptions();
+  const filtreSousTypeCreation: Options = SousTypeCreation.getAllEnumsAsOptions();
   const filtrePriorisation: Options = TagPriorisation.getAllEnumsAsOptions();
 
-  const filtreStatutRequete: Options =
-    StatutRequete.getOptionsAPartirTypeRequete(TypeRequete.CREATION);
+  const filtreStatutRequete: Options = StatutRequete.getOptionsAPartirTypeRequete(TypeRequete.CREATION);
 
-  function onSubmitFiltresEtRecherche(
-    values: IFiltreServiceRequeteCreationFormValues
-  ) {
+  function onSubmitFiltresEtRecherche(values: IFiltreServiceRequeteCreationFormValues) {
     if (values) {
       props.onSubmit(values);
     }
@@ -120,14 +111,20 @@ export const FiltreServiceRequeteCreationForm: React.FC<
               onClick={() => onSubmitFiltresEtRecherche(values)}
               aria-label="submitButton"
             >
-              <FontAwesomeIcon className="actionButton" icon={faSearch} />
+              <FontAwesomeIcon
+                className="actionButton"
+                icon={faSearch}
+              />
             </Button>
             <Button
               data-testid="resetButton"
               onClick={() => onReset(handleReset)}
               aria-label="resetButton"
             >
-              <FontAwesomeIcon className="actionButton" icon={faCircleXmark} />
+              <FontAwesomeIcon
+                className="actionButton"
+                icon={faCircleXmark}
+              />
             </Button>
           </div>
         )}

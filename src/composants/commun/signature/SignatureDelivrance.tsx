@@ -124,7 +124,7 @@ const SignatureDelivrance: React.FC<IModaleSignatureDelivranceProps> = ({
 
     lancerTraitementEnregistrement({
       parametres: { documentsSigne: informationsSignature.signes },
-      apresSucces: rep =>
+      apresSucces: () =>
         setInformationsSignature(prec => ({
           ...prec,
           statut: "termine"

@@ -71,7 +71,8 @@ const Signature = {
         resolve({
           ...eventReponse.detail,
           idRequete: signerParams.parametres.document.idRequete,
-          numeroFonctionnel: signerParams.parametres.document.numeroFonctionnel
+          numeroFonctionnel: signerParams.parametres.document.numeroFonctionnel,
+          contenu: eventReponse.detail.document
         })) as EventListener;
 
       window.top?.addEventListener(EVENT_REPONSE_SIGNATURE, retournerDocumentSigne);

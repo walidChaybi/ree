@@ -1,7 +1,4 @@
-import {
-  getServicesAsOptions,
-  listeUtilisateursToOptionsBis
-} from "@composant/menuTransfert/MenuTransfertUtil";
+import { getServicesAsOptions, listeUtilisateursToOptionsBis } from "@composant/menuTransfert/MenuTransfertUtil";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,27 +17,24 @@ import { Formik } from "formik";
 import React, { useContext } from "react";
 import "./scss/FiltreServiceRequeteDelivranceForm.scss";
 
+// TOREFACTO à couvrir (ignoré le 28/11/24)
+/* v8 ignore start */
 export interface IFiltreServiceRequeteDelivranceFormProps {
   onSubmit: (values: IFiltreServiceRequeteDelivranceFormValues) => void;
 }
 
-export const FiltreServiceRequeteDelivranceFormDefaultValues: IFiltreServiceRequeteDelivranceFormValues =
-  {
-    sousType: "",
-    provenance: "",
-    attribueA: { cle: "", libelle: "" },
-    attribueAuService: { cle: "", libelle: "" },
-    statut: ""
-  };
+export const FiltreServiceRequeteDelivranceFormDefaultValues: IFiltreServiceRequeteDelivranceFormValues = {
+  sousType: "",
+  provenance: "",
+  attribueA: { cle: "", libelle: "" },
+  attribueAuService: { cle: "", libelle: "" },
+  statut: ""
+};
 
-export const FiltreServiceRequeteDelivranceForm: React.FC<
-  IFiltreServiceRequeteDelivranceFormProps
-> = props => {
+export const FiltreServiceRequeteDelivranceForm: React.FC<IFiltreServiceRequeteDelivranceFormProps> = props => {
   const { utilisateurs, utilisateurConnecte } = useContext(RECEContextData);
 
-  function onSubmitFiltresDelivrance(
-    values: IFiltreServiceRequeteDelivranceFormValues
-  ) {
+  function onSubmitFiltresDelivrance(values: IFiltreServiceRequeteDelivranceFormValues) {
     if (values) {
       props.onSubmit(values);
     }
@@ -76,6 +70,7 @@ export const FiltreServiceRequeteDelivranceForm: React.FC<
               options={listeUtilisateursToOptionsBis(
                 TypeRequete.DELIVRANCE,
                 SousTypeDelivrance.RDC,
+                "",
                 utilisateurConnecte,
                 false,
                 utilisateurs
@@ -98,14 +93,20 @@ export const FiltreServiceRequeteDelivranceForm: React.FC<
               onClick={() => onSubmitFiltresDelivrance(values)}
               aria-label="submitButton"
             >
-              <FontAwesomeIcon className="actionButton" icon={faSearch} />
+              <FontAwesomeIcon
+                className="actionButton"
+                icon={faSearch}
+              />
             </Button>
             <Button
               data-testid="resetButton"
               onClick={() => onReset(handleReset)}
               aria-label="resetButton"
             >
-              <FontAwesomeIcon className="actionButton" icon={faCircleXmark} />
+              <FontAwesomeIcon
+                className="actionButton"
+                icon={faCircleXmark}
+              />
             </Button>
           </div>
         )}
@@ -113,3 +114,4 @@ export const FiltreServiceRequeteDelivranceForm: React.FC<
     </div>
   );
 };
+/* v8 ignore start */

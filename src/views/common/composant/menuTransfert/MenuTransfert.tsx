@@ -1,8 +1,5 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import {
-  TransfertUnitaireParams,
-  useTransfertApi
-} from "@hook/requete/TransfertHook";
+import { TransfertUnitaireParams, useTransfertApi } from "@hook/requete/TransfertHook";
 import { IActionOption } from "@model/requete/IActionOption";
 import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
@@ -144,7 +141,10 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
               <AssignmentInd onClick={e => handleClickBoutonReponse(e)} />
             </span>
           ) : (
-            <BoutonDoubleSubmit disabled={props.disabled} onClick={e => handleClickBoutonReponse(e)}>
+            <BoutonDoubleSubmit
+              disabled={props.disabled}
+              onClick={e => handleClickBoutonReponse(e)}
+            >
               {"Transférer"}
             </BoutonDoubleSubmit>
           )}
@@ -167,7 +167,10 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
           >
             {options.map((action: IActionOption) => {
               return (
-                <MenuItem onClick={e => handleTransfertMenu(action.value, e)} key={`action${action.value}`}>
+                <MenuItem
+                  onClick={e => handleTransfertMenu(action.value, e)}
+                  key={`action${action.value}`}
+                >
                   {action.label}
                 </MenuItem>
               );
@@ -175,7 +178,12 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
           </Menu>
         </div>
       ) : (
-        <GroupeBouton titre={"Transférer"} listeActions={options} onSelect={handleTransfertMenu} refs={refs} />
+        <GroupeBouton
+          titre={"Transférer"}
+          listeActions={options}
+          onSelect={handleTransfertMenu}
+          refs={refs}
+        />
       )}
 
       <TransfertPopin
@@ -196,6 +204,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
         options={listeUtilisateursToOptionsBis(
           props.typeRequete,
           props.sousTypeRequete,
+          props.idUtilisateurRequete,
           utilisateurConnecte,
           props.estTransfert,
           utilisateurs

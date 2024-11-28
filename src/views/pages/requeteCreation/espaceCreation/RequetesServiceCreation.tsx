@@ -1,7 +1,4 @@
-import {
-  IQueryParametersPourRequetes,
-  TypeAppelRequete
-} from "@api/appels/requeteApi";
+import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
 import { listeUtilisateursToOptionsBis } from "@composant/menuTransfert/MenuTransfertUtil";
 import { ITransfertPopinForm, TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
 import { RECEContextData } from "@core/contexts/RECEContext";
@@ -24,10 +21,7 @@ import { Option, Options } from "@util/Type";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { SortOrder } from "@widget/tableau/TableUtils";
-import {
-  NB_LIGNES_PAR_APPEL_DEFAUT,
-  NB_LIGNES_PAR_PAGE_DEFAUT
-} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import React, { useCallback, useContext, useEffect, useState } from "react";
@@ -44,27 +38,16 @@ interface RequetesServiceCreationProps {
   setPopinAttribuerAOuvert: Function;
 }
 
-export const RequetesServiceCreation: React.FC<
-  RequetesServiceCreationProps
-> = props => {
+export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = props => {
   // STATEs
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
-  const [paramsMiseAJour, setParamsMiseAJour] = useState<
-    ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-  >();
-  const [parametresLienRequete, setParametresLienRequete] =
-    useState<IQueryParametersPourRequetes>();
+  const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
+  const [parametresLienRequete, setParametresLienRequete] = useState<IQueryParametersPourRequetes>();
   const [enChargement, setEnChargement] = React.useState(false);
   const [paramsAttributionParLot, setParamsAttributionParLot] = useState<TransfertParLotParams>();
-  const [paramsCreation, setParamsCreation] = useState<
-    NavigationApercuReqCreationParams | undefined
-  >();
-  const [
-    idRequetesSelectionneesAttribueeA,
-    setIdRequetesSelectionneesAttribueeA
-  ] = useState<string[]>([]);
-  const [estTableauARafraichir, setEstTableauARafraichir] =
-    useState<boolean>(false);
+  const [paramsCreation, setParamsCreation] = useState<NavigationApercuReqCreationParams | undefined>();
+  const [idRequetesSelectionneesAttribueeA, setIdRequetesSelectionneesAttribueeA] = useState<string[]>([]);
+  const [estTableauARafraichir, setEstTableauARafraichir] = useState<boolean>(false);
 
   const { decrets } = useContext(RECEContextData);
 
@@ -81,28 +64,22 @@ export const RequetesServiceCreation: React.FC<
   const resultatTransfertsApi = useTransfertsApi(paramsAttributionParLot);
 
   const changementDePage = (link: string) => {
-    const queryParametersPourRequetes = goToLinkRequete(
-      link,
-      "requetesService"
-    );
+    const queryParametersPourRequetes = goToLinkRequete(link, "requetesService");
     if (queryParametersPourRequetes) {
       setParametresLienRequete(queryParametersPourRequetes);
     }
   };
 
-  const handleChangeSortTableau = useCallback(
-    (tri: string, sens: SortOrder) => {
-      const queryParameters = {
-        statuts: statutsRequetesCreation,
-        tri,
-        sens,
-        range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-      };
+  const handleChangeSortTableau = useCallback((tri: string, sens: SortOrder) => {
+    const queryParameters = {
+      statuts: statutsRequetesCreation,
+      tri,
+      sens,
+      range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+    };
 
-      setParametresLienRequete(queryParameters);
-    },
-    []
-  );
+    setParametresLienRequete(queryParameters);
+  }, []);
 
   const rafraichirTableau = () => {
     if (parametresLienRequete) {
@@ -133,14 +110,9 @@ export const RequetesServiceCreation: React.FC<
   };
 
   const filtrerRequetesChecked = (requetes: IRequeteTableauCreation[]) =>
-    requetes.filter(requete =>
-      idRequetesSelectionneesAttribueeA.includes(requete.idRequete)
-    );
+    requetes.filter(requete => idRequetesSelectionneesAttribueeA.includes(requete.idRequete));
 
-  const onValidateAttribuerA = (
-    requetes: IRequeteTableauCreation[],
-    agent?: Option
-  ) => {
+  const onValidateAttribuerA = (requetes: IRequeteTableauCreation[], agent?: Option) => {
     const requetesChecked = filtrerRequetesChecked(requetes);
     setOpEnCours(true);
     setParamsAttributionParLot({
@@ -152,35 +124,22 @@ export const RequetesServiceCreation: React.FC<
     } as TransfertParLotParams);
   };
 
-  const getUtilisateursAsOptions = (
-    requetes: IRequeteTableauCreation[],
-    utilisateurs: IUtilisateur[]
-  ): Options => {
-    return filtrerRequetesChecked(requetes).reduce(
-      (listeUtilisateurs, requete) => {
-        const options = listeUtilisateursToOptionsBis(
-          TypeRequete.CREATION,
-          SousTypeCreation.getEnumFor(requete.sousType),
-          utilisateurConnecte,
-          false,
-          utilisateurs
-        ).filter(
-          option =>
-            !listeUtilisateurs
-              .map(utilisateur => utilisateur.cle)
-              .includes(option.cle)
-        );
+  const getUtilisateursAsOptions = (requetes: IRequeteTableauCreation[], utilisateurs: IUtilisateur[]): Options => {
+    return filtrerRequetesChecked(requetes).reduce((listeUtilisateurs, requete) => {
+      const options = listeUtilisateursToOptionsBis(
+        TypeRequete.CREATION,
+        SousTypeCreation.getEnumFor(requete.sousType),
+        "",
+        utilisateurConnecte,
+        false,
+        utilisateurs
+      ).filter(option => !listeUtilisateurs.map(utilisateur => utilisateur.cle).includes(option.cle));
 
-        return listeUtilisateurs.concat(options);
-      },
-      [] as Options
-    );
+      return listeUtilisateurs.concat(options);
+    }, [] as Options);
   };
 
-  const colonneCaseACocherAttribueAParams: IColonneCaseACocherParams<
-    IRequeteTableauCreation,
-    string
-  > = {
+  const colonneCaseACocherAttribueAParams: IColonneCaseACocherParams<IRequeteTableauCreation, string> = {
     identifiantsSelectionnes: idRequetesSelectionneesAttribueeA,
     setIdentifiantsSelectionnes: setIdRequetesSelectionneesAttribueeA,
     getIdentifiant: (data: IRequeteTableauCreation) => data.idRequete,
@@ -189,9 +148,7 @@ export const RequetesServiceCreation: React.FC<
 
   const { utilisateurs, utilisateurConnecte } = useContext(RECEContextData);
 
-  const columnHeaders = getColonnesTableauRequetesServiceCreation(
-    colonneCaseACocherAttribueAParams
-  );
+  const columnHeaders = getColonnesTableauRequetesServiceCreation(colonneCaseACocherAttribueAParams);
 
   function soumettreFiltre(values: IFiltreServiceRequeteCreationFormValues) {
     if (!parametresLienRequete && !values.numeroRequete) {
@@ -203,7 +160,11 @@ export const RequetesServiceCreation: React.FC<
 
   return (
     <>
-      <OperationEnCours visible={opEnCours || !decrets || !utilisateurConnecte} onTimeoutEnd={finOpEnCours} onClick={finOpEnCours} />
+      <OperationEnCours
+        visible={opEnCours || !decrets || !utilisateurConnecte}
+        onTimeoutEnd={finOpEnCours}
+        onClick={finOpEnCours}
+      />
       <FiltreServiceRequeteCreationForm onSubmit={soumettreFiltre} />
       <TableauRece
         idKey={"idRequete"}

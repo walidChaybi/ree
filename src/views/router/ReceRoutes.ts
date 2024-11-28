@@ -328,7 +328,9 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_RECHERCHE_REQUETE_EDITION_ID,
-    component: EditionExtraitCopiePage,
+    component: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_AFFICHAGE_NOUVELLE_PAGE_DELIVRANCE)
+      ? PageEditionRequeteDelivrance
+      : EditionExtraitCopiePage,
     auMoinsUnDesDroits: [Droit.DELIVRER],
     canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES),
     libelle: "Édition"
