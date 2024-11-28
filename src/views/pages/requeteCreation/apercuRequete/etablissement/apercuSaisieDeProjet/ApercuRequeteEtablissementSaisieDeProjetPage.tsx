@@ -332,12 +332,16 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
                       : setEstPopinValiderProjetOuverte(false);
                   }
                 },
-                {
-                  label: "Annuler",
-                  action: () => {
-                    setEstPopinValiderProjetOuverte(false);
-                  }
-                }
+                ...(!isDirty && idRequeteParam && idSuiviDossierParam
+                  ? [
+                      {
+                        label: "Annuler",
+                        action: () => {
+                          setEstPopinValiderProjetOuverte(false);
+                        }
+                      }
+                    ]
+                  : [])
               ]}
               estOuvert={estPopinValiderProjetOuverte}
               messages={getTextePopinValiderProjetActe(isDirty)}

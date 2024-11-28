@@ -109,7 +109,6 @@ describe("Test de la page Aperçu requête etablissement saisie projet", () => {
       expect(screen.getByText("Des modifications du projet d'acte ne sont pas enregistrées.")).toBeDefined();
       expect(screen.getByText("Veuillez actualiser le projet d'acte avant sa validation.")).toBeDefined();
       expect(screen.getByText("OK")).toBeDefined();
-      expect(screen.getByText("Annuler")).toBeDefined();
     });
 
     fireEvent.click(screen.getByText("OK"));
@@ -119,7 +118,6 @@ describe("Test de la page Aperçu requête etablissement saisie projet", () => {
       expect(screen.queryByText("Des modifications du projet d'acte ne sont pas enregistrées.")).toBeNull();
       expect(screen.queryByText("Veuillez actualiser le projet d'acte avant sa validation.")).toBeNull();
       expect(screen.queryByText("OK")).toBeNull();
-      expect(screen.queryByText("Annuler")).toBeNull();
     });
   });
 });
