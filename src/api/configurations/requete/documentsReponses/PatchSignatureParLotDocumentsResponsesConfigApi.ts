@@ -12,6 +12,6 @@ interface IBody {
 
 export const CONFIG_PATCH_SIGNATURE_PAR_LOT_DOCUMENTS_REPONSES: TConfigurationApi<typeof URI, IBody[]> = {
   api: REQUETE_API,
-  methode: "POST",
+  methode: "PATCH",
   uri: URI
 };
