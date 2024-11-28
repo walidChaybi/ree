@@ -76,11 +76,11 @@ const PartieDocuments: React.FC<IPartieDocumentsProps> = React.memo(({ ongletAct
   const [ajoutEffectue, setAjoutEffectue] = useState<boolean>(false);
 
   useEffect(() => {
-    // Lorsque la liste d'onglets change, si il y à un onglet actif alors rien
+    // Lorsque la liste d'onglets change, s'il y a un onglet actif alors rien
     if (onglets.find(onglet => onglet.cle === ongletActif)) {
       return;
     }
-    //sinon on cherche un onglet appela "principal" pour le rendre actif. Si il n'existe pas, on focus sur Courrier
+    // Sinon on cherche un onglet appelé "principal" pour le rendre actif. S'il n'existe pas, on focus sur Courrier
 
     setOngletActif(onglets.find(onglet => onglet.cle === ECleOngletDocuments.PRINCIPAL)?.cle ?? ECleOngletDocuments.COURRIER);
   }, [onglets]);

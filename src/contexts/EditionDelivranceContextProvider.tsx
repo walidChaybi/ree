@@ -26,14 +26,14 @@ const EditionDelivranceContextProvider: React.FC<
   const [requete, setRequete] = useState<IRequeteDelivrance>();
   const [acte, setActe] = useState<IFicheActe | null>();
   const [doitChargerRequete, setDoitChargerRequete] = useState<boolean>(true);
-  const [onRechargementTermine, setOnRechargementTermine] = useState<(() => void) | undefined>();
+  const [onRechargementTermine, setOnRechargementTermine] = useState<(() => void) | null>(null);
   const valeursContext = useMemo(
     () => ({
       requete: requete ?? ({} as IRequeteDelivrance),
       acte: acte ?? null,
-      rechargerRequete: (callbackOnRechargementTermine: (() => void) | undefined) => {
+      rechargerRequete: (callbackOnRechargementTermine?: () => void) => {
         setDoitChargerRequete(true);
-        setOnRechargementTermine(callbackOnRechargementTermine);
+        callbackOnRechargementTermine && setOnRechargementTermine(() => callbackOnRechargementTermine);
       }
     }),
     [requete, acte]
@@ -49,12 +49,13 @@ const EditionDelivranceContextProvider: React.FC<
 
     setDoitChargerRequete(false);
     setEnRecuperation(true);
-    //TOREFACTOR : remplacer par useFetch, et possiblement passer le onRechargementTermine dans le .finally du useFetch
+    //TOREFACTOR : remplacer par useFetch
     getDetailRequete(idRequeteParam)
       .then(res => setRequete(mappingRequeteDelivrance(res.body.data, utilisateurs)))
       .finally(() => {
         setEnRecuperation(false);
-        onRechargementTermine?.();
+        onRechargementTermine && onRechargementTermine();
+        setOnRechargementTermine(null);
       });
   }, [idRequeteParam, doitChargerRequete, utilisateurs]);
 
