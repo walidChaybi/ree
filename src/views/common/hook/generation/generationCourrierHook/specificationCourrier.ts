@@ -104,7 +104,7 @@ const TEXTE_VARIABLE_RDD = `Le document d’état civil joint est délivré sur 
 <style isBold="true">Vous pouvez imprimer ce document pour le remettre à un tiers qui a l’obligation de l’accepter. Le destinataire de l’acte aura la possibilité, \
 pendant 6 mois, de vérifier la fiabilité des informations indiquées sur le document au moyen d’un télé-service de vérification.</style>
 
-Ce télé-service est accessible sur le site ci-contre : https://etat-civil.diplomatie.gouv.fr/rece-televerification-ui/ et \
+Ce télé-service est accessible sur le site ci-contre : $F{URL_televerification} et \
 requiert la saisie d’un code de télé-vérification (CTV) inscrit au bas et à droite de l’acte qui vous a été délivré. \
 <style isBold="true">Vous êtes tenu d’indiquer au destinataire de l’acte, l’adresse du télé-service et de vérifier que le CTV est lisible après impression.</style>
 
