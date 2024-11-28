@@ -17,8 +17,6 @@ interface IListesTypesMentionForm {
   setEstTypeMentionSelectionne: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const TYPE_MENTION_INFORMATISE_MOCK = true;
-
 const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> = ({
   formik,
   nom,
@@ -28,6 +26,8 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
   const listeNiveau1 = TypeMention.getTypeMentionAsOptions([...TypeMention.getTypeMentionParNatureActe(natureActe)]);
   const [listeNiveau2, setListeNiveau2] = useState<Options>();
   const [listeNiveau3, setListeNiveau3] = useState<Options>();
+  const [afficherTexteMention, setAfficherTexteMention] = useState<boolean>(false);
+  const [estMentionTypeInformatise, setEstMentionTypeInformatise] = useState<boolean>(false);
 
   const { indexMentionModifiee } = useContext(EditionMiseAJourContext.Valeurs);
 
@@ -79,15 +79,26 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik]);
 
-  const getConditionDesaffichageTexteMention = () => {
-    if (listeNiveau3 && listeNiveau3.length > 0) {
-      return !Boolean(formikValueInputTrois);
-    } else if (listeNiveau2 && listeNiveau2.length > 0) {
-      return !Boolean(formikValueInputDeux);
-    } else {
-      return !Boolean(formikValueInputUn);
-    }
-  };
+  useEffect(() => {
+    setAfficherTexteMention(() => {
+      if (listeNiveau3 && listeNiveau3.length > 0) {
+        return Boolean(formikValueInputTrois);
+      } else if (listeNiveau2 && listeNiveau2.length > 0) {
+        return Boolean(formikValueInputDeux);
+      } else {
+        return Boolean(formikValueInputUn);
+      }
+    });
+    setEstMentionTypeInformatise(() => {
+      if (!gestionnaireFeatureFlag.estActif(FeatureFlag.FF_AIDE_A_LA_SAISIE_MENTION)) return false;
+
+      const typeMentionUn = TypeMention.getTypesMention().find(mention => mention.id === formikValueInputUn);
+      const typeMentionDeux = typeMentionUn?.sousTypes?.find(mention => mention.id === formikValueInputDeux);
+      const typeMentionTrois = typeMentionDeux?.sousTypes?.find(mention => mention.id === formikValueInputTrois);
+
+      return Boolean(typeMentionUn?.estSaisieAssistee || typeMentionDeux?.estSaisieAssistee || typeMentionTrois?.estSaisieAssistee);
+    });
+  }, [formikValueInputUn, formikValueInputDeux, formikValueInputTrois, listeNiveau1, listeNiveau2, listeNiveau3]);
 
   return (
     <div className="ListesTypesMentionForm">
@@ -124,9 +135,9 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
           />
         </div>
       ) : undefined}
-      {/*FF : la récupération du TypeMention nécessite de récupérer les mentions sur un nouvel endpoint : getMetamodeleAideASaisie, à faire dans une prochaine US */}
-      {!!formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_UN).value &&
-        (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_AIDE_A_LA_SAISIE_MENTION) && TYPE_MENTION_INFORMATISE_MOCK ? (
+
+      {afficherTexteMention &&
+        (estMentionTypeInformatise ? (
           <p className="py-12 text-center text-red-500">Aide à la saisie en cours de développement</p>
         ) : (
           <div className="selectFieldMentions">
@@ -135,7 +146,6 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
               name={TEXTE_MENTION}
               component="textarea"
               placeholder={"Texte mention à ajouter"}
-              disabled={getConditionDesaffichageTexteMention()}
               onChange={event => {
                 formik.setFieldTouched(TEXTE_MENTION);
                 formik.setFieldValue(TEXTE_MENTION, event.target.value, true);

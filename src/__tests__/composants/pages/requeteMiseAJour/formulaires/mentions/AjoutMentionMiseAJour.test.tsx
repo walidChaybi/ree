@@ -77,14 +77,12 @@ test("Les éléments du formulaire s'affichent lorsque le Type est selectionné"
   });
 
   await waitFor(() => {
-    expect(screen.getByPlaceholderText("Texte mention à ajouter")).toBeDefined();
     expect(screen.getByText("Ajouter mention")).toBeDefined();
     expect(screen.getByText("Annuler")).toBeDefined();
-    expect(screen.getByText("Ajouter mention")).toBeDefined();
   });
 });
 
-test("Le formulaire fonctionne", async () => {
+test("Le formulaire fonctionne, et le champ texte n'apparait que lorsque tout les types sont selectionnes", async () => {
   const router = createTestingRouter(
     [
       {
@@ -111,11 +109,20 @@ test("Le formulaire fonctionne", async () => {
     }
   });
 
+  await waitFor(() => {
+    expect(screen.getByTestId("listesTypesMention.mentionNiveauDeux")).toBeDefined();
+    expect(screen.queryByPlaceholderText("Texte mention à ajouter")).toBeNull();
+  });
+
   const menyTypeDeux = screen.getByTestId("listesTypesMention.mentionNiveauDeux");
   fireEvent.change(menyTypeDeux, {
     target: {
       value: "b048e05c-ff6f-44fd-89dc-d07aa9b5fc80"
     }
+  });
+
+  await waitFor(() => {
+    expect(screen.getByPlaceholderText("Texte mention à ajouter")).toBeDefined();
   });
 
   const texteMention = screen.getByPlaceholderText("Texte mention à ajouter");

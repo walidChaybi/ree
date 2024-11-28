@@ -13,6 +13,7 @@ export interface ITypeMention {
   sousTypes?: ITypeMention[];
   estPresentListeDeroulante: boolean;
   estSousType: boolean;
+  estSaisieAssistee: boolean;
 }
 
 export class TypeMention {
@@ -31,18 +32,14 @@ export class TypeMention {
   }
 
   public static getTypesMention(formatListe = false) {
-    return formatListe
-      ? this.mapArborescenceVersListe(this.typesMentions)
-      : this.typesMentions;
+    return formatListe ? this.mapArborescenceVersListe(this.typesMentions) : this.typesMentions;
   }
 
   public static ajouteTypeMention(typeMention: ITypeMention) {
     this.typesMentions.push(typeMention);
   }
 
-  public static getNatureMention(
-    typesMention: ITypeMention[]
-  ): NatureMention[] {
+  public static getNatureMention(typesMention: ITypeMention[]): NatureMention[] {
     const natures = new Set<NatureMention>();
     const mapRecursifMentions = (mentions: ITypeMention[]) =>
       mentions.forEach(mention => {
@@ -63,17 +60,12 @@ export class TypeMention {
     return Array.from(natures);
   }
 
-  public static getIdTypeMentionDepuisIdNature(
-    idNature: string
-  ): string | undefined {
+  public static getIdTypeMentionDepuisIdNature(idNature: string): string | undefined {
     const nature = NatureMention.getEnumFor(idNature);
 
     let idMention: string;
     let idMentionTrouve: string | undefined;
-    const mapRecursifMention = (
-      typesMention: ITypeMention[],
-      premierNiveau: boolean = false
-    ) => {
+    const mapRecursifMention = (typesMention: ITypeMention[], premierNiveau: boolean = false) => {
       typesMention.forEach(typeMention => {
         if (idMention && idMentionTrouve === idMention) {
           return;
@@ -102,16 +94,11 @@ export class TypeMention {
     return idMentionTrouve;
   }
 
-  private static mapArborescenceVersListe(
-    arborescenceTypesMention: ITypeMention[]
-  ): ITypeMention[] {
+  private static mapArborescenceVersListe(arborescenceTypesMention: ITypeMention[]): ITypeMention[] {
     const liste: ITypeMention[] = [];
     for (const typeMention of arborescenceTypesMention) {
       if (typeMention.sousTypes && typeMention.sousTypes.length > ZERO) {
-        liste.push(
-          typeMention,
-          ...this.mapArborescenceVersListe(typeMention.sousTypes)
-        );
+        liste.push(typeMention, ...this.mapArborescenceVersListe(typeMention.sousTypes));
       } else {
         liste.push(typeMention);
       }
@@ -132,12 +119,8 @@ export class TypeMention {
       }));
   }
 
-  public static getTypeMentionParNatureActe(
-    natureActe: NatureActe
-  ): ITypeMention[] {
-    const typesMention = this.getTypesMention().filter(
-      typeMention => typeMention.natureActe === natureActe
-    );
+  public static getTypeMentionParNatureActe(natureActe: NatureActe): ITypeMention[] {
+    const typesMention = this.getTypesMention().filter(typeMention => typeMention.natureActe === natureActe);
 
     if ([NatureActe.NAISSANCE, NatureActe.MARIAGE].includes(natureActe)) {
       typesMention.push(this.getTypeMentionInconnue());
@@ -147,18 +130,14 @@ export class TypeMention {
   }
 
   public static getTypeMentionInconnue(): ITypeMention {
-    return this.getTypesMention().find(typeMention =>
-      NatureActe.estInconnue(typeMention.natureActe)
-    ) as ITypeMention;
+    return this.getTypesMention().find(typeMention => NatureActe.estInconnue(typeMention.natureActe)) as ITypeMention;
   }
 
   public static getIdTypeMentionNationalitePourAjoutMentionDelivrance() {
     return this.getTypesMention().filter(
       typeMention =>
-        typeMention.natureMention ===
-          NatureMention.getEnumFor(
-            NatureMention.getKeyForCode(NatureMention, NATIONALITE)
-          ) && typeMention.estSousType
+        typeMention.natureMention === NatureMention.getEnumFor(NatureMention.getKeyForCode(NatureMention, NATIONALITE)) &&
+        typeMention.estSousType
     )?.[ZERO].id;
   }
 }

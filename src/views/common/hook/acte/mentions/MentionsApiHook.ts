@@ -10,7 +10,7 @@ import { StatutMention } from "./../../../../../model/etatcivil/enum/StatutMenti
 
 export interface IMentionsParams {
   idActe: string;
-  statutMention?: StatutMention
+  statutMention?: StatutMention;
 }
 
 export interface IMentionsResultat {
@@ -30,8 +30,7 @@ export function useMentionsApiHook(params?: IMentionsParams) {
           /* istanbul ignore next */
           setMentions({ mentions: undefined });
           logError({
-            messageUtilisateur:
-              "Impossible de récupérer les mentions pour cet acte",
+            messageUtilisateur: "Impossible de récupérer les mentions pour cet acte",
             error
           });
         });
@@ -78,12 +77,11 @@ export function mappingTypeMention(typeMention: any): ITypeMention {
     natureActe: NatureActe.getEnumFor(typeMention.natureActe),
     affecteAnalyseMarginale: typeMention.affecteAnalyseMarginale,
     sousTypes: typeMention.typeMentionEnfantList
-      ? typeMention.typeMentionEnfantList.map((sousTypeMention: any) =>
-          mappingTypeMention(sousTypeMention)
-        )
+      ? typeMention.typeMentionEnfantList.map((sousTypeMention: any) => mappingTypeMention(sousTypeMention))
       : undefined,
     estPresentListeDeroulante: typeMention.estPresentListeDeroulante,
-    estSousType: typeMention.estSousType
+    estSousType: typeMention.estSousType,
+    estSaisieAssistee: typeMention.estSaisieAssistee
   };
 }
 
