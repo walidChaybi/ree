@@ -20,6 +20,7 @@ import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { FormikProps, FormikValues } from "formik";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { ECleOngletDocumentDelivre } from "../../../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletDocuments/VoletDocumentDelivre";
+import { EditionDelivranceContext } from "../../../../../../../contexts/EditionDelivranceContextProvider";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
 import {
   IProprietesFormulaire,
@@ -60,6 +61,7 @@ export const SaisirExtraitForm: React.FC<ISaisirExtraitFormProps> = props => {
   const { setOperationEnCours, rafraichirRequete } = useContext(EditionExtraitCopiePageContext);
   const { setIsDirty } = useContext(RECEContextActions);
   const { mapPrenomAffiche } = useContext(SaisirExtraitFormContext);
+  const { rechargerRequete } = useContext(EditionDelivranceContext);
 
   const [proprietesFormulaire, setProprietesFormulaire] = useState<IProprietesFormulaire>(initProprietesFormulaire());
 
@@ -114,6 +116,7 @@ export const SaisirExtraitForm: React.FC<ISaisirExtraitFormProps> = props => {
   const fermerOngletApresValidation = useCallback(() => {
     setOperationEnCours(false);
     setSaisieVerrouillee(true);
+    rechargerRequete();
     rafraichirRequete();
     props.setOngletDocumentDelivre?.(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
   }, []);
@@ -136,7 +139,8 @@ export const SaisirExtraitForm: React.FC<ISaisirExtraitFormProps> = props => {
     popinMessageErreur.problemePlurilingueActeNaissanceOuDeces,
     props,
     setOperationEnCours,
-    rafraichirRequete
+    rafraichirRequete,
+    rechargerRequete
   ]);
 
   useEffect(() => {

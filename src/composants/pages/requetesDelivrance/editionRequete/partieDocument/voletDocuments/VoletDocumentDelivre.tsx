@@ -1,4 +1,4 @@
-import { getDocumentReponseById } from "@api/appels/requeteApi";
+import { CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE } from "@api/configurations/requete/documentsReponses/GetDocumentsReponseDelivrance";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeActe } from "@model/etatcivil/enum/TypeActe";
@@ -19,6 +19,7 @@ import { ModifierCorpsExtrait } from "@pages/requeteDelivrance/editionExtraitCop
 import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { EditionDelivranceContext } from "../../../../../../contexts/EditionDelivranceContextProvider";
+import useFetchApi from "../../../../../../hooks/api/FetchApiHook";
 import AffichagePDF from "../../../../../commun/affichageDocument/AffichagePDF";
 import OngletsBouton from "../../../../../commun/onglets/OngletsBouton";
 import ConteneurVoletEdition from "../../ConteneurVoletEdition";
@@ -56,6 +57,7 @@ const aOngletSaisirCorps = (typeDelivrance: DocumentDelivrance, validation: Vali
 const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDelivre, resetOngletActif }) => {
   const { requete, acte } = useContext(EditionDelivranceContext);
   const [contenuDocument, setContenuDocument] = useState<string | null>(null);
+  const [ongletActif, setOngletActif] = useState<ECleOngletDocumentDelivre>(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
   const ongletsDisponible = useMemo(() => {
     const typeDocument = DocumentDelivrance.getEnumForUUID(documentDelivre.typeDocument);
 
@@ -66,20 +68,18 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [documentDelivre]);
-  const [ongletActif, setOngletActif] = useState<ECleOngletDocumentDelivre>(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
+  const { appelApi: getDocumentsReponse } = useFetchApi(CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE);
 
   useEffect(() => {
     resetOngletActif && setOngletActif(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
   }, [resetOngletActif]);
 
   useEffect(() => {
-    if (contenuDocument !== null) {
-      return;
-    }
-
-    getDocumentReponseById(documentDelivre.id).then(data => setContenuDocument(data.body?.data?.contenu ?? ""));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contenuDocument]);
+    getDocumentsReponse({
+      parametres: { path: { idDcumentReponse: documentDelivre.id } },
+      apresSucces: document => setContenuDocument(document.contenu)
+    });
+  }, [documentDelivre]);
 
   return (
     <>

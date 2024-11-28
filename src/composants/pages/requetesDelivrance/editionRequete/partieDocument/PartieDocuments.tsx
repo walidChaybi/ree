@@ -46,6 +46,7 @@ const PartieDocuments: React.FC<IPartieDocumentsProps> = React.memo(({ ongletAct
       secondaire: documents[UN] ?? null
     };
   }, [requete]);
+
   const onglets = useMemo(
     () => [
       {

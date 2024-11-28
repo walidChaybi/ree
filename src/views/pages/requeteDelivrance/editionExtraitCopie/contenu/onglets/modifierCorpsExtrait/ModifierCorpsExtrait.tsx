@@ -15,6 +15,7 @@ import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/edition
 import { StaticField } from "@widget/formulaire/champFixe/StaticField";
 import React, { useContext, useEffect, useState } from "react";
 import { ECleOngletDocumentDelivre } from "../../../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletDocuments/VoletDocumentDelivre";
+import { EditionDelivranceContext } from "../../../../../../../contexts/EditionDelivranceContextProvider";
 import "./scss/ModifierCorpsExtrait.scss";
 
 export interface IModifierCorpsExtraitProps {
@@ -27,6 +28,7 @@ export interface IModifierCorpsExtraitProps {
 export const ModifierCorpsExtrait: React.FC<IModifierCorpsExtraitProps> = props => {
   const { setIsDirty } = useContext(RECEContextActions);
   const { rafraichirRequete } = useContext(EditionExtraitCopiePageContext);
+  const { rechargerRequete } = useContext(EditionDelivranceContext);
 
   const [corpsTexte] = useState<string | undefined>(getCorpsTexte(props.acte, props.requete, props.document));
   const [corpsTexteNew, setCorpsTexteNew] = useState<string>(corpsTexte ?? "");
@@ -68,6 +70,7 @@ export const ModifierCorpsExtrait: React.FC<IModifierCorpsExtraitProps> = props 
 
   useEffect(() => {
     if (resultatGenerationEC?.resultGenerationUnDocument) {
+      rechargerRequete();
       rafraichirRequete();
       props.setOngletDocumentDelivre?.(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
     } // eslint-disable-next-line react-hooks/exhaustive-deps
