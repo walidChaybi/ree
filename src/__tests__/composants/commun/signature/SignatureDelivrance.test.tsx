@@ -11,10 +11,8 @@ import { CODES_ERREUR_BLOQUANTS, CODE_PIN_INVALIDE, IDocumentASigner } from "../
 
 describe("Test du composant Signature délivrance", () => {
   const listenerSignature = (valeurRetour: any) => {
-    let nombreRetour = 0;
     const retourSignature = (() => {
-      dispatchEvent(new CustomEvent("signWebextResponse", { detail: { ...valeurRetour, id: `${valeurRetour.id}${nombreRetour}` } }));
-      nombreRetour++;
+      dispatchEvent(new CustomEvent("signWebextResponse", { detail: valeurRetour }));
     }) as EventListener;
 
     window.top?.addEventListener("signWebextCall", retourSignature);
@@ -36,12 +34,18 @@ describe("Test du composant Signature délivrance", () => {
     numeroFonctionnel: "numFonc",
     contenu: "contenu"
   };
+  const DOC_A_SIGNER_BIS: IDocumentASigner = {
+    id: "idDocument2",
+    idRequete: "idRequete",
+    numeroFonctionnel: "numFonc",
+    contenu: "contenu2"
+  };
   const superagentMock = require("superagent-mock")(request, [
     {
       pattern: `http://localhost/rece/(${APPEL_RECUPERER}|${APPEL_ENREGISTRER_REQUETE}|${APPEL_ENREGISTRER_TELEVERIFICATION})`,
       fixtures: function (match: any, data: any) {
         if (match[1] === APPEL_RECUPERER) {
-          return data[0] === NUM_SANS_DOC ? { data: [] } : { data: Array.from({ length: data.length }).map(() => ({ ...DOC_A_SIGNER })) };
+          return data[0] === NUM_SANS_DOC ? { data: [] } : { data: [DOC_A_SIGNER, ...(data.length === 2 ? [DOC_A_SIGNER_BIS] : [])] };
         }
         if (match[1] === APPEL_ENREGISTRER_REQUETE) {
           return true;
@@ -126,7 +130,7 @@ describe("Test du composant Signature délivrance", () => {
     await waitFor(() => expect(boutonSigner.disabled).toBeFalsy());
     fireEvent.click(boutonSigner);
 
-    const demonterListener = listenerSignature({ ...DOC_A_SIGNER, erreur: { code: CODE_PIN_INVALIDE } });
+    const demonterListener = listenerSignature({ erreur: { code: CODE_PIN_INVALIDE } });
 
     const champPin = screen.getByLabelText("Code pin");
     const boutonValider = screen.getByTitle("Valider");
@@ -149,7 +153,7 @@ describe("Test du composant Signature délivrance", () => {
     fireEvent.click(boutonSigner);
 
     const LIBELLE_BLOQUANT = "Libelle bloquant";
-    const demonterListener = listenerSignature({ ...DOC_A_SIGNER, erreur: { code: CODES_ERREUR_BLOQUANTS[0], libelle: LIBELLE_BLOQUANT } });
+    const demonterListener = listenerSignature({ erreur: { code: CODES_ERREUR_BLOQUANTS[0], libelle: LIBELLE_BLOQUANT } });
 
     const champPin = screen.getByLabelText("Code pin");
     const boutonValider = screen.getByTitle("Valider");
@@ -160,8 +164,32 @@ describe("Test du composant Signature délivrance", () => {
       fireEvent.click(boutonValider);
     });
 
-    await waitFor(() => expect(screen.getByText("Impossible d'effectuer la signature :")).toBeDefined());
+    await waitFor(() => expect(screen.getByText("⚠ Impossible d'effectuer la signature :")).toBeDefined());
     expect(screen.getByText(LIBELLE_BLOQUANT)).toBeDefined();
+    demonterListener();
+  });
+
+  test("Une erreur non bloquante sur tout les documents met en echec la signature", async () => {
+    renderComposant([NUM_AVEC_DOC, NUM_AVEC_DOC]);
+
+    const boutonSigner: HTMLButtonElement = screen.getByTitle(TITRE_BOUTON);
+    await waitFor(() => expect(boutonSigner.disabled).toBeFalsy());
+    fireEvent.click(boutonSigner);
+
+    const LIBELLE_NON_BLOQUANT = "Libelle non bloquant";
+    const demonterListener = listenerSignature({
+      erreur: { code: "codeNonBloquant", libelle: LIBELLE_NON_BLOQUANT }
+    });
+
+    const champPin = screen.getByLabelText("Code pin");
+    const boutonValider = screen.getByTitle("Valider");
+    expect(champPin).toBeDefined();
+    expect(boutonValider).toBeDefined();
+    await act(() => userEvent.type(champPin, "1234"));
+    await waitFor(() => fireEvent.click(boutonValider));
+
+    await waitFor(() => expect(screen.getByText("signature des documents : 2/2")).toBeDefined());
+    await waitFor(() => expect(() => screen.queryByText("Aucun document n'a pu être signé")).toBeDefined());
     demonterListener();
   });
 
@@ -173,7 +201,10 @@ describe("Test du composant Signature délivrance", () => {
     fireEvent.click(boutonSigner);
 
     const LIBELLE_NON_BLOQUANT = "Libelle non bloquant";
-    const demonterListener = listenerSignature({ ...DOC_A_SIGNER, erreur: { code: "codeNonBloquant", libelle: LIBELLE_NON_BLOQUANT } });
+    const demonterListener = listenerSignature({
+      document: "contenuSigne",
+      erreur: { code: "codeNonBloquant", libelle: LIBELLE_NON_BLOQUANT }
+    });
 
     const champPin = screen.getByLabelText("Code pin");
     const boutonValider = screen.getByTitle("Valider");

@@ -2,7 +2,6 @@ import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
 import { gestionnaireSignatureFlag } from "@util/signatureFlag/gestionnaireSignatureFlag";
 
 interface IReponseDocumentSigne {
-  id: string;
   document?: string;
   erreur?: {
     code: string;
@@ -40,7 +39,7 @@ interface ISignerParams {
 
 const EVENT_REPONSE_SIGNATURE = "signWebextResponse";
 const EVENT_ENVOI_SIGNATURE_WEBEXT = "signWebextCall";
-const TIMEOUT_WEBEXT = 10000;
+const TIMEOUT_WEBEXT = 30000;
 export const CODE_WEBEXT_INDISPONIBLE = "WEB_EXT1";
 export const CODE_PIN_INVALIDE = "FONC_3";
 
@@ -67,12 +66,13 @@ const Signature = {
     let retournerDocumentSigne: null | EventListener = null;
 
     const reponseWebext: Promise<IDocumentSigne> = new Promise(resolve => {
-      retournerDocumentSigne = ((eventReponse: CustomEvent<IReponseDocumentSigne>) =>
+      retournerDocumentSigne = ((reponse: CustomEvent<IReponseDocumentSigne>) =>
         resolve({
-          ...eventReponse.detail,
+          id: signerParams.parametres.document.id,
           idRequete: signerParams.parametres.document.idRequete,
           numeroFonctionnel: signerParams.parametres.document.numeroFonctionnel,
-          contenu: eventReponse.detail.document
+          contenu: reponse.detail.document,
+          erreur: reponse.detail.erreur
         })) as EventListener;
 
       window.top?.addEventListener(EVENT_REPONSE_SIGNATURE, retournerDocumentSigne);

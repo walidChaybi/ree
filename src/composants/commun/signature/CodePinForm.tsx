@@ -31,17 +31,19 @@ const CodePinForm: React.FC<ICodePinFormProps> = ({ onSubmit, fermerModale, erre
         initialValues={{ pin: "" }}
         validationSchema={SchemaValidation}
         validateOnChange={false}
+        validateOnBlur={false}
         onSubmit={values => onSubmit(values.pin)}
         {...(erreurPin ? { initialErrors: { pin: "Le code pin est incorrect" }, initialTouched: { pin: true } } : {})}
       >
-        <Form autoComplete="off">
+        <Form>
           <ChampsTexte
             name="pin"
             type="password"
             libelle={"Code pin"}
+            autoComplete="off"
           />
 
-          <div className="mt-8 flex flex-nowrap justify-center gap-4">
+          <div className="mt-10 flex flex-nowrap justify-center gap-4">
             <Bouton
               title="Valider"
               type="submit"

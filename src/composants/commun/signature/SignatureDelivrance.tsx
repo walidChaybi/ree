@@ -3,6 +3,7 @@ import TRAITEMENT_ENREGISTRER_DOCUMENTS_SIGNES from "@api/traitements/signature/
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { utilisateurADroit } from "@model/agent/IUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
+import CircularProgress from "@mui/material/CircularProgress";
 import { useContext, useEffect, useMemo, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import useTraitementApi from "../../../hooks/api/TraitementApiHook";
@@ -52,17 +53,29 @@ const SignatureDelivrance: React.FC<IModaleSignatureDelivranceProps> = ({
   const { lancerTraitement: lancerTraitementEnregistrement } = useTraitementApi(TRAITEMENT_ENREGISTRER_DOCUMENTS_SIGNES);
 
   useEffect(() => {
-    setInformationsSignature({
-      modaleOuverte: false,
-      statut: "attente-pin",
-      codePin: null,
-      erreurPin: false,
-      erreur: null,
-      aSigner: null,
-      signes: [],
-      total: 0
-    });
     if (!numerosFonctionnel.length) {
+      setInformationsSignature({
+        modaleOuverte: false,
+        statut: "attente-pin",
+        codePin: null,
+        erreurPin: false,
+        erreur: null,
+        aSigner: null,
+        signes: [],
+        total: 0
+      });
+
+      return;
+    }
+
+    const numerosOntChanges = Boolean(
+      numerosFonctionnel.filter(
+        numeroFonctionnel =>
+          !informationsSignature.aSigner?.find(documentASigner => documentASigner.numeroFonctionnel === numeroFonctionnel)
+      ).length
+    );
+
+    if (!numerosOntChanges) {
       return;
     }
 
@@ -122,8 +135,19 @@ const SignatureDelivrance: React.FC<IModaleSignatureDelivranceProps> = ({
       return;
     }
 
+    const documentAEnregistrer = informationsSignature.signes.filter(documentSigne => Boolean(documentSigne.contenu?.length));
+    if (!documentAEnregistrer.length) {
+      setInformationsSignature(prec => ({
+        ...prec,
+        statut: "termine",
+        erreur: "Aucun document n'a pu être signé"
+      }));
+
+      return;
+    }
+
     lancerTraitementEnregistrement({
-      parametres: { documentsSigne: informationsSignature.signes },
+      parametres: { documentsSigne: documentAEnregistrer },
       apresSucces: () =>
         setInformationsSignature(prec => ({
           ...prec,
@@ -189,6 +213,9 @@ const SignatureDelivrance: React.FC<IModaleSignatureDelivranceProps> = ({
                     }}
                   ></div>
                 </div>
+                <div className="pt-4 text-center">
+                  <CircularProgress size={30} />
+                </div>
                 {informationsSignature.signes.some(documentSigne => documentSigne.erreur) && (
                   <ListeErreursSignature documentsSignes={informationsSignature.signes} />
                 )}
@@ -199,7 +226,7 @@ const SignatureDelivrance: React.FC<IModaleSignatureDelivranceProps> = ({
               <div className="text-center">
                 {informationsSignature.erreur ? (
                   <>
-                    <div className="text-rouge">{"Impossible d'effectuer la signature :"}</div>
+                    <div className="font-bold text-rouge">{"⚠ Impossible d'effectuer la signature :"}</div>
                     <div className="text-rouge">{informationsSignature.erreur}</div>
                   </>
                 ) : (
