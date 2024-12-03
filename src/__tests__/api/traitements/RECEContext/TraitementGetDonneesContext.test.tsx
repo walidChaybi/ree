@@ -10,13 +10,13 @@ describe("Test du traitement de récupération des données du context RECE", ()
       pattern: "http://localhost/rece/rece-agent-api/v1(.*)",
       fixtures: (match: any) => {
         switch (match[1]) {
-          case "/utilisateurs/all?lite=false&range=0-100":
+          case "/utilisateurs/referentiel?range=0-100":
             return { data: [{ idUtilisateur: "test-id-utilisateur" }] };
-          case "/utilisateurs/all?lite=false&range=1-100":
+          case "/utilisateurs/referentiel?range=1-100":
             return { data: [{ idUtilisateur: "test-id-utilisateur-2" }] };
-          case "/service/all?range=0-100":
+          case "/service/referentiel?range=0-100":
             return { data: [{ idService: "test-id-service" }] };
-          case "/service/all?range=1-100":
+          case "/service/referentiel?range=1-100":
             return { data: [{ idService: "test-id-service-2" }] };
           default:
             return;

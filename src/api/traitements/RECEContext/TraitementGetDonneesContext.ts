@@ -57,7 +57,6 @@ export const TRAITEMENT_GET_DONNEES_CONTEXT: TTraitementApi<undefined, IReponseS
       appelApiUtilisateurs({
         parametres: {
           query: {
-            lite: false,
             range: `${page}-${PLAGE_IMPORT}`
           }
         },

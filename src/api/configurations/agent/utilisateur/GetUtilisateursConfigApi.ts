@@ -2,11 +2,10 @@ import { AGENT_API } from "@api/ApiDisponibles";
 import { TConfigurationApi } from "@model/api/Api";
 import IUtilisateurDto from "../../../../dto/etatcivil/agent/IUtilisateurDto";
 
-const URI = "/utilisateurs/all";
+const URI = "/utilisateurs/referentiel";
 
 
 export interface IPaginationParams {
-  lite: boolean;
   range?: string;
 }
 

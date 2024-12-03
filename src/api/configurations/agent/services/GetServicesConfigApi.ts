@@ -2,7 +2,7 @@ import { AGENT_API } from "@api/ApiDisponibles";
 import { TConfigurationApi } from "@model/api/Api";
 import IServiceDto from "../../../../dto/etatcivil/agent/IServiceDto";
 
-const URI = "/service/all";
+const URI = "/service/referentiel";
 
 export interface IPaginationParams {
   range?: string;

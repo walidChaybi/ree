@@ -32,23 +32,23 @@ export const configAgent = [
       }
 
       if (
-        match[1] === "/utilisateurs/all?range=0-100&lite=false" ||
-        match[1] === "/utilisateurs/all?range=0-200&lite=false"
+        match[1] === "/utilisateurs/referentiel?range=0-100" ||
+        match[1] === "/utilisateurs/referentiel?range=0-200"
       ) {
         return { ...DONNEES_UTILISATEURS };
       }
 
-      if (match[1] === "/utilisateurs/all?range=1-100&lite=false") {
+      if (match[1] === "/utilisateurs/referentiel?range=1-100") {
         return { ...DONNEES_UTILISATEURS_PAGE2 };
       }
       if (
-        match[1] === "/service/all" ||
-        match[1].startsWith("/service/all?range=0-100")
+        match[1] === "/service/referentiel" ||
+        match[1].startsWith("/service/referentiel?range=0-100")
       ) {
         return { ...DONNEES_SERVICES };
       }
 
-      if (match[1].startsWith("/service/all?range=1-100")) {
+      if (match[1].startsWith("/service/referentiel?range=1-100")) {
         return { ...DONNEES_SERVICES_PAGE2 };
       }
 
