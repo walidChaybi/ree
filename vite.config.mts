@@ -33,7 +33,7 @@ export default defineConfig({
     "process.env": {
       //     ...env.stringified["process.env"],
       VERSION: JSON.stringify(packageJson.version),
-      DATE_BUILD: JSON.stringify(`${new Date(Date.now()).toISOString()} (${new Date(Date.now()).toLocaleString()})`)
+      DATE_BUILD: JSON.stringify(`${new Date().toISOString()} (${new Date().toLocaleString()})`)
     }
   },
   plugins: [

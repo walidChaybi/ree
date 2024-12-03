@@ -19,7 +19,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ onClick }) => {
   const navigate = useNavigate();
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const version = `${process.env.VERSION}_${process.env.VITE_DATE_BUILD}`;
+  const version = `${process.env.VERSION}_${process.env.DATE_BUILD}`;
 
   function onClickLogo(event: React.MouseEvent) {
     if (onClick) {
@@ -46,9 +46,7 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
       <div className="coteDroit">
         {officierHabiliterPourLeDroit(utilisateurConnecte, Droit.CONSULTER) && (
           <>
-            {gestionnaireFeatureFlag.estActif(
-              FeatureFlag.FF_CONSULT_ACTE_RQT
-            ) && <BoutonRechercheRmc />}
+            {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_CONSULT_ACTE_RQT) && <BoutonRechercheRmc />}
             <div className="traitVerticalConteneur">
               <div className="traitVertical" />
             </div>
