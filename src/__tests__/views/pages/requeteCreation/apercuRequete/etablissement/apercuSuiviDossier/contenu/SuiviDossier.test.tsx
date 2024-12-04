@@ -1,5 +1,7 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { requeteCreationEtablissement } from "@mock/data/requeteCreationEtablissement";
+import { IOfficier } from "@model/agent/IOfficier";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { IEchange } from "@model/requete/IEchange";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
@@ -25,26 +27,24 @@ interface HookConsumerSuiviDossierProps {
   echanges?: IEchange[];
   requete: IRequeteCreationEtablissement;
   modeConsultation?: boolean;
+  idUtilisateurConnecte?: string;
 }
 
-const HookConsumerSuiviDossier: React.FC<
-  HookConsumerSuiviDossierProps
-> = props => {
+const HookConsumerSuiviDossier: React.FC<HookConsumerSuiviDossierProps> = props => {
   return (
-    <MemoryRouter
-      initialEntries={[
-        getUrlWithParam(
-          URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-          props.requete?.id || ""
-        )
-      ]}
+    <MockRECEContextProvider
+      utilisateurConnecte={props.idUtilisateurConnecte ? ({ idUtilisateur: props.idUtilisateurConnecte } as IOfficier) : undefined}
     >
-      <SuiviDossier
-        requete={props.requete}
-        echanges={props.requete?.provenanceNatali?.echanges}
-        modeConsultation={true}
-      />
-    </MemoryRouter>
+      <MemoryRouter
+        initialEntries={[getUrlWithParam(URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID, props.requete?.id || "")]}
+      >
+        <SuiviDossier
+          requete={props.requete}
+          echanges={props.requete?.provenanceNatali?.echanges}
+          modeConsultation={true}
+        />
+      </MemoryRouter>
+    </MockRECEContextProvider>
   );
 };
 
@@ -63,7 +63,30 @@ const requeteAvecTitulaires: IRequeteCreation = {
 };
 
 test("DOIT afficher le tableau de SuiviDossier QUAND les conditions sont remplies.", () => {
-  render(<HookConsumerSuiviDossier requete={requeteAvecTitulaires} />);
+  render(
+    <HookConsumerSuiviDossier
+      idUtilisateurConnecte="7a091a3b-6835-4824-94fb-527d68926d55"
+      requete={requeteAvecTitulaires}
+    />
+  );
+
+  waitFor(() => {
+    expect(screen.getByText("Nom")).toBeDefined();
+    expect(screen.getByText("Prénoms")).toBeDefined();
+    expect(screen.getByText("Décret")).toBeDefined();
+    expect(screen.getByText("Evénement")).toBeDefined();
+    expect(screen.getByText("Date évenement")).toBeDefined();
+    expect(screen.getByText("Avancement")).toBeDefined();
+  });
+});
+
+test("DOIT afficher les lignes du tableau de SuiviDossier inactive QUAND la requete ne nous appartient pas.", () => {
+  render(
+    <HookConsumerSuiviDossier
+      idUtilisateurConnecte="7a091a3b-6835-4824-94fb-527d68926d59"
+      requete={requeteAvecTitulaires}
+    />
+  );
 
   waitFor(() => {
     expect(screen.getByText("Nom")).toBeDefined();
@@ -126,9 +149,7 @@ test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le postulant a des e
 
 test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le postulant a des unions antérieurs.", () => {
   if (requeteAvecTitulaires.titulaires) {
-    requeteAvecTitulaires.titulaires[0].evenementUnions = [
-      { id: "", type: "MARIAGE" }
-    ];
+    requeteAvecTitulaires.titulaires[0].evenementUnions = [{ id: "", type: "MARIAGE" }];
   }
 
   render(<HookConsumerSuiviDossier requete={requeteAvecTitulaires} />);
@@ -148,10 +169,7 @@ test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le postulant a des u
 });
 
 test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le FF est inactif.", () => {
-  localStorageFeatureFlagMock.setItem(
-    "FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION",
-    "false"
-  );
+  localStorageFeatureFlagMock.setItem("FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION", "false");
   render(<HookConsumerSuiviDossier requete={requeteAvecTitulaires} />);
 
   waitFor(() => {
@@ -171,18 +189,13 @@ test("NE DOIT PAS afficher les actions 'Retour SDANF' QUAND le FF est activé", 
   waitFor(() => {
     expect(screen.queryByText("Acte irrecevable")).toBeNull();
     expect(screen.queryByText("Élément manquant")).toBeNull();
-    expect(
-      screen.queryByText("Suspicion de fraude / nouvel élément")
-    ).toBeNull();
+    expect(screen.queryByText("Suspicion de fraude / nouvel élément")).toBeNull();
   });
   localStorageFeatureFlagMock.setItem("FF_RETOUR_SDANF", "true");
 });
 
 test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le FF est inactif.", () => {
-  localStorageFeatureFlagMock.setItem(
-    "FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION",
-    "false"
-  );
+  localStorageFeatureFlagMock.setItem("FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION", "false");
   render(<HookConsumerSuiviDossier requete={requeteAvecTitulaires} />);
 
   waitFor(() => {
@@ -193,10 +206,7 @@ test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le FF est inactif.",
     expect(screen.queryByText("Date évenement")).toBeNull();
     expect(screen.queryByText("Avancement")).toBeNull();
   });
-  localStorageFeatureFlagMock.setItem(
-    "FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION",
-    "true"
-  );
+  localStorageFeatureFlagMock.setItem("FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION", "true");
 });
 
 // TODO: Test à restaurer quand les utilisateurs auront besoin de traiter les dossiers d'un postulant avec ses filiations.
@@ -248,12 +258,7 @@ test.skip("DOIT rediriger vers l'aperçu saisie projet QUAND on clique sur une l
         element: <ApercuRequeteEtablissementSaisieDeProjetPage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-        requeteAvecTitulaires.id
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID, requeteAvecTitulaires.id)]
   );
 
   render(<RouterProvider router={router} />);

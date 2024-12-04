@@ -1,4 +1,6 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import { appartientAUtilisateurConnecte } from "@model/agent/IOfficier";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
@@ -16,7 +18,7 @@ import {
   IColonneFontAwesomeIcone,
   getColonneFontAwesomeIcone
 } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/ColonneFontAwesomeIcone";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ModalBulletinIdentification from "./ModalBulletinIdentification";
 import { IDataBulletinIdentificationResultat } from "./ModalBulletinIdentificationApiHook";
@@ -25,6 +27,7 @@ import { getColonnesTableauSuiviDossier } from "./TableauSuiviDossierUtils";
 import "./scss/TableauSuiviDossier.scss";
 
 const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
+  const { utilisateurConnecte } = useContext(RECEContextData);
   const [idBIAAfficher, setIdBIAAfficher] = useState<string>("");
   const [isModalOuverte, setIsModalOuverte] = useState<boolean>(false);
   const [dataFromRequete, setDataFromRequete] = useState<IDataBulletinIdentificationResultat>();
@@ -32,7 +35,10 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { dataTableau } = useTableauSuiviDossierHook(props.requete.titulaires);
+  const { dataTableau } = useTableauSuiviDossierHook(
+    appartientAUtilisateurConnecte(utilisateurConnecte, props.requete.idUtilisateur),
+    props.requete.titulaires
+  );
 
   // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
@@ -119,5 +125,6 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
 export default TableauSuiviDossier;
 
 function getLigneClassName(data: ILigneTableauSuiviDossier): string {
+  if (!data.cliquable) return "ligneProjetActeDesactive";
   return data.prenoms ? "lignePersonne" : "ligneProjetActe";
 }

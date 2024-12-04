@@ -3,6 +3,7 @@ import { IOfficier } from "@model/agent/IOfficier";
 import { ApercuRequeteEtablissementSaisieDeProjetPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/ApercuRequeteEtablissementSaisieDeProjetPage";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
+  PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID
 } from "@router/ReceUrls";
@@ -14,7 +15,7 @@ import { createTestingRouter } from "../../../../../../__tests__utils__/testsUti
 
 describe("Test de la page Aperçu requête etablissement saisie projet", () => {
   test("DOIT afficher l'onglet pièces justificatives et postulant QUAND on arrive sur la page", async () => {
-    afficherPageRequeteCreationEtablissment();
+    afficherPageRequeteCreationEtablissment("7a091a3b-6835-4824-94fb-527d68926d55");
 
     await waitFor(() => {
       expect(screen.getByText("RMC")).toBeDefined();
@@ -43,7 +44,7 @@ describe("Test de la page Aperçu requête etablissement saisie projet", () => {
   });
 
   test("NE DOIT PAS afficher les boutons de modification du formulaire lorsque la requete ne nous est PAS attribué", async () => {
-    afficherPageRequeteCreationEtablissment();
+    afficherPageRequeteCreationEtablissment("7a091a3b-6835-4824-94fb-527d68926d55");
 
     await waitFor(() => {
       expect(screen.getByText("Apercu du projet")).toBeDefined();
@@ -122,6 +123,16 @@ describe("Test de la page Aperçu requête etablissement saisie projet", () => {
   });
 });
 
+test("DOIT rediriger l'utilisateur vers l'apercuSimple QUAND la requete ne nous appartient pas et qu'on accede a l'apercu saisie de projet", async () => {
+  const router = afficherPageRequeteCreationEtablissment("7a091a3b-6835-4824-94fb-527d68926d59", "er5ez456-354v-461z-c5fd-162md289m75v");
+
+  await waitFor(() => {
+    expect(router.state.location.pathname).toBe(
+      `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/er5ez456-354v-461z-c5fd-162md289m75v/a272ec8a-1351-4edd-99b8-03004292a9d2`
+    );
+  });
+});
+
 // on donne l'idUtilisateur au RECEContext pour simuler que la requete appartient a l'utilisateur connecté
 function afficherPageRequeteCreationEtablissment(idUtilisateur?: string, idRequete?: string) {
   const url = idRequete
@@ -142,4 +153,6 @@ function afficherPageRequeteCreationEtablissment(idUtilisateur?: string, idReque
       <RouterProvider router={router} />
     </MockRECEContextProvider>
   );
+
+  return router;
 }

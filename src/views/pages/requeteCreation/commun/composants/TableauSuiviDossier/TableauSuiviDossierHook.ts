@@ -1,7 +1,4 @@
-import {
-  IAnalyseMarginaleResultat,
-  useTitulaireAnalyseMarginaleApiHook
-} from "@hook/acte/TitulaireAnalyseMarginaleApiHook";
+import { IAnalyseMarginaleResultat, useTitulaireAnalyseMarginaleApiHook } from "@hook/acte/TitulaireAnalyseMarginaleApiHook";
 import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
@@ -25,13 +22,17 @@ export interface ILigneTableauSuiviDossier {
   evenement: string;
   dateEvenement: string;
   avancement: string;
+  cliquable: boolean;
 }
 
 interface ITableauSuiviDossierResultat {
   dataTableau: ILigneTableauSuiviDossier[];
 }
 
-export function useTableauSuiviDossierHook(titulaires?: ITitulaireRequeteCreation[]): ITableauSuiviDossierResultat {
+export function useTableauSuiviDossierHook(
+  ligneEstCliquable: boolean,
+  titulaires?: ITitulaireRequeteCreation[]
+): ITableauSuiviDossierResultat {
   const [resultat, setResultat] = useState<ILigneTableauSuiviDossier[]>([]);
 
   const titulairesAAfficher = useMemo(() => getTitulairesAAfficher(titulaires), [titulaires]);
@@ -39,12 +40,11 @@ export function useTableauSuiviDossierHook(titulaires?: ITitulaireRequeteCreatio
   const idActes = useMemo(() => titulairesAAfficher.reduce(getIdentifiantsActeFromTitulaires, []), [titulairesAAfficher]);
 
   const titulaireAnalyseMarginaleResultat = useTitulaireAnalyseMarginaleApiHook(idActes);
-  
+
   useEffect(() => {
     if (titulairesAAfficher && titulaireAnalyseMarginaleResultat) {
       const lignesTableauSuiviDossier = titulairesAAfficher.reduce(
         (lignesTableau: ILigneTableauSuiviDossier[], titulaireCourant: ITitulaireRequeteCreation) => {
-
           // POSTULANT => acte de naissance pour celibataire / sans enfant = pas de verification sur le titulaire de l'analyse marginale
           // TODO => créer tri pour recup la bonne analyse marginale lorsqu'il y aura plusieurs titulaires aux analyses marginales
           const dataAnalyseMarginale = titulaireAnalyseMarginaleResultat[0];
@@ -59,7 +59,8 @@ export function useTableauSuiviDossierHook(titulaires?: ITitulaireRequeteCreatio
             decret: titulaireCourant.decret?.numeroDecret || "",
             evenement: "",
             dateEvenement: "",
-            avancement: ""
+            avancement: "",
+            cliquable: true
           };
 
           const lignesDossiers: ILigneTableauSuiviDossier[] =
@@ -77,7 +78,8 @@ export function useTableauSuiviDossierHook(titulaires?: ITitulaireRequeteCreatio
                   mois: suiviDossier.moisEvenement,
                   annee: suiviDossier.anneeEvenement
                 }),
-                avancement: suiviDossier.avancement.libelle ?? ""
+                avancement: suiviDossier.avancement.libelle ?? "",
+                cliquable: ligneEstCliquable
               };
             }) || [];
 
@@ -103,21 +105,11 @@ export function useTableauSuiviDossierHook(titulaires?: ITitulaireRequeteCreatio
   };
 }
 
-const getTitulairesAAfficher = (
-  titulaires?: ITitulaireRequeteCreation[]
-): ITitulaireRequeteCreation[] => {
-  return (
-    titulaires?.filter(
-      titulaire =>
-        titulaire.suiviDossiers && titulaire.suiviDossiers?.length > 0
-    ) || []
-  );
+const getTitulairesAAfficher = (titulaires?: ITitulaireRequeteCreation[]): ITitulaireRequeteCreation[] => {
+  return titulaires?.filter(titulaire => titulaire.suiviDossiers && titulaire.suiviDossiers?.length > 0) || [];
 };
 
-const getIdentifiantsActeFromTitulaires = (
-  identifiantsActes: string[],
-  titulaireCourant: ITitulaireRequeteCreation
-): string[] => {
+const getIdentifiantsActeFromTitulaires = (identifiantsActes: string[], titulaireCourant: ITitulaireRequeteCreation): string[] => {
   const idActe = titulaireCourant.suiviDossiers?.find(suiviDossier =>
     NatureProjetEtablissement.estNaissance(suiviDossier.natureProjet)
   )?.idActe;
@@ -127,24 +119,11 @@ const getIdentifiantsActeFromTitulaires = (
   return identifiantsActes;
 };
 
-const getPrenomTitulaire = (
-  titulaire: ITitulaireRequeteCreation,
-  analyseMarginale?: IAnalyseMarginaleResultat
-): string => {
-  const prenoms =
-    analyseMarginale?.prenoms ||
-    titulaire.retenueSdanf?.prenomsRetenu?.map(
-      prenomOrdonne => prenomOrdonne.prenom
-    );
+const getPrenomTitulaire = (titulaire: ITitulaireRequeteCreation, analyseMarginale?: IAnalyseMarginaleResultat): string => {
+  const prenoms = analyseMarginale?.prenoms || titulaire.retenueSdanf?.prenomsRetenu?.map(prenomOrdonne => prenomOrdonne.prenom);
   return prenoms ? joint(prenoms) : "";
 };
 
-const getNomTitulaire = (
-  titulaire: ITitulaireRequeteCreation,
-  analyseMarginale?: IAnalyseMarginaleResultat
-): string => {
-  return (
-    getValeurOuUndefined(analyseMarginale?.nom) ||
-    getValeurOuUndefined(titulaire.retenueSdanf?.nomNaissance)
-  );
+const getNomTitulaire = (titulaire: ITitulaireRequeteCreation, analyseMarginale?: IAnalyseMarginaleResultat): string => {
+  return getValeurOuUndefined(analyseMarginale?.nom) || getValeurOuUndefined(titulaire.retenueSdanf?.nomNaissance);
 };

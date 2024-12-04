@@ -24,8 +24,14 @@ import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
-import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID, URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
+import {
+  PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
+  PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
+  URL_RECHERCHE_REQUETE
+} from "@router/ReceUrls";
 import { DEUX, UN, getLibelle } from "@util/Utils";
+import messageManager from "@util/messageManager";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
@@ -123,6 +129,11 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
 
   useEffect(() => {
     if (detailRequeteState) {
+      if (!appartientAUtilisateurConnecte(utilisateurConnecte, detailRequeteState.idUtilisateur)) {
+        navigate(location.pathname.replace(PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET, PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE));
+        messageManager.showWarningAndClose("Ouverture impossible. Vous n'êtes pas en charge de ce dossier");
+        return;
+      }
       setRequete(detailRequeteState as IRequeteCreationEtablissement);
     }
   }, [detailRequeteState]);
